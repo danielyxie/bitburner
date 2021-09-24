@@ -103,7 +103,8 @@ import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
 import { Script } from "./Script/Script";
 import { findRunningScript, findRunningScriptByPid } from "./Script/ScriptHelpers";
-import { isScriptFilename } from "./Script/ScriptHelpersTS";
+import { isScriptFilename } from "./Script/isScriptFilename";
+
 import { AllServers, AddToAllServers, createUniqueRandomIp } from "./Server/AllServers";
 import { RunningScript } from "./Script/RunningScript";
 import {

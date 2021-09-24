@@ -10,7 +10,7 @@ import { TerminalEvents, TerminalClearEvents } from "./TerminalEvents";
 
 import { TextFile } from "../TextFile";
 import { Script } from "../Script/Script";
-import { isScriptFilename } from "../Script/ScriptHelpersTS";
+import { isScriptFilename } from "../Script/isScriptFilename";
 import { CONSTANTS } from "../Constants";
 import { AllServers } from "../Server/AllServers";
 

@@ -2,7 +2,7 @@ import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { isScriptFilename } from "../../Script/ScriptHelpersTS";
+import { isScriptFilename } from "../../Script/isScriptFilename";
 
 export function nano(
   terminal: ITerminal,

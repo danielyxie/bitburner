@@ -11,7 +11,7 @@ import { isValidFilePath } from "../../Terminal/DirectoryHelpers";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { isScriptFilename } from "../../Script/ScriptHelpersTS";
+import { isScriptFilename } from "../../Script/isScriptFilename";
 import { Script } from "../../Script/Script";
 import { TextFile } from "../../TextFile";
 import { calculateRamUsage } from "../../Script/RamCalculations";

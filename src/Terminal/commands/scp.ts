@@ -4,7 +4,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { Message } from "../../Message/Message";
 import { getServer } from "../../Server/ServerHelpers";
-import { isScriptFilename } from "../../Script/ScriptHelpersTS";
+import { isScriptFilename } from "../../Script/isScriptFilename";
 
 export function scp(
   terminal: ITerminal,
