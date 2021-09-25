@@ -31,7 +31,7 @@ export function createPopup(id: string, elems: HTMLElement[], options: ICreatePo
   }
 
   container.appendChild(content);
-  getElementById("entire-game-container").appendChild(container);
+  getElementById("root").appendChild(container);
 
   return container;
 }

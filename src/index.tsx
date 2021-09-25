@@ -9,7 +9,7 @@ ReactDOM.render(
   <Theme>
     <LoadingScreen />
   </Theme>,
-  document.getElementById("mainmenu-container"),
+  document.getElementById("root"),
 );
 
 function rerender(): void {
@@ -18,7 +18,7 @@ function rerender(): void {
     <Theme>
       <LoadingScreen />
     </Theme>,
-    document.getElementById("mainmenu-container"),
+    document.getElementById("root"),
   );
 }
 

@@ -10,7 +10,7 @@ let gameContainer: HTMLElement;
 
 (function () {
   function getGameContainer(): void {
-    const container = document.getElementById("entire-game-container");
+    const container = document.getElementById("root");
     if (container == null) {
       throw new Error(`Failed to find game container DOM element`);
     }
