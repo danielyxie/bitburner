@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 export function TutorialRoot(): React.ReactElement {
   return (
     <>
-      <Typography variant="h4">Tutorial (AKA Links to Documentation)</Typography>
+      <Typography variant="h4">Tutorial / Documentation</Typography>
       <Box m={2}>
         <Link
           color="primary"

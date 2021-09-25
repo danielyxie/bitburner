@@ -4,7 +4,6 @@ import { Console } from "./Console";
 import { AllPages } from "./AllPages";
 
 import { use } from "../../ui/Context";
-import { IBladeburner } from "../IBladeburner";
 
 export function BladeburnerRoot(): React.ReactElement {
   const player = use.Player();

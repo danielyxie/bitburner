@@ -35,7 +35,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
   const [pos, setPos] = useState([0, 0]);
   const [memoryPhase, setMemoryPhase] = useState(true);
 
-  function press(event: React.KeyboardEvent<HTMLElement>): void {
+  function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     if (memoryPhase) return;
     const move = [0, 0];

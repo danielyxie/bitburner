@@ -479,6 +479,7 @@ export class Sleeve extends Person {
 
     let time = this.storedCycles * CONSTANTS.MilliPerCycle;
     let cyclesUsed = this.storedCycles;
+    cyclesUsed = Math.min(cyclesUsed, 15);
     if (this.currentTaskMaxTime !== 0 && this.currentTaskTime + time > this.currentTaskMaxTime) {
       time = this.currentTaskMaxTime - this.currentTaskTime;
       cyclesUsed = Math.floor(time / CONSTANTS.MilliPerCycle);

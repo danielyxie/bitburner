@@ -6,7 +6,6 @@ import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { Companies, initCompanies } from "./Company/Companies";
 import { resetIndustryResearchTrees } from "./Corporation/IndustryData";
 import { Programs } from "./Programs/Programs";
-import { Engine } from "./engine";
 import { Faction } from "./Faction/Faction";
 import { Factions, initFactions } from "./Faction/Factions";
 import { joinFaction } from "./Faction/FactionHelpers";
@@ -155,7 +154,7 @@ function prestigeSourceFile(flume: boolean): void {
   Player.prestigeSourceFile();
   prestigeWorkerScripts(); // Delete all Worker Scripts objects
 
-  var homeComp = Player.getHomeComputer();
+  const homeComp = Player.getHomeComputer();
 
   // Delete all servers except home computer
   prestigeAllServers(); // Must be done before initForeignServers()
@@ -180,14 +179,14 @@ function prestigeSourceFile(flume: boolean): void {
   homeComp.cpuCores = 1;
 
   // Reset favor for Companies
-  for (var member in Companies) {
+  for (const member in Companies) {
     if (Companies.hasOwnProperty(member)) {
       Companies[member].favor = 0;
     }
   }
 
   // Reset favor for factions
-  for (var member in Factions) {
+  for (const member in Factions) {
     if (Factions.hasOwnProperty(member)) {
       Factions[member].favor = 0;
     }
@@ -199,7 +198,7 @@ function prestigeSourceFile(flume: boolean): void {
   }
 
   // Delete all Augmentations
-  for (var name in Augmentations) {
+  for (const name in Augmentations) {
     if (Augmentations.hasOwnProperty(name)) {
       delete Augmentations[name];
     }

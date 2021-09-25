@@ -97,10 +97,6 @@ export function WorkInProgressRoot(): React.ReactElement {
       player.finishClass(true);
       router.toCity();
     }
-    function unfocus(): void {
-      player.stopFocusing();
-      router.toCity();
-    }
 
     let stopText = "";
     if (

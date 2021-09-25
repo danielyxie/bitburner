@@ -17,17 +17,17 @@ export function setRedPillFlag(b: boolean): void {
 }
 
 function giveSourceFile(bitNodeNumber: number): void {
-  var sourceFileKey = "SourceFile" + bitNodeNumber.toString();
-  var sourceFile = SourceFiles[sourceFileKey];
+  const sourceFileKey = "SourceFile" + bitNodeNumber.toString();
+  const sourceFile = SourceFiles[sourceFileKey];
   if (sourceFile == null) {
     console.error(`Could not find source file for Bit node: ${bitNodeNumber}`);
     return;
   }
 
   // Check if player already has this source file
-  var alreadyOwned = false;
-  var ownedSourceFile = null;
-  for (var i = 0; i < Player.sourceFiles.length; ++i) {
+  let alreadyOwned = false;
+  let ownedSourceFile = null;
+  for (let i = 0; i < Player.sourceFiles.length; ++i) {
     if (Player.sourceFiles[i].n === bitNodeNumber) {
       alreadyOwned = true;
       ownedSourceFile = Player.sourceFiles[i];
@@ -51,7 +51,7 @@ function giveSourceFile(bitNodeNumber: number): void {
       );
     }
   } else {
-    var playerSrcFile = new PlayerOwnedSourceFile(bitNodeNumber, 1);
+    const playerSrcFile = new PlayerOwnedSourceFile(bitNodeNumber, 1);
     Player.sourceFiles.push(playerSrcFile);
     if (bitNodeNumber === 5 && Player.intelligence === 0) {
       // Artificial Intelligence

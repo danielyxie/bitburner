@@ -10,7 +10,7 @@ import { numeralWrapper } from "../ui/numeralFormat";
 
 import { compareArrays } from "../../utils/helpers/compareArrays";
 
-export function scriptCalculateOfflineProduction(runningScript: RunningScript) {
+export function scriptCalculateOfflineProduction(runningScript: RunningScript): void {
   //The Player object stores the last update time from when we were online
   const thisUpdate = new Date().getTime();
   const lastUpdate = Player.lastUpdate;
@@ -83,8 +83,12 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript) {
 
 //Returns a RunningScript object matching the filename and arguments on the
 //designated server, and false otherwise
-export function findRunningScript(filename: string, args: (string | number)[], server: BaseServer) {
-  for (var i = 0; i < server.runningScripts.length; ++i) {
+export function findRunningScript(
+  filename: string,
+  args: (string | number)[],
+  server: BaseServer,
+): RunningScript | null {
+  for (let i = 0; i < server.runningScripts.length; ++i) {
     if (server.runningScripts[i].filename === filename && compareArrays(server.runningScripts[i].args, args)) {
       return server.runningScripts[i];
     }
@@ -94,8 +98,8 @@ export function findRunningScript(filename: string, args: (string | number)[], s
 
 //Returns a RunningScript object matching the pid on the
 //designated server, and false otherwise
-export function findRunningScriptByPid(pid: number, server: BaseServer) {
-  for (var i = 0; i < server.runningScripts.length; ++i) {
+export function findRunningScriptByPid(pid: number, server: BaseServer): RunningScript | null {
+  for (let i = 0; i < server.runningScripts.length; ++i) {
     if (server.runningScripts[i].pid === pid) {
       return server.runningScripts[i];
     }

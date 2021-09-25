@@ -1,6 +1,3 @@
-import { Engine } from "./engine";
-import { createStatusText } from "./ui/createStatusText";
-
 function getDB(): Promise<IDBObjectStore> {
   return new Promise((resolve, reject) => {
     if (!window.indexedDB) {
@@ -24,7 +21,7 @@ function getDB(): Promise<IDBObjectStore> {
       reject(`Failed to get IDB ${ev}`);
     };
 
-    indexedDbRequest.onsuccess = function (this: IDBRequest<IDBDatabase>, ev: Event) {
+    indexedDbRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
       const db = this.result;
       if (!db) {
         reject("database loadign result was undefined");
@@ -33,11 +30,6 @@ function getDB(): Promise<IDBObjectStore> {
       resolve(db.transaction(["savestring"], "readwrite").objectStore("savestring"));
     };
   });
-}
-
-interface ILoadCallback {
-  success: (s: string) => void;
-  error?: () => void;
 }
 
 export function load(): Promise<string> {
@@ -57,11 +49,6 @@ export function load(): Promise<string> {
       })
       .catch((r) => reject(r));
   });
-}
-
-interface ISaveCallback {
-  success: () => void;
-  error?: () => void;
 }
 
 export function save(saveString: string): Promise<void> {

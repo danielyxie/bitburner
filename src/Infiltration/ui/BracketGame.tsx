@@ -36,7 +36,7 @@ function generateLeftSide(difficulty: Difficulty): string {
   return str;
 }
 
-function getChar(event: React.KeyboardEvent<HTMLElement>): string {
+function getChar(event: KeyboardEvent): string {
   if (event.keyCode == 48 && event.shiftKey) return ")";
   if (event.keyCode == 221 && !event.shiftKey) return "]";
   if (event.keyCode == 221 && event.shiftKey) return "}";
@@ -60,7 +60,7 @@ export function BracketGame(props: IMinigameProps): React.ReactElement {
   const [right, setRight] = useState("");
   const [left] = useState(generateLeftSide(difficulty));
 
-  function press(event: React.KeyboardEvent<HTMLElement>): void {
+  function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     const char = getChar(event);
     if (!char) return;

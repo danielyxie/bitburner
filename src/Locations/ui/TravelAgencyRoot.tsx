@@ -3,10 +3,10 @@
  *
  * TThis subcomponent renders all of the buttons for traveling to different cities
  */
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 
 import { CityName } from "../data/CityNames";
-import { TravelConfirmationPopup } from "./TravelConfirmationPopup";
+import { TravelConfirmationModal } from "./TravelConfirmationModal";
 
 import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -14,10 +14,14 @@ import { IRouter } from "../../ui/Router";
 import { Settings } from "../../Settings/Settings";
 
 import { StdButton } from "../../ui/React/StdButton";
-import { createPopup } from "../../ui/React/createPopup";
+import { use } from "../../ui/Context";
 import { Money } from "../../ui/React/Money";
 import { WorldMap } from "../../ui/React/WorldMap";
 import { dialogBoxCreate } from "../../../utils/DialogBox";
+
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 type IProps = {
   p: IPlayer;
@@ -27,7 +31,6 @@ type IProps = {
 function travel(p: IPlayer, router: IRouter, to: CityName): void {
   const cost = CONSTANTS.TravelCost;
   if (!p.canAfford(cost)) {
-    dialogBoxCreate(`You cannot afford to travel to ${to}`);
     return;
   }
 
@@ -37,69 +40,69 @@ function travel(p: IPlayer, router: IRouter, to: CityName): void {
   router.toCity();
 }
 
-function createTravelPopup(p: IPlayer, router: IRouter, city: CityName): void {
-  if (Settings.SuppressTravelConfirmation) {
-    travel(p, router, city);
-    return;
-  }
-  const popupId = `travel-confirmation`;
-  createPopup(popupId, TravelConfirmationPopup, {
-    player: p,
-    city: city,
-    travel: () => travel(p, router, city),
-    popupId: popupId,
-  });
-}
-
-function ASCIIWorldMap(props: IProps): React.ReactElement {
-  return (
-    <div className="noselect">
-      <p>
-        From here, you can travel to any other city! A ticket costs{" "}
-        <Money money={CONSTANTS.TravelCost} player={props.p} />.
-      </p>
-      <WorldMap
-        currentCity={props.p.city}
-        onTravel={(city: CityName) => createTravelPopup(props.p, props.router, city)}
-      />
-    </div>
-  );
-}
-
-function ListWorldMap(props: IProps): React.ReactElement {
-  return (
-    <div>
-      <p>
-        From here, you can travel to any other city! A ticket costs{" "}
-        <Money money={CONSTANTS.TravelCost} player={props.p} />.
-      </p>
-      {Object.values(CityName)
-        .filter((city: string) => city != props.p.city)
-        .map((city: string) => {
-          const match = Object.entries(CityName).find((entry) => entry[1] === city);
-          if (match === undefined) throw new Error(`could not find key for city '${city}'`);
-          return (
-            <StdButton
-              key={city}
-              onClick={() => createTravelPopup(props.p, props.router, city as CityName)}
-              style={{ display: "block" }}
-              text={`Travel to ${city}`}
-            />
-          );
-        })}
-    </div>
-  );
-}
-
 export function TravelAgencyRoot(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
+  const setRerender = useState(false)[1];
+  const [open, setOpen] = useState(false);
+  const [destination, setDestination] = useState(CityName.Sector12);
+  function rerender(): void {
+    setRerender((o) => !o);
+  }
+
+  useEffect(() => {
+    const id = setInterval(rerender, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  function startTravel(city: CityName): void {
+    const cost = CONSTANTS.TravelCost;
+    if (!player.canAfford(cost)) {
+      return;
+    }
+    if (Settings.SuppressTravelConfirmation) {
+      travel(player, router, city);
+      return;
+    }
+    setOpen(true);
+    setDestination(city);
+  }
+
   return (
     <>
-      <h1>Travel Agency</h1>
-      {Settings.DisableASCIIArt ? (
-        <ListWorldMap p={props.p} router={props.router} />
-      ) : (
-        <ASCIIWorldMap p={props.p} router={props.router} />
-      )}
+      <Typography variant="h4">Travel Agency</Typography>
+      <Box mx={2}>
+        <Typography>
+          From here, you can travel to any other city! A ticket costs{" "}
+          <Money money={CONSTANTS.TravelCost} player={props.p} />.
+        </Typography>
+        {Settings.DisableASCIIArt ? (
+          <div>
+            {Object.values(CityName)
+              .filter((city: string) => city != props.p.city)
+              .map((city: string) => {
+                const match = Object.entries(CityName).find((entry) => entry[1] === city);
+                if (match === undefined) throw new Error(`could not find key for city '${city}'`);
+                return (
+                  <React.Fragment key={city}>
+                    <Button onClick={() => startTravel(city as CityName)} sx={{ m: 2 }}>
+                      <Typography>Travel to {city}</Typography>
+                    </Button>
+                    <br />
+                  </React.Fragment>
+                );
+              })}
+          </div>
+        ) : (
+          <WorldMap currentCity={props.p.city} onTravel={(city: CityName) => startTravel(city)} />
+        )}
+      </Box>
+      <TravelConfirmationModal
+        city={destination}
+        travel={() => travel(player, router, destination)}
+        open={open}
+        onClose={() => setOpen(false)}
+      />
     </>
   );
 }

@@ -1,12 +1,16 @@
 /* Generic Reviver, toJSON, and fromJSON functions used for saving and loading objects */
 
+export interface IReviverValue {
+  ctor: string;
+  data: any;
+}
+
 // A generic "smart reviver" function.
 // Looks for object values with a `ctor` property and
 // a `data` property. If it finds them, and finds a matching
 // constructor that has a `fromJSON` property on it, it hands
 // off to that `fromJSON` fuunction, passing in the value.
-function Reviver(key, value) {
-  var ctor;
+export function Reviver(key: string, value: IReviverValue | null): any {
   if (value == null) {
     console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
     return 0;
@@ -20,7 +24,7 @@ function Reviver(key, value) {
       return value.data;
     }
 
-    ctor = Reviver.constructors[value.ctor] || window[value.ctor];
+    const ctor = Reviver.constructors[value.ctor];
 
     if (typeof ctor === "function" && typeof ctor.fromJSON === "function") {
       return ctor.fromJSON(value);
@@ -28,7 +32,11 @@ function Reviver(key, value) {
   }
   return value;
 }
-Reviver.constructors = {}; // A list of constructors the smart reviver should know about
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace Reviver {
+  export const constructors: { [key: string]: any } = {};
+}
 
 // A generic "toJSON" function that creates the data expected
 // by Reviver.
@@ -41,16 +49,15 @@ Reviver.constructors = {}; // A list of constructors the smart reviver should kn
 //             regardless of whether it's an "own" property.)
 // Returns:    The structure (which will then be turned into a string
 //             as part of the JSON.stringify algorithm)
-function Generic_toJSON(ctorName, obj, keys) {
-  var data, key;
-
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function Generic_toJSON(ctorName: string, obj: any, keys?: string[]): IReviverValue {
   if (!keys) {
     keys = Object.keys(obj); // Only "own" properties are included
   }
 
-  data = {};
+  const data: any = {};
   for (let index = 0; index < keys.length; ++index) {
-    key = keys[index];
+    const key = keys[index];
     data[key] = obj[key];
   }
   return { ctor: ctorName, data: data };
@@ -63,14 +70,11 @@ function Generic_toJSON(ctorName, obj, keys) {
 // `ctor`      The constructor to call
 // `data`      The data to apply
 // Returns:    The object
-function Generic_fromJSON(ctor, data) {
-  var obj, name;
-
-  obj = new ctor();
-  for (name in data) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function Generic_fromJSON<T>(ctor: new () => T, data: any): T {
+  const obj: any = new ctor();
+  for (const name in data) {
     obj[name] = data[name];
   }
   return obj;
 }
-
-export { Reviver, Generic_toJSON, Generic_fromJSON };

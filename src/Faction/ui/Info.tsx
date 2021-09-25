@@ -7,13 +7,10 @@ import React, { useState, useEffect } from "react";
 import { Faction } from "../../Faction/Faction";
 import { FactionInfo } from "../../Faction/FactionInfo";
 
-import { AutoupdatingParagraph } from "../../ui/React/AutoupdatingParagraph";
-import { ParagraphWithTooltip } from "../../ui/React/ParagraphWithTooltip";
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
 import { MathComponent } from "mathjax-react";
 
-import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import Typography from "@mui/material/Typography";
@@ -25,10 +22,11 @@ type IProps = {
   factionInfo: FactionInfo;
 };
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     noformat: {
       whiteSpace: "pre-wrap",
+      lineHeight: "1em",
     },
   }),
 );

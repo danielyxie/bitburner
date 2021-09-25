@@ -23,7 +23,7 @@ function createWindow() {
 
   win.webContents.on("new-window", function (e, url) {
     // make sure local urls stay in electron perimeter
-    if ("file://" === url.substr(0, "file://".length)) {
+    if (url.substr(0, "file://".length) === "file://") {
       return;
     }
 

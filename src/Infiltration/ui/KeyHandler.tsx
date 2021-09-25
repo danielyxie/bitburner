@@ -1,22 +1,20 @@
 import React, { useEffect } from "react";
 
 interface IProps {
-  onKeyDown: (event: React.KeyboardEvent<HTMLElement>) => void;
+  onKeyDown: (this: Document, event: KeyboardEvent) => void;
   onFailure: (options?: { automated: boolean }) => void;
 }
 
 export function KeyHandler(props: IProps): React.ReactElement {
-  let elem: any;
-  useEffect(() => elem.focus());
-
-  function onKeyDown(event: React.KeyboardEvent<HTMLElement>): void {
-    if (!event.isTrusted) {
-      props.onFailure({ automated: true });
-      return;
+  useEffect(() => {
+    function press(this: Document, event: KeyboardEvent): void {
+      const f = props.onKeyDown.bind(this);
+      f(event);
     }
-    props.onKeyDown(event);
-  }
+    document.addEventListener("keydown", press);
+    return () => document.removeEventListener("keydown", press);
+  });
 
   // invisible autofocused element that eats all the keypress for the minigames.
-  return <div tabIndex={1} ref={(c) => (elem = c)} onKeyDown={onKeyDown} />;
+  return <></>;
 }

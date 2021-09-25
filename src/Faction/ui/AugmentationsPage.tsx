@@ -12,7 +12,6 @@ import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
 import { hasAugmentationPrereqs } from "../FactionHelpers";
 
-import { StdButton } from "../../ui/React/StdButton";
 import { use } from "../../ui/Context";
 
 import Button from "@mui/material/Button";
@@ -87,7 +86,6 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
     const augs = getAugs();
     function canBuy(augName: string): boolean {
       const aug = Augmentations[augName];
-      const moneyCost = aug.baseCost * props.faction.getInfo().augmentationPriceMult;
       const repCost = aug.baseRepRequirement * props.faction.getInfo().augmentationRepRequirementMult;
       const hasReq = props.faction.playerReputation >= repCost;
       const hasRep = hasAugmentationPrereqs(aug);

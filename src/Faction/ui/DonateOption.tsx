@@ -12,8 +12,6 @@ import { Favor } from "../../ui/React/Favor";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 
-import { StdButton } from "../../ui/React/StdButton";
-
 import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../../utils/DialogBox";
@@ -32,11 +30,6 @@ type IProps = {
   rerender: () => void;
 };
 
-const inputStyleMarkup = {
-  margin: "5px",
-  height: "26px",
-};
-
 export function DonateOption(props: IProps): React.ReactElement {
   const [donateAmt, setDonateAmt] = useState<number | null>(null);
   const digits = (CONSTANTS.DonateMoneyToRepDivisor + "").length - 1;
@@ -52,7 +45,6 @@ export function DonateOption(props: IProps): React.ReactElement {
     const amt = numeralWrapper.parseMoney(event.target.value);
     if (event.target.value === "" || isNaN(amt)) setDonateAmt(null);
     else setDonateAmt(amt);
-    console.log("set");
   }
 
   function donate(): void {

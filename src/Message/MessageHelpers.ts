@@ -20,7 +20,7 @@ function sendMessage(msg: Message, forced = false): void {
 }
 
 function showMessage(msg: Message): void {
-  var txt =
+  const txt =
     "Message received from unknown sender: <br><br>" +
     "<i>" +
     msg.msg +
@@ -33,15 +33,15 @@ function showMessage(msg: Message): void {
 
 //Adds a message to a server
 function addMessageToServer(msg: Message, serverHostname: string): void {
-  var server = GetServerByHostname(serverHostname);
+  const server = GetServerByHostname(serverHostname);
   if (server == null) {
     console.warn(`Could not find server ${serverHostname}`);
     return;
   }
-  for (var i = 0; i < server.messages.length; ++i) {
-    const msg = server.messages[i];
-    if (typeof msg === "string") continue;
-    if (msg.filename === msg.filename) {
+  for (let i = 0; i < server.messages.length; ++i) {
+    const other = server.messages[i];
+    if (typeof other === "string") continue;
+    if (msg.filename === other.filename) {
       return; //Already exists
     }
   }
@@ -49,7 +49,7 @@ function addMessageToServer(msg: Message, serverHostname: string): void {
 }
 
 //Checks if any of the 'timed' messages should be sent
-function checkForMessagesToSend() {
+function checkForMessagesToSend(): void {
   if (redPillFlag) return;
   const jumper0 = Messages[MessageFilenames.Jumper0];
   const jumper1 = Messages[MessageFilenames.Jumper1];
@@ -107,7 +107,7 @@ function loadMessages(saveString: string): void {
   Messages = JSON.parse(saveString, Reviver);
 }
 
-let MessageFilenames = {
+const MessageFilenames = {
   Jumper0: "j0.msg",
   Jumper1: "j1.msg",
   Jumper2: "j2.msg",
@@ -119,7 +119,7 @@ let MessageFilenames = {
   RedPill: "icarus.msg",
 };
 
-function initMessages() {
+function initMessages(): void {
   //Reset
   Messages = {};
 

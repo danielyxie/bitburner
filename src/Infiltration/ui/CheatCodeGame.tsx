@@ -32,7 +32,7 @@ export function CheatCodeGame(props: IMinigameProps): React.ReactElement {
   const [code] = useState(generateCode(difficulty));
   const [index, setIndex] = useState(0);
 
-  function press(event: React.KeyboardEvent<HTMLElement>): void {
+  function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     if (code[index] !== getArrow(event)) {
       props.onFailure();

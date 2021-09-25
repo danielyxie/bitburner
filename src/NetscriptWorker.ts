@@ -14,13 +14,11 @@ import { isScriptErrorMessage, makeRuntimeRejectMsg } from "./NetscriptEvaluator
 import { NetscriptFunctions } from "./NetscriptFunctions";
 import { executeJSScript } from "./NetscriptJSEvaluator";
 import { NetscriptPort, IPort } from "./NetscriptPort";
-import { Player } from "./Player";
 import { RunningScript } from "./Script/RunningScript";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
 import { scriptCalculateOfflineProduction } from "./Script/ScriptHelpers";
 import { Script } from "./Script/Script";
 import { AllServers } from "./Server/AllServers";
-import { Server } from "./Server/Server";
 import { BaseServer } from "./Server/BaseServer";
 import { Settings } from "./Settings/Settings";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
@@ -38,11 +36,11 @@ import { simple as walksimple } from "acorn-walk";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
-for (var i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
+for (let i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
   NetscriptPorts.push(NetscriptPort());
 }
 
-export function prestigeWorkerScripts() {
+export function prestigeWorkerScripts(): void {
   for (const ws of workerScripts.values()) {
     ws.env.stopFlag = true;
     killWorkerScript(ws);
@@ -65,7 +63,7 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
   // We need to go through the environment and wrap each function in such a way that it
   // can be called at most once at a time. This will prevent situations where multiple
   // hack promises are outstanding, for example.
-  function wrap(propName: string, f: Function): Function {
+  function wrap(propName: string, f: (...args: any[]) => Promise<void>): (...args: any[]) => Promise<void> {
     // This function unfortunately cannot be an async function, because we don't
     // know if the original one was, and there's no way to tell.
     return function (...args: any[]) {
@@ -85,7 +83,7 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
         "Did you forget to await hack(), grow(), or some other " +
         "promise-returning function? (Currently running: %s tried to run: %s)";
       if (runningFn) {
-        workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, runningFn, propName), null);
+        workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, runningFn, propName));
         throw workerScript;
       }
       runningFn = propName;
@@ -112,7 +110,7 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
     };
   }
 
-  for (let prop in workerScript.env.vars) {
+  for (const prop in workerScript.env.vars) {
     if (typeof workerScript.env.vars[prop] !== "function") continue;
     workerScript.env.vars[prop] = wrap(prop, workerScript.env.vars[prop]);
   }
@@ -145,9 +143,9 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
   workerScript.running = true;
 
   //Process imports
-  var codeWithImports, codeLineOffset;
+  let codeWithImports, codeLineOffset;
   try {
-    let importProcessingRes = processNetscript1Imports(code, workerScript);
+    const importProcessingRes = processNetscript1Imports(code, workerScript);
     codeWithImports = importProcessingRes.code;
     codeLineOffset = importProcessingRes.lineOffset;
   } catch (e) {
@@ -158,11 +156,11 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
     return Promise.resolve(workerScript);
   }
 
-  var interpreterInitialization = function (int: any, scope: any) {
+  const interpreterInitialization = function (int: any, scope: any): void {
     //Add the Netscript environment
-    var ns = NetscriptFunctions(workerScript);
-    for (let name in ns) {
-      let entry = ns[name];
+    const ns = NetscriptFunctions(workerScript);
+    for (const name in ns) {
+      const entry = ns[name];
       if (typeof entry === "function") {
         //Async functions need to be wrapped. See JS-Interpreter documentation
         if (
@@ -173,20 +171,20 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
           name === "prompt" ||
           name === "manualHack"
         ) {
-          let tempWrapper = function () {
-            let fnArgs = [];
+          const tempWrapper = function (...args: any[]): void {
+            const fnArgs = [];
 
             //All of the Object/array elements are in JSInterpreter format, so
             //we have to convert them back to native format to pass them to these fns
-            for (let i = 0; i < arguments.length - 1; ++i) {
-              if (typeof arguments[i] === "object" || arguments[i].constructor === Array) {
-                fnArgs.push(int.pseudoToNative(arguments[i]));
+            for (let i = 0; i < args.length - 1; ++i) {
+              if (typeof args[i] === "object" || args[i].constructor === Array) {
+                fnArgs.push(int.pseudoToNative(args[i]));
               } else {
-                fnArgs.push(arguments[i]);
+                fnArgs.push(args[i]);
               }
             }
-            let cb = arguments[arguments.length - 1];
-            let fnPromise = entry.apply(null, fnArgs);
+            const cb = args[args.length - 1];
+            const fnPromise = entry(...fnArgs);
             fnPromise
               .then(function (res: any) {
                 cb(res);
@@ -206,25 +204,25 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
           name === "run" ||
           name === "exec"
         ) {
-          let tempWrapper = function () {
-            let fnArgs = [];
+          const tempWrapper = function (...args: any[]): void {
+            const fnArgs = [];
 
             //All of the Object/array elements are in JSInterpreter format, so
             //we have to convert them back to native format to pass them to these fns
-            for (let i = 0; i < arguments.length; ++i) {
-              if (typeof arguments[i] === "object" || arguments[i].constructor === Array) {
-                fnArgs.push(int.pseudoToNative(arguments[i]));
+            for (let i = 0; i < args.length; ++i) {
+              if (typeof args[i] === "object" || args[i].constructor === Array) {
+                fnArgs.push(int.pseudoToNative(args[i]));
               } else {
-                fnArgs.push(arguments[i]);
+                fnArgs.push(args[i]);
               }
             }
 
-            return entry.apply(null, fnArgs);
+            return entry(...fnArgs);
           };
           int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
         } else {
-          let tempWrapper = function () {
-            let res = entry.apply(null, arguments);
+          const tempWrapper = function (...args: any[]): any {
+            const res = entry(...args);
 
             if (res == null) {
               return res;
@@ -247,7 +245,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
     int.setProperty(scope, "args", int.nativeToPseudo(workerScript.args));
   };
 
-  var interpreter: any;
+  let interpreter: any;
   try {
     interpreter = new Interpreter(codeWithImports, interpreterInitialization, codeLineOffset);
   } catch (e) {
@@ -259,7 +257,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
   }
 
   return new Promise(function (resolve, reject) {
-    function runInterpreter() {
+    function runInterpreter(): void {
       try {
         if (workerScript.env.stopFlag) {
           return reject(workerScript);
@@ -314,7 +312,7 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
     sourceType: "module",
   });
 
-  var server = workerScript.getServer();
+  const server = workerScript.getServer();
   if (server == null) {
     throw new Error("Failed to find underlying Server object for script");
   }
@@ -339,11 +337,11 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
       if (scriptName.startsWith("./")) {
         scriptName = scriptName.slice(2);
       }
-      let script = getScript(scriptName);
+      const script = getScript(scriptName);
       if (script == null) {
         throw new Error("'Import' failed due to invalid script: " + scriptName);
       }
-      let scriptAst = parse(script.code, {
+      const scriptAst = parse(script.code, {
         ecmaVersion: 9,
         allowReserved: true,
         sourceType: "module",
@@ -351,9 +349,9 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
 
       if (node.specifiers.length === 1 && node.specifiers[0].type === "ImportNamespaceSpecifier") {
         // import * as namespace from script
-        let namespace = node.specifiers[0].local.name;
-        let fnNames: string[] = []; //Names only
-        let fnDeclarations: any[] = []; //FunctionDeclaration Node objects
+        const namespace = node.specifiers[0].local.name;
+        const fnNames: string[] = []; //Names only
+        const fnDeclarations: any[] = []; //FunctionDeclaration Node objects
         walksimple(scriptAst, {
           FunctionDeclaration: (node: any) => {
             fnNames.push(node.id.name);
@@ -382,13 +380,13 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
         //import {...} from script
 
         //Get array of all fns to import
-        let fnsToImport: string[] = [];
+        const fnsToImport: string[] = [];
         node.specifiers.forEach((e: any) => {
           fnsToImport.push(e.local.name);
         });
 
         //Walk through script and get FunctionDeclaration code for all specified fns
-        let fnDeclarations: any[] = [];
+        const fnDeclarations: any[] = [];
         walksimple(scriptAst, {
           FunctionDeclaration: (node: any) => {
             if (fnsToImport.includes(node.id.name)) {
@@ -412,7 +410,7 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
   }
 
   //Remove ImportDeclarations from AST. These ImportDeclarations must be in top-level
-  var linesRemoved = 0;
+  let linesRemoved = 0;
   if (ast.type !== "Program" || ast.body == null) {
     throw new Error("Code could not be properly parsed");
   }
@@ -424,7 +422,7 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
   }
 
   //Calculated line offset
-  var lineOffset = (generatedCode.match(/\n/g) || []).length - linesRemoved;
+  const lineOffset = (generatedCode.match(/\n/g) || []).length - linesRemoved;
 
   //Convert the AST back into code
   code = generate(ast);
@@ -432,7 +430,7 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
   //Add the imported code and re-generate in ES5 (JS Interpreter for NS1 only supports ES5);
   code = generatedCode + code;
 
-  var res = {
+  const res = {
     code: code,
     lineOffset: lineOffset,
   };
@@ -595,8 +593,8 @@ export function createAndAddWorkerScript(
 /**
  * Updates the online running time stat of all running scripts
  */
-export function updateOnlineScriptTimes(numCycles = 1) {
-  var time = (numCycles * CONSTANTS._idleSpeed) / 1000; //seconds
+export function updateOnlineScriptTimes(numCycles = 1): void {
+  const time = (numCycles * CONSTANTS._idleSpeed) / 1000; //seconds
   for (const ws of workerScripts.values()) {
     ws.scriptRef.onlineRunningTime += time;
   }
@@ -606,8 +604,8 @@ export function updateOnlineScriptTimes(numCycles = 1) {
  * Called when the game is loaded. Loads all running scripts (from all servers)
  * into worker scripts so that they will start running
  */
-export function loadAllRunningScripts() {
-  let skipScriptLoad = window.location.href.toLowerCase().indexOf("?noscripts") !== -1;
+export function loadAllRunningScripts(): void {
+  const skipScriptLoad = window.location.href.toLowerCase().indexOf("?noscripts") !== -1;
   if (skipScriptLoad) {
     console.info("Skipping the load of any scripts during startup");
   }
@@ -661,7 +659,7 @@ export function runScriptFromScript(
   }
 
   // Check if the script is already running
-  let runningScriptObj = server.getRunningScript(scriptname, args);
+  const runningScriptObj = server.getRunningScript(scriptname, args);
   if (runningScriptObj != null) {
     workerScript.log(caller, `'${scriptname}' is already running on '${server.hostname}'`);
     return 0;
@@ -703,7 +701,7 @@ export function runScriptFromScript(
           caller,
           `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
         );
-        let runningScriptObj = new RunningScript(script, args);
+        const runningScriptObj = new RunningScript(script, args);
         runningScriptObj.threads = threads;
 
         return startWorkerScript(runningScriptObj, server, workerScript);

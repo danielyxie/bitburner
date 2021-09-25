@@ -2,7 +2,7 @@ import { Bladeburner } from "../../Bladeburner/Bladeburner";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { IPlayer } from "../IPlayer";
 
-export function canAccessBladeburner(this: IPlayer) {
+export function canAccessBladeburner(this: IPlayer): boolean {
   if (this.bitNodeN === 8) {
     return false;
   }

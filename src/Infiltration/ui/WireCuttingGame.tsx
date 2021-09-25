@@ -60,7 +60,7 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
   const [cutWires, setCutWires] = useState(new Array(wires.length).fill(false));
   const [questions] = useState(generateQuestion(wires, difficulty));
 
-  function press(event: React.KeyboardEvent<HTMLElement>): void {
+  function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     const wireNum = parseInt(event.key);
 

@@ -20,20 +20,18 @@ export function OwnedSourceFiles(): React.ReactElement {
     });
   }
 
-  const sfs = sourceSfs.map((e) => {
-    const srcFileKey = "SourceFile" + e.n;
-    const sfObj = SourceFiles[srcFileKey];
-    if (sfObj == null) {
-      console.error(`Invalid source file number: ${e.n}`);
-      return null;
-    }
+  return (
+    <>
+      {sourceSfs.map((e) => {
+        const srcFileKey = "SourceFile" + e.n;
+        const sfObj = SourceFiles[srcFileKey];
+        if (sfObj == null) {
+          console.error(`Invalid source file number: ${e.n}`);
+          return null;
+        }
 
-    return (
-      <li key={e.n}>
-        <SourceFileAccordion level={e.lvl} sf={sfObj} />
-      </li>
-    );
-  });
-
-  return <>{sfs}</>;
+        return <SourceFileAccordion key={e.n} level={e.lvl} sf={sfObj} />;
+      })}
+    </>
+  );
 }

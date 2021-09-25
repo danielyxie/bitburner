@@ -40,14 +40,14 @@ export class WorkerScript {
   /**
    * Stores names of all functions that have logging disabled
    */
-  disableLogs: IMap<string> = {};
+  disableLogs: IMap<boolean> = {};
 
   /**
    * Used for dynamic RAM calculation. Stores names of all functions that have
    * already been checked by this script.
    * TODO: Could probably just combine this with loadedFns?
    */
-  dynamicLoadedFns: IMap<string> = {};
+  dynamicLoadedFns: IMap<boolean> = {};
 
   /**
    * Tracks dynamic RAM usage

@@ -213,7 +213,7 @@ export class PlayerObject implements IPlayer {
   regenerateHp: (amt: number) => void;
   recordMoneySource: (amt: number, source: string) => void;
   setMoney: (amt: number) => void;
-  singularityStopWork: () => void;
+  singularityStopWork: () => string;
   startBladeburner: (p: any) => void;
   startFactionWork: (router: IRouter, faction: Faction) => void;
   startClass: (router: IRouter, costMult: number, expMult: number, className: string) => void;
@@ -409,8 +409,8 @@ export class PlayerObject implements IPlayer {
 
     this.crimeType = "";
 
-    (this.timeWorked = 0), //in m;
-      (this.timeWorkedCreateProgram = 0);
+    this.timeWorked = 0; //in m;
+    this.timeWorkedCreateProgram = 0;
     this.timeNeededToCompleteWork = 0;
 
     this.work_money_mult = 1;
@@ -438,15 +438,15 @@ export class PlayerObject implements IPlayer {
     this.bladeburner = null;
     this.bladeburner_max_stamina_mult = 1;
     this.bladeburner_stamina_gain_mult = 1;
-    (this.bladeburner_analysis_mult = 1), //Field Analysis Onl;
-      (this.bladeburner_success_chance_mult = 1);
+    this.bladeburner_analysis_mult = 1; //Field Analysis Onl;
+    this.bladeburner_success_chance_mult = 1;
 
     // Sleeves & Re-sleeving
     this.sleeves = [];
     this.resleeves = [];
-    (this.sleevesFromCovenant = 0), // # of Duplicate sleeves purchased from the covenan;
-      //bitnode
-      (this.bitNodeN = 1);
+    this.sleevesFromCovenant = 0; // # of Duplicate sleeves purchased from the covenan;
+    //bitnode
+    this.bitNodeN = 1;
 
     //Used to store the last update time.
     this.lastUpdate = 0;
@@ -455,10 +455,10 @@ export class PlayerObject implements IPlayer {
     this.playtimeSinceLastBitnode = 0;
 
     // Keep track of where money comes from
-    (this.moneySourceA = new MoneySourceTracker()), // Where money comes from since last-installed Augmentatio;
-      (this.moneySourceB = new MoneySourceTracker()), // Where money comes from for this entire BitNode ru;
-      // Production since last Augmentation installation
-      (this.scriptProdSinceLastAug = 0);
+    this.moneySourceA = new MoneySourceTracker(); // Where money comes from since last-installed Augmentatio;
+    this.moneySourceB = new MoneySourceTracker(); // Where money comes from for this entire BitNode ru;
+    // Production since last Augmentation installation
+    this.scriptProdSinceLastAug = 0;
 
     this.exploits = [];
 

@@ -145,7 +145,7 @@ function CurrentBitNode(): React.ReactElement {
     const index = "BitNode" + player.bitNodeN;
     return (
       <>
-        <Typography variant="h5" color="primary">
+        <Typography variant="h4">
           BitNode {player.bitNodeN}: {BitNodes[index].name}
         </Typography>
         <Typography sx={{ mx: 2 }} style={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>
@@ -270,9 +270,7 @@ export function CharacterStats(): React.ReactElement {
 
   return (
     <>
-      <Typography variant="h5" color="primary">
-        General
-      </Typography>
+      <Typography variant="h4">General</Typography>
       <Box sx={{ mx: 2 }}>
         <Typography>Current City: {player.city}</Typography>
         <LastEmployer />
@@ -287,9 +285,7 @@ export function CharacterStats(): React.ReactElement {
         </Typography>
       </Box>
       <br />
-      <Typography variant="h5" color="primary">
-        Stats
-      </Typography>
+      <Typography variant="h4">Stats</Typography>
       <Box sx={{ mx: 2 }}>
         <Table size="small" padding="none">
           <TableBody>
@@ -365,9 +361,7 @@ export function CharacterStats(): React.ReactElement {
         <br />
       </Box>
       <br />
-      <Typography variant="h5" color="primary">
-        Multipliers
-      </Typography>
+      <Typography variant="h4">Multipliers</Typography>
       <Box sx={{ mx: 2 }}>
         <MultiplierTable
           rows={[
@@ -477,9 +471,7 @@ export function CharacterStats(): React.ReactElement {
       </Box>
       <br />
 
-      <Typography variant="h5" color="primary">
-        Misc
-      </Typography>
+      <Typography variant="h4">Misc</Typography>
       <Box sx={{ mx: 2 }}>
         <Typography>{`Servers owned: ${player.purchasedServers.length} / ${getPurchaseServerLimit()}`}</Typography>
         <Hacknet />

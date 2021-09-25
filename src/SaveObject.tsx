@@ -1,7 +1,6 @@
 import { loadAliases, loadGlobalAliases, Aliases, GlobalAliases } from "./Alias";
 import { Companies, loadCompanies } from "./Company/Companies";
 import { CONSTANTS } from "./Constants";
-import { Engine } from "./engine";
 import { Factions, loadFactions } from "./Faction/Factions";
 import { loadAllGangs, AllGangs } from "./Gang/AllGangs";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
@@ -18,11 +17,8 @@ import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import * as ExportBonus from "./ExportBonus";
 
 import { dialogBoxCreate } from "../utils/DialogBox";
-import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
 import { save } from "./db";
-
-import Decimal from "decimal.js";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -47,14 +43,14 @@ class BitburnerSaveObject {
     this.PlayerSave = JSON.stringify(Player);
 
     // Delete all logs from all running scripts
-    var TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
-    for (var ip in TempAllServers) {
-      var server = TempAllServers[ip];
+    const TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
+    for (const ip in TempAllServers) {
+      const server = TempAllServers[ip];
       if (server == null) {
         continue;
       }
-      for (var i = 0; i < server.runningScripts.length; ++i) {
-        var runningScriptObj = server.runningScripts[i];
+      for (let i = 0; i < server.runningScripts.length; ++i) {
+        const runningScriptObj = server.runningScripts[i];
         runningScriptObj.logs.length = 0;
         runningScriptObj.logs = [];
       }
@@ -74,7 +70,7 @@ class BitburnerSaveObject {
     if (Player.inGang()) {
       this.AllGangsSave = JSON.stringify(AllGangs);
     }
-    var saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
+    const saveString = btoa(unescape(encodeURIComponent(JSON.stringify(this))));
 
     return saveString;
   }
@@ -94,13 +90,13 @@ class BitburnerSaveObject {
     const epochTime = Math.round(Date.now() / 1000);
     const bn = Player.bitNodeN;
     const filename = `bitburnerSave_BN${bn}x${SourceFileFlags[bn]}_${epochTime}.json`;
-    var file = new Blob([saveString], { type: "text/plain" });
+    const file = new Blob([saveString], { type: "text/plain" });
     if (window.navigator.msSaveOrOpenBlob) {
       // IE10+
       window.navigator.msSaveOrOpenBlob(file, filename);
     } else {
       // Others
-      var a = document.createElement("a"),
+      const a = document.createElement("a"),
         url = URL.createObjectURL(file);
       a.href = url;
       a.download = filename;
@@ -124,7 +120,7 @@ class BitburnerSaveObject {
 
 // Makes necessary changes to the loaded/imported data to ensure
 // the game stills works with new versions
-function evaluateVersionCompatibility(ver: string) {
+function evaluateVersionCompatibility(ver: string): void {
   // We have to do this because ts won't let us otherwise
   const anyPlayer = Player as any;
   // This version refactored the Company/job-related code
@@ -239,7 +235,7 @@ function loadGame(saveString: string): boolean {
   }
   if (saveObj.hasOwnProperty("VersionSave")) {
     try {
-      var ver = JSON.parse(saveObj.VersionSave, Reviver);
+      const ver = JSON.parse(saveObj.VersionSave, Reviver);
       evaluateVersionCompatibility(ver);
 
       if (window.location.href.toLowerCase().includes("bitburner-beta")) {
@@ -265,7 +261,7 @@ function loadGame(saveString: string): boolean {
   return true;
 }
 
-function createNewUpdateText() {
+function createNewUpdateText(): void {
   dialogBoxCreate(
     "New update!<br>" +
       "Please report any bugs/issues through the github repository " +
@@ -274,7 +270,7 @@ function createNewUpdateText() {
   );
 }
 
-function createBetaUpdateText() {
+function createBetaUpdateText(): void {
   dialogBoxCreate(
     "You are playing on the beta environment! This branch of the game " +
       "features the latest developments in the game. This version may be unstable.<br>" +
@@ -288,4 +284,4 @@ Reviver.constructors.BitburnerSaveObject = BitburnerSaveObject;
 
 export { saveObject, loadGame };
 
-let saveObject = new BitburnerSaveObject();
+const saveObject = new BitburnerSaveObject();

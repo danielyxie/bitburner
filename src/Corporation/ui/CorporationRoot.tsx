@@ -7,7 +7,6 @@ import { IIndustry } from "../IIndustry";
 import { NewIndustryPopup } from "./NewIndustryPopup";
 import { createPopup } from "../../ui/React/createPopup";
 import { ICorporation } from "../ICorporation";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { MainPanel } from "./MainPanel";
 import { Industries } from "../IndustryData";
 import { use } from "../../ui/Context";

@@ -35,7 +35,7 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
   const [index, setIndex] = useState(0);
   const [pos, setPos] = useState([0, 0]);
 
-  function press(event: React.KeyboardEvent<HTMLElement>): void {
+  function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     const move = [0, 0];
     const arrow = getArrow(event);

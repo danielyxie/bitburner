@@ -2,92 +2,87 @@
  * Root React component for the Augmentations UI page that display all of your
  * owned and purchased Augmentations and Source-Files.
  */
-import * as React from "react";
+import React, { useState } from "react";
 
-import { InstalledAugmentationsAndSourceFiles } from "./InstalledAugmentationsAndSourceFiles";
+import { InstalledAugmentations } from "./InstalledAugmentations";
 import { PlayerMultipliers } from "./PlayerMultipliers";
 import { PurchasedAugmentations } from "./PurchasedAugmentations";
+import { SourceFiles } from "./SourceFiles";
 
-import { Player } from "../../Player";
-import { StdButton } from "../../ui/React/StdButton";
 import { canGetBonus } from "../../ExportBonus";
 
-type IProps = {
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import Box from "@mui/material/Box";
+
+interface IProps {
   exportGameFn: () => void;
   installAugmentationsFn: () => void;
-};
+}
 
-type IState = {
-  rerender: boolean;
-};
+export function AugmentationsRoot(props: IProps): React.ReactElement {
+  const setRerender = useState(false)[1];
 
-export class AugmentationsRoot extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      rerender: false,
-    };
-    this.export = this.export.bind(this);
+  function doExport(): void {
+    props.exportGameFn();
+    setRerender((o) => !o);
   }
 
-  export(): void {
-    this.props.exportGameFn();
-    this.setState({
-      rerender: !this.state.rerender,
-    });
+  function exportBonusStr(): string {
+    if (canGetBonus()) return "(+1 favor to all factions)";
+    return "";
   }
 
-  render(): React.ReactNode {
-    function exportBonusStr(): string {
-      if (canGetBonus()) return "(+1 favor to all factions)";
-      return "";
-    }
-
-    return (
-      <>
-        <div className="augmentations-content">
-          <h1>Purchased Augmentations</h1>
-          <p>
-            Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to
-            install them.
-          </p>
-          <p>WARNING: Installing your Augmentations resets most of your progress, including:</p>
-          <br />
-          <p>- Stats/Skill levels and Experience</p>
-          <p>- Money</p>
-          <p>- Scripts on every computer but your home computer</p>
-          <p>- Purchased servers</p>
-          <p>- Hacknet Nodes</p>
-          <p>- Faction/Company reputation</p>
-          <p>- Stocks</p>
-          <br />
-          <p>
-            Installing Augmentations lets you start over with the perks and benefits granted by all of the Augmentations
-            you have ever installed. Also, you will keep any scripts and RAM/Core upgrades on your home computer (but
-            you will lose all programs besides NUKE.exe)
-          </p>
-          <StdButton
-            onClick={this.props.installAugmentationsFn}
-            text="Install Augmentations"
-            tooltip="'I never asked for this'"
-          />
-          <StdButton
-            addClasses="flashing-button"
-            onClick={this.export}
-            text={`Backup Save ${exportBonusStr()}`}
-            tooltip="It's always a good idea to backup/export your save!"
-          />
-          <PurchasedAugmentations />
-          <h1>Installed Augmentations</h1>
-          <p>
-            {`List of all Augmentations ${Player.sourceFiles.length > 0 ? "and Source Files " : ""} ` +
-              `that have been installed. You have gained the effects of these.`}
-          </p>
-          <InstalledAugmentationsAndSourceFiles />
-          <br /> <br />
-          <PlayerMultipliers />
-        </div>
-      </>
-    );
-  }
+  return (
+    <>
+      <Typography variant="h4">Augmentations</Typography>
+      <Box mx={2}>
+        <Typography>
+          Below is a list of all Augmentations you have purchased but not yet installed. Click the button below to
+          install them.
+        </Typography>
+        <Typography>WARNING: Installing your Augmentations resets most of your progress, including:</Typography>
+        <br />
+        <Typography>- Stats/Skill levels and Experience</Typography>
+        <Typography>- Money</Typography>
+        <Typography>- Scripts on every computer but your home computer</Typography>
+        <Typography>- Purchased servers</Typography>
+        <Typography>- Hacknet Nodes</Typography>
+        <Typography>- Faction/Company reputation</Typography>
+        <Typography>- Stocks</Typography>
+        <br />
+        <Typography>
+          Installing Augmentations lets you start over with the perks and benefits granted by all of the Augmentations
+          you have ever installed. Also, you will keep any scripts and RAM/Core upgrades on your home computer (but you
+          will lose all programs besides NUKE.exe)
+        </Typography>
+      </Box>
+      <Typography variant="h4" color="primary">
+        Purchased Augmentations
+      </Typography>
+      <Box mx={2}>
+        <Tooltip title={"'I never asked for this'"}>
+          <Button onClick={props.installAugmentationsFn}>
+            <Typography>Install Augmentations</Typography>
+          </Button>
+        </Tooltip>
+        <Tooltip title={"It's always a good idea to backup/export your save!"}>
+          <Button sx={{ mx: 2 }} onClick={doExport}>
+            <Typography color="error">Backup Save {exportBonusStr()}</Typography>
+          </Button>
+        </Tooltip>
+        <PurchasedAugmentations />
+      </Box>
+      <Typography variant="h4">Installed Augmentations</Typography>
+      <Box mx={2}>
+        <Typography>
+          List of all Augmentations that have been installed. You have gained the effects of these.
+        </Typography>
+        <InstalledAugmentations />
+      </Box>
+      <PlayerMultipliers />
+      <SourceFiles />
+    </>
+  );
 }

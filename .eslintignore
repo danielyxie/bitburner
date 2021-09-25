@@ -4,3 +4,4 @@ dist/
 tests/*.bundle.*
 src/ThirdParty/*
 src/JSInterpreter.js
+main.bundle.js

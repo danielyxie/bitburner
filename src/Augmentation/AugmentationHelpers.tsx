@@ -111,8 +111,8 @@ function getRandomBonus(): any {
   return bonuses[Math.floor(bonuses.length * randomNumber.random())];
 }
 
-function initAugmentations() {
-  for (var name in Factions) {
+function initAugmentations(): void {
+  for (const name in Factions) {
     if (Factions.hasOwnProperty(name)) {
       Factions[name].augmentations = [];
     }
@@ -1555,7 +1555,7 @@ function initAugmentations() {
     repCost: 2.5e6,
     moneyCost: 0,
     info: "It's time to leave the cave.",
-    stats: <></>,
+    stats: null,
   });
   RedPill.addToFactions(["Daedalus"]);
   if (augmentationExists(AugmentationNames.TheRedPill)) {
@@ -1595,7 +1595,7 @@ function initAugmentations() {
       "exactly the implant does, but they promise that it will greatly " +
       "enhance your abilities.",
     hacking_grow_mult: 3,
-    stats: <></>,
+    stats: null,
   });
   HiveMind.addToFactions(["ECorp"]);
   if (augmentationExists(AugmentationNames.HiveMind)) {
@@ -2349,7 +2349,7 @@ function initAugmentations() {
     CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]],
     Player.queuedAugmentations.length,
   );
-  for (var name in Augmentations) {
+  for (const name in Augmentations) {
     if (Augmentations.hasOwnProperty(name)) {
       Augmentations[name].baseCost *= mult;
     }
@@ -2363,7 +2363,7 @@ function resetAugmentation(newAugObject: Augmentation): void {
   if (!(newAugObject instanceof Augmentation)) {
     throw new Error("Invalid argument 'newAugObject' passed into resetAugmentation");
   }
-  var name = newAugObject.name;
+  const name = newAugObject.name;
   if (augmentationExists(name)) {
     delete Augmentations[name];
   }
@@ -2397,12 +2397,12 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
 
   // Push onto Player's Augmentation list
   if (!reapply) {
-    var ownedAug = new PlayerOwnedAugmentation(aug.name);
+    const ownedAug = new PlayerOwnedAugmentation(aug.name);
     Player.augmentations.push(ownedAug);
   }
 }
 
-function installAugmentations() {
+function installAugmentations(): boolean {
   if (Player.queuedAugmentations.length == 0) {
     dialogBoxCreate("You have not purchased any Augmentations to install!");
     return false;
@@ -2440,9 +2440,10 @@ function installAugmentations() {
       "<br>You wake up in your home...you feel different...",
   );
   prestigeAugmentation();
+  return true;
 }
 
-function augmentationExists(name: string) {
+function augmentationExists(name: string): boolean {
   return Augmentations.hasOwnProperty(name);
 }
 
