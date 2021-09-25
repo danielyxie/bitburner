@@ -12,7 +12,7 @@ import { AllServers } from "../Server/AllServers";
 import { compareArrays } from "../../utils/helpers/compareArrays";
 import { roundToTwo } from "../../utils/helpers/roundToTwo";
 
-export function killWorkerScript(runningScriptObj: RunningScript, serverIp: string, rerenderUi: boolean): boolean;
+export function killWorkerScript(runningScriptObj: RunningScript, serverIp: string, rerenderUi?: boolean): boolean;
 export function killWorkerScript(workerScript: WorkerScript): boolean;
 export function killWorkerScript(pid: number): boolean;
 export function killWorkerScript(
