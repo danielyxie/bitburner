@@ -4,6 +4,7 @@
  * This subcomponent renders all of the buttons for training at the gym
  */
 import * as React from "react";
+import Button from "@mui/material/Button";
 import { Blackjack } from "../../Casino/Blackjack";
 import { CoinFlip } from "../../Casino/CoinFlip";
 import { Roulette } from "../../Casino/Roulette";
@@ -47,13 +48,13 @@ export class CasinoLocation extends React.Component<IProps, IState> {
   renderGames(): React.ReactNode {
     return (
       <>
-        <StdButton onClick={() => this.updateGame(GameType.Coin)} text={"Play coin flip"} />
+        <Button onClick={() => this.updateGame(GameType.Coin)}>Play coin flip</Button>
         <br />
-        <StdButton onClick={() => this.updateGame(GameType.Slots)} text={"Play slots"} />
+        <Button onClick={() => this.updateGame(GameType.Slots)}>Play slots</Button>
         <br />
-        <StdButton onClick={() => this.updateGame(GameType.Roulette)} text={"Play roulette"} />
+        <Button onClick={() => this.updateGame(GameType.Roulette)}>Play roulette</Button>
         <br />
-        <StdButton onClick={() => this.updateGame(GameType.Blackjack)} text={"Play blackjack"} />
+        <Button onClick={() => this.updateGame(GameType.Blackjack)}>Play blackjack</Button>
       </>
     );
   }
