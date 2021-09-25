@@ -213,7 +213,7 @@ export class PlayerObject implements IPlayer {
   regenerateHp: (amt: number) => void;
   recordMoneySource: (amt: number, source: string) => void;
   setMoney: (amt: number) => void;
-  singularityStopWork: () => void;
+  singularityStopWork: () => string;
   startBladeburner: (p: any) => void;
   startFactionWork: (router: IRouter, faction: Faction) => void;
   startClass: (router: IRouter, costMult: number, expMult: number, className: string) => void;
