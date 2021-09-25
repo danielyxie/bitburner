@@ -28,24 +28,28 @@ export function ProgramsRoot(): React.ReactElement {
             at any time. Your progress will be saved and you can continue later.
           </Typography>
         </Box>
-        <ButtonGroup>
-          {getAvailableCreatePrograms(player).map((program) => {
-            const create = program.create;
-            if (create === null) return <></>;
 
-            return (
-              <Tooltip key={program.name} title={create.tooltip}>
+        {getAvailableCreatePrograms(player).map((program) => {
+          const create = program.create;
+          if (create === null) return <></>;
+
+          return (
+            <React.Fragment key={program.name}>
+              <Tooltip title={create.tooltip}>
                 <Button
-                  onClick={() => {
+                  sx={{ my: 1 }}
+                  onClick={(event) => {
+                    if (!event.isTrusted) return;
                     player.startCreateProgramWork(router, program.name, create.time, create.level);
                   }}
                 >
                   {program.name}
                 </Button>
               </Tooltip>
-            );
-          })}
-        </ButtonGroup>
+              <br />
+            </React.Fragment>
+          );
+        })}
       </div>
     </>
   );

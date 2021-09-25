@@ -4,7 +4,7 @@ import Editor from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 import { createPopup } from "../../ui/React/createPopup";
-import { OptionsPopup } from "./OptionsPopup";
+import { OptionsModal } from "./OptionsModal";
 import { Options } from "./Options";
 import { js_beautify as beautifyCode } from "js-beautify";
 import { isValidFilePath } from "../../Terminal/DirectoryHelpers";
@@ -23,6 +23,14 @@ import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
 import { iTutorialNextStep, ITutorial, iTutorialSteps } from "../../InteractiveTutorial";
+
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 let loaded = false;
 let symbols: string[] = [];
@@ -78,6 +86,7 @@ export function Root(props: IProps): React.ReactElement {
   const [filename, setFilename] = useState(props.filename ? props.filename : lastFilename);
   const [code, setCode] = useState<string>(props.filename ? props.code : lastCode);
   const [ram, setRAM] = useState("RAM: ???");
+  const [optionsOpen, setOptionsOpen] = useState(false);
   const [options, setOptions] = useState<Options>({
     theme: Settings.MonacoTheme,
     insertSpaces: Settings.MonacoInsertSpaces,
@@ -198,24 +207,6 @@ export function Root(props: IProps): React.ReactElement {
     setFilename(event.target.value);
   }
 
-  function openOptions(): void {
-    const id = "script-editor-options-popup";
-    const newOptions = {
-      theme: "",
-      insertSpaces: false,
-    };
-    Object.assign(newOptions, options);
-    createPopup(id, OptionsPopup, {
-      id: id,
-      options: newOptions,
-      save: (options: Options) => {
-        setOptions(options);
-        Settings.MonacoTheme = options.theme;
-        Settings.MonacoInsertSpaces = options.insertSpaces;
-      },
-    });
-  }
-
   function updateCode(newCode?: string): void {
     if (newCode === undefined) return;
     lastCode = newCode;
@@ -307,21 +298,16 @@ export function Root(props: IProps): React.ReactElement {
 
   return (
     <>
-      <div id="script-editor-filename-wrapper">
-        <p id="script-editor-filename-tag" className="noselect">
-          {" "}
-          <strong style={{ backgroundColor: "#555" }}>Script name: </strong>
-        </p>
-        <input
-          id="script-editor-filename"
-          type="text"
-          maxLength={100}
-          tabIndex={1}
-          value={filename}
-          onChange={onFilenameChange}
-        />
-        <StdButton text={"options"} onClick={openOptions} />
-      </div>
+      <Box display="flex" flexDirection="row" alignItems="center">
+        <Typography>Script name: </Typography>
+        <TextField variant="standard" type="text" tabIndex={1} value={filename} onChange={onFilenameChange} />
+        <IconButton onClick={() => setOptionsOpen(true)}>
+          <>
+            <SettingsIcon />
+            options
+          </>
+        </IconButton>
+      </Box>
       <Editor
         beforeMount={beforeMount}
         onMount={onMount}
@@ -333,23 +319,27 @@ export function Root(props: IProps): React.ReactElement {
         theme={options.theme}
         options={options}
       />
-      <div id="script-editor-buttons-wrapper">
-        <StdButton text={"Beautify"} onClick={beautify} />
-        <p id="script-editor-status-text" style={{ display: "inline-block", margin: "10px" }}>
-          {ram}
-        </p>
-        <button className="std-button" style={{ display: "inline-block" }} onClick={save}>
-          Save & Close (Ctrl/Cmd + b)
-        </button>
-        <a
-          className="std-button"
-          style={{ display: "inline-block" }}
-          target="_blank"
-          href="https://bitburner.readthedocs.io/en/latest/index.html"
-        >
+      <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
+        <Button onClick={beautify}>Beautify</Button>
+        <Typography sx={{ mx: 1 }}>{ram}</Typography>
+        <Button onClick={save}>Save & Close (Ctrl/Cmd + b)</Button>
+        <Link sx={{ mx: 1 }} target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
           Netscript Documentation
-        </a>
-      </div>
+        </Link>
+      </Box>
+      <OptionsModal
+        open={optionsOpen}
+        onClose={() => setOptionsOpen(false)}
+        options={{
+          theme: Settings.MonacoTheme,
+          insertSpaces: Settings.MonacoInsertSpaces,
+        }}
+        save={(options: Options) => {
+          setOptions(options);
+          Settings.MonacoTheme = options.theme;
+          Settings.MonacoInsertSpaces = options.insertSpaces;
+        }}
+      />
     </>
   );
 }
