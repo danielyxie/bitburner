@@ -12,6 +12,7 @@ import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { HashRate } from "../../ui/React/HashRate";
 import { Hashes } from "../../ui/React/Hashes";
+import Typography from "@mui/material/Typography";
 
 interface IProps {
   totalProduction: number;
@@ -29,22 +30,23 @@ export function PlayerInfo(props: IProps): React.ReactElement {
   }
 
   return (
-    <p id={"hacknet-nodes-money"}>
-      <span>Money: </span>
-      <Money money={props.player.money.toNumber()} />
-      <br />
+    <>
+      <Typography>
+        Money:
+        <Money money={props.player.money.toNumber()} />
+      </Typography>
 
       {hasServers && (
         <>
-          <span>
+          <Typography>
             Hashes: {Hashes(props.player.hashManager.hashes)} / {Hashes(props.player.hashManager.capacity)}
-          </span>
-          <br />
+          </Typography>
         </>
       )}
 
-      <span>Total Hacknet {hasServers ? "Server" : "Node"} Production: </span>
-      {prod}
-    </p>
+      <Typography>
+        Total Hacknet {hasServers ? "Server" : "Node"} Production: {prod}
+      </Typography>
+    </>
   );
 }

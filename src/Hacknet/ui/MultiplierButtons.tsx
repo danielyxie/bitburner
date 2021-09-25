@@ -6,6 +6,7 @@
 import React from "react";
 
 import { PurchaseMultipliers } from "../data/Constants";
+import Button from "@mui/material/Button";
 
 interface IMultiplierProps {
   className: string;
@@ -15,11 +16,7 @@ interface IMultiplierProps {
 }
 
 function MultiplierButton(props: IMultiplierProps): React.ReactElement {
-  return (
-    <button className={props.className} onClick={props.onClick}>
-      {props.text}
-    </button>
-  );
+  return <Button onClick={props.onClick}>{props.text}</Button>;
 }
 
 interface IProps {
@@ -47,5 +44,5 @@ export function MultiplierButtons(props: IProps): React.ReactElement {
     buttons.push(<MultiplierButton {...btnProps} />);
   }
 
-  return <span id={"hacknet-nodes-multipliers"}>{buttons}</span>;
+  return <>{buttons}</>;
 }

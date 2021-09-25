@@ -26,6 +26,10 @@ import { Server } from "../../Server/Server";
 
 import { createPopup } from "../../ui/React/createPopup";
 
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+
 interface IProps {
   player: IPlayer;
 }
@@ -122,24 +126,25 @@ export function HacknetRoot(props: IProps): React.ReactElement {
 
   return (
     <>
-      <h1>Hacknet {hasHacknetServers(props.player) ? "Servers" : "Nodes"}</h1>
+      <Typography variant="h4">Hacknet {hasHacknetServers(props.player) ? "Servers" : "Nodes"}</Typography>
       <GeneralInfo hasHacknetServers={hasHacknetServers(props.player)} />
 
       <PurchaseButton cost={purchaseCost} multiplier={purchaseMultiplier} onClick={handlePurchaseButtonClick} />
 
       <br />
-      <div id={"hacknet-nodes-money-multipliers-div"}>
-        <PlayerInfo totalProduction={totalProduction} player={props.player} />
-        <MultiplierButtons onClicks={purchaseMultiplierOnClicks} purchaseMultiplier={purchaseMultiplier} />
-      </div>
 
-      {hasHacknetServers(props.player) && (
-        <button className={"std-button"} onClick={createHashUpgradesPopup} style={{ display: "block" }}>
-          {"Spend Hashes on Upgrades"}
-        </button>
-      )}
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <PlayerInfo totalProduction={totalProduction} player={props.player} />
+        </Grid>
+        <Grid item xs={6}>
+          <MultiplierButtons onClicks={purchaseMultiplierOnClicks} purchaseMultiplier={purchaseMultiplier} />
+        </Grid>
+      </Grid>
 
-      <ul id={"hacknet-nodes-list"}>{nodes}</ul>
+      {hasHacknetServers(props.player) && <Button onClick={createHashUpgradesPopup}>Spend Hashes on Upgrades</Button>}
+
+      <Grid container>{nodes}</Grid>
     </>
   );
 }
