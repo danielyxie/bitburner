@@ -19,12 +19,13 @@
 .popup-box-content {
   background-color: var(--my-background-color);
   padding: 12px;
-  border: 5px solid var(--my-highlight-color);
+  border: 2px solid $hacker-green;
   width: 70%;
   max-height: 80%;
   overflow-y: auto;
   z-index: 11; /* Sit on top of the container */
   color: var(--my-font-color);
+  box-shadow: 0px 3px 5px -1px #090, 0px 5px 8px 0px #090, 0px 1px 14px 0px #090;
 }
 
 .popup-box-input-div {
@@ -89,13 +90,13 @@
   max-height: 50%;
   z-index: 10;
   background-color: var(--my-background-color);
-  border: 2px solid var(--my-highlight-color);
+  border: 2px solid $hacker-green;
 }
 
 .log-box-header {
   z-index: 1300;
   background-color: #333;
-  border: 1px solid var(--my-highlight-color);
+  border: 2px solid $hacker-green;
   display: flex;
   flex: row nowrap;
   align-items: center;

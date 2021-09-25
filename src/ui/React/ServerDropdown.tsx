@@ -8,6 +8,8 @@ import { AllServers } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
 
 import { HacknetServer } from "../../Hacknet/HacknetServer";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 // TODO make this an enum when this gets converted to TypeScript
 export const ServerType = {
@@ -19,8 +21,8 @@ export const ServerType = {
 
 interface IProps {
   serverType: number;
-  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  style: any;
+  onChange: (event: SelectChangeEvent<string>) => void;
+  value: string;
 }
 
 export function ServerDropdown(props: IProps): React.ReactElement {
@@ -51,16 +53,16 @@ export function ServerDropdown(props: IProps): React.ReactElement {
     const server = AllServers[serverName];
     if (isValidServer(server)) {
       servers.push(
-        <option key={server.hostname} value={server.hostname}>
+        <MenuItem key={server.hostname} value={server.hostname}>
           {server.hostname}
-        </option>,
+        </MenuItem>,
       );
     }
   }
 
   return (
-    <select className={"dropdown"} onChange={props.onChange} style={props.style}>
+    <Select sx={{ mx: 1 }} variant="standard" value={props.value} onChange={props.onChange}>
       {servers}
-    </select>
+    </Select>
   );
 }
