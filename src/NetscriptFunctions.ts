@@ -375,7 +375,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
   };
 
   // Utility function to get Hacknet Node object
-  const getHacknetNode = function (i: any, callingFn: any = ""): HacknetNode | HacknetServer {
+  const getHacknetNode = function (i: any, callingFn: string = ""): HacknetNode | HacknetServer {
     if (isNaN(i)) {
       throw makeRuntimeErrorMsg(callingFn, "Invalid index specified for Hacknet Node: " + i);
     }
@@ -385,7 +385,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
     if (hasHacknetServers(Player)) {
       const hi = Player.hacknetNodes[i];
-      if (typeof hi !== "number") throw new Error("hacknet node was not number");
+      if (typeof hi !== "string") throw new Error("hacknet node was not a string");
       const hserver = AllServers[hi];
       if (!(hserver instanceof HacknetServer)) throw new Error("hacknet server was not actually hacknet server");
       if (hserver == null) {

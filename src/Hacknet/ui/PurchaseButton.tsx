@@ -7,6 +7,9 @@ import { hasHacknetServers, hasMaxNumberHacknetServers } from "../HacknetHelpers
 import { Player } from "../../Player";
 import { Money } from "../../ui/React/Money";
 
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+
 interface IProps {
   multiplier: number | string;
   onClick: () => void;
@@ -39,8 +42,8 @@ export function PurchaseButton(props: IProps): React.ReactElement {
   }
 
   return (
-    <button className={className} onClick={props.onClick} style={style}>
-      {text}
-    </button>
+    <Button onClick={props.onClick}>
+      <Typography>{text}</Typography>
+    </Button>
   );
 }

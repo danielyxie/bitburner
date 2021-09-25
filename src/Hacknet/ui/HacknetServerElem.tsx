@@ -23,6 +23,14 @@ import { HacknetServer } from "../HacknetServer";
 import { Money } from "../../ui/React/Money";
 import { Hashes } from "../../ui/React/Hashes";
 import { HashRate } from "../../ui/React/HashRate";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import { TableCell } from "../../ui/React/Table";
+import TableBody from "@mui/material/TableBody";
+import Table from "@mui/material/Table";
+import TableRow from "@mui/material/TableRow";
 
 interface IProps {
   node: HacknetServer;
@@ -37,10 +45,9 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
   const rerender = props.rerender;
 
   // Upgrade Level Button
-  let upgradeLevelContent, upgradeLevelClass;
+  let upgradeLevelContent;
   if (node.level >= HacknetServerConstants.MaxLevel) {
     upgradeLevelContent = <>MAX LEVEL</>;
-    upgradeLevelClass = "std-button-disabled";
   } else {
     let multiplier = 0;
     if (purchaseMult === "MAX") {
@@ -53,14 +60,10 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
     const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, props.player.hacknet_node_level_cost_mult);
     upgradeLevelContent = (
       <>
-        Upgrade x{multiplier} - <Money money={upgradeLevelCost} player={props.player} />
+        +{multiplier}&nbsp;-&nbsp;
+        <Money money={upgradeLevelCost} player={props.player} />
       </>
     );
-    if (props.player.money.lt(upgradeLevelCost)) {
-      upgradeLevelClass = "std-button-disabled";
-    } else {
-      upgradeLevelClass = "std-button";
-    }
   }
   function upgradeLevelOnClick(): void {
     let numUpgrades = purchaseMult;
@@ -72,10 +75,9 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
   }
 
   // Upgrade RAM Button
-  let upgradeRamContent, upgradeRamClass;
+  let upgradeRamContent;
   if (node.maxRam >= HacknetServerConstants.MaxRam) {
     upgradeRamContent = <>MAX RAM</>;
-    upgradeRamClass = "std-button-disabled";
   } else {
     let multiplier = 0;
     if (purchaseMult === "MAX") {
@@ -88,14 +90,10 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
     const upgradeRamCost = node.calculateRamUpgradeCost(multiplier, props.player.hacknet_node_ram_cost_mult);
     upgradeRamContent = (
       <>
-        Upgrade x{multiplier} - <Money money={upgradeRamCost} player={props.player} />
+        +{multiplier}&nbsp;-&nbsp;
+        <Money money={upgradeRamCost} player={props.player} />
       </>
     );
-    if (props.player.money.lt(upgradeRamCost)) {
-      upgradeRamClass = "std-button-disabled";
-    } else {
-      upgradeRamClass = "std-button";
-    }
   }
   function upgradeRamOnClick(): void {
     let numUpgrades = purchaseMult;
@@ -107,10 +105,9 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
   }
 
   // Upgrade Cores Button
-  let upgradeCoresContent, upgradeCoresClass;
+  let upgradeCoresContent;
   if (node.cores >= HacknetServerConstants.MaxCores) {
     upgradeCoresContent = <>MAX CORES</>;
-    upgradeCoresClass = "std-button-disabled";
   } else {
     let multiplier = 0;
     if (purchaseMult === "MAX") {
@@ -123,14 +120,10 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
     const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, props.player.hacknet_node_core_cost_mult);
     upgradeCoresContent = (
       <>
-        Upgrade x{multiplier} - <Money money={upgradeCoreCost} player={props.player} />
+        +{multiplier}&nbsp;-&nbsp;
+        <Money money={upgradeCoreCost} player={props.player} />
       </>
     );
-    if (props.player.money.lt(upgradeCoreCost)) {
-      upgradeCoresClass = "std-button-disabled";
-    } else {
-      upgradeCoresClass = "std-button";
-    }
   }
   function upgradeCoresOnClick(): void {
     let numUpgrades = purchaseMult;
@@ -142,10 +135,9 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
   }
 
   // Upgrade Cache button
-  let upgradeCacheContent, upgradeCacheClass;
+  let upgradeCacheContent;
   if (node.cache >= HacknetServerConstants.MaxCache) {
     upgradeCacheContent = <>MAX CACHE</>;
-    upgradeCacheClass = "std-button-disabled";
   } else {
     let multiplier = 0;
     if (purchaseMult === "MAX") {
@@ -158,13 +150,12 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
     const upgradeCacheCost = node.calculateCacheUpgradeCost(multiplier);
     upgradeCacheContent = (
       <>
-        Upgrade x{multiplier} - <Money money={upgradeCacheCost} player={props.player} />
+        +{multiplier}&nbsp;-&nbsp;
+        <Money money={upgradeCacheCost} player={props.player} />
       </>
     );
     if (props.player.money.lt(upgradeCacheCost)) {
-      upgradeCacheClass = "std-button-disabled";
     } else {
-      upgradeCacheClass = "std-button";
     }
   }
   function upgradeCacheOnClick(): void {
@@ -178,50 +169,78 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
   }
 
   return (
-    <li className={"hacknet-node"}>
-      <div className={"hacknet-node-container"}>
-        <div className={"row"}>
-          <h1 style={{ fontSize: "1em" }}>{node.hostname}</h1>
-        </div>
-        <div className={"row"}>
-          <p>Production:</p>
-          <span className={"text money-gold"}>
-            {Hashes(node.totalHashesGenerated)} ({HashRate(node.hashRate)})
-          </span>
-        </div>
-        <div className={"row"}>
-          <p>Hash Capacity:</p>
-          <span className={"text"}>{Hashes(node.hashCapacity)}</span>
-        </div>
-        <div className={"row"}>
-          <p>Level:</p>
-          <span className={"text upgradable-info"}>{node.level}</span>
-          <button className={upgradeLevelClass} onClick={upgradeLevelOnClick}>
-            {upgradeLevelContent}
-          </button>
-        </div>
-        <div className={"row"}>
-          <p>RAM:</p>
-          <span className={"text upgradable-info"}>{node.maxRam}GB</span>
-          <button className={upgradeRamClass} onClick={upgradeRamOnClick}>
-            {upgradeRamContent}
-          </button>
-        </div>
-        <div className={"row"}>
-          <p>Cores:</p>
-          <span className={"text upgradable-info"}>{node.cores}</span>
-          <button className={upgradeCoresClass} onClick={upgradeCoresOnClick}>
-            {upgradeCoresContent}
-          </button>
-        </div>
-        <div className={"row"}>
-          <p>Cache Level:</p>
-          <span className={"text upgradable-info"}>{node.cache}</span>
-          <button className={upgradeCacheClass} onClick={upgradeCacheOnClick}>
-            {upgradeCacheContent}
-          </button>
-        </div>
-      </div>
-    </li>
+    <Grid item component={Paper} p={1}>
+      <Table size="small">
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <Typography>{node.hostname}</Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>Production:</Typography>
+            </TableCell>
+            <TableCell colSpan={2}>
+              <Typography>
+                {Hashes(node.totalHashesGenerated)} ({HashRate(node.hashRate)})
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>Hash Capacity:</Typography>
+            </TableCell>
+            <TableCell colSpan={2}>
+              <Typography>{Hashes(node.hashCapacity)}</Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>Level:</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{node.level}</Typography>
+            </TableCell>
+            <TableCell>
+              <Button onClick={upgradeLevelOnClick}>{upgradeLevelContent}</Button>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>RAM:</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{node.maxRam}GB</Typography>
+            </TableCell>
+            <TableCell>
+              <Button onClick={upgradeRamOnClick}>{upgradeRamContent}</Button>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>Cores:</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{node.cores}</Typography>
+            </TableCell>
+            <TableCell>
+              <Button onClick={upgradeCoresOnClick}>{upgradeCoresContent}</Button>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>Cache Level:</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{node.cache}</Typography>
+            </TableCell>
+            <TableCell>
+              <Button onClick={upgradeCacheOnClick}>{upgradeCacheContent}</Button>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </Grid>
   );
 }

@@ -8,6 +8,7 @@ interface IProps {
 export function KeyHandler(props: IProps): React.ReactElement {
   useEffect(() => {
     function press(this: Document, event: KeyboardEvent): void {
+      if (!event.isTrusted) return;
       const f = props.onKeyDown.bind(this);
       f(event);
     }
