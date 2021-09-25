@@ -11,7 +11,7 @@ import { loadSpecialServerIps, SpecialServerIps } from "./Server/SpecialServerIp
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 
-import { createStatusText } from "./ui/createStatusText";
+import { GameSavedEvents } from "./ui/React/Snackbar";
 
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import * as ExportBonus from "./ExportBonus";
@@ -79,7 +79,7 @@ class BitburnerSaveObject {
     const saveString = this.getSaveString();
 
     save(saveString)
-      .then(() => createStatusText("Game saved!"))
+      .then(() => GameSavedEvents.emit())
       .catch((err) => console.error(err));
   }
 

@@ -66,6 +66,7 @@ import { CharacterOverview } from "./React/CharacterOverview";
 import { BladeburnerCinematic } from "../Bladeburner/ui/BladeburnerCinematic";
 import { workerScripts } from "../Netscript/WorkerScripts";
 import { Unclickable } from "../Exploits/Unclickable";
+import { Snackbar } from "./React/Snackbar";
 
 import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
@@ -392,6 +393,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
           </Box>
         )}
         <Unclickable />
+        <Snackbar />
       </Context.Router.Provider>
     </Context.Player.Provider>
   );
