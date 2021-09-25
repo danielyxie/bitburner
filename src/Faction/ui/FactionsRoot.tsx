@@ -39,9 +39,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
 
   return (
     <>
-      <Typography variant="h5" color="primary">
-        Factions
-      </Typography>
+      <Typography variant="h4">Factions</Typography>
       <Typography>Lists all factions you have joined</Typography>
       <br />
       <Box display="flex" flexDirection="column">
