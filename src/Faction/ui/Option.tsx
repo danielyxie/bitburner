@@ -5,8 +5,6 @@
  */
 import * as React from "react";
 
-import { StdButton } from "../../ui/React/StdButton";
-
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";

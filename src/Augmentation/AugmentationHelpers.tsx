@@ -111,8 +111,8 @@ function getRandomBonus(): any {
   return bonuses[Math.floor(bonuses.length * randomNumber.random())];
 }
 
-function initAugmentations() {
-  for (var name in Factions) {
+function initAugmentations(): void {
+  for (const name in Factions) {
     if (Factions.hasOwnProperty(name)) {
       Factions[name].augmentations = [];
     }
@@ -2349,7 +2349,7 @@ function initAugmentations() {
     CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]],
     Player.queuedAugmentations.length,
   );
-  for (var name in Augmentations) {
+  for (const name in Augmentations) {
     if (Augmentations.hasOwnProperty(name)) {
       Augmentations[name].baseCost *= mult;
     }
@@ -2402,7 +2402,7 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
   }
 }
 
-function installAugmentations() {
+function installAugmentations(): boolean {
   if (Player.queuedAugmentations.length == 0) {
     dialogBoxCreate("You have not purchased any Augmentations to install!");
     return false;
@@ -2440,9 +2440,10 @@ function installAugmentations() {
       "<br>You wake up in your home...you feel different...",
   );
   prestigeAugmentation();
+  return true;
 }
 
-function augmentationExists(name: string) {
+function augmentationExists(name: string): boolean {
   return Augmentations.hasOwnProperty(name);
 }
 

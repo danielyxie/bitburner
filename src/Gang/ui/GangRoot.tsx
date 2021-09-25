@@ -6,7 +6,6 @@ import { ManagementSubpage } from "./ManagementSubpage";
 import { TerritorySubpage } from "./TerritorySubpage";
 import { use } from "../../ui/Context";
 import { Factions } from "../../Faction/Factions";
-import { Gang } from "../Gang";
 
 export function GangRoot(): React.ReactElement {
   const player = use.Player();

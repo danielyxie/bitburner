@@ -15,9 +15,7 @@ import { Settings } from "../../Settings/Settings";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { createPopup } from "../../ui/React/createPopup";
-import { IMap } from "../../types";
 
-import { StdButton } from "../../ui/React/StdButton";
 import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -51,7 +49,6 @@ function Requirements(props: IReqProps): React.ReactElement {
     );
   }
 
-  const color = !props.hasRep || !props.hasCost ? "error" : "primary";
   return (
     <React.Fragment key="f">
       <TableCell key={1}>
@@ -79,26 +76,6 @@ interface IProps {
 export function PurchaseableAugmentation(props: IProps): React.ReactElement {
   const aug = Augmentations[props.augName];
   if (aug == null) throw new Error(`aug ${props.augName} does not exists`);
-
-  // Whether the player has this augmentations (purchased OR installed)
-  function owned(): boolean {
-    let owned = false;
-    for (const queuedAug of props.p.queuedAugmentations) {
-      if (queuedAug.name === props.augName) {
-        owned = true;
-        break;
-      }
-    }
-
-    for (const installedAug of props.p.augmentations) {
-      if (installedAug.name === props.augName) {
-        owned = true;
-        break;
-      }
-    }
-
-    return owned;
-  }
 
   if (aug == null) {
     console.error(

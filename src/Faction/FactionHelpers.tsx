@@ -93,7 +93,8 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
   const factionInfo = fac.getInfo();
   const hasPrereqs = hasAugmentationPrereqs(aug);
   if (!hasPrereqs) {
-    const txt = "You must first purchase or install " + aug.prereqs.join(",") + " before you can " + "purchase this one.";
+    const txt =
+      "You must first purchase or install " + aug.prereqs.join(",") + " before you can " + "purchase this one.";
     if (sing) {
       return txt;
     } else {
@@ -166,14 +167,14 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
 export function getNextNeurofluxLevel(): number {
   // Get current Neuroflux level based on Player's augmentations
   let currLevel = 0;
-  for (var i = 0; i < Player.augmentations.length; ++i) {
+  for (let i = 0; i < Player.augmentations.length; ++i) {
     if (Player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
       currLevel = Player.augmentations[i].level;
     }
   }
 
   // Account for purchased but uninstalled Augmentations
-  for (var i = 0; i < Player.queuedAugmentations.length; ++i) {
+  for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
     if (Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
       ++currLevel;
     }

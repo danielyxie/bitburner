@@ -9,8 +9,6 @@ import { PlayerMultipliers } from "./PlayerMultipliers";
 import { PurchasedAugmentations } from "./PurchasedAugmentations";
 import { SourceFiles } from "./SourceFiles";
 
-import { Player } from "../../Player";
-import { StdButton } from "../../ui/React/StdButton";
 import { canGetBonus } from "../../ExportBonus";
 
 import Typography from "@mui/material/Typography";

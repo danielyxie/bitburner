@@ -7,8 +7,6 @@
  */
 import React, { useState } from "react";
 
-import { OwnedSourceFiles } from "./OwnedSourceFiles";
-import { SourceFileMinus1 } from "./SourceFileMinus1";
 import { AugmentationAccordion } from "../../ui/React/AugmentationAccordion";
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
@@ -16,7 +14,6 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Settings } from "../../Settings/Settings";
 import { use } from "../../ui/Context";
 import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import List from "@mui/material/List";

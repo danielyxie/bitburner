@@ -14,12 +14,8 @@ export function netscriptDelay(time: number, workerScript: WorkerScript): Promis
   });
 }
 
-export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string, exp: any = null) {
-  let lineNum = "";
-  if (exp != null) {
-    const num = getErrorLineNumber(exp, workerScript);
-    lineNum = " (Line " + num + ")";
-  }
+export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): string {
+  const lineNum = "";
   const server = AllServers[workerScript.serverIp];
   if (server == null) {
     throw new Error(`WorkerScript constructed with invalid server ip: ${workerScript.serverIp}`);
@@ -32,7 +28,7 @@ export function resolveNetscriptRequestedThreads(
   workerScript: WorkerScript,
   functionName: string,
   requestedThreads: number,
-) {
+): number {
   const threads = workerScript.scriptRef.threads;
   if (!requestedThreads) {
     return isNaN(threads) || threads < 1 ? 1 : threads;
@@ -51,21 +47,6 @@ export function resolveNetscriptRequestedThreads(
     );
   }
   return requestedThreadsAsInt;
-}
-
-function getErrorLineNumber(exp: any, workerScript: WorkerScript): number {
-  return -1;
-  // TODO wtf is codeCode?
-
-  // var code = workerScript.scriptRef.codeCode();
-
-  // //Split code up to the start of the node
-  // try {
-  //   code = code.substring(0, exp.start);
-  //   return (code.match(/\n/g) || []).length + 1;
-  // } catch (e) {
-  //   return -1;
-  // }
 }
 
 export function isScriptErrorMessage(msg: string): boolean {

@@ -4,7 +4,7 @@ import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
 import { PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { CodingContractRewardType } from "../../CodingContracts";
+import { CodingContractRewardType, ICodingContractReward } from "../../CodingContracts";
 import { Company } from "../../Company/Company";
 import { Companies } from "../../Company/Companies";
 import { getNextCompanyPositionHelper } from "../../Company/GetNextCompanyPosition";
@@ -15,13 +15,11 @@ import * as posNames from "../../Company/data/companypositionnames";
 import { CONSTANTS } from "../../Constants";
 import { Programs } from "../../Programs/Programs";
 import { determineCrimeSuccess } from "../../Crime/CrimeHelpers";
-import { ICodingContractReward } from "../../CodingContracts";
 import { Crimes } from "../../Crime/Crimes";
 import { Exploit } from "../../Exploits/Exploit";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 import { resetGangs } from "../../Gang/AllGangs";
-import { hasHacknetServers } from "../../Hacknet/HacknetHelpers";
 import { Cities } from "../../Locations/Cities";
 import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
@@ -60,7 +58,7 @@ import { Money } from "../../ui/React/Money";
 
 import React from "react";
 
-export function init(this: IPlayer) {
+export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
   const t_homeComp = safetlyCreateUniqueServer({
     adminRights: true,
@@ -78,7 +76,7 @@ export function init(this: IPlayer) {
   this.getHomeComputer().programs.push(Programs.NukeProgram.name);
 }
 
-export function prestigeAugmentation(this: IPlayer) {
+export function prestigeAugmentation(this: IPlayer): void {
   const homeComp = this.getHomeComputer();
   this.currentServer = homeComp.ip;
   this.homeComputer = homeComp.ip;
@@ -178,7 +176,7 @@ export function prestigeAugmentation(this: IPlayer) {
   this.hp = this.max_hp;
 }
 
-export function prestigeSourceFile(this: IPlayer) {
+export function prestigeSourceFile(this: IPlayer): void {
   this.prestigeAugmentation();
   // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
   for (let i = 0; i < this.sleeves.length; ++i) {
@@ -354,7 +352,7 @@ export function canAfford(this: IPlayer, cost: number): boolean {
   return this.money.gte(cost);
 }
 
-export function recordMoneySource(this: IPlayer, amt: number, source: string) {
+export function recordMoneySource(this: IPlayer, amt: number, source: string): void {
   if (!(this.moneySourceA instanceof MoneySourceTracker)) {
     console.warn(`Player.moneySourceA was not properly initialized. Resetting`);
     this.moneySourceA = new MoneySourceTracker();
@@ -367,7 +365,7 @@ export function recordMoneySource(this: IPlayer, amt: number, source: string) {
   this.moneySourceB.record(amt, source);
 }
 
-export function gainHackingExp(this: IPlayer, exp: number) {
+export function gainHackingExp(this: IPlayer, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainHackingExp()");
     return;
@@ -380,7 +378,7 @@ export function gainHackingExp(this: IPlayer, exp: number) {
   this.hacking_skill = calculateSkillF(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier);
 }
 
-export function gainStrengthExp(this: IPlayer, exp: number) {
+export function gainStrengthExp(this: IPlayer, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainStrengthExp()");
     return;
@@ -393,7 +391,7 @@ export function gainStrengthExp(this: IPlayer, exp: number) {
   this.strength = calculateSkillF(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier);
 }
 
-export function gainDefenseExp(this: IPlayer, exp: number) {
+export function gainDefenseExp(this: IPlayer, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into player.gainDefenseExp()");
     return;
@@ -406,7 +404,7 @@ export function gainDefenseExp(this: IPlayer, exp: number) {
   this.defense = calculateSkillF(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier);
 }
 
-export function gainDexterityExp(this: IPlayer, exp: number) {
+export function gainDexterityExp(this: IPlayer, exp: number): void {
   if (isNaN(exp)) {
     console.error("ERR: NaN passed into Player.gainDexterityExp()");
     return;
@@ -520,7 +518,7 @@ export function resetWorkStatus(this: IPlayer, generalType?: string, group?: str
   this.className = "";
 }
 
-export function processWorkEarnings(this: IPlayer, numCycles = 1) {
+export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
   const focusBonus = this.focus ? 1 : 0.8;
   const hackExpGain = focusBonus * this.workHackExpGainRate * numCycles;
   const strExpGain = focusBonus * this.workStrExpGainRate * numCycles;
@@ -574,7 +572,7 @@ export function startWork(this: IPlayer, router: IRouter, companyName: string): 
   router.toWork();
 }
 
-export function cancelationPenalty(this: IPlayer) {
+export function cancelationPenalty(this: IPlayer): number {
   const specialIp = SpecialServerIps[this.companyName];
   if (typeof specialIp === "string" && specialIp !== "") {
     const server = AllServers[specialIp];
@@ -2547,8 +2545,7 @@ export function gainCodingContractReward(this: IPlayer, reward: ICodingContractR
 
       // Ignore Bladeburners and other special factions for this calculation
       const specialFactions = ["Bladeburners"];
-      const factions = this.factions.slice();
-      factions = factions.filter((f) => {
+      const factions = this.factions.slice().filter((f) => {
         return !specialFactions.includes(f);
       });
 
@@ -2567,7 +2564,7 @@ export function gainCodingContractReward(this: IPlayer, reward: ICodingContractR
       }
       return `Gained ${gainPerFaction} reputation for each of the following factions: ${factions.toString()}`;
       break;
-    case CodingContractRewardType.CompanyReputation:
+    case CodingContractRewardType.CompanyReputation: {
       if (reward.name == null || !(Companies[reward.name] instanceof Company)) {
         //If no/invalid company was designated, just give rewards to all factions
         reward.type = CodingContractRewardType.FactionReputationAll;
@@ -2576,14 +2573,14 @@ export function gainCodingContractReward(this: IPlayer, reward: ICodingContractR
       const repGain = CONSTANTS.CodingContractBaseCompanyRepGain * difficulty;
       Companies[reward.name].playerReputation += repGain;
       return `Gained ${repGain} company reputation for ${reward.name}`;
-      break;
+    }
     case CodingContractRewardType.Money:
-    default:
+    default: {
       const moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty * BitNodeMultipliers.CodingContractMoney;
       this.gainMoney(moneyGain);
       this.recordMoneySource(moneyGain, "codingcontract");
       return `Gained ${numeralWrapper.formatMoney(moneyGain)}`;
-      break;
+    }
   }
   /* eslint-enable no-case-declarations */
 }

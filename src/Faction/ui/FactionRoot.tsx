@@ -3,7 +3,7 @@
  * This is the component for displaying a single faction's UI, not the list of all
  * accessible factions
  */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { AugmentationsPage } from "./AugmentationsPage";
 import { DonateOption } from "./DonateOption";

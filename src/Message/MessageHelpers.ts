@@ -39,9 +39,9 @@ function addMessageToServer(msg: Message, serverHostname: string): void {
     return;
   }
   for (let i = 0; i < server.messages.length; ++i) {
-    const msg = server.messages[i];
-    if (typeof msg === "string") continue;
-    if (msg.filename === msg.filename) {
+    const other = server.messages[i];
+    if (typeof other === "string") continue;
+    if (msg.filename === other.filename) {
       return; //Already exists
     }
   }
@@ -49,7 +49,7 @@ function addMessageToServer(msg: Message, serverHostname: string): void {
 }
 
 //Checks if any of the 'timed' messages should be sent
-function checkForMessagesToSend() {
+function checkForMessagesToSend(): void {
   if (redPillFlag) return;
   const jumper0 = Messages[MessageFilenames.Jumper0];
   const jumper1 = Messages[MessageFilenames.Jumper1];
@@ -119,7 +119,7 @@ const MessageFilenames = {
   RedPill: "icarus.msg",
 };
 
-function initMessages() {
+function initMessages(): void {
   //Reset
   Messages = {};
 

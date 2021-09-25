@@ -8,7 +8,6 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { Augmentations } from "../Augmentations";
 import { Table, TableCell } from "../../ui/React/Table";
 import TableBody from "@mui/material/TableBody";
-import { Table as MuiTable } from "@mui/material";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 

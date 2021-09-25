@@ -16,8 +16,7 @@ function makeScriptBlob(code: string): Blob {
 // (i.e. hack, grow, etc.).
 // When the promise returned by this resolves, we'll have finished
 // running the main function of the script.
-export async function executeJSScript(scripts: Script[] = [], workerScript: WorkerScript) {
-  let loadedModule;
+export async function executeJSScript(scripts: Script[] = [], workerScript: WorkerScript): Promise<void> {
   let uurls: ScriptUrl[] = [];
   const script = workerScript.getScript();
   if (script === null) throw new Error("script is null");
@@ -35,7 +34,7 @@ export async function executeJSScript(scripts: Script[] = [], workerScript: Work
     script.module = new Promise((resolve) => resolve(eval("import(uurls[uurls.length - 1].url)")));
     script.dependencies = uurls;
   }
-  loadedModule = await script.module;
+  const loadedModule = await script.module;
 
   const ns = workerScript.env.vars;
 
