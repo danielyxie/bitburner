@@ -165,6 +165,18 @@ class NumeralFormatter {
     return this.format(n, "0,0");
   }
 
+  formatStaneksGiftHeat(n: number): string {
+    return this.format(n, "0.000a");
+  }
+
+  formatStaneksGiftCharge(n: number): string {
+    return this.format(n, "0.000a");
+  }
+
+  formatStaneksGiftPower(n: number): string {
+    return this.format(n, "0");
+  }
+
   parseMoney(s: string): number {
     // numeral library does not handle formats like 1e10 well (returns 110),
     // so if both return a valid number, return the biggest one

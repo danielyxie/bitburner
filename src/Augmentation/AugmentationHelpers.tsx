@@ -2344,6 +2344,142 @@ function initAugmentations(): void {
     resetAugmentation(BladesSimulacrum);
   }
 
+  // Special CotMG Augmentations
+  const ChurchOfTheMachineGodFactionName = "Church of the Machine God";
+  if (factionExists(ChurchOfTheMachineGodFactionName)) {
+    const StaneksGift1 = new Augmentation({
+      name: AugmentationNames.StaneksGift1,
+      repCost: 0,
+      moneyCost: 0,
+      info:
+        'Allison "Mother" Stanek imparts you with her gift. An ' +
+        "experimental Augmentation implanted at the base of the neck. " +
+        "It allows you to overclock your entire system by carefully " +
+        "changing the configuration.<br><br>" +
+        "Its unstable nature decreases all your stats by 10%",
+      isSpecial: true,
+      hacking_chance_mult: 0.9,
+      hacking_speed_mult: 0.9,
+      hacking_money_mult: 0.9,
+      hacking_grow_mult: 0.9,
+      hacking_mult: 0.9,
+      strength_mult: 0.9,
+      defense_mult: 0.9,
+      dexterity_mult: 0.9,
+      agility_mult: 0.9,
+      charisma_mult: 0.9,
+      hacking_exp_mult: 0.9,
+      strength_exp_mult: 0.9,
+      defense_exp_mult: 0.9,
+      dexterity_exp_mult: 0.9,
+      agility_exp_mult: 0.9,
+      charisma_exp_mult: 0.9,
+      company_rep_mult: 0.9,
+      faction_rep_mult: 0.9,
+      crime_money_mult: 0.9,
+      crime_success_mult: 0.9,
+      hacknet_node_money_mult: 0.9,
+      hacknet_node_purchase_cost_mult: 1.1,
+      hacknet_node_ram_cost_mult: 1.1,
+      hacknet_node_core_cost_mult: 1.1,
+      hacknet_node_level_cost_mult: 1.1,
+      work_money_mult: 0.9,
+    });
+    StaneksGift1.addToFactions([ChurchOfTheMachineGodFactionName]);
+    resetAugmentation(StaneksGift1);
+
+    const StaneksGift2 = new Augmentation({
+      name: AugmentationNames.StaneksGift2,
+      repCost: 1000,
+      moneyCost: 0,
+      info:
+        'TODO, something about Mother being bullshit and you get more control over her "gift"<br><br>' +
+        "The penalty for the gift is only 5%",
+      prereqs: [AugmentationNames.StaneksGift1],
+      isSpecial: true,
+      hacking_chance_mult: 0.95 / 0.9,
+      hacking_speed_mult: 0.95 / 0.9,
+      hacking_money_mult: 0.95 / 0.9,
+      hacking_grow_mult: 0.95 / 0.9,
+      hacking_mult: 0.95 / 0.9,
+      strength_mult: 0.95 / 0.9,
+      defense_mult: 0.95 / 0.9,
+      dexterity_mult: 0.95 / 0.9,
+      agility_mult: 0.95 / 0.9,
+      charisma_mult: 0.95 / 0.9,
+      hacking_exp_mult: 0.95 / 0.9,
+      strength_exp_mult: 0.95 / 0.9,
+      defense_exp_mult: 0.95 / 0.9,
+      dexterity_exp_mult: 0.95 / 0.9,
+      agility_exp_mult: 0.95 / 0.9,
+      charisma_exp_mult: 0.95 / 0.9,
+      company_rep_mult: 0.95 / 0.9,
+      faction_rep_mult: 0.95 / 0.9,
+      crime_money_mult: 0.95 / 0.9,
+      crime_success_mult: 0.95 / 0.9,
+      hacknet_node_money_mult: 0.95 / 0.9,
+      hacknet_node_purchase_cost_mult: 1.05 / 1.1,
+      hacknet_node_ram_cost_mult: 1.05 / 1.1,
+      hacknet_node_core_cost_mult: 1.05 / 1.1,
+      hacknet_node_level_cost_mult: 1.05 / 1.1,
+      work_money_mult: 0.95 / 0.9,
+    });
+    StaneksGift2.addToFactions([ChurchOfTheMachineGodFactionName]);
+    resetAugmentation(StaneksGift2);
+
+    const StaneksGift3 = new Augmentation({
+      name: AugmentationNames.StaneksGift3,
+      repCost: 10000,
+      moneyCost: 0,
+      info:
+        "TODO, learn more about Allisons scheme, gain full control over the gift.<br><br>" +
+        "Finally freed from the penalty of the gift.",
+      prereqs: [AugmentationNames.StaneksGift2],
+      isSpecial: true,
+      hacking_chance_mult: 1 / 0.95,
+      hacking_speed_mult: 1 / 0.95,
+      hacking_money_mult: 1 / 0.95,
+      hacking_grow_mult: 1 / 0.95,
+      hacking_mult: 1 / 0.95,
+      strength_mult: 1 / 0.95,
+      defense_mult: 1 / 0.95,
+      dexterity_mult: 1 / 0.95,
+      agility_mult: 1 / 0.95,
+      charisma_mult: 1 / 0.95,
+      hacking_exp_mult: 1 / 0.95,
+      strength_exp_mult: 1 / 0.95,
+      defense_exp_mult: 1 / 0.95,
+      dexterity_exp_mult: 1 / 0.95,
+      agility_exp_mult: 1 / 0.95,
+      charisma_exp_mult: 1 / 0.95,
+      company_rep_mult: 1 / 0.95,
+      faction_rep_mult: 1 / 0.95,
+      crime_money_mult: 1 / 0.95,
+      crime_success_mult: 1 / 0.95,
+      hacknet_node_money_mult: 1 / 0.95,
+      hacknet_node_purchase_cost_mult: 1 / 1.05,
+      hacknet_node_ram_cost_mult: 1 / 1.05,
+      hacknet_node_core_cost_mult: 1 / 1.05,
+      hacknet_node_level_cost_mult: 1 / 1.05,
+      work_money_mult: 1 / 0.95,
+    });
+    StaneksGift3.addToFactions([ChurchOfTheMachineGodFactionName]);
+    resetAugmentation(StaneksGift3);
+
+    const StaneksGiftAscension4 = new Augmentation({
+      name: AugmentationNames.StaneksGift4,
+      repCost: 500000000,
+      moneyCost: 0,
+      info:
+        "Allow Allison to install an Ascension port in her Gift. Allowing you to connect with the Machine God.<br><br>" +
+        "(hydro notes: Finishes the BN, eventually)",
+      prereqs: [AugmentationNames.StaneksGift3],
+      isSpecial: true,
+    });
+    StaneksGiftAscension4.addToFactions([ChurchOfTheMachineGodFactionName]);
+    resetAugmentation(StaneksGiftAscension4);
+  }
+
   // Update costs based on how many have been purchased
   mult = Math.pow(
     CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]],

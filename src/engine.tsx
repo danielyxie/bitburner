@@ -12,6 +12,7 @@ import { initCompanies } from "./Company/Companies";
 import { Corporation } from "./Corporation/Corporation";
 import { CONSTANTS } from "./Constants";
 import { Factions, initFactions } from "./Faction/Factions";
+import { staneksGift } from "./CotMG/Helper";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { Router } from "./ui/GameRoot";
 
@@ -135,6 +136,9 @@ const Engine: {
     if (inMission && currMission) {
       currMission.process(numCycles);
     }
+
+    // Staneks gift
+    staneksGift.process(Player, numCycles);
 
     // Corporation
     if (Player.corporation instanceof Corporation) {

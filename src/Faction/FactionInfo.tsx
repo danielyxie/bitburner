@@ -468,4 +468,46 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
     false,
   ),
+
+  // prettier-ignore
+  "Church of the Machine God": new FactionInfo(<>
+    {"                 ``          "}<br />
+    {"             -odmmNmds:      "}<br />
+    {"           `hNmo:..-omNh.    "}<br />
+    {"           yMd`      `hNh    "}<br />
+    {"           mMd        oNm    "}<br />
+    {"           oMNo      .mM/    "}<br />
+    {"           `dMN+    -mM+     "}<br />
+    {"            -mMNo  -mN+      "}<br />
+    {"  .+-        :mMNo/mN/       "}<br />
+    {":yNMd.        :NMNNN/        "}<br />
+    {"-mMMMh.        /NMMh`        "}<br />
+    {" .dMMMd.       /NMMMy`       "}<br />
+    {"  `yMMMd.     /NNyNMMh`      "}<br />
+    {"   `sMMMd.   +Nm: +NMMh.     "}<br />
+    {"     oMMMm- oNm:   /NMMd.    "}<br />
+    {"      +NMMmsMm-     :mMMd.   "}<br />
+    {"       /NMMMm-       -mMMd.  "}<br />
+    {"        /MMMm-        -mMMd. "}<br />
+    {"       `sMNMMm-        .mMmo "}<br />
+    {"      `sMd:hMMm.        ./.  "}<br />
+    {"     `yMy` `yNMd`            "}<br />
+    {"    `hMs`    oMMy            "}<br />
+    {"   `hMh       sMN-           "}<br />
+    {"   /MM-       .NMo           "}<br />
+    {"   +MM:       :MM+           "}<br />
+    {"    sNNo-.`.-omNy`           "}<br />
+    {"     -smNNNNmdo-             "}<br />
+    {"        `..`                 "}<br /><br />
+    Many cultures predict an end to humanity in the near future, a final
+     Armageddon that will end the world; but we disagree.
+    <br /><br />Note that for this faction, reputation can 
+    only be gained by charging Stanek's gift.</>,
+    [],
+    false,
+    false,
+    false,
+    false,
+    true,
+  ),
 };

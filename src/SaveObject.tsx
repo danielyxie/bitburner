@@ -10,6 +10,7 @@ import { Settings } from "./Settings/Settings";
 import { loadSpecialServerIps, SpecialServerIps } from "./Server/SpecialServerIps";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
+import { staneksGift, loadStaneksGift } from "./CotMG/Helper";
 
 import { GameSavedEvents } from "./ui/React/Snackbar";
 
@@ -38,6 +39,7 @@ class BitburnerSaveObject {
   VersionSave = "";
   AllGangsSave = "";
   LastExportBonus = "";
+  StaneksGiftSave = "";
 
   getSaveString(): string {
     this.PlayerSave = JSON.stringify(Player);
@@ -67,6 +69,7 @@ class BitburnerSaveObject {
     this.SettingsSave = JSON.stringify(Settings);
     this.VersionSave = JSON.stringify(CONSTANTS.Version);
     this.LastExportBonus = JSON.stringify(ExportBonus.LastExportBonus);
+    this.StaneksGiftSave = JSON.stringify(staneksGift);
     if (Player.inGang()) {
       this.AllGangsSave = JSON.stringify(AllGangs);
     }
@@ -173,6 +176,12 @@ function loadGame(saveString: string): boolean {
   loadFactions(saveObj.FactionsSave);
   loadSpecialServerIps(saveObj.SpecialServerIpsSave);
 
+  if (saveObj.hasOwnProperty("StaneksGiftSave")) {
+    loadStaneksGift(saveObj.StaneksGiftSave);
+  } else {
+    console.warn(`Could not load Staneks Gift from save`);
+    loadStaneksGift("");
+  }
   if (saveObj.hasOwnProperty("AliasesSave")) {
     try {
       loadAliases(saveObj.AliasesSave);

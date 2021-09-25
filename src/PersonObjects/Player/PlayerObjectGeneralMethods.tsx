@@ -2632,3 +2632,7 @@ export function setMult(this: IPlayer, name: string, mult: number): void {
   if (!this.hasOwnProperty(name)) return;
   (this as any)[name] = mult;
 }
+
+export function canAccessCotMG(this: IPlayer): boolean {
+  return this.bitNodeN === 13 || SourceFileFlags[13] > 0;
+}

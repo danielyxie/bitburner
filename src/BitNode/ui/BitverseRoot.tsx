@@ -126,7 +126,7 @@ export function BitverseRoot(props: IProps): React.ReactElement {
       <pre>O | | |  \|  |  O  /   _/ |    /    O  |  |/  | | | O</pre>
       <pre>| | | |O  /  |  | O   /   |   O   O |  |  \  O| | | |</pre>
       <pre>| | |/  \/  / __| | |/ \  |   \   | |__ \  \/  \| | |</pre>
-      <pre> \| O   |  |_/    |\|   \ O    \__|    \_|  |   O |/ </pre>
+      <pre> \| O   |  |_/    |\|   \ <BitNodePortal n={13} level={nextSourceFileFlags[13]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />    \__|    \_|  |   O |/ </pre>
       <pre>  | |   |_/       | |    \|    /  |       \_|   | |  </pre>
       <pre>   \|   /          \|     |   /  /          \   |/   </pre>
       <pre>    |  <BitNodePortal n={10} level={nextSourceFileFlags[10]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />            |     |  /  |            <BitNodePortal n={11} level={nextSourceFileFlags[11]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  |    </pre>

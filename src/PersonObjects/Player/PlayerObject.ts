@@ -199,7 +199,7 @@ export class PlayerObject implements IPlayer {
   getNextCompanyPosition: (company: Company, entryPosType: CompanyPosition) => CompanyPosition | null;
   getUpgradeHomeRamCost: () => number;
   gotoLocation: (to: LocationName) => boolean;
-  hasAugmentation: (aug: Augmentation) => boolean;
+  hasAugmentation: (aug: string | Augmentation) => boolean;
   hasCorporation: () => boolean;
   hasGangWith: (facName: string) => boolean;
   hasTorRouter: () => boolean;
@@ -281,6 +281,7 @@ export class PlayerObject implements IPlayer {
   setBitNodeNumber: (n: number) => void;
   getMult: (name: string) => number;
   setMult: (name: string, mult: number) => void;
+  canAccessCotMG: () => boolean;
 
   constructor() {
     //Skills and stats
@@ -575,6 +576,8 @@ export class PlayerObject implements IPlayer {
 
     this.getMult = generalMethods.getMult;
     this.setMult = generalMethods.setMult;
+
+    this.canAccessCotMG = generalMethods.canAccessCotMG;
   }
 
   /**
