@@ -5,6 +5,8 @@
  * location that is being rendered and then creates the proper component(s) for that.
  */
 import * as React from "react";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 import { CompanyLocation } from "./CompanyLocation";
 import { GymLocation } from "./GymLocation";
@@ -24,7 +26,6 @@ import { Settings } from "../../Settings/Settings";
 import { SpecialServerIps } from "../../Server/SpecialServerIps";
 import { getServer, isBackdoorInstalled } from "../../Server/ServerHelpers";
 
-import { StdButton } from "../../ui/React/StdButton";
 import { CorruptableText } from "../../ui/React/CorruptableText";
 import { use } from "../../ui/Context";
 
@@ -87,12 +88,12 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
   const backdoorInstalled = server !== null && isBackdoorInstalled(server);
 
   return (
-    <div>
-      <StdButton onClick={() => router.toCity()} style={{ display: "block" }} text={"Return to World"} />
-      <h1 className="noselect">
+    <>
+      <Button onClick={() => router.toCity()}>Return to World</Button>
+      <Typography variant="h4" className="noselect">
         {backdoorInstalled && !Settings.DisableTextEffects ? <CorruptableText content={loc.name} /> : loc.name}
-      </h1>
+      </Typography>
       {locContent}
-    </div>
+    </>
   );
 }

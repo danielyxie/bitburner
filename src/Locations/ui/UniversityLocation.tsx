@@ -4,6 +4,8 @@
  * This subcomponent renders all of the buttons for studying/taking courses
  */
 import * as React from "react";
+import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
 
@@ -12,7 +14,6 @@ import { getServer } from "../../Server/ServerHelpers";
 import { Server } from "../../Server/Server";
 import { SpecialServerIps } from "../../Server/SpecialServerIps";
 
-import { StdButton } from "../../ui/React/StdButton";
 import { Money } from "../../ui/React/Money";
 import { use } from "../../ui/Context";
 
@@ -73,68 +74,45 @@ export function UniversityLocation(props: IProps): React.ReactElement {
   const earnCharismaExpTooltip = `Gain charisma experience!`;
 
   return (
-    <div>
-      <StdButton
-        onClick={study}
-        style={{ display: "block" }}
-        text={`Study Computer Science (free)`}
-        tooltip={earnHackingExpTooltip}
-      />
-      <StdButton
-        onClick={dataStructures}
-        style={{ display: "block" }}
-        text={
-          <>
-            Take Data Structures course (
-            <Money money={dataStructuresCost} player={player} /> / sec)
-          </>
-        }
-        tooltip={earnHackingExpTooltip}
-      />
-      <StdButton
-        onClick={networks}
-        style={{ display: "block" }}
-        text={
-          <>
-            Take Networks course (
-            <Money money={networksCost} player={player} /> / sec)
-          </>
-        }
-        tooltip={earnHackingExpTooltip}
-      />
-      <StdButton
-        onClick={algorithms}
-        style={{ display: "block" }}
-        text={
-          <>
-            Take Algorithms course (
-            <Money money={algorithmsCost} player={player} /> / sec)
-          </>
-        }
-        tooltip={earnHackingExpTooltip}
-      />
-      <StdButton
-        onClick={management}
-        style={{ display: "block" }}
-        text={
-          <>
-            Take Management course (
-            <Money money={managementCost} player={player} /> / sec)
-          </>
-        }
-        tooltip={earnCharismaExpTooltip}
-      />
-      <StdButton
-        onClick={leadership}
-        style={{ display: "block" }}
-        text={
-          <>
-            Take Leadership course (
-            <Money money={leadershipCost} player={player} /> / sec)
-          </>
-        }
-        tooltip={earnCharismaExpTooltip}
-      />
-    </div>
+    <>
+      <Tooltip title={earnHackingExpTooltip}>
+        <Button onClick={study}>Study Computer Science (free)</Button>
+      </Tooltip>
+      <br />
+      <Tooltip title={earnHackingExpTooltip}>
+        <Button onClick={dataStructures}>
+          Take Data Structures course (
+          <Money money={dataStructuresCost} player={player} /> / sec)
+        </Button>
+      </Tooltip>
+      <br />
+      <Tooltip title={earnHackingExpTooltip}>
+        <Button onClick={networks}>
+          Take Networks course (
+          <Money money={networksCost} player={player} /> / sec)
+        </Button>
+      </Tooltip>
+      <br />
+      <Tooltip title={earnHackingExpTooltip}>
+        <Button onClick={algorithms}>
+          Take Algorithms course (
+          <Money money={algorithmsCost} player={player} /> / sec)
+        </Button>
+      </Tooltip>
+      <br />
+      <Tooltip title={earnCharismaExpTooltip}>
+        <Button onClick={management}>
+          Take Management course (
+          <Money money={managementCost} player={player} /> / sec)
+        </Button>
+      </Tooltip>
+      <br />
+      <Tooltip title={earnCharismaExpTooltip}>
+        <Button onClick={leadership}>
+          Take Leadership course (
+          <Money money={leadershipCost} player={player} /> / sec)
+        </Button>
+      </Tooltip>
+    </>
   );
 }

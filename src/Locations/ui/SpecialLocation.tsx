@@ -11,6 +11,8 @@
  * properties
  */
 import React, { useState } from "react";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
 import { CreateCorporationPopup } from "../../Corporation/ui/CreateCorporationPopup";
@@ -18,9 +20,6 @@ import { createPopup } from "../../ui/React/createPopup";
 import { LocationName } from "../data/LocationNames";
 
 import { use } from "../../ui/Context";
-
-import { AutoupdatingStdButton } from "../../ui/React/AutoupdatingStdButton";
-import { StdButton } from "../../ui/React/StdButton";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
@@ -83,7 +82,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       return <></>;
     }
     const text = inBladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";
-    return <StdButton onClick={handleBladeburner} style={{ display: "block" }} text={text} />;
+    return <Button onClick={handleBladeburner}>{text}</Button>;
   }
 
   function renderNoodleBar(): React.ReactElement {
@@ -91,26 +90,23 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       dialogBoxCreate(<>You ate some delicious noodles and feel refreshed.</>);
     }
 
-    return <StdButton onClick={EatNoodles} style={{ display: "block" }} text={"Eat noodles"} />;
+    return <Button onClick={EatNoodles}>Eat noodles</Button>;
   }
 
   function renderCreateCorporation(): React.ReactElement {
     if (!player.canAccessCorporation()) {
       return (
         <>
-          <p>
+          <Typography>
             <i>A business man is yelling at a clerk. You should come back later.</i>
-          </p>
+          </Typography>
         </>
       );
     }
     return (
-      <AutoupdatingStdButton
-        disabled={!player.canAccessCorporation() || player.hasCorporation()}
-        onClick={createCorporationPopup}
-        style={{ display: "block" }}
-        text={"Create a Corporation"}
-      />
+      <Button disabled={!player.canAccessCorporation() || player.hasCorporation()} onClick={createCorporationPopup}>
+        Create a Corporation
+      </Button>
     );
   }
 
@@ -118,7 +114,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     if (!player.canAccessResleeving()) {
       return <></>;
     }
-    return <StdButton onClick={handleResleeving} style={{ display: "block" }} text={"Re-Sleeve"} />;
+    return <Button onClick={handleResleeving}>Re-Sleeve</Button>;
   }
 
   switch (props.loc.name) {

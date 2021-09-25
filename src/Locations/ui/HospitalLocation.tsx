@@ -4,6 +4,7 @@
  * This subcomponent renders all of the buttons for hospital options
  */
 import * as React from "react";
+import Button from "@mui/material/Button";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { getHospitalizationCost } from "../../Hospital/Hospital";
@@ -77,15 +78,9 @@ export class HospitalLocation extends React.Component<IProps, IState> {
     const cost = this.getCost();
 
     return (
-      <AutoupdatingStdButton
-        onClick={this.getHealed}
-        style={this.btnStyle}
-        text={
-          <>
-            Get treatment for wounds - <Money money={cost} player={this.props.p} />
-          </>
-        }
-      />
+      <Button onClick={this.getHealed} style={this.btnStyle}>
+        Get treatment for wounds - <Money money={cost} player={this.props.p} />
+      </Button>
     );
   }
 }
