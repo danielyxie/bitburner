@@ -152,10 +152,7 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
             placement="top"
             disableFocusListener
             disableTouchListener
-            enterNextDelay={1000}
-            enterDelay={500}
-            leaveDelay={0}
-            leaveTouchDelay={0}
+            disableInteractive
           >
             <Typography>{btnTxt}</Typography>
           </Tooltip>

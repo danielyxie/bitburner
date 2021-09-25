@@ -26,6 +26,7 @@ const useStyles = makeStyles(() =>
   createStyles({
     noformat: {
       whiteSpace: "pre-wrap",
+      lineHeight: "1em",
     },
   }),
 );

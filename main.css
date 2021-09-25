@@ -2178,7 +2178,8 @@ input[type="checkbox"] {
   display: flex;
   flex: row nowrap;
   align-items: center;
-  justify-content: space-between; }
+  justify-content: space-between;
+  cursor: grab; }
 
 .log-box-log-container {
   overflow-y: auto; }
