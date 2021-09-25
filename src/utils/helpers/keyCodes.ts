@@ -1,4 +1,4 @@
-import { IMap } from "../../src/types";
+import { IMap } from "../../types";
 
 /**
  * Keyboard key codes

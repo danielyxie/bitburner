@@ -1,5 +1,5 @@
 import { setTimeoutRef } from "../utils/SetTimeoutRef";
-import { getElementById } from "../../utils/uiHelpers/getElementById";
+import { getElementById } from "./uiHelpers/getElementById";
 import { Action } from "../types";
 
 const threeSeconds = 3000;

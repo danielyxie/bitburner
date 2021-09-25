@@ -1,5 +1,5 @@
 import React from "react";
-import { formatNumber } from "../../../utils/StringHelperFunctions";
+import { formatNumber } from "../../utils/StringHelperFunctions";
 
 interface IProps {
   chance: number[];

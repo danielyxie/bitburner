@@ -3,8 +3,8 @@
  * Contains skills and exp.
  */
 import React from "react";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { formatNumber } from "../../../utils/StringHelperFunctions";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { formatNumber } from "../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createPopup } from "../../ui/React/createPopup";
 import { Gang } from "../Gang";

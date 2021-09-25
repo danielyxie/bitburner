@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SkillList } from "./SkillList";
 import { BladeburnerConstants } from "../data/Constants";
-import { formatNumber } from "../../../utils/StringHelperFunctions";
+import { formatNumber } from "../../utils/StringHelperFunctions";
 import { IBladeburner } from "../IBladeburner";
 
 interface IProps {

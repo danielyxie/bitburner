@@ -1,5 +1,5 @@
-import { createPopup } from "../src/ui/React/createPopup";
-import { getRandomInt } from "./helpers/getRandomInt";
+import { createPopup } from "./createPopup";
+import { getRandomInt } from "../../utils/helpers/getRandomInt";
 
 import React from "react";
 

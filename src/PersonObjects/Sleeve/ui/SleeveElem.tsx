@@ -10,9 +10,9 @@ import { Crimes } from "../../../Crime/Crimes";
 
 import { numeralWrapper } from "../../../ui/numeralFormat";
 
-import { dialogBoxCreate } from "../../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 
-import { createProgressBarText } from "../../../../utils/helpers/createProgressBarText";
+import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
 
 import { createPopup } from "../../../ui/React/createPopup";
 

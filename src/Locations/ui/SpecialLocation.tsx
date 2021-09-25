@@ -22,7 +22,7 @@ import { use } from "../../ui/Context";
 import { AutoupdatingStdButton } from "../../ui/React/AutoupdatingStdButton";
 import { StdButton } from "../../ui/React/StdButton";
 
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 type IProps = {
   loc: Location;

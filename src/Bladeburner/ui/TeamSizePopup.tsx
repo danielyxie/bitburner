@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { removePopup } from "../../ui/React/createPopup";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { Action } from "../Action";
 import { IBladeburner } from "../IBladeburner";
 

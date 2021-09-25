@@ -1,7 +1,7 @@
 // React Components for the Unlock upgrade buttons on the overview page
 import React from "react";
 
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { CorporationUnlockUpgrade } from "../data/CorporationUnlockUpgrades";
 import { ICorporation } from "../ICorporation";
 import { IPlayer } from "../../PersonObjects/IPlayer";

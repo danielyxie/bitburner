@@ -1,4 +1,4 @@
-import { containsAllStrings, longestCommonStart } from "../../utils/StringHelperFunctions";
+import { containsAllStrings, longestCommonStart } from "../utils/StringHelperFunctions";
 
 /**
  * Implements tab completion for the Terminal

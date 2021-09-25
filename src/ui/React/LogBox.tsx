@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { killWorkerScript } from "../src/Netscript/killWorkerScript";
-import { RunningScript } from "../src/Script/RunningScript";
+import { killWorkerScript } from "../../Netscript/killWorkerScript";
+import { RunningScript } from "../../Script/RunningScript";
 
-import { createElement } from "./uiHelpers/createElement";
-import { removeElementById } from "./uiHelpers/removeElementById";
+import { createElement } from "../uiHelpers/createElement";
+import { removeElementById } from "../uiHelpers/removeElementById";
 
 let gameContainer: HTMLElement;
 

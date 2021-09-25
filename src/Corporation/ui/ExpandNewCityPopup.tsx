@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { IIndustry } from "../IIndustry";
 import { CorporationConstants } from "../data/Constants";
 import { removePopup } from "../../ui/React/createPopup";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { ICorporation } from "../ICorporation";
 import { NewCity } from "../Actions";
 import { MoneyCost } from "./MoneyCost";

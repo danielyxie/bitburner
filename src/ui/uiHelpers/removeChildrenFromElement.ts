@@ -1,4 +1,4 @@
-import { isString } from "../helpers/isString";
+import { isString } from "../../utils/helpers/isString";
 import { getElementById } from "./getElementById";
 
 /**

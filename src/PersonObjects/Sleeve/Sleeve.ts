@@ -32,7 +32,7 @@ import { FactionWorkType } from "../../Faction/FactionWorkTypeEnum";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export class Sleeve extends Person {
   /**

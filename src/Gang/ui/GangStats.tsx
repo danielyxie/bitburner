@@ -6,7 +6,7 @@ import React from "react";
 import { Factions } from "../../Faction/Factions";
 import { Gang } from "../Gang";
 
-import { formatNumber } from "../../../utils/StringHelperFunctions";
+import { formatNumber } from "../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { Reputation } from "../../ui/React/Reputation";

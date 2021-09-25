@@ -11,8 +11,8 @@ import * as ReactDOM from "react-dom";
 
 import { Popup } from "./Popup";
 
-import { createElement } from "../../../utils/uiHelpers/createElement";
-import { removeElementById } from "../../../utils/uiHelpers/removeElementById";
+import { createElement } from "../uiHelpers/createElement";
+import { removeElementById } from "../uiHelpers/removeElementById";
 
 let gameContainer: HTMLElement;
 

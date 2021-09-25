@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ActionTypes } from "../data/ActionTypes";
-import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
-import { formatNumber, convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
+import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
+import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { stealthIcon, killIcon } from "../data/Icons";
 import { BladeburnerConstants } from "../data/Constants";
 import { createPopup } from "../../ui/React/createPopup";

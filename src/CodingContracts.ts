@@ -2,7 +2,7 @@ import { codingContractTypesMetadata, DescriptionFunc, GeneratorFunc, SolverFunc
 
 import { IMap } from "./types";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
 import { createPopup, removePopup } from "./ui/React/createPopup";
 import { CodingContractPopup } from "./ui/React/CodingContractPopup";
 

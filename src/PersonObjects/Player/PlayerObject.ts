@@ -32,7 +32,7 @@ import { HashManager } from "../../Hacknet/HashManager";
 import { CityName } from "../../Locations/data/CityNames";
 
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
 
 import Decimal from "decimal.js";
 

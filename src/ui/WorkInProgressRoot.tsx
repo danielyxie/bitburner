@@ -6,7 +6,7 @@ import { Reputation } from "./React/Reputation";
 import { ReputationRate } from "./React/ReputationRate";
 import { MoneyRate } from "./React/MoneyRate";
 import { Money } from "./React/Money";
-import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { Factions } from "../Faction/Factions";
 import { Company } from "../Company/Company";
 import { Companies } from "../Company/Companies";
@@ -17,7 +17,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
-import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
+import { createProgressBarText } from "../utils/helpers/createProgressBarText";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 

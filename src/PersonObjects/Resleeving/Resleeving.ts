@@ -18,7 +18,7 @@ import { Augmentations } from "../../Augmentation/Augmentations";
 import { IPlayerOwnedAugmentation, PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
-import { getRandomInt } from "../../../utils/helpers/getRandomInt";
+import { getRandomInt } from "../../utils/helpers/getRandomInt";
 
 // Executes the actual re-sleeve when one is purchased
 export function purchaseResleeve(r: Resleeve, p: IPlayer): boolean {

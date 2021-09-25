@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ActionTypes } from "../data/ActionTypes";
-import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
-import { formatNumber, convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
+import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
+import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { CopyableText } from "../../ui/React/CopyableText";

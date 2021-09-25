@@ -8,7 +8,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 
 import { ServerDropdown, ServerType } from "../../ui/React/ServerDropdown";
 
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { CopyableText } from "../../ui/React/CopyableText";
 import { Hashes } from "../../ui/React/Hashes";
 

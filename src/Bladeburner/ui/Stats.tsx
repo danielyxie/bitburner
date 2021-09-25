@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { formatNumber, convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
+import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { BladeburnerConstants } from "../data/Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Money } from "../../ui/React/Money";
 import { StatsTable } from "../../ui/React/StatsTable";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { createPopup } from "../../ui/React/createPopup";
 import { Factions } from "../../Faction/Factions";
 import { IRouter } from "../../ui/Router";

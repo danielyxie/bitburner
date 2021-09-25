@@ -6,7 +6,7 @@ import { purchaseResleeve } from "../Resleeving";
 import { Money } from "../../../ui/React/Money";
 
 import { numeralWrapper } from "../../../ui/numeralFormat";
-import { dialogBoxCreate } from "../../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 
 interface IProps {
   resleeve: Resleeve;

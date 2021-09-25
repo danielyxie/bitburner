@@ -4,7 +4,7 @@
 import * as React from "react";
 import { Gang } from "../Gang";
 import { CONSTANTS } from "../../Constants";
-import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 
 interface IProps {
   gang: Gang;

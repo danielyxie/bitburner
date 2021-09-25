@@ -6,8 +6,8 @@ import { ProductRatingWeights, IProductRatingWeight } from "./ProductRatingWeigh
 import { createCityMap } from "../Locations/createCityMap";
 import { IMap } from "../types";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
-import { getRandomInt } from "../../utils/helpers/getRandomInt";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
 
 interface IConstructorParams {
   name?: string;

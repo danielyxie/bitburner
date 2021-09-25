@@ -14,7 +14,7 @@ import { PopupCloseButton } from "../../../ui/React/PopupCloseButton";
 import { StdButton } from "../../../ui/React/StdButton";
 import { Money } from "../../../ui/React/Money";
 
-import { dialogBoxCreate } from "../../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 
 interface IProps {
   closeFn: () => void;

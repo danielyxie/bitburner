@@ -1,4 +1,4 @@
-import { getRandomInt } from "../../utils/helpers/getRandomInt";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
 
 /* tslint:disable:completed-docs no-magic-numbers arrow-return-shorthand */
 

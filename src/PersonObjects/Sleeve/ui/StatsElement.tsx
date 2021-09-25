@@ -1,7 +1,7 @@
 import { Sleeve } from "../Sleeve";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import * as React from "react";
-import { convertTimeMsToTimeElapsedString } from "../../../../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 import { CONSTANTS } from "../../../Constants";
 
 interface IProps {

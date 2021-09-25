@@ -6,7 +6,7 @@ import { IAscensionResult } from "./IAscensionResult";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { AllGangs } from "./AllGangs";
 import { IGang } from "./IGang";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
 interface IMults {
   hack: number;

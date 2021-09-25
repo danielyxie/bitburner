@@ -11,7 +11,7 @@ import { Programs } from "../Programs/Programs";
 import { LiteratureNames } from "../Literature/data/LiteratureNames";
 
 import { isValidNumber } from "../utils/helpers/isValidNumber";
-import { isValidIPAddress } from "../../utils/helpers/isValidIPAddress";
+import { isValidIPAddress } from "../utils/helpers/isValidIPAddress";
 
 /**
  * Constructs a new server, while also ensuring that the new server

@@ -27,10 +27,10 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { killWorkerScript } from "../../Netscript/killWorkerScript";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 
-import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { logBoxCreate } from "../../../utils/LogBox";
-import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
-import { arrayToString } from "../../../utils/helpers/arrayToString";
+import { dialogBoxCreate } from "../React/DialogBox";
+import { logBoxCreate } from "../React/LogBox";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import { arrayToString } from "../../utils/helpers/arrayToString";
 import { Money } from "../React/Money";
 import { MoneyRate } from "../React/MoneyRate";
 

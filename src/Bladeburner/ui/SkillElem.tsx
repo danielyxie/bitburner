@@ -1,6 +1,6 @@
 import React from "react";
 import { CopyableText } from "../../ui/React/CopyableText";
-import { formatNumber } from "../../../utils/StringHelperFunctions";
+import { formatNumber } from "../../utils/StringHelperFunctions";
 import { IBladeburner } from "../IBladeburner";
 
 interface IProps {

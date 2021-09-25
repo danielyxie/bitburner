@@ -11,7 +11,7 @@ import { getHospitalizationCost } from "../../Hospital/Hospital";
 import { AutoupdatingStdButton } from "../../ui/React/AutoupdatingStdButton";
 import { Money } from "../../ui/React/Money";
 
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 type IProps = {
   p: IPlayer;

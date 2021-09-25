@@ -6,7 +6,7 @@ import createStyles from "@mui/styles/createStyles";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 
-import { KEY } from "../../../utils/helpers/keyCodes";
+import { KEY } from "../../utils/helpers/keyCodes";
 import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";

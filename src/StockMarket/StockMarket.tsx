@@ -16,8 +16,8 @@ import { EventEmitter } from "../utils/EventEmitter";
 
 import { numeralWrapper } from ".././ui/numeralFormat";
 
-import { dialogBoxCreate } from "../../utils/DialogBox";
-import { Reviver } from "../../utils/JSONReviver";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { Reviver } from "../utils/JSONReviver";
 
 export let StockMarket: IStockMarket = {
   lastUpdate: 0,

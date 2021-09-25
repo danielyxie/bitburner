@@ -16,7 +16,7 @@ import { CorporationUpgrade, CorporationUpgrades } from "../data/CorporationUpgr
 
 import { CONSTANTS } from "../../Constants";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { createPopup } from "../../ui/React/createPopup";
 import { Money } from "../../ui/React/Money";
 import { IPlayer } from "../../PersonObjects/IPlayer";

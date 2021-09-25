@@ -50,8 +50,8 @@ import Decimal from "decimal.js";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { IRouter } from "../../ui/Router";
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 
 import { Reputation } from "../../ui/React/Reputation";
 import { Money } from "../../ui/React/Money";

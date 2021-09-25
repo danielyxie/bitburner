@@ -1,4 +1,4 @@
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { Export } from "./Export";
 
 interface IConstructorParams {

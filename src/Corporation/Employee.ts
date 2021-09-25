@@ -1,11 +1,11 @@
 import { CorporationConstants } from "./data/Constants";
-import { getRandomInt } from "../../utils/helpers/getRandomInt";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
-import { createElement } from "../../utils/uiHelpers/createElement";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { createElement } from "../ui/uiHelpers/createElement";
 import { EmployeePositions } from "./EmployeePositions";
 import { ICorporation } from "./ICorporation";
 import { numeralWrapper } from "../ui/numeralFormat";
-import { formatNumber } from "../../utils/StringHelperFunctions";
+import { formatNumber } from "../utils/StringHelperFunctions";
 import { OfficeSpace } from "./OfficeSpace";
 import { IIndustry } from "./IIndustry";
 

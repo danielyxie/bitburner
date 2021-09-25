@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import { Gang } from "../Gang";
 import { removePopup } from "../../ui/React/createPopup";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 interface IRecruitPopupProps {
   gang: Gang;

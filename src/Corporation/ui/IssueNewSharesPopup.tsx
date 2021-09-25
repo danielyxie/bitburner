@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
-import { getRandomInt } from "../../../utils/helpers/getRandomInt";
+import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CorporationConstants } from "../data/Constants";
 import { ICorporation } from "../ICorporation";
 

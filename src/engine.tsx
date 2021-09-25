@@ -1,7 +1,7 @@
 /**
  * Game engine. Handles the main game loop.
  */
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 import { Augmentations } from "./Augmentation/Augmentations";
 import { initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
@@ -42,8 +42,8 @@ import { Money } from "./ui/React/Money";
 import { Hashes } from "./ui/React/Hashes";
 import { Reputation } from "./ui/React/Reputation";
 
-import { dialogBoxCreate } from "../utils/DialogBox";
-import { exceptionAlert } from "../utils/helpers/exceptionAlert";
+import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { exceptionAlert } from "./utils/helpers/exceptionAlert";
 
 import { startTampering } from "./Exploits/tampering";
 

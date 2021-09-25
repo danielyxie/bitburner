@@ -15,7 +15,7 @@ import { ITutorialEvents } from "./InteractiveTutorial/ITutorialEvents";
 
 import { Faction } from "../Faction/Faction";
 import { prestigeAugmentation } from "../Prestige";
-import { dialogBoxCreate } from "../../utils/DialogBox";
+import { dialogBoxCreate } from "./React/DialogBox";
 import { AllServers } from "../Server/AllServers";
 import { Factions } from "../Faction/Factions";
 import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";

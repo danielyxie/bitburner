@@ -16,8 +16,8 @@ import {
 } from "./formulas/HacknetNodes";
 import { HacknetNodeConstants } from "./data/Constants";
 
-import { dialogBoxCreate } from "../../utils/DialogBox";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
 export class HacknetNode implements IHacknetNode {
   // Node's number of cores

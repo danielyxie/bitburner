@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { dialogBoxCreate } from "../../utils/DialogBox";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
 
 const gainLimit = 10e9;
 

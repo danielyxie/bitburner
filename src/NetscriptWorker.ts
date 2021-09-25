@@ -25,10 +25,10 @@ import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
 import { generate } from "escodegen";
 
-import { dialogBoxCreate } from "../utils/DialogBox";
-import { arrayToString } from "../utils/helpers/arrayToString";
-import { roundToTwo } from "../utils/helpers/roundToTwo";
-import { isString } from "../utils/helpers/isString";
+import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { arrayToString } from "./utils/helpers/arrayToString";
+import { roundToTwo } from "./utils/helpers/roundToTwo";
+import { isString } from "./utils/helpers/isString";
 import { sprintf } from "sprintf-js";
 
 import { parse } from "acorn";

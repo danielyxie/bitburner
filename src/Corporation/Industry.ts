@@ -1,22 +1,22 @@
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
 import { CityName } from "../Locations/data/CityNames";
 import Decimal from "decimal.js";
 import { Industries, IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
 import { CorporationConstants } from "./data/Constants";
 import { EmployeePositions } from "./EmployeePositions";
 import { Material } from "./Material";
-import { getRandomInt } from "../../utils/helpers/getRandomInt";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { calculateEffectWithFactors } from "../utils/calculateEffectWithFactors";
 import { OfficeSpace } from "./OfficeSpace";
 import { Product } from "./Product";
-import { dialogBoxCreate } from "../../utils/DialogBox";
-import { isString } from "../../utils/helpers/isString";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { isString } from "../utils/helpers/isString";
 import { MaterialSizes } from "./MaterialSizes";
 import { Warehouse } from "./Warehouse";
 import { ICorporation } from "./ICorporation";
 import { IIndustry } from "./IIndustry";
 import { IndustryUpgrade, IndustryUpgrades } from "./IndustryUpgrades";
-import { formatNumber } from "../../utils/StringHelperFunctions";
+import { formatNumber } from "../utils/StringHelperFunctions";
 
 interface IParams {
   name?: string;

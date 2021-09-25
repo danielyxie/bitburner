@@ -16,8 +16,8 @@ import { GameSavedEvents } from "./ui/React/Snackbar";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import * as ExportBonus from "./ExportBonus";
 
-import { dialogBoxCreate } from "../utils/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "./utils/JSONReviver";
 import { save } from "./db";
 
 /* SaveObject.js

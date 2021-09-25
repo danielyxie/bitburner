@@ -2,10 +2,10 @@ import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { logBoxCreate } from "../../../utils/LogBox";
+import { logBoxCreate } from "../../ui/React/LogBox";
 import { findRunningScriptByPid } from "../../Script/ScriptHelpers";
 import { isScriptFilename } from "../../Script/isScriptFilename";
-import { compareArrays } from "../../../utils/helpers/compareArrays";
+import { compareArrays } from "../../utils/helpers/compareArrays";
 
 export function tail(
   terminal: ITerminal,

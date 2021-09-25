@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { Industries, IndustryDescriptions } from "../IndustryData";
 import { ICorporation } from "../ICorporation";

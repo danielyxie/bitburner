@@ -1,4 +1,4 @@
-import { dialogBoxCreate } from "../DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 interface IError {
   fileName?: string;

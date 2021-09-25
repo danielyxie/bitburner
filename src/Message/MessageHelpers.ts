@@ -7,8 +7,8 @@ import { Player } from "../Player";
 import { redPillFlag } from "../RedPill";
 import { GetServerByHostname } from "../Server/ServerHelpers";
 import { Settings } from "../Settings/Settings";
-import { dialogBoxCreate } from "../../utils/DialogBox";
-import { Reviver } from "../../utils/JSONReviver";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { Reviver } from "../utils/JSONReviver";
 
 //Sends message to player, including a pop up
 function sendMessage(msg: Message, forced = false): void {

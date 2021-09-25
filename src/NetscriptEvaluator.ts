@@ -1,6 +1,6 @@
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
-import { isString } from "../utils/helpers/isString";
+import { isString } from "./utils/helpers/isString";
 import { AllServers } from "./Server/AllServers";
 import { WorkerScript } from "./Netscript/WorkerScript";
 

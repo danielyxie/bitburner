@@ -2,7 +2,7 @@ import { Crimes } from "./Crimes";
 import { Crime } from "./Crime";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
-import { dialogBoxCreate } from "../../utils/DialogBox";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
 
 export function determineCrimeSuccess(p: IPlayer, type: string): boolean {
   let chance = 0;

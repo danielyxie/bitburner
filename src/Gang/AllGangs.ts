@@ -1,4 +1,4 @@
-import { Reviver } from "../../utils/JSONReviver";
+import { Reviver } from "../utils/JSONReviver";
 
 interface GangTerritory {
   power: number;

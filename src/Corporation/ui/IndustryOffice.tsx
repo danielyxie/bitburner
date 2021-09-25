@@ -9,7 +9,7 @@ import { EmployeePositions } from "../EmployeePositions";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
-import { getSelectText } from "../../../utils/uiHelpers/getSelectData";
+import { getSelectText } from "../../ui/uiHelpers/getSelectData";
 import { createPopup } from "../../ui/React/createPopup";
 import { UpgradeOfficeSizePopup } from "./UpgradeOfficeSizePopup";
 import { HireEmployeePopup } from "./HireEmployeePopup";

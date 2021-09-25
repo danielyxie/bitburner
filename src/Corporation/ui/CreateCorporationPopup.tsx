@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { removePopup } from "../../ui/React/createPopup";
 import { Money } from "../../ui/React/Money";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { IRouter } from "../../ui/Router";
 
 interface IProps {

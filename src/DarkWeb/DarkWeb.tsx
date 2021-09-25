@@ -5,7 +5,7 @@ import { Terminal } from "../Terminal";
 import { SpecialServerIps } from "../Server/SpecialServerIps";
 import { numeralWrapper } from "../ui/numeralFormat";
 
-import { isValidIPAddress } from "../../utils/helpers/isValidIPAddress";
+import { isValidIPAddress } from "../utils/helpers/isValidIPAddress";
 
 //Posts a "help" message if connected to DarkWeb
 export function checkIfConnectedToDarkweb(): void {

@@ -4,7 +4,7 @@ import { Factions } from "../../Faction/Factions";
 import { CorporationConstants } from "../data/Constants";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { removePopup } from "../../ui/React/createPopup";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { ICorporation } from "../ICorporation";
 
 interface IProps {

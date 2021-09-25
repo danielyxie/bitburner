@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { removePopup } from "../../ui/React/createPopup";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { CorporationConstants } from "../data/Constants";
 import { ICorporation } from "../ICorporation";
 import { IssueDividends } from "../Actions";

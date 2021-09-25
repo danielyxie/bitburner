@@ -2,7 +2,7 @@ import { Corporation } from "./Corporation/Corporation";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { sanitizeExploits } from "./Exploits/Exploit";
 
-import { Reviver } from "../utils/JSONReviver";
+import { Reviver } from "./utils/JSONReviver";
 
 import Decimal from "decimal.js";
 

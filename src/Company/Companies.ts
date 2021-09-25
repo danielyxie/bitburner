@@ -2,7 +2,7 @@
 import { companiesMetadata } from "./data/CompaniesMetadata";
 import { Company, IConstructorParams } from "./Company";
 import { IMap } from "../types";
-import { Reviver } from "../../utils/JSONReviver";
+import { Reviver } from "../utils/JSONReviver";
 
 export let Companies: IMap<Company> = {};
 

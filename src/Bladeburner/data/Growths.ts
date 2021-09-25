@@ -1,4 +1,4 @@
-import { getRandomInt } from "../../../utils/helpers/getRandomInt";
+import { getRandomInt } from "../../utils/helpers/getRandomInt";
 
 export const Growths: {
   [key: string]: (() => number) | undefined;

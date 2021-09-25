@@ -21,7 +21,7 @@ import { GetServerByHostname, getServer, getServerOnNetwork } from "../Server/Se
 import { ParseCommand, ParseCommands } from "./Parser";
 import { SpecialServerIps, SpecialServerNames } from "../Server/SpecialServerIps";
 import { Settings } from "../Settings/Settings";
-import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
+import { createProgressBarText } from "../utils/helpers/createProgressBarText";
 import {
   calculateHackingChance,
   calculateHackingExpGain,
@@ -29,7 +29,7 @@ import {
   calculateHackingTime,
 } from "../Hacking";
 import { numeralWrapper } from "../ui/numeralFormat";
-import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
 import { alias } from "./commands/alias";
 import { analyze } from "./commands/analyze";

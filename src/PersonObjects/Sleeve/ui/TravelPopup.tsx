@@ -7,7 +7,7 @@ import { Money } from "../../../ui/React/Money";
 import { WorldMap } from "../../../ui/React/WorldMap";
 import { CityName } from "../../../Locations/data/CityNames";
 import { Settings } from "../../../Settings/Settings";
-import { dialogBoxCreate } from "../../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 
 interface IProps {
   popupId: string;

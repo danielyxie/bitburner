@@ -8,7 +8,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { removeElement } from "../../../utils/uiHelpers/removeElement";
+import { removeElement } from "../uiHelpers/removeElement";
 import { IPopupButtonProps, PopupButton } from "./PopupButton";
 
 export interface IPopupCloseButtonProps extends IPopupButtonProps {

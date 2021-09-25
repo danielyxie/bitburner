@@ -1,7 +1,7 @@
 import { Player } from "../Player";
-import { getRandomInt } from "../../utils/helpers/getRandomInt";
-import { addOffset } from "../../utils/helpers/addOffset";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { addOffset } from "../utils/helpers/addOffset";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { BladeburnerConstants } from "./data/Constants";
 import { IBladeburner } from "./IBladeburner";
 import { IAction, ISuccessChanceParams } from "./IAction";

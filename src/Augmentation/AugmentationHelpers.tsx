@@ -11,8 +11,8 @@ import { prestigeAugmentation } from "../Prestige";
 import { Programs } from "../Programs/Programs";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
-import { dialogBoxCreate } from "../../utils/DialogBox";
-import { clearObject } from "../../utils/helpers/clearObject";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { clearObject } from "../utils/helpers/clearObject";
 
 import { WHRNG } from "../Casino/RNG";
 
