@@ -130,14 +130,14 @@ export function Root(props: IProps): React.ReactElement {
       let found = false;
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {
-          server.scripts[i].saveScript(code, props.player.currentServer, server.scripts);
+          server.scripts[i].saveScript(filename, code, props.player.currentServer, server.scripts);
           found = true;
         }
       }
 
       if (!found) {
         const script = new Script();
-        script.saveScript(code, props.player.currentServer, server.scripts);
+        script.saveScript(filename, code, props.player.currentServer, server.scripts);
         server.scripts.push(script);
       }
 
@@ -165,7 +165,7 @@ export function Root(props: IProps): React.ReactElement {
       //If the current script already exists on the server, overwrite it
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {
-          server.scripts[i].saveScript(code, props.player.currentServer, server.scripts);
+          server.scripts[i].saveScript(filename, code, props.player.currentServer, server.scripts);
           props.router.toTerminal();
           return;
         }
@@ -173,7 +173,7 @@ export function Root(props: IProps): React.ReactElement {
 
       //If the current script does NOT exist, create a new one
       const script = new Script();
-      script.saveScript(code, props.player.currentServer, server.scripts);
+      script.saveScript(filename, code, props.player.currentServer, server.scripts);
       server.scripts.push(script);
     } else if (filename.endsWith(".txt")) {
       for (let i = 0; i < server.textFiles.length; ++i) {

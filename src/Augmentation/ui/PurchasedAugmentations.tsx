@@ -9,6 +9,7 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Player } from "../../Player";
 
 import { AugmentationAccordion } from "../../ui/React/AugmentationAccordion";
+import List from "@mui/material/List";
 
 export function PurchasedAugmentations(): React.ReactElement {
   const augs: React.ReactElement[] = [];
@@ -29,12 +30,8 @@ export function PurchasedAugmentations(): React.ReactElement {
       level = ownedAug.level;
     }
 
-    augs.push(
-      <li key={`${ownedAug.name}${ownedAug.level}`}>
-        <AugmentationAccordion aug={aug} level={level} />
-      </li>,
-    );
+    augs.push(<AugmentationAccordion key={aug.name} aug={aug} level={level} />);
   }
 
-  return <ul className="augmentations-list">{augs}</ul>;
+  return <List dense>{augs}</List>;
 }

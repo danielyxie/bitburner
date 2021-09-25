@@ -1555,7 +1555,7 @@ function initAugmentations() {
     repCost: 2.5e6,
     moneyCost: 0,
     info: "It's time to leave the cave.",
-    stats: <></>,
+    stats: null,
   });
   RedPill.addToFactions(["Daedalus"]);
   if (augmentationExists(AugmentationNames.TheRedPill)) {
@@ -1595,7 +1595,7 @@ function initAugmentations() {
       "exactly the implant does, but they promise that it will greatly " +
       "enhance your abilities.",
     hacking_grow_mult: 3,
-    stats: <></>,
+    stats: null,
   });
   HiveMind.addToFactions(["ECorp"]);
   if (augmentationExists(AugmentationNames.HiveMind)) {

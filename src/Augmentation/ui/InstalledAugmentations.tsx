@@ -1,19 +1,31 @@
 /**
- * React Component for displaying a list of the player's installed Augmentations
- * on the Augmentations UI
+ * React Component for displaying all of the player's installed Augmentations and
+ * Source-Files.
+ *
+ * It also contains 'configuration' buttons that allow you to change how the
+ * Augs/SF's are displayed
  */
-import * as React from "react";
+import React, { useState } from "react";
 
-import { Player } from "../../Player";
+import { OwnedSourceFiles } from "./OwnedSourceFiles";
+import { SourceFileMinus1 } from "./SourceFileMinus1";
+import { AugmentationAccordion } from "../../ui/React/AugmentationAccordion";
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Settings } from "../../Settings/Settings";
-import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 
-import { AugmentationAccordion } from "../../ui/React/AugmentationAccordion";
+import { Settings } from "../../Settings/Settings";
+import { use } from "../../ui/Context";
+import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import List from "@mui/material/List";
 
 export function InstalledAugmentations(): React.ReactElement {
-  const sourceAugs = Player.augmentations.slice();
+  const setRerender = useState(true)[1];
+  const player = use.Player();
+
+  const sourceAugs = player.augmentations.slice();
 
   if (Settings.OwnedAugmentationsOrder === OwnedAugmentationsOrderSetting.Alphabetically) {
     sourceAugs.sort((aug1, aug2) => {
@@ -21,20 +33,42 @@ export function InstalledAugmentations(): React.ReactElement {
     });
   }
 
-  const augs = sourceAugs.map((e) => {
-    const aug = Augmentations[e.name];
+  function rerender(): void {
+    setRerender((old) => !old);
+  }
 
-    let level = null;
-    if (e.name === AugmentationNames.NeuroFluxGovernor) {
-      level = e.level;
-    }
+  function sortByAcquirementTime(): void {
+    Settings.OwnedAugmentationsOrder = OwnedAugmentationsOrderSetting.AcquirementTime;
+    rerender();
+  }
 
-    return (
-      <li key={e.name}>
-        <AugmentationAccordion aug={aug} level={level} />
-      </li>
-    );
-  });
+  function sortInOrder(): void {
+    Settings.OwnedAugmentationsOrder = OwnedAugmentationsOrderSetting.Alphabetically;
+    rerender();
+  }
 
-  return <>{augs}</>;
+  return (
+    <>
+      <Tooltip title={"Sorts the Augmentations alphabetically in numeral order"}>
+        <Button onClick={sortInOrder}>Sort in Order</Button>
+      </Tooltip>
+      <Tooltip title={"Sorts the Augmentations based on when you acquired them (same as default)"}>
+        <Button sx={{ mx: 2 }} onClick={sortByAcquirementTime}>
+          Sort by Acquirement Time
+        </Button>
+      </Tooltip>
+      <List dense>
+        {sourceAugs.map((e) => {
+          const aug = Augmentations[e.name];
+
+          let level = null;
+          if (e.name === AugmentationNames.NeuroFluxGovernor) {
+            level = e.level;
+          }
+
+          return <AugmentationAccordion key={aug.name} aug={aug} level={level} />;
+        })}
+      </List>
+    </>
+  );
 }

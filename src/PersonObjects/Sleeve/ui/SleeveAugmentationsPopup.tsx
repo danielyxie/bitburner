@@ -47,7 +47,7 @@ export function SleeveAugmentationsPopup(props: IProps): React.ReactElement {
             tooltip = renderToStaticMarkup(tooltip);
           }
           tooltip += "<br /><br />";
-          tooltip += renderToStaticMarkup(aug.stats);
+          tooltip += renderToStaticMarkup(aug.stats || <></>);
           return (
             <div key={augName} className="gang-owned-upgrade tooltip">
               {augName}
@@ -70,7 +70,7 @@ export function SleeveAugmentationsPopup(props: IProps): React.ReactElement {
           info = renderToStaticMarkup(info);
         }
         info += "<br /><br />";
-        info += renderToStaticMarkup(aug.stats);
+        info += renderToStaticMarkup(aug.stats || <></>);
 
         return (
           <div key={aug.name} className="cmpy-mgmt-upgrade-div" onClick={() => purchaseAugmentation(aug)}>
