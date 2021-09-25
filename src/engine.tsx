@@ -46,7 +46,6 @@ import { dialogBoxCreate } from "../utils/DialogBox";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 
 import { startTampering } from "./Exploits/tampering";
-import { startUnclickable } from "./Exploits/unclickable";
 
 import React from "react";
 
@@ -270,7 +269,6 @@ const Engine: {
 
   load: function (saveString) {
     startTampering();
-    startUnclickable();
     // Load game from save or create new game
     if (loadGame(saveString)) {
       ThemeEvents.emit();
