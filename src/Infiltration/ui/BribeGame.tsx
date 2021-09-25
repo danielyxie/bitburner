@@ -30,7 +30,7 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
   const [choices] = useState(makeChoices(difficulty));
   const [index, setIndex] = useState(0);
 
-  function press(event: React.KeyboardEvent<HTMLElement>): void {
+  function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     const k = event.keyCode;
     if (k === 32) {

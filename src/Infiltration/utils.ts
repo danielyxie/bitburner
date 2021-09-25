@@ -4,7 +4,7 @@ export function random(min: number, max: number): number {
   return Math.random() * (max - min) + min;
 }
 
-export function getArrow(event: React.KeyboardEvent<HTMLElement>): string {
+export function getArrow(event: KeyboardEvent): string {
   switch (event.keyCode) {
     case 38:
     case 87:

@@ -33,7 +33,7 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
   const [answer] = useState(makeAnswer(difficulty));
   const [guess, setGuess] = useState("");
 
-  function press(event: React.KeyboardEvent<HTMLElement>): void {
+  function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     if (event.keyCode === 16) return;
     const nextGuess = guess + event.key.toUpperCase();
