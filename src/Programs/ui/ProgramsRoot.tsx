@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { use } from "../../ui/Context";
 import { getAvailableCreatePrograms } from "../ProgramHelpers";
 
-import { Box, ButtonGroup, Tooltip, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 
 export function ProgramsRoot(): React.ReactElement {

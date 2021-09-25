@@ -19,7 +19,7 @@ function makeScriptBlob(code: string): Blob {
 export async function executeJSScript(scripts: Script[] = [], workerScript: WorkerScript) {
   let loadedModule;
   let uurls: ScriptUrl[] = [];
-  let script = workerScript.getScript();
+  const script = workerScript.getScript();
   if (script === null) throw new Error("script is null");
   if (shouldCompile(script, scripts)) {
     // The URL at the top is the one we want to import. It will
@@ -37,7 +37,7 @@ export async function executeJSScript(scripts: Script[] = [], workerScript: Work
   }
   loadedModule = await script.module;
 
-  let ns = workerScript.env.vars;
+  const ns = workerScript.env.vars;
 
   // TODO: putting await in a non-async function yields unhelpful
   // "SyntaxError: unexpected reserved word" with no line number information.

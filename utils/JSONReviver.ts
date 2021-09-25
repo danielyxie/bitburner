@@ -10,7 +10,7 @@ export interface IReviverValue {
 // a `data` property. If it finds them, and finds a matching
 // constructor that has a `fromJSON` property on it, it hands
 // off to that `fromJSON` fuunction, passing in the value.
-export function Reviver(key: string, value: IReviverValue | null) {
+export function Reviver(key: string, value: IReviverValue | null): any {
   if (value == null) {
     console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
     return 0;
@@ -32,6 +32,8 @@ export function Reviver(key: string, value: IReviverValue | null) {
   }
   return value;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Reviver {
   export const constructors: { [key: string]: any } = {};
 }
@@ -47,6 +49,7 @@ export namespace Reviver {
 //             regardless of whether it's an "own" property.)
 // Returns:    The structure (which will then be turned into a string
 //             as part of the JSON.stringify algorithm)
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function Generic_toJSON(ctorName: string, obj: any, keys?: string[]): IReviverValue {
   if (!keys) {
     keys = Object.keys(obj); // Only "own" properties are included
@@ -67,6 +70,7 @@ export function Generic_toJSON(ctorName: string, obj: any, keys?: string[]): IRe
 // `ctor`      The constructor to call
 // `data`      The data to apply
 // Returns:    The object
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function Generic_fromJSON<T>(ctor: new () => T, data: any): T {
   const obj: any = new ctor();
   for (const name in data) {

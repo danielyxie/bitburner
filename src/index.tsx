@@ -12,7 +12,7 @@ ReactDOM.render(
   document.getElementById("mainmenu-container"),
 );
 
-function rerender() {
+function rerender(): void {
   refreshTheme();
   ReactDOM.render(
     <Theme>

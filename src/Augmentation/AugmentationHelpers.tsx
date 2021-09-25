@@ -2363,7 +2363,7 @@ function resetAugmentation(newAugObject: Augmentation): void {
   if (!(newAugObject instanceof Augmentation)) {
     throw new Error("Invalid argument 'newAugObject' passed into resetAugmentation");
   }
-  var name = newAugObject.name;
+  const name = newAugObject.name;
   if (augmentationExists(name)) {
     delete Augmentations[name];
   }
@@ -2397,7 +2397,7 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
 
   // Push onto Player's Augmentation list
   if (!reapply) {
-    var ownedAug = new PlayerOwnedAugmentation(aug.name);
+    const ownedAug = new PlayerOwnedAugmentation(aug.name);
     Player.augmentations.push(ownedAug);
   }
 }

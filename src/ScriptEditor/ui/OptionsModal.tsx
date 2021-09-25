@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Options } from "./Options";
-import { StdButton } from "../../ui/React/StdButton";
-import { removePopup } from "../../ui/React/createPopup";
 import { Modal } from "../../ui/React/Modal";
 
 import Button from "@mui/material/Button";

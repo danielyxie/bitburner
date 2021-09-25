@@ -3,7 +3,6 @@ import { Modal } from "./Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import DoneIcon from "@mui/icons-material/Done";
 import IconButton from "@mui/material/IconButton";
 import ReplyIcon from "@mui/icons-material/Reply";
 import { Color, ColorPicker } from "material-ui-color";

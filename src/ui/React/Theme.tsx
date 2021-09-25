@@ -32,7 +32,7 @@ declare module "@mui/material/styles" {
 
 let theme: Theme;
 
-export function refreshTheme() {
+export function refreshTheme(): void {
   theme = createTheme({
     colors: {
       hp: Settings.theme.hp,

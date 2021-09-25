@@ -26,7 +26,6 @@ function calculateAugmentedStats(): any {
 
 function Improvements({ r }: { r: number }): React.ReactElement {
   if (r) {
-    console.log(r);
     return (
       <>
         <TableCell key="2">

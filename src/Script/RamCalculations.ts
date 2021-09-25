@@ -104,7 +104,7 @@ async function parseOnlyRamCalculate(
         }
 
         let script = null;
-        let fn = nextModule.startsWith("./") ? nextModule.slice(2) : nextModule;
+        const fn = nextModule.startsWith("./") ? nextModule.slice(2) : nextModule;
         for (const s of otherScripts) {
           if (s.filename === fn) {
             script = s;
@@ -147,14 +147,14 @@ async function parseOnlyRamCalculate(
       if (ref.endsWith(".*")) {
         // A prefix reference. We need to find all matching identifiers.
         const prefix = ref.slice(0, ref.length - 2);
-        for (let ident of Object.keys(dependencyMap).filter((k) => k.startsWith(prefix))) {
-          for (let dep of dependencyMap[ident] || []) {
+        for (const ident of Object.keys(dependencyMap).filter((k) => k.startsWith(prefix))) {
+          for (const dep of dependencyMap[ident] || []) {
             if (!resolvedRefs.has(dep)) unresolvedRefs.push(dep);
           }
         }
       } else {
         // An exact reference. Add all dependencies of this ref.
-        for (let dep of dependencyMap[ref] || []) {
+        for (const dep of dependencyMap[ref] || []) {
           if (!resolvedRefs.has(dep)) unresolvedRefs.push(dep);
         }
       }
@@ -162,7 +162,7 @@ async function parseOnlyRamCalculate(
       // Check if this identifier is a function in the workerScript environment.
       // If it is, then we need to get its RAM cost.
       try {
-        function applyFuncRam(func: any) {
+        function applyFuncRam(func: any): number {
           if (typeof func === "function") {
             try {
               let res;
@@ -235,9 +235,9 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): any {
 
   // If we reference this internal name, we're really referencing that external name.
   // Filled when we import names from other modules.
-  let internalToExternal: { [key: string]: string | undefined } = {};
+  const internalToExternal: { [key: string]: string | undefined } = {};
 
-  let additionalModules: string[] = [];
+  const additionalModules: string[] = [];
 
   // References get added pessimistically. They are added for thisModule.name, name, and for
   // any aliases.
@@ -256,7 +256,7 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): any {
 
   // If we discover a dependency identifier, state.key is the dependent identifier.
   // walkDeeper is for doing recursive walks of expressions in composites that we handle.
-  function commonVisitors() {
+  function commonVisitors(): any {
     return {
       Identifier: (node: any, st: any) => {
         if (objectPrototypeProperties.includes(node.name)) {

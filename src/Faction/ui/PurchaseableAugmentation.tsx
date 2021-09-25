@@ -51,7 +51,7 @@ function Requirements(props: IReqProps): React.ReactElement {
     );
   }
 
-  let color = !props.hasRep || !props.hasCost ? "error" : "primary";
+  const color = !props.hasRep || !props.hasCost ? "error" : "primary";
   return (
     <React.Fragment key="f">
       <TableCell key={1}>

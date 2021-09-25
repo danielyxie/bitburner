@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StdButton } from "../../ui/React/StdButton";
 import Editor from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
-import { createPopup } from "../../ui/React/createPopup";
 import { OptionsModal } from "./OptionsModal";
 import { Options } from "./Options";
 import { js_beautify as beautifyCode } from "js-beautify";
@@ -32,7 +30,6 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 
-let loaded = false;
 let symbols: string[] = [];
 (function () {
   const ns = NetscriptFunctions({} as WorkerScript);
@@ -293,7 +290,6 @@ export function Root(props: IProps): React.ReactElement {
     });
     monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, "netscript.d.ts");
     monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, "netscript.d.ts");
-    loaded = true;
   }
 
   return (

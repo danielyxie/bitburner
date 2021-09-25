@@ -62,7 +62,7 @@ import React from "react";
 
 export function init(this: IPlayer) {
   /* Initialize Player's home computer */
-  var t_homeComp = safetlyCreateUniqueServer({
+  const t_homeComp = safetlyCreateUniqueServer({
     adminRights: true,
     hostname: "home",
     ip: createUniqueRandomIp(),
@@ -79,7 +79,7 @@ export function init(this: IPlayer) {
 }
 
 export function prestigeAugmentation(this: IPlayer) {
-  var homeComp = this.getHomeComputer();
+  const homeComp = this.getHomeComputer();
   this.currentServer = homeComp.ip;
   this.homeComputer = homeComp.ip;
 
@@ -262,7 +262,7 @@ export function updateSkillLevels(this: IPlayer): void {
     this.intelligence = 0;
   }
 
-  var ratio = this.hp / this.max_hp;
+  const ratio = this.hp / this.max_hp;
   this.max_hp = Math.floor(10 + this.defense / 10);
   this.hp = Math.round(this.max_hp * ratio);
 }
@@ -313,7 +313,7 @@ export function hasProgram(this: IPlayer, programName: string): boolean {
     return false;
   }
 
-  for (var i = 0; i < home.programs.length; ++i) {
+  for (let i = 0; i < home.programs.length; ++i) {
     if (programName.toLowerCase() == home.programs[i].toLowerCase()) {
       return true;
     }
@@ -588,7 +588,7 @@ export function cancelationPenalty(this: IPlayer) {
 export function work(this: IPlayer, numCycles: number): boolean {
   // Cap the number of cycles being processed to whatever would put you at
   // the work time limit (8 hours)
-  var overMax = false;
+  let overMax = false;
   if (this.timeWorked + CONSTANTS._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer8Hours) {
     overMax = true;
     numCycles = Math.round((CONSTANTS.MillisecondsPer8Hours - this.timeWorked) / CONSTANTS._idleSpeed);
@@ -714,7 +714,7 @@ export function startWorkPartTime(this: IPlayer, router: IRouter, companyName: s
 export function workPartTime(this: IPlayer, numCycles: number): boolean {
   //Cap the number of cycles being processed to whatever would put you at the
   //work time limit (8 hours)
-  var overMax = false;
+  let overMax = false;
   if (this.timeWorked + CONSTANTS._idleSpeed * numCycles >= CONSTANTS.MillisecondsPer8Hours) {
     overMax = true;
     numCycles = Math.round((CONSTANTS.MillisecondsPer8Hours - this.timeWorked) / CONSTANTS._idleSpeed);
@@ -733,7 +733,7 @@ export function workPartTime(this: IPlayer, numCycles: number): boolean {
 }
 
 export function finishWorkPartTime(this: IPlayer, sing = false): string {
-  var company = Companies[this.companyName];
+  const company = Companies[this.companyName];
   company.playerReputation += this.workRepGained;
 
   this.updateSkillLevels();
@@ -764,7 +764,7 @@ export function finishWorkPartTime(this: IPlayer, sing = false): string {
   this.resetWorkStatus();
 
   if (sing) {
-    var res =
+    const res =
       "You worked for " +
       convertTimeMsToTimeElapsedString(this.timeWorked) +
       " and " +
@@ -802,7 +802,7 @@ export function stopFocusing(this: IPlayer): void {
 /* Working for Faction */
 export function startFactionWork(this: IPlayer, router: IRouter, faction: Faction): void {
   //Update reputation gain rate to account for faction favor
-  var favorMult = 1 + faction.favor / 100;
+  let favorMult = 1 + faction.favor / 100;
   if (isNaN(favorMult)) {
     favorMult = 1;
   }
@@ -818,7 +818,7 @@ export function startFactionWork(this: IPlayer, router: IRouter, faction: Factio
   router.toWork();
 }
 
-export function startFactionHackWork(this: IPlayer, router: IRouter, faction: Faction) {
+export function startFactionHackWork(this: IPlayer, router: IRouter, faction: Faction): void {
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkHacking);
 
   this.workHackExpGainRate = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -833,7 +833,7 @@ export function startFactionHackWork(this: IPlayer, router: IRouter, faction: Fa
   this.startFactionWork(router, faction);
 }
 
-export function startFactionFieldWork(this: IPlayer, router: IRouter, faction: Faction) {
+export function startFactionFieldWork(this: IPlayer, router: IRouter, faction: Faction): void {
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkField);
 
   this.workHackExpGainRate = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -850,7 +850,7 @@ export function startFactionFieldWork(this: IPlayer, router: IRouter, faction: F
   this.startFactionWork(router, faction);
 }
 
-export function startFactionSecurityWork(this: IPlayer, router: IRouter, faction: Faction) {
+export function startFactionSecurityWork(this: IPlayer, router: IRouter, faction: Faction): void {
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkSecurity);
 
   this.workHackExpGainRate = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -867,7 +867,7 @@ export function startFactionSecurityWork(this: IPlayer, router: IRouter, faction
   this.startFactionWork(router, faction);
 }
 
-export function workForFaction(this: IPlayer, numCycles: number) {
+export function workForFaction(this: IPlayer, numCycles: number): boolean {
   const faction = Factions[this.currentWorkFactionName];
 
   //Constantly update the rep gain rate
@@ -933,7 +933,7 @@ export function finishFactionWork(this: IPlayer, cancelled: boolean, sing = fals
   this.isWorking = false;
   this.resetWorkStatus();
   if (sing) {
-    var res =
+    const res =
       "You worked for your faction " +
       faction.name +
       " for a total of " +
@@ -1146,7 +1146,7 @@ export function getWorkRepGain(this: IPlayer): number {
     return 0;
   }
 
-  var jobPerformance = companyPosition.calculateJobPerformance(
+  let jobPerformance = companyPosition.calculateJobPerformance(
     this.hacking_skill,
     this.strength,
     this.defense,
@@ -1159,7 +1159,7 @@ export function getWorkRepGain(this: IPlayer): number {
   jobPerformance += this.intelligence / CONSTANTS.MaxSkillLevel;
 
   //Update reputation gain rate to account for company favor
-  var favorMult = 1 + company.favor / 100;
+  let favorMult = 1 + company.favor / 100;
   if (isNaN(favorMult)) {
     favorMult = 1;
   }
@@ -1208,14 +1208,14 @@ export function startCreateProgramWork(
 
   this.timeNeededToCompleteWork = time;
   //Check for incomplete program
-  for (var i = 0; i < this.getHomeComputer().programs.length; ++i) {
-    var programFile = this.getHomeComputer().programs[i];
+  for (let i = 0; i < this.getHomeComputer().programs.length; ++i) {
+    const programFile = this.getHomeComputer().programs[i];
     if (programFile.startsWith(programName) && programFile.endsWith("%-INC")) {
-      var res = programFile.split("-");
+      const res = programFile.split("-");
       if (res.length != 3) {
         break;
       }
-      var percComplete = Number(res[1].slice(0, -1));
+      const percComplete = Number(res[1].slice(0, -1));
       if (isNaN(percComplete) || percComplete < 0 || percComplete >= 100) {
         break;
       }
@@ -1230,8 +1230,8 @@ export function startCreateProgramWork(
 
 export function createProgramWork(this: IPlayer, numCycles: number): boolean {
   //Higher hacking skill will allow you to create programs faster
-  var reqLvl = this.createProgramReqLvl;
-  var skillMult = (this.hacking_skill / reqLvl) * this.getIntelligenceBonus(3); //This should always be greater than 1;
+  const reqLvl = this.createProgramReqLvl;
+  let skillMult = (this.hacking_skill / reqLvl) * this.getIntelligenceBonus(3); //This should always be greater than 1;
   skillMult = 1 + (skillMult - 1) / 5; //The divider constant can be adjusted as necessary
 
   //Skill multiplier directly applied to "time worked"
@@ -1246,7 +1246,7 @@ export function createProgramWork(this: IPlayer, numCycles: number): boolean {
 }
 
 export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): string {
-  var programName = this.createProgramName;
+  const programName = this.createProgramName;
   if (cancelled === false) {
     dialogBoxCreate(
       "You've finished creating " + programName + "!<br>" + "The new program can be found on your home computer.",
@@ -1254,8 +1254,8 @@ export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): stri
 
     this.getHomeComputer().programs.push(programName);
   } else {
-    var perc = (Math.floor((this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) * 10000) / 100).toString();
-    var incompleteName = programName + "-" + perc + "%-INC";
+    const perc = (Math.floor((this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) * 10000) / 100).toString();
+    const incompleteName = programName + "-" + perc + "%-INC";
     this.getHomeComputer().programs.push(incompleteName);
   }
 
@@ -1281,8 +1281,8 @@ export function startClass(this: IPlayer, router: IRouter, costMult: number, exp
   const gameCPS = 1000 / CONSTANTS._idleSpeed;
 
   //Find cost and exp gain per game cycle
-  var cost = 0;
-  var hackExp = 0,
+  let cost = 0;
+  let hackExp = 0,
     strExp = 0,
     defExp = 0,
     dexExp = 0,
@@ -1381,7 +1381,7 @@ export function finishClass(this: IPlayer, sing = false): string {
   this.isWorking = false;
 
   if (sing) {
-    var res =
+    const res =
       "After " +
       this.className +
       " for " +
@@ -1709,7 +1709,7 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   }
 
   while (true) {
-    let newPos = getNextCompanyPositionHelper(pos);
+    const newPos = getNextCompanyPositionHelper(pos);
     if (newPos == null) {
       break;
     }
@@ -1737,7 +1737,7 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
         return false;
       } else if (company.hasPosition(nextPos)) {
         if (!sing) {
-          var reqText = getJobRequirementText(company, nextPos);
+          const reqText = getJobRequirementText(company, nextPos);
           dialogBoxCreate("Unfortunately, you do not qualify for a promotion<br>" + reqText);
         }
         return false;
@@ -1766,7 +1766,7 @@ export function getNextCompanyPosition(
   company: Company,
   entryPosType: CompanyPosition,
 ): CompanyPosition | null {
-  var currCompany = null;
+  let currCompany = null;
   if (this.companyName !== "") {
     currCompany = Companies[this.companyName];
   }
@@ -1818,7 +1818,7 @@ export function applyForItJob(this: IPlayer, sing = false): boolean {
 }
 
 export function applyForSecurityEngineerJob(this: IPlayer, sing = false): boolean {
-  var company = Companies[this.location]; //Company being applied to
+  const company = Companies[this.location]; //Company being applied to
   if (this.isQualified(company, CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]])) {
     return this.applyForJob(CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]], sing);
   } else {
@@ -1830,7 +1830,7 @@ export function applyForSecurityEngineerJob(this: IPlayer, sing = false): boolea
 }
 
 export function applyForNetworkEngineerJob(this: IPlayer, sing = false): boolean {
-  var company = Companies[this.location]; //Company being applied to
+  const company = Companies[this.location]; //Company being applied to
   if (this.isQualified(company, CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]])) {
     const pos = CompanyPositions[posNames.NetworkEngineerCompanyPositions[0]];
     return this.applyForJob(pos, sing);
@@ -1857,7 +1857,7 @@ export function applyForSecurityJob(this: IPlayer, sing = false): boolean {
 }
 
 export function applyForAgentJob(this: IPlayer, sing = false): boolean {
-  var company = Companies[this.location]; //Company being applied to
+  const company = Companies[this.location]; //Company being applied to
   if (this.isQualified(company, CompanyPositions[posNames.AgentCompanyPositions[0]])) {
     const pos = CompanyPositions[posNames.AgentCompanyPositions[0]];
     return this.applyForJob(pos, sing);
@@ -1870,7 +1870,7 @@ export function applyForAgentJob(this: IPlayer, sing = false): boolean {
 }
 
 export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
-  var company = Companies[this.location]; //Company being applied to
+  const company = Companies[this.location]; //Company being applied to
   if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[1]])) {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.MiscCompanyPositions[1];
@@ -1889,7 +1889,7 @@ export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
 }
 
 export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolean {
-  var company = Companies[this.location]; //Company being applied to
+  const company = Companies[this.location]; //Company being applied to
   if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
     this.jobs[company.name] = posNames.PartTimeCompanyPositions[1];
     if (!sing) {
@@ -1907,7 +1907,7 @@ export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolea
 }
 
 export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
-  var company = Companies[this.location]; //Company being applied to
+  const company = Companies[this.location]; //Company being applied to
   if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[0]])) {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.MiscCompanyPositions[0];
@@ -1924,7 +1924,7 @@ export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
 }
 
 export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean {
-  var company = Companies[this.location]; //Company being applied to
+  const company = Companies[this.location]; //Company being applied to
   if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[0]])) {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.PartTimeCompanyPositions[0];
@@ -1942,13 +1942,13 @@ export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean 
 
 //Checks if the Player is qualified for a certain position
 export function isQualified(this: IPlayer, company: Company, position: CompanyPosition): boolean {
-  var offset = company.jobStatReqOffset;
-  var reqHacking = position.requiredHacking > 0 ? position.requiredHacking + offset : 0;
-  var reqStrength = position.requiredStrength > 0 ? position.requiredStrength + offset : 0;
-  var reqDefense = position.requiredDefense > 0 ? position.requiredDefense + offset : 0;
-  var reqDexterity = position.requiredDexterity > 0 ? position.requiredDexterity + offset : 0;
-  var reqAgility = position.requiredDexterity > 0 ? position.requiredDexterity + offset : 0;
-  var reqCharisma = position.requiredCharisma > 0 ? position.requiredCharisma + offset : 0;
+  const offset = company.jobStatReqOffset;
+  const reqHacking = position.requiredHacking > 0 ? position.requiredHacking + offset : 0;
+  const reqStrength = position.requiredStrength > 0 ? position.requiredStrength + offset : 0;
+  const reqDefense = position.requiredDefense > 0 ? position.requiredDefense + offset : 0;
+  const reqDexterity = position.requiredDexterity > 0 ? position.requiredDexterity + offset : 0;
+  const reqAgility = position.requiredDexterity > 0 ? position.requiredDexterity + offset : 0;
+  const reqCharisma = position.requiredCharisma > 0 ? position.requiredCharisma + offset : 0;
 
   if (
     this.hacking_skill >= reqHacking &&
@@ -1977,7 +1977,7 @@ export function reapplyAllAugmentations(this: IPlayer, resetMultipliers = true):
     }
 
     const augName = this.augmentations[i].name;
-    var aug = Augmentations[augName];
+    const aug = Augmentations[augName];
     if (aug == null) {
       console.warn(`Invalid augmentation name in Player.reapplyAllAugmentations(). Aug ${augName} will be skipped`);
       continue;
@@ -2000,8 +2000,8 @@ export function reapplyAllSourceFiles(this: IPlayer): void {
   //this.resetMultipliers();
 
   for (let i = 0; i < this.sourceFiles.length; ++i) {
-    var srcFileKey = "SourceFile" + this.sourceFiles[i].n;
-    var sourceFileObject = SourceFiles[srcFileKey];
+    const srcFileKey = "SourceFile" + this.sourceFiles[i].n;
+    const sourceFileObject = SourceFiles[srcFileKey];
     if (sourceFileObject == null) {
       console.error(`Invalid source file number: ${this.sourceFiles[i].n}`);
       continue;
@@ -2016,9 +2016,9 @@ export function reapplyAllSourceFiles(this: IPlayer): void {
 //those requirements and will return an array of all factions that the Player should
 //receive an invitation to
 export function checkForFactionInvitations(this: IPlayer): Faction[] {
-  let invitedFactions: Faction[] = []; //Array which will hold all Factions the player should be invited to
+  const invitedFactions: Faction[] = []; //Array which will hold all Factions the player should be invited to
 
-  var numAugmentations = this.augmentations.length;
+  const numAugmentations = this.augmentations.length;
 
   const allCompanies = Object.keys(this.jobs);
   const allPositions = Object.values(this.jobs);
@@ -2042,7 +2042,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Illuminati
-  var illuminatiFac = Factions["Illuminati"];
+  const illuminatiFac = Factions["Illuminati"];
   if (
     !illuminatiFac.isBanned &&
     !illuminatiFac.isMember &&
@@ -2059,7 +2059,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Daedalus
-  var daedalusFac = Factions["Daedalus"];
+  const daedalusFac = Factions["Daedalus"];
   if (
     !daedalusFac.isBanned &&
     !daedalusFac.isMember &&
@@ -2073,7 +2073,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //The Covenant
-  var covenantFac = Factions["The Covenant"];
+  const covenantFac = Factions["The Covenant"];
   if (
     !covenantFac.isBanned &&
     !covenantFac.isMember &&
@@ -2090,7 +2090,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //ECorp
-  var ecorpFac = Factions["ECorp"];
+  const ecorpFac = Factions["ECorp"];
   if (
     !ecorpFac.isBanned &&
     !ecorpFac.isMember &&
@@ -2101,7 +2101,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //MegaCorp
-  var megacorpFac = Factions["MegaCorp"];
+  const megacorpFac = Factions["MegaCorp"];
   if (
     !megacorpFac.isBanned &&
     !megacorpFac.isMember &&
@@ -2112,7 +2112,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Bachman & Associates
-  var bachmanandassociatesFac = Factions["Bachman & Associates"];
+  const bachmanandassociatesFac = Factions["Bachman & Associates"];
   if (
     !bachmanandassociatesFac.isBanned &&
     !bachmanandassociatesFac.isMember &&
@@ -2123,7 +2123,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Blade Industries
-  var bladeindustriesFac = Factions["Blade Industries"];
+  const bladeindustriesFac = Factions["Blade Industries"];
   if (
     !bladeindustriesFac.isBanned &&
     !bladeindustriesFac.isMember &&
@@ -2134,7 +2134,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //NWO
-  var nwoFac = Factions["NWO"];
+  const nwoFac = Factions["NWO"];
   if (
     !nwoFac.isBanned &&
     !nwoFac.isMember &&
@@ -2145,7 +2145,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Clarke Incorporated
-  var clarkeincorporatedFac = Factions["Clarke Incorporated"];
+  const clarkeincorporatedFac = Factions["Clarke Incorporated"];
   if (
     !clarkeincorporatedFac.isBanned &&
     !clarkeincorporatedFac.isMember &&
@@ -2156,7 +2156,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //OmniTek Incorporated
-  var omnitekincorporatedFac = Factions["OmniTek Incorporated"];
+  const omnitekincorporatedFac = Factions["OmniTek Incorporated"];
   if (
     !omnitekincorporatedFac.isBanned &&
     !omnitekincorporatedFac.isMember &&
@@ -2167,7 +2167,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Four Sigma
-  var foursigmaFac = Factions["Four Sigma"];
+  const foursigmaFac = Factions["Four Sigma"];
   if (
     !foursigmaFac.isBanned &&
     !foursigmaFac.isMember &&
@@ -2178,7 +2178,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //KuaiGong International
-  var kuaigonginternationalFac = Factions["KuaiGong International"];
+  const kuaigonginternationalFac = Factions["KuaiGong International"];
   if (
     !kuaigonginternationalFac.isBanned &&
     !kuaigonginternationalFac.isMember &&
@@ -2261,7 +2261,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Chongqing
-  var chongqingFac = Factions["Chongqing"];
+  const chongqingFac = Factions["Chongqing"];
   if (
     !chongqingFac.isBanned &&
     !chongqingFac.isMember &&
@@ -2273,7 +2273,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Sector-12
-  var sector12Fac = Factions["Sector-12"];
+  const sector12Fac = Factions["Sector-12"];
   if (
     !sector12Fac.isBanned &&
     !sector12Fac.isMember &&
@@ -2285,7 +2285,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //New Tokyo
-  var newtokyoFac = Factions["New Tokyo"];
+  const newtokyoFac = Factions["New Tokyo"];
   if (
     !newtokyoFac.isBanned &&
     !newtokyoFac.isMember &&
@@ -2297,7 +2297,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Aevum
-  var aevumFac = Factions["Aevum"];
+  const aevumFac = Factions["Aevum"];
   if (
     !aevumFac.isBanned &&
     !aevumFac.isMember &&
@@ -2309,7 +2309,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Ishima
-  var ishimaFac = Factions["Ishima"];
+  const ishimaFac = Factions["Ishima"];
   if (
     !ishimaFac.isBanned &&
     !ishimaFac.isMember &&
@@ -2321,7 +2321,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Volhaven
-  var volhavenFac = Factions["Volhaven"];
+  const volhavenFac = Factions["Volhaven"];
   if (
     !volhavenFac.isBanned &&
     !volhavenFac.isMember &&
@@ -2333,7 +2333,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Speakers for the Dead
-  var speakersforthedeadFac = Factions["Speakers for the Dead"];
+  const speakersforthedeadFac = Factions["Speakers for the Dead"];
   if (
     !speakersforthedeadFac.isBanned &&
     !speakersforthedeadFac.isMember &&
@@ -2352,7 +2352,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //The Dark Army
-  var thedarkarmyFac = Factions["The Dark Army"];
+  const thedarkarmyFac = Factions["The Dark Army"];
   if (
     !thedarkarmyFac.isBanned &&
     !thedarkarmyFac.isMember &&
@@ -2372,7 +2372,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //The Syndicate
-  var thesyndicateFac = Factions["The Syndicate"];
+  const thesyndicateFac = Factions["The Syndicate"];
   if (
     !thesyndicateFac.isBanned &&
     !thesyndicateFac.isMember &&
@@ -2392,7 +2392,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Silhouette
-  var silhouetteFac = Factions["Silhouette"];
+  const silhouetteFac = Factions["Silhouette"];
   if (
     !silhouetteFac.isBanned &&
     !silhouetteFac.isMember &&
@@ -2407,7 +2407,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Tetrads
-  var tetradsFac = Factions["Tetrads"];
+  const tetradsFac = Factions["Tetrads"];
   if (
     !tetradsFac.isBanned &&
     !tetradsFac.isMember &&
@@ -2423,7 +2423,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //SlumSnakes
-  var slumsnakesFac = Factions["Slum Snakes"];
+  const slumsnakesFac = Factions["Slum Snakes"];
   if (
     !slumsnakesFac.isBanned &&
     !slumsnakesFac.isMember &&
@@ -2439,10 +2439,10 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Netburners
-  var netburnersFac = Factions["Netburners"];
-  var totalHacknetRam = 0;
-  var totalHacknetCores = 0;
-  var totalHacknetLevels = 0;
+  const netburnersFac = Factions["Netburners"];
+  let totalHacknetRam = 0;
+  let totalHacknetCores = 0;
+  let totalHacknetLevels = 0;
   for (let i = 0; i < this.hacknetNodes.length; ++i) {
     const v = this.hacknetNodes[i];
     if (typeof v === "string") {
@@ -2470,7 +2470,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Tian Di Hui
-  var tiandihuiFac = Factions["Tian Di Hui"];
+  const tiandihuiFac = Factions["Tian Di Hui"];
   if (
     !tiandihuiFac.isBanned &&
     !tiandihuiFac.isMember &&
@@ -2503,11 +2503,11 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
 }
 
 /************* BitNodes **************/
-export function setBitNodeNumber(this: IPlayer, n: number) {
+export function setBitNodeNumber(this: IPlayer, n: number): void {
   this.bitNodeN = n;
 }
 
-export function queueAugmentation(this: IPlayer, name: string) {
+export function queueAugmentation(this: IPlayer, name: string): void {
   for (const i in this.queuedAugmentations) {
     if (this.queuedAugmentations[i].name == name) {
       console.warn(`tried to queue ${name} twice, this may be a bug`);
@@ -2526,7 +2526,7 @@ export function queueAugmentation(this: IPlayer, name: string) {
 }
 
 /************* Coding Contracts **************/
-export function gainCodingContractReward(this: IPlayer, reward: ICodingContractReward, difficulty = 1) {
+export function gainCodingContractReward(this: IPlayer, reward: ICodingContractReward, difficulty = 1): string {
   if (reward == null || reward.type == null || reward == null) {
     return `No reward for this contract`;
   }
@@ -2539,7 +2539,7 @@ export function gainCodingContractReward(this: IPlayer, reward: ICodingContractR
         reward.type = CodingContractRewardType.FactionReputationAll;
         return this.gainCodingContractReward(reward);
       }
-      var repGain = CONSTANTS.CodingContractBaseFactionRepGain * difficulty;
+      const repGain = CONSTANTS.CodingContractBaseFactionRepGain * difficulty;
       Factions[reward.name].playerReputation += repGain;
       return `Gained ${repGain} faction reputation for ${reward.name}`;
     case CodingContractRewardType.FactionReputationAll:
@@ -2547,7 +2547,7 @@ export function gainCodingContractReward(this: IPlayer, reward: ICodingContractR
 
       // Ignore Bladeburners and other special factions for this calculation
       const specialFactions = ["Bladeburners"];
-      var factions = this.factions.slice();
+      const factions = this.factions.slice();
       factions = factions.filter((f) => {
         return !specialFactions.includes(f);
       });
@@ -2573,13 +2573,13 @@ export function gainCodingContractReward(this: IPlayer, reward: ICodingContractR
         reward.type = CodingContractRewardType.FactionReputationAll;
         return this.gainCodingContractReward(reward);
       }
-      var repGain = CONSTANTS.CodingContractBaseCompanyRepGain * difficulty;
+      const repGain = CONSTANTS.CodingContractBaseCompanyRepGain * difficulty;
       Companies[reward.name].playerReputation += repGain;
       return `Gained ${repGain} company reputation for ${reward.name}`;
       break;
     case CodingContractRewardType.Money:
     default:
-      var moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty * BitNodeMultipliers.CodingContractMoney;
+      const moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty * BitNodeMultipliers.CodingContractMoney;
       this.gainMoney(moneyGain);
       this.recordMoneySource(moneyGain, "codingcontract");
       return `Gained ${numeralWrapper.formatMoney(moneyGain)}`;
@@ -2588,7 +2588,7 @@ export function gainCodingContractReward(this: IPlayer, reward: ICodingContractR
   /* eslint-enable no-case-declarations */
 }
 
-export function travel(this: IPlayer, to: CityName) {
+export function travel(this: IPlayer, to: CityName): boolean {
   if (Cities[to] == null) {
     console.warn(`Player.travel() called with invalid city: ${to}`);
     return false;
@@ -2598,7 +2598,7 @@ export function travel(this: IPlayer, to: CityName) {
   return true;
 }
 
-export function gotoLocation(this: IPlayer, to: LocationName) {
+export function gotoLocation(this: IPlayer, to: LocationName): boolean {
   if (Locations[to] == null) {
     console.warn(`Player.gotoLocation() called with invalid location: ${to}`);
     return false;
@@ -2608,21 +2608,21 @@ export function gotoLocation(this: IPlayer, to: LocationName) {
   return true;
 }
 
-export function canAccessResleeving(this: IPlayer) {
+export function canAccessResleeving(this: IPlayer): boolean {
   return this.bitNodeN === 10 || SourceFileFlags[10] > 0;
 }
 
-export function giveExploit(this: IPlayer, exploit: Exploit) {
+export function giveExploit(this: IPlayer, exploit: Exploit): void {
   if (!this.exploits.includes(exploit)) {
     this.exploits.push(exploit);
   }
 }
 
-export function getIntelligenceBonus(this: IPlayer, weight: number) {
+export function getIntelligenceBonus(this: IPlayer, weight: number): number {
   return calculateIntelligenceBonus(this.intelligence, weight);
 }
 
-export function getCasinoWinnings(this: IPlayer) {
+export function getCasinoWinnings(this: IPlayer): number {
   return this.moneySourceA.casino;
 }
 

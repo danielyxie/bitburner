@@ -47,7 +47,7 @@ export function joinFaction(faction: Faction): void {
       Factions[enemy].isBanned = true;
     }
   }
-  for (var i = 0; i < Player.factionInvitations.length; ++i) {
+  for (let i = 0; i < Player.factionInvitations.length; ++i) {
     if (Player.factionInvitations[i] == faction.name || Factions[Player.factionInvitations[i]].isBanned) {
       Player.factionInvitations.splice(i, 1);
       i--;
@@ -91,28 +91,28 @@ export function hasAugmentationPrereqs(aug: Augmentation): boolean {
 
 export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = false): string {
   const factionInfo = fac.getInfo();
-  var hasPrereqs = hasAugmentationPrereqs(aug);
+  const hasPrereqs = hasAugmentationPrereqs(aug);
   if (!hasPrereqs) {
-    var txt = "You must first purchase or install " + aug.prereqs.join(",") + " before you can " + "purchase this one.";
+    const txt = "You must first purchase or install " + aug.prereqs.join(",") + " before you can " + "purchase this one.";
     if (sing) {
       return txt;
     } else {
       dialogBoxCreate(txt);
     }
   } else if (aug.baseCost !== 0 && Player.money.lt(aug.baseCost * factionInfo.augmentationPriceMult)) {
-    let txt = "You don't have enough money to purchase " + aug.name;
+    const txt = "You don't have enough money to purchase " + aug.name;
     if (sing) {
       return txt;
     }
     dialogBoxCreate(txt);
   } else if (fac.playerReputation < aug.baseRepRequirement) {
-    let txt = "You don't have enough faction reputation to purchase " + aug.name;
+    const txt = "You don't have enough faction reputation to purchase " + aug.name;
     if (sing) {
       return txt;
     }
     dialogBoxCreate(txt);
   } else if (aug.baseCost === 0 || Player.money.gte(aug.baseCost * factionInfo.augmentationPriceMult)) {
-    var queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
+    const queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {
       queuedAugmentation.level = getNextNeurofluxLevel();
     }
@@ -122,18 +122,18 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
 
     // If you just purchased Neuroflux Governor, recalculate the cost
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-      var nextLevel = getNextNeurofluxLevel();
+      let nextLevel = getNextNeurofluxLevel();
       --nextLevel;
-      var mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
+      const mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
       aug.baseRepRequirement = 500 * mult * BitNodeMultipliers.AugmentationRepCost;
       aug.baseCost = 750e3 * mult * BitNodeMultipliers.AugmentationMoneyCost;
 
-      for (var i = 0; i < Player.queuedAugmentations.length - 1; ++i) {
+      for (let i = 0; i < Player.queuedAugmentations.length - 1; ++i) {
         aug.baseCost *= CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
       }
     }
 
-    for (var name in Augmentations) {
+    for (const name in Augmentations) {
       if (Augmentations.hasOwnProperty(name)) {
         Augmentations[name].baseCost *= CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
       }

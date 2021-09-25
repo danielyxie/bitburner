@@ -23,7 +23,7 @@ export function LoadingScreen(): React.ReactElement {
   });
 
   useEffect(() => {
-    async function doLoad() {
+    async function doLoad(): Promise<void> {
       await load()
         .then((saveString) => {
           Engine.load(saveString);

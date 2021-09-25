@@ -15,9 +15,9 @@ export function netscriptDelay(time: number, workerScript: WorkerScript): Promis
 }
 
 export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string, exp: any = null) {
-  var lineNum = "";
+  let lineNum = "";
   if (exp != null) {
-    var num = getErrorLineNumber(exp, workerScript);
+    const num = getErrorLineNumber(exp, workerScript);
     lineNum = " (Line " + num + ")";
   }
   const server = AllServers[workerScript.serverIp];
@@ -72,7 +72,7 @@ export function isScriptErrorMessage(msg: string): boolean {
   if (!isString(msg)) {
     return false;
   }
-  let splitMsg = msg.split("|");
+  const splitMsg = msg.split("|");
   if (splitMsg.length != 4) {
     return false;
   }

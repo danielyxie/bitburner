@@ -231,7 +231,7 @@ const Engine: {
     }
 
     if (Engine.Counters.passiveFactionGrowth <= 0) {
-      var adjustedCycles = Math.floor(5 - Engine.Counters.passiveFactionGrowth);
+      const adjustedCycles = Math.floor(5 - Engine.Counters.passiveFactionGrowth);
       processPassiveFactionRepGain(adjustedCycles);
       Engine.Counters.passiveFactionGrowth = 5;
     }
@@ -334,7 +334,7 @@ const Engine: {
       }
 
       // Hacknet Nodes offline progress
-      var offlineProductionFromHacknetNodes = processHacknetEarnings(Player, numCyclesOffline);
+      const offlineProductionFromHacknetNodes = processHacknetEarnings(Player, numCyclesOffline);
       const hacknetProdInfo = hasHacknetServers(Player) ? (
         <>{Hashes(offlineProductionFromHacknetNodes)} hashes</>
       ) : (
@@ -384,7 +384,7 @@ const Engine: {
       }
 
       // Update total playtime
-      var time = numCyclesOffline * CONSTANTS._idleSpeed;
+      const time = numCyclesOffline * CONSTANTS._idleSpeed;
       if (Player.totalPlaytime == null) {
         Player.totalPlaytime = 0;
       }
