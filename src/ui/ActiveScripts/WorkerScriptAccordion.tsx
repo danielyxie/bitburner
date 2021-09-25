@@ -154,9 +154,7 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
             </TableBody>
           </Table>
 
-          <Button onClick={logClickHandler}>
-            <Typography>LOG</Typography>
-          </Button>
+          <Button onClick={logClickHandler}>LOG</Button>
           <IconButton onClick={killScriptClickHandler}>
             <DeleteIcon color="error" />
           </IconButton>

@@ -70,13 +70,11 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
       </Typography>
       <Box mx={2}>
         <Tooltip title={"'I never asked for this'"}>
-          <Button onClick={props.installAugmentationsFn}>
-            <Typography>Install Augmentations</Typography>
-          </Button>
+          <Button onClick={props.installAugmentationsFn}>Install Augmentations</Button>
         </Tooltip>
         <Tooltip title={"It's always a good idea to backup/export your save!"}>
-          <Button sx={{ mx: 2 }} onClick={doExport}>
-            <Typography color="error">Backup Save {exportBonusStr()}</Typography>
+          <Button sx={{ mx: 2 }} onClick={doExport} color="error">
+            Backup Save {exportBonusStr()}
           </Button>
         </Tooltip>
         <PurchasedAugmentations />

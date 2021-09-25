@@ -41,9 +41,5 @@ export function PurchaseButton(props: IProps): React.ReactElement {
     );
   }
 
-  return (
-    <Button onClick={props.onClick}>
-      <Typography>{text}</Typography>
-    </Button>
-  );
+  return <Button onClick={props.onClick}>{text}</Button>;
 }
