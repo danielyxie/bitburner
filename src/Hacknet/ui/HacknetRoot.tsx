@@ -42,7 +42,7 @@ export function HacknetRoot(props: IProps): React.ReactElement {
   const [purchaseMultiplier, setPurchaseMultiplier] = useState<number | string>(PurchaseMultipliers.x1);
 
   useEffect(() => {
-    const id = setInterval(rerender, 1000);
+    const id = setInterval(rerender, 200);
     return () => clearInterval(id);
   }, []);
 

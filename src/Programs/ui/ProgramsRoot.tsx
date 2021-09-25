@@ -14,7 +14,7 @@ export function ProgramsRoot(): React.ReactElement {
   }
 
   useEffect(() => {
-    const id = setInterval(rerender, 1000);
+    const id = setInterval(rerender, 200);
     return () => clearInterval(id);
   }, []);
 
@@ -33,7 +33,7 @@ export function ProgramsRoot(): React.ReactElement {
 
         return (
           <React.Fragment key={program.name}>
-            <Tooltip title={create.tooltip}>
+            <Tooltip title={create.tooltip} disableInteractive>
               <Button
                 sx={{ my: 1 }}
                 onClick={(event) => {

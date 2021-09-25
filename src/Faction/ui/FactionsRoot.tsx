@@ -24,7 +24,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
     setRerender((old) => !old);
   }
   useEffect(() => {
-    const id = setInterval(rerender, 1000);
+    const id = setInterval(rerender, 200);
     return () => clearInterval(id);
   }, []);
   function openFaction(faction: Faction): void {

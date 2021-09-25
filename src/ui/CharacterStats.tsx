@@ -253,7 +253,7 @@ export function CharacterStats(): React.ReactElement {
   }
 
   useEffect(() => {
-    const id = setInterval(rerender, 20);
+    const id = setInterval(rerender, 200);
     return () => clearInterval(id);
   }, []);
 

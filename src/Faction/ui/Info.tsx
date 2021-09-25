@@ -38,7 +38,7 @@ export function Info(props: IProps): React.ReactElement {
   }
 
   useEffect(() => {
-    const id = setInterval(rerender, 1000);
+    const id = setInterval(rerender, 200);
     return () => clearInterval(id);
   }, []);
 

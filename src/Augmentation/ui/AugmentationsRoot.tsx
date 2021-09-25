@@ -2,7 +2,7 @@
  * Root React component for the Augmentations UI page that display all of your
  * owned and purchased Augmentations and Source-Files.
  */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { InstalledAugmentations } from "./InstalledAugmentations";
 import { PlayerMultipliers } from "./PlayerMultipliers";
@@ -23,10 +23,17 @@ interface IProps {
 
 export function AugmentationsRoot(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((o) => !o);
+  }
+  useEffect(() => {
+    const id = setInterval(rerender, 200);
+    return () => clearInterval(id);
+  }, []);
 
   function doExport(): void {
     props.exportGameFn();
-    setRerender((o) => !o);
+    rerender();
   }
 
   function exportBonusStr(): string {
