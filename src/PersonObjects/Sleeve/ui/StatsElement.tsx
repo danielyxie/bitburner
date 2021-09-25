@@ -1,6 +1,8 @@
 import { Sleeve } from "../Sleeve";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import * as React from "react";
+import { convertTimeMsToTimeElapsedString } from "../../../../utils/StringHelperFunctions";
+import { CONSTANTS } from "../../../Constants";
 
 interface IProps {
   sleeve: Sleeve;
@@ -77,6 +79,14 @@ export function StatsElement(props: IProps): React.ReactElement {
               {numeralWrapper.formatSleeveMemory(props.sleeve.memory)}
             </td>
           </tr>
+          {props.sleeve.storedCycles > 15 && (
+            <tr>
+              <td>Bonus time: </td>
+              <td style={style}>
+                {convertTimeMsToTimeElapsedString((props.sleeve.storedCycles / (1000 / CONSTANTS._idleSpeed)) * 1000)}
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </>
