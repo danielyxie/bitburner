@@ -53,7 +53,7 @@ export function resolveNetscriptRequestedThreads(
   return requestedThreadsAsInt;
 }
 
-export function getErrorLineNumber(exp: any, workerScript: WorkerScript): number {
+function getErrorLineNumber(exp: any, workerScript: WorkerScript): number {
   return -1;
   // TODO wtf is codeCode?
 
