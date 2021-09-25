@@ -13,6 +13,15 @@ export let Factions: IMap<Faction> = {};
 
 export function loadFactions(saveString: string): void {
   Factions = JSON.parse(saveString, Reviver);
+  // safety check for when we load older save file that don't have newer factions
+  for (const faction of Object.keys(Factions)) {
+    try {
+      Factions[faction].getInfo();
+    } catch (err) {
+      console.error("deleting " + faction);
+      delete Factions[faction];
+    }
+  }
 }
 
 export function AddToFactions(faction: Faction): void {
