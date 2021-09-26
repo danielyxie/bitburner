@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { CONSTANTS } from "../../Constants";
 import { Faction } from "../../Faction/Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { repFromDonation } from "../formulas/donation";
+import { repFromDonation, costFromRep } from "../formulas/donation";
 import { Favor } from "../../ui/React/Favor";
 
 import { Money } from "../../ui/React/Money";
@@ -39,6 +39,7 @@ const inputStyleMarkup = {
 
 export function DonateOption(props: IProps): React.ReactElement {
   const [donateAmt, setDonateAmt] = useState<number | null>(null);
+  const [repDesired, setRepDesired] = useState<number | null>(null);
   const digits = (CONSTANTS.DonateMoneyToRepDivisor + "").length - 1;
 
   function canDonate(): boolean {
@@ -53,6 +54,13 @@ export function DonateOption(props: IProps): React.ReactElement {
     if (event.target.value === "" || isNaN(amt)) setDonateAmt(null);
     else setDonateAmt(amt);
     console.log("set");
+  }
+
+  function onChangeRep(event: React.ChangeEvent<HTMLInputElement>): void {
+    const amt = numeralWrapper.parseMoney(event.target.value);
+    if (event.target.value === "" || isNaN(amt)) setDonateAmt(null);
+    else setDonateAmt(costFromRep(amt, props.p));
+    console.log("set (from rep)");
   }
 
   function donate(): void {
@@ -79,7 +87,7 @@ export function DonateOption(props: IProps): React.ReactElement {
     }
     return (
       <Typography>
-        This donation will result in {Reputation(repFromDonation(donateAmt, props.p))} reputation gain
+        This donation will result in {Reputation(repFromDonation(donateAmt, props.p))} reputation gain, costing {Money({money:costFromRep(repFromDonation(donateAmt, props.p), props.p)})}
       </Typography>
     );
   }
@@ -97,6 +105,20 @@ export function DonateOption(props: IProps): React.ReactElement {
             variant="standard"
             onChange={onChange}
             placeholder={"Donation amount"}
+            disabled={props.disabled}
+            InputProps={{
+              endAdornment: (
+                <Button onClick={donate} disabled={props.disabled || !canDonate()}>
+                  donate
+                </Button>
+              ),
+            }}
+          />
+          <br />
+          <TextField
+            variant="standard"
+            onChange={onChangeRep}
+            placeholder={"Reputation desired"}
             disabled={props.disabled}
             InputProps={{
               endAdornment: (
