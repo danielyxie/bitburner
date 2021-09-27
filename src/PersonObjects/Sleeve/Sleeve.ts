@@ -537,6 +537,7 @@ export class Sleeve extends Person {
         break;
       case SleeveTaskType.Synchro:
         this.sync = Math.min(100, this.sync + p.getIntelligenceBonus(0.5) * 0.0002 * cyclesUsed);
+        if (this.sync >= 100) this.resetTaskStatus();
         break;
       default:
         break;

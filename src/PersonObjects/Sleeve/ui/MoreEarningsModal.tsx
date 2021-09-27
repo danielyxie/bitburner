@@ -3,14 +3,17 @@ import { numeralWrapper } from "../../../ui/numeralFormat";
 import { Money } from "../../../ui/React/Money";
 import * as React from "react";
 import { StatsTable } from "../../../ui/React/StatsTable";
+import { Modal } from "../../../ui/React/Modal";
 
 interface IProps {
+  open: boolean;
+  onClose: () => void;
   sleeve: Sleeve;
 }
 
-export function MoreEarningsContent(props: IProps): React.ReactElement {
+export function MoreEarningsModal(props: IProps): React.ReactElement {
   return (
-    <>
+    <Modal open={props.open} onClose={props.onClose}>
       <StatsTable
         rows={[
           ["Money ", <Money money={props.sleeve.earningsForTask.money} />],
@@ -50,6 +53,6 @@ export function MoreEarningsContent(props: IProps): React.ReactElement {
         title="Total Earnings for Other Sleeves:"
       />
       <br />
-    </>
+    </Modal>
   );
 }

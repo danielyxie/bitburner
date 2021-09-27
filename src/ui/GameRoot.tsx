@@ -306,7 +306,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
               {page === Page.Terminal ? (
                 <TerminalRoot terminal={terminal} router={Router} player={player} />
               ) : page === Page.Sleeves ? (
-                <SleeveRoot player={player} />
+                <SleeveRoot />
               ) : page === Page.Stats ? (
                 <CharacterStats />
               ) : page === Page.CreateScript ? (

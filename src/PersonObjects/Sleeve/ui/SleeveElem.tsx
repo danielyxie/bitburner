@@ -3,65 +3,46 @@ import React, { useState } from "react";
 import { Sleeve } from "../Sleeve";
 import { SleeveTaskType } from "../SleeveTaskTypesEnum";
 
-import { IPlayer } from "../../IPlayer";
 import { CONSTANTS } from "../../../Constants";
 
 import { Crimes } from "../../../Crime/Crimes";
 
 import { numeralWrapper } from "../../../ui/numeralFormat";
 
-import { dialogBoxCreate } from "../../../ui/React/DialogBox";
-
 import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
 
-import { createPopup } from "../../../ui/React/createPopup";
-
-import { SleeveAugmentationsPopup } from "../ui/SleeveAugmentationsPopup";
-import { TravelPopup } from "../ui/TravelPopup";
-import { EarningsTableElement } from "../ui/EarningsTableElement";
+import { SleeveAugmentationsModal } from "./SleeveAugmentationsModal";
+import { TravelModal } from "./TravelModal";
 import { Money } from "../../../ui/React/Money";
 import { MoneyRate } from "../../../ui/React/MoneyRate";
+import { use } from "../../../ui/Context";
 import { ReputationRate } from "../../../ui/React/ReputationRate";
 import { StatsElement } from "../ui/StatsElement";
-import { MoreStatsContent } from "../ui/MoreStatsContent";
-import { MoreEarningsContent } from "../ui/MoreEarningsContent";
+import { MoreStatsModal } from "./MoreStatsModal";
+import { MoreEarningsModal } from "../ui/MoreEarningsModal";
 import { TaskSelector } from "../ui/TaskSelector";
 import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
+import { StatsTable } from "../../../ui/React/StatsTable";
+
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 
 interface IProps {
-  player: IPlayer;
   sleeve: Sleeve;
   rerender: () => void;
 }
 
 export function SleeveElem(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const [statsOpen, setStatsOpen] = useState(false);
+  const [earningsOpen, setEarningsOpen] = useState(false);
+  const [travelOpen, setTravelOpen] = useState(false);
+  const [augmentationsOpen, setAugmentationsOpen] = useState(false);
+
   const [abc, setABC] = useState(["------", "------", "------"]);
-
-  function openMoreStats(): void {
-    dialogBoxCreate(<MoreStatsContent sleeve={props.sleeve} />);
-  }
-
-  function openTravel(): void {
-    const popupId = "sleeve-travel-popup";
-    createPopup(popupId, TravelPopup, {
-      popupId: popupId,
-      sleeve: props.sleeve,
-      player: props.player,
-      rerender: props.rerender,
-    });
-  }
-
-  function openManageAugmentations(): void {
-    const popupId = "sleeve-augmentation-popup";
-    createPopup(popupId, SleeveAugmentationsPopup, {
-      sleeve: props.sleeve,
-      player: props.player,
-    });
-  }
-
-  function openMoreEarnings(): void {
-    dialogBoxCreate(<MoreEarningsContent sleeve={props.sleeve} />);
-  }
 
   function setTask(): void {
     props.sleeve.resetTaskStatus(); // sets to idle
@@ -69,25 +50,25 @@ export function SleeveElem(props: IProps): React.ReactElement {
       case "------":
         break;
       case "Work for Company":
-        props.sleeve.workForCompany(props.player, abc[1]);
+        props.sleeve.workForCompany(player, abc[1]);
         break;
       case "Work for Faction":
-        props.sleeve.workForFaction(props.player, abc[1], abc[2]);
+        props.sleeve.workForFaction(player, abc[1], abc[2]);
         break;
       case "Commit Crime":
-        props.sleeve.commitCrime(props.player, abc[1]);
+        props.sleeve.commitCrime(player, abc[1]);
         break;
       case "Take University Course":
-        props.sleeve.takeUniversityCourse(props.player, abc[2], abc[1]);
+        props.sleeve.takeUniversityCourse(player, abc[2], abc[1]);
         break;
       case "Workout at Gym":
-        props.sleeve.workoutAtGym(props.player, abc[2], abc[1]);
+        props.sleeve.workoutAtGym(player, abc[2], abc[1]);
         break;
       case "Shock Recovery":
-        props.sleeve.shockRecovery(props.player);
+        props.sleeve.shockRecovery(player);
         break;
       case "Synchronize":
-        props.sleeve.synchronize(props.player);
+        props.sleeve.synchronize(player);
         break;
       default:
         console.error(`Invalid/Unrecognized taskValue in setSleeveTask(): ${abc[0]}`);
@@ -168,11 +149,6 @@ export function SleeveElem(props: IProps): React.ReactElement {
       [`Agility Exp`, numeralWrapper.formatExp(props.sleeve.gainRatesForTask.agi), `(2x on success)`],
       [`Charisma Exp`, numeralWrapper.formatExp(props.sleeve.gainRatesForTask.cha), `(2x on success)`],
     ];
-
-    // elems.taskProgressBar.innerText = createProgressBarText({
-    //   progress: props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime,
-    //   totalTicks: 25,
-    // });
   } else {
     data = [
       [`Money:`, <MoneyRate money={5 * props.sleeve.gainRatesForTask.money} />],
@@ -184,60 +160,68 @@ export function SleeveElem(props: IProps): React.ReactElement {
       [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * props.sleeve.gainRatesForTask.cha)} / s`],
     ];
     if (props.sleeve.currentTask === SleeveTaskType.Company || props.sleeve.currentTask === SleeveTaskType.Faction) {
-      const repGain: number = props.sleeve.getRepGain(props.player);
+      const repGain: number = props.sleeve.getRepGain(player);
       data.push([`Reputation:`, ReputationRate(5 * repGain)]);
     }
-
-    // elems.taskProgressBar.innerText = "";
   }
 
   return (
-    <div className="sleeve-elem">
-      <div className="sleeve-panel" style={{ width: "25%" }}>
-        <div className="sleeve-stats-text">
+    <>
+      <Grid container component={Paper}>
+        <Grid item xs={3}>
           <StatsElement sleeve={props.sleeve} />
-          <button className="std-button" onClick={openMoreStats}>
-            More Stats
-          </button>
-          <button
-            className={`std-button${props.player.money.lt(CONSTANTS.TravelCost) ? " tooltip" : ""}`}
-            onClick={openTravel}
-            disabled={props.player.money.lt(CONSTANTS.TravelCost)}
+          <Button onClick={() => setStatsOpen(true)}>More Stats</Button>
+          <Tooltip
+            disableInteractive
+            title={player.money.lt(CONSTANTS.TravelCost) ? <Typography>Insufficient funds</Typography> : ""}
           >
-            Travel
-            {props.player.money.lt(CONSTANTS.TravelCost) && <span className="tooltiptext">Not enough money</span>}
-          </button>
-          <button
-            className={`std-button${props.sleeve.shock < 100 ? " tooltip" : ""}`}
-            onClick={openManageAugmentations}
-            style={{ display: "block" }}
-            disabled={props.sleeve.shock < 100}
+            <span>
+              <Button onClick={() => setTravelOpen(true)} disabled={player.money.lt(CONSTANTS.TravelCost)}>
+                Travel
+              </Button>
+            </span>
+          </Tooltip>
+          <Tooltip
+            disableInteractive
+            title={props.sleeve.shock < 100 ? <Typography>Unlocked when sleeve has fully recovered</Typography> : ""}
           >
-            Manage Augmentations
-            {props.sleeve.shock < 100 && <span className="tooltiptext">Unlocked when sleeve has fully recovered</span>}
-          </button>
-        </div>
-      </div>
-      <div className="sleeve-panel" style={{ width: "40%" }}>
-        <TaskSelector player={props.player} sleeve={props.sleeve} setABC={setABC} />
-        <p>{desc}</p>
-        <p>
-          {props.sleeve.currentTask === SleeveTaskType.Crime &&
-            createProgressBarText({
-              progress: props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime,
-              totalTicks: 25,
-            })}
-        </p>
-        <button className="std-button" onClick={setTask}>
-          Set Task
-        </button>
-      </div>
-      <div className="sleeve-panel" style={{ width: "35%" }}>
-        <EarningsTableElement title="Earnings (Pre-Synchronization)" stats={data} />
-        <button className="std-button" onClick={openMoreEarnings}>
-          More Earnings Info
-        </button>
-      </div>
-    </div>
+            <span>
+              <Button onClick={() => setAugmentationsOpen(true)} disabled={props.sleeve.shock < 100}>
+                Manage Augmentations
+              </Button>
+            </span>
+          </Tooltip>
+        </Grid>
+        <Grid item xs={5}>
+          <TaskSelector player={player} sleeve={props.sleeve} setABC={setABC} />
+          <Typography>{desc}</Typography>
+          <Typography>
+            {props.sleeve.currentTask === SleeveTaskType.Crime &&
+              createProgressBarText({
+                progress: props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime,
+                totalTicks: 25,
+              })}
+          </Typography>
+          <Button onClick={setTask}>Set Task</Button>
+        </Grid>
+        <Grid item xs={4}>
+          <StatsTable title="Earnings (Pre-Synchronization)" rows={data} />
+          <Button onClick={() => setEarningsOpen(true)}>More Earnings Info</Button>
+        </Grid>
+      </Grid>
+      <MoreStatsModal open={statsOpen} onClose={() => setStatsOpen(false)} sleeve={props.sleeve} />
+      <MoreEarningsModal open={earningsOpen} onClose={() => setEarningsOpen(false)} sleeve={props.sleeve} />
+      <TravelModal
+        open={travelOpen}
+        onClose={() => setTravelOpen(false)}
+        sleeve={props.sleeve}
+        rerender={props.rerender}
+      />
+      <SleeveAugmentationsModal
+        open={augmentationsOpen}
+        onClose={() => setAugmentationsOpen(false)}
+        sleeve={props.sleeve}
+      />
+    </>
   );
 }

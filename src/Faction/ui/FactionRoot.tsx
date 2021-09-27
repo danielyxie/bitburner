@@ -14,7 +14,6 @@ import { CONSTANTS } from "../../Constants";
 
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Faction } from "../../Faction/Faction";
-import { createSleevePurchasesFromCovenantPopup } from "../../PersonObjects/Sleeve/SleeveCovenantPurchases";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 
 import { createPopup } from "../../ui/React/createPopup";
@@ -23,6 +22,7 @@ import { CreateGangPopup } from "./CreateGangPopup";
 
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPurchasesRoot";
 
 type IProps = {
   faction: Faction;
@@ -66,6 +66,7 @@ const GangNames = [
 ];
 
 export function FactionRoot(props: IProps): React.ReactElement {
+  const [sleevesOpen, setSleevesOpen] = useState(false);
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -99,10 +100,6 @@ export function FactionRoot(props: IProps): React.ReactElement {
   // Route to the purchase augmentation UI for this faction
   function routeToPurchaseAugs(): void {
     setPurchasingAugs(true);
-  }
-
-  function sleevePurchases(): void {
-    createSleevePurchasesFromCovenantPopup(player);
   }
 
   function startFieldWork(faction: Faction): void {
@@ -185,11 +182,14 @@ export function FactionRoot(props: IProps): React.ReactElement {
         )}
         <Option buttonText={"Purchase Augmentations"} infoText={augmentationsInfo} onClick={routeToPurchaseAugs} />
         {canPurchaseSleeves && (
-          <Option
-            buttonText={"Purchase & Upgrade Duplicate Sleeves"}
-            infoText={sleevePurchasesInfo}
-            onClick={sleevePurchases}
-          />
+          <>
+            <Option
+              buttonText={"Purchase & Upgrade Duplicate Sleeves"}
+              infoText={sleevePurchasesInfo}
+              onClick={() => setSleevesOpen(true)}
+            />
+            <CovenantPurchasesRoot open={sleevesOpen} onClose={() => setSleevesOpen(false)} />
+          </>
         )}
       </>
     );
