@@ -375,7 +375,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
   };
 
   // Utility function to get Hacknet Node object
-  const getHacknetNode = function (i: any, callingFn: string = ""): HacknetNode | HacknetServer {
+  const getHacknetNode = function (i: any, callingFn = ""): HacknetNode | HacknetServer {
     if (isNaN(i)) {
       throw makeRuntimeErrorMsg(callingFn, "Invalid index specified for Hacknet Node: " + i);
     }

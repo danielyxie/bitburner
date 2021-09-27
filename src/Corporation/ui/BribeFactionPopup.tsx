@@ -17,7 +17,7 @@ export function BribeFactionPopup(props: IProps): React.ReactElement {
   const [money, setMoney] = useState<number | null>(0);
   const [stock, setStock] = useState<number | null>(0);
   const [selectedFaction, setSelectedFaction] = useState(
-    props.player.factions.length > 0 ? props.player.factions[0] : "",
+    props.player.factions.length > 0 ? props.player.factions.filter(faction => Factions[faction].getInfo().offersWork())[0] : ""
   );
 
   function onMoneyChange(event: React.ChangeEvent<HTMLInputElement>): void {
