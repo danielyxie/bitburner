@@ -1,3 +1,4 @@
+import React from "react";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
 import { IBladeburner } from "./IBladeburner";
 import { IActionIdentifier } from "./IActionIdentifier";
@@ -1586,11 +1587,6 @@ export class Bladeburner implements IBladeburner {
   create(): void {
     this.contracts["Tracking"] = new Contract({
       name: "Tracking",
-      desc:
-        "Identify and locate Synthoids. This contract involves reconnaissance " +
-        "and information-gathering ONLY. Do NOT engage. Stealth is of the utmost importance.<br><br>" +
-        "Successfully completing Tracking contracts will slightly improve your Synthoid population estimate for " +
-        "whatever city you are currently in.",
       baseDifficulty: 125,
       difficultyFac: 1.02,
       rewardFac: 1.041,
@@ -1619,10 +1615,6 @@ export class Bladeburner implements IBladeburner {
     });
     this.contracts["Bounty Hunter"] = new Contract({
       name: "Bounty Hunter",
-      desc:
-        "Hunt down and capture fugitive Synthoids. These Synthoids are wanted alive.<br><br>" +
-        "Successfully completing a Bounty Hunter contract will lower the population in your " +
-        "current city, and will also increase its chaos level.",
       baseDifficulty: 250,
       difficultyFac: 1.04,
       rewardFac: 1.085,
@@ -1651,10 +1643,6 @@ export class Bladeburner implements IBladeburner {
     });
     this.contracts["Retirement"] = new Contract({
       name: "Retirement",
-      desc:
-        "Hunt down and retire (kill) rogue Synthoids.<br><br>" +
-        "Successfully completing a Retirement contract will lower the population in your current " +
-        "city, and will also increase its chaos level.",
       baseDifficulty: 200,
       difficultyFac: 1.03,
       rewardFac: 1.065,
@@ -1684,12 +1672,6 @@ export class Bladeburner implements IBladeburner {
 
     this.operations["Investigation"] = new Operation({
       name: "Investigation",
-      desc:
-        "As a field agent, investigate and identify Synthoid " +
-        "populations, movements, and operations.<br><br>Successful " +
-        "Investigation ops will increase the accuracy of your " +
-        "synthoid data.<br><br>" +
-        "You will NOT lose HP from failed Investigation ops.",
       baseDifficulty: 400,
       difficultyFac: 1.03,
       rewardFac: 1.07,
@@ -1719,11 +1701,6 @@ export class Bladeburner implements IBladeburner {
     });
     this.operations["Undercover Operation"] = new Operation({
       name: "Undercover Operation",
-      desc:
-        "Conduct undercover operations to identify hidden " +
-        "and underground Synthoid communities and organizations.<br><br>" +
-        "Successful Undercover ops will increase the accuracy of your synthoid " +
-        "data.",
       baseDifficulty: 500,
       difficultyFac: 1.04,
       rewardFac: 1.09,
@@ -1754,7 +1731,6 @@ export class Bladeburner implements IBladeburner {
     });
     this.operations["Sting Operation"] = new Operation({
       name: "Sting Operation",
-      desc: "Conduct a sting operation to bait and capture particularly " + "notorious Synthoid criminals.",
       baseDifficulty: 650,
       difficultyFac: 1.04,
       rewardFac: 1.095,
@@ -1785,10 +1761,6 @@ export class Bladeburner implements IBladeburner {
     });
     this.operations["Raid"] = new Operation({
       name: "Raid",
-      desc:
-        "Lead an assault on a known Synthoid community. Note that " +
-        "there must be an existing Synthoid community in your current city " +
-        "in order for this Operation to be successful.",
       baseDifficulty: 800,
       difficultyFac: 1.045,
       rewardFac: 1.1,
@@ -1819,10 +1791,6 @@ export class Bladeburner implements IBladeburner {
     });
     this.operations["Stealth Retirement Operation"] = new Operation({
       name: "Stealth Retirement Operation",
-      desc:
-        "Lead a covert operation to retire Synthoids. The " +
-        "objective is to complete the task without " +
-        "drawing any attention. Stealth and discretion are key.",
       baseDifficulty: 1000,
       difficultyFac: 1.05,
       rewardFac: 1.11,
@@ -1854,10 +1822,6 @@ export class Bladeburner implements IBladeburner {
     });
     this.operations["Assassination"] = new Operation({
       name: "Assassination",
-      desc:
-        "Assassinate Synthoids that have been identified as " +
-        "important, high-profile social and political leaders " +
-        "in the Synthoid communities.",
       baseDifficulty: 1500,
       difficultyFac: 1.06,
       rewardFac: 1.14,
@@ -1900,7 +1864,7 @@ export class Bladeburner implements IBladeburner {
       if (this.action.type !== ActionTypes["Idle"]) {
         let msg = "Your Bladeburner action was cancelled because you started doing something else.";
         if (this.automateEnabled) {
-          msg += `<br><br>Your automation was disabled as well. You will have to re-enable it through the Bladeburner console`;
+          msg += `<br /><br />Your automation was disabled as well. You will have to re-enable it through the Bladeburner console`;
           this.automateEnabled = false;
         }
         if (!Settings.SuppressBladeburnerPopup) {

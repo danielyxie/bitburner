@@ -3,17 +3,28 @@ import { ActionTypes } from "../data/ActionTypes";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { IBladeburner } from "../IBladeburner";
+import { IAction } from "../IAction";
+import { GeneralActions } from "../data/GeneralActions";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { CopyableText } from "../../ui/React/CopyableText";
+
+import { StartButton } from "./StartButton";
+
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 
 interface IProps {
   bladeburner: IBladeburner;
   player: IPlayer;
-  action: any;
+  action: IAction;
 }
 
 export function GeneralActionElem(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((old) => !old);
+  }
   const isActive = props.action.name === props.bladeburner.action.name;
   const computedActionTimeCurrent = Math.min(
     props.bladeburner.actionTimeCurrent + props.bladeburner.actionTimeOverflow,
@@ -37,44 +48,44 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
       ? Math.max(0, Math.min(props.bladeburner.getRecruitmentSuccessChance(props.player), 1))
       : -1;
 
-  function onStart(): void {
-    props.bladeburner.action.type = ActionTypes[props.action.name as string];
-    props.bladeburner.action.name = props.action.name;
-    props.bladeburner.startAction(props.player, props.bladeburner.action);
-    setRerender((old) => !old);
+  const actionData = GeneralActions[props.action.name];
+  if (actionData === undefined) {
+    throw new Error(`Cannot find data for ${props.action.name}`);
   }
 
   return (
-    <>
-      <h2 style={{ display: "inline-block" }}>
-        {isActive ? (
-          <>
+    <Paper sx={{ my: 1, p: 1 }}>
+      {isActive ? (
+        <>
+          <Typography>
             <CopyableText value={props.action.name} /> (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} /{" "}
             {formatNumber(props.bladeburner.actionTimeToComplete, 0)})
-          </>
-        ) : (
-          <CopyableText value={props.action.name} />
-        )}
-      </h2>
-      {isActive ? (
-        <p style={{ display: "block" }}>
-          {createProgressBarText({
-            progress: computedActionTimeCurrent / props.bladeburner.actionTimeToComplete,
-          })}
-        </p>
-      ) : (
-        <>
-          <a onClick={onStart} className="a-link-button" style={{ margin: "3px", padding: "3px" }}>
-            Start
-          </a>
+          </Typography>
+          <Typography>
+            {createProgressBarText({
+              progress: computedActionTimeCurrent / props.bladeburner.actionTimeToComplete,
+            })}
+          </Typography>
         </>
+      ) : (
+        <Box display="flex" flexDirection="row" alignItems="center">
+          <Typography>
+            <CopyableText value={props.action.name} />
+          </Typography>
+          <StartButton
+            bladeburner={props.bladeburner}
+            type={ActionTypes[props.action.name as string]}
+            name={props.action.name}
+            rerender={rerender}
+          />
+        </Box>
       )}
       <br />
       <br />
-      <pre style={{ display: "inline-block" }} dangerouslySetInnerHTML={{ __html: props.action.desc }}></pre>
+      <Typography>{actionData.desc}</Typography>
       <br />
       <br />
-      <pre style={{ display: "inline-block" }}>
+      <Typography>
         Time Required: {convertTimeMsToTimeElapsedString(actionTime * 1000)}
         {successChance !== -1 && (
           <>
@@ -82,7 +93,7 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
             Estimated success chance: {formatNumber(successChance * 100, 1)}%
           </>
         )}
-      </pre>
-    </>
+      </Typography>
+    </Paper>
   );
 }

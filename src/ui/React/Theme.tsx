@@ -261,6 +261,16 @@ export function refreshTheme(): void {
           },
         },
       },
+      MuiTab: {
+        styleOverrides: {
+          textColorPrimary: {
+            color: Settings.theme.secondary,
+            "&.Mui-selected": {
+              color: Settings.theme.primary,
+            },
+          },
+        },
+      },
     },
   });
 }

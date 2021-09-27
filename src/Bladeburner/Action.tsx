@@ -1,3 +1,4 @@
+import React from "react";
 import { Player } from "../Player";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { addOffset } from "../utils/helpers/addOffset";
@@ -20,7 +21,6 @@ class StatsMultiplier {
 
 export interface IActionParams {
   name?: string;
-  desc?: string;
   level?: number;
   maxLevel?: number;
   autoLevel?: boolean;
@@ -43,7 +43,6 @@ export interface IActionParams {
 
 export class Action implements IAction {
   name = "";
-  desc = "";
 
   // Difficulty scales with level. See getDifficulty() method
   level = 1;
@@ -100,7 +99,6 @@ export class Action implements IAction {
   constructor(params: IActionParams | null = null) {
     //  | null = null
     if (params && params.name) this.name = params.name;
-    if (params && params.desc) this.desc = params.desc;
 
     if (params && params.baseDifficulty) this.baseDifficulty = addOffset(params.baseDifficulty, 10);
     if (params && params.difficultyFac) this.difficultyFac = params.difficultyFac;

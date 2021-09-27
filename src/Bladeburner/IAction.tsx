@@ -18,7 +18,6 @@ export interface ISuccessChanceParams {
 
 export interface IAction {
   name: string;
-  desc: string;
 
   // Difficulty scales with level. See getDifficulty() method
   level: number;

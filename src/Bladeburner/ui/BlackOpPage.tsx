@@ -2,6 +2,7 @@ import * as React from "react";
 import { BlackOpList } from "./BlackOpList";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import Typography from "@mui/material/Typography";
 
 interface IProps {
   bladeburner: IBladeburner;
@@ -11,7 +12,7 @@ interface IProps {
 export function BlackOpPage(props: IProps): React.ReactElement {
   return (
     <>
-      <p style={{ display: "block", margin: "4px", padding: "4px" }}>
+      <Typography>
         Black Operations (Black Ops) are special, one-time covert operations. Each Black Op must be unlocked
         successively by completing the one before it.
         <br />
@@ -21,7 +22,7 @@ export function BlackOpPage(props: IProps): React.ReactElement {
         <br />
         Like normal operations, you may use a team for Black Ops. Failing a black op will incur heavy HP and rank
         losses.
-      </p>
+      </Typography>
       <BlackOpList bladeburner={props.bladeburner} player={props.player} />
     </>
   );

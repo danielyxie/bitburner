@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 import { CinematicLine } from "./CinematicLine";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 interface IProps {
   lines: string[];
@@ -24,14 +26,10 @@ export function CinematicText(props: IProps): React.ReactElement {
   return (
     <div>
       {props.lines.slice(0, i).map((line, i) => (
-        <pre key={i}>{line}</pre>
+        <Typography key={i}>{line}</Typography>
       ))}
       {props.lines.length > i && <CinematicLine key={i} text={props.lines[i]} onDone={advance} />}
-      {!props.auto && props.onDone && done && (
-        <button className="std-button" onClick={props.onDone}>
-          Continue ...
-        </button>
-      )}
+      {!props.auto && props.onDone && done && <Button onClick={props.onDone}>Continue ...</Button>}
     </div>
   );
 }

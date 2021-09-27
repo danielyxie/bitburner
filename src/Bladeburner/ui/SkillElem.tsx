@@ -3,6 +3,13 @@ import { CopyableText } from "../../ui/React/CopyableText";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { IBladeburner } from "../IBladeburner";
 
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+
 interface IProps {
   skill: any;
   bladeburner: IBladeburner;
@@ -28,26 +35,30 @@ export function SkillElem(props: IProps): React.ReactElement {
   }
 
   return (
-    <>
-      <h2 style={{ display: "inline-block" }}>
-        <CopyableText value={props.skill.name} />
-      </h2>
-      <a
-        onClick={onClick}
-        style={{ display: "inline-block", margin: "3px", padding: "3px" }}
-        className={canLevel && !maxLvl ? "a-link-button" : "a-link-button-inactive"}
-      >
-        Level
-      </a>
+    <Paper sx={{ my: 1, p: 1 }}>
+      <Box display="flex" flexDirection="row" alignItems="center">
+        <Typography>
+          <CopyableText value={props.skill.name} />
+        </Typography>
+        {!canLevel || maxLvl ? (
+          <IconButton disabled>
+            <CloseIcon />
+          </IconButton>
+        ) : (
+          <IconButton onClick={onClick}>
+            <AddIcon />
+          </IconButton>
+        )}
+      </Box>
       <br />
       <br />
-      <p style={{ display: "block" }}>Level: {currentLevel}</p>
+      <Typography>Level: {currentLevel}</Typography>
       {maxLvl ? (
-        <p style={{ color: "red", display: "block" }}>MAX LEVEL</p>
+        <Typography>MAX LEVEL</Typography>
       ) : (
-        <p style={{ display: "block" }}>Skill Points required: {formatNumber(pointCost, 0)}</p>
+        <Typography>Skill Points required: {formatNumber(pointCost, 0)}</Typography>
       )}
-      <p style={{ display: "inline-block" }} dangerouslySetInnerHTML={{ __html: props.skill.desc }} />
-    </>
+      <Typography>{props.skill.desc}</Typography>
+    </Paper>
   );
 }

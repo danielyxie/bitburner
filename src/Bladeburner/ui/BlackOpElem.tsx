@@ -2,22 +2,29 @@ import React, { useState } from "react";
 import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { ActionTypes } from "../data/ActionTypes";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
-import { stealthIcon, killIcon } from "../data/Icons";
-import { createPopup } from "../../ui/React/createPopup";
-import { TeamSizePopup } from "./TeamSizePopup";
+import { TeamSizeButton } from "./TeamSizeButton";
 import { IBladeburner } from "../IBladeburner";
+import { BlackOperation } from "../BlackOperation";
+import { BlackOperations } from "../data/BlackOperations";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { SuccessChance } from "./SuccessChance";
 import { CopyableText } from "../../ui/React/CopyableText";
+import { SuccessChance } from "./SuccessChance";
+import { StartButton } from "./StartButton";
+
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
 
 interface IProps {
   bladeburner: IBladeburner;
   player: IPlayer;
-  action: any;
+  action: BlackOperation;
 }
 
 export function BlackOpElem(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((old) => !old);
+  }
   const isCompleted = props.bladeburner.blackops[props.action.name] != null;
   if (isCompleted) {
     return <h2 style={{ display: "block" }}>{props.action.name} (COMPLETED)</h2>;
@@ -26,7 +33,6 @@ export function BlackOpElem(props: IProps): React.ReactElement {
   const isActive =
     props.bladeburner.action.type === ActionTypes["BlackOperation"] &&
     props.action.name === props.bladeburner.action.name;
-  const estimatedSuccessChance = props.action.getEstSuccessChance(props.bladeburner);
   const actionTime = props.action.getActionTime(props.bladeburner);
   const hasReqdRank = props.bladeburner.rank >= props.action.reqdRank;
   const computedActionTimeCurrent = Math.min(
@@ -34,70 +40,54 @@ export function BlackOpElem(props: IProps): React.ReactElement {
     props.bladeburner.actionTimeToComplete,
   );
 
-  function onStart(): void {
-    props.bladeburner.action.type = ActionTypes.BlackOperation;
-    props.bladeburner.action.name = props.action.name;
-    props.bladeburner.startAction(props.player, props.bladeburner.action);
-    setRerender((old) => !old);
-  }
-
-  function onTeam(): void {
-    const popupId = "bladeburner-operation-set-team-size-popup";
-    createPopup(popupId, TeamSizePopup, {
-      bladeburner: props.bladeburner,
-      action: props.action,
-      popupId: popupId,
-    });
+  const actionData = BlackOperations[props.action.name];
+  if (actionData === undefined) {
+    throw new Error(`Cannot find data for ${props.action.name}`);
   }
 
   return (
-    <>
-      <h2 style={{ display: "inline-block" }}>
+    <Paper sx={{ my: 1, p: 1 }}>
+      <Typography>
         {isActive ? (
           <>
-            <CopyableText value={props.action.name} /> (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} /{" "}
-            {formatNumber(props.bladeburner.actionTimeToComplete, 0)})
+            <>
+              <CopyableText value={props.action.name} /> (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} /{" "}
+              {formatNumber(props.bladeburner.actionTimeToComplete, 0)})
+              <p style={{ display: "block" }}>
+                {createProgressBarText({
+                  progress: computedActionTimeCurrent / props.bladeburner.actionTimeToComplete,
+                })}
+              </p>
+            </>
           </>
         ) : (
-          <CopyableText value={props.action.name} />
+          <>
+            <CopyableText value={props.action.name} />
+
+            <StartButton
+              bladeburner={props.bladeburner}
+              type={ActionTypes.BlackOperation}
+              name={props.action.name}
+              rerender={rerender}
+            />
+            <TeamSizeButton action={props.action} bladeburner={props.bladeburner} />
+          </>
         )}
-      </h2>
-      {isActive ? (
-        <p style={{ display: "block" }}>
-          {createProgressBarText({
-            progress: computedActionTimeCurrent / props.bladeburner.actionTimeToComplete,
-          })}
-        </p>
-      ) : (
-        <>
-          <a
-            className={hasReqdRank ? "a-link-button" : "a-link-button-inactive"}
-            style={{ margin: "3px", padding: "3px" }}
-            onClick={onStart}
-          >
-            Start
-          </a>
-          <a onClick={onTeam} style={{ margin: "3px", padding: "3px" }} className="a-link-button">
-            Set Team Size (Curr Size: {formatNumber(props.action.teamCount, 0)})
-          </a>
-        </>
-      )}
+      </Typography>
       <br />
       <br />
-      <p style={{ display: "inline-block" }} dangerouslySetInnerHTML={{ __html: props.action.desc }} />
+      <Typography>{actionData.desc}</Typography>
       <br />
       <br />
-      <p style={{ display: "block", color: hasReqdRank ? "white" : "red" }}>
+      <Typography color={hasReqdRank ? "primary" : "error"}>
         Required Rank: {formatNumber(props.action.reqdRank, 0)}
-      </p>
+      </Typography>
       <br />
-      <pre style={{ display: "inline-block" }}>
-        Estimated Success Chance: <SuccessChance chance={estimatedSuccessChance} />{" "}
-        {props.action.isStealth ? stealthIcon : <></>}
-        {props.action.isKill ? killIcon : <></>}
+      <Typography>
+        <SuccessChance action={props.action} bladeburner={props.bladeburner} />
         <br />
         Time Required: {convertTimeMsToTimeElapsedString(actionTime * 1000)}
-      </pre>
-    </>
+      </Typography>
+    </Paper>
   );
 }

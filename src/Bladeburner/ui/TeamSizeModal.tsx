@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import { removePopup } from "../../ui/React/createPopup";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { Modal } from "../../ui/React/Modal";
 import { Action } from "../Action";
 import { IBladeburner } from "../IBladeburner";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 interface IProps {
   bladeburner: IBladeburner;
   action: Action;
-  popupId: string;
+  open: boolean;
+  onClose: () => void;
 }
 
-export function TeamSizePopup(props: IProps): React.ReactElement {
+export function TeamSizeModal(props: IProps): React.ReactElement {
   const [teamSize, setTeamSize] = useState<number | undefined>();
 
   function confirmTeamSize(): void {
@@ -21,25 +25,32 @@ export function TeamSizePopup(props: IProps): React.ReactElement {
     } else {
       props.action.teamCount = num;
     }
-    removePopup(props.popupId);
+    props.onClose();
+  }
+
+  function onTeamSize(event: React.ChangeEvent<HTMLInputElement>): void {
+    const x = parseFloat(event.target.value);
+    if (x > props.bladeburner.teamSize) setTeamSize(props.bladeburner.teamSize);
+    else setTeamSize(x);
   }
 
   return (
-    <>
-      <p>
+    <Modal open={props.open} onClose={props.onClose}>
+      <Typography>
         Enter the amount of team members you would like to take on this Op. If you do not have the specified number of
         team members, then as many as possible will be used. Note that team members may be lost during operations.
-      </p>
-      <input
+      </Typography>
+      <TextField
         autoFocus
+        variant="standard"
         type="number"
         placeholder="Team size"
-        className="text-input"
-        onChange={(event) => setTeamSize(parseFloat(event.target.value))}
+        value={teamSize}
+        onChange={onTeamSize}
       />
-      <a className="a-link-button" onClick={confirmTeamSize}>
+      <Button sx={{ mx: 2 }} onClick={confirmTeamSize}>
         Confirm
-      </a>
-    </>
+      </Button>
+    </Modal>
   );
 }

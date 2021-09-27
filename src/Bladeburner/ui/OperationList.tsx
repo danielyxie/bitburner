@@ -14,9 +14,7 @@ export function OperationList(props: IProps): React.ReactElement {
   return (
     <>
       {names.map((name: string) => (
-        <li key={name} className="bladeburner-action">
-          <OperationElem bladeburner={props.bladeburner} action={operations[name]} player={props.player} />
-        </li>
+        <OperationElem key={name} bladeburner={props.bladeburner} action={operations[name]} player={props.player} />
       ))}
     </>
   );
