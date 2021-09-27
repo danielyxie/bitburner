@@ -2044,6 +2044,28 @@ function initAugmentations(): void {
   }
   AddToAugmentations(SNA);
 
+  const NeuroreceptorManager = new Augmentation({
+    name: AugmentationNames.NeuroreceptorManager,
+    repCost: 0.75e5,
+    moneyCost: 5.5e8,
+    info:
+      "A brain implant carefully assembled around the synapses, which " +
+      "micromanages the activity and levels of various neuroreceptor " +
+      "chemicals and modulates electrical acvitiy to optimize concentration, " +
+      "allowing the user to multitask much more effectively.",
+    stats: (
+      <>
+        This augmentation removes the penalty for not focusing on actions such as working in a job or working for a
+        faction.
+      </>
+    ),
+  });
+  NeuroreceptorManager.addToFactions(["Tian Di Hui"]);
+  if (augmentationExists(AugmentationNames.NeuroreceptorManager)) {
+    delete Augmentations[AugmentationNames.NeuroreceptorManager];
+  }
+  AddToAugmentations(NeuroreceptorManager);
+
   // Special Bladeburner Augmentations
   const BladeburnersFactionName = "Bladeburners";
   if (factionExists(BladeburnersFactionName)) {

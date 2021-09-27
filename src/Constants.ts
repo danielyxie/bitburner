@@ -9,6 +9,7 @@ export const CONSTANTS: {
   MaxSkillLevel: number;
   MilliPerCycle: number;
   CorpFactionRepRequirement: number;
+  BaseFocusBonus: number;
   BaseCostFor1GBOfRamHome: number;
   BaseCostFor1GBOfRamServer: number;
   TravelCost: number;
@@ -285,6 +286,7 @@ export const CONSTANTS: {
   GameCyclesPerFiveMinutes: 300000 / 200,
 
   // Player Work & Action
+  BaseFocusBonus: 0.8,
   FactionWorkHacking: "Faction Hacking Work",
   FactionWorkField: "Faction Field Work",
   FactionWorkSecurity: "Faction Security Work",

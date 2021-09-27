@@ -199,7 +199,7 @@ export class PlayerObject implements IPlayer {
   getNextCompanyPosition: (company: Company, entryPosType: CompanyPosition) => CompanyPosition | null;
   getUpgradeHomeRamCost: () => number;
   gotoLocation: (to: LocationName) => boolean;
-  hasAugmentation: (aug: Augmentation) => boolean;
+  hasAugmentation: (aug: string | Augmentation) => boolean;
   hasCorporation: () => boolean;
   hasGangWith: (facName: string) => boolean;
   hasTorRouter: () => boolean;
