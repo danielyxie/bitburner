@@ -33,6 +33,7 @@ declare module "@mui/material/styles" {
 let theme: Theme;
 
 export function refreshTheme(): void {
+  console.log(Settings.theme.disabled);
   theme = createTheme({
     colors: {
       hp: Settings.theme.hp,
@@ -72,6 +73,10 @@ export function refreshTheme(): void {
       background: {
         default: Settings.theme.black,
         paper: Settings.theme.well,
+      },
+      action: {
+        disabledBackground: Settings.theme.disabled,
+        disabled: Settings.theme.disabled,
       },
     },
     typography: {
