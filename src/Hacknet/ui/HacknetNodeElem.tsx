@@ -20,9 +20,18 @@ import { HacknetNode } from "../HacknetNode";
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import { TableCell } from "../../ui/React/Table";
+import TableBody from "@mui/material/TableBody";
+import Table from "@mui/material/Table";
+import TableRow from "@mui/material/TableRow";
+
 interface IProps {
   node: HacknetNode;
-  purchaseMultiplier: number | string;
+  purchaseMultiplier: number | "MAX";
   rerender: () => void;
   player: IPlayer;
 }
@@ -33,10 +42,9 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
   const rerender = props.rerender;
 
   // Upgrade Level Button
-  let upgradeLevelContent, upgradeLevelClass;
+  let upgradeLevelContent;
   if (node.level >= HacknetNodeConstants.MaxLevel) {
     upgradeLevelContent = <>MAX LEVEL</>;
-    upgradeLevelClass = "std-button-disabled";
   } else {
     let multiplier = 0;
     if (purchaseMult === "MAX") {
@@ -49,28 +57,23 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
     const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, props.player.hacknet_node_level_cost_mult);
     upgradeLevelContent = (
       <>
-        Upgrade x{multiplier} - <Money money={upgradeLevelCost} player={props.player} />
+        +{multiplier} -&nbsp;
+        <Money money={upgradeLevelCost} player={props.player} />
       </>
     );
-    if (props.player.money.lt(upgradeLevelCost)) {
-      upgradeLevelClass = "std-button-disabled";
-    } else {
-      upgradeLevelClass = "std-button";
-    }
   }
   function upgradeLevelOnClick(): void {
-    let numUpgrades = purchaseMult;
-    if (purchaseMult === "MAX") {
-      numUpgrades = getMaxNumberLevelUpgrades(props.player, node, HacknetNodeConstants.MaxLevel);
-    }
-    purchaseLevelUpgrade(props.player, node, numUpgrades as number);
+    const numUpgrades =
+      purchaseMult === "MAX"
+        ? getMaxNumberLevelUpgrades(props.player, node, HacknetNodeConstants.MaxLevel)
+        : purchaseMult;
+    purchaseLevelUpgrade(props.player, node, numUpgrades);
     rerender();
   }
 
-  let upgradeRamContent, upgradeRamClass;
+  let upgradeRamContent;
   if (node.ram >= HacknetNodeConstants.MaxRam) {
     upgradeRamContent = <>MAX RAM</>;
-    upgradeRamClass = "std-button-disabled";
   } else {
     let multiplier = 0;
     if (purchaseMult === "MAX") {
@@ -83,28 +86,21 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
     const upgradeRamCost = node.calculateRamUpgradeCost(multiplier, props.player.hacknet_node_ram_cost_mult);
     upgradeRamContent = (
       <>
-        Upgrade x{multiplier} - <Money money={upgradeRamCost} player={props.player} />
+        +{multiplier} -&nbsp;
+        <Money money={upgradeRamCost} player={props.player} />
       </>
     );
-    if (props.player.money.lt(upgradeRamCost)) {
-      upgradeRamClass = "std-button-disabled";
-    } else {
-      upgradeRamClass = "std-button";
-    }
   }
   function upgradeRamOnClick(): void {
-    let numUpgrades = purchaseMult;
-    if (purchaseMult === "MAX") {
-      numUpgrades = getMaxNumberRamUpgrades(props.player, node, HacknetNodeConstants.MaxRam);
-    }
-    purchaseRamUpgrade(props.player, node, numUpgrades as number);
+    const numUpgrades =
+      purchaseMult === "MAX" ? getMaxNumberRamUpgrades(props.player, node, HacknetNodeConstants.MaxRam) : purchaseMult;
+    purchaseRamUpgrade(props.player, node, numUpgrades);
     rerender();
   }
 
-  let upgradeCoresContent, upgradeCoresClass;
+  let upgradeCoresContent;
   if (node.cores >= HacknetNodeConstants.MaxCores) {
     upgradeCoresContent = <>MAX CORES</>;
-    upgradeCoresClass = "std-button-disabled";
   } else {
     let multiplier = 0;
     if (purchaseMult === "MAX") {
@@ -117,59 +113,75 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
     const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, props.player.hacknet_node_core_cost_mult);
     upgradeCoresContent = (
       <>
-        Upgrade x{multiplier} - <Money money={upgradeCoreCost} player={props.player} />
+        +{multiplier} -&nbsp;
+        <Money money={upgradeCoreCost} player={props.player} />
       </>
     );
-    if (props.player.money.lt(upgradeCoreCost)) {
-      upgradeCoresClass = "std-button-disabled";
-    } else {
-      upgradeCoresClass = "std-button";
-    }
   }
   function upgradeCoresOnClick(): void {
-    let numUpgrades = purchaseMult;
-    if (purchaseMult === "MAX") {
-      numUpgrades = getMaxNumberCoreUpgrades(props.player, node, HacknetNodeConstants.MaxCores);
-    }
-    purchaseCoreUpgrade(props.player, node, numUpgrades as number);
+    const numUpgrades =
+      purchaseMult === "MAX"
+        ? getMaxNumberCoreUpgrades(props.player, node, HacknetNodeConstants.MaxCores)
+        : purchaseMult;
+    purchaseCoreUpgrade(props.player, node, numUpgrades);
     rerender();
   }
 
   return (
-    <li className={"hacknet-node"}>
-      <div className={"hacknet-node-container"}>
-        <div className={"row"}>
-          <h1 style={{ fontSize: "1em" }}>{node.name}</h1>
-        </div>
-        <div className={"row"}>
-          <p>Production:</p>
-          <span className={"text money-gold"}>
-            <Money money={node.totalMoneyGenerated} player={props.player} /> (
-            <MoneyRate money={node.moneyGainRatePerSecond} />)
-          </span>
-        </div>
-        <div className={"row"}>
-          <p>Level:</p>
-          <span className={"text upgradable-info"}>{node.level}</span>
-          <button className={upgradeLevelClass} onClick={upgradeLevelOnClick}>
-            {upgradeLevelContent}
-          </button>
-        </div>
-        <div className={"row"}>
-          <p>RAM:</p>
-          <span className={"text upgradable-info"}>{node.ram}GB</span>
-          <button className={upgradeRamClass} onClick={upgradeRamOnClick}>
-            {upgradeRamContent}
-          </button>
-        </div>
-        <div className={"row"}>
-          <p>Cores:</p>
-          <span className={"text upgradable-info"}>{node.cores}</span>
-          <button className={upgradeCoresClass} onClick={upgradeCoresOnClick}>
-            {upgradeCoresContent}
-          </button>
-        </div>
-      </div>
-    </li>
+    <Grid item component={Paper} p={1}>
+      <Table size="small">
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <Typography>{node.name}</Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>Production:</Typography>
+            </TableCell>
+            <TableCell colSpan={2}>
+              <Typography>
+                <Money money={node.totalMoneyGenerated} player={props.player} /> (
+                <MoneyRate money={node.moneyGainRatePerSecond} />)
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>Level:</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{node.level}</Typography>
+            </TableCell>
+            <TableCell>
+              <Button onClick={upgradeLevelOnClick}>{upgradeLevelContent}</Button>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>RAM:</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{node.ram}GB</Typography>
+            </TableCell>
+            <TableCell>
+              <Button onClick={upgradeRamOnClick}>{upgradeRamContent}</Button>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>Cores:</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{node.cores}</Typography>
+            </TableCell>
+            <TableCell>
+              <Button onClick={upgradeCoresOnClick}>{upgradeCoresContent}</Button>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </Grid>
   );
 }

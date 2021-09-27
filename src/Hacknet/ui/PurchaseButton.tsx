@@ -29,14 +29,16 @@ export function PurchaseButton(props: IProps): React.ReactElement {
     } else {
       text = (
         <>
-          Purchase Hacknet Server - <Money money={cost} player={Player} />
+          Purchase Hacknet Server -&nbsp;
+          <Money money={cost} player={Player} />
         </>
       );
     }
   } else {
     text = (
       <>
-        Purchase Hacknet Node - <Money money={cost} player={Player} />
+        Purchase Hacknet Node -&nbsp;
+        <Money money={cost} player={Player} />
       </>
     );
   }

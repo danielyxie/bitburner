@@ -38,7 +38,7 @@ export function HacknetRoot(props: IProps): React.ReactElement {
   function rerender(): void {
     setRerender((old) => !old);
   }
-  const [purchaseMultiplier, setPurchaseMultiplier] = useState<number | string>(PurchaseMultipliers.x1);
+  const [purchaseMultiplier, setPurchaseMultiplier] = useState<number | "MAX">(PurchaseMultipliers.x1);
 
   useEffect(() => {
     const id = setInterval(rerender, 200);
