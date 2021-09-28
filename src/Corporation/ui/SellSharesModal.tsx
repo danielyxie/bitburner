@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { removePopup } from "../../ui/React/createPopup";
+import { Modal } from "../../ui/React/Modal";
+import { use } from "../../ui/Context";
+import { useCorporation } from "./Context";
 import { CorporationConstants } from "../data/Constants";
 import { ICorporation } from "../ICorporation";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 interface IProps {
-  corp: ICorporation;
-  player: IPlayer;
-  popupId: string;
+  open: boolean;
+  onClose: () => void;
   rerender: () => void;
 }
 
 // Create a popup that lets the player sell Corporation shares
 // This is created when the player clicks the "Sell Shares" button in the overview panel
-export function SellSharesPopup(props: IProps): React.ReactElement {
+export function SellSharesModal(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const corp = useCorporation();
   const [shares, setShares] = useState<number | null>(null);
 
   function changeShares(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -27,10 +32,10 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
     if (props.shares === null) return <></>;
     if (isNaN(props.shares) || props.shares <= 0) {
       return <>ERROR: Invalid value entered for number of shares to sell</>;
-    } else if (props.shares > props.corp.numShares) {
+    } else if (props.shares > corp.numShares) {
       return <>You don't have this many shares to sell!</>;
     } else {
-      const stockSaleResults = props.corp.calculateShareSale(props.shares);
+      const stockSaleResults = corp.calculateShareSale(props.shares);
       const profit = stockSaleResults[0];
       return (
         <>
@@ -44,35 +49,35 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
     if (shares === null) return;
     if (isNaN(shares) || shares <= 0) {
       dialogBoxCreate("ERROR: Invalid value for number of shares");
-    } else if (shares > props.corp.numShares) {
+    } else if (shares > corp.numShares) {
       dialogBoxCreate("ERROR: You don't have this many shares to sell");
     } else {
-      const stockSaleResults = props.corp.calculateShareSale(shares);
+      const stockSaleResults = corp.calculateShareSale(shares);
       const profit = stockSaleResults[0];
       const newSharePrice = stockSaleResults[1];
       const newSharesUntilUpdate = stockSaleResults[2];
 
-      props.corp.numShares -= shares;
-      if (isNaN(props.corp.issuedShares)) {
-        console.error(`Corporation issuedShares is NaN: ${props.corp.issuedShares}`);
-        const res = props.corp.issuedShares;
+      corp.numShares -= shares;
+      if (isNaN(corp.issuedShares)) {
+        console.error(`Corporation issuedShares is NaN: ${corp.issuedShares}`);
+        const res = corp.issuedShares;
         if (isNaN(res)) {
-          props.corp.issuedShares = 0;
+          corp.issuedShares = 0;
         } else {
-          props.corp.issuedShares = res;
+          corp.issuedShares = res;
         }
       }
-      props.corp.issuedShares += shares;
-      props.corp.sharePrice = newSharePrice;
-      props.corp.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
-      props.corp.shareSaleCooldown = CorporationConstants.SellSharesCooldown;
-      props.player.gainMoney(profit);
-      props.player.recordMoneySource(profit, "corporation");
-      removePopup(props.popupId);
+      corp.issuedShares += shares;
+      corp.sharePrice = newSharePrice;
+      corp.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
+      corp.shareSaleCooldown = CorporationConstants.SellSharesCooldown;
+      player.gainMoney(profit);
+      player.recordMoneySource(profit, "corporation");
+      props.onClose();
       dialogBoxCreate(
         `Sold ${numeralWrapper.formatMoney(shares)} shares for ` +
           `${numeralWrapper.formatMoney(profit)}. ` +
-          `The corporation's stock price fell to ${numeralWrapper.formatMoney(props.corp.sharePrice)} ` +
+          `The corporation's stock price fell to ${numeralWrapper.formatMoney(corp.sharePrice)} ` +
           `as a result of dilution.`,
       );
 
@@ -85,8 +90,8 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
   }
 
   return (
-    <>
-      <p>
+    <Modal open={props.open} onClose={props.onClose}>
+      <Typography>
         Enter the number of shares you would like to sell. The money from selling your shares will go directly to you
         (NOT your Corporation).
         <br />
@@ -95,22 +100,21 @@ export function SellSharesPopup(props: IProps): React.ReactElement {
         large number of shares all at once will have an immediate effect in reducing your stock price.
         <br />
         <br />
-        The current price of your company's stock is {numeralWrapper.formatMoney(props.corp.sharePrice)}
-      </p>
-      <ProfitIndicator shares={shares} corp={props.corp} />
+        The current price of your company's stock is {numeralWrapper.formatMoney(corp.sharePrice)}
+      </Typography>
+      <ProfitIndicator shares={shares} corp={corp} />
       <br />
-      <input
-        autoFocus={true}
-        className="text-input"
+      <TextField
+        variant="standard"
+        autoFocus
         type="number"
         placeholder="Shares to sell"
-        style={{ margin: "5px" }}
         onChange={changeShares}
         onKeyDown={onKeyDown}
       />
-      <button onClick={sell} className="a-link-button" style={{ display: "inline-block" }}>
+      <Button onClick={sell} sx={{ mx: 1 }}>
         Sell shares
-      </button>
-    </>
+      </Button>
+    </Modal>
   );
 }

@@ -1,24 +1,28 @@
 import React, { useState } from "react";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { removePopup } from "../../ui/React/createPopup";
 import { Industries, IndustryDescriptions } from "../IndustryData";
-import { ICorporation } from "../ICorporation";
+import { useCorporation } from "./Context";
 import { IIndustry } from "../IIndustry";
 import { NewIndustry } from "../Actions";
 
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import Box from "@mui/material/Box";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+
 interface IProps {
-  corp: ICorporation;
-  popupId: string;
   setDivisionName: (name: string) => void;
 }
-// Create a popup that lets the player create a new industry.
-// This is created when the player clicks the "Expand into new Industry" header tab
-export function NewIndustryPopup(props: IProps): React.ReactElement {
+
+export function ExpandIndustryTab(props: IProps): React.ReactElement {
+  const corp = useCorporation();
   const allIndustries = Object.keys(Industries).sort();
   const possibleIndustries = allIndustries
     .filter(
       (industryType: string) =>
-        props.corp.divisions.find((division: IIndustry) => division.type === industryType) === undefined,
+        corp.divisions.find((division: IIndustry) => division.type === industryType) === undefined,
     )
     .sort();
   const [industry, setIndustry] = useState(possibleIndustries.length > 0 ? possibleIndustries[0] : "");
@@ -26,7 +30,7 @@ export function NewIndustryPopup(props: IProps): React.ReactElement {
 
   function newIndustry(): void {
     try {
-      NewIndustry(props.corp, industry, name);
+      NewIndustry(corp, industry, name);
     } catch (err) {
       dialogBoxCreate(err + "");
       return;
@@ -34,11 +38,10 @@ export function NewIndustryPopup(props: IProps): React.ReactElement {
 
     // Set routing to the new division so that the UI automatically switches to it
     props.setDivisionName(name);
-
-    removePopup(props.popupId);
   }
 
   function onNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    // [a-zA-Z0-9-_]
     setName(event.target.value);
   }
 
@@ -46,7 +49,7 @@ export function NewIndustryPopup(props: IProps): React.ReactElement {
     if (event.keyCode === 13) newIndustry();
   }
 
-  function onIndustryChange(event: React.ChangeEvent<HTMLSelectElement>): void {
+  function onIndustryChange(event: SelectChangeEvent<string>): void {
     setIndustry(event.target.value);
   }
 
@@ -55,33 +58,33 @@ export function NewIndustryPopup(props: IProps): React.ReactElement {
 
   return (
     <>
-      <p>Create a new division to expand into a new industry:</p>
-      <select className="dropdown" defaultValue={industry} onChange={onIndustryChange}>
+      <Typography>Create a new division to expand into a new industry:</Typography>
+      <Select variant="standard" value={industry} onChange={onIndustryChange}>
         {possibleIndustries.map((industry: string) => (
-          <option key={industry} value={industry}>
+          <MenuItem key={industry} value={industry}>
             {industry}
-          </option>
+          </MenuItem>
         ))}
-      </select>
-      <p>{desc(props.corp)}</p>
+      </Select>
+      <Typography>{desc(corp)}</Typography>
       <br />
       <br />
 
-      <p>Division name:</p>
-      <input
-        autoFocus={true}
-        value={name}
-        onChange={onNameChange}
-        onKeyDown={onKeyDown}
-        type="text"
-        className="text-input"
-        style={{ display: "block" }}
-        maxLength={30}
-        pattern="[a-zA-Z0-9-_]"
-      />
-      <span onClick={newIndustry} className="popup-box-button">
-        Create Division
-      </span>
+      <Typography>Division name:</Typography>
+
+      <Box display="flex" alignItems="center">
+        <TextField
+          variant="standard"
+          autoFocus={true}
+          value={name}
+          onChange={onNameChange}
+          onKeyDown={onKeyDown}
+          type="text"
+        />
+        <Button sx={{ mx: 1 }} onClick={newIndustry}>
+          Create Division
+        </Button>
+      </Box>
     </>
   );
 }

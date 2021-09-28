@@ -26,7 +26,7 @@ export function AllPages(props: IProps): React.ReactElement {
 
   return (
     <>
-      <Tabs variant="fullWidth" value={value} onChange={handleChange} aria-label="basic tabs example">
+      <Tabs variant="fullWidth" value={value} onChange={handleChange}>
         <Tab label="General" />
         <Tab label="Contracts" />
         <Tab label="Operations" />

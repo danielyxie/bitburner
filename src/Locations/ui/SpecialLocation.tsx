@@ -15,8 +15,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
-import { CreateCorporationPopup } from "../../Corporation/ui/CreateCorporationPopup";
-import { createPopup } from "../../ui/React/createPopup";
+import { CreateCorporationModal } from "../../Corporation/ui/CreateCorporationModal";
 import { LocationName } from "../data/LocationNames";
 
 import { use } from "../../ui/Context";
@@ -32,17 +31,6 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   const router = use.Router();
   const setRerender = useState(false)[1];
   const inBladeburner = player.inBladeburner();
-  /**
-   * Click handler for "Create Corporation" button at Sector-12 City Hall
-   */
-  function createCorporationPopup(): void {
-    const popupId = `create-start-corporation-popup`;
-    createPopup(popupId, CreateCorporationPopup, {
-      player: player,
-      popupId: popupId,
-      router: router,
-    });
-  }
 
   /**
    * Click handler for Bladeburner button at Sector-12 NSA
@@ -93,7 +81,8 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     return <Button onClick={EatNoodles}>Eat noodles</Button>;
   }
 
-  function renderCreateCorporation(): React.ReactElement {
+  function CreateCorporation(): React.ReactElement {
+    const [open, setOpen] = useState(false);
     if (!player.canAccessCorporation()) {
       return (
         <>
@@ -104,9 +93,12 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       );
     }
     return (
-      <Button disabled={!player.canAccessCorporation() || player.hasCorporation()} onClick={createCorporationPopup}>
-        Create a Corporation
-      </Button>
+      <>
+        <Button disabled={!player.canAccessCorporation() || player.hasCorporation()} onClick={() => setOpen(true)}>
+          Create a Corporation
+        </Button>
+        <CreateCorporationModal open={open} onClose={() => setOpen(false)} />
+      </>
     );
   }
 
@@ -122,7 +114,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       return renderResleeving();
     }
     case LocationName.Sector12CityHall: {
-      return renderCreateCorporation();
+      return <CreateCorporation />;
     }
     case LocationName.Sector12NSA: {
       return renderBladeburner();

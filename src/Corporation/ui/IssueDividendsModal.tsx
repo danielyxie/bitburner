@@ -1,29 +1,34 @@
 import React, { useState } from "react";
-import { removePopup } from "../../ui/React/createPopup";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { Modal } from "../../ui/React/Modal";
 import { CorporationConstants } from "../data/Constants";
-import { ICorporation } from "../ICorporation";
 import { IssueDividends } from "../Actions";
-
+import { useCorporation } from "./Context";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 interface IProps {
-  popupId: string;
-  corp: ICorporation;
+  open: boolean;
+  onClose: () => void;
 }
 
 // Create a popup that lets the player issue & manage dividends
 // This is created when the player clicks the "Issue Dividends" button in the overview panel
-export function IssueDividendsPopup(props: IProps): React.ReactElement {
-  const [percent, setPercent] = useState<number | null>(null);
+export function IssueDividendsModal(props: IProps): React.ReactElement {
+  const corp = useCorporation();
+  const [percent, setPercent] = useState(0);
 
+  const canIssue = !isNaN(percent) && percent >= 0 && percent <= CorporationConstants.DividendMaxPercentage * 100;
   function issueDividends(): void {
+    if (!canIssue) return;
     if (percent === null) return;
     try {
-      IssueDividends(props.corp, percent / 100);
+      IssueDividends(corp, percent / 100);
     } catch (err) {
       dialogBoxCreate(err + "");
     }
 
-    removePopup(props.popupId);
+    props.onClose();
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
@@ -31,13 +36,17 @@ export function IssueDividendsPopup(props: IProps): React.ReactElement {
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.value === "") setPercent(null);
-    else setPercent(parseFloat(event.target.value));
+    if (event.target.value === "") setPercent(0);
+    else {
+      let p = parseFloat(event.target.value);
+      if (p > 50) p = 50;
+      setPercent(p);
+    }
   }
 
   return (
-    <>
-      <p>
+    <Modal open={props.open} onClose={props.onClose}>
+      <Typography>
         Dividends are a distribution of a portion of the corporation's profits to the shareholders. This includes
         yourself, as well.
         <br />
@@ -58,19 +67,19 @@ export function IssueDividendsPopup(props: IProps): React.ReactElement {
         That means your corporation will gain $60m / sec in funds and the remaining $40m / sec will be paid as
         dividends. Since your corporation starts with 1 billion shares, every shareholder will be paid $0.04 per share
         per second before taxes.
-      </p>
-      <input
-        autoFocus={true}
+      </Typography>
+      <TextField
+        variant="standard"
+        autoFocus
+        value={percent}
         onChange={onChange}
         onKeyDown={onKeyDown}
-        className="text-input"
         placeholder="Dividend %"
         type="number"
-        style={{ margin: "5px" }}
       />
-      <button onClick={issueDividends} className="std-button" style={{ display: "inline-block" }}>
+      <Button disabled={!canIssue} sx={{ mx: 1 }} onClick={issueDividends}>
         Allocate Dividend Percentage
-      </button>
-    </>
+      </Button>
+    </Modal>
   );
 }

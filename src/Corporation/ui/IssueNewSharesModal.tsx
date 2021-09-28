@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { removePopup } from "../../ui/React/createPopup";
+import { Modal } from "../../ui/React/Modal";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { CorporationConstants } from "../data/Constants";
-import { ICorporation } from "../ICorporation";
+import { useCorporation } from "./Context";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 interface IEffectTextProps {
-  corp: ICorporation;
   shares: number | null;
 }
 
 function EffectText(props: IEffectTextProps): React.ReactElement {
+  const corp = useCorporation();
   if (props.shares === null) return <></>;
-  const newSharePrice = Math.round(props.corp.sharePrice * 0.9);
-  const maxNewSharesUnrounded = Math.round(props.corp.totalShares * 0.2);
+  const newSharePrice = Math.round(corp.sharePrice * 0.9);
+  const maxNewSharesUnrounded = Math.round(corp.totalShares * 0.2);
   const maxNewShares = maxNewSharesUnrounded - (maxNewSharesUnrounded % 1e6);
   let newShares = props.shares;
   if (isNaN(newShares)) {
-    return <p>Invalid input</p>;
+    return <Typography>Invalid input</Typography>;
   }
 
   // Round to nearest ten-millionth
@@ -26,36 +29,37 @@ function EffectText(props: IEffectTextProps): React.ReactElement {
   newShares = Math.round(newShares) * 10e6;
 
   if (newShares < 10e6) {
-    return <p>Must issue at least 10 million new shares</p>;
+    return <Typography>Must issue at least 10 million new shares</Typography>;
   }
 
   if (newShares > maxNewShares) {
-    return <p>You cannot issue that many shares</p>;
+    return <Typography>You cannot issue that many shares</Typography>;
   }
 
   return (
-    <p>
+    <Typography>
       Issue ${numeralWrapper.format(newShares, "0.000a")} new shares for{" "}
       {numeralWrapper.formatMoney(newShares * newSharePrice)}?
-    </p>
+    </Typography>
   );
 }
 
 interface IProps {
-  corp: ICorporation;
-  popupId: string;
+  open: boolean;
+  onClose: () => void;
 }
 
 // Create a popup that lets the player issue new shares
 // This is created when the player clicks the "Issue New Shares" buttons in the overview panel
-export function IssueNewSharesPopup(props: IProps): React.ReactElement {
+export function IssueNewSharesModal(props: IProps): React.ReactElement {
+  const corp = useCorporation();
   const [shares, setShares] = useState<number | null>(null);
-  const maxNewSharesUnrounded = Math.round(props.corp.totalShares * 0.2);
+  const maxNewSharesUnrounded = Math.round(corp.totalShares * 0.2);
   const maxNewShares = maxNewSharesUnrounded - (maxNewSharesUnrounded % 1e6);
 
   function issueNewShares(): void {
     if (shares === null) return;
-    const newSharePrice = Math.round(props.corp.sharePrice * 0.9);
+    const newSharePrice = Math.round(corp.sharePrice * 0.9);
     let newShares = shares;
     if (isNaN(newShares)) {
       dialogBoxCreate("Invalid input for number of new shares");
@@ -71,8 +75,8 @@ export function IssueNewSharesPopup(props: IProps): React.ReactElement {
     }
 
     const profit = newShares * newSharePrice;
-    props.corp.issueNewSharesCooldown = CorporationConstants.IssueNewSharesCooldown;
-    props.corp.totalShares += newShares;
+    corp.issueNewSharesCooldown = CorporationConstants.IssueNewSharesCooldown;
+    corp.totalShares += newShares;
 
     // Determine how many are bought by private investors
     // Private investors get up to 50% at most
@@ -80,16 +84,15 @@ export function IssueNewSharesPopup(props: IProps): React.ReactElement {
     let privateShares = getRandomInt(0, Math.round(newShares / 2));
     privateShares = Math.round(privateShares / 1e6) * 1e6;
 
-    props.corp.issuedShares += newShares - privateShares;
-    props.corp.funds = props.corp.funds.plus(profit);
-    props.corp.immediatelyUpdateSharePrice();
-
-    removePopup(props.popupId);
+    corp.issuedShares += newShares - privateShares;
+    corp.funds = corp.funds.plus(profit);
+    corp.immediatelyUpdateSharePrice();
+    props.onClose();
     dialogBoxCreate(
       `Issued ${numeralWrapper.format(newShares, "0.000a")} and raised ` +
         `${numeralWrapper.formatMoney(profit)}. ${numeralWrapper.format(privateShares, "0.000a")} ` +
         `of these shares were bought by private investors.<br><br>` +
-        `Stock price decreased to ${numeralWrapper.formatMoney(props.corp.sharePrice)}`,
+        `Stock price decreased to ${numeralWrapper.formatMoney(corp.sharePrice)}`,
     );
   }
 
@@ -103,8 +106,8 @@ export function IssueNewSharesPopup(props: IProps): React.ReactElement {
   }
 
   return (
-    <>
-      <p>
+    <Modal open={props.open} onClose={props.onClose}>
+      <Typography>
         You can issue new equity shares (i.e. stocks) in order to raise capital for your corporation.
         <br />
         <br />
@@ -122,19 +125,12 @@ export function IssueNewSharesPopup(props: IProps): React.ReactElement {
         When you choose to issue new equity, private shareholders have first priority for up to 50% of the new shares.
         If they choose to exercise this option, these newly issued shares become private, restricted shares, which means
         you cannot buy them back.
-      </p>
-      <EffectText corp={props.corp} shares={shares} />
-      <input
-        className="text-input"
-        autoFocus={true}
-        placeholder="# New Shares"
-        style={{ margin: "5px" }}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-      />
-      <button onClick={issueNewShares} className="std-button" style={{ display: "inline-block" }}>
+      </Typography>
+      <EffectText shares={shares} />
+      <TextField variant="standard" autoFocus placeholder="# New Shares" onChange={onChange} onKeyDown={onKeyDown} />
+      <Button onClick={issueNewShares} sx={{ mx: 1 }}>
         Issue New Shares
-      </button>
-    </>
+      </Button>
+    </Modal>
   );
 }
