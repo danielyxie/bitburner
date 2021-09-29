@@ -531,13 +531,6 @@ export function createAndAddWorkerScript(
       }
     }
 
-    // If the WorkerScript is no longer "running", then this means its execution was
-    // already stopped somewhere else (maybe by something like exit()). This prevents
-    // the script from being cleaned up twice
-    if (w === undefined || !w.running) {
-      return;
-    }
-
     killWorkerScript(s);
     w.log("", "Script finished running");
   }).catch(function (w) {
