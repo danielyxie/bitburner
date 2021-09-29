@@ -3,26 +3,35 @@
 import React, { useState } from "react";
 
 import { OfficeSpace } from "../OfficeSpace";
-import { IIndustry } from "../IIndustry";
 import { Employee } from "../Employee";
 import { EmployeePositions } from "../EmployeePositions";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
-import { getSelectText } from "../../ui/uiHelpers/getSelectData";
 import { createPopup } from "../../ui/React/createPopup";
 import { UpgradeOfficeSizePopup } from "./UpgradeOfficeSizePopup";
 import { HireEmployeePopup } from "./HireEmployeePopup";
 import { ThrowPartyPopup } from "./ThrowPartyPopup";
-import { ICorporation } from "../ICorporation";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Money } from "../../ui/React/Money";
+import { use } from "../../ui/Context";
+import { useCorporation, useDivision } from "./Context";
+
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import { TableCell } from "../../ui/React/Table";
 
 interface IProps {
-  corp: ICorporation;
-  division: IIndustry;
   office: OfficeSpace;
-  player: IPlayer;
   rerender: () => void;
 }
 
@@ -42,27 +51,35 @@ interface ISwitchProps {
 function SwitchButton(props: ISwitchProps): React.ReactElement {
   if (props.manualMode) {
     return (
-      <button className={"std-button tooltip"} onClick={() => props.switchMode((old) => !old)}>
-        Switch to Auto Mode
-        <span className={"tooltiptext"}>
-          Switch to Automatic Assignment Mode, which will automatically assign employees to your selected jobs. You
-          simply have to select the number of assignments for each job
-        </span>
-      </button>
+      <Tooltip
+        title={
+          <Typography>
+            Switch to Automatic Assignment Mode, which will automatically assign employees to your selected jobs. You
+            simply have to select the number of assignments for each job
+          </Typography>
+        }
+      >
+        <Button onClick={() => props.switchMode((old) => !old)}>Switch to Auto Mode</Button>
+      </Tooltip>
     );
   } else {
     return (
-      <button className={"std-button tooltip"} onClick={() => props.switchMode((old) => !old)}>
-        Switch to Manual Mode
-        <span className={"tooltiptext"}>
-          Switch to Manual Assignment Mode, which allows you to specify which employees should get which jobs
-        </span>
-      </button>
+      <Tooltip
+        title={
+          <Typography>
+            Switch to Manual Assignment Mode, which allows you to specify which employees should get which jobs
+          </Typography>
+        }
+      >
+        <Button onClick={() => props.switchMode((old) => !old)}>Switch to Manual Mode</Button>
+      </Tooltip>
     );
   }
 }
 
 function ManualManagement(props: IProps): React.ReactElement {
+  const corp = useCorporation();
+  const division = useDivision();
   const [employee, setEmployee] = useState<Employee | null>(
     props.office.employees.length > 0 ? props.office.employees[0] : null,
   );
@@ -76,11 +93,15 @@ function ManualManagement(props: IProps): React.ReactElement {
   // Employee Selector
   const employees = [];
   for (let i = 0; i < props.office.employees.length; ++i) {
-    employees.push(<option key={props.office.employees[i].name}>{props.office.employees[i].name}</option>);
+    employees.push(
+      <MenuItem key={props.office.employees[i].name} value={props.office.employees[i].name}>
+        {props.office.employees[i].name}
+      </MenuItem>,
+    );
   }
 
-  function employeeSelectorOnChange(e: React.ChangeEvent<HTMLSelectElement>): void {
-    const name = getSelectText(e.target);
+  function employeeSelectorOnChange(e: SelectChangeEvent<string>): void {
+    const name = e.target.value;
     for (let i = 0; i < props.office.employees.length; ++i) {
       if (name === props.office.employees[i].name) {
         setEmployee(props.office.employees[i]);
@@ -98,19 +119,18 @@ function ManualManagement(props: IProps): React.ReactElement {
   const positionNames = Object.values(EmployeePositions);
   for (let i = 0; i < positionNames.length; ++i) {
     employeePositions.push(
-      <option key={positionNames[i]} value={positionNames[i]}>
+      <MenuItem key={positionNames[i]} value={positionNames[i]}>
         {positionNames[i]}
-      </option>,
+      </MenuItem>,
     );
     if (emp != null && emp.pos === positionNames[i]) {
       employeePositionSelectorInitialValue = positionNames[i];
     }
   }
 
-  function employeePositionSelectorOnChange(e: React.ChangeEvent<HTMLSelectElement>): void {
+  function employeePositionSelectorOnChange(e: SelectChangeEvent<string>): void {
     if (employee === null) return;
-    const pos = getSelectText(e.target);
-    employee.pos = pos;
+    employee.pos = e.target.value;
     props.rerender();
   }
 
@@ -118,16 +138,16 @@ function ManualManagement(props: IProps): React.ReactElement {
   const nf = "0.000";
 
   // Employee stats (after applying multipliers)
-  const effCre = emp ? emp.cre * props.corp.getEmployeeCreMultiplier() * props.division.getEmployeeCreMultiplier() : 0;
-  const effCha = emp ? emp.cha * props.corp.getEmployeeChaMultiplier() * props.division.getEmployeeChaMultiplier() : 0;
-  const effInt = emp ? emp.int * props.corp.getEmployeeIntMultiplier() * props.division.getEmployeeIntMultiplier() : 0;
-  const effEff = emp ? emp.eff * props.corp.getEmployeeEffMultiplier() * props.division.getEmployeeEffMultiplier() : 0;
+  const effCre = emp ? emp.cre * corp.getEmployeeCreMultiplier() * division.getEmployeeCreMultiplier() : 0;
+  const effCha = emp ? emp.cha * corp.getEmployeeChaMultiplier() * division.getEmployeeChaMultiplier() : 0;
+  const effInt = emp ? emp.int * corp.getEmployeeIntMultiplier() * division.getEmployeeIntMultiplier() : 0;
+  const effEff = emp ? emp.eff * corp.getEmployeeEffMultiplier() * division.getEmployeeEffMultiplier() : 0;
 
   return (
     <div style={employeeInfoDivStyle}>
-      <select className="dropdown" onChange={employeeSelectorOnChange}>
+      <Select value={employee !== null ? employee.name : ""} onChange={employeeSelectorOnChange}>
         {employees}
-      </select>
+      </Select>
       {employee != null && (
         <p>
           Morale: {numeralWrapper.format(employee.mor, nf)}
@@ -150,13 +170,9 @@ function ManualManagement(props: IProps): React.ReactElement {
         </p>
       )}
       {employee != null && (
-        <select
-          className="dropdown"
-          onChange={employeePositionSelectorOnChange}
-          value={employeePositionSelectorInitialValue}
-        >
+        <Select onChange={employeePositionSelectorOnChange} value={employeePositionSelectorInitialValue}>
           {employeePositions}
-        </select>
+        </Select>
       )}
     </div>
   );
@@ -164,15 +180,14 @@ function ManualManagement(props: IProps): React.ReactElement {
 
 interface IAutoAssignProps {
   office: OfficeSpace;
-  corp: ICorporation;
-  division: IIndustry;
-  player: IPlayer;
   job: string;
   desc: string;
   rerender: () => void;
 }
 
 function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
+  const corp = useCorporation();
+  const division = useDivision();
   const numJob = countEmployee(props.office.employees, props.job);
   const numUnassigned = countEmployee(props.office.employees, EmployeePositions.Unassigned);
   function assignEmployee(): void {
@@ -182,42 +197,43 @@ function AutoAssignJob(props: IAutoAssignProps): React.ReactElement {
     }
 
     props.office.assignEmployeeToJob(props.job);
-    props.office.calculateEmployeeProductivity(props.corp, props.division);
+    props.office.calculateEmployeeProductivity(corp, division);
     props.rerender();
   }
 
   function unassignEmployee(): void {
     props.office.unassignEmployeeFromJob(props.job);
-    props.office.calculateEmployeeProductivity(props.corp, props.division);
+    props.office.calculateEmployeeProductivity(corp, division);
     props.rerender();
   }
-  const positionHeaderStyle = {
-    fontSize: "15px",
-    margin: "5px 0px 5px 0px",
-    width: "50%",
-  };
   return (
-    <>
-      <h2 className={"tooltip"} style={positionHeaderStyle}>
-        {props.job} ({numJob})<span className={"tooltiptext"}>{props.desc}</span>
-      </h2>
-      <button className={numUnassigned > 0 ? "std-button" : "a-link-button-inactive"} onClick={assignEmployee}>
-        +
-      </button>
-      <button className={numJob > 0 ? "std-button" : "a-link-button-inactive"} onClick={unassignEmployee}>
-        -
-      </button>
-      <br />
-    </>
+    <TableRow>
+      <TableCell>
+        <Tooltip title={props.desc}>
+          <Typography>
+            {props.job} ({numJob})
+          </Typography>
+        </Tooltip>
+      </TableCell>
+      <TableCell>
+        <IconButton disabled={numUnassigned === 0} onClick={assignEmployee}>
+          <ArrowDropUpIcon />
+        </IconButton>
+        <IconButton disabled={numJob === 0} onClick={unassignEmployee}>
+          <ArrowDropDownIcon />
+        </IconButton>
+      </TableCell>
+    </TableRow>
   );
 }
 
 function AutoManagement(props: IProps): React.ReactElement {
+  const corp = useCorporation();
+  const division = useDivision();
   const numUnassigned = countEmployee(props.office.employees, EmployeePositions.Unassigned);
-  const vechain = props.corp.unlockUpgrades[4] === 1; // Has Vechain upgrade
+  const vechain = corp.unlockUpgrades[4] === 1; // Has Vechain upgrade
 
-  // Calculate average morale, happiness, and energy. Also salary
-  // TODO is this efficient?
+  // Calculate average morale, happiness,  energy, and salary.
   let totalMorale = 0,
     totalHappiness = 0,
     totalEnergy = 0,
@@ -240,50 +256,54 @@ function AutoManagement(props: IProps): React.ReactElement {
 
   return (
     <>
-      <p>
-        <strong>Unassigned Employees: {numUnassigned}</strong>
-      </p>
-      <br />
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <p>Avg Employee Morale:</p>
-            </td>
-            <td>
-              <p>{numeralWrapper.format(avgMorale, "0.000")}</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Avg Employee Happiness:</p>
-            </td>
-            <td>
-              <p>{numeralWrapper.format(avgHappiness, "0.000")}</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Avg Employee Energy:</p>
-            </td>
-            <td>
-              <p>{numeralWrapper.format(avgEnergy, "0.000")}</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Total Employee Salary:</p>
-            </td>
-            <td>
-              <p>
+      <Table padding="none">
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <Typography>Unassigned Employees:</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{numUnassigned}</Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>Avg Employee Morale:</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{numeralWrapper.format(avgMorale, "0.000")}</Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>Avg Employee Happiness:</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{numeralWrapper.format(avgHappiness, "0.000")}</Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>Avg Employee Energy:</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{numeralWrapper.format(avgEnergy, "0.000")}</Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>
+              <Typography>Total Employee Salary:</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>
                 <Money money={totalSalary} />
-              </p>
-            </td>
-          </tr>
+              </Typography>
+            </TableCell>
+          </TableRow>
           {vechain && (
             <>
-              <tr>
-                <td>
+              <TableRow>
+                <TableCell>
                   <p className={"tooltip"} style={{ display: "inline-block" }}>
                     Material Production:
                     <span className={"tooltiptext"}>
@@ -292,120 +312,112 @@ function AutoManagement(props: IProps): React.ReactElement {
                       and Management employees
                     </span>
                   </p>
-                </td>
-                <td>
-                  <p>{numeralWrapper.format(props.division.getOfficeProductivity(props.office), "0.000")}</p>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p className={"tooltip"} style={{ display: "inline-block" }}>
-                    Product Production:
-                    <span className={"tooltiptext"}>
-                      The base amount of any given Product this office can produce. Does not include production
-                      multipliers from upgrades and materials. This value is based off the productivity of your
-                      Operations, Engineering, and Management employees
-                    </span>
-                  </p>
-                </td>
-                <td>
-                  <p>
+                </TableCell>
+                <TableCell>
+                  <p>{numeralWrapper.format(division.getOfficeProductivity(props.office), "0.000")}</p>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Tooltip
+                    title={
+                      <Typography>
+                        The base amount of any given Product this office can produce. Does not include production
+                        multipliers from upgrades and materials. This value is based off the productivity of your
+                        Operations, Engineering, and Management employees
+                      </Typography>
+                    }
+                  >
+                    <Typography>Product Production:</Typography>
+                  </Tooltip>
+                </TableCell>
+                <TableCell>
+                  <Typography>
                     {numeralWrapper.format(
-                      props.division.getOfficeProductivity(props.office, {
+                      division.getOfficeProductivity(props.office, {
                         forProduct: true,
                       }),
                       "0.000",
                     )}
-                  </p>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <p className={"tooltip"} style={{ display: "inline-block" }}>
-                    Business Multiplier:
-                    <span className={"tooltiptext"}>
-                      The effect this office's 'Business' employees has on boosting sales
-                    </span>
-                  </p>
-                </td>
-                <td>
-                  <p>x{numeralWrapper.format(props.division.getBusinessFactor(props.office), "0.000")}</p>
-                </td>
-              </tr>
+                  </Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Tooltip
+                    title={<Typography>The effect this office's 'Business' employees has on boosting sales</Typography>}
+                  >
+                    <Typography> Business Multiplier:</Typography>
+                  </Tooltip>
+                </TableCell>
+                <TableCell>
+                  <Typography>x{numeralWrapper.format(division.getBusinessFactor(props.office), "0.000")}</Typography>
+                </TableCell>
+              </TableRow>
             </>
           )}
-        </tbody>
-      </table>
-      <AutoAssignJob
-        rerender={props.rerender}
-        office={props.office}
-        corp={props.corp}
-        division={props.division}
-        player={props.player}
-        job={EmployeePositions.Operations}
-        desc={"Manages supply chain operations. Improves the amount of Materials and Products you produce."}
-      />
+        </TableBody>
+      </Table>
 
-      <AutoAssignJob
-        rerender={props.rerender}
-        office={props.office}
-        corp={props.corp}
-        division={props.division}
-        player={props.player}
-        job={EmployeePositions.Engineer}
-        desc={
-          "Develops and maintains products and production systems. Increases the quality of everything you produce. Also increases the amount you produce (not as much as Operations, however)"
-        }
-      />
+      <Table padding="none">
+        <TableBody>
+          <AutoAssignJob
+            rerender={props.rerender}
+            office={props.office}
+            job={EmployeePositions.Operations}
+            desc={"Manages supply chain operations. Improves the amount of Materials and Products you produce."}
+          />
 
-      <AutoAssignJob
-        rerender={props.rerender}
-        office={props.office}
-        corp={props.corp}
-        division={props.division}
-        player={props.player}
-        job={EmployeePositions.Business}
-        desc={"Handles sales and finances. Improves the amount of Materials and Products you can sell."}
-      />
+          <AutoAssignJob
+            rerender={props.rerender}
+            office={props.office}
+            job={EmployeePositions.Engineer}
+            desc={
+              "Develops and maintains products and production systems. Increases the quality of everything you produce. Also increases the amount you produce (not as much as Operations, however)"
+            }
+          />
 
-      <AutoAssignJob
-        rerender={props.rerender}
-        office={props.office}
-        corp={props.corp}
-        division={props.division}
-        player={props.player}
-        job={EmployeePositions.Management}
-        desc={
-          "Leads and oversees employees and office operations. Improves the effectiveness of Engineer and Operations employees."
-        }
-      />
+          <AutoAssignJob
+            rerender={props.rerender}
+            office={props.office}
+            job={EmployeePositions.Business}
+            desc={"Handles sales and finances. Improves the amount of Materials and Products you can sell."}
+          />
 
-      <AutoAssignJob
-        rerender={props.rerender}
-        office={props.office}
-        corp={props.corp}
-        division={props.division}
-        player={props.player}
-        job={EmployeePositions.RandD}
-        desc={"Research new innovative ways to improve the company. Generates Scientific Research."}
-      />
+          <AutoAssignJob
+            rerender={props.rerender}
+            office={props.office}
+            job={EmployeePositions.Management}
+            desc={
+              "Leads and oversees employees and office operations. Improves the effectiveness of Engineer and Operations employees."
+            }
+          />
 
-      <AutoAssignJob
-        rerender={props.rerender}
-        office={props.office}
-        corp={props.corp}
-        division={props.division}
-        player={props.player}
-        job={EmployeePositions.Training}
-        desc={
-          "Set employee to training, which will increase some of their stats. Employees in training do not affect any company operations."
-        }
-      />
+          <AutoAssignJob
+            rerender={props.rerender}
+            office={props.office}
+            job={EmployeePositions.RandD}
+            desc={"Research new innovative ways to improve the company. Generates Scientific Research."}
+          />
+
+          <AutoAssignJob
+            rerender={props.rerender}
+            office={props.office}
+            job={EmployeePositions.Training}
+            desc={
+              "Set employee to training, which will increase some of their stats. Employees in training do not affect any company operations."
+            }
+          />
+        </TableBody>
+      </Table>
     </>
   );
 }
 
 export function IndustryOffice(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const corp = useCorporation();
+  const division = useDivision();
   const [employeeManualAssignMode, setEmployeeManualAssignMode] = useState(false);
 
   const buttonStyle = {
@@ -428,19 +440,12 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     createPopup(popupId, HireEmployeePopup, {
       rerender: props.rerender,
       office: props.office,
-      corp: props.corp,
+      corp: corp,
       popupId: popupId,
-      player: props.player,
+      player: player,
     });
   }
 
-  // Autohire employee button
-  let autohireEmployeeButtonClass = "tooltip";
-  if (props.office.atCapacity()) {
-    autohireEmployeeButtonClass += " a-link-button-inactive";
-  } else {
-    autohireEmployeeButtonClass += " std-button";
-  }
   function autohireEmployeeButtonOnClick(): void {
     if (props.office.atCapacity()) return;
     props.office.hireRandomEmployee();
@@ -452,9 +457,9 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     createPopup(popupId, UpgradeOfficeSizePopup, {
       rerender: props.rerender,
       office: props.office,
-      corp: props.corp,
+      corp: corp,
       popupId: popupId,
-      player: props.player,
+      player: player,
     });
   }
 
@@ -462,74 +467,70 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     const popupId = "cmpy-mgmt-throw-office-party-popup";
     createPopup(popupId, ThrowPartyPopup, {
       office: props.office,
-      corp: props.corp,
+      corp: corp,
       popupId: popupId,
     });
   }
 
   return (
     <div className={"cmpy-mgmt-employee-panel"}>
-      <h1 style={{ margin: "4px 0px 5px 0px" }}>Office Space</h1>
-      <p>
+      <Typography>Office Space</Typography>
+      <Typography>
         Size: {props.office.employees.length} / {props.office.size} employees
-      </p>
-      <button className={hireEmployeeButtonClass} onClick={openHireEmployeePopup} style={buttonStyle}>
-        Hire Employee
-        {props.office.employees.length === 0 && (
-          <span className={"tooltiptext"}>
-            You'll need to hire some employees to get your operations started! It's recommended to have at least one
-            employee in every position
-          </span>
-        )}
-      </button>
-      <button className={autohireEmployeeButtonClass} onClick={autohireEmployeeButtonOnClick} style={buttonStyle}>
-        Autohire Employee
-        <span className={"tooltiptext"}>Automatically hires an employee and gives him/her a random name</span>
-      </button>
-      <br />
-      <button
-        className={"std-button tooltip"}
-        onClick={openUpgradeOfficeSizePopup}
-        style={buttonStyle}
-        disabled={props.corp.funds.lt(0)}
+      </Typography>
+      <Tooltip
+        title={
+          props.office.employees.length === 0 ? (
+            <Typography>
+              You'll need to hire some employees to get your operations started! It's recommended to have at least one
+              employee in every position
+            </Typography>
+          ) : (
+            ""
+          )
+        }
       >
-        Upgrade size
-        <span className={"tooltiptext"}>Upgrade the office's size so that it can hold more employees!</span>
-      </button>
-      {!props.division.hasResearch("AutoPartyManager") && (
-        <button
-          className={"std-button tooltip"}
-          onClick={openThrowPartyPopup}
-          style={buttonStyle}
-          disabled={props.corp.funds.lt(0)}
+        <span>
+          <Button disabled={props.office.atCapacity()} onClick={openHireEmployeePopup}>
+            Hire Employee
+          </Button>
+        </span>
+      </Tooltip>
+      <Tooltip title={<Typography>Automatically hires an employee and gives him/her a random name</Typography>}>
+        <span>
+          <Button disabled={props.office.atCapacity()} onClick={autohireEmployeeButtonOnClick}>
+            Autohire Employee
+          </Button>
+        </span>
+      </Tooltip>
+      <br />
+      <Tooltip title={<Typography>Upgrade the office's size so that it can hold more employees!</Typography>}>
+        <span>
+          <Button disabled={corp.funds.lt(0)} onClick={openUpgradeOfficeSizePopup}>
+            Upgrade size
+          </Button>
+        </span>
+      </Tooltip>
+
+      {!division.hasResearch("AutoPartyManager") && (
+        <Tooltip
+          title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
         >
-          Throw Party
-          <span className={"tooltiptext"}>
-            "Throw an office party to increase your employee's morale and happiness"
+          <span>
+            <Button disabled={corp.funds.lt(0)} onClick={openThrowPartyPopup}>
+              Throw Party
+            </Button>
           </span>
-        </button>
+        </Tooltip>
       )}
+
       <br />
 
-      <div>
-        <SwitchButton manualMode={employeeManualAssignMode} switchMode={setEmployeeManualAssignMode} />
-      </div>
+      <SwitchButton manualMode={employeeManualAssignMode} switchMode={setEmployeeManualAssignMode} />
       {employeeManualAssignMode ? (
-        <ManualManagement
-          rerender={props.rerender}
-          corp={props.corp}
-          division={props.division}
-          office={props.office}
-          player={props.player}
-        />
+        <ManualManagement rerender={props.rerender} office={props.office} />
       ) : (
-        <AutoManagement
-          rerender={props.rerender}
-          corp={props.corp}
-          division={props.division}
-          office={props.office}
-          player={props.player}
-        />
+        <AutoManagement rerender={props.rerender} office={props.office} />
       )}
     </div>
   );
