@@ -1,5 +1,5 @@
 import { Literatures } from "./Literatures";
-import { dialogBoxCreate } from "../../utils/DialogBox";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
 
 export function showLiterature(fn: string): void {
   const litObj = Literatures[fn];

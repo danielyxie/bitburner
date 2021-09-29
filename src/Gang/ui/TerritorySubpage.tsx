@@ -3,8 +3,8 @@
  */
 import React from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { formatNumber } from "../../../utils/StringHelperFunctions";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { formatNumber } from "../../utils/StringHelperFunctions";
 import { AllGangs } from "../AllGangs";
 import { Gang } from "../Gang";
 

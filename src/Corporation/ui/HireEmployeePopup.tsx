@@ -5,10 +5,10 @@ import { CorporationConstants } from "../data/Constants";
 import { ICorporation } from "../ICorporation";
 import { OfficeSpace } from "../OfficeSpace";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { getRandomInt } from "../../../utils/helpers/getRandomInt";
-import { formatNumber } from "../../../utils/StringHelperFunctions";
+import { getRandomInt } from "../../utils/helpers/getRandomInt";
+import { formatNumber } from "../../utils/StringHelperFunctions";
 import { Employee } from "../Employee";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 interface INameEmployeeProps {
   office: OfficeSpace;

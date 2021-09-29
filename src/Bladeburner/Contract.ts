@@ -1,6 +1,6 @@
 import { IBladeburner } from "./IBladeburner";
 import { Action, IActionParams } from "./Action";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
 export class Contract extends Action {
   constructor(params: IActionParams | null = null) {

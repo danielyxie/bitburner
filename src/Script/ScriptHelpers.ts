@@ -8,7 +8,7 @@ import { processSingleServerGrowth } from "../Server/ServerHelpers";
 
 import { numeralWrapper } from "../ui/numeralFormat";
 
-import { compareArrays } from "../../utils/helpers/compareArrays";
+import { compareArrays } from "../utils/helpers/compareArrays";
 
 export function scriptCalculateOfflineProduction(runningScript: RunningScript): void {
   //The Player object stores the last update time from when we were online

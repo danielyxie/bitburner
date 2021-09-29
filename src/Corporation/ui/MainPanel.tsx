@@ -5,42 +5,28 @@ import React from "react";
 
 import { CityTabs } from "./CityTabs";
 import { IIndustry } from "../IIndustry";
-import { Overview } from "./Overview";
+import { useCorporation } from "./Context";
+import { use } from "../../ui/Context";
 
 import { CityName } from "../../Locations/data/CityNames";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { ICorporation } from "../ICorporation";
 
 interface IProps {
-  corp: ICorporation;
-  player: IPlayer;
   divisionName: string;
   rerender: () => void;
 }
 
 export function MainPanel(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const corp = useCorporation();
   const division =
     props.divisionName !== "Overview"
-      ? props.corp.divisions.find((division: IIndustry) => division.name === props.divisionName)
+      ? corp.divisions.find((division: IIndustry) => division.name === props.divisionName)
       : undefined; // use undefined because find returns undefined
 
-  if (division === undefined) {
-    return (
-      <div id="cmpy-mgmt-panel">
-        <Overview {...props} />
-      </div>
-    );
-  } else {
-    return (
-      <div id="cmpy-mgmt-panel">
-        <CityTabs
-          rerender={props.rerender}
-          division={division}
-          corp={props.corp}
-          city={CityName.Sector12}
-          player={props.player}
-        />
-      </div>
-    );
-  }
+  if (division === undefined) throw new Error("Cannot find division");
+  return (
+    <div id="cmpy-mgmt-panel">
+      <CityTabs rerender={props.rerender} division={division} corp={corp} city={CityName.Sector12} player={player} />
+    </div>
+  );
 }

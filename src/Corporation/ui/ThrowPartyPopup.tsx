@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { removePopup } from "../../ui/React/createPopup";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { OfficeSpace } from "../OfficeSpace";
 import { ICorporation } from "../ICorporation";
 import { ThrowParty } from "../Actions";

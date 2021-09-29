@@ -19,7 +19,7 @@ import { ServerAccordionContent } from "./ServerAccordionContent";
 import { BaseServer } from "../../Server/BaseServer";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 
-import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
+import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 
 type IProps = {
   server: BaseServer;

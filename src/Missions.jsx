@@ -1,15 +1,15 @@
 import { CONSTANTS } from "./Constants";
 import { Player } from "./Player";
 
-import { dialogBoxCreate } from "../utils/DialogBox";
-import { formatNumber } from "../utils/StringHelperFunctions";
+import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { formatNumber } from "./utils/StringHelperFunctions";
 import { Reputation } from "./ui/React/Reputation";
 
-import { addOffset } from "../utils/helpers/addOffset";
-import { getRandomInt } from "../utils/helpers/getRandomInt";
-import { isString } from "../utils/helpers/isString";
+import { addOffset } from "./utils/helpers/addOffset";
+import { getRandomInt } from "./utils/helpers/getRandomInt";
+import { isString } from "./utils/helpers/isString";
 
-import { clearEventListeners } from "../utils/uiHelpers/clearEventListeners";
+import { clearEventListeners } from "./ui/uiHelpers/clearEventListeners";
 import { Router } from "./ui/GameRoot";
 
 // For some reason `jsplumb` needs to be imported exactly like this,

@@ -1,4 +1,4 @@
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
 
 export class Message {
   // Name of Message file

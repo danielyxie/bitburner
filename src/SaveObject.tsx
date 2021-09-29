@@ -11,13 +11,13 @@ import { loadSpecialServerIps, SpecialServerIps } from "./Server/SpecialServerIp
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 
-import { createStatusText } from "./ui/createStatusText";
+import { GameSavedEvents } from "./ui/React/Snackbar";
 
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import * as ExportBonus from "./ExportBonus";
 
-import { dialogBoxCreate } from "../utils/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "./utils/JSONReviver";
 import { save } from "./db";
 
 /* SaveObject.js
@@ -79,7 +79,7 @@ class BitburnerSaveObject {
     const saveString = this.getSaveString();
 
     save(saveString)
-      .then(() => createStatusText("Game saved!"))
+      .then(() => GameSavedEvents.emit())
       .catch((err) => console.error(err));
   }
 

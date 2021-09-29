@@ -8,8 +8,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { KEY } from "../../../utils/helpers/keyCodes";
-import { removeElement } from "../../../utils/uiHelpers/removeElement";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { removeElement } from "../uiHelpers/removeElement";
 
 export interface IPopupButtonProps {
   class?: string;

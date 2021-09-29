@@ -6,7 +6,7 @@ import { IIndustry } from "../IIndustry";
 import { SetSmartSupply, SetSmartSupplyUseLeftovers } from "../Actions";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Material } from "../Material";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 interface ILeftoverProps {
   matName: string;

@@ -7,7 +7,7 @@ import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SourceFiles } from "./SourceFile/SourceFiles";
 
-import { dialogBoxCreate } from "../utils/DialogBox";
+import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { IRouter } from "./ui/Router";
 
 export let redPillFlag = false;

@@ -35,9 +35,7 @@ export function BlackOpList(props: IProps): React.ReactElement {
   return (
     <>
       {blackops.map((blackop: BlackOperation) => (
-        <li key={blackop.name} className="bladeburner-action">
-          <BlackOpElem bladeburner={props.bladeburner} action={blackop} player={props.player} />
-        </li>
+        <BlackOpElem key={blackop.name} bladeburner={props.bladeburner} action={blackop} player={props.player} />
       ))}
     </>
   );

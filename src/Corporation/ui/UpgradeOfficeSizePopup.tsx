@@ -1,7 +1,7 @@
 import React from "react";
 import { removePopup } from "../../ui/React/createPopup";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { CorporationConstants } from "../data/Constants";
 import { OfficeSpace } from "../OfficeSpace";
 import { ICorporation } from "../ICorporation";

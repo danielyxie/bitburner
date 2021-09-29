@@ -1,7 +1,7 @@
 import React from "react";
 import { use } from "../../ui/Context";
 import { CinematicText } from "../../ui/React/CinematicText";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 export function BladeburnerCinematic(): React.ReactElement {
   const router = use.Router();

@@ -5,7 +5,7 @@ import React from "react";
 import { Gang } from "../Gang";
 import { RecruitPopup } from "./RecruitPopup";
 import { GangConstants } from "../data/Constants";
-import { formatNumber } from "../../../utils/StringHelperFunctions";
+import { formatNumber } from "../../utils/StringHelperFunctions";
 import { createPopup } from "../../ui/React/createPopup";
 
 interface IProps {

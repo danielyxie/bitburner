@@ -20,7 +20,7 @@ import { SmartSupplyPopup } from "./SmartSupplyPopup";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createPopup } from "../../ui/React/createPopup";
 
-import { isString } from "../../../utils/helpers/isString";
+import { isString } from "../../utils/helpers/isString";
 import { ICorporation } from "../ICorporation";
 import { IIndustry } from "../IIndustry";
 import { IPlayer } from "../../PersonObjects/IPlayer";

@@ -32,7 +32,7 @@ import { HashManager } from "../../Hacknet/HashManager";
 import { CityName } from "../../Locations/data/CityNames";
 
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
 
 import Decimal from "decimal.js";
 
@@ -199,7 +199,7 @@ export class PlayerObject implements IPlayer {
   getNextCompanyPosition: (company: Company, entryPosType: CompanyPosition) => CompanyPosition | null;
   getUpgradeHomeRamCost: () => number;
   gotoLocation: (to: LocationName) => boolean;
-  hasAugmentation: (aug: Augmentation) => boolean;
+  hasAugmentation: (aug: string | Augmentation) => boolean;
   hasCorporation: () => boolean;
   hasGangWith: (facName: string) => boolean;
   hasTorRouter: () => boolean;

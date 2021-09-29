@@ -144,15 +144,15 @@ import { Router } from "./ui/GameRoot";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 
-import { logBoxCreate } from "../utils/LogBox";
-import { arrayToString } from "../utils/helpers/arrayToString";
-import { isString } from "../utils/helpers/isString";
+import { logBoxCreate } from "./ui/React/LogBox";
+import { arrayToString } from "./utils/helpers/arrayToString";
+import { isString } from "./utils/helpers/isString";
 
-import { createElement } from "../utils/uiHelpers/createElement";
-import { createPopup } from "../utils/uiHelpers/createPopup";
-import { removeElementById } from "../utils/uiHelpers/removeElementById";
+import { createElement } from "./ui/uiHelpers/createElement";
+import { createPopup } from "./ui/uiHelpers/createPopup";
+import { removeElementById } from "./ui/uiHelpers/removeElementById";
 
 import { OfficeSpace } from "./Corporation/OfficeSpace";
 import { Employee } from "./Corporation/Employee";
@@ -375,7 +375,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
   };
 
   // Utility function to get Hacknet Node object
-  const getHacknetNode = function (i: any, callingFn: string = ""): HacknetNode | HacknetServer {
+  const getHacknetNode = function (i: any, callingFn = ""): HacknetNode | HacknetServer {
     if (isNaN(i)) {
       throw makeRuntimeErrorMsg(callingFn, "Invalid index specified for Hacknet Node: " + i);
     }

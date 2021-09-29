@@ -12,7 +12,7 @@ import { SpecialServerNames } from "./Server/SpecialServerIps";
 import { Server } from "./Server/Server";
 import { HacknetServer } from "./Hacknet/HacknetServer";
 
-import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { getRandomInt } from "./utils/helpers/getRandomInt";
 
 export function generateRandomContract(): void {
   // First select a random problem type

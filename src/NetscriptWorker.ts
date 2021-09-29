@@ -25,10 +25,10 @@ import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
 import { generate } from "escodegen";
 
-import { dialogBoxCreate } from "../utils/DialogBox";
-import { arrayToString } from "../utils/helpers/arrayToString";
-import { roundToTwo } from "../utils/helpers/roundToTwo";
-import { isString } from "../utils/helpers/isString";
+import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { arrayToString } from "./utils/helpers/arrayToString";
+import { roundToTwo } from "./utils/helpers/roundToTwo";
+import { isString } from "./utils/helpers/isString";
 import { sprintf } from "sprintf-js";
 
 import { parse } from "acorn";
@@ -529,13 +529,6 @@ export function createAndAddWorkerScript(
         parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
         parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
       }
-    }
-
-    // If the WorkerScript is no longer "running", then this means its execution was
-    // already stopped somewhere else (maybe by something like exit()). This prevents
-    // the script from being cleaned up twice
-    if (w === undefined || !w.running) {
-      return;
     }
 
     killWorkerScript(s);

@@ -24,7 +24,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import UploadIcon from "@mui/icons-material/Upload";
 
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "./DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { ThemeEditorModal } from "./ThemeEditorModal";
 
@@ -211,6 +211,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
           <List>
             <ListItem>
               <Tooltip
+                disableInteractive
                 title={
                   <Typography>
                     The minimum number of milliseconds it takes to execute an operation in Netscript. Setting this too
@@ -231,6 +232,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <Tooltip
+                disableInteractive
                 title={
                   <Typography>
                     The maximum number of lines a script's logs can hold. Setting this too high can cause the game to
@@ -251,6 +253,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <Tooltip
+                disableInteractive
                 title={
                   <Typography>
                     The maximum number of entries that can be written to a port using Netscript's write() function.
@@ -271,6 +274,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <Tooltip
+                disableInteractive
                 title={
                   <Typography>
                     The maximum number of entries that can be written to a the terminal. Setting this too high can cause
@@ -292,6 +296,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <Tooltip
+                disableInteractive
                 title={
                   <Typography>The time (in seconds) between each autosave. Set to 0 to disable autosave.</Typography>
                 }
@@ -313,6 +318,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 control={<Switch checked={suppressMessages} onChange={handleSuppressMessagesChange} />}
                 label={
                   <Tooltip
+                    disableInteractive
                     title={
                       <Typography>
                         If this is set, then any messages you receive will not appear as popups on the screen. They will
@@ -331,6 +337,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 control={<Switch checked={suppressFactionInvites} onChange={handleSuppressFactionInvitesChange} />}
                 label={
                   <Tooltip
+                    disableInteractive
                     title={
                       <Typography>
                         If this is set, then any faction invites you receive will not appear as popups on the screen.
@@ -350,6 +357,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 }
                 label={
                   <Tooltip
+                    disableInteractive
                     title={
                       <Typography>
                         If this is set, the confirmation message before traveling will not show up. You will
@@ -372,6 +380,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 }
                 label={
                   <Tooltip
+                    disableInteractive
                     title={
                       <Typography>
                         If this is set, the confirmation message before buying augmentation will not show up.
@@ -390,6 +399,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 }
                 label={
                   <Tooltip
+                    disableInteractive
                     title={
                       <Typography>
                         If this is set, a popup message will no longer be shown when you are hospitalized after taking
@@ -410,6 +420,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                   }
                   label={
                     <Tooltip
+                      disableInteractive
                       title={
                         <Typography>
                           If this is set, then having your Bladeburner actions interrupted by being busy with something
@@ -428,6 +439,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 control={<Switch checked={disableHotkeys} onChange={handleDisableHotkeysChange} />}
                 label={
                   <Tooltip
+                    disableInteractive
                     title={
                       <Typography>
                         If this is set, then most hotkeys (keyboard shortcuts) in the game are disabled. This includes
@@ -445,7 +457,10 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <FormControlLabel
                 control={<Switch checked={disableASCIIArt} onChange={handleDisableASCIIArtChange} />}
                 label={
-                  <Tooltip title={<Typography>If this is set all ASCII art will be disabled.</Typography>}>
+                  <Tooltip
+                    disableInteractive
+                    title={<Typography>If this is set all ASCII art will be disabled.</Typography>}
+                  >
                     <Typography>Disable ascii art</Typography>
                   </Tooltip>
                 }
@@ -456,6 +471,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 control={<Switch checked={disableTextEffects} onChange={handleDisableTextEffectsChange} />}
                 label={
                   <Tooltip
+                    disableInteractive
                     title={
                       <Typography>
                         If this is set, text effects will not be displayed. This can help if text is difficult to read
@@ -474,6 +490,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 control={<Switch checked={enableBashHotkeys} onChange={handleEnableBashHotkeysChange} />}
                 label={
                   <Tooltip
+                    disableInteractive
                     title={
                       <Typography>
                         Improved Bash emulation mode. Setting this to 1 enables several new Terminal shortcuts and
@@ -492,6 +509,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 control={<Switch checked={enableTimestamps} onChange={handleEnableTimestampsChange} />}
                 label={
                   <Tooltip
+                    disableInteractive
                     title={
                       <Typography>
                         Terminal commands and log entries will be timestamped. The timestamp will have the format: M/D
@@ -506,7 +524,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
 
             <ListItem>
-              <Tooltip title={<Typography>Sets the locale for displaying numbers.</Typography>}>
+              <Tooltip disableInteractive title={<Typography>Sets the locale for displaying numbers.</Typography>}>
                 <Typography>Locale&nbsp;</Typography>
               </Tooltip>
               <Select value={locale} onChange={handleLocaleChange}>
@@ -551,13 +569,13 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <Button onClick={() => setDeleteOpen(true)}>Delete Game</Button>
           </Box>
           <Box>
-            <Tooltip title={<Typography>export</Typography>}>
+            <Tooltip disableInteractive title={<Typography>export</Typography>}>
               <Button onClick={() => props.export()}>
                 <DownloadIcon color="primary" />
                 Export
               </Button>
             </Tooltip>
-            <Tooltip title={<Typography>import</Typography>}>
+            <Tooltip disableInteractive title={<Typography>import</Typography>}>
               <Button onClick={startImport}>
                 <UploadIcon color="primary" />
                 Import
@@ -567,6 +585,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
           </Box>
           <Box>
             <Tooltip
+              disableInteractive
               title={
                 <Typography>
                   Forcefully kill all active running scripts, in case there is a bug or some unexpected issue with the
@@ -582,6 +601,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
           </Box>
           <Box>
             <Tooltip
+              disableInteractive
               title={
                 <Typography>
                   Perform a soft reset. Resets everything as if you had just purchased an Augmentation.
@@ -593,6 +613,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
           </Box>
           <Box>
             <Tooltip
+              disableInteractive
               title={
                 <Typography>
                   If your save file is extremely big you can use this button to view a map of all the files on every

@@ -8,7 +8,7 @@ import { Factions } from "../Faction/Factions";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
 export interface IConstructorParams {
   info: string | JSX.Element;

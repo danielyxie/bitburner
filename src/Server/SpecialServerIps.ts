@@ -1,5 +1,5 @@
 import { IMap } from "../types";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
 
 /* Holds IP of Special Servers */
 export const SpecialServerNames: IMap<string> = {

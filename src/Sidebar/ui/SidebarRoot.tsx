@@ -51,7 +51,7 @@ import { Settings } from "../../Settings/Settings";
 import { redPillFlag } from "../../RedPill";
 
 import { inMission } from "../../Missions";
-import { KEY } from "../../../utils/helpers/keyCodes";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),

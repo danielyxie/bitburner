@@ -3,7 +3,7 @@ import { Script } from "../Script/Script";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IRouter } from "../ui/Router";
 import { Settings } from "../Settings/Settings";
-import { getTimestamp } from "../../utils/helpers/getTimestamp";
+import { getTimestamp } from "../utils/helpers/getTimestamp";
 
 export class Output {
   text: string;

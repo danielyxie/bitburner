@@ -22,7 +22,10 @@ interface IColorEditorProps {
 }
 
 function ColorEditor({ name, onColorChange, color, defaultColor }: IColorEditorProps): React.ReactElement {
-  if (color === undefined) throw new Error("should not happen");
+  if (color === undefined) {
+    console.error(`color ${name} was undefined, reverting to default`);
+    color = defaultColor;
+  }
 
   return (
     <>
@@ -263,6 +266,12 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
         onColorChange={onColorChange}
         color={customTheme["rep"]}
         defaultColor={defaultSettings.theme["rep"]}
+      />
+      <ColorEditor
+        name="disabled"
+        onColorChange={onColorChange}
+        color={customTheme["disabled"]}
+        defaultColor={defaultSettings.theme["disabled"]}
       />
       <br />
       <br />

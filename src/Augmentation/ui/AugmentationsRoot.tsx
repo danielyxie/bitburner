@@ -2,7 +2,7 @@
  * Root React component for the Augmentations UI page that display all of your
  * owned and purchased Augmentations and Source-Files.
  */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { InstalledAugmentations } from "./InstalledAugmentations";
 import { PlayerMultipliers } from "./PlayerMultipliers";
@@ -23,10 +23,17 @@ interface IProps {
 
 export function AugmentationsRoot(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
+  function rerender(): void {
+    setRerender((o) => !o);
+  }
+  useEffect(() => {
+    const id = setInterval(rerender, 200);
+    return () => clearInterval(id);
+  }, []);
 
   function doExport(): void {
     props.exportGameFn();
-    setRerender((o) => !o);
+    rerender();
   }
 
   function exportBonusStr(): string {
@@ -63,13 +70,11 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
       </Typography>
       <Box mx={2}>
         <Tooltip title={"'I never asked for this'"}>
-          <Button onClick={props.installAugmentationsFn}>
-            <Typography>Install Augmentations</Typography>
-          </Button>
+          <Button onClick={props.installAugmentationsFn}>Install Augmentations</Button>
         </Tooltip>
         <Tooltip title={"It's always a good idea to backup/export your save!"}>
-          <Button sx={{ mx: 2 }} onClick={doExport}>
-            <Typography color="error">Backup Save {exportBonusStr()}</Typography>
+          <Button sx={{ mx: 2 }} onClick={doExport} color="error">
+            Backup Save {exportBonusStr()}
           </Button>
         </Tooltip>
         <PurchasedAugmentations />

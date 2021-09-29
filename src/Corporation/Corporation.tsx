@@ -10,9 +10,9 @@ import { showLiterature } from "../Literature/LiteratureHelpers";
 import { LiteratureNames } from "../Literature/data/LiteratureNames";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
-import { dialogBoxCreate } from "../../utils/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
-import { isString } from "../../utils/helpers/isString";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
+import { isString } from "../utils/helpers/isString";
 
 // UI Related Imports
 

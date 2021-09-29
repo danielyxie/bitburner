@@ -14,7 +14,7 @@ import { Reputation } from "../../ui/React/Reputation";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { MathComponent } from "mathjax-react";
 
 import Typography from "@mui/material/Typography";

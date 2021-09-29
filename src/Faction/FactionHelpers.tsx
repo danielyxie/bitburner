@@ -17,7 +17,7 @@ import {
 } from "../PersonObjects/formulas/reputation";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
-import { dialogBoxCreate } from "../../utils/DialogBox";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { createPopup } from "../ui/React/createPopup";
 import { InvitationPopup } from "./ui/InvitationPopup";
 

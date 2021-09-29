@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { KEY } from "../../../utils/helpers/keyCodes";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 import { CodingContract, CodingContractType, CodingContractTypes } from "../../CodingContracts";
 import { ClickableTag, CopyableText } from "./CopyableText";

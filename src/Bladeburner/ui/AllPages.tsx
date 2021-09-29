@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { GeneralActionPage } from "./GeneralActionPage";
 import { ContractPage } from "./ContractPage";
 import { OperationPage } from "./OperationPage";
 import { BlackOpPage } from "./BlackOpPage";
 import { SkillPage } from "./SkillPage";
-import { stealthIcon, killIcon } from "../data/Icons";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 
 interface IProps {
   bladeburner: IBladeburner;
@@ -14,41 +18,28 @@ interface IProps {
 }
 
 export function AllPages(props: IProps): React.ReactElement {
-  const [page, setPage] = useState("General");
-  const setRerender = useState(false)[1];
+  const [value, setValue] = React.useState(0);
 
-  useEffect(() => {
-    const id = setInterval(() => setRerender((old) => !old), 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  function Header(props: { name: string }): React.ReactElement {
-    return (
-      <a
-        onClick={() => setPage(props.name)}
-        className={page !== props.name ? "bladeburner-nav-button noselect" : "bladeburner-nav-button-inactive noselect"}
-      >
-        {props.name}
-      </a>
-    );
+  function handleChange(event: React.SyntheticEvent, tab: number): void {
+    setValue(tab);
   }
+
   return (
     <>
-      <Header name={"General"} />
-      <Header name={"Contracts"} />
-      <Header name={"Operations"} />
-      <Header name={"BlackOps"} />
-      <Header name={"Skills"} />
-      <div style={{ display: "block", margin: "4px", padding: "4px" }}>
-        {page === "General" && <GeneralActionPage bladeburner={props.bladeburner} player={props.player} />}
-        {page === "Contracts" && <ContractPage bladeburner={props.bladeburner} player={props.player} />}
-        {page === "Operations" && <OperationPage bladeburner={props.bladeburner} player={props.player} />}
-        {page === "BlackOps" && <BlackOpPage bladeburner={props.bladeburner} player={props.player} />}
-        {page === "Skills" && <SkillPage bladeburner={props.bladeburner} />}
-      </div>
-      <span className="text">
-        {stealthIcon} = This action requires stealth, {killIcon} = This action involves retirement
-      </span>
+      <Tabs variant="fullWidth" value={value} onChange={handleChange}>
+        <Tab label="General" />
+        <Tab label="Contracts" />
+        <Tab label="Operations" />
+        <Tab label="BlackOps" />
+        <Tab label="Skills" />
+      </Tabs>
+      <Box sx={{ p: 1 }}>
+        {value === 0 && <GeneralActionPage bladeburner={props.bladeburner} player={props.player} />}
+        {value === 1 && <ContractPage bladeburner={props.bladeburner} player={props.player} />}
+        {value === 2 && <OperationPage bladeburner={props.bladeburner} player={props.player} />}
+        {value === 3 && <BlackOpPage bladeburner={props.bladeburner} player={props.player} />}
+        {value === 4 && <SkillPage bladeburner={props.bladeburner} />}
+      </Box>
     </>
   );
 }

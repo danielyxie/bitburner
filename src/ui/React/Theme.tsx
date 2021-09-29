@@ -73,6 +73,9 @@ export function refreshTheme(): void {
         default: Settings.theme.black,
         paper: Settings.theme.well,
       },
+      action: {
+        disabled: Settings.theme.disabled,
+      },
     },
     typography: {
       fontFamily: "monospace",
@@ -255,6 +258,16 @@ export function refreshTheme(): void {
         styleOverrides: {
           select: {
             color: Settings.theme.primary,
+          },
+        },
+      },
+      MuiTab: {
+        styleOverrides: {
+          textColorPrimary: {
+            color: Settings.theme.secondary,
+            "&.Mui-selected": {
+              color: Settings.theme.primary,
+            },
           },
         },
       },

@@ -9,8 +9,8 @@ import { WorkerScriptStartStopEventEmitter } from "./WorkerScriptStartStopEventE
 import { RunningScript } from "../Script/RunningScript";
 import { AllServers } from "../Server/AllServers";
 
-import { compareArrays } from "../../utils/helpers/compareArrays";
-import { roundToTwo } from "../../utils/helpers/roundToTwo";
+import { compareArrays } from "../utils/helpers/compareArrays";
+import { roundToTwo } from "../utils/helpers/roundToTwo";
 
 export function killWorkerScript(runningScriptObj: RunningScript, serverIp: string, rerenderUi?: boolean): boolean;
 export function killWorkerScript(workerScript: WorkerScript): boolean;

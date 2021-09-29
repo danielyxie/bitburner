@@ -24,7 +24,7 @@ import { SpecialServerIps, prestigeSpecialServerIps, SpecialServerNames } from "
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 
-import { dialogBoxCreate } from "../utils/DialogBox";
+import { dialogBoxCreate } from "./ui/React/DialogBox";
 
 import Decimal from "decimal.js";
 

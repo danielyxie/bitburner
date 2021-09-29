@@ -8,9 +8,14 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 
 import { ServerDropdown, ServerType } from "../../ui/React/ServerDropdown";
 
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { CopyableText } from "../../ui/React/CopyableText";
 import { Hashes } from "../../ui/React/Hashes";
+
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import { SelectChangeEvent } from "@mui/material/Select";
 
 interface IProps {
   player: IPlayer;
@@ -21,7 +26,7 @@ interface IProps {
 
 export function HacknetUpgradeElem(props: IProps): React.ReactElement {
   const [selectedServer, setSelectedServer] = useState("ecorp");
-  function changeTargetServer(event: React.ChangeEvent<HTMLSelectElement>): void {
+  function changeTargetServer(event: SelectChangeEvent<string>): void {
     setSelectedServer(event.target.value);
   }
 
@@ -47,24 +52,25 @@ export function HacknetUpgradeElem(props: IProps): React.ReactElement {
 
   // Purchase button
   const canPurchase = hashManager.hashes >= cost;
-  const btnClass = canPurchase ? "std-button" : "std-button-disabled";
 
   // We'll reuse a Bladeburner css class
   return (
-    <div className={"bladeburner-action"}>
-      <CopyableText value={upg.name} />
-      <p>
+    <Paper sx={{ p: 1 }}>
+      <Typography>
+        <CopyableText value={upg.name} />
+      </Typography>
+      <Typography>
         Cost: {Hashes(cost)}, Bought: {level} times
-      </p>
+      </Typography>
 
-      <p>{upg.desc}</p>
-      <button className={btnClass} onClick={purchase}>
+      <Typography>{upg.desc}</Typography>
+      <Button onClick={purchase} disabled={!canPurchase}>
         Purchase
-      </button>
-      {level > 0 && effect && <p>{effect}</p>}
+      </Button>
+      {level > 0 && effect && <Typography>{effect}</Typography>}
       {upg.hasTargetServer && (
-        <ServerDropdown serverType={ServerType.Foreign} onChange={changeTargetServer} style={{ margin: "5px" }} />
+        <ServerDropdown value={selectedServer} serverType={ServerType.Foreign} onChange={changeTargetServer} />
       )}
-    </div>
+    </Paper>
   );
 }

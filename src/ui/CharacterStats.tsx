@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { numeralWrapper } from "../ui/numeralFormat";
-import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { getPurchaseServerLimit } from "../Server/ServerPurchases";
@@ -253,7 +253,7 @@ export function CharacterStats(): React.ReactElement {
   }
 
   useEffect(() => {
-    const id = setInterval(rerender, 20);
+    const id = setInterval(rerender, 200);
     return () => clearInterval(id);
   }, []);
 

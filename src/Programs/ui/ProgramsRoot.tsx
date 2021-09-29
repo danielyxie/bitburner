@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { use } from "../../ui/Context";
 import { getAvailableCreatePrograms } from "../ProgramHelpers";
 
-import { Box, Tooltip, Typography } from "@mui/material";
+import { Tooltip, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 
 export function ProgramsRoot(): React.ReactElement {
@@ -14,7 +14,7 @@ export function ProgramsRoot(): React.ReactElement {
   }
 
   useEffect(() => {
-    const id = setInterval(rerender, 1000);
+    const id = setInterval(rerender, 200);
     return () => clearInterval(id);
   }, []);
 
@@ -33,7 +33,7 @@ export function ProgramsRoot(): React.ReactElement {
 
         return (
           <React.Fragment key={program.name}>
-            <Tooltip title={create.tooltip}>
+            <Tooltip title={create.tooltip} disableInteractive>
               <Button
                 sx={{ my: 1 }}
                 onClick={(event) => {

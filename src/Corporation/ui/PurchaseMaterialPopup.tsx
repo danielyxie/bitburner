@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { removePopup } from "../../ui/React/createPopup";
 import { MaterialSizes } from "../MaterialSizes";
 import { Warehouse } from "../Warehouse";

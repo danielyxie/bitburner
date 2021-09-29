@@ -13,7 +13,7 @@ import { StdButton } from "../../ui/React/StdButton";
 import { StdButtonPurchased } from "../../ui/React/StdButtonPurchased";
 import { Money } from "../../ui/React/Money";
 
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 type IProps = {
   initStockMarket: () => void;

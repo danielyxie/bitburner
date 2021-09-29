@@ -4,6 +4,10 @@
  * This subcomponent renders all of the buttons for applying to jobs at a company
  */
 import React, { useState } from "react";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import Box from "@mui/material/Box";
 
 import { ApplyToJobButton } from "./ApplyToJobButton";
 
@@ -15,7 +19,6 @@ import { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
 import * as posNames from "../../Company/data/companypositionnames";
 
-import { StdButton } from "../../ui/React/StdButton";
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
 import { createPopup } from "../../ui/React/createPopup";
@@ -195,35 +198,41 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     <div>
       {isEmployedHere && (
         <div>
-          <p>Job Title: {jobTitle}</p>
+          <Typography>Job Title: {jobTitle}</Typography>
+          <Typography>-------------------------</Typography>
+          <Box display="flex">
+            <Tooltip
+              title={
+                <>
+                  You will have {Favor(company.favor + favorGain[0])} company favor upon resetting after installing
+                  Augmentations
+                </>
+              }
+              disableInteractive
+            >
+              <Typography>Company reputation: {Reputation(company.playerReputation)}</Typography>
+            </Tooltip>
+          </Box>
+          <Typography>-------------------------</Typography>
+          <Box display="flex">
+            <Tooltip
+              title={
+                <>
+                  Company favor increases the rate at which you earn reputation for this company by 1% per favor.
+                  Company favor is gained whenever you reset after installing Augmentations. The amount of favor you
+                  gain depends on how much reputation you have with the company.
+                </>
+              }
+              disableInteractive
+            >
+              <Typography className={"tooltip"}>Company Favor: {Favor(company.favor)}</Typography>
+            </Tooltip>
+          </Box>
+          <Typography>-------------------------</Typography>
           <br />
-          <p style={{ display: "block" }}>-------------------------</p>
-          <br />
-          <p className={"tooltip"}>
-            Company reputation: {Reputation(company.playerReputation)}
-            <span className={"tooltiptext"}>
-              You will earn {Favor(favorGain[0])} company favor upon resetting after installing Augmentations
-            </span>
-          </p>
-          <br />
-          <br />
-          <p style={{ display: "block" }}>-------------------------</p>
-          <br />
-          <p className={"tooltip"}>
-            Company Favor: {Favor(company.favor)}
-            <span className={"tooltiptext"}>
-              Company favor increases the rate at which you earn reputation for this company by 1% per favor. Company
-              favor is gained whenever you reset after installing Augmentations. The amount of favor you gain depends on
-              how much reputation you have with the comapny.
-            </span>
-          </p>
-          <br />
-          <br />
-          <p style={{ display: "block" }}>-------------------------</p>
-          <br />
-          <StdButton onClick={work} text={"Work"} />
+          <Button onClick={work}>Work</Button>
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <StdButton onClick={quit} text={"Quit"} />
+          <Button onClick={quit}>Quit</Button>
         </div>
       )}
       {company.hasAgentPositions() && (
@@ -231,8 +240,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           company={company}
           entryPosType={CompanyPositions[posNames.AgentCompanyPositions[0]]}
           onClick={applyForAgentJob}
-          p={p}
-          style={{ display: "block" }}
           text={"Apply for Agent Job"}
         />
       )}
@@ -241,8 +248,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           company={company}
           entryPosType={CompanyPositions[posNames.BusinessConsultantCompanyPositions[0]]}
           onClick={applyForBusinessConsultantJob}
-          p={p}
-          style={{ display: "block" }}
           text={"Apply for Business Consultant Job"}
         />
       )}
@@ -251,8 +256,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           company={company}
           entryPosType={CompanyPositions[posNames.BusinessCompanyPositions[0]]}
           onClick={applyForBusinessJob}
-          p={p}
-          style={{ display: "block" }}
           text={"Apply for Business Job"}
         />
       )}
@@ -261,8 +264,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           company={company}
           entryPosType={CompanyPositions[posNames.MiscCompanyPositions[1]]}
           onClick={applyForEmployeeJob}
-          p={p}
-          style={{ display: "block" }}
           text={"Apply to be an Employee"}
         />
       )}
@@ -271,8 +272,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           company={company}
           entryPosType={CompanyPositions[posNames.PartTimeCompanyPositions[1]]}
           onClick={applyForPartTimeEmployeeJob}
-          p={p}
-          style={{ display: "block" }}
           text={"Apply to be a part-time Employee"}
         />
       )}
@@ -281,8 +280,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           company={company}
           entryPosType={CompanyPositions[posNames.ITCompanyPositions[0]]}
           onClick={applyForItJob}
-          p={p}
-          style={{ display: "block" }}
           text={"Apply for IT Job"}
         />
       )}
@@ -291,8 +288,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           company={company}
           entryPosType={CompanyPositions[posNames.SecurityCompanyPositions[2]]}
           onClick={applyForSecurityJob}
-          p={p}
-          style={{ display: "block" }}
           text={"Apply for Security Job"}
         />
       )}
@@ -301,8 +296,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           company={company}
           entryPosType={CompanyPositions[posNames.SoftwareConsultantCompanyPositions[0]]}
           onClick={applyForSoftwareConsultantJob}
-          p={p}
-          style={{ display: "block" }}
           text={"Apply for Software Consultant Job"}
         />
       )}
@@ -311,8 +304,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           company={company}
           entryPosType={CompanyPositions[posNames.SoftwareCompanyPositions[0]]}
           onClick={applyForSoftwareJob}
-          p={p}
-          style={{ display: "block" }}
           text={"Apply for Software Job"}
         />
       )}
@@ -321,8 +312,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           company={company}
           entryPosType={CompanyPositions[posNames.MiscCompanyPositions[0]]}
           onClick={applyForWaiterJob}
-          p={p}
-          style={{ display: "block" }}
           text={"Apply to be a Waiter"}
         />
       )}
@@ -331,19 +320,10 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           company={company}
           entryPosType={CompanyPositions[posNames.PartTimeCompanyPositions[0]]}
           onClick={applyForPartTimeWaiterJob}
-          p={p}
-          style={{ display: "block" }}
           text={"Apply to be a part-time Waiter"}
         />
       )}
-      {location.infiltrationData != null && (
-        <StdButton onClick={startInfiltration} style={{ display: "block" }} text={"Infiltrate Company"} />
-      )}
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      {location.infiltrationData != null && <Button onClick={startInfiltration}>Infiltrate Company</Button>}
     </div>
   );
 }

@@ -15,7 +15,7 @@ import { ITutorialEvents } from "./InteractiveTutorial/ITutorialEvents";
 
 import { Faction } from "../Faction/Faction";
 import { prestigeAugmentation } from "../Prestige";
-import { dialogBoxCreate } from "../../utils/DialogBox";
+import { dialogBoxCreate } from "./React/DialogBox";
 import { AllServers } from "../Server/AllServers";
 import { Factions } from "../Faction/Factions";
 import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";
@@ -65,6 +65,8 @@ import { BitverseRoot } from "../BitNode/ui/BitverseRoot";
 import { CharacterOverview } from "./React/CharacterOverview";
 import { BladeburnerCinematic } from "../Bladeburner/ui/BladeburnerCinematic";
 import { workerScripts } from "../Netscript/WorkerScripts";
+import { Unclickable } from "../Exploits/Unclickable";
+import { Snackbar } from "./React/Snackbar";
 
 import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
@@ -304,7 +306,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
               {page === Page.Terminal ? (
                 <TerminalRoot terminal={terminal} router={Router} player={player} />
               ) : page === Page.Sleeves ? (
-                <SleeveRoot player={player} />
+                <SleeveRoot />
               ) : page === Page.Stats ? (
                 <CharacterStats />
               ) : page === Page.CreateScript ? (
@@ -390,6 +392,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
             </Box>
           </Box>
         )}
+        <Unclickable />
+        <Snackbar />
       </Context.Router.Provider>
     </Context.Player.Provider>
   );

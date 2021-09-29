@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Typography from "@mui/material/Typography";
 
 interface IProps {
   text: string;
@@ -34,10 +35,10 @@ export function CinematicLine(props: IProps): React.ReactElement {
   });
   return (
     <>
-      <pre>
+      <Typography>
         {props.text.slice(0, length)}
         {!done && <span>&#9608;</span>}
-      </pre>
+      </Typography>
     </>
   );
 }

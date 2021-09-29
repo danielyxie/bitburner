@@ -7,7 +7,7 @@ import { Gang } from "../Gang";
 import { GangMember } from "../GangMember";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { removePopup } from "../../ui/React/createPopup";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 interface IProps {
   member: GangMember;

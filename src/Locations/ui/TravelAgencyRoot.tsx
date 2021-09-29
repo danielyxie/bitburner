@@ -17,7 +17,7 @@ import { StdButton } from "../../ui/React/StdButton";
 import { use } from "../../ui/Context";
 import { Money } from "../../ui/React/Money";
 import { WorldMap } from "../../ui/React/WorldMap";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";

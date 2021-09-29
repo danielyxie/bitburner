@@ -9,8 +9,8 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
-import { dialogBoxCreate } from "../../utils/DialogBox";
-import { isPowerOfTwo } from "../../utils/helpers/isPowerOfTwo";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { isPowerOfTwo } from "../utils/helpers/isPowerOfTwo";
 
 // Returns the cost of purchasing a server with the given RAM
 // Returns Infinity for invalid 'ram' arguments

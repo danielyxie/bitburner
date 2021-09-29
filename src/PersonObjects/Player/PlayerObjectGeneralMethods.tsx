@@ -50,8 +50,8 @@ import Decimal from "decimal.js";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { IRouter } from "../../ui/Router";
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
-import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 
 import { Reputation } from "../../ui/React/Reputation";
 import { Money } from "../../ui/React/Money";
@@ -519,7 +519,10 @@ export function resetWorkStatus(this: IPlayer, generalType?: string, group?: str
 }
 
 export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
-  const focusBonus = this.focus ? 1 : 0.8;
+  let focusBonus = 1;
+  if (!this.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
+    focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
+  }
   const hackExpGain = focusBonus * this.workHackExpGainRate * numCycles;
   const strExpGain = focusBonus * this.workStrExpGainRate * numCycles;
   const defExpGain = focusBonus * this.workDefExpGainRate * numCycles;

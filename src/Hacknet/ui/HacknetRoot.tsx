@@ -7,7 +7,7 @@ import { GeneralInfo } from "./GeneralInfo";
 import { HacknetNodeElem } from "./HacknetNodeElem";
 import { HacknetServerElem } from "./HacknetServerElem";
 import { HacknetNode } from "../HacknetNode";
-import { HashUpgradePopup } from "./HashUpgradePopup";
+import { HashUpgradeModal } from "./HashUpgradeModal";
 import { MultiplierButtons } from "./MultiplierButtons";
 import { PlayerInfo } from "./PlayerInfo";
 import { PurchaseButton } from "./PurchaseButton";
@@ -24,8 +24,6 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { AllServers } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
 
-import { createPopup } from "../../ui/React/createPopup";
-
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -35,23 +33,17 @@ interface IProps {
 }
 
 export function HacknetRoot(props: IProps): React.ReactElement {
+  const [open, setOpen] = useState(false);
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
   }
-  const [purchaseMultiplier, setPurchaseMultiplier] = useState<number | string>(PurchaseMultipliers.x1);
+  const [purchaseMultiplier, setPurchaseMultiplier] = useState<number | "MAX">(PurchaseMultipliers.x1);
 
   useEffect(() => {
-    const id = setInterval(rerender, 1000);
+    const id = setInterval(rerender, 200);
     return () => clearInterval(id);
   }, []);
-
-  function createHashUpgradesPopup(): void {
-    const id = "hacknet-server-hash-upgrades-popup";
-    createPopup(id, HashUpgradePopup, {
-      player: props.player,
-    });
-  }
 
   let totalProduction = 0;
   for (let i = 0; i < props.player.hacknetNodes.length; ++i) {
@@ -142,9 +134,10 @@ export function HacknetRoot(props: IProps): React.ReactElement {
         </Grid>
       </Grid>
 
-      {hasHacknetServers(props.player) && <Button onClick={createHashUpgradesPopup}>Spend Hashes on Upgrades</Button>}
+      {hasHacknetServers(props.player) && <Button onClick={() => setOpen(true)}>Spend Hashes on Upgrades</Button>}
 
       <Grid container>{nodes}</Grid>
+      <HashUpgradeModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 }

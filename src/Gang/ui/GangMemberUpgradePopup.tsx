@@ -2,7 +2,7 @@
  * React Component for the popup that manages gang members upgrades
  */
 import React, { useState, useEffect } from "react";
-import { formatNumber } from "../../../utils/StringHelperFunctions";
+import { formatNumber } from "../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { GangMemberUpgrades } from "../GangMemberUpgrades";
 import { GangMemberUpgrade } from "../GangMemberUpgrade";

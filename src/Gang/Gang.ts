@@ -7,11 +7,11 @@
 import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
 
-import { dialogBoxCreate } from "../../utils/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
 
-import { exceptionAlert } from "../../utils/helpers/exceptionAlert";
-import { getRandomInt } from "../../utils/helpers/getRandomInt";
+import { exceptionAlert } from "../utils/helpers/exceptionAlert";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
 
 import { GangMemberUpgrade } from "./GangMemberUpgrade";
 import { GangConstants } from "./data/Constants";

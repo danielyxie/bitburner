@@ -22,7 +22,7 @@ import { BBAccordion } from "../../ui/React/BBAccordion";
 import { Money } from "../../ui/React/Money";
 import { createPopup } from "../../ui/React/createPopup";
 
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 enum SelectorOrderType {
   Market = "Market Order",

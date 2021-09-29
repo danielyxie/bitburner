@@ -6,7 +6,7 @@ import { ITerminal } from "../../Terminal/ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
-import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { getServer } from "../../Server/ServerHelpers";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";

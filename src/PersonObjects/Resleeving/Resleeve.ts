@@ -7,7 +7,7 @@ import { Person } from "../Person";
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../../utils/JSONReviver";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
 
 export class Resleeve extends Person {
   constructor() {

@@ -9,7 +9,7 @@ import { AddToAllServers, createUniqueRandomIp } from "../Server/AllServers";
 import { safetlyCreateUniqueServer } from "../Server/ServerHelpers";
 import { SpecialServerIps } from "../Server/SpecialServerIps";
 
-import { dialogBoxCreate } from "../../utils/DialogBox";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
 
 /**
  * Attempt to purchase a TOR router

@@ -4,6 +4,8 @@
  * This subcomponent renders all of the buttons for purchasing things from tech vendors
  */
 import React, { useState, useEffect } from "react";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
 import { RamButton } from "./RamButton";
@@ -44,23 +46,18 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
     const id = setInterval(rerender, 1000);
     return () => clearInterval(id);
   }, []);
-  const btnStyle = { display: "block" };
 
   const purchaseServerButtons: React.ReactNode[] = [];
   for (let i = props.loc.techVendorMinRam; i <= props.loc.techVendorMaxRam; i *= 2) {
     const cost = getPurchaseServerCost(i);
     purchaseServerButtons.push(
-      <StdButton
-        key={i}
-        onClick={() => openPurchaseServer(i, cost, props.p)}
-        style={btnStyle}
-        text={
-          <>
-            Purchase {i}GB Server - <Money money={cost} player={props.p} />
-          </>
-        }
-        disabled={!props.p.canAfford(cost)}
-      />,
+      <>
+        <Button key={i} onClick={() => openPurchaseServer(i, cost, props.p)} disabled={!props.p.canAfford(cost)}>
+          Purchase {i}GB Server&nbsp;-&nbsp;
+          <Money money={cost} player={props.p} />
+        </Button>
+        <br />
+      </>,
     );
   }
 
@@ -68,12 +65,14 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
     <div>
       {purchaseServerButtons}
       <br />
-      <p className="noselect">
+      <Typography className="noselect">
         <i>"You can order bigger servers via scripts. We don't take custom order in person."</i>
-      </p>
+      </Typography>
       <br />
       <TorButton p={props.p} rerender={rerender} />
+      <br />
       <RamButton p={props.p} rerender={rerender} />
+      <br />
       <CoresButton p={props.p} rerender={rerender} />
     </div>
   );

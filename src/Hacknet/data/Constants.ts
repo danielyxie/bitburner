@@ -36,11 +36,11 @@ export const HacknetNodeConstants: {
 };
 
 export const PurchaseMultipliers: {
-  [key: string]: number | string | undefined;
+  [key: string]: number | "MAX" | undefined;
   x1: number;
   x5: number;
   x10: number;
-  MAX: string;
+  MAX: "MAX";
 } = {
   x1: 1,
   x5: 5,

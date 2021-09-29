@@ -8,7 +8,7 @@ import { js_beautify as beautifyCode } from "js-beautify";
 import { isValidFilePath } from "../../Terminal/DirectoryHelpers";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
-import { dialogBoxCreate } from "../../../utils/DialogBox";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 import { Script } from "../../Script/Script";
 import { TextFile } from "../../TextFile";

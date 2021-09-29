@@ -14,9 +14,7 @@ export function ContractList(props: IProps): React.ReactElement {
   return (
     <>
       {names.map((name: string) => (
-        <li key={name} className="bladeburner-action">
-          <ContractElem bladeburner={props.bladeburner} action={contracts[name]} player={props.player} />
-        </li>
+        <ContractElem key={name} bladeburner={props.bladeburner} action={contracts[name]} player={props.player} />
       ))}
     </>
   );

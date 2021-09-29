@@ -7,8 +7,8 @@ import { Settings } from "../Settings/Settings";
 import { IMap } from "../types";
 import { Terminal } from "../Terminal";
 
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
-import { getTimestamp } from "../../utils/helpers/getTimestamp";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { getTimestamp } from "../utils/helpers/getTimestamp";
 
 export class RunningScript {
   // Script arguments
