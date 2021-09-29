@@ -5,7 +5,6 @@ import React from "react";
 import { OfficeSpace } from "../OfficeSpace";
 import { Industries } from "../IndustryData";
 import { IndustryUpgrades } from "../IndustryUpgrades";
-import { IIndustry } from "../IIndustry";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
@@ -13,24 +12,26 @@ import { MakeProductPopup } from "./MakeProductPopup";
 import { ResearchPopup } from "./ResearchPopup";
 import { createPopup } from "../../ui/React/createPopup";
 import { Money } from "../../ui/React/Money";
-import { ICorporation } from "../ICorporation";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { MoneyCost } from "./MoneyCost";
+import { useCorporation, useDivision } from "./Context";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import Paper from "@mui/material/Paper";
 
 interface IProps {
-  corp: ICorporation;
   currentCity: string;
-  division: IIndustry;
   office: OfficeSpace;
-  player: IPlayer;
   rerender: () => void;
 }
 
 export function IndustryOverview(props: IProps): React.ReactElement {
+  const corp = useCorporation();
+  const division = useDivision();
   function renderMakeProductButton(): React.ReactElement {
     let createProductButtonText = "";
     let createProductPopupText = "";
-    switch (props.division.type) {
+    switch (division.type) {
       case Industries.Food:
         createProductButtonText = "Build Restaurant";
         createProductPopupText = "Build and manage a new restaurant!";
@@ -78,51 +79,47 @@ export function IndustryOverview(props: IProps): React.ReactElement {
       "the product. Investing money in its design will result in a superior product. " +
       "Investing money in marketing the product will help the product's sales.";
 
-    const hasMaxProducts = props.division.hasMaximumNumberProducts();
-
-    const className = hasMaxProducts ? "a-link-button-inactive tooltip" : "std-button";
-    const buttonStyle = {
-      margin: "6px",
-      display: "inline-block",
-    };
+    const hasMaxProducts = division.hasMaximumNumberProducts();
 
     function openMakeProductPopup(): void {
       const popupId = "cmpy-mgmt-create-product-popup";
       createPopup(popupId, MakeProductPopup, {
         popupText: createProductPopupText,
-        division: props.division,
-        corp: props.corp,
+        division: division,
+        corp: corp,
         popupId: popupId,
       });
     }
 
     function shouldFlash(): boolean {
-      return Object.keys(props.division.products).length === 0;
+      return Object.keys(division.products).length === 0;
     }
 
     return (
-      <button
-        className={className + (shouldFlash() ? " flashing-button" : "")}
-        onClick={openMakeProductPopup}
-        style={buttonStyle}
-        disabled={props.corp.funds.lt(0)}
+      <Tooltip
+        title={
+          hasMaxProducts ? (
+            <Typography>
+              ou have reached the maximum number of products: {division.getMaximumNumberProducts()}
+            </Typography>
+          ) : (
+            ""
+          )
+        }
       >
-        {createProductButtonText}
-        {hasMaxProducts && (
-          <span className={"tooltiptext"}>
-            You have reached the maximum number of products: {props.division.getMaximumNumberProducts()}
-          </span>
-        )}
-      </button>
+        <Button color={shouldFlash() ? "error" : "primary"} onClick={openMakeProductPopup} disabled={corp.funds.lt(0)}>
+          {createProductButtonText}
+        </Button>
+      </Tooltip>
     );
   }
 
   function renderText(): React.ReactElement {
-    const vechain = props.corp.unlockUpgrades[4] === 1;
-    const profit = props.division.lastCycleRevenue.minus(props.division.lastCycleExpenses).toNumber();
+    const vechain = corp.unlockUpgrades[4] === 1;
+    const profit = division.lastCycleRevenue.minus(division.lastCycleExpenses).toNumber();
 
     let advertisingInfo = false;
-    const advertisingFactors = props.division.getAdvertisingFactors();
+    const advertisingFactors = division.getAdvertisingFactors();
     const awarenessFac = advertisingFactors[1];
     const popularityFac = advertisingFactors[2];
     const ratioFac = advertisingFactors[3];
@@ -155,42 +152,44 @@ export function IndustryOverview(props: IProps): React.ReactElement {
           "production multiplier of your entire Division.<br><br>" +
           "Below are approximations for how effective each material is at boosting " +
           "this industry's production multiplier (Bigger bars = more effective):<br><br>" +
-          `Hardware:&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(props.division.hwFac)}<br>` +
-          `Robots:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(props.division.robFac)}<br>` +
-          `AI Cores:&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(props.division.aiFac)}<br>` +
-          `Real Estate: ${convertEffectFacToGraphic(props.division.reFac)}`,
+          `Hardware:&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(division.hwFac)}<br>` +
+          `Robots:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(division.robFac)}<br>` +
+          `AI Cores:&nbsp;&nbsp;&nbsp; ${convertEffectFacToGraphic(division.aiFac)}<br>` +
+          `Real Estate: ${convertEffectFacToGraphic(division.reFac)}`,
       );
     }
 
     function openResearchPopup(): void {
       const popupId = "corporation-research-popup-box";
       createPopup(popupId, ResearchPopup, {
-        industry: props.division,
+        industry: division,
         popupId: popupId,
       });
     }
 
     return (
       <div>
-        Industry: {props.division.type} (Corp Funds: <Money money={props.corp.funds.toNumber()} />)
-        <br /> <br />
-        Awareness: {numeralWrapper.format(props.division.awareness, "0.000")} <br />
-        Popularity: {numeralWrapper.format(props.division.popularity, "0.000")} <br />
-        {advertisingInfo !== false && (
-          <p className={"tooltip"}>
-            Advertising Multiplier: x{numeralWrapper.format(totalAdvertisingFac, "0.000")}
-            <span className={"tooltiptext cmpy-mgmt-advertising-info"}>
-              Total multiplier for this industrys sales due to its awareness and popularity
-              <br />
-              Awareness Bonus: x{numeralWrapper.format(Math.pow(awarenessFac, 0.85), "0.000")}
-              <br />
-              Popularity Bonus: x{numeralWrapper.format(Math.pow(popularityFac, 0.85), "0.000")}
-              <br />
-              Ratio Multiplier: x{numeralWrapper.format(Math.pow(ratioFac, 0.85), "0.000")}
-            </span>
-          </p>
-        )}
-        {advertisingInfo}
+        <Typography>
+          Industry: {division.type} (Corp Funds: <Money money={corp.funds.toNumber()} />)
+          <br /> <br />
+          Awareness: {numeralWrapper.format(division.awareness, "0.000")} <br />
+          Popularity: {numeralWrapper.format(division.popularity, "0.000")} <br />
+          {advertisingInfo !== false && (
+            <p className={"tooltip"}>
+              Advertising Multiplier: x{numeralWrapper.format(totalAdvertisingFac, "0.000")}
+              <span className={"tooltiptext cmpy-mgmt-advertising-info"}>
+                Total multiplier for this industrys sales due to its awareness and popularity
+                <br />
+                Awareness Bonus: x{numeralWrapper.format(Math.pow(awarenessFac, 0.85), "0.000")}
+                <br />
+                Popularity Bonus: x{numeralWrapper.format(Math.pow(popularityFac, 0.85), "0.000")}
+                <br />
+                Ratio Multiplier: x{numeralWrapper.format(Math.pow(ratioFac, 0.85), "0.000")}
+              </span>
+            </p>
+          )}
+          {advertisingInfo}
+        </Typography>
         <br />
         <br />
         <table>
@@ -201,7 +200,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
               </td>
               <td>
                 <p>
-                  <Money money={props.division.lastCycleRevenue.toNumber()} /> / s
+                  <Money money={division.lastCycleRevenue.toNumber()} /> / s
                 </p>
               </td>
             </tr>
@@ -211,7 +210,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
               </td>
               <td>
                 <p>
-                  <Money money={props.division.lastCycleExpenses.toNumber()} /> / s
+                  <Money money={division.lastCycleExpenses.toNumber()} /> / s
                 </p>
               </td>
             </tr>
@@ -229,7 +228,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         </table>
         <br />
         <p className={"tooltip"}>
-          Production Multiplier: {numeralWrapper.format(props.division.prodMult, "0.00")}
+          Production Multiplier: {numeralWrapper.format(division.prodMult, "0.00")}
           <span className={"tooltiptext"}>
             Production gain from owning production-boosting materials such as hardware, Robots, AI Cores, and Real
             Estate
@@ -240,7 +239,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
         </div>
         <br /> <br />
         <p className={"tooltip"}>
-          Scientific Research: {numeralWrapper.format(props.division.sciResearch.qty, "0.000a")}
+          Scientific Research: {numeralWrapper.format(division.sciResearch.qty, "0.000a")}
           <span className={"tooltiptext"}>
             Scientific Research increases the quality of the materials and products that you produce.
           </span>
@@ -258,7 +257,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
       const upgrade = IndustryUpgrades[index];
 
       // AutoBrew research disables the Coffee upgrade
-      if (props.division.hasResearch("AutoBrew") && upgrade[4] === "Coffee") {
+      if (division.hasResearch("AutoBrew") && upgrade[4] === "Coffee") {
         continue;
       }
 
@@ -271,15 +270,15 @@ export function IndustryOverview(props: IProps): React.ReactElement {
           cost = props.office.employees.length * baseCost;
           break;
         default:
-          cost = baseCost * Math.pow(priceMult, props.division.upgrades[i]);
+          cost = baseCost * Math.pow(priceMult, division.upgrades[i]);
           break;
       }
 
       function onClick(): void {
-        if (props.corp.funds.lt(cost)) return;
-        props.corp.funds = props.corp.funds.minus(cost);
-        props.division.upgrade(upgrade, {
-          corporation: props.corp,
+        if (corp.funds.lt(cost)) return;
+        corp.funds = corp.funds.minus(cost);
+        division.upgrade(upgrade, {
+          corporation: corp,
           office: props.office,
         });
         props.rerender();
@@ -291,7 +290,7 @@ export function IndustryOverview(props: IProps): React.ReactElement {
           onClick: onClick,
           text: (
             <>
-              {upgrade[4]} - <MoneyCost money={cost} corp={props.corp} />
+              {upgrade[4]} - <MoneyCost money={cost} corp={corp} />
             </>
           ),
           tooltip: upgrade[5],
@@ -321,13 +320,12 @@ export function IndustryOverview(props: IProps): React.ReactElement {
   const makeProductButton = renderMakeProductButton();
 
   return (
-    <div className={"cmpy-mgmt-industry-overview-panel"}>
+    <Paper>
       {renderText()}
       <br />
-      <u className={"industry-purchases-and-upgrades-header"}>Purchases & Upgrades</u>
-      <br />
+      <Typography>Purchases & Upgrades</Typography>
       {renderUpgrades()} <br />
-      {props.division.makesProducts && makeProductButton}
-    </div>
+      {division.makesProducts && makeProductButton}
+    </Paper>
   );
 }

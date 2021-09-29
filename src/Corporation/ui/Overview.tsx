@@ -19,11 +19,16 @@ import { CONSTANTS } from "../../Constants";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { Money } from "../../ui/React/Money";
+import { MoneyRate } from "../../ui/React/MoneyRate";
+import { StatsTable } from "../../ui/React/StatsTable";
 import { use } from "../../ui/Context";
 import { useCorporation } from "./Context";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 
 interface IProps {
   rerender: () => void;
@@ -33,67 +38,73 @@ export function Overview({ rerender }: IProps): React.ReactElement {
   const corp = useCorporation();
   const profit: number = corp.revenue.minus(corp.expenses).toNumber();
 
+  const multRows: any[][] = [];
+  function appendMult(name: string, value: number): void {
+    if (value === 1) return;
+    multRows.push([name, numeralWrapper.format(value, "0.000")]);
+  }
+  appendMult("Production Multiplier: ", corp.getProductionMultiplier());
+  appendMult("Storage Multiplier: ", corp.getStorageMultiplier());
+  appendMult("Advertising Multiplier: ", corp.getAdvertisingMultiplier());
+  appendMult("Empl. Creativity Multiplier: ", corp.getEmployeeCreMultiplier());
+  appendMult("Empl. Charisma Multiplier: ", corp.getEmployeeChaMultiplier());
+  appendMult("Empl. Intelligence Multiplier: ", corp.getEmployeeIntMultiplier());
+  appendMult("Empl. Efficiency Multiplier: ", corp.getEmployeeEffMultiplier());
+  appendMult("Sales Multiplier: ", corp.getSalesMultiplier());
+  appendMult("Scientific Research Multiplier: ", corp.getScientificResearchMultiplier());
+
   return (
-    <div>
-      <Typography>
-        Total Funds: <Money money={corp.funds.toNumber()} />
-        <br />
-        Total Revenue: <Money money={corp.revenue.toNumber()} /> / s<br />
-        Total Expenses: <Money money={corp.expenses.toNumber()} /> / s
-        <br />
-        Total Profits: <Money money={profit} /> / s<br />
-        <DividendsStats profit={profit} />
-        Publicly Traded: {corp.public ? "Yes" : "No"}
-        <br />
-        Owned Stock Shares: {numeralWrapper.format(corp.numShares, "0.000a")}
-        <br />
-        Stock Price: {corp.public ? <Money money={corp.sharePrice} /> : "N/A"}
-        <br />
-      </Typography>
+    <>
+      <StatsTable
+        rows={[
+          ["Total Funds:", <Money money={corp.funds.toNumber()} />],
+          ["Total Revenue:", <MoneyRate money={corp.revenue.toNumber()} />],
+          ["Total Expenses:", <MoneyRate money={corp.expenses.toNumber()} />],
+          ["Publicly Traded:", corp.public ? "Yes" : "No"],
+          ["Owned Stock Shares:", numeralWrapper.format(corp.numShares, "0.000a")],
+          ["Stock Price:", corp.public ? <Money money={corp.sharePrice} /> : "N/A"],
+        ]}
+      />
+      <br />
+      <Box display="flex">
+        <Tooltip
+          title={
+            <StatsTable
+              rows={[
+                ["Outstanding Shares:", numeralWrapper.format(corp.issuedShares, "0.000a")],
+                [
+                  "Private Shares:",
+                  numeralWrapper.format(corp.totalShares - corp.issuedShares - corp.numShares, "0.000a"),
+                ],
+              ]}
+            />
+          }
+        >
+          <Typography>Total Stock Shares: {numeralWrapper.format(corp.totalShares, "0.000a")}</Typography>
+        </Tooltip>
+      </Box>
+      <br />
+      <DividendsStats profit={profit} />
+      <br />
+      <StatsTable rows={multRows} />
+      <br />
+      <BonusTime />
       <Tooltip
         title={
           <Typography>
-            Outstanding Shares: {numeralWrapper.format(corp.issuedShares, "0.000a")}
-            <br />
-            Private Shares: {numeralWrapper.format(corp.totalShares - corp.issuedShares - corp.numShares, "0.000a")}
+            Get a copy of and read 'The Complete Handbook for Creating a Successful Corporation.' This is a .lit file
+            that guides you through the beginning of setting up a Corporation and provides some tips/pointers for
+            helping you get started with managing it.
           </Typography>
         }
       >
-        <Typography className="tooltip">
-          Total Stock Shares: {numeralWrapper.format(corp.totalShares, "0.000a")}
-        </Typography>
+        <Button onClick={() => corp.getStarterGuide(player)}>Getting Started Guide</Button>
       </Tooltip>
-      <br />
-      <br />
-      <Mult name="Production Multiplier: " mult={corp.getProductionMultiplier()} />
-      <Mult name="Storage Multiplier: " mult={corp.getStorageMultiplier()} />
-      <Mult name="Advertising Multiplier: " mult={corp.getAdvertisingMultiplier()} />
-      <Mult name="Empl. Creativity Multiplier: " mult={corp.getEmployeeCreMultiplier()} />
-      <Mult name="Empl. Charisma Multiplier: " mult={corp.getEmployeeChaMultiplier()} />
-      <Mult name="Empl. Intelligence Multiplier: " mult={corp.getEmployeeIntMultiplier()} />
-      <Mult name="Empl. Efficiency Multiplier: " mult={corp.getEmployeeEffMultiplier()} />
-      <Mult name="Sales Multiplier: " mult={corp.getSalesMultiplier()} />
-      <Mult name="Scientific Research Multiplier: " mult={corp.getScientificResearchMultiplier()} />
-      <br />
-      <BonusTime />
-      <div>
-        <Tooltip
-          title={
-            <Typography>
-              Get a copy of and read 'The Complete Handbook for Creating a Successful Corporation.' This is a .lit file
-              that guides you through the beginning of setting up a Corporation and provides some tips/pointers for
-              helping you get started with managing it.
-            </Typography>
-          }
-        >
-          <Button onClick={() => corp.getStarterGuide(player)}>Getting Started Guide</Button>
-        </Tooltip>
-        {corp.public ? <PublicButtons rerender={rerender} /> : <PrivateButtons rerender={rerender} />}
-        <BribeButton />
-      </div>
+      {corp.public ? <PublicButtons rerender={rerender} /> : <PrivateButtons rerender={rerender} />}
+      <BribeButton />
       <br />
       <Upgrades rerender={rerender} />
-    </div>
+    </>
   );
 }
 
@@ -102,7 +113,6 @@ interface IPrivateButtonsProps {
 }
 // Render the buttons for when your Corporation is still private
 function PrivateButtons({ rerender }: IPrivateButtonsProps): React.ReactElement {
-  const player = use.Player();
   const corp = useCorporation();
   const [findInvestorsopen, setFindInvestorsopen] = useState(false);
   const [goPublicopen, setGoPublicopen] = useState(false);
@@ -115,9 +125,11 @@ function PrivateButtons({ rerender }: IPrivateButtonsProps): React.ReactElement 
   return (
     <>
       <Tooltip title={<Typography>{findInvestorsTooltip}</Typography>}>
-        <Button disabled={!fundingAvailable} onClick={() => setFindInvestorsopen(true)}>
-          Find Investors
-        </Button>
+        <span>
+          <Button disabled={!fundingAvailable} onClick={() => setFindInvestorsopen(true)}>
+            Find Investors
+          </Button>
+        </span>
       </Tooltip>
       <Tooltip
         title={
@@ -148,21 +160,28 @@ function Upgrades({ rerender }: IUpgradeProps): React.ReactElement {
   }
 
   return (
-    <div className={"cmpy-mgmt-upgrade-container"}>
-      <h1 className={"cmpy-mgmt-upgrade-header"}> Unlocks </h1>
-      {Object.values(CorporationUnlockUpgrades)
-        .filter((upgrade: CorporationUnlockUpgrade) => corp.unlockUpgrades[upgrade[0]] === 0)
-        .map((upgrade: CorporationUnlockUpgrade) => (
-          <UnlockUpgrade rerender={rerender} upgradeData={upgrade} key={upgrade[0]} />
-        ))}
-
-      <h1 className={"cmpy-mgmt-upgrade-header"}> Upgrades </h1>
-      {corp.upgrades
-        .map((level: number, i: number) => CorporationUpgrades[i])
-        .map((upgrade: CorporationUpgrade) => (
-          <LevelableUpgrade rerender={rerender} upgrade={upgrade} key={upgrade[0]} />
-        ))}
-    </div>
+    <>
+      <Paper sx={{ p: 1, my: 1 }}>
+        <Typography variant="h4">Unlocks</Typography>
+        <Grid container>
+          {Object.values(CorporationUnlockUpgrades)
+            .filter((upgrade: CorporationUnlockUpgrade) => corp.unlockUpgrades[upgrade[0]] === 0)
+            .map((upgrade: CorporationUnlockUpgrade) => (
+              <UnlockUpgrade rerender={rerender} upgradeData={upgrade} key={upgrade[0]} />
+            ))}
+        </Grid>
+      </Paper>
+      <Paper sx={{ p: 1, my: 1 }}>
+        <Typography variant="h4">Upgrades</Typography>
+        <Grid container>
+          {corp.upgrades
+            .map((level: number, i: number) => CorporationUpgrades[i])
+            .map((upgrade: CorporationUpgrade) => (
+              <LevelableUpgrade rerender={rerender} upgrade={upgrade} key={upgrade[0]} />
+            ))}
+        </Grid>
+      </Paper>
+    </>
   );
 }
 
@@ -193,9 +212,11 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
   return (
     <>
       <Tooltip title={<Typography>{sellSharesTooltip}</Typography>}>
-        <Button disabled={sellSharesOnCd} onClick={() => setSellSharesOpen(true)}>
-          Sell Shares
-        </Button>
+        <span>
+          <Button disabled={sellSharesOnCd} onClick={() => setSellSharesOpen(true)}>
+            Sell Shares
+          </Button>
+        </span>
       </Tooltip>
       <SellSharesModal open={sellSharesOpen} onClose={() => setSellSharesOpen(false)} rerender={rerender} />
       <Tooltip title={<Typography>Buy back shares you that previously issued or sold at market price.</Typography>}>
@@ -204,9 +225,11 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
       <BuybackSharesModal open={buybackSharesOpen} onClose={() => setBuybackSharesOpen(false)} rerender={rerender} />
       <br />
       <Tooltip title={<Typography>{issueNewSharesTooltip}</Typography>}>
-        <Button disabled={issueNewSharesOnCd} onClick={() => setIssueNewSharesOpen(true)}>
-          Issue New Shares
-        </Button>
+        <span>
+          <Button disabled={issueNewSharesOnCd} onClick={() => setIssueNewSharesOpen(true)}>
+            Issue New Shares
+          </Button>
+        </span>
       </Tooltip>
       <IssueNewSharesModal open={issueNewSharesOpen} onClose={() => setIssueNewSharesOpen(false)} />
       <Tooltip
@@ -264,34 +287,19 @@ function DividendsStats({ profit }: IDividendsStatsProps): React.ReactElement {
   const dividendsPerShare = totalDividends / corp.totalShares;
   const playerEarnings = corp.numShares * dividendsPerShare;
   return (
-    <>
-      Retained Profits (after dividends): <Money money={retainedEarnings} /> / s
-      <br />
-      <br />
-      Dividend Percentage: {numeralWrapper.format(corp.dividendPercentage / 100, "0%")}
-      <br />
-      Dividends per share: <Money money={dividendsPerShare} /> / s<br />
-      Your earnings as a shareholder (Pre-Tax): <Money money={playerEarnings} /> / s<br />
-      Dividend Tax Rate: {corp.dividendTaxPercentage}%<br />
-      Your earnings as a shareholder (Post-Tax):{" "}
-      <Money money={playerEarnings * (1 - corp.dividendTaxPercentage / 100)} /> / s<br />
-      <br />
-    </>
-  );
-}
-
-interface IMultProps {
-  name: string;
-  mult: number;
-}
-function Mult({ name, mult }: IMultProps): React.ReactElement {
-  if (mult <= 1) return <></>;
-  return (
-    <Typography>
-      {name}
-      {numeralWrapper.format(mult, "0.000")}
-      <br />
-    </Typography>
+    <StatsTable
+      rows={[
+        ["Retained Profits (after dividends):", <MoneyRate money={retainedEarnings} />],
+        ["Dividend Percentage:", numeralWrapper.format(corp.dividendPercentage / 100, "0%")],
+        ["Dividends per share:", <MoneyRate money={dividendsPerShare} />],
+        ["Your earnings as a shareholder (Pre-Tax):", <MoneyRate money={playerEarnings} />],
+        ["Dividend Tax Rate:", <>{corp.dividendTaxPercentage}%</>],
+        [
+          "Your earnings as a shareholder (Post-Tax):",
+          <MoneyRate money={playerEarnings * (1 - corp.dividendTaxPercentage / 100)} />,
+        ],
+      ]}
+    />
   );
 }
 

@@ -8,18 +8,15 @@ import { EmployeePositions } from "../EmployeePositions";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
-import { createPopup } from "../../ui/React/createPopup";
-import { UpgradeOfficeSizePopup } from "./UpgradeOfficeSizePopup";
-import { HireEmployeePopup } from "./HireEmployeePopup";
-import { ThrowPartyPopup } from "./ThrowPartyPopup";
+import { UpgradeOfficeSizeModal } from "./UpgradeOfficeSizeModal";
+import { ThrowPartyModal } from "./ThrowPartyModal";
 import { Money } from "../../ui/React/Money";
-import { use } from "../../ui/Context";
 import { useCorporation, useDivision } from "./Context";
 
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Tooltip from "@mui/material/Tooltip";
@@ -84,12 +81,6 @@ function ManualManagement(props: IProps): React.ReactElement {
     props.office.employees.length > 0 ? props.office.employees[0] : null,
   );
 
-  const employeeInfoDivStyle = {
-    color: "white",
-    margin: "4px",
-    padding: "4px",
-  };
-
   // Employee Selector
   const employees = [];
   for (let i = 0; i < props.office.employees.length; ++i) {
@@ -144,12 +135,12 @@ function ManualManagement(props: IProps): React.ReactElement {
   const effEff = emp ? emp.eff * corp.getEmployeeEffMultiplier() * division.getEmployeeEffMultiplier() : 0;
 
   return (
-    <div style={employeeInfoDivStyle}>
+    <>
       <Select value={employee !== null ? employee.name : ""} onChange={employeeSelectorOnChange}>
         {employees}
       </Select>
       {employee != null && (
-        <p>
+        <Typography>
           Morale: {numeralWrapper.format(employee.mor, nf)}
           <br />
           Happiness: {numeralWrapper.format(employee.hap, nf)}
@@ -167,14 +158,14 @@ function ManualManagement(props: IProps): React.ReactElement {
           Efficiency: {numeralWrapper.format(effEff, nf)}
           <br />
           Salary: <Money money={employee.sal} />
-        </p>
+        </Typography>
       )}
       {employee != null && (
         <Select onChange={employeePositionSelectorOnChange} value={employeePositionSelectorInitialValue}>
           {employeePositions}
         </Select>
       )}
-    </div>
+    </>
   );
 }
 
@@ -304,17 +295,22 @@ function AutoManagement(props: IProps): React.ReactElement {
             <>
               <TableRow>
                 <TableCell>
-                  <p className={"tooltip"} style={{ display: "inline-block" }}>
-                    Material Production:
-                    <span className={"tooltiptext"}>
-                      The base amount of material this office can produce. Does not include production multipliers from
-                      upgrades and materials. This value is based off the productivity of your Operations, Engineering,
-                      and Management employees
-                    </span>
-                  </p>
+                  <Tooltip
+                    title={
+                      <Typography>
+                        The base amount of material this office can produce. Does not include production multipliers
+                        from upgrades and materials. This value is based off the productivity of your Operations,
+                        Engineering, and Management employees
+                      </Typography>
+                    }
+                  >
+                    <Typography>Material Production:</Typography>
+                  </Tooltip>
                 </TableCell>
                 <TableCell>
-                  <p>{numeralWrapper.format(division.getOfficeProductivity(props.office), "0.000")}</p>
+                  <Typography>
+                    {numeralWrapper.format(division.getOfficeProductivity(props.office), "0.000")}
+                  </Typography>
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -415,36 +411,11 @@ function AutoManagement(props: IProps): React.ReactElement {
 }
 
 export function IndustryOffice(props: IProps): React.ReactElement {
-  const player = use.Player();
   const corp = useCorporation();
   const division = useDivision();
+  const [upgradeOfficeSizeOpen, setUpgradeOfficeSizeOpen] = useState(false);
+  const [throwPartyOpen, setThrowPartyOpen] = useState(false);
   const [employeeManualAssignMode, setEmployeeManualAssignMode] = useState(false);
-
-  const buttonStyle = {
-    fontSize: "13px",
-  };
-
-  // Hire Employee button
-  let hireEmployeeButtonClass = "tooltip";
-  if (props.office.atCapacity()) {
-    hireEmployeeButtonClass += " a-link-button-inactive";
-  } else {
-    hireEmployeeButtonClass += " std-button";
-    if (props.office.employees.length === 0) {
-      hireEmployeeButtonClass += " flashing-button";
-    }
-  }
-
-  function openHireEmployeePopup(): void {
-    const popupId = "cmpy-mgmt-hire-employee-popup";
-    createPopup(popupId, HireEmployeePopup, {
-      rerender: props.rerender,
-      office: props.office,
-      corp: corp,
-      popupId: popupId,
-      player: player,
-    });
-  }
 
   function autohireEmployeeButtonOnClick(): void {
     if (props.office.atCapacity()) return;
@@ -452,50 +423,12 @@ export function IndustryOffice(props: IProps): React.ReactElement {
     props.rerender();
   }
 
-  function openUpgradeOfficeSizePopup(): void {
-    const popupId = "cmpy-mgmt-upgrade-office-size-popup";
-    createPopup(popupId, UpgradeOfficeSizePopup, {
-      rerender: props.rerender,
-      office: props.office,
-      corp: corp,
-      popupId: popupId,
-      player: player,
-    });
-  }
-
-  function openThrowPartyPopup(): void {
-    const popupId = "cmpy-mgmt-throw-office-party-popup";
-    createPopup(popupId, ThrowPartyPopup, {
-      office: props.office,
-      corp: corp,
-      popupId: popupId,
-    });
-  }
-
   return (
-    <div className={"cmpy-mgmt-employee-panel"}>
+    <Paper>
       <Typography>Office Space</Typography>
       <Typography>
         Size: {props.office.employees.length} / {props.office.size} employees
       </Typography>
-      <Tooltip
-        title={
-          props.office.employees.length === 0 ? (
-            <Typography>
-              You'll need to hire some employees to get your operations started! It's recommended to have at least one
-              employee in every position
-            </Typography>
-          ) : (
-            ""
-          )
-        }
-      >
-        <span>
-          <Button disabled={props.office.atCapacity()} onClick={openHireEmployeePopup}>
-            Hire Employee
-          </Button>
-        </span>
-      </Tooltip>
       <Tooltip title={<Typography>Automatically hires an employee and gives him/her a random name</Typography>}>
         <span>
           <Button disabled={props.office.atCapacity()} onClick={autohireEmployeeButtonOnClick}>
@@ -506,22 +439,36 @@ export function IndustryOffice(props: IProps): React.ReactElement {
       <br />
       <Tooltip title={<Typography>Upgrade the office's size so that it can hold more employees!</Typography>}>
         <span>
-          <Button disabled={corp.funds.lt(0)} onClick={openUpgradeOfficeSizePopup}>
+          <Button disabled={corp.funds.lt(0)} onClick={() => setUpgradeOfficeSizeOpen(true)}>
             Upgrade size
           </Button>
         </span>
       </Tooltip>
+      <UpgradeOfficeSizeModal
+        rerender={props.rerender}
+        office={props.office}
+        open={upgradeOfficeSizeOpen}
+        onClose={() => setUpgradeOfficeSizeOpen(false)}
+      />
 
       {!division.hasResearch("AutoPartyManager") && (
-        <Tooltip
-          title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
-        >
-          <span>
-            <Button disabled={corp.funds.lt(0)} onClick={openThrowPartyPopup}>
-              Throw Party
-            </Button>
-          </span>
-        </Tooltip>
+        <>
+          <Tooltip
+            title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
+          >
+            <span>
+              <Button disabled={corp.funds.lt(0)} onClick={() => setThrowPartyOpen(true)}>
+                Throw Party
+              </Button>
+            </span>
+          </Tooltip>
+          <ThrowPartyModal
+            rerender={props.rerender}
+            office={props.office}
+            open={throwPartyOpen}
+            onClose={() => setThrowPartyOpen(false)}
+          />
+        </>
       )}
 
       <br />
@@ -532,6 +479,6 @@ export function IndustryOffice(props: IProps): React.ReactElement {
       ) : (
         <AutoManagement rerender={props.rerender} office={props.office} />
       )}
-    </div>
+    </Paper>
   );
 }

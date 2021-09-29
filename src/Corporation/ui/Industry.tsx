@@ -24,14 +24,7 @@ export function Industry(props: IProps): React.ReactElement {
   return (
     <div>
       <div className={"cmpy-mgmt-industry-left-panel"}>
-        <IndustryOverview
-          rerender={props.rerender}
-          player={player}
-          corp={corp}
-          division={division}
-          currentCity={props.city}
-          office={props.office}
-        />
+        <IndustryOverview rerender={props.rerender} currentCity={props.city} office={props.office} />
         <IndustryOffice rerender={props.rerender} office={props.office} />
       </div>
       <div className={"cmpy-mgmt-industry-right-panel"}>
