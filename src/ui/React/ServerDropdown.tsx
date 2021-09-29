@@ -61,7 +61,7 @@ export function ServerDropdown(props: IProps): React.ReactElement {
   }
 
   return (
-    <Select sx={{ mx: 1 }} variant="standard" value={props.value} onChange={props.onChange}>
+    <Select sx={{ mx: 1 }} value={props.value} onChange={props.onChange}>
       {servers}
     </Select>
   );

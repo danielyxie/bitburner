@@ -6,7 +6,7 @@ import React from "react";
 import { CityTabs } from "./CityTabs";
 import { IIndustry } from "../IIndustry";
 import { useCorporation } from "./Context";
-import { use } from "../../ui/Context";
+import { Context } from "./Context";
 
 import { CityName } from "../../Locations/data/CityNames";
 
@@ -16,7 +16,6 @@ interface IProps {
 }
 
 export function MainPanel(props: IProps): React.ReactElement {
-  const player = use.Player();
   const corp = useCorporation();
   const division =
     props.divisionName !== "Overview"
@@ -25,8 +24,10 @@ export function MainPanel(props: IProps): React.ReactElement {
 
   if (division === undefined) throw new Error("Cannot find division");
   return (
-    <div id="cmpy-mgmt-panel">
-      <CityTabs rerender={props.rerender} division={division} corp={corp} city={CityName.Sector12} player={player} />
-    </div>
+    <Context.Division.Provider value={division}>
+      <div id="cmpy-mgmt-panel">
+        <CityTabs rerender={props.rerender} city={CityName.Sector12} />
+      </div>
+    </Context.Division.Provider>
   );
 }

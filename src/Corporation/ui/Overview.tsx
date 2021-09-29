@@ -51,7 +51,6 @@ export function Overview({ rerender }: IProps): React.ReactElement {
         <br />
       </Typography>
       <Tooltip
-        disableInteractive
         title={
           <Typography>
             Outstanding Shares: {numeralWrapper.format(corp.issuedShares, "0.000a")}
@@ -79,7 +78,6 @@ export function Overview({ rerender }: IProps): React.ReactElement {
       <BonusTime />
       <div>
         <Tooltip
-          disableInteractive
           title={
             <Typography>
               Get a copy of and read 'The Complete Handbook for Creating a Successful Corporation.' This is a .lit file
@@ -116,13 +114,12 @@ function PrivateButtons({ rerender }: IPrivateButtonsProps): React.ReactElement 
 
   return (
     <>
-      <Tooltip disableInteractive title={<Typography>{findInvestorsTooltip}</Typography>}>
+      <Tooltip title={<Typography>{findInvestorsTooltip}</Typography>}>
         <Button disabled={!fundingAvailable} onClick={() => setFindInvestorsopen(true)}>
           Find Investors
         </Button>
       </Tooltip>
       <Tooltip
-        disableInteractive
         title={
           <Typography>
             Become a publicly traded and owned entity. Going public involves issuing shares for an IPO. Once you are a
@@ -195,28 +192,24 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
 
   return (
     <>
-      <Tooltip disableInteractive title={<Typography>{sellSharesTooltip}</Typography>}>
+      <Tooltip title={<Typography>{sellSharesTooltip}</Typography>}>
         <Button disabled={sellSharesOnCd} onClick={() => setSellSharesOpen(true)}>
           Sell Shares
         </Button>
       </Tooltip>
       <SellSharesModal open={sellSharesOpen} onClose={() => setSellSharesOpen(false)} rerender={rerender} />
-      <Tooltip
-        disableInteractive
-        title={<Typography>Buy back shares you that previously issued or sold at market price.</Typography>}
-      >
+      <Tooltip title={<Typography>Buy back shares you that previously issued or sold at market price.</Typography>}>
         <Button onClick={() => setBuybackSharesOpen(true)}>Buyback shares</Button>
       </Tooltip>
       <BuybackSharesModal open={buybackSharesOpen} onClose={() => setBuybackSharesOpen(false)} rerender={rerender} />
       <br />
-      <Tooltip disableInteractive title={<Typography>{issueNewSharesTooltip}</Typography>}>
+      <Tooltip title={<Typography>{issueNewSharesTooltip}</Typography>}>
         <Button disabled={issueNewSharesOnCd} onClick={() => setIssueNewSharesOpen(true)}>
           Issue New Shares
         </Button>
       </Tooltip>
       <IssueNewSharesModal open={issueNewSharesOpen} onClose={() => setIssueNewSharesOpen(false)} />
       <Tooltip
-        disableInteractive
         title={<Typography>Manage the dividends that are paid out to shareholders (including yourself)</Typography>}
       >
         <Button onClick={() => setIssueDividendsOpen(true)}>Issue Dividends</Button>
@@ -243,7 +236,6 @@ function BribeButton(): React.ReactElement {
   return (
     <>
       <Tooltip
-        disableInteractive
         title={
           canBribe
             ? "Use your Corporations power and influence to bribe Faction leaders in exchange for reputation"

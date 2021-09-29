@@ -127,7 +127,7 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
         you cannot buy them back.
       </Typography>
       <EffectText shares={shares} />
-      <TextField variant="standard" autoFocus placeholder="# New Shares" onChange={onChange} onKeyDown={onKeyDown} />
+      <TextField autoFocus placeholder="# New Shares" onChange={onChange} onKeyDown={onKeyDown} />
       <Button onClick={issueNewShares} sx={{ mx: 1 }}>
         Issue New Shares
       </Button>

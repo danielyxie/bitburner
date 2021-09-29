@@ -46,14 +46,13 @@ export function Stats(props: IProps): React.ReactElement {
   return (
     <Paper sx={{ p: 1 }}>
       <Box display="flex">
-        <Tooltip disableInteractive title={<Typography>Your rank within the Bladeburner division.</Typography>}>
+        <Tooltip title={<Typography>Your rank within the Bladeburner division.</Typography>}>
           <Typography>Rank: {formatNumber(props.bladeburner.rank, 2)}</Typography>
         </Tooltip>
       </Box>
       <br />
       <Box display="flex">
         <Tooltip
-          disableInteractive
           title={
             <Typography>
               Performing actions will use up your stamina.
@@ -97,7 +96,6 @@ export function Stats(props: IProps): React.ReactElement {
       <Typography>Current City: {props.bladeburner.city}</Typography>
       <Box display="flex">
         <Tooltip
-          disableInteractive
           title={
             <Typography>
               This is your Bladeburner division's estimate of how many Synthoids exist in your current city. An accurate
@@ -113,7 +111,6 @@ export function Stats(props: IProps): React.ReactElement {
       <br />
       <Box display="flex">
         <Tooltip
-          disableInteractive
           title={
             <Typography>
               This is your Bladeburner divison's estimate of how many Synthoid communities exist in your current city.
@@ -128,7 +125,6 @@ export function Stats(props: IProps): React.ReactElement {
       <br />
       <Box display="flex">
         <Tooltip
-          disableInteractive
           title={
             <Typography>
               The city's chaos level due to tensions and conflicts between humans and Synthoids. Having too high of a
@@ -144,7 +140,6 @@ export function Stats(props: IProps): React.ReactElement {
         <>
           <Box display="flex">
             <Tooltip
-              disableInteractive
               title={
                 <Typography>
                   You gain bonus time while offline or when the game is inactive (e.g. when the tab is throttled by

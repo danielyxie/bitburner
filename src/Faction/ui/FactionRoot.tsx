@@ -72,10 +72,11 @@ export function FactionRoot(props: IProps): React.ReactElement {
     setRerender((old) => !old);
   }
 
-  useEffect(() => {
-    const id = setInterval(rerender, 200);
-    return () => clearInterval(id);
-  }, []);
+  // Enabling this breaks donations.
+  // useEffect(() => {
+  //   const id = setInterval(rerender, 200);
+  //   return () => clearInterval(id);
+  // }, []);
 
   const faction = props.faction;
 

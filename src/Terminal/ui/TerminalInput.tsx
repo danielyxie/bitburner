@@ -341,7 +341,6 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         </Paper>
       )}
       <TextField
-        variant="standard"
         color={terminal.action === null ? "primary" : "secondary"}
         autoFocus
         disabled={terminal.action !== null}

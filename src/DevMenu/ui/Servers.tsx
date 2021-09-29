@@ -87,7 +87,7 @@ export function Servers(): React.ReactElement {
                 <span className="text">Server:</span>
               </td>
               <td colSpan={2}>
-                <Select id="dev-servers-dropdown" className="dropdown" onChange={setServerDropdown} value={server}>
+                <Select id="dev-servers-dropdown" onChange={setServerDropdown} value={server}>
                   {Object.values(AllServers).map((server) => (
                     <MenuItem key={server.hostname} value={server.hostname}>
                       {server.hostname}

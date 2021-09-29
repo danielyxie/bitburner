@@ -63,7 +63,7 @@ export function CreateCorporationModal(props: IProps): React.ReactElement {
         <br />
         If you would like to start one, please enter a name for your corporation below:
       </Typography>
-      <TextField autoFocus={true} variant="standard" placeholder="Corporation Name" onChange={onChange} value={name} />
+      <TextField autoFocus={true} placeholder="Corporation Name" onChange={onChange} value={name} />
       <Button onClick={seed} disabled={name == ""}>
         Use seed money
       </Button>

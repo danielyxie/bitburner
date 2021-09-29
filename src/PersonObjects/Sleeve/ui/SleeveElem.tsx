@@ -171,10 +171,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
         <Grid item xs={3}>
           <StatsElement sleeve={props.sleeve} />
           <Button onClick={() => setStatsOpen(true)}>More Stats</Button>
-          <Tooltip
-            disableInteractive
-            title={player.money.lt(CONSTANTS.TravelCost) ? <Typography>Insufficient funds</Typography> : ""}
-          >
+          <Tooltip title={player.money.lt(CONSTANTS.TravelCost) ? <Typography>Insufficient funds</Typography> : ""}>
             <span>
               <Button onClick={() => setTravelOpen(true)} disabled={player.money.lt(CONSTANTS.TravelCost)}>
                 Travel
@@ -182,7 +179,6 @@ export function SleeveElem(props: IProps): React.ReactElement {
             </span>
           </Tooltip>
           <Tooltip
-            disableInteractive
             title={props.sleeve.shock < 100 ? <Typography>Unlocked when sleeve has fully recovered</Typography> : ""}
           >
             <span>

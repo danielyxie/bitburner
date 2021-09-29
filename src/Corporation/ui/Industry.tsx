@@ -6,48 +6,47 @@ import { IndustryOffice } from "./IndustryOffice";
 import { IndustryOverview } from "./IndustryOverview";
 import { IndustryWarehouse } from "./IndustryWarehouse";
 import { Warehouse } from "../Warehouse";
-import { ICorporation } from "../ICorporation";
 import { OfficeSpace } from "../OfficeSpace";
-import { IIndustry } from "../IIndustry";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { use } from "../../ui/Context";
+import { useCorporation, useDivision } from "./Context";
 
 interface IProps {
-  corp: ICorporation;
-  division: IIndustry;
   city: string;
   warehouse: Warehouse | 0;
   office: OfficeSpace;
-  player: IPlayer;
   rerender: () => void;
 }
 
 export function Industry(props: IProps): React.ReactElement {
+  const player = use.Player();
+  const corp = useCorporation();
+  const division = useDivision();
   return (
     <div>
       <div className={"cmpy-mgmt-industry-left-panel"}>
         <IndustryOverview
           rerender={props.rerender}
-          player={props.player}
-          corp={props.corp}
-          division={props.division}
+          player={player}
+          corp={corp}
+          division={division}
           currentCity={props.city}
           office={props.office}
         />
         <IndustryOffice
           rerender={props.rerender}
-          player={props.player}
-          corp={props.corp}
-          division={props.division}
+          player={player}
+          corp={corp}
+          division={division}
           office={props.office}
         />
       </div>
       <div className={"cmpy-mgmt-industry-right-panel"}>
         <IndustryWarehouse
           rerender={props.rerender}
-          player={props.player}
-          corp={props.corp}
+          player={player}
+          corp={corp}
           currentCity={props.city}
-          division={props.division}
+          division={division}
           warehouse={props.warehouse}
         />
       </div>

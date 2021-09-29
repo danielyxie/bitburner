@@ -33,7 +33,7 @@ export function ProgramsRoot(): React.ReactElement {
 
         return (
           <React.Fragment key={program.name}>
-            <Tooltip title={create.tooltip} disableInteractive>
+            <Tooltip title={create.tooltip}>
               <Button
                 sx={{ my: 1 }}
                 onClick={(event) => {

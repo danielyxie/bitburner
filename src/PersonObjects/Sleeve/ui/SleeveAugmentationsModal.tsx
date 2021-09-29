@@ -70,7 +70,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
                   </TableCell>
                   <TableCell>
                     <Box display="flex">
-                      <Tooltip disableInteractive title={aug.stats || ""}>
+                      <Tooltip title={aug.stats || ""}>
                         <Typography>{aug.name}</Typography>
                       </Tooltip>
                     </Box>
@@ -111,7 +111,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
               }
 
               return (
-                <Tooltip key={augName} disableInteractive title={<Typography>{tooltip}</Typography>}>
+                <Tooltip key={augName} title={<Typography>{tooltip}</Typography>}>
                   <Paper>
                     <Typography>{augName}</Typography>
                   </Paper>

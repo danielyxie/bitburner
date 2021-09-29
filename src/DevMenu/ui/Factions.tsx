@@ -114,7 +114,6 @@ export function Factions(props: IProps): React.ReactElement {
                   <Select
                     labelId="factions-select"
                     id="factions-dropdown"
-                    className="dropdown exp-input"
                     onChange={setFactionDropdown}
                     value={faction}
                     startAdornment={

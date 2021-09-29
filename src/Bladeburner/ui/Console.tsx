@@ -148,7 +148,6 @@ export function Console(props: IProps): React.ReactElement {
           <TextField
             classes={{ root: classes.textfield }}
             autoFocus
-            variant="standard"
             tabIndex={1}
             type="text"
             value={command}

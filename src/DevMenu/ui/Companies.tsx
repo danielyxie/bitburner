@@ -81,7 +81,7 @@ export function Companies(): React.ReactElement {
                 <span className="text">Company:</span>
               </td>
               <td colSpan={3}>
-                <Select id="dev-companies-dropdown" className="dropdown" onChange={setCompanyDropdown} value={company}>
+                <Select id="dev-companies-dropdown" onChange={setCompanyDropdown} value={company}>
                   {Object.values(AllCompanies).map((company) => (
                     <MenuItem key={company.name} value={company.name}>
                       {company.name}

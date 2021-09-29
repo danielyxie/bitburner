@@ -59,7 +59,7 @@ export function ExpandIndustryTab(props: IProps): React.ReactElement {
   return (
     <>
       <Typography>Create a new division to expand into a new industry:</Typography>
-      <Select variant="standard" value={industry} onChange={onIndustryChange}>
+      <Select value={industry} onChange={onIndustryChange}>
         {possibleIndustries.map((industry: string) => (
           <MenuItem key={industry} value={industry}>
             {industry}
@@ -73,14 +73,7 @@ export function ExpandIndustryTab(props: IProps): React.ReactElement {
       <Typography>Division name:</Typography>
 
       <Box display="flex" alignItems="center">
-        <TextField
-          variant="standard"
-          autoFocus={true}
-          value={name}
-          onChange={onNameChange}
-          onKeyDown={onKeyDown}
-          type="text"
-        />
+        <TextField autoFocus={true} value={name} onChange={onNameChange} onKeyDown={onKeyDown} type="text" />
         <Button sx={{ mx: 1 }} onClick={newIndustry}>
           Create Division
         </Button>

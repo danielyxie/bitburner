@@ -38,20 +38,18 @@ export function CorporationRoot(): React.ReactElement {
 
   return (
     <Context.Corporation.Provider value={corporation}>
-      <div className="cmpy-mgmt-container">
-        <Tabs variant="fullWidth" value={divisionName} onChange={handleChange}>
-          <Tab label={corporation.name} value={"Overview"} />
-          {corporation.divisions.map((div) => (
-            <Tab key={div.name} label={div.name} value={div.name} />
-          ))}
-          {canExpand && <Tab label={"Expand"} value={-1} />}
-        </Tabs>
-        {divisionName === "Overview" && <Overview rerender={rerender} />}
-        {divisionName === -1 && <ExpandIndustryTab setDivisionName={setDivisionName} />}
-        {typeof divisionName === "string" && divisionName !== "Overview" && (
-          <MainPanel rerender={rerender} divisionName={divisionName + ""} />
-        )}
-      </div>
+      <Tabs variant="fullWidth" value={divisionName} onChange={handleChange}>
+        <Tab label={corporation.name} value={"Overview"} />
+        {corporation.divisions.map((div) => (
+          <Tab key={div.name} label={div.name} value={div.name} />
+        ))}
+        {canExpand && <Tab label={"Expand"} value={-1} />}
+      </Tabs>
+      {divisionName === "Overview" && <Overview rerender={rerender} />}
+      {divisionName === -1 && <ExpandIndustryTab setDivisionName={setDivisionName} />}
+      {typeof divisionName === "string" && divisionName !== "Overview" && (
+        <MainPanel rerender={rerender} divisionName={divisionName + ""} />
+      )}
     </Context.Corporation.Provider>
   );
 }
