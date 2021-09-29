@@ -33,7 +33,6 @@ function ColorEditor({ name, onColorChange, color, defaultColor }: IColorEditorP
         sx={{ mx: 1 }}
         label={name}
         value={color}
-        variant="standard"
         InputProps={{
           startAdornment: (
             <>

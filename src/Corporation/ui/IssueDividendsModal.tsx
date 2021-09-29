@@ -69,7 +69,6 @@ export function IssueDividendsModal(props: IProps): React.ReactElement {
         per second before taxes.
       </Typography>
       <TextField
-        variant="standard"
         autoFocus
         value={percent}
         onChange={onChange}

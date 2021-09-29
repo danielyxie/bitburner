@@ -275,7 +275,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
 
   return (
     <>
-      <Select variant="standard" onChange={onS0Change} value={s0}>
+      <Select onChange={onS0Change} value={s0}>
         {validActions.map((task) => (
           <MenuItem key={task} value={task}>
             {task}
@@ -285,7 +285,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
       {!(details.first.length === 1 && details.first[0] === "------") && (
         <>
           <br />
-          <Select variant="standard" onChange={onS1Change} value={s1}>
+          <Select onChange={onS1Change} value={s1}>
             {details.first.map((detail) => (
               <MenuItem key={detail} value={detail}>
                 {detail}
@@ -297,7 +297,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
       {!(details2.length === 1 && details2[0] === "------") && (
         <>
           <br />
-          <Select variant="standard" onChange={onS2Change} value={s2}>
+          <Select onChange={onS2Change} value={s2}>
             {details2.map((detail) => (
               <MenuItem key={detail} value={detail}>
                 {detail}

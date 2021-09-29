@@ -86,7 +86,6 @@ export function DonateOption(props: IProps): React.ReactElement {
       ) : (
         <>
           <TextField
-            variant="standard"
             onChange={onChange}
             placeholder={"Donation amount"}
             disabled={props.disabled}

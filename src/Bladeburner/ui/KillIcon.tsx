@@ -5,9 +5,5 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 
 export function KillIcon(): React.ReactElement {
-  return (
-    <Tooltip disableInteractive title={<Typography>This action involves retirement</Typography>}>
-      {killIcon}
-    </Tooltip>
-  );
+  return <Tooltip title={<Typography>This action involves retirement</Typography>}>{killIcon}</Tooltip>;
 }

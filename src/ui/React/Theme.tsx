@@ -150,6 +150,14 @@ export function refreshTheme(): void {
             color: Settings.theme.primary,
           },
         },
+        defaultProps: {
+          variant: "standard",
+        },
+      },
+      MuiTextField: {
+        defaultProps: {
+          variant: "standard",
+        },
       },
       MuiMenu: {
         styleOverrides: {
@@ -196,6 +204,9 @@ export function refreshTheme(): void {
             border: "2px solid white",
             maxWidth: "100vh",
           },
+        },
+        defaultProps: {
+          disableInteractive: true,
         },
       },
       MuiSlider: {

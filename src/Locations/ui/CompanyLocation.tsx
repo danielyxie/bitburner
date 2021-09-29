@@ -208,7 +208,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
                   Augmentations
                 </>
               }
-              disableInteractive
             >
               <Typography>Company reputation: {Reputation(company.playerReputation)}</Typography>
             </Tooltip>
@@ -223,7 +222,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
                   gain depends on how much reputation you have with the company.
                 </>
               }
-              disableInteractive
             >
               <Typography className={"tooltip"}>Company Favor: {Favor(company.favor)}</Typography>
             </Tooltip>

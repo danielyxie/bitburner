@@ -147,13 +147,7 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
       )}
       <TableCell key={1}>
         <Box display="flex">
-          <Tooltip
-            title={<Typography>{tooltip}</Typography>}
-            placement="top"
-            disableFocusListener
-            disableTouchListener
-            disableInteractive
-          >
+          <Tooltip title={<Typography>{tooltip}</Typography>} placement="top">
             <Typography>{btnTxt}</Typography>
           </Tooltip>
         </Box>

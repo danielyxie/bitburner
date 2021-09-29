@@ -85,7 +85,7 @@ export function CovenantSleeveMemoryUpgrade(props: IProps): React.ReactElement {
 
       <Box display="flex" flexDirection="row" alignItems="center">
         <Typography>Amount of memory to purchase (must be an integer):&nbsp;</Typography>
-        <TextField variant="standard" onChange={changePurchaseAmount} type={"number"} value={amt} />
+        <TextField onChange={changePurchaseAmount} type={"number"} value={amt} />
       </Box>
       <br />
       <Button disabled={purchaseBtnDisabled} onClick={purchaseMemory}>

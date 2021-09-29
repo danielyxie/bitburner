@@ -64,7 +64,6 @@ export function GoPublicModal(props: IProps): React.ReactElement {
       </Typography>
       <Box display="flex" alignItems="center">
         <TextField
-          variant="standard"
           value={shares}
           onChange={onChange}
           autoFocus

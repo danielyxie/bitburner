@@ -89,7 +89,7 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
       </Typography>
       <Box display="flex" alignItems="center">
         <Typography>Faction:</Typography>
-        <Select variant="standard" value={selectedFaction} onChange={changeFaction}>
+        <Select value={selectedFaction} onChange={changeFaction}>
           {player.factions.map((name: string) => {
             const info = Factions[name].getInfo();
             if (!info.offersWork()) return;
@@ -102,8 +102,8 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
         </Select>
       </Box>
       <Typography>{getRepText(money ? money : 0, stock ? stock : 0)}</Typography>
-      <TextField variant="standard" onChange={onMoneyChange} placeholder="Corporation funds" />
-      <TextField sx={{ mx: 1 }} variant="standard" onChange={onStockChange} placeholder="Stock Shares" />
+      <TextField onChange={onMoneyChange} placeholder="Corporation funds" />
+      <TextField sx={{ mx: 1 }} onChange={onStockChange} placeholder="Stock Shares" />
       <Button sx={{ mx: 1 }} onClick={() => bribe(money ? money : 0, stock ? stock : 0)}>
         Bribe
       </Button>

@@ -296,7 +296,7 @@ export function Root(props: IProps): React.ReactElement {
     <>
       <Box display="flex" flexDirection="row" alignItems="center">
         <Typography>Script name: </Typography>
-        <TextField variant="standard" type="text" tabIndex={1} value={filename} onChange={onFilenameChange} />
+        <TextField type="text" tabIndex={1} value={filename} onChange={onFilenameChange} />
         <IconButton onClick={() => setOptionsOpen(true)}>
           <>
             <SettingsIcon />
