@@ -4,6 +4,9 @@
  */
 import * as React from "react";
 
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
 type IProps = {
   onClick: () => void;
   text: string;
@@ -11,17 +14,9 @@ type IProps = {
 };
 
 export function StockTickerTxButton(props: IProps): React.ReactElement {
-  let className = "stock-market-input std-button";
-
-  const hasTooltip = props.tooltip != null;
-  if (hasTooltip) {
-    className += " tooltip";
-  }
-
   return (
-    <button className={className} onClick={props.onClick}>
-      {props.text}
-      {props.tooltip != null && <span className={"tooltiptext"}>{props.tooltip}</span>}
-    </button>
+    <Tooltip title={props.tooltip != null ? <Typography>{props.tooltip}</Typography> : ""}>
+      <Button onClick={props.onClick}>{props.text}</Button>
+    </Tooltip>
   );
 }
