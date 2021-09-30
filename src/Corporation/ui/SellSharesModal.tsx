@@ -23,6 +23,8 @@ export function SellSharesModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const [shares, setShares] = useState<number | null>(null);
 
+  const disabled = shares === null || isNaN(shares) || shares <= 0 || shares > corp.numShares;
+
   function changeShares(event: React.ChangeEvent<HTMLInputElement>): void {
     if (event.target.value === "") setShares(null);
     else setShares(Math.round(parseFloat(event.target.value)));
@@ -47,42 +49,37 @@ export function SellSharesModal(props: IProps): React.ReactElement {
 
   function sell(): void {
     if (shares === null) return;
-    if (isNaN(shares) || shares <= 0) {
-      dialogBoxCreate("ERROR: Invalid value for number of shares");
-    } else if (shares > corp.numShares) {
-      dialogBoxCreate("ERROR: You don't have this many shares to sell");
-    } else {
-      const stockSaleResults = corp.calculateShareSale(shares);
-      const profit = stockSaleResults[0];
-      const newSharePrice = stockSaleResults[1];
-      const newSharesUntilUpdate = stockSaleResults[2];
+    if (disabled) return;
+    const stockSaleResults = corp.calculateShareSale(shares);
+    const profit = stockSaleResults[0];
+    const newSharePrice = stockSaleResults[1];
+    const newSharesUntilUpdate = stockSaleResults[2];
 
-      corp.numShares -= shares;
-      if (isNaN(corp.issuedShares)) {
-        console.error(`Corporation issuedShares is NaN: ${corp.issuedShares}`);
-        const res = corp.issuedShares;
-        if (isNaN(res)) {
-          corp.issuedShares = 0;
-        } else {
-          corp.issuedShares = res;
-        }
+    corp.numShares -= shares;
+    if (isNaN(corp.issuedShares)) {
+      console.error(`Corporation issuedShares is NaN: ${corp.issuedShares}`);
+      const res = corp.issuedShares;
+      if (isNaN(res)) {
+        corp.issuedShares = 0;
+      } else {
+        corp.issuedShares = res;
       }
-      corp.issuedShares += shares;
-      corp.sharePrice = newSharePrice;
-      corp.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
-      corp.shareSaleCooldown = CorporationConstants.SellSharesCooldown;
-      player.gainMoney(profit);
-      player.recordMoneySource(profit, "corporation");
-      props.onClose();
-      dialogBoxCreate(
-        `Sold ${numeralWrapper.formatMoney(shares)} shares for ` +
-          `${numeralWrapper.formatMoney(profit)}. ` +
-          `The corporation's stock price fell to ${numeralWrapper.formatMoney(corp.sharePrice)} ` +
-          `as a result of dilution.`,
-      );
-
-      props.rerender();
     }
+    corp.issuedShares += shares;
+    corp.sharePrice = newSharePrice;
+    corp.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
+    corp.shareSaleCooldown = CorporationConstants.SellSharesCooldown;
+    player.gainMoney(profit);
+    player.recordMoneySource(profit, "corporation");
+    props.onClose();
+    dialogBoxCreate(
+      `Sold {numeralWrapper.formatMoney(shares)} shares for ` +
+        `${numeralWrapper.formatMoney(profit)}. ` +
+        `The corporation's stock price fell to ${numeralWrapper.formatMoney(corp.sharePrice)} ` +
+        `as a result of dilution.`,
+    );
+
+    props.rerender();
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
@@ -112,7 +109,7 @@ export function SellSharesModal(props: IProps): React.ReactElement {
         onChange={changeShares}
         onKeyDown={onKeyDown}
       />
-      <Button onClick={sell} sx={{ mx: 1 }}>
+      <Button disabled={disabled} onClick={sell} sx={{ mx: 1 }}>
         Sell shares
       </Button>
     </Modal>

@@ -2,18 +2,23 @@ import React from "react";
 
 import { BitNodes } from "../BitNode";
 import { IRouter } from "../../ui/Router";
-import { removePopup } from "../../ui/React/createPopup";
+import { use } from "../../ui/Context";
+import { Modal } from "../../ui/React/Modal";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+
 interface IProps {
+  open: boolean;
+  onClose: () => void;
   n: number;
   level: number;
   destroyedBitNode: number;
   flume: boolean;
-  router: IRouter;
   enter: (router: IRouter, flume: boolean, destroyedBitNode: number, newBitNode: number) => void;
-  popupId: string;
 }
 
-export function PortalPopup(props: IProps): React.ReactElement {
+export function PortalModal(props: IProps): React.ReactElement {
+  const router = use.Router();
   const bitNodeKey = "BitNode" + props.n;
   const bitNode = BitNodes[bitNodeKey];
   if (bitNode == null) throw new Error(`Could not find BitNode object for number: ${props.n}`);
@@ -21,29 +26,30 @@ export function PortalPopup(props: IProps): React.ReactElement {
 
   const newLevel = Math.min(props.level + 1, props.n === 12 ? Infinity : 3);
   return (
-    <>
-      <h1>
+    <Modal open={props.open} onClose={props.onClose}>
+      <Typography variant="h4">
         BitNode-{props.n}: {bitNode.name}
-      </h1>
+      </Typography>
       <br />
-      Source-File Level: {props.level} / {maxSourceFileLevel}
-      <br />
-      <br />
-      Difficulty: {["easy", "normal", "hard"][bitNode.difficulty]}
-      <br />
-      <br />
-      {bitNode.info}
+      <Typography>
+        Source-File Level: {props.level} / {maxSourceFileLevel}
+      </Typography>
       <br />
       <br />
-      <button
-        className="std-button"
+      <Typography> Difficulty: {["easy", "normal", "hard"][bitNode.difficulty]}</Typography>
+      <br />
+      <br />
+      <Typography>{bitNode.info}</Typography>
+      <br />
+      <br />
+      <Button
         onClick={() => {
-          props.enter(props.router, props.flume, props.destroyedBitNode, props.n);
-          removePopup(props.popupId);
+          props.enter(router, props.flume, props.destroyedBitNode, props.n);
+          props.onClose();
         }}
       >
         Enter BN{props.n}.{newLevel}
-      </button>
-    </>
+      </Button>
+    </Modal>
   );
 }

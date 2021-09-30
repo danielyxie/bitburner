@@ -6,6 +6,7 @@ import { CorporationConstants } from "../data/Constants";
 import { Treant } from "treant-js";
 import { IIndustry } from "../IIndustry";
 import { Research } from "../Actions";
+import Typography from "@mui/material/Typography";
 
 interface IProps {
   industry: IIndustry;

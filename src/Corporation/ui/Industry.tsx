@@ -9,6 +9,7 @@ import { Warehouse } from "../Warehouse";
 import { OfficeSpace } from "../OfficeSpace";
 import { use } from "../../ui/Context";
 import { useCorporation, useDivision } from "./Context";
+import Box from "@mui/material/Box";
 
 interface IProps {
   city: string;
@@ -22,25 +23,12 @@ export function Industry(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
   return (
-    <div>
-      <div className={"cmpy-mgmt-industry-left-panel"}>
-        <IndustryOverview
-          rerender={props.rerender}
-          player={player}
-          corp={corp}
-          division={division}
-          currentCity={props.city}
-          office={props.office}
-        />
-        <IndustryOffice
-          rerender={props.rerender}
-          player={player}
-          corp={corp}
-          division={division}
-          office={props.office}
-        />
-      </div>
-      <div className={"cmpy-mgmt-industry-right-panel"}>
+    <Box display="flex">
+      <Box sx={{ width: "50%" }}>
+        <IndustryOverview rerender={props.rerender} currentCity={props.city} office={props.office} />
+        <IndustryOffice rerender={props.rerender} office={props.office} />
+      </Box>
+      <Box sx={{ width: "50%" }}>
         <IndustryWarehouse
           rerender={props.rerender}
           player={player}
@@ -49,7 +37,7 @@ export function Industry(props: IProps): React.ReactElement {
           division={division}
           warehouse={props.warehouse}
         />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

@@ -122,7 +122,6 @@ export class OfficeSpace {
     if (document.getElementById("cmpy-mgmt-hire-employee-popup") != null) return;
 
     //Generate three random employees (meh, decent, amazing)
-    const mult = getRandomInt(76, 100) / 100;
     const int = getRandomInt(50, 100),
       cha = getRandomInt(50, 100),
       exp = getRandomInt(50, 100),
@@ -131,12 +130,12 @@ export class OfficeSpace {
       sal = CorporationConstants.EmployeeSalaryMultiplier * (int + cha + exp + cre + eff);
 
     const emp = new Employee({
-      intelligence: int * mult,
-      charisma: cha * mult,
-      experience: exp * mult,
-      creativity: cre * mult,
-      efficiency: eff * mult,
-      salary: sal * mult,
+      intelligence: int,
+      charisma: cha,
+      experience: exp,
+      creativity: cre,
+      efficiency: eff,
+      salary: sal,
     });
 
     const name = generateRandomString(7);

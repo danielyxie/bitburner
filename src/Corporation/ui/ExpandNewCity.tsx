@@ -19,6 +19,8 @@ export function ExpandNewCity(props: IProps): React.ReactElement {
   const possibleCities = Object.keys(division.offices).filter((cityName: string) => division.offices[cityName] === 0);
   const [city, setCity] = useState(possibleCities[0]);
 
+  const disabled = corp.funds.lt(CorporationConstants.OfficeInitialCost);
+
   function onCityChange(event: SelectChangeEvent<string>): void {
     setCity(event.target.value);
   }
@@ -48,7 +50,7 @@ export function ExpandNewCity(props: IProps): React.ReactElement {
           </MenuItem>
         ))}
       </Select>
-      <Button onClick={expand} disabled={corp.funds.lt(0)}>
+      <Button onClick={expand} disabled={disabled}>
         Confirm
       </Button>
     </>

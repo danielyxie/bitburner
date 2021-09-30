@@ -25,9 +25,7 @@ export function MainPanel(props: IProps): React.ReactElement {
   if (division === undefined) throw new Error("Cannot find division");
   return (
     <Context.Division.Provider value={division}>
-      <div id="cmpy-mgmt-panel">
-        <CityTabs rerender={props.rerender} city={CityName.Sector12} />
-      </div>
+      <CityTabs rerender={props.rerender} city={CityName.Sector12} />
     </Context.Division.Provider>
   );
 }
