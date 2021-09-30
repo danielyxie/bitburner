@@ -40,7 +40,6 @@ type IProps = {
 export function StockTickers(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   const [tickerDisplayMode, setTickerDisplayMode] = useState(TickerDisplayMode.AllStocks);
-  const [watchlistFilter, setWatchlistFilter] = useState("");
   const [watchlistSymbols, setWatchlistSymbols] = useState<string[]>([]);
 
   function changeDisplayMode(): void {
@@ -54,8 +53,6 @@ export function StockTickers(props: IProps): React.ReactElement {
   function changeWatchlistFilter(e: React.ChangeEvent<HTMLInputElement>): void {
     const watchlist = e.target.value;
     const sanitizedWatchlist = watchlist.replace(/\s/g, "");
-
-    setWatchlistFilter(watchlist);
 
     if (sanitizedWatchlist !== "") {
       setWatchlistSymbols(sanitizedWatchlist.split(","));

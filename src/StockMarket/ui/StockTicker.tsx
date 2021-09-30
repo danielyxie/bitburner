@@ -21,7 +21,6 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -76,7 +75,7 @@ export function StockTicker(props: IProps): React.ReactElement {
   }>({
     text: "",
     placeText: "",
-    place: (n: number) => false,
+    place: () => false,
   });
 
   function getBuyTransactionCostContent(): JSX.Element | null {
