@@ -7,15 +7,12 @@ import { OfficeSpace } from "../OfficeSpace";
 import { Material } from "../Material";
 import { Product } from "../Product";
 import { Warehouse } from "../Warehouse";
-import { DiscontinueProductPopup } from "./DiscontinueProductPopup";
 import { ExportPopup } from "./ExportPopup";
-import { LimitProductProductionPopup } from "./LimitProductProductionPopup";
 import { MaterialMarketTaPopup } from "./MaterialMarketTaPopup";
 import { SellMaterialPopup } from "./SellMaterialPopup";
-import { SellProductPopup } from "./SellProductPopup";
 import { PurchaseMaterialPopup } from "./PurchaseMaterialPopup";
-import { ProductMarketTaPopup } from "./ProductMarketTaPopup";
 import { SmartSupplyModal } from "./SmartSupplyModal";
+import { ProductElem } from "./ProductElem";
 import { MaterialSizes } from "../MaterialSizes";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -37,203 +34,6 @@ import Tooltip from "@mui/material/Tooltip";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-
-interface IProductProps {
-  corp: ICorporation;
-  division: IIndustry;
-  city: string;
-  product: Product;
-  player: IPlayer;
-  rerender: () => void;
-}
-
-// Creates the UI for a single Product type
-function ProductComponent(props: IProductProps): React.ReactElement {
-  const corp = useCorporation();
-  const division = useDivision();
-  const city = props.city;
-  const product = props.product;
-
-  // Numeraljs formatters
-  const nf = "0.000";
-  const nfB = "0.000a"; // For numbers that might be big
-
-  const hasUpgradeDashboard = division.hasResearch("uPgrade: Dashboard");
-
-  // Total product gain = production - sale
-  const totalGain = product.data[city][1] - product.data[city][2];
-
-  // Sell button
-  let sellButtonText: JSX.Element;
-  if (product.sllman[city][0]) {
-    if (isString(product.sllman[city][1])) {
-      sellButtonText = (
-        <>
-          Sell ({numeralWrapper.format(product.data[city][2], nfB)}/{product.sllman[city][1]})
-        </>
-      );
-    } else {
-      sellButtonText = (
-        <>
-          Sell ({numeralWrapper.format(product.data[city][2], nfB)}/
-          {numeralWrapper.format(product.sllman[city][1], nfB)})
-        </>
-      );
-    }
-  } else {
-    sellButtonText = <>Sell (0.000/0.000)</>;
-  }
-
-  if (product.marketTa2) {
-    sellButtonText = (
-      <>
-        {sellButtonText} @ <Money money={product.marketTa2Price[city]} />
-      </>
-    );
-  } else if (product.marketTa1) {
-    const markupLimit = product.rat / product.mku;
-    sellButtonText = (
-      <>
-        {sellButtonText} @ <Money money={product.pCost + markupLimit} />
-      </>
-    );
-  } else if (product.sCost) {
-    if (isString(product.sCost)) {
-      const sCost = (product.sCost as string).replace(/MP/g, product.pCost + "");
-      sellButtonText = (
-        <>
-          {sellButtonText} @ <Money money={eval(sCost)} />
-        </>
-      );
-    } else {
-      sellButtonText = (
-        <>
-          {sellButtonText} @ <Money money={product.sCost} />
-        </>
-      );
-    }
-  }
-
-  function openSellProductPopup(): void {
-    const popupId = "cmpy-mgmt-limit-product-production-popup";
-    createPopup(popupId, SellProductPopup, {
-      product: product,
-      city: city,
-      popupId: popupId,
-    });
-  }
-
-  // Limit Production button
-  let limitProductionButtonText = "Limit Production";
-  if (product.prdman[city][0]) {
-    limitProductionButtonText += " (" + numeralWrapper.format(product.prdman[city][1], nf) + ")";
-  }
-
-  function openLimitProductProdutionPopup(): void {
-    const popupId = "cmpy-mgmt-limit-product-production-popup";
-    createPopup(popupId, LimitProductProductionPopup, {
-      product: product,
-      city: city,
-      popupId: popupId,
-    });
-  }
-
-  function openDiscontinueProductPopup(): void {
-    const popupId = "cmpy-mgmt-discontinue-product-popup";
-    createPopup(popupId, DiscontinueProductPopup, {
-      rerender: props.rerender,
-      product: product,
-      industry: division,
-      corp: corp,
-      popupId: popupId,
-      player: props.player,
-    });
-  }
-
-  function openProductMarketTaPopup(): void {
-    const popupId = "cmpy-mgmt-marketta-popup";
-    createPopup(popupId, ProductMarketTaPopup, {
-      product: product,
-      industry: division,
-      popupId: popupId,
-    });
-  }
-
-  // Unfinished Product
-  if (!product.fin) {
-    return (
-      <div className={"cmpy-mgmt-warehouse-product-div"}>
-        <p>
-          Designing {product.name} (req. Operations/Engineers in {product.createCity})...
-        </p>
-        <br />
-        <p>{numeralWrapper.format(product.prog, "0.00")}% complete</p>
-        <br />
-
-        {hasUpgradeDashboard && (
-          <div>
-            <Button onClick={openSellProductPopup}>{sellButtonText}</Button>
-            <br />
-            <Button onClick={openLimitProductProdutionPopup}>{limitProductionButtonText}</Button>
-            <Button onClick={openDiscontinueProductPopup}>Discontinue</Button>
-            {division.hasResearch("Market-TA.I") && <Button onClick={openProductMarketTaPopup}>Market-TA</Button>}
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  return (
-    <div className={"cmpy-mgmt-warehouse-product-div"}>
-      <p className={"tooltip"}>
-        {product.name}: {numeralWrapper.format(product.data[city][0], nfB)} ({numeralWrapper.format(totalGain, nfB)}/s)
-        <span className={"tooltiptext"}>
-          Prod: {numeralWrapper.format(product.data[city][1], nfB)}/s
-          <br />
-          Sell: {numeralWrapper.format(product.data[city][2], nfB)} /s
-        </span>
-      </p>
-      <br />
-      <p className={"tooltip"}>
-        Rating: {numeralWrapper.format(product.rat, nf)}
-        <span className={"tooltiptext"}>
-          Quality: {numeralWrapper.format(product.qlt, nf)} <br />
-          Performance: {numeralWrapper.format(product.per, nf)} <br />
-          Durability: {numeralWrapper.format(product.dur, nf)} <br />
-          Reliability: {numeralWrapper.format(product.rel, nf)} <br />
-          Aesthetics: {numeralWrapper.format(product.aes, nf)} <br />
-          Features: {numeralWrapper.format(product.fea, nf)}
-          {corp.unlockUpgrades[2] === 1 && <br />}
-          {corp.unlockUpgrades[2] === 1 && "Demand: " + numeralWrapper.format(product.dmd, nf)}
-          {corp.unlockUpgrades[3] === 1 && <br />}
-          {corp.unlockUpgrades[3] === 1 && "Competition: " + numeralWrapper.format(product.cmp, nf)}
-        </span>
-      </p>
-      <br />
-      <p className={"tooltip"}>
-        Est. Production Cost:{" "}
-        {numeralWrapper.formatMoney(product.pCost / CorporationConstants.ProductProductionCostRatio)}
-        <span className={"tooltiptext"}>An estimate of the material cost it takes to create this Product.</span>
-      </p>
-      <br />
-      <p className={"tooltip"}>
-        Est. Market Price: {numeralWrapper.formatMoney(product.pCost)}
-        <span className={"tooltiptext"}>
-          An estimate of how much consumers are willing to pay for this product. Setting the sale price above this may
-          result in less sales. Setting the sale price below this may result in more sales.
-        </span>
-      </p>
-
-      <div>
-        <Button onClick={openSellProductPopup}>{sellButtonText}</Button>
-        <br />
-        <Button onClick={openLimitProductProdutionPopup}>{limitProductionButtonText}</Button>
-        <Button onClick={openDiscontinueProductPopup}>Discontinue</Button>
-        {division.hasResearch("Market-TA.I") && <Button onClick={openProductMarketTaPopup}>Market-TA</Button>}
-      </div>
-    </div>
-  );
-}
 
 interface IMaterialProps {
   warehouse: Warehouse;
@@ -506,15 +306,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
       const product = division.products[productName];
       if (!(product instanceof Product)) continue;
       products.push(
-        <ProductComponent
-          rerender={props.rerender}
-          player={props.player}
-          city={props.currentCity}
-          corp={corp}
-          division={division}
-          key={productName}
-          product={product}
-        />,
+        <ProductElem rerender={props.rerender} city={props.currentCity} key={productName} product={product} />,
       );
     }
   }

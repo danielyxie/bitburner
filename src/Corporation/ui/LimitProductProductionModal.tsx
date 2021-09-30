@@ -1,23 +1,24 @@
 import React, { useState } from "react";
-import { removePopup } from "../../ui/React/createPopup";
 import { Product } from "../Product";
 import { LimitProductProduction } from "../Actions";
+import { Modal } from "../../ui/React/Modal";
 
 interface IProps {
+  open: boolean;
+  onClose: () => void;
   product: Product;
   city: string;
-  popupId: string;
 }
 
 // Create a popup that lets the player limit the production of a product
-export function LimitProductProductionPopup(props: IProps): React.ReactElement {
+export function LimitProductProductionModal(props: IProps): React.ReactElement {
   const [limit, setLimit] = useState<number | null>(null);
 
   function limitProductProduction(): void {
     let qty = limit;
     if (qty === null) qty = -1;
     LimitProductProduction(props.product, props.city, qty);
-    removePopup(props.popupId);
+    props.onClose();
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
@@ -30,7 +31,7 @@ export function LimitProductProductionPopup(props: IProps): React.ReactElement {
   }
 
   return (
-    <>
+    <Modal open={props.open} onClose={props.onClose}>
       <p>
         Enter a limit to the amount of this product you would like to product per second. Leave the box empty to set no
         limit.
@@ -51,6 +52,6 @@ export function LimitProductProductionPopup(props: IProps): React.ReactElement {
       >
         Limit production
       </button>
-    </>
+    </Modal>
   );
 }

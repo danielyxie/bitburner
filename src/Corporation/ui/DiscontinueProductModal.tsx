@@ -1,29 +1,27 @@
 import React from "react";
-import { removePopup } from "../../ui/React/createPopup";
-import { ICorporation } from "../ICorporation";
+
 import { Product } from "../Product";
-import { IIndustry } from "../IIndustry";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Modal } from "../../ui/React/Modal";
+import { useDivision } from "./Context";
 
 interface IProps {
+  open: boolean;
+  onClose: () => void;
   product: Product;
-  industry: IIndustry;
-  corp: ICorporation;
-  popupId: string;
-  player: IPlayer;
   rerender: () => void;
 }
 
 // Create a popup that lets the player discontinue a product
-export function DiscontinueProductPopup(props: IProps): React.ReactElement {
+export function DiscontinueProductModal(props: IProps): React.ReactElement {
+  const division = useDivision();
   function discontinue(): void {
-    props.industry.discontinueProduct(props.product);
-    removePopup(props.popupId);
+    division.discontinueProduct(props.product);
+    props.onClose();
     props.rerender();
   }
 
   return (
-    <>
+    <Modal open={props.open} onClose={props.onClose}>
       <p>
         Are you sure you want to do this? Discontinuing a product removes it completely and permanently. You will no
         longer produce this product and all of its existing stock will be removed and left unsold
@@ -31,6 +29,6 @@ export function DiscontinueProductPopup(props: IProps): React.ReactElement {
       <button className="popup-box-button" onClick={discontinue}>
         Discontinue
       </button>
-    </>
+    </Modal>
   );
 }
