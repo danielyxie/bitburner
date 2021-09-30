@@ -15,10 +15,6 @@ interface IConstructorParams {
 }
 
 export class Warehouse {
-  // Text that describes how the space in this Warehouse is being used
-  // Used to create a tooltip in the UI
-  breakdown = "";
-
   // Warehouse's level, which affects its maximum size
   level = 1;
 
@@ -90,14 +86,10 @@ export class Warehouse {
   // Re-calculate how much space is being used by this Warehouse
   updateMaterialSizeUsed(): void {
     this.sizeUsed = 0;
-    this.breakdown = "";
     for (const matName in this.materials) {
       const mat = this.materials[matName];
       if (MaterialSizes.hasOwnProperty(matName)) {
         this.sizeUsed += mat.qty * MaterialSizes[matName];
-        if (mat.qty > 0) {
-          this.breakdown += matName + ": " + numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0") + "<br>";
-        }
       }
     }
     if (this.sizeUsed > this.size) {

@@ -1,6 +1,6 @@
 // React Component for displaying an Industry's warehouse information
 // (right-side panel in the Industry UI)
-import React from "react";
+import React, { useState } from "react";
 
 import { CorporationConstants } from "../data/Constants";
 import { OfficeSpace } from "../OfficeSpace";
@@ -15,7 +15,8 @@ import { SellMaterialPopup } from "./SellMaterialPopup";
 import { SellProductPopup } from "./SellProductPopup";
 import { PurchaseMaterialPopup } from "./PurchaseMaterialPopup";
 import { ProductMarketTaPopup } from "./ProductMarketTaPopup";
-import { SmartSupplyPopup } from "./SmartSupplyPopup";
+import { SmartSupplyModal } from "./SmartSupplyModal";
+import { MaterialSizes } from "../MaterialSizes";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createPopup } from "../../ui/React/createPopup";
@@ -29,6 +30,13 @@ import { MoneyCost } from "./MoneyCost";
 import { isRelevantMaterial } from "./Helpers";
 import { IndustryProductEquation } from "./IndustryProductEquation";
 import { PurchaseWarehouse } from "../Actions";
+import { useCorporation, useDivision } from "./Context";
+
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 interface IProductProps {
   corp: ICorporation;
@@ -41,8 +49,8 @@ interface IProductProps {
 
 // Creates the UI for a single Product type
 function ProductComponent(props: IProductProps): React.ReactElement {
-  const corp = props.corp;
-  const division = props.division;
+  const corp = useCorporation();
+  const division = useDivision();
   const city = props.city;
   const product = props.product;
 
@@ -136,7 +144,7 @@ function ProductComponent(props: IProductProps): React.ReactElement {
       rerender: props.rerender,
       product: product,
       industry: division,
-      corp: props.corp,
+      corp: corp,
       popupId: popupId,
       player: props.player,
     });
@@ -164,21 +172,11 @@ function ProductComponent(props: IProductProps): React.ReactElement {
 
         {hasUpgradeDashboard && (
           <div>
-            <button className={"std-button"} onClick={openSellProductPopup}>
-              {sellButtonText}
-            </button>
+            <Button onClick={openSellProductPopup}>{sellButtonText}</Button>
             <br />
-            <button className={"std-button"} onClick={openLimitProductProdutionPopup}>
-              {limitProductionButtonText}
-            </button>
-            <button className={"std-button"} onClick={openDiscontinueProductPopup}>
-              Discontinue
-            </button>
-            {division.hasResearch("Market-TA.I") && (
-              <button className={"std-button"} onClick={openProductMarketTaPopup}>
-                Market-TA
-              </button>
-            )}
+            <Button onClick={openLimitProductProdutionPopup}>{limitProductionButtonText}</Button>
+            <Button onClick={openDiscontinueProductPopup}>Discontinue</Button>
+            {division.hasResearch("Market-TA.I") && <Button onClick={openProductMarketTaPopup}>Market-TA</Button>}
           </div>
         )}
       </div>
@@ -227,29 +225,17 @@ function ProductComponent(props: IProductProps): React.ReactElement {
       </p>
 
       <div>
-        <button className={"std-button"} onClick={openSellProductPopup}>
-          {sellButtonText}
-        </button>
+        <Button onClick={openSellProductPopup}>{sellButtonText}</Button>
         <br />
-        <button className={"std-button"} onClick={openLimitProductProdutionPopup}>
-          {limitProductionButtonText}
-        </button>
-        <button className={"std-button"} onClick={openDiscontinueProductPopup}>
-          Discontinue
-        </button>
-        {division.hasResearch("Market-TA.I") && (
-          <button className={"std-button"} onClick={openProductMarketTaPopup}>
-            Market-TA
-          </button>
-        )}
+        <Button onClick={openLimitProductProdutionPopup}>{limitProductionButtonText}</Button>
+        <Button onClick={openDiscontinueProductPopup}>Discontinue</Button>
+        {division.hasResearch("Market-TA.I") && <Button onClick={openProductMarketTaPopup}>Market-TA</Button>}
       </div>
     </div>
   );
 }
 
 interface IMaterialProps {
-  corp: ICorporation;
-  division: IIndustry;
   warehouse: Warehouse;
   city: string;
   mat: Material;
@@ -258,8 +244,8 @@ interface IMaterialProps {
 
 // Creates the UI for a single Material type
 function MaterialComponent(props: IMaterialProps): React.ReactElement {
-  const corp = props.corp;
-  const division = props.division;
+  const corp = useCorporation();
+  const division = useDivision();
   const warehouse = props.warehouse;
   const city = props.city;
   const mat = props.mat;
@@ -291,7 +277,7 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
       mat: mat,
       industry: division,
       warehouse: warehouse,
-      corp: props.corp,
+      corp: corp,
       popupId: popupId,
     });
   }
@@ -300,7 +286,7 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
     const popupId = "cmpy-mgmt-export-popup";
     createPopup(popupId, ExportPopup, {
       mat: mat,
-      corp: props.corp,
+      corp: corp,
       popupId: popupId,
     });
   }
@@ -358,7 +344,7 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
     const popupId = "cmpy-mgmt-material-sell-popup";
     createPopup(popupId, SellMaterialPopup, {
       mat: mat,
-      corp: props.corp,
+      corp: corp,
       popupId: popupId,
     });
   }
@@ -368,13 +354,13 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
     createPopup(popupId, MaterialMarketTaPopup, {
       mat: mat,
       industry: division,
-      corp: props.corp,
+      corp: corp,
       popupId: popupId,
     });
   }
 
   function shouldFlash(): boolean {
-    return props.division.prodMats.includes(props.mat.name) && !mat.sllman[0];
+    return division.prodMats.includes(props.mat.name) && !mat.sllman[0];
   }
 
   return (
@@ -409,33 +395,25 @@ function MaterialComponent(props: IMaterialProps): React.ReactElement {
       </div>
 
       <div style={{ display: "inline-block" }}>
-        <button
+        <Button
           className={purchaseButtonClass}
           onClick={openPurchaseMaterialPopup}
-          disabled={props.warehouse.smartSupplyEnabled && Object.keys(props.division.reqMats).includes(props.mat.name)}
+          disabled={props.warehouse.smartSupplyEnabled && Object.keys(division.reqMats).includes(props.mat.name)}
         >
           {purchaseButtonText}
           {tutorial && (
             <span className={"tooltiptext"}>Purchase your required materials to get production started!</span>
           )}
-        </button>
+        </Button>
 
-        {corp.unlockUpgrades[0] === 1 && (
-          <button className={"std-button"} onClick={openExportPopup}>
-            Export
-          </button>
-        )}
+        {corp.unlockUpgrades[0] === 1 && <Button onClick={openExportPopup}>Export</Button>}
         <br />
 
-        <button className={`std-button${shouldFlash() ? " flashing-button" : ""}`} onClick={openSellMaterialPopup}>
+        <Button className={`std-button${shouldFlash() ? " flashing-button" : ""}`} onClick={openSellMaterialPopup}>
           {sellButtonText}
-        </button>
+        </Button>
 
-        {division.hasResearch("Market-TA.I") && (
-          <button className={"std-button"} onClick={openMaterialMarketTaPopup}>
-            Market-TA
-          </button>
-        )}
+        {division.hasResearch("Market-TA.I") && <Button onClick={openMaterialMarketTaPopup}>Market-TA</Button>}
       </div>
     </div>
   );
@@ -450,177 +428,188 @@ interface IProps {
   rerender: () => void;
 }
 
-export function IndustryWarehouse(props: IProps): React.ReactElement {
-  function renderWarehouseUI(): React.ReactElement {
-    if (props.warehouse === 0) return <></>;
-    // General Storage information at the top
-    const sizeUsageStyle = {
-      color: props.warehouse.sizeUsed >= props.warehouse.size ? "red" : "white",
-      margin: "5px",
-    };
+function WarehouseRoot(props: IProps): React.ReactElement {
+  const corp = useCorporation();
+  const division = useDivision();
+  const [smartSupplyOpen, setSmartSupplyOpen] = useState(false);
+  if (props.warehouse === 0) return <></>;
 
-    // Upgrade Warehouse size button
-    const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, props.warehouse.level + 1);
-    const canAffordUpgrade = props.corp.funds.gt(sizeUpgradeCost);
-    const upgradeWarehouseClass = canAffordUpgrade ? "std-button" : "a-link-button-inactive";
-    function upgradeWarehouseOnClick(): void {
-      if (props.division === null) return;
-      if (props.warehouse === 0) return;
-      ++props.warehouse.level;
-      props.warehouse.updateSize(props.corp, props.division);
-      props.corp.funds = props.corp.funds.minus(sizeUpgradeCost);
-      props.rerender();
-    }
-
-    function openSmartSupplyPopup(): void {
-      if (props.warehouse === 0) return;
-      const popupId = "cmpy-mgmt-smart-supply-popup";
-      createPopup(popupId, SmartSupplyPopup, {
-        division: props.division,
-        warehouse: props.warehouse,
-        corp: props.corp,
-        player: props.player,
-        popupId: popupId,
-      });
-    }
-
-    const ratioLines = [];
-    for (const matName in props.division.reqMats) {
-      if (props.division.reqMats.hasOwnProperty(matName)) {
-        const text = [" *", props.division.reqMats[matName], matName].join(" ");
-        ratioLines.push(
-          <div key={matName}>
-            <p>{text}</p>
-          </div>,
-        );
-      }
-    }
-
-    // Current State:
-    let stateText;
-    switch (props.division.state) {
-      case "START":
-        stateText = "Current state: Preparing...";
-        break;
-      case "PURCHASE":
-        stateText = "Current state: Purchasing materials...";
-        break;
-      case "PRODUCTION":
-        stateText = "Current state: Producing materials and/or products...";
-        break;
-      case "SALE":
-        stateText = "Current state: Selling materials and/or products...";
-        break;
-      case "EXPORT":
-        stateText = "Current state: Exporting materials and/or products...";
-        break;
-      default:
-        console.error(`Invalid state: ${props.division.state}`);
-        break;
-    }
-
-    // Create React components for materials
-    const mats = [];
-    for (const matName in props.warehouse.materials) {
-      if (props.warehouse.materials[matName] instanceof Material) {
-        // Only create UI for materials that are relevant for the industry
-        if (isRelevantMaterial(matName, props.division)) {
-          mats.push(
-            <MaterialComponent
-              rerender={props.rerender}
-              city={props.currentCity}
-              corp={props.corp}
-              division={props.division}
-              key={matName}
-              mat={props.warehouse.materials[matName]}
-              warehouse={props.warehouse}
-            />,
-          );
-        }
-      }
-    }
-
-    // Create React components for products
-    const products = [];
-    if (props.division.makesProducts && Object.keys(props.division.products).length > 0) {
-      for (const productName in props.division.products) {
-        const product = props.division.products[productName];
-        if (product instanceof Product) {
-          products.push(
-            <ProductComponent
-              rerender={props.rerender}
-              player={props.player}
-              city={props.currentCity}
-              corp={props.corp}
-              division={props.division}
-              key={productName}
-              product={product}
-            />,
-          );
-        }
-      }
-    }
-
-    return (
-      <div className={"cmpy-mgmt-warehouse-panel"}>
-        <p className={"tooltip"} style={sizeUsageStyle}>
-          Storage: {numeralWrapper.formatBigNumber(props.warehouse.sizeUsed)} /{" "}
-          {numeralWrapper.formatBigNumber(props.warehouse.size)}
-          <span className={"tooltiptext"} dangerouslySetInnerHTML={{ __html: props.warehouse.breakdown }}></span>
-        </p>
-
-        <button className={upgradeWarehouseClass} onClick={upgradeWarehouseOnClick}>
-          Upgrade Warehouse Size - <MoneyCost money={sizeUpgradeCost} corp={props.corp} />
-        </button>
-
-        <p>This industry uses the following equation for it's production: </p>
-        <br />
-        <br />
-        <IndustryProductEquation division={props.division} />
-        <br />
-        <br />
-        <p>
-          To get started with production, purchase your required materials or import them from another of your company's
-          divisions.
-        </p>
-        <br />
-
-        <p>{stateText}</p>
-
-        {props.corp.unlockUpgrades[1] && (
-          <>
-            <button className="std-button" onClick={openSmartSupplyPopup}>
-              Configure Smart Supply
-            </button>
-          </>
-        )}
-
-        {mats}
-
-        {products}
-      </div>
-    );
-  }
-
-  function purchaseWarehouse(division: IIndustry, city: string): void {
-    PurchaseWarehouse(props.corp, division, city);
+  // Upgrade Warehouse size button
+  const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, props.warehouse.level + 1);
+  const canAffordUpgrade = corp.funds.gt(sizeUpgradeCost);
+  function upgradeWarehouseOnClick(): void {
+    if (division === null) return;
+    if (props.warehouse === 0) return;
+    if (!canAffordUpgrade) return;
+    ++props.warehouse.level;
+    props.warehouse.updateSize(corp, division);
+    corp.funds = corp.funds.minus(sizeUpgradeCost);
     props.rerender();
   }
 
-  if (props.warehouse instanceof Warehouse) {
-    return renderWarehouseUI();
-  } else {
-    return (
-      <div className={"cmpy-mgmt-warehouse-panel"}>
-        <button
-          className={"std-button"}
-          onClick={() => purchaseWarehouse(props.division, props.currentCity)}
-          disabled={props.corp.funds.lt(CorporationConstants.WarehouseInitialCost)}
-        >
-          Purchase Warehouse (
-          <MoneyCost money={CorporationConstants.WarehouseInitialCost} corp={props.corp} />)
-        </button>
-      </div>
+  const ratioLines = [];
+  for (const matName in division.reqMats) {
+    if (division.reqMats.hasOwnProperty(matName)) {
+      const text = [" *", division.reqMats[matName], matName].join(" ");
+      ratioLines.push(
+        <div key={matName}>
+          <p>{text}</p>
+        </div>,
+      );
+    }
+  }
+
+  // Current State:
+  let stateText;
+  switch (division.state) {
+    case "START":
+      stateText = "Current state: Preparing...";
+      break;
+    case "PURCHASE":
+      stateText = "Current state: Purchasing materials...";
+      break;
+    case "PRODUCTION":
+      stateText = "Current state: Producing materials and/or products...";
+      break;
+    case "SALE":
+      stateText = "Current state: Selling materials and/or products...";
+      break;
+    case "EXPORT":
+      stateText = "Current state: Exporting materials and/or products...";
+      break;
+    default:
+      console.error(`Invalid state: ${division.state}`);
+      break;
+  }
+
+  // Create React components for materials
+  const mats = [];
+  for (const matName in props.warehouse.materials) {
+    if (!(props.warehouse.materials[matName] instanceof Material)) continue;
+    // Only create UI for materials that are relevant for the industry
+    if (!isRelevantMaterial(matName, division)) continue;
+    mats.push(
+      <MaterialComponent
+        rerender={props.rerender}
+        city={props.currentCity}
+        key={matName}
+        mat={props.warehouse.materials[matName]}
+        warehouse={props.warehouse}
+      />,
     );
   }
+
+  // Create React components for products
+  const products = [];
+  if (division.makesProducts && Object.keys(division.products).length > 0) {
+    for (const productName in division.products) {
+      const product = division.products[productName];
+      if (!(product instanceof Product)) continue;
+      products.push(
+        <ProductComponent
+          rerender={props.rerender}
+          player={props.player}
+          city={props.currentCity}
+          corp={corp}
+          division={division}
+          key={productName}
+          product={product}
+        />,
+      );
+    }
+  }
+
+  let breakdown = <></>;
+  for (const matName in props.warehouse.materials) {
+    if (matName === "RealEstate") continue;
+    const mat = props.warehouse.materials[matName];
+    if (!MaterialSizes.hasOwnProperty(matName)) continue;
+    if (mat.qty === 0) continue;
+    breakdown = (
+      <>
+        {breakdown}
+        {matName}: {numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0")}
+        <br />
+      </>
+    );
+  }
+
+  return (
+    <div className={"cmpy-mgmt-warehouse-panel"}>
+      <Box display="flex" alignItems="center">
+        <Tooltip title={props.warehouse.sizeUsed !== 0 ? breakdown : ""}>
+          <Typography color={props.warehouse.sizeUsed >= props.warehouse.size ? "error" : "primary"}>
+            Storage: {numeralWrapper.formatBigNumber(props.warehouse.sizeUsed)} /{" "}
+            {numeralWrapper.formatBigNumber(props.warehouse.size)}
+          </Typography>
+        </Tooltip>
+
+        <Button disabled={!canAffordUpgrade} onClick={upgradeWarehouseOnClick}>
+          Upgrade Warehouse Size -&nbsp;
+          <MoneyCost money={sizeUpgradeCost} corp={corp} />
+        </Button>
+      </Box>
+
+      <Typography>This industry uses the following equation for it's production: </Typography>
+      <br />
+      <Typography>
+        <IndustryProductEquation division={division} />
+      </Typography>
+      <br />
+      <Typography>
+        To get started with production, purchase your required materials or import them from another of your company's
+        divisions.
+      </Typography>
+      <br />
+
+      <Typography>{stateText}</Typography>
+
+      {corp.unlockUpgrades[1] && (
+        <>
+          <Button onClick={() => setSmartSupplyOpen(true)}>Configure Smart Supply</Button>
+          <SmartSupplyModal
+            open={smartSupplyOpen}
+            onClose={() => setSmartSupplyOpen(false)}
+            warehouse={props.warehouse}
+          />
+        </>
+      )}
+
+      {mats}
+
+      {products}
+    </div>
+  );
+}
+
+export function IndustryWarehouse(props: IProps): React.ReactElement {
+  if (props.warehouse instanceof Warehouse) {
+    return <WarehouseRoot {...props} />;
+  } else {
+    return <EmptyWarehouse rerender={props.rerender} city={props.currentCity} />;
+  }
+}
+
+interface IEmptyProps {
+  city: string;
+  rerender: () => void;
+}
+
+function EmptyWarehouse(props: IEmptyProps): React.ReactElement {
+  const corp = useCorporation();
+  const division = useDivision();
+  const disabled = corp.funds.lt(CorporationConstants.WarehouseInitialCost);
+  function purchaseWarehouse(): void {
+    if (disabled) return;
+    PurchaseWarehouse(corp, division, props.city);
+    props.rerender();
+  }
+  return (
+    <Paper>
+      <Button onClick={purchaseWarehouse} disabled={disabled}>
+        Purchase Warehouse (
+        <MoneyCost money={CorporationConstants.WarehouseInitialCost} corp={corp} />)
+      </Button>
+    </Paper>
+  );
 }

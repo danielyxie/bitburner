@@ -432,7 +432,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
       <Tooltip title={<Typography>Automatically hires an employee and gives him/her a random name</Typography>}>
         <span>
           <Button disabled={props.office.atCapacity()} onClick={autohireEmployeeButtonOnClick}>
-            Autohire Employee
+            Hire Employee
           </Button>
         </span>
       </Tooltip>
