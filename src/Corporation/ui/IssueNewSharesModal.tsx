@@ -57,22 +57,18 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
   const maxNewSharesUnrounded = Math.round(corp.totalShares * 0.2);
   const maxNewShares = maxNewSharesUnrounded - (maxNewSharesUnrounded % 1e6);
 
+  const newShares = Math.round((shares || 0) / 10e6) * 10e6;
+  const disabled = shares === null || isNaN(newShares) || newShares < 10e6 || newShares > maxNewShares;
+
   function issueNewShares(): void {
     if (shares === null) return;
+    if (disabled) return;
+
     const newSharePrice = Math.round(corp.sharePrice * 0.9);
     let newShares = shares;
-    if (isNaN(newShares)) {
-      dialogBoxCreate("Invalid input for number of new shares");
-      return;
-    }
 
     // Round to nearest ten-millionth
     newShares = Math.round(newShares / 10e6) * 10e6;
-
-    if (newShares < 10e6 || newShares > maxNewShares) {
-      dialogBoxCreate("Invalid input for number of new shares");
-      return;
-    }
 
     const profit = newShares * newSharePrice;
     corp.issueNewSharesCooldown = CorporationConstants.IssueNewSharesCooldown;
@@ -128,7 +124,7 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
       </Typography>
       <EffectText shares={shares} />
       <TextField autoFocus placeholder="# New Shares" onChange={onChange} onKeyDown={onKeyDown} />
-      <Button onClick={issueNewShares} sx={{ mx: 1 }}>
+      <Button disabled={disabled} onClick={issueNewShares} sx={{ mx: 1 }}>
         Issue New Shares
       </Button>
     </Modal>

@@ -40,6 +40,7 @@ export function IssueDividendsModal(props: IProps): React.ReactElement {
     else {
       let p = parseFloat(event.target.value);
       if (p > 50) p = 50;
+      if (p < 0) p = 0;
       setPercent(p);
     }
   }

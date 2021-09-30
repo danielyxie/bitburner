@@ -136,6 +136,7 @@ function ManualManagement(props: IProps): React.ReactElement {
 
   return (
     <>
+      <br />
       <Select value={employee !== null ? employee.name : ""} onChange={employeeSelectorOnChange}>
         {employees}
       </Select>

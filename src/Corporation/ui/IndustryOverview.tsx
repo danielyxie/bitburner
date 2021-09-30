@@ -259,10 +259,12 @@ function Upgrades(props: { office: OfficeSpace; rerender: () => void }): React.R
 
     upgrades.push(
       <Tooltip key={index} title={upgrade[5]}>
-        <Button onClick={onClick}>
-          {upgrade[4]} -&nbsp;
-          <MoneyCost money={cost} corp={corp} />
-        </Button>
+        <span>
+          <Button disabled={corp.funds.lt(cost)} onClick={onClick}>
+            {upgrade[4]} -&nbsp;
+            <MoneyCost money={cost} corp={corp} />
+          </Button>
+        </span>
       </Tooltip>,
     );
   }

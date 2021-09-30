@@ -20,12 +20,26 @@ interface IProps {
 
 export function BribeFactionModal(props: IProps): React.ReactElement {
   const player = use.Player();
+  const factions = player.factions.filter((name: string) => {
+    const info = Factions[name].getInfo();
+    if (!info.offersWork()) return false;
+    if (player.hasGangWith(name)) return false;
+    return true;
+  });
   const corp = useCorporation();
   const [money, setMoney] = useState<number | null>(0);
   const [stock, setStock] = useState<number | null>(0);
-  const [selectedFaction, setSelectedFaction] = useState(
-    player.factions.length > 0 ? player.factions.filter((faction) => Factions[faction].getInfo().offersWork())[0] : "",
-  );
+  const [selectedFaction, setSelectedFaction] = useState(factions.length > 0 ? factions[0] : "");
+  const disabled =
+    money === null ||
+    stock === null ||
+    (money === 0 && stock === 0) ||
+    isNaN(money) ||
+    isNaN(stock) ||
+    money < 0 ||
+    stock < 0 ||
+    corp.funds.lt(money) ||
+    stock > corp.numShares;
 
   function onMoneyChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setMoney(parseFloat(event.target.value));
@@ -64,22 +78,15 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
 
   function bribe(money: number, stock: number): void {
     const fac = Factions[selectedFaction];
-    if (fac == null) {
-      dialogBoxCreate("ERROR: You must select a faction to bribe");
-    }
-    if (isNaN(money) || isNaN(stock) || money < 0 || stock < 0) {
-    } else if (corp.funds.lt(money)) {
-    } else if (stock > corp.numShares) {
-    } else {
-      const rep = repGain(money, stock);
-      dialogBoxCreate(
-        "You gained " + numeralWrapper.formatReputation(rep) + " reputation with " + fac.name + " by bribing them.",
-      );
-      fac.playerReputation += rep;
-      corp.funds = corp.funds.minus(money);
-      corp.numShares -= stock;
-      props.onClose();
-    }
+    if (disabled) return;
+    const rep = repGain(money, stock);
+    dialogBoxCreate(
+      "You gained " + numeralWrapper.formatReputation(rep) + " reputation with " + fac.name + " by bribing them.",
+    );
+    fac.playerReputation += rep;
+    corp.funds = corp.funds.minus(money);
+    corp.numShares -= stock;
+    props.onClose();
   }
 
   return (
@@ -90,9 +97,10 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
       <Box display="flex" alignItems="center">
         <Typography>Faction:</Typography>
         <Select value={selectedFaction} onChange={changeFaction}>
-          {player.factions.map((name: string) => {
+          {factions.map((name: string) => {
             const info = Factions[name].getInfo();
             if (!info.offersWork()) return;
+            if (player.hasGangWith(name)) return;
             return (
               <MenuItem key={name} value={name}>
                 {name}
@@ -104,7 +112,7 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
       <Typography>{getRepText(money ? money : 0, stock ? stock : 0)}</Typography>
       <TextField onChange={onMoneyChange} placeholder="Corporation funds" />
       <TextField sx={{ mx: 1 }} onChange={onStockChange} placeholder="Stock Shares" />
-      <Button sx={{ mx: 1 }} onClick={() => bribe(money ? money : 0, stock ? stock : 0)}>
+      <Button disabled={disabled} sx={{ mx: 1 }} onClick={() => bribe(money ? money : 0, stock ? stock : 0)}>
         Bribe
       </Button>
     </Modal>

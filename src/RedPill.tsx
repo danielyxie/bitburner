@@ -1,6 +1,7 @@
 /**
  * Implementation for what happens when you destroy a BitNode
  */
+import React from "react";
 import { Player } from "./Player";
 import { prestigeSourceFile } from "./Prestige";
 import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
@@ -58,7 +59,15 @@ function giveSourceFile(bitNodeNumber: number): void {
       Player.intelligence = 1;
     }
     dialogBoxCreate(
-      "You received a Source-File for destroying a BitNode!<br><br>" + sourceFile.name + "<br><br>" + sourceFile.info,
+      <>
+        You received a Source-File for destroying a BitNode!
+        <br />
+        <br />
+        {sourceFile.name}
+        <br />
+        <br />
+        {sourceFile.info}
+      </>,
     );
   }
 }

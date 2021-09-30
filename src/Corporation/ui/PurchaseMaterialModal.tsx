@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { removePopup } from "../../ui/React/createPopup";
 import { MaterialSizes } from "../MaterialSizes";
 import { Warehouse } from "../Warehouse";
 import { Material } from "../Material";
-import { IIndustry } from "../IIndustry";
-import { ICorporation } from "../ICorporation";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { BuyMaterial } from "../Actions";
+import { Modal } from "../../ui/React/Modal";
+import { useCorporation, useDivision } from "./Context";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 interface IBulkPurchaseTextProps {
   warehouse: Warehouse;
@@ -36,15 +38,14 @@ function BulkPurchaseText(props: IBulkPurchaseTextProps): React.ReactElement {
   }
 }
 
-interface IProps {
+interface IBPProps {
+  onClose: () => void;
   mat: Material;
-  industry: IIndustry;
   warehouse: Warehouse;
-  corp: ICorporation;
-  popupId: string;
 }
 
-function BulkPurchase(props: IProps): React.ReactElement {
+function BulkPurchase(props: IBPProps): React.ReactElement {
+  const corp = useCorporation();
   const [buyAmt, setBuyAmt] = useState("");
 
   function bulkPurchase(): void {
@@ -61,15 +62,14 @@ function BulkPurchase(props: IProps): React.ReactElement {
       dialogBoxCreate("Invalid input amount");
     } else {
       const cost = amount * props.mat.bCost;
-      if (props.corp.funds.gt(cost)) {
-        props.corp.funds = props.corp.funds.minus(cost);
+      if (corp.funds.gt(cost)) {
+        corp.funds = corp.funds.minus(cost);
         props.mat.qty += amount;
       } else {
         dialogBoxCreate(`You cannot afford this purchase.`);
         return;
       }
-
-      removePopup(props.popupId);
+      props.onClose();
     }
   }
 
@@ -83,28 +83,34 @@ function BulkPurchase(props: IProps): React.ReactElement {
 
   return (
     <>
-      <p>
+      <Typography>
         Enter the amount of {props.mat.name} you would like to bulk purchase. This purchases the specified amount
         instantly (all at once).
-      </p>
+      </Typography>
       <BulkPurchaseText warehouse={props.warehouse} mat={props.mat} amount={buyAmt} />
-      <input
+      <TextField
+        value={buyAmt}
         onChange={onChange}
         type="number"
         placeholder="Bulk Purchase amount"
-        style={{ margin: "5px" }}
         onKeyDown={onKeyDown}
       />
-      <button className="std-button" onClick={bulkPurchase}>
-        Confirm Bulk Purchase
-      </button>
+      <Button onClick={bulkPurchase}>Confirm Bulk Purchase</Button>
     </>
   );
 }
 
+interface IProps {
+  open: boolean;
+  onClose: () => void;
+  mat: Material;
+  warehouse: Warehouse;
+}
+
 // Create a popup that lets the player purchase a Material
-export function PurchaseMaterialPopup(props: IProps): React.ReactElement {
-  const [buyAmt, setBuyAmt] = useState(props.mat.buy ? props.mat.buy : null);
+export function PurchaseMaterialModal(props: IProps): React.ReactElement {
+  const division = useDivision();
+  const [buyAmt, setBuyAmt] = useState(props.mat.buy ? props.mat.buy : 0);
 
   function purchaseMaterial(): void {
     if (buyAmt === null) return;
@@ -114,12 +120,12 @@ export function PurchaseMaterialPopup(props: IProps): React.ReactElement {
       dialogBoxCreate(err + "");
     }
 
-    removePopup(props.popupId);
+    props.onClose();
   }
 
   function clearPurchase(): void {
     props.mat.buy = 0;
-    removePopup(props.popupId);
+    props.onClose();
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
@@ -131,35 +137,26 @@ export function PurchaseMaterialPopup(props: IProps): React.ReactElement {
   }
 
   return (
-    <>
-      <p>
-        Enter the amount of {props.mat.name} you would like to purchase per second. This material's cost changes
-        constantly.
-      </p>
-      <input
-        onChange={onChange}
-        className="text-input"
-        autoFocus={true}
-        placeholder="Purchase amount"
-        type="number"
-        style={{ margin: "5px" }}
-        onKeyDown={onKeyDown}
-      />
-      <button onClick={purchaseMaterial} className="std-button">
-        Confirm
-      </button>
-      <button onClick={clearPurchase} className="std-button">
-        Clear Purchase
-      </button>
-      {props.industry.hasResearch("Bulk Purchasing") && (
-        <BulkPurchase
-          corp={props.corp}
-          mat={props.mat}
-          industry={props.industry}
-          warehouse={props.warehouse}
-          popupId={props.popupId}
+    <Modal open={props.open} onClose={props.onClose}>
+      <>
+        <Typography>
+          Enter the amount of {props.mat.name} you would like to purchase per second. This material's cost changes
+          constantly.
+        </Typography>
+        <TextField
+          value={buyAmt}
+          onChange={onChange}
+          autoFocus={true}
+          placeholder="Purchase amount"
+          type="number"
+          onKeyDown={onKeyDown}
         />
-      )}
-    </>
+        <Button onClick={purchaseMaterial}>Confirm</Button>
+        <Button onClick={clearPurchase}>Clear Purchase</Button>
+        {division.hasResearch("Bulk Purchasing") && (
+          <BulkPurchase onClose={props.onClose} mat={props.mat} warehouse={props.warehouse} />
+        )}
+      </>
+    </Modal>
   );
 }

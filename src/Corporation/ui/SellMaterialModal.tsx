@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { removePopup } from "../../ui/React/createPopup";
-import { ICorporation } from "../ICorporation";
 import { Material } from "../Material";
 import { SellMaterial } from "../Actions";
+import { Modal } from "../../ui/React/Modal";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 function initialPrice(mat: Material): string {
   let val = mat.sCost ? mat.sCost + "" : "";
@@ -16,13 +18,13 @@ function initialPrice(mat: Material): string {
 }
 
 interface IProps {
+  open: boolean;
+  onClose: () => void;
   mat: Material;
-  corp: ICorporation;
-  popupId: string;
 }
 
 // Create a popup that let the player manage sales of a material
-export function SellMaterialPopup(props: IProps): React.ReactElement {
+export function SellMaterialModal(props: IProps): React.ReactElement {
   const [amt, setAmt] = useState<string>(props.mat.sllman[1] ? props.mat.sllman[1] + "" : "");
   const [price, setPrice] = useState<string>(initialPrice(props.mat));
 
@@ -32,8 +34,7 @@ export function SellMaterialPopup(props: IProps): React.ReactElement {
     } catch (err) {
       dialogBoxCreate(err + "");
     }
-
-    removePopup(props.popupId);
+    props.onClose();
   }
 
   function onAmtChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -49,8 +50,8 @@ export function SellMaterialPopup(props: IProps): React.ReactElement {
   }
 
   return (
-    <>
-      <p>
+    <Modal open={props.open} onClose={props.onClose}>
+      <Typography>
         Enter the maximum amount of {props.mat.name} you would like to sell per second, as well as the price at which
         you would like to sell at.
         <br />
@@ -70,30 +71,18 @@ export function SellMaterialPopup(props: IProps): React.ReactElement {
         When setting the sell price, you can use the 'MP' variable to designate a dynamically changing price that
         depends on the market price. For example, if you set the sell price to 'MP+10' then it will always be sold at
         $10 above the market price.
-      </p>
+      </Typography>
       <br />
-      <input
-        className="text-input"
+      <TextField
         value={amt}
         autoFocus={true}
         type="text"
         placeholder="Sell amount"
-        style={{ marginTop: "4px" }}
         onChange={onAmtChange}
         onKeyDown={onKeyDown}
       />
-      <input
-        className="text-input"
-        value={price}
-        type="text"
-        placeholder="Sell price"
-        style={{ marginTop: "4px" }}
-        onChange={onPriceChange}
-        onKeyDown={onKeyDown}
-      />
-      <button className="std-button" onClick={sellMaterial}>
-        Confirm
-      </button>
-    </>
+      <TextField value={price} type="text" placeholder="Sell price" onChange={onPriceChange} onKeyDown={onKeyDown} />
+      <Button onClick={sellMaterial}>Confirm</Button>
+    </Modal>
   );
 }

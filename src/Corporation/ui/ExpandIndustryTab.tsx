@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { Industries, IndustryDescriptions } from "../IndustryData";
+import { IndustryStartingCosts, Industries, IndustryDescriptions } from "../IndustryData";
 import { useCorporation } from "./Context";
 import { IIndustry } from "../IIndustry";
 import { NewIndustry } from "../Actions";
@@ -28,7 +28,14 @@ export function ExpandIndustryTab(props: IProps): React.ReactElement {
   const [industry, setIndustry] = useState(possibleIndustries.length > 0 ? possibleIndustries[0] : "");
   const [name, setName] = useState("");
 
+  const cost = IndustryStartingCosts[industry];
+  if (cost === undefined) {
+    throw new Error(`Invalid industry: '${industry}'`);
+  }
+  const disabled = corp.funds.lt(cost) || name === "";
+
   function newIndustry(): void {
+    if (disabled) return;
     try {
       NewIndustry(corp, industry, name);
     } catch (err) {
@@ -74,7 +81,7 @@ export function ExpandIndustryTab(props: IProps): React.ReactElement {
 
       <Box display="flex" alignItems="center">
         <TextField autoFocus={true} value={name} onChange={onNameChange} onKeyDown={onKeyDown} type="text" />
-        <Button sx={{ mx: 1 }} onClick={newIndustry}>
+        <Button disabled={disabled} sx={{ mx: 1 }} onClick={newIndustry}>
           Create Division
         </Button>
       </Box>

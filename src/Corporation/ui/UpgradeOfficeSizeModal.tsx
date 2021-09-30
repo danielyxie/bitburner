@@ -11,6 +11,37 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 
+interface IUpgradeButton {
+  cost: number;
+  size: number;
+  corp: ICorporation;
+  office: OfficeSpace;
+  onClose: () => void;
+  rerender: () => void;
+}
+
+function UpgradeSizeButton(props: IUpgradeButton): React.ReactElement {
+  const corp = useCorporation();
+  function upgradeSize(cost: number, size: number): void {
+    if (corp.funds.lt(cost)) {
+      return;
+    }
+
+    UpgradeOfficeSize(corp, props.office, size);
+    props.rerender();
+    props.onClose();
+  }
+  return (
+    <Tooltip title={numeralWrapper.formatMoney(props.cost)}>
+      <span>
+        <Button disabled={corp.funds.lt(props.cost)} onClick={() => upgradeSize(props.cost, props.size)}>
+          +{props.size}
+        </Button>
+      </span>
+    </Tooltip>
+  );
+}
+
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -48,44 +79,35 @@ export function UpgradeOfficeSizeModal(props: IProps): React.ReactElement {
   }
   const upgradeCostMax = CorporationConstants.OfficeInitialCost * mult;
 
-  function upgradeSize(cost: number, size: number): void {
-    if (corp.funds.lt(cost)) {
-      return;
-    }
-
-    UpgradeOfficeSize(corp, props.office, size);
-    props.rerender();
-
-    props.rerender();
-    props.onClose();
-  }
-
-  interface IUpgradeButton {
-    cost: number;
-    size: number;
-    corp: ICorporation;
-  }
-
-  function UpgradeSizeButton(props: IUpgradeButton): React.ReactElement {
-    return (
-      <Tooltip title={numeralWrapper.formatMoney(props.cost)}>
-        <span>
-          <Button disabled={corp.funds.lt(props.cost)} onClick={() => upgradeSize(props.cost, props.size)}>
-            +{props.size}
-          </Button>
-        </span>
-      </Tooltip>
-    );
-  }
-
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Typography>Increase the size of your office space to fit additional employees!</Typography>
       <Box display="flex" alignItems="center">
         <Typography>Upgrade size: </Typography>
-        <UpgradeSizeButton corp={corp} cost={upgradeCost} size={CorporationConstants.OfficeInitialSize} />
-        <UpgradeSizeButton corp={corp} cost={upgradeCost15} size={CorporationConstants.OfficeInitialSize * 5} />
-        <UpgradeSizeButton corp={corp} cost={upgradeCostMax} size={maxNum * CorporationConstants.OfficeInitialSize} />
+        <UpgradeSizeButton
+          onClose={props.onClose}
+          rerender={props.rerender}
+          office={props.office}
+          corp={corp}
+          cost={upgradeCost}
+          size={CorporationConstants.OfficeInitialSize}
+        />
+        <UpgradeSizeButton
+          onClose={props.onClose}
+          rerender={props.rerender}
+          office={props.office}
+          corp={corp}
+          cost={upgradeCost15}
+          size={CorporationConstants.OfficeInitialSize * 5}
+        />
+        <UpgradeSizeButton
+          onClose={props.onClose}
+          rerender={props.rerender}
+          office={props.office}
+          corp={corp}
+          cost={upgradeCostMax}
+          size={maxNum * CorporationConstants.OfficeInitialSize}
+        />
       </Box>
     </Modal>
   );

@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { IIndustry } from "../IIndustry";
-import { ICorporation } from "../ICorporation";
 import { Material } from "../Material";
+import { Modal } from "../../ui/React/Modal";
+import { useDivision } from "./Context";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import Tooltip from "@mui/material/Tooltip";
 
 interface IMarketTA2Props {
-  industry: IIndustry;
   mat: Material;
 }
 
 function MarketTA2(props: IMarketTA2Props): React.ReactElement {
-  if (!props.industry.hasResearch("Market-TA.II")) return <></>;
+  const division = useDivision();
+  if (!division.hasResearch("Market-TA.II")) return <></>;
 
   const [newCost, setNewCost] = useState<number>(props.mat.bCost);
   const setRerender = useState(false)[1];
@@ -47,50 +52,47 @@ function MarketTA2(props: IMarketTA2Props): React.ReactElement {
 
   return (
     <>
-      <p>
-        <br />
-        <u>
-          <strong>Market-TA.II</strong>
-        </u>
-        <br />
+      <Typography variant="h4">Market-TA.II</Typography>
+      <br />
+      <Typography>
         If you sell at {numeralWrapper.formatMoney(sCost)}, then you will sell{" "}
         {numeralWrapper.format(markup, "0.00000")}x as much compared to if you sold at market price.
-      </p>
-      <input className="text-input" type="number" style={{ marginTop: "4px" }} onChange={onChange} value={newCost} />
-      <div style={{ display: "block" }}>
-        <label className="tooltip" htmlFor="cmpy-mgmt-marketa2-checkbox" style={{ color: "white" }}>
-          Use Market-TA.II for Auto-Sale Price
-          <span className="tooltiptext">
-            If this is enabled, then this Material will automatically be sold at the optimal price such that the amount
-            sold matches the amount produced. (i.e. the highest possible price, while still ensuring that all produced
-            materials will be sold)
-          </span>
-        </label>
-        <input
-          id="cmpy-mgmt-marketa2-checkbox"
-          type="checkbox"
-          onChange={onMarketTA2}
-          checked={props.mat.marketTa2}
-          style={{ margin: "3px" }}
-        />
-      </div>
-      <p>
+      </Typography>
+      <TextField type="number" onChange={onChange} value={newCost} />
+      <br />
+      <FormControlLabel
+        control={<Switch checked={props.mat.marketTa2} onChange={onMarketTA2} />}
+        label={
+          <Tooltip
+            title={
+              <Typography>
+                If this is enabled, then this Material will automatically be sold at the optimal price such that the
+                amount sold matches the amount produced. (i.e. the highest possible price, while still ensuring that all
+                produced materials will be sold)
+              </Typography>
+            }
+          >
+            <Typography>Use Market-TA.II for Auto-Sale Price</Typography>
+          </Tooltip>
+        }
+      />
+
+      <Typography>
         Note that Market-TA.II overrides Market-TA.I. This means that if both are enabled, then Market-TA.II will take
         effect, not Market-TA.I
-      </p>
+      </Typography>
     </>
   );
 }
 
 interface IProps {
+  open: boolean;
+  onClose: () => void;
   mat: Material;
-  industry: IIndustry;
-  corp: ICorporation;
-  popupId: string;
 }
 
 // Create a popup that lets the player use the Market TA research for Materials
-export function MaterialMarketTaPopup(props: IProps): React.ReactElement {
+export function MaterialMarketTaModal(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -103,33 +105,30 @@ export function MaterialMarketTaPopup(props: IProps): React.ReactElement {
   }
 
   return (
-    <>
-      <p>
-        <u>
-          <strong>Market-TA.I</strong>
-        </u>
-        <br />
+    <Modal open={props.open} onClose={props.onClose}>
+      <Typography variant="h4">Market-TA.I</Typography>
+      <Typography>
         The maximum sale price you can mark this up to is {numeralWrapper.formatMoney(props.mat.bCost + markupLimit)}.
         This means that if you set the sale price higher than this, you will begin to experience a loss in number of
         sales
-      </p>
-      <div style={{ display: "block" }}>
-        <label className="tooltip" htmlFor="cmpy-mgmt-marketa1-checkbox" style={{ color: "white" }}>
-          Use Market-TA.I for Auto-Sale Price
-          <span className="tooltiptext">
-            If this is enabled, then this Material will automatically be sold at the price identified by Market-TA.I
-            (i.e. the price shown above)
-          </span>
-        </label>
-        <input
-          id="cmpy-mgmt-marketa1-checkbox"
-          type="checkbox"
-          onChange={onMarketTA1}
-          checked={props.mat.marketTa1}
-          style={{ margin: "3px" }}
-        />
-      </div>
-      <MarketTA2 mat={props.mat} industry={props.industry} />
-    </>
+      </Typography>
+
+      <FormControlLabel
+        control={<Switch checked={props.mat.marketTa1} onChange={onMarketTA1} />}
+        label={
+          <Tooltip
+            title={
+              <Typography>
+                If this is enabled, then this Material will automatically be sold at the price identified by Market-TA.I
+                (i.e. the price shown above)
+              </Typography>
+            }
+          >
+            <Typography>Use Market-TA.I for Auto-Sale Price</Typography>
+          </Tooltip>
+        }
+      />
+      <MarketTA2 mat={props.mat} />
+    </Modal>
   );
 }

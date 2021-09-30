@@ -220,7 +220,11 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
       </Tooltip>
       <SellSharesModal open={sellSharesOpen} onClose={() => setSellSharesOpen(false)} rerender={rerender} />
       <Tooltip title={<Typography>Buy back shares you that previously issued or sold at market price.</Typography>}>
-        <Button onClick={() => setBuybackSharesOpen(true)}>Buyback shares</Button>
+        <span>
+          <Button disabled={corp.issuedShares > 0.5} onClick={() => setBuybackSharesOpen(true)}>
+            Buyback shares
+          </Button>
+        </span>
       </Tooltip>
       <BuybackSharesModal open={buybackSharesOpen} onClose={() => setBuybackSharesOpen(false)} rerender={rerender} />
       <br />

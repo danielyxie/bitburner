@@ -4,6 +4,9 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { use } from "../../ui/Context";
 import { useCorporation } from "./Context";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 interface IProps {
   open: boolean;
@@ -25,38 +28,30 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
 
   const currentStockPrice = corp.sharePrice;
   const buybackPrice = currentStockPrice * 1.1;
+  const disabled =
+    shares === null ||
+    isNaN(shares) ||
+    shares <= 0 ||
+    shares > corp.issuedShares ||
+    shares * buybackPrice > player.money;
 
   function buy(): void {
     if (shares === null) return;
-    const tempStockPrice = corp.sharePrice;
-    const buybackPrice = tempStockPrice * 1.1;
-    if (isNaN(shares) || shares <= 0) {
-      dialogBoxCreate("ERROR: Invalid value for number of shares");
-    } else if (shares > corp.issuedShares) {
-      dialogBoxCreate("ERROR: There are not this many oustanding shares to buy back");
-    } else if (shares * buybackPrice > player.money) {
-      dialogBoxCreate(
-        "ERROR: You do not have enough money to purchase this many shares (you need " +
-          numeralWrapper.format(shares * buybackPrice, "$0.000a") +
-          ")",
-      );
-    } else {
-      corp.numShares += shares;
-      if (isNaN(corp.issuedShares)) {
-        console.warn("Corporation issuedShares is NaN: " + corp.issuedShares);
-        console.warn("Converting to number now");
-        const res = corp.issuedShares;
-        if (isNaN(res)) {
-          corp.issuedShares = 0;
-        } else {
-          corp.issuedShares = res;
-        }
+    corp.numShares += shares;
+    if (isNaN(corp.issuedShares)) {
+      console.warn("Corporation issuedShares is NaN: " + corp.issuedShares);
+      console.warn("Converting to number now");
+      const res = corp.issuedShares;
+      if (isNaN(res)) {
+        corp.issuedShares = 0;
+      } else {
+        corp.issuedShares = res;
       }
-      corp.issuedShares -= shares;
-      player.loseMoney(shares * buybackPrice);
-      props.onClose();
-      props.rerender();
     }
+    corp.issuedShares -= shares;
+    player.loseMoney(shares * buybackPrice);
+    props.onClose();
+    props.rerender();
   }
 
   function CostIndicator(): React.ReactElement {
@@ -85,7 +80,7 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
-      <p>
+      <Typography>
         Enter the number of outstanding shares you would like to buy back. These shares must be bought at a 10% premium.
         However, repurchasing shares from the market tends to lead to an increase in stock price.
         <br />
@@ -95,21 +90,19 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
         <br />
         The current buyback price of your company's stock is {numeralWrapper.formatMoney(buybackPrice)}. Your company
         currently has {numeralWrapper.formatBigNumber(corp.issuedShares)} outstanding stock shares.
-      </p>
+      </Typography>
       <CostIndicator />
       <br />
-      <input
+      <TextField
         autoFocus={true}
-        className="text-input"
         type="number"
         placeholder="Shares to buyback"
-        style={{ margin: "5px" }}
         onChange={changeShares}
         onKeyDown={onKeyDown}
       />
-      <button onClick={buy} className="a-link-button" style={{ display: "inline-block" }}>
+      <Button disabled={disabled} onClick={buy}>
         Buy shares
-      </button>
+      </Button>
     </Modal>
   );
 }
