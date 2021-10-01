@@ -114,7 +114,7 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  Version: "0.54.0",
+  Version: "0.55.0",
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -281,48 +281,26 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v0.54.0 - 2021-09-20 One big react node (hydroflame & community)
+    v0.55.0 - 2021-09-20 Material UI (hydroflame & community)
     -------------------------------------------
 
-    ** UI **
+    ** Global ** 
 
-    * The UI is now completely(ish) in react and I'm starting to implement
-      Material-UI everywhere. This will help make the game feel more consistent.
-    * Major help from (@threehams)
-    * New Terminal
-    * New Active Scripts page
-    * New sidebar.
-    * New Character overview
-    * New tutorial
-    * New options page
-    * New create program page (@Nolshine)
-
-    ** Netscript ** 
-
-    * Add companyName to getPlayer
-
-    ** Factions **
-
-    * Megacorp factions are no longer removed when installing.
-
-    ** Corporation **
-
-    * All research tooltips are always visible.
-    * Smart supply is enabled by default if purchased (@Nolshine)
+    * The game is now 100% in typescript, react, and Material-UI
 
     ** Misc. **
 
-    * Fix "Game saved" animation. (@Nolshine)
-    * Update commitCrime documentation (@Tryneus)
-    * Fix logbox scrolling weird (@Nolshine)
-    * Fix weird scrolling in corporations (@BartKoppelmans)
-    * Fix typo (@BartKoppelmans & @Nolshine)
-    * Delete game now has a confirmation modal (@Nolshine)
-    * Fix issue where skills would not get properly updated when entering new
-      BN. (@Nolshine)
-    * Convert create gang to popup (@vmesecher)
-    * Fixed a bug that prevented travel to Sector-12 and New Tokyo when not using
-      ASCII art.
+    * Corporations can no longer bribe special factions
+    * Infiltration can no longer lose focus of the keyboard.
+    * Fix terminal line limit
+    * Added theme editor
+    * Theme applies on game load (@Nolshine)
+    * Sleeves no longer consume all bonus time for some actions
+    * Fix a bug where the autocomlete list would get duplicates
+    * Fix tutorial not scaling properly on small screens
+    * Import should be more consistent
+    * Typo with 'help' command
+    * Fix infinite loop in casino
     * nerf noodle bar
 `,
 

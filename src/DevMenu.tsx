@@ -20,6 +20,7 @@ import { CodingContracts } from "./DevMenu/ui/CodingContracts";
 import { StockMarket } from "./DevMenu/ui/StockMarket";
 import { Sleeves } from "./DevMenu/ui/Sleeves";
 import { TimeSkip } from "./DevMenu/ui/TimeSkip";
+import Typography from "@mui/material/Typography";
 
 interface IProps {
   player: IPlayer;
@@ -30,7 +31,7 @@ interface IProps {
 export function DevMenuRoot(props: IProps): React.ReactElement {
   return (
     <>
-      <h1>Development Menu - Only meant to be used for testing/debugging</h1>
+      <Typography>Development Menu - Only meant to be used for testing/debugging</Typography>
       <General player={props.player} router={props.router} />
       <Stats player={props.player} />
       <Factions player={props.player} />

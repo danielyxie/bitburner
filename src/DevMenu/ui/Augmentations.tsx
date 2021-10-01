@@ -43,7 +43,7 @@ export function Augmentations(props: IProps): React.ReactElement {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Augmentations</h2>
+        <Typography>Augmentations</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <table>

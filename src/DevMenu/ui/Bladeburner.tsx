@@ -57,7 +57,7 @@ export function Bladeburner(props: IProps): React.ReactElement {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Bladeburner</h2>
+        <Typography>Bladeburner</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <table>

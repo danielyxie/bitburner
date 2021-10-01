@@ -320,7 +320,7 @@ export function Root(props: IProps): React.ReactElement {
         <Typography sx={{ mx: 1 }}>{ram}</Typography>
         <Button onClick={save}>Save & Close (Ctrl/Cmd + b)</Button>
         <Link sx={{ mx: 1 }} target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
-          Netscript Documentation
+          <Typography> Netscript Documentation</Typography>
         </Link>
       </Box>
       <OptionsModal

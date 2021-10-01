@@ -3,6 +3,28 @@
 Changelog
 =========
 
+v0.55.0 - 2021-09-20 Material UI (hydroflame & community)
+-------------------------------------------
+
+** Global ** 
+
+* The game is now 100% in typescript, react, and Material-UI
+
+** Misc. **
+
+* Corporations can no longer bribe special factions
+* Infiltration can no longer lose focus of the keyboard.
+* Fix terminal line limit
+* Added theme editor
+* Theme applies on game load (@Nolshine)
+* Sleeves no longer consume all bonus time for some actions
+* Fix a bug where the autocomlete list would get duplicates
+* Fix tutorial not scaling properly on small screens
+* Import should be more consistent
+* Typo with 'help' command
+* Fix infinite loop in casino
+* nerf noodle bar
+
 v0.54.0 - 2021-09-20 One big react node (hydroflame & community)
 -------------------------------------------
 

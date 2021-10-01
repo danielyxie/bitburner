@@ -70,7 +70,7 @@ export function Corporation(props: IProps): React.ReactElement {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Corporation</h2>
+        <Typography>Corporation</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <table>

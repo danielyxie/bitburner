@@ -109,7 +109,11 @@ function ASCIICity(props: IProps): React.ReactElement {
   const elems: JSX.Element[] = [];
   const lines = props.city.asciiArt.split("\n");
   for (const i in lines) {
-    elems.push(<pre key={i}>{lineElems(lines[i])}</pre>);
+    elems.push(
+      <Typography key={i} sx={{ lineHeight: "1em", whiteSpace: "pre" }}>
+        {lineElems(lines[i])}
+      </Typography>,
+    );
   }
 
   return <>{elems}</>;
