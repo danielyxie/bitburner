@@ -146,7 +146,7 @@ import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 
-import { logBoxCreate } from "./ui/React/LogBox";
+import { LogBoxEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
 
@@ -1203,7 +1203,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return;
       }
 
-      logBoxCreate(runningScriptObj);
+      LogBoxEvents.emit(runningScriptObj);
     },
     nuke: function (ip: any): any {
       updateDynamicRam("nuke", getRamCost("nuke"));

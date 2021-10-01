@@ -42,7 +42,7 @@ import { Money } from "./ui/React/Money";
 import { Hashes } from "./ui/React/Hashes";
 import { Reputation } from "./ui/React/Reputation";
 
-import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { AlertEvents } from "./ui/React/AlertManager";
 import { exceptionAlert } from "./utils/helpers/exceptionAlert";
 
 import { startTampering } from "./Exploits/tampering";
@@ -399,12 +399,16 @@ const Engine: {
       Player.lastUpdate = Engine._lastUpdate;
       Engine.start(); // Run main game loop and Scripts loop
       const timeOfflineString = convertTimeMsToTimeElapsedString(time);
-      dialogBoxCreate(
-        <>
-          Offline for {timeOfflineString}. While you were offline, your scripts generated{" "}
-          <Money money={offlineHackingIncome} />, your Hacknet Nodes generated {hacknetProdInfo} and you gained{" "}
-          {Reputation(offlineReputation)} divided amongst your factions.
-        </>,
+      setTimeout(
+        () =>
+          AlertEvents.emit(
+            <>
+              Offline for {timeOfflineString}. While you were offline, your scripts generated{" "}
+              <Money money={offlineHackingIncome} />, your Hacknet Nodes generated {hacknetProdInfo} and you gained{" "}
+              {Reputation(offlineReputation)} divided amongst your factions.
+            </>,
+          ),
+        250,
       );
     } else {
       // No save found, start new game

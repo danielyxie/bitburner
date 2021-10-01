@@ -2,7 +2,7 @@ import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { logBoxCreate } from "../../ui/React/LogBox";
+import { LogBoxEvents } from "../../ui/React/LogBoxManager";
 import { startWorkerScript } from "../../NetscriptWorker";
 import { RunningScript } from "../../Script/RunningScript";
 import { findRunningScript } from "../../Script/ScriptHelpers";
@@ -84,7 +84,7 @@ export function runScript(
       `Running script with ${numThreads} thread(s), pid ${runningScript.pid} and args: ${JSON.stringify(args)}.`,
     );
     if (tailFlag) {
-      logBoxCreate(runningScript);
+      LogBoxEvents.emit(runningScript);
     }
     return;
   }

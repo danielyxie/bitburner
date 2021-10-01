@@ -13,7 +13,6 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
 import { Settings } from "../../Settings/Settings";
 
-import { StdButton } from "../../ui/React/StdButton";
 import { use } from "../../ui/Context";
 import { Money } from "../../ui/React/Money";
 import { WorldMap } from "../../ui/React/WorldMap";
@@ -36,7 +35,7 @@ function travel(p: IPlayer, router: IRouter, to: CityName): void {
 
   p.loseMoney(cost);
   p.travel(to);
-  dialogBoxCreate(<span className="noselect">You are now in {to}!</span>);
+  dialogBoxCreate(<>You are now in {to}!</>);
   router.toCity();
 }
 

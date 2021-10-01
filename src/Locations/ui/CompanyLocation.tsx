@@ -212,7 +212,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
                 </>
               }
             >
-              <Typography className={"tooltip"}>Company Favor: {Favor(company.favor)}</Typography>
+              <Typography>Company Favor: {Favor(company.favor)}</Typography>
             </Tooltip>
           </Box>
           <Typography>-------------------------</Typography>
