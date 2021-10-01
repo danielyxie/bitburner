@@ -16,7 +16,6 @@ import { Warehouse } from "./Warehouse";
 import { ICorporation } from "./ICorporation";
 import { IIndustry } from "./IIndustry";
 import { IndustryUpgrade, IndustryUpgrades } from "./IndustryUpgrades";
-import { formatNumber } from "../utils/StringHelperFunctions";
 
 interface IParams {
   name?: string;

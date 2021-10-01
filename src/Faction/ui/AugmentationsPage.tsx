@@ -13,6 +13,8 @@ import { Settings } from "../../Settings/Settings";
 import { hasAugmentationPrereqs } from "../FactionHelpers";
 
 import { use } from "../../ui/Context";
+import { Reputation } from "../../ui/React/Reputation";
+import { Favor } from "../../ui/React/Favor";
 
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -181,6 +183,9 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       <Typography>
         These are all of the Augmentations that are available to purchase from {props.faction.name}. Augmentations are
         powerful upgrades that will enhance your abilities.
+        <br />
+        Reputation: <Reputation reputation={props.faction.playerReputation} /> Favor:{" "}
+        <Favor favor={props.faction.favor} />
       </Typography>
       <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)}>Sort by Cost</Button>
       <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Reputation)}>Sort by Reputation</Button>

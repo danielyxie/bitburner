@@ -3,7 +3,6 @@ import { ICorporation } from "./ICorporation";
 import { IIndustry } from "./IIndustry";
 import { MaterialSizes } from "./MaterialSizes";
 import { IMap } from "../types";
-import { numeralWrapper } from "../ui/numeralFormat";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 

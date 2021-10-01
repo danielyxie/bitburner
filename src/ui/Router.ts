@@ -33,7 +33,6 @@ export enum Page {
   Work,
   BladeburnerCinematic,
   Location,
-  HackingMission,
   Loading,
 }
 
@@ -74,5 +73,4 @@ export interface IRouter {
   toWork(): void;
   toBladeburnerCinematic(): void;
   toLocation(location: Location): void;
-  toHackingMission(faction: Faction): void;
 }

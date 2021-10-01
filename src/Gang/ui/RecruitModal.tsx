@@ -2,38 +2,35 @@
  * React Component for the popup used to recruit new gang members.
  */
 import React, { useState } from "react";
-import { Gang } from "../Gang";
-import { removePopup } from "../../ui/React/createPopup";
+import { Modal } from "../../ui/React/Modal";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { useGang } from "./Context";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 interface IRecruitPopupProps {
-  gang: Gang;
-  popupId: string;
+  open: boolean;
+  onClose: () => void;
   onRecruit: () => void;
 }
 
-export function RecruitPopup(props: IRecruitPopupProps): React.ReactElement {
+export function RecruitModal(props: IRecruitPopupProps): React.ReactElement {
+  const gang = useGang();
   const [name, setName] = useState("");
 
+  const disabled = name === "" || !gang.canRecruitMember();
   function recruit(): void {
-    if (name === "") {
-      dialogBoxCreate("You must enter a name for your Gang member!");
-      return;
-    }
-    if (!props.gang.canRecruitMember()) {
-      dialogBoxCreate("You cannot recruit another Gang member!");
-      return;
-    }
-
+    if (disabled) return;
     // At this point, the only way this can fail is if you already
     // have a gang member with the same name
-    if (!props.gang.recruitMember(name)) {
+    if (!gang.recruitMember(name)) {
       dialogBoxCreate("You already have a gang member with this name!");
       return;
     }
 
     props.onRecruit();
-    removePopup(props.popupId);
+    props.onClose();
   }
 
   function onKeyUp(event: React.KeyboardEvent<HTMLInputElement>): void {
@@ -45,20 +42,23 @@ export function RecruitPopup(props: IRecruitPopupProps): React.ReactElement {
   }
 
   return (
-    <>
-      <p className="noselect">Enter a name for your new Gang member:</p>
+    <Modal open={props.open} onClose={props.onClose}>
+      <Typography>Enter a name for your new Gang member:</Typography>
       <br />
-      <input
+      <TextField
         autoFocus
         onKeyUp={onKeyUp}
         onChange={onChange}
-        className="text-input noselect"
         type="text"
         placeholder="unique name"
+        InputProps={{
+          endAdornment: (
+            <Button disabled={disabled} onClick={recruit}>
+              Recruit
+            </Button>
+          ),
+        }}
       />
-      <a className="std-button" onClick={recruit}>
-        Recruit Gang Member
-      </a>
-    </>
+    </Modal>
   );
 }

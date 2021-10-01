@@ -7,7 +7,6 @@ import { hasHacknetServers, hasMaxNumberHacknetServers } from "../HacknetHelpers
 import { Player } from "../../Player";
 import { Money } from "../../ui/React/Money";
 
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 interface IProps {

@@ -10,5 +10,5 @@ export const Context: {
   Division: React.createContext<IIndustry>({} as IIndustry),
 };
 
-export const useCorporation = () => useContext(Context.Corporation);
-export const useDivision = () => useContext(Context.Division);
+export const useCorporation = (): ICorporation => useContext(Context.Corporation);
+export const useDivision = (): IIndustry => useContext(Context.Division);

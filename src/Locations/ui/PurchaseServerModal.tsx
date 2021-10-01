@@ -6,7 +6,6 @@ import { purchaseServer } from "../../Server/ServerPurchases";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
 import { Modal } from "../../ui/React/Modal";
-import { StdButton } from "../../ui/React/StdButton";
 import { use } from "../../ui/Context";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";

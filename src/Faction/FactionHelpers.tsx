@@ -7,7 +7,6 @@ import { CONSTANTS } from "../Constants";
 
 import { Faction } from "./Faction";
 import { Factions } from "./Factions";
-import { HackingMission, setInMission } from "../Missions";
 import { Player } from "../Player";
 import { Settings } from "../Settings/Settings";
 import {
@@ -47,12 +46,6 @@ export function joinFaction(faction: Faction): void {
       i--;
     }
   }
-}
-
-export function startHackingMission(faction: Faction): void {
-  const mission = new HackingMission(faction.playerReputation, faction);
-  setInMission(true, mission); //Sets inMission flag to true
-  mission.init();
 }
 
 //Returns a boolean indicating whether the player has the prerequisites for the

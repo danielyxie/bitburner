@@ -3,7 +3,6 @@ import { Card, Suit } from "./Card";
 
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
 type Props = {

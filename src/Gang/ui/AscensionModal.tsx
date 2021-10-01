@@ -3,20 +3,23 @@
  * ascension of a gang member.
  */
 import React, { useState, useEffect } from "react";
-import { Gang } from "../Gang";
 import { GangMember } from "../GangMember";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { removePopup } from "../../ui/React/createPopup";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { Modal } from "../../ui/React/Modal";
+import { useGang } from "./Context";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 interface IProps {
+  open: boolean;
+  onClose: () => void;
   member: GangMember;
-  gang: Gang;
-  popupId: string;
   onAscend: () => void;
 }
 
-export function AscensionPopup(props: IProps): React.ReactElement {
+export function AscensionModal(props: IProps): React.ReactElement {
+  const gang = useGang();
   const setRerender = useState(false)[1];
 
   useEffect(() => {
@@ -26,9 +29,9 @@ export function AscensionPopup(props: IProps): React.ReactElement {
 
   function confirm(): void {
     props.onAscend();
-    const res = props.gang.ascendMember(props.member);
+    const res = gang.ascendMember(props.member);
     dialogBoxCreate(
-      <p>
+      <Typography>
         You ascended {props.member.name}!<br />
         <br />
         Your gang lost {numeralWrapper.formatRespect(res.respect)} respect.
@@ -48,13 +51,9 @@ export function AscensionPopup(props: IProps): React.ReactElement {
         <br />
         Charisma: x{numeralWrapper.format(res.cha, "0.000")}
         <br />
-      </p>,
+      </Typography>,
     );
-    removePopup(props.popupId);
-  }
-
-  function cancel(): void {
-    removePopup(props.popupId);
+    props.onClose();
   }
 
   // const ascendBenefits = props.member.getAscensionResults();
@@ -62,8 +61,8 @@ export function AscensionPopup(props: IProps): React.ReactElement {
   const postAscend = props.member.getAscensionMultsAfterAscend();
 
   return (
-    <>
-      <pre>
+    <Modal open={props.open} onClose={props.onClose}>
+      <Typography>
         Are you sure you want to ascend this member? They will lose all of
         <br />
         their non-Augmentation upgrades and their stats will reset back to 1.
@@ -92,13 +91,8 @@ export function AscensionPopup(props: IProps): React.ReactElement {
         Charisma: x{numeralWrapper.format(preAscend.cha, "0.000")} =&gt; x
         {numeralWrapper.format(postAscend.cha, "0.000")}
         <br />
-      </pre>
-      <button className="std-button" onClick={confirm}>
-        Ascend
-      </button>
-      <button className="std-button" onClick={cancel}>
-        Cancel
-      </button>
-    </>
+      </Typography>
+      <Button onClick={confirm}>Ascend</Button>
+    </Modal>
   );
 }

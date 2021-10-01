@@ -283,7 +283,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       req: bitFlumeRequirements(),
       time: CONSTANTS.MillisecondsPerFiveMinutes / 20,
     },
-    run: (router: IRouter, terminal: ITerminal, player: IPlayer): void => {
+    run: (): void => {
       BitFlumeEvent.emit();
     },
   },

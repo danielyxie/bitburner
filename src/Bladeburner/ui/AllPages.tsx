@@ -10,7 +10,6 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 
 interface IProps {
   bladeburner: IBladeburner;

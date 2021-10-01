@@ -23,10 +23,6 @@ type IProps = {
   p: IPlayer;
 };
 
-type IState = {
-  game: GameType;
-};
-
 export function CasinoLocation(props: IProps): React.ReactElement {
   const [game, setGame] = useState(GameType.None);
 
