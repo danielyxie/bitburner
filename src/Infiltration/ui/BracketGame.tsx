@@ -6,6 +6,7 @@ import { GameTimer } from "./GameTimer";
 import { random } from "../utils";
 import { interpolate } from "./Difficulty";
 import { BlinkingCursor } from "./BlinkingCursor";
+import Typography from "@mui/material/Typography";
 
 interface Difficulty {
   [key: string]: number;
@@ -79,11 +80,11 @@ export function BracketGame(props: IMinigameProps): React.ReactElement {
     <Grid container spacing={3}>
       <GameTimer millis={timer} onExpire={props.onFailure} />
       <Grid item xs={12}>
-        <h1 className={"noselect"}>Close the brackets</h1>
-        <p style={{ fontSize: "5em" }}>
+        <Typography variant="h4">Close the brackets</Typography>
+        <Typography style={{ fontSize: "5em" }}>
           {`${left}${right}`}
           <BlinkingCursor />
-        </p>
+        </Typography>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
       </Grid>
     </Grid>

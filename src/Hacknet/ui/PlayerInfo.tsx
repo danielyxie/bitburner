@@ -24,7 +24,7 @@ export function PlayerInfo(props: IProps): React.ReactElement {
 
   let prod;
   if (hasServers) {
-    prod = HashRate(props.totalProduction);
+    prod = <HashRate hashes={props.totalProduction} />;
   } else {
     prod = <MoneyRate money={props.totalProduction} />;
   }
@@ -39,7 +39,8 @@ export function PlayerInfo(props: IProps): React.ReactElement {
       {hasServers && (
         <>
           <Typography>
-            Hashes: {Hashes(props.player.hashManager.hashes)} / {Hashes(props.player.hashManager.capacity)}
+            Hashes: <Hashes hashes={props.player.hashManager.hashes} /> /{" "}
+            <Hashes hashes={props.player.hashManager.capacity} />
           </Typography>
         </>
       )}

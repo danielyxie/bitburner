@@ -125,7 +125,7 @@ function Text(): React.ReactElement {
   }
 
   return (
-    <div>
+    <>
       <Typography>
         Industry: {division.type} (Corp Funds: <Money money={corp.funds.toNumber()} />)
       </Typography>
@@ -218,7 +218,7 @@ function Text(): React.ReactElement {
           Research
         </Button>
       </Box>
-    </div>
+    </>
   );
 }
 

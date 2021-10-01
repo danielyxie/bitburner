@@ -307,9 +307,9 @@ export class Blackjack extends Game<Props, State> {
     const dealerHandValues = this.getHandDisplayValues(dealerHand);
 
     return (
-      <div>
+      <>
         {/* Wager input */}
-        <div>
+        <Box>
           <TextField
             value={betInput}
             label={
@@ -336,32 +336,30 @@ export class Blackjack extends Game<Props, State> {
             }}
           />
 
-          <p>
+          <Typography>
             {"Total earnings this session: "}
             <Money money={gains} />
-          </p>
-        </div>
+          </Typography>
+        </Box>
 
         {/* Buttons */}
         {!gameInProgress ? (
-          <div>
-            <Button onClick={this.startOnClick} disabled={wagerInvalid || !this.canStartGame()}>
-              Start
-            </Button>
-          </div>
+          <Button onClick={this.startOnClick} disabled={wagerInvalid || !this.canStartGame()}>
+            Start
+          </Button>
         ) : (
-          <div>
+          <>
             <Button onClick={this.playerHit}>Hit</Button>
             <Button color="secondary" onClick={this.playerStay}>
               Stay
             </Button>
-          </div>
+          </>
         )}
 
         {/* Main game part. Displays both if the game is in progress OR if there's a result so you can see
          * the cards that led to that result. */}
         {(gameInProgress || result !== Result.Pending) && (
-          <div>
+          <>
             <Box display="flex">
               <Paper elevation={2}>
                 <pre>Player</pre>
@@ -396,28 +394,18 @@ export class Blackjack extends Game<Props, State> {
                 )}
               </Paper>
             </Box>
-          </div>
+          </>
         )}
 
         {/* Results from previous round */}
         {result !== Result.Pending && (
-          <p>
+          <Typography>
             {result}
-            {this.isPlayerWinResult(result) && (
-              <>
-                {" You gained "}
-                <Money money={this.state.bet} />
-              </>
-            )}
-            {result === Result.DealerWon && (
-              <>
-                {" You lost "}
-                <Money money={this.state.bet} />
-              </>
-            )}
-          </p>
+            {this.isPlayerWinResult(result) && <Money money={this.state.bet} />}
+            {result === Result.DealerWon && <Money money={this.state.bet} />}
+          </Typography>
         )}
-      </div>
+      </>
     );
   }
 }

@@ -49,7 +49,8 @@ export function WorkInProgressRoot(): React.ReactElement {
           <Typography>
             You are currently {player.currentWorkFactionDescription} for your faction {faction.name}
             <br />
-            (Current Faction Reputation: {Reputation(faction.playerReputation)}). <br />
+            (Current Faction Reputation: <Reputation reputation={faction.playerReputation} />
+            ). <br />
             You have been doing this for {convertTimeMsToTimeElapsedString(player.timeWorked)}
             <br />
             <br />
@@ -58,8 +59,8 @@ export function WorkInProgressRoot(): React.ReactElement {
             <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />){" "}
             <br />
             <br />
-            {Reputation(player.workRepGained)} ({ReputationRate(player.workRepGainRate * CYCLES_PER_SEC)}) reputation
-            for this faction <br />
+            <Reputation reputation={player.workRepGained} /> (
+            <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />) reputation for this faction <br />
             <br />
             {numeralWrapper.formatExp(player.workHackExpGained)} (
             {numeralWrapper.formatExp(player.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br />
@@ -171,7 +172,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         <Grid item>
           <Typography>
             You are currently working as a {position} at {player.companyName} (Current Company Reputation:{" "}
-            {Reputation(companyRep)})<br />
+            <Reputation reputation={companyRep} />)<br />
             <br />
             You have been working for {convertTimeMsToTimeElapsedString(player.timeWorked)}
             <br />
@@ -181,8 +182,8 @@ export function WorkInProgressRoot(): React.ReactElement {
             <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />){" "}
             <br />
             <br />
-            {Reputation(player.workRepGained)} ({ReputationRate(player.workRepGainRate * CYCLES_PER_SEC)}) reputation
-            for this company <br />
+            <Reputation reputation={player.workRepGained} /> (
+            <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />) reputation for this company <br />
             <br />
             {numeralWrapper.formatExp(player.workHackExpGained)} (
             {`${numeralWrapper.formatExp(player.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}
@@ -241,7 +242,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         <Grid item>
           <Typography>
             You are currently working as a {position} at {player.companyName} (Current Company Reputation:{" "}
-            {Reputation(companyRep)})<br />
+            <Reputation reputation={companyRep} />)<br />
             <br />
             You have been working for {convertTimeMsToTimeElapsedString(player.timeWorked)}
             <br />
@@ -251,8 +252,8 @@ export function WorkInProgressRoot(): React.ReactElement {
             <Money money={player.workMoneyGained} /> (<MoneyRate money={player.workMoneyGainRate * CYCLES_PER_SEC} />){" "}
             <br />
             <br />
-            {Reputation(player.workRepGained)} (
-            {Reputation(`${numeralWrapper.formatExp(player.workRepGainRate * CYCLES_PER_SEC)} / sec`)}
+            <Reputation reputation={player.workRepGained} /> (
+            <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />
             ) reputation for this company <br />
             <br />
             {numeralWrapper.formatExp(player.workHackExpGained)} (
@@ -306,12 +307,12 @@ export function WorkInProgressRoot(): React.ReactElement {
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
         <Grid item>
           <Typography>
-            <p>You are attempting to {player.crimeType}.</p>
+            <Typography>You are attempting to {player.crimeType}.</Typography>
             <br />
 
-            <p>
+            <Typography>
               Time remaining: {convertTimeMsToTimeElapsedString(player.timeNeededToCompleteWork - player.timeWorked)}
-            </p>
+            </Typography>
 
             <br />
             <pre>{progressBar}</pre>

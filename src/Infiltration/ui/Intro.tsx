@@ -1,7 +1,8 @@
 import React from "react";
-import { StdButton } from "../../ui/React/StdButton";
 import { Location } from "../../Locations/Location";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 interface IProps {
   Location: Location;
@@ -52,37 +53,45 @@ export function Intro(props: IProps): React.ReactElement {
     <>
       <Grid container spacing={3}>
         <Grid item xs={10}>
-          <h1>Infiltrating {props.Location.name}</h1>
+          <Typography variant="h4">Infiltrating {props.Location.name}</Typography>
         </Grid>
         <Grid item xs={10}>
-          <h2>Maximum level: {props.MaxLevel}</h2>
+          <Typography variant="h5" color="primary">
+            Maximum level: {props.MaxLevel}
+          </Typography>
         </Grid>
         <Grid item xs={10}>
-          <pre>[{coloredArrow(props.Difficulty)}]</pre>
-          <pre>{` ^            ^            ^           ^`}</pre>
-          <pre>{` Trivial    Normal        Hard    Impossible`}</pre>
+          <Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>[{coloredArrow(props.Difficulty)}]</Typography>
+          <Typography
+            sx={{ lineHeight: "1em", whiteSpace: "pre" }}
+          >{` ^            ^            ^           ^`}</Typography>
+          <Typography
+            sx={{ lineHeight: "1em", whiteSpace: "pre" }}
+          >{` Trivial    Normal        Hard    Impossible`}</Typography>
         </Grid>
         <Grid item xs={10}>
-          <p>
+          <Typography>
             Infiltration is a series of short minigames that get progressively harder. You take damage for failing them.
             Reaching the maximum level rewards you with intel you can trade for money or reputation.
-          </p>
+          </Typography>
           <br />
-          <p>The minigames you play are randomly selected. It might take you few tries to get used to them.</p>
+          <Typography>
+            The minigames you play are randomly selected. It might take you few tries to get used to them.
+          </Typography>
           <br />
-          <p>No game require use of the mouse.</p>
+          <Typography>No game require use of the mouse.</Typography>
           <br />
-          <p>Spacebar is the default action/confirm button.</p>
+          <Typography>Spacebar is the default action/confirm button.</Typography>
           <br />
-          <p>Everything that uses arrow can also use WASD</p>
+          <Typography>Everything that uses arrow can also use WASD</Typography>
           <br />
-          <p>Sometimes the rest of the keyboard is used.</p>
+          <Typography>Sometimes the rest of the keyboard is used.</Typography>
         </Grid>
         <Grid item xs={3}>
-          <StdButton onClick={props.start} text={"Start"} />
+          <Button onClick={props.start}>Start</Button>
         </Grid>
         <Grid item xs={3}>
-          <StdButton onClick={props.cancel} text={"Cancel"} />
+          <Button onClick={props.cancel}>Cancel</Button>
         </Grid>
       </Grid>
     </>

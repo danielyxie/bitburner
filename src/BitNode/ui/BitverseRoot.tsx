@@ -150,7 +150,7 @@ export function BitverseRoot(props: IProps): React.ReactElement {
 
   return (
     // prettier-ignore
-    <div className="noselect">
+    <>
       <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>                          O                          </Typography>
       <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>             |  O  O      |      O  O  |             </Typography>
       <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>        O    |  | /     __|       \ |  |    O        </Typography>
@@ -203,7 +203,7 @@ export function BitverseRoot(props: IProps): React.ReactElement {
         ">  ",
         "> (Enter a new BitNode using the image above)",
       ]} />
-    </div>
+    </>
   );
 
   return <></>;

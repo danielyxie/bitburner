@@ -334,7 +334,9 @@ const Engine: {
       // Hacknet Nodes offline progress
       const offlineProductionFromHacknetNodes = processHacknetEarnings(Player, numCyclesOffline);
       const hacknetProdInfo = hasHacknetServers(Player) ? (
-        <>{Hashes(offlineProductionFromHacknetNodes)} hashes</>
+        <>
+          <Hashes hashes={offlineProductionFromHacknetNodes} /> hashes
+        </>
       ) : (
         <Money money={offlineProductionFromHacknetNodes} />
       );
@@ -405,7 +407,7 @@ const Engine: {
             <>
               Offline for {timeOfflineString}. While you were offline, your scripts generated{" "}
               <Money money={offlineHackingIncome} />, your Hacknet Nodes generated {hacknetProdInfo} and you gained{" "}
-              {Reputation(offlineReputation)} divided amongst your factions.
+              <Reputation reputation={offlineReputation} /> reputation divided amongst your factions.
             </>,
           ),
         250,

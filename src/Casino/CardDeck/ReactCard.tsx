@@ -1,8 +1,10 @@
 import React, { FC } from "react";
 import { Card, Suit } from "./Card";
-import { Theme } from "@mui/material";
+
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
 
 type Props = {
   card: Card;
@@ -56,11 +58,11 @@ export const ReactCard: FC<Props> = ({ card, hidden }) => {
       throw new Error(`MissingCaseException: ${card.suit}`);
   }
   return (
-    <div className={`${classes.card} ${card.isRedSuit() ? classes.red : classes.black}`}>
+    <Paper className={`${classes.card} ${card.isRedSuit() ? classes.red : classes.black}`}>
       <>
-        <div className={classes.value}>{hidden ? " - " : card.formatValue()}</div>
-        <div>{hidden ? " - " : suit}</div>
+        <span className={classes.value}>{hidden ? " - " : card.formatValue()}</span>
+        <span>{hidden ? " - " : suit}</span>
       </>
-    </div>
+    </Paper>
   );
 };

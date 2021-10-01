@@ -10,9 +10,7 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { getServer } from "../../Server/ServerHelpers";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { createPopup } from "../../ui/React/createPopup";
-import { BitFlumePopup } from "../../BitNode/ui/BitFlumePopup";
-
+import { BitFlumeEvent } from "../../BitNode/ui/BitFlumeModal";
 import { calculateHackingTime, calculateGrowTime, calculateWeakenTime } from "../../Hacking";
 
 function requireHackingLevel(lvl: number) {
@@ -286,12 +284,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       time: CONSTANTS.MillisecondsPerFiveMinutes / 20,
     },
     run: (router: IRouter, terminal: ITerminal, player: IPlayer): void => {
-      const popupId = "bitflume-popup";
-      createPopup(popupId, BitFlumePopup, {
-        player: player,
-        router: router,
-        popupId: popupId,
-      });
+      BitFlumeEvent.emit();
     },
   },
   {

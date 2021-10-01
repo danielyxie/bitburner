@@ -60,7 +60,7 @@ export function HacknetUpgradeElem(props: IProps): React.ReactElement {
         <CopyableText value={upg.name} />
       </Typography>
       <Typography>
-        Cost: {Hashes(cost)}, Bought: {level} times
+        Cost: <Hashes hashes={cost} />, Bought: {level} times
       </Typography>
 
       <Typography>{upg.desc}</Typography>

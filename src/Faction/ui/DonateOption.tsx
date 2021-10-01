@@ -57,7 +57,7 @@ export function DonateOption(props: IProps): React.ReactElement {
     props.faction.playerReputation += repGain;
     dialogBoxCreate(
       <>
-        You just donated <Money money={amt} /> to {fac.name} to gain {Reputation(repGain)} reputation.
+        You just donated <Money money={amt} /> to {fac.name} to gain <Reputation reputation={repGain} /> reputation.
       </>,
     );
     props.rerender();
@@ -71,7 +71,7 @@ export function DonateOption(props: IProps): React.ReactElement {
     }
     return (
       <Typography>
-        This donation will result in {Reputation(repFromDonation(donateAmt, props.p))} reputation gain
+        This donation will result in <Reputation reputation={repFromDonation(donateAmt, props.p)} /> reputation gain
       </Typography>
     );
   }
@@ -81,7 +81,7 @@ export function DonateOption(props: IProps): React.ReactElement {
       <Status />
       {props.disabled ? (
         <Typography>
-          Unlock donations at {Favor(props.favorToDonate)} favor with {props.faction.name}
+          Unlock donations at <Favor favor={props.favorToDonate} /> favor with {props.faction.name}
         </Typography>
       ) : (
         <>

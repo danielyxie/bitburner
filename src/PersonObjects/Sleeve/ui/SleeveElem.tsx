@@ -161,7 +161,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
     ];
     if (props.sleeve.currentTask === SleeveTaskType.Company || props.sleeve.currentTask === SleeveTaskType.Faction) {
       const repGain: number = props.sleeve.getRepGain(player);
-      data.push([`Reputation:`, ReputationRate(5 * repGain)]);
+      data.push([`Reputation:`, <ReputationRate reputation={5 * repGain} />]);
     }
   }
 

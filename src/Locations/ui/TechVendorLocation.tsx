@@ -67,7 +67,7 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
   }
 
   return (
-    <div>
+    <>
       {purchaseServerButtons}
       <br />
       <Typography>
@@ -79,6 +79,6 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
       <RamButton p={player} rerender={rerender} />
       <br />
       <CoresButton p={player} rerender={rerender} />
-    </div>
+    </>
   );
 }

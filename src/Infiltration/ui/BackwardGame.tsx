@@ -6,6 +6,7 @@ import { GameTimer } from "./GameTimer";
 import { random } from "../utils";
 import { interpolate } from "./Difficulty";
 import { BlinkingCursor } from "./BlinkingCursor";
+import Typography from "@mui/material/Typography";
 
 interface Difficulty {
   [key: string]: number;
@@ -46,17 +47,17 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
     <Grid container spacing={3}>
       <GameTimer millis={timer} onExpire={props.onFailure} />
       <Grid item xs={12}>
-        <h1 className={"noselect"}>Type it backward</h1>
+        <Typography variant="h4">Type it backward</Typography>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
       </Grid>
       <Grid item xs={6}>
-        <p style={{ transform: "scaleX(-1)" }}>{answer}</p>
+        <Typography style={{ transform: "scaleX(-1)" }}>{answer}</Typography>
       </Grid>
       <Grid item xs={6}>
-        <p>
+        <Typography>
           {guess}
           <BlinkingCursor />
-        </p>
+        </Typography>
       </Grid>
     </Grid>
   );

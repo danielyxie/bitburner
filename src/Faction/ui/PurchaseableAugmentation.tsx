@@ -57,7 +57,7 @@ function Requirements(props: IReqProps): React.ReactElement {
       </TableCell>
       <TableCell key={2}>
         <Typography color={props.hasRep ? "primary" : "error"}>
-          Requires {Reputation(props.rep)} faction reputation
+          Requires <Reputation reputation={props.rep} /> faction reputation
         </Typography>
       </TableCell>
     </React.Fragment>

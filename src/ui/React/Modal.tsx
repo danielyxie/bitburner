@@ -42,6 +42,8 @@ export const Modal = (props: IProps): React.ReactElement => {
     <M
       disableRestoreFocus
       disableScrollLock
+      disableEnforceFocus
+      disableAutoFocus
       open={props.open}
       onClose={props.onClose}
       closeAfterTransition

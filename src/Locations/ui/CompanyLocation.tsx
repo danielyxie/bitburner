@@ -21,7 +21,6 @@ import * as posNames from "../../Company/data/companypositionnames";
 
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
-import { createPopup } from "../../ui/React/createPopup";
 import { use } from "../../ui/Context";
 import { QuitJobModal } from "../../Company/ui/QuitJobModal";
 
@@ -184,21 +183,23 @@ export function CompanyLocation(props: IProps): React.ReactElement {
   const favorGain = company.getFavorGain();
 
   return (
-    <div>
+    <>
       {isEmployedHere && (
-        <div>
+        <>
           <Typography>Job Title: {jobTitle}</Typography>
           <Typography>-------------------------</Typography>
           <Box display="flex">
             <Tooltip
               title={
                 <>
-                  You will have {Favor(company.favor + favorGain[0])} company favor upon resetting after installing
-                  Augmentations
+                  You will have <Favor favor={company.favor + favorGain[0]} /> company favor upon resetting after
+                  installing Augmentations
                 </>
               }
             >
-              <Typography>Company reputation: {Reputation(company.playerReputation)}</Typography>
+              <Typography>
+                Company reputation: <Reputation reputation={company.playerReputation} />
+              </Typography>
             </Tooltip>
           </Box>
           <Typography>-------------------------</Typography>
@@ -212,7 +213,9 @@ export function CompanyLocation(props: IProps): React.ReactElement {
                 </>
               }
             >
-              <Typography>Company Favor: {Favor(company.favor)}</Typography>
+              <Typography>
+                Company Favor: <Favor favor={company.favor} />
+              </Typography>
             </Tooltip>
           </Box>
           <Typography>-------------------------</Typography>
@@ -227,8 +230,9 @@ export function CompanyLocation(props: IProps): React.ReactElement {
             open={quitOpen}
             onClose={() => setQuitOpen(false)}
           />
-        </div>
+        </>
       )}
+      <br />
       {company.hasAgentPositions() && (
         <ApplyToJobButton
           company={company}
@@ -318,6 +322,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
         />
       )}
       {location.infiltrationData != null && <Button onClick={startInfiltration}>Infiltrate Company</Button>}
-    </div>
+    </>
   );
 }

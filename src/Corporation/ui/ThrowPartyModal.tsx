@@ -50,7 +50,7 @@ export function ThrowPartyModal(props: IProps): React.ReactElement {
   }
 
   function EffectText(): React.ReactElement {
-    if (isNaN(cost) || cost < 0) return <p>Invalid value entered!</p>;
+    if (isNaN(cost) || cost < 0) return <Typography>Invalid value entered!</Typography>;
     return (
       <Typography>
         Throwing this party will cost a total of <Money money={totalCost} />

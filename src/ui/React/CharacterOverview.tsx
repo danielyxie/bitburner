@@ -60,7 +60,9 @@ function Work(): React.ReactElement {
       </TableRow>
       <TableRow>
         <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-          <Typography>+{Reputation(player.workRepGained)} rep</Typography>
+          <Typography>
+            +<Reputation reputation={player.workRepGained} /> rep
+          </Typography>
         </TableCell>
       </TableRow>
       <TableRow>

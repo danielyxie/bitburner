@@ -40,7 +40,7 @@ function DisplayModeButton(props: IProps): React.ReactElement {
 
 export function StockTickersConfig(props: IProps): React.ReactElement {
   return (
-    <div>
+    <>
       <DisplayModeButton {...props} />
       <br />
       <TextField
@@ -49,6 +49,6 @@ export function StockTickersConfig(props: IProps): React.ReactElement {
         placeholder="Filter Stocks by symbol (comma-separated list)"
         type="text"
       />
-    </div>
+    </>
   );
 }

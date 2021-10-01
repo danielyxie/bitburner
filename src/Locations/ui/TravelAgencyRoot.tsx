@@ -76,7 +76,7 @@ export function TravelAgencyRoot(props: IProps): React.ReactElement {
           <Money money={CONSTANTS.TravelCost} player={props.p} />.
         </Typography>
         {Settings.DisableASCIIArt ? (
-          <div>
+          <>
             {Object.values(CityName)
               .filter((city: string) => city != props.p.city)
               .map((city: string) => {
@@ -91,7 +91,7 @@ export function TravelAgencyRoot(props: IProps): React.ReactElement {
                   </React.Fragment>
                 );
               })}
-          </div>
+          </>
         ) : (
           <WorldMap currentCity={props.p.city} onTravel={(city: CityName) => startTravel(city)} />
         )}

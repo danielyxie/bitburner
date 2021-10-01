@@ -18,14 +18,10 @@ interface IProps {
 
 export function PurchaseButton(props: IProps): React.ReactElement {
   const cost = props.cost;
-  let className = Player.canAfford(cost) ? "std-button" : "std-button-disabled";
   let text;
-  let style = {};
   if (hasHacknetServers(Player)) {
     if (hasMaxNumberHacknetServers(Player)) {
-      className = "std-button-disabled";
       text = <>Hacknet Server limit reached</>;
-      style = { color: "red" };
     } else {
       text = (
         <>
@@ -43,5 +39,9 @@ export function PurchaseButton(props: IProps): React.ReactElement {
     );
   }
 
-  return <Button onClick={props.onClick}>{text}</Button>;
+  return (
+    <Button disabled={!Player.canAfford(cost)} onClick={props.onClick}>
+      {text}
+    </Button>
+  );
 }

@@ -56,18 +56,6 @@ function WarehouseRoot(props: IProps): React.ReactElement {
     props.rerender();
   }
 
-  const ratioLines = [];
-  for (const matName in division.reqMats) {
-    if (division.reqMats.hasOwnProperty(matName)) {
-      const text = [" *", division.reqMats[matName], matName].join(" ");
-      ratioLines.push(
-        <div key={matName}>
-          <p>{text}</p>
-        </div>,
-      );
-    }
-  }
-
   // Current State:
   let stateText;
   switch (division.state) {

@@ -4,6 +4,7 @@ import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { interpolate } from "./Difficulty";
+import Typography from "@mui/material/Typography";
 
 interface Difficulty {
   [key: string]: number;
@@ -51,13 +52,19 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
     <Grid container spacing={3}>
       <GameTimer millis={timer} onExpire={props.onFailure} />
       <Grid item xs={12}>
-        <h1>Say something nice about the guard.</h1>
+        <Typography variant="h4">Say something nice about the guard.</Typography>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
       </Grid>
       <Grid item xs={6}>
-        <h2 style={{ fontSize: "2em" }}>↑</h2>
-        <h2 style={{ fontSize: "2em" }}>{choices[index]}</h2>
-        <h2 style={{ fontSize: "2em" }}>↓</h2>
+        <Typography variant="h5" color="primary">
+          ↑
+        </Typography>
+        <Typography variant="h5" color="primary">
+          {choices[index]}
+        </Typography>
+        <Typography variant="h5" color="primary">
+          ↓
+        </Typography>
       </Grid>
     </Grid>
   );
