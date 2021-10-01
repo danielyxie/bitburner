@@ -17,7 +17,7 @@ export function determineCrimeSuccess(p: IPlayer, type: string): boolean {
   }
 
   if (!found) {
-    dialogBoxCreate(`ERR: Unrecognized crime type: ${type} This is probably a bug please contact the developer`, false);
+    dialogBoxCreate(`ERR: Unrecognized crime type: ${type} This is probably a bug please contact the developer`);
     return false;
   }
 

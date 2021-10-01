@@ -7,9 +7,11 @@ import { Deck } from "./CardDeck/Deck";
 import { Hand } from "./CardDeck/Hand";
 import { InputAdornment } from "@mui/material";
 import { ReactCard } from "./CardDeck/ReactCard";
-import { MuiTextField } from "../ui/React/MuiTextField";
-import { MuiButton } from "../ui/React/MuiButton";
-import { MuiPaper } from "../ui/React/MuiPaper";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 
 const MAX_BET = 100e6;
 
@@ -305,10 +307,10 @@ export class Blackjack extends Game<Props, State> {
     const dealerHandValues = this.getHandDisplayValues(dealerHand);
 
     return (
-      <div>
+      <>
         {/* Wager input */}
-        <div>
-          <MuiTextField
+        <Box>
+          <TextField
             value={betInput}
             label={
               <>
@@ -322,93 +324,88 @@ export class Blackjack extends Game<Props, State> {
             error={wagerInvalid}
             helperText={wagerInvalid ? wagerInvalidHelperText : ""}
             type="number"
-            variant="filled"
             style={{
               width: "200px",
             }}
             InputProps={{
-              startAdornment: <InputAdornment position="start">$</InputAdornment>,
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Typography>$</Typography>
+                </InputAdornment>
+              ),
             }}
           />
 
-          <p>
+          <Typography>
             {"Total earnings this session: "}
             <Money money={gains} />
-          </p>
-        </div>
+          </Typography>
+        </Box>
 
         {/* Buttons */}
         {!gameInProgress ? (
-          <div>
-            <MuiButton onClick={this.startOnClick} disabled={wagerInvalid || !this.canStartGame()}>
-              Start
-            </MuiButton>
-          </div>
+          <Button onClick={this.startOnClick} disabled={wagerInvalid || !this.canStartGame()}>
+            Start
+          </Button>
         ) : (
-          <div>
-            <MuiButton onClick={this.playerHit}>Hit</MuiButton>
-            <MuiButton color="secondary" onClick={this.playerStay}>
+          <>
+            <Button onClick={this.playerHit}>Hit</Button>
+            <Button color="secondary" onClick={this.playerStay}>
               Stay
-            </MuiButton>
-          </div>
+            </Button>
+          </>
         )}
 
         {/* Main game part. Displays both if the game is in progress OR if there's a result so you can see
          * the cards that led to that result. */}
         {(gameInProgress || result !== Result.Pending) && (
-          <div>
-            <MuiPaper variant="outlined" elevation={2}>
-              <pre>Player</pre>
-              {playerHand.cards.map((card, i) => (
-                <ReactCard card={card} key={i} />
-              ))}
+          <>
+            <Box display="flex">
+              <Paper elevation={2}>
+                <pre>Player</pre>
+                {playerHand.cards.map((card, i) => (
+                  <ReactCard card={card} key={i} />
+                ))}
 
-              <pre>Value(s): </pre>
-              {playerHandValues.map((value, i) => (
-                <pre key={i}>{value}</pre>
-              ))}
-            </MuiPaper>
+                <pre>Value(s): </pre>
+                {playerHandValues.map((value, i) => (
+                  <pre key={i}>{value}</pre>
+                ))}
+              </Paper>
+            </Box>
 
             <br />
 
-            <MuiPaper variant="outlined" elevation={2}>
-              <pre>Dealer</pre>
-              {dealerHand.cards.map((card, i) => (
-                // Hide every card except the first while game is in progress
-                <ReactCard card={card} hidden={gameInProgress && i !== 0} key={i} />
-              ))}
+            <Box display="flex">
+              <Paper elevation={2}>
+                <pre>Dealer</pre>
+                {dealerHand.cards.map((card, i) => (
+                  // Hide every card except the first while game is in progress
+                  <ReactCard card={card} hidden={gameInProgress && i !== 0} key={i} />
+                ))}
 
-              {!gameInProgress && (
-                <>
-                  <pre>Value(s): </pre>
-                  {dealerHandValues.map((value, i) => (
-                    <pre key={i}>{value}</pre>
-                  ))}
-                </>
-              )}
-            </MuiPaper>
-          </div>
+                {!gameInProgress && (
+                  <>
+                    <pre>Value(s): </pre>
+                    {dealerHandValues.map((value, i) => (
+                      <pre key={i}>{value}</pre>
+                    ))}
+                  </>
+                )}
+              </Paper>
+            </Box>
+          </>
         )}
 
         {/* Results from previous round */}
         {result !== Result.Pending && (
-          <p>
+          <Typography>
             {result}
-            {this.isPlayerWinResult(result) && (
-              <>
-                {" You gained "}
-                <Money money={this.state.bet} />
-              </>
-            )}
-            {result === Result.DealerWon && (
-              <>
-                {" You lost "}
-                <Money money={this.state.bet} />
-              </>
-            )}
-          </p>
+            {this.isPlayerWinResult(result) && <Money money={this.state.bet} />}
+            {result === Result.DealerWon && <Money money={this.state.bet} />}
+          </Typography>
         )}
-      </div>
+      </>
     );
   }
 }

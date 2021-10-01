@@ -148,6 +148,7 @@
     "format": "prettier --write .",
     "start": "http-server -p 8000",
     "start:dev": "webpack-dev-server --progress --env.devServer --mode development",
+    "start:dev-fast": "webpack-dev-server --progress --env.devServer --mode development --fast true",
     "start:container": "webpack-dev-server --progress --env.devServer --mode development --env.runInContainer",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",

@@ -54,7 +54,8 @@ export function Info(props: IProps): React.ReactElement {
           title={
             <>
               <Typography>
-                You will have {Favor(props.faction.favor + favorGain)} faction favor after installing an Augmentation.
+                You will have <Favor favor={props.faction.favor + favorGain} /> faction favor after installing an
+                Augmentation.
               </Typography>
               <MathComponent tex={String.raw`\large{r = \text{total faction reputation}}`} />
               <MathComponent
@@ -63,7 +64,9 @@ export function Info(props: IProps): React.ReactElement {
             </>
           }
         >
-          <Typography>Reputation: {Reputation(props.faction.playerReputation)}</Typography>
+          <Typography>
+            Reputation: <Reputation reputation={props.faction.playerReputation} />
+          </Typography>
         </Tooltip>
       </Box>
 
@@ -83,7 +86,9 @@ export function Info(props: IProps): React.ReactElement {
             </>
           }
         >
-          <Typography>Faction Favor: {Favor(props.faction.favor)}</Typography>
+          <Typography>
+            Faction Favor: <Favor favor={props.faction.favor} />
+          </Typography>
         </Tooltip>
       </Box>
 

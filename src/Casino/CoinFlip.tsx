@@ -3,44 +3,32 @@
  *
  * This subcomponent renders all of the buttons for training at the gym
  */
-import * as React from "react";
+import React, { useState } from "react";
 
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { StdButton } from "../ui/React/StdButton";
 import { BadRNG } from "./RNG";
-import { Game } from "./Game";
+import { win, reachedLimit } from "./Game";
 import { trusted } from "./utils";
+
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 type IProps = {
   p: IPlayer;
 };
 
-type IState = {
-  investment: number;
-  result: any;
-  status: string;
-  playLock: boolean;
-};
-
 const minPlay = 0;
 const maxPlay = 10e3;
 
-export class CoinFlip extends Game<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
+export function CoinFlip(props: IProps): React.ReactElement {
+  const [investment, setInvestment] = useState(1000);
+  const [result, setResult] = useState(<span> </span>);
+  const [status, setStatus] = useState("");
+  const [playLock, setPlayLock] = useState(false);
 
-    this.state = {
-      investment: 1000,
-      result: <span> </span>,
-      status: "",
-      playLock: false,
-    };
-
-    this.play = this.play.bind(this);
-    this.updateInvestment = this.updateInvestment.bind(this);
-  }
-
-  updateInvestment(e: React.FormEvent<HTMLInputElement>): void {
+  function updateInvestment(e: React.ChangeEvent<HTMLInputElement>): void {
     let investment: number = parseInt(e.currentTarget.value);
     if (isNaN(investment)) {
       investment = minPlay;
@@ -51,11 +39,11 @@ export class CoinFlip extends Game<IProps, IState> {
     if (investment < minPlay) {
       investment = minPlay;
     }
-    this.setState({ investment: investment });
+    setInvestment(investment);
   }
 
-  play(guess: string): void {
-    if (this.reachedLimit(this.props.p)) return;
+  function play(guess: string): void {
+    if (reachedLimit(props.p)) return;
     const v = BadRNG.random();
     let letter: string;
     if (v < 0.5) {
@@ -64,39 +52,48 @@ export class CoinFlip extends Game<IProps, IState> {
       letter = "T";
     }
     const correct: boolean = guess === letter;
-    this.setState({
-      result: <span className={correct ? "text" : "failure"}>{letter}</span>,
-      status: correct ? " win!" : "lose!",
-      playLock: true,
-    });
-    setTimeout(() => this.setState({ playLock: false }), 250);
+
+    setResult(
+      <Box display="flex">
+        <Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }} color={correct ? "primary" : "error"}>
+          {letter}
+        </Typography>
+      </Box>,
+    );
+    setStatus(correct ? " win!" : "lose!");
+    setPlayLock(true);
+
+    setTimeout(() => setPlayLock(false), 250);
     if (correct) {
-      this.win(this.props.p, this.state.investment);
+      win(props.p, investment);
     } else {
-      this.win(this.props.p, -this.state.investment);
+      win(props.p, -investment);
     }
-    if (this.reachedLimit(this.props.p)) return;
+    if (reachedLimit(props.p)) return;
   }
 
-  render(): React.ReactNode {
-    return (
-      <>
-        <pre>{`+———————+`}</pre>
-        <pre>{`| |   | |`}</pre>
-        <pre>
-          {`| | `}
-          {this.state.result}
-          {` | |`}
-        </pre>
-        <pre>{`| |   | |`}</pre>
-        <pre>{`+———————+`}</pre>
-        <span className="text">Play for: </span>
-        <input type="number" className="text-input" onChange={this.updateInvestment} value={this.state.investment} />
-        <br />
-        <StdButton onClick={trusted(() => this.play("H"))} text={"Head!"} disabled={this.state.playLock} />
-        <StdButton onClick={trusted(() => this.play("T"))} text={"Tail!"} disabled={this.state.playLock} />
-        <h1>{this.state.status}</h1>
-      </>
-    );
-  }
+  return (
+    <>
+      <Typography>Result:</Typography> {result}
+      <Box display="flex" alignItems="center">
+        <TextField
+          type="number"
+          onChange={updateInvestment}
+          InputProps={{
+            endAdornment: (
+              <>
+                <Button onClick={trusted(() => play("H"))} disabled={playLock}>
+                  Head!
+                </Button>
+                <Button onClick={trusted(() => play("T"))} disabled={playLock}>
+                  Tail!
+                </Button>
+              </>
+            ),
+          }}
+        />
+      </Box>
+      <Typography variant="h3">{status}</Typography>
+    </>
+  );
 }

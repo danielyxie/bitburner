@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Product } from "../Product";
 import { LimitProductProduction } from "../Actions";
 import { Modal } from "../../ui/React/Modal";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 interface IProps {
   open: boolean;
@@ -32,26 +35,12 @@ export function LimitProductProductionModal(props: IProps): React.ReactElement {
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
-      <p>
+      <Typography>
         Enter a limit to the amount of this product you would like to product per second. Leave the box empty to set no
         limit.
-      </p>
-      <input
-        autoFocus={true}
-        className="text-input"
-        style={{ margin: "5px" }}
-        placeholder="Limit"
-        type="number"
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-      />
-      <button
-        className="std-button"
-        style={{ margin: "5px", display: "inline-block" }}
-        onClick={limitProductProduction}
-      >
-        Limit production
-      </button>
+      </Typography>
+      <TextField autoFocus={true} placeholder="Limit" type="number" onChange={onChange} onKeyDown={onKeyDown} />
+      <Button onClick={limitProductProduction}>Limit production</Button>
     </Modal>
   );
 }

@@ -1,24 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { KEY } from "../../utils/helpers/keyCodes";
 
 import { CodingContract, CodingContractType, CodingContractTypes } from "../../CodingContracts";
-import { ClickableTag, CopyableText } from "./CopyableText";
+import { CopyableText } from "./CopyableText";
+import { Modal } from "./Modal";
+import { EventEmitter } from "../../utils/EventEmitter";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
-type IProps = {
+interface IProps {
   c: CodingContract;
-  popupId: string;
   onClose: () => void;
   onAttempt: (answer: string) => void;
-};
+}
 
-export function CodingContractPopup(props: IProps): React.ReactElement {
+export const CodingContractEvent = new EventEmitter<[IProps]>();
+
+export function CodingContractModal(): React.ReactElement {
+  const [props, setProps] = useState<IProps | null>(null);
   const [answer, setAnswer] = useState("");
+
+  useEffect(() => {
+    CodingContractEvent.subscribe((props) => setProps(props));
+  });
+  if (props === null) return <></>;
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setAnswer(event.target.value);
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
+    if (props === null) return;
     // React just won't cooperate on this one.
     // "React.KeyboardEvent<HTMLInputElement>" seems like the right type but
     // whatever ...
@@ -30,34 +43,45 @@ export function CodingContractPopup(props: IProps): React.ReactElement {
     }
   }
 
+  function close(): void {
+    if (props === null) return;
+    props.onClose();
+    setProps(null);
+  }
+
   const contractType: CodingContractType = CodingContractTypes[props.c.type];
   const description = [];
   for (const [i, value] of contractType.desc(props.c.data).split("\n").entries())
     description.push(<span key={i} dangerouslySetInnerHTML={{ __html: value + "<br />" }}></span>);
   return (
-    <div>
-      <CopyableText value={props.c.type} tag={ClickableTag.Tag_h1} />
-      <br />
-      <br />
-      <p>
+    <Modal open={props !== null} onClose={close}>
+      <CopyableText variant="h4" value={props.c.type} />
+      <Typography>
         You are attempting to solve a Coding Contract. You have {props.c.getMaxNumTries() - props.c.tries} tries
         remaining, after which the contract will self-destruct.
-      </p>
+      </Typography>
       <br />
-      <p>{description}</p>
+      <Typography>{description}</Typography>
       <br />
-      <input
-        className="text-input"
-        style={{ width: "50%", marginTop: "8px" }}
-        autoFocus={true}
+      <TextField
+        autoFocus
         placeholder="Enter Solution here"
         value={answer}
         onChange={onChange}
         onKeyDown={onKeyDown}
+        InputProps={{
+          endAdornment: (
+            <Button
+              onClick={() => {
+                props.onAttempt(answer);
+                close();
+              }}
+            >
+              Solve
+            </Button>
+          ),
+        }}
       />
-      <button className={"std-button"} onClick={() => props.onAttempt(answer)}>
-        Solve
-      </button>
-    </div>
+    </Modal>
   );
 }

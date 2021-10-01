@@ -28,7 +28,7 @@ import { killWorkerScript } from "../../Netscript/killWorkerScript";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 
 import { dialogBoxCreate } from "../React/DialogBox";
-import { logBoxCreate } from "../React/LogBox";
+import { LogBoxEvents } from "../React/LogBoxManager";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { arrayToString } from "../../utils/helpers/arrayToString";
 import { Money } from "../React/Money";
@@ -50,7 +50,9 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
   const workerScript = props.workerScript;
   const scriptRef = workerScript.scriptRef;
 
-  const logClickHandler = logBoxCreate.bind(null, scriptRef);
+  function logClickHandler(): void {
+    LogBoxEvents.emit(scriptRef);
+  }
   const killScript = killWorkerScript.bind(null, scriptRef as any, scriptRef.server);
 
   function killScriptClickHandler(): void {

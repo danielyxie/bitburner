@@ -5,6 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Adjuster } from "./Adjuster";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -82,7 +83,7 @@ export function Corporation(props: IProps): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">Cycles:</span>
+                <Typography>Cycles:</Typography>
               </td>
               <td>
                 <Adjuster

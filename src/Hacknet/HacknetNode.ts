@@ -107,7 +107,7 @@ export class HacknetNode implements IHacknetNode {
     this.moneyGainRatePerSecond = calculateMoneyGainRate(this.level, this.ram, this.cores, prodMult);
     if (isNaN(this.moneyGainRatePerSecond)) {
       this.moneyGainRatePerSecond = 0;
-      dialogBoxCreate("Error in calculating Hacknet Node production. Please report to game developer", false);
+      dialogBoxCreate("Error in calculating Hacknet Node production. Please report to game developer");
     }
   }
 

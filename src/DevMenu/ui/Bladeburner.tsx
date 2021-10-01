@@ -1,5 +1,6 @@
 import React from "react";
 
+import Typography from "@mui/material/Typography";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -63,7 +64,7 @@ export function Bladeburner(props: IProps): React.ReactElement {
           <tbody>
             <tr>
               <td>
-                <span className="text">Rank:</span>
+                <Typography>Rank:</Typography>
               </td>
               <td>
                 <Adjuster
@@ -78,7 +79,7 @@ export function Bladeburner(props: IProps): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">Cycles:</span>
+                <Typography>Cycles:</Typography>
               </td>
               <td>
                 <Adjuster

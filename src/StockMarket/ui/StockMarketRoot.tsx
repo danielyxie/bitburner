@@ -47,7 +47,7 @@ export function StockMarketRoot(props: IProps): React.ReactElement {
     return () => clearInterval(id);
   }, []);
   return (
-    <div className="stock-market-container">
+    <>
       <InfoAndPurchases initStockMarket={props.initStockMarket} p={props.p} rerender={rerender} />
       {props.p.hasWseAccount && (
         <StockTickers
@@ -62,6 +62,6 @@ export function StockMarketRoot(props: IProps): React.ReactElement {
           stockMarket={props.stockMarket}
         />
       )}
-    </div>
+    </>
   );
 }

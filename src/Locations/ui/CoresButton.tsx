@@ -31,10 +31,12 @@ export function CoresButton(props: IProps): React.ReactElement {
 
   return (
     <Tooltip title={<MathComponent tex={String.raw`\large{cost = 10^9 \times 7.5 ^{\text{cores}}}`} />}>
-      <Button disabled={!props.p.canAfford(cost)} onClick={buy}>
-        Upgrade 'home' cores ({homeComputer.cpuCores} -&gt; {homeComputer.cpuCores + 1}) -&nbsp;
-        <Money money={cost} player={props.p} />
-      </Button>
+      <span>
+        <Button disabled={!props.p.canAfford(cost)} onClick={buy}>
+          Upgrade 'home' cores ({homeComputer.cpuCores} -&gt; {homeComputer.cpuCores + 1}) -&nbsp;
+          <Money money={cost} player={props.p} />
+        </Button>
+      </span>
     </Tooltip>
   );
 }

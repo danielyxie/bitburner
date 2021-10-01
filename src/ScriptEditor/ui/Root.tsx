@@ -307,7 +307,7 @@ export function Root(props: IProps): React.ReactElement {
       <Editor
         beforeMount={beforeMount}
         onMount={onMount}
-        loading={<p>Loading script editor!</p>}
+        loading={<Typography>Loading script editor!</Typography>}
         height="90%"
         defaultLanguage="javascript"
         defaultValue={code}

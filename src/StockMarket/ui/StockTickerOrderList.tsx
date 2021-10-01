@@ -18,14 +18,12 @@ type IProps = {
   stock: Stock;
 };
 
-export class StockTickerOrderList extends React.Component<IProps, any> {
-  render(): React.ReactNode {
-    const orders: React.ReactElement[] = [];
-    for (let i = 0; i < this.props.orders.length; ++i) {
-      const o = this.props.orders[i];
-      orders.push(<StockTickerOrder cancelOrder={this.props.cancelOrder} order={o} key={i} />);
-    }
-
-    return <ul className={"stock-market-order-list"}>{orders}</ul>;
+export function StockTickerOrderList(props: IProps): React.ReactElement {
+  const orders: React.ReactElement[] = [];
+  for (let i = 0; i < props.orders.length; ++i) {
+    const o = props.orders[i];
+    orders.push(<StockTickerOrder cancelOrder={props.cancelOrder} order={o} key={i} />);
   }
+
+  return <>{orders}</>;
 }

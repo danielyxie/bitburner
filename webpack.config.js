@@ -12,6 +12,7 @@ module.exports = (env, argv) => {
   const isDevServer = (env || {}).devServer === true;
   const runInContainer = (env || {}).runInContainer === true;
   const isDevelopment = argv.mode === "development";
+  const isFastRefresh = argv.fast === "true";
   const outputDirectory = isDevServer ? "dist-dev" : "dist";
   const entry = "./src/index.tsx";
 
@@ -130,7 +131,7 @@ module.exports = (env, argv) => {
           columns: true,
           module: true,
         }),
-      isDevelopment && new ReactRefreshWebpackPlugin(),
+      isFastRefresh && new ReactRefreshWebpackPlugin(),
       new DeadCodePlugin({
         patterns: ["src/**/*.(js|jsx|css|ts|tsx)"],
         exclude: ["**/*.(stories|spec).(js|jsx)"],
@@ -150,7 +151,7 @@ module.exports = (env, argv) => {
           use: {
             loader: "babel-loader",
             options: {
-              plugins: [isDevelopment && require.resolve("react-refresh/babel")].filter(Boolean),
+              plugins: [isFastRefresh && require.resolve("react-refresh/babel")].filter(Boolean),
               cacheDirectory: true,
             },
           },

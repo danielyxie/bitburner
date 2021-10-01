@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
@@ -93,9 +94,9 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
     <Grid container spacing={3}>
       <GameTimer millis={timer} onExpire={props.onFailure} />
       <Grid item xs={12}>
-        <h1 className={"noselect"}>Cut the wires with the following properties! (keyboard 1 to 9)</h1>
+        <Typography variant="h4">Cut the wires with the following properties! (keyboard 1 to 9)</Typography>
         {questions.map((question, i) => (
-          <h3 key={i}>{question.toString()}</h3>
+          <Typography key={i}>{question.toString()}</Typography>
         ))}
         <pre>
           {new Array(wires.length).fill(0).map((_, i) => (

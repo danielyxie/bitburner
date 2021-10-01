@@ -11,6 +11,7 @@ import { TickerHeaderFormatData } from "../data/TickerHeaderFormatData";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import Typography from "@mui/material/Typography";
 
 type IProps = {
   p: IPlayer;
@@ -45,14 +46,16 @@ export function StockTickerHeaderText(props: IProps): React.ReactElement {
     // hdrText += ` - ${stock.getAbsoluteForecast()} / ${stock.otlkMagForecast}`;
   }
 
-  const styleMarkup = {
-    color: "#66ff33",
-  };
+  let color = "primary";
   if (stock.lastPrice === stock.price) {
-    styleMarkup.color = "white";
+    color = "secondary";
   } else if (stock.lastPrice > stock.price) {
-    styleMarkup.color = "red";
+    color = "error";
   }
 
-  return <pre style={styleMarkup}>{hdrText}</pre>;
+  return (
+    <Typography style={{ whiteSpace: "pre" }} color={color}>
+      {hdrText}
+    </Typography>
+  );
 }

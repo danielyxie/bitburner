@@ -113,7 +113,7 @@ export function SlumsLocation(): React.ReactElement {
   const heistChance = Crimes.Heist.successRate(player);
 
   return (
-    <div>
+    <>
       <Tooltip title={<>Attempt to shoplift from a low-end retailer</>}>
         <Button onClick={shoplift}>
           Shoplift ({numeralWrapper.formatPercentage(shopliftChance)} chance of success)
@@ -180,6 +180,6 @@ export function SlumsLocation(): React.ReactElement {
         <Button onClick={heist}>Heist ({numeralWrapper.formatPercentage(heistChance)} chance of success)</Button>
       </Tooltip>
       <br />
-    </div>
+    </>
   );
 }

@@ -24,12 +24,12 @@ export function CinematicText(props: IProps): React.ReactElement {
   }
 
   return (
-    <div>
+    <>
       {props.lines.slice(0, i).map((line, i) => (
         <Typography key={i}>{line}</Typography>
       ))}
       {props.lines.length > i && <CinematicLine key={i} text={props.lines[i]} onDone={advance} />}
       {!props.auto && props.onDone && done && <Button onClick={props.onDone}>Continue ...</Button>}
-    </div>
+    </>
   );
 }

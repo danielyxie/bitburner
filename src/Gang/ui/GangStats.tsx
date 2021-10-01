@@ -66,7 +66,7 @@ export function GangStats(props: IProps): React.ReactElement {
       </p>
       <br />
       <p style={{ display: "inline-block" }}>
-        Faction reputation: {Reputation(Factions[props.gang.facName].playerReputation)}
+        Faction reputation: <Reputation reputation={Factions[props.gang.facName].playerReputation} />
       </p>
       <br />
       <BonusTime gang={props.gang} />

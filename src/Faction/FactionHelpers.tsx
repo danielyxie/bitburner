@@ -18,19 +18,13 @@ import {
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { createPopup } from "../ui/React/createPopup";
-import { InvitationPopup } from "./ui/InvitationPopup";
+import { InvitationEvent } from "./ui/InvitationModal";
 
 export function inviteToFaction(faction: Faction): void {
   Player.factionInvitations.push(faction.name);
   faction.alreadyInvited = true;
   if (!Settings.SuppressFactionInvites) {
-    const popupId = "faction-invitation";
-    createPopup(popupId, InvitationPopup, {
-      player: Player,
-      faction: faction,
-      popupId: popupId,
-    });
+    InvitationEvent.emit(faction);
   }
 }
 

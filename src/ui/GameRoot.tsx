@@ -67,6 +67,9 @@ import { BladeburnerCinematic } from "../Bladeburner/ui/BladeburnerCinematic";
 import { workerScripts } from "../Netscript/WorkerScripts";
 import { Unclickable } from "../Exploits/Unclickable";
 import { Snackbar } from "./React/Snackbar";
+import { LogBoxManager } from "./React/LogBoxManager";
+import { AlertManager } from "./React/AlertManager";
+import { InvitationModal } from "../Faction/ui/InvitationModal";
 
 import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
@@ -334,7 +337,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
               ) : page === Page.Bladeburner ? (
                 <BladeburnerRoot />
               ) : page === Page.Resleeves ? (
-                <ResleeveRoot player={player} />
+                <ResleeveRoot />
               ) : page === Page.Travel ? (
                 <TravelAgencyRoot p={player} router={Router} />
               ) : page === Page.StockMarket ? (
@@ -394,6 +397,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         )}
         <Unclickable />
         <Snackbar />
+        <LogBoxManager />
+        <AlertManager />
+        <InvitationModal />
       </Context.Router.Provider>
     </Context.Player.Provider>
   );

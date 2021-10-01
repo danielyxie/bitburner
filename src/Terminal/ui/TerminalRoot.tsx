@@ -12,6 +12,9 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { TerminalInput } from "./TerminalInput";
 import { TerminalEvents, TerminalClearEvents } from "../TerminalEvents";
+import { BitFlumeModal } from "../../BitNode/ui/BitFlumeModal";
+import { CodingContractModal } from "../../ui/React/CodingContractModal";
+
 import _ from "lodash";
 
 interface IActionTimerProps {
@@ -118,6 +121,8 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
       <Box position="sticky" bottom={0} width="100%" px={0}>
         <TerminalInput player={player} router={router} terminal={terminal} />
       </Box>
+      <BitFlumeModal />
+      <CodingContractModal />
     </>
   );
 }

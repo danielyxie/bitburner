@@ -51,7 +51,6 @@ interface IPortalProps {
 function BitNodePortal(props: IPortalProps): React.ReactElement {
   const [portalOpen, setPortalOpen] = useState(false);
   const classes = useStyles();
-  const router = use.Router();
   const bitNode = BitNodes[`BitNode${props.n}`];
   if (bitNode == null) {
     return <>O</>;
@@ -63,8 +62,11 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
     cssClass = classes.level2;
   } else if (props.level === 1) {
     cssClass = classes.level1;
-  } else {
+  } else if (props.level === 3) {
     cssClass = classes.level3;
+  }
+  if (props.level === 2) {
+    cssClass = classes.level2;
   }
 
   return (
@@ -148,7 +150,7 @@ export function BitverseRoot(props: IProps): React.ReactElement {
 
   return (
     // prettier-ignore
-    <div className="noselect">
+    <>
       <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>                          O                          </Typography>
       <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>             |  O  O      |      O  O  |             </Typography>
       <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>        O    |  | /     __|       \ |  |    O        </Typography>
@@ -201,7 +203,7 @@ export function BitverseRoot(props: IProps): React.ReactElement {
         ">  ",
         "> (Enter a new BitNode using the image above)",
       ]} />
-    </div>
+    </>
   );
 
   return <></>;

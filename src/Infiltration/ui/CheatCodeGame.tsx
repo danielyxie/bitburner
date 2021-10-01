@@ -5,6 +5,7 @@ import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { random, getArrow } from "../utils";
 import { interpolate } from "./Difficulty";
+import Typography from "@mui/material/Typography";
 
 interface Difficulty {
   [key: string]: number;
@@ -46,8 +47,8 @@ export function CheatCodeGame(props: IMinigameProps): React.ReactElement {
     <Grid container spacing={3}>
       <GameTimer millis={timer} onExpire={props.onFailure} />
       <Grid item xs={12}>
-        <h1 className={"noselect"}>Enter the Code!</h1>
-        <p style={{ fontSize: "5em" }}>{code[index]}</p>
+        <Typography variant="h4">Enter the Code!</Typography>
+        <Typography variant="h4">{code[index]}</Typography>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
       </Grid>
     </Grid>

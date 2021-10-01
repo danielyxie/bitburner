@@ -65,7 +65,7 @@ export class TextFile {
    * Shows the content to the user via the game's dialog box.
    */
   show(): void {
-    dialogBoxCreate(`${this.fn}<br /><br />${this.text}`, true);
+    dialogBoxCreate(`${this.fn}<br /><br />${this.text}`);
   }
 
   /**

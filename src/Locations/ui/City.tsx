@@ -12,9 +12,10 @@ import { Locations } from "../Locations";
 import { Location } from "../Location";
 import { Settings } from "../../Settings/Settings";
 
-import { StdButton } from "../../ui/React/StdButton";
 import { use } from "../../ui/Context";
 import { IRouter } from "../../ui/Router";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 type IProps = {
   city: City;
@@ -37,7 +38,6 @@ function LocationLetter(location: Location): React.ReactElement {
     <span
       aria-label={location.name}
       key={location.name}
-      className="tooltip"
       style={{
         color: "white",
         whiteSpace: "nowrap",
@@ -112,29 +112,30 @@ function ASCIICity(props: IProps): React.ReactElement {
     elems.push(<pre key={i}>{lineElems(lines[i])}</pre>);
   }
 
-  return <div className="noselect">{elems}</div>;
+  return <>{elems}</>;
 }
 
 function ListCity(props: IProps): React.ReactElement {
   const router = use.Router();
   const locationButtons = props.city.locations.map((locName) => {
     return (
-      <li key={locName}>
-        <StdButton onClick={() => toLocation(router, Locations[locName])} text={locName} />
-      </li>
+      <React.Fragment key={locName}>
+        <Button onClick={() => toLocation(router, Locations[locName])}>{locName}</Button>
+        <br />
+      </React.Fragment>
     );
   });
 
-  return <ul>{locationButtons}</ul>;
+  return <>{locationButtons}</>;
 }
 
 export function LocationCity(): React.ReactElement {
   const player = use.Player();
   const city = Cities[player.city];
   return (
-    <div className="noselect">
-      <h2>{city.name}</h2>
+    <>
+      <Typography>{city.name}</Typography>
       {Settings.DisableASCIIArt ? <ListCity city={city} /> : <ASCIICity city={city} />}
-    </div>
+    </>
   );
 }
