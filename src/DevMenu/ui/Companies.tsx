@@ -5,6 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Companies as AllCompanies } from "../../Company/Companies";
@@ -78,7 +79,7 @@ export function Companies(): React.ReactElement {
           <tbody>
             <tr>
               <td>
-                <span className="text">Company:</span>
+                <Typography>Company:</Typography>
               </td>
               <td colSpan={3}>
                 <Select id="dev-companies-dropdown" onChange={setCompanyDropdown} value={company}>
@@ -92,7 +93,7 @@ export function Companies(): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">Reputation:</span>
+                <Typography>Reputation:</Typography>
               </td>
               <td>
                 <Adjuster
@@ -107,7 +108,7 @@ export function Companies(): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">Favor:</span>
+                <Typography>Favor:</Typography>
               </td>
               <td>
                 <Adjuster
@@ -122,7 +123,7 @@ export function Companies(): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">All Reputation:</span>
+                <Typography>All Reputation:</Typography>
               </td>
               <td>
                 <Button onClick={tonsOfRepCompanies}>Tons</Button>
@@ -131,7 +132,7 @@ export function Companies(): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">All Favor:</span>
+                <Typography>All Favor:</Typography>
               </td>
               <td>
                 <Button onClick={tonsOfFavorCompanies}>Tons</Button>

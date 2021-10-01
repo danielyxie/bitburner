@@ -19,11 +19,9 @@ export function IndustryProductEquation(props: IProps): React.ReactElement {
   }
 
   return (
-    <span className="text">
-      <MathComponent
-        display={false}
-        tex={reqs.join("+") + String.raw`\Rightarrow` + prod.map((p) => String.raw`1\text{ }${p}`).join("+")}
-      />
-    </span>
+    <MathComponent
+      display={false}
+      tex={reqs.join("+") + String.raw`\Rightarrow` + prod.map((p) => String.raw`1\text{ }${p}`).join("+")}
+    />
   );
 }

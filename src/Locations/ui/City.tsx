@@ -37,7 +37,6 @@ function LocationLetter(location: Location): React.ReactElement {
     <span
       aria-label={location.name}
       key={location.name}
-      className="tooltip"
       style={{
         color: "white",
         whiteSpace: "nowrap",

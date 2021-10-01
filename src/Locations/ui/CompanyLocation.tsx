@@ -23,7 +23,7 @@ import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
 import { createPopup } from "../../ui/React/createPopup";
 import { use } from "../../ui/Context";
-import { QuitJobPopup } from "../../Company/ui/QuitJobPopup";
+import { QuitJobModal } from "../../Company/ui/QuitJobModal";
 
 type IProps = {
   locName: LocationName;
@@ -32,6 +32,7 @@ type IProps = {
 export function CompanyLocation(props: IProps): React.ReactElement {
   const p = use.Player();
   const router = use.Router();
+  const [quitOpen, setQuitOpen] = useState(false);
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -179,18 +180,6 @@ export function CompanyLocation(props: IProps): React.ReactElement {
     }
   }
 
-  function quit(e: React.MouseEvent<HTMLElement>): void {
-    if (!e.isTrusted) return;
-    const popupId = `quit-job-popup`;
-    createPopup(popupId, QuitJobPopup, {
-      locName: props.locName,
-      company: company,
-      player: p,
-      onQuit: rerender,
-      popupId: popupId,
-    });
-  }
-
   const isEmployedHere = jobTitle != null;
   const favorGain = company.getFavorGain();
 
@@ -230,7 +219,14 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           <br />
           <Button onClick={work}>Work</Button>
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <Button onClick={quit}>Quit</Button>
+          <Button onClick={() => setQuitOpen(true)}>Quit</Button>
+          <QuitJobModal
+            locName={props.locName}
+            company={company}
+            onQuit={rerender}
+            open={quitOpen}
+            onClose={() => setQuitOpen(false)}
+          />
         </div>
       )}
       {company.hasAgentPositions() && (

@@ -6,6 +6,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
@@ -47,7 +48,7 @@ export function Sleeves(props: IProps): React.ReactElement {
           <tbody>
             <tr>
               <td>
-                <span className="text">Shock:</span>
+                <Typography>Shock:</Typography>
               </td>
               <td>
                 <Button onClick={sleeveMaxAllShock}>Max all</Button>
@@ -58,7 +59,7 @@ export function Sleeves(props: IProps): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">Sync:</span>
+                <Typography>Sync:</Typography>
               </td>
               <td>
                 <Button onClick={sleeveSyncMaxAll}>Max all</Button>

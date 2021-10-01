@@ -1,5 +1,6 @@
 import React from "react";
 
+import Typography from "@mui/material/Typography";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -45,7 +46,7 @@ export function Gang(props: IProps): React.ReactElement {
           <tbody>
             <tr>
               <td>
-                <span className="text">Cycles:</span>
+                <Typography>Cycles:</Typography>
               </td>
               <td>
                 <Adjuster

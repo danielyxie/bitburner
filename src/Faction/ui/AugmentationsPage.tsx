@@ -175,7 +175,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   }
 
   return (
-    <div>
+    <>
       <Button onClick={props.routeToMainPage}>Back</Button>
       <Typography variant="h4">Faction Augmentations</Typography>
       <Typography>
@@ -197,6 +197,6 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       <Table size="small" padding="none">
         <TableBody>{ownedElem}</TableBody>
       </Table>
-    </div>
+    </>
   );
 }

@@ -5,6 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -44,7 +45,7 @@ export function Programs(props: IProps): React.ReactElement {
           <tbody>
             <tr>
               <td>
-                <span className="text">Program:</span>
+                <Typography>Program:</Typography>
               </td>
               <td>
                 <Select onChange={setProgramDropdown} value={program}>
@@ -58,7 +59,7 @@ export function Programs(props: IProps): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">Add:</span>
+                <Typography>Add:</Typography>
               </td>
               <td>
                 <Button onClick={addProgram}>One</Button>

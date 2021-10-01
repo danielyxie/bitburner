@@ -64,7 +64,7 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
     }
 
     if (loc.types.includes(LocationType.TechVendor)) {
-      content.push(<TechVendorLocation key={"techvendorlocation"} loc={loc} p={player} />);
+      content.push(<TechVendorLocation key={"techvendorlocation"} loc={loc} />);
     }
 
     if (loc.types.includes(LocationType.TravelAgency)) {

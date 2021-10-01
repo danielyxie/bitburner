@@ -3,6 +3,8 @@ import React from "react";
 import { Product } from "../Product";
 import { Modal } from "../../ui/React/Modal";
 import { useDivision } from "./Context";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 interface IProps {
   open: boolean;
@@ -22,13 +24,11 @@ export function DiscontinueProductModal(props: IProps): React.ReactElement {
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
-      <p>
+      <Typography>
         Are you sure you want to do this? Discontinuing a product removes it completely and permanently. You will no
         longer produce this product and all of its existing stock will be removed and left unsold
-      </p>
-      <button className="popup-box-button" onClick={discontinue}>
-        Discontinue
-      </button>
+      </Typography>
+      <Button onClick={discontinue}>Discontinue</Button>
     </Modal>
   );
 }
