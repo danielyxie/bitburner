@@ -32,9 +32,8 @@ export function AlertManager(): React.ReactElement {
   );
 
   function close(): void {
-    console.log("close");
     setAlerts((old) => {
-      return old.slice(0, -1);
+      return old.slice(1, 1e99);
     });
   }
 

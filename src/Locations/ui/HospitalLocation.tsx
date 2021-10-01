@@ -9,7 +9,6 @@ import Button from "@mui/material/Button";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { getHospitalizationCost } from "../../Hospital/Hospital";
 
-import { AutoupdatingStdButton } from "../../ui/React/AutoupdatingStdButton";
 import { Money } from "../../ui/React/Money";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";

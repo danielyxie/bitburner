@@ -58,7 +58,7 @@ export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
       player.sleeves.push(new Sleeve(player));
       rerender();
     } else {
-      dialogBoxCreate(`You cannot afford to purchase a Duplicate Sleeve`, false);
+      dialogBoxCreate(`You cannot afford to purchase a Duplicate Sleeve`);
     }
   }
 

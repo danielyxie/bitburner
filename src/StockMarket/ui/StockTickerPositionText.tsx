@@ -104,11 +104,11 @@ export function StockTickerPositionText(props: IProps): React.ReactElement {
   return (
     <>
       <Typography>Max Shares: {numeralWrapper.formatShares(stock.maxShares)}</Typography>
-      <Typography className={"tooltip"}>
+      <Typography>
         Ask Price: <Money money={stock.getAskPrice()} />
       </Typography>
       <br />
-      <Typography className={"tooltip"}>
+      <Typography>
         Bid Price: <Money money={stock.getBidPrice()} />
       </Typography>
       <LongPosition {...props} />
