@@ -73,7 +73,7 @@ function MakeProductButton(): React.ReactElement {
         title={
           hasMaxProducts ? (
             <Typography>
-              ou have reached the maximum number of products: {division.getMaximumNumberProducts()}
+              You have reached the maximum number of products: {division.getMaximumNumberProducts()}
             </Typography>
           ) : (
             ""
