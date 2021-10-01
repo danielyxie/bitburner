@@ -159,6 +159,11 @@ export function refreshTheme(): void {
           variant: "standard",
         },
       },
+      MuiTypography: {
+        defaultProps: {
+          color: "primary",
+        },
+      },
       MuiMenu: {
         styleOverrides: {
           list: {

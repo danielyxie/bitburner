@@ -78,7 +78,7 @@ export function Servers(): React.ReactElement {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Servers</h2>
+        <Typography>Servers</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <table>

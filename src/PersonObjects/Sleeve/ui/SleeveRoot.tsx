@@ -39,7 +39,7 @@ export function SleeveRoot(): React.ReactElement {
         target="_blank"
         href="https://bitburner.readthedocs.io/en/latest/advancedgameplay/sleeves.html#duplicate-sleeves"
       >
-        Documentation
+        <Typography> Documentation</Typography>
       </Link>
       {player.sleeves.map((sleeve, i) => (
         <SleeveElem key={i} rerender={rerender} sleeve={sleeve} />

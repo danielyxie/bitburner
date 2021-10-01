@@ -39,7 +39,7 @@ export function Gang(props: IProps): React.ReactElement {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Gang</h2>
+        <Typography>Gang</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <table>

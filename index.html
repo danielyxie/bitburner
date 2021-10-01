@@ -36,7 +36,18 @@
       ga("send", "pageview");
     </script>
     
-  <link rel="shortcut icon" href="favicon.ico"><link href="dist/vendor.css" rel="stylesheet"><link href="main.css" rel="stylesheet"></head>
+    <style>
+      body {
+        background-color: black;
+        -ms-overflow-style: none; /* for Internet Explorer, Edge */
+        scrollbar-width: none; /* for Firefox */
+      }
+
+      body::-webkit-scrollbar {
+        display: none; /* for Chrome, Safari, and Opera */
+      }
+    </style>
+  <link rel="shortcut icon" href="favicon.ico"></head>
   <body>
     <div id="root"/>
   <script type="text/javascript" src="dist/vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>

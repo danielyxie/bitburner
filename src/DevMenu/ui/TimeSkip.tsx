@@ -5,6 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { saveObject } from "../../SaveObject";
@@ -30,7 +31,7 @@ export function TimeSkip(props: IProps): React.ReactElement {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Time skip</h2>
+        <Typography>Time skip</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <Button onClick={timeskip(60 * 1000)}>1 minute</Button>

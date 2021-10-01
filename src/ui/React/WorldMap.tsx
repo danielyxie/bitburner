@@ -12,10 +12,10 @@ interface ICityProps {
 function City(props: ICityProps): React.ReactElement {
   if (props.city !== props.currentCity) {
     return (
-      <Tooltip title={props.city}>
+      <Tooltip title={<Typography>{props.city}</Typography>}>
         <span
           onClick={() => props.onTravel(props.city)}
-          style={{ color: "white", lineHeight: "1em", whiteSpace: "pre" }}
+          style={{ color: "white", lineHeight: "1em", whiteSpace: "pre", cursor: "pointer" }}
         >
           {props.city[0]}
         </span>

@@ -36,6 +36,17 @@
       ga("send", "pageview");
     </script>
     <% } %>
+    <style>
+      body {
+        background-color: black;
+        -ms-overflow-style: none; /* for Internet Explorer, Edge */
+        scrollbar-width: none; /* for Firefox */
+      }
+
+      body::-webkit-scrollbar {
+        display: none; /* for Chrome, Safari, and Opera */
+      }
+    </style>
   </head>
   <body>
     <div id="root" />

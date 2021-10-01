@@ -10,6 +10,7 @@ import { PurchasedAugmentations } from "./PurchasedAugmentations";
 import { SourceFiles } from "./SourceFiles";
 
 import { canGetBonus } from "../../ExportBonus";
+import { use } from "../../ui/Context";
 
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -22,6 +23,7 @@ interface IProps {
 }
 
 export function AugmentationsRoot(props: IProps): React.ReactElement {
+  const player = use.Player();
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((o) => !o);
@@ -69,10 +71,14 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
         Purchased Augmentations
       </Typography>
       <Box mx={2}>
-        <Tooltip title={"'I never asked for this'"}>
-          <Button onClick={props.installAugmentationsFn}>Install Augmentations</Button>
+        <Tooltip title={<Typography>'I never asked for this'</Typography>}>
+          <span>
+            <Button disabled={player.queuedAugmentations.length === 0} onClick={props.installAugmentationsFn}>
+              Install Augmentations
+            </Button>
+          </span>
         </Tooltip>
-        <Tooltip title={"It's always a good idea to backup/export your save!"}>
+        <Tooltip title={<Typography>It's always a good idea to backup/export your save!</Typography>}>
           <Button sx={{ mx: 2 }} onClick={doExport} color="error">
             Backup Save {exportBonusStr()}
           </Button>

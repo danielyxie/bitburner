@@ -100,7 +100,7 @@ export function Factions(props: IProps): React.ReactElement {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Factions</h2>
+        <Typography>Factions</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <table>
