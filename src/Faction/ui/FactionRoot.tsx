@@ -30,10 +30,6 @@ type IProps = {
 
 // Info text for all options on the UI
 const gangInfo = "Create and manage a gang for this Faction. Gangs will earn you money and " + "faction reputation";
-const hackingMissionInfo =
-  "Attempt a hacking mission for your faction. " +
-  "A mission is a mini game that, if won, earns you " +
-  "significant reputation with this faction. (Recommended hacking level: 200+)";
 const hackingContractsInfo =
   "Complete hacking contracts for your faction. " +
   "Your effectiveness, which determines how much " +
@@ -96,11 +92,6 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
     player.startFactionHackWork(router, faction);
   }
 
-  function startHackingMission(faction: Faction): void {
-    player.singularityStopWork();
-    router.toHackingMission(faction);
-  }
-
   function startSecurityWork(faction: Faction): void {
     player.startFactionSecurityWork(router, faction);
   }
@@ -137,13 +128,6 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
           <Option buttonText={"Manage Gang"} infoText={gangInfo} onClick={manageGang} />
           <CreateGangModal facName={faction.name} open={gangOpen} onClose={() => setGangOpen(false)} />
         </>
-      )}
-      {!isPlayersGang && factionInfo.offerHackingMission && (
-        <Option
-          buttonText={"Hacking Mission"}
-          infoText={hackingMissionInfo}
-          onClick={() => startHackingMission(faction)}
-        />
       )}
       {!isPlayersGang && factionInfo.offerHackingWork && (
         <Option

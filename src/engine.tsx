@@ -23,7 +23,6 @@ import {
 import { hasHacknetServers, processHacknetEarnings } from "./Hacknet/HacknetHelpers";
 import { iTutorialStart } from "./InteractiveTutorial";
 import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
-import { inMission, currMission } from "./Missions";
 import { loadAllRunningScripts, updateOnlineScriptTimes } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { saveObject, loadGame } from "./SaveObject";
@@ -129,11 +128,6 @@ const Engine: {
     // Gang, if applicable
     if (Player.inGang() && Player.gang !== null) {
       Player.gang.process(numCycles, Player);
-    }
-
-    // Mission
-    if (inMission && currMission) {
-      currMission.process(numCycles);
     }
 
     // Corporation

@@ -56,7 +56,6 @@ import { TerminalRoot } from "../Terminal/ui/TerminalRoot";
 import { TutorialRoot } from "../Tutorial/ui/TutorialRoot";
 import { ActiveScriptsRoot } from "../ui/ActiveScripts/ActiveScriptsRoot";
 import { FactionsRoot } from "../Faction/ui/FactionsRoot";
-import { HackingMissionRoot } from "../HackingMission/ui/HackingMissionRoot";
 import { FactionRoot } from "../Faction/ui/FactionRoot";
 import { CharacterStats } from "./CharacterStats";
 import { TravelAgencyRoot } from "../Locations/ui/TravelAgencyRoot";
@@ -178,9 +177,6 @@ export let Router: IRouter = {
   toLocation: () => {
     throw new Error("Router called before initialization");
   },
-  toHackingMission: () => {
-    throw new Error("Router called before initialization");
-  },
 };
 
 function determineStartPage(player: IPlayer): Page {
@@ -270,10 +266,6 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       setLocation(location);
       setPage(Page.Location);
     },
-    toHackingMission: (faction: Faction) => {
-      setPage(Page.HackingMission);
-      setFaction(faction);
-    },
   };
 
   useEffect(() => {
@@ -296,8 +288,6 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
           <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />
         ) : page === Page.Infiltration ? (
           <InfiltrationRoot location={location} />
-        ) : page === Page.HackingMission ? (
-          <HackingMissionRoot faction={faction} />
         ) : page === Page.BladeburnerCinematic ? (
           <BladeburnerCinematic />
         ) : page === Page.Work ? (
