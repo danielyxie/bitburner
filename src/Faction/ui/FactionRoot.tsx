@@ -16,7 +16,6 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Faction } from "../../Faction/Faction";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 
-import { createPopup } from "../../ui/React/createPopup";
 import { use } from "../../ui/Context";
 import { CreateGangModal } from "./CreateGangModal";
 

@@ -6,17 +6,10 @@ import { ManagementSubpage } from "./ManagementSubpage";
 import { TerritorySubpage } from "./TerritorySubpage";
 import { EquipmentsSubpage } from "./EquipmentsSubpage";
 import { use } from "../../ui/Context";
-import { Factions } from "../../Faction/Factions";
 import { Context } from "./Context";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-
-enum Page {
-  Management,
-  Equipment,
-  Territory,
-}
 
 export function GangRoot(): React.ReactElement {
   const player = use.Player();

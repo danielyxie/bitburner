@@ -13,14 +13,6 @@ type IProps = {
   p: IPlayer;
 };
 
-type IState = {
-  index: number[];
-  locks: number[];
-  investment: number;
-  canPlay: boolean;
-  status: string | JSX.Element;
-};
-
 // statically shuffled array of symbols.
 const symbols = [
   "D",

@@ -5,8 +5,7 @@ import React from "react";
 
 import { CityTabs } from "./CityTabs";
 import { IIndustry } from "../IIndustry";
-import { useCorporation } from "./Context";
-import { Context } from "./Context";
+import { Context, useCorporation } from "./Context";
 
 import { CityName } from "../../Locations/data/CityNames";
 

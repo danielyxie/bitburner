@@ -26,12 +26,9 @@ export function SkillPage(props: IProps): React.ReactElement {
         You will gain one skill point every{" "}
         {BladeburnerConstants.RanksPerSkillPoint * BitNodeMultipliers.BladeburnerSkillCost} ranks.
         <br />
-        <br />
         Note that when upgrading a skill, the benefit for that skill is additive. However, the effects of different
         skills with each other is multiplicative.
-        <br />
       </Typography>
-      <br />
       {valid(mults["successChanceAll"]) && (
         <Typography>Total Success Chance: x{formatNumber(mults["successChanceAll"], 3)}</Typography>
       )}
@@ -61,7 +58,6 @@ export function SkillPage(props: IProps): React.ReactElement {
       {valid(mults["stamina"]) && <Typography>Stamina: x{formatNumber(mults["stamina"], 3)}</Typography>}
       {valid(mults["money"]) && <Typography>Contract Money: x{formatNumber(mults["money"], 3)}</Typography>}
       {valid(mults["expGain"]) && <Typography>Exp Gain: x{formatNumber(mults["expGain"], 3)}</Typography>}
-      <br />
       <SkillList bladeburner={props.bladeburner} onUpgrade={() => setRerender((old) => !old)} />
     </>
   );

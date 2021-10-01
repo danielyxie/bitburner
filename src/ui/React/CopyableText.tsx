@@ -4,6 +4,7 @@ import Tooltip from "@mui/material/Tooltip";
 
 type IProps = {
   value: string;
+  color?: string;
   variant?:
     | "button"
     | "caption"
@@ -39,7 +40,7 @@ export function CopyableText(props: IProps): React.ReactElement {
 
   return (
     <Tooltip open={open} title={<Typography>Copied!</Typography>}>
-      <Typography variant={props.variant} onClick={copy}>
+      <Typography variant={props.variant} color={props.color} onClick={copy}>
         {props.value}
       </Typography>
     </Tooltip>

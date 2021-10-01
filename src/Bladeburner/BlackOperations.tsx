@@ -1,4 +1,3 @@
-import React from "react";
 import { BlackOperation } from "./BlackOperation";
 import { IMap } from "../types";
 

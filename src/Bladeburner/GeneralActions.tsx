@@ -1,4 +1,3 @@
-import React from "react";
 import { Action } from "./Action";
 import { IMap } from "../types";
 

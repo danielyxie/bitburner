@@ -37,9 +37,7 @@ export function SkillElem(props: IProps): React.ReactElement {
   return (
     <Paper sx={{ my: 1, p: 1 }}>
       <Box display="flex" flexDirection="row" alignItems="center">
-        <Typography>
-          <CopyableText value={props.skill.name} />
-        </Typography>
+        <CopyableText variant="h6" color="primary" value={props.skill.name} />
         {!canLevel || maxLvl ? (
           <IconButton disabled>
             <CloseIcon />
@@ -50,8 +48,6 @@ export function SkillElem(props: IProps): React.ReactElement {
           </IconButton>
         )}
       </Box>
-      <br />
-      <br />
       <Typography>Level: {currentLevel}</Typography>
       {maxLvl ? (
         <Typography>MAX LEVEL</Typography>

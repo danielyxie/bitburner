@@ -5,7 +5,6 @@ import React from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { AllGangs } from "../AllGangs";
-import { Gang } from "../Gang";
 import { useGang } from "./Context";
 
 import Typography from "@mui/material/Typography";

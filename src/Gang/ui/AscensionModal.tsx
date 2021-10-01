@@ -56,10 +56,6 @@ export function AscensionModal(props: IProps): React.ReactElement {
     props.onClose();
   }
 
-  function cancel(): void {
-    props.onClose();
-  }
-
   // const ascendBenefits = props.member.getAscensionResults();
   const preAscend = props.member.getCurrentAscensionMults();
   const postAscend = props.member.getAscensionMultsAfterAscend();

@@ -7,4 +7,4 @@ export const Context: {
   Gang: React.createContext<IGang>({} as IGang),
 };
 
-export const useGang = () => useContext(Context.Gang);
+export const useGang = (): IGang => useContext(Context.Gang);
