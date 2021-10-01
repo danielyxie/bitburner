@@ -1,51 +1,42 @@
 /**
  * React Component for the recruitment button and text on the gang main page.
  */
-import React from "react";
-import { Gang } from "../Gang";
-import { RecruitPopup } from "./RecruitPopup";
+import React, { useState } from "react";
+import { RecruitModal } from "./RecruitModal";
 import { GangConstants } from "../data/Constants";
 import { formatNumber } from "../../utils/StringHelperFunctions";
-import { createPopup } from "../../ui/React/createPopup";
+import { useGang } from "./Context";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 interface IProps {
-  gang: Gang;
   onRecruit: () => void;
 }
 
 export function RecruitButton(props: IProps): React.ReactElement {
-  if (props.gang.members.length >= GangConstants.MaximumGangMembers) {
+  const gang = useGang();
+  const [open, setOpen] = useState(false);
+  if (gang.members.length >= GangConstants.MaximumGangMembers) {
     return <></>;
   }
 
-  if (!props.gang.canRecruitMember()) {
-    const respect = props.gang.getRespectNeededToRecruitMember();
+  if (!gang.canRecruitMember()) {
+    const respect = gang.getRespectNeededToRecruitMember();
     return (
-      <>
-        <a className="a-link-button-inactive" style={{ display: "inline-block", margin: "10px" }}>
+      <Box display="flex" alignItems="center">
+        <Button sx={{ mx: 1 }} disabled>
           Recruit Gang Member
-        </a>
-        <p style={{ margin: "10px", color: "red", display: "inline-block" }}>
-          {formatNumber(respect, 2)} respect needed to recruit next member
-        </p>
-      </>
+        </Button>
+        <Typography>{formatNumber(respect, 2)} respect needed to recruit next member</Typography>
+      </Box>
     );
-  }
-
-  function onClick(): void {
-    const popupId = "recruit-gang-member-popup";
-    createPopup(popupId, RecruitPopup, {
-      gang: props.gang,
-      popupId: popupId,
-      onRecruit: props.onRecruit,
-    });
   }
 
   return (
     <>
-      <a className="a-link-button" onClick={onClick} style={{ display: "inline-block", margin: "10px" }}>
-        Recruit Gang Member
-      </a>
+      <Button onClick={() => setOpen(true)}>Recruit Gang Member</Button>
+      <RecruitModal open={open} onClose={() => setOpen(false)} onRecruit={props.onRecruit} />
     </>
   );
 }

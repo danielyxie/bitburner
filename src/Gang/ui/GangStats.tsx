@@ -4,7 +4,6 @@
  */
 import React from "react";
 import { Factions } from "../../Faction/Factions";
-import { Gang } from "../Gang";
 
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -12,13 +11,14 @@ import { MoneyRate } from "../../ui/React/MoneyRate";
 import { Reputation } from "../../ui/React/Reputation";
 import { AllGangs } from "../AllGangs";
 import { BonusTime } from "./BonusTime";
+import { useGang } from "./Context";
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import Box from "@mui/material/Box";
 
-interface IProps {
-  gang: Gang;
-}
-
-export function GangStats(props: IProps): React.ReactElement {
-  const territoryMult = AllGangs[props.gang.facName].territory * 100;
+export function GangStats(): React.ReactElement {
+  const gang = useGang();
+  const territoryMult = AllGangs[gang.facName].territory * 100;
   let territoryStr;
   if (territoryMult <= 0) {
     territoryStr = formatNumber(0, 2);
@@ -30,46 +30,59 @@ export function GangStats(props: IProps): React.ReactElement {
 
   return (
     <>
-      <p className="tooltip" style={{ display: "inline-block" }}>
-        Respect: {numeralWrapper.formatRespect(props.gang.respect)} (
-        {numeralWrapper.formatRespect(5 * props.gang.respectGainRate)} / sec)
-        <span className="tooltiptext">
-          Represents the amount of respect your gang has from other gangs and criminal organizations. Your respect
-          affects the amount of money your gang members will earn, and also determines how much reputation you are
-          earning with your gang's corresponding Faction.
-        </span>
-      </p>
-      <br />
-      <p className="tooltip" style={{ display: "inline-block" }}>
-        Wanted Level: {numeralWrapper.formatWanted(props.gang.wanted)} (
-        {numeralWrapper.formatWanted(5 * props.gang.wantedGainRate)} / sec)
-        <span className="tooltiptext">
-          Represents how much the gang is wanted by law enforcement. The higher your gang's wanted level, the harder it
-          will be for your gang members to make money and earn respect. Note that the minimum wanted level is 1.
-        </span>
-      </p>
-      <br />
-      <p className="tooltip" style={{ display: "inline-block" }}>
-        Wanted Level Penalty: -{formatNumber((1 - props.gang.getWantedPenalty()) * 100, 2)}%
-        <span className="tooltiptext">Penalty for respect and money gain rates due to Wanted Level</span>
-      </p>
-      <br />
-      <div>
-        <p style={{ display: "inline-block" }}>
-          Money gain rate: <MoneyRate money={5 * props.gang.moneyGainRate} />
-        </p>
-      </div>
-      <br />
-      <p className="tooltip" style={{ display: "inline-block" }}>
-        Territory: {territoryStr}%
-        <span className="tooltiptext">The percentage of total territory your Gang controls</span>
-      </p>
-      <br />
-      <p style={{ display: "inline-block" }}>
-        Faction reputation: <Reputation reputation={Factions[props.gang.facName].playerReputation} />
-      </p>
-      <br />
-      <BonusTime gang={props.gang} />
+      <Box display="flex">
+        <Tooltip
+          title={
+            <Typography>
+              Represents the amount of respect your gang has from other gangs and criminal organizations. Your respect
+              affects the amount of money your gang members will earn, and also determines how much reputation you are
+              earning with your gang's corresponding Faction.
+            </Typography>
+          }
+        >
+          <Typography>
+            Respect: {numeralWrapper.formatRespect(gang.respect)} (
+            {numeralWrapper.formatRespect(5 * gang.respectGainRate)} / sec)
+          </Typography>
+        </Tooltip>
+      </Box>
+
+      <Box display="flex">
+        <Tooltip
+          title={
+            <Typography>
+              Represents how much the gang is wanted by law enforcement. The higher your gang's wanted level, the harder
+              it will be for your gang members to make money and earn respect. Note that the minimum wanted level is 1.
+            </Typography>
+          }
+        >
+          <Typography>
+            Wanted Level: {numeralWrapper.formatWanted(gang.wanted)} (
+            {numeralWrapper.formatWanted(5 * gang.wantedGainRate)} / sec)
+          </Typography>
+        </Tooltip>
+      </Box>
+
+      <Box display="flex">
+        <Tooltip title={<Typography>Penalty for respect and money gain rates due to Wanted Level</Typography>}>
+          <Typography>Wanted Level Penalty: -{formatNumber((1 - gang.getWantedPenalty()) * 100, 2)}%</Typography>
+        </Tooltip>
+      </Box>
+
+      <Typography>
+        Money gain rate: <MoneyRate money={5 * gang.moneyGainRate} />
+      </Typography>
+
+      <Box display="flex">
+        <Tooltip title={<Typography>The percentage of total territory your Gang controls</Typography>}>
+          <Typography>Territory: {territoryStr}%</Typography>
+        </Tooltip>
+      </Box>
+      <Typography>
+        Faction reputation: <Reputation reputation={Factions[gang.facName].playerReputation} />
+      </Typography>
+
+      <BonusTime gang={gang} />
     </>
   );
 }

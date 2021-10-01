@@ -16,7 +16,7 @@ export function Reputation({ reputation }: { reputation: number | string }): Rea
   const classes = useStyles();
   return (
     <span className={classes.reputation}>
-      {typeof reputation === "number" ? numeralWrapper.formatFavor(reputation) : reputation}
+      {typeof reputation === "number" ? numeralWrapper.formatReputation(reputation) : reputation}
     </span>
   );
 }

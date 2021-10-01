@@ -6,49 +6,50 @@ import React, { useState } from "react";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { StatsTable } from "../../ui/React/StatsTable";
 import { MoneyRate } from "../../ui/React/MoneyRate";
-import { Gang } from "../Gang";
+import { useGang } from "./Context";
 import { GangMember } from "../GangMember";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 interface IProps {
   member: GangMember;
-  gang: Gang;
   onTaskChange: () => void;
 }
 
 export function TaskSelector(props: IProps): React.ReactElement {
+  const gang = useGang();
   const [currentTask, setCurrentTask] = useState(props.member.task);
 
-  function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {
+  function onChange(event: SelectChangeEvent<string>): void {
     const task = event.target.value;
     props.member.assignToTask(task);
     setCurrentTask(task);
     props.onTaskChange();
   }
 
-  const tasks = props.gang.getAllTaskNames();
+  const tasks = gang.getAllTaskNames();
 
   const data = [
-    [`Money:`, <MoneyRate money={5 * props.member.calculateMoneyGain(props.gang)} />],
-    [`Respect:`, `${numeralWrapper.formatRespect(5 * props.member.calculateRespectGain(props.gang))} / sec`],
-    [`Wanted Level:`, `${numeralWrapper.formatWanted(5 * props.member.calculateWantedLevelGain(props.gang))} / sec`],
+    [`Money:`, <MoneyRate money={5 * props.member.calculateMoneyGain(gang)} />],
+    [`Respect:`, `${numeralWrapper.formatRespect(5 * props.member.calculateRespectGain(gang))} / sec`],
+    [`Wanted Level:`, `${numeralWrapper.formatWanted(5 * props.member.calculateWantedLevelGain(gang))} / sec`],
     [`Total Respect:`, `${numeralWrapper.formatRespect(props.member.earnedRespect)}`],
   ];
 
   return (
     <>
-      <select onChange={onChange} className="dropdown noselect" value={currentTask}>
-        <option key={0} value={"---"}>
-          ---
-        </option>
+      <Select onChange={onChange} value={currentTask}>
+        <MenuItem key={0} value={"Unassigned"}>
+          Unassigned
+        </MenuItem>
         {tasks.map((task: string, i: number) => (
-          <option key={i + 1} value={task}>
+          <MenuItem key={i + 1} value={task}>
             {task}
-          </option>
+          </MenuItem>
         ))}
-      </select>
-      <div>
-        <StatsTable rows={data} />
-      </div>
+      </Select>
+
+      <StatsTable rows={data} />
     </>
   );
 }
