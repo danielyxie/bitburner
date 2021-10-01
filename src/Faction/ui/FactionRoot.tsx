@@ -18,7 +18,7 @@ import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 
 import { createPopup } from "../../ui/React/createPopup";
 import { use } from "../../ui/Context";
-import { CreateGangPopup } from "./CreateGangPopup";
+import { CreateGangModal } from "./CreateGangModal";
 
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -75,22 +75,17 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
   const player = use.Player();
   const router = use.Router();
   const [sleevesOpen, setSleevesOpen] = useState(false);
+  const [gangOpen, setGangOpen] = useState(false);
   const p = player;
   const factionInfo = faction.getInfo();
 
-  function manageGang(faction: Faction): void {
+  function manageGang(): void {
     // If player already has a gang, just go to the gang UI
     if (player.inGang()) {
       return router.toGang();
     }
 
-    const popupId = "create-gang-popup";
-    createPopup(popupId, CreateGangPopup, {
-      popupId: popupId,
-      facName: faction.name,
-      player: player,
-      router: router,
-    });
+    setGangOpen(true);
   }
 
   function startFieldWork(faction: Faction): void {
@@ -137,7 +132,12 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
         {faction.name}
       </Typography>
       <Info faction={faction} factionInfo={factionInfo} />
-      {canAccessGang && <Option buttonText={"Manage Gang"} infoText={gangInfo} onClick={() => manageGang(faction)} />}
+      {canAccessGang && (
+        <>
+          <Option buttonText={"Manage Gang"} infoText={gangInfo} onClick={manageGang} />
+          <CreateGangModal facName={faction.name} open={gangOpen} onClose={() => setGangOpen(false)} />
+        </>
+      )}
       {!isPlayersGang && factionInfo.offerHackingMission && (
         <Option
           buttonText={"Hacking Mission"}

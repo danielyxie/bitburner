@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { KEY } from "../../utils/helpers/keyCodes";
 
 import { CodingContract, CodingContractType, CodingContractTypes } from "../../CodingContracts";
-import { ClickableTag, CopyableText } from "./CopyableText";
+import { CopyableText } from "./CopyableText";
 import { Modal } from "./Modal";
 import { EventEmitter } from "../../utils/EventEmitter";
 import Typography from "@mui/material/Typography";
@@ -55,9 +55,7 @@ export function CodingContractModal(): React.ReactElement {
     description.push(<span key={i} dangerouslySetInnerHTML={{ __html: value + "<br />" }}></span>);
   return (
     <Modal open={props !== null} onClose={close}>
-      <Typography variant="h4">
-        <CopyableText value={props.c.type} />
-      </Typography>
+      <CopyableText variant="h4" value={props.c.type} />
       <Typography>
         You are attempting to solve a Coding Contract. You have {props.c.getMaxNumTries() - props.c.tries} tries
         remaining, after which the contract will self-destruct.

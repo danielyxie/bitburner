@@ -53,7 +53,13 @@ export function CoinFlip(props: IProps): React.ReactElement {
     }
     const correct: boolean = guess === letter;
 
-    setResult(<span className={correct ? "text" : "failure"}>{letter}</span>);
+    setResult(
+      <Box display="flex">
+        <Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }} color={correct ? "primary" : "error"}>
+          {letter}
+        </Typography>
+      </Box>,
+    );
     setStatus(correct ? " win!" : "lose!");
     setPlayLock(true);
 
@@ -68,15 +74,7 @@ export function CoinFlip(props: IProps): React.ReactElement {
 
   return (
     <>
-      <Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>{`+———————+`}</Typography>
-      <Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>{`| |   | |`}</Typography>
-      <Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>
-        {`| | `}
-        {result}
-        {` | |`}
-      </Typography>
-      <Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>{`| |   | |`}</Typography>
-      <Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>{`+———————+`}</Typography>
+      <Typography>Result:</Typography> {result}
       <Box display="flex" alignItems="center">
         <TextField
           type="number"
@@ -95,7 +93,6 @@ export function CoinFlip(props: IProps): React.ReactElement {
           }}
         />
       </Box>
-
       <Typography variant="h3">{status}</Typography>
     </>
   );
