@@ -150,10 +150,6 @@ import { LogBoxEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
 
-import { createElement } from "./ui/uiHelpers/createElement";
-import { createPopup } from "./ui/uiHelpers/createPopup";
-import { removeElementById } from "./ui/uiHelpers/removeElementById";
-
 import { OfficeSpace } from "./Corporation/OfficeSpace";
 import { Employee } from "./Corporation/Employee";
 import { Product } from "./Corporation/Product";

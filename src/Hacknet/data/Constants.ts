@@ -18,7 +18,7 @@ export const HacknetNodeConstants: {
   MaxRam: number;
   MaxCores: number;
 } = {
-  MoneyGainPerLevel: 1.6,
+  MoneyGainPerLevel: 1.5,
 
   BaseCost: 1000,
   LevelBaseCost: 1,
