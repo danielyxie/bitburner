@@ -1083,7 +1083,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("growthAnalyze", `Invalid argument: growth must be numeric and >= 1, is ${growth}.`);
       }
 
-      return numCycleForGrowth(server, Number(growth), Player);
+      return numCycleForGrowth(server, Number(growth), Player, server.cpuCores);
     },
     weaken: function (ip: any, { threads: requestedThreads }: any = {}): any {
       updateDynamicRam("weaken", getRamCost("weaken"));
