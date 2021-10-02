@@ -68,6 +68,7 @@ import { Unclickable } from "../Exploits/Unclickable";
 import { Snackbar } from "./React/Snackbar";
 import { LogBoxManager } from "./React/LogBoxManager";
 import { AlertManager } from "./React/AlertManager";
+import { PromptManager } from "./React/PromptManager";
 import { InvitationModal } from "../Faction/ui/InvitationModal";
 
 import { enterBitNode } from "../RedPill";
@@ -389,6 +390,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         <Snackbar />
         <LogBoxManager />
         <AlertManager />
+        <PromptManager />
         <InvitationModal />
       </Context.Router.Provider>
     </Context.Player.Provider>
