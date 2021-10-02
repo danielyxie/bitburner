@@ -147,14 +147,16 @@ function LogWindow(props: IProps): React.ReactElement {
         </Box>
       </Paper>
       <Paper>
-        {props.script.logs.map(
-          (line: string, i: number): JSX.Element => (
-            <Typography key={i} style={{ whiteSpace: "pre-line" }}>
-              {line}
-              <br />
-            </Typography>
-          ),
-        )}
+        <Box maxHeight="25vh" overflow="scroll">
+          {props.script.logs.map(
+            (line: string, i: number): JSX.Element => (
+              <Typography key={i} style={{ whiteSpace: "pre-line" }}>
+                {line}
+                <br />
+              </Typography>
+            ),
+          )}
+        </Box>
       </Paper>
     </Paper>
   );
