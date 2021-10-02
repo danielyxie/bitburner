@@ -45,7 +45,7 @@ export function safetlyCreateUniqueServer(params: IConstructorParams): Server {
  * @param p - Reference to Player object
  * @returns Number of "growth cycles" needed
  */
-export function numCycleForGrowth(server: Server, growth: number, p: IPlayer): number {
+export function numCycleForGrowth(server: Server, growth: number, p: IPlayer, cores = 1): number {
   let ajdGrowthRate = 1 + (CONSTANTS.ServerBaseGrowthRate - 1) / server.hackDifficulty;
   if (ajdGrowthRate > CONSTANTS.ServerMaxGrowthRate) {
     ajdGrowthRate = CONSTANTS.ServerMaxGrowthRate;
@@ -53,9 +53,14 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer): n
 
   const serverGrowthPercentage = server.serverGrowth / 100;
 
+  const coreBonus = 1 + (cores - 1) / 16;
   const cycles =
     Math.log(growth) /
-    (Math.log(ajdGrowthRate) * p.hacking_grow_mult * serverGrowthPercentage * BitNodeMultipliers.ServerGrowthRate);
+    (Math.log(ajdGrowthRate) *
+      p.hacking_grow_mult *
+      serverGrowthPercentage *
+      BitNodeMultipliers.ServerGrowthRate *
+      coreBonus);
 
   return cycles;
 }
@@ -84,7 +89,7 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
   // if there was any growth at all, increase security
   if (oldMoneyAvailable !== server.moneyAvailable) {
     //Growing increases server security twice as much as hacking
-    let usedCycles = numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable, p);
+    let usedCycles = numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable, p, cores);
     usedCycles = Math.max(0, usedCycles);
     server.fortify(2 * CONSTANTS.ServerFortifyAmount * Math.ceil(usedCycles));
   }
