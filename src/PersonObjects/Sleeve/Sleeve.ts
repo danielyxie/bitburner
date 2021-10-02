@@ -750,7 +750,7 @@ export class Sleeve extends Person {
         case LocationName.Sector12PowerhouseGym.toLowerCase():
           expMult = 10;
           break;
-        case LocationName.VolhavenMilleniumFitnessGym:
+        case LocationName.VolhavenMilleniumFitnessGym.toLowerCase():
           expMult = 4;
           break;
         default:
