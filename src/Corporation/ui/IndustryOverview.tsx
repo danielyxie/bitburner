@@ -8,8 +8,7 @@ import { IndustryUpgrades } from "../IndustryUpgrades";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
 import { MakeProductModal } from "./MakeProductModal";
-import { ResearchPopup } from "./ResearchPopup";
-import { createPopup } from "../../ui/React/createPopup";
+import { ResearchModal } from "./ResearchModal";
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { StatsTable } from "../../ui/React/StatsTable";
@@ -96,6 +95,7 @@ function Text(): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
   const [helpOpen, setHelpOpen] = useState(false);
+  const [researchOpen, setResearchOpen] = useState(false);
   const vechain = corp.unlockUpgrades[4] === 1;
   const profit = division.lastCycleRevenue.minus(division.lastCycleExpenses).toNumber();
 
@@ -113,14 +113,6 @@ function Text(): React.ReactElement {
     return createProgressBarText({
       progress: fac,
       totalTicks: 20,
-    });
-  }
-
-  function openResearchPopup(): void {
-    const popupId = "corporation-research-popup-box";
-    createPopup(popupId, ResearchPopup, {
-      industry: division,
-      popupId: popupId,
     });
   }
 
@@ -214,9 +206,10 @@ function Text(): React.ReactElement {
         >
           <Typography>Scientific Research: {numeralWrapper.format(division.sciResearch.qty, "0.000a")}</Typography>
         </Tooltip>
-        <Button sx={{ mx: 1 }} onClick={openResearchPopup}>
+        <Button sx={{ mx: 1 }} onClick={() => setResearchOpen(true)}>
           Research
         </Button>
+        <ResearchModal open={researchOpen} onClose={() => setResearchOpen(false)} industry={division} />
       </Box>
     </>
   );
