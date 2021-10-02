@@ -103,6 +103,7 @@ import { Programs } from "./Programs/Programs";
 import { Script } from "./Script/Script";
 import { findRunningScript, findRunningScriptByPid } from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/isScriptFilename";
+import { PromptEvent } from "./ui/React/PromptManager";
 
 import { AllServers, AddToAllServers, createUniqueRandomIp } from "./Server/AllServers";
 import { RunningScript } from "./Script/RunningScript";
@@ -2894,31 +2895,11 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         txt = JSON.stringify(txt);
       }
 
-      // The id for this popup will consist of the first 20 characters of the prompt string..
-      // Thats hopefully good enough to be unique
-      const popupId = `prompt-popup-${txt.slice(0, 20)}`;
-      const textElement = createElement("p", { innerHTML: txt });
-
       return new Promise(function (resolve) {
-        const yesBtn = createElement("button", {
-          class: "popup-box-button",
-          innerText: "Yes",
-          clickListener: () => {
-            removeElementById(popupId);
-            resolve(true);
-          },
+        PromptEvent.emit({
+          txt: txt,
+          resolve: resolve,
         });
-
-        const noBtn = createElement("button", {
-          class: "popup-box-button",
-          innerText: "No",
-          clickListener: () => {
-            removeElementById(popupId);
-            resolve(false);
-          },
-        });
-
-        createPopup(popupId, [textElement, yesBtn, noBtn]);
       });
     },
     wget: async function (url: any, target: any, ip: any = workerScript.serverIp): Promise<boolean> {
