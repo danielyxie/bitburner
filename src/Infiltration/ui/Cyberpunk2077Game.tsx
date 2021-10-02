@@ -96,7 +96,7 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
         <br />
         {grid.map((line, y) => (
           <div key={y}>
-            <pre>
+            <Typography>
               {line.map((cell, x) => {
                 if (x == pos[0] && y == pos[1])
                   return (
@@ -110,7 +110,7 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
                   </span>
                 );
               })}
-            </pre>
+            </Typography>
             <br />
           </div>
         ))}

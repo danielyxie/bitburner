@@ -85,7 +85,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
         <Typography variant="h4">{memoryPhase ? "Remember all the mines!" : "Mark all the mines!"}</Typography>
         {minefield.map((line, y) => (
           <div key={y}>
-            <pre>
+            <Typography>
               {line.map((cell, x) => {
                 if (memoryPhase) {
                   if (minefield[y][x]) return <span key={x}>[?]&nbsp;</span>;
@@ -96,7 +96,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
                   return <span key={x}>[&nbsp;]&nbsp;</span>;
                 }
               })}
-            </pre>
+            </Typography>
             <br />
           </div>
         ))}
