@@ -409,7 +409,6 @@ export class Sleeve extends Person {
 
       return jobPerformance * this.company_rep_mult * favorMult;
     } else {
-      console.warn(`Sleeve.getRepGain() called for invalid task type: ${this.currentTask}`);
       return 0;
     }
   }
