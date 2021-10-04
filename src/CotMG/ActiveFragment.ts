@@ -51,7 +51,7 @@ export class ActiveFragment {
 
   fragment(): Fragment {
     const fragment = FragmentById(this.id);
-    if (fragment === null) throw "ActiveFragment id refers to unknown Fragment.";
+    if (fragment === null) throw new Error("ActiveFragment id refers to unknown Fragment.");
     return fragment;
   }
 
@@ -68,7 +68,7 @@ export class ActiveFragment {
   copy(): ActiveFragment {
     // We have to do a round trip because the constructor.
     const fragment = FragmentById(this.id);
-    if (fragment === null) throw "ActiveFragment id refers to unknown Fragment.";
+    if (fragment === null) throw new Error("ActiveFragment id refers to unknown Fragment.");
     const c = new ActiveFragment({ x: this.x, y: this.y, fragment: fragment });
     c.charge = this.charge;
     c.heat = this.heat;

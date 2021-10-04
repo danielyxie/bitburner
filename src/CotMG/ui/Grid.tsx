@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Fragment, Fragments, NoneFragment } from "../Fragment";
+import { Fragment, NoneFragment } from "../Fragment";
 import { ActiveFragment } from "../ActiveFragment";
 import { FragmentType } from "../FragmentType";
 import { IStaneksGift } from "../IStaneksGift";
@@ -7,6 +7,9 @@ import { Cell } from "./Cell";
 import { FragmentInspector } from "./FragmentInspector";
 import { FragmentSelector } from "./FragmentSelector";
 import Button from "@mui/material/Button";
+import TableRow from "@mui/material/TableRow";
+import TableBody from "@mui/material/TableBody";
+import { Table } from "../../ui/React/Table";
 
 function zeros(dimensions: number[]): any {
   const array = [];
@@ -116,9 +119,9 @@ export function Grid(props: GridProps): React.ReactElement {
       );
     }
     elems.push(
-      <div key={j} className="staneksgift_row">
+      <TableRow key={j} className="staneksgift_row">
         {cells}
-      </div>,
+      </TableRow>,
     );
   }
 
@@ -130,10 +133,12 @@ export function Grid(props: GridProps): React.ReactElement {
 
   return (
     <>
-      {elems}
+      <Table>
+        <TableBody>{elems}</TableBody>
+      </Table>
       <FragmentSelector gift={props.gift} selectFragment={updateSelectedFragment} />
       <Button onClick={clear}>Clear</Button>
-      <FragmentInspector fragment={props.gift.fragmentAt(pos[0], pos[1])} />
+      <FragmentInspector x={pos[0]} y={pos[1]} fragment={props.gift.fragmentAt(pos[0], pos[1])} />
     </>
   );
 }

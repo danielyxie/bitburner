@@ -9,9 +9,11 @@ import Typography from "@mui/material/Typography";
 
 type IProps = {
   fragment: ActiveFragment | null;
+  x: number;
+  y: number;
 };
 
-export function FragmentInspector(props: IProps) {
+export function FragmentInspector(props: IProps): React.ReactElement {
   const [, setC] = useState(new Date());
 
   useEffect(() => {
@@ -38,6 +40,7 @@ export function FragmentInspector(props: IProps) {
           <br />
           [X, Y] N/A
           <br />
+          [X, Y] {props.x}, {props.y}
         </Typography>
       </Paper>
     );
@@ -68,8 +71,9 @@ export function FragmentInspector(props: IProps) {
         <br />
         Effect: {effect}
         <br />
-        [X, Y] {props.fragment.x}, {props.fragment.y}
+        root [X, Y] {props.fragment.x}, {props.fragment.y}
         <br />
+        [X, Y] {props.x}, {props.y}
       </Typography>
     </Paper>
   );
