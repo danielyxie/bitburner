@@ -51,7 +51,6 @@ import { Settings } from "../../Settings/Settings";
 import { redPillFlag } from "../../RedPill";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
-import { inMission } from "../../Missions";
 import { KEY } from "../../utils/helpers/keyCodes";
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -270,7 +269,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     //  Alt-o - Options
     function handleShortcuts(this: Document, event: KeyboardEvent): any {
       if (Settings.DisableHotkeys) return;
-      if (props.player.isWorking || redPillFlag || inMission) return;
+      if (props.player.isWorking || redPillFlag) return;
       if (event.keyCode == KEY.T && event.altKey) {
         event.preventDefault();
         clickTerminal();
@@ -409,25 +408,6 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 </Typography>
               </ListItemText>
             </ListItem>
-            {/* {canStaneksGift && (
-              <ListItem
-                button
-                key={"Staneks Gift"}
-                className={clsx({
-                  [classes.active]: props.page === Page.StaneksGift,
-                })}
-                onClick={clickStaneksGift}
-              >
-                <ListItemIcon>
-                  <DeveloperBoardIcon color={props.page !== Page.StaneksGift ? "secondary" : "primary"} />
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={props.page !== Page.StaneksGift ? "secondary" : "primary"}>
-                    Staneks Gift
-                  </Typography>
-                </ListItemText>
-              </ListItem>
-            )} */}
             {canCreateProgram && (
               <ListItem
                 button

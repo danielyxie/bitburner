@@ -152,6 +152,15 @@ SourceFiles["SourceFile9"] = new SourceFile(
       <br />
       (Note that the Level 3 effect of this Source-File only applies when entering a new BitNode, NOT when installing
       Augmentations)
+      <br />
+      <br />
+      This Source-File also increases your hacknet multipliers by:
+      <br />
+      Level 1: 8%
+      <br />
+      Level 2: 12%
+      <br />
+      Level 3: 14%
     </>
   ),
 );

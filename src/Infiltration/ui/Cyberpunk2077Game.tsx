@@ -5,6 +5,7 @@ import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { interpolate } from "./Difficulty";
 import { getArrow } from "../utils";
+import Typography from "@mui/material/Typography";
 
 interface Difficulty {
   [key: string]: number;
@@ -75,8 +76,8 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
     <Grid container spacing={3}>
       <GameTimer millis={timer} onExpire={props.onFailure} />
       <Grid item xs={12}>
-        <h1 className={"noselect"}>Match the symbols!</h1>
-        <h2 style={{ fontSize: fontSize }}>
+        <Typography variant="h4">Match the symbols!</Typography>
+        <Typography variant="h5" color="primary">
           Targets:{" "}
           {answer.map((a, i) => {
             if (i == index)
@@ -91,11 +92,11 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
               </span>
             );
           })}
-        </h2>
+        </Typography>
         <br />
         {grid.map((line, y) => (
           <div key={y}>
-            <pre>
+            <Typography>
               {line.map((cell, x) => {
                 if (x == pos[0] && y == pos[1])
                   return (
@@ -109,7 +110,7 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
                   </span>
                 );
               })}
-            </pre>
+            </Typography>
             <br />
           </div>
         ))}

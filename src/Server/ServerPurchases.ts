@@ -46,7 +46,7 @@ export function getPurchaseServerMaxRam(): number {
 export function purchaseServer(hostname: string, ram: number, cost: number, p: IPlayer): void {
   //Check if player has enough money
   if (!p.canAfford(cost)) {
-    dialogBoxCreate("You don't have enough money to purchase this server!", false);
+    dialogBoxCreate("You don't have enough money to purchase this server!");
     return;
   }
 

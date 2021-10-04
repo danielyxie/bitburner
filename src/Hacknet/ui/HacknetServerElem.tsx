@@ -183,7 +183,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
             </TableCell>
             <TableCell colSpan={2}>
               <Typography>
-                {Hashes(node.totalHashesGenerated)} ({HashRate(node.hashRate)})
+                <Hashes hashes={node.totalHashesGenerated} /> (<HashRate hashes={node.hashRate} />)
               </Typography>
             </TableCell>
           </TableRow>
@@ -192,7 +192,9 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
               <Typography>Hash Capacity:</Typography>
             </TableCell>
             <TableCell colSpan={2}>
-              <Typography>{Hashes(node.hashCapacity)}</Typography>
+              <Typography>
+                <Hashes hashes={node.hashCapacity} />
+              </Typography>
             </TableCell>
           </TableRow>
           <TableRow>

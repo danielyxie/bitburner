@@ -1,23 +1,16 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { StdButton } from "../ui/React/StdButton";
 import { Money } from "../ui/React/Money";
-import { Game } from "./Game";
+import { win, reachedLimit } from "./Game";
 import { WHRNG } from "./RNG";
 import { trusted } from "./utils";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 type IProps = {
   p: IPlayer;
-};
-
-type IState = {
-  investment: number;
-  canPlay: boolean;
-  status: string | JSX.Element;
-  n: number;
-  lock: boolean;
-  strategy: Strategy;
 };
 
 const minPlay = 0;
@@ -118,48 +111,32 @@ function Single(s: number): Strategy {
   };
 }
 
-export class Roulette extends Game<IProps, IState> {
-  interval = -1;
-  rng: WHRNG;
+export function Roulette(props: IProps): React.ReactElement {
+  const [rng] = useState(new WHRNG(new Date().getTime()));
+  const [investment, setInvestment] = useState(1000);
+  const [canPlay, setCanPlay] = useState(true);
+  const [status, setStatus] = useState<string | JSX.Element>("waiting");
+  const [n, setN] = useState(0);
+  const [lock, setLock] = useState(true);
+  const [strategy, setStrategy] = useState<Strategy>({
+    payout: 0,
+    match: (): boolean => {
+      return false;
+    },
+  });
 
-  constructor(props: IProps) {
-    super(props);
+  useEffect(() => {
+    const i = window.setInterval(step, 50);
+    return () => clearInterval(i);
+  });
 
-    this.rng = new WHRNG(new Date().getTime());
-    this.state = {
-      investment: 1000,
-      canPlay: true,
-      status: "waiting",
-      n: 0,
-      lock: true,
-      strategy: {
-        payout: 0,
-        match: (): boolean => {
-          return false;
-        },
-      },
-    };
-
-    this.step = this.step.bind(this);
-    this.currentNumber = this.currentNumber.bind(this);
-    this.updateInvestment = this.updateInvestment.bind(this);
-  }
-
-  componentDidMount(): void {
-    this.interval = window.setInterval(this.step, 50);
-  }
-
-  step(): void {
-    if (!this.state.lock) {
-      this.setState({ n: Math.floor(Math.random() * 37) });
+  function step(): void {
+    if (!lock) {
+      setN(Math.floor(Math.random() * 37));
     }
   }
 
-  componentWillUnmount(): void {
-    clearInterval(this.interval);
-  }
-
-  updateInvestment(e: React.FormEvent<HTMLInputElement>): void {
+  function updateInvestment(e: React.ChangeEvent<HTMLInputElement>): void {
     let investment: number = parseInt(e.currentTarget.value);
     if (isNaN(investment)) {
       investment = minPlay;
@@ -170,265 +147,312 @@ export class Roulette extends Game<IProps, IState> {
     if (investment < minPlay) {
       investment = minPlay;
     }
-    this.setState({ investment: investment });
+    setInvestment(investment);
   }
 
-  currentNumber(): string {
-    if (this.state.n === 0) return "0";
-    const color = isRed(this.state.n) ? "R" : "B";
-    return `${this.state.n}${color}`;
+  function currentNumber(): string {
+    if (n === 0) return "0";
+    const color = isRed(n) ? "R" : "B";
+    return `${n}${color}`;
   }
 
-  play(s: Strategy): void {
-    if (this.reachedLimit(this.props.p)) return;
-    this.setState({
-      canPlay: false,
-      lock: false,
-      status: "playing",
-      strategy: s,
-    });
+  function play(s: Strategy): void {
+    if (reachedLimit(props.p)) return;
+
+    setCanPlay(false);
+    setLock(false);
+    setStatus("playing");
+    setStrategy(s);
+
     setTimeout(() => {
-      let n = Math.floor(this.rng.random() * 37);
+      let n = Math.floor(rng.random() * 37);
       let status = <></>;
       let gain = 0;
-      let playerWin = this.state.strategy.match(n);
+      let playerWin = strategy.match(n);
       // oh yeah, the house straight up cheats. Try finding the seed now!
       if (playerWin && Math.random() > 0.9) {
         playerWin = false;
-        while (this.state.strategy.match(n)) {
+        while (strategy.match(n)) {
           n = (n + 1) % 36;
         }
       }
       if (playerWin) {
-        gain = this.state.investment * this.state.strategy.payout;
+        gain = investment * strategy.payout;
         status = (
           <>
             won <Money money={gain} />
           </>
         );
       } else {
-        gain = -this.state.investment;
+        gain = -investment;
         status = (
           <>
             lost <Money money={-gain} />
           </>
         );
       }
-      this.win(this.props.p, gain);
-      this.setState({
-        canPlay: true,
-        lock: true,
-        status: status,
-        n: n,
-      });
-      this.reachedLimit(this.props.p);
+      win(props.p, gain);
+
+      setCanPlay(true);
+      setLock(true);
+      setStatus(status);
+      setN(n);
+
+      reachedLimit(props.p);
     }, 1600);
   }
 
-  render(): React.ReactNode {
-    return (
-      <>
-        <h1>{this.currentNumber()}</h1>
-        <input
-          type="number"
-          className="text-input"
-          onChange={this.updateInvestment}
-          placeholder={"Amount to play"}
-          value={this.state.investment}
-          disabled={!this.state.canPlay}
-        />
-        <h1>{this.state.status}</h1>
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <StdButton text={"3"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(3)))} />
-              </td>
-              <td>
-                <StdButton text={"6"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(6)))} />
-              </td>
-              <td>
-                <StdButton text={"9"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(9)))} />
-              </td>
-              <td>
-                <StdButton text={"12"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(12)))} />
-              </td>
-              <td>
-                <StdButton text={"15"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(15)))} />
-              </td>
-              <td>
-                <StdButton text={"18"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(18)))} />
-              </td>
-              <td>
-                <StdButton text={"21"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(21)))} />
-              </td>
-              <td>
-                <StdButton text={"24"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(24)))} />
-              </td>
-              <td>
-                <StdButton text={"27"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(27)))} />
-              </td>
-              <td>
-                <StdButton text={"30"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(30)))} />
-              </td>
-              <td>
-                <StdButton text={"33"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(33)))} />
-              </td>
-              <td>
-                <StdButton text={"36"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(36)))} />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <StdButton text={"2"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(2)))} />
-              </td>
-              <td>
-                <StdButton text={"5"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(5)))} />
-              </td>
-              <td>
-                <StdButton text={"8"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(8)))} />
-              </td>
-              <td>
-                <StdButton text={"11"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(11)))} />
-              </td>
-              <td>
-                <StdButton text={"14"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(14)))} />
-              </td>
-              <td>
-                <StdButton text={"17"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(17)))} />
-              </td>
-              <td>
-                <StdButton text={"20"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(20)))} />
-              </td>
-              <td>
-                <StdButton text={"23"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(23)))} />
-              </td>
-              <td>
-                <StdButton text={"26"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(26)))} />
-              </td>
-              <td>
-                <StdButton text={"29"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(29)))} />
-              </td>
-              <td>
-                <StdButton text={"32"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(32)))} />
-              </td>
-              <td>
-                <StdButton text={"35"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(35)))} />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <StdButton text={"1"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(1)))} />
-              </td>
-              <td>
-                <StdButton text={"4"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(4)))} />
-              </td>
-              <td>
-                <StdButton text={"7"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(7)))} />
-              </td>
-              <td>
-                <StdButton text={"10"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(10)))} />
-              </td>
-              <td>
-                <StdButton text={"13"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(13)))} />
-              </td>
-              <td>
-                <StdButton text={"16"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(16)))} />
-              </td>
-              <td>
-                <StdButton text={"19"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(19)))} />
-              </td>
-              <td>
-                <StdButton text={"22"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(22)))} />
-              </td>
-              <td>
-                <StdButton text={"25"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(25)))} />
-              </td>
-              <td>
-                <StdButton text={"28"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(28)))} />
-              </td>
-              <td>
-                <StdButton text={"31"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(31)))} />
-              </td>
-              <td>
-                <StdButton text={"34"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(34)))} />
-              </td>
-            </tr>
-            <tr>
-              <td colSpan={4}>
-                <StdButton
-                  text={"1 to 12"}
-                  disabled={!this.state.canPlay}
-                  onClick={trusted(() => this.play(strategies.Third1))}
-                />
-              </td>
-              <td colSpan={4}>
-                <StdButton
-                  text={"13 to 24"}
-                  disabled={!this.state.canPlay}
-                  onClick={trusted(() => this.play(strategies.Third2))}
-                />
-              </td>
-              <td colSpan={4}>
-                <StdButton
-                  text={"25 to 36"}
-                  disabled={!this.state.canPlay}
-                  onClick={trusted(() => this.play(strategies.Third3))}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td colSpan={2}>
-                <StdButton
-                  text={"Red"}
-                  disabled={!this.state.canPlay}
-                  onClick={trusted(() => this.play(strategies.Red))}
-                />
-              </td>
-              <td colSpan={2}>
-                <StdButton
-                  text={"Black"}
-                  disabled={!this.state.canPlay}
-                  onClick={trusted(() => this.play(strategies.Black))}
-                />
-              </td>
-              <td colSpan={2}>
-                <StdButton
-                  text={"Odd"}
-                  disabled={!this.state.canPlay}
-                  onClick={trusted(() => this.play(strategies.Odd))}
-                />
-              </td>
-              <td colSpan={2}>
-                <StdButton
-                  text={"Even"}
-                  disabled={!this.state.canPlay}
-                  onClick={trusted(() => this.play(strategies.Even))}
-                />
-              </td>
-              <td colSpan={2}>
-                <StdButton
-                  text={"High"}
-                  disabled={!this.state.canPlay}
-                  onClick={trusted(() => this.play(strategies.High))}
-                />
-              </td>
-              <td colSpan={2}>
-                <StdButton
-                  text={"Low"}
-                  disabled={!this.state.canPlay}
-                  onClick={trusted(() => this.play(strategies.Low))}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <StdButton text={"0"} disabled={!this.state.canPlay} onClick={trusted(() => this.play(Single(0)))} />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </>
-    );
-  }
+  return (
+    <>
+      <Typography variant="h4">{currentNumber()}</Typography>
+      <TextField type="number" onChange={updateInvestment} placeholder={"Amount to play"} disabled={!canPlay} />
+      <Typography variant="h4">{status}</Typography>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(3)))}>
+                3
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(6)))}>
+                6
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(9)))}>
+                9
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(12)))}>
+                12
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(15)))}>
+                15
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(18)))}>
+                18
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(21)))}>
+                21
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(24)))}>
+                24
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(27)))}>
+                27
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(30)))}>
+                30
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(33)))}>
+                33
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(36)))}>
+                36
+              </Button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(2)))}>
+                2
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(5)))}>
+                5
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(8)))}>
+                8
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(11)))}>
+                11
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(14)))}>
+                14
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(17)))}>
+                17
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(20)))}>
+                20
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(23)))}>
+                23
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(26)))}>
+                26
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(29)))}>
+                29
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(32)))}>
+                32
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(35)))}>
+                35
+              </Button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(1)))}>
+                1
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(4)))}>
+                4
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(7)))}>
+                7
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(10)))}>
+                10
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(13)))}>
+                13
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(16)))}>
+                16
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(19)))}>
+                19
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(22)))}>
+                22
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(25)))}>
+                25
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(28)))}>
+                28
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(31)))}>
+                31
+              </Button>
+            </td>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(34)))}>
+                34
+              </Button>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={4}>
+              <Button disabled={!canPlay} onClick={trusted(() => play(strategies.Third1))}>
+                1 to 12
+              </Button>
+            </td>
+            <td colSpan={4}>
+              <Button disabled={!canPlay} onClick={trusted(() => play(strategies.Third2))}>
+                13 to 24
+              </Button>
+            </td>
+            <td colSpan={4}>
+              <Button disabled={!canPlay} onClick={trusted(() => play(strategies.Third3))}>
+                25 to 36
+              </Button>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={2}>
+              <Button disabled={!canPlay} onClick={trusted(() => play(strategies.Red))}>
+                Red
+              </Button>
+            </td>
+            <td colSpan={2}>
+              <Button disabled={!canPlay} onClick={trusted(() => play(strategies.Black))}>
+                Black
+              </Button>
+            </td>
+            <td colSpan={2}>
+              <Button disabled={!canPlay} onClick={trusted(() => play(strategies.Odd))}>
+                Odd
+              </Button>
+            </td>
+            <td colSpan={2}>
+              <Button disabled={!canPlay} onClick={trusted(() => play(strategies.Even))}>
+                Even
+              </Button>
+            </td>
+            <td colSpan={2}>
+              <Button disabled={!canPlay} onClick={trusted(() => play(strategies.High))}>
+                High
+              </Button>
+            </td>
+            <td colSpan={2}>
+              <Button disabled={!canPlay} onClick={trusted(() => play(strategies.Low))}>
+                Low
+              </Button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Button disabled={!canPlay} onClick={trusted(() => play(Single(0)))}>
+                0
+              </Button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </>
+  );
 }

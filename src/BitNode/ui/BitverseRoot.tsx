@@ -3,10 +3,42 @@ import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { IRouter } from "../../ui/Router";
 import { BitNodes } from "../BitNode";
 import { enterBitNode, setRedPillFlag } from "../../RedPill";
-import { PortalPopup } from "./PortalPopup";
-import { createPopup } from "../../ui/React/createPopup";
+import { PortalModal } from "./PortalModal";
 import { CinematicText } from "../../ui/React/CinematicText";
 import { use } from "../../ui/Context";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    level0: {
+      color: "red",
+      "&:hover": {
+        color: "#fff",
+      },
+    },
+    level1: {
+      color: "yellow",
+      "&:hover": {
+        color: "#fff",
+      },
+    },
+    level2: {
+      color: "#48d1cc",
+      "&:hover": {
+        color: "#fff",
+      },
+    },
+    level3: {
+      color: "blue",
+      "&:hover": {
+        color: "#fff",
+      },
+    },
+  }),
+);
 
 interface IPortalProps {
   n: number;
@@ -16,51 +48,53 @@ interface IPortalProps {
   enter: (router: IRouter, flume: boolean, destroyedBitNode: number, newBitNode: number) => void;
 }
 function BitNodePortal(props: IPortalProps): React.ReactElement {
-  const router = use.Router();
+  const [portalOpen, setPortalOpen] = useState(false);
+  const classes = useStyles();
   const bitNode = BitNodes[`BitNode${props.n}`];
   if (bitNode == null) {
     return <>O</>;
   }
 
-  let cssClass;
+  let cssClass = classes.level0;
   if (props.n === 12 && props.level >= 2) {
     // Repeating BitNode
-    cssClass = "level-2";
-  } else {
-    cssClass = `level-${props.level}`;
+    cssClass = classes.level2;
+  } else if (props.level === 1) {
+    cssClass = classes.level1;
+  } else if (props.level === 3) {
+    cssClass = classes.level3;
   }
-
-  function openPortalPopup(): void {
-    const popupId = "bitverse-portal-popup";
-    createPopup(popupId, PortalPopup, {
-      n: props.n,
-      level: props.level,
-      enter: props.enter,
-      router: router,
-      destroyedBitNode: props.destroyedBitNode,
-      flume: props.flume,
-      popupId: popupId,
-    });
+  if (props.level === 2) {
+    cssClass = classes.level2;
   }
 
   return (
-    <button
-      className={`bitnode ${cssClass} tooltip`}
-      aria-label={`enter-bitnode-${bitNode.number.toString()}`}
-      onClick={openPortalPopup}
-    >
-      <strong>O</strong>
-      <span className="tooltiptext">
-        <strong>
-          BitNode-{bitNode.number.toString()}
-          <br />
-          {bitNode.name}
-        </strong>
-        <br />
-        {bitNode.desc}
-        <br />
-      </span>
-    </button>
+    <>
+      <Tooltip
+        title={
+          <Typography>
+            <strong>
+              BitNode-{bitNode.number.toString()}: {bitNode.name}
+            </strong>
+            <br />
+            {bitNode.desc}
+          </Typography>
+        }
+      >
+        <span onClick={() => setPortalOpen(true)} className={cssClass}>
+          <b>O</b>
+        </span>
+      </Tooltip>
+      <PortalModal
+        open={portalOpen}
+        onClose={() => setPortalOpen(false)}
+        n={props.n}
+        level={props.level}
+        enter={props.enter}
+        destroyedBitNode={props.destroyedBitNode}
+        flume={props.flume}
+      />
+    </>
   );
 }
 
@@ -115,32 +149,32 @@ export function BitverseRoot(props: IProps): React.ReactElement {
 
   return (
     // prettier-ignore
-    <div className="noselect">
-      <pre>                          O                          </pre>
-      <pre>             |  O  O      |      O  O  |             </pre>
-      <pre>        O    |  | /     __|       \ |  |    O        </pre>
-      <pre>      O |    O  | |  O /  |  O    | |  O    | O      </pre>
-      <pre>    | | |    |  |_/  |/   |   \_  \_|  |    | | |    </pre>
-      <pre>  O | | | O  |  | O__/    |   / \__ |  |  O | | | O  </pre>
-      <pre>  | | | | |  |  |   /    /|  O  /  \|  |  | | | | |  </pre>
-      <pre>O | | |  \|  |  O  /   _/ |    /    O  |  |/  | | | O</pre>
-      <pre>| | | |O  /  |  | O   /   |   O   O |  |  \  O| | | |</pre>
-      <pre>| | |/  \/  / __| | |/ \  |   \   | |__ \  \/  \| | |</pre>
-      <pre> \| O   |  |_/    |\|   \ <BitNodePortal n={13} level={nextSourceFileFlags[13]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />    \__|    \_|  |   O |/ </pre>
-      <pre>  | |   |_/       | |    \|    /  |       \_|   | |  </pre>
-      <pre>   \|   /          \|     |   /  /          \   |/   </pre>
-      <pre>    |  <BitNodePortal n={10} level={nextSourceFileFlags[10]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />            |     |  /  |            <BitNodePortal n={11} level={nextSourceFileFlags[11]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  |    </pre>
-      <pre>  <BitNodePortal n={9} level={nextSourceFileFlags[9]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> |  |            |     |     |            |  | <BitNodePortal n={12} level={nextSourceFileFlags[12]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  </pre>
-      <pre>  | |  |            /    / \    \            |  | |  </pre>
-      <pre>   \|  |           /  <BitNodePortal n={7} level={nextSourceFileFlags[7]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> /   \ <BitNodePortal n={8} level={nextSourceFileFlags[8]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  \           |  |/   </pre>
-      <pre>    \  |          /  / |     | \  \          |  /    </pre>
-      <pre>     \ \JUMP <BitNodePortal n={5} level={nextSourceFileFlags[5]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />3R |  |  |     |  |  | R3<BitNodePortal n={6} level={nextSourceFileFlags[6]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> PMUJ/ /     </pre>
-      <pre>      \||    |   |  |  |     |  |  |   |    ||/      </pre>
-      <pre>       \|     \_ |  |  |     |  |  | _/     |/       </pre>
-      <pre>        \       \| /    \   /    \ |/       /        </pre>
-      <pre>         <BitNodePortal n={1} level={nextSourceFileFlags[1]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />       |/   <BitNodePortal n={2} level={nextSourceFileFlags[2]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  | |  <BitNodePortal n={3} level={nextSourceFileFlags[3]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />   \|       <BitNodePortal n={4} level={nextSourceFileFlags[4]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />         </pre>
-      <pre>         |       |    |  | |  |    |       |         </pre>
-      <pre>          \JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          </pre>
+    <>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>                          O                          </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>             |  O  O      |      O  O  |             </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>        O    |  | /     __|       \ |  |    O        </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>      O |    O  | |  O /  |  O    | |  O    | O      </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>    | | |    |  |_/  |/   |   \_  \_|  |    | | |    </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  O | | | O  |  | O__/    |   / \__ |  |  O | | | O  </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  | | | | |  |  |   /    /|  O  /  \|  |  | | | | |  </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>O | | |  \|  |  O  /   _/ |    /    O  |  |/  | | | O</Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>| | | |O  /  |  | O   /   |   O   O |  |  \  O| | | |</Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>| | |/  \/  / __| | |/ \  |   \   | |__ \  \/  \| | |</Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}> \| O   |  |_/    |\|   \ <BitNodePortal n={13} level={nextSourceFileFlags[13]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />    \__|    \_|  |   O |/ </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  | |   |_/       | |    \|    /  |       \_|   | |  </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>   \|   /          \|     |   /  /          \   |/   </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>    |  <BitNodePortal n={10} level={nextSourceFileFlags[10]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />            |     |  /  |            <BitNodePortal n={11} level={nextSourceFileFlags[11]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  |    </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  <BitNodePortal n={9} level={nextSourceFileFlags[9]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> |  |            |     |     |            |  | <BitNodePortal n={12} level={nextSourceFileFlags[12]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  | |  |            /    / \    \            |  | |  </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>   \|  |           /  <BitNodePortal n={7} level={nextSourceFileFlags[7]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> /   \ <BitNodePortal n={8} level={nextSourceFileFlags[8]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  \           |  |/   </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>    \  |          /  / |     | \  \          |  /    </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>     \ \JUMP <BitNodePortal n={5} level={nextSourceFileFlags[5]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />3R |  |  |     |  |  | R3<BitNodePortal n={6} level={nextSourceFileFlags[6]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> PMUJ/ /     </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>      \||    |   |  |  |     |  |  |   |    ||/      </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>       \|     \_ |  |  |     |  |  | _/     |/       </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>        \       \| /    \   /    \ |/       /        </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>         <BitNodePortal n={1} level={nextSourceFileFlags[1]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />       |/   <BitNodePortal n={2} level={nextSourceFileFlags[2]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  | |  <BitNodePortal n={3} level={nextSourceFileFlags[3]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />   \|       <BitNodePortal n={4} level={nextSourceFileFlags[4]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />         </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>         |       |    |  | |  |    |       |         </Typography>
+      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>          \JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          </Typography>
       <br />
       <br />
       <br />
@@ -168,7 +202,7 @@ export function BitverseRoot(props: IProps): React.ReactElement {
         ">  ",
         "> (Enter a new BitNode using the image above)",
       ]} />
-    </div>
+    </>
   );
 
   return <></>;

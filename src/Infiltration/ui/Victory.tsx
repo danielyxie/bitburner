@@ -1,11 +1,14 @@
 import { Factions } from "../../Faction/Factions";
 import React, { useState } from "react";
-import { StdButton } from "../../ui/React/StdButton";
 import Grid from "@mui/material/Grid";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { use } from "../../ui/Context";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 interface IProps {
   StartingDifficulty: number;
@@ -50,7 +53,7 @@ export function Victory(props: IProps): React.ReactElement {
     quitInfiltration();
   }
 
-  function changeDropdown(event: React.ChangeEvent<HTMLSelectElement>): void {
+  function changeDropdown(event: SelectChangeEvent<string>): void {
     setFaction(event.target.value);
   }
 
@@ -58,46 +61,36 @@ export function Victory(props: IProps): React.ReactElement {
     <>
       <Grid container spacing={3}>
         <Grid item xs={10}>
-          <h1>Infiltration successful!</h1>
+          <Typography variant="h4">Infiltration successful!</Typography>
         </Grid>
         <Grid item xs={10}>
-          <h2>You can trade the confidential information you found for money or reputation.</h2>
-          <select className={"dropdown"} onChange={changeDropdown}>
-            <option key={"none"} value={"none"}>
+          <Typography variant="h5" color="primary">
+            You can trade the confidential information you found for money or reputation.
+          </Typography>
+          <Select value={faction} onChange={changeDropdown}>
+            <MenuItem key={"none"} value={"none"}>
               {"none"}
-            </option>
+            </MenuItem>
             {player.factions
               .filter((f) => Factions[f].getInfo().offersWork())
               .map((f) => (
-                <option key={f} value={f}>
+                <MenuItem key={f} value={f}>
                   {f}
-                </option>
+                </MenuItem>
               ))}
-          </select>
-          <StdButton
-            onClick={trade}
-            text={
-              <>
-                {"Trade for "}
-                {Reputation(repGain)}
-                {" reputation"}
-              </>
-            }
-          />
+          </Select>
+          <Button onClick={trade}>
+            Trade for <Reputation reputation={repGain} /> reputation
+          </Button>
         </Grid>
         <Grid item xs={3}>
-          <StdButton
-            onClick={sell}
-            text={
-              <>
-                {"Sell for "}
-                <Money money={moneyGain} />
-              </>
-            }
-          />
+          <Button onClick={sell}>
+            Sell for&nbsp;
+            <Money money={moneyGain} />
+          </Button>
         </Grid>
         <Grid item xs={3}>
-          <StdButton onClick={quitInfiltration} text={"Quit"} />
+          <Button onClick={quitInfiltration}>Quit</Button>
         </Grid>
       </Grid>
     </>

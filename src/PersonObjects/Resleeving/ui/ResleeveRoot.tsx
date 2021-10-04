@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 
-import { IPlayer } from "../../IPlayer";
 import { generateResleeves } from "../Resleeving";
 import { Resleeve } from "../Resleeve";
 import { ResleeveElem } from "./ResleeveElem";
+import { use } from "../../../ui/Context";
+import Typography from "@mui/material/Typography";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Box from "@mui/material/Box";
 
 const SortOption: {
   [key: string]: string | undefined;
@@ -69,28 +73,25 @@ const SortFunctions: {
   TotalNumAugmentations: (a: Resleeve, b: Resleeve): number => a.augmentations.length - b.augmentations.length,
 };
 
-interface IProps {
-  player: IPlayer;
-}
-
-export function ResleeveRoot(props: IProps): React.ReactElement {
+export function ResleeveRoot(): React.ReactElement {
+  const player = use.Player();
   const [sort, setSort] = useState(SortOption.Cost);
   // Randomly create all Resleeves if they dont already exist
-  if (props.player.resleeves.length === 0) {
-    props.player.resleeves = generateResleeves();
+  if (player.resleeves.length === 0) {
+    player.resleeves = generateResleeves();
   }
 
-  function onSortChange(event: React.ChangeEvent<HTMLSelectElement>): void {
+  function onSortChange(event: SelectChangeEvent<string>): void {
     setSort(event.target.value);
   }
 
   const sortFunction = SortFunctions[sort];
   if (sortFunction === undefined) throw new Error(`sort function '${sort}' is undefined`);
-  props.player.resleeves.sort(sortFunction);
+  player.resleeves.sort(sortFunction);
 
   return (
     <>
-      <p style={{ display: "block", width: "75%" }}>
+      <Typography>
         Re-sleeving is the process of digitizing and transferring your consciousness into a new human body, or 'sleeve'.
         Here at VitaLife, you can purchase new specially-engineered bodies for the re-sleeve process. Many of these
         bodies even come with genetic and cybernetic Augmentations!
@@ -104,17 +105,19 @@ export function ResleeveRoot(props: IProps): React.ReactElement {
         <br />
         <br />
         NOTE: The stats and multipliers displayed on this page do NOT include your bonuses from Source-File.
-      </p>
-      <p style={{ display: "inline-block" }}>Sort By: </p>
-      <select className="dropdown" defaultValue={sort} onChange={onSortChange}>
-        {Object.keys(SortOption).map((opt) => (
-          <option key={opt} value={opt}>
-            {SortOption[opt]}
-          </option>
-        ))}
-      </select>
-      {props.player.resleeves.map((resleeve, i) => (
-        <ResleeveElem key={i} player={props.player} resleeve={resleeve} />
+      </Typography>
+      <Box display="flex" alignItems="center">
+        <Typography>Sort By: </Typography>
+        <Select value={sort} onChange={onSortChange}>
+          {Object.keys(SortOption).map((opt) => (
+            <MenuItem key={opt} value={opt}>
+              {SortOption[opt]}
+            </MenuItem>
+          ))}
+        </Select>
+      </Box>
+      {player.resleeves.map((resleeve, i) => (
+        <ResleeveElem key={i} player={player} resleeve={resleeve} />
       ))}
     </>
   );

@@ -32,12 +32,7 @@ export function OptionsModal(props: IProps): React.ReactElement {
     <Modal open={props.open} onClose={props.onClose}>
       <Box display="flex" flexDirection="row" alignItems="center">
         <Typography>Theme: </Typography>
-        <Select
-          variant="standard"
-          color="primary"
-          onChange={(event) => setTheme(event.target.value)}
-          defaultValue={props.options.theme}
-        >
+        <Select onChange={(event) => setTheme(event.target.value)} defaultValue={props.options.theme}>
           <MenuItem value="vs-dark">dark</MenuItem>
           <MenuItem value="light">light</MenuItem>
         </Select>

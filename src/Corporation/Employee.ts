@@ -1,11 +1,8 @@
 import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
-import { createElement } from "../ui/uiHelpers/createElement";
 import { EmployeePositions } from "./EmployeePositions";
 import { ICorporation } from "./ICorporation";
-import { numeralWrapper } from "../ui/numeralFormat";
-import { formatNumber } from "../utils/StringHelperFunctions";
 import { OfficeSpace } from "./OfficeSpace";
 import { IIndustry } from "./IIndustry";
 
@@ -137,74 +134,6 @@ export class Employee {
     this.hap *= mult;
     this.hap = Math.min(100, this.hap);
     return mult;
-  }
-
-  //'panel' is the DOM element on which to create the UI
-  createUI(panel: HTMLElement, corporation: ICorporation, industry: IIndustry): void {
-    const effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
-      effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
-      effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),
-      effEff = this.eff * corporation.getEmployeeEffMultiplier() * industry.getEmployeeEffMultiplier();
-    panel.style.color = "white";
-    panel.appendChild(
-      createElement("p", {
-        id: "cmpy-mgmt-employee-" + this.name + "-panel-text",
-        innerHTML:
-          "Morale: " +
-          formatNumber(this.mor, 3) +
-          "<br>" +
-          "Happiness: " +
-          formatNumber(this.hap, 3) +
-          "<br>" +
-          "Energy: " +
-          formatNumber(this.ene, 3) +
-          "<br>" +
-          "Intelligence: " +
-          formatNumber(effInt, 3) +
-          "<br>" +
-          "Charisma: " +
-          formatNumber(effCha, 3) +
-          "<br>" +
-          "Experience: " +
-          formatNumber(this.exp, 3) +
-          "<br>" +
-          "Creativity: " +
-          formatNumber(effCre, 3) +
-          "<br>" +
-          "Efficiency: " +
-          formatNumber(effEff, 3) +
-          "<br>" +
-          "Salary: " +
-          numeralWrapper.format(this.sal, "$0.000a") +
-          "/ s<br>",
-      }),
-    );
-
-    //Selector for employee position
-    const selector = createElement("select", {}) as HTMLSelectElement;
-    for (const key in EmployeePositions) {
-      if (EmployeePositions.hasOwnProperty(key)) {
-        selector.add(
-          createElement("option", {
-            text: EmployeePositions[key],
-            value: EmployeePositions[key],
-          }) as HTMLOptionElement,
-        );
-      }
-    }
-
-    selector.addEventListener("change", () => {
-      this.pos = selector.options[selector.selectedIndex].value;
-    });
-
-    //Set initial value of selector
-    for (let i = 0; i < selector.length; ++i) {
-      if (selector.options[i].value === this.pos) {
-        selector.selectedIndex = i;
-        break;
-      }
-    }
-    panel.appendChild(selector);
   }
 
   copy(): Employee {

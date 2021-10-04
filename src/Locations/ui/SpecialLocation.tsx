@@ -15,8 +15,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
-import { CreateCorporationPopup } from "../../Corporation/ui/CreateCorporationPopup";
-import { createPopup } from "../../ui/React/createPopup";
+import { CreateCorporationModal } from "../../Corporation/ui/CreateCorporationModal";
 import { LocationName } from "../data/LocationNames";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Factions } from "../../Faction/Factions";
@@ -25,7 +24,6 @@ import { joinFaction } from "../../Faction/FactionHelpers";
 import { use } from "../../ui/Context";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { RadioButtonUncheckedRounded } from "@mui/icons-material";
 
 type IProps = {
   loc: Location;
@@ -36,17 +34,6 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   const router = use.Router();
   const setRerender = useState(false)[1];
   const inBladeburner = player.inBladeburner();
-  /**
-   * Click handler for "Create Corporation" button at Sector-12 City Hall
-   */
-  function createCorporationPopup(): void {
-    const popupId = `create-start-corporation-popup`;
-    createPopup(popupId, CreateCorporationPopup, {
-      player: player,
-      popupId: popupId,
-      router: router,
-    });
-  }
 
   /**
    * Click handler for Bladeburner button at Sector-12 NSA
@@ -97,7 +84,8 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     return <Button onClick={EatNoodles}>Eat noodles</Button>;
   }
 
-  function renderCreateCorporation(): React.ReactElement {
+  function CreateCorporation(): React.ReactElement {
+    const [open, setOpen] = useState(false);
     if (!player.canAccessCorporation()) {
       return (
         <>
@@ -108,9 +96,12 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       );
     }
     return (
-      <Button disabled={!player.canAccessCorporation() || player.hasCorporation()} onClick={createCorporationPopup}>
-        Create a Corporation
-      </Button>
+      <>
+        <Button disabled={!player.canAccessCorporation() || player.hasCorporation()} onClick={() => setOpen(true)}>
+          Create a Corporation
+        </Button>
+        <CreateCorporationModal open={open} onClose={() => setOpen(false)} />
+      </>
     );
   }
 
@@ -138,7 +129,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   function renderCotMG(): React.ReactElement {
     // prettier-ignore
-    const symbol = <pre>
+    const symbol = <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>
         {"                 ``          "}<br />
         {"             -odmmNmds:      "}<br />
         {"           `hNmo:..-omNh.    "}<br />
@@ -166,28 +157,26 @@ export function SpecialLocation(props: IProps): React.ReactElement {
         {"   +MM:       :MM+           "}<br />
         {"    sNNo-.`.-omNy`           "}<br />
         {"     -smNNNNmdo-             "}<br />
-        {"        `..`                 "}</pre>
+        {"        `..`                 "}</Typography>
     if (player.factions.includes("Church of the Machine God")) {
       return (
-        <div style={{ width: "60%" }}>
-          <p>
-            <i className="text">Allison "Mother" Stanek: Welcome back my child!</i>
-          </p>
+        <>
+          <Typography>
+            <i>Allison "Mother" Stanek: Welcome back my child!</i>
+          </Typography>
           {symbol}
-        </div>
+        </>
       );
     }
 
     if (!player.canAccessCotMG()) {
       return (
         <>
-          <p>
-            <i className="text">
-              A decrepit altar stands in the middle of a dilapidated church.
-              <br />
-              <br />A symbol is carved in the altar.
-            </i>
-          </p>
+          <Typography>
+            A decrepit altar stands in the middle of a dilapidated church.
+            <br />
+            <br />A symbol is carved in the altar.
+          </Typography>
           <br />
           {symbol}
         </>
@@ -199,28 +188,28 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       player.queuedAugmentations.filter((a) => a.name !== AugmentationNames.NeuroFluxGovernor).length > 0
     ) {
       return (
-        <div style={{ width: "60%" }}>
-          <p>
-            <i className="text">
+        <>
+          <Typography>
+            <i>
               Allison "Mother" Stanek: Begone you filth! My gift must be the first modification that your body should
               have!
             </i>
-          </p>
-        </div>
+          </Typography>
+        </>
       );
     }
 
     return (
-      <div style={{ width: "60%" }}>
-        <p>
-          <i className="text">
+      <>
+        <Typography>
+          <i>
             Allison "Mother" Stanek: Welcome child, I see your body is pure. Are you ready to ascend beyond our human
             form? If you are, accept my gift.
           </i>
-        </p>
+        </Typography>
         <Button onClick={handleCotMG}>Accept Stanek's Gift</Button>
         {symbol}
-      </div>
+      </>
     );
   }
 
@@ -229,7 +218,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       return renderResleeving();
     }
     case LocationName.Sector12CityHall: {
-      return renderCreateCorporation();
+      return <CreateCorporation />;
     }
     case LocationName.Sector12NSA: {
       return renderBladeburner();

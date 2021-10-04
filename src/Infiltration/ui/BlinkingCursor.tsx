@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export function BlinkingCursor(): React.ReactElement {
-  return (
-    <span style={{ fontSize: "1em" }} className={"blinking-cursor"}>
-      |
-    </span>
-  );
+  const [on, setOn] = useState(true);
+  useEffect(() => {
+    const i = setInterval(() => setOn((old) => !old), 1000);
+    return () => clearInterval(i);
+  });
+  return <>{on ? "|" : ""}</>;
 }

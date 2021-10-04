@@ -19,8 +19,8 @@ export function StatsTable({ rows, title, wide }: IProps): React.ReactElement {
       {title && <Typography>{title}</Typography>}
       <T size="small" padding="none">
         <TableBody>
-          {rows.map((row: any[]) => (
-            <TableRow key={row[0]}>
+          {rows.map((row: any[], i: number) => (
+            <TableRow key={i}>
               {row.map((elem: any, i: number) => (
                 <TableCell key={i} align={i !== 0 ? "right" : "left"}>
                   <Typography noWrap>{elem}</Typography>

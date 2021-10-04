@@ -2,6 +2,7 @@ import * as React from "react";
 import { OperationList } from "./OperationList";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import Typography from "@mui/material/Typography";
 
 interface IProps {
   bladeburner: IBladeburner;
@@ -11,7 +12,7 @@ interface IProps {
 export function OperationPage(props: IProps): React.ReactElement {
   return (
     <>
-      <p style={{ display: "block", margin: "4px", padding: "4px" }}>
+      <Typography>
         Carry out operations for the Bladeburner division. Failing an operation will reduce your Bladeburner rank. It
         will also cause you to lose HP, which can lead to hospitalization. In general, operations are harder and more
         punishing than contracts, but are also more rewarding.
@@ -27,7 +28,7 @@ export function OperationPage(props: IProps): React.ReactElement {
         <br />
         You can unlock higher-level operations by successfully completing them. Higher-level operations are more
         difficult, but grant more rank and experience.
-      </p>
+      </Typography>
       <OperationList bladeburner={props.bladeburner} player={props.player} />
     </>
   );

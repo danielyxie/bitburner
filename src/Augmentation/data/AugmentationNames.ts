@@ -41,6 +41,7 @@ export const AugmentationNames: IMap<string> = {
   CranialSignalProcessorsG4: "Cranial Signal Processors - Gen IV",
   CranialSignalProcessorsG5: "Cranial Signal Processors - Gen V",
   NeuronalDensification: "Neuronal Densification",
+  NeuroreceptorManager: "Neuroreceptor Management Implant",
   NuoptimalInjectorImplant: "Nuoptimal Nootropic Injector Implant",
   SpeechEnhancement: "Speech Enhancement",
   FocusWire: "FocusWire",

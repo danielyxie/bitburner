@@ -7,7 +7,6 @@ import { hasHacknetServers, hasMaxNumberHacknetServers } from "../HacknetHelpers
 import { Player } from "../../Player";
 import { Money } from "../../ui/React/Money";
 
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 interface IProps {
@@ -18,28 +17,30 @@ interface IProps {
 
 export function PurchaseButton(props: IProps): React.ReactElement {
   const cost = props.cost;
-  let className = Player.canAfford(cost) ? "std-button" : "std-button-disabled";
   let text;
-  let style = {};
   if (hasHacknetServers(Player)) {
     if (hasMaxNumberHacknetServers(Player)) {
-      className = "std-button-disabled";
       text = <>Hacknet Server limit reached</>;
-      style = { color: "red" };
     } else {
       text = (
         <>
-          Purchase Hacknet Server - <Money money={cost} player={Player} />
+          Purchase Hacknet Server -&nbsp;
+          <Money money={cost} player={Player} />
         </>
       );
     }
   } else {
     text = (
       <>
-        Purchase Hacknet Node - <Money money={cost} player={Player} />
+        Purchase Hacknet Node -&nbsp;
+        <Money money={cost} player={Player} />
       </>
     );
   }
 
-  return <Button onClick={props.onClick}>{text}</Button>;
+  return (
+    <Button disabled={!Player.canAfford(cost)} onClick={props.onClick}>
+      {text}
+    </Button>
+  );
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { use } from "../../ui/Context";
 import { getAvailableCreatePrograms } from "../ProgramHelpers";
 
-import { Box, Tooltip, Typography } from "@mui/material";
+import { Tooltip, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 
 export function ProgramsRoot(): React.ReactElement {
@@ -33,7 +33,7 @@ export function ProgramsRoot(): React.ReactElement {
 
         return (
           <React.Fragment key={program.name}>
-            <Tooltip title={create.tooltip} disableInteractive>
+            <Tooltip title={create.tooltip}>
               <Button
                 sx={{ my: 1 }}
                 onClick={(event) => {

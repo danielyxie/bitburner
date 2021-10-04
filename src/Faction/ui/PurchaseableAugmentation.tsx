@@ -2,10 +2,10 @@
  * React component for displaying a single augmentation for purchase through
  * the faction UI
  */
-import * as React from "react";
+import React, { useState } from "react";
 
 import { getNextNeurofluxLevel, hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
-import { PurchaseAugmentationPopup } from "./PurchaseAugmentationPopup";
+import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
@@ -14,7 +14,6 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
-import { createPopup } from "../../ui/React/createPopup";
 
 import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
 import Button from "@mui/material/Button";
@@ -58,7 +57,7 @@ function Requirements(props: IReqProps): React.ReactElement {
       </TableCell>
       <TableCell key={2}>
         <Typography color={props.hasRep ? "primary" : "error"}>
-          Requires {Reputation(props.rep)} faction reputation
+          Requires <Reputation reputation={props.rep} /> faction reputation
         </Typography>
       </TableCell>
     </React.Fragment>
@@ -74,6 +73,7 @@ interface IProps {
 }
 
 export function PurchaseableAugmentation(props: IProps): React.ReactElement {
+  const [open, setOpen] = useState(false);
   const aug = Augmentations[props.augName];
   if (aug == null) throw new Error(`aug ${props.augName} does not exists`);
 
@@ -122,14 +122,7 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
   function handleClick(): void {
     if (color === "error") return;
     if (!Settings.SuppressBuyAugmentationConfirmation) {
-      const popupId = "purchase-augmentation-popup";
-      createPopup(popupId, PurchaseAugmentationPopup, {
-        aug: aug,
-        faction: props.faction,
-        player: props.p,
-        rerender: props.rerender,
-        popupId: popupId,
-      });
+      setOpen(true);
     } else {
       purchaseAugmentation(aug, props.faction);
       props.rerender();
@@ -143,17 +136,18 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
           <Button onClick={handleClick} color={color}>
             Buy
           </Button>
+          <PurchaseAugmentationModal
+            open={open}
+            onClose={() => setOpen(false)}
+            aug={aug}
+            faction={props.faction}
+            rerender={props.rerender}
+          />
         </TableCell>
       )}
       <TableCell key={1}>
         <Box display="flex">
-          <Tooltip
-            title={<Typography>{tooltip}</Typography>}
-            placement="top"
-            disableFocusListener
-            disableTouchListener
-            disableInteractive
-          >
+          <Tooltip title={<Typography>{tooltip}</Typography>} placement="top">
             <Typography>{btnTxt}</Typography>
           </Tooltip>
         </Box>

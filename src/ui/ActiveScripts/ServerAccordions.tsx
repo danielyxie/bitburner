@@ -85,9 +85,7 @@ export function ServerAccordions(props: IProps): React.ReactElement {
       <TextField
         value={filter}
         onChange={handleFilterChange}
-        color="primary"
         autoFocus
-        variant="standard"
         InputProps={{
           startAdornment: <SearchIcon />,
           spellCheck: false,

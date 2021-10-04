@@ -133,7 +133,17 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
     }
     case 9: {
       // Hacktocracy
-      // This has non-multiplier effects
+      let mult = 0;
+      for (let i = 0; i < srcFile.lvl; ++i) {
+        mult += 8 / Math.pow(2, i);
+      }
+      const incMult = 1 + mult / 100;
+      const decMult = 1 - mult / 100;
+      Player.hacknet_node_core_cost_mult *= decMult;
+      Player.hacknet_node_level_cost_mult *= decMult;
+      Player.hacknet_node_money_mult *= incMult;
+      Player.hacknet_node_purchase_cost_mult *= decMult;
+      Player.hacknet_node_ram_cost_mult *= decMult;
       break;
     }
     case 10: {

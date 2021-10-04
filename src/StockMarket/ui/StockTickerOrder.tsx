@@ -8,40 +8,33 @@ import { PositionTypes } from "../data/PositionTypes";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 type IProps = {
   cancelOrder: (params: any) => void;
   order: Order;
 };
 
-export class StockTickerOrder extends React.Component<IProps, any> {
-  constructor(props: IProps) {
-    super(props);
-
-    this.handleCancelOrderClick = this.handleCancelOrderClick.bind(this);
+export function StockTickerOrder(props: IProps): React.ReactElement {
+  function handleCancelOrderClick(): void {
+    props.cancelOrder({ order: props.order });
   }
 
-  handleCancelOrderClick(): void {
-    this.props.cancelOrder({ order: this.props.order });
-  }
+  const order = props.order;
 
-  render(): React.ReactNode {
-    const order = this.props.order;
+  const posTxt = order.pos === PositionTypes.Long ? "Long Position" : "Short Position";
+  const txt = (
+    <>
+      {order.type} - {posTxt} - {numeralWrapper.formatShares(order.shares)} @ <Money money={order.price} />
+    </>
+  );
 
-    const posTxt = order.pos === PositionTypes.Long ? "Long Position" : "Short Position";
-    const txt = (
-      <>
-        {order.type} - {posTxt} - {numeralWrapper.formatShares(order.shares)} @ <Money money={order.price} />
-      </>
-    );
-
-    return (
-      <li>
-        {txt}
-        <button className={"std-button stock-market-order-cancel-btn"} onClick={this.handleCancelOrderClick}>
-          Cancel Order
-        </button>
-      </li>
-    );
-  }
+  return (
+    <Box display="flex" alignItems="center">
+      <Typography>{txt}</Typography>
+      <Button onClick={handleCancelOrderClick}>Cancel Order</Button>
+    </Box>
+  );
 }

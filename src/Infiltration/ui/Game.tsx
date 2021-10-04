@@ -11,6 +11,7 @@ import { Cyberpunk2077Game } from "./Cyberpunk2077Game";
 import { MinesweeperGame } from "./MinesweeperGame";
 import { WireCuttingGame } from "./WireCuttingGame";
 import { Victory } from "./Victory";
+import Typography from "@mui/material/Typography";
 
 interface IProps {
   StartingDifficulty: number;
@@ -130,9 +131,9 @@ export function Game(props: IProps): React.ReactElement {
     <>
       <Grid container spacing={3}>
         <Grid item xs={3}>
-          <h3>
+          <Typography>
             Level: {level}&nbsp;/&nbsp;{props.MaxLevel}
-          </h3>
+          </Typography>
           <Progress />
         </Grid>
 

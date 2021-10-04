@@ -2,10 +2,10 @@ import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { logBoxCreate } from "../../ui/React/LogBox";
 import { findRunningScriptByPid } from "../../Script/ScriptHelpers";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 import { compareArrays } from "../../utils/helpers/compareArrays";
+import { LogBoxEvents } from "../../ui/React/LogBoxManager";
 
 export function tail(
   terminal: ITerminal,
@@ -34,7 +34,7 @@ export function tail(
       // match, use it!
       for (let i = 0; i < server.runningScripts.length; ++i) {
         if (server.runningScripts[i].filename === scriptName && compareArrays(server.runningScripts[i].args, args)) {
-          logBoxCreate(server.runningScripts[i]);
+          LogBoxEvents.emit(server.runningScripts[i]);
           return;
         }
       }
@@ -53,7 +53,7 @@ export function tail(
 
       // If there's only 1 possible choice, use that.
       if (candidates.length === 1) {
-        logBoxCreate(candidates[0]);
+        LogBoxEvents.emit(candidates[0]);
         return;
       }
 
@@ -73,7 +73,7 @@ export function tail(
         terminal.error("No such script exists");
         return;
       }
-      logBoxCreate(runningScript);
+      LogBoxEvents.emit(runningScript);
     }
   } catch (e) {
     terminal.error(e + "");

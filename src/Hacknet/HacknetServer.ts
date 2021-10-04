@@ -77,8 +77,12 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
   // Process this Hacknet Server in the game loop. Returns the number of hashes generated
   process(numCycles = 1): number {
     const seconds = (numCycles * CONSTANTS.MilliPerCycle) / 1000;
+    this.onlineTimeSeconds += seconds;
 
-    return this.hashRate * seconds;
+    const hashes = this.hashRate * seconds;
+    this.totalHashesGenerated += hashes;
+
+    return hashes;
   }
 
   upgradeCache(levels: number): void {

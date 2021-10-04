@@ -12,34 +12,48 @@ import { RamButton } from "./RamButton";
 import { TorButton } from "./TorButton";
 import { CoresButton } from "./CoresButton";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { getPurchaseServerCost } from "../../Server/ServerPurchases";
 
-import { StdButton } from "../../ui/React/StdButton";
 import { Money } from "../../ui/React/Money";
-import { createPopup } from "../../ui/React/createPopup";
-import { PurchaseServerPopup } from "./PurchaseServerPopup";
+import { use } from "../../ui/Context";
+import { PurchaseServerModal } from "./PurchaseServerModal";
+
+interface IServerProps {
+  ram: number;
+  rerender: () => void;
+}
+
+function ServerButton(props: IServerProps): React.ReactElement {
+  const [open, setOpen] = useState(false);
+  const player = use.Player();
+  const cost = getPurchaseServerCost(props.ram);
+  return (
+    <>
+      <Button onClick={() => setOpen(true)} disabled={!player.canAfford(cost)}>
+        Purchase {props.ram}GB Server&nbsp;-&nbsp;
+        <Money money={cost} player={player} />
+      </Button>
+      <PurchaseServerModal
+        open={open}
+        onClose={() => setOpen(false)}
+        ram={props.ram}
+        cost={cost}
+        rerender={props.rerender}
+      />
+      <br />
+    </>
+  );
+}
 
 type IProps = {
   loc: Location;
-  p: IPlayer;
 };
 
 export function TechVendorLocation(props: IProps): React.ReactElement {
+  const player = use.Player();
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
-  }
-
-  function openPurchaseServer(ram: number, cost: number, p: IPlayer): void {
-    const popupId = "purchase-server-popup";
-    createPopup(popupId, PurchaseServerPopup, {
-      ram: ram,
-      cost: cost,
-      p: p,
-      popupId: popupId,
-      rerender: rerender,
-    });
   }
 
   useEffect(() => {
@@ -49,31 +63,22 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
 
   const purchaseServerButtons: React.ReactNode[] = [];
   for (let i = props.loc.techVendorMinRam; i <= props.loc.techVendorMaxRam; i *= 2) {
-    const cost = getPurchaseServerCost(i);
-    purchaseServerButtons.push(
-      <>
-        <Button key={i} onClick={() => openPurchaseServer(i, cost, props.p)} disabled={!props.p.canAfford(cost)}>
-          Purchase {i}GB Server&nbsp;-&nbsp;
-          <Money money={cost} player={props.p} />
-        </Button>
-        <br />
-      </>,
-    );
+    purchaseServerButtons.push(<ServerButton key={i} ram={i} rerender={rerender} />);
   }
 
   return (
-    <div>
+    <>
       {purchaseServerButtons}
       <br />
-      <Typography className="noselect">
+      <Typography>
         <i>"You can order bigger servers via scripts. We don't take custom order in person."</i>
       </Typography>
       <br />
-      <TorButton p={props.p} rerender={rerender} />
+      <TorButton p={player} rerender={rerender} />
       <br />
-      <RamButton p={props.p} rerender={rerender} />
+      <RamButton p={player} rerender={rerender} />
       <br />
-      <CoresButton p={props.p} rerender={rerender} />
-    </div>
+      <CoresButton p={player} rerender={rerender} />
+    </>
   );
 }

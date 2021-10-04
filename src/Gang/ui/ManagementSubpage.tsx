@@ -2,20 +2,16 @@
  * React Component for the subpage that manages gang members, the main page.
  */
 import React from "react";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { GangStats } from "./GangStats";
-import { Gang } from "../Gang";
 import { GangMemberList } from "./GangMemberList";
+import { useGang } from "./Context";
+import Typography from "@mui/material/Typography";
 
-interface IProps {
-  gang: Gang;
-  player: IPlayer;
-}
-
-export function ManagementSubpage(props: IProps): React.ReactElement {
+export function ManagementSubpage(): React.ReactElement {
+  const gang = useGang();
   return (
-    <div style={{ display: "block" }}>
-      <p className="noselect" style={{ width: "70%" }}>
+    <>
+      <Typography>
         This page is used to manage your gang members and get an overview of your gang's stats.
         <br />
         <br />
@@ -23,7 +19,7 @@ export function ManagementSubpage(props: IProps): React.ReactElement {
         too difficult. Consider training that member's stats or choosing an easier task. The tasks closer to the top of
         the dropdown list are generally easier. Alternatively, the gang member's low production might be due to the fact
         that your wanted level is too high. Consider assigning a few members to the '
-        {props.gang.isHackingGang ? "Ethical Hacking" : "Vigilante Justice"}' task to lower your wanted level.
+        {gang.isHackingGang ? "Ethical Hacking" : "Vigilante Justice"}' task to lower your wanted level.
         <br />
         <br />
         Installing Augmentations does NOT reset your progress with your Gang. Furthermore, after installing
@@ -31,11 +27,11 @@ export function ManagementSubpage(props: IProps): React.ReactElement {
         <br />
         <br />
         You can also manage your gang programmatically through Netscript using the Gang API
-      </p>
+      </Typography>
       <br />
-      <GangStats gang={props.gang} />
+      <GangStats />
       <br />
-      <GangMemberList gang={props.gang} player={props.player} />
-    </div>
+      <GangMemberList />
+    </>
   );
 }

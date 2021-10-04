@@ -3,10 +3,10 @@ import { Fragment, Fragments, NoneFragment } from "../Fragment";
 import { ActiveFragment } from "../ActiveFragment";
 import { FragmentType } from "../FragmentType";
 import { IStaneksGift } from "../IStaneksGift";
-import { StdButton } from "../../ui/React/StdButton";
 import { Cell } from "./Cell";
 import { FragmentInspector } from "./FragmentInspector";
 import { FragmentSelector } from "./FragmentSelector";
+import Button from "@mui/material/Button";
 
 function zeros(dimensions: number[]): any {
   const array = [];
@@ -129,13 +129,11 @@ export function Grid(props: GridProps): React.ReactElement {
   }
 
   return (
-    <div>
+    <>
+      {elems}
       <FragmentSelector gift={props.gift} selectFragment={updateSelectedFragment} />
-      <StdButton onClick={clear} text="Clear" />
-      <div style={{ float: "left" }}>{elems}</div>
-      <div>
-        <FragmentInspector fragment={props.gift.fragmentAt(pos[0], pos[1])} />
-      </div>
-    </div>
+      <Button onClick={clear}>Clear</Button>
+      <FragmentInspector fragment={props.gift.fragmentAt(pos[0], pos[1])} />
+    </>
   );
 }

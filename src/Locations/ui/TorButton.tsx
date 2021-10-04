@@ -25,7 +25,8 @@ export function TorButton(props: IProps): React.ReactElement {
 
   return (
     <Button disabled={!props.p.canAfford(CONSTANTS.TorRouterCost)} onClick={buy}>
-      Purchase TOR router - <Money money={CONSTANTS.TorRouterCost} player={props.p} />
+      Purchase TOR router -&nbsp;
+      <Money money={CONSTANTS.TorRouterCost} player={props.p} />
     </Button>
   );
 }

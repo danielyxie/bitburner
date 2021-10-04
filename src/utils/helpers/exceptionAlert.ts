@@ -21,6 +21,5 @@ export function exceptionAlert(e: IError | string): void {
       "message as well as details about how to reproduce the bug.<br><br>" +
       "If you want to be safe, I suggest refreshing the game WITHOUT saving so that your " +
       "safe doesn't get corrupted",
-    false,
   );
 }

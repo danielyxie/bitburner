@@ -12,10 +12,10 @@ interface ICityProps {
 function City(props: ICityProps): React.ReactElement {
   if (props.city !== props.currentCity) {
     return (
-      <Tooltip title={props.city}>
+      <Tooltip title={<Typography>{props.city}</Typography>}>
         <span
           onClick={() => props.onTravel(props.city)}
-          style={{ color: "white", lineHeight: "1em", whiteSpace: "pre" }}
+          style={{ color: "white", lineHeight: "1em", whiteSpace: "pre", cursor: "pointer" }}
         >
           {props.city[0]}
         </span>
@@ -33,7 +33,7 @@ interface IProps {
 export function WorldMap(props: IProps): React.ReactElement {
   // prettier-ignore
   return (
-    <div className="noselect">
+    <>
         <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>               ,_   .  ._. _.  .</Typography>
         <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>           , _-\','|~\~      ~/      ;-'_   _-'     ,;_;_,    ~~-</Typography>
         <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  /~~-\_/-'~'--' \~~| ',    ,'      /  / ~|-_\_/~/~      ~~--~~~~'--_</Typography>
@@ -56,6 +56,6 @@ export function WorldMap(props: IProps): React.ReactElement {
         <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>                    / ,'                                      ~</Typography>
         <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>                    ',|  ~</Typography>
         <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>                      ~'</Typography>
-    </div>
+    </>
   );
 }

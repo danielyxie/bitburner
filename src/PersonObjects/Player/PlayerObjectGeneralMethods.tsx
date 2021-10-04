@@ -519,7 +519,10 @@ export function resetWorkStatus(this: IPlayer, generalType?: string, group?: str
 }
 
 export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
-  const focusBonus = this.focus ? 1 : 0.8;
+  let focusBonus = 1;
+  if (!this.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
+    focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
+  }
   const hackExpGain = focusBonus * this.workHackExpGainRate * numCycles;
   const strExpGain = focusBonus * this.workStrExpGainRate * numCycles;
   const defExpGain = focusBonus * this.workDefExpGainRate * numCycles;
@@ -623,7 +626,7 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
       You earned a total of: <br />
       <Money money={this.workMoneyGained} />
       <br />
-      {Reputation(this.workRepGained)} reputation for the company <br />
+      <Reputation reputation={this.workRepGained} /> reputation for the company <br />
       {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
       {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
       {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
@@ -744,7 +747,7 @@ export function finishWorkPartTime(this: IPlayer, sing = false): string {
       You earned a total of: <br />
       <Money money={this.workMoneyGained} />
       <br />
-      {Reputation(this.workRepGained)} reputation for the company <br />
+      <Reputation reputation={this.workRepGained} /> reputation for the company <br />
       {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
       {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
       {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
@@ -916,7 +919,7 @@ export function finishFactionWork(this: IPlayer, cancelled: boolean, sing = fals
         You earned a total of: <br />
         <Money money={this.workMoneyGained} />
         <br />
-        {Reputation(this.workRepGained)} reputation for the faction <br />
+        <Reputation reputation={this.workRepGained} /> reputation for the faction <br />
         {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
         {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
         {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />

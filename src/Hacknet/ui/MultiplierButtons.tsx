@@ -9,14 +9,17 @@ import { PurchaseMultipliers } from "../data/Constants";
 import Button from "@mui/material/Button";
 
 interface IMultiplierProps {
-  className: string;
-  key: string;
+  disabled: boolean;
   onClick: () => void;
   text: string;
 }
 
 function MultiplierButton(props: IMultiplierProps): React.ReactElement {
-  return <Button onClick={props.onClick}>{props.text}</Button>;
+  return (
+    <Button disabled={props.disabled} onClick={props.onClick}>
+      {props.text}
+    </Button>
+  );
 }
 
 interface IProps {
@@ -35,13 +38,12 @@ export function MultiplierButtons(props: IProps): React.ReactElement {
   for (let i = 0; i < mults.length; ++i) {
     const mult = mults[i];
     const btnProps = {
-      className: props.purchaseMultiplier === PurchaseMultipliers[mult] ? "std-button-disabled" : "std-button",
-      key: mult,
+      disabled: props.purchaseMultiplier === PurchaseMultipliers[mult],
       onClick: onClicks[i],
       text: mult,
     };
 
-    buttons.push(<MultiplierButton {...btnProps} />);
+    buttons.push(<MultiplierButton key={mult} {...btnProps} />);
   }
 
   return <>{buttons}</>;

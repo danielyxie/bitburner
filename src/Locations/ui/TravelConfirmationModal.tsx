@@ -1,5 +1,4 @@
 import React from "react";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { CONSTANTS } from "../../Constants";
 import { Money } from "../../ui/React/Money";
 import { Modal } from "../../ui/React/Modal";

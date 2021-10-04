@@ -33,13 +33,22 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IProps {
   open: boolean;
   onClose: () => void;
-  children: JSX.Element[] | JSX.Element | React.ReactElement[] | React.ReactElement;
+  children: React.ReactNode;
 }
 
 export const Modal = (props: IProps): React.ReactElement => {
   const classes = useStyles();
   return (
-    <M open={props.open} onClose={props.onClose} closeAfterTransition className={classes.modal}>
+    <M
+      disableRestoreFocus
+      disableScrollLock
+      disableEnforceFocus
+      disableAutoFocus
+      open={props.open}
+      onClose={props.onClose}
+      closeAfterTransition
+      className={classes.modal}
+    >
       <Fade in={props.open}>
         <div className={classes.paper}>
           <Box sx={{ m: 2 }}>{props.children}</Box>

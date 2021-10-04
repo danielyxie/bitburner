@@ -5,6 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Money } from "../../ui/React/Money";
@@ -82,14 +83,14 @@ export function StockMarket(): React.ReactElement {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Stock Market</h2>
+        <Typography>Stock Market</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <table>
           <tbody>
             <tr>
               <td>
-                <span className="text">Symbol:</span>
+                <Typography>Symbol:</Typography>
               </td>
               <td>
                 <TextField placeholder="symbol/'all'" onChange={setStockSymbolField} />
@@ -97,7 +98,7 @@ export function StockMarket(): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">Price:</span>
+                <Typography>Price:</Typography>
               </td>
               <td>
                 <TextField placeholder="$$$" onChange={setStockPriceField} />
@@ -106,7 +107,7 @@ export function StockMarket(): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">Caps:</span>
+                <Typography>Caps:</Typography>
               </td>
               <td>
                 <Button onClick={viewStockCaps}>View stock caps</Button>

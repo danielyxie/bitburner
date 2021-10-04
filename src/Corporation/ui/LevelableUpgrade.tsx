@@ -2,37 +2,35 @@
 import React from "react";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { ICorporation } from "../ICorporation";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { CorporationUpgrade } from "../data/CorporationUpgrades";
 import { LevelUpgrade } from "../Actions";
 import { MoneyCost } from "./MoneyCost";
+import { useCorporation } from "./Context";
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
 interface IProps {
   upgrade: CorporationUpgrade;
-  corp: ICorporation;
-  player: IPlayer;
   rerender: () => void;
 }
 
 export function LevelableUpgrade(props: IProps): React.ReactElement {
+  const corp = useCorporation();
   const data = props.upgrade;
-  const level = props.corp.upgrades[data[0]];
+  const level = corp.upgrades[data[0]];
 
   const baseCost = data[1];
   const priceMult = data[2];
   const cost = baseCost * Math.pow(priceMult, level);
 
-  const text = (
-    <>
-      {data[4]} - <MoneyCost money={cost} corp={props.corp} />
-    </>
-  );
   const tooltip = data[5];
   function onClick(): void {
-    if (props.corp.funds.lt(cost)) return;
+    if (corp.funds.lt(cost)) return;
     try {
-      LevelUpgrade(props.corp, props.upgrade);
+      LevelUpgrade(corp, props.upgrade);
     } catch (err) {
       dialogBoxCreate(err + "");
     }
@@ -40,9 +38,15 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
   }
 
   return (
-    <button className={"cmpy-mgmt-upgrade-div tooltip"} style={{ width: "45%" }} onClick={onClick}>
-      {text}
-      <span className={"tooltiptext"}>{tooltip}</span>
-    </button>
+    <Grid item xs={4}>
+      <Box display="flex" alignItems="center" flexDirection="row-reverse">
+        <Button disabled={corp.funds.lt(cost)} sx={{ mx: 1 }} onClick={onClick}>
+          <MoneyCost money={cost} corp={corp} />
+        </Button>
+        <Tooltip title={tooltip}>
+          <Typography>{data[4]} </Typography>
+        </Tooltip>
+      </Box>
+    </Grid>
   );
 }

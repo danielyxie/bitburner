@@ -6,8 +6,6 @@ import React, { useState, useEffect } from "react";
 import { HashManager } from "../HashManager";
 import { HashUpgrades } from "../HashUpgrades";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
-
 import { Hashes } from "../../ui/React/Hashes";
 import { HacknetUpgradeElem } from "./HacknetUpgradeElem";
 import { Modal } from "../../ui/React/Modal";
@@ -40,7 +38,9 @@ export function HashUpgradeModal(props: IProps): React.ReactElement {
     <Modal open={props.open} onClose={props.onClose}>
       <>
         <Typography>Spend your hashes on a variety of different upgrades</Typography>
-        <Typography>Hashes: {Hashes(player.hashManager.hashes)}</Typography>
+        <Typography>
+          Hashes: <Hashes hashes={player.hashManager.hashes} />
+        </Typography>
         {Object.keys(HashUpgrades).map((upgName) => {
           const upg = HashUpgrades[upgName];
           return (

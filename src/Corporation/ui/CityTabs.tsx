@@ -1,87 +1,47 @@
 // React Components for the Corporation UI's City navigation tabs
 // These allow player to navigate between different cities for each industry
 import React, { useState } from "react";
-import { CityTab } from "./CityTab";
-import { ExpandNewCityPopup } from "./ExpandNewCityPopup";
-import { createPopup } from "../../ui/React/createPopup";
-import { ICorporation } from "../ICorporation";
-import { IIndustry } from "../IIndustry";
 import { OfficeSpace } from "../OfficeSpace";
 import { Industry } from "./Industry";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-
-interface IExpandButtonProps {
-  corp: ICorporation;
-  division: IIndustry;
-  setCity: (name: string) => void;
-}
-
-function ExpandButton(props: IExpandButtonProps): React.ReactElement {
-  function openExpandNewCityModal(): void {
-    const popupId = "cmpy-mgmt-expand-city-popup";
-    createPopup(popupId, ExpandNewCityPopup, {
-      popupId: popupId,
-      corp: props.corp,
-      division: props.division,
-      cityStateSetter: props.setCity,
-    });
-  }
-
-  const possibleCities = Object.keys(props.division.offices).filter(
-    (cityName: string) => props.division.offices[cityName] === 0,
-  );
-  if (possibleCities.length === 0) return <></>;
-
-  return (
-    <CityTab
-      current={false}
-      key={"Expand into new City"}
-      name={"Expand into new City"}
-      onClick={openExpandNewCityModal}
-    />
-  );
-}
+import { ExpandNewCity } from "./ExpandNewCity";
+import { useDivision } from "./Context";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 
 interface IProps {
   city: string;
-  division: IIndustry;
-  corp: ICorporation;
-  player: IPlayer;
   rerender: () => void;
 }
 
 export function CityTabs(props: IProps): React.ReactElement {
+  const division = useDivision();
   const [city, setCity] = useState(props.city);
 
-  const office = props.division.offices[city];
+  const office = division.offices[city];
   if (office === 0) {
     setCity("Sector-12");
     return <></>;
   }
 
+  const canExpand =
+    Object.keys(division.offices).filter((cityName: string) => division.offices[cityName] === 0).length > 0;
+  function handleChange(event: React.SyntheticEvent, tab: string): void {
+    setCity(tab);
+  }
   return (
     <>
-      {Object.values(props.division.offices).map(
-        (office: OfficeSpace | 0) =>
-          office !== 0 && (
-            <CityTab
-              current={city === office.loc}
-              key={office.loc}
-              name={office.loc}
-              onClick={() => setCity(office.loc)}
-            />
-          ),
+      <Tabs variant="fullWidth" value={city} onChange={handleChange}>
+        {Object.values(division.offices).map(
+          (office: OfficeSpace | 0) => office !== 0 && <Tab key={office.loc} label={office.loc} value={office.loc} />,
+        )}
+        {canExpand && <Tab label={"Expand"} value={"Expand"} />}
+      </Tabs>
+
+      {city !== "Expand" ? (
+        <Industry rerender={props.rerender} city={city} warehouse={division.warehouses[city]} office={office} />
+      ) : (
+        <ExpandNewCity cityStateSetter={setCity} />
       )}
-      <ExpandButton corp={props.corp} division={props.division} setCity={setCity} />
-      <Industry
-        rerender={props.rerender}
-        corp={props.corp}
-        division={props.division}
-        city={city}
-        warehouse={props.division.warehouses[city]}
-        office={office}
-        player={props.player}
-      />
     </>
   );
 }

@@ -129,6 +129,7 @@ interface IDefaultSettings {
     cha: string;
     int: string;
     rep: string;
+    disabled: string;
   };
 }
 
@@ -199,6 +200,7 @@ export const defaultSettings: IDefaultSettings = {
     cha: "#a671d1",
     int: "#6495ed",
     rep: "#faffdf",
+    disabled: "#66cfbc",
   },
 };
 
@@ -258,6 +260,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     cha: defaultSettings.theme.cha,
     int: defaultSettings.theme.int,
     rep: defaultSettings.theme.rep,
+    disabled: defaultSettings.theme.disabled,
   },
   init() {
     Object.assign(Settings, defaultSettings);

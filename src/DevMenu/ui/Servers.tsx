@@ -5,6 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { AllServers } from "../../Server/AllServers";
@@ -77,17 +78,17 @@ export function Servers(): React.ReactElement {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Servers</h2>
+        <Typography>Servers</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <table>
           <tbody>
             <tr>
               <td>
-                <span className="text">Server:</span>
+                <Typography>Server:</Typography>
               </td>
               <td colSpan={2}>
-                <Select id="dev-servers-dropdown" className="dropdown" onChange={setServerDropdown} value={server}>
+                <Select id="dev-servers-dropdown" onChange={setServerDropdown} value={server}>
                   {Object.values(AllServers).map((server) => (
                     <MenuItem key={server.hostname} value={server.hostname}>
                       {server.hostname}
@@ -98,7 +99,7 @@ export function Servers(): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">Root:</span>
+                <Typography>Root:</Typography>
               </td>
               <td>
                 <Button onClick={rootServer}>Root one</Button>
@@ -109,7 +110,7 @@ export function Servers(): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">Security:</span>
+                <Typography>Security:</Typography>
               </td>
               <td>
                 <Button onClick={minSecurity}>Min one</Button>
@@ -120,7 +121,7 @@ export function Servers(): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text">Money:</span>
+                <Typography>Money:</Typography>
               </td>
               <td>
                 <Button onClick={maxMoney}>Max one</Button>

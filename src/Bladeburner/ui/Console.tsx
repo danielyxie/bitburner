@@ -2,18 +2,48 @@ import React, { useState, useRef, useEffect } from "react";
 import { IBladeburner } from "../IBladeburner";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import Paper from "@mui/material/Paper";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 
 interface ILineProps {
   content: any;
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    textfield: {
+      margin: theme.spacing(0),
+      width: "100%",
+    },
+    input: {
+      backgroundColor: "#000",
+    },
+    nopadding: {
+      padding: theme.spacing(0),
+    },
+    preformatted: {
+      whiteSpace: "pre-wrap",
+      margin: theme.spacing(0),
+    },
+    list: {
+      padding: theme.spacing(0),
+      height: "100%",
+    },
+  }),
+);
+
 function Line(props: ILineProps): React.ReactElement {
   return (
-    <tr>
-      <td className="bladeburner-console-line" style={{ color: "var(--my-font-color)", whiteSpace: "pre-wrap" }}>
-        {props.content}
-      </td>
-    </tr>
+    <ListItem sx={{ p: 0 }}>
+      <Typography>{props.content}</Typography>
+    </ListItem>
   );
 }
 
@@ -23,15 +53,21 @@ interface IProps {
 }
 
 export function Console(props: IProps): React.ReactElement {
-  const lastRef = useRef<HTMLDivElement>(null);
+  const classes = useStyles();
+  const scrollHook = useRef<HTMLDivElement>(null);
+  const [command, setCommand] = useState("");
   const setRerender = useState(false)[1];
+
+  function handleCommandChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setCommand(event.target.value);
+  }
 
   const [consoleHistoryIndex, setConsoleHistoryIndex] = useState(props.bladeburner.consoleHistory.length);
 
   // TODO: Figure out how to actually make the scrolling work correctly.
   function scrollToBottom(): void {
-    if (!lastRef.current) return;
-    lastRef.current.scrollTop = lastRef.current.scrollHeight;
+    if (!scrollHook.current) return;
+    scrollHook.current.scrollTop = scrollHook.current.scrollHeight;
   }
 
   function rerender(): void {
@@ -50,13 +86,11 @@ export function Console(props: IProps): React.ReactElement {
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.keyCode === 13) {
       event.preventDefault();
-      const command = event.currentTarget.value;
-      event.currentTarget.value = "";
       if (command.length > 0) {
         props.bladeburner.postToConsole("> " + command);
         props.bladeburner.executeConsoleCommands(props.player, command);
         setConsoleHistoryIndex(props.bladeburner.consoleHistory.length);
-        rerender();
+        setCommand("");
       }
     }
 
@@ -105,31 +139,34 @@ export function Console(props: IProps): React.ReactElement {
   }
 
   return (
-    <div ref={lastRef} className="bladeburner-console-div">
-      <table className="bladeburner-console-table">
-        <tbody>
-          {/*
-                    TODO: optimize this.
-                    using `i` as a key here isn't great because it'll re-render everything
-                    everytime the console reaches max length.
-                */}
+    <Box height={"60vh"} display={"flex"} alignItems={"stretch"} component={Paper}>
+      <Box>
+        <List sx={{ height: "100%", overflow: "auto" }}>
           {props.bladeburner.consoleLogs.map((log: any, i: number) => (
             <Line key={i} content={log} />
           ))}
-          <tr key="input" id="bladeburner-console-input-row" className="bladeburner-console-input-row">
-            <td className="bladeburner-console-input-cell">
-              <pre>{"> "}</pre>
-              <input
-                autoFocus
-                className="bladeburner-console-input"
-                tabIndex={1}
-                type="text"
-                onKeyDown={handleKeyDown}
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+          <TextField
+            classes={{ root: classes.textfield }}
+            autoFocus
+            tabIndex={1}
+            type="text"
+            value={command}
+            onChange={handleCommandChange}
+            onKeyDown={handleKeyDown}
+            InputProps={{
+              // for players to hook in
+              className: classes.input,
+              startAdornment: (
+                <>
+                  <Typography>&gt;&nbsp;</Typography>
+                </>
+              ),
+              spellCheck: false,
+            }}
+          />
+        </List>
+        <div ref={scrollHook}></div>
+      </Box>
+    </Box>
   );
 }

@@ -7,6 +7,8 @@ import { LocationName } from "../../../Locations/data/LocationNames";
 import { CityName } from "../../../Locations/data/CityNames";
 import { Factions } from "../../../Faction/Factions";
 import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 const universitySelectorOptions: string[] = [
   "Study Computer Science",
@@ -249,7 +251,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
     props.setABC([s0, s1, details2[0]]);
   }
 
-  function onS0Change(event: React.ChangeEvent<HTMLSelectElement>): void {
+  function onS0Change(event: SelectChangeEvent<string>): void {
     const n = event.target.value;
     const detailsF = tasks[n];
     if (detailsF === undefined) throw new Error(`No function for task '${s0}'`);
@@ -261,42 +263,48 @@ export function TaskSelector(props: IProps): React.ReactElement {
     props.setABC([n, details.first[0], details2[0]]);
   }
 
-  function onS1Change(event: React.ChangeEvent<HTMLSelectElement>): void {
+  function onS1Change(event: SelectChangeEvent<string>): void {
     setS1(event.target.value);
     props.setABC([s0, event.target.value, s2]);
   }
 
-  function onS2Change(event: React.ChangeEvent<HTMLSelectElement>): void {
+  function onS2Change(event: SelectChangeEvent<string>): void {
     setS2(event.target.value);
     props.setABC([s0, s1, event.target.value]);
   }
 
   return (
     <>
-      <select className="dropdown" onChange={onS0Change} defaultValue={s0}>
+      <Select onChange={onS0Change} value={s0}>
         {validActions.map((task) => (
-          <option key={task} value={task}>
+          <MenuItem key={task} value={task}>
             {task}
-          </option>
+          </MenuItem>
         ))}
-      </select>
+      </Select>
       {!(details.first.length === 1 && details.first[0] === "------") && (
-        <select className="dropdown" onChange={onS1Change} defaultValue={s1}>
-          {details.first.map((detail) => (
-            <option key={detail} value={detail}>
-              {detail}
-            </option>
-          ))}
-        </select>
+        <>
+          <br />
+          <Select onChange={onS1Change} value={s1}>
+            {details.first.map((detail) => (
+              <MenuItem key={detail} value={detail}>
+                {detail}
+              </MenuItem>
+            ))}
+          </Select>
+        </>
       )}
       {!(details2.length === 1 && details2[0] === "------") && (
-        <select className="dropdown" onChange={onS2Change} defaultValue={s2}>
-          {details2.map((detail) => (
-            <option key={detail} value={detail}>
-              {detail}
-            </option>
-          ))}
-        </select>
+        <>
+          <br />
+          <Select onChange={onS2Change} value={s2}>
+            {details2.map((detail) => (
+              <MenuItem key={detail} value={detail}>
+                {detail}
+              </MenuItem>
+            ))}
+          </Select>
+        </>
       )}
     </>
   );

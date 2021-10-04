@@ -98,12 +98,12 @@ import { Terminal } from "./Terminal";
 import { calculateSkill, calculateExp } from "./PersonObjects/formulas/skill";
 
 import { Message } from "./Message/Message";
-import { inMission } from "./Missions";
 import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
 import { Script } from "./Script/Script";
 import { findRunningScript, findRunningScriptByPid } from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/isScriptFilename";
+import { PromptEvent } from "./ui/React/PromptManager";
 
 import { AllServers, AddToAllServers, createUniqueRandomIp } from "./Server/AllServers";
 import { RunningScript } from "./Script/RunningScript";
@@ -146,13 +146,9 @@ import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 
-import { logBoxCreate } from "./ui/React/LogBox";
+import { LogBoxEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
-
-import { createElement } from "./ui/uiHelpers/createElement";
-import { createPopup } from "./ui/uiHelpers/createPopup";
-import { removeElementById } from "./ui/uiHelpers/removeElementById";
 
 import { OfficeSpace } from "./Corporation/OfficeSpace";
 import { Employee } from "./Corporation/Employee";
@@ -1095,7 +1091,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("growthAnalyze", `Invalid argument: growth must be numeric and >= 1, is ${growth}.`);
       }
 
-      return numCycleForGrowth(server, Number(growth), Player);
+      return numCycleForGrowth(server, Number(growth), Player, server.cpuCores);
     },
     weaken: function (ip: any, { threads: requestedThreads }: any = {}): any {
       updateDynamicRam("weaken", getRamCost("weaken"));
@@ -1215,7 +1211,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return;
       }
 
-      logBoxCreate(runningScriptObj);
+      LogBoxEvents.emit(runningScriptObj);
     },
     nuke: function (ip: any): any {
       updateDynamicRam("nuke", getRamCost("nuke"));
@@ -2907,31 +2903,11 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         txt = JSON.stringify(txt);
       }
 
-      // The id for this popup will consist of the first 20 characters of the prompt string..
-      // Thats hopefully good enough to be unique
-      const popupId = `prompt-popup-${txt.slice(0, 20)}`;
-      const textElement = createElement("p", { innerHTML: txt });
-
       return new Promise(function (resolve) {
-        const yesBtn = createElement("button", {
-          class: "popup-box-button",
-          innerText: "Yes",
-          clickListener: () => {
-            removeElementById(popupId);
-            resolve(true);
-          },
+        PromptEvent.emit({
+          txt: txt,
+          resolve: resolve,
         });
-
-        const noBtn = createElement("button", {
-          class: "popup-box-button",
-          innerText: "No",
-          clickListener: () => {
-            removeElementById(popupId);
-            resolve(false);
-          },
-        });
-
-        createPopup(popupId, [textElement, yesBtn, noBtn]);
       });
     },
     wget: async function (url: any, target: any, ip: any = workerScript.serverIp): Promise<boolean> {
@@ -2977,10 +2953,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     universityCourse: function (universityName: any, className: any): any {
       updateDynamicRam("universityCourse", getRamCost("universityCourse"));
       checkSingularityAccess("universityCourse", 1);
-      if (inMission) {
-        workerScript.log("universityCourse", "You are in the middle of a mission.");
-        return;
-      }
       if (Player.isWorking) {
         const txt = Player.singularityStopWork();
         workerScript.log("universityCourse", txt);
@@ -3061,10 +3033,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     gymWorkout: function (gymName: any, stat: any): any {
       updateDynamicRam("gymWorkout", getRamCost("gymWorkout"));
       checkSingularityAccess("gymWorkout", 1);
-      if (inMission) {
-        workerScript.log("gymWorkout", "You are in the middle of a mission.");
-        return;
-      }
       if (Player.isWorking) {
         const txt = Player.singularityStopWork();
         workerScript.log("gymWorkout", txt);
@@ -3498,7 +3466,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     isBusy: function (): any {
       updateDynamicRam("isBusy", getRamCost("isBusy"));
       checkSingularityAccess("isBusy", 1);
-      return Player.isWorking || inMission;
+      return Player.isWorking;
     },
     stopAction: function (): any {
       updateDynamicRam("stopAction", getRamCost("stopAction"));
@@ -3562,12 +3530,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       // Make sure player is actually employed at the comapny
       if (!Object.keys(Player.jobs).includes(companyName)) {
         workerScript.log("workForCompany", `You do not have a job at '${companyName}'`);
-        return false;
-      }
-
-      // Cant work while in a mission
-      if (inMission) {
-        workerScript.log("workForCompany", "You are in the middle of a mission.");
         return false;
       }
 
@@ -3717,11 +3679,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       // if the player is in a gang and the target faction is any of the gang faction, fail
       if (Player.inGang() && AllGangs[name] !== undefined) {
         workerScript.log("workForFaction", `Faction '${name}' does not offer work at the moment.`);
-        return;
-      }
-
-      if (inMission) {
-        workerScript.log("workForFaction", "You are in the middle of a mission.");
         return;
       }
 
@@ -3912,10 +3869,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("createProgram", getRamCost("createProgram"));
       checkSingularityAccess("createProgram", 3);
 
-      if (inMission) {
-        workerScript.log("createProgram", "You are in the middle of a mission.");
-        return;
-      }
       if (Player.isWorking) {
         const txt = Player.singularityStopWork();
         workerScript.log("createProgram", txt);
@@ -3958,10 +3911,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     commitCrime: function (crimeRoughName: any): any {
       updateDynamicRam("commitCrime", getRamCost("commitCrime"));
       checkSingularityAccess("commitCrime", 3);
-      if (inMission) {
-        workerScript.log("commitCrime", "You are in the middle of a mission.");
-        return;
-      }
+
       if (Player.isWorking) {
         const txt = Player.singularityStopWork();
         workerScript.log("commitCrime", txt);

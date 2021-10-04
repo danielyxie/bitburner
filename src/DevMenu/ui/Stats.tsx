@@ -5,6 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Adjuster } from "./Adjuster";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -138,14 +139,14 @@ export function Stats(props: IProps): React.ReactElement {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Experience / Stats</h2>
+        <Typography>Experience / Stats</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <table>
           <tbody>
             <tr>
               <td>
-                <span className="text text-center">All:</span>
+                <Typography>All:</Typography>
               </td>
               <td>
                 <Button onClick={tonsOfExp}>Tons of exp</Button>
@@ -154,7 +155,7 @@ export function Stats(props: IProps): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text text-center">Hacking:</span>
+                <Typography>Hacking:</Typography>
               </td>
               <td>
                 <Adjuster
@@ -169,7 +170,7 @@ export function Stats(props: IProps): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text text-center">Strength:</span>
+                <Typography>Strength:</Typography>
               </td>
               <td>
                 <Adjuster
@@ -184,7 +185,7 @@ export function Stats(props: IProps): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text text-center">Defense:</span>
+                <Typography>Defense:</Typography>
               </td>
               <td>
                 <Adjuster
@@ -199,7 +200,7 @@ export function Stats(props: IProps): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text text-center">Dexterity:</span>
+                <Typography>Dexterity:</Typography>
               </td>
               <td>
                 <Adjuster
@@ -214,7 +215,7 @@ export function Stats(props: IProps): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text text-center">Agility:</span>
+                <Typography>Agility:</Typography>
               </td>
               <td>
                 <Adjuster
@@ -229,7 +230,7 @@ export function Stats(props: IProps): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text text-center">Charisma:</span>
+                <Typography>Charisma:</Typography>
               </td>
               <td>
                 <Adjuster
@@ -244,7 +245,7 @@ export function Stats(props: IProps): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text text-center">Intelligence:</span>
+                <Typography>Intelligence:</Typography>
               </td>
               <td>
                 <Adjuster
@@ -265,7 +266,7 @@ export function Stats(props: IProps): React.ReactElement {
             </tr>
             <tr>
               <td>
-                <span className="text text-center">Karma:</span>
+                <Typography>Karma:</Typography>
               </td>
               <td>
                 <Adjuster

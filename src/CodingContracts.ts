@@ -3,8 +3,7 @@ import { codingContractTypesMetadata, DescriptionFunc, GeneratorFunc, SolverFunc
 import { IMap } from "./types";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
-import { createPopup, removePopup } from "./ui/React/createPopup";
-import { CodingContractPopup } from "./ui/React/CodingContractPopup";
+import { CodingContractEvent } from "./ui/React/CodingContractModal";
 
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 
@@ -166,29 +165,21 @@ export class CodingContract {
    * Creates a popup to prompt the player to solve the problem
    */
   async prompt(): Promise<CodingContractResult> {
-    const popupId = `coding-contract-prompt-popup-${this.fn}`;
     return new Promise<CodingContractResult>((resolve) => {
-      createPopup(
-        popupId,
-        CodingContractPopup,
-        {
-          c: this,
-          popupId: popupId,
-          onClose: () => {
-            resolve(CodingContractResult.Cancelled);
-            removePopup(popupId);
-          },
-          onAttempt: (val: string) => {
-            if (this.isSolution(val)) {
-              resolve(CodingContractResult.Success);
-            } else {
-              resolve(CodingContractResult.Failure);
-            }
-            removePopup(popupId);
-          },
+      const props = {
+        c: this,
+        onClose: () => {
+          resolve(CodingContractResult.Cancelled);
         },
-        () => resolve(CodingContractResult.Cancelled),
-      );
+        onAttempt: (val: string) => {
+          if (this.isSolution(val)) {
+            resolve(CodingContractResult.Success);
+          } else {
+            resolve(CodingContractResult.Failure);
+          }
+        },
+      };
+      CodingContractEvent.emit(props);
     });
   }
 

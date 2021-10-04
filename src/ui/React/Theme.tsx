@@ -73,6 +73,9 @@ export function refreshTheme(): void {
         default: Settings.theme.black,
         paper: Settings.theme.well,
       },
+      action: {
+        disabled: Settings.theme.disabled,
+      },
     },
     typography: {
       fontFamily: "monospace",
@@ -147,6 +150,19 @@ export function refreshTheme(): void {
             color: Settings.theme.primary,
           },
         },
+        defaultProps: {
+          variant: "standard",
+        },
+      },
+      MuiTextField: {
+        defaultProps: {
+          variant: "standard",
+        },
+      },
+      MuiTypography: {
+        defaultProps: {
+          color: "primary",
+        },
       },
       MuiMenu: {
         styleOverrides: {
@@ -193,6 +209,9 @@ export function refreshTheme(): void {
             border: "2px solid white",
             maxWidth: "100vh",
           },
+        },
+        defaultProps: {
+          disableInteractive: true,
         },
       },
       MuiSlider: {
@@ -255,6 +274,16 @@ export function refreshTheme(): void {
         styleOverrides: {
           select: {
             color: Settings.theme.primary,
+          },
+        },
+      },
+      MuiTab: {
+        styleOverrides: {
+          textColorPrimary: {
+            color: Settings.theme.secondary,
+            "&.Mui-selected": {
+              color: Settings.theme.primary,
+            },
           },
         },
       },

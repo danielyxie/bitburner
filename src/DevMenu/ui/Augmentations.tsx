@@ -8,6 +8,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import ReplyAllIcon from "@mui/icons-material/ReplyAll";
@@ -42,14 +43,14 @@ export function Augmentations(props: IProps): React.ReactElement {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Augmentations</h2>
+        <Typography>Augmentations</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <table>
           <tbody>
             <tr>
               <td>
-                <span className="text">Aug:</span>
+                <Typography>Aug:</Typography>
               </td>
               <td>
                 <Select

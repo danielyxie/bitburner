@@ -1,22 +1,16 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { StdButton } from "../ui/React/StdButton";
 import { Money } from "../ui/React/Money";
 import { WHRNG } from "./RNG";
-import { Game } from "./Game";
+import { win, reachedLimit } from "./Game";
 import { trusted } from "./utils";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 type IProps = {
   p: IPlayer;
-};
-
-type IState = {
-  index: number[];
-  locks: number[];
-  investment: number;
-  canPlay: boolean;
-  status: string | JSX.Element;
 };
 
 // statically shuffled array of symbols.
@@ -147,104 +141,76 @@ const payLines = [
 const minPlay = 0;
 const maxPlay = 1e6;
 
-export class SlotMachine extends Game<IProps, IState> {
-  rng: WHRNG;
-  interval = -1;
+export function SlotMachine(props: IProps): React.ReactElement {
+  const [rng] = useState(new WHRNG(props.p.totalPlaytime));
+  const [index, setIndex] = useState<number[]>([0, 0, 0, 0, 0]);
+  const [locks, setLocks] = useState<number[]>([0, 0, 0, 0, 0]);
+  const [investment, setInvestment] = useState(1000);
+  const [canPlay, setCanPlay] = useState(true);
+  const [status, setStatus] = useState<string | JSX.Element>("waiting");
 
-  constructor(props: IProps) {
-    super(props);
-    this.rng = new WHRNG(this.props.p.totalPlaytime);
+  useEffect(() => {
+    const i = window.setInterval(step, 50);
+    return () => clearInterval(i);
+  });
 
-    this.state = {
-      index: [0, 0, 0, 0, 0],
-      investment: 1000,
-      locks: [0, 0, 0, 0, 0],
-      canPlay: true,
-      status: "waiting",
-    };
-
-    this.play = this.play.bind(this);
-    this.lock = this.lock.bind(this);
-    this.unlock = this.unlock.bind(this);
-    this.step = this.step.bind(this);
-    this.checkWinnings = this.checkWinnings.bind(this);
-    this.getTable = this.getTable.bind(this);
-    this.updateInvestment = this.updateInvestment.bind(this);
-  }
-
-  componentDidMount(): void {
-    this.interval = window.setInterval(this.step, 50);
-  }
-
-  step(): void {
+  function step(): void {
     let stoppedOne = false;
-    const index = this.state.index.slice();
-    for (const i in index) {
-      if (index[i] === this.state.locks[i] && !stoppedOne) continue;
-      index[i] = (index[i] + 1) % symbols.length;
+    const copy = index.slice();
+    for (const i in copy) {
+      if (copy[i] === locks[i] && !stoppedOne) continue;
+      copy[i] = (copy[i] + 1) % symbols.length;
       stoppedOne = true;
     }
 
-    this.setState({ index: index });
+    setIndex(copy);
 
-    if (stoppedOne && index.every((e, i) => e === this.state.locks[i])) {
-      this.checkWinnings();
+    if (stoppedOne && copy.every((e, i) => e === locks[i])) {
+      checkWinnings();
     }
   }
 
-  componentWillUnmount(): void {
-    clearInterval(this.interval);
-  }
-
-  getTable(): string[][] {
+  function getTable(): string[][] {
     return [
       [
-        symbols[(this.state.index[0] + symbols.length - 1) % symbols.length],
-        symbols[(this.state.index[1] + symbols.length - 1) % symbols.length],
-        symbols[(this.state.index[2] + symbols.length - 1) % symbols.length],
-        symbols[(this.state.index[3] + symbols.length - 1) % symbols.length],
-        symbols[(this.state.index[4] + symbols.length - 1) % symbols.length],
+        symbols[(index[0] + symbols.length - 1) % symbols.length],
+        symbols[(index[1] + symbols.length - 1) % symbols.length],
+        symbols[(index[2] + symbols.length - 1) % symbols.length],
+        symbols[(index[3] + symbols.length - 1) % symbols.length],
+        symbols[(index[4] + symbols.length - 1) % symbols.length],
       ],
+      [symbols[index[0]], symbols[index[1]], symbols[index[2]], symbols[index[3]], symbols[index[4]]],
       [
-        symbols[this.state.index[0]],
-        symbols[this.state.index[1]],
-        symbols[this.state.index[2]],
-        symbols[this.state.index[3]],
-        symbols[this.state.index[4]],
-      ],
-      [
-        symbols[(this.state.index[0] + 1) % symbols.length],
-        symbols[(this.state.index[1] + 1) % symbols.length],
-        symbols[(this.state.index[2] + 1) % symbols.length],
-        symbols[(this.state.index[3] + 1) % symbols.length],
-        symbols[(this.state.index[4] + 1) % symbols.length],
+        symbols[(index[0] + 1) % symbols.length],
+        symbols[(index[1] + 1) % symbols.length],
+        symbols[(index[2] + 1) % symbols.length],
+        symbols[(index[3] + 1) % symbols.length],
+        symbols[(index[4] + 1) % symbols.length],
       ],
     ];
   }
 
-  play(): void {
-    if (this.reachedLimit(this.props.p)) return;
-    this.setState({ status: "playing" });
-    this.win(this.props.p, -this.state.investment);
-    if (!this.state.canPlay) return;
-    this.unlock();
-    setTimeout(this.lock, this.rng.random() * 2000 + 1000);
+  function play(): void {
+    if (reachedLimit(props.p)) return;
+    setStatus("playing");
+    win(props.p, -investment);
+    if (!canPlay) return;
+    unlock();
+    setTimeout(lock, rng.random() * 2000 + 1000);
   }
 
-  lock(): void {
-    this.setState({
-      locks: [
-        Math.floor(this.rng.random() * symbols.length),
-        Math.floor(this.rng.random() * symbols.length),
-        Math.floor(this.rng.random() * symbols.length),
-        Math.floor(this.rng.random() * symbols.length),
-        Math.floor(this.rng.random() * symbols.length),
-      ],
-    });
+  function lock(): void {
+    setLocks([
+      Math.floor(rng.random() * symbols.length),
+      Math.floor(rng.random() * symbols.length),
+      Math.floor(rng.random() * symbols.length),
+      Math.floor(rng.random() * symbols.length),
+      Math.floor(rng.random() * symbols.length),
+    ]);
   }
 
-  checkWinnings(): void {
-    const t = this.getTable();
+  function checkWinnings(): void {
+    const t = getTable();
     const getPaylineData = function (payline: number[][]): string[] {
       const data = [];
       for (const point of payline) {
@@ -263,35 +229,31 @@ export class SlotMachine extends Game<IProps, IState> {
       return count;
     };
 
-    let gains = -this.state.investment;
+    let gains = -investment;
     for (const payline of payLines) {
       const data = getPaylineData(payline);
       const count = countSequence(data);
       if (count < 3) continue;
       const payout = getPayout(data[0], count - 3);
-      gains += this.state.investment * payout;
-      this.win(this.props.p, this.state.investment * payout);
+      gains += investment * payout;
+      win(props.p, investment * payout);
     }
 
-    this.setState({
-      status: (
-        <>
-          {gains > 0 ? "gained" : "lost"} <Money money={Math.abs(gains)} />
-        </>
-      ),
-      canPlay: true,
-    });
-    if (this.reachedLimit(this.props.p)) return;
+    setStatus(
+      <>
+        {gains > 0 ? "gained" : "lost"} <Money money={Math.abs(gains)} />
+      </>,
+    );
+    setCanPlay(true);
+    if (reachedLimit(props.p)) return;
   }
 
-  unlock(): void {
-    this.setState({
-      locks: [-1, -1, -1, -1, -1],
-      canPlay: false,
-    });
+  function unlock(): void {
+    setLocks([-1, -1, -1, -1, -1]);
+    setCanPlay(false);
   }
 
-  updateInvestment(e: React.FormEvent<HTMLInputElement>): void {
+  function updateInvestment(e: React.ChangeEvent<HTMLInputElement>): void {
     let investment: number = parseInt(e.currentTarget.value);
     if (isNaN(investment)) {
       investment = minPlay;
@@ -302,53 +264,49 @@ export class SlotMachine extends Game<IProps, IState> {
     if (investment < minPlay) {
       investment = minPlay;
     }
-    this.setState({ investment: investment });
+    setInvestment(investment);
   }
 
-  render(): React.ReactNode {
-    const t = this.getTable();
-    // prettier-ignore
-    return (
+  const t = getTable();
+  // prettier-ignore
+  return (
       <>
-<pre>+———————————————————————+</pre>
-<pre>| | {t[0][0]} | {t[0][1]} | {t[0][2]} | {t[0][3]} | {t[0][4]} | |</pre>
-<pre>| |   |   |   |   |   | |</pre>
-<pre>| | {symbols[this.state.index[0]]} | {symbols[this.state.index[1]]} | {symbols[this.state.index[2]]} | {symbols[this.state.index[3]]} | {symbols[this.state.index[4]]} | |</pre>
-<pre>| |   |   |   |   |   | |</pre>
-<pre>| | {symbols[(this.state.index[0]+1)%symbols.length]} | {symbols[(this.state.index[1]+1)%symbols.length]} | {symbols[(this.state.index[2]+1)%symbols.length]} | {symbols[(this.state.index[3]+1)%symbols.length]} | {symbols[(this.state.index[4]+1)%symbols.length]} | |</pre>
-<pre>+———————————————————————+</pre>
-        <input
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>+———————————————————————+</Typography>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>| | {t[0][0]} | {t[0][1]} | {t[0][2]} | {t[0][3]} | {t[0][4]} | |</Typography>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>| |   |   |   |   |   | |</Typography>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>| | {symbols[index[0]]} | {symbols[index[1]]} | {symbols[index[2]]} | {symbols[index[3]]} | {symbols[index[4]]} | |</Typography>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>| |   |   |   |   |   | |</Typography>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>| | {symbols[(index[0]+1)%symbols.length]} | {symbols[(index[1]+1)%symbols.length]} | {symbols[(index[2]+1)%symbols.length]} | {symbols[(index[3]+1)%symbols.length]} | {symbols[(index[4]+1)%symbols.length]} | |</Typography>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>+———————————————————————+</Typography>
+        <TextField
           type="number"
-          className="text-input"
-          onChange={this.updateInvestment}
+          onChange={updateInvestment}
           placeholder={"Amount to play"}
-          value={this.state.investment}
-          disabled={!this.state.canPlay}
+          disabled={!canPlay}
+          InputProps={{endAdornment:(<Button
+            onClick={trusted(play)}
+            disabled={!canPlay}
+          >Spin!</Button>)}}
         />
-        <StdButton
-          onClick={trusted(this.play)}
-          text={"Spin!"}
-          disabled={!this.state.canPlay}
-        />
-        <h1>{this.state.status}</h1>
-        <h2>Pay lines</h2>
+        
+        <Typography variant="h4">{status}</Typography>
+        <Typography>Pay lines</Typography>
 
-<pre>-----   ·····   ·····</pre>
-<pre>·····   -----   ·····</pre>
-<pre>·····   ·····   -----</pre>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>-----   ·····   ·····</Typography>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>·····   -----   ·····</Typography>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>·····   ·····   -----</Typography>
 <br />
 
-<pre>··^··   \···/   \···/</pre>
-<pre>·/·\·   ·\·/·   ·---·</pre>
-<pre>/···\   ··v··   ·····</pre>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>··^··   \···/   \···/</Typography>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>·/·\·   ·\·/·   ·---·</Typography>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>/···\   ··v··   ·····</Typography>
 <br />
 
-<pre>·····   ·---·   ·····</pre>
-<pre>·---·   /···\   \···/</pre>
-<pre>/···\   ·····   ·---·</pre>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>·····   ·---·   ·····</Typography>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>·---·   /···\   \···/</Typography>
+<Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>/···\   ·····   ·---·</Typography>
         </>
     );
-  }
 }
 
 // https://felgo.com/doc/how-to-make-a-slot-game-tutorial/

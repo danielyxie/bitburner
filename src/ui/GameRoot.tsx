@@ -56,7 +56,6 @@ import { TerminalRoot } from "../Terminal/ui/TerminalRoot";
 import { TutorialRoot } from "../Tutorial/ui/TutorialRoot";
 import { ActiveScriptsRoot } from "../ui/ActiveScripts/ActiveScriptsRoot";
 import { FactionsRoot } from "../Faction/ui/FactionsRoot";
-import { HackingMissionRoot } from "../HackingMission/ui/HackingMissionRoot";
 import { FactionRoot } from "../Faction/ui/FactionRoot";
 import { CharacterStats } from "./CharacterStats";
 import { TravelAgencyRoot } from "../Locations/ui/TravelAgencyRoot";
@@ -69,6 +68,10 @@ import { BladeburnerCinematic } from "../Bladeburner/ui/BladeburnerCinematic";
 import { workerScripts } from "../Netscript/WorkerScripts";
 import { Unclickable } from "../Exploits/Unclickable";
 import { Snackbar } from "./React/Snackbar";
+import { LogBoxManager } from "./React/LogBoxManager";
+import { AlertManager } from "./React/AlertManager";
+import { PromptManager } from "./React/PromptManager";
+import { InvitationModal } from "../Faction/ui/InvitationModal";
 
 import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
@@ -177,9 +180,6 @@ export let Router: IRouter = {
   toLocation: () => {
     throw new Error("Router called before initialization");
   },
-  toHackingMission: () => {
-    throw new Error("Router called before initialization");
-  },
   toStaneksGift: () => {
     throw new Error("Router called before initialization");
   },
@@ -272,10 +272,6 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       setLocation(location);
       setPage(Page.Location);
     },
-    toHackingMission: (faction: Faction) => {
-      setPage(Page.HackingMission);
-      setFaction(faction);
-    },
     toStaneksGift: () => {
       setPage(Page.StaneksGift);
     },
@@ -301,8 +297,6 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
           <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />
         ) : page === Page.Infiltration ? (
           <InfiltrationRoot location={location} />
-        ) : page === Page.HackingMission ? (
-          <HackingMissionRoot faction={faction} />
         ) : page === Page.BladeburnerCinematic ? (
           <BladeburnerCinematic />
         ) : page === Page.Work ? (
@@ -314,7 +308,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
               {page === Page.Terminal ? (
                 <TerminalRoot terminal={terminal} router={Router} player={player} />
               ) : page === Page.Sleeves ? (
-                <SleeveRoot player={player} />
+                <SleeveRoot />
               ) : page === Page.Stats ? (
                 <CharacterStats />
               ) : page === Page.StaneksGift ? (
@@ -344,7 +338,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
               ) : page === Page.Bladeburner ? (
                 <BladeburnerRoot />
               ) : page === Page.Resleeves ? (
-                <ResleeveRoot player={player} />
+                <ResleeveRoot />
               ) : page === Page.Travel ? (
                 <TravelAgencyRoot p={player} router={Router} />
               ) : page === Page.StockMarket ? (
@@ -404,6 +398,10 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         )}
         <Unclickable />
         <Snackbar />
+        <LogBoxManager />
+        <AlertManager />
+        <PromptManager />
+        <InvitationModal />
       </Context.Router.Provider>
     </Context.Player.Provider>
   );

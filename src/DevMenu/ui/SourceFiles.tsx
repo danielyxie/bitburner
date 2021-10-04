@@ -5,6 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { PlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -53,14 +54,14 @@ export function SourceFiles(props: IProps): React.ReactElement {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h2>Source-Files</h2>
+        <Typography>Source-Files</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <table>
           <tbody>
             <tr>
               <td>
-                <span className="text">Exploits:</span>
+                <Typography>Exploits:</Typography>
               </td>
               <td>
                 <Button onClick={clearExploits}>Clear</Button>
@@ -68,7 +69,7 @@ export function SourceFiles(props: IProps): React.ReactElement {
             </tr>
             <tr key={"sf-all"}>
               <td>
-                <span className="text">All:</span>
+                <Typography>All:</Typography>
               </td>
               <td>
                 <ButtonGroup>
@@ -90,7 +91,7 @@ export function SourceFiles(props: IProps): React.ReactElement {
             {validSFN.map((i) => (
               <tr key={"sf-" + i}>
                 <td>
-                  <span className="text">SF-{i}:</span>
+                  <Typography>SF-{i}:</Typography>
                 </td>
                 <td>
                   <ButtonGroup>

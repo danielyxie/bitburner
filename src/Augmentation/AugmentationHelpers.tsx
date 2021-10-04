@@ -2044,6 +2044,28 @@ function initAugmentations(): void {
   }
   AddToAugmentations(SNA);
 
+  const NeuroreceptorManager = new Augmentation({
+    name: AugmentationNames.NeuroreceptorManager,
+    repCost: 0.75e5,
+    moneyCost: 5.5e8,
+    info:
+      "A brain implant carefully assembled around the synapses, which " +
+      "micromanages the activity and levels of various neuroreceptor " +
+      "chemicals and modulates electrical acvitiy to optimize concentration, " +
+      "allowing the user to multitask much more effectively.",
+    stats: (
+      <>
+        This augmentation removes the penalty for not focusing on actions such as working in a job or working for a
+        faction.
+      </>
+    ),
+  });
+  NeuroreceptorManager.addToFactions(["Tian Di Hui"]);
+  if (augmentationExists(AugmentationNames.NeuroreceptorManager)) {
+    delete Augmentations[AugmentationNames.NeuroreceptorManager];
+  }
+  AddToAugmentations(NeuroreceptorManager);
+
   // Special Bladeburner Augmentations
   const BladeburnersFactionName = "Bladeburners";
   if (factionExists(BladeburnersFactionName)) {
@@ -2384,6 +2406,7 @@ function initAugmentations(): void {
       hacknet_node_core_cost_mult: 1.1,
       hacknet_node_level_cost_mult: 1.1,
       work_money_mult: 0.9,
+      stats: null,
     });
     StaneksGift1.addToFactions([ChurchOfTheMachineGodFactionName]);
     resetAugmentation(StaneksGift1);
@@ -2423,6 +2446,7 @@ function initAugmentations(): void {
       hacknet_node_core_cost_mult: 1.05 / 1.1,
       hacknet_node_level_cost_mult: 1.05 / 1.1,
       work_money_mult: 0.95 / 0.9,
+      stats: null,
     });
     StaneksGift2.addToFactions([ChurchOfTheMachineGodFactionName]);
     resetAugmentation(StaneksGift2);
@@ -2462,6 +2486,7 @@ function initAugmentations(): void {
       hacknet_node_core_cost_mult: 1 / 1.05,
       hacknet_node_level_cost_mult: 1 / 1.05,
       work_money_mult: 1 / 0.95,
+      stats: null,
     });
     StaneksGift3.addToFactions([ChurchOfTheMachineGodFactionName]);
     resetAugmentation(StaneksGift3);
@@ -2475,6 +2500,7 @@ function initAugmentations(): void {
         "(hydro notes: Finishes the BN, eventually)",
       prereqs: [AugmentationNames.StaneksGift3],
       isSpecial: true,
+      stats: null,
     });
     StaneksGiftAscension4.addToFactions([ChurchOfTheMachineGodFactionName]);
     resetAugmentation(StaneksGiftAscension4);

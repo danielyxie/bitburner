@@ -64,7 +64,7 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
     }
 
     if (loc.types.includes(LocationType.TechVendor)) {
-      content.push(<TechVendorLocation key={"techvendorlocation"} loc={loc} p={player} />);
+      content.push(<TechVendorLocation key={"techvendorlocation"} loc={loc} />);
     }
 
     if (loc.types.includes(LocationType.TravelAgency)) {
@@ -90,7 +90,7 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
   return (
     <>
       <Button onClick={() => router.toCity()}>Return to World</Button>
-      <Typography variant="h4" className="noselect">
+      <Typography variant="h4">
         {backdoorInstalled && !Settings.DisableTextEffects ? <CorruptableText content={loc.name} /> : loc.name}
       </Typography>
       {locContent}

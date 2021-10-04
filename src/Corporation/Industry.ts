@@ -16,7 +16,6 @@ import { Warehouse } from "./Warehouse";
 import { ICorporation } from "./ICorporation";
 import { IIndustry } from "./IIndustry";
 import { IndustryUpgrade, IndustryUpgrades } from "./IndustryUpgrades";
-import { formatNumber } from "../utils/StringHelperFunctions";
 
 interface IParams {
   name?: string;
@@ -385,9 +384,6 @@ export class Industry implements IIndustry {
         const prod = this.products[prodName];
         if (prod === undefined) continue;
         warehouse.sizeUsed += prod.data[warehouse.loc][0] * prod.siz;
-        if (prod.data[warehouse.loc][0] > 0) {
-          warehouse.breakdown += prodName + ": " + formatNumber(prod.data[warehouse.loc][0] * prod.siz, 0) + "<br>";
-        }
       }
     }
   }

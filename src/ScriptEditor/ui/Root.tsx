@@ -296,7 +296,7 @@ export function Root(props: IProps): React.ReactElement {
     <>
       <Box display="flex" flexDirection="row" alignItems="center">
         <Typography>Script name: </Typography>
-        <TextField variant="standard" type="text" tabIndex={1} value={filename} onChange={onFilenameChange} />
+        <TextField type="text" tabIndex={1} value={filename} onChange={onFilenameChange} />
         <IconButton onClick={() => setOptionsOpen(true)}>
           <>
             <SettingsIcon />
@@ -307,7 +307,7 @@ export function Root(props: IProps): React.ReactElement {
       <Editor
         beforeMount={beforeMount}
         onMount={onMount}
-        loading={<p>Loading script editor!</p>}
+        loading={<Typography>Loading script editor!</Typography>}
         height="90%"
         defaultLanguage="javascript"
         defaultValue={code}
@@ -320,7 +320,7 @@ export function Root(props: IProps): React.ReactElement {
         <Typography sx={{ mx: 1 }}>{ram}</Typography>
         <Button onClick={save}>Save & Close (Ctrl/Cmd + b)</Button>
         <Link sx={{ mx: 1 }} target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
-          Netscript Documentation
+          <Typography> Netscript Documentation</Typography>
         </Link>
       </Box>
       <OptionsModal
