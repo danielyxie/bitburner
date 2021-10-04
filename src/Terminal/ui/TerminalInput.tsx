@@ -4,7 +4,7 @@ import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import TextField from "@mui/material/TextField";
-import Paper from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
 
 import { KEY } from "../../utils/helpers/keyCodes";
 import { ITerminal } from "../ITerminal";
@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     textfield: {
       margin: theme.spacing(0),
-      width: "100%",
     },
     input: {
       backgroundColor: "#000",
@@ -330,40 +329,46 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
 
   return (
     <>
-      {possibilities.length > 0 && (
-        <Paper square>
-          <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
-            Possible autocomplete candidate:
-          </Typography>
-          <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
-            {possibilities.join(" ")}
-          </Typography>
-        </Paper>
-      )}
-      <TextField
-        color={terminal.action === null ? "primary" : "secondary"}
-        autoFocus
-        disabled={terminal.action !== null}
-        autoComplete="off"
-        classes={{ root: classes.textfield }}
-        value={value}
-        onChange={handleValueChange}
-        inputRef={terminalInput}
-        InputProps={{
-          // for players to hook in
-          id: "terminal-input",
-          className: classes.input,
-          startAdornment: (
+      <Tooltip
+        title={
+          possibilities.length > 0 ? (
             <>
+              <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
+                Possible autocomplete candidate:
+              </Typography>
+              <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
+                {possibilities.join(" ")}
+              </Typography>
+            </>
+          ) : (
+            ""
+          )
+        }
+      >
+        <TextField
+          fullWidth
+          color={terminal.action === null ? "primary" : "secondary"}
+          autoFocus
+          disabled={terminal.action !== null}
+          autoComplete="off"
+          value={value}
+          classes={{ root: classes.textfield }}
+          onChange={handleValueChange}
+          inputRef={terminalInput}
+          InputProps={{
+            // for players to hook in
+            id: "terminal-input",
+            className: classes.input,
+            startAdornment: (
               <Typography color={terminal.action === null ? "primary" : "secondary"} flexShrink={0}>
                 [{player.getCurrentServer().hostname}&nbsp;~{terminal.cwd()}]&gt;&nbsp;
               </Typography>
-            </>
-          ),
-          spellCheck: false,
-          onKeyDown: onKeyDown,
-        }}
-      ></TextField>
+            ),
+            spellCheck: false,
+            onKeyDown: onKeyDown,
+          }}
+        ></TextField>
+      </Tooltip>
     </>
   );
 }

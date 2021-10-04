@@ -142,7 +142,6 @@ import { Exploit } from "./Exploits/Exploit";
 import { Router } from "./ui/GameRoot";
 
 import { numeralWrapper } from "./ui/numeralFormat";
-import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 
@@ -1045,7 +1044,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
           return Promise.reject(workerScript);
         }
         const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
-        server.moneyAvailable += 1 * threads; // It can be grown even if it has no money
         processSingleServerGrowth(server, threads, Player, host.cpuCores);
         const moneyAfter = server.moneyAvailable;
         workerScript.scriptRef.recordGrow(server.ip, threads);
@@ -1389,7 +1387,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
 
       const spawnDelay = 10;
-      setTimeoutRef(() => {
+      setTimeout(() => {
         if (isNaN(threads) || threads <= 0) {
           throw makeRuntimeErrorMsg("spawn", `Invalid thread count. Must be numeric and > 0, is ${threads}`);
         }
@@ -4072,7 +4070,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       checkSingularityAccess("softReset", 3);
 
       workerScript.log("softReset", "Soft resetting. This will cause this script to be killed");
-      setTimeoutRef(() => {
+      setTimeout(() => {
         prestigeAugmentation();
         runAfterReset(cbScript);
       }, 0);
@@ -4091,7 +4089,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log("installAugmentations", "Installing Augmentations. This will cause this script to be killed");
-      setTimeoutRef(() => {
+      setTimeout(() => {
         installAugmentations();
         runAfterReset(cbScript);
       }, 0);

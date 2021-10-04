@@ -44,7 +44,7 @@ import { Reputation } from "./ui/React/Reputation";
 import { AlertEvents } from "./ui/React/AlertManager";
 import { exceptionAlert } from "./utils/helpers/exceptionAlert";
 
-import { startTampering } from "./Exploits/tampering";
+import { startExploits } from "./Exploits/loops";
 
 import React from "react";
 
@@ -262,7 +262,7 @@ const Engine: {
   },
 
   load: function (saveString) {
-    startTampering();
+    startExploits();
     // Load game from save or create new game
     if (loadGame(saveString)) {
       ThemeEvents.emit();

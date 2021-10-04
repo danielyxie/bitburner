@@ -7,7 +7,6 @@
 import { calculateRamUsage } from "./RamCalculations";
 import { ScriptUrl } from "./ScriptUrl";
 
-import { setTimeoutRef } from "../utils/SetTimeoutRef";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
 
@@ -70,7 +69,7 @@ export class Script {
       a.download = filename;
       document.body.appendChild(a);
       a.click();
-      setTimeoutRef(function () {
+      setTimeout(function () {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
       }, 0);
