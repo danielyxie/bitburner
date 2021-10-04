@@ -84,8 +84,8 @@ Cities[CityName.Chongqing].asciiArt = `
        [world stock exchange] F       |                                         
                                \\      o 78      [kuaigong international]       
                                 \\    /                                         
-                         38 o----x--x------x------A---------                    
-                           /    39  |      41                                   
+                         38 o----x--x------x------A------G--                    
+                           /    39  |      41             [church]                         
                        37 o         + 79    o--x--x-C-0                         
                          /          |      /                                    
                         /     x-----+-----x-----0   [hospital]                  

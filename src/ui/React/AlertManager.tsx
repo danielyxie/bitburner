@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { EventEmitter } from "../../utils/EventEmitter";
 import { Modal } from "../../ui/React/Modal";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 export const AlertEvents = new EventEmitter<[string | JSX.Element]>();
 
@@ -41,7 +42,9 @@ export function AlertManager(): React.ReactElement {
     <>
       {alerts.length > 0 && (
         <Modal open={true} onClose={close}>
-          <Typography>{alerts[0].text}</Typography>
+          <Box>
+            <Typography>{alerts[0].text}</Typography>
+          </Box>
         </Modal>
       )}
     </>

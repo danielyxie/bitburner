@@ -122,11 +122,22 @@ function WarehouseRoot(props: IProps): React.ReactElement {
       </>
     );
   }
+  console.log(division.products);
+  for (const prodName in division.products) {
+    const prod = division.products[prodName];
+    if (prod === undefined) continue;
+    breakdown = (
+      <>
+        {breakdown}
+        {prodName}: {numeralWrapper.format(prod.data[props.warehouse.loc][0] * prod.siz, "0,0.0")}
+      </>
+    );
+  }
 
   return (
     <Paper>
       <Box display="flex" alignItems="center">
-        <Tooltip title={props.warehouse.sizeUsed !== 0 ? breakdown : ""}>
+        <Tooltip title={props.warehouse.sizeUsed !== 0 ? <Typography>{breakdown}</Typography> : ""}>
           <Typography color={props.warehouse.sizeUsed >= props.warehouse.size ? "error" : "primary"}>
             Storage: {numeralWrapper.formatBigNumber(props.warehouse.sizeUsed)} /{" "}
             {numeralWrapper.formatBigNumber(props.warehouse.size)}

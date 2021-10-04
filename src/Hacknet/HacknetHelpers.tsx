@@ -420,7 +420,6 @@ function processAllHacknetServerEarnings(player: IPlayer, numCycles: number): nu
     if (hserver instanceof Server) throw new Error(`player nodes shoud not be Server`);
     hserver.updateHashRate(player.hacknet_node_money_mult);
     const h = hserver.process(numCycles);
-    hserver.totalHashesGenerated += h;
     hashes += h;
   }
 

@@ -109,6 +109,51 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     return <Button onClick={handleResleeving}>Re-Sleeve</Button>;
   }
 
+  function renderCotMG(): React.ReactElement {
+    // prettier-ignore
+    const symbol = <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>
+        {"                 ``          "}<br />
+        {"             -odmmNmds:      "}<br />
+        {"           `hNmo:..-omNh.    "}<br />
+        {"           yMd`      `hNh    "}<br />
+        {"           mMd        oNm    "}<br />
+        {"           oMNo      .mM/    "}<br />
+        {"           `dMN+    -mM+     "}<br />
+        {"            -mMNo  -mN+      "}<br />
+        {"  .+-        :mMNo/mN/       "}<br />
+        {":yNMd.        :NMNNN/        "}<br />
+        {"-mMMMh.        /NMMh`        "}<br />
+        {" .dMMMd.       /NMMMy`       "}<br />
+        {"  `yMMMd.     /NNyNMMh`      "}<br />
+        {"   `sMMMd.   +Nm: +NMMh.     "}<br />
+        {"     oMMMm- oNm:   /NMMd.    "}<br />
+        {"      +NMMmsMm-     :mMMd.   "}<br />
+        {"       /NMMMm-       -mMMd.  "}<br />
+        {"        /MMMm-        -mMMd. "}<br />
+        {"       `sMNMMm-        .mMmo "}<br />
+        {"      `sMd:hMMm.        ./.  "}<br />
+        {"     `yMy` `yNMd`            "}<br />
+        {"    `hMs`    oMMy            "}<br />
+        {"   `hMh       sMN-           "}<br />
+        {"   /MM-       .NMo           "}<br />
+        {"   +MM:       :MM+           "}<br />
+        {"    sNNo-.`.-omNy`           "}<br />
+        {"     -smNNNNmdo-             "}<br />
+        {"        `..`                 "}</Typography>
+
+    return (
+      <>
+        <Typography>
+          A decrepit altar stands in the middle of a dilapidated church.
+          <br />
+          <br />A symbol is carved in the altar.
+        </Typography>
+        <br />
+        {symbol}
+      </>
+    );
+  }
+
   switch (props.loc.name) {
     case LocationName.NewTokyoVitaLife: {
       return renderResleeving();
@@ -121,6 +166,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
     case LocationName.NewTokyoNoodleBar: {
       return renderNoodleBar();
+    }
+    case LocationName.ChongqingChurchOfTheMachineGod: {
+      return renderCotMG();
     }
     default:
       console.error(`Location ${props.loc.name} doesn't have any special properties`);
