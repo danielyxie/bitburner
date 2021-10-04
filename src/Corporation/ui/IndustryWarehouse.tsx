@@ -122,7 +122,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
       </>
     );
   }
-  console.log(division.products);
+
   for (const prodName in division.products) {
     const prod = division.products[prodName];
     if (prod === undefined) continue;
