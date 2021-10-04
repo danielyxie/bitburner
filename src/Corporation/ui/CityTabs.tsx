@@ -38,7 +38,13 @@ export function CityTabs(props: IProps): React.ReactElement {
       </Tabs>
 
       {city !== "Expand" ? (
-        <Industry rerender={props.rerender} city={city} warehouse={division.warehouses[city]} office={office} />
+        <Industry
+          key={city}
+          rerender={props.rerender}
+          city={city}
+          warehouse={division.warehouses[city]}
+          office={office}
+        />
       ) : (
         <ExpandNewCity cityStateSetter={setCity} />
       )}
