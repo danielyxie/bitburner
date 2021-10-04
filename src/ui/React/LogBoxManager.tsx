@@ -147,7 +147,7 @@ function LogWindow(props: IProps): React.ReactElement {
         </Box>
       </Paper>
       <Paper>
-        <Box maxHeight="25vh" overflow="scroll" sx={{ overflowWrap: "break-word" }}>
+        <Box maxHeight="25vh" overflow="scroll" sx={{ overflowWrap: "break-word", whiteSpace: "pre-line" }}>
           {props.script.logs.map(
             (line: string, i: number): JSX.Element => (
               <Typography key={i}>
