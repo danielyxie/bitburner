@@ -1,4 +1,3 @@
-import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { BaseServer } from "./Server/BaseServer";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
@@ -47,7 +46,7 @@ export class TextFile {
       a.download = this.fn;
       document.body.appendChild(a);
       a.click();
-      setTimeoutRef(() => {
+      setTimeout(() => {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
       }, 0);

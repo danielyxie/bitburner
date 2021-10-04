@@ -21,7 +21,6 @@ import { Script } from "./Script/Script";
 import { AllServers } from "./Server/AllServers";
 import { BaseServer } from "./Server/BaseServer";
 import { Settings } from "./Settings/Settings";
-import { setTimeoutRef } from "./utils/SetTimeoutRef";
 
 import { generate } from "escodegen";
 
@@ -264,7 +263,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
         }
 
         if (interpreter.step()) {
-          setTimeoutRef(runInterpreter, Settings.CodeInstructionRunTime);
+          setTimeout(runInterpreter, Settings.CodeInstructionRunTime);
         } else {
           resolve(workerScript);
         }

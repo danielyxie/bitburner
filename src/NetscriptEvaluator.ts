@@ -1,12 +1,10 @@
-import { setTimeoutRef } from "./utils/SetTimeoutRef";
-
 import { isString } from "./utils/helpers/isString";
 import { AllServers } from "./Server/AllServers";
 import { WorkerScript } from "./Netscript/WorkerScript";
 
 export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
   return new Promise(function (resolve) {
-    workerScript.delay = setTimeoutRef(() => {
+    workerScript.delay = window.setTimeout(() => {
       workerScript.delay = null;
       resolve();
     }, time);
