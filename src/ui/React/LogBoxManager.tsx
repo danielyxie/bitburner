@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Draggable from "react-draggable";
+import { ResizableBox } from "react-resizable";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export const LogBoxEvents = new EventEmitter<[RunningScript]>();
 
@@ -106,12 +108,12 @@ function LogWindow(props: IProps): React.ReactElement {
           display: "flex",
           flexFlow: "column",
           backgroundColor: "gray",
-          width: "50%",
+
           position: "fixed",
           left: "50%",
           top: "40%",
           margin: "-10% 0 0 -25%",
-          height: "auto",
+
           maxHeight: "50%",
           zIndex: 10,
           border: "2px solid $hacker-green",
@@ -134,17 +136,27 @@ function LogWindow(props: IProps): React.ReactElement {
             </Box>
           </Box>
         </Paper>
-        <Paper>
-          <Box maxHeight="25vh" overflow="scroll" sx={{ overflowWrap: "break-word", whiteSpace: "pre-line" }}>
-            {props.script.logs.map(
-              (line: string, i: number): JSX.Element => (
-                <Typography key={i}>
-                  {line}
-                  <br />
-                </Typography>
-              ),
-            )}
-          </Box>
+        <Paper sx={{ overflow: "scroll", overflowWrap: "break-word", whiteSpace: "pre-line" }}>
+          <ResizableBox
+            height={500}
+            width={500}
+            handle={
+              <span style={{ position: "absolute", right: 0, bottom: 0 }}>
+                <ArrowForwardIosIcon color="primary" style={{ transform: "rotate(45deg)" }} />
+              </span>
+            }
+          >
+            <Box>
+              {props.script.logs.map(
+                (line: string, i: number): JSX.Element => (
+                  <Typography key={i}>
+                    {line}
+                    <br />
+                  </Typography>
+                ),
+              )}
+            </Box>
+          </ResizableBox>
         </Paper>
       </Paper>
     </Draggable>
