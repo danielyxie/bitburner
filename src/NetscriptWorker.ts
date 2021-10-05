@@ -198,7 +198,6 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
           name === "vsprintf" ||
           name === "scp" ||
           name == "write" ||
-          name === "read" ||
           name === "tryWrite" ||
           name === "run" ||
           name === "exec"

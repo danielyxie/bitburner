@@ -2396,7 +2396,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (iport == null || !(iport instanceof Object)) {
           throw makeRuntimeErrorMsg("read", `Could not find port: ${port}. This is a bug. Report to dev.`);
         }
-        return iport.read();
+        const x = iport.read();
+        console.log(x);
+        return x;
       } else if (isString(port)) {
         // Read from script or text file
         const fn = port;
@@ -2443,7 +2445,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (iport == null || !(iport instanceof Object)) {
         throw makeRuntimeErrorMsg("peek", `Could not find port: ${port}. This is a bug. Report to dev.`);
       }
-      return iport.peek();
+      const x = iport.peek();
+      console.log(x);
+      return x;
     },
     clear: function (port: any): any {
       updateDynamicRam("clear", getRamCost("clear"));
