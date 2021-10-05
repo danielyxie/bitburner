@@ -17,7 +17,7 @@ import { AllServers } from "../Server/AllServers";
 import { removeLeadingSlash, isInRootDirectory, evaluateFilePath } from "./DirectoryHelpers";
 import { checkIfConnectedToDarkweb } from "../DarkWeb/DarkWeb";
 import { iTutorialNextStep, iTutorialSteps, ITutorial } from "../InteractiveTutorial";
-import { GetServerByHostname, getServer, getServerOnNetwork } from "../Server/ServerHelpers";
+import { GetServerByHostname, getServer, getServerOnNetwork, processSingleServerGrowth } from "../Server/ServerHelpers";
 import { ParseCommand, ParseCommands } from "./Parser";
 import { SpecialServerIps, SpecialServerNames } from "../Server/SpecialServerIps";
 import { Settings } from "../Settings/Settings";
@@ -27,6 +27,8 @@ import {
   calculateHackingExpGain,
   calculatePercentMoneyHacked,
   calculateHackingTime,
+  calculateGrowTime,
+  calculateWeakenTime,
 } from "../Hacking";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
@@ -42,6 +44,7 @@ import { connect } from "./commands/connect";
 import { download } from "./commands/download";
 import { expr } from "./commands/expr";
 import { free } from "./commands/free";
+import { grow } from "./commands/grow";
 import { hack } from "./commands/hack";
 import { help } from "./commands/help";
 import { home } from "./commands/home";
@@ -64,6 +67,7 @@ import { sudov } from "./commands/sudov";
 import { tail } from "./commands/tail";
 import { top } from "./commands/top";
 import { unalias } from "./commands/unalias";
+import { weaken } from "./commands/weaken";
 import { wget } from "./commands/wget";
 
 export class Terminal implements ITerminal {
@@ -115,6 +119,23 @@ export class Terminal implements ITerminal {
     this.startAction(calculateHackingTime(server, player) / 4, "h");
   }
 
+  startGrow(player: IPlayer): void {
+    const server = player.getCurrentServer();
+    if (server instanceof HacknetServer) {
+      this.error("Cannot hack this kind of server");
+      return;
+    }
+    this.startAction(calculateGrowTime(server, player) / 16, "g");
+  }
+  startWeaken(player: IPlayer): void {
+    const server = player.getCurrentServer();
+    if (server instanceof HacknetServer) {
+      this.error("Cannot hack this kind of server");
+      return;
+    }
+    this.startAction(calculateWeakenTime(server, player) / 16, "w");
+  }
+
   startBackdoor(player: IPlayer): void {
     // Backdoor should take the same amount of time as hack
     const server = player.getCurrentServer();
@@ -130,7 +151,7 @@ export class Terminal implements ITerminal {
     this.startAction(1, "a");
   }
 
-  startAction(n: number, action: "h" | "b" | "a"): void {
+  startAction(n: number, action: "h" | "b" | "a" | "g" | "w"): void {
     this.action = new TTimer(n, action);
   }
 
@@ -183,12 +204,44 @@ export class Terminal implements ITerminal {
       );
     } else {
       // Failure
-      // player only gains 25% exp for failure? TODO Can change this later to balance
       player.gainHackingExp(expGainedOnFailure);
       this.print(
         `Failed to hack ${server.hostname}. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} hacking exp`,
       );
     }
+  }
+
+  finishGrow(player: IPlayer, cancelled = false): void {
+    if (cancelled) return;
+    const server = player.getCurrentServer();
+    if (server instanceof HacknetServer) {
+      this.error("Cannot hack this kind of server");
+      return;
+    }
+    const expGain = calculateHackingExpGain(server, player);
+    const growth = processSingleServerGrowth(server, 1, player, server.cpuCores) - 1;
+    this.print(
+      `Available money on '${server.hostname}' grown by ${numeralWrapper.formatPercentage(
+        growth,
+        6,
+      )}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp.`,
+    );
+  }
+
+  finishWeaken(player: IPlayer, cancelled = false): void {
+    if (cancelled) return;
+    const server = player.getCurrentServer();
+    if (server instanceof HacknetServer) {
+      this.error("Cannot hack this kind of server");
+      return;
+    }
+    const expGain = calculateHackingExpGain(server, player);
+    server.weaken(CONSTANTS.ServerWeakenAmount);
+    this.print(
+      `'${server.hostname}' security level weakened to ${server.hackDifficulty}. Gained ${numeralWrapper.formatExp(
+        expGain,
+      )} hacking exp.`,
+    );
   }
 
   finishBackdoor(router: IRouter, player: IPlayer, cancelled = false): void {
@@ -257,6 +310,10 @@ export class Terminal implements ITerminal {
     this.print(this.getProgressText());
     if (this.action.action === "h") {
       this.finishHack(router, player, cancelled);
+    } else if (this.action.action === "g") {
+      this.finishGrow(player, cancelled);
+    } else if (this.action.action === "w") {
+      this.finishWeaken(player, cancelled);
     } else if (this.action.action === "b") {
       this.finishBackdoor(router, player, cancelled);
     } else if (this.action.action === "a") {
@@ -657,6 +714,7 @@ export class Terminal implements ITerminal {
         args: (string | number)[],
       ) => void;
     } = {
+      "scan-analyze": scananalyze,
       alias: alias,
       analyze: analyze,
       backdoor: backdoor,
@@ -664,12 +722,13 @@ export class Terminal implements ITerminal {
       cat: cat,
       cd: cd,
       check: check,
-      cls: () => this.clear(),
       clear: () => this.clear(),
+      cls: () => this.clear(),
       connect: connect,
       download: download,
       expr: expr,
       free: free,
+      grow: grow,
       hack: hack,
       help: help,
       home: home,
@@ -686,12 +745,12 @@ export class Terminal implements ITerminal {
       rm: rm,
       run: run,
       scan: scan,
-      "scan-analyze": scananalyze,
       scp: scp,
       sudov: sudov,
       tail: tail,
       top: top,
       unalias: unalias,
+      weaken: weaken,
       wget: wget,
     };
 

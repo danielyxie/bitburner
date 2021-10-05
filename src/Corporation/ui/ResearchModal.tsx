@@ -25,7 +25,7 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
   const [open, setOpen] = useState(false);
   if (n === null) return <></>;
   const r = ResearchMap[n.text];
-  let disabled = division.sciResearch.qty < r.cost;
+  let disabled = division.sciResearch.qty < r.cost || n.researched;
   const parent = n.parent;
   if (parent !== null) {
     disabled = disabled || !parent.researched;

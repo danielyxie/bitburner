@@ -15,6 +15,7 @@ import { Factions, initFactions } from "./Faction/Factions";
 import { staneksGift } from "./CotMG/Helper";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { Router } from "./ui/GameRoot";
+import { SetupTextEditor } from "./ScriptEditor/ui/Root";
 
 import {
   getHackingWorkRepGain,
@@ -45,7 +46,7 @@ import { Reputation } from "./ui/React/Reputation";
 import { AlertEvents } from "./ui/React/AlertManager";
 import { exceptionAlert } from "./utils/helpers/exceptionAlert";
 
-import { startTampering } from "./Exploits/tampering";
+import { startExploits } from "./Exploits/loops";
 
 import React from "react";
 
@@ -266,7 +267,7 @@ const Engine: {
   },
 
   load: function (saveString) {
-    startTampering();
+    startExploits();
     // Load game from save or create new game
     if (loadGame(saveString)) {
       ThemeEvents.emit();
@@ -426,6 +427,7 @@ const Engine: {
       // Start interactive tutorial
       iTutorialStart();
     }
+    SetupTextEditor();
   },
 
   start: function () {

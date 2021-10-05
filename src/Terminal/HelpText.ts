@@ -13,10 +13,11 @@ export const TerminalHelpText: string[] = [
   "check [script] [args...]             Print a script's logs to Terminal",
   "clear                                Clear all text on the terminal ",
   "cls                                  See 'clear' command ",
-  "connect [ip/hostname]                Connects to a remote server",
+  "connect [hostname]                   Connects to a remote server",
   "download [script/text file]          Downloads scripts or text files to your computer",
   "expr [math expression]               Evaluate a mathematical expression",
   "free                                 Check the machine's memory (RAM) usage",
+  "grow                                 Spoof money in a servers bank account, increasing the amount available.",
   "hack                                 Hack the current machine",
   "help [command]                       Display this help text, or the help text for a command",
   "home                                 Connect to home computer",
@@ -39,6 +40,7 @@ export const TerminalHelpText: string[] = [
   "tail [script] [args...]              Displays dynamic logs for the specified script",
   "top                                  Displays all running scripts and their RAM usage",
   "unalias [alias name]                 Deletes the specified alias",
+  "weaken [server]                      Reduce the security of a server",
   "wget [url] [target file]             Retrieves code/text from a web server",
 ];
 
@@ -151,7 +153,7 @@ export const HelpTexts: IMap<string[]> = {
     "and down arrow keys is still valid. Also note that this is permanent and there is no way to undo this. Synonymous with 'clear' command",
   ],
   connect: [
-    "connect [hostname/ip]",
+    "connect [hostname]",
     " ",
     "Connect to a remote server. The hostname or IP address of the remote server must be given as the argument ",
     "to this command. Note that only servers that are immediately adjacent to the current server in the network can be connected to. To ",
@@ -189,6 +191,12 @@ export const HelpTexts: IMap<string[]> = {
     " ",
     "Display's the memory usage on the current machine. Print the amount of RAM that is available on the current server as well as ",
     "how much of it is being used.",
+  ],
+  grow: [
+    "grow",
+    "",
+    "Spoof transactions in the current server. Increasing the money available by hacking. Requires root access.",
+    "See the wiki page for hacking mechanics.",
   ],
   hack: [
     "hack",
@@ -393,6 +401,12 @@ export const HelpTexts: IMap<string[]> = {
     "unalias r",
     " ",
     "It is not necessary to differentiate between global and non-global aliases when using 'unalias'",
+  ],
+  weaken: [
+    "weaken",
+    "",
+    "Reduces the security level of the current server. Decreasing the time it takes for all operations on this server.",
+    "Requires root access. See the wiki page for hacking mechanics.",
   ],
   wget: [
     "wget [url] [target file]",

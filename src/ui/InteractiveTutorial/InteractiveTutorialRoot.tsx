@@ -285,7 +285,9 @@ export function InteractiveTutorialRoot(): React.ReactElement {
           <br />
           <br />
           The amount of money on a server is not limitless. So, if you constantly hack a server and deplete its money,
-          then you will encounter diminishing returns in your hacking.
+          then you will encounter diminishing returns in your hacking. You will need to use{" "}
+          <Typography classes={{ root: classes.textfield }}>{"[n00dles ~/]> grow"}</Typography>
+          and <Typography classes={{ root: classes.textfield }}>{"[n00dles ~/]> weaken"}</Typography>
         </Typography>
       ),
       canNext: true,

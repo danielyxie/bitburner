@@ -21,6 +21,7 @@ const commands = [
   "download",
   "expr",
   "free",
+  "grow",
   "hack",
   "help",
   "home",
@@ -36,13 +37,14 @@ const commands = [
   "ps",
   "rm",
   "run",
-  "scan",
   "scan-analyze",
+  "scan",
   "scp",
   "sudov",
   "tail",
   "theme",
   "top",
+  "weaken",
 ];
 
 export function determineAllPossibilitiesForTabCompletion(

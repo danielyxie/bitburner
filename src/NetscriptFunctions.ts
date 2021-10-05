@@ -54,13 +54,9 @@ import {
   calculateWeakenTime,
 } from "./Hacking";
 import { calculateServerGrowth } from "./Server/formulas/grow";
-import { Gang } from "./Gang/Gang";
 import { AllGangs } from "./Gang/AllGangs";
-import { GangMemberTasks } from "./Gang/GangMemberTasks";
-import { GangMemberUpgrades } from "./Gang/GangMemberUpgrades";
 import { Factions, factionExists } from "./Faction/Factions";
 import { joinFaction, purchaseAugmentation } from "./Faction/FactionHelpers";
-import { FactionWorkType } from "./Faction/FactionWorkTypeEnum";
 import { netscriptCanGrow, netscriptCanHack, netscriptCanWeaken } from "./Hacking/netscriptCanHack";
 
 import {
@@ -136,13 +132,9 @@ import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads } from "./NetscriptEvaluator";
 import { Interpreter } from "./ThirdParty/JSInterpreter";
-import { SleeveTaskType } from "./PersonObjects/Sleeve/SleeveTaskTypesEnum";
-import { findSleevePurchasableAugs } from "./PersonObjects/Sleeve/SleeveHelpers";
-import { Exploit } from "./Exploits/Exploit";
 import { Router } from "./ui/GameRoot";
 
 import { numeralWrapper } from "./ui/numeralFormat";
-import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import { is2DArray } from "./utils/helpers/is2DArray";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 
@@ -162,13 +154,13 @@ import { Augmentation } from "./Augmentation/Augmentation";
 import { HacknetNode } from "./Hacknet/HacknetNode";
 
 import { CodingContract } from "./CodingContracts";
-import { GangMember } from "./Gang/GangMember";
-import { GangMemberTask } from "./Gang/GangMemberTask";
 import { Stock } from "./StockMarket/Stock";
 import { BaseServer } from "./Server/BaseServer";
-
-import { staneksGift } from "./CotMG/Helper";
-import { Fragments, FragmentById } from "./CotMG/Fragment";
+import { INetscriptGang, NetscriptGang } from "./NetscriptFunctions/Gang";
+import { INetscriptSleeve, NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
+import { INetscriptExtra, NetscriptExtra } from "./NetscriptFunctions/Extra";
+import { INetscriptHacknet, NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
+import { INetscriptStanek, NetscriptStanek } from "./NetscriptFunctions/Stanek";
 
 const defaultInterpreter = new Interpreter("", () => undefined);
 
@@ -205,8 +197,12 @@ function toNative(pseudoObj: any): any {
   return nativeObj;
 }
 
-interface NS {
+interface NS extends INetscriptExtra {
   [key: string]: any;
+  hacknet: INetscriptHacknet;
+  gang: INetscriptGang;
+  sleeve: INetscriptSleeve;
+  stanek: INetscriptStanek;
 }
 
 function NetscriptFunctions(workerScript: WorkerScript): NS {
@@ -373,35 +369,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     }
   };
 
-  // Utility function to get Hacknet Node object
-  const getHacknetNode = function (i: any, callingFn = ""): HacknetNode | HacknetServer {
-    if (isNaN(i)) {
-      throw makeRuntimeErrorMsg(callingFn, "Invalid index specified for Hacknet Node: " + i);
-    }
-    if (i < 0 || i >= Player.hacknetNodes.length) {
-      throw makeRuntimeErrorMsg(callingFn, "Index specified for Hacknet Node is out-of-bounds: " + i);
-    }
-
-    if (hasHacknetServers(Player)) {
-      const hi = Player.hacknetNodes[i];
-      if (typeof hi !== "string") throw new Error("hacknet node was not a string");
-      const hserver = AllServers[hi];
-      if (!(hserver instanceof HacknetServer)) throw new Error("hacknet server was not actually hacknet server");
-      if (hserver == null) {
-        throw makeRuntimeErrorMsg(
-          callingFn,
-          `Could not get Hacknet Server for index ${i}. This is probably a bug, please report to game dev`,
-        );
-      }
-
-      return hserver;
-    } else {
-      const node = Player.hacknetNodes[i];
-      if (!(node instanceof HacknetNode)) throw new Error("hacknet node was not node.");
-      return node;
-    }
-  };
-
   const makeRuntimeErrorMsg = function (caller: string, msg: string): string {
     const errstack = new Error().stack;
     if (errstack === undefined) throw new Error("how did we not throw an error?");
@@ -517,23 +484,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     }
   };
 
-  const checkSleeveAPIAccess = function (func: any): void {
-    if (Player.bitNodeN !== 10 && !SourceFileFlags[10]) {
-      throw makeRuntimeErrorMsg(
-        `sleeve.${func}`,
-        "You do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10",
-      );
-    }
-  };
-
-  const checkSleeveNumber = function (func: any, sleeveNumber: any): void {
-    if (sleeveNumber >= Player.sleeves.length || sleeveNumber < 0) {
-      const msg = `Invalid sleeve number: ${sleeveNumber}`;
-      workerScript.log(func, msg);
-      throw makeRuntimeErrorMsg(`sleeve.${func}`, msg);
-    }
-  };
-
   const getCodingContract = function (func: any, ip: any, fn: any): CodingContract {
     const server = safeGetServer(ip, func);
     const contract = server.getContract(fn);
@@ -551,31 +501,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         "You do not currently have access to the Stanek API. This is either because you are not in BitNode-13 or because you do not have Source-File 13",
       );
     }
-  };
-
-  const checkGangApiAccess = function (func: any): void {
-    const gang = Player.gang;
-    if (gang === null) throw new Error("Must have joined gang");
-    const hasAccess = gang instanceof Gang;
-    if (!hasAccess) {
-      throw makeRuntimeErrorMsg(`gang.${func}`, `You do not currently have a Gang`);
-    }
-  };
-
-  const getGangMember = function (func: any, name: any): GangMember {
-    const gang = Player.gang;
-    if (gang === null) throw new Error("Must have joined gang");
-    for (const member of gang.members) if (member.name === name) return member;
-    throw makeRuntimeErrorMsg(`gang.${func}`, `Invalid gang member: '${name}'`);
-  };
-
-  const getGangTask = function (func: any, name: any): GangMemberTask {
-    const task = GangMemberTasks[name];
-    if (!task) {
-      throw makeRuntimeErrorMsg(`gang.${func}`, `Invalid task: '${name}'`);
-    }
-
-    return task;
   };
 
   const getBladeburnerActionObject = function (func: any, type: any, name: any): any {
@@ -796,142 +721,32 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     return out;
   };
 
-  const functions = {
-    hacknet: {
-      numNodes: function (): any {
-        return Player.hacknetNodes.length;
-      },
-      maxNumNodes: function (): any {
-        if (hasHacknetServers(Player)) {
-          return HacknetServerConstants.MaxServers;
-        }
-        return Infinity;
-      },
-      purchaseNode: function (): any {
-        return purchaseHacknet(Player);
-      },
-      getPurchaseNodeCost: function (): any {
-        if (hasHacknetServers(Player)) {
-          return getCostOfNextHacknetServer(Player);
-        } else {
-          return getCostOfNextHacknetNode(Player);
-        }
-      },
-      getNodeStats: function (i: any): any {
-        const node = getHacknetNode(i, "getNodeStats");
-        const hasUpgraded = hasHacknetServers(Player);
-        const res: any = {
-          name: node instanceof HacknetServer ? node.hostname : node.name,
-          level: node.level,
-          ram: node instanceof HacknetServer ? node.maxRam : node.ram,
-          cores: node.cores,
-          production: node instanceof HacknetServer ? node.hashRate : node.moneyGainRatePerSecond,
-          timeOnline: node.onlineTimeSeconds,
-          totalProduction: node instanceof HacknetServer ? node.totalHashesGenerated : node.totalMoneyGenerated,
-        };
-
-        if (hasUpgraded && node instanceof HacknetServer) {
-          res.cache = node.cache;
-          res.hashCapacity = node.hashCapacity;
-        }
-
-        return res;
-      },
-      upgradeLevel: function (i: any, n: any): any {
-        const node = getHacknetNode(i, "upgradeLevel");
-        return purchaseLevelUpgrade(Player, node, n);
-      },
-      upgradeRam: function (i: any, n: any): any {
-        const node = getHacknetNode(i, "upgradeRam");
-        return purchaseRamUpgrade(Player, node, n);
-      },
-      upgradeCore: function (i: any, n: any): any {
-        const node = getHacknetNode(i, "upgradeCore");
-        return purchaseCoreUpgrade(Player, node, n);
-      },
-      upgradeCache: function (i: any, n: any): any {
-        if (!hasHacknetServers(Player)) {
-          return false;
-        }
-        const node = getHacknetNode(i, "upgradeCache");
-        if (!(node instanceof HacknetServer)) {
-          workerScript.log("upgradeCache", "Can only be called on hacknet servers");
-          return false;
-        }
-        const res = purchaseCacheUpgrade(Player, node, n);
-        if (res) {
-          updateHashManagerCapacity(Player);
-        }
-        return res;
-      },
-      getLevelUpgradeCost: function (i: any, n: any): any {
-        const node = getHacknetNode(i, "upgradeLevel");
-        return node.calculateLevelUpgradeCost(n, Player.hacknet_node_level_cost_mult);
-      },
-      getRamUpgradeCost: function (i: any, n: any): any {
-        const node = getHacknetNode(i, "upgradeRam");
-        return node.calculateRamUpgradeCost(n, Player.hacknet_node_ram_cost_mult);
-      },
-      getCoreUpgradeCost: function (i: any, n: any): any {
-        const node = getHacknetNode(i, "upgradeCore");
-        return node.calculateCoreUpgradeCost(n, Player.hacknet_node_core_cost_mult);
-      },
-      getCacheUpgradeCost: function (i: any, n: any): any {
-        if (!hasHacknetServers(Player)) {
-          return Infinity;
-        }
-        const node = getHacknetNode(i, "upgradeCache");
-        if (!(node instanceof HacknetServer)) {
-          workerScript.log("getCacheUpgradeCost", "Can only be called on hacknet servers");
-          return -1;
-        }
-        return node.calculateCacheUpgradeCost(n);
-      },
-      numHashes: function (): any {
-        if (!hasHacknetServers(Player)) {
-          return 0;
-        }
-        return Player.hashManager.hashes;
-      },
-      hashCapacity: function (): any {
-        if (!hasHacknetServers(Player)) {
-          return 0;
-        }
-        return Player.hashManager.capacity;
-      },
-      hashCost: function (upgName: any): any {
-        if (!hasHacknetServers(Player)) {
-          return Infinity;
-        }
-
-        return Player.hashManager.getUpgradeCost(upgName);
-      },
-      spendHashes: function (upgName: any, upgTarget: any): any {
-        if (!hasHacknetServers(Player)) {
-          return false;
-        }
-        return purchaseHashUpgrade(Player, upgName, upgTarget);
-      },
-      getHashUpgradeLevel: function (upgName: any): any {
-        const level = Player.hashManager.upgrades[upgName];
-        if (level === undefined) {
-          throw makeRuntimeErrorMsg("hacknet.hashUpgradeLevel", `Invalid Hash Upgrade: ${upgName}`);
-        }
-        return level;
-      },
-      getStudyMult: function (): any {
-        if (!hasHacknetServers(Player)) {
-          return false;
-        }
-        return Player.hashManager.getStudyMult();
-      },
-      getTrainingMult: function (): any {
-        if (!hasHacknetServers(Player)) {
-          return false;
-        }
-        return Player.hashManager.getTrainingMult();
-      },
+  const helper = {
+    updateDynamicRam: updateDynamicRam,
+    makeRuntimeErrorMsg: makeRuntimeErrorMsg,
+    string: (funcName: string, argName: string, v: any): string => {
+      if (typeof v === "string") return v;
+      if (typeof v === "number") return v + ""; // cast to string;
+      throw makeRuntimeErrorMsg(funcName, `${argName} should be a string`);
     },
+    number: (funcName: string, argName: string, v: any): number => {
+      if (typeof v === "number") return v;
+      if (!isNaN(v) && !isNaN(parseFloat(v))) return parseFloat(v);
+      throw makeRuntimeErrorMsg(funcName, `${argName} should be a number`);
+    },
+    boolean: (v: any): boolean => {
+      return !!v; // Just convert it to boolean.
+    },
+  };
+
+  const gang = NetscriptGang(Player, workerScript, helper);
+  const sleeve = NetscriptSleeve(Player, workerScript, helper);
+  const extra = NetscriptExtra(Player, workerScript, helper);
+  const hacknet = NetscriptHacknet(Player, workerScript, helper);
+  const stanek = NetscriptStanek(Player, workerScript, helper);
+
+  const functions = {
+    hacknet: hacknet,
     sprintf: sprintf,
     vsprintf: vsprintf,
     scan: function (ip: any = workerScript.serverIp, hostnames: any = true): any {
@@ -1057,7 +872,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
           return Promise.reject(workerScript);
         }
         const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
-        server.moneyAvailable += 1 * threads; // It can be grown even if it has no money
         processSingleServerGrowth(server, threads, Player, host.cpuCores);
         const moneyAfter = server.moneyAvailable;
         workerScript.scriptRef.recordGrow(server.ip, threads);
@@ -1401,7 +1215,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
 
       const spawnDelay = 10;
-      setTimeoutRef(() => {
+      setTimeout(() => {
         if (isNaN(threads) || threads <= 0) {
           throw makeRuntimeErrorMsg("spawn", `Invalid thread count. Must be numeric and > 0, is ${threads}`);
         }
@@ -4084,7 +3898,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       checkSingularityAccess("softReset", 3);
 
       workerScript.log("softReset", "Soft resetting. This will cause this script to be killed");
-      setTimeoutRef(() => {
+      setTimeout(() => {
         prestigeAugmentation();
         runAfterReset(cbScript);
       }, 0);
@@ -4103,7 +3917,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log("installAugmentations", "Installing Augmentations. This will cause this script to be killed");
-      setTimeoutRef(() => {
+      setTimeout(() => {
         installAugmentations();
         runAfterReset(cbScript);
       }, 0);
@@ -4113,259 +3927,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
 
     // Gang API
-    gang: {
-      createGang: function (faction: any): any {
-        updateDynamicRam("createGang", getRamCost("gang", "createGang"));
-        // this list is copied from Faction/ui/Root.tsx
-        const GangNames = [
-          "Slum Snakes",
-          "Tetrads",
-          "The Syndicate",
-          "The Dark Army",
-          "Speakers for the Dead",
-          "NiteSec",
-          "The Black Hand",
-        ];
-        if (!Player.canAccessGang() || !GangNames.includes(faction)) return false;
-        if (Player.inGang()) return false;
-        if (!Player.factions.includes(faction)) return false;
-
-        const isHacking = faction === "NiteSec" || faction === "The Black Hand";
-        Player.startGang(faction, isHacking);
-        return true;
-      },
-      inGang: function (): any {
-        updateDynamicRam("inGang", getRamCost("gang", "inGang"));
-        return Player.inGang();
-      },
-      getMemberNames: function (): any {
-        updateDynamicRam("getMemberNames", getRamCost("gang", "getMemberNames"));
-        checkGangApiAccess("getMemberNames");
-        const gang = Player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
-        return gang.members.map((member) => member.name);
-      },
-      getGangInformation: function (): any {
-        updateDynamicRam("getGangInformation", getRamCost("gang", "getGangInformation"));
-        checkGangApiAccess("getGangInformation");
-        const gang = Player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
-        return {
-          faction: gang.facName,
-          isHacking: gang.isHackingGang,
-          moneyGainRate: gang.moneyGainRate,
-          power: gang.getPower(),
-          respect: gang.respect,
-          respectGainRate: gang.respectGainRate,
-          territory: gang.getTerritory(),
-          territoryClashChance: gang.territoryClashChance,
-          territoryWarfareEngaged: gang.territoryWarfareEngaged,
-          wantedLevel: gang.wanted,
-          wantedLevelGainRate: gang.wantedGainRate,
-        };
-      },
-      getOtherGangInformation: function (): any {
-        updateDynamicRam("getOtherGangInformation", getRamCost("gang", "getOtherGangInformation"));
-        checkGangApiAccess("getOtherGangInformation");
-        const cpy: any = {};
-        for (const gang in AllGangs) {
-          cpy[gang] = Object.assign({}, AllGangs[gang]);
-        }
-
-        return cpy;
-      },
-      getMemberInformation: function (name: any): any {
-        updateDynamicRam("getMemberInformation", getRamCost("gang", "getMemberInformation"));
-        checkGangApiAccess("getMemberInformation");
-        const member = getGangMember("getMemberInformation", name);
-        return {
-          name: member.name,
-          task: member.task,
-          earnedRespect: member.earnedRespect,
-          hack: member.hack,
-          str: member.str,
-          def: member.def,
-          dex: member.dex,
-          agi: member.agi,
-          cha: member.cha,
-
-          hack_exp: member.hack_exp,
-          str_exp: member.str_exp,
-          def_exp: member.def_exp,
-          dex_exp: member.dex_exp,
-          agi_exp: member.agi_exp,
-          cha_exp: member.cha_exp,
-
-          hack_mult: member.hack_mult,
-          str_mult: member.str_mult,
-          def_mult: member.def_mult,
-          dex_mult: member.dex_mult,
-          agi_mult: member.agi_mult,
-          cha_mult: member.cha_mult,
-
-          hack_asc_mult: member.calculateAscensionMult(member.hack_asc_points),
-          str_asc_mult: member.calculateAscensionMult(member.str_asc_points),
-          def_asc_mult: member.calculateAscensionMult(member.def_asc_points),
-          dex_asc_mult: member.calculateAscensionMult(member.dex_asc_points),
-          agi_asc_mult: member.calculateAscensionMult(member.agi_asc_points),
-          cha_asc_mult: member.calculateAscensionMult(member.cha_asc_points),
-
-          hack_asc_points: member.hack_asc_points,
-          str_asc_points: member.str_asc_points,
-          def_asc_points: member.def_asc_points,
-          dex_asc_points: member.dex_asc_points,
-          agi_asc_points: member.agi_asc_points,
-          cha_asc_points: member.cha_asc_points,
-
-          upgrades: member.upgrades.slice(),
-          augmentations: member.augmentations.slice(),
-        };
-      },
-      canRecruitMember: function (): any {
-        updateDynamicRam("canRecruitMember", getRamCost("gang", "canRecruitMember"));
-        checkGangApiAccess("canRecruitMember");
-        const gang = Player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
-        return gang.canRecruitMember();
-      },
-      recruitMember: function (name: any): any {
-        updateDynamicRam("recruitMember", getRamCost("gang", "recruitMember"));
-        checkGangApiAccess("recruitMember");
-        const gang = Player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
-        const recruited = gang.recruitMember(name);
-        if (recruited) {
-          workerScript.log("recruitMember", `Successfully recruited Gang Member '${name}'`);
-        } else {
-          workerScript.log("recruitMember", `Failed to recruit Gang Member '${name}'`);
-        }
-
-        return recruited;
-      },
-      getTaskNames: function (): any {
-        updateDynamicRam("getTaskNames", getRamCost("gang", "getTaskNames"));
-        checkGangApiAccess("getTaskNames");
-        const gang = Player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
-        const tasks = gang.getAllTaskNames();
-        tasks.unshift("Unassigned");
-        return tasks;
-      },
-      setMemberTask: function (memberName: any, taskName: any): any {
-        updateDynamicRam("setMemberTask", getRamCost("gang", "setMemberTask"));
-        checkGangApiAccess("setMemberTask");
-        const member = getGangMember("setMemberTask", memberName);
-        const success = member.assignToTask(taskName);
-        if (success) {
-          workerScript.log("setMemberTask", `Successfully assigned Gang Member '${memberName}' to '${taskName}' task`);
-        } else {
-          workerScript.log(
-            "setMemberTask",
-            `Failed to assign Gang Member '${memberName}' to '${taskName}' task. '${memberName}' is now Unassigned`,
-          );
-        }
-
-        return success;
-      },
-      getTaskStats: function (taskName: any): any {
-        updateDynamicRam("getTaskStats", getRamCost("gang", "getTaskStats"));
-        checkGangApiAccess("getTaskStats");
-        const task = getGangTask("getTaskStats", taskName);
-        const copy = Object.assign({}, task);
-        copy.territory = Object.assign({}, task.territory);
-        return copy;
-      },
-      getEquipmentNames: function (): any {
-        updateDynamicRam("getEquipmentNames", getRamCost("gang", "getEquipmentNames"));
-        checkGangApiAccess("getEquipmentNames");
-        return Object.keys(GangMemberUpgrades);
-      },
-      getEquipmentCost: function (equipName: any): any {
-        updateDynamicRam("getEquipmentCost", getRamCost("gang", "getEquipmentCost"));
-        checkGangApiAccess("getEquipmentCost");
-        const gang = Player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
-        const upg = GangMemberUpgrades[equipName];
-        if (upg === null) return Infinity;
-        return gang.getUpgradeCost(upg);
-      },
-      getEquipmentType: function (equipName: any): any {
-        updateDynamicRam("getEquipmentType", getRamCost("gang", "getEquipmentType"));
-        checkGangApiAccess("getEquipmentType");
-        const upg = GangMemberUpgrades[equipName];
-        if (upg == null) return "";
-        return upg.getType();
-      },
-      getEquipmentStats: function (equipName: any): any {
-        updateDynamicRam("getEquipmentStats", getRamCost("gang", "getEquipmentStats"));
-        checkGangApiAccess("getEquipmentStats");
-        const equipment = GangMemberUpgrades[equipName];
-        if (!equipment) {
-          throw makeRuntimeErrorMsg("getEquipmentStats", `Invalid equipment: ${equipName}`);
-        }
-        return Object.assign({}, equipment.mults);
-      },
-      purchaseEquipment: function (memberName: any, equipName: any): any {
-        updateDynamicRam("purchaseEquipment", getRamCost("gang", "purchaseEquipment"));
-        checkGangApiAccess("purchaseEquipment");
-        const gang = Player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
-        const member = getGangMember("purchaseEquipment", memberName);
-        const equipment = GangMemberUpgrades[equipName];
-        if (!equipment) return false;
-        const res = member.buyUpgrade(equipment, Player, gang);
-        if (res) {
-          workerScript.log("purchaseEquipment", `Purchased '${equipName}' for Gang member '${memberName}'`);
-        } else {
-          workerScript.log("purchaseEquipment", `Failed to purchase '${equipName}' for Gang member '${memberName}'`);
-        }
-
-        return res;
-      },
-      ascendMember: function (name: any): any {
-        updateDynamicRam("ascendMember", getRamCost("gang", "ascendMember"));
-        checkGangApiAccess("ascendMember");
-        const gang = Player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
-        const member = getGangMember("ascendMember", name);
-        if (!member.canAscend()) return;
-        return gang.ascendMember(member, workerScript);
-      },
-      setTerritoryWarfare: function (engage: any): any {
-        updateDynamicRam("setTerritoryWarfare", getRamCost("gang", "setTerritoryWarfare"));
-        checkGangApiAccess("setTerritoryWarfare");
-        const gang = Player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
-        if (engage) {
-          gang.territoryWarfareEngaged = true;
-          workerScript.log("setTerritoryWarfare", "Engaging in Gang Territory Warfare");
-        } else {
-          gang.territoryWarfareEngaged = false;
-          workerScript.log("setTerritoryWarfare", "Disengaging in Gang Territory Warfare");
-        }
-      },
-      getChanceToWinClash: function (otherGang: any): any {
-        updateDynamicRam("getChanceToWinClash", getRamCost("gang", "getChanceToWinClash"));
-        checkGangApiAccess("getChanceToWinClash");
-        const gang = Player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
-        if (AllGangs[otherGang] == null) {
-          throw makeRuntimeErrorMsg(`gang.getChanceToWinClash`, `Invalid gang: ${otherGang}`);
-        }
-
-        const playerPower = AllGangs[gang.facName].power;
-        const otherPower = AllGangs[otherGang].power;
-
-        return playerPower / (otherPower + playerPower);
-      },
-      getBonusTime: function (): any {
-        updateDynamicRam("getBonusTime", getRamCost("gang", "getBonusTime"));
-        checkGangApiAccess("getBonusTime");
-        const gang = Player.gang;
-        if (gang === null) throw new Error("Should not be called without Gang");
-        return Math.round(gang.storedCycles / 5);
-      },
-    }, // end gang namespace
+    gang: gang,
 
     // Bladeburner API
     bladeburner: {
@@ -4941,286 +4503,10 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     }, // End coding contracts
 
     // Duplicate Sleeve API
-    sleeve: {
-      getNumSleeves: function (): any {
-        updateDynamicRam("getNumSleeves", getRamCost("sleeve", "getNumSleeves"));
-        checkSleeveAPIAccess("getNumSleeves");
-        return Player.sleeves.length;
-      },
-      setToShockRecovery: function (sleeveNumber: any = 0): any {
-        updateDynamicRam("setToShockRecovery", getRamCost("sleeve", "setToShockRecovery"));
-        checkSleeveAPIAccess("setToShockRecovery");
-        checkSleeveNumber("setToShockRecovery", sleeveNumber);
-        return Player.sleeves[sleeveNumber].shockRecovery(Player);
-      },
-      setToSynchronize: function (sleeveNumber: any = 0): any {
-        updateDynamicRam("setToSynchronize", getRamCost("sleeve", "setToSynchronize"));
-        checkSleeveAPIAccess("setToSynchronize");
-        checkSleeveNumber("setToSynchronize", sleeveNumber);
-        return Player.sleeves[sleeveNumber].synchronize(Player);
-      },
-      setToCommitCrime: function (sleeveNumber: any = 0, crimeName: any = ""): any {
-        updateDynamicRam("setToCommitCrime", getRamCost("sleeve", "setToCommitCrime"));
-        checkSleeveAPIAccess("setToCommitCrime");
-        checkSleeveNumber("setToCommitCrime", sleeveNumber);
-        return Player.sleeves[sleeveNumber].commitCrime(Player, crimeName);
-      },
-      setToUniversityCourse: function (sleeveNumber: any = 0, universityName: any = "", className: any = ""): any {
-        updateDynamicRam("setToUniversityCourse", getRamCost("sleeve", "setToUniversityCourse"));
-        checkSleeveAPIAccess("setToUniversityCourse");
-        checkSleeveNumber("setToUniversityCourse", sleeveNumber);
-        return Player.sleeves[sleeveNumber].takeUniversityCourse(Player, universityName, className);
-      },
-      travel: function (sleeveNumber: any = 0, cityName: any = ""): any {
-        updateDynamicRam("travel", getRamCost("sleeve", "travel"));
-        checkSleeveAPIAccess("travel");
-        checkSleeveNumber("travel", sleeveNumber);
-        return Player.sleeves[sleeveNumber].travel(Player, cityName);
-      },
-      setToCompanyWork: function (sleeveNumber: any = 0, companyName: any = ""): any {
-        updateDynamicRam("setToCompanyWork", getRamCost("sleeve", "setToCompanyWork"));
-        checkSleeveAPIAccess("setToCompanyWork");
-        checkSleeveNumber("setToCompanyWork", sleeveNumber);
+    sleeve: sleeve,
 
-        // Cannot work at the same company that another sleeve is working at
-        for (let i = 0; i < Player.sleeves.length; ++i) {
-          if (i === sleeveNumber) {
-            continue;
-          }
-          const other = Player.sleeves[i];
-          if (other.currentTask === SleeveTaskType.Company && other.currentTaskLocation === companyName) {
-            throw makeRuntimeErrorMsg(
-              "sleeve.setToFactionWork",
-              `Sleeve ${sleeveNumber} cannot work for company ${companyName} because Sleeve ${i} is already working for them.`,
-            );
-          }
-        }
+    stanek: stanek,
 
-        return Player.sleeves[sleeveNumber].workForCompany(Player, companyName);
-      },
-      setToFactionWork: function (sleeveNumber: any = 0, factionName: any = "", workType: any = ""): any {
-        updateDynamicRam("setToFactionWork", getRamCost("sleeve", "setToFactionWork"));
-        checkSleeveAPIAccess("setToFactionWork");
-        checkSleeveNumber("setToFactionWork", sleeveNumber);
-
-        // Cannot work at the same faction that another sleeve is working at
-        for (let i = 0; i < Player.sleeves.length; ++i) {
-          if (i === sleeveNumber) {
-            continue;
-          }
-          const other = Player.sleeves[i];
-          if (other.currentTask === SleeveTaskType.Faction && other.currentTaskLocation === factionName) {
-            throw makeRuntimeErrorMsg(
-              "sleeve.setToFactionWork",
-              `Sleeve ${sleeveNumber} cannot work for faction ${factionName} because Sleeve ${i} is already working for them.`,
-            );
-          }
-        }
-
-        return Player.sleeves[sleeveNumber].workForFaction(Player, factionName, workType);
-      },
-      setToGymWorkout: function (sleeveNumber: any = 0, gymName: any = "", stat: any = ""): any {
-        updateDynamicRam("setToGymWorkout", getRamCost("sleeve", "setToGymWorkout"));
-        checkSleeveAPIAccess("setToGymWorkout");
-        checkSleeveNumber("setToGymWorkout", sleeveNumber);
-
-        return Player.sleeves[sleeveNumber].workoutAtGym(Player, gymName, stat);
-      },
-      getSleeveStats: function (sleeveNumber: any = 0): any {
-        updateDynamicRam("getSleeveStats", getRamCost("sleeve", "getSleeveStats"));
-        checkSleeveAPIAccess("getSleeveStats");
-        checkSleeveNumber("getSleeveStats", sleeveNumber);
-
-        const sl = Player.sleeves[sleeveNumber];
-        return {
-          shock: 100 - sl.shock,
-          sync: sl.sync,
-          hacking_skill: sl.hacking_skill,
-          strength: sl.strength,
-          defense: sl.defense,
-          dexterity: sl.dexterity,
-          agility: sl.agility,
-          charisma: sl.charisma,
-        };
-      },
-      getTask: function (sleeveNumber: any = 0): any {
-        updateDynamicRam("getTask", getRamCost("sleeve", "getTask"));
-        checkSleeveAPIAccess("getTask");
-        checkSleeveNumber("getTask", sleeveNumber);
-
-        const sl = Player.sleeves[sleeveNumber];
-        return {
-          task: SleeveTaskType[sl.currentTask],
-          crime: sl.crimeType,
-          location: sl.currentTaskLocation,
-          gymStatType: sl.gymStatType,
-          factionWorkType: FactionWorkType[sl.factionWorkType],
-        };
-      },
-      getInformation: function (sleeveNumber: any = 0): any {
-        updateDynamicRam("getInformation", getRamCost("sleeve", "getInformation"));
-        checkSleeveAPIAccess("getInformation");
-        checkSleeveNumber("getInformation", sleeveNumber);
-
-        const sl = Player.sleeves[sleeveNumber];
-        return {
-          city: sl.city,
-          hp: sl.hp,
-          jobs: Object.keys(Player.jobs), // technically sleeves have the same jobs as the player.
-          jobTitle: Object.values(Player.jobs),
-          maxHp: sl.max_hp,
-          tor: SpecialServerIps.hasOwnProperty("Darkweb Server"), // There's no reason not to give that infomation here as well. Worst case scenario it isn't used.
-
-          mult: {
-            agility: sl.agility_mult,
-            agilityExp: sl.agility_exp_mult,
-            companyRep: sl.company_rep_mult,
-            crimeMoney: sl.crime_money_mult,
-            crimeSuccess: sl.crime_success_mult,
-            defense: sl.defense_mult,
-            defenseExp: sl.defense_exp_mult,
-            dexterity: sl.dexterity_mult,
-            dexterityExp: sl.dexterity_exp_mult,
-            factionRep: sl.faction_rep_mult,
-            hacking: sl.hacking_mult,
-            hackingExp: sl.hacking_exp_mult,
-            strength: sl.strength_mult,
-            strengthExp: sl.strength_exp_mult,
-            workMoney: sl.work_money_mult,
-          },
-
-          timeWorked: sl.currentTaskTime,
-          earningsForSleeves: {
-            workHackExpGain: sl.earningsForSleeves.hack,
-            workStrExpGain: sl.earningsForSleeves.str,
-            workDefExpGain: sl.earningsForSleeves.def,
-            workDexExpGain: sl.earningsForSleeves.dex,
-            workAgiExpGain: sl.earningsForSleeves.agi,
-            workChaExpGain: sl.earningsForSleeves.cha,
-            workMoneyGain: sl.earningsForSleeves.money,
-          },
-          earningsForPlayer: {
-            workHackExpGain: sl.earningsForPlayer.hack,
-            workStrExpGain: sl.earningsForPlayer.str,
-            workDefExpGain: sl.earningsForPlayer.def,
-            workDexExpGain: sl.earningsForPlayer.dex,
-            workAgiExpGain: sl.earningsForPlayer.agi,
-            workChaExpGain: sl.earningsForPlayer.cha,
-            workMoneyGain: sl.earningsForPlayer.money,
-          },
-          earningsForTask: {
-            workHackExpGain: sl.earningsForTask.hack,
-            workStrExpGain: sl.earningsForTask.str,
-            workDefExpGain: sl.earningsForTask.def,
-            workDexExpGain: sl.earningsForTask.dex,
-            workAgiExpGain: sl.earningsForTask.agi,
-            workChaExpGain: sl.earningsForTask.cha,
-            workMoneyGain: sl.earningsForTask.money,
-          },
-          workRepGain: sl.getRepGain(Player),
-        };
-      },
-      getSleeveAugmentations: function (sleeveNumber: any = 0): any {
-        updateDynamicRam("getSleeveAugmentations", getRamCost("sleeve", "getSleeveAugmentations"));
-        checkSleeveAPIAccess("getSleeveAugmentations");
-        checkSleeveNumber("getSleeveAugmentations", sleeveNumber);
-
-        const augs = [];
-        for (let i = 0; i < Player.sleeves[sleeveNumber].augmentations.length; i++) {
-          augs.push(Player.sleeves[sleeveNumber].augmentations[i].name);
-        }
-        return augs;
-      },
-      getSleevePurchasableAugs: function (sleeveNumber: any = 0): any {
-        updateDynamicRam("getSleevePurchasableAugs", getRamCost("sleeve", "getSleevePurchasableAugs"));
-        checkSleeveAPIAccess("getSleevePurchasableAugs");
-        checkSleeveNumber("getSleevePurchasableAugs", sleeveNumber);
-
-        const purchasableAugs = findSleevePurchasableAugs(Player.sleeves[sleeveNumber], Player);
-        const augs = [];
-        for (let i = 0; i < purchasableAugs.length; i++) {
-          const aug = purchasableAugs[i];
-          augs.push({
-            name: aug.name,
-            cost: aug.startingCost,
-          });
-        }
-
-        return augs;
-      },
-      purchaseSleeveAug: function (sleeveNumber: any = 0, augName: any = ""): any {
-        updateDynamicRam("purchaseSleeveAug", getRamCost("sleeve", "purchaseSleeveAug"));
-        checkSleeveAPIAccess("purchaseSleeveAug");
-        checkSleeveNumber("purchaseSleeveAug", sleeveNumber);
-
-        const aug = Augmentations[augName];
-        if (!aug) {
-          throw makeRuntimeErrorMsg("sleeve.purchaseSleeveAug", `Invalid aug: ${augName}`);
-        }
-
-        return Player.sleeves[sleeveNumber].tryBuyAugmentation(Player, aug);
-      },
-    }, // End sleeve
-
-    // Stanek's gift API
-    stanek: {
-      charge: function (worldX: any, worldY: any): any {
-        updateDynamicRam("charge", getRamCost("stanek", "charge"));
-        //checkStanekAPIAccess("charge");
-        const fragment = staneksGift.fragmentAt(worldX, worldY);
-        if (!fragment) throw makeRuntimeErrorMsg("stanek.charge", `No fragment at (${worldX}, ${worldY})`);
-        return netscriptDelay(1000, workerScript).then(function () {
-          if (workerScript.env.stopFlag) {
-            return Promise.reject(workerScript);
-          }
-          const ram = workerScript.scriptRef.ramUsage * workerScript.scriptRef.threads;
-          return Promise.resolve(staneksGift.charge(worldX, worldY, ram));
-        });
-      },
-      fragmentDefinitions: function () {
-        updateDynamicRam("fragmentDefinitions", getRamCost("stanek", "fragmentDefinitions"));
-        //checkStanekAPIAccess("fragmentDefinitions");
-        return Fragments.map((f) => f.copy());
-      },
-      placedFragments: function () {
-        updateDynamicRam("placedFragments", getRamCost("stanek", "placedFragments"));
-        //checkStanekAPIAccess("placedFragments");
-        return staneksGift.fragments.map((af) => {
-          return { ...af.copy(), ...af.fragment().copy() };
-        });
-      },
-      clear: function () {
-        updateDynamicRam("clear", getRamCost("stanek", "clear"));
-        //checkStanekAPIAccess("clear");
-        staneksGift.clear();
-      },
-      canPlace: function (worldX: any, worldY: any, fragmentId: any): any {
-        updateDynamicRam("canPlace", getRamCost("stanek", "canPlace"));
-        //checkStanekAPIAccess("canPlace");
-        const fragment = FragmentById(fragmentId);
-        if (!fragment) throw makeRuntimeErrorMsg("stanek.canPlace", `Invalid fragment id: ${fragmentId}`);
-        return staneksGift.canPlace(worldX, worldY, fragment);
-      },
-      place: function (worldX: any, worldY: any, fragmentId: any): any {
-        updateDynamicRam("place", getRamCost("stanek", "place"));
-        //checkStanekAPIAccess("place");
-        const fragment = FragmentById(fragmentId);
-        if (!fragment) throw makeRuntimeErrorMsg("stanek.place", `Invalid fragment id: ${fragmentId}`);
-        return staneksGift.place(worldX, worldY, fragment);
-      },
-      fragmentAt: function (worldX: any, worldY: any): any {
-        updateDynamicRam("fragmentAt", getRamCost("stanek", "fragmentAt"));
-        //checkStanekAPIAccess("fragmentAt");
-        const fragment = staneksGift.fragmentAt(worldX, worldY);
-        if (fragment !== null) return fragment.copy();
-        return null;
-      },
-      deleteAt: function (worldX: any, worldY: any): any {
-        updateDynamicRam("deleteAt", getRamCost("stanek", "deleteAt"));
-        //checkStanekAPIAccess("deleteAt");
-        return staneksGift.deleteAt(worldX, worldY);
-      },
-    }, // End stanek
     formulas: {
       basic: {
         calculateSkill: function (exp: any, mult: any = 1): any {
@@ -5328,28 +4614,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         },
       },
     }, // end formulas
-    heart: {
-      // Easter egg function
-      break: function (): number {
-        return Player.karma;
-      },
-    },
-    exploit: function (): any {
-      Player.giveExploit(Exploit.UndocumentedFunctionCall);
-    },
-    bypass: function (doc: any): any {
-      // reset both fields first
-      doc.completely_unused_field = undefined;
-      const real_document: any = document;
-      real_document.completely_unused_field = undefined;
-      // set one to true and check that it affected the other.
-      real_document.completely_unused_field = true;
-      if (doc.completely_unused_field && workerScript.ramUsage === 1.6) {
-        Player.giveExploit(Exploit.Bypass);
-      }
-      doc.completely_unused_field = undefined;
-      real_document.completely_unused_field = undefined;
-    },
     flags: function (data: any): any {
       data = toNative(data);
       // We always want the help flag.
@@ -5382,6 +4646,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return ret;
     },
+    ...extra,
   };
 
   function getFunctionNames(obj: NS): string[] {

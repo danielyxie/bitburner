@@ -14,7 +14,6 @@ import { staneksGift, loadStaneksGift } from "./CotMG/Helper";
 
 import { GameSavedEvents } from "./ui/React/Snackbar";
 
-import { setTimeoutRef } from "./utils/SetTimeoutRef";
 import * as ExportBonus from "./ExportBonus";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
@@ -105,7 +104,7 @@ class BitburnerSaveObject {
       a.download = filename;
       document.body.appendChild(a);
       a.click();
-      setTimeoutRef(function () {
+      setTimeout(function () {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
       }, 0);
