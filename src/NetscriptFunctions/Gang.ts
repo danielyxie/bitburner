@@ -10,7 +10,7 @@ import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
 
 export interface INetscriptGang {
-  createGang(faction: any): boolean;
+  createGang(faction: string): boolean;
   inGang(): boolean;
   getMemberNames(): string[];
   getGangInformation(): any;
@@ -59,7 +59,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
   };
 
   return {
-    createGang: function (faction: string): any {
+    createGang: function (faction: string): boolean {
       helper.updateDynamicRam("createGang", getRamCost("gang", "createGang"));
       // this list is copied from Faction/ui/Root.tsx
       const GangNames = [
