@@ -150,6 +150,8 @@ interface ISettings extends IDefaultSettings {
   MonacoTheme: string;
 
   MonacoInsertSpaces: boolean;
+
+  MonacoFontSize: number;
 }
 
 export const defaultSettings: IDefaultSettings = {
@@ -232,6 +234,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,
   MonacoTheme: "vs-dark",
   MonacoInsertSpaces: false,
+  MonacoFontSize: 10,
 
   theme: {
     primarylight: defaultSettings.theme.primarylight,

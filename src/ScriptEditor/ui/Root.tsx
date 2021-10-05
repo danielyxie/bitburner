@@ -31,7 +31,7 @@ import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 let symbols: string[] = [];
-(function () {
+export function SetupTextEditor(): void {
   const ns = NetscriptFunctions({} as WorkerScript);
 
   function populate(ns: any): string[] {
@@ -52,7 +52,7 @@ let symbols: string[] = [];
 
   const exclude = ["heart", "break", "exploit", "bypass", "corporation"];
   symbols = symbols.filter((symbol: string) => !exclude.includes(symbol));
-})();
+}
 
 interface IProps {
   filename: string;
@@ -87,6 +87,7 @@ export function Root(props: IProps): React.ReactElement {
   const [options, setOptions] = useState<Options>({
     theme: Settings.MonacoTheme,
     insertSpaces: Settings.MonacoInsertSpaces,
+    fontSize: Settings.MonacoFontSize,
   });
 
   // store the last known state in case we need to restart without nano.
@@ -329,11 +330,13 @@ export function Root(props: IProps): React.ReactElement {
         options={{
           theme: Settings.MonacoTheme,
           insertSpaces: Settings.MonacoInsertSpaces,
+          fontSize: Settings.MonacoFontSize,
         }}
         save={(options: Options) => {
           setOptions(options);
           Settings.MonacoTheme = options.theme;
           Settings.MonacoInsertSpaces = options.insertSpaces;
+          Settings.MonacoFontSize = options.fontSize;
         }}
       />
     </>
