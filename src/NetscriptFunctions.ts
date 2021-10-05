@@ -836,9 +836,8 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
 
       const host = getServer(workerScript.serverIp);
-      if (!(host instanceof Server)) {
-        workerScript.log("grow", "Cannot be executed on this server.");
-        return false;
+      if (host === null) {
+        throw new Error("Workerscript host is null");
       }
 
       // No root access or skill level too low
