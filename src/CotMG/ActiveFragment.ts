@@ -2,7 +2,7 @@ import { Fragment, FragmentById } from "./Fragment";
 import { FragmentType } from "./FragmentType";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
-const noCharge = [FragmentType.None, FragmentType.Delete, FragmentType.Booster, FragmentType.Cooling];
+const noCharge = [FragmentType.None, FragmentType.Delete, FragmentType.Booster];
 
 export interface IActiveFragmentParams {
   x: number;
@@ -13,7 +13,6 @@ export interface IActiveFragmentParams {
 export class ActiveFragment {
   id: number;
   charge: number;
-  heat: number;
   x: number;
   y: number;
 
@@ -24,13 +23,11 @@ export class ActiveFragment {
       this.y = params.y;
       this.charge = 1;
       if (noCharge.includes(params.fragment.type)) this.charge = 0;
-      this.heat = 1;
     } else {
       this.id = -1;
       this.x = -1;
       this.y = -1;
       this.charge = -1;
-      this.heat = -1;
     }
   }
 
@@ -71,7 +68,6 @@ export class ActiveFragment {
     if (fragment === null) throw new Error("ActiveFragment id refers to unknown Fragment.");
     const c = new ActiveFragment({ x: this.x, y: this.y, fragment: fragment });
     c.charge = this.charge;
-    c.heat = this.heat;
     return c;
   }
 

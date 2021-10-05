@@ -12,7 +12,7 @@ type IProps = {
   colorAt: (x: number, y: number) => string;
 };
 
-export function G(props: IProps): React.ReactElement {
+export function FragmentPreview(props: IProps): React.ReactElement {
   // switch the width/length to make axis consistent.
   const elems = [];
   for (let j = 0; j < props.height; j++) {

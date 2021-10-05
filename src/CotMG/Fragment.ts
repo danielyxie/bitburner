@@ -128,31 +128,6 @@ export function FragmentById(id: number): Fragment | null {
   );
   Fragments.push(
     new Fragment(
-      3, // id
-      [
-        // shape
-        [X, X],
-        [X, X],
-      ],
-      FragmentType.Cooling, // type
-      200,
-      Infinity, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      4, // id
-      [
-        // shape
-        [X],
-      ],
-      FragmentType.Cooling, // type
-      50,
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
       5, // id
       [
         // shape

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Fragments, Fragment, NoneFragment, DeleteFragment } from "../Fragment";
 import { FragmentType } from "../FragmentType";
 import { IStaneksGift } from "../IStaneksGift";
-import { G } from "./G";
+import { FragmentPreview } from "./FragmentPreview";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -32,7 +32,7 @@ function FragmentOption(props: IOptionProps): React.ReactElement {
         {remaining}
       </Typography>
       <br />
-      <G
+      <FragmentPreview
         width={props.fragment.width()}
         height={props.fragment.height()}
         colorAt={(x, y) => (props.fragment.fullAt(x, y) ? "green" : "")}
@@ -53,7 +53,9 @@ export function FragmentSelector(props: IProps): React.ReactElement {
     setValue(v);
     if (v === "None") props.selectFragment(NoneFragment);
     else if (v === "Delete") props.selectFragment(DeleteFragment);
-    if (typeof v === "number") props.selectFragment(Fragments[v]);
+    const fragment = Fragments.find((f) => f.id === v);
+    if (fragment === undefined) throw new Error("Fragment selector selected an undefined fragment with id " + v);
+    if (typeof v === "number") props.selectFragment(fragment);
   }
   return (
     <Select sx={{ width: "100%" }} onChange={onChange} value={value}>

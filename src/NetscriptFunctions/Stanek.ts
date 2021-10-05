@@ -8,14 +8,14 @@ import { staneksGift } from "../CotMG/Helper";
 import { Fragments, FragmentById } from "../CotMG/Fragment";
 
 export interface INetscriptStanek {
-  charge(worldX: any, worldY: any): any;
+  charge(worldX: number, worldY: number): any;
   fragmentDefinitions(): any;
   placedFragments(): any;
-  clear(): any;
-  canPlace(worldX: any, worldY: any, fragmentId: any): any;
-  place(worldX: any, worldY: any, fragmentId: any): any;
-  fragmentAt(worldX: any, worldY: any): any;
-  deleteAt(worldX: any, worldY: any): any;
+  clear(): void;
+  canPlace(worldX: number, worldY: number, fragmentId: number): boolean;
+  place(worldX: number, worldY: number, fragmentId: number): boolean;
+  fragmentAt(worldX: number, worldY: number): any;
+  deleteAt(worldX: number, worldY: number): boolean;
 }
 
 export function NetscriptStanek(

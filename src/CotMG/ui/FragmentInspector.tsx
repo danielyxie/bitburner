@@ -48,11 +48,9 @@ export function FragmentInspector(props: IProps): React.ReactElement {
   const f = props.fragment.fragment();
 
   let charge = numeralWrapper.formatStaneksGiftCharge(props.fragment.charge);
-  let heat = numeralWrapper.formatStaneksGiftHeat(props.fragment.heat);
   // Boosters and cooling don't deal with heat.
-  if (f.type === FragmentType.Booster || f.type === FragmentType.Cooling) {
+  if (f.type === FragmentType.Booster) {
     charge = "N/A";
-    heat = "N/A";
   }
   const effect = numeralWrapper.format(CalculateEffect(props.fragment.charge, f.power) - 1, "+0.00%");
 
@@ -66,8 +64,6 @@ export function FragmentInspector(props: IProps): React.ReactElement {
         Power: {numeralWrapper.formatStaneksGiftPower(f.power)}
         <br />
         Charge: {charge}
-        <br />
-        Heat: {heat}
         <br />
         Effect: {effect}
         <br />

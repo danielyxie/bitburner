@@ -65,8 +65,6 @@ export function Grid(props: GridProps): React.ReactElement {
     const newgrid = zeros([props.gift.width(), props.gift.height()]);
     for (let i = 0; i < selectedFragment.shape.length; i++) {
       for (let j = 0; j < selectedFragment.shape[i].length; j++) {
-        if (worldX + i > newgrid.length - 1) continue;
-        if (worldY + j > newgrid[worldX + i].length - 1) continue;
         if (!selectedFragment.shape[i][j]) continue;
         if (worldX + j > newgrid.length - 1) continue;
         if (worldY + i > newgrid[worldX + j].length - 1) continue;

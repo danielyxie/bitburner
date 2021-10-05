@@ -36,16 +36,13 @@ export class StaneksGift implements IStaneksGift {
 
     // count number of neighbooring boosts and cooling.
     let boost = 1;
-    let cool = 1;
     for (const neighboor of neighboors) {
       const f = neighboor.fragment();
-      if (f.type === FragmentType.Cooling) cool *= 1 + f.power / 1000;
       if (f.type === FragmentType.Booster) boost *= 1 + f.power / 1000;
     }
 
-    const [extraCharge, extraHeat] = CalculateCharge(ram, af.heat, boost, cool);
+    const extraCharge = CalculateCharge(ram, boost);
     af.charge += extraCharge;
-    af.heat += extraHeat;
 
     Factions["Church of the Machine God"].playerReputation += extraCharge;
 
@@ -57,10 +54,7 @@ export class StaneksGift implements IStaneksGift {
       const fragment = activeFragment.fragment();
 
       // Boosters and cooling don't deal with heat.
-      if (fragment.type === FragmentType.Booster || fragment.type === FragmentType.Cooling) continue;
-      activeFragment.heat *= 0.98;
-      activeFragment.heat -= 1;
-      if (activeFragment.heat < 1) activeFragment.heat = 1;
+      if (fragment.type === FragmentType.Booster) continue;
     }
 
     this.updateMults(p);
