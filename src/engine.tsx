@@ -14,6 +14,7 @@ import { CONSTANTS } from "./Constants";
 import { Factions, initFactions } from "./Faction/Factions";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { Router } from "./ui/GameRoot";
+import { SetupTextEditor } from "./ScriptEditor/ui/Root";
 
 import {
   getHackingWorkRepGain,
@@ -422,6 +423,7 @@ const Engine: {
       // Start interactive tutorial
       iTutorialStart();
     }
+    SetupTextEditor();
   },
 
   start: function () {
