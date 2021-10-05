@@ -620,6 +620,9 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <Link href="https://www.reddit.com/r/bitburner" target="_blank">
               <Typography>Reddit</Typography>
             </Link>
+            <Link href="https://plaza.dsolver.ca/games/bitburner" target="_blank">
+              <Typography>Incremental game plaza</Typography>
+            </Link>
           </Box>
         </Grid>
       </Grid>
