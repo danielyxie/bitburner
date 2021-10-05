@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+import Draggable from "react-draggable";
 
 export const LogBoxEvents = new EventEmitter<[RunningScript]>();
 
@@ -64,20 +65,6 @@ function LogWindow(props: IProps): React.ReactElement {
     return () => clearInterval(id);
   }, []);
 
-  useEffect(() => {
-    function closeHandler(event: KeyboardEvent): void {
-      if (event.keyCode === 27) {
-        props.onClose();
-      }
-    }
-
-    document.addEventListener("keydown", closeHandler);
-
-    return () => {
-      document.removeEventListener("keydown", closeHandler);
-    };
-  }, []);
-
   function kill(): void {
     killWorkerScript(props.script, props.script.server, true);
     props.onClose();
@@ -113,51 +100,53 @@ function LogWindow(props: IProps): React.ReactElement {
   }
 
   return (
-    <Paper
-      style={{
-        display: "flex",
-        flexFlow: "column",
-        backgroundColor: "gray",
-        width: "50%",
-        position: "fixed",
-        left: "50%",
-        top: "40%",
-        margin: "-10% 0 0 -25%",
-        height: "auto",
-        maxHeight: "50%",
-        zIndex: 10,
-        border: "2px solid $hacker-green",
-      }}
-      ref={container}
-    >
+    <Draggable handle="#drag">
       <Paper
         style={{
-          cursor: "grab",
+          display: "flex",
+          flexFlow: "column",
+          backgroundColor: "gray",
+          width: "50%",
+          position: "fixed",
+          left: "50%",
+          top: "40%",
+          margin: "-10% 0 0 -25%",
+          height: "auto",
+          maxHeight: "50%",
+          zIndex: 10,
+          border: "2px solid $hacker-green",
         }}
+        ref={container}
       >
-        <Box display="flex" alignItems="center" onMouseDown={drag}>
-          <Typography color="primary" variant="h6" noWrap component="div">
-            {props.script.filename} {props.script.args.map((x: any): string => `${x}`).join(" ")}
-          </Typography>
+        <Paper
+          style={{
+            cursor: "grab",
+          }}
+        >
+          <Box id="drag" display="flex" alignItems="center">
+            <Typography color="primary" variant="h6" noWrap component="div">
+              {props.script.filename} {props.script.args.map((x: any): string => `${x}`).join(" ")}
+            </Typography>
 
-          <Box display="flex" marginLeft="auto">
-            <Button onClick={kill}>Kill Script</Button>
-            <Button onClick={props.onClose}>Close</Button>
+            <Box display="flex" marginLeft="auto">
+              <Button onClick={kill}>Kill Script</Button>
+              <Button onClick={props.onClose}>Close</Button>
+            </Box>
           </Box>
-        </Box>
+        </Paper>
+        <Paper>
+          <Box maxHeight="25vh" overflow="scroll" sx={{ overflowWrap: "break-word", whiteSpace: "pre-line" }}>
+            {props.script.logs.map(
+              (line: string, i: number): JSX.Element => (
+                <Typography key={i}>
+                  {line}
+                  <br />
+                </Typography>
+              ),
+            )}
+          </Box>
+        </Paper>
       </Paper>
-      <Paper>
-        <Box maxHeight="25vh" overflow="scroll" sx={{ overflowWrap: "break-word", whiteSpace: "pre-line" }}>
-          {props.script.logs.map(
-            (line: string, i: number): JSX.Element => (
-              <Typography key={i}>
-                {line}
-                <br />
-              </Typography>
-            ),
-          )}
-        </Box>
-      </Paper>
-    </Paper>
+    </Draggable>
   );
 }
