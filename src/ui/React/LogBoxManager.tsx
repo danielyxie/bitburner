@@ -107,16 +107,10 @@ function LogWindow(props: IProps): React.ReactElement {
         style={{
           display: "flex",
           flexFlow: "column",
-          backgroundColor: "gray",
-
           position: "fixed",
-          left: "50%",
-          top: "40%",
-          margin: "-10% 0 0 -25%",
-
-          maxHeight: "50%",
-          zIndex: 10,
-          border: "2px solid $hacker-green",
+          left: "40%",
+          top: "30%",
+          zIndex: 1400,
         }}
         ref={container}
       >
