@@ -120,11 +120,11 @@ function LogWindow(props: IProps): React.ReactElement {
           }}
         >
           <Box id="drag" display="flex" alignItems="center">
-            <Typography color="primary" variant="h6" noWrap component="div">
+            <Typography color="primary" variant="h6">
               {props.script.filename} {props.script.args.map((x: any): string => `${x}`).join(" ")}
             </Typography>
 
-            <Box display="flex" marginLeft="auto">
+            <Box position="absolute" right={0}>
               <Button onClick={kill}>Kill Script</Button>
               <Button onClick={props.onClose}>Close</Button>
             </Box>
