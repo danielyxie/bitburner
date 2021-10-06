@@ -238,11 +238,10 @@ const Engine: {
         Engine.Counters.messages = 150;
       }
     }
-
+    if (Player.corporation instanceof Corporation) {
+      Player.corporation.process(Player);
+    }
     if (Engine.Counters.mechanicProcess <= 0) {
-      if (Player.corporation instanceof Corporation) {
-        Player.corporation.process(Player);
-      }
       if (Player.bladeburner instanceof Bladeburner) {
         try {
           Player.bladeburner.process(Router, Player);
