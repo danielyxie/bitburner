@@ -542,7 +542,7 @@ BitNodes["BitNode13"] = new BitNode(
       <br />
       <br />
       Their leader, Allison "Mother" Stanek is said to have created her own Augmentation whose power goes beyond any
-      other.' + Find her in Chongquin and gain her trust.
+      other. Find her in Chongquing and gain her trust.
       <br />
       <br />
       In this BitNode:
@@ -557,17 +557,7 @@ BitNodes["BitNode13"] = new BitNode(
       level up to a maximum of 3. This Source-File lets the Church of the Machine God appear in other BitNodes.
       <br />
       <br />
-      This Source-File also increases Stanek's Gift multipliers by:
-      <br />
-      <br />
-      Level 1: 8%
-      <br />
-      Level 2: 12%
-      <br />
-      Level 3: 14%
-      <br />
-      <br />
-      Each level of this Source-File also increases the size of the gift.
+      Each level of this Source-File increases the size of Stanek's Gift.
     </>
   ),
 );

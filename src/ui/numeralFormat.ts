@@ -174,7 +174,7 @@ class NumeralFormatter {
   }
 
   formatStaneksGiftPower(n: number): string {
-    return this.format(n, "0");
+    return this.format(n, "0.00");
   }
 
   parseMoney(s: string): number {

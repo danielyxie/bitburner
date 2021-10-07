@@ -250,6 +250,10 @@ function prestigeSourceFile(flume: boolean): void {
     dialogBoxCreate("Visit VitaLife in New Tokyo if you'd like to purchase a new sleeve!");
   }
 
+  if (Player.bitNodeN === 13) {
+    dialogBoxCreate("Trouble is brewing in Chongqing");
+  }
+
   // Reset Stock market, gang, and corporation
   if (Player.hasWseAccount) {
     initStockMarket();

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Fragments, Fragment, NoneFragment, DeleteFragment } from "../Fragment";
-import { FragmentType } from "../FragmentType";
+import { FragmentType, Effect } from "../FragmentType";
 import { IStaneksGift } from "../IStaneksGift";
 import { FragmentPreview } from "./FragmentPreview";
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -8,6 +8,7 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 type IOptionProps = {
   gift: IStaneksGift;
@@ -23,21 +24,26 @@ function FragmentOption(props: IOptionProps): React.ReactElement {
       <></>
     );
   return (
-    <>
+    <Box display="flex">
+      <Box sx={{ mx: 2 }}>
+        <FragmentPreview
+          width={props.fragment.width()}
+          height={props.fragment.height()}
+          colorAt={(x, y) => {
+            return !props.fragment.fullAt(x, y) ? "" : props.fragment.type === FragmentType.Booster ? "blue" : "green";
+          }}
+        />
+      </Box>
       <Typography>
-        {FragmentType[props.fragment.type]}
+        {props.fragment.type === FragmentType.Booster
+          ? `${props.fragment.power}x adjacent fragment power`
+          : Effect(props.fragment.type)}
         <br />
         power: {numeralWrapper.formatStaneksGiftPower(props.fragment.power)}
         <br />
         {remaining}
       </Typography>
-      <br />
-      <FragmentPreview
-        width={props.fragment.width()}
-        height={props.fragment.height()}
-        colorAt={(x, y) => (props.fragment.fullAt(x, y) ? "green" : "")}
-      />
-    </>
+    </Box>
   );
 }
 
@@ -51,8 +57,13 @@ export function FragmentSelector(props: IProps): React.ReactElement {
   function onChange(event: SelectChangeEvent<string | number>): void {
     const v = event.target.value;
     setValue(v);
-    if (v === "None") props.selectFragment(NoneFragment);
-    else if (v === "Delete") props.selectFragment(DeleteFragment);
+    if (v === "None") {
+      props.selectFragment(NoneFragment);
+      return;
+    } else if (v === "Delete") {
+      props.selectFragment(DeleteFragment);
+      return;
+    }
     const fragment = Fragments.find((f) => f.id === v);
     if (fragment === undefined) throw new Error("Fragment selector selected an undefined fragment with id " + v);
     if (typeof v === "number") props.selectFragment(fragment);

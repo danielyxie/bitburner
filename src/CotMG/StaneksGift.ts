@@ -1,4 +1,4 @@
-import { Fragment, FragmentById } from "./Fragment";
+import { Fragment } from "./Fragment";
 import { ActiveFragment } from "./ActiveFragment";
 import { FragmentType } from "./FragmentType";
 import { IStaneksGift } from "./IStaneksGift";
@@ -22,42 +22,34 @@ export class StaneksGift implements IStaneksGift {
     const af = this.fragmentAt(worldX, worldY);
     if (af === null) return 0;
 
-    // Find all the neighbooring cells
-    const cells = af.neighboors();
+    const charge = CalculateCharge(ram);
+    af.charge += charge;
 
+    Factions["Church of the Machine God"].playerReputation += Math.log(ram) / Math.log(2);
+
+    return ram;
+  }
+
+  process(p: IPlayer, numCycles: number): void {
+    this.updateMults(p);
+  }
+
+  effect(fragment: ActiveFragment): number {
+    // Find all the neighbooring cells
+    const cells = fragment.neighboors();
     // find the neighbooring active fragments.
     const maybeFragments = cells.map((n) => this.fragmentAt(n[0], n[1]));
 
     // Filter out nulls with typescript "Type guard". Whatever
     let neighboors = maybeFragments.filter((v: ActiveFragment | null): v is ActiveFragment => !!v);
 
-    // filter unique fragments
-    neighboors = neighboors.filter((value, index) => neighboors.indexOf(value) === index);
-
-    // count number of neighbooring boosts and cooling.
+    neighboors = neighboors.filter((fragment) => fragment.fragment().type === FragmentType.Booster);
     let boost = 1;
     for (const neighboor of neighboors) {
-      const f = neighboor.fragment();
-      if (f.type === FragmentType.Booster) boost *= 1 + f.power / 1000;
+      boost *= neighboor.fragment().power;
     }
 
-    const extraCharge = CalculateCharge(ram, boost);
-    af.charge += extraCharge;
-
-    Factions["Church of the Machine God"].playerReputation += extraCharge;
-
-    return ram;
-  }
-
-  process(p: IPlayer, numCycles: number): void {
-    for (const activeFragment of this.fragments) {
-      const fragment = activeFragment.fragment();
-
-      // Boosters and cooling don't deal with heat.
-      if (fragment.type === FragmentType.Booster) continue;
-    }
-
-    this.updateMults(p);
+    return CalculateEffect(fragment.charge, fragment.fragment().power, boost);
   }
 
   canPlace(x: number, y: number, fragment: Fragment): boolean {
@@ -116,7 +108,8 @@ export class StaneksGift implements IStaneksGift {
 
     for (const aFrag of this.fragments) {
       const fragment = aFrag.fragment();
-      const power = CalculateEffect(aFrag.charge, fragment.power);
+
+      const power = this.effect(aFrag);
       switch (fragment.type) {
         case FragmentType.HackingChance:
           p.hacking_chance_mult *= power;

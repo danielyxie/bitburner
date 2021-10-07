@@ -2377,8 +2377,7 @@ function initAugmentations(): void {
         'Allison "Mother" Stanek imparts you with her gift. An ' +
         "experimental Augmentation implanted at the base of the neck. " +
         "It allows you to overclock your entire system by carefully " +
-        "changing the configuration.<br><br>" +
-        "Its unstable nature decreases all your stats by 10%",
+        "changing the configuration.",
       isSpecial: true,
       hacking_chance_mult: 0.9,
       hacking_speed_mult: 0.9,
@@ -2406,7 +2405,7 @@ function initAugmentations(): void {
       hacknet_node_core_cost_mult: 1.1,
       hacknet_node_level_cost_mult: 1.1,
       work_money_mult: 0.9,
-      stats: null,
+      stats: <>Its unstable nature decreases all your stats by 10%</>,
     });
     StaneksGift1.addToFactions([ChurchOfTheMachineGodFactionName]);
     resetAugmentation(StaneksGift1);

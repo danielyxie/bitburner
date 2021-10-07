@@ -94,7 +94,7 @@ export function FragmentById(id: number): Fragment | null {
         [_, _, X],
       ],
       FragmentType.Hacking, // type
-      10,
+      1,
       1, // limit
     ),
   );
@@ -108,7 +108,189 @@ export function FragmentById(id: number): Fragment | null {
         [_, X, _],
       ],
       FragmentType.Hacking, // type
-      10,
+      1,
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      5, // id
+      [
+        // shape
+        [X, X],
+      ],
+      FragmentType.HackingSpeed, // type
+      1.3,
+      1, // limit
+    ),
+  );
+
+  Fragments.push(
+    new Fragment(
+      6, // id
+      [
+        [X, _],
+        [X, X],
+      ], // shape
+      FragmentType.HackingMoney, // type
+      2, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      7, // id
+      [
+        [X, X],
+        [X, X],
+      ], // shape
+      FragmentType.HackingGrow, // type
+      0.5, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      8, // id
+      [
+        [X, X, X],
+        [_, X, _],
+        [X, X, X],
+      ], // shape
+      FragmentType.Hacking, // type
+      1, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      10, // id
+      [
+        [X, X],
+        [_, X],
+      ], // shape
+      FragmentType.Strength, // type
+      2, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      12, // id
+      [
+        [_, X],
+        [X, X],
+      ], // shape
+      FragmentType.Defense, // type
+      2, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      14, // id
+      [
+        [X, X],
+        [X, _],
+      ], // shape
+      FragmentType.Dexterity, // type
+      2, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      16, // id
+      [
+        [X, _],
+        [X, X],
+      ], // shape
+      FragmentType.Agility, // type
+      2, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      18, // id
+      [
+        [X, X],
+        [X, _],
+      ], // shape
+      FragmentType.Charisma, // type
+      3, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      20, // id
+      [
+        [X, _, _],
+        [X, X, _],
+        [X, X, X],
+      ], // shape
+      FragmentType.HacknetMoney, // type
+      1, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      21, // id
+      [
+        [X, X],
+        [_, X],
+        [_, X],
+      ], // shape
+      FragmentType.HacknetCost, // type
+      -1, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      25, // id
+      [
+        [X, X, X],
+        [_, X, _],
+      ], // shape
+      FragmentType.Rep, // type
+      0.5, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      27, // id
+      [
+        [X, _],
+        [_, X],
+      ], // shape
+      FragmentType.WorkMoney, // type
+      10, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      28, // id
+      [[X, X]], // shape
+      FragmentType.Crime, // type
+      2, // power
+      1, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      30, // id
+      [
+        [X, X, X],
+        [X, X, X],
+        [X, X, X],
+      ], // shape
+      FragmentType.Bladeburner, // type
+      1.3, // power
       1, // limit
     ),
   );
@@ -122,190 +304,23 @@ export function FragmentById(id: number): Fragment | null {
         [X, X, X],
       ],
       FragmentType.Booster, // type
-      500,
+      1.1, // power
       3, // limit
     ),
   );
   Fragments.push(
     new Fragment(
-      5, // id
+      31, // id
       [
         // shape
-        [X, X],
+        [X],
+        [X],
+        [X],
+        [X],
       ],
-      FragmentType.HackingSpeed, // type
-      50,
-      1, // limit
-    ),
-  );
-
-  Fragments.push(
-    new Fragment(
-      6, // id
-      [
-        [X, _],
-        [X, X],
-      ], // shape
-      FragmentType.HackingMoney, // type
-      10, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      7, // id
-      [
-        [X, X],
-        [X, X],
-      ], // shape
-      FragmentType.HackingGrow, // type
-      30, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      8, // id
-      [
-        [X, X, X],
-        [_, X, _],
-        [X, X, X],
-      ], // shape
-      FragmentType.Hacking, // type
-      50, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      10, // id
-      [
-        [X, X],
-        [_, X],
-      ], // shape
-      FragmentType.Strength, // type
-      50, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      12, // id
-      [
-        [_, X],
-        [X, X],
-      ], // shape
-      FragmentType.Defense, // type
-      50, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      14, // id
-      [
-        [X, X],
-        [X, _],
-      ], // shape
-      FragmentType.Dexterity, // type
-      50, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      16, // id
-      [
-        [X, _],
-        [X, X],
-      ], // shape
-      FragmentType.Agility, // type
-      50, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      18, // id
-      [
-        [X, X],
-        [X, _],
-      ], // shape
-      FragmentType.Charisma, // type
-      50, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      20, // id
-      [
-        [X, _, _],
-        [X, X, _],
-        [X, X, X],
-      ], // shape
-      FragmentType.HacknetMoney, // type
-      30, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      21, // id
-      [
-        [X, X],
-        [_, X],
-        [_, X],
-      ], // shape
-      FragmentType.HacknetCost, // type
-      -10, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      25, // id
-      [
-        [X, X, X],
-        [_, X, _],
-      ], // shape
-      FragmentType.Rep, // type
-      100, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      27, // id
-      [
-        [X, _],
-        [_, X],
-      ], // shape
-      FragmentType.WorkMoney, // type
-      20, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      28, // id
-      [[X, X]], // shape
-      FragmentType.Crime, // type
-      20, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
-      30, // id
-      [
-        [X, X, X],
-        [X, X, X],
-        [X, X, X],
-      ], // shape
-      FragmentType.Bladeburner, // type
-      50, // power
-      1, // limit
+      FragmentType.Booster, // type
+      1.1, // power
+      3, // limit
     ),
   );
 })();

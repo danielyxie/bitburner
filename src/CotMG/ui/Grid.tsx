@@ -136,7 +136,7 @@ export function Grid(props: GridProps): React.ReactElement {
       </Table>
       <FragmentSelector gift={props.gift} selectFragment={updateSelectedFragment} />
       <Button onClick={clear}>Clear</Button>
-      <FragmentInspector x={pos[0]} y={pos[1]} fragment={props.gift.fragmentAt(pos[0], pos[1])} />
+      <FragmentInspector gift={props.gift} x={pos[0]} y={pos[1]} fragment={props.gift.fragmentAt(pos[0], pos[1])} />
     </>
   );
 }

@@ -161,7 +161,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   const canJob = props.player.companyName !== "";
   const canStockMarket = props.player.hasWseAccount;
   const canBladeburner = !!(props.player.bladeburner as any);
-  const canStaneksGift = props.player.hasAugmentation(AugmentationNames.StaneksGift1);
+  const canStaneksGift = props.player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1);
 
   function clickTerminal(): void {
     props.router.toTerminal();
@@ -442,7 +442,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                   <DeveloperBoardIcon color={props.page !== Page.StaneksGift ? "secondary" : "primary"} />
                 </ListItemIcon>
                 <ListItemText>
-                  <Typography color={props.page !== Page.StaneksGift ? "secondary" : "primary"}>StaneksGift</Typography>
+                  <Typography color={props.page !== Page.StaneksGift ? "secondary" : "primary"}>
+                    Stanek's Gift
+                  </Typography>
                 </ListItemText>
               </ListItem>
             )}

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { ActiveFragment } from "../ActiveFragment";
-import { FragmentType } from "../FragmentType";
+import { IStaneksGift } from "../IStaneksGift";
+import { FragmentType, Effect } from "../FragmentType";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { CalculateEffect } from "../formulas/effect";
 
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
 type IProps = {
+  gift: IStaneksGift;
   fragment: ActiveFragment | null;
   x: number;
   y: number;
@@ -28,7 +29,7 @@ export function FragmentInspector(props: IProps): React.ReactElement {
         <Typography>
           ID: N/A
           <br />
-          Type: N/A
+          Effect: N/A
           <br />
           Magnitude: N/A
           <br />
@@ -48,24 +49,26 @@ export function FragmentInspector(props: IProps): React.ReactElement {
   const f = props.fragment.fragment();
 
   let charge = numeralWrapper.formatStaneksGiftCharge(props.fragment.charge);
+  let effect = "N/A";
   // Boosters and cooling don't deal with heat.
-  if (f.type === FragmentType.Booster) {
+  if ([FragmentType.Booster, FragmentType.None, FragmentType.Delete].includes(f.type)) {
     charge = "N/A";
+    effect = `${f.power}x adjacent fragment power`;
+  } else {
+    effect = Effect(f.type).replace("+x%", numeralWrapper.formatPercentage(props.gift.effect(props.fragment) - 1));
   }
-  const effect = numeralWrapper.format(CalculateEffect(props.fragment.charge, f.power) - 1, "+0.00%");
 
   return (
     <Paper>
       <Typography>
         ID: {props.fragment.id}
         <br />
-        Type: {FragmentType[f.type]}
+        Effect: {effect}
         <br />
         Power: {numeralWrapper.formatStaneksGiftPower(f.power)}
         <br />
         Charge: {charge}
         <br />
-        Effect: {effect}
         <br />
         root [X, Y] {props.fragment.x}, {props.fragment.y}
         <br />
