@@ -32,7 +32,6 @@ import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { ThemeEvents } from "./ui/React/Theme";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
-import { initSpecialServerIps } from "./Server/SpecialServerIps";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
@@ -242,11 +241,10 @@ const Engine: {
         Engine.Counters.messages = 150;
       }
     }
-
+    if (Player.corporation instanceof Corporation) {
+      Player.corporation.process(Player);
+    }
     if (Engine.Counters.mechanicProcess <= 0) {
-      if (Player.corporation instanceof Corporation) {
-        Player.corporation.process(Player);
-      }
       if (Player.bladeburner instanceof Bladeburner) {
         try {
           Player.bladeburner.process(Router, Player);
@@ -414,7 +412,6 @@ const Engine: {
     } else {
       // No save found, start new game
       initBitNodeMultipliers(Player);
-      initSpecialServerIps();
       Engine.start(); // Run main game loop and Scripts loop
       Player.init();
       initForeignServers(Player.getHomeComputer());

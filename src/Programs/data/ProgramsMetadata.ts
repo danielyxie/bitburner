@@ -5,9 +5,8 @@ import { Server } from "../../Server/Server";
 import { ITerminal } from "../../Terminal/ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { getServer } from "../../Server/ServerHelpers";
+import { GetServer } from "../../Server/AllServers";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { BitFlumeEvent } from "../../BitNode/ui/BitFlumeModal";
@@ -224,14 +223,14 @@ export const programsMetadata: IProgramCreationParams[] = [
         return;
       }
 
-      const targetServer = getServer(args[0]);
+      const targetServer = GetServer(args[0]);
       if (targetServer == null) {
         terminal.print("Invalid server IP/hostname");
         return;
       }
 
-      if (targetServer instanceof HacknetServer) {
-        terminal.print(`ServerProfiler.exe cannot be run on a Hacknet Server.`);
+      if (!(targetServer instanceof Server)) {
+        terminal.print(`ServerProfiler.exe can only be run on normal servers.`);
         return;
       }
 

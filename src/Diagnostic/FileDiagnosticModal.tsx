@@ -1,5 +1,5 @@
 import React from "react";
-import { AllServers } from "../Server/AllServers";
+import { GetServer, GetAllServers } from "../Server/AllServers";
 import { Modal } from "../ui/React/Modal";
 import { numeralWrapper } from "../ui/numeralFormat";
 
@@ -17,11 +17,12 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 interface IServerProps {
-  ip: string;
+  hostname: string;
 }
 
 function ServerAccordion(props: IServerProps): React.ReactElement {
-  const server = AllServers[props.ip];
+  const server = GetServer(props.hostname);
+  if (server === null) throw new Error("server should not be null");
   let totalSize = 0;
   for (const f of server.scripts) {
     totalSize += f.code.length;
@@ -98,9 +99,9 @@ interface IProps {
 }
 
 export function FileDiagnosticModal(props: IProps): React.ReactElement {
-  const ips: string[] = [];
-  for (const ip of Object.keys(AllServers)) {
-    ips.push(ip);
+  const keys: string[] = [];
+  for (const key in GetAllServers()) {
+    keys.push(key);
   }
 
   return (
@@ -110,8 +111,8 @@ export function FileDiagnosticModal(props: IProps): React.ReactElement {
           Welcome to the file diagnostic! If your save file is really big it's likely because you have too many
           text/scripts. This tool can help you narrow down where they are.
         </Typography>
-        {ips.map((ip: string) => (
-          <ServerAccordion key={ip} ip={ip} />
+        {keys.map((hostname: string) => (
+          <ServerAccordion key={hostname} hostname={hostname} />
         ))}
       </>
     </Modal>

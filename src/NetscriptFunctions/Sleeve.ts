@@ -4,7 +4,6 @@ import { getRamCost } from "../Netscript/RamCostGenerator";
 import { FactionWorkType } from "../Faction/FactionWorkTypeEnum";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { SleeveTaskType } from "../PersonObjects/Sleeve/SleeveTaskTypesEnum";
-import { SpecialServerIps } from "../Server/SpecialServerIps";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
 import { Augmentations } from "../Augmentation/Augmentations";
@@ -231,7 +230,6 @@ export function NetscriptSleeve(
         jobs: Object.keys(player.jobs), // technically sleeves have the same jobs as the player.
         jobTitle: Object.values(player.jobs),
         maxHp: sl.max_hp,
-        tor: SpecialServerIps.hasOwnProperty("Darkweb Server"), // There's no reason not to give that infomation here as well. Worst case scenario it isn't used.
 
         mult: {
           agility: sl.agility_mult,

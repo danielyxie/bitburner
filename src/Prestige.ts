@@ -17,10 +17,10 @@ import { Router } from "./ui/GameRoot";
 import { resetPidCounter } from "./Netscript/Pid";
 import { LiteratureNames } from "./Literature/data/LiteratureNames";
 
-import { AllServers, AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
+import { GetServer, AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
 import { prestigeHomeComputer } from "./Server/ServerHelpers";
 import { SourceFileFlags, updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
-import { SpecialServerIps, prestigeSpecialServerIps, SpecialServerNames } from "./Server/SpecialServerIps";
+import { SpecialServers } from "./Server/data/SpecialServers";
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 
@@ -45,9 +45,6 @@ function prestigeAugmentation(): void {
   const homeComp = Player.getHomeComputer();
   // Delete all servers except home computer
   prestigeAllServers();
-
-  // Delete Special Server IPs
-  prestigeSpecialServerIps(); // Must be done before initForeignServers()
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);
@@ -87,6 +84,7 @@ function prestigeAugmentation(): void {
   if (Terminal.action !== null) {
     Terminal.finishAction(Router, Player, true);
   }
+  Terminal.clear();
 
   // Re-initialize things - This will update any changes
   initFactions(); // Factions must be initialized before augmentations
@@ -131,15 +129,11 @@ function prestigeAugmentation(): void {
 
   // Red Pill
   if (augmentationExists(AugmentationNames.TheRedPill) && Augmentations[AugmentationNames.TheRedPill].owned) {
-    const WorldDaemonIP = SpecialServerIps[SpecialServerNames.WorldDaemon];
-    if (typeof WorldDaemonIP !== "string") throw new Error("WorldDaemonIP should be string");
-    const WorldDaemon = AllServers[WorldDaemonIP];
-    const DaedalusServerIP = SpecialServerIps[SpecialServerNames.DaedalusServer];
-    if (typeof DaedalusServerIP !== "string") throw new Error("DaedalusServerIP should be string");
-    const DaedalusServer = AllServers[DaedalusServerIP];
+    const WorldDaemon = GetServer(SpecialServers.WorldDaemon);
+    const DaedalusServer = GetServer(SpecialServers.DaedalusServer);
     if (WorldDaemon && DaedalusServer) {
-      WorldDaemon.serversOnNetwork.push(DaedalusServer.ip);
-      DaedalusServer.serversOnNetwork.push(WorldDaemon.ip);
+      WorldDaemon.serversOnNetwork.push(DaedalusServer.hostname);
+      DaedalusServer.serversOnNetwork.push(WorldDaemon.hostname);
     }
   }
 
@@ -164,9 +158,6 @@ function prestigeSourceFile(flume: boolean): void {
 
   // Delete all servers except home computer
   prestigeAllServers(); // Must be done before initForeignServers()
-
-  // Delete Special Server IPs
-  prestigeSpecialServerIps();
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);

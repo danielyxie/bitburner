@@ -8,9 +8,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { AllServers } from "../../Server/AllServers";
-import { HacknetServer } from "../../Hacknet/HacknetServer";
-import { GetServerByHostname } from "../../Server/ServerHelpers";
+import { GetServer, GetAllServers } from "../../Server/AllServers";
+import { Server } from "../../Server/Server";
 import MenuItem from "@mui/material/MenuItem";
 
 export function Servers(): React.ReactElement {
@@ -19,9 +18,9 @@ export function Servers(): React.ReactElement {
     setServer(event.target.value as string);
   }
   function rootServer(): void {
-    const s = GetServerByHostname(server);
+    const s = GetServer(server);
     if (s === null) return;
-    if (s instanceof HacknetServer) return;
+    if (!(s instanceof Server)) return;
     s.hasAdminRights = true;
     s.sshPortOpen = true;
     s.ftpPortOpen = true;
@@ -32,9 +31,8 @@ export function Servers(): React.ReactElement {
   }
 
   function rootAllServers(): void {
-    for (const i in AllServers) {
-      const s = AllServers[i];
-      if (s instanceof HacknetServer) return;
+    for (const s of GetAllServers()) {
+      if (!(s instanceof Server)) return;
       s.hasAdminRights = true;
       s.sshPortOpen = true;
       s.ftpPortOpen = true;
@@ -46,32 +44,30 @@ export function Servers(): React.ReactElement {
   }
 
   function minSecurity(): void {
-    const s = GetServerByHostname(server);
+    const s = GetServer(server);
     if (s === null) return;
-    if (s instanceof HacknetServer) return;
+    if (!(s instanceof Server)) return;
     s.hackDifficulty = s.minDifficulty;
   }
 
   function minAllSecurity(): void {
-    for (const i in AllServers) {
-      const server = AllServers[i];
-      if (server instanceof HacknetServer) continue;
-      server.hackDifficulty = server.minDifficulty;
+    for (const s of GetAllServers()) {
+      if (!(s instanceof Server)) return;
+      s.hackDifficulty = s.minDifficulty;
     }
   }
 
   function maxMoney(): void {
-    const s = GetServerByHostname(server);
+    const s = GetServer(server);
     if (s === null) return;
-    if (s instanceof HacknetServer) return;
+    if (!(s instanceof Server)) return;
     s.moneyAvailable = s.moneyMax;
   }
 
   function maxAllMoney(): void {
-    for (const i in AllServers) {
-      const server = AllServers[i];
-      if (server instanceof HacknetServer) continue;
-      server.moneyAvailable = server.moneyMax;
+    for (const s of GetAllServers()) {
+      if (!(s instanceof Server)) return;
+      s.moneyAvailable = s.moneyMax;
     }
   }
 
@@ -89,7 +85,7 @@ export function Servers(): React.ReactElement {
               </td>
               <td colSpan={2}>
                 <Select id="dev-servers-dropdown" onChange={setServerDropdown} value={server}>
-                  {Object.values(AllServers).map((server) => (
+                  {GetAllServers().map((server) => (
                     <MenuItem key={server.hostname} value={server.hostname}>
                       {server.hostname}
                     </MenuItem>

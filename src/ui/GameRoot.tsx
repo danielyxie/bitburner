@@ -16,7 +16,7 @@ import { ITutorialEvents } from "./InteractiveTutorial/ITutorialEvents";
 import { Faction } from "../Faction/Faction";
 import { prestigeAugmentation } from "../Prestige";
 import { dialogBoxCreate } from "./React/DialogBox";
-import { AllServers } from "../Server/AllServers";
+import { GetAllServers } from "../Server/AllServers";
 import { Factions } from "../Faction/Factions";
 import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";
 import {
@@ -366,8 +366,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                   save={() => saveObject.saveGame()}
                   export={() => saveObject.exportGame()}
                   forceKill={() => {
-                    for (const hostname of Object.keys(AllServers)) {
-                      AllServers[hostname].runningScripts = [];
+                    for (const server of GetAllServers()) {
+                      server.runningScripts = [];
                     }
                     dialogBoxCreate("Forcefully deleted all running scripts. Please save and refresh page.");
                   }}

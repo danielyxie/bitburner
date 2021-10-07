@@ -4,8 +4,9 @@
  * Configurable to only contain certain types of servers
  */
 import React from "react";
-import { AllServers } from "../../Server/AllServers";
+import { GetAllServers } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
+import { BaseServer } from "../../Server/BaseServer";
 
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -30,7 +31,7 @@ export function ServerDropdown(props: IProps): React.ReactElement {
    * Checks if the server should be shown in the dropdown menu, based on the
    * 'serverType' property
    */
-  function isValidServer(s: Server | HacknetServer): boolean {
+  function isValidServer(s: BaseServer): boolean {
     const purchased = s instanceof Server && s.purchasedByPlayer;
     const type = props.serverType;
     switch (type) {
@@ -49,8 +50,7 @@ export function ServerDropdown(props: IProps): React.ReactElement {
   }
 
   const servers = [];
-  for (const serverName in AllServers) {
-    const server = AllServers[serverName];
+  for (const server of GetAllServers()) {
     if (isValidServer(server)) {
       servers.push(
         <MenuItem key={server.hostname} value={server.hostname}>

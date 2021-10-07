@@ -3,7 +3,8 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { listAllDarkwebItems, buyDarkwebItem } from "../../DarkWeb/DarkWeb";
-import { SpecialServerIps } from "../../Server/SpecialServerIps";
+import { SpecialServers } from "../../Server/data/SpecialServers";
+import { GetServer } from "../../Server/AllServers";
 
 export function buy(
   terminal: ITerminal,
@@ -12,7 +13,7 @@ export function buy(
   server: BaseServer,
   args: (string | number)[],
 ): void {
-  if (!SpecialServerIps.hasOwnProperty("Darkweb Server")) {
+  if (!GetServer(SpecialServers.DarkWeb)) {
     terminal.error(
       "You need to be able to connect to the Dark Web to use the buy command. (Maybe there's a TOR router you can buy somewhere)",
     );

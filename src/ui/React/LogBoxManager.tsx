@@ -6,6 +6,11 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+import Draggable from "react-draggable";
+import { ResizableBox } from "react-resizable";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export const LogBoxEvents = new EventEmitter<[RunningScript]>();
 
@@ -52,7 +57,20 @@ interface IProps {
   onClose: () => void;
 }
 
+const useStyles = makeStyles(() =>
+  createStyles({
+    logs: {
+      overflowY: "scroll",
+      overflowX: "hidden",
+      scrollbarWidth: "auto",
+      display: "flex",
+      flexDirection: "column-reverse",
+    },
+  }),
+);
+
 function LogWindow(props: IProps): React.ReactElement {
+  const classes = useStyles();
   const container = useRef<HTMLDivElement>(null);
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -64,100 +82,64 @@ function LogWindow(props: IProps): React.ReactElement {
     return () => clearInterval(id);
   }, []);
 
-  useEffect(() => {
-    function closeHandler(event: KeyboardEvent): void {
-      if (event.keyCode === 27) {
-        props.onClose();
-      }
-    }
-
-    document.addEventListener("keydown", closeHandler);
-
-    return () => {
-      document.removeEventListener("keydown", closeHandler);
-    };
-  }, []);
-
   function kill(): void {
     killWorkerScript(props.script, props.script.server, true);
     props.onClose();
   }
 
-  function drag(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
-    const c = container.current;
-    if (c === null) return;
-    event.preventDefault();
-    let x = event.clientX;
-    let y = event.clientY;
-    let left = c.offsetLeft + c.clientWidth / 2;
-    let top = c.offsetTop + c.clientWidth / 5;
-    function mouseMove(event: MouseEvent): void {
-      const c = container.current;
-      if (c === null) return;
-      left += event.clientX - x;
-      top += event.clientY - y;
-      c.style.left = left + "px";
-      c.style.top = top + "px";
-      // reset right and bottom to avoid the window stretching
-      c.style.right = "";
-      c.style.bottom = "";
-      x = event.clientX;
-      y = event.clientY;
-    }
-    function mouseUp(): void {
-      document.removeEventListener("mouseup", mouseUp);
-      document.removeEventListener("mousemove", mouseMove);
-    }
-    document.addEventListener("mouseup", mouseUp);
-    document.addEventListener("mousemove", mouseMove);
-  }
-
   return (
-    <Paper
-      style={{
-        display: "flex",
-        flexFlow: "column",
-        backgroundColor: "gray",
-        width: "50%",
-        position: "fixed",
-        left: "50%",
-        top: "40%",
-        margin: "-10% 0 0 -25%",
-        height: "auto",
-        maxHeight: "50%",
-        zIndex: 10,
-        border: "2px solid $hacker-green",
-      }}
-      ref={container}
-    >
+    <Draggable handle="#drag">
       <Paper
         style={{
-          cursor: "grab",
+          display: "flex",
+          flexFlow: "column",
+          position: "fixed",
+          left: "40%",
+          top: "30%",
+          zIndex: 1400,
         }}
+        ref={container}
       >
-        <Box display="flex" alignItems="center" onMouseDown={drag}>
-          <Typography color="primary" variant="h6" noWrap component="div">
-            {props.script.filename} {props.script.args.map((x: any): string => `${x}`).join(" ")}
-          </Typography>
+        <Paper
+          style={{
+            cursor: "grab",
+          }}
+        >
+          <Box id="drag" display="flex" alignItems="center">
+            <Typography color="primary" variant="h6">
+              {props.script.filename} {props.script.args.map((x: any): string => `${x}`).join(" ")}
+            </Typography>
 
-          <Box display="flex" marginLeft="auto">
-            <Button onClick={kill}>Kill Script</Button>
-            <Button onClick={props.onClose}>Close</Button>
+            <Box position="absolute" right={0}>
+              <Button onClick={kill}>Kill Script</Button>
+              <Button onClick={props.onClose}>Close</Button>
+            </Box>
           </Box>
-        </Box>
+        </Paper>
+        <Paper sx={{ overflow: "scroll", overflowWrap: "break-word", whiteSpace: "pre-line" }}>
+          <ResizableBox
+            className={classes.logs}
+            height={500}
+            width={500}
+            handle={
+              <span style={{ position: "absolute", right: "-10px", bottom: "-13px", cursor: "nw-resize" }}>
+                <ArrowForwardIosIcon color="primary" style={{ transform: "rotate(45deg)" }} />
+              </span>
+            }
+          >
+            <Box>
+              {props.script.logs.map(
+                (line: string, i: number): JSX.Element => (
+                  <Typography key={i}>
+                    {line}
+                    <br />
+                  </Typography>
+                ),
+              )}
+            </Box>
+          </ResizableBox>
+        </Paper>
       </Paper>
-      <Paper>
-        <Box maxHeight="25vh" overflow="scroll" sx={{ overflowWrap: "break-word", whiteSpace: "pre-line" }}>
-          {props.script.logs.map(
-            (line: string, i: number): JSX.Element => (
-              <Typography key={i}>
-                {line}
-                <br />
-              </Typography>
-            ),
-          )}
-        </Box>
-      </Paper>
-    </Paper>
+    </Draggable>
   );
 }

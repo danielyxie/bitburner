@@ -36,7 +36,7 @@ export function kill(
       terminal.error("No such script is running. Nothing to kill");
       return;
     }
-    killWorkerScript(runningScript, server.ip, false);
+    killWorkerScript(runningScript, server.hostname, false);
     terminal.print(`Killing ${scriptName}`);
   } catch (e) {
     terminal.error(e + "");

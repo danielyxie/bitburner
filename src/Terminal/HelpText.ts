@@ -22,7 +22,6 @@ export const TerminalHelpText: string[] = [
   "help [command]                       Display this help text, or the help text for a command",
   "home                                 Connect to home computer",
   "hostname                             Displays the hostname of the machine",
-  "ifconfig                             Displays the IP address of the machine",
   "kill [script/pid] [args...]          Stops the specified script on the current server ",
   "killall                              Stops all running scripts on the current machine",
   "ls [dir] [| grep pattern]            Displays all files on the machine",
@@ -219,7 +218,6 @@ export const HelpTexts: IMap<string[]> = {
     "home" + "Connect to your home computer. This will work no matter what server you are currently connected to.",
   ],
   hostname: ["hostname", " ", "Prints the hostname of the current server"],
-  ifconfig: ["ipconfig", " ", "Prints the IP address of the current server"],
   kill: [
     "kill [script name] [args...]",
     " ",

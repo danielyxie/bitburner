@@ -7,6 +7,7 @@ import { GeneralInfo } from "./GeneralInfo";
 import { HacknetNodeElem } from "./HacknetNodeElem";
 import { HacknetServerElem } from "./HacknetServerElem";
 import { HacknetNode } from "../HacknetNode";
+import { HacknetServer } from "../HacknetServer";
 import { HashUpgradeModal } from "./HashUpgradeModal";
 import { MultiplierButtons } from "./MultiplierButtons";
 import { PlayerInfo } from "./PlayerInfo";
@@ -21,8 +22,7 @@ import {
 } from "../HacknetHelpers";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { AllServers } from "../../Server/AllServers";
-import { Server } from "../../Server/Server";
+import { GetServer } from "../../Server/AllServers";
 
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -50,8 +50,8 @@ export function HacknetRoot(props: IProps): React.ReactElement {
     const node = props.player.hacknetNodes[i];
     if (hasHacknetServers(props.player)) {
       if (node instanceof HacknetNode) throw new Error("node was hacknet node"); // should never happen
-      const hserver = AllServers[node];
-      if (hserver instanceof Server) throw new Error("node was a normal server"); // should never happen
+      const hserver = GetServer(node);
+      if (!(hserver instanceof HacknetServer)) throw new Error("node was not hacknet server"); // should never happen
       if (hserver) {
         totalProduction += hserver.hashRate;
       } else {
@@ -88,11 +88,11 @@ export function HacknetRoot(props: IProps): React.ReactElement {
   const nodes = props.player.hacknetNodes.map((node: string | HacknetNode) => {
     if (hasHacknetServers(props.player)) {
       if (node instanceof HacknetNode) throw new Error("node was hacknet node"); // should never happen
-      const hserver = AllServers[node];
+      const hserver = GetServer(node);
       if (hserver == null) {
         throw new Error(`Could not find Hacknet Server object in AllServers map for IP: ${node}`);
       }
-      if (hserver instanceof Server) throw new Error("node was normal server"); // should never happen
+      if (!(hserver instanceof HacknetServer)) throw new Error("node was not hacknet server"); // should never happen
       return (
         <HacknetServerElem
           player={props.player}

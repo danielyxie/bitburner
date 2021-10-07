@@ -18,7 +18,7 @@ import { RunningScript } from "./Script/RunningScript";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
 import { scriptCalculateOfflineProduction } from "./Script/ScriptHelpers";
 import { Script } from "./Script/Script";
-import { AllServers } from "./Server/AllServers";
+import { GetAllServers } from "./Server/AllServers";
 import { BaseServer } from "./Server/BaseServer";
 import { Settings } from "./Settings/Settings";
 
@@ -199,7 +199,6 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
           name === "vsprintf" ||
           name === "scp" ||
           name == "write" ||
-          name === "read" ||
           name === "tryWrite" ||
           name === "run" ||
           name === "exec"
@@ -546,11 +545,11 @@ export function createAndAddWorkerScript(
           console.error("Error text: " + w.errorMessage);
           return;
         }
-        const serverIp = errorTextArray[1];
+        const hostname = errorTextArray[1];
         const scriptName = errorTextArray[2];
         const errorMsg = errorTextArray[3];
 
-        let msg = `RUNTIME ERROR<br>${scriptName}@${serverIp}<br>`;
+        let msg = `RUNTIME ERROR<br>${scriptName}@${hostname}<br>`;
         if (w.args.length > 0) {
           msg += `Args: ${arrayToString(w.args)}<br>`;
         }
@@ -602,28 +601,24 @@ export function loadAllRunningScripts(): void {
   if (skipScriptLoad) {
     console.info("Skipping the load of any scripts during startup");
   }
-  for (const property in AllServers) {
-    if (AllServers.hasOwnProperty(property)) {
-      const server = AllServers[property];
+  for (const server of GetAllServers()) {
+    // Reset each server's RAM usage to 0
+    server.ramUsed = 0;
 
-      // Reset each server's RAM usage to 0
-      server.ramUsed = 0;
+    // Reset modules on all scripts
+    for (let i = 0; i < server.scripts.length; ++i) {
+      server.scripts[i].markUpdated();
+    }
 
-      // Reset modules on all scripts
-      for (let i = 0; i < server.scripts.length; ++i) {
-        server.scripts[i].markUpdated();
-      }
+    if (skipScriptLoad) {
+      // Start game with no scripts
+      server.runningScripts.length = 0;
+    } else {
+      for (let j = 0; j < server.runningScripts.length; ++j) {
+        createAndAddWorkerScript(server.runningScripts[j], server);
 
-      if (skipScriptLoad) {
-        // Start game with no scripts
-        server.runningScripts.length = 0;
-      } else {
-        for (let j = 0; j < server.runningScripts.length; ++j) {
-          createAndAddWorkerScript(server.runningScripts[j], server);
-
-          // Offline production
-          scriptCalculateOfflineProduction(server.runningScripts[j]);
-        }
+        // Offline production
+        scriptCalculateOfflineProduction(server.runningScripts[j]);
       }
     }
   }

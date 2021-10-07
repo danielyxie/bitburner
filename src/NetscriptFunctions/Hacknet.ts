@@ -16,7 +16,7 @@ import {
 } from "../Hacknet/HacknetHelpers";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { HacknetNode } from "../Hacknet/HacknetNode";
-import { AllServers } from "../Server/AllServers";
+import { GetServer } from "../Server/AllServers";
 
 export interface INetscriptHacknet {
   numNodes(): number;
@@ -58,7 +58,7 @@ export function NetscriptHacknet(
     if (hasHacknetServers(player)) {
       const hi = player.hacknetNodes[i];
       if (typeof hi !== "string") throw new Error("hacknet node was not a string");
-      const hserver = AllServers[hi];
+      const hserver = GetServer(hi);
       if (!(hserver instanceof HacknetServer)) throw new Error("hacknet server was not actually hacknet server");
       if (hserver == null) {
         throw helper.makeRuntimeErrorMsg(

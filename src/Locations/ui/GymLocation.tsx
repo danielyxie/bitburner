@@ -10,9 +10,8 @@ import { Location } from "../Location";
 
 import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { getServer } from "../../Server/ServerHelpers";
+import { GetServer } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
-import { SpecialServerIps } from "../../Server/SpecialServerIps";
 
 import { Money } from "../../ui/React/Money";
 import { IRouter } from "../../ui/Router";
@@ -25,8 +24,7 @@ type IProps = {
 
 export function GymLocation(props: IProps): React.ReactElement {
   function calculateCost(): number {
-    const ip = SpecialServerIps.getIp(props.loc.name);
-    const server = getServer(ip);
+    const server = GetServer(props.loc.name);
     if (server == null || !server.hasOwnProperty("backdoorInstalled")) return props.loc.costMult;
     const discount = (server as Server).backdoorInstalled ? 0.9 : 1;
     return props.loc.costMult * discount;

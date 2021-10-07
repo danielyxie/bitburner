@@ -15,7 +15,7 @@ export function home(
     return;
   }
   player.getCurrentServer().isConnectedTo = false;
-  player.currentServer = player.getHomeComputer().ip;
+  player.currentServer = player.getHomeComputer().hostname;
   player.getCurrentServer().isConnectedTo = true;
   terminal.print("Connected to home");
   terminal.setcwd("/");

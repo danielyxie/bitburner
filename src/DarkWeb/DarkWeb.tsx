@@ -2,26 +2,18 @@ import { DarkWebItems } from "./DarkWebItems";
 
 import { Player } from "../Player";
 import { Terminal } from "../Terminal";
-import { SpecialServerIps } from "../Server/SpecialServerIps";
+import { SpecialServers } from "../Server/data/SpecialServers";
 import { numeralWrapper } from "../ui/numeralFormat";
-
-import { isValidIPAddress } from "../utils/helpers/isValidIPAddress";
 
 //Posts a "help" message if connected to DarkWeb
 export function checkIfConnectedToDarkweb(): void {
-  if (SpecialServerIps.hasOwnProperty("Darkweb Server")) {
-    const darkwebIp = SpecialServerIps.getIp("Darkweb Server");
-    if (!isValidIPAddress(darkwebIp)) {
-      return;
-    }
-    const server = Player.getCurrentServer();
-    if (server !== null && darkwebIp == server.ip) {
-      Terminal.print(
-        "You are now connected to the dark web. From the dark web you can purchase illegal items. " +
-          "Use the 'buy -l' command to display a list of all the items you can buy. Use 'buy [item-name] " +
-          "to purchase an item.",
-      );
-    }
+  const server = Player.getCurrentServer();
+  if (server !== null && SpecialServers.DarkWeb == server.hostname) {
+    Terminal.print(
+      "You are now connected to the dark web. From the dark web you can purchase illegal items. " +
+        "Use the 'buy -l' command to display a list of all the items you can buy. Use 'buy [item-name] " +
+        "to purchase an item.",
+    );
   }
 }
 

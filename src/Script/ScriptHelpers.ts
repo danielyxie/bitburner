@@ -1,10 +1,10 @@
 import { CONSTANTS } from "../Constants";
 import { Player } from "../Player";
-import { AllServers } from "../Server/AllServers";
 import { BaseServer } from "../Server/BaseServer";
 import { Server } from "../Server/Server";
 import { RunningScript } from "../Script/RunningScript";
 import { processSingleServerGrowth } from "../Server/ServerHelpers";
+import { GetServer } from "../Server/AllServers";
 
 import { numeralWrapper } from "../ui/numeralFormat";
 
@@ -27,20 +27,21 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
   //Data map: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
 
   // Grow
-  for (const ip in runningScript.dataMap) {
-    if (runningScript.dataMap.hasOwnProperty(ip)) {
-      if (runningScript.dataMap[ip][2] == 0 || runningScript.dataMap[ip][2] == null) {
+  for (const hostname in runningScript.dataMap) {
+    if (runningScript.dataMap.hasOwnProperty(hostname)) {
+      if (runningScript.dataMap[hostname][2] == 0 || runningScript.dataMap[hostname][2] == null) {
         continue;
       }
-      const serv = AllServers[ip];
+      const serv = GetServer(hostname);
       if (serv == null) {
         continue;
       }
       const timesGrown = Math.round(
-        ((0.5 * runningScript.dataMap[ip][2]) / runningScript.onlineRunningTime) * timePassed,
+        ((0.5 * runningScript.dataMap[hostname][2]) / runningScript.onlineRunningTime) * timePassed,
       );
       runningScript.log(`Called on ${serv.hostname} ${timesGrown} times while offline`);
-      const host = AllServers[runningScript.server];
+      const host = GetServer(runningScript.server);
+      if (host === null) throw new Error("getServer of null key?");
       if (!(serv instanceof Server)) throw new Error("trying to grow a non-normal server");
       const growth = processSingleServerGrowth(serv, timesGrown, Player, host.cpuCores);
       runningScript.log(
@@ -59,20 +60,21 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
   runningScript.offlineExpGained += expGain;
 
   // Weaken
-  for (const ip in runningScript.dataMap) {
-    if (runningScript.dataMap.hasOwnProperty(ip)) {
-      if (runningScript.dataMap[ip][3] == 0 || runningScript.dataMap[ip][3] == null) {
+  for (const hostname in runningScript.dataMap) {
+    if (runningScript.dataMap.hasOwnProperty(hostname)) {
+      if (runningScript.dataMap[hostname][3] == 0 || runningScript.dataMap[hostname][3] == null) {
         continue;
       }
-      const serv = AllServers[ip];
+      const serv = GetServer(hostname);
       if (serv == null) {
         continue;
       }
 
       if (!(serv instanceof Server)) throw new Error("trying to weaken a non-normal server");
-      const host = AllServers[runningScript.server];
+      const host = GetServer(runningScript.server);
+      if (host === null) throw new Error("getServer of null key?");
       const timesWeakened = Math.round(
-        ((0.5 * runningScript.dataMap[ip][3]) / runningScript.onlineRunningTime) * timePassed,
+        ((0.5 * runningScript.dataMap[hostname][3]) / runningScript.onlineRunningTime) * timePassed,
       );
       runningScript.log(`Called weaken() on ${serv.hostname} ${timesWeakened} times while offline`);
       const coreBonus = 1 + (host.cpuCores - 1) / 16;
