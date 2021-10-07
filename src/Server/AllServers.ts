@@ -148,4 +148,5 @@ export function prestigeAllServers(): void {
 
 export function loadAllServers(saveString: string): void {
   AllServers = JSON.parse(saveString, Reviver);
+  console.log(AllServers);
 }

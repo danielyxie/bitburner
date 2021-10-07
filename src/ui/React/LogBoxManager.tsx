@@ -8,6 +8,9 @@ import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Draggable from "react-draggable";
 import { ResizableBox } from "react-resizable";
+import { Theme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export const LogBoxEvents = new EventEmitter<[RunningScript]>();
@@ -55,7 +58,20 @@ interface IProps {
   onClose: () => void;
 }
 
+const useStyles = makeStyles(() =>
+  createStyles({
+    logs: {
+      overflowY: "scroll",
+      overflowX: "hidden",
+      scrollbarWidth: "auto",
+      display: "flex",
+      flexDirection: "column-reverse",
+    },
+  }),
+);
+
 function LogWindow(props: IProps): React.ReactElement {
+  const classes = useStyles();
   const container = useRef<HTMLDivElement>(null);
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -70,35 +86,6 @@ function LogWindow(props: IProps): React.ReactElement {
   function kill(): void {
     killWorkerScript(props.script, props.script.server, true);
     props.onClose();
-  }
-
-  function drag(event: React.MouseEvent<HTMLElement, MouseEvent>): void {
-    const c = container.current;
-    if (c === null) return;
-    event.preventDefault();
-    let x = event.clientX;
-    let y = event.clientY;
-    let left = c.offsetLeft + c.clientWidth / 2;
-    let top = c.offsetTop + c.clientWidth / 5;
-    function mouseMove(event: MouseEvent): void {
-      const c = container.current;
-      if (c === null) return;
-      left += event.clientX - x;
-      top += event.clientY - y;
-      c.style.left = left + "px";
-      c.style.top = top + "px";
-      // reset right and bottom to avoid the window stretching
-      c.style.right = "";
-      c.style.bottom = "";
-      x = event.clientX;
-      y = event.clientY;
-    }
-    function mouseUp(): void {
-      document.removeEventListener("mouseup", mouseUp);
-      document.removeEventListener("mousemove", mouseMove);
-    }
-    document.addEventListener("mouseup", mouseUp);
-    document.addEventListener("mousemove", mouseMove);
   }
 
   return (
@@ -132,10 +119,11 @@ function LogWindow(props: IProps): React.ReactElement {
         </Paper>
         <Paper sx={{ overflow: "scroll", overflowWrap: "break-word", whiteSpace: "pre-line" }}>
           <ResizableBox
+            className={classes.logs}
             height={500}
             width={500}
             handle={
-              <span style={{ position: "absolute", right: 0, bottom: 0 }}>
+              <span style={{ position: "absolute", right: "-10px", bottom: "-13px", cursor: "nw-resize" }}>
                 <ArrowForwardIosIcon color="primary" style={{ transform: "rotate(45deg)" }} />
               </span>
             }
