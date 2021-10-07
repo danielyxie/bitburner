@@ -224,7 +224,6 @@ export function determineAllPossibilitiesForTabCompletion(
 
   if (isCommand("scp") && index === 1) {
     for (const server of GetAllServers()) {
-      allPos.push(server.ip);
       allPos.push(server.hostname);
     }
 
@@ -247,7 +246,6 @@ export function determineAllPossibilitiesForTabCompletion(
       if (serv == null) {
         continue;
       }
-      allPos.push(serv.ip);
       allPos.push(serv.hostname);
     }
 

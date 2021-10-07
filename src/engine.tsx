@@ -31,7 +31,6 @@ import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { ThemeEvents } from "./ui/React/Theme";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
-import { initSpecialServerIps } from "./Server/SpecialServerIps";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
@@ -409,7 +408,6 @@ const Engine: {
     } else {
       // No save found, start new game
       initBitNodeMultipliers(Player);
-      initSpecialServerIps();
       Engine.start(); // Run main game loop and Scripts loop
       Player.init();
       initForeignServers(Player.getHomeComputer());

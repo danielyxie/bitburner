@@ -80,12 +80,12 @@ export function purchaseServer(hostname: string, ram: number, cost: number, p: I
   AddToAllServers(newServ);
 
   // Add to Player's purchasedServers array
-  p.purchasedServers.push(newServ.ip);
+  p.purchasedServers.push(newServ.hostname);
 
   // Connect new server to home computer
   const homeComputer = p.getHomeComputer();
-  homeComputer.serversOnNetwork.push(newServ.ip);
-  newServ.serversOnNetwork.push(homeComputer.ip);
+  homeComputer.serversOnNetwork.push(newServ.hostname);
+  newServ.serversOnNetwork.push(homeComputer.hostname);
 
   p.loseMoney(cost);
 

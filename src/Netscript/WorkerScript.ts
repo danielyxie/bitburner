@@ -104,11 +104,11 @@ export class WorkerScript {
   /**
    * IP Address on which this script is running
    */
-  serverIp: string;
+  hostname: string;
 
   constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => any) {
     this.name = runningScriptObj.filename;
-    this.serverIp = runningScriptObj.server;
+    this.hostname = runningScriptObj.server;
 
     const sanitizedPid = Math.round(pid);
     if (typeof sanitizedPid !== "number" || isNaN(sanitizedPid)) {
@@ -118,9 +118,9 @@ export class WorkerScript {
     runningScriptObj.pid = sanitizedPid;
 
     // Get the underlying script's code
-    const server = GetServer(this.serverIp);
+    const server = GetServer(this.hostname);
     if (server == null) {
-      throw new Error(`WorkerScript constructed with invalid server ip: ${this.serverIp}`);
+      throw new Error(`WorkerScript constructed with invalid server ip: ${this.hostname}`);
     }
     let found = false;
     for (let i = 0; i < server.scripts.length; ++i) {
@@ -147,7 +147,7 @@ export class WorkerScript {
    * Returns the Server on which this script is running
    */
   getServer(): BaseServer {
-    const server = GetServer(this.serverIp);
+    const server = GetServer(this.hostname);
     if (server == null) throw new Error(`Script ${this.name} pid ${this.pid} is running on non-existent server?`);
     return server;
   }

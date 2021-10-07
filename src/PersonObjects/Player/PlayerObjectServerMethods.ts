@@ -10,10 +10,10 @@ import { Server } from "../../Server/Server";
 import { BaseServer } from "../../Server/BaseServer";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
-import { SpecialServerIps } from "../../Server/SpecialServerIps";
+import { SpecialServers } from "../../Server/data/SpecialServers";
 
 export function hasTorRouter(this: IPlayer): boolean {
-  return SpecialServerIps.hasOwnProperty("Darkweb Server");
+  return !!GetServer(SpecialServers.DarkWeb);
 }
 
 export function getCurrentServer(this: IPlayer): BaseServer {
@@ -49,13 +49,13 @@ export function createHacknetServer(this: IPlayer): HacknetServer {
     ip: createUniqueRandomIp(),
     // player: this,
   });
-  this.hacknetNodes.push(server.ip);
+  this.hacknetNodes.push(server.hostname);
 
   // Configure the HacknetServer to actually act as a Server
   AddToAllServers(server);
   const homeComputer = this.getHomeComputer();
-  homeComputer.serversOnNetwork.push(server.ip);
-  server.serversOnNetwork.push(homeComputer.ip);
+  homeComputer.serversOnNetwork.push(server.hostname);
+  server.serversOnNetwork.push(SpecialServers.Home);
 
   return server;
 }

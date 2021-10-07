@@ -1,6 +1,5 @@
 import { Server } from "./Server";
 import { BaseServer } from "./BaseServer";
-import { SpecialServerIps } from "./SpecialServerIps";
 import { serverMetadata } from "./data/servers";
 
 import { HacknetServer } from "../Hacknet/HacknetServer";
@@ -90,13 +89,11 @@ export function createUniqueRandomIp(): string {
 // Saftely add a Server to the AllServers map
 export function AddToAllServers(server: Server | HacknetServer): void {
   if (GetServer(server.hostname)) {
-    console.warn(`IP of server that's being added: ${server.ip}`);
     console.warn(`Hostname of the server thats being added: ${server.hostname}`);
     console.warn(`The server that already has this IP is: ${AllServers[server.hostname].hostname}`);
     throw new Error("Error: Trying to add a server with an existing IP");
   }
 
-  console.log(`adding ${server.hostname}`);
   AllServers[server.hostname] = server;
 }
 
@@ -164,10 +161,6 @@ export function initForeignServers(homeComputer: Server): void {
       server.messages.push(filename);
     }
 
-    if (metadata.specialName !== undefined) {
-      SpecialServerIps.addIp(metadata.specialName, server.ip);
-    }
-
     AddToAllServers(server);
     if (metadata.networkLayer !== undefined) {
       networkLayers[toNumber(metadata.networkLayer) - 1].push(server);
@@ -176,8 +169,8 @@ export function initForeignServers(homeComputer: Server): void {
 
   /* Create a randomized network for all the foreign servers */
   const linkComputers = (server1: Server, server2: Server): void => {
-    server1.serversOnNetwork.push(server2.ip);
-    server2.serversOnNetwork.push(server1.ip);
+    server1.serversOnNetwork.push(server2.hostname);
+    server2.serversOnNetwork.push(server1.hostname);
   };
 
   const getRandomArrayItem = (arr: any[]): any => arr[Math.floor(Math.random() * arr.length)];

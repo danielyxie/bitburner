@@ -12,12 +12,12 @@ import { GetServer } from "../Server/AllServers";
 import { compareArrays } from "../utils/helpers/compareArrays";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
 
-export function killWorkerScript(runningScriptObj: RunningScript, serverIp: string, rerenderUi?: boolean): boolean;
+export function killWorkerScript(runningScriptObj: RunningScript, hostname: string, rerenderUi?: boolean): boolean;
 export function killWorkerScript(workerScript: WorkerScript): boolean;
 export function killWorkerScript(pid: number): boolean;
 export function killWorkerScript(
   script: RunningScript | WorkerScript | number,
-  serverIp?: string,
+  hostname?: string,
   rerenderUi?: boolean,
 ): boolean {
   if (rerenderUi == null || typeof rerenderUi !== "boolean") {
@@ -28,7 +28,7 @@ export function killWorkerScript(
     stopAndCleanUpWorkerScript(script);
 
     return true;
-  } else if (script instanceof RunningScript && typeof serverIp === "string") {
+  } else if (script instanceof RunningScript && typeof hostname === "string") {
     // Try to kill by PID
     const res = killWorkerScriptByPid(script.pid, rerenderUi);
     if (res) {
@@ -37,7 +37,7 @@ export function killWorkerScript(
 
     // If for some reason that doesn't work, we'll try the old way
     for (const ws of workerScripts.values()) {
-      if (ws.name == script.filename && ws.serverIp == serverIp && compareArrays(ws.args, script.args)) {
+      if (ws.name == script.filename && ws.hostname == hostname && compareArrays(ws.args, script.args)) {
         stopAndCleanUpWorkerScript(ws, rerenderUi);
 
         return true;
@@ -80,7 +80,7 @@ function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = tru
  */
 function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void {
   if (workerScript instanceof WorkerScript) {
-    const ip = workerScript.serverIp;
+    const ip = workerScript.hostname;
     const name = workerScript.name;
 
     // Get the server on which the script runs

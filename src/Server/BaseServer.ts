@@ -267,7 +267,7 @@ export class BaseServer {
     }
 
     // Otherwise, create a new script
-    const newScript = new Script(fn, code, this.ip, this.scripts);
+    const newScript = new Script(fn, code, this.hostname, this.scripts);
     this.scripts.push(newScript);
     ret.success = true;
     return ret;

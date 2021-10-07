@@ -4,6 +4,7 @@
 import { IMinMaxRange } from "../../types";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { LiteratureNames } from "../../Literature/data/LiteratureNames";
+import { SpecialServers } from "./SpecialServers";
 
 /**
  * The metadata describing the base state of servers on the network.
@@ -319,7 +320,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 1100,
     },
     serverGrowth: 1,
-    specialName: "Fulcrum Secret Technologies Server",
+    specialName: SpecialServers.FulcrumSecretTechnologies,
   },
   {
     hackDifficulty: {
@@ -1470,7 +1471,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 505,
     },
     serverGrowth: 0,
-    specialName: "BitRunners Server",
+    specialName: SpecialServers.BitRunnersServer,
   },
   {
     hackDifficulty: 0,
@@ -1489,7 +1490,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 340,
     },
     serverGrowth: 0,
-    specialName: "The Black Hand Server",
+    specialName: SpecialServers.TheBlackHandServer,
   },
   {
     hackDifficulty: 0,
@@ -1508,7 +1509,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 202,
     },
     serverGrowth: 0,
-    specialName: "NiteSec Server",
+    specialName: SpecialServers.NiteSecServer,
   },
   {
     hackDifficulty: 0,
@@ -1523,7 +1524,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 505,
     },
     serverGrowth: 0,
-    specialName: "The Dark Army Server",
+    specialName: SpecialServers.TheDarkArmyServer,
   },
   {
     hackDifficulty: 0,
@@ -1539,7 +1540,7 @@ export const serverMetadata: IServerMetadata[] = [
       min: 51,
     },
     serverGrowth: 0,
-    specialName: "CyberSec Server",
+    specialName: SpecialServers.CyberSecServer,
   },
   {
     hackDifficulty: 0,
@@ -1551,7 +1552,7 @@ export const serverMetadata: IServerMetadata[] = [
     organizationName: "Helios",
     requiredHackingSkill: 925,
     serverGrowth: 0,
-    specialName: "Daedalus Server",
+    specialName: SpecialServers.DaedalusServer,
   },
   {
     hackDifficulty: 0,
@@ -1561,6 +1562,6 @@ export const serverMetadata: IServerMetadata[] = [
     organizationName: "w0r1d_d43m0n",
     requiredHackingSkill: 3000,
     serverGrowth: 0,
-    specialName: "w0r1d_d43m0n",
+    specialName: SpecialServers.WorldDaemon,
   },
 ];

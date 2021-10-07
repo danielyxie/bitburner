@@ -20,7 +20,7 @@ import { LiteratureNames } from "./Literature/data/LiteratureNames";
 import { GetServer, AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
 import { prestigeHomeComputer } from "./Server/ServerHelpers";
 import { SourceFileFlags, updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
-import { prestigeSpecialServerIps, SpecialServerNames } from "./Server/SpecialServerIps";
+import { SpecialServers } from "./Server/data/SpecialServers";
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 
@@ -45,9 +45,6 @@ function prestigeAugmentation(): void {
   const homeComp = Player.getHomeComputer();
   // Delete all servers except home computer
   prestigeAllServers();
-
-  // Delete Special Server IPs
-  prestigeSpecialServerIps(); // Must be done before initForeignServers()
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);
@@ -132,11 +129,11 @@ function prestigeAugmentation(): void {
 
   // Red Pill
   if (augmentationExists(AugmentationNames.TheRedPill) && Augmentations[AugmentationNames.TheRedPill].owned) {
-    const WorldDaemon = GetServer(SpecialServerNames.WorldDaemon);
-    const DaedalusServer = GetServer(SpecialServerNames.DaedalusServer);
+    const WorldDaemon = GetServer(SpecialServers.WorldDaemon);
+    const DaedalusServer = GetServer(SpecialServers.DaedalusServer);
     if (WorldDaemon && DaedalusServer) {
-      WorldDaemon.serversOnNetwork.push(DaedalusServer.ip);
-      DaedalusServer.serversOnNetwork.push(WorldDaemon.ip);
+      WorldDaemon.serversOnNetwork.push(DaedalusServer.hostname);
+      DaedalusServer.serversOnNetwork.push(WorldDaemon.hostname);
     }
   }
 
@@ -155,9 +152,6 @@ function prestigeSourceFile(flume: boolean): void {
 
   // Delete all servers except home computer
   prestigeAllServers(); // Must be done before initForeignServers()
-
-  // Delete Special Server IPs
-  prestigeSpecialServerIps();
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);

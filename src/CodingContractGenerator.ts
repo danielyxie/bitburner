@@ -7,7 +7,7 @@ import {
 import { Factions } from "./Faction/Factions";
 import { Player } from "./Player";
 import { GetServer, GetAllServers } from "./Server/AllServers";
-import { SpecialServerNames } from "./Server/SpecialServerIps";
+import { SpecialServers } from "./Server/data/SpecialServers";
 import { Server } from "./Server/Server";
 import { BaseServer } from "./Server/BaseServer";
 
@@ -172,7 +172,7 @@ function getRandomServer(): BaseServer {
     if (
       randServer instanceof Server &&
       !randServer.purchasedByPlayer &&
-      randServer.hostname !== SpecialServerNames.WorldDaemon
+      randServer.hostname !== SpecialServers.WorldDaemon
     ) {
       break;
     }

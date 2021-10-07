@@ -27,17 +27,17 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
   //Data map: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
 
   // Grow
-  for (const ip in runningScript.dataMap) {
-    if (runningScript.dataMap.hasOwnProperty(ip)) {
-      if (runningScript.dataMap[ip][2] == 0 || runningScript.dataMap[ip][2] == null) {
+  for (const hostname in runningScript.dataMap) {
+    if (runningScript.dataMap.hasOwnProperty(hostname)) {
+      if (runningScript.dataMap[hostname][2] == 0 || runningScript.dataMap[hostname][2] == null) {
         continue;
       }
-      const serv = GetServer(ip);
+      const serv = GetServer(hostname);
       if (serv == null) {
         continue;
       }
       const timesGrown = Math.round(
-        ((0.5 * runningScript.dataMap[ip][2]) / runningScript.onlineRunningTime) * timePassed,
+        ((0.5 * runningScript.dataMap[hostname][2]) / runningScript.onlineRunningTime) * timePassed,
       );
       runningScript.log(`Called on ${serv.hostname} ${timesGrown} times while offline`);
       const host = GetServer(runningScript.server);
@@ -60,12 +60,12 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
   runningScript.offlineExpGained += expGain;
 
   // Weaken
-  for (const ip in runningScript.dataMap) {
-    if (runningScript.dataMap.hasOwnProperty(ip)) {
-      if (runningScript.dataMap[ip][3] == 0 || runningScript.dataMap[ip][3] == null) {
+  for (const hostname in runningScript.dataMap) {
+    if (runningScript.dataMap.hasOwnProperty(hostname)) {
+      if (runningScript.dataMap[hostname][3] == 0 || runningScript.dataMap[hostname][3] == null) {
         continue;
       }
-      const serv = GetServer(ip);
+      const serv = GetServer(hostname);
       if (serv == null) {
         continue;
       }
@@ -74,7 +74,7 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
       const host = GetServer(runningScript.server);
       if (host === null) throw new Error("getServer of null key?");
       const timesWeakened = Math.round(
-        ((0.5 * runningScript.dataMap[ip][3]) / runningScript.onlineRunningTime) * timePassed,
+        ((0.5 * runningScript.dataMap[hostname][3]) / runningScript.onlineRunningTime) * timePassed,
       );
       runningScript.log(`Called weaken() on ${serv.hostname} ${timesWeakened} times while offline`);
       const coreBonus = 1 + (host.cpuCores - 1) / 16;

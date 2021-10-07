@@ -544,11 +544,11 @@ export function createAndAddWorkerScript(
           console.error("Error text: " + w.errorMessage);
           return;
         }
-        const serverIp = errorTextArray[1];
+        const hostname = errorTextArray[1];
         const scriptName = errorTextArray[2];
         const errorMsg = errorTextArray[3];
 
-        let msg = `RUNTIME ERROR<br>${scriptName}@${serverIp}<br>`;
+        let msg = `RUNTIME ERROR<br>${scriptName}@${hostname}<br>`;
         if (w.args.length > 0) {
           msg += `Args: ${arrayToString(w.args)}<br>`;
         }

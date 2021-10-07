@@ -17,13 +17,13 @@ export function connect(
     return;
   }
 
-  const ip = args[0] + "";
+  const hostname = args[0] + "";
 
   for (let i = 0; i < server.serversOnNetwork.length; i++) {
     const other = getServerOnNetwork(server, i);
     if (other === null) throw new Error(`Server on network should not be null`);
-    if (other.ip == ip || other.hostname == ip) {
-      terminal.connectToServer(player, ip);
+    if (other.hostname == hostname) {
+      terminal.connectToServer(player, hostname);
       return;
     }
   }

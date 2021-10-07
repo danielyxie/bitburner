@@ -14,7 +14,7 @@ export class RunningScript {
   // Script arguments
   args: any[] = [];
 
-  // Map of [key: server ip] -> Hacking data. Used for offline progress calculations.
+  // Map of [key: hostname] -> Hacking data. Used for offline progress calculations.
   // Hacking data format: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
   dataMap: IMap<number[]> = {};
 
@@ -52,7 +52,7 @@ export class RunningScript {
   // How much RAM this script uses for ONE thread
   ramUsage = 0;
 
-  // IP of the server on which this script is running
+  // hostname of the server on which this script is running
   server = "";
 
   // Number of threads that this script is running with
@@ -93,28 +93,28 @@ export class RunningScript {
   }
 
   // Update the moneyStolen and numTimesHack maps when hacking
-  recordHack(serverIp: string, moneyGained: number, n = 1): void {
-    if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
-      this.dataMap[serverIp] = [0, 0, 0, 0];
+  recordHack(hostname: string, moneyGained: number, n = 1): void {
+    if (this.dataMap[hostname] == null || this.dataMap[hostname].constructor !== Array) {
+      this.dataMap[hostname] = [0, 0, 0, 0];
     }
-    this.dataMap[serverIp][0] += moneyGained;
-    this.dataMap[serverIp][1] += n;
+    this.dataMap[hostname][0] += moneyGained;
+    this.dataMap[hostname][1] += n;
   }
 
   // Update the grow map when calling grow()
-  recordGrow(serverIp: string, n = 1): void {
-    if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
-      this.dataMap[serverIp] = [0, 0, 0, 0];
+  recordGrow(hostname: string, n = 1): void {
+    if (this.dataMap[hostname] == null || this.dataMap[hostname].constructor !== Array) {
+      this.dataMap[hostname] = [0, 0, 0, 0];
     }
-    this.dataMap[serverIp][2] += n;
+    this.dataMap[hostname][2] += n;
   }
 
   // Update the weaken map when calling weaken() {
-  recordWeaken(serverIp: string, n = 1): void {
-    if (this.dataMap[serverIp] == null || this.dataMap[serverIp].constructor !== Array) {
-      this.dataMap[serverIp] = [0, 0, 0, 0];
+  recordWeaken(hostname: string, n = 1): void {
+    if (this.dataMap[hostname] == null || this.dataMap[hostname].constructor !== Array) {
+      this.dataMap[hostname] = [0, 0, 0, 0];
     }
-    this.dataMap[serverIp][3] += n;
+    this.dataMap[hostname][3] += n;
   }
 
   // Serialize the current object to a JSON save state

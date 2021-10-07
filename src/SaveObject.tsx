@@ -7,7 +7,6 @@ import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import { Player, loadPlayer } from "./Player";
 import { saveAllServers, loadAllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
-import { loadSpecialServerIps, SpecialServerIps } from "./Server/SpecialServerIps";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 
@@ -28,7 +27,6 @@ class BitburnerSaveObject {
   AllServersSave = "";
   CompaniesSave = "";
   FactionsSave = "";
-  SpecialServerIpsSave = "";
   AliasesSave = "";
   GlobalAliasesSave = "";
   MessagesSave = "";
@@ -44,7 +42,6 @@ class BitburnerSaveObject {
     this.AllServersSave = saveAllServers();
     this.CompaniesSave = JSON.stringify(Companies);
     this.FactionsSave = JSON.stringify(Factions);
-    this.SpecialServerIpsSave = JSON.stringify(SpecialServerIps);
     this.AliasesSave = JSON.stringify(Aliases);
     this.GlobalAliasesSave = JSON.stringify(GlobalAliases);
     this.MessagesSave = JSON.stringify(Messages);
@@ -156,7 +153,6 @@ function loadGame(saveString: string): boolean {
   loadAllServers(saveObj.AllServersSave);
   loadCompanies(saveObj.CompaniesSave);
   loadFactions(saveObj.FactionsSave);
-  loadSpecialServerIps(saveObj.SpecialServerIpsSave);
 
   if (saveObj.hasOwnProperty("AliasesSave")) {
     try {

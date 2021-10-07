@@ -54,9 +54,9 @@ export function ServerAccordions(props: IProps): React.ReactElement {
 
   const serverToScriptMap: IServerToScriptsMap = {};
   for (const ws of props.workerScripts.values()) {
-    const server = GetServer(ws.serverIp);
+    const server = GetServer(ws.hostname);
     if (server == null) {
-      console.warn(`WorkerScript has invalid IP address: ${ws.serverIp}`);
+      console.warn(`WorkerScript has invalid IP address: ${ws.hostname}`);
       continue;
     }
 

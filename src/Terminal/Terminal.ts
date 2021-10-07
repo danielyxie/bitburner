@@ -19,7 +19,7 @@ import { checkIfConnectedToDarkweb } from "../DarkWeb/DarkWeb";
 import { iTutorialNextStep, iTutorialSteps, ITutorial } from "../InteractiveTutorial";
 import { getServerOnNetwork, processSingleServerGrowth } from "../Server/ServerHelpers";
 import { ParseCommand, ParseCommands } from "./Parser";
-import { SpecialServerIps, SpecialServerNames } from "../Server/SpecialServerIps";
+import { SpecialServers } from "../Server/data/SpecialServers";
 import { Settings } from "../Settings/Settings";
 import { createProgressBarText } from "../utils/helpers/createProgressBarText";
 import {
@@ -49,7 +49,6 @@ import { hack } from "./commands/hack";
 import { help } from "./commands/help";
 import { home } from "./commands/home";
 import { hostname } from "./commands/hostname";
-import { ifconfig } from "./commands/ifconfig";
 import { kill } from "./commands/kill";
 import { killall } from "./commands/killall";
 import { ls } from "./commands/ls";
@@ -176,10 +175,7 @@ export class Terminal implements ITerminal {
     const expGainedOnFailure = expGainedOnSuccess / 4;
     if (rand < hackChance) {
       // Success!
-      if (
-        SpecialServerIps[SpecialServerNames.WorldDaemon] &&
-        SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip
-      ) {
+      if (SpecialServers.WorldDaemon === server.hostname) {
         if (player.bitNodeN == null) {
           player.bitNodeN = 1;
         }
@@ -259,10 +255,7 @@ export class Terminal implements ITerminal {
         return;
       }
       if (!(server instanceof Server)) throw new Error("server should be normal server");
-      if (
-        SpecialServerIps[SpecialServerNames.WorldDaemon] &&
-        SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip
-      ) {
+      if (SpecialServers.WorldDaemon === server.hostname) {
         if (player.bitNodeN == null) {
           player.bitNodeN = 1;
         }
@@ -519,7 +512,7 @@ export class Terminal implements ITerminal {
       return;
     }
     player.getCurrentServer().isConnectedTo = false;
-    player.currentServer = serv.ip;
+    player.currentServer = serv.hostname;
     player.getCurrentServer().isConnectedTo = true;
     this.print("Connected to " + serv.hostname);
     this.setcwd("/");
@@ -625,7 +618,10 @@ export class Terminal implements ITerminal {
           break;
         case iTutorialSteps.TerminalConnect:
           if (commandArray.length == 2) {
-            if (commandArray[0] == "connect" && (commandArray[1] == "n00dles" || commandArray[1] == n00dlesServ.ip)) {
+            if (
+              commandArray[0] == "connect" &&
+              (commandArray[1] == "n00dles" || commandArray[1] == n00dlesServ.hostname)
+            ) {
               iTutorialNextStep();
             } else {
               this.print("Wrong command! Try again!");
@@ -741,7 +737,6 @@ export class Terminal implements ITerminal {
       help: help,
       home: home,
       hostname: hostname,
-      ifconfig: ifconfig,
       kill: kill,
       killall: killall,
       ls: ls,

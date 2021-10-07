@@ -7,7 +7,6 @@ import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { AddToAllServers, createUniqueRandomIp } from "../Server/AllServers";
 import { safetlyCreateUniqueServer } from "../Server/ServerHelpers";
-import { SpecialServerIps } from "../Server/SpecialServerIps";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 
@@ -36,10 +35,9 @@ export function purchaseTorRouter(p: IPlayer): void {
     maxRam: 1,
   });
   AddToAllServers(darkweb);
-  SpecialServerIps.addIp("Darkweb Server", darkweb.ip);
 
-  p.getHomeComputer().serversOnNetwork.push(darkweb.ip);
-  darkweb.serversOnNetwork.push(p.getHomeComputer().ip);
+  p.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
+  darkweb.serversOnNetwork.push(p.getHomeComputer().hostname);
   dialogBoxCreate(
     "You have purchased a TOR router!<br>" +
       "You now have access to the dark web from your home computer.<br>" +
