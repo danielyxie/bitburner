@@ -17,10 +17,10 @@ import { Router } from "./ui/GameRoot";
 import { resetPidCounter } from "./Netscript/Pid";
 import { LiteratureNames } from "./Literature/data/LiteratureNames";
 
-import { AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
-import { prestigeHomeComputer, getServer } from "./Server/ServerHelpers";
+import { GetServer, AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
+import { prestigeHomeComputer } from "./Server/ServerHelpers";
 import { SourceFileFlags, updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
-import { SpecialServerIps, prestigeSpecialServerIps, SpecialServerNames } from "./Server/SpecialServerIps";
+import { prestigeSpecialServerIps, SpecialServerNames } from "./Server/SpecialServerIps";
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 
@@ -87,6 +87,7 @@ function prestigeAugmentation(): void {
   if (Terminal.action !== null) {
     Terminal.finishAction(Router, Player, true);
   }
+  Terminal.clear();
 
   // Re-initialize things - This will update any changes
   initFactions(); // Factions must be initialized before augmentations
@@ -131,12 +132,8 @@ function prestigeAugmentation(): void {
 
   // Red Pill
   if (augmentationExists(AugmentationNames.TheRedPill) && Augmentations[AugmentationNames.TheRedPill].owned) {
-    const WorldDaemonIP = SpecialServerIps[SpecialServerNames.WorldDaemon];
-    if (typeof WorldDaemonIP !== "string") throw new Error("WorldDaemonIP should be string");
-    const WorldDaemon = getServer(WorldDaemonIP);
-    const DaedalusServerIP = SpecialServerIps[SpecialServerNames.DaedalusServer];
-    if (typeof DaedalusServerIP !== "string") throw new Error("DaedalusServerIP should be string");
-    const DaedalusServer = getServer(DaedalusServerIP);
+    const WorldDaemon = GetServer(SpecialServerNames.WorldDaemon);
+    const DaedalusServer = GetServer(SpecialServerNames.DaedalusServer);
     if (WorldDaemon && DaedalusServer) {
       WorldDaemon.serversOnNetwork.push(DaedalusServer.ip);
       DaedalusServer.serversOnNetwork.push(WorldDaemon.ip);

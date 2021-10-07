@@ -9,8 +9,7 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Server } from "../../Server/Server";
 import { BaseServer } from "../../Server/BaseServer";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
-import { AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
-import { getServer } from "../../Server/ServerHelpers";
+import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { SpecialServerIps } from "../../Server/SpecialServerIps";
 
 export function hasTorRouter(this: IPlayer): boolean {
@@ -18,13 +17,13 @@ export function hasTorRouter(this: IPlayer): boolean {
 }
 
 export function getCurrentServer(this: IPlayer): BaseServer {
-  const server = getServer(this.currentServer);
+  const server = GetServer(this.currentServer);
   if (server === null) throw new Error("somehow connected to a server that does not exist.");
   return server;
 }
 
 export function getHomeComputer(this: IPlayer): Server {
-  const home = getServer(this.homeComputer);
+  const home = GetServer("home");
   if (home instanceof Server) return home;
   throw new Error("home computer was not a normal server");
 }

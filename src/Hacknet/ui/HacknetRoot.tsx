@@ -22,8 +22,7 @@ import {
 } from "../HacknetHelpers";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
-import { getServer } from "../../Server/ServerHelpers";
-import { Server } from "../../Server/Server";
+import { GetServer } from "../../Server/AllServers";
 
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -51,7 +50,7 @@ export function HacknetRoot(props: IProps): React.ReactElement {
     const node = props.player.hacknetNodes[i];
     if (hasHacknetServers(props.player)) {
       if (node instanceof HacknetNode) throw new Error("node was hacknet node"); // should never happen
-      const hserver = getServer(node);
+      const hserver = GetServer(node);
       if (!(hserver instanceof HacknetServer)) throw new Error("node was not hacknet server"); // should never happen
       if (hserver) {
         totalProduction += hserver.hashRate;
@@ -89,7 +88,7 @@ export function HacknetRoot(props: IProps): React.ReactElement {
   const nodes = props.player.hacknetNodes.map((node: string | HacknetNode) => {
     if (hasHacknetServers(props.player)) {
       if (node instanceof HacknetNode) throw new Error("node was hacknet node"); // should never happen
-      const hserver = getServer(node);
+      const hserver = GetServer(node);
       if (hserver == null) {
         throw new Error(`Could not find Hacknet Server object in AllServers map for IP: ${node}`);
       }

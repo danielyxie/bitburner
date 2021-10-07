@@ -12,12 +12,12 @@ import { TextFile } from "../TextFile";
 import { Script } from "../Script/Script";
 import { isScriptFilename } from "../Script/isScriptFilename";
 import { CONSTANTS } from "../Constants";
-import { GetAllServers } from "../Server/AllServers";
+import { GetServer, GetAllServers } from "../Server/AllServers";
 
 import { removeLeadingSlash, isInRootDirectory, evaluateFilePath } from "./DirectoryHelpers";
 import { checkIfConnectedToDarkweb } from "../DarkWeb/DarkWeb";
 import { iTutorialNextStep, iTutorialSteps, ITutorial } from "../InteractiveTutorial";
-import { GetServerByHostname, getServer, getServerOnNetwork, processSingleServerGrowth } from "../Server/ServerHelpers";
+import { getServerOnNetwork, processSingleServerGrowth } from "../Server/ServerHelpers";
 import { ParseCommand, ParseCommands } from "./Parser";
 import { SpecialServerIps, SpecialServerNames } from "../Server/SpecialServerIps";
 import { Settings } from "../Settings/Settings";
@@ -513,7 +513,7 @@ export class Terminal implements ITerminal {
   }
 
   connectToServer(player: IPlayer, server: string): void {
-    const serv = getServer(server);
+    const serv = GetServer(server);
     if (serv == null) {
       this.error("Invalid server. Connection failed.");
       return;
@@ -577,7 +577,7 @@ export class Terminal implements ITerminal {
     const s = player.getCurrentServer();
     /****************** Interactive Tutorial Terminal Commands ******************/
     if (ITutorial.isRunning) {
-      const n00dlesServ = GetServerByHostname("n00dles");
+      const n00dlesServ = GetServer("n00dles");
       if (n00dlesServ == null) {
         throw new Error("Could not get n00dles server");
         return;

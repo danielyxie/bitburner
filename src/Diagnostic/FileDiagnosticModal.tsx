@@ -1,6 +1,5 @@
 import React from "react";
-import { GetAllServers } from "../Server/AllServers";
-import { getServer } from "../Server/ServerHelpers";
+import { GetServer, GetAllServers } from "../Server/AllServers";
 import { Modal } from "../ui/React/Modal";
 import { numeralWrapper } from "../ui/numeralFormat";
 
@@ -22,7 +21,7 @@ interface IServerProps {
 }
 
 function ServerAccordion(props: IServerProps): React.ReactElement {
-  const server = getServer(props.ip);
+  const server = GetServer(props.ip);
   if (server === null) throw new Error("server should not be null");
   let totalSize = 0;
   for (const f of server.scripts) {

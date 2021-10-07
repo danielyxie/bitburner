@@ -32,9 +32,9 @@ import {
   getFactionSecurityWorkRepGain,
   getFactionFieldWorkRepGain,
 } from "../formulas/reputation";
-import { AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
+import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
-import { safetlyCreateUniqueServer, getServer } from "../../Server/ServerHelpers";
+import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
 import { Settings } from "../../Settings/Settings";
 import { SpecialServerIps, SpecialServerNames } from "../../Server/SpecialServerIps";
 import { applySourceFile } from "../../SourceFile/applySourceFile";
@@ -70,7 +70,6 @@ export function init(this: IPlayer): void {
     organizationName: "Home PC",
     purchasedByPlayer: true,
   });
-  this.homeComputer = t_homeComp.ip;
   this.currentServer = t_homeComp.ip;
   AddToAllServers(t_homeComp);
 
@@ -80,7 +79,6 @@ export function init(this: IPlayer): void {
 export function prestigeAugmentation(this: IPlayer): void {
   const homeComp = this.getHomeComputer();
   this.currentServer = homeComp.ip;
-  this.homeComputer = homeComp.ip;
 
   this.numPeopleKilled = 0;
   this.karma = 0;
@@ -579,7 +577,7 @@ export function startWork(this: IPlayer, router: IRouter, companyName: string): 
 export function cancelationPenalty(this: IPlayer): number {
   const specialIp = SpecialServerIps[this.companyName];
   if (typeof specialIp === "string" && specialIp !== "") {
-    const server = getServer(specialIp);
+    const server = GetServer(specialIp);
     if (server instanceof Server) {
       if (server && server.backdoorInstalled) return 0.75;
     }
@@ -2194,7 +2192,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   const fulcrumsecrettechonologiesFac = Factions["Fulcrum Secret Technologies"];
   const fulcrumIP = SpecialServerIps[SpecialServerNames.BitRunnersServer];
   if (typeof fulcrumIP !== "string") throw new Error("Fulcrum Secret Technologies should be string");
-  const fulcrumSecretServer = getServer(fulcrumIP);
+  const fulcrumSecretServer = GetServer(fulcrumIP);
   if (!(fulcrumSecretServer instanceof Server)) throw new Error("Fulcrum Secret Technologies should be normal server");
   if (fulcrumSecretServer == null) {
     console.error("Could not find Fulcrum Secret Technologies Server");
@@ -2214,7 +2212,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   const bitrunnersFac = Factions["BitRunners"];
   const bitrunnerIP = SpecialServerIps[SpecialServerNames.BitRunnersServer];
   if (typeof bitrunnerIP !== "string") throw new Error("BitRunners should be string");
-  const bitrunnersServer = getServer(bitrunnerIP);
+  const bitrunnersServer = GetServer(bitrunnerIP);
   if (!(bitrunnersServer instanceof Server)) throw new Error("BitRunners should be normal server");
   if (bitrunnersServer == null) {
     console.error("Could not find BitRunners Server");
@@ -2232,7 +2230,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   const theblackhandFac = Factions["The Black Hand"];
   const tbhIP = SpecialServerIps[SpecialServerNames.TheBlackHandServer];
   if (typeof tbhIP !== "string") throw new Error("TheBlackHand should be string");
-  const blackhandServer = getServer(tbhIP);
+  const blackhandServer = GetServer(tbhIP);
   if (!(blackhandServer instanceof Server)) throw new Error("TheBlackHand should be normal server");
   if (blackhandServer == null) {
     console.error("Could not find The Black Hand Server");
@@ -2249,7 +2247,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   const nitesecFac = Factions["NiteSec"];
   const nitesecIP = SpecialServerIps[SpecialServerNames.NiteSecServer];
   if (typeof nitesecIP !== "string") throw new Error("NiteSec should be string");
-  const nitesecServer = getServer(nitesecIP);
+  const nitesecServer = GetServer(nitesecIP);
   if (!(nitesecServer instanceof Server)) throw new Error("NiteSec should be normal server");
   if (nitesecServer == null) {
     console.error("Could not find NiteSec Server");
@@ -2448,7 +2446,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   for (let i = 0; i < this.hacknetNodes.length; ++i) {
     const v = this.hacknetNodes[i];
     if (typeof v === "string") {
-      const hserver = getServer(v);
+      const hserver = GetServer(v);
       if (hserver === null || !(hserver instanceof HacknetServer))
         throw new Error("player hacknet server was not HacknetServer");
       totalHacknetLevels += hserver.level;
@@ -2489,7 +2487,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   const cybersecFac = Factions["CyberSec"];
   const cyberSecIP = SpecialServerIps[SpecialServerNames.CyberSecServer];
   if (typeof cyberSecIP !== "string") throw new Error("cybersec should be string");
-  const cybersecServer = getServer(cyberSecIP);
+  const cybersecServer = GetServer(cyberSecIP);
   if (!(cybersecServer instanceof Server)) throw new Error("cybersec should be normal server");
   if (cybersecServer == null) {
     console.error("Could not find CyberSec Server");

@@ -9,6 +9,7 @@ import { IMap } from "../types";
 import { createRandomIp } from "../utils/IPAddress";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Reviver } from "../utils/JSONReviver";
+import { isValidIPAddress } from "../utils/helpers/isValidIPAddress";
 
 /**
  * Map of all Servers that exist in the game
@@ -17,8 +18,41 @@ import { Reviver } from "../utils/JSONReviver";
  */
 let AllServers: IMap<Server | HacknetServer> = {};
 
-export function GetServerByIP(ip: string): Server | HacknetServer | undefined {
-  return AllServers[ip];
+function GetServerByIP(ip: string): BaseServer | undefined {
+  for (const key in AllServers) {
+    const server = AllServers[key];
+    if (server.ip !== ip) continue;
+    return server;
+  }
+}
+
+//Returns server object with corresponding hostname
+//    Relatively slow, would rather not use this a lot
+function GetServerByHostname(hostname: string): BaseServer | null {
+  for (const key in AllServers) {
+    const server = AllServers[key];
+    if (server.hostname == hostname) {
+      return server;
+    }
+  }
+
+  return null;
+}
+
+//Get server by IP or hostname. Returns null if invalid
+export function GetServer(s: string): BaseServer | null {
+  const server = AllServers[s];
+  if (server) return server;
+  if (!isValidIPAddress(s)) {
+    return GetServerByHostname(s);
+  }
+
+  const ipserver = GetServerByIP(s);
+  if (ipserver !== undefined) {
+    return ipserver;
+  }
+
+  return null;
 }
 
 export function GetAllServers(): BaseServer[] {

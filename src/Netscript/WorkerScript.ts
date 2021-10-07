@@ -11,7 +11,7 @@ import { RamCostConstants } from "./RamCostGenerator";
 
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
-import { getServer } from "../Server/ServerHelpers";
+import { GetServer } from "../Server/AllServers";
 import { BaseServer } from "../Server/BaseServer";
 import { IMap } from "../types";
 
@@ -118,7 +118,7 @@ export class WorkerScript {
     runningScriptObj.pid = sanitizedPid;
 
     // Get the underlying script's code
-    const server = getServer(this.serverIp);
+    const server = GetServer(this.serverIp);
     if (server == null) {
       throw new Error(`WorkerScript constructed with invalid server ip: ${this.serverIp}`);
     }
@@ -147,7 +147,7 @@ export class WorkerScript {
    * Returns the Server on which this script is running
    */
   getServer(): BaseServer {
-    const server = getServer(this.serverIp);
+    const server = GetServer(this.serverIp);
     if (server == null) throw new Error(`Script ${this.name} pid ${this.pid} is running on non-existent server?`);
     return server;
   }

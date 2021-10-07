@@ -218,6 +218,13 @@ function loadGame(saveString: string): boolean {
       console.error("ERROR: Failed to parse last export bonus Settings " + err);
     }
   }
+  if (Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
+    try {
+      loadAllGangs(saveObj.AllGangsSave);
+    } catch (e) {
+      console.error("ERROR: Failed to parse AllGangsSave: " + e);
+    }
+  }
   if (saveObj.hasOwnProperty("VersionSave")) {
     try {
       const ver = JSON.parse(saveObj.VersionSave, Reviver);
@@ -234,13 +241,6 @@ function loadGame(saveString: string): boolean {
     }
   } else {
     createNewUpdateText();
-  }
-  if (Player.inGang() && saveObj.hasOwnProperty("AllGangsSave")) {
-    try {
-      loadAllGangs(saveObj.AllGangsSave);
-    } catch (e) {
-      console.error("ERROR: Failed to parse AllGangsSave: " + e);
-    }
   }
 
   return true;

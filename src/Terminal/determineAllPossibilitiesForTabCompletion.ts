@@ -5,8 +5,7 @@ import { Aliases, GlobalAliases } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
 import { Message } from "../Message/Message";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { GetAllServers } from "../Server/AllServers";
-import { getServer } from "../Server/ServerHelpers";
+import { GetServer, GetAllServers } from "../Server/AllServers";
 
 // An array of all Terminal commands
 const commands = [
@@ -244,7 +243,7 @@ export function determineAllPossibilitiesForTabCompletion(
   if (isCommand("connect")) {
     // All network connections
     for (let i = 0; i < currServ.serversOnNetwork.length; ++i) {
-      const serv = getServer(currServ.serversOnNetwork[i]);
+      const serv = GetServer(currServ.serversOnNetwork[i]);
       if (serv == null) {
         continue;
       }

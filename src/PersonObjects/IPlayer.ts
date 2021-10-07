@@ -48,7 +48,6 @@ export interface IPlayer {
   hashManager: HashManager;
   hasTixApiAccess: boolean;
   hasWseAccount: boolean;
-  homeComputer: string;
   hp: number;
   jobs: IMap<string>;
   init: () => void;

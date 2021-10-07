@@ -6,8 +6,7 @@ import {
 } from "./CodingContracts";
 import { Factions } from "./Faction/Factions";
 import { Player } from "./Player";
-import { GetAllServers } from "./Server/AllServers";
-import { getServer } from "./Server/ServerHelpers";
+import { GetServer, GetAllServers } from "./Server/AllServers";
 import { SpecialServerNames } from "./Server/SpecialServerIps";
 import { Server } from "./Server/Server";
 import { BaseServer } from "./Server/BaseServer";
@@ -68,7 +67,7 @@ export function generateContract(params: IGenerateContractParams): void {
   // Server
   let server;
   if (params.server != null) {
-    server = getServer(params.server);
+    server = GetServer(params.server);
     if (server == null) {
       server = getRandomServer();
     }

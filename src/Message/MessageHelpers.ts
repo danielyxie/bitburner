@@ -4,7 +4,7 @@ import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { Programs } from "../Programs/Programs";
 import { Player } from "../Player";
 import { redPillFlag } from "../RedPill";
-import { GetServerByHostname } from "../Server/ServerHelpers";
+import { GetServer } from "../Server/AllServers";
 import { Settings } from "../Settings/Settings";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver } from "../utils/JSONReviver";
@@ -32,7 +32,7 @@ function showMessage(msg: Message): void {
 
 //Adds a message to a server
 function addMessageToServer(msg: Message, serverHostname: string): void {
-  const server = GetServerByHostname(serverHostname);
+  const server = GetServer(serverHostname);
   if (server == null) {
     console.warn(`Could not find server ${serverHostname}`);
     return;

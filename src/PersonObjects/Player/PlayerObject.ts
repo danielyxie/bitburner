@@ -55,7 +55,6 @@ export class PlayerObject implements IPlayer {
   hashManager: HashManager;
   hasTixApiAccess: boolean;
   hasWseAccount: boolean;
-  homeComputer: string;
   hp: number;
   jobs: IMap<string>;
   init: () => void;
@@ -335,9 +334,6 @@ export class PlayerObject implements IPlayer {
 
     //Money
     this.money = new Decimal(1000);
-
-    //IP Address of Starting (home) computer
-    this.homeComputer = "";
 
     //Location information
     this.city = CityName.Sector12;

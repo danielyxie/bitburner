@@ -19,7 +19,7 @@ import { HashUpgrades } from "./HashUpgrades";
 import { generateRandomContract } from "../CodingContractGenerator";
 import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../InteractiveTutorial";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { GetServerByHostname, getServer } from "../Server/ServerHelpers";
+import { GetServer } from "../Server/AllServers";
 import { Server } from "../Server/Server";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
@@ -415,7 +415,7 @@ function processAllHacknetServerEarnings(player: IPlayer, numCycles: number): nu
     // Also, update the hash rate before processing
     const ip = player.hacknetNodes[i];
     if (ip instanceof HacknetNode) throw new Error(`player nodes should not be HacketNode`);
-    const hserver = getServer(ip);
+    const hserver = GetServer(ip);
     if (!(hserver instanceof HacknetServer)) throw new Error(`player nodes shoud not be Server`);
     hserver.updateHashRate(player.hacknet_node_money_mult);
     const h = hserver.process(numCycles);
@@ -447,7 +447,7 @@ export function updateHashManagerCapacity(player: IPlayer): void {
     }
     const ip = nodes[i];
     if (ip instanceof HacknetNode) throw new Error(`player nodes should be string but isn't`);
-    const h = getServer(ip);
+    const h = GetServer(ip);
     if (!(h instanceof HacknetServer)) {
       player.hashManager.updateCapacity(0);
       return;
@@ -487,7 +487,7 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
       }
       case "Reduce Minimum Security": {
         try {
-          const target = GetServerByHostname(upgTarget);
+          const target = GetServer(upgTarget);
           if (target == null) {
             console.error(`Invalid target specified in purchaseHashUpgrade(): ${upgTarget}`);
             return false;
@@ -503,7 +503,7 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
       }
       case "Increase Maximum Money": {
         try {
-          const target = GetServerByHostname(upgTarget);
+          const target = GetServer(upgTarget);
           if (target == null) {
             console.error(`Invalid target specified in purchaseHashUpgrade(): ${upgTarget}`);
             return false;

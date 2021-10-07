@@ -8,9 +8,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { GetAllServers } from "../../Server/AllServers";
+import { GetServer, GetAllServers } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
-import { GetServerByHostname } from "../../Server/ServerHelpers";
 import MenuItem from "@mui/material/MenuItem";
 
 export function Servers(): React.ReactElement {
@@ -19,7 +18,7 @@ export function Servers(): React.ReactElement {
     setServer(event.target.value as string);
   }
   function rootServer(): void {
-    const s = GetServerByHostname(server);
+    const s = GetServer(server);
     if (s === null) return;
     if (!(s instanceof Server)) return;
     s.hasAdminRights = true;
@@ -45,7 +44,7 @@ export function Servers(): React.ReactElement {
   }
 
   function minSecurity(): void {
-    const s = GetServerByHostname(server);
+    const s = GetServer(server);
     if (s === null) return;
     if (!(s instanceof Server)) return;
     s.hackDifficulty = s.minDifficulty;
@@ -59,7 +58,7 @@ export function Servers(): React.ReactElement {
   }
 
   function maxMoney(): void {
-    const s = GetServerByHostname(server);
+    const s = GetServer(server);
     if (s === null) return;
     if (!(s instanceof Server)) return;
     s.moneyAvailable = s.moneyMax;
