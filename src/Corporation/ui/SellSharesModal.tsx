@@ -9,7 +9,7 @@ import { ICorporation } from "../ICorporation";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-
+import { Money } from "../../ui/React/Money";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -72,11 +72,12 @@ export function SellSharesModal(props: IProps): React.ReactElement {
     player.gainMoney(profit);
     player.recordMoneySource(profit, "corporation");
     props.onClose();
-    dialogBoxCreate(
-      `Sold {numeralWrapper.formatMoney(shares)} shares for ` +
-        `${numeralWrapper.formatMoney(profit)}. ` +
-        `The corporation's stock price fell to ${numeralWrapper.formatMoney(corp.sharePrice)} ` +
-        `as a result of dilution.`,
+     dialogBoxCreate(
+      <>
+        Sold {numeralWrapper.formatMoney(shares)} shares for
+        <Money money={profit} />. The corporation's stock price fell to&nbsp; <Money money={corp.sharePrice} />
+        as a result of dilution.
+      </>,
     );
 
     props.rerender();

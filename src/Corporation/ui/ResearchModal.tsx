@@ -104,7 +104,7 @@ export function ResearchModal(props: IProps): React.ReactElement {
     <Modal open={props.open} onClose={props.onClose}>
       <Upgrade division={props.industry} n={researchTree.root} />
       <Typography>
-        Research points: {props.industry.sciResearch.qty}
+        Research points: {props.industry.sciResearch.qty.toFixed(3)}
         <br />
         Multipliers from research:
         <br />* Advertising Multiplier: x{researchTree.getAdvertisingMultiplier()}
