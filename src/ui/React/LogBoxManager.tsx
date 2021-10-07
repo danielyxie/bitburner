@@ -8,7 +8,6 @@ import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Draggable from "react-draggable";
 import { ResizableBox } from "react-resizable";
-import { Theme } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";

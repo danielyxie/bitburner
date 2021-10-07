@@ -12,14 +12,14 @@ import { TextFile } from "../TextFile";
 import { Script } from "../Script/Script";
 import { isScriptFilename } from "../Script/isScriptFilename";
 import { CONSTANTS } from "../Constants";
-import { AllServers } from "../Server/AllServers";
+import { GetServer, GetAllServers } from "../Server/AllServers";
 
 import { removeLeadingSlash, isInRootDirectory, evaluateFilePath } from "./DirectoryHelpers";
 import { checkIfConnectedToDarkweb } from "../DarkWeb/DarkWeb";
 import { iTutorialNextStep, iTutorialSteps, ITutorial } from "../InteractiveTutorial";
-import { GetServerByHostname, getServer, getServerOnNetwork, processSingleServerGrowth } from "../Server/ServerHelpers";
+import { getServerOnNetwork, processSingleServerGrowth } from "../Server/ServerHelpers";
 import { ParseCommand, ParseCommands } from "./Parser";
-import { SpecialServerIps, SpecialServerNames } from "../Server/SpecialServerIps";
+import { SpecialServers } from "../Server/data/SpecialServers";
 import { Settings } from "../Settings/Settings";
 import { createProgressBarText } from "../utils/helpers/createProgressBarText";
 import {
@@ -49,7 +49,6 @@ import { hack } from "./commands/hack";
 import { help } from "./commands/help";
 import { home } from "./commands/home";
 import { hostname } from "./commands/hostname";
-import { ifconfig } from "./commands/ifconfig";
 import { kill } from "./commands/kill";
 import { killall } from "./commands/killall";
 import { ls } from "./commands/ls";
@@ -116,6 +115,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot hack this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
     this.startAction(calculateHackingTime(server, player) / 4, "h");
   }
 
@@ -125,6 +125,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot hack this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
     this.startAction(calculateGrowTime(server, player) / 16, "g");
   }
   startWeaken(player: IPlayer): void {
@@ -133,6 +134,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot hack this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
     this.startAction(calculateWeakenTime(server, player) / 16, "w");
   }
 
@@ -143,6 +145,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot backdoor this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
     this.startAction(calculateHackingTime(server, player) / 4, "b");
   }
 
@@ -163,6 +166,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot hack this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
 
     // Calculate whether hack was successful
     const hackChance = calculateHackingChance(server, player);
@@ -171,10 +175,7 @@ export class Terminal implements ITerminal {
     const expGainedOnFailure = expGainedOnSuccess / 4;
     if (rand < hackChance) {
       // Success!
-      if (
-        SpecialServerIps[SpecialServerNames.WorldDaemon] &&
-        SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip
-      ) {
+      if (SpecialServers.WorldDaemon === server.hostname) {
         if (player.bitNodeN == null) {
           player.bitNodeN = 1;
         }
@@ -218,6 +219,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot hack this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
     const expGain = calculateHackingExpGain(server, player);
     const growth = processSingleServerGrowth(server, 1, player, server.cpuCores) - 1;
     this.print(
@@ -235,6 +237,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot hack this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
     const expGain = calculateHackingExpGain(server, player);
     server.weaken(CONSTANTS.ServerWeakenAmount);
     this.print(
@@ -251,10 +254,8 @@ export class Terminal implements ITerminal {
         this.error("Cannot hack this kind of server");
         return;
       }
-      if (
-        SpecialServerIps[SpecialServerNames.WorldDaemon] &&
-        SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip
-      ) {
+      if (!(server instanceof Server)) throw new Error("server should be normal server");
+      if (SpecialServers.WorldDaemon === server.hostname) {
         if (player.bitNodeN == null) {
           player.bitNodeN = 1;
         }
@@ -287,7 +288,7 @@ export class Terminal implements ITerminal {
       }
       this.print(
         `Total money available on server: ${
-          !(currServ instanceof HacknetServer) ? numeralWrapper.formatMoney(currServ.moneyAvailable) : "N/A"
+          currServ instanceof Server ? numeralWrapper.formatMoney(currServ.moneyAvailable) : "N/A"
         }`,
       );
       if (currServ instanceof Server) {
@@ -449,8 +450,8 @@ export class Terminal implements ITerminal {
     const visited: {
       [key: string]: number | undefined;
     } = {};
-    for (const ip in AllServers) {
-      visited[ip] = 0;
+    for (const server of GetAllServers()) {
+      visited[server.hostname] = 0;
     }
 
     const stack: BaseServer[] = [];
@@ -465,12 +466,12 @@ export class Terminal implements ITerminal {
       const isHacknet = s instanceof HacknetServer;
       if (!all && (s as any).purchasedByPlayer && s.hostname != "home") {
         continue; // Purchased server
-      } else if (visited[s.ip] || d > depth) {
+      } else if (visited[s.hostname] || d > depth) {
         continue; // Already visited or out-of-depth
       } else if (!all && isHacknet) {
         continue; // Hacknet Server
       } else {
-        visited[s.ip] = 1;
+        visited[s.hostname] = 1;
       }
       for (let i = s.serversOnNetwork.length - 1; i >= 0; --i) {
         const newS = getServerOnNetwork(s, i);
@@ -505,13 +506,13 @@ export class Terminal implements ITerminal {
   }
 
   connectToServer(player: IPlayer, server: string): void {
-    const serv = getServer(server);
+    const serv = GetServer(server);
     if (serv == null) {
       this.error("Invalid server. Connection failed.");
       return;
     }
     player.getCurrentServer().isConnectedTo = false;
-    player.currentServer = serv.ip;
+    player.currentServer = serv.hostname;
     player.getCurrentServer().isConnectedTo = true;
     this.print("Connected to " + serv.hostname);
     this.setcwd("/");
@@ -569,7 +570,7 @@ export class Terminal implements ITerminal {
     const s = player.getCurrentServer();
     /****************** Interactive Tutorial Terminal Commands ******************/
     if (ITutorial.isRunning) {
-      const n00dlesServ = GetServerByHostname("n00dles");
+      const n00dlesServ = GetServer("n00dles");
       if (n00dlesServ == null) {
         throw new Error("Could not get n00dles server");
         return;
@@ -617,7 +618,10 @@ export class Terminal implements ITerminal {
           break;
         case iTutorialSteps.TerminalConnect:
           if (commandArray.length == 2) {
-            if (commandArray[0] == "connect" && (commandArray[1] == "n00dles" || commandArray[1] == n00dlesServ.ip)) {
+            if (
+              commandArray[0] == "connect" &&
+              (commandArray[1] == "n00dles" || commandArray[1] == n00dlesServ.hostname)
+            ) {
               iTutorialNextStep();
             } else {
               this.print("Wrong command! Try again!");
@@ -733,7 +737,6 @@ export class Terminal implements ITerminal {
       help: help,
       home: home,
       hostname: hostname,
-      ifconfig: ifconfig,
       kill: kill,
       killall: killall,
       ls: ls,

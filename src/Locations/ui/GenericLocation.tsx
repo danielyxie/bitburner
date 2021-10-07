@@ -23,8 +23,8 @@ import { LocationType } from "../LocationTypeEnum";
 
 import { Settings } from "../../Settings/Settings";
 
-import { SpecialServerIps } from "../../Server/SpecialServerIps";
-import { getServer, isBackdoorInstalled } from "../../Server/ServerHelpers";
+import { isBackdoorInstalled } from "../../Server/ServerHelpers";
+import { GetServer } from "../../Server/AllServers";
 
 import { CorruptableText } from "../../ui/React/CorruptableText";
 import { use } from "../../ui/Context";
@@ -83,8 +83,7 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
   }
 
   const locContent: React.ReactNode[] = getLocationSpecificContent();
-  const ip = SpecialServerIps.getIp(loc.name);
-  const server = getServer(ip);
+  const server = GetServer(loc.name);
   const backdoorInstalled = server !== null && isBackdoorInstalled(server);
 
   return (

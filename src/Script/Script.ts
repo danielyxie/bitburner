@@ -37,14 +37,14 @@ export class Script {
   // Amount of RAM this Script requres to run
   ramUsage = 0;
 
-  // IP of server that this script is on.
+  // hostname of server that this script is on.
   server = "";
 
   constructor(fn = "", code = "", server = "", otherScripts: Script[] = []) {
     this.filename = fn;
     this.code = code;
     this.ramUsage = 0;
-    this.server = server; // IP of server this script is on
+    this.server = server; // hostname of server this script is on
     this.module = "";
     this.moduleSequenceNumber = ++globalModuleSequenceNumber;
     if (this.code !== "") {
@@ -90,12 +90,12 @@ export class Script {
    * @param {string} code - The new contents of the script
    * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
    */
-  saveScript(filename: string, code: string, serverIp: string, otherScripts: Script[]): void {
+  saveScript(filename: string, code: string, hostname: string, otherScripts: Script[]): void {
     // Update code and filename
     this.code = code.replace(/^\s+|\s+$/g, "");
 
     this.filename = filename;
-    this.server = serverIp;
+    this.server = hostname;
     this.updateRamUsage(otherScripts);
     this.markUpdated();
   }

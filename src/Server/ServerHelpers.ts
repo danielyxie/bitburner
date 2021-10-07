@@ -1,17 +1,15 @@
-import { AllServers, createUniqueRandomIp, ipExists } from "./AllServers";
+import { GetServer, createUniqueRandomIp, ipExists } from "./AllServers";
 import { Server, IConstructorParams } from "./Server";
 import { BaseServer } from "./BaseServer";
 import { calculateServerGrowth } from "./formulas/grow";
 
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
-import { HacknetServer } from "../Hacknet/HacknetServer";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Programs } from "../Programs/Programs";
 import { LiteratureNames } from "../Literature/data/LiteratureNames";
 
 import { isValidNumber } from "../utils/helpers/isValidNumber";
-import { isValidIPAddress } from "../utils/helpers/isValidIPAddress";
 
 /**
  * Constructs a new server, while also ensuring that the new server
@@ -22,12 +20,12 @@ export function safetlyCreateUniqueServer(params: IConstructorParams): Server {
     params.ip = createUniqueRandomIp();
   }
 
-  if (GetServerByHostname(params.hostname) != null) {
+  if (GetServer(params.hostname) != null) {
     // Use a for loop to ensure that we don't get suck in an infinite loop somehow
     let hostname: string = params.hostname;
     for (let i = 0; i < 200; ++i) {
       hostname = `${params.hostname}-${i}`;
-      if (GetServerByHostname(hostname) == null) {
+      if (GetServer(hostname) == null) {
         break;
       }
     }
@@ -119,46 +117,20 @@ export function prestigeHomeComputer(homeComp: Server): void {
   homeComp.messages.push(LiteratureNames.HackersStartingHandbook);
 }
 
-//Returns server object with corresponding hostname
-//    Relatively slow, would rather not use this a lot
-export function GetServerByHostname(hostname: string): Server | HacknetServer | null {
-  for (const ip in AllServers) {
-    if (AllServers.hasOwnProperty(ip)) {
-      if (AllServers[ip].hostname == hostname) {
-        return AllServers[ip];
-      }
-    }
-  }
-
-  return null;
-}
-
-//Get server by IP or hostname. Returns null if invalid
-export function getServer(s: string): Server | HacknetServer | null {
-  if (!isValidIPAddress(s)) {
-    return GetServerByHostname(s);
-  }
-  if (AllServers[s] !== undefined) {
-    return AllServers[s];
-  }
-
-  return null;
-}
-
 // Returns the i-th server on the specified server's network
 // A Server's serverOnNetwork property holds only the IPs. This function returns
 // the actual Server object
-export function getServerOnNetwork(server: BaseServer, i: number): Server | HacknetServer | null {
+export function getServerOnNetwork(server: BaseServer, i: number): BaseServer | null {
   if (i > server.serversOnNetwork.length) {
     console.error("Tried to get server on network that was out of range");
     return null;
   }
 
-  return AllServers[server.serversOnNetwork[i]];
+  return GetServer(server.serversOnNetwork[i]);
 }
 
-export function isBackdoorInstalled(server: Server | HacknetServer): boolean {
-  if ("backdoorInstalled" in server) {
+export function isBackdoorInstalled(server: BaseServer): boolean {
+  if (server instanceof Server) {
     return server.backdoorInstalled;
   }
   return false;

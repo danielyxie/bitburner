@@ -13,6 +13,7 @@ import { Exploit } from "../../Exploits/Exploit";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { CompanyPosition } from "../../Company/CompanyPosition";
 import { Server } from "../../Server/Server";
+import { BaseServer } from "../../Server/BaseServer";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { Faction } from "../../Faction/Faction";
 import { Company } from "../../Company/Company";
@@ -54,7 +55,6 @@ export class PlayerObject implements IPlayer {
   hashManager: HashManager;
   hasTixApiAccess: boolean;
   hasWseAccount: boolean;
-  homeComputer: string;
   hp: number;
   jobs: IMap<string>;
   init: () => void;
@@ -192,7 +192,7 @@ export class PlayerObject implements IPlayer {
   gainCharismaExp: (exp: number) => void;
   gainIntelligenceExp: (exp: number) => void;
   gainMoney: (money: number) => void;
-  getCurrentServer: () => Server | HacknetServer;
+  getCurrentServer: () => BaseServer;
   getGangFaction: () => Faction;
   getGangName: () => string;
   getHomeComputer: () => Server;
@@ -334,9 +334,6 @@ export class PlayerObject implements IPlayer {
 
     //Money
     this.money = new Decimal(1000);
-
-    //IP Address of Starting (home) computer
-    this.homeComputer = "";
 
     //Location information
     this.city = CityName.Sector12;

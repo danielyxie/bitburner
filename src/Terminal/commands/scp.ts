@@ -3,7 +3,7 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { Message } from "../../Message/Message";
-import { getServer } from "../../Server/ServerHelpers";
+import { GetServer } from "../../Server/AllServers";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 
 export function scp(
@@ -24,7 +24,7 @@ export function scp(
       return;
     }
 
-    const destServer = getServer(args[1] + "");
+    const destServer = GetServer(args[1] + "");
     if (destServer == null) {
       terminal.error(`Invalid destination. ${args[1]} not found`);
       return;

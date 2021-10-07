@@ -11,7 +11,7 @@ import List from "@mui/material/List";
 import TablePagination from "@mui/material/TablePagination";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { WorkerScriptStartStopEventEmitter } from "../../Netscript/WorkerScriptStartStopEventEmitter";
-import { getServer } from "../../Server/ServerHelpers";
+import { GetServer } from "../../Server/AllServers";
 import { BaseServer } from "../../Server/BaseServer";
 import { Settings } from "../../Settings/Settings";
 import { TablePaginationActionsAll } from "../React/TablePaginationActionsAll";
@@ -54,9 +54,9 @@ export function ServerAccordions(props: IProps): React.ReactElement {
 
   const serverToScriptMap: IServerToScriptsMap = {};
   for (const ws of props.workerScripts.values()) {
-    const server = getServer(ws.serverIp);
+    const server = GetServer(ws.hostname);
     if (server == null) {
-      console.warn(`WorkerScript has invalid IP address: ${ws.serverIp}`);
+      console.warn(`WorkerScript has invalid IP address: ${ws.hostname}`);
       continue;
     }
 
