@@ -5,7 +5,7 @@ import { Factions, loadFactions } from "./Faction/Factions";
 import { loadAllGangs, AllGangs } from "./Gang/AllGangs";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import { Player, loadPlayer } from "./Player";
-import { AllServers, loadAllServers } from "./Server/AllServers";
+import { saveAllServers, loadAllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { loadSpecialServerIps, SpecialServerIps } from "./Server/SpecialServerIps";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
@@ -41,21 +41,7 @@ class BitburnerSaveObject {
   getSaveString(): string {
     this.PlayerSave = JSON.stringify(Player);
 
-    // Delete all logs from all running scripts
-    const TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
-    for (const ip in TempAllServers) {
-      const server = TempAllServers[ip];
-      if (server == null) {
-        continue;
-      }
-      for (let i = 0; i < server.runningScripts.length; ++i) {
-        const runningScriptObj = server.runningScripts[i];
-        runningScriptObj.logs.length = 0;
-        runningScriptObj.logs = [];
-      }
-    }
-
-    this.AllServersSave = JSON.stringify(TempAllServers);
+    this.AllServersSave = saveAllServers();
     this.CompaniesSave = JSON.stringify(Companies);
     this.FactionsSave = JSON.stringify(Factions);
     this.SpecialServerIpsSave = JSON.stringify(SpecialServerIps);

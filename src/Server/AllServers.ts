@@ -1,4 +1,5 @@
 import { Server } from "./Server";
+import { BaseServer } from "./BaseServer";
 import { SpecialServerIps } from "./SpecialServerIps";
 import { serverMetadata } from "./data/servers";
 
@@ -14,7 +15,28 @@ import { Reviver } from "../utils/JSONReviver";
  *  Key (string) = IP
  *  Value = Server object
  */
-export let AllServers: IMap<Server | HacknetServer> = {};
+let AllServers: IMap<Server | HacknetServer> = {};
+
+export function GetServerByIP(ip: string): Server | HacknetServer | undefined {
+  return AllServers[ip];
+}
+
+export function GetAllServers(): BaseServer[] {
+  const servers: BaseServer[] = [];
+  for (const key in AllServers) {
+    servers.push(AllServers[key]);
+  }
+  return servers;
+}
+
+export function DeleteServer(serverkey: string): void {
+  for (const key in AllServers) {
+    const server = AllServers[key];
+    if (server.ip !== serverkey && server.hostname !== serverkey) continue;
+    delete AllServers[key];
+    break;
+  }
+}
 
 export function ipExists(ip: string): boolean {
   return AllServers[ip] != null;
@@ -148,5 +170,18 @@ export function prestigeAllServers(): void {
 
 export function loadAllServers(saveString: string): void {
   AllServers = JSON.parse(saveString, Reviver);
-  console.log(AllServers);
+}
+
+export function saveAllServers(): string {
+  const TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
+  for (const key in TempAllServers) {
+    const server = TempAllServers[key];
+    for (let i = 0; i < server.runningScripts.length; ++i) {
+      const runningScriptObj = server.runningScripts[i];
+      runningScriptObj.logs.length = 0;
+      runningScriptObj.logs = [];
+    }
+  }
+
+  return JSON.stringify(TempAllServers);
 }

@@ -230,8 +230,8 @@ export const programsMetadata: IProgramCreationParams[] = [
         return;
       }
 
-      if (targetServer instanceof HacknetServer) {
-        terminal.print(`ServerProfiler.exe cannot be run on a Hacknet Server.`);
+      if (!(targetServer instanceof Server)) {
+        terminal.print(`ServerProfiler.exe can only be run on normal servers.`);
         return;
       }
 

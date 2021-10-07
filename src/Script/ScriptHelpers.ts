@@ -1,10 +1,9 @@
 import { CONSTANTS } from "../Constants";
 import { Player } from "../Player";
-import { AllServers } from "../Server/AllServers";
 import { BaseServer } from "../Server/BaseServer";
 import { Server } from "../Server/Server";
 import { RunningScript } from "../Script/RunningScript";
-import { processSingleServerGrowth } from "../Server/ServerHelpers";
+import { processSingleServerGrowth, getServer } from "../Server/ServerHelpers";
 
 import { numeralWrapper } from "../ui/numeralFormat";
 
@@ -32,7 +31,7 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
       if (runningScript.dataMap[ip][2] == 0 || runningScript.dataMap[ip][2] == null) {
         continue;
       }
-      const serv = AllServers[ip];
+      const serv = getServer(ip);
       if (serv == null) {
         continue;
       }
@@ -40,7 +39,8 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
         ((0.5 * runningScript.dataMap[ip][2]) / runningScript.onlineRunningTime) * timePassed,
       );
       runningScript.log(`Called on ${serv.hostname} ${timesGrown} times while offline`);
-      const host = AllServers[runningScript.server];
+      const host = getServer(runningScript.server);
+      if (host === null) throw new Error("getServer of null key?");
       if (!(serv instanceof Server)) throw new Error("trying to grow a non-normal server");
       const growth = processSingleServerGrowth(serv, timesGrown, Player, host.cpuCores);
       runningScript.log(
@@ -64,13 +64,14 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
       if (runningScript.dataMap[ip][3] == 0 || runningScript.dataMap[ip][3] == null) {
         continue;
       }
-      const serv = AllServers[ip];
+      const serv = getServer(ip);
       if (serv == null) {
         continue;
       }
 
       if (!(serv instanceof Server)) throw new Error("trying to weaken a non-normal server");
-      const host = AllServers[runningScript.server];
+      const host = getServer(runningScript.server);
+      if (host === null) throw new Error("getServer of null key?");
       const timesWeakened = Math.round(
         ((0.5 * runningScript.dataMap[ip][3]) / runningScript.onlineRunningTime) * timePassed,
       );

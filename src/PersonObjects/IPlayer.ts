@@ -18,6 +18,7 @@ import { HashManager } from "../Hacknet/HashManager";
 import { HacknetNode } from "../Hacknet/HacknetNode";
 import { LocationName } from "../Locations/data/LocationNames";
 import { Server } from "../Server/Server";
+import { BaseServer } from "../Server/BaseServer";
 import { IPlayerOwnedSourceFile } from "../SourceFile/PlayerOwnedSourceFile";
 import { MoneySourceTracker } from "../utils/MoneySourceTracker";
 import { Exploit } from "../Exploits/Exploit";
@@ -185,7 +186,7 @@ export interface IPlayer {
   gainCharismaExp(exp: number): void;
   gainIntelligenceExp(exp: number): void;
   gainMoney(money: number): void;
-  getCurrentServer(): Server | HacknetServer;
+  getCurrentServer(): BaseServer;
   getGangFaction(): Faction;
   getGangName(): string;
   getHomeComputer(): Server;

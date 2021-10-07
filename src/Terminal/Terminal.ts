@@ -12,7 +12,7 @@ import { TextFile } from "../TextFile";
 import { Script } from "../Script/Script";
 import { isScriptFilename } from "../Script/isScriptFilename";
 import { CONSTANTS } from "../Constants";
-import { AllServers } from "../Server/AllServers";
+import { GetAllServers } from "../Server/AllServers";
 
 import { removeLeadingSlash, isInRootDirectory, evaluateFilePath } from "./DirectoryHelpers";
 import { checkIfConnectedToDarkweb } from "../DarkWeb/DarkWeb";
@@ -116,6 +116,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot hack this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
     this.startAction(calculateHackingTime(server, player) / 4, "h");
   }
 
@@ -125,6 +126,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot hack this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
     this.startAction(calculateGrowTime(server, player) / 16, "g");
   }
   startWeaken(player: IPlayer): void {
@@ -133,6 +135,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot hack this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
     this.startAction(calculateWeakenTime(server, player) / 16, "w");
   }
 
@@ -143,6 +146,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot backdoor this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
     this.startAction(calculateHackingTime(server, player) / 4, "b");
   }
 
@@ -163,6 +167,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot hack this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
 
     // Calculate whether hack was successful
     const hackChance = calculateHackingChance(server, player);
@@ -218,6 +223,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot hack this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
     const expGain = calculateHackingExpGain(server, player);
     const growth = processSingleServerGrowth(server, 1, player, server.cpuCores) - 1;
     this.print(
@@ -235,6 +241,7 @@ export class Terminal implements ITerminal {
       this.error("Cannot hack this kind of server");
       return;
     }
+    if (!(server instanceof Server)) throw new Error("server should be normal server");
     const expGain = calculateHackingExpGain(server, player);
     server.weaken(CONSTANTS.ServerWeakenAmount);
     this.print(
@@ -251,6 +258,7 @@ export class Terminal implements ITerminal {
         this.error("Cannot hack this kind of server");
         return;
       }
+      if (!(server instanceof Server)) throw new Error("server should be normal server");
       if (
         SpecialServerIps[SpecialServerNames.WorldDaemon] &&
         SpecialServerIps[SpecialServerNames.WorldDaemon] == server.ip
@@ -287,7 +295,7 @@ export class Terminal implements ITerminal {
       }
       this.print(
         `Total money available on server: ${
-          !(currServ instanceof HacknetServer) ? numeralWrapper.formatMoney(currServ.moneyAvailable) : "N/A"
+          currServ instanceof Server ? numeralWrapper.formatMoney(currServ.moneyAvailable) : "N/A"
         }`,
       );
       if (currServ instanceof Server) {
@@ -449,8 +457,8 @@ export class Terminal implements ITerminal {
     const visited: {
       [key: string]: number | undefined;
     } = {};
-    for (const ip in AllServers) {
-      visited[ip] = 0;
+    for (const server of GetAllServers()) {
+      visited[server.hostname] = 0;
     }
 
     const stack: BaseServer[] = [];
@@ -465,12 +473,12 @@ export class Terminal implements ITerminal {
       const isHacknet = s instanceof HacknetServer;
       if (!all && (s as any).purchasedByPlayer && s.hostname != "home") {
         continue; // Purchased server
-      } else if (visited[s.ip] || d > depth) {
+      } else if (visited[s.hostname] || d > depth) {
         continue; // Already visited or out-of-depth
       } else if (!all && isHacknet) {
         continue; // Hacknet Server
       } else {
-        visited[s.ip] = 1;
+        visited[s.hostname] = 1;
       }
       for (let i = s.serversOnNetwork.length - 1; i >= 0; --i) {
         const newS = getServerOnNetwork(s, i);

@@ -7,7 +7,7 @@ import { workerScripts } from "./WorkerScripts";
 import { WorkerScriptStartStopEventEmitter } from "./WorkerScriptStartStopEventEmitter";
 
 import { RunningScript } from "../Script/RunningScript";
-import { AllServers } from "../Server/AllServers";
+import { getServer } from "../Server/ServerHelpers";
 
 import { compareArrays } from "../utils/helpers/compareArrays";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
@@ -84,7 +84,7 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void
     const name = workerScript.name;
 
     // Get the server on which the script runs
-    const server = AllServers[ip];
+    const server = getServer(ip);
     if (server == null) {
       console.error(`Could not find server on which this script is running: ${ip}`);
       return;

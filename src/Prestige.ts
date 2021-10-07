@@ -17,8 +17,8 @@ import { Router } from "./ui/GameRoot";
 import { resetPidCounter } from "./Netscript/Pid";
 import { LiteratureNames } from "./Literature/data/LiteratureNames";
 
-import { AllServers, AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
-import { prestigeHomeComputer } from "./Server/ServerHelpers";
+import { AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
+import { prestigeHomeComputer, getServer } from "./Server/ServerHelpers";
 import { SourceFileFlags, updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SpecialServerIps, prestigeSpecialServerIps, SpecialServerNames } from "./Server/SpecialServerIps";
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
@@ -133,10 +133,10 @@ function prestigeAugmentation(): void {
   if (augmentationExists(AugmentationNames.TheRedPill) && Augmentations[AugmentationNames.TheRedPill].owned) {
     const WorldDaemonIP = SpecialServerIps[SpecialServerNames.WorldDaemon];
     if (typeof WorldDaemonIP !== "string") throw new Error("WorldDaemonIP should be string");
-    const WorldDaemon = AllServers[WorldDaemonIP];
+    const WorldDaemon = getServer(WorldDaemonIP);
     const DaedalusServerIP = SpecialServerIps[SpecialServerNames.DaedalusServer];
     if (typeof DaedalusServerIP !== "string") throw new Error("DaedalusServerIP should be string");
-    const DaedalusServer = AllServers[DaedalusServerIP];
+    const DaedalusServer = getServer(DaedalusServerIP);
     if (WorldDaemon && DaedalusServer) {
       WorldDaemon.serversOnNetwork.push(DaedalusServer.ip);
       DaedalusServer.serversOnNetwork.push(WorldDaemon.ip);

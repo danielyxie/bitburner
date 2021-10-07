@@ -101,7 +101,7 @@ import { findRunningScript, findRunningScriptByPid } from "./Script/ScriptHelper
 import { isScriptFilename } from "./Script/isScriptFilename";
 import { PromptEvent } from "./ui/React/PromptManager";
 
-import { AllServers, AddToAllServers, createUniqueRandomIp } from "./Server/AllServers";
+import { GetAllServers, DeleteServer, AddToAllServers, createUniqueRandomIp } from "./Server/AllServers";
 import { RunningScript } from "./Script/RunningScript";
 import {
   GetServerByHostname,
@@ -301,8 +301,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       callingFnName = "getRunningScriptgetRunningScriptByPid";
     }
 
-    for (const name of Object.keys(AllServers)) {
-      const server = AllServers[name];
+    for (const server of GetAllServers()) {
       const runningScript = findRunningScriptByPid(pid, server);
       if (runningScript) return runningScript;
     }
@@ -2257,7 +2256,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
 
       // Delete from all servers
-      delete AllServers[ip];
+      DeleteServer(ip);
 
       // Delete from home computer
       found = false;

@@ -1,4 +1,4 @@
-import { AllServers } from "../Server/AllServers";
+import { getServer } from "../Server/ServerHelpers";
 import { RunningScript } from "./RunningScript";
 
 export function getRamUsageFromRunningScript(script: RunningScript): number {
@@ -6,7 +6,7 @@ export function getRamUsageFromRunningScript(script: RunningScript): number {
     return script.ramUsage; // Use cached value
   }
 
-  const server = AllServers[script.server];
+  const server = getServer(script.server);
   if (server == null) {
     return 0;
   }

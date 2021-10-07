@@ -1,5 +1,5 @@
 import { isString } from "./utils/helpers/isString";
-import { AllServers } from "./Server/AllServers";
+import { getServer } from "./Server/ServerHelpers";
 import { WorkerScript } from "./Netscript/WorkerScript";
 
 export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
@@ -14,7 +14,7 @@ export function netscriptDelay(time: number, workerScript: WorkerScript): Promis
 
 export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): string {
   const lineNum = "";
-  const server = AllServers[workerScript.serverIp];
+  const server = getServer(workerScript.serverIp);
   if (server == null) {
     throw new Error(`WorkerScript constructed with invalid server ip: ${workerScript.serverIp}`);
   }

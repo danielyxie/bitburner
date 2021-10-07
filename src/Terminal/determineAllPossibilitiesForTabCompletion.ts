@@ -5,7 +5,8 @@ import { Aliases, GlobalAliases } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
 import { Message } from "../Message/Message";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { AllServers } from "../Server/AllServers";
+import { GetAllServers } from "../Server/AllServers";
+import { getServer } from "../Server/ServerHelpers";
 
 // An array of all Terminal commands
 const commands = [
@@ -223,9 +224,9 @@ export function determineAllPossibilitiesForTabCompletion(
   }
 
   if (isCommand("scp") && index === 1) {
-    for (const iphostname in AllServers) {
-      allPos.push(AllServers[iphostname].ip);
-      allPos.push(AllServers[iphostname].hostname);
+    for (const server of GetAllServers()) {
+      allPos.push(server.ip);
+      allPos.push(server.hostname);
     }
 
     return allPos;
@@ -243,7 +244,7 @@ export function determineAllPossibilitiesForTabCompletion(
   if (isCommand("connect")) {
     // All network connections
     for (let i = 0; i < currServ.serversOnNetwork.length; ++i) {
-      const serv = AllServers[currServ.serversOnNetwork[i]];
+      const serv = getServer(currServ.serversOnNetwork[i]);
       if (serv == null) {
         continue;
       }

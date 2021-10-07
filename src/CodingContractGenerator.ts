@@ -6,11 +6,11 @@ import {
 } from "./CodingContracts";
 import { Factions } from "./Faction/Factions";
 import { Player } from "./Player";
-import { AllServers } from "./Server/AllServers";
-import { GetServerByHostname } from "./Server/ServerHelpers";
+import { GetAllServers } from "./Server/AllServers";
+import { getServer } from "./Server/ServerHelpers";
 import { SpecialServerNames } from "./Server/SpecialServerIps";
 import { Server } from "./Server/Server";
-import { HacknetServer } from "./Hacknet/HacknetServer";
+import { BaseServer } from "./Server/BaseServer";
 
 import { getRandomInt } from "./utils/helpers/getRandomInt";
 
@@ -68,10 +68,7 @@ export function generateContract(params: IGenerateContractParams): void {
   // Server
   let server;
   if (params.server != null) {
-    server = GetServerByHostname(params.server);
-    if (server == null) {
-      server = AllServers[params.server];
-    }
+    server = getServer(params.server);
     if (server == null) {
       server = getRandomServer();
     }
@@ -165,10 +162,10 @@ function getRandomReward(): ICodingContractReward {
   return reward;
 }
 
-function getRandomServer(): Server | HacknetServer {
-  const servers = Object.keys(AllServers);
+function getRandomServer(): BaseServer {
+  const servers = GetAllServers();
   let randIndex = getRandomInt(0, servers.length - 1);
-  let randServer = AllServers[servers[randIndex]];
+  let randServer = servers[randIndex];
 
   // An infinite loop shouldn't ever happen, but to be safe we'll use
   // a for loop with a limited number of tries
@@ -181,13 +178,13 @@ function getRandomServer(): Server | HacknetServer {
       break;
     }
     randIndex = getRandomInt(0, servers.length - 1);
-    randServer = AllServers[servers[randIndex]];
+    randServer = servers[randIndex];
   }
 
   return randServer;
 }
 
-function getRandomFilename(server: Server | HacknetServer, reward: ICodingContractReward): string {
+function getRandomFilename(server: BaseServer, reward: ICodingContractReward): string {
   let contractFn = `contract-${getRandomInt(0, 1e6)}`;
 
   for (let i = 0; i < 1000; ++i) {
