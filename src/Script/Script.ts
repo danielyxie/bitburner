@@ -109,6 +109,7 @@ export class Script {
     if (res > 0) {
       this.ramUsage = roundToTwo(res);
     }
+    this.markUpdated();
   }
 
   // Serialize the current object to a JSON save state
