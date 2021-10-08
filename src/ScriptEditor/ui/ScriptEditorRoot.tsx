@@ -15,7 +15,7 @@ import { TextFile } from "../../TextFile";
 import { calculateRamUsage } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { CursorPositions } from "../../ScriptEditor/CursorPositions";
+import { CursorPositions } from "../CursorPositions";
 import { libSource } from "../NetscriptDefinitions";
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
@@ -201,7 +201,7 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   function onFilenameChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    lastFilename = filename;
+    lastFilename = event.target.value;
     setFilename(event.target.value);
   }
 
@@ -296,8 +296,13 @@ export function Root(props: IProps): React.ReactElement {
   return (
     <>
       <Box display="flex" flexDirection="row" alignItems="center">
-        <Typography>Script name: </Typography>
-        <TextField type="text" tabIndex={1} value={filename} onChange={onFilenameChange} />
+        <TextField
+          type="text"
+          tabIndex={1}
+          value={filename}
+          onChange={onFilenameChange}
+          InputProps={{ startAdornment: <Typography>Script&nbsp;name:&nbsp;</Typography> }}
+        />
         <IconButton onClick={() => setOptionsOpen(true)}>
           <>
             <SettingsIcon />

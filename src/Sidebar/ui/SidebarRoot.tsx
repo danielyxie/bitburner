@@ -168,7 +168,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     if (flashTerminal) iTutorialNextStep();
   }
 
-  function clickCreateScripts(): void {
+  function clickScriptEditor(): void {
     props.router.toScriptEditor();
   }
 
@@ -278,7 +278,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         clickStats();
       } else if (event.keyCode === KEY.E && event.altKey) {
         event.preventDefault();
-        clickCreateScripts();
+        clickScriptEditor();
       } else if (event.keyCode === KEY.S && event.altKey) {
         event.preventDefault();
         clickActiveScripts();
@@ -371,18 +371,18 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             <ListItem
               classes={{ root: classes.listitem }}
               button
-              key={"Create Scripts"}
+              key={"Script Editor"}
               className={clsx({
-                [classes.active]: props.page === Page.CreateScript,
+                [classes.active]: props.page === Page.ScriptEditor,
               })}
-              onClick={clickCreateScripts}
+              onClick={clickScriptEditor}
             >
               <ListItemIcon>
-                <CreateIcon color={props.page !== Page.CreateScript ? "secondary" : "primary"} />
+                <CreateIcon color={props.page !== Page.ScriptEditor ? "secondary" : "primary"} />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={props.page !== Page.CreateScript ? "secondary" : "primary"}>
-                  Create Script
+                <Typography color={props.page !== Page.ScriptEditor ? "secondary" : "primary"}>
+                  Script Editor
                 </Typography>
               </ListItemText>
             </ListItem>
