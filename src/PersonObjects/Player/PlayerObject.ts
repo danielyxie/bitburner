@@ -282,6 +282,7 @@ export class PlayerObject implements IPlayer {
   getMult: (name: string) => number;
   setMult: (name: string, mult: number) => void;
   canAccessCotMG: () => boolean;
+  sourceFileLvl: (n: number) => number;
 
   constructor() {
     //Skills and stats
@@ -575,6 +576,7 @@ export class PlayerObject implements IPlayer {
     this.setMult = generalMethods.setMult;
 
     this.canAccessCotMG = generalMethods.canAccessCotMG;
+    this.sourceFileLvl = generalMethods.sourceFileLvl;
   }
 
   /**

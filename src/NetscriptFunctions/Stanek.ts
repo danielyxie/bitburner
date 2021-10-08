@@ -29,7 +29,8 @@ export function NetscriptStanek(
       //checkStanekAPIAccess("charge");
       const fragment = staneksGift.fragmentAt(worldX, worldY);
       if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.charge", `No fragment at (${worldX}, ${worldY})`);
-      return netscriptDelay(1000, workerScript).then(function () {
+      const time = staneksGift.inBonus() ? 200 : 1000;
+      return netscriptDelay(time, workerScript).then(function () {
         if (workerScript.env.stopFlag) {
           return Promise.reject(workerScript);
         }

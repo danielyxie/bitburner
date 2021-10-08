@@ -583,6 +583,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers[mult] = 1;
     }
   }
+  // Special case.
+  BitNodeMultipliers.StaneksGiftExtraSize = 0;
 
   switch (p.bitNodeN) {
     case 1: // Source Genesis (every multiplier is 1)
@@ -860,6 +862,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.BladeburnerRank = 0.1;
       BitNodeMultipliers.BladeburnerSkillCost = 5;
       BitNodeMultipliers.GangKarmaRequirement = 20;
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = 2;
+      BitNodeMultipliers.StaneksGiftExtraSize = 1;
       break;
     }
     default:

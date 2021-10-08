@@ -6,16 +6,26 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { Factions } from "../Faction/Factions";
 import { CalculateEffect } from "./formulas/effect";
 import { CalculateCharge } from "./formulas/charge";
+import { StaneksGiftEvents } from "./StaneksGiftEvents";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { CONSTANTS } from "../Constants";
+import { StanekConstants } from "./data/Constants";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { Player } from "../Player";
 
 export class StaneksGift implements IStaneksGift {
+  storedCycles = 0;
   fragments: ActiveFragment[] = [];
 
+  baseSize(): number {
+    return StanekConstants.BaseSize + BitNodeMultipliers.StaneksGiftExtraSize + Player.sourceFileLvl(13);
+  }
+
   width(): number {
-    return 7;
+    return Math.floor(this.baseSize() / 2 + 1);
   }
   height(): number {
-    return 6;
+    return Math.floor(this.baseSize() / 2 + 0.6);
   }
 
   charge(worldX: number, worldY: number, ram: number): number {
@@ -30,8 +40,16 @@ export class StaneksGift implements IStaneksGift {
     return ram;
   }
 
-  process(p: IPlayer, numCycles: number): void {
+  inBonus(): boolean {
+    return (this.storedCycles * CONSTANTS._idleSpeed) / 1000 > 1;
+  }
+
+  process(p: IPlayer, numCycles = 1): void {
+    this.storedCycles += numCycles;
+    this.storedCycles -= 5;
+    this.storedCycles = Math.max(0, this.storedCycles);
     this.updateMults(p);
+    StaneksGiftEvents.emit();
   }
 
   effect(fragment: ActiveFragment): number {
@@ -175,6 +193,14 @@ export class StaneksGift implements IStaneksGift {
           break;
       }
     }
+  }
+
+  prestigeAugmentation(): void {
+    this.clear();
+  }
+
+  prestigeSourceFile(): void {
+    this.clear();
   }
 
   /**

@@ -3,6 +3,7 @@ import { Fragment } from "./Fragment";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 export interface IStaneksGift {
+  storedCycles: number;
   fragments: ActiveFragment[];
   width(): number;
   height(): number;
@@ -15,4 +16,7 @@ export interface IStaneksGift {
   deleteAt(worldX: number, worldY: number): boolean;
   clear(): void;
   count(fragment: Fragment): number;
+  inBonus(): boolean;
+  prestigeAugmentation(): void;
+  prestigeSourceFile(): void;
 }

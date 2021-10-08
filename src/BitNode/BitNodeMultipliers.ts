@@ -212,6 +212,16 @@ interface IBitNodeMultipliers {
    */
   StrengthLevelMultiplier: number;
 
+  /**
+   * Influences the power of the gift.
+   */
+  StaneksGiftPowerMultiplier: number;
+
+  /**
+   * Influences the size of the gift.
+   */
+  StaneksGiftExtraSize: number;
+
   // Index signature
   [key: string]: number;
 }
@@ -274,4 +284,7 @@ export const BitNodeMultipliers: IBitNodeMultipliers = {
 
   DaedalusAugsRequirement: 1,
   GangKarmaRequirement: 1,
+
+  StaneksGiftPowerMultiplier: 1,
+  StaneksGiftExtraSize: 0,
 };

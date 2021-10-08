@@ -362,6 +362,8 @@ const Engine: {
         Player.bladeburner.storeCycles(numCyclesOffline);
       }
 
+      staneksGift.process(Player, numCyclesOffline);
+
       // Sleeves offline progress
       for (let i = 0; i < Player.sleeves.length; ++i) {
         if (Player.sleeves[i] instanceof Sleeve) {

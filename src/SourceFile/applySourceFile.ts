@@ -163,7 +163,10 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       break;
     }
     case 12: // The Recursion
-      // No effects, grants neuroflux.
+      // Grants neuroflux.
+      break;
+    case 13: // They're Lunatics
+      // Grants more space on Stanek's Gift.
       break;
     default:
       console.error(`Invalid source file number: ${srcFile.n}`);

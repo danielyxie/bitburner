@@ -276,4 +276,5 @@ export interface IPlayer {
   setMult(name: string, mult: number): void;
 
   canAccessCotMG(): boolean;
+  sourceFileLvl(n: number): number;
 }
