@@ -862,7 +862,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return Promise.resolve(moneyAfter / moneyBefore);
       });
     },
-    growthAnalyze: function (ip: any, growth: any): any {
+    growthAnalyze: function (ip: any, growth: any, cores: any = 1): any {
       updateDynamicRam("growthAnalyze", getRamCost("growthAnalyze"));
 
       // Check argument validity
@@ -875,7 +875,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("growthAnalyze", `Invalid argument: growth must be numeric and >= 1, is ${growth}.`);
       }
 
-      return numCycleForGrowth(server, Number(growth), Player, 1);
+      return numCycleForGrowth(server, Number(growth), Player, cores);
     },
     weaken: function (ip: any, { threads: requestedThreads }: any = {}): any {
       updateDynamicRam("weaken", getRamCost("weaken"));
