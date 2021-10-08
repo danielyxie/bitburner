@@ -1960,6 +1960,18 @@ export class Bladeburner implements IBladeburner {
         break;
       }
     }
+    const gen = [
+      "Training",
+      "Recruitment",
+      "FieldAnalysis",
+      "Field Analysis",
+      "Diplomacy",
+      "Hyperbolic Regeneration Chamber",
+    ];
+    if (gen.includes(res.type)) {
+      res.type = "General";
+    }
+
     if (res.type == null) {
       res.type = "Idle";
     }
