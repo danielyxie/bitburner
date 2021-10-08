@@ -13,7 +13,7 @@ export enum Page {
   City,
   Corporation,
   CreateProgram,
-  CreateScript,
+  ScriptEditor,
   DevMenu,
   Faction,
   Factions,
