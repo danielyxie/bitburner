@@ -1,18 +1,18 @@
 :root {
-  --dark-text-color: #c1c1c1;
-  --dark-link-color: #249ee8;
+  --dark-text-color: #0c0;
+  --dark-link-color: #090;
 }
 
 body {
-  color: #bfbfbf;
+  color: #000;
 }
 
 .wy-nav-content-wrap {
-  background-color: #101010;
+  background-color: #000;
 }
 
 .wy-nav-content {
-  background-color: #141414;
+  background-color: #000;
 }
 
 .section {
@@ -54,9 +54,15 @@ body {
   border-color: #1a1a1a;
 }
 
+.icon,
+.icon-home {
+  color: var(--dark-link-color);
+}
+
 .wy-nav-content a,
 .wy-nav-content a:visited {
-  color: var(--dark-link-color);
+  color: var(--dark-link-color) !important;
+  text-decoration: underline;
 }
 
 .btn-neutral {
@@ -80,26 +86,47 @@ footer {
 }
 
 .wy-nav-side {
-  background-color: #0d0d0d;
+  background-color: #000;
+  border: 1px solid #333;
+}
+
+.wy-menu-vertical > a {
+  color: var(--dark-text-color);
 }
 
 .wy-menu-vertical li.current {
-  background-color: #141414;
+  background-color: #000;
 }
 
 .wy-menu-vertical li.current > a,
 .wy-menu-vertical li.on a {
-  background-color: #141415;
+  background-color: #000;
   color: var(--dark-text-color);
 }
 
 .wy-menu-vertical li.toctree-l1.current > a,
 .wy-menu-vertical li.current a {
-  border-color: #0b0c0d;
+  border-color: #000;
+}
+
+.wy-menu-vertical header,
+.wy-menu-vertical p.caption {
+  color: var(--dark-text-color);
+}
+
+html.writer-html4 .rst-content dl:not(.docutils) > dt,
+html.writer-html5
+  .rst-content
+  dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.glossary):not(.simple)
+  > dt {
+  background-color: #333;
 }
 
 .wy-menu-vertical li.current a {
-  color: #bbb;
+  color: #090;
+}
+.wy-menu-vertical a {
+  color: var(--dark-text-color);
 }
 
 .wy-menu-vertical li.current a:hover {
@@ -109,26 +136,33 @@ footer {
 .wy-menu-vertical a:hover,
 .wy-menu-vertical li.current > a:hover,
 .wy-menu-vertical li.on a:hover {
-  background-color: #1e1e1e;
+  background-color: #000;
+  color: var(--dark-text-color);
 }
 
 .wy-menu-vertical li.toctree-l2.current > a,
 .wy-menu-vertical li.toctree-l2.current li.toctree-l3 > a {
-  background-color: #18181a;
+  background-color: #000;
 }
 
 .wy-side-nav-search {
-  background-color: #0b152d;
+  background-color: #000;
+  color: var(--dark-text-color);
 }
 
 .wy-side-nav-search .wy-dropdown > a,
 .wy-side-nav-search > a {
-  color: #ddd;
+  color: var(--dark-text-color);
 }
 
 .wy-side-nav-search input[type="text"] {
-  border-color: #111;
-  background-color: #141414;
+  border-left: 0px;
+  border-right: 0px;
+  border-top: 0px;
+  border-radius: 0px;
+  box-shadow: none;
+  border-bottom-color: #0c0;
+  background-color: #333;
   color: var(--dark-text-color);
 }
 
@@ -266,6 +300,10 @@ a .rst-content tt {
   background-color: #004a7b;
 }
 
+.rst-content {
+  color: var(--dark-text-color);
+}
+
 .rst-content .admonition-todo,
 .rst-content .attention,
 .rst-content .caution,
@@ -372,7 +410,14 @@ a .rst-content tt {
 .wy-table-backed,
 .wy-table-odd td,
 .wy-table-striped tr:nth-child(2n-1) td {
-  background-color: #181818;
+  background-color: #333;
+}
+
+.rst-content table.docutils:not(.field-list) tr:nth-child(2n) td,
+.wy-table-backed,
+.wy-table-odd td,
+.wy-table-striped tr:nth-child(2n) td {
+  background-color: #444;
 }
 
 .rst-content table.docutils td,
@@ -391,5 +436,9 @@ writer-html5 .rst-content table.docutils th,
 
 .wy-menu-vertical li.toctree-l3.current > a,
 .wy-menu-vertical li.toctree-l3.current li.toctree-l4 > a {
-  background-color: #18181a;
+  background-color: #000;
+}
+
+.wy-side-nav-search > div.version {
+  color: var(--dark-text-color);
 }
