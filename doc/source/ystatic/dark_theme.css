@@ -19,6 +19,11 @@ body {
   color: var(--dark-text-color);
 }
 
+.rst-content .highlighted {
+  background: #060;
+  box-shadow: none;
+}
+
 .highlight {
   background-color: #17181c;
 }
@@ -298,6 +303,10 @@ a .rst-content tt {
 .wy-alert.wy-alert-info .rst-content .admonition-title,
 .wy-alert.wy-alert-info .wy-alert-title {
   background-color: #004a7b;
+}
+
+.rst-content dl:not(.docutils) dt {
+  background-color: #333;
 }
 
 .rst-content {
