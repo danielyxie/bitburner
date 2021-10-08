@@ -6,6 +6,7 @@ import { IStaneksGift } from "../IStaneksGift";
 import { Cell } from "./Cell";
 import { FragmentInspector } from "./FragmentInspector";
 import { FragmentSelector } from "./FragmentSelector";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
@@ -131,12 +132,14 @@ export function Grid(props: GridProps): React.ReactElement {
 
   return (
     <>
-      <Table>
-        <TableBody>{elems}</TableBody>
-      </Table>
-      <FragmentSelector gift={props.gift} selectFragment={updateSelectedFragment} />
       <Button onClick={clear}>Clear</Button>
-      <FragmentInspector gift={props.gift} x={pos[0]} y={pos[1]} fragment={props.gift.fragmentAt(pos[0], pos[1])} />
+      <Box display="flex">
+        <Table>
+          <TableBody>{elems}</TableBody>
+        </Table>
+        <FragmentInspector gift={props.gift} x={pos[0]} y={pos[1]} fragment={props.gift.fragmentAt(pos[0], pos[1])} />
+      </Box>
+      <FragmentSelector gift={props.gift} selectFragment={updateSelectedFragment} />
     </>
   );
 }
