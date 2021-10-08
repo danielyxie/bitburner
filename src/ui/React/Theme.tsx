@@ -78,7 +78,8 @@ export function refreshTheme(): void {
       },
     },
     typography: {
-      fontFamily: "monospace",
+      fontFamily:
+        "Lucida Console, Lucida Sans Unicode, Fira Mono, Consolas, Courier New, Courier, monospace, Times New Roman",
       button: {
         textTransform: "none",
       },
