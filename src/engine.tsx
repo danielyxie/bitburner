@@ -14,7 +14,7 @@ import { CONSTANTS } from "./Constants";
 import { Factions, initFactions } from "./Faction/Factions";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { Router } from "./ui/GameRoot";
-import { SetupTextEditor } from "./ScriptEditor/ui/Root";
+import { SetupTextEditor } from "./ScriptEditor/ui/ScriptEditorRoot";
 
 import {
   getHackingWorkRepGain,

@@ -50,7 +50,7 @@ import { HacknetRoot } from "../Hacknet/ui/HacknetRoot";
 import { GenericLocation } from "../Locations/ui/GenericLocation";
 import { LocationCity } from "../Locations/ui/City";
 import { ProgramsRoot } from "../Programs/ui/ProgramsRoot";
-import { Root as ScriptEditorRoot } from "../ScriptEditor/ui/Root";
+import { Root as ScriptEditorRoot } from "../ScriptEditor/ui/ScriptEditorRoot";
 import { MilestonesRoot } from "../Milestones/ui/MilestonesRoot";
 import { TerminalRoot } from "../Terminal/ui/TerminalRoot";
 import { TutorialRoot } from "../Tutorial/ui/TutorialRoot";
@@ -232,7 +232,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toScriptEditor: (fn: string, c: string) => {
       filename = fn;
       code = c;
-      setPage(Page.CreateScript);
+      setPage(Page.ScriptEditor);
     },
     toSleeves: () => setPage(Page.Sleeves),
     toStockMarket: () => setPage(Page.StockMarket),
@@ -303,7 +303,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                 <SleeveRoot />
               ) : page === Page.Stats ? (
                 <CharacterStats />
-              ) : page === Page.CreateScript ? (
+              ) : page === Page.ScriptEditor ? (
                 <ScriptEditorRoot filename={filename} code={code} player={player} router={Router} />
               ) : page === Page.ActiveScripts ? (
                 <ActiveScriptsRoot workerScripts={workerScripts} />
