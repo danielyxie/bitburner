@@ -1,13 +1,13 @@
 .. Bitburner documentation master file, created by
    sphinx-quickstart on Wed Oct  4 15:03:07 2017.
    You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive. aaa
+   contain the root `toctree` directive.
 
 Welcome to Bitburner's documentation!
 =====================================
 Bitburner is a programming-based `incremental game <https://en.wikipedia.org/wiki/Incremental_game>`_
 that revolves around hacking and cyberpunk themes. The game is currently in the
-early beta stage of development. It `can be played here <https://danielyxie.github.io/bitburner/>`_.
+early beta stage of development. aaa It `can be played here <https://danielyxie.github.io/bitburner/>`_.
 
 What is Bitburner?
 ------------------
