@@ -2321,17 +2321,16 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
             // Create a new script
             script = new Script(fn, data, server.hostname, server.scripts);
             server.scripts.push(script);
-            return true;
+            return script.updateRamUsage(server.scripts);
           }
           mode === "w" ? (script.code = data) : (script.code += data);
-          script.updateRamUsage(server.scripts);
-          script.markUpdated();
+          return script.updateRamUsage(server.scripts);
         } else {
           // Write to text file
           const txtFile = getTextFile(fn, server);
           if (txtFile == null) {
             createTextFile(fn, data, server);
-            return true;
+            return Promise.resolve();
           }
           if (mode === "w") {
             txtFile.write(data);
@@ -2339,7 +2338,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
             txtFile.append(data);
           }
         }
-        return true;
+        return Promise.resolve();
       } else {
         throw makeRuntimeErrorMsg("write", `Invalid argument: ${port}`);
       }
