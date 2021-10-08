@@ -1,7 +1,7 @@
 .. Bitburner documentation master file, created by
    sphinx-quickstart on Wed Oct  4 15:03:07 2017.
    You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+   contain the root `toctree` directive. aaa
 
 Welcome to Bitburner's documentation!
 =====================================
