@@ -189,3 +189,4 @@ intersphinx_mapping = {'https://docs.python.org/': None}
 def setup(app):
     print("Initializing (setup())");
     app.add_stylesheet('maxwidthoverride.css')
+    app.add_stylesheet('dark_theme.css')
