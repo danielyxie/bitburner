@@ -90,15 +90,6 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void
       return;
     }
 
-    // Recalculate ram used on that server
-    server.ramUsed = roundToTwo(server.ramUsed - workerScript.ramUsage);
-    if (server.ramUsed < 0) {
-      console.warn(
-        `Server (${server.hostname}) RAM usage went negative (if it's due to floating pt imprecision, it's okay): ${server.ramUsed}`,
-      );
-      server.ramUsed = 0;
-    }
-
     // Delete the RunningScript object from that server
     for (let i = 0; i < server.runningScripts.length; ++i) {
       const runningScript = server.runningScripts[i];
@@ -107,6 +98,10 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void
         break;
       }
     }
+
+    // Recalculate ram used on that server
+    server.ramUsed = 0;
+    for (const rs of server.runningScripts) server.ramUsed += rs.ramUsage;
 
     // Delete script from global pool (workerScripts)
     const res = workerScripts.delete(workerScript.pid);
