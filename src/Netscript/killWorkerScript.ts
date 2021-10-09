@@ -101,7 +101,7 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void
 
     // Recalculate ram used on that server
     server.ramUsed = 0;
-    for (const rs of server.runningScripts) server.ramUsed += rs.ramUsage;
+    for (const rs of server.runningScripts) server.ramUsed += rs.ramUsage * rs.threads;
 
     // Delete script from global pool (workerScripts)
     const res = workerScripts.delete(workerScript.pid);
