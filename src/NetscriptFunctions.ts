@@ -4178,7 +4178,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
       joinBladeburnerDivision: function (): any {
         updateDynamicRam("joinBladeburnerDivision", getRamCost("bladeburner", "joinBladeburnerDivision"));
-        checkBladeburnerAccess("joinBladeburnerDivision", true);
         const bladeburner = Player.bladeburner;
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         if (Player.bitNodeN === 7 || SourceFileFlags[7] > 0) {
@@ -4195,12 +4194,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
           ) {
             Player.bladeburner = new Bladeburner(Player);
             workerScript.log("joinBladeburnerDivision", "You have been accepted into the Bladeburner division");
-
-            const worldHeader = document.getElementById("world-menu-header");
-            if (worldHeader instanceof HTMLElement) {
-              worldHeader.click();
-              worldHeader.click();
-            }
 
             return true;
           } else {

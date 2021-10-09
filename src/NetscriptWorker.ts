@@ -189,7 +189,8 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
                 cb(res);
               })
               .catch(function (err: any) {
-                console.error(err);
+                // workerscript is when you cancel a delay
+                if (!(err instanceof WorkerScript)) console.error(err);
               });
           };
           int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
