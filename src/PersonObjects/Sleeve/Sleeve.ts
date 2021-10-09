@@ -489,7 +489,7 @@ export class Sleeve extends Person {
         cyclesUsed = 0;
       }
     }
-    console.log(cyclesUsed);
+
     this.currentTaskTime += time;
 
     // Shock gradually goes towards 100
