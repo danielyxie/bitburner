@@ -29,6 +29,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { loadThemes } from "./themes";
 
 let symbols: string[] = [];
 export function SetupTextEditor(): void {
@@ -291,6 +292,7 @@ export function Root(props: IProps): React.ReactElement {
     });
     monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, "netscript.d.ts");
     monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, "netscript.d.ts");
+    loadThemes(monaco);
   }
 
   return (
@@ -315,7 +317,7 @@ export function Root(props: IProps): React.ReactElement {
         onMount={onMount}
         loading={<Typography>Loading script editor!</Typography>}
         height="90%"
-        defaultLanguage="javascript"
+        language="javascript"
         defaultValue={code}
         onChange={updateCode}
         theme={options.theme}
