@@ -29,8 +29,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { loadThemes } from "./themes";
 
+let symbolsLoaded = false;
 let symbols: string[] = [];
 export function SetupTextEditor(): void {
   const ns = NetscriptFunctions({} as WorkerScript);
@@ -276,6 +276,8 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   function beforeMount(monaco: any): void {
+    if (symbolsLoaded) return;
+    symbolsLoaded = true;
     monaco.languages.registerCompletionItemProvider("javascript", {
       provideCompletionItems: () => {
         const suggestions = [];
@@ -292,7 +294,6 @@ export function Root(props: IProps): React.ReactElement {
     });
     monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, "netscript.d.ts");
     monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, "netscript.d.ts");
-    loadThemes(monaco);
   }
 
   return (
@@ -317,7 +318,7 @@ export function Root(props: IProps): React.ReactElement {
         onMount={onMount}
         loading={<Typography>Loading script editor!</Typography>}
         height="90%"
-        language="javascript"
+        defaultLanguage="javascript"
         defaultValue={code}
         onChange={updateCode}
         theme={options.theme}
