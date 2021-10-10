@@ -1,4 +1,6 @@
-export const libSource = `interface NS {
+export {};
+declare module "!raw-loader!*" {
+  export interface NS {
     args: string[];
     /**
      * Example documentation for scan.
@@ -42,7 +44,7 @@ export const libSource = `interface NS {
     exit(): void;
     scp(scriptname: string, ip1: string, ip2: string): boolean;
     ls(ip: string, grep: string): string[];
-    ps(ip: string): {filename: string, threads: number, args: string[], pid: number}[];
+    ps(ip: string): { filename: string; threads: number; args: string[]; pid: number }[];
     hasRootAccess(ip: string): boolean;
     getIp(): string;
     getHostname(): string;
@@ -157,4 +159,5 @@ export const libSource = `interface NS {
     exploit(): void;
     bypass(doc: any): void;
     flags(data: any): any;
-}`;
+  }
+}

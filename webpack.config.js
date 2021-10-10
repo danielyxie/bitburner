@@ -160,6 +160,17 @@ module.exports = (env, argv) => {
           test: /\.s?css$/,
           use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
         },
+        {
+          test: /\.ts$/i,
+          use: [
+            {
+              loader: "raw-loader",
+              options: {
+                esModule: false,
+              },
+            },
+          ],
+        },
       ],
     },
     optimization: {

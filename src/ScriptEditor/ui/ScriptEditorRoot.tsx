@@ -16,7 +16,7 @@ import { calculateRamUsage } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { CursorPositions } from "../CursorPositions";
-import { libSource } from "../NetscriptDefinitions";
+import * as libSource from "!!raw-loader!../NetscriptDefinitions";
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
