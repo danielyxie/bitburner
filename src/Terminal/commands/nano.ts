@@ -26,7 +26,7 @@ export function nano(
         if (filename.endsWith(".ns") || filename.endsWith(".js")) {
           code = `/**
  * @param {NS} ns
- * /
+ **/
 export async function main(ns) {
 
 }`;
