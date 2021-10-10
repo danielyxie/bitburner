@@ -161,7 +161,7 @@ module.exports = (env, argv) => {
           use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
         },
         {
-          test: /\.ts$/i,
+          test: /NetscriptDefinitions\.d\.ts$/,
           use: [
             {
               loader: "raw-loader",

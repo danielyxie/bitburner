@@ -16,7 +16,7 @@ import { calculateRamUsage } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { CursorPositions } from "../CursorPositions";
-import * as libSource from "!!raw-loader!../NetscriptDefinitions";
+import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
@@ -292,6 +292,7 @@ export function Root(props: IProps): React.ReactElement {
         return { suggestions: suggestions };
       },
     });
+    console.log(libSource);
     monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, "netscript.d.ts");
     monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, "netscript.d.ts");
   }
