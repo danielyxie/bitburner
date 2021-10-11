@@ -7,6 +7,7 @@ import { startWorkerScript } from "../../NetscriptWorker";
 import { RunningScript } from "../../Script/RunningScript";
 import { findRunningScript } from "../../Script/ScriptHelpers";
 import * as libarg from "arg";
+import { numeralWrapper } from "../../ui/numeralFormat";
 
 export function runScript(
   terminal: ITerminal,
@@ -64,8 +65,8 @@ export function runScript(
         "This machine does not have enough RAM to run this script with " +
           numThreads +
           " threads. Script requires " +
-          ramUsage +
-          "GB of RAM",
+          numeralWrapper.formatRAM(ramUsage) +
+          " of RAM",
       );
       return;
     }

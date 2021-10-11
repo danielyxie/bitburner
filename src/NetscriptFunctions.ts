@@ -3280,7 +3280,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log(
         "upgradeHomeRam",
-        `Purchased additional RAM for home computer! It now has ${homeComputer.maxRam}GB of RAM.`,
+        `Purchased additional RAM for home computer! It now has ${numeralWrapper.formatRAM(
+          homeComputer.maxRam,
+        )} of RAM.`,
       );
       return true;
     },
