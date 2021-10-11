@@ -22,6 +22,7 @@ import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
 import { iTutorialNextStep, ITutorial, iTutorialSteps } from "../../InteractiveTutorial";
 import { debounce } from "lodash";
+import { saveObject } from "../../SaveObject";
 
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -176,6 +177,7 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {
           server.scripts[i].saveScript(filename, code, props.player.currentServer, server.scripts);
+          saveObject.saveGame();
           props.router.toTerminal();
           return;
         }
@@ -189,6 +191,7 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.textFiles.length; ++i) {
         if (server.textFiles[i].fn === filename) {
           server.textFiles[i].write(code);
+          saveObject.saveGame();
           props.router.toTerminal();
           return;
         }
@@ -199,6 +202,8 @@ export function Root(props: IProps): React.ReactElement {
       dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " + " or text file (.txt)");
       return;
     }
+
+    saveObject.saveGame();
     props.router.toTerminal();
   }
 
