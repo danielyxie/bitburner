@@ -720,7 +720,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     hacknet: hacknet,
     sprintf: sprintf,
     vsprintf: vsprintf,
-    scan: function (ip: any = workerScript.hostname, hostnames: any = true): any {
+    scan: function (ip: any = workerScript.hostname): any {
       updateDynamicRam("scan", getRamCost("scan"));
       const server = GetServer(ip);
       if (server == null) {
@@ -728,14 +728,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       const out = [];
       for (let i = 0; i < server.serversOnNetwork.length; i++) {
-        let entry;
         const s = getServerOnNetwork(server, i);
         if (s === null) continue;
-        if (hostnames) {
-          entry = s.hostname;
-        } else {
-          entry = s.hostname;
-        }
+        const entry = s.hostname;
         if (entry == null) {
           continue;
         }
