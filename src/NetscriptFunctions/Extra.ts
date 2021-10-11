@@ -1,4 +1,3 @@
-import { INetscriptHelper } from "./INetscriptHelper";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Exploit } from "../Exploits/Exploit";
@@ -11,7 +10,7 @@ export interface INetscriptExtra {
   bypass(doc: Document): void;
 }
 
-export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): INetscriptExtra {
+export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript): INetscriptExtra {
   return {
     heart: {
       // Easter egg function

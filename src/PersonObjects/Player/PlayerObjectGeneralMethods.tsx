@@ -77,7 +77,6 @@ export function init(this: IPlayer): void {
 }
 
 export function prestigeAugmentation(this: IPlayer): void {
-  const homeComp = this.getHomeComputer();
   this.currentServer = SpecialServers.Home;
 
   this.numPeopleKilled = 0;

@@ -1,4 +1,4 @@
-export async function loadThemes(monaco: any): Promise<void> {
+export async function loadThemes(monaco: { editor: any }): Promise<void> {
   monaco.editor.defineTheme("monokai", {
     base: "vs-dark",
     inherit: true,

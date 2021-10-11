@@ -713,7 +713,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
   const gang = NetscriptGang(Player, workerScript, helper);
   const sleeve = NetscriptSleeve(Player, workerScript, helper);
-  const extra = NetscriptExtra(Player, workerScript, helper);
+  const extra = NetscriptExtra(Player, workerScript);
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
 
   const functions = {
