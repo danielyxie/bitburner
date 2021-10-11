@@ -84,6 +84,28 @@ changes are okay to contribute:
 - Changes that directly affect the game's balance
 - New gameplay mechanics
 
+### How to setup fork properly
+
+Fork and clone the repo
+
+```
+  # This will add the game original code as a repo in your local copy
+  $ git remote add danielyxie git@github.com:danielyxie/bitburner.git
+
+  # You can verify you did this right by doing the following command
+  $ git remote show
+  danielyxie
+  origin
+
+  # Then download all the branches from the game. (there might be more branches)
+  $ git fetch danielyxie
+  From github.com:danielyxie/bitburner
+  * [new branch]        dev             -> danielyxie/dev
+  * [new branch]        master          -> danielyxie/master
+
+  # Makes sure you always start from `danielyxie/dev` to avoid merge conflicts.
+```
+
 #### Submitting a Pull Request
 
 When submitting a pull request with your code contributions, please abide by
