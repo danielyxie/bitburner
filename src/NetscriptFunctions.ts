@@ -1579,9 +1579,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     getServer: function (ip: any): any {
       updateDynamicRam("getServer", getRamCost("getServer"));
-      if (SourceFileFlags[5] <= 0 && Player.bitNodeN !== 5) {
-        throw makeRuntimeErrorMsg("getServer", "Requires Source-File 5 to run.");
-      }
       const server = safeGetServer(ip, "getServer");
       const copy = Object.assign({}, server);
       // These fields should be hidden.

@@ -15,6 +15,7 @@ help you learn some basic programming concepts.
 Here are some good tutorials for learning programming/JavaScript as a beginner:
 
 * `Learn-JS <http://www.learn-js.org/en/Welcome>`_
+* `programiz <https://www.programiz.com/javascript/get-started>`_
 * `Speaking JavaScript <http://speakingjs.com/es5/index.html>`_
    This is a bit on the longer side. You can skip all of the historical
    background stuff. Recommended chapters: 1, 7-18
