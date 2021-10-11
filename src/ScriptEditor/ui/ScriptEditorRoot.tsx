@@ -177,7 +177,7 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {
           server.scripts[i].saveScript(filename, code, props.player.currentServer, server.scripts);
-          saveObject.saveGame();
+          if (Settings.SaveGameOnFileSave) saveObject.saveGame();
           props.router.toTerminal();
           return;
         }
@@ -191,7 +191,7 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.textFiles.length; ++i) {
         if (server.textFiles[i].fn === filename) {
           server.textFiles[i].write(code);
-          saveObject.saveGame();
+          if (Settings.SaveGameOnFileSave) saveObject.saveGame();
           props.router.toTerminal();
           return;
         }
@@ -203,7 +203,7 @@ export function Root(props: IProps): React.ReactElement {
       return;
     }
 
-    saveObject.saveGame();
+    if (Settings.SaveGameOnFileSave) saveObject.saveGame();
     props.router.toTerminal();
   }
 
