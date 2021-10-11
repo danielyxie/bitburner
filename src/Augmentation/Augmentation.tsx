@@ -533,6 +533,7 @@ export class Augmentation {
           console.warn(`Invalid Faction object in addToAllFactions(). Key value: ${fac}`);
           continue;
         }
+        if (facObj.getInfo().special) continue;
         facObj.augmentations.push(this.name);
       }
     }
