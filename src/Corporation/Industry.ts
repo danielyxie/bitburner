@@ -564,7 +564,7 @@ export class Industry implements IIndustry {
               buyAmt = mat.buy * CorporationConstants.SecsPerMarketCycle * marketCycles;
 
               if (matName == "RealEstate") {
-                maxAmt = buyAmt;
+                maxAmt = corporation.funds.toNumber() / mat.bCost;
               } else {
                 maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / MaterialSizes[matName]);
               }
