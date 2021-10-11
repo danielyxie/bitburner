@@ -4610,19 +4610,19 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     ...extra,
   };
 
-  function getFunctionNames(obj: NS): string[] {
+  function getFunctionNames(obj: NS, prefix: string): string[] {
     const functionNames: string[] = [];
     for (const [key, value] of Object.entries(obj)) {
       if (typeof value == "function") {
-        functionNames.push(key);
+        functionNames.push(prefix + key);
       } else if (typeof value == "object") {
-        functionNames.push(...getFunctionNames(value));
+        functionNames.push(...getFunctionNames(value, key + "."));
       }
     }
     return functionNames;
   }
 
-  const possibleLogs = Object.fromEntries([...getFunctionNames(functions)].map((a) => [a, true]));
+  const possibleLogs = Object.fromEntries([...getFunctionNames(functions, "")].map((a) => [a, true]));
 
   return functions;
 } // End NetscriptFunction()
