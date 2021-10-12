@@ -34,8 +34,6 @@ import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
-import { Locations } from "./Locations/Locations";
-import { LocationName } from "./Locations/data/LocationNames";
 
 import { Money } from "./ui/React/Money";
 import { Hashes } from "./ui/React/Hashes";

@@ -141,6 +141,18 @@ function evaluateVersionCompatibility(ver: string): void {
 
     delete anyPlayer.companyPosition;
   }
+  if (ver < "0.56.0") {
+    for (const q of anyPlayer.queuedAugmentations) {
+      if (q.name === "Graphene BranchiBlades Upgrade") {
+        q.name = "Graphene BrachiBlades Upgrade";
+      }
+    }
+    for (const q of anyPlayer.augmentations) {
+      if (q.name === "Graphene BranchiBlades Upgrade") {
+        q.name = "Graphene BrachiBlades Upgrade";
+      }
+    }
+  }
 }
 
 function loadGame(saveString: string): boolean {

@@ -241,7 +241,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,
   MonacoTheme: "vs-dark",
   MonacoInsertSpaces: false,
-  MonacoFontSize: 10,
+  MonacoFontSize: 20,
 
   theme: {
     primarylight: defaultSettings.theme.primarylight,

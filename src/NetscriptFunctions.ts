@@ -4182,8 +4182,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
       joinBladeburnerDivision: function (): any {
         updateDynamicRam("joinBladeburnerDivision", getRamCost("bladeburner", "joinBladeburnerDivision"));
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         if (Player.bitNodeN === 7 || SourceFileFlags[7] > 0) {
           if (Player.bitNodeN === 8) {
             return false;

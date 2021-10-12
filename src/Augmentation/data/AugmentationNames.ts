@@ -1,6 +1,114 @@
-import { IMap } from "../../types";
-
-export const AugmentationNames: IMap<string> = {
+export const AugmentationNames: {
+  Targeting1: string;
+  Targeting2: string;
+  Targeting3: string;
+  SyntheticHeart: string;
+  SynfibrilMuscle: string;
+  CombatRib1: string;
+  CombatRib2: string;
+  CombatRib3: string;
+  NanofiberWeave: string;
+  SubdermalArmor: string;
+  WiredReflexes: string;
+  GrapheneBoneLacings: string;
+  BionicSpine: string;
+  GrapheneBionicSpine: string;
+  BionicLegs: string;
+  GrapheneBionicLegs: string;
+  SpeechProcessor: string;
+  TITN41Injection: string;
+  EnhancedSocialInteractionImplant: string;
+  BitWire: string;
+  ArtificialBioNeuralNetwork: string;
+  ArtificialSynapticPotentiation: string;
+  EnhancedMyelinSheathing: string;
+  SynapticEnhancement: string;
+  NeuralRetentionEnhancement: string;
+  DataJack: string;
+  ENM: string;
+  ENMCore: string;
+  ENMCoreV2: string;
+  ENMCoreV3: string;
+  ENMAnalyzeEngine: string;
+  ENMDMA: string;
+  Neuralstimulator: string;
+  NeuralAccelerator: string;
+  CranialSignalProcessorsG1: string;
+  CranialSignalProcessorsG2: string;
+  CranialSignalProcessorsG3: string;
+  CranialSignalProcessorsG4: string;
+  CranialSignalProcessorsG5: string;
+  NeuronalDensification: string;
+  NeuroreceptorManager: string;
+  NuoptimalInjectorImplant: string;
+  SpeechEnhancement: string;
+  FocusWire: string;
+  PCDNI: string;
+  PCDNIOptimizer: string;
+  PCDNINeuralNetwork: string;
+  PCMatrix: string;
+  ADRPheromone1: string;
+  ADRPheromone2: string;
+  ShadowsSimulacrum: string;
+  HacknetNodeCPUUpload: string;
+  HacknetNodeCacheUpload: string;
+  HacknetNodeNICUpload: string;
+  HacknetNodeKernelDNI: string;
+  HacknetNodeCoreDNI: string;
+  NeuroFluxGovernor: string;
+  Neurotrainer1: string;
+  Neurotrainer2: string;
+  Neurotrainer3: string;
+  Hypersight: string;
+  LuminCloaking1: string;
+  LuminCloaking2: string;
+  HemoRecirculator: string;
+  SmartSonar: string;
+  PowerRecirculator: string;
+  QLink: string;
+  TheRedPill: string;
+  SPTN97: string;
+  HiveMind: string;
+  CordiARCReactor: string;
+  SmartJaw: string;
+  Neotra: string;
+  Xanipher: string;
+  nextSENS: string;
+  OmniTekInfoLoad: string;
+  PhotosyntheticCells: string;
+  Neurolink: string;
+  TheBlackHand: string;
+  UnstableCircadianModulator: string;
+  CRTX42AA: string;
+  Neuregen: string;
+  CashRoot: string;
+  NutriGen: string;
+  INFRARet: string;
+  DermaForce: string;
+  GrapheneBrachiBlades: string;
+  GrapheneBionicArms: string;
+  BrachiBlades: string;
+  BionicArms: string;
+  SNA: string;
+  HydroflameLeftArm: string;
+  EsperEyewear: string;
+  EMS4Recombination: string;
+  OrionShoulder: string;
+  HyperionV1: string;
+  HyperionV2: string;
+  GolemSerum: string;
+  VangelisVirus: string;
+  VangelisVirus3: string;
+  INTERLINKED: string;
+  BladeRunner: string;
+  BladeArmor: string;
+  BladeArmorPowerCells: string;
+  BladeArmorEnergyShielding: string;
+  BladeArmorUnibeam: string;
+  BladeArmorOmnibeam: string;
+  BladeArmorIPU: string;
+  BladesSimulacrum: string;
+} = {
   Targeting1: "Augmented Targeting I",
   Targeting2: "Augmented Targeting II",
   Targeting3: "Augmented Targeting III",
@@ -87,7 +195,7 @@ export const AugmentationNames: IMap<string> = {
   NutriGen: "NutriGen Implant",
   INFRARet: "INFRARET Enhancement",
   DermaForce: "DermaForce Particle Barrier",
-  GrapheneBrachiBlades: "Graphene BranchiBlades Upgrade",
+  GrapheneBrachiBlades: "Graphene BrachiBlades Upgrade",
   GrapheneBionicArms: "Graphene Bionic Arms Upgrade",
   BrachiBlades: "BrachiBlades",
   BionicArms: "Bionic Arms",
