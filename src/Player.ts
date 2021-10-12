@@ -29,5 +29,4 @@ export function loadPlayer(saveString: string): void {
   }
 
   Player.exploits = sanitizeExploits(Player.exploits);
-  console.log(Player.bladeburner);
 }
