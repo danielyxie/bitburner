@@ -105,6 +105,7 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
   }
 
   //Parse quantity
+  amt = amt.toUpperCase();
   if (amt.includes("MAX") || amt.includes("PROD")) {
     let q = amt.replace(/\s+/g, "");
     q = q.replace(/[^-()\d/*+.MAXPROD]/g, "");
@@ -168,6 +169,7 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
   const cities = Object.keys(Cities);
 
   // Parse quantity
+  amt = amt.toUpperCase();
   if (amt.includes("MAX") || amt.includes("PROD")) {
     //Dynamically evaluated quantity. First test to make sure its valid
     let qty = amt.replace(/\s+/g, "");
@@ -372,7 +374,7 @@ export function Research(division: IIndustry, researchName: string): void {
 
 export function ExportMaterial(divisionName: string, cityName: string, material: Material, amt: string): void {
   // Sanitize amt
-  let sanitizedAmt = amt.replace(/\s+/g, "");
+  let sanitizedAmt = amt.replace(/\s+/g, "").toUpperCase();
   sanitizedAmt = sanitizedAmt.replace(/[^-()\d/*+.MAX]/g, "");
   let temp = sanitizedAmt.replace(/MAX/g, "1");
   try {

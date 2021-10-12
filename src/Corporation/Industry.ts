@@ -840,7 +840,7 @@ export class Industry implements IIndustry {
                 let sellAmt;
                 if (isString(mat.sllman[1])) {
                   //Dynamically evaluated
-                  let tmp = (mat.sllman[1] as string).replace(/MAX/g, maxSell + "");
+                  let tmp = (mat.sllman[1] as string).replace(/MAX/g, (maxSell + "").toUpperCase());
                   tmp = tmp.replace(/PROD/g, mat.prd + "");
                   try {
                     sellAmt = eval(tmp);
@@ -893,7 +893,7 @@ export class Industry implements IIndustry {
                   const exp = mat.exp[expI];
                   const amtStr = exp.amt.replace(
                     /MAX/g,
-                    mat.qty / (CorporationConstants.SecsPerMarketCycle * marketCycles) + "",
+                    (mat.qty / (CorporationConstants.SecsPerMarketCycle * marketCycles) + "").toUpperCase(),
                   );
                   let amt = 0;
                   try {
@@ -1201,7 +1201,7 @@ export class Industry implements IIndustry {
             let sellAmt;
             if (product.sllman[city][0] && isString(product.sllman[city][1])) {
               //Sell amount is dynamically evaluated
-              let tmp = product.sllman[city][1].replace(/MAX/g, maxSell);
+              let tmp = product.sllman[city][1].replace(/MAX/g, (maxSell + "").toUpperCase());
               tmp = tmp.replace(/PROD/g, product.data[city][1]);
               try {
                 tmp = eval(tmp);
