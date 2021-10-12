@@ -451,9 +451,8 @@ export function gainIntelligenceExp(this: IPlayer, exp: number): void {
   }
   if (SourceFileFlags[5] > 0 || this.intelligence > 0) {
     this.intelligence_exp += exp;
+    this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp));
   }
-
-  this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp));
 }
 
 //Given a string expression like "str" or "strength", returns the given stat
