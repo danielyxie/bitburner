@@ -122,6 +122,7 @@ import { Router } from "./ui/GameRoot";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { is2DArray } from "./utils/helpers/is2DArray";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
+import { SpecialServers } from "./Server/data/SpecialServers";
 
 import { LogBoxEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
@@ -3076,6 +3077,10 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("installBackdoor", `Successfully installed backdoor on '${server.hostname}'`);
 
         server.backdoorInstalled = true;
+
+        if (SpecialServers.WorldDaemon === server.hostname) {
+          Router.toBitVerse(false, false);
+        }
         return Promise.resolve();
       });
     },
