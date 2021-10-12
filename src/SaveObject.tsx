@@ -153,6 +153,17 @@ function evaluateVersionCompatibility(ver: string): void {
       }
     }
   }
+  if (ver < "0.56.1") {
+    if (anyPlayer.bladeburner === 0) {
+      anyPlayer.bladeburner = null;
+    }
+    if (anyPlayer.gang === 0) {
+      anyPlayer.gang = null;
+    }
+    if (anyPlayer.corporation === 0) {
+      anyPlayer.corporation = null;
+    }
+  }
 }
 
 function loadGame(saveString: string): boolean {

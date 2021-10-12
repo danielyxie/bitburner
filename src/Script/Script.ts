@@ -58,9 +58,10 @@ export class Script {
   download(): void {
     const filename = this.filename + ".js";
     const file = new Blob([this.code], { type: "text/plain" });
-    if (window.navigator.msSaveOrOpenBlob) {
+    const navigator = window.navigator as any;
+    if (navigator.msSaveOrOpenBlob) {
       // IE10+
-      window.navigator.msSaveOrOpenBlob(file, filename);
+      navigator.msSaveOrOpenBlob(file, filename);
     } else {
       // Others
       const a = document.createElement("a"),
@@ -110,6 +111,10 @@ export class Script {
       this.ramUsage = roundToTwo(res);
     }
     this.markUpdated();
+  }
+
+  imports(): string[] {
+    return [];
   }
 
   // Serialize the current object to a JSON save state
