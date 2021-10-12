@@ -39,7 +39,9 @@ export function ExportModal(props: IProps): React.ReactElement {
   }
 
   function onIndustryChange(event: SelectChangeEvent<string>): void {
-    setIndustry(event.target.value);
+    const div = event.target.value;
+    setIndustry(div);
+    setCity(Object.keys(corp.divisions[0].warehouses)[0]);
   }
 
   function onAmtChange(event: React.ChangeEvent<HTMLInputElement>): void {

@@ -80,10 +80,20 @@ export function ExpandIndustryTab(props: IProps): React.ReactElement {
       <Typography>Division name:</Typography>
 
       <Box display="flex" alignItems="center">
-        <TextField autoFocus={true} value={name} onChange={onNameChange} onKeyDown={onKeyDown} type="text" />
-        <Button disabled={disabled} sx={{ mx: 1 }} onClick={newIndustry}>
-          Create Division
-        </Button>
+        <TextField
+          autoFocus={true}
+          value={name}
+          onChange={onNameChange}
+          onKeyDown={onKeyDown}
+          type="text"
+          InputProps={{
+            endAdornment: (
+              <Button disabled={disabled} sx={{ mx: 1 }} onClick={newIndustry}>
+                Expand
+              </Button>
+            ),
+          }}
+        />
       </Box>
     </>
   );

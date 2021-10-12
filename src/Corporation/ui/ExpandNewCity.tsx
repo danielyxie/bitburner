@@ -43,16 +43,21 @@ export function ExpandNewCity(props: IProps): React.ReactElement {
         Would you like to expand into a new city by opening an office? This would cost{" "}
         <MoneyCost money={CorporationConstants.OfficeInitialCost} corp={corp} />
       </Typography>
-      <Select value={city} onChange={onCityChange}>
+      <Select
+        endAdornment={
+          <Button onClick={expand} disabled={disabled}>
+            Confirm
+          </Button>
+        }
+        value={city}
+        onChange={onCityChange}
+      >
         {possibleCities.map((cityName: string) => (
           <MenuItem key={cityName} value={cityName}>
             {cityName}
           </MenuItem>
         ))}
       </Select>
-      <Button onClick={expand} disabled={disabled}>
-        Confirm
-      </Button>
     </>
   );
 }
