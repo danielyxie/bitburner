@@ -201,6 +201,7 @@ export interface IPlayer {
   inGang(): boolean;
   isQualified(company: Company, position: CompanyPosition): boolean;
   loseMoney(money: number): void;
+  process(router: IRouter, numCycles?: number): void;
   reapplyAllAugmentations(resetMultipliers?: boolean): void;
   reapplyAllSourceFiles(): void;
   regenerateHp(amt: number): void;

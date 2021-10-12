@@ -137,6 +137,7 @@ import { IIndustry } from "./Corporation/IIndustry";
 
 import { Faction } from "./Faction/Faction";
 import { Augmentation } from "./Augmentation/Augmentation";
+import { Page } from "./ui/Router";
 
 import { CodingContract } from "./CodingContracts";
 import { Stock } from "./StockMarket/Stock";
@@ -3244,12 +3245,16 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     hospitalize: function (): any {
       updateDynamicRam("hospitalize", getRamCost("hospitalize"));
       checkSingularityAccess("hospitalize", 1);
+      if (Player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse) {
+        workerScript.log("hospitalize", "Cannot go to the hospital because the player is busy.");
+        return;
+      }
       return Player.hospitalize();
     },
     isBusy: function (): any {
       updateDynamicRam("isBusy", getRamCost("isBusy"));
       checkSingularityAccess("isBusy", 1);
-      return Player.isWorking;
+      return Player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse;
     },
     stopAction: function (): any {
       updateDynamicRam("stopAction", getRamCost("stopAction"));

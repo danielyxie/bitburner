@@ -575,6 +575,37 @@ export function startWork(this: IPlayer, router: IRouter, companyName: string): 
   router.toWork();
 }
 
+export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
+  // Working
+  if (this.isWorking) {
+    if (this.workType == CONSTANTS.WorkTypeFaction) {
+      if (this.workForFaction(numCycles)) {
+        router.toFaction();
+      }
+    } else if (this.workType == CONSTANTS.WorkTypeCreateProgram) {
+      if (this.createProgramWork(numCycles)) {
+        router.toTerminal();
+      }
+    } else if (this.workType == CONSTANTS.WorkTypeStudyClass) {
+      if (this.takeClass(numCycles)) {
+        router.toCity();
+      }
+    } else if (this.workType == CONSTANTS.WorkTypeCrime) {
+      if (this.commitCrime(numCycles)) {
+        router.toLocation(Locations[LocationName.Slums]);
+      }
+    } else if (this.workType == CONSTANTS.WorkTypeCompanyPartTime) {
+      if (this.workPartTime(numCycles)) {
+        router.toCity();
+      }
+    } else {
+      if (this.work(numCycles)) {
+        router.toCity();
+      }
+    }
+  }
+}
+
 export function cancelationPenalty(this: IPlayer): number {
   const server = GetServer(this.companyName);
   if (server instanceof Server) {
