@@ -77,6 +77,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [disableTextEffects, setDisableTextEffects] = useState(Settings.DisableTextEffects);
   const [enableBashHotkeys, setEnableBashHotkeys] = useState(Settings.EnableBashHotkeys);
   const [enableTimestamps, setEnableTimestamps] = useState(Settings.EnableTimestamps);
+  const [saveGameOnFileSave, setSaveGameOnFileSave] = useState(Settings.SaveGameOnFileSave);
 
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
@@ -164,6 +165,10 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handleEnableTimestampsChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setEnableTimestamps(event.target.checked);
     Settings.EnableTimestamps = event.target.checked;
+  }
+  function handleSaveGameOnFile(event: React.ChangeEvent<HTMLInputElement>): void {
+    setSaveGameOnFileSave(event.target.checked);
+    Settings.SaveGameOnFileSave = event.target.checked;
   }
 
   function startImport(): void {
@@ -500,6 +505,19 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                     }
                   >
                     <Typography>Enable timestamps</Typography>
+                  </Tooltip>
+                }
+              />
+            </ListItem>
+
+            <ListItem>
+              <FormControlLabel
+                control={<Switch checked={saveGameOnFileSave} onChange={handleSaveGameOnFile} />}
+                label={
+                  <Tooltip
+                    title={<Typography>Save your game any time a file is saved in the script editor.</Typography>}
+                  >
+                    <Typography>Save game on file save</Typography>
                   </Tooltip>
                 }
               />

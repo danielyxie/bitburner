@@ -114,7 +114,7 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  Version: "0.55.0",
+  Version: "0.56.0",
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -281,31 +281,107 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v0.55.0 - 2021-09-20 Material UI (hydroflame & community)
+    v0.56.0 - 2021-10-11 Trimming the backlog (hydroflame & community)
     -------------------------------------------
 
-    ** Global ** 
+    ** BREAKING **
 
-    * The game is now 100% in typescript, react, and Material-UI
+    * The 'write' function is now async. This helps when making scripts that write scripts.
+
+    ** Terminal **
+
+    * 'grow' and 'weaken' have been added as terminal command. This should help player transition
+      from commands to scripts. The tutorial also talks about it.
+    * 'cp' command added
+    * Improved performance by rate limiting refresh.
+
+    ** IP vs Hostname **
+
+    * The game now uses hostname as primary key for it's servers (yeah believe it or not IPs were
+      used until then). This has caused some issues with purchased servers (they couldn't be sold).
+      You might need to soft reset for the game to fully convert itself.
+
+    ** Sleeve **
+
+    * Fixed bug where they couldn't train at Volhaven.
+    * No longer consume all bonus time at once, making it look buggy.
+    
+    ** SF9 **
+
+    * Now boosts hacknet production by 8/12/14%
+    
+    ** Hacknet Servers ** 
+
+    * production nerfed by 10%
+    * Max money increase gets weaker above 10t max money
+
+    ** Corporation **
+
+    * Warehouse tooltip now also displays the amount of space taken by products.
+    * Changed research box completely to avoid dependency on Treant (Treant is a pita)
+    * All textbox should accept MAX/MP case insensitive.
+    * Fixed export popup not refreshing dropdowns correctly.
+    * Fixed product mku becoming zero
+    * Increased scaling of Wilson to avoid feedback loop.
+    * Can no longer get in debt by buying real estate
+    * Bonus time is consumed faster.
+
+    ** Netscript **
+
+    * isBusy takes bitverse and infiltration into account
+    * hospitalize can't be called when in infiltration.
+    * setToCommitCrime now accepts crime rough name instead of perfect name.
+    * disableLog All now works for bladeburner functions.
+    * Fixed netscript port for ns1.
+    
+    ** Augmentation **
+
+    * Added augmentation to Ti Di Hui that removes penalty for being unfocused.
+    * Neuroflux no longer appears in special factions.
+
+    ** Script Editor ** 
+
+    * Ram check is debounced instead of refreshed every second.
+    * Added the vscode extension documentation to the game (it doesn't work well, thought)
+    * Fixed issue where autocomplete list would grow forever
+    * Added semi-monokai as theme.
+    * Fixed issue where modifying filename would mess it up.
+    * Font size can be changed now.
+
+    ** Infiltration ** 
+
+    * Fixed issue where game controls would become unfocused.
 
     ** Misc. **
 
-    * Corporations can no longer bribe special factions
-    * Infiltration can no longer lose focus of the keyboard.
-    * Fix terminal line limit
-    * Added theme editor
-    * Theme applies on game load (@Nolshine)
-    * Sleeves no longer consume all bonus time for some actions
-    * Fix a bug where the autocomlete list would get duplicates
-    * Fix tutorial not scaling properly on small screens
-    * Import should be more consistent
-    * Typo with 'help' command
-    * Fix infinite loop in casino
+    * Fixed loader incorrectly assuming some null values are incorrect.
+    * installBackdoor trigger Bitverse sequence
+    * Some improvements to the theme editor
+    * Improved documentation about where to learn javascript.
+    * Added some instructions for contributors.
+    * Fixed typo in corporation sell shares modal (@Saynt_Garmo)
+    * Fixed pagination being black on black in Active Scripts
+    * Create Script tab renamed to Script Editor
+    * Fixed an issue where corp some textbox wouldn't update when changing city.
+    * Fixed an issue where hacknet online time was always 0.
+    * Netscript function prompt fixed.
+    * Fixed miscalculation in growth.
+    * Script with syntax errors will try to be a tad more helpful.
+    * Corporations can no longer bribe bladeburners.
+    * Augmentation Graphene Branchiblade renamed to Brachi, like the rest of them.
+    * All ram is displayed in GB/TB/PB now.
+    * Game now saves when saving a file, this can be turned off.
+    * Several improvement to log window.
+    * Bladeburner current action returns General type instead of the name of the action.
+    * Bladeburner travel and Sleeve travel respect disable ASCII.
+    * Tutorial fits on small screens.
+    * Import is much slower but more consistent now.
+    * Fix intelligence not updating properly.
+    * Added SF -1: Time Compression
+    * ReadTheDoc theme now matches the game.
+    * Logbox should wrap text better
+    * Logbox behavior should feel better.
+    * Fix font for AutoLink.exe
     * nerf noodle bar
 `,
-
-  /*
-
-
-*/
 };

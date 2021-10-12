@@ -41,6 +41,7 @@ import { cat } from "./commands/cat";
 import { cd } from "./commands/cd";
 import { check } from "./commands/check";
 import { connect } from "./commands/connect";
+import { cp } from "./commands/cp";
 import { download } from "./commands/download";
 import { expr } from "./commands/expr";
 import { free } from "./commands/free";
@@ -729,6 +730,7 @@ export class Terminal implements ITerminal {
       clear: () => this.clear(),
       cls: () => this.clear(),
       connect: connect,
+      cp: cp,
       download: download,
       expr: expr,
       free: free,

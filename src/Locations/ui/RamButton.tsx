@@ -8,6 +8,7 @@ import { purchaseRamForHomeComputer } from "../../Server/ServerPurchases";
 
 import { Money } from "../../ui/React/Money";
 import { MathComponent } from "mathjax-react";
+import { numeralWrapper } from "../../ui/numeralFormat";
 
 type IProps = {
   p: IPlayer;
@@ -31,7 +32,8 @@ export function RamButton(props: IProps): React.ReactElement {
     <Tooltip title={<MathComponent tex={String.raw`\large{cost = 3.2 \times 10^3 \times 1.58^{log_2{(ram)}}}`} />}>
       <span>
         <Button disabled={!props.p.canAfford(cost)} onClick={buy}>
-          Upgrade 'home' RAM ({homeComputer.maxRam}GB -&gt;&nbsp;{homeComputer.maxRam * 2}GB) -&nbsp;
+          Upgrade 'home' RAM ({numeralWrapper.formatRAM(homeComputer.maxRam)} -&gt;&nbsp;
+          {numeralWrapper.formatRAM(homeComputer.maxRam * 2)}) -&nbsp;
           <Money money={cost} player={props.p} />
         </Button>
       </span>

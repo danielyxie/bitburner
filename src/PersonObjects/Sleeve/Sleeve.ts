@@ -563,7 +563,6 @@ export class Sleeve extends Person {
    * Resets all parameters used to keep information about the current task
    */
   resetTaskStatus(): void {
-    console.error("");
     this.earningsForTask = createTaskTracker();
     this.gainRatesForTask = createTaskTracker();
     this.currentTask = SleeveTaskType.Idle;

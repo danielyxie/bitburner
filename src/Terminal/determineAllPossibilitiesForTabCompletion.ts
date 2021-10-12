@@ -18,6 +18,7 @@ const commands = [
   "clear",
   "cls",
   "connect",
+  "cp",
   "download",
   "expr",
   "free",
@@ -236,6 +237,13 @@ export function determineAllPossibilitiesForTabCompletion(
     addAllTextFiles();
     addAllDirectories();
 
+    return allPos;
+  }
+
+  if (isCommand("cp") && index === 0) {
+    addAllScripts();
+    addAllTextFiles();
+    addAllDirectories();
     return allPos;
   }
 

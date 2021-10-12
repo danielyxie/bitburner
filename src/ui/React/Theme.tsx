@@ -276,6 +276,12 @@ export function refreshTheme(): void {
           select: {
             color: Settings.theme.primary,
           },
+          selectLabel: {
+            color: Settings.theme.primary,
+          },
+          displayedRows: {
+            color: Settings.theme.primary,
+          },
         },
       },
       MuiTab: {

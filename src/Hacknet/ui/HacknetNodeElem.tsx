@@ -28,6 +28,7 @@ import { TableCell } from "../../ui/React/Table";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
 import TableRow from "@mui/material/TableRow";
+import { numeralWrapper } from "../../ui/numeralFormat";
 
 interface IProps {
   node: HacknetNode;
@@ -163,7 +164,7 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
               <Typography>RAM:</Typography>
             </TableCell>
             <TableCell>
-              <Typography>{node.ram}GB</Typography>
+              <Typography>{numeralWrapper.formatRAM(node.ram)}</Typography>
             </TableCell>
             <TableCell>
               <Button onClick={upgradeRamOnClick}>{upgradeRamContent}</Button>

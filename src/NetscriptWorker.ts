@@ -124,10 +124,14 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
       .catch((e) => reject(e));
   }).catch((e) => {
     if (e instanceof Error) {
-      workerScript.errorMessage = makeRuntimeRejectMsg(
-        workerScript,
-        e.message + ((e.stack && "\nstack:\n" + e.stack.toString()) || ""),
-      );
+      if (e instanceof SyntaxError) {
+        workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e.message + " (sorry we can't be more helpful)");
+      } else {
+        workerScript.errorMessage = makeRuntimeRejectMsg(
+          workerScript,
+          e.message + ((e.stack && "\nstack:\n" + e.stack.toString()) || ""),
+        );
+      }
       throw workerScript;
     } else if (isScriptErrorMessage(e)) {
       workerScript.errorMessage = e;

@@ -41,6 +41,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
     if (isPlayersGang) {
       const augs: string[] = [];
       for (const augName in Augmentations) {
+        if (augName === AugmentationNames.NeuroFluxGovernor) continue;
         const aug = Augmentations[augName];
         if (!aug.isSpecial) {
           augs.push(augName);

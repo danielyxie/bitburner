@@ -12,8 +12,7 @@ export interface IReviverValue {
 // off to that `fromJSON` fuunction, passing in the value.
 export function Reviver(key: string, value: IReviverValue | null): any {
   if (value == null) {
-    console.log("Reviver WRONGLY called with key: " + key + ", and value: " + value);
-    return 0;
+    return null;
   }
 
   if (typeof value === "object" && typeof value.ctor === "string" && typeof value.data !== "undefined") {

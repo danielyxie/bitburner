@@ -122,6 +122,7 @@ import { Router } from "./ui/GameRoot";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { is2DArray } from "./utils/helpers/is2DArray";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
+import { SpecialServers } from "./Server/data/SpecialServers";
 
 import { LogBoxEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
@@ -136,6 +137,7 @@ import { IIndustry } from "./Corporation/IIndustry";
 
 import { Faction } from "./Faction/Faction";
 import { Augmentation } from "./Augmentation/Augmentation";
+import { Page } from "./ui/Router";
 
 import { CodingContract } from "./CodingContracts";
 import { Stock } from "./StockMarket/Stock";
@@ -713,7 +715,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
   const gang = NetscriptGang(Player, workerScript, helper);
   const sleeve = NetscriptSleeve(Player, workerScript, helper);
-  const extra = NetscriptExtra(Player, workerScript, helper);
+  const extra = NetscriptExtra(Player, workerScript);
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
 
   const functions = {
@@ -3076,6 +3078,10 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("installBackdoor", `Successfully installed backdoor on '${server.hostname}'`);
 
         server.backdoorInstalled = true;
+
+        if (SpecialServers.WorldDaemon === server.hostname) {
+          Router.toBitVerse(false, false);
+        }
         return Promise.resolve();
       });
     },
@@ -3239,12 +3245,16 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     hospitalize: function (): any {
       updateDynamicRam("hospitalize", getRamCost("hospitalize"));
       checkSingularityAccess("hospitalize", 1);
+      if (Player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse) {
+        workerScript.log("hospitalize", "Cannot go to the hospital because the player is busy.");
+        return;
+      }
       return Player.hospitalize();
     },
     isBusy: function (): any {
       updateDynamicRam("isBusy", getRamCost("isBusy"));
       checkSingularityAccess("isBusy", 1);
-      return Player.isWorking;
+      return Player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse;
     },
     stopAction: function (): any {
       updateDynamicRam("stopAction", getRamCost("stopAction"));
@@ -3280,7 +3290,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log(
         "upgradeHomeRam",
-        `Purchased additional RAM for home computer! It now has ${homeComputer.maxRam}GB of RAM.`,
+        `Purchased additional RAM for home computer! It now has ${numeralWrapper.formatRAM(
+          homeComputer.maxRam,
+        )} of RAM.`,
       );
       return true;
     },
@@ -4170,8 +4182,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
       joinBladeburnerDivision: function (): any {
         updateDynamicRam("joinBladeburnerDivision", getRamCost("bladeburner", "joinBladeburnerDivision"));
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         if (Player.bitNodeN === 7 || SourceFileFlags[7] > 0) {
           if (Player.bitNodeN === 8) {
             return false;

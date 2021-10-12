@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Editor from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
@@ -21,6 +21,8 @@ import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
 import { iTutorialNextStep, ITutorial, iTutorialSteps } from "../../InteractiveTutorial";
+import { debounce } from "lodash";
+import { saveObject } from "../../SaveObject";
 
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -84,12 +86,22 @@ export function Root(props: IProps): React.ReactElement {
   const [filename, setFilename] = useState(props.filename ? props.filename : lastFilename);
   const [code, setCode] = useState<string>(props.filename ? props.code : lastCode);
   const [ram, setRAM] = useState("RAM: ???");
+  const [updatingRam, setUpdatingRam] = useState(false);
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [options, setOptions] = useState<Options>({
     theme: Settings.MonacoTheme,
     insertSpaces: Settings.MonacoInsertSpaces,
     fontSize: Settings.MonacoFontSize,
   });
+
+  const debouncedSetRAM = useMemo(
+    () =>
+      debounce((s) => {
+        setRAM(s);
+        setUpdatingRam(false);
+      }, 300),
+    [],
+  );
 
   // store the last known state in case we need to restart without nano.
   useEffect(() => {
@@ -165,6 +177,7 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {
           server.scripts[i].saveScript(filename, code, props.player.currentServer, server.scripts);
+          if (Settings.SaveGameOnFileSave) saveObject.saveGame();
           props.router.toTerminal();
           return;
         }
@@ -178,6 +191,7 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.textFiles.length; ++i) {
         if (server.textFiles[i].fn === filename) {
           server.textFiles[i].write(code);
+          if (Settings.SaveGameOnFileSave) saveObject.saveGame();
           props.router.toTerminal();
           return;
         }
@@ -188,6 +202,8 @@ export function Root(props: IProps): React.ReactElement {
       dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " + " or text file (.txt)");
       return;
     }
+
+    if (Settings.SaveGameOnFileSave) saveObject.saveGame();
     props.router.toTerminal();
   }
 
@@ -213,37 +229,39 @@ export function Root(props: IProps): React.ReactElement {
       lastPosition = editorRef.current.getPosition();
     }
     setCode(newCode);
+    updateRAM(newCode);
   }
 
-  async function updateRAM(): Promise<void> {
-    const codeCopy = code + "";
+  // calculate it once the first time the file is loaded.
+  useEffect(() => {
+    updateRAM(code);
+  }, []);
+
+  async function updateRAM(newCode: string): Promise<void> {
+    setUpdatingRam(true);
+    const codeCopy = newCode + "";
     const ramUsage = await calculateRamUsage(codeCopy, props.player.getCurrentServer().scripts);
     if (ramUsage > 0) {
-      setRAM("RAM: " + numeralWrapper.formatRAM(ramUsage));
+      debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage));
       return;
     }
     switch (ramUsage) {
       case RamCalculationErrorCode.ImportError: {
-        setRAM("RAM: Import Error");
+        debouncedSetRAM("RAM: Import Error");
         break;
       }
       case RamCalculationErrorCode.URLImportError: {
-        setRAM("RAM: HTTP Import Error");
+        debouncedSetRAM("RAM: HTTP Import Error");
         break;
       }
       case RamCalculationErrorCode.SyntaxError:
       default: {
-        setRAM("RAM: Syntax Error");
+        debouncedSetRAM("RAM: Syntax Error");
         break;
       }
     }
     return new Promise<void>(() => undefined);
   }
-
-  useEffect(() => {
-    const id = setInterval(updateRAM, 1000);
-    return () => clearInterval(id);
-  }, [code]);
 
   useEffect(() => {
     function maybeSave(event: KeyboardEvent): void {
@@ -326,7 +344,9 @@ export function Root(props: IProps): React.ReactElement {
       />
       <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
         <Button onClick={beautify}>Beautify</Button>
-        <Typography sx={{ mx: 1 }}>{ram}</Typography>
+        <Typography color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
+          {ram}
+        </Typography>
         <Button onClick={save}>Save & Close (Ctrl/Cmd + b)</Button>
         <Link sx={{ mx: 1 }} target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
           <Typography> Netscript Documentation</Typography>

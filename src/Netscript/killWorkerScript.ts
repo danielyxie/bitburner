@@ -10,7 +10,6 @@ import { RunningScript } from "../Script/RunningScript";
 import { GetServer } from "../Server/AllServers";
 
 import { compareArrays } from "../utils/helpers/compareArrays";
-import { roundToTwo } from "../utils/helpers/roundToTwo";
 
 export function killWorkerScript(runningScriptObj: RunningScript, hostname: string, rerenderUi?: boolean): boolean;
 export function killWorkerScript(workerScript: WorkerScript): boolean;
