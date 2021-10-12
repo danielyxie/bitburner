@@ -46,6 +46,31 @@ function Intelligence(): React.ReactElement {
   );
 }
 
+function Bladeburner(): React.ReactElement {
+  const player = use.Player();
+  const classes = useStyles();
+  const bladeburner = player.bladeburner;
+  if (bladeburner === null) return <></>;
+  const action = bladeburner.getTypeAndNameFromActionId(bladeburner.action);
+  if (action.type === "Idle") return <></>;
+  return (
+    <>
+      <TableRow>
+        <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
+          <Typography>Bladeburner:</Typography>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
+          <Typography>
+            {action.type}: {action.name}
+          </Typography>
+        </TableCell>
+      </TableRow>
+    </>
+  );
+}
+
 function Work(): React.ReactElement {
   const player = use.Player();
   const router = use.Router();
@@ -269,6 +294,7 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
               </TableCell>
             </TableRow>
             <Work />
+            <Bladeburner />
 
             <TableRow>
               <TableCell align="center" colSpan={2} classes={{ root: classes.cellNone }}>
