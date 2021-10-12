@@ -99,7 +99,6 @@ module.exports = {
     "no-catch-shadow": ["error"],
     "no-class-assign": ["error"],
     "no-compare-neg-zero": ["error"],
-    "no-cond-assign": ["off", "except-parens"],
     "no-confusing-arrow": ["error"],
     "no-console": ["off"],
     "no-const-assign": ["error"],

@@ -72,7 +72,7 @@ export function SellSharesModal(props: IProps): React.ReactElement {
     player.gainMoney(profit);
     player.recordMoneySource(profit, "corporation");
     props.onClose();
-     dialogBoxCreate(
+    dialogBoxCreate(
       <>
         Sold {numeralWrapper.formatMoney(shares)} shares for
         <Money money={profit} />. The corporation's stock price fell to&nbsp; <Money money={corp.sharePrice} />

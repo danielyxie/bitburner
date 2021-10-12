@@ -69,6 +69,11 @@ interface IDefaultSettings {
   MaxTerminalCapacity: number;
 
   /**
+   * Save the game when you save any file.
+   */
+  SaveGameOnFileSave: boolean;
+
+  /**
    * Whether the player should be asked to confirm purchasing each and every augmentation.
    */
   SuppressBuyAugmentationConfirmation: boolean;
@@ -168,6 +173,7 @@ export const defaultSettings: IDefaultSettings = {
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
   MaxTerminalCapacity: 200,
+  SaveGameOnFileSave: true,
   SuppressBuyAugmentationConfirmation: false,
   SuppressFactionInvites: false,
   SuppressHospitalizationPopup: false,
@@ -226,6 +232,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   MaxTerminalCapacity: defaultSettings.MaxTerminalCapacity,
   OwnedAugmentationsOrder: OwnedAugmentationsOrderSetting.AcquirementTime,
   PurchaseAugmentationsOrder: PurchaseAugmentationsOrderSetting.Default,
+  SaveGameOnFileSave: defaultSettings.SaveGameOnFileSave,
   SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
   SuppressFactionInvites: defaultSettings.SuppressFactionInvites,
   SuppressHospitalizationPopup: defaultSettings.SuppressHospitalizationPopup,
@@ -234,7 +241,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,
   MonacoTheme: "vs-dark",
   MonacoInsertSpaces: false,
-  MonacoFontSize: 10,
+  MonacoFontSize: 20,
 
   theme: {
     primarylight: defaultSettings.theme.primarylight,

@@ -35,8 +35,6 @@ import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
-import { Locations } from "./Locations/Locations";
-import { LocationName } from "./Locations/data/LocationNames";
 
 import { Money } from "./ui/React/Money";
 import { Hashes } from "./ui/React/Hashes";
@@ -92,34 +90,7 @@ const Engine: {
 
     Terminal.process(Router, Player, numCycles);
 
-    // Working
-    if (Player.isWorking) {
-      if (Player.workType == CONSTANTS.WorkTypeFaction) {
-        if (Player.workForFaction(numCycles)) {
-          Router.toFaction();
-        }
-      } else if (Player.workType == CONSTANTS.WorkTypeCreateProgram) {
-        if (Player.createProgramWork(numCycles)) {
-          Router.toTerminal();
-        }
-      } else if (Player.workType == CONSTANTS.WorkTypeStudyClass) {
-        if (Player.takeClass(numCycles)) {
-          Router.toCity();
-        }
-      } else if (Player.workType == CONSTANTS.WorkTypeCrime) {
-        if (Player.commitCrime(numCycles)) {
-          Router.toLocation(Locations[LocationName.Slums]);
-        }
-      } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
-        if (Player.workPartTime(numCycles)) {
-          Router.toCity();
-        }
-      } else {
-        if (Player.work(numCycles)) {
-          Router.toCity();
-        }
-      }
-    }
+    Player.process(Router, numCycles);
 
     // Update stock prices
     if (Player.hasWseAccount) {

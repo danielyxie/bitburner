@@ -13,13 +13,12 @@ export function netscriptDelay(time: number, workerScript: WorkerScript): Promis
 }
 
 export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): string {
-  const lineNum = "";
   const server = GetServer(workerScript.hostname);
   if (server == null) {
     throw new Error(`WorkerScript constructed with invalid server ip: ${workerScript.hostname}`);
   }
 
-  return "|" + server.hostname + "|" + workerScript.name + "|" + msg + lineNum;
+  return "|" + server.hostname + "|" + workerScript.name + "|" + msg;
 }
 
 export function resolveNetscriptRequestedThreads(

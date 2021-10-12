@@ -106,6 +106,10 @@ class NumeralFormatter {
   }
 
   formatRAM(n: number): string {
+    if (n < 1e3) return this.format(n, "0.00") + "GB";
+    if (n < 1e6) return this.format(n / 1e3, "0.00") + "TB";
+    if (n < 1e9) return this.format(n / 1e6, "0.00") + "PB";
+    if (n < 1e12) return this.format(n / 1e9, "0.00") + "EB";
     return this.format(n, "0.00") + "GB";
   }
 

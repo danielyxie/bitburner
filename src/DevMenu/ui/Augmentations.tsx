@@ -30,8 +30,7 @@ export function Augmentations(props: IProps): React.ReactElement {
   }
 
   function queueAllAugs(): void {
-    for (const i in AugmentationNames) {
-      const augName = AugmentationNames[i];
+    for (const augName of Object.keys(AugmentationNames)) {
       props.player.queueAugmentation(augName);
     }
   }

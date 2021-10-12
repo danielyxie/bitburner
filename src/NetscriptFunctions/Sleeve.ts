@@ -8,6 +8,7 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
 import { Augmentations } from "../Augmentation/Augmentations";
 import { CityName } from "../Locations/data/CityNames";
+import { findCrime } from "../Crime/CrimeHelpers";
 
 export interface INetscriptSleeve {
   getNumSleeves(): number;
@@ -87,13 +88,17 @@ export function NetscriptSleeve(
       checkSleeveNumber("setToSynchronize", sleeveNumber);
       return player.sleeves[sleeveNumber].synchronize(player);
     },
-    setToCommitCrime: function (asleeveNumber: any = 0, acrimeName: any = ""): boolean {
+    setToCommitCrime: function (asleeveNumber: any = 0, aCrimeRoughName: any = ""): boolean {
       const sleeveNumber = helper.number("setToCommitCrime", "sleeveNumber", asleeveNumber);
-      const crimeName = helper.string("setToUniversityCourse", "crimeName", acrimeName);
+      const crimeRoughName = helper.string("setToCommitCrime", "crimeName", aCrimeRoughName);
       helper.updateDynamicRam("setToCommitCrime", getRamCost("sleeve", "setToCommitCrime"));
       checkSleeveAPIAccess("setToCommitCrime");
       checkSleeveNumber("setToCommitCrime", sleeveNumber);
-      return player.sleeves[sleeveNumber].commitCrime(player, crimeName);
+      const crime = findCrime(crimeRoughName);
+      if (crime === null) {
+        return false;
+      }
+      return player.sleeves[sleeveNumber].commitCrime(player, crime.name);
     },
     setToUniversityCourse: function (asleeveNumber: any = 0, auniversityName: any = "", aclassName: any = ""): boolean {
       const sleeveNumber = helper.number("setToUniversityCourse", "sleeveNumber", asleeveNumber);

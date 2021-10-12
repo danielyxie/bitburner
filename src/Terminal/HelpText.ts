@@ -14,6 +14,7 @@ export const TerminalHelpText: string[] = [
   "clear                                Clear all text on the terminal ",
   "cls                                  See 'clear' command ",
   "connect [hostname]                   Connects to a remote server",
+  "cp [src] [dst]:                      Copy a file",
   "download [script/text file]          Downloads scripts or text files to your computer",
   "expr [math expression]               Evaluate a mathematical expression",
   "free                                 Check the machine's memory (RAM) usage",
@@ -158,6 +159,7 @@ export const HelpTexts: IMap<string[]> = {
     "to this command. Note that only servers that are immediately adjacent to the current server in the network can be connected to. To ",
     "see which servers can be connected to, use the 'scan' command.",
   ],
+  cp: ["cp [src] [dst]", " ", "Copy a file on this server. To copy a file to another server use scp."],
   download: [
     "download [script/text file]",
     " ",

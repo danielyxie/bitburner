@@ -24,7 +24,10 @@ export function nano(
       if (script == null) {
         let code = "";
         if (filename.endsWith(".ns") || filename.endsWith(".js")) {
-          code = `export async function main(ns) {
+          code = `/**
+ * @param {NS} ns
+ **/
+export async function main(ns) {
 
 }`;
         }

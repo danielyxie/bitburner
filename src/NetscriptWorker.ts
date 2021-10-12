@@ -125,10 +125,14 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
       .catch((e) => reject(e));
   }).catch((e) => {
     if (e instanceof Error) {
-      workerScript.errorMessage = makeRuntimeRejectMsg(
-        workerScript,
-        e.message + ((e.stack && "\nstack:\n" + e.stack.toString()) || ""),
-      );
+      if (e instanceof SyntaxError) {
+        workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e.message + " (sorry we can't be more helpful)");
+      } else {
+        workerScript.errorMessage = makeRuntimeRejectMsg(
+          workerScript,
+          e.message + ((e.stack && "\nstack:\n" + e.stack.toString()) || ""),
+        );
+      }
       throw workerScript;
     } else if (isScriptErrorMessage(e)) {
       workerScript.errorMessage = e;
@@ -190,7 +194,8 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
                 cb(res);
               })
               .catch(function (err: any) {
-                console.error(err);
+                // workerscript is when you cancel a delay
+                if (!(err instanceof WorkerScript)) console.error(err);
               });
           };
           int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));

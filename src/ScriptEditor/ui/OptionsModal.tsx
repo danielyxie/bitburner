@@ -44,6 +44,7 @@ export function OptionsModal(props: IProps): React.ReactElement {
         <Select onChange={(event) => setTheme(event.target.value)} defaultValue={props.options.theme}>
           <MenuItem value="vs-dark">dark</MenuItem>
           <MenuItem value="light">light</MenuItem>
+          <MenuItem value="monokai">monokai</MenuItem>
         </Select>
       </Box>
 

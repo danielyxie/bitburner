@@ -11,6 +11,7 @@ import { BaseServer } from "../../Server/BaseServer";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
 
 // TODO make this an enum when this gets converted to TypeScript
 export const ServerType = {
@@ -21,6 +22,8 @@ export const ServerType = {
 };
 
 interface IProps {
+  purchase: () => void;
+  canPurchase: boolean;
   serverType: number;
   onChange: (event: SelectChangeEvent<string>) => void;
   value: string;
@@ -61,7 +64,16 @@ export function ServerDropdown(props: IProps): React.ReactElement {
   }
 
   return (
-    <Select sx={{ mx: 1 }} value={props.value} onChange={props.onChange}>
+    <Select
+      startAdornment={
+        <Button onClick={props.purchase} disabled={!props.canPurchase}>
+          Buy
+        </Button>
+      }
+      sx={{ mx: 1 }}
+      value={props.value}
+      onChange={props.onChange}
+    >
       {servers}
     </Select>
   );

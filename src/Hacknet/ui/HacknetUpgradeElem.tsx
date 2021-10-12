@@ -64,13 +64,21 @@ export function HacknetUpgradeElem(props: IProps): React.ReactElement {
       </Typography>
 
       <Typography>{upg.desc}</Typography>
-      <Button onClick={purchase} disabled={!canPurchase}>
-        Purchase
-      </Button>
-      {level > 0 && effect && <Typography>{effect}</Typography>}
-      {upg.hasTargetServer && (
-        <ServerDropdown value={selectedServer} serverType={ServerType.Foreign} onChange={changeTargetServer} />
+      {!upg.hasTargetServer && (
+        <Button onClick={purchase} disabled={!canPurchase}>
+          Buy
+        </Button>
       )}
+      {upg.hasTargetServer && (
+        <ServerDropdown
+          purchase={purchase}
+          canPurchase={canPurchase}
+          value={selectedServer}
+          serverType={ServerType.Foreign}
+          onChange={changeTargetServer}
+        />
+      )}
+      {level > 0 && effect && <Typography>{effect}</Typography>}
     </Paper>
   );
 }

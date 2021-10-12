@@ -77,7 +77,6 @@ export function init(this: IPlayer): void {
 }
 
 export function prestigeAugmentation(this: IPlayer): void {
-  const homeComp = this.getHomeComputer();
   this.currentServer = SpecialServers.Home;
 
   this.numPeopleKilled = 0;
@@ -453,6 +452,8 @@ export function gainIntelligenceExp(this: IPlayer, exp: number): void {
   if (SourceFileFlags[5] > 0 || this.intelligence > 0) {
     this.intelligence_exp += exp;
   }
+
+  this.intelligence = Math.floor(this.calculateSkill(this.intelligence_exp));
 }
 
 //Given a string expression like "str" or "strength", returns the given stat
@@ -572,6 +573,37 @@ export function startWork(this: IPlayer, router: IRouter, companyName: string): 
 
   this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
   router.toWork();
+}
+
+export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
+  // Working
+  if (this.isWorking) {
+    if (this.workType == CONSTANTS.WorkTypeFaction) {
+      if (this.workForFaction(numCycles)) {
+        router.toFaction();
+      }
+    } else if (this.workType == CONSTANTS.WorkTypeCreateProgram) {
+      if (this.createProgramWork(numCycles)) {
+        router.toTerminal();
+      }
+    } else if (this.workType == CONSTANTS.WorkTypeStudyClass) {
+      if (this.takeClass(numCycles)) {
+        router.toCity();
+      }
+    } else if (this.workType == CONSTANTS.WorkTypeCrime) {
+      if (this.commitCrime(numCycles)) {
+        router.toLocation(Locations[LocationName.Slums]);
+      }
+    } else if (this.workType == CONSTANTS.WorkTypeCompanyPartTime) {
+      if (this.workPartTime(numCycles)) {
+        router.toCity();
+      }
+    } else {
+      if (this.work(numCycles)) {
+        router.toCity();
+      }
+    }
+  }
 }
 
 export function cancelationPenalty(this: IPlayer): number {

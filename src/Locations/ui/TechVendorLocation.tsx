@@ -17,6 +17,7 @@ import { getPurchaseServerCost } from "../../Server/ServerPurchases";
 import { Money } from "../../ui/React/Money";
 import { use } from "../../ui/Context";
 import { PurchaseServerModal } from "./PurchaseServerModal";
+import { numeralWrapper } from "../../ui/numeralFormat";
 
 interface IServerProps {
   ram: number;
@@ -30,7 +31,7 @@ function ServerButton(props: IServerProps): React.ReactElement {
   return (
     <>
       <Button onClick={() => setOpen(true)} disabled={!player.canAfford(cost)}>
-        Purchase {props.ram}GB Server&nbsp;-&nbsp;
+        Purchase {numeralWrapper.formatRAM(props.ram)} Server&nbsp;-&nbsp;
         <Money money={cost} player={player} />
       </Button>
       <PurchaseServerModal

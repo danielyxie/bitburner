@@ -245,6 +245,7 @@ export class PlayerObject implements IPlayer {
   getIntelligenceBonus: (weight: number) => number;
   getCasinoWinnings: () => number;
   quitJob: (company: string) => void;
+  process: (router: IRouter, numCycles?: number) => void;
   createHacknetServer: () => HacknetServer;
   startCreateProgramWork: (router: IRouter, programName: string, time: number, reqLevel: number) => void;
   queueAugmentation: (augmentationName: string) => void;
@@ -507,6 +508,7 @@ export class PlayerObject implements IPlayer {
     this.getWorkAgiExpGain = generalMethods.getWorkAgiExpGain;
     this.getWorkChaExpGain = generalMethods.getWorkChaExpGain;
     this.getWorkRepGain = generalMethods.getWorkRepGain;
+    this.process = generalMethods.process;
     this.startCreateProgramWork = generalMethods.startCreateProgramWork;
     this.createProgramWork = generalMethods.createProgramWork;
     this.finishCreateProgramWork = generalMethods.finishCreateProgramWork;

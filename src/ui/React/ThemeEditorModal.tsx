@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Modal } from "./Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import ReplyIcon from "@mui/icons-material/Reply";
@@ -87,17 +89,22 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
-      <Button color="primary">primary</Button>
-      <Button color="secondary">secondary</Button>
-      <Button color="warning">warning</Button>
-      <Button color="info">info</Button>
-      <Button color="error">error</Button>
-      <Typography color="primary">primary</Typography>
-      <Typography color="secondary">secondary</Typography>
-      <Typography color="warning">warning</Typography>
-      <Typography color="info">info</Typography>
-      <Typography color="error">error</Typography>
+      <Paper>
+        <Tooltip open={true} placement={"top"} title={<Typography>Example tooltip</Typography>}>
+          <Button color="primary">primary button</Button>
+        </Tooltip>
+        <Button color="secondary">secondary button</Button>
+        <Button color="warning">warning button</Button>
+        <Button color="info">info button</Button>
+        <Button color="error">error button</Button>
+        <Button disabled>disabled button</Button>
+        <Typography color="primary">text with primary color</Typography>
+        <Typography color="secondary">text with secondary color</Typography>
+        <Typography color="error">text with error color</Typography>
+        <TextField value={"Text field"} />
+      </Paper>
       <br />
+      <Typography>Warning: Editing the theme is very slow.</Typography>
       <ColorEditor
         name="primarylight"
         onColorChange={onColorChange}

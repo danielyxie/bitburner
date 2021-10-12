@@ -47,7 +47,7 @@ export const CorporationUpgrades: IMap<CorporationUpgrade> = {
   "3": [
     3,
     4e9,
-    1.12,
+    1.5,
     0.005,
     "Wilson Analytics",
     "Purchase data and analysis from Wilson, a marketing research " +

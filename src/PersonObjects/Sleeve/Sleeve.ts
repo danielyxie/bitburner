@@ -476,9 +476,9 @@ export class Sleeve extends Person {
       return null;
     }
 
-    let time = this.storedCycles * CONSTANTS.MilliPerCycle;
     let cyclesUsed = this.storedCycles;
     cyclesUsed = Math.min(cyclesUsed, 15);
+    let time = cyclesUsed * CONSTANTS.MilliPerCycle;
     if (this.currentTaskMaxTime !== 0 && this.currentTaskTime + time > this.currentTaskMaxTime) {
       time = this.currentTaskMaxTime - this.currentTaskTime;
       cyclesUsed = Math.floor(time / CONSTANTS.MilliPerCycle);
@@ -489,6 +489,7 @@ export class Sleeve extends Person {
         cyclesUsed = 0;
       }
     }
+
     this.currentTaskTime += time;
 
     // Shock gradually goes towards 100
@@ -846,7 +847,6 @@ export class Sleeve extends Person {
 
     this.currentTaskLocation = companyName;
     this.currentTask = SleeveTaskType.Company;
-    this.currentTaskMaxTime = CONSTANTS.MillisecondsPer8Hours;
 
     return true;
   }
@@ -906,7 +906,6 @@ export class Sleeve extends Person {
 
     this.currentTaskLocation = factionName;
     this.currentTask = SleeveTaskType.Faction;
-    this.currentTaskMaxTime = CONSTANTS.MillisecondsPer20Hours;
 
     return true;
   }

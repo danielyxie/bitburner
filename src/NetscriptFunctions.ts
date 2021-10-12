@@ -122,6 +122,7 @@ import { Router } from "./ui/GameRoot";
 import { numeralWrapper } from "./ui/numeralFormat";
 import { is2DArray } from "./utils/helpers/is2DArray";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
+import { SpecialServers } from "./Server/data/SpecialServers";
 
 import { LogBoxEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
@@ -136,6 +137,7 @@ import { IIndustry } from "./Corporation/IIndustry";
 
 import { Faction } from "./Faction/Faction";
 import { Augmentation } from "./Augmentation/Augmentation";
+import { Page } from "./ui/Router";
 
 import { CodingContract } from "./CodingContracts";
 import { Stock } from "./StockMarket/Stock";
@@ -724,7 +726,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
   const gang = NetscriptGang(Player, workerScript, helper);
   const sleeve = NetscriptSleeve(Player, workerScript, helper);
-  const extra = NetscriptExtra(Player, workerScript, helper);
+  const extra = NetscriptExtra(Player, workerScript);
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
   const stanek = NetscriptStanek(Player, workerScript, helper);
 
@@ -732,7 +734,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     hacknet: hacknet,
     sprintf: sprintf,
     vsprintf: vsprintf,
-    scan: function (ip: any = workerScript.hostname, hostnames: any = true): any {
+    scan: function (ip: any = workerScript.hostname): any {
       updateDynamicRam("scan", getRamCost("scan"));
       const server = GetServer(ip);
       if (server == null) {
@@ -740,14 +742,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       const out = [];
       for (let i = 0; i < server.serversOnNetwork.length; i++) {
-        let entry;
         const s = getServerOnNetwork(server, i);
         if (s === null) continue;
-        if (hostnames) {
-          entry = s.hostname;
-        } else {
-          entry = s.hostname;
-        }
+        const entry = s.hostname;
         if (entry == null) {
           continue;
         }
@@ -874,7 +871,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return Promise.resolve(moneyAfter / moneyBefore);
       });
     },
-    growthAnalyze: function (ip: any, growth: any): any {
+    growthAnalyze: function (ip: any, growth: any, cores: any = 1): any {
       updateDynamicRam("growthAnalyze", getRamCost("growthAnalyze"));
 
       // Check argument validity
@@ -887,7 +884,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("growthAnalyze", `Invalid argument: growth must be numeric and >= 1, is ${growth}.`);
       }
 
-      return numCycleForGrowth(server, Number(growth), Player, 1);
+      return numCycleForGrowth(server, Number(growth), Player, cores);
     },
     weaken: function (ip: any, { threads: requestedThreads }: any = {}): any {
       updateDynamicRam("weaken", getRamCost("weaken"));
@@ -1596,9 +1593,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     getServer: function (ip: any): any {
       updateDynamicRam("getServer", getRamCost("getServer"));
-      if (SourceFileFlags[5] <= 0 && Player.bitNodeN !== 5) {
-        throw makeRuntimeErrorMsg("getServer", "Requires Source-File 5 to run.");
-      }
       const server = safeGetServer(ip, "getServer");
       const copy = Object.assign({}, server);
       // These fields should be hidden.
@@ -2333,17 +2327,16 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
             // Create a new script
             script = new Script(fn, data, server.hostname, server.scripts);
             server.scripts.push(script);
-            return true;
+            return script.updateRamUsage(server.scripts);
           }
           mode === "w" ? (script.code = data) : (script.code += data);
-          script.updateRamUsage(server.scripts);
-          script.markUpdated();
+          return script.updateRamUsage(server.scripts);
         } else {
           // Write to text file
           const txtFile = getTextFile(fn, server);
           if (txtFile == null) {
             createTextFile(fn, data, server);
-            return true;
+            return Promise.resolve();
           }
           if (mode === "w") {
             txtFile.write(data);
@@ -2351,7 +2344,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
             txtFile.append(data);
           }
         }
-        return true;
+        return Promise.resolve();
       } else {
         throw makeRuntimeErrorMsg("write", `Invalid argument: ${port}`);
       }
@@ -3097,6 +3090,10 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("installBackdoor", `Successfully installed backdoor on '${server.hostname}'`);
 
         server.backdoorInstalled = true;
+
+        if (SpecialServers.WorldDaemon === server.hostname) {
+          Router.toBitVerse(false, false);
+        }
         return Promise.resolve();
       });
     },
@@ -3260,12 +3257,16 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     hospitalize: function (): any {
       updateDynamicRam("hospitalize", getRamCost("hospitalize"));
       checkSingularityAccess("hospitalize", 1);
+      if (Player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse) {
+        workerScript.log("hospitalize", "Cannot go to the hospital because the player is busy.");
+        return;
+      }
       return Player.hospitalize();
     },
     isBusy: function (): any {
       updateDynamicRam("isBusy", getRamCost("isBusy"));
       checkSingularityAccess("isBusy", 1);
-      return Player.isWorking;
+      return Player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse;
     },
     stopAction: function (): any {
       updateDynamicRam("stopAction", getRamCost("stopAction"));
@@ -3301,7 +3302,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log(
         "upgradeHomeRam",
-        `Purchased additional RAM for home computer! It now has ${homeComputer.maxRam}GB of RAM.`,
+        `Purchased additional RAM for home computer! It now has ${numeralWrapper.formatRAM(
+          homeComputer.maxRam,
+        )} of RAM.`,
       );
       return true;
     },
@@ -4191,9 +4194,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       },
       joinBladeburnerDivision: function (): any {
         updateDynamicRam("joinBladeburnerDivision", getRamCost("bladeburner", "joinBladeburnerDivision"));
-        checkBladeburnerAccess("joinBladeburnerDivision", true);
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         if (Player.bitNodeN === 7 || SourceFileFlags[7] > 0) {
           if (Player.bitNodeN === 8) {
             return false;
@@ -4208,12 +4208,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
           ) {
             Player.bladeburner = new Bladeburner(Player);
             workerScript.log("joinBladeburnerDivision", "You have been accepted into the Bladeburner division");
-
-            const worldHeader = document.getElementById("world-menu-header");
-            if (worldHeader instanceof HTMLElement) {
-              worldHeader.click();
-              worldHeader.click();
-            }
 
             return true;
           } else {
@@ -4634,19 +4628,19 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     ...extra,
   };
 
-  function getFunctionNames(obj: NS): string[] {
+  function getFunctionNames(obj: NS, prefix: string): string[] {
     const functionNames: string[] = [];
     for (const [key, value] of Object.entries(obj)) {
       if (typeof value == "function") {
-        functionNames.push(key);
+        functionNames.push(prefix + key);
       } else if (typeof value == "object") {
-        functionNames.push(...getFunctionNames(value));
+        functionNames.push(...getFunctionNames(value, key + "."));
       }
     }
     return functionNames;
   }
 
-  const possibleLogs = Object.fromEntries([...getFunctionNames(functions)].map((a) => [a, true]));
+  const possibleLogs = Object.fromEntries([...getFunctionNames(functions, "")].map((a) => [a, true]));
 
   return functions;
 } // End NetscriptFunction()

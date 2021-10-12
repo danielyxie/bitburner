@@ -137,7 +137,7 @@ function prestigeAugmentation(): void {
     }
   }
 
-  if (augmentationExists(AugmentationNames.StaneksGift) && Augmentations[AugmentationNames.StaneksGift].owned) {
+  if (augmentationExists(AugmentationNames.StaneksGift1) && Augmentations[AugmentationNames.StaneksGift1].owned) {
     // TODO(hydroflame): refactor faction names so we don't have to hard
     // code strings.
     joinFaction(Factions["Church of the Machine God"]);

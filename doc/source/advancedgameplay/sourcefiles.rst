@@ -1,6 +1,6 @@
 .. _gameplay_sourcefiles:
 
-.. warning:: This page contains spoilers regarding the game's story/plot-line.
+.. warning:: This page contains spoilers for the game
 
 Source-Files
 ============

@@ -1,12 +1,13 @@
 growthAnalyze() Netscript Function
 ==================================
 
-.. js:function:: growthAnalyze(hostname, growthAmount)
+.. js:function:: growthAnalyze(hostname, growthAmount[, cores])
 
     :RAM cost: 1 GB
     :param string hostname: Hostname of server to analyze.
     :param number growthAmount: Multiplicative factor by which the server is
         grown. Decimal form. Must be >= 1.
+    :param number cores: Amount of cores on the server that would run the growth, defaults to 1
     :returns: The amount of :doc:`grow<grow>` threads needed to grow the specified
         server by the specified amount.
 

@@ -125,14 +125,16 @@ export class Server extends BaseServer {
   /**
    * Change this server's maximum money
    * @param n - Value by which to change the server's maximum money
-   * @param perc - Whether it should be changed by a percentage, or a flat value
    */
-  changeMaximumMoney(n: number, perc = false): void {
-    if (perc) {
-      this.moneyMax *= n;
-    } else {
-      this.moneyMax += n;
+  changeMaximumMoney(n: number): void {
+    const softCap = 10e12;
+    if (this.moneyMax > softCap) {
+      const aboveCap = this.moneyMax - softCap;
+      n = 1 + (n - 1) / Math.log(aboveCap) / Math.log(8);
     }
+    console.log(n);
+
+    this.moneyMax *= n;
   }
 
   /**
