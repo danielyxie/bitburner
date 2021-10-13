@@ -93,7 +93,7 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
       let result;
       try {
         result = f(...args);
-      } catch (e) {
+      } catch (e: any) {
         runningFn = null;
         throw e;
       }
@@ -151,7 +151,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
     const importProcessingRes = processNetscript1Imports(code, workerScript);
     codeWithImports = importProcessingRes.code;
     codeLineOffset = importProcessingRes.lineOffset;
-  } catch (e) {
+  } catch (e: any) {
     dialogBoxCreate("Error processing Imports in " + workerScript.name + ":<br>" + e);
     workerScript.env.stopFlag = true;
     workerScript.running = false;
@@ -251,7 +251,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
   let interpreter: any;
   try {
     interpreter = new Interpreter(codeWithImports, interpreterInitialization, codeLineOffset);
-  } catch (e) {
+  } catch (e: any) {
     dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" + e);
     workerScript.env.stopFlag = true;
     workerScript.running = false;
@@ -271,7 +271,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
         } else {
           resolve(workerScript);
         }
-      } catch (e) {
+      } catch (e: any) {
         e = e.toString();
         if (!isScriptErrorMessage(e)) {
           e = makeRuntimeRejectMsg(workerScript, e);
@@ -283,7 +283,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
 
     try {
       runInterpreter();
-    } catch (e) {
+    } catch (e: any) {
       if (isString(e)) {
         workerScript.errorMessage = e;
         return reject(workerScript);

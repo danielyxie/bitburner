@@ -73,9 +73,10 @@ class BitburnerSaveObject {
     const bn = Player.bitNodeN;
     const filename = `bitburnerSave_BN${bn}x${SourceFileFlags[bn]}_${epochTime}.json`;
     const file = new Blob([saveString], { type: "text/plain" });
-    if (window.navigator.msSaveOrOpenBlob) {
+    const navigator = window.navigator as any;
+    if (navigator.msSaveOrOpenBlob) {
       // IE10+
-      window.navigator.msSaveOrOpenBlob(file, filename);
+      navigator.msSaveOrOpenBlob(file, filename);
     } else {
       // Others
       const a = document.createElement("a"),
