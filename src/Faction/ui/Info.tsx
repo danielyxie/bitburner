@@ -58,10 +58,12 @@ export function Info(props: IProps): React.ReactElement {
                 Augmentation.
               </Typography>
               <MathJaxContext>
-                <MathJax>{String.raw`\large{r = \text{total faction reputation}}`}</MathJax>
+                <MathJax>{"\\(\\huge{r = \\text{total faction reputation}}\\)"}</MathJax>
               </MathJaxContext>
               <MathJaxContext>
-                <MathJax>{String.raw`\large{favor=\left\lfloor\log_{1.02}\left(\frac{r+25000}{25500}\right)\right\rfloor}`}</MathJax>
+                <MathJax>
+                  {"\\(\\huge{favor=\\left\\lfloor\\log_{1.02}\\left(\\frac{r+25000}{25500}\\right)\\right\\rfloor}\\)"}
+                </MathJax>
               </MathJaxContext>
             </>
           }
@@ -85,10 +87,10 @@ export function Info(props: IProps): React.ReactElement {
               </Typography>
 
               <MathJaxContext>
-                <MathJax>{"\\(\\frac{10}{4x} \\approx 2^{12}\\)"}</MathJax>
+                <MathJax>{"\\(\\huge{r = reputation}\\)"}</MathJax>
               </MathJaxContext>
               <MathJaxContext>
-                <MathJax>{String.raw`\large{\Delta r = \Delta r \times \frac{100+favor}{100}}`}</MathJax>
+                <MathJax>{"\\(\\huge{\\Delta r = \\Delta r \\times \\frac{100+favor}{100}}\\)"}</MathJax>
               </MathJaxContext>
             </>
           }
