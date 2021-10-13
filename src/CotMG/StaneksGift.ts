@@ -193,6 +193,7 @@ export class StaneksGift implements IStaneksGift {
           break;
       }
     }
+    p.updateSkillLevels();
   }
 
   prestigeAugmentation(): void {
