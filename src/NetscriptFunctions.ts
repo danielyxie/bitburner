@@ -147,6 +147,7 @@ import { INetscriptSleeve, NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { INetscriptExtra, NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { INetscriptHacknet, NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { SnackbarEvents } from "./ui/React/Snackbar";
 
 const defaultInterpreter = new Interpreter("", () => undefined);
 
@@ -2682,6 +2683,11 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     alert: function (message: any): void {
       dialogBoxCreate(message);
+    },
+    toast: function (message: any, variant: any = "success"): void {
+      if (!["success", "info", "warning", "error"].includes(variant))
+        throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
+      SnackbarEvents.emit(message, variant);
     },
     prompt: function (txt: any): any {
       if (!isString(txt)) {

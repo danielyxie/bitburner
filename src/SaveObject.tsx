@@ -10,7 +10,7 @@ import { Settings } from "./Settings/Settings";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 
-import { GameSavedEvents } from "./ui/React/Snackbar";
+import { SnackbarEvents } from "./ui/React/Snackbar";
 
 import * as ExportBonus from "./ExportBonus";
 
@@ -61,7 +61,7 @@ class BitburnerSaveObject {
     const saveString = this.getSaveString();
 
     save(saveString)
-      .then(() => GameSavedEvents.emit())
+      .then(() => SnackbarEvents.emit("Game Saved!", "info"))
       .catch((err) => console.error(err));
   }
 

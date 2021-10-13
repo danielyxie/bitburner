@@ -1,29 +1,48 @@
-import React, { useState, useEffect } from "react";
-
-import { Snackbar as S } from "@mui/material";
+import React, { useEffect } from "react";
+import { useSnackbar, SnackbarProvider as SB } from "notistack";
 import { EventEmitter } from "../../utils/EventEmitter";
-import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
 import Paper from "@mui/material/Paper";
 
-export const GameSavedEvents = new EventEmitter<[]>();
+interface IProps {
+  children: React.ReactNode | React.ReactNode[];
+}
+
+export function SnackbarProvider(props: IProps): React.ReactElement {
+  return (
+    <SB dense maxSnack={9} anchorOrigin={{ horizontal: "right", vertical: "bottom" }} autoHideDuration={2000}>
+      {props.children}
+    </SB>
+  );
+}
+
+export const SnackbarEvents = new EventEmitter<[string, "success" | "warning" | "error" | "info"]>();
 
 export function Snackbar(): React.ReactElement {
-  const [open, setOpen] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
-  useEffect(() => GameSavedEvents.subscribe(() => setOpen(true)));
-  return (
-    <S
-      open={open}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "center",
-      }}
-      autoHideDuration={2000}
-      onClose={() => setOpen(false)}
-    >
-      <Paper sx={{ p: 2 }}>
-        <Typography>Game Saved!</Typography>
-      </Paper>
-    </S>
+  useEffect(() =>
+    SnackbarEvents.subscribe((s, variant) =>
+      enqueueSnackbar(<Alert severity={variant}>{s}</Alert>, {
+        content: (k, m) => <Paper key={k}>{m}</Paper>,
+        variant: variant,
+      }),
+    ),
   );
+  return <></>;
+  // return (
+  //   <S
+  //     open={open}
+  //     anchorOrigin={{
+  //       vertical: "top",
+  //       horizontal: "center",
+  //     }}
+  //     autoHideDuration={2000}
+  //     onClose={() => setOpen(false)}
+  //   >
+  //     <Paper sx={{ p: 2 }}>
+  //       <Typography>Game Saved!</Typography>
+  //     </Paper>
+  //   </S>
+  // );
 }
