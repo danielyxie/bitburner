@@ -294,6 +294,27 @@ export function refreshTheme(): void {
           },
         },
       },
+      MuiAlert: {
+        styleOverrides: {
+          root: {
+            backgroundColor: Settings.theme.black,
+            borderRadius: 0,
+            border: "1px solid " + Settings.theme.well,
+          },
+          standardSuccess: {
+            color: Settings.theme.successLight,
+          },
+          standardError: {
+            color: Settings.theme.errorlight,
+          },
+          standardWarning: {
+            color: Settings.theme.warninglight,
+          },
+          standardInfo: {
+            color: Settings.theme.infolight,
+          },
+        },
+      },
     },
   });
 }

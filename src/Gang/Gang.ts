@@ -97,7 +97,7 @@ export class Gang {
       this.processExperienceGains(cycles);
       this.processTerritoryAndPowerGains(cycles);
       this.storedCycles -= cycles;
-    } catch (e) {
+    } catch (e: any) {
       console.error(`Exception caught when processing Gang: ${e}`);
     }
   }
@@ -344,7 +344,7 @@ export class Gang {
         workerScript.log("ascend", `Ascended Gang member ${member.name}`);
       }
       return res;
-    } catch (e) {
+    } catch (e: any) {
       if (workerScript == null) {
         exceptionAlert(e);
       }

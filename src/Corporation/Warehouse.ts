@@ -99,7 +99,7 @@ export class Warehouse {
   updateSize(corporation: ICorporation, industry: IIndustry): void {
     try {
       this.size = this.level * 100 * corporation.getStorageMultiplier() * industry.getStorageMultiplier();
-    } catch (e) {
+    } catch (e: any) {
       exceptionAlert(e);
     }
   }

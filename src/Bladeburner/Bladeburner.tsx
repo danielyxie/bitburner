@@ -132,7 +132,7 @@ export class Bladeburner implements IBladeburner {
             return this.resetAction();
           }
           this.actionTimeToComplete = action.getActionTime(this);
-        } catch (e) {
+        } catch (e: any) {
           exceptionAlert(e);
         }
         break;
@@ -149,7 +149,7 @@ export class Bladeburner implements IBladeburner {
             return this.resetAction();
           }
           this.actionTimeToComplete = action.getActionTime(this);
-        } catch (e) {
+        } catch (e: any) {
           exceptionAlert(e);
         }
         break;
@@ -169,7 +169,7 @@ export class Bladeburner implements IBladeburner {
             throw new Error("Failed to get BlackOperation object for: " + actionId.name);
           }
           this.actionTimeToComplete = action.getActionTime(this);
-        } catch (e) {
+        } catch (e: any) {
           exceptionAlert(e);
         }
         break;
@@ -220,7 +220,7 @@ export class Bladeburner implements IBladeburner {
       for (let i = 0; i < arrayOfCommands.length; ++i) {
         this.executeConsoleCommand(player, arrayOfCommands[i]);
       }
-    } catch (e) {
+    } catch (e: any) {
       exceptionAlert(e);
     }
   }
@@ -1298,7 +1298,7 @@ export class Bladeburner implements IBladeburner {
             action.level = action.maxLevel;
           } // Autolevel
           this.startAction(player, this.action); // Repeat action
-        } catch (e) {
+        } catch (e: any) {
           exceptionAlert(e);
         }
         break;
@@ -1387,7 +1387,7 @@ export class Bladeburner implements IBladeburner {
               this.log("You lost " + formatNumber(losses, 0) + " team members during " + action.name);
             }
           }
-        } catch (e) {
+        } catch (e: any) {
           exceptionAlert(e);
         }
         break;
@@ -2056,7 +2056,7 @@ export class Bladeburner implements IBladeburner {
       this.startAction(player, actionId);
       workerScript.log("bladeburner.startAction", `Starting bladeburner action with type '${type}' and name ${name}"`);
       return true;
-    } catch (e) {
+    } catch (e: any) {
       this.resetAction();
       workerScript.log("bladeburner.startAction", errorLogText);
       return false;

@@ -1,7 +1,6 @@
 /* eslint-disable spaced-comment */
 module.exports = {
   plugins: [
-    "stylelint-declaration-use-variable",
     "stylelint-order" /*,
         "stylelint-scss" */,
   ],
