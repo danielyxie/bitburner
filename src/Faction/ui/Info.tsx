@@ -9,7 +9,7 @@ import { FactionInfo } from "../../Faction/FactionInfo";
 
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
-import { MathComponent } from "mathjax-react";
+import { MathJax, MathJaxContext } from "better-react-mathjax";
 
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
@@ -57,10 +57,12 @@ export function Info(props: IProps): React.ReactElement {
                 You will have <Favor favor={props.faction.favor + favorGain} /> faction favor after installing an
                 Augmentation.
               </Typography>
-              <MathComponent tex={String.raw`\large{r = \text{total faction reputation}}`} />
-              <MathComponent
-                tex={String.raw`\large{favor=\left\lfloor\log_{1.02}\left(\frac{r+25000}{25500}\right)\right\rfloor}`}
-              />
+              <MathJaxContext>
+                <MathJax>{String.raw`\large{r = \text{total faction reputation}}`}</MathJax>
+              </MathJaxContext>
+              <MathJaxContext>
+                <MathJax>{String.raw`\large{favor=\left\lfloor\log_{1.02}\left(\frac{r+25000}{25500}\right)\right\rfloor}`}</MathJax>
+              </MathJaxContext>
             </>
           }
         >
@@ -81,8 +83,13 @@ export function Info(props: IProps): React.ReactElement {
                 favor is gained whenever you install an Augmentation. The amount of favor you gain depends on the total
                 amount of reputation you earned with this faction. Across all resets.
               </Typography>
-              <MathComponent tex={String.raw`\large{r = reputation}`} />
-              <MathComponent tex={String.raw`\large{\Delta r = \Delta r \times \frac{100+favor}{100}}`} />
+
+              <MathJaxContext>
+                <MathJax>{"\\(\\frac{10}{4x} \\approx 2^{12}\\)"}</MathJax>
+              </MathJaxContext>
+              <MathJaxContext>
+                <MathJax>{String.raw`\large{\Delta r = \Delta r \times \frac{100+favor}{100}}`}</MathJax>
+              </MathJaxContext>
             </>
           }
         >

@@ -5,7 +5,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
 import { Money } from "../../ui/React/Money";
-import { MathComponent } from "mathjax-react";
+import { MathJax, MathJaxContext } from "better-react-mathjax";
 
 type IProps = {
   p: IPlayer;
@@ -30,7 +30,13 @@ export function CoresButton(props: IProps): React.ReactElement {
   }
 
   return (
-    <Tooltip title={<MathComponent tex={String.raw`\large{cost = 10^9 \times 7.5 ^{\text{cores}}}`} />}>
+    <Tooltip
+      title={
+        <MathJaxContext>
+          <MathJax>{String.raw`\large{cost = 10^9 \times 7.5 ^{\text{cores}}}`}</MathJax>
+        </MathJaxContext>
+      }
+    >
       <span>
         <Button disabled={!props.p.canAfford(cost)} onClick={buy}>
           Upgrade 'home' cores ({homeComputer.cpuCores} -&gt; {homeComputer.cpuCores + 1}) -&nbsp;
