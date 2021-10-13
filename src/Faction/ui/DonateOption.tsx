@@ -99,7 +99,7 @@ export function DonateOption(props: IProps): React.ReactElement {
           />
           <Typography>
             <MathJaxContext>
-              <MathJax>{String.raw`reputation = \frac{\text{donation amount} \times \text{reputation multiplier}}{10^{${digits}}}`}</MathJax>
+              <MathJax>{`\\(reputation = \\frac{\\text{donation amount} \\cdot \\text{reputation multiplier}}{10^{${digits}}}\\)`}</MathJax>
             </MathJaxContext>
           </Typography>
         </>

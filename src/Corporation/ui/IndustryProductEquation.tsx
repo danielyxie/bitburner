@@ -20,9 +20,7 @@ export function IndustryProductEquation(props: IProps): React.ReactElement {
 
   return (
     <MathJaxContext>
-      <MathJax>
-        {reqs.join("+") + String.raw`\Rightarrow` + prod.map((p) => String.raw`1\text{ }${p}`).join("+")}
-      </MathJax>
+      <MathJax>{"\\(" + reqs.join("+") + `\\Rightarrow` + prod.map((p) => `1\\text{ }${p}`).join("+") + "\\)"}</MathJax>
     </MathJaxContext>
   );
 }

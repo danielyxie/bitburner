@@ -33,7 +33,7 @@ export function CoresButton(props: IProps): React.ReactElement {
     <Tooltip
       title={
         <MathJaxContext>
-          <MathJax>{String.raw`\large{cost = 10^9 \times 7.5 ^{\text{cores}}}`}</MathJax>
+          <MathJax>{`\\(\\large{cost = 10^9 \\cdot 7.5 ^{\\text{cores}}}\\)`}</MathJax>
         </MathJaxContext>
       }
     >
