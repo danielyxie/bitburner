@@ -35,9 +35,10 @@ export class TextFile {
     const filename: string = this.fn;
     const file: Blob = new Blob([this.text], { type: "text/plain" });
     /* tslint:disable-next-line:strict-boolean-expressions */
-    if (window.navigator.msSaveOrOpenBlob) {
+    const navigator = window.navigator as any;
+    if (navigator.msSaveOrOpenBlob) {
       // IE10+
-      window.navigator.msSaveOrOpenBlob(file, filename);
+      navigator.msSaveOrOpenBlob(file, filename);
     } else {
       // Others
       const a: HTMLAnchorElement = document.createElement("a");
