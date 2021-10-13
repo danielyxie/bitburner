@@ -146,6 +146,7 @@ import { INetscriptGang, NetscriptGang } from "./NetscriptFunctions/Gang";
 import { INetscriptSleeve, NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { INetscriptExtra, NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { INetscriptHacknet, NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
+import { dialogBoxCreate } from "./ui/React/DialogBox";
 
 const defaultInterpreter = new Interpreter("", () => undefined);
 
@@ -2678,6 +2679,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     getTimeSinceLastAug: function (): any {
       updateDynamicRam("getTimeSinceLastAug", getRamCost("getTimeSinceLastAug"));
       return Player.playtimeSinceLastAug;
+    },
+    alert: function (message: any): void {
+      dialogBoxCreate(message);
     },
     prompt: function (txt: any): any {
       if (!isString(txt)) {
