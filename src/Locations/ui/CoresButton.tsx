@@ -19,7 +19,7 @@ export function CoresButton(props: IProps): React.ReactElement {
     return <Button>Upgrade 'home' cores - MAX</Button>;
   }
 
-  const cost = 1e9 * Math.pow(7.5, homeComputer.cpuCores);
+  const cost = props.p.getUpgradeHomeCoresCost();
 
   function buy(): void {
     if (maxCores) return;

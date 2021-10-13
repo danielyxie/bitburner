@@ -40,6 +40,10 @@ export function getUpgradeHomeRamCost(this: IPlayer): number {
   return cost;
 }
 
+export function getUpgradeHomeCoresCost(this: IPlayer): number {
+  return 1e9 * Math.pow(7.5, this.getHomeComputer().cpuCores);
+}
+
 export function createHacknetServer(this: IPlayer): HacknetServer {
   const numOwned = this.hacknetNodes.length;
   const name = `hacknet-node-${numOwned}`;
