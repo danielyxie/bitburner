@@ -4,7 +4,7 @@ import { IPlayerOrSleeve } from "../PersonObjects/IPlayerOrSleeve";
 import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
 
-export interface IConstructorParams {
+interface IConstructorParams {
   hacking_success_weight?: number;
   strength_success_weight?: number;
   defense_success_weight?: number;

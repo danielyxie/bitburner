@@ -45,7 +45,7 @@ export function generateRandomContractOnHome(): void {
   serv.addContract(contract);
 }
 
-export interface IGenerateContractParams {
+interface IGenerateContractParams {
   problemType?: string;
   server?: string;
   fn?: string;

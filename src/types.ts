@@ -11,11 +11,6 @@ export interface IMap<T> {
 }
 
 /**
- * Performs some action, with no returned value.
- */
-export type Action = () => void;
-
-/**
  * Contains a method to initialize itself to a known state.
  */
 export interface ISelfInitializer {

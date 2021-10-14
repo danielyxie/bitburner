@@ -4,7 +4,7 @@
 
 type cbFn = (...args: any[]) => any;
 
-export interface ISubscriber {
+interface ISubscriber {
   /**
    * Callback function that will be run when an event is emitted
    */

@@ -5,7 +5,7 @@ import { ITaskParams } from "../ITaskParams";
  * Defines the parameters that can be used to initialize and describe a GangMemberTask
  * (defined in Gang.js)
  */
-export interface IGangMemberTaskMetadata {
+interface IGangMemberTaskMetadata {
   /**
    * Description of the task
    */

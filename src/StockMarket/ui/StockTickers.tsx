@@ -16,8 +16,8 @@ import { PositionTypes } from "../data/PositionTypes";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { EventEmitter } from "../../utils/EventEmitter";
 
-export type txFn = (stock: Stock, shares: number) => boolean;
-export type placeOrderFn = (
+type txFn = (stock: Stock, shares: number) => boolean;
+type placeOrderFn = (
   stock: Stock,
   shares: number,
   price: number,

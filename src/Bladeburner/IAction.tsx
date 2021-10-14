@@ -1,6 +1,6 @@
 import { IBladeburner } from "./IBladeburner";
 
-export interface IStatsMultiplier {
+interface IStatsMultiplier {
   [key: string]: number;
 
   hack: number;

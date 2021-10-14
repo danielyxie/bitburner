@@ -1,4 +1,4 @@
-export interface RNG {
+interface RNG {
   random(): number;
 }
 

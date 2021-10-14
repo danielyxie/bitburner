@@ -12,7 +12,7 @@ export type SolverFunc = (data: any, answer: string) => boolean;
    Requires the 'data' of a Contract as input */
 export type DescriptionFunc = (data: any) => string;
 
-export interface ICodingContractTypeMetadata {
+interface ICodingContractTypeMetadata {
   desc: DescriptionFunc;
   difficulty: number;
   gen: GeneratorFunc;
