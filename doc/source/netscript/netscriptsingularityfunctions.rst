@@ -43,6 +43,7 @@ The player has access to all of these functions while in BitNode-4. Completing B
     getFactionRep() <singularityfunctions/getFactionRep>
     getFactionFavor() <singularityfunctions/getFactionFavor>
     getFactionFavorGain() <singularityfunctions/getFactionFavorGain>
+	upgradeHomeCores() <singularityfunctions/upgradeHomeCores> 
     
 .. toctree::
     :caption:  Level 3 Functions
