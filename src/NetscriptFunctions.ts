@@ -2747,13 +2747,13 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return false;
     },
-	 upgradeHomeCores: function (): any {
+    upgradeHomeCores: function (): any {
       updateDynamicRam("upgradeHomeCores", getRamCost("upgradeHomeCores"));
       checkSingularityAccess("upgradeHomeCores", 2);
 
-      // Check if we're at max CORES
+      // Check if we're at max cores
       const homeComputer = Player.getHomeComputer();
-      if (homeComputer.cpuCores >=8) {
+      if (homeComputer.cpuCores >= 8) {
         workerScript.log("upgradeHomeCores", `Your home computer is at max cores.`);
         return false;
       }
@@ -2764,13 +2764,14 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return false;
       }
 
-      homeComputer.cpuCores +=1;
+      homeComputer.cpuCores += 1;
       Player.loseMoney(cost);
 
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log(
         "upgradeHomeCores",
-        `Purchased an additional core for home computer! It now has ${(homeComputer.cpuCores)} cores.`,);
+        `Purchased an additional core for home computer! It now has ${homeComputer.cpuCores} cores.`,
+      );
       return true;
     },
     getUpgradeHomeCoresCost: function (): any {
