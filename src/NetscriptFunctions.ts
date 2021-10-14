@@ -81,7 +81,6 @@ import { LocationName } from "./Locations/data/LocationNames";
 import { Terminal } from "./Terminal";
 import { calculateSkill, calculateExp } from "./PersonObjects/formulas/skill";
 
-import { Message } from "./Message/Message";
 import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
 import { Script } from "./Script/Script";
@@ -147,6 +146,8 @@ import { INetscriptSleeve, NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { INetscriptExtra, NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { INetscriptHacknet, NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
 import { INetscriptStanek, NetscriptStanek } from "./NetscriptFunctions/Stanek";
+import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { SnackbarEvents } from "./ui/React/Snackbar";
 
 const defaultInterpreter = new Interpreter("", () => undefined);
 
@@ -477,15 +478,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     }
 
     return contract;
-  };
-
-  const checkStanekAPIAccess = function (func: string): void {
-    if (Player.bitNodeN !== 13 && !SourceFileFlags[13]) {
-      throw makeRuntimeErrorMsg(
-        `stanek.${func}`,
-        "You do not currently have access to the Stanek API. This is either because you are not in BitNode-13 or because you do not have Source-File 13",
-      );
-    }
   };
 
   const getBladeburnerActionObject = function (func: any, type: any, name: any): any {
@@ -1346,7 +1338,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (scriptname.endsWith(".lit")) {
         let found = false;
         for (let i = 0; i < currServ.messages.length; ++i) {
-          if (!(currServ.messages[i] instanceof Message) && currServ.messages[i] == scriptname) {
+          if (currServ.messages[i] == scriptname) {
             found = true;
             break;
           }
@@ -1472,20 +1464,11 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       for (let i = 0; i < server.messages.length; i++) {
         if (filter) {
           const msg = server.messages[i];
-          if (msg instanceof Message) {
-            if (msg.filename.includes(filter)) {
-              allFiles.push(msg.filename);
-            }
-          } else if (msg.includes(filter)) {
+          if (msg.includes(filter)) {
             allFiles.push(msg);
           }
         } else {
-          const msg = server.messages[i];
-          if (msg instanceof Message) {
-            allFiles.push(msg.filename);
-          } else {
-            allFiles.push(msg);
-          }
+          allFiles.push(server.messages[i]);
         }
       }
 
@@ -1780,7 +1763,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         }
       }
       for (let i = 0; i < server.messages.length; ++i) {
-        if (!(server.messages[i] instanceof Message) && filename.toLowerCase() === server.messages[i]) {
+        if (filename.toLowerCase() === server.messages[i]) {
           return true;
         }
       }
@@ -2312,7 +2295,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         // Coerce 'data' to be a string
         try {
           data = String(data);
-        } catch (e) {
+        } catch (e: any) {
           throw makeRuntimeErrorMsg("write", `Invalid data (${e}). Data being written must be convertible to a string`);
         }
 
@@ -2690,6 +2673,14 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     getTimeSinceLastAug: function (): any {
       updateDynamicRam("getTimeSinceLastAug", getRamCost("getTimeSinceLastAug"));
       return Player.playtimeSinceLastAug;
+    },
+    alert: function (message: any): void {
+      dialogBoxCreate(message);
+    },
+    toast: function (message: any, variant: any = "success"): void {
+      if (!["success", "info", "warning", "error"].includes(variant))
+        throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
+      SnackbarEvents.emit(message, variant);
     },
     prompt: function (txt: any): any {
       if (!isString(txt)) {
@@ -3967,7 +3958,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.startActionNetscriptFn(Player, type, name, workerScript);
-        } catch (e) {
+        } catch (e: any) {
           throw makeRuntimeErrorMsg("bladeburner.startAction", e);
         }
       },
@@ -3992,7 +3983,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.getActionTimeNetscriptFn(Player, type, name, workerScript);
-        } catch (e) {
+        } catch (e: any) {
           throw makeRuntimeErrorMsg("bladeburner.getActionTime", e);
         }
       },
@@ -4006,7 +3997,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.getActionEstimatedSuccessChanceNetscriptFn(Player, type, name, workerScript);
-        } catch (e) {
+        } catch (e: any) {
           throw makeRuntimeErrorMsg("bladeburner.getActionEstimatedSuccessChance", e);
         }
       },
@@ -4030,7 +4021,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.getActionCountRemainingNetscriptFn(type, name, workerScript);
-        } catch (e) {
+        } catch (e: any) {
           throw makeRuntimeErrorMsg("bladeburner.getActionCountRemaining", e);
         }
       },
@@ -4091,7 +4082,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.getSkillLevelNetscriptFn(skillName, workerScript);
-        } catch (e) {
+        } catch (e: any) {
           throw makeRuntimeErrorMsg("bladeburner.getSkillLevel", e);
         }
       },
@@ -4102,7 +4093,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.getSkillUpgradeCostNetscriptFn(skillName, workerScript);
-        } catch (e) {
+        } catch (e: any) {
           throw makeRuntimeErrorMsg("bladeburner.getSkillUpgradeCost", e);
         }
       },
@@ -4113,7 +4104,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.upgradeSkillNetscriptFn(skillName, workerScript);
-        } catch (e) {
+        } catch (e: any) {
           throw makeRuntimeErrorMsg("bladeburner.upgradeSkill", e);
         }
       },
@@ -4124,7 +4115,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.getTeamSizeNetscriptFn(type, name, workerScript);
-        } catch (e) {
+        } catch (e: any) {
           throw makeRuntimeErrorMsg("bladeburner.getTeamSize", e);
         }
       },
@@ -4135,7 +4126,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
         try {
           return bladeburner.setTeamSizeNetscriptFn(type, name, size, workerScript);
-        } catch (e) {
+        } catch (e: any) {
           throw makeRuntimeErrorMsg("bladeburner.setTeamSize", e);
         }
       },

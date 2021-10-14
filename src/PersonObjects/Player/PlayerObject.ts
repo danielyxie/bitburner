@@ -198,6 +198,7 @@ export class PlayerObject implements IPlayer {
   getHomeComputer: () => Server;
   getNextCompanyPosition: (company: Company, entryPosType: CompanyPosition) => CompanyPosition | null;
   getUpgradeHomeRamCost: () => number;
+  getUpgradeHomeCoresCost: () => number;
   gotoLocation: (to: LocationName) => boolean;
   hasAugmentation: (aug: string | Augmentation) => boolean;
   hasCorporation: () => boolean;
@@ -569,6 +570,7 @@ export class PlayerObject implements IPlayer {
     this.getCurrentServer = serverMethods.getCurrentServer;
     this.getHomeComputer = serverMethods.getHomeComputer;
     this.getUpgradeHomeRamCost = serverMethods.getUpgradeHomeRamCost;
+    this.getUpgradeHomeCoresCost = serverMethods.getUpgradeHomeCoresCost;
     this.createHacknetServer = serverMethods.createHacknetServer;
     this.factionWorkType = "";
     this.committingCrimeThruSingFn = false;

@@ -23,6 +23,7 @@ import { Settings } from "../../Settings/Settings";
 import { iTutorialNextStep, ITutorial, iTutorialSteps } from "../../InteractiveTutorial";
 import { debounce } from "lodash";
 import { saveObject } from "../../SaveObject";
+import { loadThemes } from "./themes";
 
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -312,6 +313,7 @@ export function Root(props: IProps): React.ReactElement {
     });
     monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, "netscript.d.ts");
     monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, "netscript.d.ts");
+    loadThemes(monaco);
   }
 
   return (

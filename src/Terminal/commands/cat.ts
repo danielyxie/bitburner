@@ -3,7 +3,6 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { showMessage } from "../../Message/MessageHelpers";
-import { Message } from "../../Message/Message";
 import { showLiterature } from "../../Literature/LiteratureHelpers";
 
 export function cat(
@@ -29,12 +28,12 @@ export function cat(
     for (let i = 0; i < server.messages.length; ++i) {
       if (filename.endsWith(".lit") && server.messages[i] === filename) {
         const file = server.messages[i];
-        if (file instanceof Message) throw new Error(".lit file should not be a .msg");
+        if (file.endsWith(".msg")) throw new Error(".lit file should not be a .msg");
         showLiterature(file);
         return;
       } else if (filename.endsWith(".msg")) {
-        const file = server.messages[i] as Message;
-        if (file.filename !== filename) continue;
+        const file = server.messages[i];
+        if (file !== filename) continue;
         showMessage(file);
         return;
       }

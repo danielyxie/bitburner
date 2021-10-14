@@ -191,6 +191,7 @@ export interface IPlayer {
   getHomeComputer(): Server;
   getNextCompanyPosition(company: Company, entryPosType: CompanyPosition): CompanyPosition | null;
   getUpgradeHomeRamCost(): number;
+  getUpgradeHomeCoresCost(): number;
   gotoLocation(to: LocationName): boolean;
   hasAugmentation(aug: string | Augmentation): boolean;
   hasCorporation(): boolean;

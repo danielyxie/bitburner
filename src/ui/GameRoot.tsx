@@ -67,7 +67,7 @@ import { CharacterOverview } from "./React/CharacterOverview";
 import { BladeburnerCinematic } from "../Bladeburner/ui/BladeburnerCinematic";
 import { workerScripts } from "../Netscript/WorkerScripts";
 import { Unclickable } from "../Exploits/Unclickable";
-import { Snackbar } from "./React/Snackbar";
+import { Snackbar, SnackbarProvider } from "./React/Snackbar";
 import { LogBoxManager } from "./React/LogBoxManager";
 import { AlertManager } from "./React/AlertManager";
 import { PromptManager } from "./React/PromptManager";
@@ -302,102 +302,104 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         ) : page === Page.Work ? (
           <WorkInProgressRoot />
         ) : (
-          <Box display="flex" flexDirection="row" width="100%">
-            <SidebarRoot player={player} router={Router} page={page} />
-            <Box className={classes.root} flexGrow={1} display="block" px={1} height="100vh">
-              {page === Page.Terminal ? (
-                <TerminalRoot terminal={terminal} router={Router} player={player} />
-              ) : page === Page.Sleeves ? (
-                <SleeveRoot />
-              ) : page === Page.Stats ? (
-                <CharacterStats />
-              ) : page === Page.StaneksGift ? (
-                <StaneksGiftRoot staneksGift={staneksGift} />
-              ) : page === Page.ScriptEditor ? (
-                <ScriptEditorRoot filename={filename} code={code} player={player} router={Router} />
-              ) : page === Page.ActiveScripts ? (
-                <ActiveScriptsRoot workerScripts={workerScripts} />
-              ) : page === Page.Hacknet ? (
-                <HacknetRoot player={player} />
-              ) : page === Page.CreateProgram ? (
-                <ProgramsRoot />
-              ) : page === Page.Factions ? (
-                <FactionsRoot player={player} router={Router} />
-              ) : page === Page.Faction ? (
-                <FactionRoot faction={faction} />
-              ) : page === Page.Milestones ? (
-                <MilestonesRoot player={player} />
-              ) : page === Page.Tutorial ? (
-                <TutorialRoot />
-              ) : page === Page.DevMenu ? (
-                <DevMenuRoot player={player} engine={engine} router={Router} />
-              ) : page === Page.Gang ? (
-                <GangRoot />
-              ) : page === Page.Corporation ? (
-                <CorporationRoot />
-              ) : page === Page.Bladeburner ? (
-                <BladeburnerRoot />
-              ) : page === Page.Resleeves ? (
-                <ResleeveRoot />
-              ) : page === Page.Travel ? (
-                <TravelAgencyRoot p={player} router={Router} />
-              ) : page === Page.StockMarket ? (
-                <StockMarketRoot
-                  buyStockLong={buyStock}
-                  buyStockShort={shortStock}
-                  cancelOrder={cancelOrder}
-                  eventEmitterForReset={eventEmitterForUiReset}
-                  initStockMarket={initStockMarketFnForReact}
-                  p={player}
-                  placeOrder={placeOrder}
-                  sellStockLong={sellStock}
-                  sellStockShort={sellShort}
-                  stockMarket={StockMarket}
-                />
-              ) : page === Page.City ? (
-                <LocationCity />
-              ) : page === Page.Job ? (
-                <GenericLocation loc={location} />
-              ) : page === Page.Location ? (
-                <GenericLocation loc={location} />
-              ) : page === Page.Options ? (
-                <GameOptionsRoot
-                  player={player}
-                  save={() => saveObject.saveGame()}
-                  export={() => saveObject.exportGame()}
-                  forceKill={() => {
-                    for (const server of GetAllServers()) {
-                      server.runningScripts = [];
-                    }
-                    dialogBoxCreate("Forcefully deleted all running scripts. Please save and refresh page.");
-                  }}
-                  softReset={() => {
-                    dialogBoxCreate("Soft Reset!");
-                    prestigeAugmentation();
-                    Router.toTerminal();
-                  }}
-                />
-              ) : page === Page.Augmentations ? (
-                <AugmentationsRoot
-                  exportGameFn={() => {
-                    saveObject.exportGame();
-                    onExport(player);
-                  }}
-                  installAugmentationsFn={() => {
-                    installAugmentations();
-                    Router.toTerminal();
-                  }}
-                />
-              ) : (
-                <>
-                  <Typography>Cannot load</Typography>
-                </>
-              )}
+          <SnackbarProvider>
+            <Box display="flex" flexDirection="row" width="100%">
+              <SidebarRoot player={player} router={Router} page={page} />
+              <Box className={classes.root} flexGrow={1} display="block" px={1} height="100vh">
+                {page === Page.Terminal ? (
+                  <TerminalRoot terminal={terminal} router={Router} player={player} />
+                ) : page === Page.Sleeves ? (
+                  <SleeveRoot />
+                ) : page === Page.StaneksGift ? (
+                  <StaneksGiftRoot staneksGift={staneksGift} />
+                ) : page === Page.Stats ? (
+                  <CharacterStats />
+                ) : page === Page.ScriptEditor ? (
+                  <ScriptEditorRoot filename={filename} code={code} player={player} router={Router} />
+                ) : page === Page.ActiveScripts ? (
+                  <ActiveScriptsRoot workerScripts={workerScripts} />
+                ) : page === Page.Hacknet ? (
+                  <HacknetRoot player={player} />
+                ) : page === Page.CreateProgram ? (
+                  <ProgramsRoot />
+                ) : page === Page.Factions ? (
+                  <FactionsRoot player={player} router={Router} />
+                ) : page === Page.Faction ? (
+                  <FactionRoot faction={faction} />
+                ) : page === Page.Milestones ? (
+                  <MilestonesRoot player={player} />
+                ) : page === Page.Tutorial ? (
+                  <TutorialRoot />
+                ) : page === Page.DevMenu ? (
+                  <DevMenuRoot player={player} engine={engine} router={Router} />
+                ) : page === Page.Gang ? (
+                  <GangRoot />
+                ) : page === Page.Corporation ? (
+                  <CorporationRoot />
+                ) : page === Page.Bladeburner ? (
+                  <BladeburnerRoot />
+                ) : page === Page.Resleeves ? (
+                  <ResleeveRoot />
+                ) : page === Page.Travel ? (
+                  <TravelAgencyRoot p={player} router={Router} />
+                ) : page === Page.StockMarket ? (
+                  <StockMarketRoot
+                    buyStockLong={buyStock}
+                    buyStockShort={shortStock}
+                    cancelOrder={cancelOrder}
+                    eventEmitterForReset={eventEmitterForUiReset}
+                    initStockMarket={initStockMarketFnForReact}
+                    p={player}
+                    placeOrder={placeOrder}
+                    sellStockLong={sellStock}
+                    sellStockShort={sellShort}
+                    stockMarket={StockMarket}
+                  />
+                ) : page === Page.City ? (
+                  <LocationCity />
+                ) : page === Page.Job ? (
+                  <GenericLocation loc={location} />
+                ) : page === Page.Location ? (
+                  <GenericLocation loc={location} />
+                ) : page === Page.Options ? (
+                  <GameOptionsRoot
+                    player={player}
+                    save={() => saveObject.saveGame()}
+                    export={() => saveObject.exportGame()}
+                    forceKill={() => {
+                      for (const server of GetAllServers()) {
+                        server.runningScripts = [];
+                      }
+                      dialogBoxCreate("Forcefully deleted all running scripts. Please save and refresh page.");
+                    }}
+                    softReset={() => {
+                      dialogBoxCreate("Soft Reset!");
+                      prestigeAugmentation();
+                      Router.toTerminal();
+                    }}
+                  />
+                ) : page === Page.Augmentations ? (
+                  <AugmentationsRoot
+                    exportGameFn={() => {
+                      saveObject.exportGame();
+                      onExport(player);
+                    }}
+                    installAugmentationsFn={() => {
+                      installAugmentations();
+                      Router.toTerminal();
+                    }}
+                  />
+                ) : (
+                  <>
+                    <Typography>Cannot load</Typography>
+                  </>
+                )}
+              </Box>
             </Box>
-          </Box>
+            <Snackbar />
+          </SnackbarProvider>
         )}
         <Unclickable />
-        <Snackbar />
         <LogBoxManager />
         <AlertManager />
         <PromptManager />

@@ -2,7 +2,6 @@ import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { Message } from "../../Message/Message";
 import { getFirstParentDirectory, isValidDirectoryPath, evaluateDirectoryPath } from "../../Terminal/DirectoryHelpers";
 
 export function ls(
@@ -103,8 +102,7 @@ export function ls(
   for (const script of s.scripts) handleFn(script.filename, allScripts);
   for (const txt of s.textFiles) handleFn(txt.fn, allTextFiles);
   for (const contract of s.contracts) handleFn(contract.fn, allContracts);
-  for (const msgOrLit of s.messages)
-    msgOrLit instanceof Message ? handleFn(msgOrLit.filename, allMessages) : handleFn(msgOrLit, allMessages);
+  for (const msgOrLit of s.messages) handleFn(msgOrLit, allMessages);
 
   // Sort the files/folders alphabetically then print each
   allPrograms.sort();

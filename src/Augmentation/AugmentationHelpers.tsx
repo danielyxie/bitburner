@@ -735,7 +735,7 @@ function initAugmentations(): void {
 
   const ENMCore = new Augmentation({
     name: AugmentationNames.ENMCore,
-    repCost: 2.5e5,
+    repCost: 175e3,
     moneyCost: 2.5e9,
     info:
       "The Core library is an implant that upgrades the firmware of the Embedded Netburner Module. " +

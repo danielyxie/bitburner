@@ -11,7 +11,7 @@ import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 import { staneksGift, loadStaneksGift } from "./CotMG/Helper";
 
-import { GameSavedEvents } from "./ui/React/Snackbar";
+import { SnackbarEvents } from "./ui/React/Snackbar";
 
 import * as ExportBonus from "./ExportBonus";
 
@@ -64,7 +64,7 @@ class BitburnerSaveObject {
     const saveString = this.getSaveString();
 
     save(saveString)
-      .then(() => GameSavedEvents.emit())
+      .then(() => SnackbarEvents.emit("Game Saved!", "info"))
       .catch((err) => console.error(err));
   }
 
@@ -76,9 +76,10 @@ class BitburnerSaveObject {
     const bn = Player.bitNodeN;
     const filename = `bitburnerSave_BN${bn}x${SourceFileFlags[bn]}_${epochTime}.json`;
     const file = new Blob([saveString], { type: "text/plain" });
-    if (window.navigator.msSaveOrOpenBlob) {
+    const navigator = window.navigator as any;
+    if (navigator.msSaveOrOpenBlob) {
       // IE10+
-      window.navigator.msSaveOrOpenBlob(file, filename);
+      navigator.msSaveOrOpenBlob(file, filename);
     } else {
       // Others
       const a = document.createElement("a"),
@@ -153,6 +154,24 @@ function evaluateVersionCompatibility(ver: string): void {
     for (const q of anyPlayer.augmentations) {
       if (q.name === "Graphene BranchiBlades Upgrade") {
         q.name = "Graphene BrachiBlades Upgrade";
+      }
+    }
+  }
+  if (ver < "0.56.1") {
+    if (anyPlayer.bladeburner === 0) {
+      anyPlayer.bladeburner = null;
+    }
+    if (anyPlayer.gang === 0) {
+      anyPlayer.gang = null;
+    }
+    if (anyPlayer.corporation === 0) {
+      anyPlayer.corporation = null;
+    }
+    // convert all Messages to just filename to save space.
+    const home = anyPlayer.getHomeComputer();
+    for (let i = 0; i < home.messages.length; i++) {
+      if (home.messages[i].filename) {
+        home.messages[i] = home.messages[i].filename;
       }
     }
   }
