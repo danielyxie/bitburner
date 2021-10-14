@@ -86,6 +86,7 @@ import { INetscriptStockMarket, NetscriptStockMarket } from "./NetscriptFunction
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { SnackbarEvents } from "./ui/React/Snackbar";
+import { Locations } from "./Locations/Locations";
 
 const defaultInterpreter = new Interpreter("", () => undefined);
 
@@ -2211,6 +2212,19 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
 
     /* Singularity Functions */
+    goToLocation: function (locationName: any): boolean {
+      const location = Object.values(Locations).find((l) => l.name === locationName);
+      if (!location) {
+        workerScript.log("goToLocation", `No location named ${locationName}`);
+        return false;
+      }
+      if (Player.city !== location.city) {
+        workerScript.log("goToLocation", `No location named ${locationName} in ${Player.city}`);
+        return false;
+      }
+      Router.toLocation(location);
+      return true;
+    },
     universityCourse: function (universityName: any, className: any): any {
       updateDynamicRam("universityCourse", getRamCost("universityCourse"));
       checkSingularityAccess("universityCourse", 1);
