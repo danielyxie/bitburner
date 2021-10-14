@@ -2747,6 +2747,39 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return false;
     },
+    upgradeHomeCores: function (): any {
+      updateDynamicRam("upgradeHomeCores", getRamCost("upgradeHomeCores"));
+      checkSingularityAccess("upgradeHomeCores", 2);
+
+      // Check if we're at max cores
+      const homeComputer = Player.getHomeComputer();
+      if (homeComputer.cpuCores >= 8) {
+        workerScript.log("upgradeHomeCores", `Your home computer is at max cores.`);
+        return false;
+      }
+
+      const cost = Player.getUpgradeHomeCoresCost();
+      if (Player.money.lt(cost)) {
+        workerScript.log("upgradeHomeCores", `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`);
+        return false;
+      }
+
+      homeComputer.cpuCores += 1;
+      Player.loseMoney(cost);
+
+      Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
+      workerScript.log(
+        "upgradeHomeCores",
+        `Purchased an additional core for home computer! It now has ${homeComputer.cpuCores} cores.`,
+      );
+      return true;
+    },
+    getUpgradeHomeCoresCost: function (): any {
+      updateDynamicRam("getUpgradeHomeCoresCost", getRamCost("getUpgradeHomeCoresCost"));
+      checkSingularityAccess("getUpgradeHomeCoresCost", 2);
+
+      return Player.getUpgradeHomeCoresCost();
+    },
     upgradeHomeRam: function (): any {
       updateDynamicRam("upgradeHomeRam", getRamCost("upgradeHomeRam"));
       checkSingularityAccess("upgradeHomeRam", 2);
