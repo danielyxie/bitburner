@@ -3300,10 +3300,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log(
         "upgradeHomeCores",
-        `Purchased additional CORES for home computer! It now has $(
-		homeComputer.cpuCores
-        )} of CORES.`,
-      );
+        `Purchased  an additional core for home computer! It now has ${(homeComputer.cpuCores)} cores.`,);
       return true;
     },
     getUpgradeHomeCoresCost: function (): any {
@@ -3334,7 +3331,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log(
-        "upgradeHomeCores",
+        "upgradeHomeRam",
         `Purchased additional RAM for home computer! It now has ${numeralWrapper.formatRAM(
           homeComputer.maxRam,
         )} of RAM.`,
