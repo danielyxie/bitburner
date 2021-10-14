@@ -13,12 +13,14 @@ import { Reviver } from "../utils/JSONReviver";
 function sendMessage(msg: Message, forced = false): void {
   msg.recvd = true;
   if (forced || !Settings.SuppressMessages) {
-    showMessage(msg);
+    showMessage(msg.filename);
   }
   addMessageToServer(msg, "home");
 }
 
-function showMessage(msg: Message): void {
+function showMessage(name: string): void {
+  const msg = Messages[name];
+  if (!msg) throw new Error("trying to display unexistent message");
   const txt =
     "Message received from unknown sender: <br><br>" +
     "<i>" +
@@ -39,12 +41,11 @@ function addMessageToServer(msg: Message, serverHostname: string): void {
   }
   for (let i = 0; i < server.messages.length; ++i) {
     const other = server.messages[i];
-    if (typeof other === "string") continue;
-    if (msg.filename === other.filename) {
+    if (msg.filename === other) {
       return; //Already exists
     }
   }
-  server.messages.push(msg);
+  server.messages.push(msg.filename);
 }
 
 //Checks if any of the 'timed' messages should be sent

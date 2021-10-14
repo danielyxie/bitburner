@@ -283,6 +283,7 @@ export class PlayerObject implements IPlayer {
   setBitNodeNumber: (n: number) => void;
   getMult: (name: string) => number;
   setMult: (name: string, mult: number) => void;
+  sourceFileLvl: (n: number) => number;
 
   constructor() {
     //Skills and stats
@@ -576,6 +577,7 @@ export class PlayerObject implements IPlayer {
 
     this.getMult = generalMethods.getMult;
     this.setMult = generalMethods.setMult;
+    this.sourceFileLvl = generalMethods.sourceFileLvl;
   }
 
   /**
