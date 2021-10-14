@@ -3284,7 +3284,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       // Check if we're at max CORES
       const homeComputer = Player.getHomeComputer();
       if (homeComputer.cpuCores >=8) {
-        workerScript.log("upgradeHomeCores", `Your home computer is at max CORES.`);
+        workerScript.log("upgradeHomeCores", `Your home computer is at max cores.`);
         return false;
       }
 
@@ -3294,13 +3294,13 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return false;
       }
 
-      homeComputer.cpuCores *= 2;
+      homeComputer.cpuCores +=1;
       Player.loseMoney(cost);
 
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log(
         "upgradeHomeCores",
-        `Purchased  an additional core for home computer! It now has ${(homeComputer.cpuCores)} cores.`,);
+        `Purchased an additional core for home computer! It now has ${(homeComputer.cpuCores)} cores.`,);
       return true;
     },
     getUpgradeHomeCoresCost: function (): any {
