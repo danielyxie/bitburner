@@ -47,7 +47,7 @@ function LongPosition(props: IProps): React.ReactElement {
       </Box>
       <Typography>Shares: {numeralWrapper.formatShares(stock.playerShares)}</Typography>
       <Typography>
-        Average Price: <Money money={stock.playerAvgPx} /> (Total Cost: <Money money={totalCost} />
+        Average Price: <Money money={stock.playerAvgPx} /> (Total Cost: <Money money={totalCost} />)
       </Typography>
       <Typography>
         Profit: <Money money={gains} /> ({numeralWrapper.formatPercentage(percentageGains)})
