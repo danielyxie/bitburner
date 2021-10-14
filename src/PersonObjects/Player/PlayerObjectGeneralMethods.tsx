@@ -2654,3 +2654,10 @@ export function setMult(this: IPlayer, name: string, mult: number): void {
   if (!this.hasOwnProperty(name)) return;
   (this as any)[name] = mult;
 }
+
+export function sourceFileLvl(this: IPlayer, n: number): number {
+  for (const sf of this.sourceFiles) {
+    if (sf.n === n) return sf.lvl;
+  }
+  return 0;
+}
