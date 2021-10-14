@@ -95,7 +95,7 @@ describe("determineAllPossibilitiesForTabCompletion", function () {
     Player.getHomeComputer().writeToTextFile("note.txt", "oh hai mark");
     Player.getHomeComputer().writeToScriptFile("/www/script.js", "oh hai mark");
     Player.getHomeComputer().contracts.push(new CodingContract("linklist.cct"));
-    Player.getHomeComputer().messages.push(new Message("asl.msg"));
+    Player.getHomeComputer().messages.push("asl.msg");
     Player.getHomeComputer().messages.push("af.lit");
     expect(determineAllPossibilitiesForTabCompletion(Player, "rm ", 0)).equal([
       "/www/script.js",
@@ -120,7 +120,7 @@ describe("determineAllPossibilitiesForTabCompletion", function () {
 
   it("completes the cat command", () => {
     Player.getHomeComputer().writeToTextFile("/www/note.txt", "oh hai mark");
-    Player.getHomeComputer().messages.push(new Message("asl.msg"));
+    Player.getHomeComputer().messages.push("asl.msg");
     Player.getHomeComputer().messages.push("af.lit");
     expect(determineAllPossibilitiesForTabCompletion(Player, "cat ", 0)).equal([
       "asl.msg",

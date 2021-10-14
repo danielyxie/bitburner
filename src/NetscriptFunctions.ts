@@ -1336,7 +1336,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (scriptname.endsWith(".lit")) {
         let found = false;
         for (let i = 0; i < currServ.messages.length; ++i) {
-          if (!(currServ.messages[i] instanceof Message) && currServ.messages[i] == scriptname) {
+          if (currServ.messages[i] == scriptname) {
             found = true;
             break;
           }
@@ -1462,20 +1462,11 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       for (let i = 0; i < server.messages.length; i++) {
         if (filter) {
           const msg = server.messages[i];
-          if (msg instanceof Message) {
-            if (msg.filename.includes(filter)) {
-              allFiles.push(msg.filename);
-            }
-          } else if (msg.includes(filter)) {
+          if (msg.includes(filter)) {
             allFiles.push(msg);
           }
         } else {
-          const msg = server.messages[i];
-          if (msg instanceof Message) {
-            allFiles.push(msg.filename);
-          } else {
-            allFiles.push(msg);
-          }
+          allFiles.push(server.messages[i]);
         }
       }
 
@@ -1770,7 +1761,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         }
       }
       for (let i = 0; i < server.messages.length; ++i) {
-        if (!(server.messages[i] instanceof Message) && filename.toLowerCase() === server.messages[i]) {
+        if (filename.toLowerCase() === server.messages[i]) {
           return true;
         }
       }

@@ -164,6 +164,13 @@ function evaluateVersionCompatibility(ver: string): void {
     if (anyPlayer.corporation === 0) {
       anyPlayer.corporation = null;
     }
+    // convert all Messages to just filename to save space.
+    const home = anyPlayer.getHomeComputer();
+    for (let i = 0; i < home.messages.length; i++) {
+      if (home.messages[i].filename) {
+        home.messages[i] = home.messages[i].filename;
+      }
+    }
   }
 }
 

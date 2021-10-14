@@ -34,7 +34,7 @@ export function scp(
     if (scriptname.endsWith(".lit")) {
       let found = false;
       for (let i = 0; i < server.messages.length; ++i) {
-        if (!(server.messages[i] instanceof Message) && server.messages[i] == scriptname) {
+        if (server.messages[i] == scriptname) {
           found = true;
           break;
         }

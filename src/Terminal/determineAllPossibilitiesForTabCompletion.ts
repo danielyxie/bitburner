@@ -71,7 +71,7 @@ export function determineAllPossibilitiesForTabCompletion(
 
   function addAllLitFiles(): void {
     for (const file of currServ.messages) {
-      if (!(file instanceof Message)) {
+      if (!file.endsWith(".msg")) {
         allPos.push(file);
       }
     }
@@ -79,8 +79,8 @@ export function determineAllPossibilitiesForTabCompletion(
 
   function addAllMessages(): void {
     for (const file of currServ.messages) {
-      if (file instanceof Message) {
-        allPos.push(file.filename);
+      if (file.endsWith(".msg")) {
+        allPos.push(file);
       }
     }
   }

@@ -61,7 +61,7 @@ export class BaseServer {
   // For Literature files, this array contains only the filename (string)
   // For Messages, it contains the actual Message object
   // TODO Separate literature files into its own property
-  messages: (Message | string)[] = [];
+  messages: string[] = [];
 
   // Name of company/faction/etc. that this server belongs to.
   // Optional, not applicable to all Servers
