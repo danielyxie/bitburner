@@ -3335,8 +3335,8 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log(
         "upgradeHomeCores",
-        `Purchased additional RAM for home computer! It now has ${(
-          homeComputer.cpuCores
+        `Purchased additional RAM for home computer! It now has ${numeralWrapper.formatRAM(
+          homeComputer.maxRam,
         )} of RAM.`,
       );
       return true;
