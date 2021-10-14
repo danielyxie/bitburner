@@ -145,7 +145,7 @@ export class Bladeburner implements IBladeburner {
           if (action.count < 1) {
             return this.resetAction();
           }
-          if (actionId.name === "Raid" && this.getCurrentCity().commsEst === 0) {
+          if (actionId.name === "Raid" && this.getCurrentCity().comms === 0) {
             return this.resetAction();
           }
           this.actionTimeToComplete = action.getActionTime(this);
@@ -1088,9 +1088,6 @@ export class Bladeburner implements IBladeburner {
       case "Investigation":
         if (success) {
           city.improvePopulationEstimateByPercentage(0.4 * this.skillMultipliers.successChanceEstimate);
-          if (Math.random() < 0.02 * this.skillMultipliers.successChanceEstimate) {
-            city.improveCommunityEstimate(1);
-          }
         } else {
           this.triggerPotentialMigration(this.city, 0.1);
         }
@@ -1098,9 +1095,6 @@ export class Bladeburner implements IBladeburner {
       case "Undercover Operation":
         if (success) {
           city.improvePopulationEstimateByPercentage(0.8 * this.skillMultipliers.successChanceEstimate);
-          if (Math.random() < 0.02 * this.skillMultipliers.successChanceEstimate) {
-            city.improveCommunityEstimate(1);
-          }
         } else {
           this.triggerPotentialMigration(this.city, 0.15);
         }
@@ -1121,7 +1115,6 @@ export class Bladeburner implements IBladeburner {
             nonZero: true,
           });
           --city.comms;
-          --city.commsEst;
         } else {
           const change = getRandomInt(-10, -5) / 10;
           city.changePopulationByPercentage(change, {
