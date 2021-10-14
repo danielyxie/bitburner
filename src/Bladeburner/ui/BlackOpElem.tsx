@@ -51,33 +51,35 @@ export function BlackOpElem(props: IProps): React.ReactElement {
 
   return (
     <Paper sx={{ my: 1, p: 1 }}>
-      <Typography>
-        {isActive ? (
-          <>
-            <>
-              <CopyableText value={props.action.name} /> (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} /{" "}
-              {formatNumber(props.bladeburner.actionTimeToComplete, 0)})
-              <Typography>
-                {createProgressBarText({
-                  progress: computedActionTimeCurrent / props.bladeburner.actionTimeToComplete,
-                })}
-              </Typography>
-            </>
-          </>
-        ) : (
+      {isActive ? (
+        <>
           <>
             <CopyableText value={props.action.name} />
-
-            <StartButton
-              bladeburner={props.bladeburner}
-              type={ActionTypes.BlackOperation}
-              name={props.action.name}
-              rerender={rerender}
-            />
-            <TeamSizeButton action={props.action} bladeburner={props.bladeburner} />
+            <Typography>
+              (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} /{" "}
+              {formatNumber(props.bladeburner.actionTimeToComplete, 0)})
+            </Typography>
+            <Typography>
+              {createProgressBarText({
+                progress: computedActionTimeCurrent / props.bladeburner.actionTimeToComplete,
+              })}
+            </Typography>
           </>
-        )}
-      </Typography>
+        </>
+      ) : (
+        <>
+          <CopyableText value={props.action.name} />
+
+          <StartButton
+            bladeburner={props.bladeburner}
+            type={ActionTypes.BlackOperation}
+            name={props.action.name}
+            rerender={rerender}
+          />
+          <TeamSizeButton action={props.action} bladeburner={props.bladeburner} />
+        </>
+      )}
+
       <br />
       <br />
       <Typography>{actionData.desc}</Typography>

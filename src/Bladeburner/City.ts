@@ -35,11 +35,6 @@ export class City {
   comms = 0;
 
   /**
-   * Estimated number of communities in the city.
-   */
-  commsEst = 0;
-
-  /**
    * Chaos level of the city.
    */
   chaos = 0;
@@ -53,8 +48,6 @@ export class City {
 
     // Number of Synthoid communities population and estimate
     this.comms = getRandomInt(5, 150);
-    this.commsEst = this.comms + getRandomInt(-5, 5);
-    if (this.commsEst < 0) this.commsEst = 0;
     this.chaos = 0;
   }
 
@@ -109,23 +102,6 @@ export class City {
       this.popEst *= 1 - p / 100;
       if (this.popEst < this.pop) {
         this.popEst = this.pop;
-      }
-    }
-  }
-
-  improveCommunityEstimate(n = 1): void {
-    if (isNaN(n)) {
-      throw new Error("NaN passed into City.improveCommunityEstimate()");
-    }
-    if (this.commsEst < this.comms) {
-      this.commsEst += n;
-      if (this.commsEst > this.comms) {
-        this.commsEst = this.comms;
-      }
-    } else if (this.commsEst > this.comms) {
-      this.commsEst -= n;
-      if (this.commsEst < this.comms) {
-        this.commsEst = this.comms;
       }
     }
   }
