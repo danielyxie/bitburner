@@ -28,8 +28,7 @@ export async function executeJSScript(scripts: Script[] = [], workerScript: Work
     // but not really behaves like import. Particularly, it cannot
     // load fully dynamic content. So we hide the import from webpack
     // by placing it inside an eval call.
-    await script.updateRamUsage(scripts);
-    workerScript.ramUsage = script.ramUsage;
+    script.markUpdated();
     uurls = _getScriptUrls(script, scripts, []);
     script.url = uurls[uurls.length - 1].url;
     script.module = new Promise((resolve) => resolve(eval("import(uurls[uurls.length - 1].url)")));
