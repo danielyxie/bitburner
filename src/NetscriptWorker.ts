@@ -469,11 +469,7 @@ export function startWorkerScript(runningScript: RunningScript, server: BaseServ
  * @param {Server} server - Server on which the script is to be run
  * returns {boolean} indicating whether or not the workerScript was successfully added
  */
-export function createAndAddWorkerScript(
-  runningScriptObj: RunningScript,
-  server: BaseServer,
-  parent?: WorkerScript,
-): boolean {
+function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseServer, parent?: WorkerScript): boolean {
   // Update server's ram usage
   let threads = 1;
   if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {

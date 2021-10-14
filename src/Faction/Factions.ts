@@ -24,7 +24,7 @@ export function loadFactions(saveString: string): void {
   }
 }
 
-export function AddToFactions(faction: Faction): void {
+function AddToFactions(faction: Faction): void {
   const name: string = faction.name;
   Factions[name] = faction;
 }
@@ -42,7 +42,7 @@ export function initFactions(): void {
 //Resets a faction during (re-)initialization. Saves the favor in the new
 //Faction object and deletes the old Faction Object from "Factions". Then
 //reinserts the new Faction object
-export function resetFaction(newFactionObject: Faction): void {
+function resetFaction(newFactionObject: Faction): void {
   if (!(newFactionObject instanceof Faction)) {
     throw new Error("Invalid argument 'newFactionObject' passed into resetFaction()");
   }
