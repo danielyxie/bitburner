@@ -27,7 +27,11 @@ export function BlackOpElem(props: IProps): React.ReactElement {
   }
   const isCompleted = props.bladeburner.blackops[props.action.name] != null;
   if (isCompleted) {
-    return <h2 style={{ display: "block" }}>{props.action.name} (COMPLETED)</h2>;
+    return (
+      <Paper sx={{ my: 1, p: 1 }}>
+        <Typography>{props.action.name} (COMPLETED)</Typography>
+      </Paper>
+    );
   }
 
   const isActive =
@@ -53,11 +57,11 @@ export function BlackOpElem(props: IProps): React.ReactElement {
             <>
               <CopyableText value={props.action.name} /> (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} /{" "}
               {formatNumber(props.bladeburner.actionTimeToComplete, 0)})
-              <p style={{ display: "block" }}>
+              <Typography>
                 {createProgressBarText({
                   progress: computedActionTimeCurrent / props.bladeburner.actionTimeToComplete,
                 })}
-              </p>
+              </Typography>
             </>
           </>
         ) : (
