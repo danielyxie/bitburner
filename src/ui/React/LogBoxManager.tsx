@@ -93,7 +93,9 @@ function LogWindow(props: IProps): React.ReactElement {
     const c = container.current;
     if (c === null) return;
     // This number is getTime on 2021-10-15, the reason we need this is to remove a
-    // large number from getTime so it's value fits in an int32 (from int64)
+    // large number from getTime so it's value fits in an int32 (from int64).
+    // The date is arbitrary but it is the date that this "stay-on-top" mechanic was released
+    // so every future date is guaranteed to be at least after that.
     const date = 1634320967207;
     // +1500 so it's at least on top of everything else in the game.
     c.style.zIndex = new Date().getTime() - date + 1500 + "";
