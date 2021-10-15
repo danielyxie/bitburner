@@ -15,7 +15,7 @@ import { Skill } from "./Skill";
 import { City } from "./City";
 import { IAction } from "./IAction";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { IRouter } from "../ui/Router";
+import { IRouter, Page } from "../ui/Router";
 import { ConsoleHelpText } from "./data/Help";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
@@ -26,7 +26,6 @@ import { addOffset } from "../utils/helpers/addOffset";
 import { Faction } from "../Faction/Faction";
 import { Factions, factionExists } from "../Faction/Factions";
 import { calculateHospitalizationCost } from "../Hospital/Hospital";
-import { redPillFlag } from "../RedPill";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Settings } from "../Settings/Settings";
 import { Augmentations } from "../Augmentation/Augmentations";
@@ -184,6 +183,7 @@ export class Bladeburner implements IBladeburner {
         break;
       case ActionTypes["Diplomacy"]:
       case ActionTypes["Hyperbolic Regeneration Chamber"]:
+      case ActionTypes["Incite Violence"]:
         this.actionTimeToComplete = 60;
         break;
       default:
@@ -338,6 +338,10 @@ export class Bladeburner implements IBladeburner {
         case "hyperbolic regeneration chamber":
           action.type = ActionTypes["Hyperbolic Regeneration Chamber"];
           action.name = "Hyperbolic Regeneration Chamber";
+          break;
+        case "stir trouble":
+          action.type = ActionTypes["Incite Violence"];
+          action.name = "Incite Violence";
           break;
         default:
           return null;
@@ -1167,6 +1171,8 @@ export class Bladeburner implements IBladeburner {
         return GeneralActions["Diplomacy"];
       case ActionTypes["Hyperbolic Regeneration Chamber"]:
         return GeneralActions["Hyperbolic Regeneration Chamber"];
+      case ActionTypes["Incite Violence"]:
+        return GeneralActions["Incite Violence"];
       default:
         return null;
     }
@@ -1491,6 +1497,23 @@ export class Bladeburner implements IBladeburner {
             } HP and gained ${numeralWrapper.formatStamina(staminaGain)} stamina`,
           );
         }
+        break;
+      }
+      case ActionTypes["Incite Violence"]: {
+        for (const contract of Object.keys(this.contracts)) {
+          const growthF = Growths[contract];
+          if (!growthF) throw new Error("trying to generate count for action that doesn't exist? " + contract);
+          this.contracts[contract].count += (60 * 3 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
+        }
+        for (const operation of Object.keys(this.operations)) {
+          const growthF = Growths[operation];
+          if (!growthF) throw new Error("trying to generate count for action that doesn't exist? " + operation);
+          this.operations[operation].count += (60 * 3 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
+        }
+        if (this.logging.general) {
+          this.log(`Incited violence in the synthoid communities.`);
+        }
+        this.startAction(player, this.action);
         break;
       }
       default:
@@ -1847,7 +1870,7 @@ export class Bladeburner implements IBladeburner {
 
   process(router: IRouter, player: IPlayer): void {
     // Edge case condition...if Operation Daedalus is complete trigger the BitNode
-    if (redPillFlag === false && this.blackops.hasOwnProperty("Operation Daedalus")) {
+    if (router.page() !== Page.BitVerse && this.blackops.hasOwnProperty("Operation Daedalus")) {
       return router.toBitVerse(false, false);
     }
 
@@ -1960,6 +1983,7 @@ export class Bladeburner implements IBladeburner {
       "Field Analysis",
       "Diplomacy",
       "Hyperbolic Regeneration Chamber",
+      "Incite Violence",
     ];
     if (gen.includes(res.type)) {
       res.type = "General";
@@ -2084,6 +2108,7 @@ export class Bladeburner implements IBladeburner {
         return this.getRecruitmentTime(player);
       case ActionTypes["Diplomacy"]:
       case ActionTypes["Hyperbolic Regeneration Chamber"]:
+      case ActionTypes["Incite Violence"]:
         return 60;
       default:
         workerScript.log("bladeburner.getActionTime", errorLogText);
@@ -2121,6 +2146,7 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["FieldAnalysis"]:
       case ActionTypes["Diplomacy"]:
       case ActionTypes["Hyperbolic Regeneration Chamber"]:
+      case ActionTypes["Incite Violence"]:
         return [1, 1];
       case ActionTypes["Recruitment"]: {
         const recChance = this.getRecruitmentSuccessChance(player);
@@ -2163,6 +2189,7 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["FieldAnalysis"]:
       case ActionTypes["Diplomacy"]:
       case ActionTypes["Hyperbolic Regeneration Chamber"]:
+      case ActionTypes["Incite Violence"]:
         return Infinity;
       default:
         workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
