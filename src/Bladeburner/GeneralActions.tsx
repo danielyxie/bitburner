@@ -30,4 +30,8 @@ export const GeneralActions: IMap<Action> = {};
   GeneralActions[actionName] = new Action({
     name: actionName,
   });
+  actionName = "Incite Violence";
+  GeneralActions[actionName] = new Action({
+    name: actionName,
+  });
 })();

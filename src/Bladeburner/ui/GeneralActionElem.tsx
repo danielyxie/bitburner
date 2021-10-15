@@ -38,6 +38,8 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
       case "Diplomacy":
       case "Hyperbolic Regeneration Chamber":
         return 60;
+      case "Incite Violence":
+        return 600;
       case "Recruitment":
         return props.bladeburner.getRecruitmentTime(props.player);
     }
