@@ -75,6 +75,7 @@ interface IProps {
 // https://www.npmjs.com/package/@monaco-editor/react#development-playground
 // https://microsoft.github.io/monaco-editor/playground.html#extending-language-services-custom-languages
 // https://github.com/threehams/typescript-error-guide/blob/master/stories/components/Editor.tsx#L11-L39
+// https://blog.checklyhq.com/customizing-monaco/
 
 // These variables are used to reload a script when it's clicked on. Because we
 // won't have references to the old script.
