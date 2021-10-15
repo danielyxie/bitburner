@@ -299,16 +299,12 @@ export async function determineAllPossibilitiesForTabCompletion(
     const script = currServ.scripts.find((script) => script.filename === filename);
     if (!script) return; // Doesn't exist.
     // TODO compile if needs be.
-    console.log("asd1");
     if (!script.module) return;
     const loadedModule = await script.module;
-    console.log("asd2");
     if (!loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
-    console.log(loadedModule.autocomplete());
     return loadedModule.autocomplete();
   }
   const pos = await scriptAutocomplete();
-  console.log(pos);
   if (pos) return pos;
 
   if (isCommand("run")) {
