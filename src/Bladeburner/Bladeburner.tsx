@@ -15,7 +15,7 @@ import { Skill } from "./Skill";
 import { City } from "./City";
 import { IAction } from "./IAction";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { IRouter } from "../ui/Router";
+import { IRouter, Page } from "../ui/Router";
 import { ConsoleHelpText } from "./data/Help";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
@@ -26,7 +26,6 @@ import { addOffset } from "../utils/helpers/addOffset";
 import { Faction } from "../Faction/Faction";
 import { Factions, factionExists } from "../Faction/Factions";
 import { calculateHospitalizationCost } from "../Hospital/Hospital";
-import { redPillFlag } from "../RedPill";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Settings } from "../Settings/Settings";
 import { Augmentations } from "../Augmentation/Augmentations";
@@ -1871,7 +1870,7 @@ export class Bladeburner implements IBladeburner {
 
   process(router: IRouter, player: IPlayer): void {
     // Edge case condition...if Operation Daedalus is complete trigger the BitNode
-    if (redPillFlag === false && this.blackops.hasOwnProperty("Operation Daedalus")) {
+    if (router.page() !== Page.BitVerse && this.blackops.hasOwnProperty("Operation Daedalus")) {
       return router.toBitVerse(false, false);
     }
 
