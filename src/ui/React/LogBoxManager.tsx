@@ -88,7 +88,7 @@ function LogWindow(props: IProps): React.ReactElement {
   }
 
   return (
-    <Draggable handle="#drag">
+    <Draggable handle=".drag">
       <Paper
         style={{
           display: "flex",
@@ -105,7 +105,7 @@ function LogWindow(props: IProps): React.ReactElement {
             cursor: "grab",
           }}
         >
-          <Box id="drag" display="flex" alignItems="center">
+          <Box className="drag" display="flex" alignItems="center">
             <Typography color="primary" variant="h6">
               {props.script.filename} {props.script.args.map((x: any): string => `${x}`).join(" ")}
             </Typography>
