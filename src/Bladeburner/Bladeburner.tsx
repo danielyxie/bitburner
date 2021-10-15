@@ -339,7 +339,7 @@ export class Bladeburner implements IBladeburner {
           action.type = ActionTypes["Hyperbolic Regeneration Chamber"];
           action.name = "Hyperbolic Regeneration Chamber";
           break;
-        case "stir trouble":
+        case "incite violence":
           action.type = ActionTypes["Incite Violence"];
           action.name = "Incite Violence";
           break;
