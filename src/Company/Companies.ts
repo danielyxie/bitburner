@@ -45,8 +45,3 @@ export function initCompanies(): void {
 export function loadCompanies(saveString: string): void {
   Companies = JSON.parse(saveString, Reviver);
 }
-
-// Utility function to check if a string is valid company name
-export function companyExists(name: string): boolean {
-  return Companies.hasOwnProperty(name);
-}

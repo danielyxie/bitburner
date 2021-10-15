@@ -1,6 +1,6 @@
 /* Generic Reviver, toJSON, and fromJSON functions used for saving and loading objects */
 
-export interface IReviverValue {
+interface IReviverValue {
   ctor: string;
   data: any;
 }

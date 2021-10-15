@@ -197,7 +197,7 @@ export function initSymbolToStockMap(): void {
   }
 }
 
-export function stockMarketCycle(): void {
+function stockMarketCycle(): void {
   for (const name in StockMarket) {
     const stock = StockMarket[name];
     if (!(stock instanceof Stock)) {

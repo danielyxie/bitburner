@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { KEY } from "../../utils/helpers/keyCodes";
 
-import { CodingContract, CodingContractType, CodingContractTypes } from "../../CodingContracts";
+import { CodingContract, CodingContractTypes } from "../../CodingContracts";
 import { CopyableText } from "./CopyableText";
 import { Modal } from "./Modal";
 import { EventEmitter } from "../../utils/EventEmitter";
@@ -49,7 +49,7 @@ export function CodingContractModal(): React.ReactElement {
     setProps(null);
   }
 
-  const contractType: CodingContractType = CodingContractTypes[props.c.type];
+  const contractType = CodingContractTypes[props.c.type];
   const description = [];
   for (const [i, value] of contractType.desc(props.c.data).split("\n").entries())
     description.push(<span key={i} dangerouslySetInnerHTML={{ __html: value + "<br />" }}></span>);

@@ -24,7 +24,7 @@ function bitFlumeRequirements() {
   };
 }
 
-export interface IProgramCreationParams {
+interface IProgramCreationParams {
   key: string;
   name: string;
   create: IProgramCreate | null;

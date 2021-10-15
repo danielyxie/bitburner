@@ -1,7 +1,7 @@
-export type Position = {
+interface Position {
   row: number;
   column: number;
-};
+}
 
 class PositionTracker {
   positions: Map<string, Position>;

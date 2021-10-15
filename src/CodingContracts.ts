@@ -8,7 +8,7 @@ import { CodingContractEvent } from "./ui/React/CodingContractModal";
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 
 /* Represents different types of problems that a Coding Contract can have */
-export class CodingContractType {
+class CodingContractType {
   /**
    * Function that generates a description of the problem
    */

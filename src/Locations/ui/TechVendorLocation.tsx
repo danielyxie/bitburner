@@ -69,6 +69,7 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
 
   return (
     <>
+      <br />
       {purchaseServerButtons}
       <br />
       <Typography>

@@ -39,8 +39,8 @@ enum SelectorOrderType {
   Stop = "Stop Order",
 }
 
-export type txFn = (stock: Stock, shares: number) => boolean;
-export type placeOrderFn = (
+type txFn = (stock: Stock, shares: number) => boolean;
+type placeOrderFn = (
   stock: Stock,
   shares: number,
   price: number,

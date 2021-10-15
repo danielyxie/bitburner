@@ -106,6 +106,11 @@ export class WorkerScript {
    */
   hostname: string;
 
+  /**
+   * Function called when the script ends.
+   */
+  atExit: any;
+
   constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => any) {
     this.name = runningScriptObj.filename;
     this.hostname = runningScriptObj.server;
