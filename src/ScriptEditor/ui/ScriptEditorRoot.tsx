@@ -318,7 +318,6 @@ export function Root(props: IProps): React.ReactElement {
   // 370px  71%, 725px  85.1%, 1085px 90%, 1300px 91.7%
   // fuck around in desmos until you find a function
   const p = 11000 / -window.innerHeight + 100;
-  console.log(p);
   return (
     <>
       <Box display="flex" flexDirection="row" alignItems="center">
