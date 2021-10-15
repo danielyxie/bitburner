@@ -89,15 +89,15 @@ function LogWindow(props: IProps): React.ReactElement {
   }
   //useEffect(() => TerminalEvents.subscribe(_.debounce(async () => rerender(), 25, { maxWait: 50 })), []);
 
-  function onDrag(): void {
+  function updateLayer(): void {
     const c = container.current;
     if (c === null) return;
-    c.style.zIndex = (new Date().getTime() % 1000000) + "";
+    c.style.zIndex = (new Date().getTime() % 1000000000) + 1500 + "";
     rerender();
   }
 
   return (
-    <Draggable onDrag={onDrag} handle=".drag">
+    <Draggable handle=".drag">
       <Paper
         style={{
           display: "flex",
@@ -109,45 +109,47 @@ function LogWindow(props: IProps): React.ReactElement {
         }}
         ref={container}
       >
-        <Paper
-          style={{
-            cursor: "grab",
-          }}
-        >
-          <Box className="drag" display="flex" alignItems="center">
-            <Typography color="primary" variant="h6">
-              {props.script.filename} {props.script.args.map((x: any): string => `${x}`).join(" ")}
-            </Typography>
-
-            <Box position="absolute" right={0}>
-              <Button onClick={kill}>Kill Script</Button>
-              <Button onClick={props.onClose}>Close</Button>
-            </Box>
-          </Box>
-        </Paper>
-        <Paper sx={{ overflow: "scroll", overflowWrap: "break-word", whiteSpace: "pre-line" }}>
-          <ResizableBox
-            className={classes.logs}
-            height={500}
-            width={500}
-            handle={
-              <span style={{ position: "absolute", right: "-10px", bottom: "-13px", cursor: "nw-resize" }}>
-                <ArrowForwardIosIcon color="primary" style={{ transform: "rotate(45deg)" }} />
-              </span>
-            }
+        <div onMouseDown={updateLayer}>
+          <Paper
+            style={{
+              cursor: "grab",
+            }}
           >
-            <Box>
-              {props.script.logs.map(
-                (line: string, i: number): JSX.Element => (
-                  <Typography key={i}>
-                    {line}
-                    <br />
-                  </Typography>
-                ),
-              )}
+            <Box className="drag" display="flex" alignItems="center">
+              <Typography color="primary" variant="h6">
+                {props.script.filename} {props.script.args.map((x: any): string => `${x}`).join(" ")}
+              </Typography>
+
+              <Box position="absolute" right={0}>
+                <Button onClick={kill}>Kill Script</Button>
+                <Button onClick={props.onClose}>Close</Button>
+              </Box>
             </Box>
-          </ResizableBox>
-        </Paper>
+          </Paper>
+          <Paper sx={{ overflow: "scroll", overflowWrap: "break-word", whiteSpace: "pre-line" }}>
+            <ResizableBox
+              className={classes.logs}
+              height={500}
+              width={500}
+              handle={
+                <span style={{ position: "absolute", right: "-10px", bottom: "-13px", cursor: "nw-resize" }}>
+                  <ArrowForwardIosIcon color="primary" style={{ transform: "rotate(45deg)" }} />
+                </span>
+              }
+            >
+              <Box>
+                {props.script.logs.map(
+                  (line: string, i: number): JSX.Element => (
+                    <Typography key={i}>
+                      {line}
+                      <br />
+                    </Typography>
+                  ),
+                )}
+              </Box>
+            </ResizableBox>
+          </Paper>
+        </div>
       </Paper>
     </Draggable>
   );
