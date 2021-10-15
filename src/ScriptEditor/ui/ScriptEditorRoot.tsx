@@ -315,7 +315,9 @@ export function Root(props: IProps): React.ReactElement {
     monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, "netscript.d.ts");
     loadThemes(monaco);
   }
-  const h = window.innerHeight;
+  // 370px  71%, 725px  85.1%, 1085px 90%, 1300px 91.7%
+  // fuck around in desmos until you find a function
+  const p = 11000 / -window.innerHeight + 100;
   return (
     <>
       <Box display="flex" flexDirection="row" alignItems="center">
@@ -337,7 +339,7 @@ export function Root(props: IProps): React.ReactElement {
         beforeMount={beforeMount}
         onMount={onMount}
         loading={<Typography>Loading script editor!</Typography>}
-        height={90 - h / 100 + "%"}
+        height={p + "%"}
         defaultLanguage="javascript"
         defaultValue={code}
         onChange={updateCode}
