@@ -1513,6 +1513,8 @@ export class Bladeburner implements IBladeburner {
         if (this.logging.general) {
           this.log(`Incited violence in the synthoid communities.`);
         }
+        const city = this.cities[this.city];
+        city.chaos *= 2;
         this.startAction(player, this.action);
         break;
       }
