@@ -7,6 +7,9 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { GetServer, GetAllServers } from "../Server/AllServers";
 import { ParseCommand, ParseCommands } from "./Parser";
 import { isScriptFilename } from "../Script/isScriptFilename";
+import { compile } from "../NetscriptJSEvaluator";
+import { Flags } from "../NetscriptFunctions/Flags";
+import * as libarg from "arg";
 
 // An array of all Terminal commands
 const commands = [
@@ -298,11 +301,27 @@ export async function determineAllPossibilitiesForTabCompletion(
     if (filename.endsWith(".script")) return; // Doesn't work with ns1.
     const script = currServ.scripts.find((script) => script.filename === filename);
     if (!script) return; // Doesn't exist.
-    // TODO compile if needs be.
-    if (!script.module) return;
+    if (!script.module) {
+      compile(script, currServ.scripts);
+    }
     const loadedModule = await script.module;
     if (!loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
-    return loadedModule.autocomplete();
+
+    const runArgs = { "--tail": Boolean, "-t": Number };
+    const flags = libarg(runArgs, {
+      permissive: true,
+      argv: command.slice(2),
+    });
+
+    return loadedModule.autocomplete(
+      {
+        servers: GetAllServers().map((server) => server.hostname),
+        scripts: currServ.scripts.map((script) => script.filename),
+        txts: currServ.textFiles.map((txt) => txt.fn),
+        flags: Flags(flags._),
+      },
+      flags._,
+    );
   }
   const pos = await scriptAutocomplete();
   if (pos) return pos;

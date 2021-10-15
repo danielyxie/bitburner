@@ -1,5 +1,4 @@
 import { vsprintf, sprintf } from "sprintf-js";
-import * as libarg from "arg";
 
 import { getRamCost } from "./Netscript/RamCostGenerator";
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
@@ -58,7 +57,6 @@ import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads } from "./NetscriptEvaluator";
-import { Interpreter } from "./ThirdParty/JSInterpreter";
 import { Router } from "./ui/GameRoot";
 
 import { numeralWrapper } from "./ui/numeralFormat";
@@ -84,44 +82,12 @@ import { INetscriptFormulas, NetscriptFormulas } from "./NetscriptFunctions/Form
 import { INetscriptAugmentations, NetscriptAugmentations } from "./NetscriptFunctions/Augmentations";
 import { INetscriptStockMarket, NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
 
+import { toNative } from "./NetscriptFunctions/toNative";
+
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { SnackbarEvents } from "./ui/React/Snackbar";
 import { Locations } from "./Locations/Locations";
-
-const defaultInterpreter = new Interpreter("", () => undefined);
-
-// the acorn interpreter has a bug where it doesn't convert arrays correctly.
-// so we have to more or less copy it here.
-function toNative(pseudoObj: any): any {
-  if (pseudoObj == null) return null;
-  if (
-    !pseudoObj.hasOwnProperty("properties") ||
-    !pseudoObj.hasOwnProperty("getter") ||
-    !pseudoObj.hasOwnProperty("setter") ||
-    !pseudoObj.hasOwnProperty("proto")
-  ) {
-    return pseudoObj; // it wasn't a pseudo object anyway.
-  }
-
-  let nativeObj: any;
-  if (pseudoObj.hasOwnProperty("class") && pseudoObj.class === "Array") {
-    nativeObj = [];
-    const length = defaultInterpreter.getProperty(pseudoObj, "length");
-    for (let i = 0; i < length; i++) {
-      if (defaultInterpreter.hasProperty(pseudoObj, i)) {
-        nativeObj[i] = toNative(defaultInterpreter.getProperty(pseudoObj, i));
-      }
-    }
-  } else {
-    // Object.
-    nativeObj = {};
-    for (const key in pseudoObj.properties) {
-      const val = pseudoObj.properties[key];
-      nativeObj[key] = toNative(val);
-    }
-  }
-  return nativeObj;
-}
+import { Flags } from "./NetscriptFunctions/Flags";
 
 interface NS extends INetscriptExtra, INetscriptAugmentations, INetscriptStockMarket {
   [key: string]: any;
@@ -362,6 +328,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
     return Factions[name];
   };
+
+  console.log(workerScript);
+  console.log(workerScript.args);
 
   const hack = function (ip: any, manual: any, { threads: requestedThreads, stock }: any = {}): Promise<number> {
     if (ip === undefined) {
@@ -1846,7 +1815,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
           throw makeRuntimeErrorMsg("read", `Could not find port: ${port}. This is a bug. Report to dev.`);
         }
         const x = iport.read();
-        console.log(x);
         return x;
       } else if (isString(port)) {
         // Read from script or text file
@@ -1895,7 +1863,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("peek", `Could not find port: ${port}. This is a bug. Report to dev.`);
       }
       const x = iport.peek();
-      console.log(x);
       return x;
     },
     clear: function (port: any): any {
@@ -3284,38 +3251,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       workerScript.atExit = f;
     },
-    flags: function (data: any): any {
-      data = toNative(data);
-      // We always want the help flag.
-      const args: {
-        [key: string]: any;
-      } = {};
-
-      for (const d of data) {
-        let t: any = String;
-        if (typeof d[1] === "number") {
-          t = Number;
-        } else if (typeof d[1] === "boolean") {
-          t = Boolean;
-        } else if (Array.isArray(d[1])) {
-          t = [String];
-        }
-        const numDashes = d[0].length > 1 ? 2 : 1;
-        args["-".repeat(numDashes) + d[0]] = t;
-      }
-      const ret = libarg(args, { argv: workerScript.args });
-      for (const d of data) {
-        if (!ret.hasOwnProperty("--" + d[0]) || !ret.hasOwnProperty("-" + d[0])) ret[d[0]] = d[1];
-      }
-      for (const key of Object.keys(ret)) {
-        if (!key.startsWith("-")) continue;
-        const value = ret[key];
-        delete ret[key];
-        const numDashes = key.length === 2 ? 1 : 2;
-        ret[key.slice(numDashes)] = value;
-      }
-      return ret;
-    },
+    flags: Flags(workerScript.args),
     ...extra,
   };
 
