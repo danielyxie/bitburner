@@ -326,7 +326,7 @@ export function NetscriptBladeburner(
       checkBladeburnerCity("getCityEstimatedCommunities", cityName);
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-      return bladeburner.cities[cityName].commsEst;
+      return bladeburner.cities[cityName].comms;
     },
     getCityChaos: function (cityName: any): any {
       helper.updateDynamicRam("getCityChaos", getRamCost("bladeburner", "getCityChaos"));

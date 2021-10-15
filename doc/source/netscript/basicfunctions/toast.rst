@@ -7,7 +7,7 @@ toast() Netscript Function
     :param string message: message to display
     :param success|info|warning|error variant: color of the toast
 
-    Spawns a toast (those bottom left notifications).
+    Spawns a toast (those bottom right notifications, like "Game Saved!" ).
 
     Example:
 
