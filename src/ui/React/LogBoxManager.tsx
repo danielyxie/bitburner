@@ -11,6 +11,7 @@ import { ResizableBox } from "react-resizable";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import _ from "lodash";
 
 export const LogBoxEvents = new EventEmitter<[RunningScript]>();
 
@@ -86,9 +87,17 @@ function LogWindow(props: IProps): React.ReactElement {
     killWorkerScript(props.script, props.script.server, true);
     props.onClose();
   }
+  //useEffect(() => TerminalEvents.subscribe(_.debounce(async () => rerender(), 25, { maxWait: 50 })), []);
+
+  function onDrag(): void {
+    const c = container.current;
+    if (c === null) return;
+    c.style.zIndex = (new Date().getTime() % 1000000) + "";
+    rerender();
+  }
 
   return (
-    <Draggable handle="#drag">
+    <Draggable onDrag={onDrag} handle=".drag">
       <Paper
         style={{
           display: "flex",
@@ -105,7 +114,7 @@ function LogWindow(props: IProps): React.ReactElement {
             cursor: "grab",
           }}
         >
-          <Box id="drag" display="flex" alignItems="center">
+          <Box className="drag" display="flex" alignItems="center">
             <Typography color="primary" variant="h6">
               {props.script.filename} {props.script.args.map((x: any): string => `${x}`).join(" ")}
             </Typography>
