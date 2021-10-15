@@ -37,9 +37,8 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
         return 30;
       case "Diplomacy":
       case "Hyperbolic Regeneration Chamber":
-        return 60;
       case "Incite Violence":
-        return 600;
+        return 60;
       case "Recruitment":
         return props.bladeburner.getRecruitmentTime(props.player);
     }
