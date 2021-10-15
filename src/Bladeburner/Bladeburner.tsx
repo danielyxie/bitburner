@@ -184,9 +184,8 @@ export class Bladeburner implements IBladeburner {
         break;
       case ActionTypes["Diplomacy"]:
       case ActionTypes["Hyperbolic Regeneration Chamber"]:
-        this.actionTimeToComplete = 60;
       case ActionTypes["Incite Violence"]:
-        this.actionTimeToComplete = 600;
+        this.actionTimeToComplete = 60;
         break;
       default:
         throw new Error("Invalid Action Type in startAction(Bladeburner,player, ): " + actionId.type);
@@ -1505,12 +1504,12 @@ export class Bladeburner implements IBladeburner {
         for (const contract of Object.keys(this.contracts)) {
           const growthF = Growths[contract];
           if (!growthF) throw new Error("trying to generate count for action that doesn't exist? " + contract);
-          this.contracts[contract].count += (60 * 30 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
+          this.contracts[contract].count += (60 * 3 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
         }
         for (const operation of Object.keys(this.operations)) {
           const growthF = Growths[operation];
           if (!growthF) throw new Error("trying to generate count for action that doesn't exist? " + operation);
-          this.operations[operation].count += (60 * 30 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
+          this.operations[operation].count += (60 * 3 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
         }
         break;
       }
@@ -2106,9 +2105,8 @@ export class Bladeburner implements IBladeburner {
         return this.getRecruitmentTime(player);
       case ActionTypes["Diplomacy"]:
       case ActionTypes["Hyperbolic Regeneration Chamber"]:
-        return 60;
       case ActionTypes["Incite Violence"]:
-        return 600;
+        return 60;
       default:
         workerScript.log("bladeburner.getActionTime", errorLogText);
         return -1;
