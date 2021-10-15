@@ -313,12 +313,18 @@ export function Root(props: IProps): React.ReactElement {
       },
     });
     (async function () {
+      // We have to improve the default js language otherwise theme sucks
       const l = await monaco.languages
         .getLanguages()
         .find((l: any) => l.id === "javascript")
         .loader();
       l.language.tokenizer.root.unshift(["ns", { token: "ns" }]);
       for (const symbol of symbols) l.language.tokenizer.root.unshift(["\\." + symbol, { token: "netscriptfunction" }]);
+      const otherKeywords = ["let", "const", "var", "function"];
+      const otherKeyvars = ["true", "false", "null", "undefined"];
+      otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeywords" }]));
+      otherKeyvars.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeyvars" }]));
+      l.language.tokenizer.root.unshift(["this", { token: "this" }]);
       console.log(l);
     })();
 
