@@ -12,6 +12,7 @@ export const ActionTypes: {
   "Field Analysis": number;
   Diplomacy: number;
   "Hyperbolic Regeneration Chamber": number;
+  "Incite Violence": number;
 } = {
   Idle: 1,
   Contract: 2,
@@ -24,4 +25,5 @@ export const ActionTypes: {
   "Field Analysis": 7,
   Diplomacy: 8,
   "Hyperbolic Regeneration Chamber": 9,
+  "Incite Violence": 10,
 };

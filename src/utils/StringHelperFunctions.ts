@@ -1,13 +1,6 @@
 import { EqualityFunc } from "../types";
 import { isString } from "./helpers/isString";
 
-// Netburner String helper functions
-
-// Replaces the character at an index with a new character
-function replaceAt(base: string, index: number, character: string): string {
-  return base.substr(0, index) + character + base.substr(index + character.length);
-}
-
 /*
 Converts a date representing time in milliseconds to a string with the format H hours M minutes and S seconds
 e.g.    10000 -> "10 seconds"
@@ -92,20 +85,6 @@ function formatNumber(num: number, numFractionDigits = 0): string {
   });
 }
 
-// Checks if a string contains HTML elements
-function isHTML(str: string): boolean {
-  const element: HTMLDivElement = document.createElement("div");
-  element.innerHTML = str;
-  const c: NodeListOf<Node & ChildNode> = element.childNodes;
-  for (let i: number = c.length - 1; i >= 0; i--) {
-    if (c[i].nodeType === 1) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
 // Generates a random alphanumeric string with N characters
 function generateRandomString(n: number): string {
   let str = "";
@@ -118,12 +97,4 @@ function generateRandomString(n: number): string {
   return str;
 }
 
-export {
-  convertTimeMsToTimeElapsedString,
-  longestCommonStart,
-  containsAllStrings,
-  formatNumber,
-  isHTML,
-  generateRandomString,
-  replaceAt,
-};
+export { convertTimeMsToTimeElapsedString, longestCommonStart, containsAllStrings, formatNumber, generateRandomString };

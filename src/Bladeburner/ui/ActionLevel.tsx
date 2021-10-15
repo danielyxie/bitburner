@@ -55,14 +55,18 @@ export function ActionLevel({ action, isActive, bladeburner, rerender }: IProps)
         </Tooltip>
       </Box>
       <Tooltip title={isActive ? <Typography>WARNING: changing the level will restart the Operation</Typography> : ""}>
-        <IconButton disabled={!canIncrease} onClick={increaseLevel}>
-          <ArrowDropUpIcon />
-        </IconButton>
+        <span>
+          <IconButton disabled={!canIncrease} onClick={increaseLevel}>
+            <ArrowDropUpIcon />
+          </IconButton>
+        </span>
       </Tooltip>
       <Tooltip title={isActive ? <Typography>WARNING: changing the level will restart the Operation</Typography> : ""}>
-        <IconButton disabled={!canDecrease} onClick={decreaseLevel}>
-          <ArrowDropDownIcon />
-        </IconButton>
+        <span>
+          <IconButton disabled={!canDecrease} onClick={decreaseLevel}>
+            <ArrowDropDownIcon />
+          </IconButton>
+        </span>
       </Tooltip>
     </Box>
   );

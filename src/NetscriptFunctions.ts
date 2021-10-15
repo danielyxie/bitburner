@@ -1,50 +1,16 @@
 import { vsprintf, sprintf } from "sprintf-js";
-import * as libarg from "arg";
 
 import { getRamCost } from "./Netscript/RamCostGenerator";
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
 
-import { Augmentations } from "./Augmentation/Augmentations";
-import { augmentationExists, installAugmentations } from "./Augmentation/AugmentationHelpers";
-import { prestigeAugmentation } from "./Prestige";
-import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
 import { findCrime } from "./Crime/CrimeHelpers";
-import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { Company } from "./Company/Company";
 import { Companies } from "./Company/Companies";
 import { CompanyPosition } from "./Company/CompanyPosition";
 import { CompanyPositions } from "./Company/CompanyPositions";
 import { CONSTANTS } from "./Constants";
 import { DarkWebItems } from "./DarkWeb/DarkWebItems";
-import {
-  NewIndustry,
-  NewCity,
-  UnlockUpgrade,
-  LevelUpgrade,
-  IssueDividends,
-  SellMaterial,
-  SellProduct,
-  SetSmartSupply,
-  BuyMaterial,
-  AssignJob,
-  UpgradeOfficeSize,
-  ThrowParty,
-  PurchaseWarehouse,
-  UpgradeWarehouse,
-  BuyCoffee,
-  HireAdVert,
-  MakeProduct,
-  Research,
-  ExportMaterial,
-  CancelExportMaterial,
-  SetMaterialMarketTA1,
-  SetMaterialMarketTA2,
-  SetProductMarketTA1,
-  SetProductMarketTA2,
-} from "./Corporation/Actions";
-import { CorporationUnlockUpgrades } from "./Corporation/data/CorporationUnlockUpgrades";
-import { CorporationUpgrades } from "./Corporation/data/CorporationUpgrades";
 import {
   calculateHackingChance,
   calculateHackingExpGain,
@@ -53,33 +19,15 @@ import {
   calculateGrowTime,
   calculateWeakenTime,
 } from "./Hacking";
-import { calculateServerGrowth } from "./Server/formulas/grow";
 import { AllGangs } from "./Gang/AllGangs";
 import { Factions, factionExists } from "./Faction/Factions";
-import { joinFaction, purchaseAugmentation } from "./Faction/FactionHelpers";
+import { joinFaction } from "./Faction/FactionHelpers";
 import { netscriptCanGrow, netscriptCanHack, netscriptCanWeaken } from "./Hacking/netscriptCanHack";
 
-import {
-  calculateMoneyGainRate,
-  calculateLevelUpgradeCost,
-  calculateRamUpgradeCost,
-  calculateCoreUpgradeCost,
-  calculateNodeCost,
-} from "./Hacknet/formulas/HacknetNodes";
-import {
-  calculateHashGainRate as HScalculateHashGainRate,
-  calculateLevelUpgradeCost as HScalculateLevelUpgradeCost,
-  calculateRamUpgradeCost as HScalculateRamUpgradeCost,
-  calculateCoreUpgradeCost as HScalculateCoreUpgradeCost,
-  calculateCacheUpgradeCost as HScalculateCacheUpgradeCost,
-  calculateServerCost as HScalculateServerCost,
-} from "./Hacknet/formulas/HacknetServers";
-import { HacknetNodeConstants, HacknetServerConstants } from "./Hacknet/data/Constants";
 import { HacknetServer } from "./Hacknet/HacknetServer";
 import { CityName } from "./Locations/data/CityNames";
 import { LocationName } from "./Locations/data/LocationNames";
 import { Terminal } from "./Terminal";
-import { calculateSkill, calculateExp } from "./PersonObjects/formulas/skill";
 
 import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
@@ -99,27 +47,19 @@ import {
 import { getPurchaseServerCost, getPurchaseServerLimit, getPurchaseServerMaxRam } from "./Server/ServerPurchases";
 import { Server } from "./Server/Server";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
-import { buyStock, sellStock, shortStock, sellShort } from "./StockMarket/BuyingAndSelling";
 import { influenceStockThroughServerHack, influenceStockThroughServerGrow } from "./StockMarket/PlayerInfluencing";
-import { StockMarket, SymbolToStockMap, placeOrder, cancelOrder } from "./StockMarket/StockMarket";
-import { getBuyTransactionCost, getSellTransactionGain } from "./StockMarket/StockMarketHelpers";
-import { OrderTypes } from "./StockMarket/data/OrderTypes";
-import { PositionTypes } from "./StockMarket/data/PositionTypes";
-import { StockSymbols } from "./StockMarket/data/StockSymbols";
-import { getStockMarket4SDataCost, getStockMarket4STixApiCost } from "./StockMarket/StockMarketCosts";
+
 import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { TextFile, getTextFile, createTextFile } from "./TextFile";
 
-import { NetscriptPorts, runScriptFromScript, startWorkerScript } from "./NetscriptWorker";
+import { NetscriptPorts, runScriptFromScript } from "./NetscriptWorker";
 import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads } from "./NetscriptEvaluator";
-import { Interpreter } from "./ThirdParty/JSInterpreter";
 import { Router } from "./ui/GameRoot";
 
 import { numeralWrapper } from "./ui/numeralFormat";
-import { is2DArray } from "./utils/helpers/is2DArray";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 import { SpecialServers } from "./Server/data/SpecialServers";
 
@@ -127,69 +67,39 @@ import { LogBoxEvents } from "./ui/React/LogBoxManager";
 import { arrayToString } from "./utils/helpers/arrayToString";
 import { isString } from "./utils/helpers/isString";
 
-import { OfficeSpace } from "./Corporation/OfficeSpace";
-import { Employee } from "./Corporation/Employee";
-import { Product } from "./Corporation/Product";
-import { Material } from "./Corporation/Material";
-import { Warehouse } from "./Corporation/Warehouse";
-import { IIndustry } from "./Corporation/IIndustry";
-
 import { Faction } from "./Faction/Faction";
-import { Augmentation } from "./Augmentation/Augmentation";
 import { Page } from "./ui/Router";
 
-import { CodingContract } from "./CodingContracts";
-import { Stock } from "./StockMarket/Stock";
 import { BaseServer } from "./Server/BaseServer";
 import { INetscriptGang, NetscriptGang } from "./NetscriptFunctions/Gang";
 import { INetscriptSleeve, NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { INetscriptExtra, NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { INetscriptHacknet, NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
 import { INetscriptStanek, NetscriptStanek } from "./NetscriptFunctions/Stanek";
+import { INetscriptBladeburner, NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
+import { INetscriptCodingContract, NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
+import { INetscriptCorporation, NetscriptCorporation } from "./NetscriptFunctions/Corporation";
+import { INetscriptFormulas, NetscriptFormulas } from "./NetscriptFunctions/Formulas";
+import { INetscriptAugmentations, NetscriptAugmentations } from "./NetscriptFunctions/Augmentations";
+import { INetscriptStockMarket, NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
+
+import { toNative } from "./NetscriptFunctions/toNative";
+
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { SnackbarEvents } from "./ui/React/Snackbar";
+import { Locations } from "./Locations/Locations";
+import { Flags } from "./NetscriptFunctions/Flags";
 
-const defaultInterpreter = new Interpreter("", () => undefined);
-
-// the acorn interpreter has a bug where it doesn't convert arrays correctly.
-// so we have to more or less copy it here.
-function toNative(pseudoObj: any): any {
-  if (pseudoObj == null) return null;
-  if (
-    !pseudoObj.hasOwnProperty("properties") ||
-    !pseudoObj.hasOwnProperty("getter") ||
-    !pseudoObj.hasOwnProperty("setter") ||
-    !pseudoObj.hasOwnProperty("proto")
-  ) {
-    return pseudoObj; // it wasn't a pseudo object anyway.
-  }
-
-  let nativeObj: any;
-  if (pseudoObj.hasOwnProperty("class") && pseudoObj.class === "Array") {
-    nativeObj = [];
-    const length = defaultInterpreter.getProperty(pseudoObj, "length");
-    for (let i = 0; i < length; i++) {
-      if (defaultInterpreter.hasProperty(pseudoObj, i)) {
-        nativeObj[i] = toNative(defaultInterpreter.getProperty(pseudoObj, i));
-      }
-    }
-  } else {
-    // Object.
-    nativeObj = {};
-    for (const key in pseudoObj.properties) {
-      const val = pseudoObj.properties[key];
-      nativeObj[key] = toNative(val);
-    }
-  }
-  return nativeObj;
-}
-
-interface NS extends INetscriptExtra {
+interface NS extends INetscriptExtra, INetscriptAugmentations, INetscriptStockMarket {
   [key: string]: any;
   hacknet: INetscriptHacknet;
   gang: INetscriptGang;
   sleeve: INetscriptSleeve;
   stanek: INetscriptStanek;
+  bladeburner: INetscriptBladeburner;
+  codingcontract: INetscriptCodingContract;
+  corporation: INetscriptCorporation;
+  formulas: INetscriptFormulas;
 }
 
 function NetscriptFunctions(workerScript: WorkerScript): NS {
@@ -239,7 +149,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
    * @param {string} callingFnName - Name of calling function. For logging purposes
    * @returns {Server} The specified Server
    */
-  const safeGetServer = function (ip: any, callingFnName: any = ""): BaseServer {
+  const safeGetServer = function (ip: string, callingFnName: string): BaseServer {
     const server = GetServer(ip);
     if (server == null) {
       throw makeRuntimeErrorMsg(callingFnName, `Invalid IP/hostname: ${ip}`);
@@ -311,32 +221,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     }
 
     return `Cannot find running script ${fn} on server ${ip} with args: ${arrayToString(scriptArgs)}`;
-  };
-
-  /**
-   * Checks if the player has TIX API access. Throws an error if the player does not
-   */
-  const checkTixApiAccess = function (callingFn: any = ""): void {
-    if (!Player.hasWseAccount) {
-      throw makeRuntimeErrorMsg(callingFn, `You don't have WSE Access! Cannot use ${callingFn}()`);
-    }
-    if (!Player.hasTixApiAccess) {
-      throw makeRuntimeErrorMsg(callingFn, `You don't have TIX API Access! Cannot use ${callingFn}()`);
-    }
-  };
-
-  /**
-   * Gets a stock, given its symbol. Throws an error if the symbol is invalid
-   * @param {string} symbol - Stock's symbol
-   * @returns {Stock} stock object
-   */
-  const getStockFromSymbol = function (symbol: any, callingFn: any = ""): Stock {
-    const stock = SymbolToStockMap[symbol];
-    if (stock == null) {
-      throw makeRuntimeErrorMsg(callingFn, `Invalid stock symbol: '${symbol}'`);
-    }
-
-    return stock;
   };
 
   /**
@@ -423,76 +307,12 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     return makeRuntimeRejectMsg(workerScript, rejectMsg);
   };
 
-  const checkFormulasAccess = function (func: any, n: any): void {
-    if ((SourceFileFlags[5] < 1 && Player.bitNodeN !== 5) || (SourceFileFlags[n] < 1 && Player.bitNodeN !== n)) {
-      let extra = "";
-      if (n !== 5) {
-        extra = ` and Source-File ${n}-1`;
-      }
-      throw makeRuntimeErrorMsg(`formulas.${func}`, `Requires Source-File 5-1${extra} to run.`);
-    }
-  };
-
   const checkSingularityAccess = function (func: any, n: any): void {
     if (Player.bitNodeN !== 4) {
       if (SourceFileFlags[4] < n) {
         throw makeRuntimeErrorMsg(func, `This singularity function requires Source-File 4-${n} to run.`);
       }
     }
-  };
-
-  const checkBladeburnerAccess = function (func: any, skipjoined: any = false): void {
-    const bladeburner = Player.bladeburner;
-    if (bladeburner === null) throw new Error("Must have joined bladeburner");
-    const apiAccess =
-      Player.bitNodeN === 7 ||
-      Player.sourceFiles.some((a) => {
-        return a.n === 7;
-      });
-    if (!apiAccess) {
-      const apiDenied = `You do not currently have access to the Bladeburner API. You must either be in BitNode-7 or have Source-File 7.`;
-      throw makeRuntimeErrorMsg(`bladeburner.${func}`, apiDenied);
-    }
-    if (!skipjoined) {
-      const bladeburnerAccess = bladeburner instanceof Bladeburner;
-      if (!bladeburnerAccess) {
-        const bladeburnerDenied = `You must be a member of the Bladeburner division to use this API.`;
-        throw makeRuntimeErrorMsg(`bladeburner.${func}`, bladeburnerDenied);
-      }
-    }
-  };
-
-  const checkBladeburnerCity = function (func: any, city: any): void {
-    const bladeburner = Player.bladeburner;
-    if (bladeburner === null) throw new Error("Must have joined bladeburner");
-    if (!bladeburner.cities.hasOwnProperty(city)) {
-      throw makeRuntimeErrorMsg(`bladeburner.${func}`, `Invalid city: ${city}`);
-    }
-  };
-
-  const getCodingContract = function (func: any, ip: any, fn: any): CodingContract {
-    const server = safeGetServer(ip, func);
-    const contract = server.getContract(fn);
-    if (contract == null) {
-      throw makeRuntimeErrorMsg(`codingcontract.${func}`, `Cannot find contract '${fn}' on server '${ip}'`);
-    }
-
-    return contract;
-  };
-
-  const getBladeburnerActionObject = function (func: any, type: any, name: any): any {
-    const bladeburner = Player.bladeburner;
-    if (bladeburner === null) throw new Error("Must have joined bladeburner");
-    const actionId = bladeburner.getActionIdFromTypeAndName(type, name);
-    if (!actionId) {
-      throw makeRuntimeErrorMsg(`bladeburner.${func}`, `Invalid action type='${type}', name='${name}'`);
-    }
-    const actionObj = bladeburner.getActionObject(actionId);
-    if (!actionObj) {
-      throw makeRuntimeErrorMsg(`bladeburner.${func}`, `Invalid action type='${type}', name='${name}'`);
-    }
-
-    return actionObj;
   };
 
   const getCompany = function (func: any, name: any): Company {
@@ -509,78 +329,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     }
 
     return Factions[name];
-  };
-
-  const getAugmentation = function (func: any, name: any): Augmentation {
-    if (!augmentationExists(name)) {
-      throw makeRuntimeErrorMsg(func, `Invalid augmentation: '${name}'`);
-    }
-
-    return Augmentations[name];
-  };
-
-  function getDivision(divisionName: any): IIndustry {
-    const corporation = Player.corporation;
-    if (corporation === null) throw new Error("cannot be called without a corporation");
-    const division = corporation.divisions.find((div) => div.name === divisionName);
-    if (division === undefined) throw new Error(`No division named '${divisionName}'`);
-    return division;
-  }
-
-  function getOffice(divisionName: any, cityName: any): OfficeSpace {
-    const division = getDivision(divisionName);
-    if (!(cityName in division.offices)) throw new Error(`Invalid city name '${cityName}'`);
-    const office = division.offices[cityName];
-    if (office === 0) throw new Error(`${division.name} has not expanded to '${cityName}'`);
-    return office;
-  }
-
-  function getWarehouse(divisionName: any, cityName: any): Warehouse {
-    const division = getDivision(divisionName);
-    if (!(cityName in division.warehouses)) throw new Error(`Invalid city name '${cityName}'`);
-    const warehouse = division.warehouses[cityName];
-    if (warehouse === 0) throw new Error(`${division.name} has not expanded to '${cityName}'`);
-    return warehouse;
-  }
-
-  function getMaterial(divisionName: any, cityName: any, materialName: any): Material {
-    const warehouse = getWarehouse(divisionName, cityName);
-    const material = warehouse.materials[materialName];
-    if (material === undefined) throw new Error(`Invalid material name: '${materialName}'`);
-    return material;
-  }
-
-  function getProduct(divisionName: any, productName: any): Product {
-    const division = getDivision(divisionName);
-    const product = division.products[productName];
-    if (product === undefined) throw new Error(`Invalid product name: '${productName}'`);
-    return product;
-  }
-
-  function getEmployee(divisionName: any, cityName: any, employeeName: any): Employee {
-    const office = getOffice(divisionName, cityName);
-    const employee = office.employees.find((e) => e.name === employeeName);
-    if (employee === undefined) throw new Error(`Invalid employee name: '${employeeName}'`);
-    return employee;
-  }
-
-  const runAfterReset = function (cbScript = null): void {
-    //Run a script after reset
-    if (cbScript && isString(cbScript)) {
-      const home = Player.getHomeComputer();
-      for (const script of home.scripts) {
-        if (script.filename === cbScript) {
-          const ramUsage = script.ramUsage;
-          const ramAvailable = home.maxRam - home.ramUsed;
-          if (ramUsage > ramAvailable) {
-            return; // Not enough RAM
-          }
-          const runningScriptObj = new RunningScript(script, []); // No args
-          runningScriptObj.threads = 1; // Only 1 thread
-          startWorkerScript(runningScriptObj, home);
-        }
-      }
-    }
   };
 
   const hack = function (ip: any, manual: any, { threads: requestedThreads, stock }: any = {}): Promise<number> {
@@ -714,6 +462,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     boolean: (v: any): boolean => {
       return !!v; // Just convert it to boolean.
     },
+    getServer: safeGetServer,
+    checkSingularityAccess: checkSingularityAccess,
+    getFaction: getFaction,
   };
 
   const gang = NetscriptGang(Player, workerScript, helper);
@@ -721,6 +472,12 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
   const extra = NetscriptExtra(Player, workerScript);
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
   const stanek = NetscriptStanek(Player, workerScript, helper);
+  const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
+  const codingcontract = NetscriptCodingContract(Player, workerScript, helper);
+  const corporation = NetscriptCorporation(Player, workerScript, helper);
+  const formulas = NetscriptFormulas(Player, workerScript, helper);
+  const augmentations = NetscriptAugmentations(Player, workerScript, helper);
+  const stockmarket = NetscriptStockMarket(Player, workerScript, helper);
 
   const functions = {
     hacknet: hacknet,
@@ -1219,7 +976,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
           throw makeRuntimeErrorMsg("kill", "Usage: kill(scriptname, server, [arg1], [arg2]...)");
         }
 
-        const server = safeGetServer(ip);
+        const server = safeGetServer(ip, "kill");
         const runningScriptObj = getRunningScript(filename, ip, "kill", scriptArgs);
         if (runningScriptObj == null) {
           workerScript.log("kill", getCannotFindRunningScriptErrorMessage(filename, ip, scriptArgs));
@@ -1784,317 +1541,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return getRunningScript(fn, ip, "isRunning", scriptArgs) != null;
       }
     },
-    getStockSymbols: function (): any {
-      updateDynamicRam("getStockSymbols", getRamCost("getStockSymbols"));
-      checkTixApiAccess("getStockSymbols");
-      return Object.values(StockSymbols);
-    },
-    getStockPrice: function (symbol: any): any {
-      updateDynamicRam("getStockPrice", getRamCost("getStockPrice"));
-      checkTixApiAccess("getStockPrice");
-      const stock = getStockFromSymbol(symbol, "getStockPrice");
-
-      return stock.price;
-    },
-    getStockAskPrice: function (symbol: any): any {
-      updateDynamicRam("getStockAskPrice", getRamCost("getStockAskPrice"));
-      checkTixApiAccess("getStockAskPrice");
-      const stock = getStockFromSymbol(symbol, "getStockAskPrice");
-
-      return stock.getAskPrice();
-    },
-    getStockBidPrice: function (symbol: any): any {
-      updateDynamicRam("getStockBidPrice", getRamCost("getStockBidPrice"));
-      checkTixApiAccess("getStockBidPrice");
-      const stock = getStockFromSymbol(symbol, "getStockBidPrice");
-
-      return stock.getBidPrice();
-    },
-    getStockPosition: function (symbol: any): any {
-      updateDynamicRam("getStockPosition", getRamCost("getStockPosition"));
-      checkTixApiAccess("getStockPosition");
-      const stock = SymbolToStockMap[symbol];
-      if (stock == null) {
-        throw makeRuntimeErrorMsg("getStockPosition", `Invalid stock symbol: ${symbol}`);
-      }
-      return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
-    },
-    getStockMaxShares: function (symbol: any): any {
-      updateDynamicRam("getStockMaxShares", getRamCost("getStockMaxShares"));
-      checkTixApiAccess("getStockMaxShares");
-      const stock = getStockFromSymbol(symbol, "getStockMaxShares");
-
-      return stock.maxShares;
-    },
-    getStockPurchaseCost: function (symbol: any, shares: any, posType: any): any {
-      updateDynamicRam("getStockPurchaseCost", getRamCost("getStockPurchaseCost"));
-      checkTixApiAccess("getStockPurchaseCost");
-      const stock = getStockFromSymbol(symbol, "getStockPurchaseCost");
-      shares = Math.round(shares);
-
-      let pos;
-      const sanitizedPosType = posType.toLowerCase();
-      if (sanitizedPosType.includes("l")) {
-        pos = PositionTypes.Long;
-      } else if (sanitizedPosType.includes("s")) {
-        pos = PositionTypes.Short;
-      } else {
-        return Infinity;
-      }
-
-      const res = getBuyTransactionCost(stock, shares, pos);
-      if (res == null) {
-        return Infinity;
-      }
-
-      return res;
-    },
-    getStockSaleGain: function (symbol: any, shares: any, posType: any): any {
-      updateDynamicRam("getStockSaleGain", getRamCost("getStockSaleGain"));
-      checkTixApiAccess("getStockSaleGain");
-      const stock = getStockFromSymbol(symbol, "getStockSaleGain");
-      shares = Math.round(shares);
-
-      let pos;
-      const sanitizedPosType = posType.toLowerCase();
-      if (sanitizedPosType.includes("l")) {
-        pos = PositionTypes.Long;
-      } else if (sanitizedPosType.includes("s")) {
-        pos = PositionTypes.Short;
-      } else {
-        return 0;
-      }
-
-      const res = getSellTransactionGain(stock, shares, pos);
-      if (res == null) {
-        return 0;
-      }
-
-      return res;
-    },
-    buyStock: function (symbol: any, shares: any): any {
-      updateDynamicRam("buyStock", getRamCost("buyStock"));
-      checkTixApiAccess("buyStock");
-      const stock = getStockFromSymbol(symbol, "buyStock");
-      const res = buyStock(stock, shares, workerScript, {});
-      return res ? stock.price : 0;
-    },
-    sellStock: function (symbol: any, shares: any): any {
-      updateDynamicRam("sellStock", getRamCost("sellStock"));
-      checkTixApiAccess("sellStock");
-      const stock = getStockFromSymbol(symbol, "sellStock");
-      const res = sellStock(stock, shares, workerScript, {});
-
-      return res ? stock.price : 0;
-    },
-    shortStock: function (symbol: any, shares: any): any {
-      updateDynamicRam("shortStock", getRamCost("shortStock"));
-      checkTixApiAccess("shortStock");
-      if (Player.bitNodeN !== 8) {
-        if (SourceFileFlags[8] <= 1) {
-          throw makeRuntimeErrorMsg(
-            "shortStock",
-            "You must either be in BitNode-8 or you must have Source-File 8 Level 2.",
-          );
-        }
-      }
-      const stock = getStockFromSymbol(symbol, "shortStock");
-      const res = shortStock(stock, shares, workerScript, {});
-
-      return res ? stock.price : 0;
-    },
-    sellShort: function (symbol: any, shares: any): any {
-      updateDynamicRam("sellShort", getRamCost("sellShort"));
-      checkTixApiAccess("sellShort");
-      if (Player.bitNodeN !== 8) {
-        if (SourceFileFlags[8] <= 1) {
-          throw makeRuntimeErrorMsg(
-            "sellShort",
-            "You must either be in BitNode-8 or you must have Source-File 8 Level 2.",
-          );
-        }
-      }
-      const stock = getStockFromSymbol(symbol, "sellShort");
-      const res = sellShort(stock, shares, workerScript, {});
-
-      return res ? stock.price : 0;
-    },
-    placeOrder: function (symbol: any, shares: any, price: any, type: any, pos: any): any {
-      updateDynamicRam("placeOrder", getRamCost("placeOrder"));
-      checkTixApiAccess("placeOrder");
-      if (Player.bitNodeN !== 8) {
-        if (SourceFileFlags[8] <= 2) {
-          throw makeRuntimeErrorMsg(
-            "placeOrder",
-            "You must either be in BitNode-8 or you must have Source-File 8 Level 3.",
-          );
-        }
-      }
-      const stock = getStockFromSymbol(symbol, "placeOrder");
-
-      let orderType;
-      let orderPos;
-      const ltype = type.toLowerCase();
-      if (ltype.includes("limit") && ltype.includes("buy")) {
-        orderType = OrderTypes.LimitBuy;
-      } else if (ltype.includes("limit") && ltype.includes("sell")) {
-        orderType = OrderTypes.LimitSell;
-      } else if (ltype.includes("stop") && ltype.includes("buy")) {
-        orderType = OrderTypes.StopBuy;
-      } else if (ltype.includes("stop") && ltype.includes("sell")) {
-        orderType = OrderTypes.StopSell;
-      } else {
-        throw makeRuntimeErrorMsg("placeOrder", `Invalid order type: ${type}`);
-      }
-
-      const lpos = pos.toLowerCase();
-      if (lpos.includes("l")) {
-        orderPos = PositionTypes.Long;
-      } else if (lpos.includes("s")) {
-        orderPos = PositionTypes.Short;
-      } else {
-        throw makeRuntimeErrorMsg("placeOrder", `Invalid position type: ${pos}`);
-      }
-
-      return placeOrder(stock, shares, price, orderType, orderPos, workerScript);
-    },
-    cancelOrder: function (symbol: any, shares: any, price: any, type: any, pos: any): any {
-      updateDynamicRam("cancelOrder", getRamCost("cancelOrder"));
-      checkTixApiAccess("cancelOrder");
-      if (Player.bitNodeN !== 8) {
-        if (SourceFileFlags[8] <= 2) {
-          throw makeRuntimeErrorMsg(
-            "cancelOrder",
-            "You must either be in BitNode-8 or you must have Source-File 8 Level 3.",
-          );
-        }
-      }
-      const stock = getStockFromSymbol(symbol, "cancelOrder");
-      if (isNaN(shares) || isNaN(price)) {
-        throw makeRuntimeErrorMsg(
-          "cancelOrder",
-          `Invalid shares or price. Must be numeric. shares=${shares}, price=${price}`,
-        );
-      }
-      let orderType;
-      let orderPos;
-      const ltype = type.toLowerCase();
-      if (ltype.includes("limit") && ltype.includes("buy")) {
-        orderType = OrderTypes.LimitBuy;
-      } else if (ltype.includes("limit") && ltype.includes("sell")) {
-        orderType = OrderTypes.LimitSell;
-      } else if (ltype.includes("stop") && ltype.includes("buy")) {
-        orderType = OrderTypes.StopBuy;
-      } else if (ltype.includes("stop") && ltype.includes("sell")) {
-        orderType = OrderTypes.StopSell;
-      } else {
-        throw makeRuntimeErrorMsg("cancelOrder", `Invalid order type: ${type}`);
-      }
-
-      const lpos = pos.toLowerCase();
-      if (lpos.includes("l")) {
-        orderPos = PositionTypes.Long;
-      } else if (lpos.includes("s")) {
-        orderPos = PositionTypes.Short;
-      } else {
-        throw makeRuntimeErrorMsg("cancelOrder", `Invalid position type: ${pos}`);
-      }
-      const params = {
-        stock: stock,
-        shares: shares,
-        price: price,
-        type: orderType,
-        pos: orderPos,
-      };
-      return cancelOrder(params, workerScript);
-    },
-    getOrders: function (): any {
-      updateDynamicRam("getOrders", getRamCost("getOrders"));
-      checkTixApiAccess("getOrders");
-      if (Player.bitNodeN !== 8) {
-        if (SourceFileFlags[8] <= 2) {
-          throw makeRuntimeErrorMsg("getOrders", "You must either be in BitNode-8 or have Source-File 8 Level 3.");
-        }
-      }
-
-      const orders: any = {};
-
-      const stockMarketOrders = StockMarket["Orders"];
-      for (const symbol in stockMarketOrders) {
-        const orderBook = stockMarketOrders[symbol];
-        if (orderBook.constructor === Array && orderBook.length > 0) {
-          orders[symbol] = [];
-          for (let i = 0; i < orderBook.length; ++i) {
-            orders[symbol].push({
-              shares: orderBook[i].shares,
-              price: orderBook[i].price,
-              type: orderBook[i].type,
-              position: orderBook[i].pos,
-            });
-          }
-        }
-      }
-
-      return orders;
-    },
-    getStockVolatility: function (symbol: any): any {
-      updateDynamicRam("getStockVolatility", getRamCost("getStockVolatility"));
-      if (!Player.has4SDataTixApi) {
-        throw makeRuntimeErrorMsg("getStockVolatility", "You don't have 4S Market Data TIX API Access!");
-      }
-      const stock = getStockFromSymbol(symbol, "getStockVolatility");
-
-      return stock.mv / 100; // Convert from percentage to decimal
-    },
-    getStockForecast: function (symbol: any): any {
-      updateDynamicRam("getStockForecast", getRamCost("getStockForecast"));
-      if (!Player.has4SDataTixApi) {
-        throw makeRuntimeErrorMsg("getStockForecast", "You don't have 4S Market Data TIX API Access!");
-      }
-      const stock = getStockFromSymbol(symbol, "getStockForecast");
-
-      let forecast = 50;
-      stock.b ? (forecast += stock.otlkMag) : (forecast -= stock.otlkMag);
-      return forecast / 100; // Convert from percentage to decimal
-    },
-    purchase4SMarketData: function () {
-      updateDynamicRam("purchase4SMarketData", getRamCost("purchase4SMarketData"));
-      checkTixApiAccess("purchase4SMarketData");
-
-      if (Player.has4SData) {
-        workerScript.log("purchase4SMarketData", "Already purchased 4S Market Data.");
-        return true;
-      }
-
-      if (Player.money.lt(getStockMarket4SDataCost())) {
-        workerScript.log("purchase4SMarketData", "Not enough money to purchase 4S Market Data.");
-        return false;
-      }
-
-      Player.has4SData = true;
-      Player.loseMoney(getStockMarket4SDataCost());
-      workerScript.log("purchase4SMarketData", "Purchased 4S Market Data");
-      return true;
-    },
-    purchase4SMarketDataTixApi: function () {
-      updateDynamicRam("purchase4SMarketDataTixApi", getRamCost("purchase4SMarketDataTixApi"));
-      checkTixApiAccess("purchase4SMarketDataTixApi");
-
-      if (Player.has4SDataTixApi) {
-        workerScript.log("purchase4SMarketDataTixApi", "Already purchased 4S Market Data TIX API");
-        return true;
-      }
-
-      if (Player.money.lt(getStockMarket4STixApiCost())) {
-        workerScript.log("purchase4SMarketDataTixApi", "Not enough money to purchase 4S Market Data TIX API");
-        return false;
-      }
-
-      Player.has4SDataTixApi = true;
-      Player.loseMoney(getStockMarket4STixApiCost());
-      workerScript.log("purchase4SMarketDataTixApi", "Purchased 4S Market Data TIX API");
-      return true;
-    },
+    ...stockmarket,
     getPurchasedServerLimit: function (): any {
       updateDynamicRam("getPurchasedServerLimit", getRamCost("getPurchasedServerLimit"));
 
@@ -2368,7 +1815,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
           throw makeRuntimeErrorMsg("read", `Could not find port: ${port}. This is a bug. Report to dev.`);
         }
         const x = iport.read();
-        console.log(x);
         return x;
       } else if (isString(port)) {
         // Read from script or text file
@@ -2417,7 +1863,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("peek", `Could not find port: ${port}. This is a bug. Report to dev.`);
       }
       const x = iport.peek();
-      console.log(x);
       return x;
     },
     clear: function (port: any): any {
@@ -2734,6 +2179,19 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
 
     /* Singularity Functions */
+    goToLocation: function (locationName: any): boolean {
+      const location = Object.values(Locations).find((l) => l.name === locationName);
+      if (!location) {
+        workerScript.log("goToLocation", `No location named ${locationName}`);
+        return false;
+      }
+      if (Player.city !== location.city) {
+        workerScript.log("goToLocation", `No location named ${locationName} in ${Player.city}`);
+        return false;
+      }
+      Router.toLocation(location);
+      return true;
+    },
     universityCourse: function (universityName: any, className: any): any {
       updateDynamicRam("universityCourse", getRamCost("universityCourse"));
       checkSingularityAccess("universityCourse", 1);
@@ -3270,6 +2728,39 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return false;
     },
+    upgradeHomeCores: function (): any {
+      updateDynamicRam("upgradeHomeCores", getRamCost("upgradeHomeCores"));
+      checkSingularityAccess("upgradeHomeCores", 2);
+
+      // Check if we're at max cores
+      const homeComputer = Player.getHomeComputer();
+      if (homeComputer.cpuCores >= 8) {
+        workerScript.log("upgradeHomeCores", `Your home computer is at max cores.`);
+        return false;
+      }
+
+      const cost = Player.getUpgradeHomeCoresCost();
+      if (Player.money.lt(cost)) {
+        workerScript.log("upgradeHomeCores", `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`);
+        return false;
+      }
+
+      homeComputer.cpuCores += 1;
+      Player.loseMoney(cost);
+
+      Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
+      workerScript.log(
+        "upgradeHomeCores",
+        `Purchased an additional core for home computer! It now has ${homeComputer.cpuCores} cores.`,
+      );
+      return true;
+    },
+    getUpgradeHomeCoresCost: function (): any {
+      updateDynamicRam("getUpgradeHomeCoresCost", getRamCost("getUpgradeHomeCoresCost"));
+      checkSingularityAccess("getUpgradeHomeCoresCost", 2);
+
+      return Player.getUpgradeHomeCoresCost();
+    },
     upgradeHomeRam: function (): any {
       updateDynamicRam("upgradeHomeRam", getRamCost("upgradeHomeRam"));
       checkSingularityAccess("upgradeHomeRam", 2);
@@ -3743,879 +3234,24 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return Object.assign({}, crime);
     },
-    getOwnedAugmentations: function (purchased: any = false): any {
-      updateDynamicRam("getOwnedAugmentations", getRamCost("getOwnedAugmentations"));
-      checkSingularityAccess("getOwnedAugmentations", 3);
-      const res = [];
-      for (let i = 0; i < Player.augmentations.length; ++i) {
-        res.push(Player.augmentations[i].name);
-      }
-      if (purchased) {
-        for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
-          res.push(Player.queuedAugmentations[i].name);
-        }
-      }
-      return res;
-    },
-    getOwnedSourceFiles: function (): any {
-      updateDynamicRam("getOwnedSourceFiles", getRamCost("getOwnedSourceFiles"));
-      checkSingularityAccess("getOwnedSourceFiles", 3);
-      const res = [];
-      for (let i = 0; i < Player.sourceFiles.length; ++i) {
-        res.push({
-          n: Player.sourceFiles[i].n,
-          lvl: Player.sourceFiles[i].lvl,
-        });
-      }
-      return res;
-    },
-    getAugmentationsFromFaction: function (facname: any): any {
-      updateDynamicRam("getAugmentationsFromFaction", getRamCost("getAugmentationsFromFaction"));
-      checkSingularityAccess("getAugmentationsFromFaction", 3);
-      const faction = getFaction("getAugmentationsFromFaction", facname);
 
-      // If player has a gang with this faction, return all augmentations.
-      if (Player.hasGangWith(facname)) {
-        const res = [];
-        for (const augName in Augmentations) {
-          const aug = Augmentations[augName];
-          if (!aug.isSpecial) {
-            res.push(augName);
-          }
-        }
+    ...augmentations,
 
-        return res;
-      }
-
-      return faction.augmentations.slice();
-    },
-    getAugmentationCost: function (name: any): any {
-      updateDynamicRam("getAugmentationCost", getRamCost("getAugmentationCost"));
-      checkSingularityAccess("getAugmentationCost", 3);
-      const aug = getAugmentation("getAugmentationCost", name);
-      return [aug.baseRepRequirement, aug.baseCost];
-    },
-    getAugmentationPrereq: function (name: any): any {
-      updateDynamicRam("getAugmentationPrereq", getRamCost("getAugmentationPrereq"));
-      checkSingularityAccess("getAugmentationPrereq", 3);
-      const aug = getAugmentation("getAugmentationPrereq", name);
-      return aug.prereqs.slice();
-    },
-    getAugmentationPrice: function (name: any): any {
-      updateDynamicRam("getAugmentationPrice", getRamCost("getAugmentationPrice"));
-      checkSingularityAccess("getAugmentationPrice", 3);
-      const aug = getAugmentation("getAugmentationPrice", name);
-      return aug.baseCost;
-    },
-    getAugmentationRepReq: function (name: any): any {
-      updateDynamicRam("getAugmentationRepReq", getRamCost("getAugmentationRepReq"));
-      checkSingularityAccess("getAugmentationRepReq", 3);
-      const aug = getAugmentation("getAugmentationRepReq", name);
-      return aug.baseRepRequirement;
-    },
-    getAugmentationStats: function (name: any): any {
-      updateDynamicRam("getAugmentationStats", getRamCost("getAugmentationStats"));
-      checkSingularityAccess("getAugmentationStats", 3);
-      const aug = getAugmentation("getAugmentationStats", name);
-      return Object.assign({}, aug.mults);
-    },
-    purchaseAugmentation: function (faction: any, name: any): any {
-      updateDynamicRam("purchaseAugmentation", getRamCost("purchaseAugmentation"));
-      checkSingularityAccess("purchaseAugmentation", 3);
-      const fac = getFaction("purchaseAugmentation", faction);
-      const aug = getAugmentation("purchaseAugmentation", name);
-
-      let augs = [];
-      if (Player.hasGangWith(faction)) {
-        for (const augName in Augmentations) {
-          const tempAug = Augmentations[augName];
-          if (!tempAug.isSpecial) {
-            augs.push(augName);
-          }
-        }
-      } else {
-        augs = fac.augmentations;
-      }
-
-      if (!augs.includes(name)) {
-        workerScript.log("purchaseAugmentation", `Faction '${faction}' does not have the '${name}' augmentation.`);
-        return false;
-      }
-
-      const isNeuroflux = aug.name === AugmentationNames.NeuroFluxGovernor;
-      if (!isNeuroflux) {
-        for (let j = 0; j < Player.queuedAugmentations.length; ++j) {
-          if (Player.queuedAugmentations[j].name === aug.name) {
-            workerScript.log("purchaseAugmentation", `You already have the '${name}' augmentation.`);
-            return false;
-          }
-        }
-        for (let j = 0; j < Player.augmentations.length; ++j) {
-          if (Player.augmentations[j].name === aug.name) {
-            workerScript.log("purchaseAugmentation", `You already have the '${name}' augmentation.`);
-            return false;
-          }
-        }
-      }
-
-      if (fac.playerReputation < aug.baseRepRequirement) {
-        workerScript.log("purchaseAugmentation", `You do not have enough reputation with '${fac.name}'.`);
-        return false;
-      }
-
-      const res = purchaseAugmentation(aug, fac, true);
-      workerScript.log("purchaseAugmentation", res);
-      if (isString(res) && res.startsWith("You purchased")) {
-        Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
-        return true;
-      } else {
-        return false;
-      }
-    },
-    softReset: function (cbScript: any): any {
-      updateDynamicRam("softReset", getRamCost("softReset"));
-      checkSingularityAccess("softReset", 3);
-
-      workerScript.log("softReset", "Soft resetting. This will cause this script to be killed");
-      setTimeout(() => {
-        prestigeAugmentation();
-        runAfterReset(cbScript);
-      }, 0);
-
-      // Prevent workerScript from "finishing execution naturally"
-      workerScript.running = false;
-      killWorkerScript(workerScript);
-    },
-    installAugmentations: function (cbScript: any): any {
-      updateDynamicRam("installAugmentations", getRamCost("installAugmentations"));
-      checkSingularityAccess("installAugmentations", 3);
-
-      if (Player.queuedAugmentations.length === 0) {
-        workerScript.log("installAugmentations", "You do not have any Augmentations to be installed.");
-        return false;
-      }
-      Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
-      workerScript.log("installAugmentations", "Installing Augmentations. This will cause this script to be killed");
-      setTimeout(() => {
-        installAugmentations();
-        runAfterReset(cbScript);
-      }, 0);
-
-      workerScript.running = false; // Prevent workerScript from "finishing execution naturally"
-      killWorkerScript(workerScript);
-    },
-
-    // Gang API
     gang: gang,
-
-    // Bladeburner API
-    bladeburner: {
-      getContractNames: function (): any {
-        updateDynamicRam("getContractNames", getRamCost("bladeburner", "getContractNames"));
-        checkBladeburnerAccess("getContractNames");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.getContractNamesNetscriptFn();
-      },
-      getOperationNames: function (): any {
-        updateDynamicRam("getOperationNames", getRamCost("bladeburner", "getOperationNames"));
-        checkBladeburnerAccess("getOperationNames");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.getOperationNamesNetscriptFn();
-      },
-      getBlackOpNames: function (): any {
-        updateDynamicRam("getBlackOpNames", getRamCost("bladeburner", "getBlackOpNames"));
-        checkBladeburnerAccess("getBlackOpNames");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.getBlackOpNamesNetscriptFn();
-      },
-      getBlackOpRank: function (name: any = ""): any {
-        updateDynamicRam("getBlackOpRank", getRamCost("bladeburner", "getBlackOpRank"));
-        checkBladeburnerAccess("getBlackOpRank");
-        const action: any = getBladeburnerActionObject("getBlackOpRank", "blackops", name);
-        return action.reqdRank;
-      },
-      getGeneralActionNames: function (): any {
-        updateDynamicRam("getGeneralActionNames", getRamCost("bladeburner", "getGeneralActionNames"));
-        checkBladeburnerAccess("getGeneralActionNames");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.getGeneralActionNamesNetscriptFn();
-      },
-      getSkillNames: function (): any {
-        updateDynamicRam("getSkillNames", getRamCost("bladeburner", "getSkillNames"));
-        checkBladeburnerAccess("getSkillNames");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.getSkillNamesNetscriptFn();
-      },
-      startAction: function (type: any = "", name: any = ""): any {
-        updateDynamicRam("startAction", getRamCost("bladeburner", "startAction"));
-        checkBladeburnerAccess("startAction");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        try {
-          return bladeburner.startActionNetscriptFn(Player, type, name, workerScript);
-        } catch (e: any) {
-          throw makeRuntimeErrorMsg("bladeburner.startAction", e);
-        }
-      },
-      stopBladeburnerAction: function (): any {
-        updateDynamicRam("stopBladeburnerAction", getRamCost("bladeburner", "stopBladeburnerAction"));
-        checkBladeburnerAccess("stopBladeburnerAction");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.resetAction();
-      },
-      getCurrentAction: function (): any {
-        updateDynamicRam("getCurrentAction", getRamCost("bladeburner", "getCurrentAction"));
-        checkBladeburnerAccess("getCurrentAction");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.getTypeAndNameFromActionId(bladeburner.action);
-      },
-      getActionTime: function (type: any = "", name: any = ""): any {
-        updateDynamicRam("getActionTime", getRamCost("bladeburner", "getActionTime"));
-        checkBladeburnerAccess("getActionTime");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        try {
-          return bladeburner.getActionTimeNetscriptFn(Player, type, name, workerScript);
-        } catch (e: any) {
-          throw makeRuntimeErrorMsg("bladeburner.getActionTime", e);
-        }
-      },
-      getActionEstimatedSuccessChance: function (type: any = "", name: any = ""): any {
-        updateDynamicRam(
-          "getActionEstimatedSuccessChance",
-          getRamCost("bladeburner", "getActionEstimatedSuccessChance"),
-        );
-        checkBladeburnerAccess("getActionEstimatedSuccessChance");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        try {
-          return bladeburner.getActionEstimatedSuccessChanceNetscriptFn(Player, type, name, workerScript);
-        } catch (e: any) {
-          throw makeRuntimeErrorMsg("bladeburner.getActionEstimatedSuccessChance", e);
-        }
-      },
-      getActionRepGain: function (type: any = "", name: any = "", level: any): any {
-        updateDynamicRam("getActionRepGain", getRamCost("bladeburner", "getActionRepGain"));
-        checkBladeburnerAccess("getActionRepGain");
-        const action = getBladeburnerActionObject("getActionRepGain", type, name);
-        let rewardMultiplier;
-        if (level == null || isNaN(level)) {
-          rewardMultiplier = Math.pow(action.rewardFac, action.level - 1);
-        } else {
-          rewardMultiplier = Math.pow(action.rewardFac, level - 1);
-        }
-
-        return action.rankGain * rewardMultiplier * BitNodeMultipliers.BladeburnerRank;
-      },
-      getActionCountRemaining: function (type: any = "", name: any = ""): any {
-        updateDynamicRam("getActionCountRemaining", getRamCost("bladeburner", "getActionCountRemaining"));
-        checkBladeburnerAccess("getActionCountRemaining");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        try {
-          return bladeburner.getActionCountRemainingNetscriptFn(type, name, workerScript);
-        } catch (e: any) {
-          throw makeRuntimeErrorMsg("bladeburner.getActionCountRemaining", e);
-        }
-      },
-      getActionMaxLevel: function (type: any = "", name: any = ""): any {
-        updateDynamicRam("getActionMaxLevel", getRamCost("bladeburner", "getActionMaxLevel"));
-        checkBladeburnerAccess("getActionMaxLevel");
-        const action = getBladeburnerActionObject("getActionMaxLevel", type, name);
-        return action.maxLevel;
-      },
-      getActionCurrentLevel: function (type: any = "", name: any = ""): any {
-        updateDynamicRam("getActionCurrentLevel", getRamCost("bladeburner", "getActionCurrentLevel"));
-        checkBladeburnerAccess("getActionCurrentLevel");
-        const action = getBladeburnerActionObject("getActionCurrentLevel", type, name);
-        return action.level;
-      },
-      getActionAutolevel: function (type: any = "", name: any = ""): any {
-        updateDynamicRam("getActionAutolevel", getRamCost("bladeburner", "getActionAutolevel"));
-        checkBladeburnerAccess("getActionAutolevel");
-        const action = getBladeburnerActionObject("getActionCurrentLevel", type, name);
-        return action.autoLevel;
-      },
-      setActionAutolevel: function (type: any = "", name: any = "", autoLevel: any = true): any {
-        updateDynamicRam("setActionAutolevel", getRamCost("bladeburner", "setActionAutolevel"));
-        checkBladeburnerAccess("setActionAutolevel");
-        const action = getBladeburnerActionObject("setActionAutolevel", type, name);
-        action.autoLevel = autoLevel;
-      },
-      setActionLevel: function (type: any = "", name: any = "", level: any = 1): any {
-        updateDynamicRam("setActionLevel", getRamCost("bladeburner", "setActionLevel"));
-        checkBladeburnerAccess("setActionLevel");
-        const action = getBladeburnerActionObject("setActionLevel", type, name);
-        if (level < 1 || level > action.maxLevel) {
-          throw makeRuntimeErrorMsg(
-            "bladeburner.setActionLevel",
-            `Level must be between 1 and ${action.maxLevel}, is ${level}`,
-          );
-        }
-        action.level = level;
-      },
-      getRank: function (): any {
-        updateDynamicRam("getRank", getRamCost("bladeburner", "getRank"));
-        checkBladeburnerAccess("getRank");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.rank;
-      },
-      getSkillPoints: function (): any {
-        updateDynamicRam("getSkillPoints", getRamCost("bladeburner", "getSkillPoints"));
-        checkBladeburnerAccess("getSkillPoints");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.skillPoints;
-      },
-      getSkillLevel: function (skillName: any = ""): any {
-        updateDynamicRam("getSkillLevel", getRamCost("bladeburner", "getSkillLevel"));
-        checkBladeburnerAccess("getSkillLevel");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        try {
-          return bladeburner.getSkillLevelNetscriptFn(skillName, workerScript);
-        } catch (e: any) {
-          throw makeRuntimeErrorMsg("bladeburner.getSkillLevel", e);
-        }
-      },
-      getSkillUpgradeCost: function (skillName: any = ""): any {
-        updateDynamicRam("getSkillUpgradeCost", getRamCost("bladeburner", "getSkillUpgradeCost"));
-        checkBladeburnerAccess("getSkillUpgradeCost");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        try {
-          return bladeburner.getSkillUpgradeCostNetscriptFn(skillName, workerScript);
-        } catch (e: any) {
-          throw makeRuntimeErrorMsg("bladeburner.getSkillUpgradeCost", e);
-        }
-      },
-      upgradeSkill: function (skillName: any): any {
-        updateDynamicRam("upgradeSkill", getRamCost("bladeburner", "upgradeSkill"));
-        checkBladeburnerAccess("upgradeSkill");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        try {
-          return bladeburner.upgradeSkillNetscriptFn(skillName, workerScript);
-        } catch (e: any) {
-          throw makeRuntimeErrorMsg("bladeburner.upgradeSkill", e);
-        }
-      },
-      getTeamSize: function (type: any = "", name: any = ""): any {
-        updateDynamicRam("getTeamSize", getRamCost("bladeburner", "getTeamSize"));
-        checkBladeburnerAccess("getTeamSize");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        try {
-          return bladeburner.getTeamSizeNetscriptFn(type, name, workerScript);
-        } catch (e: any) {
-          throw makeRuntimeErrorMsg("bladeburner.getTeamSize", e);
-        }
-      },
-      setTeamSize: function (type: any = "", name: any = "", size: any): any {
-        updateDynamicRam("setTeamSize", getRamCost("bladeburner", "setTeamSize"));
-        checkBladeburnerAccess("setTeamSize");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        try {
-          return bladeburner.setTeamSizeNetscriptFn(type, name, size, workerScript);
-        } catch (e: any) {
-          throw makeRuntimeErrorMsg("bladeburner.setTeamSize", e);
-        }
-      },
-      getCityEstimatedPopulation: function (cityName: any): any {
-        updateDynamicRam("getCityEstimatedPopulation", getRamCost("bladeburner", "getCityEstimatedPopulation"));
-        checkBladeburnerAccess("getCityEstimatedPopulation");
-        checkBladeburnerCity("getCityEstimatedPopulation", cityName);
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.cities[cityName].popEst;
-      },
-      getCityEstimatedCommunities: function (cityName: any): any {
-        updateDynamicRam("getCityEstimatedCommunities", getRamCost("bladeburner", "getCityEstimatedCommunities"));
-        checkBladeburnerAccess("getCityEstimatedCommunities");
-        checkBladeburnerCity("getCityEstimatedCommunities", cityName);
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.cities[cityName].commsEst;
-      },
-      getCityChaos: function (cityName: any): any {
-        updateDynamicRam("getCityChaos", getRamCost("bladeburner", "getCityChaos"));
-        checkBladeburnerAccess("getCityChaos");
-        checkBladeburnerCity("getCityChaos", cityName);
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.cities[cityName].chaos;
-      },
-      getCity: function (): any {
-        updateDynamicRam("getCity", getRamCost("bladeburner", "getCity"));
-        checkBladeburnerAccess("getCityChaos");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.city;
-      },
-      switchCity: function (cityName: any): any {
-        updateDynamicRam("switchCity", getRamCost("bladeburner", "switchCity"));
-        checkBladeburnerAccess("switchCity");
-        checkBladeburnerCity("switchCity", cityName);
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return (bladeburner.city = cityName);
-      },
-      getStamina: function (): any {
-        updateDynamicRam("getStamina", getRamCost("bladeburner", "getStamina"));
-        checkBladeburnerAccess("getStamina");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return [bladeburner.stamina, bladeburner.maxStamina];
-      },
-      joinBladeburnerFaction: function (): any {
-        updateDynamicRam("joinBladeburnerFaction", getRamCost("bladeburner", "joinBladeburnerFaction"));
-        checkBladeburnerAccess("joinBladeburnerFaction", true);
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return bladeburner.joinBladeburnerFactionNetscriptFn(workerScript);
-      },
-      joinBladeburnerDivision: function (): any {
-        updateDynamicRam("joinBladeburnerDivision", getRamCost("bladeburner", "joinBladeburnerDivision"));
-        if (Player.bitNodeN === 7 || SourceFileFlags[7] > 0) {
-          if (Player.bitNodeN === 8) {
-            return false;
-          }
-          if (Player.bladeburner instanceof Bladeburner) {
-            return true; // Already member
-          } else if (
-            Player.strength >= 100 &&
-            Player.defense >= 100 &&
-            Player.dexterity >= 100 &&
-            Player.agility >= 100
-          ) {
-            Player.bladeburner = new Bladeburner(Player);
-            workerScript.log("joinBladeburnerDivision", "You have been accepted into the Bladeburner division");
-
-            return true;
-          } else {
-            workerScript.log(
-              "joinBladeburnerDivision",
-              "You do not meet the requirements for joining the Bladeburner division",
-            );
-            return false;
-          }
-        }
-      },
-      getBonusTime: function (): any {
-        updateDynamicRam("getBonusTime", getRamCost("bladeburner", "getBonusTime"));
-        checkBladeburnerAccess("getBonusTime");
-        const bladeburner = Player.bladeburner;
-        if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-        return Math.round(bladeburner.storedCycles / 5);
-      },
-    }, // End Bladeburner
-
-    // Hi, if you're reading this you're a bit nosy.
-    // There's a corporation API but it's very imbalanced right now.
-    // It's here so players can test with if they want.
-    corporation: {
-      expandIndustry: function (industryName: any, divisionName: any): any {
-        const corporation = Player.corporation;
-        if (corporation === null) throw new Error("Should not be called without a corporation");
-        NewIndustry(corporation, industryName, divisionName);
-      },
-      expandCity: function (divisionName: any, cityName: any): any {
-        const division = getDivision(divisionName);
-        const corporation = Player.corporation;
-        if (corporation === null) throw new Error("Should not be called without a corporation");
-        NewCity(corporation, division, cityName);
-      },
-      unlockUpgrade: function (upgradeName: any): any {
-        const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade[2] === upgradeName);
-        if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
-        const corporation = Player.corporation;
-        if (corporation === null) throw new Error("Should not be called without a corporation");
-        UnlockUpgrade(corporation, upgrade);
-      },
-      levelUpgrade: function (upgradeName: any): any {
-        const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
-        if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
-        const corporation = Player.corporation;
-        if (corporation === null) throw new Error("Should not be called without a corporation");
-        LevelUpgrade(corporation, upgrade);
-      },
-      issueDividends: function (percent: any): any {
-        const corporation = Player.corporation;
-        if (corporation === null) throw new Error("Should not be called without a corporation");
-        IssueDividends(corporation, percent);
-      },
-      sellMaterial: function (divisionName: any, cityName: any, materialName: any, amt: any, price: any): any {
-        const material = getMaterial(divisionName, cityName, materialName);
-        SellMaterial(material, amt, price);
-      },
-      sellProduct: function (divisionName: any, cityName: any, productName: any, amt: any, price: any, all: any): any {
-        const product = getProduct(divisionName, productName);
-        SellProduct(product, cityName, amt, price, all);
-      },
-      discontinueProduct: function (divisionName: any, productName: any): any {
-        getDivision(divisionName).discontinueProduct(getProduct(divisionName, productName));
-      },
-      setSmartSupply: function (divisionName: any, cityName: any, enabled: any): any {
-        const warehouse = getWarehouse(divisionName, cityName);
-        SetSmartSupply(warehouse, enabled);
-      },
-      // setSmartSupplyUseLeftovers: function (): any {},
-      buyMaterial: function (divisionName: any, cityName: any, materialName: any, amt: any): any {
-        const material = getMaterial(divisionName, cityName, materialName);
-        BuyMaterial(material, amt);
-      },
-      employees: function (divisionName: any, cityName: any): any {
-        const office = getOffice(divisionName, cityName);
-        return office.employees.map((e) => Object.assign({}, e));
-      },
-      assignJob: function (divisionName: any, cityName: any, employeeName: any, job: any): any {
-        const employee = getEmployee(divisionName, cityName, employeeName);
-        AssignJob(employee, job);
-      },
-      hireEmployee: function (divisionName: any, cityName: any): any {
-        const office = getOffice(divisionName, cityName);
-        office.hireRandomEmployee();
-      },
-      upgradeOfficeSize: function (divisionName: any, cityName: any, size: any): any {
-        const office = getOffice(divisionName, cityName);
-        const corporation = Player.corporation;
-        if (corporation === null) throw new Error("Should not be called without a corporation");
-        UpgradeOfficeSize(corporation, office, size);
-      },
-      throwParty: function (divisionName: any, cityName: any, costPerEmployee: any): any {
-        const office = getOffice(divisionName, cityName);
-        const corporation = Player.corporation;
-        if (corporation === null) throw new Error("Should not be called without a corporation");
-        ThrowParty(corporation, office, costPerEmployee);
-      },
-      purchaseWarehouse: function (divisionName: any, cityName: any): any {
-        const corporation = Player.corporation;
-        if (corporation === null) throw new Error("Should not be called without a corporation");
-        PurchaseWarehouse(corporation, getDivision(divisionName), cityName);
-      },
-      upgradeWarehouse: function (divisionName: any, cityName: any): any {
-        const corporation = Player.corporation;
-        if (corporation === null) throw new Error("Should not be called without a corporation");
-        UpgradeWarehouse(corporation, getDivision(divisionName), getWarehouse(divisionName, cityName));
-      },
-      buyCoffee: function (divisionName: any, cityName: any): any {
-        const corporation = Player.corporation;
-        if (corporation === null) throw new Error("Should not be called without a corporation");
-        BuyCoffee(corporation, getDivision(divisionName), getOffice(divisionName, cityName));
-      },
-      hireAdVert: function (divisionName: any): any {
-        const corporation = Player.corporation;
-        if (corporation === null) throw new Error("Should not be called without a corporation");
-        HireAdVert(corporation, getDivision(divisionName), getOffice(divisionName, "Sector-12"));
-      },
-      makeProduct: function (
-        divisionName: any,
-        cityName: any,
-        productName: any,
-        designInvest: any,
-        marketingInvest: any,
-      ): any {
-        const corporation = Player.corporation;
-        if (corporation === null) throw new Error("Should not be called without a corporation");
-        MakeProduct(corporation, getDivision(divisionName), cityName, productName, designInvest, marketingInvest);
-      },
-      research: function (divisionName: any, researchName: any): any {
-        Research(getDivision(divisionName), researchName);
-      },
-      exportMaterial: function (
-        sourceDivision: any,
-        sourceCity: any,
-        targetDivision: any,
-        targetCity: any,
-        materialName: any,
-        amt: any,
-      ): any {
-        ExportMaterial(targetDivision, targetCity, getMaterial(sourceDivision, sourceCity, materialName), amt + "");
-      },
-      cancelExportMaterial: function (
-        sourceDivision: any,
-        sourceCity: any,
-        targetDivision: any,
-        targetCity: any,
-        materialName: any,
-        amt: any,
-      ): any {
-        CancelExportMaterial(
-          targetDivision,
-          targetCity,
-          getMaterial(sourceDivision, sourceCity, materialName),
-          amt + "",
-        );
-      },
-      setMaterialMarketTA1: function (divisionName: any, cityName: any, materialName: any, on: any): any {
-        SetMaterialMarketTA1(getMaterial(divisionName, cityName, materialName), on);
-      },
-      setMaterialMarketTA2: function (divisionName: any, cityName: any, materialName: any, on: any) {
-        SetMaterialMarketTA2(getMaterial(divisionName, cityName, materialName), on);
-      },
-      setProductMarketTA1: function (divisionName: any, productName: any, on: any): any {
-        SetProductMarketTA1(getProduct(divisionName, productName), on);
-      },
-      setProductMarketTA2: function (divisionName: any, productName: any, on: any) {
-        SetProductMarketTA2(getProduct(divisionName, productName), on);
-      },
-      // If you modify these objects you will affect them for real, it's not
-      // copies.
-      getDivision: function (divisionName: any): any {
-        return getDivision(divisionName);
-      },
-      getOffice: function (divisionName: any, cityName: any): any {
-        return getOffice(divisionName, cityName);
-      },
-      getWarehouse: function (divisionName: any, cityName: any): any {
-        return getWarehouse(divisionName, cityName);
-      },
-      getMaterial: function (divisionName: any, cityName: any, materialName: any): any {
-        return getMaterial(divisionName, cityName, materialName);
-      },
-      getProduct: function (divisionName: any, productName: any): any {
-        return getProduct(divisionName, productName);
-      },
-      getEmployee: function (divisionName: any, cityName: any, employeeName: any): any {
-        return getEmployee(divisionName, cityName, employeeName);
-      },
-    }, // End Corporation API
-
-    // Coding Contract API
-    codingcontract: {
-      attempt: function (answer: any, fn: any, ip: any = workerScript.hostname, { returnReward }: any = {}): any {
-        updateDynamicRam("attempt", getRamCost("codingcontract", "attempt"));
-        const contract = getCodingContract("attempt", ip, fn);
-
-        // Convert answer to string. If the answer is a 2D array, then we have to
-        // manually add brackets for the inner arrays
-        if (is2DArray(answer)) {
-          const answerComponents = [];
-          for (let i = 0; i < answer.length; ++i) {
-            answerComponents.push(["[", answer[i].toString(), "]"].join(""));
-          }
-
-          answer = answerComponents.join(",");
-        } else {
-          answer = String(answer);
-        }
-
-        const creward = contract.reward;
-        if (creward === null) throw new Error("Somehow solved a contract that didn't have a reward");
-
-        const serv = safeGetServer(ip, "codingcontract.attempt");
-        if (contract.isSolution(answer)) {
-          const reward = Player.gainCodingContractReward(creward, contract.getDifficulty());
-          workerScript.log("attempt", `Successfully completed Coding Contract '${fn}'. Reward: ${reward}`);
-          serv.removeContract(fn);
-          return returnReward ? reward : true;
-        } else {
-          ++contract.tries;
-          if (contract.tries >= contract.getMaxNumTries()) {
-            workerScript.log("attempt", `Coding Contract attempt '${fn}' failed. Contract is now self-destructing`);
-            serv.removeContract(fn);
-          } else {
-            workerScript.log(
-              "attempt",
-              `Coding Contract attempt '${fn}' failed. ${
-                contract.getMaxNumTries() - contract.tries
-              } attempts remaining.`,
-            );
-          }
-
-          return returnReward ? "" : false;
-        }
-      },
-      getContractType: function (fn: any, ip: any = workerScript.hostname): any {
-        updateDynamicRam("getContractType", getRamCost("codingcontract", "getContractType"));
-        const contract = getCodingContract("getContractType", ip, fn);
-        return contract.getType();
-      },
-      getData: function (fn: any, ip: any = workerScript.hostname): any {
-        updateDynamicRam("getData", getRamCost("codingcontract", "getData"));
-        const contract = getCodingContract("getData", ip, fn);
-        const data = contract.getData();
-        if (data.constructor === Array) {
-          // For two dimensional arrays, we have to copy the internal arrays using
-          // slice() as well. As of right now, no contract has arrays that have
-          // more than two dimensions
-          const copy = data.slice();
-          for (let i = 0; i < copy.length; ++i) {
-            if (data[i].constructor === Array) {
-              copy[i] = data[i].slice();
-            }
-          }
-
-          return copy;
-        } else {
-          return data;
-        }
-      },
-      getDescription: function (fn: any, ip: any = workerScript.hostname): any {
-        updateDynamicRam("getDescription", getRamCost("codingcontract", "getDescription"));
-        const contract = getCodingContract("getDescription", ip, fn);
-        return contract.getDescription();
-      },
-      getNumTriesRemaining: function (fn: any, ip: any = workerScript.hostname): any {
-        updateDynamicRam("getNumTriesRemaining", getRamCost("codingcontract", "getNumTriesRemaining"));
-        const contract = getCodingContract("getNumTriesRemaining", ip, fn);
-        return contract.getMaxNumTries() - contract.tries;
-      },
-    }, // End coding contracts
-
-    // Duplicate Sleeve API
+    bladeburner: bladeburner,
+    codingcontract: codingcontract,
     sleeve: sleeve,
+    corporation: corporation,
 
+    formulas: formulas,
     stanek: stanek,
-
-    formulas: {
-      basic: {
-        calculateSkill: function (exp: any, mult: any = 1): any {
-          checkFormulasAccess("basic.calculateSkill", 5);
-          return calculateSkill(exp, mult);
-        },
-        calculateExp: function (skill: any, mult: any = 1): any {
-          checkFormulasAccess("basic.calculateExp", 5);
-          return calculateExp(skill, mult);
-        },
-        hackChance: function (server: any, player: any): any {
-          checkFormulasAccess("basic.hackChance", 5);
-          return calculateHackingChance(server, player);
-        },
-        hackExp: function (server: any, player: any): any {
-          checkFormulasAccess("basic.hackExp", 5);
-          return calculateHackingExpGain(server, player);
-        },
-        hackPercent: function (server: any, player: any): any {
-          checkFormulasAccess("basic.hackPercent", 5);
-          return calculatePercentMoneyHacked(server, player);
-        },
-        growPercent: function (server: any, threads: any, player: any, cores: any = 1): any {
-          checkFormulasAccess("basic.growPercent", 5);
-          return calculateServerGrowth(server, threads, player, cores);
-        },
-        hackTime: function (server: any, player: any): any {
-          checkFormulasAccess("basic.hackTime", 5);
-          return calculateHackingTime(server, player);
-        },
-        growTime: function (server: any, player: any): any {
-          checkFormulasAccess("basic.growTime", 5);
-          return calculateGrowTime(server, player);
-        },
-        weakenTime: function (server: any, player: any): any {
-          checkFormulasAccess("basic.weakenTime", 5);
-          return calculateWeakenTime(server, player);
-        },
-      },
-      hacknetNodes: {
-        moneyGainRate: function (level: any, ram: any, cores: any, mult: any = 1): any {
-          checkFormulasAccess("hacknetNodes.moneyGainRate", 5);
-          return calculateMoneyGainRate(level, ram, cores, mult);
-        },
-        levelUpgradeCost: function (startingLevel: any, extraLevels: any = 1, costMult: any = 1): any {
-          checkFormulasAccess("hacknetNodes.levelUpgradeCost", 5);
-          return calculateLevelUpgradeCost(startingLevel, extraLevels, costMult);
-        },
-        ramUpgradeCost: function (startingRam: any, extraLevels: any = 1, costMult: any = 1): any {
-          checkFormulasAccess("hacknetNodes.ramUpgradeCost", 5);
-          return calculateRamUpgradeCost(startingRam, extraLevels, costMult);
-        },
-        coreUpgradeCost: function (startingCore: any, extraCores: any = 1, costMult: any = 1): any {
-          checkFormulasAccess("hacknetNodes.coreUpgradeCost", 5);
-          return calculateCoreUpgradeCost(startingCore, extraCores, costMult);
-        },
-        hacknetNodeCost: function (n: any, mult: any): any {
-          checkFormulasAccess("hacknetNodes.hacknetNodeCost", 5);
-          return calculateNodeCost(n, mult);
-        },
-        constants: function (): any {
-          checkFormulasAccess("hacknetNodes.constants", 5);
-          return Object.assign({}, HacknetNodeConstants);
-        },
-      },
-      hacknetServers: {
-        hashGainRate: function (level: any, ramUsed: any, maxRam: any, cores: any, mult: any = 1): any {
-          checkFormulasAccess("hacknetServers.hashGainRate", 9);
-          return HScalculateHashGainRate(level, ramUsed, maxRam, cores, mult);
-        },
-        levelUpgradeCost: function (startingLevel: any, extraLevels: any = 1, costMult: any = 1): any {
-          checkFormulasAccess("hacknetServers.levelUpgradeCost", 9);
-          return HScalculateLevelUpgradeCost(startingLevel, extraLevels, costMult);
-        },
-        ramUpgradeCost: function (startingRam: any, extraLevels: any = 1, costMult: any = 1): any {
-          checkFormulasAccess("hacknetServers.ramUpgradeCost", 9);
-          return HScalculateRamUpgradeCost(startingRam, extraLevels, costMult);
-        },
-        coreUpgradeCost: function (startingCore: any, extraCores: any = 1, costMult: any = 1): any {
-          checkFormulasAccess("hacknetServers.coreUpgradeCost", 9);
-          return HScalculateCoreUpgradeCost(startingCore, extraCores, costMult);
-        },
-        cacheUpgradeCost: function (startingCache: any, extraCache: any = 1): any {
-          checkFormulasAccess("hacknetServers.cacheUpgradeCost", 9);
-          return HScalculateCacheUpgradeCost(startingCache, extraCache);
-        },
-        hashUpgradeCost: function (upgName: any, level: any): any {
-          checkFormulasAccess("hacknetServers.hashUpgradeCost", 9);
-          const upg = Player.hashManager.getUpgrade(upgName);
-          if (!upg) {
-            throw makeRuntimeErrorMsg(
-              "formulas.hacknetServers.calculateHashUpgradeCost",
-              `Invalid Hash Upgrade: ${upgName}`,
-            );
-          }
-          return upg.getCost(level);
-        },
-        hacknetServerCost: function (n: any, mult: any): any {
-          checkFormulasAccess("hacknetServers.hacknetServerCost", 9);
-          return HScalculateServerCost(n, mult);
-        },
-        constants: function (): any {
-          checkFormulasAccess("hacknetServers.constants", 9);
-          return Object.assign({}, HacknetServerConstants);
-        },
-      },
-    }, // end formulas
-    flags: function (data: any): any {
-      data = toNative(data);
-      // We always want the help flag.
-      const args: {
-        [key: string]: any;
-      } = {};
-
-      for (const d of data) {
-        let t: any = String;
-        if (typeof d[1] === "number") {
-          t = Number;
-        } else if (typeof d[1] === "boolean") {
-          t = Boolean;
-        } else if (Array.isArray(d[1])) {
-          t = [String];
-        }
-        const numDashes = d[0].length > 1 ? 2 : 1;
-        args["-".repeat(numDashes) + d[0]] = t;
+    atExit: function (f: any): void {
+      if (typeof f !== "function") {
+        throw makeRuntimeErrorMsg("atExit", "argument should be function");
       }
-      const ret = libarg(args, { argv: workerScript.args });
-      for (const d of data) {
-        if (!ret.hasOwnProperty("--" + d[0]) || !ret.hasOwnProperty("-" + d[0])) ret[d[0]] = d[1];
-      }
-      for (const key of Object.keys(ret)) {
-        if (!key.startsWith("-")) continue;
-        const value = ret[key];
-        delete ret[key];
-        const numDashes = key.length === 2 ? 1 : 2;
-        ret[key.slice(numDashes)] = value;
-      }
-      return ret;
+      workerScript.atExit = f;
     },
+    flags: Flags(workerScript.args),
     ...extra,
   };
 

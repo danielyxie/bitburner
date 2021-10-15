@@ -10,6 +10,7 @@ import { RunningScript } from "../Script/RunningScript";
 import { GetServer } from "../Server/AllServers";
 
 import { compareArrays } from "../utils/helpers/compareArrays";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
 
 export function killWorkerScript(runningScriptObj: RunningScript, hostname: string, rerenderUi?: boolean): boolean;
 export function killWorkerScript(workerScript: WorkerScript): boolean;
@@ -67,6 +68,16 @@ function killWorkerScriptByPid(pid: number, rerenderUi = true): boolean {
 function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = true): void {
   workerScript.env.stopFlag = true;
   killNetscriptDelay(workerScript);
+  if (typeof workerScript.atExit === "function") {
+    try {
+      workerScript.atExit();
+    } catch (e: any) {
+      dialogBoxCreate(
+        `Error trying to call atExit for script ${workerScript.name} on ${workerScript.hostname} ${workerScript.scriptRef.args} ${e}`,
+      );
+    }
+    workerScript.atExit = undefined;
+  }
   removeWorkerScript(workerScript, rerenderUi);
 }
 

@@ -132,7 +132,6 @@ export class Server extends BaseServer {
       const aboveCap = this.moneyMax - softCap;
       n = 1 + (n - 1) / Math.log(aboveCap) / Math.log(8);
     }
-    console.log(n);
 
     this.moneyMax *= n;
   }

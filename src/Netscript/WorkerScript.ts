@@ -106,6 +106,11 @@ export class WorkerScript {
    */
   hostname: string;
 
+  /**
+   * Function called when the script ends.
+   */
+  atExit: any;
+
   constructor(runningScriptObj: RunningScript, pid: number, nsFuncsGenerator?: (ws: WorkerScript) => any) {
     this.name = runningScriptObj.filename;
     this.hostname = runningScriptObj.server;
@@ -132,15 +137,13 @@ export class WorkerScript {
     if (!found) {
       throw new Error(`WorkerScript constructed with invalid script filename: ${this.name}`);
     }
-
+    this.scriptRef = runningScriptObj;
+    this.args = runningScriptObj.args.slice();
     this.env = new Environment(null);
     if (typeof nsFuncsGenerator === "function") {
       this.env.vars = nsFuncsGenerator(this);
     }
     this.env.set("args", runningScriptObj.args.slice());
-
-    this.scriptRef = runningScriptObj;
-    this.args = runningScriptObj.args.slice();
   }
 
   /**

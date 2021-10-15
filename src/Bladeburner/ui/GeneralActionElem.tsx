@@ -37,6 +37,7 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
         return 30;
       case "Diplomacy":
       case "Hyperbolic Regeneration Chamber":
+      case "Incite Violence":
         return 60;
       case "Recruitment":
         return props.bladeburner.getRecruitmentTime(props.player);
@@ -57,8 +58,9 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
     <Paper sx={{ my: 1, p: 1 }}>
       {isActive ? (
         <>
+          <CopyableText value={props.action.name} />
           <Typography>
-            <CopyableText value={props.action.name} /> (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} /{" "}
+            (IN PROGRESS - {formatNumber(computedActionTimeCurrent, 0)} /{" "}
             {formatNumber(props.bladeburner.actionTimeToComplete, 0)})
           </Typography>
           <Typography>
@@ -69,9 +71,7 @@ export function GeneralActionElem(props: IProps): React.ReactElement {
         </>
       ) : (
         <Box display="flex" flexDirection="row" alignItems="center">
-          <Typography>
-            <CopyableText value={props.action.name} />
-          </Typography>
+          <CopyableText value={props.action.name} />
           <StartButton
             bladeburner={props.bladeburner}
             type={ActionTypes[props.action.name as string]}

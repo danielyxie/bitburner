@@ -4,9 +4,7 @@ const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const UnusedWebpackPlugin = require("unused-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const DeadCodePlugin = require("webpack-deadcode-plugin");
 
 module.exports = (env, argv) => {
   const isDevServer = (env || {}).devServer === true;
@@ -107,14 +105,6 @@ module.exports = (env, argv) => {
           },
         },
       }),
-      new UnusedWebpackPlugin({
-        // Source directories
-        directories: [path.join(__dirname, "src"), path.join(__dirname, "utils")],
-        // Exclude patterns
-        exclude: ["*.test.js"],
-        // Root directory (optional)
-        root: __dirname,
-      }),
       // In dev mode, use a faster method of create sourcemaps
       // while keeping lines/columns accurate
       isDevServer &&
@@ -132,10 +122,6 @@ module.exports = (env, argv) => {
           module: true,
         }),
       isFastRefresh && new ReactRefreshWebpackPlugin(),
-      new DeadCodePlugin({
-        patterns: ["src/**/*.(js|jsx|css|ts|tsx)"],
-        exclude: ["**/*.(stories|spec).(js|jsx)"],
-      }),
     ].filter(Boolean),
     target: "web",
     entry: entry,

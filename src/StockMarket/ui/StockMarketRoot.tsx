@@ -15,7 +15,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { EventEmitter } from "../../utils/EventEmitter";
 
 type txFn = (stock: Stock, shares: number) => boolean;
-export type placeOrderFn = (
+type placeOrderFn = (
   stock: Stock,
   shares: number,
   price: number,

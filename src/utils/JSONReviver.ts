@@ -1,6 +1,6 @@
 /* Generic Reviver, toJSON, and fromJSON functions used for saving and loading objects */
 
-export interface IReviverValue {
+interface IReviverValue {
   ctor: string;
   data: any;
 }
@@ -19,7 +19,7 @@ export function Reviver(key: string, value: IReviverValue | null): any {
     // Compatibility for version v0.43.1
     // TODO Remove this eventually
     if (value.ctor === "AllServersMap") {
-      console.log("Converting AllServersMap for v0.43.1");
+      console.warn("Converting AllServersMap for v0.43.1");
       return value.data;
     }
 

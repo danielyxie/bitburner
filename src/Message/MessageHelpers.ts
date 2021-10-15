@@ -217,4 +217,4 @@ function initMessages(): void {
   );
 }
 
-export { Messages, checkForMessagesToSend, sendMessage, showMessage, loadMessages, initMessages, Message };
+export { Messages, checkForMessagesToSend, showMessage, loadMessages, initMessages };

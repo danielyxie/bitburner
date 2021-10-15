@@ -117,9 +117,7 @@ export function Stats(props: IProps): React.ReactElement {
             </Typography>
           }
         >
-          <Typography>
-            Est. Synthoid Communities: {formatNumber(props.bladeburner.getCurrentCity().comms, 0)}
-          </Typography>
+          <Typography>Synthoid Communities: {formatNumber(props.bladeburner.getCurrentCity().comms, 0)}</Typography>
         </Tooltip>
       </Box>
       <br />

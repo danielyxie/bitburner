@@ -19,7 +19,7 @@ export enum UpgradeType {
  * Defines the parameters that can be used to initialize and describe a GangMemberUpgrade
  * (defined in Gang.js)
  */
-export interface IGangMemberUpgradeMetadata {
+interface IGangMemberUpgradeMetadata {
   cost: number;
   mults: IMults;
   name: string;

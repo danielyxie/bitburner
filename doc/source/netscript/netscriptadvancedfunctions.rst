@@ -10,3 +10,4 @@ they contain spoilers for the game.
 
     getBitNodeMultipliers() <advancedfunctions/getBitNodeMultipliers>
     getServer() <advancedfunctions/getServer>
+    autocomplete() <advancedfunctions/autocomplete>
