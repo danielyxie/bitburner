@@ -290,7 +290,7 @@ export function FragmentById(id: number): Fragment | null {
         [X, X, X],
       ], // shape
       FragmentType.Bladeburner, // type
-      1.3, // power
+      0.4, // power
       1, // limit
     ),
   );
@@ -299,9 +299,10 @@ export function FragmentById(id: number): Fragment | null {
       2, // id
       [
         // shape
-        [X, X, X],
-        [X, _, X],
-        [X, X, X],
+        [X, X, X, X],
+        [X, _, _, X],
+        [X, _, _, X],
+        [X, X, X, X],
       ],
       FragmentType.Booster, // type
       1.1, // power
