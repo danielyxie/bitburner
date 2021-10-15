@@ -19,15 +19,6 @@ export function run(
   } else {
     const executableName = args[0] + "";
 
-    // Secret Music player!
-    // if (executableName === "musicplayer") {
-    //   post(
-    //     '<iframe src="https://open.spotify.com/embed/user/danielyxie/playlist/1ORnnL6YNvXOracUaUV2kh" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>',
-    //     false,
-    //   );
-    //   return;
-    // }
-
     // Check if its a script or just a program/executable
     if (isScriptFilename(executableName)) {
       runScript(terminal, router, player, server, args);

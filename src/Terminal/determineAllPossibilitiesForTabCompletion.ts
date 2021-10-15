@@ -3,9 +3,10 @@ import { getSubdirectories } from "./DirectoryServerHelpers";
 
 import { Aliases, GlobalAliases } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
-import { Message } from "../Message/Message";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { GetServer, GetAllServers } from "../Server/AllServers";
+import { ParseCommand, ParseCommands } from "./Parser";
+import { isScriptFilename } from "../Script/isScriptFilename";
 
 // An array of all Terminal commands
 const commands = [
@@ -48,12 +49,12 @@ const commands = [
   "weaken",
 ];
 
-export function determineAllPossibilitiesForTabCompletion(
+export async function determineAllPossibilitiesForTabCompletion(
   p: IPlayer,
   input: string,
   index: number,
   currPath = "",
-): string[] {
+): Promise<string[]> {
   let allPos: string[] = [];
   allPos = allPos.concat(Object.keys(GlobalAliases));
   const currServ = p.getCurrentServer();
@@ -287,13 +288,34 @@ export function determineAllPossibilitiesForTabCompletion(
     return allPos;
   }
 
+  async function scriptAutocomplete(): Promise<string[] | undefined> {
+    if (!isCommand("run")) return;
+    const commands = ParseCommands(input);
+    if (commands.length === 0) return;
+    const command = ParseCommand(commands[commands.length - 1]);
+    const filename = command[1] + "";
+    if (!isScriptFilename(filename)) return; // Not a script.
+    if (filename.endsWith(".script")) return; // Doesn't work with ns1.
+    const script = currServ.scripts.find((script) => script.filename === filename);
+    if (!script) return; // Doesn't exist.
+    // TODO compile if needs be.
+    console.log("asd1");
+    if (!script.module) return;
+    const loadedModule = await script.module;
+    console.log("asd2");
+    if (!loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
+    console.log(loadedModule.autocomplete());
+    return loadedModule.autocomplete();
+  }
+  const pos = await scriptAutocomplete();
+  console.log(pos);
+  if (pos) return pos;
+
   if (isCommand("run")) {
     addAllScripts();
     addAllPrograms();
     addAllCodingContracts();
     addAllDirectories();
-
-    return allPos;
   }
 
   if (isCommand("cat")) {
