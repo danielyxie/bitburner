@@ -3277,6 +3277,13 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     corporation: corporation,
 
     formulas: formulas,
+
+    atExit: function (f: any): void {
+      if (typeof f !== "function") {
+        throw makeRuntimeErrorMsg("atExit", "argument should be function");
+      }
+      workerScript.atExit = f;
+    },
     flags: function (data: any): any {
       data = toNative(data);
       // We always want the help flag.
