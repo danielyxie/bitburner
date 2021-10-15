@@ -92,7 +92,11 @@ function LogWindow(props: IProps): React.ReactElement {
   function updateLayer(): void {
     const c = container.current;
     if (c === null) return;
-    c.style.zIndex = (new Date().getTime() % 1000000000) + 1500 + "";
+    // This number is getTime on 2021-10-15, the reason we need this is to remove a
+    // large number from getTime so it's value fits in an int32 (from int64)
+    const date = 1634320967207;
+    // +1500 so it's at least on top of everything else in the game.
+    c.style.zIndex = new Date().getTime() - date + 1500 + "";
     rerender();
   }
 
