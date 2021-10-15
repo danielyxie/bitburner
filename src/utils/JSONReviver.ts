@@ -19,7 +19,7 @@ export function Reviver(key: string, value: IReviverValue | null): any {
     // Compatibility for version v0.43.1
     // TODO Remove this eventually
     if (value.ctor === "AllServersMap") {
-      console.log("Converting AllServersMap for v0.43.1");
+      console.warning("Converting AllServersMap for v0.43.1");
       return value.data;
     }
 

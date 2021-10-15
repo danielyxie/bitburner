@@ -312,16 +312,28 @@ export async function determineAllPossibilitiesForTabCompletion(
       permissive: true,
       argv: command.slice(2),
     });
-
-    return loadedModule.autocomplete(
-      {
-        servers: GetAllServers().map((server) => server.hostname),
-        scripts: currServ.scripts.map((script) => script.filename),
-        txts: currServ.textFiles.map((txt) => txt.fn),
-        flags: Flags(flags._),
-      },
-      flags._,
+    const flagFunc = Flags(flags._);
+    let pos: string[] = [];
+    let pos2: string[] = [];
+    pos = pos.concat(
+      loadedModule.autocomplete(
+        {
+          servers: GetAllServers().map((server) => server.hostname),
+          scripts: currServ.scripts.map((script) => script.filename),
+          txts: currServ.textFiles.map((txt) => txt.fn),
+          flags: (schema: any) => {
+            pos2 = schema.map((f: any) => "--" + f[0]);
+            try {
+              return flagFunc(schema);
+            } catch (err) {
+              return undefined;
+            }
+          },
+        },
+        flags._,
+      ),
     );
+    return pos.concat(pos2);
   }
   const pos = await scriptAutocomplete();
   if (pos) return pos;

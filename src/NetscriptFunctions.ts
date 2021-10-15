@@ -329,9 +329,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     return Factions[name];
   };
 
-  console.log(workerScript);
-  console.log(workerScript.args);
-
   const hack = function (ip: any, manual: any, { threads: requestedThreads, stock }: any = {}): Promise<number> {
     if (ip === undefined) {
       throw makeRuntimeErrorMsg("hack", "Takes 1 argument.");
