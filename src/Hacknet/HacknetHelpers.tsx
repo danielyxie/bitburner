@@ -512,7 +512,6 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
 
           const old = target.moneyMax;
           target.changeMaximumMoney(upg.value);
-          console.log(target.moneyMax / old);
         } catch (e) {
           player.hashManager.refundUpgrade(upgName);
           return false;

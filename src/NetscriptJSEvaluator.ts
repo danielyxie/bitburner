@@ -8,7 +8,21 @@ function makeScriptBlob(code: string): Blob {
   return new Blob([code], { type: "text/javascript" });
 }
 
-export function compile(script: Script, scripts: Script[]): void {}
+export function compile(script: Script, scripts: Script[]): void {
+  if (!shouldCompile(script, scripts)) return;
+  // The URL at the top is the one we want to import. It will
+  // recursively import all the other modules in the urlStack.
+  //
+  // Webpack likes to turn the import into a require, which sort of
+  // but not really behaves like import. Particularly, it cannot
+  // load fully dynamic content. So we hide the import from webpack
+  // by placing it inside an eval call.
+  script.markUpdated();
+  const uurls = _getScriptUrls(script, scripts, []);
+  script.url = uurls[uurls.length - 1].url;
+  script.module = new Promise((resolve) => resolve(eval("import(uurls[uurls.length - 1].url)")));
+  script.dependencies = uurls;
+}
 
 // Begin executing a user JS script, and return a promise that resolves
 // or rejects when the script finishes.
@@ -19,23 +33,9 @@ export function compile(script: Script, scripts: Script[]): void {}
 // When the promise returned by this resolves, we'll have finished
 // running the main function of the script.
 export async function executeJSScript(scripts: Script[] = [], workerScript: WorkerScript): Promise<void> {
-  let uurls: ScriptUrl[] = [];
   const script = workerScript.getScript();
   if (script === null) throw new Error("script is null");
-  if (shouldCompile(script, scripts)) {
-    // The URL at the top is the one we want to import. It will
-    // recursively import all the other modules in the urlStack.
-    //
-    // Webpack likes to turn the import into a require, which sort of
-    // but not really behaves like import. Particularly, it cannot
-    // load fully dynamic content. So we hide the import from webpack
-    // by placing it inside an eval call.
-    script.markUpdated();
-    uurls = _getScriptUrls(script, scripts, []);
-    script.url = uurls[uurls.length - 1].url;
-    script.module = new Promise((resolve) => resolve(eval("import(uurls[uurls.length - 1].url)")));
-    script.dependencies = uurls;
-  }
+  compile(script, scripts);
   const loadedModule = await script.module;
 
   const ns = workerScript.env.vars;

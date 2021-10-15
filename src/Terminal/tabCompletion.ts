@@ -44,7 +44,7 @@ export function tabCompletion(
   } else if (allPossibilities.length === 1) {
     if (arg === "") {
       //Autocomplete command
-      val = allPossibilities[0] + " ";
+      val = allPossibilities[0];
     } else {
       val = command + " " + allPossibilities[0];
     }

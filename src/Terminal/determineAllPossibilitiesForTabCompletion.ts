@@ -3,9 +3,13 @@ import { getSubdirectories } from "./DirectoryServerHelpers";
 
 import { Aliases, GlobalAliases } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
-import { Message } from "../Message/Message";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { GetServer, GetAllServers } from "../Server/AllServers";
+import { ParseCommand, ParseCommands } from "./Parser";
+import { isScriptFilename } from "../Script/isScriptFilename";
+import { compile } from "../NetscriptJSEvaluator";
+import { Flags } from "../NetscriptFunctions/Flags";
+import * as libarg from "arg";
 
 // An array of all Terminal commands
 const commands = [
@@ -48,12 +52,12 @@ const commands = [
   "weaken",
 ];
 
-export function determineAllPossibilitiesForTabCompletion(
+export async function determineAllPossibilitiesForTabCompletion(
   p: IPlayer,
   input: string,
   index: number,
   currPath = "",
-): string[] {
+): Promise<string[]> {
   let allPos: string[] = [];
   allPos = allPos.concat(Object.keys(GlobalAliases));
   const currServ = p.getCurrentServer();
@@ -287,13 +291,58 @@ export function determineAllPossibilitiesForTabCompletion(
     return allPos;
   }
 
+  async function scriptAutocomplete(): Promise<string[] | undefined> {
+    if (!isCommand("run")) return;
+    const commands = ParseCommands(input);
+    if (commands.length === 0) return;
+    const command = ParseCommand(commands[commands.length - 1]);
+    const filename = command[1] + "";
+    if (!isScriptFilename(filename)) return; // Not a script.
+    if (filename.endsWith(".script")) return; // Doesn't work with ns1.
+    const script = currServ.scripts.find((script) => script.filename === filename);
+    if (!script) return; // Doesn't exist.
+    if (!script.module) {
+      compile(script, currServ.scripts);
+    }
+    const loadedModule = await script.module;
+    if (!loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
+
+    const runArgs = { "--tail": Boolean, "-t": Number };
+    const flags = libarg(runArgs, {
+      permissive: true,
+      argv: command.slice(2),
+    });
+    const flagFunc = Flags(flags._);
+    let pos: string[] = [];
+    let pos2: string[] = [];
+    pos = pos.concat(
+      loadedModule.autocomplete(
+        {
+          servers: GetAllServers().map((server) => server.hostname),
+          scripts: currServ.scripts.map((script) => script.filename),
+          txts: currServ.textFiles.map((txt) => txt.fn),
+          flags: (schema: any) => {
+            pos2 = schema.map((f: any) => "--" + f[0]);
+            try {
+              return flagFunc(schema);
+            } catch (err) {
+              return undefined;
+            }
+          },
+        },
+        flags._,
+      ),
+    );
+    return pos.concat(pos2);
+  }
+  const pos = await scriptAutocomplete();
+  if (pos) return pos;
+
   if (isCommand("run")) {
     addAllScripts();
     addAllPrograms();
     addAllCodingContracts();
     addAllDirectories();
-
-    return allPos;
   }
 
   if (isCommand("cat")) {

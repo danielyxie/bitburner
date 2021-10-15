@@ -543,7 +543,6 @@ export class Terminal implements ITerminal {
   }
 
   clear(): void {
-    // TODO: remove this once we figure out the height issue.
     this.outputHistory = [new Output(`Bitburner v${CONSTANTS.Version}`, "primary")];
     TerminalEvents.emit();
     TerminalClearEvents.emit();

@@ -162,7 +162,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     return () => document.removeEventListener("keydown", keyDown);
   });
 
-  function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
+  async function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): Promise<void> {
     // Run command.
     if (event.keyCode === KEY.ENTER && value !== "") {
       event.preventDefault();
@@ -190,7 +190,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       if (index < -1) {
         index = 0;
       }
-      const allPos = determineAllPossibilitiesForTabCompletion(player, copy, index, terminal.cwd());
+      const allPos = await determineAllPossibilitiesForTabCompletion(player, copy, index, terminal.cwd());
       if (allPos.length == 0) {
         return;
       }
@@ -213,8 +213,9 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         command = commandArray.join(" ");
       }
 
-      const newValue = tabCompletion(command, arg, allPos, value);
+      let newValue = tabCompletion(command, arg, allPos, value);
       if (typeof newValue === "string" && newValue !== "") {
+        if (!newValue.endsWith(" ") && allPos.length === 1) newValue += " ";
         saveValue(newValue);
       }
       if (Array.isArray(newValue)) {
