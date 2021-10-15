@@ -55,7 +55,7 @@ export function SetupTextEditor(): void {
   symbols = populate(ns);
 
   const exclude = ["heart", "break", "exploit", "bypass", "corporation"];
-  symbols = symbols.filter((symbol: string) => !exclude.includes(symbol));
+  symbols = symbols.filter((symbol: string) => !exclude.includes(symbol)).sort();
 }
 
 interface IProps {
@@ -311,6 +311,16 @@ export function Root(props: IProps): React.ReactElement {
         return { suggestions: suggestions };
       },
     });
+    (async function () {
+      const l = await monaco.languages
+        .getLanguages()
+        .find((l: any) => l.id === "javascript")
+        .loader();
+      l.language.tokenizer.root.unshift(["ns", { token: "ns" }]);
+      for (const symbol of symbols) l.language.tokenizer.root.unshift(["\\." + symbol, { token: "netscriptfunction" }]);
+      console.log(l);
+    })();
+
     monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, "netscript.d.ts");
     monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, "netscript.d.ts");
     loadThemes(monaco);

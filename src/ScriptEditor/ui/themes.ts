@@ -31,7 +31,14 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         token: "storage.type.function.js",
         foreground: "ae81ff",
       },
-
+      {
+        token: "ns",
+        foreground: "97d92b",
+      },
+      {
+        token: "netscriptfunction",
+        foreground: "53d3e4",
+      },
       //   {
       //     foreground: "ae81ff",
       //     token: "entity.name.function",
