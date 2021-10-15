@@ -62,4 +62,7 @@ export const GeneralActions: {
       </>
     ),
   },
+  "Incite Violence": {
+    desc: <>Purposefully stir trouble in the synthoid community in order to gain a political edge.</>,
+  },
 };
