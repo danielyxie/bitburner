@@ -8,6 +8,8 @@ function makeScriptBlob(code: string): Blob {
   return new Blob([code], { type: "text/javascript" });
 }
 
+export function compile(script: Script, scripts: Script[]): void {}
+
 // Begin executing a user JS script, and return a promise that resolves
 // or rejects when the script finishes.
 // - script is a script to execute (see Script.js). We depend only on .filename and .code.

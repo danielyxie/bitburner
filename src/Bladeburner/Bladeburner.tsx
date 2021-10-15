@@ -1172,7 +1172,7 @@ export class Bladeburner implements IBladeburner {
         return GeneralActions["Diplomacy"];
       case ActionTypes["Hyperbolic Regeneration Chamber"]:
         return GeneralActions["Hyperbolic Regeneration Chamber"];
-      case ActionTypes["stir trouble"]:
+      case ActionTypes["Incite Violence"]:
         return GeneralActions["Incite Violence"];
       default:
         return null;
@@ -1511,6 +1511,10 @@ export class Bladeburner implements IBladeburner {
           if (!growthF) throw new Error("trying to generate count for action that doesn't exist? " + operation);
           this.operations[operation].count += (60 * 3 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
         }
+        if (this.logging.general) {
+          this.log(`Incited violence in the synthoid communities.`);
+        }
+        this.startAction(player, this.action);
         break;
       }
       default:
