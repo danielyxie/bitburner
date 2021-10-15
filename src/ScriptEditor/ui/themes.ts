@@ -20,6 +20,10 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         foreground: "ae81ff",
       },
       {
+        token: "otherkeyvars",
+        foreground: "ae81ff",
+      },
+      {
         foreground: "ae81ff",
         token: "function",
       },
@@ -39,10 +43,14 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         token: "netscriptfunction",
         foreground: "53d3e4",
       },
-      //   {
-      //     foreground: "ae81ff",
-      //     token: "entity.name.function",
-      //   },
+      {
+        token: "otherkeywords",
+        foreground: "53d3e4",
+      },
+      {
+        token: "this",
+        foreground: "fd971f",
+      },
     ],
     colors: {
       "editor.foreground": "#F8F8F2",
