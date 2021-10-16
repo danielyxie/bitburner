@@ -58,6 +58,7 @@ import { Reputation } from "../../ui/React/Reputation";
 import { Money } from "../../ui/React/Money";
 
 import React from "react";
+import { serverMetadata } from "../../Server/data/servers";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -606,7 +607,9 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
 }
 
 export function cancelationPenalty(this: IPlayer): number {
-  const server = GetServer(this.companyName);
+  const data = serverMetadata.find((s) => s.specialName === this.companyName);
+  if (!data) throw new Error("Couldn't find server for company " + this.companyName);
+  const server = GetServer(data.hostname);
   if (server instanceof Server) {
     if (server && server.backdoorInstalled) return 0.75;
   }
