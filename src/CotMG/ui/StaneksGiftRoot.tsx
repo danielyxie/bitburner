@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { CONSTANTS } from "../../Constants";
 import { StaneksGiftEvents } from "../StaneksGiftEvents";
-import { Grid } from "./Grid";
+import { MainBoard } from "./MainBoard";
 import { IStaneksGift } from "../IStaneksGift";
 import Typography from "@mui/material/Typography";
 
@@ -30,7 +30,7 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
           Bonus time: {convertTimeMsToTimeElapsedString(CONSTANTS._idleSpeed * staneksGift.storedCycles)}
         </Typography>
       )}
-      <Grid gift={staneksGift} />
+      <MainBoard gift={staneksGift} />
     </>
   );
 }

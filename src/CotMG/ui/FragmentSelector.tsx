@@ -27,10 +27,14 @@ function FragmentOption(props: IOptionProps): React.ReactElement {
     <Box display="flex">
       <Box sx={{ mx: 2 }}>
         <FragmentPreview
-          width={props.fragment.width()}
-          height={props.fragment.height()}
+          width={props.fragment.width(0)}
+          height={props.fragment.height(0)}
           colorAt={(x, y) => {
-            return !props.fragment.fullAt(x, y) ? "" : props.fragment.type === FragmentType.Booster ? "blue" : "green";
+            return !props.fragment.fullAt(x, y, 0)
+              ? ""
+              : props.fragment.type === FragmentType.Booster
+              ? "blue"
+              : "green";
           }}
         />
       </Box>

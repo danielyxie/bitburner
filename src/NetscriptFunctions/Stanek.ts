@@ -12,8 +12,8 @@ export interface INetscriptStanek {
   fragmentDefinitions(): any;
   placedFragments(): any;
   clear(): void;
-  canPlace(worldX: number, worldY: number, fragmentId: number): boolean;
-  place(worldX: number, worldY: number, fragmentId: number): boolean;
+  canPlace(worldX: number, worldY: number, rotation: number, fragmentId: number): boolean;
+  place(worldX: number, worldY: number, rotation: number, fragmentId: number): boolean;
   fragmentAt(worldX: number, worldY: number): any;
   deleteAt(worldX: number, worldY: number): boolean;
 }
@@ -55,19 +55,19 @@ export function NetscriptStanek(
       //checkStanekAPIAccess("clear");
       staneksGift.clear();
     },
-    canPlace: function (worldX: any, worldY: any, fragmentId: any): any {
+    canPlace: function (worldX: any, worldY: any, rotation: any, fragmentId: any): any {
       helper.updateDynamicRam("canPlace", getRamCost("stanek", "canPlace"));
       //checkStanekAPIAccess("canPlace");
       const fragment = FragmentById(fragmentId);
       if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.canPlace", `Invalid fragment id: ${fragmentId}`);
-      return staneksGift.canPlace(worldX, worldY, fragment);
+      return staneksGift.canPlace(worldX, worldY, rotation, fragment);
     },
-    place: function (worldX: any, worldY: any, fragmentId: any): any {
+    place: function (worldX: any, worldY: any, rotation: any, fragmentId: any): any {
       helper.updateDynamicRam("place", getRamCost("stanek", "place"));
       //checkStanekAPIAccess("place");
       const fragment = FragmentById(fragmentId);
       if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.place", `Invalid fragment id: ${fragmentId}`);
-      return staneksGift.place(worldX, worldY, fragment);
+      return staneksGift.place(worldX, worldY, rotation, fragment);
     },
     fragmentAt: function (worldX: any, worldY: any): any {
       helper.updateDynamicRam("fragmentAt", getRamCost("stanek", "fragmentAt"));

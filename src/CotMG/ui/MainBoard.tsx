@@ -39,11 +39,11 @@ function randomColor(fragment: ActiveFragment): string {
   return `rgb(${colors[0] * 256}, ${colors[1] * 256}, ${colors[2] * 256})`;
 }
 
-type GridProps = {
+interface IProps {
   gift: IStaneksGift;
-};
+}
 
-export function Grid(props: GridProps): React.ReactElement {
+export function MainBoard(props: IProps): React.ReactElement {
   function calculateGrid(gift: IStaneksGift): any {
     const newgrid = zeros([gift.width(), gift.height()]);
     for (let i = 0; i < gift.width(); i++) {
@@ -60,16 +60,19 @@ export function Grid(props: GridProps): React.ReactElement {
   const [grid, setGrid] = React.useState(calculateGrid(props.gift));
   const [ghostGrid, setGhostGrid] = React.useState(zeros([props.gift.width(), props.gift.height()]));
   const [pos, setPos] = React.useState([0, 0]);
+  const [rotation, setRotation] = React.useState(0);
   const [selectedFragment, setSelectedFragment] = React.useState(NoneFragment);
 
   function moveGhost(worldX: number, worldY: number): void {
+    if (selectedFragment.type === FragmentType.None || selectedFragment.type === FragmentType.Delete) return;
     const newgrid = zeros([props.gift.width(), props.gift.height()]);
-    for (let i = 0; i < selectedFragment.shape.length; i++) {
-      for (let j = 0; j < selectedFragment.shape[i].length; j++) {
-        if (!selectedFragment.shape[i][j]) continue;
-        if (worldX + j > newgrid.length - 1) continue;
-        if (worldY + i > newgrid[worldX + j].length - 1) continue;
-        newgrid[worldX + j][worldY + i] = 1;
+    for (let y = 0; y < selectedFragment.height(rotation); y++) {
+      for (let x = 0; x < selectedFragment.width(rotation); x++) {
+        console.log([x, y]);
+        if (!selectedFragment.fullAt(x, y, rotation, true)) continue;
+        if (worldX + x > newgrid.length - 1) continue;
+        if (worldY + y > newgrid[worldX + x].length - 1) continue;
+        newgrid[worldX + x][worldY + y] = 1;
       }
     }
 
@@ -86,8 +89,8 @@ export function Grid(props: GridProps): React.ReactElement {
     if (selectedFragment.type == FragmentType.Delete) {
       deleteAt(worldX, worldY);
     } else {
-      if (!props.gift.canPlace(worldX, worldY, selectedFragment)) return;
-      props.gift.place(worldX, worldY, selectedFragment);
+      if (!props.gift.canPlace(worldX, worldY, rotation, selectedFragment)) return;
+      props.gift.place(worldX, worldY, rotation, selectedFragment);
     }
     setGrid(calculateGrid(props.gift));
   }
@@ -129,6 +132,25 @@ export function Grid(props: GridProps): React.ReactElement {
     const newgrid = zeros([props.gift.width(), props.gift.height()]);
     setGhostGrid(newgrid);
   }
+
+  React.useEffect(() => {
+    function doRotate(this: Document, event: KeyboardEvent): void {
+      if (event.key === "q") {
+        setRotation((rotation - 1 + 4) % 4);
+        console.log((rotation - 1 + 4) % 4);
+      }
+      if (event.key === "e") {
+        setRotation((rotation + 1) % 4);
+        console.log((rotation + 1) % 4);
+      }
+    }
+    document.addEventListener("keydown", doRotate);
+    return () => document.removeEventListener("keydown", doRotate);
+  });
+
+  // try {
+  //   console.log(selectedFragment);
+  // } catch (err) {}
 
   return (
     <>

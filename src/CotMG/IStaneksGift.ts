@@ -10,8 +10,8 @@ export interface IStaneksGift {
   charge(worldX: number, worldY: number, ram: number): number;
   process(p: IPlayer, n: number): void;
   effect(fragment: ActiveFragment): number;
-  canPlace(x: number, y: number, fragment: Fragment): boolean;
-  place(x: number, y: number, fragment: Fragment): boolean;
+  canPlace(x: number, y: number, rotation: number, fragment: Fragment): boolean;
+  place(x: number, y: number, rotation: number, fragment: Fragment): boolean;
   fragmentAt(worldX: number, worldY: number): ActiveFragment | null;
   deleteAt(worldX: number, worldY: number): boolean;
   clear(): void;

@@ -17,30 +17,44 @@ export class Fragment {
     this.limit = limit;
   }
 
-  fullAt(x: number, y: number): boolean {
+  fullAt(x: number, y: number, rotation: number, debug = false): boolean {
     if (y < 0) return false;
-    if (y >= this.shape.length) return false;
+    if (y >= this.height(rotation)) return false;
     if (x < 0) return false;
-    if (x >= this.shape[y].length) return false;
-    // Yes it's ordered y first.
-    return this.shape[y][x];
+    if (x >= this.width(rotation)) return false;
+    // start xy, modifier xy
+    let [sx, sy, mx, my] = [0, 0, 1, 1];
+    if (rotation === 1) {
+      [sx, sy, mx, my] = [this.width(rotation) - 1, 0, -1, 1];
+    } else if (rotation === 2) {
+      [sx, sy, mx, my] = [this.width(rotation) - 1, this.height(rotation) - 1, -1, -1];
+    } else if (rotation === 3) {
+      [sx, sy, mx, my] = [0, this.height(rotation) - 1, 1, -1];
+    }
+    let [qx, qy] = [sx + mx * x, sy + my * y];
+    if (rotation % 2 === 1) [qx, qy] = [qy, qx];
+    if (debug) {
+      console.log("q " + [qx, qy]);
+    }
+    return this.shape[qy][qx];
   }
 
-  width(): number {
-    // check every line for robustness.
-    return Math.max(...this.shape.map((line) => line.length));
-  }
-
-  height(): number {
+  width(rotation: number): number {
+    if (rotation % 2 === 0) return this.shape[0].length;
     return this.shape.length;
   }
 
+  height(rotation: number): number {
+    if (rotation % 2 === 0) return this.shape.length;
+    return this.shape[0].length;
+  }
+
   // List of direct neighboors of this fragment.
-  neighboors(): number[][] {
+  neighboors(rotation: number): number[][] {
     const candidates: number[][] = [];
 
     const add = (x: number, y: number): void => {
-      if (this.fullAt(x, y)) return;
+      if (this.fullAt(x, y, rotation)) return;
       if (candidates.some((coord) => coord[0] === x && coord[1] === y)) return;
       candidates.push([x, y]);
     };
