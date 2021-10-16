@@ -239,7 +239,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressMessages: defaultSettings.SuppressMessages,
   SuppressTravelConfirmation: defaultSettings.SuppressTravelConfirmation,
   SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,
-  MonacoTheme: "vs-dark",
+  MonacoTheme: "monokai",
   MonacoInsertSpaces: false,
   MonacoFontSize: 20,
 

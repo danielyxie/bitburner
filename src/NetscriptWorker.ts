@@ -647,6 +647,11 @@ export function runScriptFromScript(
     return 0;
   }
 
+  args = args.map((arg) => {
+    if (typeof arg === "number") return arg;
+    return arg + ""; // force cast to string
+  });
+
   // Check if the script is already running
   const runningScriptObj = server.getRunningScript(scriptname, args);
   if (runningScriptObj != null) {

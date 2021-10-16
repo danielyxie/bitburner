@@ -315,7 +315,13 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                 ) : page === Page.Stats ? (
                   <CharacterStats />
                 ) : page === Page.ScriptEditor ? (
-                  <ScriptEditorRoot filename={filename} code={code} player={player} router={Router} />
+                  <ScriptEditorRoot
+                    filename={filename}
+                    code={code}
+                    hostname={player.getCurrentServer().hostname}
+                    player={player}
+                    router={Router}
+                  />
                 ) : page === Page.ActiveScripts ? (
                   <ActiveScriptsRoot workerScripts={workerScripts} />
                 ) : page === Page.Hacknet ? (

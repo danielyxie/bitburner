@@ -339,7 +339,7 @@ export class Bladeburner implements IBladeburner {
           action.type = ActionTypes["Hyperbolic Regeneration Chamber"];
           action.name = "Hyperbolic Regeneration Chamber";
           break;
-        case "stir trouble":
+        case "incite violence":
           action.type = ActionTypes["Incite Violence"];
           action.name = "Incite Violence";
           break;
@@ -1513,6 +1513,8 @@ export class Bladeburner implements IBladeburner {
         if (this.logging.general) {
           this.log(`Incited violence in the synthoid communities.`);
         }
+        const city = this.cities[this.city];
+        city.chaos *= 2;
         this.startAction(player, this.action);
         break;
       }
