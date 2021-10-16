@@ -361,5 +361,7 @@ export function WorkInProgressRoot(): React.ReactElement {
     );
   }
 
+  if (!player.workType) router.toTerminal();
+
   return <></>;
 }

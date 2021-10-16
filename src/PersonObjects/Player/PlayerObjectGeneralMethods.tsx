@@ -516,6 +516,7 @@ export function resetWorkStatus(this: IPlayer, generalType?: string, group?: str
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
   this.className = "";
+  this.workType = "";
 }
 
 export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
@@ -883,6 +884,7 @@ export function startFactionFieldWork(this: IPlayer, router: IRouter, faction: F
 }
 
 export function startFactionSecurityWork(this: IPlayer, router: IRouter, faction: Faction): void {
+  console.log(faction);
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkSecurity);
 
   this.workHackExpGainRate = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
