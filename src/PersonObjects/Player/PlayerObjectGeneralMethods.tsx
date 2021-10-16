@@ -608,7 +608,7 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
 
 export function cancelationPenalty(this: IPlayer): number {
   const data = serverMetadata.find((s) => s.specialName === this.companyName);
-  if (!data) throw new Error("Couldn't find server for company " + this.companyName);
+  if (!data) return 0.5; // Does not have special server.
   const server = GetServer(data.hostname);
   if (server instanceof Server) {
     if (server && server.backdoorInstalled) return 0.75;
@@ -2658,9 +2658,12 @@ export function setMult(this: IPlayer, name: string, mult: number): void {
   (this as any)[name] = mult;
 }
 
+export function canAccessCotMG(this: IPlayer): boolean {
+  return this.bitNodeN === 13 || SourceFileFlags[13] > 0;
+}
+
 export function sourceFileLvl(this: IPlayer, n: number): number {
-  for (const sf of this.sourceFiles) {
-    if (sf.n === n) return sf.lvl;
-  }
-  return 0;
+  const sf = this.sourceFiles.find((sf) => sf.n === n);
+  if (!sf) return 0;
+  return sf.lvl;
 }
