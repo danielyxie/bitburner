@@ -516,6 +516,7 @@ export function resetWorkStatus(this: IPlayer, generalType?: string, group?: str
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
   this.className = "";
+  this.workType = "";
 }
 
 export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
@@ -608,7 +609,7 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
 
 export function cancelationPenalty(this: IPlayer): number {
   const data = serverMetadata.find((s) => s.specialName === this.companyName);
-  if (!data) throw new Error("Couldn't find server for company " + this.companyName);
+  if (!data) return 0.5; // Does not have special server.
   const server = GetServer(data.hostname);
   if (server instanceof Server) {
     if (server && server.backdoorInstalled) return 0.75;
@@ -883,6 +884,7 @@ export function startFactionFieldWork(this: IPlayer, router: IRouter, faction: F
 }
 
 export function startFactionSecurityWork(this: IPlayer, router: IRouter, faction: Faction): void {
+  console.log(faction);
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkSecurity);
 
   this.workHackExpGainRate = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
