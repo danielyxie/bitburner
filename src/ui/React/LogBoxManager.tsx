@@ -88,7 +88,6 @@ function LogWindow(props: IProps): React.ReactElement {
     killWorkerScript(props.script, props.script.server, true);
     props.onClose();
   }
-  //useEffect(() => TerminalEvents.subscribe(_.debounce(async () => rerender(), 25, { maxWait: 50 })), []);
 
   function updateLayer(): void {
     const c = container.current;
@@ -96,6 +95,15 @@ function LogWindow(props: IProps): React.ReactElement {
     c.style.zIndex = 1500 + layerCounter + "";
     layerCounter++;
     rerender();
+  }
+
+  function title(): string {
+    const maxLength = 30;
+    const t = `${props.script.filename} ${props.script.args.map((x: any): string => `${x}`).join(" ")}`;
+    if (t.length <= maxLength) {
+      return t;
+    }
+    return t.slice(0, maxLength - 3) + "...";
   }
 
   return (
@@ -119,7 +127,7 @@ function LogWindow(props: IProps): React.ReactElement {
           >
             <Box className="drag" display="flex" alignItems="center">
               <Typography color="primary" variant="h6">
-                {props.script.filename} {props.script.args.map((x: any): string => `${x}`).join(" ")}
+                {title()}
               </Typography>
 
               <Box position="absolute" right={0}>
