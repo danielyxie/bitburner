@@ -345,6 +345,7 @@ export function Root(props: IProps): React.ReactElement {
     <>
       <Box display="flex" flexDirection="row" alignItems="center">
         <TextField
+          placeholder="filename"
           type="text"
           tabIndex={1}
           value={filename}
