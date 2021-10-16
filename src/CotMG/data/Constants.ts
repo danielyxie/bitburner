@@ -3,5 +3,5 @@ export const StanekConstants: {
   BaseSize: number;
 } = {
   RAMBonus: 0.1,
-  BaseSize: 12,
+  BaseSize: 9,
 };

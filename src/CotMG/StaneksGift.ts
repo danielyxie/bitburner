@@ -70,20 +70,21 @@ export class StaneksGift implements IStaneksGift {
     return CalculateEffect(fragment.charge, fragment.fragment().power, boost);
   }
 
-  canPlace(x: number, y: number, rotation: number, fragment: Fragment): boolean {
-    if (x + fragment.width(0) > this.width()) return false;
-    if (y + fragment.height(0) > this.height()) return false;
+  canPlace(worldX: number, worldY: number, rotation: number, fragment: Fragment): boolean {
+    if (worldX < 0 || worldY < 0) return false;
+    if (worldX + fragment.width(rotation) > this.width()) return false;
+    if (worldY + fragment.height(rotation) > this.height()) return false;
     if (this.count(fragment) >= fragment.limit) return false;
-    const newFrag = new ActiveFragment({ x: x, y: y, rotation: rotation, fragment: fragment });
+    const newFrag = new ActiveFragment({ x: worldX, y: worldY, rotation: rotation, fragment: fragment });
     for (const aFrag of this.fragments) {
       if (aFrag.collide(newFrag)) return false;
     }
     return true;
   }
 
-  place(x: number, y: number, rotation: number, fragment: Fragment): boolean {
-    if (!this.canPlace(x, y, rotation, fragment)) return false;
-    this.fragments.push(new ActiveFragment({ x: x, y: y, rotation: rotation, fragment: fragment }));
+  place(worldX: number, worldY: number, rotation: number, fragment: Fragment): boolean {
+    if (!this.canPlace(worldX, worldY, rotation, fragment)) return false;
+    this.fragments.push(new ActiveFragment({ x: worldX, y: worldY, rotation: rotation, fragment: fragment }));
     return true;
   }
 

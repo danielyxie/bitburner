@@ -1,4 +1,5 @@
 import { FragmentType } from "./FragmentType";
+import { Shapes } from "./data/Shapes";
 
 export const Fragments: Fragment[] = [];
 
@@ -101,12 +102,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       0, // id
-      [
-        // shape
-        [X, X, X],
-        [_, _, X],
-        [_, _, X],
-      ],
+      Shapes.T,
       FragmentType.Hacking, // type
       1,
       1, // limit
@@ -115,12 +111,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       1, // id
-      [
-        // shape
-        [_, X, _],
-        [X, X, X],
-        [_, X, _],
-      ],
+      Shapes.Z,
       FragmentType.Hacking, // type
       1,
       1, // limit
@@ -129,10 +120,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       5, // id
-      [
-        // shape
-        [X, X],
-      ],
+      Shapes.S,
       FragmentType.HackingSpeed, // type
       1.3,
       1, // limit
@@ -142,10 +130,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       6, // id
-      [
-        [X, _],
-        [X, X],
-      ], // shape
+      Shapes.I,
       FragmentType.HackingMoney, // type
       2, // power
       1, // limit
@@ -154,10 +139,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       7, // id
-      [
-        [X, X],
-        [X, X],
-      ], // shape
+      Shapes.J,
       FragmentType.HackingGrow, // type
       0.5, // power
       1, // limit
@@ -166,11 +148,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       8, // id
-      [
-        [X, X, X],
-        [_, X, _],
-        [X, X, X],
-      ], // shape
+      Shapes.O,
       FragmentType.Hacking, // type
       1, // power
       1, // limit
@@ -179,10 +157,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       10, // id
-      [
-        [X, X],
-        [_, X],
-      ], // shape
+      Shapes.T,
       FragmentType.Strength, // type
       2, // power
       1, // limit
@@ -191,10 +166,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       12, // id
-      [
-        [_, X],
-        [X, X],
-      ], // shape
+      Shapes.L,
       FragmentType.Defense, // type
       2, // power
       1, // limit
@@ -203,10 +175,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       14, // id
-      [
-        [X, X],
-        [X, _],
-      ], // shape
+      Shapes.L,
       FragmentType.Dexterity, // type
       2, // power
       1, // limit
@@ -215,10 +184,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       16, // id
-      [
-        [X, _],
-        [X, X],
-      ], // shape
+      Shapes.S,
       FragmentType.Agility, // type
       2, // power
       1, // limit
@@ -227,10 +193,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       18, // id
-      [
-        [X, X],
-        [X, _],
-      ], // shape
+      Shapes.S,
       FragmentType.Charisma, // type
       3, // power
       1, // limit
@@ -239,11 +202,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       20, // id
-      [
-        [X, _, _],
-        [X, X, _],
-        [X, X, X],
-      ], // shape
+      Shapes.I,
       FragmentType.HacknetMoney, // type
       1, // power
       1, // limit
@@ -252,11 +211,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       21, // id
-      [
-        [X, X],
-        [_, X],
-        [_, X],
-      ], // shape
+      Shapes.O,
       FragmentType.HacknetCost, // type
       -1, // power
       1, // limit
@@ -265,10 +220,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       25, // id
-      [
-        [X, X, X],
-        [_, X, _],
-      ], // shape
+      Shapes.J,
       FragmentType.Rep, // type
       0.5, // power
       1, // limit
@@ -277,10 +229,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       27, // id
-      [
-        [X, _],
-        [_, X],
-      ], // shape
+      Shapes.J,
       FragmentType.WorkMoney, // type
       10, // power
       1, // limit
@@ -289,7 +238,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       28, // id
-      [[X, X]], // shape
+      Shapes.L,
       FragmentType.Crime, // type
       2, // power
       1, // limit
@@ -298,11 +247,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       30, // id
-      [
-        [X, X, X],
-        [X, X, X],
-        [X, X, X],
-      ], // shape
+      Shapes.S,
       FragmentType.Bladeburner, // type
       0.4, // power
       1, // limit
