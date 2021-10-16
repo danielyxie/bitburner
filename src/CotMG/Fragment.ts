@@ -18,7 +18,7 @@ export class Fragment {
     this.limit = limit;
   }
 
-  fullAt(x: number, y: number, rotation: number, debug = false): boolean {
+  fullAt(x: number, y: number, rotation: number): boolean {
     if (y < 0) return false;
     if (y >= this.height(rotation)) return false;
     if (x < 0) return false;
@@ -34,9 +34,6 @@ export class Fragment {
     }
     let [qx, qy] = [sx + mx * x, sy + my * y];
     if (rotation % 2 === 1) [qx, qy] = [qy, qx];
-    if (debug) {
-      console.log("q " + [qx, qy]);
-    }
     return this.shape[qy][qx];
   }
 

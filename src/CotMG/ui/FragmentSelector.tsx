@@ -17,12 +17,8 @@ type IOptionProps = {
 };
 
 function FragmentOption(props: IOptionProps): React.ReactElement {
-  const remaining =
-    props.fragment.limit !== Infinity ? (
-      <>{props.fragment.limit - props.gift.count(props.fragment)} remaining</>
-    ) : (
-      <></>
-    );
+  const left = props.fragment.limit - props.gift.count(props.fragment);
+  const remaining = props.fragment.limit !== Infinity ? <>{left} remaining</> : <></>;
   return (
     <Box display="flex">
       <Box sx={{ mx: 2 }}>
@@ -30,11 +26,9 @@ function FragmentOption(props: IOptionProps): React.ReactElement {
           width={props.fragment.width(0)}
           height={props.fragment.height(0)}
           colorAt={(x, y) => {
-            return !props.fragment.fullAt(x, y, 0)
-              ? ""
-              : props.fragment.type === FragmentType.Booster
-              ? "blue"
-              : "green";
+            if (!props.fragment.fullAt(x, y, 0)) return "";
+            if (left === 0) return "grey";
+            return props.fragment.type === FragmentType.Booster ? "blue" : "green";
           }}
         />
       </Box>

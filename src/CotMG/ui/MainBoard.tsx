@@ -63,13 +63,12 @@ export function MainBoard(props: IProps): React.ReactElement {
   const [rotation, setRotation] = React.useState(0);
   const [selectedFragment, setSelectedFragment] = React.useState(NoneFragment);
 
-  function moveGhost(worldX: number, worldY: number): void {
+  function moveGhost(worldX: number, worldY: number, rotation: number): void {
     if (selectedFragment.type === FragmentType.None || selectedFragment.type === FragmentType.Delete) return;
     const newgrid = zeros([props.gift.width(), props.gift.height()]);
     for (let y = 0; y < selectedFragment.height(rotation); y++) {
       for (let x = 0; x < selectedFragment.width(rotation); x++) {
-        console.log([x, y]);
-        if (!selectedFragment.fullAt(x, y, rotation, true)) continue;
+        if (!selectedFragment.fullAt(x, y, rotation)) continue;
         if (worldX + x > newgrid.length - 1) continue;
         if (worldY + y > newgrid[worldX + x].length - 1) continue;
         newgrid[worldX + x][worldY + y] = 1;
@@ -117,7 +116,12 @@ export function MainBoard(props: IProps): React.ReactElement {
     const cells = [];
     for (let i = 0; i < props.gift.width(); i++) {
       cells.push(
-        <Cell key={i} onMouseEnter={() => moveGhost(i, j)} onClick={() => clickAt(i, j)} color={color(i, j)} />,
+        <Cell
+          key={i}
+          onMouseEnter={() => moveGhost(i, j, rotation)}
+          onClick={() => clickAt(i, j)}
+          color={color(i, j)}
+        />,
       );
     }
     elems.push(
@@ -136,21 +140,19 @@ export function MainBoard(props: IProps): React.ReactElement {
   React.useEffect(() => {
     function doRotate(this: Document, event: KeyboardEvent): void {
       if (event.key === "q") {
-        setRotation((rotation - 1 + 4) % 4);
-        console.log((rotation - 1 + 4) % 4);
+        const r = (rotation - 1 + 4) % 4;
+        setRotation(r);
+        moveGhost(pos[0], pos[1], r);
       }
       if (event.key === "e") {
-        setRotation((rotation + 1) % 4);
-        console.log((rotation + 1) % 4);
+        const r = (rotation + 1) % 4;
+        setRotation(r);
+        moveGhost(pos[0], pos[1], r);
       }
     }
     document.addEventListener("keydown", doRotate);
     return () => document.removeEventListener("keydown", doRotate);
   });
-
-  // try {
-  //   console.log(selectedFragment);
-  // } catch (err) {}
 
   return (
     <>
