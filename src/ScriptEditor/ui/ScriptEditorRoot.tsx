@@ -61,6 +61,7 @@ export function SetupTextEditor(): void {
 interface IProps {
   filename: string;
   code: string;
+  hostname: string;
   player: IPlayer;
   router: IRouter;
 }
@@ -81,12 +82,17 @@ interface IProps {
 // won't have references to the old script.
 let lastFilename = "";
 let lastCode = "";
+let hostname = "";
 let lastPosition: monaco.Position | null = null;
 
 export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
   const [filename, setFilename] = useState(props.filename ? props.filename : lastFilename);
   const [code, setCode] = useState<string>(props.filename ? props.code : lastCode);
+  hostname = props.filename ? props.hostname : hostname;
+  if (hostname === "") {
+    hostname = props.player.getCurrentServer().hostname;
+  }
   const [ram, setRAM] = useState("RAM: ???");
   const [updatingRam, setUpdatingRam] = useState(false);
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -129,7 +135,7 @@ export function Root(props: IProps): React.ReactElement {
     if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
       //Make sure filename + code properly follow tutorial
       if (filename !== "n00dles.script") {
-        dialogBoxCreate("Leave the script name as 'n00dles'!");
+        dialogBoxCreate("Leave the script name as 'n00dles.script'!");
         return;
       }
       if (code.replace(/\s/g, "").indexOf("while(true){hack('n00dles');}") == -1) {
@@ -143,14 +149,14 @@ export function Root(props: IProps): React.ReactElement {
       let found = false;
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {
-          server.scripts[i].saveScript(filename, code, props.player.currentServer, server.scripts);
+          server.scripts[i].saveScript(filename, code, hostname, server.scripts);
           found = true;
         }
       }
 
       if (!found) {
         const script = new Script();
-        script.saveScript(filename, code, props.player.currentServer, server.scripts);
+        script.saveScript(filename, code, hostname, server.scripts);
         server.scripts.push(script);
       }
 
@@ -339,11 +345,12 @@ export function Root(props: IProps): React.ReactElement {
     <>
       <Box display="flex" flexDirection="row" alignItems="center">
         <TextField
+          placeholder="filename"
           type="text"
           tabIndex={1}
           value={filename}
           onChange={onFilenameChange}
-          InputProps={{ startAdornment: <Typography>Script&nbsp;name:&nbsp;</Typography> }}
+          InputProps={{ startAdornment: <Typography>{hostname}:~/</Typography> }}
         />
         <IconButton onClick={() => setOptionsOpen(true)}>
           <>
