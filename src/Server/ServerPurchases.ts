@@ -28,7 +28,14 @@ export function getPurchaseServerCost(ram: number): number {
     return Infinity;
   }
 
-  return sanitizedRam * CONSTANTS.BaseCostFor1GBOfRamServer * BitNodeMultipliers.PurchasedServerCost;
+  const upg = Math.max(0, Math.log(sanitizedRam) / Math.log(2) - 9);
+
+  return (
+    sanitizedRam *
+    CONSTANTS.BaseCostFor1GBOfRamServer *
+    BitNodeMultipliers.PurchasedServerCost *
+    Math.pow(BitNodeMultipliers.PurchasedServerSoftcap, upg)
+  );
 }
 
 export function getPurchaseServerLimit(): number {

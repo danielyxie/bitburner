@@ -567,6 +567,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.FactionWorkRepGain = 0.5;
       BitNodeMultipliers.FactionPassiveRepGain = 0;
       BitNodeMultipliers.GangKarmaRequirement = 0;
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.4;
       break;
     case 3: // Corporatocracy
       BitNodeMultipliers.HackingLevelMultiplier = 0.8;
@@ -583,6 +584,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.HomeComputerRamCost = 1.5;
       BitNodeMultipliers.PurchasedServerCost = 2;
       BitNodeMultipliers.GangKarmaRequirement = 3;
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.4;
       break;
     case 4: // The Singularity
       BitNodeMultipliers.ServerMaxMoney = 0.15;
@@ -597,6 +599,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.HackExpGain = 0.4;
       BitNodeMultipliers.CrimeExpGain = 0.5;
       BitNodeMultipliers.FactionWorkRepGain = 0.75;
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.3;
       break;
     case 5: // Artificial intelligence
       BitNodeMultipliers.ServerMaxMoney = 2;
@@ -610,6 +613,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.AugmentationMoneyCost = 2;
       BitNodeMultipliers.HackExpGain = 0.5;
       BitNodeMultipliers.CorporationValuation = 0.5;
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.3;
       break;
     case 6: // Bladeburner
       BitNodeMultipliers.HackingLevelMultiplier = 0.35;
@@ -626,6 +630,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.HackExpGain = 0.25;
       BitNodeMultipliers.DaedalusAugsRequirement = 1.166; // Results in 35 Augs needed
       BitNodeMultipliers.GangKarmaRequirement = 5;
+      BitNodeMultipliers.PurchasedServerSoftcap = 2;
       break;
     case 7: // Bladeburner 2079
       BitNodeMultipliers.BladeburnerRank = 0.6;
@@ -647,6 +652,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.FourSigmaMarketDataApiCost = 2;
       BitNodeMultipliers.DaedalusAugsRequirement = 1.166; // Results in 35 Augs needed
       BitNodeMultipliers.GangKarmaRequirement = 5;
+      BitNodeMultipliers.PurchasedServerSoftcap = 2;
       break;
     case 8: // Ghost of Wall Street
       BitNodeMultipliers.ScriptHackMoney = 0.3;
@@ -660,6 +666,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.CorporationValuation = 0;
       BitNodeMultipliers.CodingContractMoney = 0;
       BitNodeMultipliers.GangKarmaRequirement = 10;
+      BitNodeMultipliers.PurchasedServerSoftcap = 5;
       break;
     case 9: // Hacktocracy
       BitNodeMultipliers.HackingLevelMultiplier = 0.4;
@@ -706,6 +713,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.PurchasedServerMaxRam = 0.5;
       BitNodeMultipliers.BladeburnerRank = 0.8;
       BitNodeMultipliers.GangKarmaRequirement = 3;
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.2;
       break;
     case 11: //The Big Crash
       BitNodeMultipliers.HackingLevelMultiplier = 0.5;
@@ -724,6 +732,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.CodingContractMoney = 0.25;
       BitNodeMultipliers.FourSigmaMarketDataCost = 4;
       BitNodeMultipliers.FourSigmaMarketDataApiCost = 4;
+      BitNodeMultipliers.PurchasedServerSoftcap = 2.2;
       break;
     case 12: {
       //The Recursion
@@ -760,6 +769,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.PurchasedServerCost = inc;
       BitNodeMultipliers.PurchasedServerLimit = dec;
       BitNodeMultipliers.PurchasedServerMaxRam = dec;
+      BitNodeMultipliers.PurchasedServerSoftcap = inc;
 
       BitNodeMultipliers.ManualHackMoney = dec;
       BitNodeMultipliers.ScriptHackMoney = dec;

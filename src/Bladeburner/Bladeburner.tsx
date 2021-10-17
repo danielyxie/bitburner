@@ -1503,18 +1503,18 @@ export class Bladeburner implements IBladeburner {
         for (const contract of Object.keys(this.contracts)) {
           const growthF = Growths[contract];
           if (!growthF) throw new Error("trying to generate count for action that doesn't exist? " + contract);
-          this.contracts[contract].count += (60 * 3 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
+          this.contracts[contract].count += (60 * 6 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
         }
         for (const operation of Object.keys(this.operations)) {
           const growthF = Growths[operation];
           if (!growthF) throw new Error("trying to generate count for action that doesn't exist? " + operation);
-          this.operations[operation].count += (60 * 3 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
+          this.operations[operation].count += (60 * 6 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
         }
         if (this.logging.general) {
           this.log(`Incited violence in the synthoid communities.`);
         }
         const city = this.cities[this.city];
-        city.chaos *= 2;
+        city.chaos *= (city.chaos + 100) * 2;
         this.startAction(player, this.action);
         break;
       }
