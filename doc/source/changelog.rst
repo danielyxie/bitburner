@@ -3,6 +3,57 @@
 Changelog
 =========
 
+v0.57.0 - 2021-10-16 It was too cheap! (hydroflame & community)
+-------------------------------------------
+
+** BREAKING (kindof) **
+
+* purchased server cost now scales exponentially past 2^10.
+  I'm going to actually explain this one: Currently the cost of a 2^20GB server is 57b
+  Most players can get that before their first install. In an effort to nerf good players
+  a softcap was added. This softcap is different for every BN.
+
+** Script Editor **
+
+* Added a theme that is close to monokai. Unfortunately a full monokai is impossible because 
+  Monaco doesn't have a very good tokenizer.
+* Opening a file and connecting to a new server will still save the file on the server that the file
+  was opened.
+
+** Netscript **
+
+* New function: alert, which creates a textbox.
+* New function: toast, creates a notification in the bottom right.
+* New function: upgradeHomeCores (@Saynt_Garmo)
+* New function: atExit, allows you to set a callback for when the script closes.
+* New kindof function: autocomplete, this allows you to tell the game what it should
+  autocomplete on the terminal.
+
+** Augmentation **
+
+* ENM Core (the Augmentation from The Black Hand with the highest rep cost) rep cost
+  reduced from 250 to 175. This will help new players transition from TBH to BitRunners more easily.
+
+** Bladeburner **
+
+* New general action: Incite Violence. This action adds other action counts but increases chaos.
+
+** Misc. **
+
+* Current bladeburner action is shown on the character overview.
+* Fix blackop being #000 on #000.
+* The last clicked Tail Box goes in front of the others.
+* Fixed an issue where some values were loaded as 0 when they should be null.
+* Implemented toasts.
+* .msg are no longer saved in the text file.
+* Tail boxes no longer display all the args, they use "..." after 30 characters.
+* Fixed cancelation penalty bonus not being properly applied after the IP <-> hostname switch.
+* Fixed an exploit where you could send non-strings or numbers to other scripts.
+* Fixed issue when trying to work for a faction with a work type that doesn't exist while
+  already working for that faction.
+* Fixed not being able to work for the CIA. (Don't ask)
+* nerf noodle bar
+
 v0.56.0 - 2021-10-11 Trimming the backlog (hydroflame & community)
 -------------------------------------------
 
