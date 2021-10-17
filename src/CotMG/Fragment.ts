@@ -99,7 +99,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       0, // id
-      Shapes.T,
+      Shapes.S,
       FragmentType.Hacking, // type
       1,
       1, // limit
@@ -117,7 +117,7 @@ export function FragmentById(id: number): Fragment | null {
   Fragments.push(
     new Fragment(
       5, // id
-      Shapes.S,
+      Shapes.T,
       FragmentType.HackingSpeed, // type
       1.3,
       1, // limit
@@ -252,32 +252,111 @@ export function FragmentById(id: number): Fragment | null {
   );
   Fragments.push(
     new Fragment(
-      2, // id
+      100, // id
       [
         // shape
-        [X, X, X, X],
-        [X, _, _, X],
-        [X, _, _, X],
-        [X, X, X, X],
+        [_, X, X],
+        [X, X, _],
+        [_, X, _],
       ],
       FragmentType.Booster, // type
       1.1, // power
-      3, // limit
+      99, // limit
     ),
   );
   Fragments.push(
     new Fragment(
-      31, // id
+      101, // id
       [
         // shape
-        [X],
-        [X],
-        [X],
-        [X],
+        [X, X, X, X],
+        [X, _, _, _],
       ],
       FragmentType.Booster, // type
       1.1, // power
-      3, // limit
+      99, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      102, // id
+      [
+        // shape
+        [_, X, X, X],
+        [X, X, _, _],
+      ],
+      FragmentType.Booster, // type
+      1.1, // power
+      99, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      103, // id
+      [
+        // shape
+        [_, X, X, X],
+        [X, X, _, _],
+      ],
+      FragmentType.Booster, // type
+      1.1, // power
+      99, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      104, // id
+      [
+        // shape
+        [_, X, X],
+        [_, X, _],
+        [X, X, _],
+      ],
+      FragmentType.Booster, // type
+      1.1, // power
+      99, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      105, // id
+      [
+        // shape
+        [_, _, X],
+        [_, X, X],
+        [X, X, _],
+      ],
+      FragmentType.Booster, // type
+      1.1, // power
+      99, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      106, // id
+      [
+        // shape
+        [X, _, _],
+        [X, X, X],
+        [X, _, _],
+      ],
+      FragmentType.Booster, // type
+      1.1, // power
+      99, // limit
+    ),
+  );
+  Fragments.push(
+    new Fragment(
+      107, // id
+      [
+        // shape
+        [_, X, _],
+        [X, X, X],
+        [_, X, _],
+      ],
+      FragmentType.Booster, // type
+      1.1, // power
+      99, // limit
     ),
   );
 })();
