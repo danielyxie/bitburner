@@ -27,6 +27,7 @@ import { Terminal } from "./Terminal";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 
 import Decimal from "decimal.js";
+import { staneksGift } from "./CotMG/Helper";
 
 const BitNode8StartingMoney = 250e6;
 
@@ -142,6 +143,8 @@ function prestigeAugmentation(): void {
     // code strings.
     joinFaction(Factions["Church of the Machine God"]);
   }
+
+  staneksGift.prestigeAugmentation();
 
   resetPidCounter();
 }
@@ -269,6 +272,8 @@ function prestigeSourceFile(flume: boolean): void {
     hserver.updateHashCapacity();
     updateHashManagerCapacity(Player);
   }
+
+  staneksGift.prestigeSourceFile();
 
   // Gain int exp
   if (SourceFileFlags[5] !== 0 && !flume) Player.gainIntelligenceExp(300);

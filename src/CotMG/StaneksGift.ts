@@ -12,6 +12,7 @@ import { CONSTANTS } from "../Constants";
 import { StanekConstants } from "./data/Constants";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Player } from "../Player";
+import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 
 export class StaneksGift implements IStaneksGift {
   storedCycles = 0;
@@ -45,6 +46,7 @@ export class StaneksGift implements IStaneksGift {
   }
 
   process(p: IPlayer, numCycles = 1): void {
+    if (!p.hasAugmentation(AugmentationNames.StaneksGift1)) return;
     this.storedCycles += numCycles;
     this.storedCycles -= 5;
     this.storedCycles = Math.max(0, this.storedCycles);
@@ -119,6 +121,10 @@ export class StaneksGift implements IStaneksGift {
 
   clear(): void {
     this.fragments = [];
+  }
+
+  clearCharge(): void {
+    this.fragments.forEach((f) => (f.charge = 0));
   }
 
   updateMults(p: IPlayer): void {
@@ -198,11 +204,12 @@ export class StaneksGift implements IStaneksGift {
   }
 
   prestigeAugmentation(): void {
-    this.clear();
+    this.clearCharge();
   }
 
   prestigeSourceFile(): void {
     this.clear();
+    this.storedCycles = 0;
   }
 
   /**
