@@ -55,12 +55,13 @@ export function SetupTextEditor(): void {
   symbols = populate(ns);
 
   const exclude = ["heart", "break", "exploit", "bypass", "corporation"];
-  symbols = symbols.filter((symbol: string) => !exclude.includes(symbol));
+  symbols = symbols.filter((symbol: string) => !exclude.includes(symbol)).sort();
 }
 
 interface IProps {
   filename: string;
   code: string;
+  hostname: string;
   player: IPlayer;
   router: IRouter;
 }
@@ -75,17 +76,23 @@ interface IProps {
 // https://www.npmjs.com/package/@monaco-editor/react#development-playground
 // https://microsoft.github.io/monaco-editor/playground.html#extending-language-services-custom-languages
 // https://github.com/threehams/typescript-error-guide/blob/master/stories/components/Editor.tsx#L11-L39
+// https://blog.checklyhq.com/customizing-monaco/
 
 // These variables are used to reload a script when it's clicked on. Because we
 // won't have references to the old script.
 let lastFilename = "";
 let lastCode = "";
+let hostname = "";
 let lastPosition: monaco.Position | null = null;
 
 export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
   const [filename, setFilename] = useState(props.filename ? props.filename : lastFilename);
   const [code, setCode] = useState<string>(props.filename ? props.code : lastCode);
+  hostname = props.filename ? props.hostname : hostname;
+  if (hostname === "") {
+    hostname = props.player.getCurrentServer().hostname;
+  }
   const [ram, setRAM] = useState("RAM: ???");
   const [updatingRam, setUpdatingRam] = useState(false);
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -128,7 +135,7 @@ export function Root(props: IProps): React.ReactElement {
     if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
       //Make sure filename + code properly follow tutorial
       if (filename !== "n00dles.script") {
-        dialogBoxCreate("Leave the script name as 'n00dles'!");
+        dialogBoxCreate("Leave the script name as 'n00dles.script'!");
         return;
       }
       if (code.replace(/\s/g, "").indexOf("while(true){hack('n00dles');}") == -1) {
@@ -142,14 +149,14 @@ export function Root(props: IProps): React.ReactElement {
       let found = false;
       for (let i = 0; i < server.scripts.length; i++) {
         if (filename == server.scripts[i].filename) {
-          server.scripts[i].saveScript(filename, code, props.player.currentServer, server.scripts);
+          server.scripts[i].saveScript(filename, code, hostname, server.scripts);
           found = true;
         }
       }
 
       if (!found) {
         const script = new Script();
-        script.saveScript(filename, code, props.player.currentServer, server.scripts);
+        script.saveScript(filename, code, hostname, server.scripts);
         server.scripts.push(script);
       }
 
@@ -311,6 +318,21 @@ export function Root(props: IProps): React.ReactElement {
         return { suggestions: suggestions };
       },
     });
+    (async function () {
+      // We have to improve the default js language otherwise theme sucks
+      const l = await monaco.languages
+        .getLanguages()
+        .find((l: any) => l.id === "javascript")
+        .loader();
+      l.language.tokenizer.root.unshift(["ns", { token: "ns" }]);
+      for (const symbol of symbols) l.language.tokenizer.root.unshift(["\\." + symbol, { token: "netscriptfunction" }]);
+      const otherKeywords = ["let", "const", "var", "function"];
+      const otherKeyvars = ["true", "false", "null", "undefined"];
+      otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeywords" }]));
+      otherKeyvars.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeyvars" }]));
+      l.language.tokenizer.root.unshift(["this", { token: "this" }]);
+    })();
+
     monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, "netscript.d.ts");
     monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, "netscript.d.ts");
     loadThemes(monaco);
@@ -322,11 +344,12 @@ export function Root(props: IProps): React.ReactElement {
     <>
       <Box display="flex" flexDirection="row" alignItems="center">
         <TextField
+          placeholder="filename"
           type="text"
           tabIndex={1}
           value={filename}
           onChange={onFilenameChange}
-          InputProps={{ startAdornment: <Typography>Script&nbsp;name:&nbsp;</Typography> }}
+          InputProps={{ startAdornment: <Typography>{hostname}:~/</Typography> }}
         />
         <IconButton onClick={() => setOptionsOpen(true)}>
           <>

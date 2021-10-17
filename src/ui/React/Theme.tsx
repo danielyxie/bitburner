@@ -302,7 +302,7 @@ export function refreshTheme(): void {
             border: "1px solid " + Settings.theme.well,
           },
           standardSuccess: {
-            color: Settings.theme.successLight,
+            color: Settings.theme.primaryLight,
           },
           standardError: {
             color: Settings.theme.errorlight,

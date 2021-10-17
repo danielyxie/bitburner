@@ -2,7 +2,6 @@
  * Abstract Base Class for any Server object
  */
 import { CodingContract } from "../CodingContracts";
-import { Message } from "../Message/Message";
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
 import { isValidFilePath } from "../Terminal/DirectoryHelpers";

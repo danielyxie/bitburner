@@ -215,7 +215,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
 
       let newValue = tabCompletion(command, arg, allPos, value);
       if (typeof newValue === "string" && newValue !== "") {
-        if (!newValue.endsWith(" ") && allPos.length === 1) newValue += " ";
+        if (!newValue.endsWith(" ") && !newValue.endsWith("/") && allPos.length === 1) newValue += " ";
         saveValue(newValue);
       }
       if (Array.isArray(newValue)) {
