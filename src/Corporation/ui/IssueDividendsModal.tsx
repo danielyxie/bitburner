@@ -53,8 +53,8 @@ export function IssueDividendsModal(props: IProps): React.ReactElement {
         <br />
         <br />
         In order to issue dividends, simply allocate some percentage of your corporation's profits to dividends. This
-        percentage must be an integer between 0 and {CorporationConstants.DividendMaxPercentage}. (A percentage of 0
-        means no dividends will be issued
+        percentage must be an integer between 0 and 50. (A percentage of 0
+        means no dividends will be issued)
         <br />
         <br />
         Two important things to note:

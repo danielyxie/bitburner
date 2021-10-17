@@ -32,7 +32,7 @@ export interface INetscriptBladeburner {
   getTeamSize(type?: any, name?: any): any;
   setTeamSize(type?: any, name?: any, size?: any): any;
   getCityEstimatedPopulation(cityName: any): any;
-  getCityEstimatedCommunities(cityName: any): any;
+  getCityCommunities(cityName: any): any;
   getCityChaos(cityName: any): any;
   getCity(): any;
   switchCity(cityName: any): any;
@@ -320,13 +320,13 @@ export function NetscriptBladeburner(
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.cities[cityName].popEst;
     },
-    getCityEstimatedCommunities: function (cityName: any): any {
-      helper.updateDynamicRam("getCityEstimatedCommunities", getRamCost("bladeburner", "getCityEstimatedCommunities"));
-      checkBladeburnerAccess("getCityEstimatedCommunities");
-      checkBladeburnerCity("getCityEstimatedCommunities", cityName);
+    getCityCommunities: function (cityName: any): any {
+      helper.updateDynamicRam("getCityCommunities", getRamCost("bladeburner", "getCityCommunities"));
+      checkBladeburnerAccess("getCityCommunities");
+      checkBladeburnerCity("getCityCommunities", cityName);
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-      return bladeburner.cities[cityName].commsEst;
+      return bladeburner.cities[cityName].comms;
     },
     getCityChaos: function (cityName: any): any {
       helper.updateDynamicRam("getCityChaos", getRamCost("bladeburner", "getCityChaos"));
