@@ -16,7 +16,7 @@ interface IMarketTA2Props {
 function MarketTA2(props: IMarketTA2Props): React.ReactElement {
   const division = useDivision();
   if (!division.hasResearch("Market-TA.II")) return <></>;
-
+  props.mat.marketTa2 = false;
   const [newCost, setNewCost] = useState<number>(props.mat.bCost);
   const setRerender = useState(false)[1];
   function rerender(): void {

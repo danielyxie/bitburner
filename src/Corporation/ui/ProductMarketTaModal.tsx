@@ -16,6 +16,7 @@ interface ITa2Props {
 function MarketTA2(props: ITa2Props): React.ReactElement {
   const division = useDivision();
   if (!division.hasResearch("Market-TA.II")) return <></>;
+  props.product.marketTa1 = false;
   const markupLimit = props.product.rat / props.product.mku;
   const [value, setValue] = useState(props.product.pCost);
   const setRerender = useState(false)[1];
