@@ -114,7 +114,7 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  Version: "0.56.0",
+  Version: "0.57.0",
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -281,107 +281,55 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v0.56.0 - 2021-10-11 Trimming the backlog (hydroflame & community)
+    v0.57.0 - 2021-10-16 It was too cheap! (hydroflame & community)
     -------------------------------------------
 
-    ** BREAKING **
+    ** BREAKING (kindof) **
 
-    * The 'write' function is now async. This helps when making scripts that write scripts.
+    * purchased server cost now scales exponentially past 2^10.
+      I'm going to actually explain this one: Currently the cost of a 2^20GB server is 57b
+      Most players can get that before their first install. In an effort to nerf good players
+      a softcap was added. This softcap is different for every BN.
 
-    ** Terminal **
+    ** Script Editor **
 
-    * 'grow' and 'weaken' have been added as terminal command. This should help player transition
-      from commands to scripts. The tutorial also talks about it.
-    * 'cp' command added
-    * Improved performance by rate limiting refresh.
-
-    ** IP vs Hostname **
-
-    * The game now uses hostname as primary key for it's servers (yeah believe it or not IPs were
-      used until then). This has caused some issues with purchased servers (they couldn't be sold).
-      You might need to soft reset for the game to fully convert itself.
-
-    ** Sleeve **
-
-    * Fixed bug where they couldn't train at Volhaven.
-    * No longer consume all bonus time at once, making it look buggy.
-    
-    ** SF9 **
-
-    * Now boosts hacknet production by 8/12/14%
-    
-    ** Hacknet Servers ** 
-
-    * production nerfed by 10%
-    * Max money increase gets weaker above 10t max money
-
-    ** Corporation **
-
-    * Warehouse tooltip now also displays the amount of space taken by products.
-    * Changed research box completely to avoid dependency on Treant (Treant is a pita)
-    * All textbox should accept MAX/MP case insensitive.
-    * Fixed export popup not refreshing dropdowns correctly.
-    * Fixed product mku becoming zero
-    * Increased scaling of Wilson to avoid feedback loop.
-    * Can no longer get in debt by buying real estate
-    * Bonus time is consumed faster.
+    * Added a theme that is close to monokai. Unfortunately a full monokai is impossible because 
+      Monaco doesn't have a very good tokenizer.
+    * Opening a file and connecting to a new server will still save the file on the server that the file
+      was opened.
 
     ** Netscript **
 
-    * isBusy takes bitverse and infiltration into account
-    * hospitalize can't be called when in infiltration.
-    * setToCommitCrime now accepts crime rough name instead of perfect name.
-    * disableLog All now works for bladeburner functions.
-    * Fixed netscript port for ns1.
-    
+    * New function: alert, which creates a textbox.
+    * New function: toast, creates a notification in the bottom right.
+    * New function: upgradeHomeCores (@Saynt_Garmo)
+    * New function: atExit, allows you to set a callback for when the script closes.
+    * New kindof function: autocomplete, this allows you to tell the game what it should
+      autocomplete on the terminal.
+
     ** Augmentation **
 
-    * Added augmentation to Ti Di Hui that removes penalty for being unfocused.
-    * Neuroflux no longer appears in special factions.
+    * ENM Core (the Augmentation from The Black Hand with the highest rep cost) rep cost
+      reduced from 250 to 175. This will help new players transition from TBH to BitRunners more easily.
 
-    ** Script Editor ** 
+    ** Bladeburner **
 
-    * Ram check is debounced instead of refreshed every second.
-    * Added the vscode extension documentation to the game (it doesn't work well, thought)
-    * Fixed issue where autocomplete list would grow forever
-    * Added semi-monokai as theme.
-    * Fixed issue where modifying filename would mess it up.
-    * Font size can be changed now.
-
-    ** Infiltration ** 
-
-    * Fixed issue where game controls would become unfocused.
+    * New general action: Incite Violence. This action adds other action counts but increases chaos.
 
     ** Misc. **
 
-    * Fixed loader incorrectly assuming some null values are incorrect.
-    * installBackdoor trigger Bitverse sequence
-    * Some improvements to the theme editor
-    * Improved documentation about where to learn javascript.
-    * Added some instructions for contributors.
-    * Fixed typo in corporation sell shares modal (@Saynt_Garmo)
-    * Fixed pagination being black on black in Active Scripts
-    * Create Script tab renamed to Script Editor
-    * Fixed an issue where corp some textbox wouldn't update when changing city.
-    * Fixed an issue where hacknet online time was always 0.
-    * Netscript function prompt fixed.
-    * Fixed miscalculation in growth.
-    * Script with syntax errors will try to be a tad more helpful.
-    * Corporations can no longer bribe bladeburners.
-    * Augmentation Graphene Branchiblade renamed to Brachi, like the rest of them.
-    * All ram is displayed in GB/TB/PB now.
-    * Game now saves when saving a file, this can be turned off.
-    * Several improvement to log window.
-    * Bladeburner current action returns General type instead of the name of the action.
-    * Bladeburner travel and Sleeve travel respect disable ASCII.
-    * Tutorial fits on small screens.
-    * Import is much slower but more consistent now.
-    * Fix intelligence not updating properly.
-    * Added SF -1: Time Compression
-    * ReadTheDoc theme now matches the game.
-    * Logbox should wrap text better
-    * Logbox behavior should feel better.
-    * Fix font for AutoLink.exe
+    * Current bladeburner action is shown on the character overview.
+    * Fix blackop being #000 on #000.
+    * The last clicked Tail Box goes in front of the others.
+    * Fixed an issue where some values were loaded as 0 when they should be null.
+    * Implemented toasts.
+    * .msg are no longer saved in the text file.
+    * Tail boxes no longer display all the args, they use "..." after 30 characters.
+    * Fixed cancelation penalty bonus not being properly applied after the IP <-> hostname switch.
+    * Fixed an exploit where you could send non-strings or numbers to other scripts.
+    * Fixed issue when trying to work for a faction with a work type that doesn't exist while
+      already working for that faction.
+    * Fixed not being able to work for the CIA. (Don't ask)
     * nerf noodle bar
 `,
 };

@@ -884,7 +884,6 @@ export function startFactionFieldWork(this: IPlayer, router: IRouter, faction: F
 }
 
 export function startFactionSecurityWork(this: IPlayer, router: IRouter, faction: Faction): void {
-  console.log(faction);
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkSecurity);
 
   this.workHackExpGainRate = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;

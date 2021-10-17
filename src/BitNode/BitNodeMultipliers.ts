@@ -157,6 +157,11 @@ interface IBitNodeMultipliers {
   PurchasedServerCost: number;
 
   /**
+   * Influence how much it costs to purchase a server
+   */
+  PurchasedServerSoftcap: number;
+
+  /**
    * Influences the maximum number of purchased servers you can have
    */
   PurchasedServerLimit: number;
@@ -247,6 +252,7 @@ export const BitNodeMultipliers: IBitNodeMultipliers = {
   HomeComputerRamCost: 1,
 
   PurchasedServerCost: 1,
+  PurchasedServerSoftcap: 1,
   PurchasedServerLimit: 1,
   PurchasedServerMaxRam: 1,
 

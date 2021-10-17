@@ -331,7 +331,6 @@ export function Root(props: IProps): React.ReactElement {
       otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeywords" }]));
       otherKeyvars.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeyvars" }]));
       l.language.tokenizer.root.unshift(["this", { token: "this" }]);
-      console.log(l);
     })();
 
     monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, "netscript.d.ts");

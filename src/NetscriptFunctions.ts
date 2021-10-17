@@ -2956,7 +2956,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       return true;
     },
     workForFaction: function (name: any, type: any): any {
-      console.log(`${name} ${type}`);
       updateDynamicRam("workForFaction", getRamCost("workForFaction"));
       checkSingularityAccess("workForFaction", 2);
       getFaction("workForFaction", name);
