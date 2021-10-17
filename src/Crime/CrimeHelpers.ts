@@ -31,6 +31,7 @@ export function determineCrimeSuccess(p: IPlayer, type: string): boolean {
 }
 
 export function findCrime(roughName: string): Crime | null {
+  roughName = roughName.toLowerCase();
   if (roughName.includes("shoplift")) {
     return Crimes.Shoplift;
   } else if (roughName.includes("rob") && roughName.includes("store")) {
