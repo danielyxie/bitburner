@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 
 type IProps = {
   gift: IStaneksGift;
-  fragment: ActiveFragment | null;
+  fragment: ActiveFragment | undefined;
   x: number;
   y: number;
 };
@@ -23,7 +23,7 @@ export function FragmentInspector(props: IProps): React.ReactElement {
     return () => clearInterval(id);
   }, []);
 
-  if (props.fragment === null) {
+  if (props.fragment === undefined) {
     return (
       <Paper>
         <Typography>

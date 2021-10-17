@@ -49,7 +49,7 @@ export function MainBoard(props: IProps): React.ReactElement {
     for (let i = 0; i < gift.width(); i++) {
       for (let j = 0; j < gift.height(); j++) {
         const fragment = gift.fragmentAt(i, j);
-        if (fragment === null) continue;
+        if (!fragment) continue;
         newgrid[i][j] = 1;
       }
     }
@@ -64,6 +64,7 @@ export function MainBoard(props: IProps): React.ReactElement {
   const [selectedFragment, setSelectedFragment] = React.useState(NoneFragment);
 
   function moveGhost(worldX: number, worldY: number, rotation: number): void {
+    setPos([worldX, worldY]);
     if (selectedFragment.type === FragmentType.None || selectedFragment.type === FragmentType.Delete) return;
     const newgrid = zeros([props.gift.width(), props.gift.height()]);
     for (let y = 0; y < selectedFragment.height(rotation); y++) {
@@ -76,7 +77,6 @@ export function MainBoard(props: IProps): React.ReactElement {
     }
 
     setGhostGrid(newgrid);
-    setPos([worldX, worldY]);
   }
 
   function deleteAt(worldX: number, worldY: number): boolean {
@@ -97,9 +97,10 @@ export function MainBoard(props: IProps): React.ReactElement {
   function color(worldX: number, worldY: number): string {
     if (ghostGrid[worldX][worldY] && grid[worldX][worldY]) return "red";
     if (ghostGrid[worldX][worldY]) return "white";
+
     if (grid[worldX][worldY]) {
       const fragment = props.gift.fragmentAt(worldX, worldY);
-      if (fragment === null) throw new Error("ActiveFragment should not be null");
+      if (!fragment) throw new Error("ActiveFragment should not be null");
       return randomColor(fragment);
     }
     return "";

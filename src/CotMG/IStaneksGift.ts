@@ -7,12 +7,13 @@ export interface IStaneksGift {
   fragments: ActiveFragment[];
   width(): number;
   height(): number;
-  charge(worldX: number, worldY: number, ram: number): number;
+  charge(rootX: number, rootY: number, ram: number): number;
   process(p: IPlayer, n: number): void;
   effect(fragment: ActiveFragment): number;
   canPlace(x: number, y: number, rotation: number, fragment: Fragment): boolean;
   place(x: number, y: number, rotation: number, fragment: Fragment): boolean;
-  fragmentAt(worldX: number, worldY: number): ActiveFragment | null;
+  findFragment(rootX: number, rootY: number): ActiveFragment | undefined;
+  fragmentAt(worldX: number, worldY: number): ActiveFragment | undefined;
   deleteAt(worldX: number, worldY: number): boolean;
   clear(): void;
   count(fragment: Fragment): number;

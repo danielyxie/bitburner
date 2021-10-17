@@ -12,12 +12,11 @@ placedFragments() Netscript Function
                 // In world coordinates
                 x: number;
                 y: number;
-                heat: number;
                 charge: number;
                 id: number;
                 shape: boolean[][];
                 type: string;
-                magnitude: number;
+                power: number;
                 limit: number;
             }
         ]

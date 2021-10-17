@@ -29,9 +29,9 @@ export class StaneksGift implements IStaneksGift {
     return Math.floor(this.baseSize() / 2 + 0.6);
   }
 
-  charge(worldX: number, worldY: number, ram: number): number {
-    const af = this.fragmentAt(worldX, worldY);
-    if (af === null) return 0;
+  charge(rootX: number, rootY: number, ram: number): number {
+    const af = this.findFragment(rootX, rootY);
+    if (af === undefined) return 0;
 
     const charge = CalculateCharge(ram);
     af.charge += charge;
@@ -60,8 +60,8 @@ export class StaneksGift implements IStaneksGift {
     // find the neighbooring active fragments.
     const maybeFragments = cells.map((n) => this.fragmentAt(n[0], n[1]));
 
-    // Filter out nulls with typescript "Type guard". Whatever
-    let neighboors = maybeFragments.filter((v: ActiveFragment | null): v is ActiveFragment => !!v);
+    // Filter out undefined with typescript "Type guard". Whatever
+    let neighboors = maybeFragments.filter((v: ActiveFragment | undefined): v is ActiveFragment => !!v);
 
     neighboors = neighboors.filter((fragment) => fragment.fragment().type === FragmentType.Booster);
     let boost = 1;
@@ -90,14 +90,18 @@ export class StaneksGift implements IStaneksGift {
     return true;
   }
 
-  fragmentAt(worldX: number, worldY: number): ActiveFragment | null {
+  findFragment(rootX: number, rootY: number): ActiveFragment | undefined {
+    return this.fragments.find((f) => f.x === rootX && f.y === rootY);
+  }
+
+  fragmentAt(worldX: number, worldY: number): ActiveFragment | undefined {
     for (const aFrag of this.fragments) {
       if (aFrag.fullAt(worldX, worldY)) {
         return aFrag;
       }
     }
 
-    return null;
+    return undefined;
   }
 
   count(fragment: Fragment): number {
