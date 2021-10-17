@@ -2412,7 +2412,7 @@ function initAugmentations(): void {
 
     const StaneksGift2 = new Augmentation({
       name: AugmentationNames.StaneksGift2,
-      repCost: 1000,
+      repCost: 1e5,
       moneyCost: 0,
       info:
         'TODO, something about Mother being bullshit and you get more control over her "gift"<br><br>' +
@@ -2452,7 +2452,7 @@ function initAugmentations(): void {
 
     const StaneksGift3 = new Augmentation({
       name: AugmentationNames.StaneksGift3,
-      repCost: 10000,
+      repCost: 1e7,
       moneyCost: 0,
       info:
         "TODO, learn more about Allisons scheme, gain full control over the gift.<br><br>" +
@@ -2492,7 +2492,7 @@ function initAugmentations(): void {
 
     const StaneksGiftAscension4 = new Augmentation({
       name: AugmentationNames.StaneksGift4,
-      repCost: 500000000,
+      repCost: 1e9,
       moneyCost: 0,
       info:
         "Allow Allison to install an Ascension port in her Gift. Allowing you to connect with the Machine God.<br><br>" +
