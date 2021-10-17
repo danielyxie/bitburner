@@ -55,7 +55,7 @@ export function FragmentInspector(props: IProps): React.ReactElement {
     charge = "N/A";
     effect = `${f.power}x adjacent fragment power`;
   } else {
-    effect = Effect(f.type).replace("x%", numeralWrapper.formatPercentage(props.gift.effect(props.fragment) - 1));
+    effect = Effect(f.type).replace(/-*x%/, numeralWrapper.formatPercentage(props.gift.effect(props.fragment) - 1));
   }
 
   return (
