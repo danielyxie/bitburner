@@ -56,10 +56,10 @@ export class Fragment {
       if (candidates.some((coord) => coord[0] === x && coord[1] === y)) return;
       candidates.push([x, y]);
     };
-    for (let y = 0; y < this.shape.length; y++) {
-      for (let x = 0; x < this.shape[y].length; x++) {
+    for (let y = 0; y < this.height(rotation); y++) {
+      for (let x = 0; x < this.width(rotation); x++) {
         // This cell is full, add all it's neighboors.
-        if (!this.shape[y][x]) continue;
+        if (!this.fullAt(x, y, rotation)) continue;
         add(x - 1, y);
         add(x + 1, y);
         add(x, y - 1);
