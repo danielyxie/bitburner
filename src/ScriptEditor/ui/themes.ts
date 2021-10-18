@@ -77,12 +77,12 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         token: "comment",
       },
       {
-        foreground: "2aa198",
+        foreground: "00afaf",
         token: "string",
       },
       {
         token: "number",
-        foreground: "2aa198",
+        foreground: "00afaf",
       },
       {
         token: "otherkeyvars",
@@ -115,6 +115,14 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
       {
       	token: "type.identifier.js",
 	foreground: "b58900",
+      },
+      {
+      	token: "delimiter.square.js",
+	foreground: "0087ff",
+      },
+      {
+      	token: "delimiter.bracket.js",
+	foreground: "0087ff",
       },
       {
         token: "this",
@@ -185,6 +193,14 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
       {
       	token: "type.identifier.js",
 	foreground: "b58900",
+      },
+      {
+      	token: "delimiter.square.js",
+	foreground: "0087ff",
+      },
+      {
+      	token: "delimiter.bracket.js",
+	foreground: "0087ff",
       },
       {
         token: "this",
