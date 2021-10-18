@@ -77,7 +77,7 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         token: "comment",
       },
       {
-        foreground: "b58900",
+        foreground: "2aa198",
         token: "string",
       },
       {
@@ -86,35 +86,39 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
       },
       {
         token: "otherkeyvars",
-        foreground: "ae81ff",
+        foreground: "268bd2",
       },
       {
-        foreground: "93a1a1",
+        foreground: "268bd2",
         token: "function",
       },
       {
-        foreground: "d33682",
+        foreground: "859900",
         token: "keyword",
       },
       {
         token: "storage.type.function.js",
-        foreground: "ae81ff",
+        foreground: "cb4b16",
       },
       {
         token: "ns",
-        foreground: "97d92b",
+        foreground: "cb4b16",
       },
       {
         token: "netscriptfunction",
-        foreground: "cb4b16",
+        foreground: "268bd2",
       },
       {
         token: "otherkeywords",
-        foreground: "cb4b16",
+        foreground: "268bd2",
+      },
+      {
+      	token: "type.identifier.js",
+	foreground: "b58900",
       },
       {
         token: "this",
-        foreground: "fd971f",
+        foreground: "cb4b16",
       },
     ],
     colors: {
@@ -122,8 +126,8 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
       "editor.background": "#002b36",
       "editor.selectionBackground": "#073642",
       "editor.lineHighlightBackground": "#073642",
-      "editorCursor.foreground": "#F8F8F0",
-      "editorWhitespace.foreground": "#3B3A32",
+      "editorCursor.foreground": "#819090",
+      "editorWhitespace.foreground": "#073642",
       "editorIndentGuide.activeBackground": "#9D550FB0",
       "editor.selectionHighlightBorder": "#222218",
     },
@@ -139,11 +143,11 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         token: "",
       },
       {
-        foreground: "93a1a1",
+        foreground: "586e75",
         token: "comment",
       },
       {
-        foreground: "b58900",
+        foreground: "2aa198",
         token: "string",
       },
       {
@@ -152,45 +156,49 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
       },
       {
         token: "otherkeyvars",
-        foreground: "ae81ff",
+        foreground: "268bd2",
       },
       {
-        foreground: "93a1a1",
+        foreground: "268bd2",
         token: "function",
       },
       {
-        foreground: "d33682",
+        foreground: "859900",
         token: "keyword",
       },
       {
         token: "storage.type.function.js",
-        foreground: "ae81ff",
+        foreground: "bc4b16",
       },
       {
         token: "ns",
-        foreground: "97d92b",
+        foreground: "cb4b16",
       },
       {
         token: "netscriptfunction",
-        foreground: "cb4b16",
+        foreground: "268bd2",
       },
       {
         token: "otherkeywords",
-        foreground: "cb4b16",
+        foreground: "268bd2",
+      },
+      {
+      	token: "type.identifier.js",
+	foreground: "b58900",
       },
       {
         token: "this",
-        foreground: "fd971f",
+        foreground: "cb4b16",
       },
     ],
     colors: {
       "editor.foreground": "#657b83",
       "editor.background": "#fdf6e3",
       "editor.selectionBackground": "#eee8d5",
-      "editor.lineHighlightBackground": "#073642",
+      "editor.lineHighlightBackground": "#eee8d5",
       "editorCursor.foreground": "#657b83",
-      "editorWhitespace.foreground": "#3B3A32",
-      "editorIndentGuide.activeBackground": "#073642",
+      "editorWhitespace.foreground": "#eee8d5",
+      "editorIndentGuide.activeBackground": "#eee8d5",
       "editor.selectionHighlightBorder": "#073642",
     },
   });
