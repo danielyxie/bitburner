@@ -1,17 +1,29 @@
 import React, { useState } from "react";
 
 import makeStyles from "@mui/styles/makeStyles";
-import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import Fab from "@mui/material/Fab";
+import Paper from "@mui/material/Paper";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { use } from "../Context";
 import { Page } from "../Router";
 
 const useStyles = makeStyles({
-  nobackground: {
-    backgroundColor: "#0000",
+  visibilityToggle: {
+    backgroundColor: "transparent",
+    position: "absolute",
+    top: "100%",
+    right: 0,
+  },
+  overviewContainer: {
+    position: "fixed",
+    top: 0,
+    right: 0,
+    zIndex: 1500,
+    display: "flex",
+    justifyContent: "flex-end",
+    flexDirection: "column",
   },
 });
 
@@ -30,16 +42,13 @@ export function Overview({ children }: IProps): React.ReactElement {
   } else {
     icon = <VisibilityIcon color="primary" />;
   }
+
   return (
-    <div style={{ position: "fixed", top: 0, right: 0, zIndex: 1500 }}>
-      <Box display="flex" justifyContent="flex-end" flexDirection={"column"}>
-        <Collapse in={open}>{children}</Collapse>
-        <Box display="flex" justifyContent="flex-end">
-          <Fab classes={{ root: classes.nobackground }} onClick={() => setOpen((old) => !old)}>
-            {icon}
-          </Fab>
-        </Box>
-      </Box>
-    </div>
+    <Paper square classes={{ root: classes.overviewContainer }}>
+      <Collapse in={open}>{children}</Collapse>
+      <Fab classes={{ root: classes.visibilityToggle }} onClick={() => setOpen((old) => !old)}>
+        {icon}
+      </Fab>
+    </Paper>
   );
 }
