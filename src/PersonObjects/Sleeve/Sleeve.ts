@@ -143,8 +143,8 @@ export class Sleeve extends Person {
    * Commit crimes
    */
   commitCrime(p: IPlayer, crimeKey: string): boolean {
-    const crime: Crime | null = Crimes[crimeKey];
-    if (!(crime instanceof Crime)) {
+    const crime: Crime | null = Crimes[crimeKey] || Object.values(Crimes).find((crime) => crime.name === crimeKey);
+    if (!crime) {
       return false;
     }
 
@@ -164,7 +164,7 @@ export class Sleeve extends Person {
 
     this.currentTaskLocation = String(this.gainRatesForTask.money);
 
-    this.crimeType = crimeKey;
+    this.crimeType = crime.name;
     this.currentTaskMaxTime = crime.time;
     this.currentTask = SleeveTaskType.Crime;
     return true;
@@ -179,8 +179,8 @@ export class Sleeve extends Person {
     if (this.currentTask === SleeveTaskType.Crime) {
       // For crimes, all experience and money is gained at the end
       if (this.currentTaskTime >= this.currentTaskMaxTime) {
-        const crime: Crime | null = Crimes[this.crimeType];
-        if (!(crime instanceof Crime)) {
+        const crime: Crime | undefined = Object.values(Crimes).find((crime) => crime.name === this.crimeType);
+        if (!crime) {
           console.error(`Invalid data stored in sleeve.crimeType: ${this.crimeType}`);
           this.resetTaskStatus();
           return retValue;
