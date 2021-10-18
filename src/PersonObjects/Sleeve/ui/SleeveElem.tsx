@@ -104,14 +104,17 @@ export function SleeveElem(props: IProps): React.ReactElement {
       );
       break;
     }
-    case SleeveTaskType.Crime:
+    case SleeveTaskType.Crime: {
+      const crime = Object.values(Crimes).find((crime) => crime.name === props.sleeve.crimeType);
+      if (!crime) throw new Error("crime should not be undefined");
       desc = (
         <>
-          This sleeve is currently attempting to {Crimes[props.sleeve.crimeType].type} (Success Rate:{" "}
-          {numeralWrapper.formatPercentage(Crimes[props.sleeve.crimeType].successRate(props.sleeve))}).
+          This sleeve is currently attempting to {crime.type} (Success Rate:{" "}
+          {numeralWrapper.formatPercentage(crime.successRate(props.sleeve))}).
         </>
       );
       break;
+    }
     case SleeveTaskType.Class:
       desc = <>This sleeve is currently studying/taking a course at {props.sleeve.currentTaskLocation}.</>;
       break;
