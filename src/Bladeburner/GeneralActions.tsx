@@ -3,35 +3,16 @@ import { IMap } from "../types";
 
 export const GeneralActions: IMap<Action> = {};
 
-(function () {
-  // General Actions
-  let actionName;
-  actionName = "Training";
-  GeneralActions[actionName] = new Action({
-    name: actionName,
-  });
-
-  actionName = "Field Analysis";
-  GeneralActions[actionName] = new Action({
-    name: actionName,
-  });
-
-  actionName = "Recruitment";
-  GeneralActions[actionName] = new Action({
-    name: actionName,
-  });
-
-  actionName = "Diplomacy";
-  GeneralActions[actionName] = new Action({
-    name: actionName,
-  });
-
-  actionName = "Hyperbolic Regeneration Chamber";
-  GeneralActions[actionName] = new Action({
-    name: actionName,
-  });
-  actionName = "Incite Violence";
-  GeneralActions[actionName] = new Action({
-    name: actionName,
-  });
-})();
+let actionNames : Array<string> = [
+    "Training",
+    "Field Analysis",
+    "Recruitment",
+    "Diplomacy",
+    "Hyperbolic Regeneration Chamber",
+    "Incite Violence"
+];
+for (let actionName of actionNames){
+    GeneralActions[actionName] = new Action({
+        name: actionName,
+    });
+}
