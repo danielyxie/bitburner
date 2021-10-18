@@ -46,7 +46,7 @@ export function Overview({ children }: IProps): React.ReactElement {
   return (
     <Paper square classes={{ root: classes.overviewContainer }}>
       <Collapse in={open}>{children}</Collapse>
-      <Fab classes={{ root: classes.visibilityToggle }} onClick={() => setOpen((old) => !old)}>
+      <Fab size="small" classes={{ root: classes.visibilityToggle }} onClick={() => setOpen((old) => !old)}>
         {icon}
       </Fab>
     </Paper>
