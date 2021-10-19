@@ -3892,6 +3892,16 @@ interface NS extends TIX, Singularity {
     getHacknetMultipliers (): HacknetMultipliers;
 
     /**
+     * Returns a server object for the given server. Defaults to the running script's server if host is not specified.
+     *
+     * @ramCost 2 GB
+     * @param {string} [host] Optional. Hostname or IP for the requested server object.
+     * @returns {Server} The requested server object.
+     */
+    getServer (host?: Host): Server;
+
+
+    /**
      * Returns the amount of money available on a server.
      * Running this function on the home computer will return the player’s money.
      *
