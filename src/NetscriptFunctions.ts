@@ -125,15 +125,10 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
         One of these could be the reason:
         * Using eval() to get a reference to a ns function
-        &nbsp;&nbsp;const scan = eval('ns.scan');
+        &nbsp;&nbsp;const myScan = eval('ns.scan');
 
         * Using map access to do the same
-        &nbsp;&nbsp;const scan = ns['scan'];
-
-        * Saving script in the improper order.
-        &nbsp;&nbsp;Increase the cost of an imported script, save it, then run the
-        &nbsp;&nbsp;parent. To fix this just re-open & save every script in order
-        &nbsp;&nbsp;from most imported to least imported (parent script).
+        &nbsp;&nbsp;const myScan = ns['scan'];
 
         Sorry :(`,
       );
@@ -143,30 +138,30 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
   /**
    * Gets the Server for a specific hostname/ip, throwing an error
    * if the server doesn't exist.
-   * @param {string} ip - Hostname or IP of the server
+   * @param {string} hostname - Hostname or IP of the server
    * @param {string} callingFnName - Name of calling function. For logging purposes
-   * @returns {Server} The specified Server
+   * @returns {BaseServer} The specified server as a BaseServer
    */
-  const safeGetServer = function (ip: string, callingFnName: string): BaseServer {
-    const server = GetServer(ip);
+  const safeGetServer = function (hostname: string, callingFnName: string): BaseServer {
+    const server = GetServer(hostname);
     if (server == null) {
-      throw makeRuntimeErrorMsg(callingFnName, `Invalid IP/hostname: ${ip}`);
+      throw makeRuntimeErrorMsg(callingFnName, `Invalid hostname or IP: ${hostname}`);
     }
     return server;
   };
-
+  
   /**
    * Searches for and returns the RunningScript object for the specified script.
    * If the 'fn' argument is not specified, this returns the current RunningScript.
    * @param {string} fn - Filename of script
-   * @param {string} ip - Hostname/ip of the server on which the script resides
+   * @param {string} hostname - Hostname/ip of the server on which the script resides
    * @param {any[]} scriptArgs - Running script's arguments
    * @returns {RunningScript}
    *      Running script identified by the parameters, or null if no such script
    *      exists, or the current running script if the first argument 'fn'
    *      is not specified.
    */
-  const getRunningScript = function (fn: any, ip: any, callingFnName: any, scriptArgs: any): RunningScript | null {
+  const getRunningScript = function (fn: any, hostname: any, callingFnName: any, scriptArgs: any): RunningScript | null {
     if (typeof callingFnName !== "string" || callingFnName === "") {
       callingFnName = "getRunningScript";
     }
@@ -181,10 +176,10 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
     if (fn != null && typeof fn === "string") {
       // Get Logs of another script
-      if (ip == null) {
-        ip = workerScript.hostname;
+      if (hostname == null) {
+        hostname = workerScript.hostname;
       }
-      const server = safeGetServer(ip, callingFnName);
+      const server = safeGetServer(hostname, callingFnName);
 
       return findRunningScript(fn, scriptArgs, server);
     }
@@ -209,16 +204,16 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
    * Helper function for getting the error log message when the user specifies
    * a nonexistent running script
    * @param {string} fn - Filename of script
-   * @param {string} ip - Hostname/ip of the server on which the script resides
+   * @param {string} hostname - Hostname/ip of the server on which the script resides
    * @param {any[]} scriptArgs - Running script's arguments
    * @returns {string} Error message to print to logs
    */
-  const getCannotFindRunningScriptErrorMessage = function (fn: any, ip: any, scriptArgs: any): string {
+  const getCannotFindRunningScriptErrorMessage = function (fn: any, hostname: any, scriptArgs: any): string {
     if (!Array.isArray(scriptArgs)) {
       scriptArgs = [];
     }
 
-    return `Cannot find running script ${fn} on server ${ip} with args: ${arrayToString(scriptArgs)}`;
+    return `Cannot find running script ${fn} on server ${hostname} with args: ${arrayToString(scriptArgs)}`;
   };
 
   /**
@@ -329,18 +324,14 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     return Factions[name];
   };
 
-  const hack = function (ip: any, manual: any, { threads: requestedThreads, stock }: any = {}): Promise<number> {
-    if (ip === undefined) {
+  const hack = function (hostname: any, manual: any, { threads: requestedThreads, stock }: any = {}): Promise<number> {
+    if (hostname === undefined) {
       throw makeRuntimeErrorMsg("hack", "Takes 1 argument.");
     }
     const threads = resolveNetscriptRequestedThreads(workerScript, "hack", requestedThreads);
-    const server = GetServer(ip);
-    if (!(server instanceof Server)) {
-      throw makeRuntimeErrorMsg("hack", `Invalid IP/hostname: ${ip}.`);
-    }
-
-    if (server == null) {
-      throw makeRuntimeErrorMsg("hack", `Invalid IP/hostname: ${ip}.`);
+    const server = safeGetServer(hostname,"hack");
+    if (!(server instanceof Server)){
+      throw makeRuntimeErrorMsg("hack", "Cannot be executed on this server.");
     }
 
     // Calculate the hacking time
@@ -354,7 +345,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
     workerScript.log(
       "hack",
-      `Executing ${ip} in ${convertTimeMsToTimeElapsedString(
+      `Executing ${hostname} in ${convertTimeMsToTimeElapsedString(
         hackingTime * 1000,
         true,
       )} (t=${numeralWrapper.formatThreads(threads)})`,
@@ -434,11 +425,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     let out = "";
     for (let arg of args) {
       arg = toNative(arg);
-      if (typeof arg === "object") {
-        out += JSON.stringify(arg);
-        continue;
-      }
-      out += `${arg}`;
+      out += (typeof arg === "object") ? JSON.stringify(arg) : `${arg}`;
     }
 
     return out;
@@ -480,34 +467,29 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     hacknet: hacknet,
     sprintf: sprintf,
     vsprintf: vsprintf,
-    scan: function (ip: any = workerScript.hostname): any {
+    scan: function (hostname: any = workerScript.hostname): any {
       updateDynamicRam("scan", getRamCost("scan"));
-      const server = GetServer(ip);
-      if (server == null) {
-        throw makeRuntimeErrorMsg("scan", `Invalid IP/hostname: ${ip}.`);
-      }
+      const server = safeGetServer(hostname,"scan");
       const out = [];
       for (let i = 0; i < server.serversOnNetwork.length; i++) {
         const s = getServerOnNetwork(server, i);
         if (s === null) continue;
         const entry = s.hostname;
-        if (entry == null) {
-          continue;
-        }
+        if (entry === null) continue;
         out.push(entry);
       }
       workerScript.log("scan", `returned ${server.serversOnNetwork.length} connections for ${server.hostname}`);
       return out;
     },
-    hack: function (ip: any, { threads: requestedThreads, stock }: any = {}): any {
+    hack: function (hostname: any, { threads: requestedThreads, stock }: any = {}): any {
       updateDynamicRam("hack", getRamCost("hack"));
-      return hack(ip, false, { threads: requestedThreads, stock: stock });
+      return hack(hostname, false, { threads: requestedThreads, stock: stock });
     },
-    hackAnalyzeThreads: function (ip: any, hackAmount: any): any {
+    hackAnalyzeThreads: function (hostname: any, hackAmount: any): any {
       updateDynamicRam("hackAnalyzeThreads", getRamCost("hackAnalyzeThreads"));
 
       // Check argument validity
-      const server = safeGetServer(ip, "hackAnalyzeThreads");
+      const server = safeGetServer(hostname, "hackAnalyzeThreads");
       if (!(server instanceof Server)) {
         workerScript.log("hackAnalyzeThreads", "Cannot be executed on this server.");
         return -1;
@@ -527,10 +509,10 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return hackAmount / Math.floor(server.moneyAvailable * percentHacked);
     },
-    hackAnalyzePercent: function (ip: any): any {
+    hackAnalyzePercent: function (hostname: any): any {
       updateDynamicRam("hackAnalyzePercent", getRamCost("hackAnalyzePercent"));
 
-      const server = safeGetServer(ip, "hackAnalyzePercent");
+      const server = safeGetServer(hostname, "hackAnalyzePercent");
       if (!(server instanceof Server)) {
         workerScript.log("hackAnalyzePercent", "Cannot be executed on this server.");
         return false;
@@ -538,10 +520,10 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculatePercentMoneyHacked(server, Player) * 100;
     },
-    hackChance: function (ip: any): any {
+    hackChance: function (hostname: any): any {
       updateDynamicRam("hackChance", getRamCost("hackChance"));
 
-      const server = safeGetServer(ip, "hackChance");
+      const server = safeGetServer(hostname, "hackChance");
       if (!(server instanceof Server)) {
         workerScript.log("hackChance", "Cannot be executed on this server.");
         return false;
@@ -558,21 +540,18 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return Promise.resolve(true);
       });
     },
-    grow: function (ip: any, { threads: requestedThreads, stock }: any = {}): any {
+    grow: function (hostname: any, { threads: requestedThreads, stock }: any = {}): any {
       updateDynamicRam("grow", getRamCost("grow"));
       const threads = resolveNetscriptRequestedThreads(workerScript, "grow", requestedThreads);
-      if (ip === undefined) {
+      if (hostname === undefined) {
         throw makeRuntimeErrorMsg("grow", "Takes 1 argument.");
       }
-      const server = GetServer(ip);
+      const server = safeGetServer(hostname,"grow");
       if (!(server instanceof Server)) {
         workerScript.log("grow", "Cannot be executed on this server.");
         return false;
       }
-      if (server == null) {
-        throw makeRuntimeErrorMsg("grow", `Invalid IP/hostname: ${ip}.`);
-      }
-
+      
       const host = GetServer(workerScript.hostname);
       if (host === null) {
         throw new Error("Workerscript host is null");
@@ -617,11 +596,11 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return Promise.resolve(moneyAfter / moneyBefore);
       });
     },
-    growthAnalyze: function (ip: any, growth: any, cores: any = 1): any {
+    growthAnalyze: function (hostname: any, growth: any, cores: any = 1): any {
       updateDynamicRam("growthAnalyze", getRamCost("growthAnalyze"));
 
       // Check argument validity
-      const server = safeGetServer(ip, "growthAnalyze");
+      const server = safeGetServer(hostname, "growthAnalyze");
       if (!(server instanceof Server)) {
         workerScript.log("growthAnalyze", "Cannot be executed on this server.");
         return false;
@@ -632,19 +611,16 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return numCycleForGrowth(server, Number(growth), Player, cores);
     },
-    weaken: function (ip: any, { threads: requestedThreads }: any = {}): any {
+    weaken: function (hostname: any, { threads: requestedThreads }: any = {}): any {
       updateDynamicRam("weaken", getRamCost("weaken"));
       const threads = resolveNetscriptRequestedThreads(workerScript, "weaken", requestedThreads);
-      if (ip === undefined) {
+      if (hostname === undefined) {
         throw makeRuntimeErrorMsg("weaken", "Takes 1 argument.");
       }
-      const server = GetServer(ip);
+      const server = safeGetServer(hostname,"weaken");
       if (!(server instanceof Server)) {
         workerScript.log("weaken", "Cannot be executed on this server.");
         return false;
-      }
-      if (server == null) {
-        throw makeRuntimeErrorMsg("weaken", `Invalid IP/hostname: ${ip}`);
       }
 
       // No root access or skill level too low
@@ -727,43 +703,40 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return workerScript.disableLogs[fn] ? false : true;
     },
-    getScriptLogs: function (fn: any, ip: any, ...scriptArgs: any): any {
-      const runningScriptObj = getRunningScript(fn, ip, "getScriptLogs", scriptArgs);
+    getScriptLogs: function (fn: any, hostname: any, ...scriptArgs: any): any {
+      const runningScriptObj = getRunningScript(fn, hostname, "getScriptLogs", scriptArgs);
       if (runningScriptObj == null) {
-        workerScript.log("getScriptLogs", getCannotFindRunningScriptErrorMessage(fn, ip, scriptArgs));
+        workerScript.log("getScriptLogs", getCannotFindRunningScriptErrorMessage(fn, hostname, scriptArgs));
         return "";
       }
 
       return runningScriptObj.logs.slice();
     },
-    tail: function (fn: any, ip: any = workerScript.hostname, ...scriptArgs: any): any {
+    tail: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any): any {
       let runningScriptObj;
       if (arguments.length === 0) {
         runningScriptObj = workerScript.scriptRef;
       } else if (typeof fn === "number") {
         runningScriptObj = getRunningScriptByPid(fn, "tail");
       } else {
-        runningScriptObj = getRunningScript(fn, ip, "tail", scriptArgs);
+        runningScriptObj = getRunningScript(fn, hostname, "tail", scriptArgs);
       }
       if (runningScriptObj == null) {
-        workerScript.log("tail", getCannotFindRunningScriptErrorMessage(fn, ip, scriptArgs));
+        workerScript.log("tail", getCannotFindRunningScriptErrorMessage(fn, hostname, scriptArgs));
         return;
       }
 
       LogBoxEvents.emit(runningScriptObj);
     },
-    nuke: function (ip: any): any {
+    nuke: function (hostname: any): boolean {
       updateDynamicRam("nuke", getRamCost("nuke"));
-      if (ip === undefined) {
+      if (hostname === undefined) {
         throw makeRuntimeErrorMsg("nuke", "Takes 1 argument.");
       }
-      const server = GetServer(ip);
+      const server = safeGetServer(hostname,"nuke");
       if (!(server instanceof Server)) {
         workerScript.log("nuke", "Cannot be executed on this server.");
         return false;
-      }
-      if (server == null) {
-        throw makeRuntimeErrorMsg("nuke", `Invalid IP/hostname: ${ip}.`);
       }
       if (!Player.hasProgram(Programs.NukeProgram.name)) {
         throw makeRuntimeErrorMsg("nuke", "You do not have the NUKE.exe virus!");
@@ -779,18 +752,15 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return true;
     },
-    brutessh: function (ip: any): any {
+    brutessh: function (hostname: any): boolean {
       updateDynamicRam("brutessh", getRamCost("brutessh"));
-      if (ip === undefined) {
+      if (hostname === undefined) {
         throw makeRuntimeErrorMsg("brutessh", "Takes 1 argument.");
       }
-      const server = GetServer(ip);
+      const server = safeGetServer(hostname,"brutessh");
       if (!(server instanceof Server)) {
         workerScript.log("brutessh", "Cannot be executed on this server.");
         return false;
-      }
-      if (server == null) {
-        throw makeRuntimeErrorMsg("brutessh", `Invalid IP/hostname: ${ip}.`);
       }
       if (!Player.hasProgram(Programs.BruteSSHProgram.name)) {
         throw makeRuntimeErrorMsg("brutessh", "You do not have the BruteSSH.exe program!");
@@ -804,18 +774,15 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return true;
     },
-    ftpcrack: function (ip: any): any {
+    ftpcrack: function (hostname: any): boolean {
       updateDynamicRam("ftpcrack", getRamCost("ftpcrack"));
-      if (ip === undefined) {
+      if (hostname === undefined) {
         throw makeRuntimeErrorMsg("ftpcrack", "Takes 1 argument.");
       }
-      const server = GetServer(ip);
+      const server = safeGetServer(hostname,"ftpcrack");
       if (!(server instanceof Server)) {
         workerScript.log("ftpcrack", "Cannot be executed on this server.");
         return false;
-      }
-      if (server == null) {
-        throw makeRuntimeErrorMsg("ftpcrack", `Invalid IP/hostname: ${ip}.`);
       }
       if (!Player.hasProgram(Programs.FTPCrackProgram.name)) {
         throw makeRuntimeErrorMsg("ftpcrack", "You do not have the FTPCrack.exe program!");
@@ -829,18 +796,15 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return true;
     },
-    relaysmtp: function (ip: any): any {
+    relaysmtp: function (hostname: any): boolean {
       updateDynamicRam("relaysmtp", getRamCost("relaysmtp"));
-      if (ip === undefined) {
+      if (hostname === undefined) {
         throw makeRuntimeErrorMsg("relaysmtp", "Takes 1 argument.");
       }
-      const server = GetServer(ip);
+      const server = safeGetServer(hostname,"relaysmtp");
       if (!(server instanceof Server)) {
         workerScript.log("relaysmtp", "Cannot be executed on this server.");
         return false;
-      }
-      if (server == null) {
-        throw makeRuntimeErrorMsg("relaysmtp", `Invalid IP/hostname: ${ip}.`);
       }
       if (!Player.hasProgram(Programs.RelaySMTPProgram.name)) {
         throw makeRuntimeErrorMsg("relaysmtp", "You do not have the relaySMTP.exe program!");
@@ -854,18 +818,15 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return true;
     },
-    httpworm: function (ip: any): any {
+    httpworm: function (hostname: any): boolean {
       updateDynamicRam("httpworm", getRamCost("httpworm"));
-      if (ip === undefined) {
+      if (hostname === undefined) {
         throw makeRuntimeErrorMsg("httpworm", "Takes 1 argument");
       }
-      const server = GetServer(ip);
+      const server = safeGetServer(hostname,"httpworm");
       if (!(server instanceof Server)) {
         workerScript.log("httpworm", "Cannot be executed on this server.");
         return false;
-      }
-      if (server == null) {
-        throw makeRuntimeErrorMsg("httpworm", `Invalid IP/hostname: ${ip}`);
       }
       if (!Player.hasProgram(Programs.HTTPWormProgram.name)) {
         throw makeRuntimeErrorMsg("httpworm", "You do not have the HTTPWorm.exe program!");
@@ -879,18 +840,15 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return true;
     },
-    sqlinject: function (ip: any): any {
+    sqlinject: function (hostname: any): boolean {
       updateDynamicRam("sqlinject", getRamCost("sqlinject"));
-      if (ip === undefined) {
+      if (hostname === undefined) {
         throw makeRuntimeErrorMsg("sqlinject", "Takes 1 argument.");
       }
-      const server = GetServer(ip);
+      const server = safeGetServer(hostname,"sqlinject");
       if (!(server instanceof Server)) {
         workerScript.log("sqlinject", "Cannot be executed on this server.");
         return false;
-      }
-      if (server == null) {
-        throw makeRuntimeErrorMsg("sqlinject", `Invalid IP/hostname: ${ip}`);
       }
       if (!Player.hasProgram(Programs.SQLInjectProgram.name)) {
         throw makeRuntimeErrorMsg("sqlinject", "You do not have the SQLInject.exe program!");
@@ -919,18 +877,15 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return runScriptFromScript("run", scriptServer, scriptname, args, workerScript, threads);
     },
-    exec: function (scriptname: any, ip: any, threads: any = 1, ...args: any[]): any {
+    exec: function (scriptname: any, hostname: any, threads: any = 1, ...args: any[]): any {
       updateDynamicRam("exec", getRamCost("exec"));
-      if (scriptname === undefined || ip === undefined) {
+      if (scriptname === undefined || hostname === undefined) {
         throw makeRuntimeErrorMsg("exec", "Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
       }
       if (isNaN(threads) || threads <= 0) {
         throw makeRuntimeErrorMsg("exec", `Invalid thread count. Must be numeric and > 0, is ${threads}`);
       }
-      const server = GetServer(ip);
-      if (server == null) {
-        throw makeRuntimeErrorMsg("exec", `Invalid IP/hostname: ${ip}`);
-      }
+      const server = safeGetServer(hostname,"exec");
       return runScriptFromScript("exec", server, scriptname, args, workerScript, threads);
     },
     spawn: function (scriptname: any, threads: any, ...args: any[]): any {
@@ -959,7 +914,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("spawn", "Exiting...");
       }
     },
-    kill: function (filename: any, ip: any, ...scriptArgs: any): any {
+    kill: function (filename: any, hostname: any, ...scriptArgs: any): any {
       updateDynamicRam("kill", getRamCost("kill"));
 
       let res;
@@ -968,15 +923,15 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         // Kill by pid
         res = killWorkerScript(filename);
       } else {
-        // Kill by filename/ip
-        if (filename === undefined || ip === undefined) {
+        // Kill by filename/hostname
+        if (filename === undefined || hostname === undefined) {
           throw makeRuntimeErrorMsg("kill", "Usage: kill(scriptname, server, [arg1], [arg2]...)");
         }
 
-        const server = safeGetServer(ip, "kill");
-        const runningScriptObj = getRunningScript(filename, ip, "kill", scriptArgs);
+        const server = safeGetServer(hostname, "kill");
+        const runningScriptObj = getRunningScript(filename, hostname, "kill", scriptArgs);
         if (runningScriptObj == null) {
-          workerScript.log("kill", getCannotFindRunningScriptErrorMessage(filename, ip, scriptArgs));
+          workerScript.log("kill", getCannotFindRunningScriptErrorMessage(filename, hostname, scriptArgs));
           return false;
         }
 
@@ -987,27 +942,24 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (killByPid) {
           workerScript.log("kill", `Killing script with PID ${filename}`);
         } else {
-          workerScript.log("kill", `Killing '${filename}' on '${ip}' with args: ${arrayToString(scriptArgs)}.`);
+          workerScript.log("kill", `Killing '${filename}' on '${hostname}' with args: ${arrayToString(scriptArgs)}.`);
         }
         return true;
       } else {
         if (killByPid) {
           workerScript.log("kill", `No script with PID ${filename}`);
         } else {
-          workerScript.log("kill", `No such script '${filename}' on '${ip}' with args: ${arrayToString(scriptArgs)}`);
+          workerScript.log("kill", `No such script '${filename}' on '${hostname}' with args: ${arrayToString(scriptArgs)}`);
         }
         return false;
       }
     },
-    killall: function (ip: any = workerScript.hostname): any {
+    killall: function (hostname: any = workerScript.hostname): any {
       updateDynamicRam("killall", getRamCost("killall"));
-      if (ip === undefined) {
+      if (hostname === undefined) {
         throw makeRuntimeErrorMsg("killall", "Takes 1 argument");
       }
-      const server = GetServer(ip);
-      if (server == null) {
-        throw makeRuntimeErrorMsg("killall", `Invalid IP/hostname: ${ip}`);
-      }
+      const server = safeGetServer(hostname,"killall");
       const scriptsRunning = server.runningScripts.length > 0;
       for (let i = server.runningScripts.length - 1; i >= 0; --i) {
         killWorkerScript(server.runningScripts[i], server.hostname, false);
@@ -1028,7 +980,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("exit", "Failed. This is a bug. Report to dev.");
       }
     },
-    scp: function (scriptname: any, ip1: any, ip2: any): any {
+    scp: function (scriptname: any, hostname1: any, hostname2: any): boolean {
       updateDynamicRam("scp", getRamCost("scp"));
       if (arguments.length !== 2 && arguments.length !== 3) {
         throw makeRuntimeErrorMsg("scp", "Takes 2 or 3 arguments");
@@ -1037,7 +989,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         // Recursively call scp on all elements of array
         let res = false;
         scriptname.forEach(function (script) {
-          if (NetscriptFunctions(workerScript).scp(script, ip1, ip2)) {
+          if (NetscriptFunctions(workerScript).scp(script, hostname1, hostname2)) {
             res = true;
           }
         });
@@ -1056,33 +1008,23 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       let destServer, currServ;
 
-      if (ip2 != null) {
+      if (hostname2 != null) {
         // 3 Argument version: scriptname, source, destination
-        if (scriptname === undefined || ip1 === undefined || ip2 === undefined) {
+        if (scriptname === undefined || hostname1 === undefined || hostname2 === undefined) {
           throw makeRuntimeErrorMsg("scp", "Takes 2 or 3 arguments");
         }
-        destServer = GetServer(ip2);
-        if (destServer == null) {
-          throw makeRuntimeErrorMsg("scp", `Invalid IP/hostname: ${ip2}`);
-        }
+        destServer = safeGetServer(hostname2,"scp");
+        currServ = safeGetServer(hostname1, "scp");
 
-        currServ = GetServer(ip1);
-        if (currServ == null) {
-          throw makeRuntimeErrorMsg("scp", `Invalid IP/hostname: ${ip1}`);
-        }
-      } else if (ip1 != null) {
+      } else if (hostname1 != null) {
         // 2 Argument version: scriptname, destination
-        if (scriptname === undefined || ip1 === undefined) {
+        if (scriptname === undefined || hostname1 === undefined) {
           throw makeRuntimeErrorMsg("scp", "Takes 2 or 3 arguments");
         }
-        destServer = GetServer(ip1);
-        if (destServer == null) {
-          throw makeRuntimeErrorMsg("scp", `Invalid IP/hostname: ${ip1}`);
-        }
-
+        destServer = safeGetServer(hostname1,"scp");
         currServ = GetServer(workerScript.hostname);
         if (currServ == null) {
-          throw makeRuntimeErrorMsg("scp", "Could not find server ip for this script. This is a bug. Report to dev.");
+          throw makeRuntimeErrorMsg("scp", "Could not find server hostname for this script. This is a bug. Report to dev.");
         }
       } else {
         throw makeRuntimeErrorMsg("scp", "Takes 2 or 3 arguments");
@@ -1180,16 +1122,13 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       workerScript.log("scp", `File '${scriptname}' copied over to '${destServer.hostname}'.`);
       return true;
     },
-    ls: function (ip: any, grep: any): any {
+    ls: function (hostname: any, grep: any): any {
       updateDynamicRam("ls", getRamCost("ls"));
-      if (ip === undefined) {
-        throw makeRuntimeErrorMsg("ls", "Usage: ls(ip/hostname, [grep filter])");
+      if (hostname === undefined) {
+        throw makeRuntimeErrorMsg("ls", "Usage: ls(hostname/ip, [grep filter])");
       }
-      const server = GetServer(ip);
-      if (server == null) {
-        throw makeRuntimeErrorMsg("ls", `Invalid IP/hostname: ${ip}`);
-      }
-
+      const server = safeGetServer(hostname,"ls");
+      
       // Get the grep filter, if one exists
       let filter = "";
       if (arguments.length >= 2) {
@@ -1250,12 +1189,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       allFiles.sort();
       return allFiles;
     },
-    ps: function (ip: any = workerScript.hostname): any {
+    ps: function (hostname: any = workerScript.hostname): any {
       updateDynamicRam("ps", getRamCost("ps"));
-      const server = GetServer(ip);
-      if (server == null) {
-        throw makeRuntimeErrorMsg("ps", `Invalid IP/hostname: ${ip}`);
-      }
+      const server = safeGetServer(hostname,"ps");
       const processes = [];
       for (const i in server.runningScripts) {
         const script = server.runningScripts[i];
@@ -1268,15 +1204,12 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return processes;
     },
-    hasRootAccess: function (ip: any): any {
+    hasRootAccess: function (hostname: any): any {
       updateDynamicRam("hasRootAccess", getRamCost("hasRootAccess"));
-      if (ip === undefined) {
+      if (hostname === undefined) {
         throw makeRuntimeErrorMsg("hasRootAccess", "Takes 1 argument");
       }
-      const server = GetServer(ip);
-      if (server == null) {
-        throw makeRuntimeErrorMsg("hasRootAccess", `Invalid IP/hostname: ${ip}`);
-      }
+      const server = safeGetServer(hostname,"hasRootAccess");
       return server.hasAdminRights;
     },
     getIp: function (): any {
@@ -1328,9 +1261,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       const copy = Object.assign({}, BitNodeMultipliers);
       return copy;
     },
-    getServer: function (ip: any): any {
+    getServer: function (hostname: any = workerScript.hostname): any {
       updateDynamicRam("getServer", getRamCost("getServer"));
-      const server = safeGetServer(ip, "getServer");
+      const server = safeGetServer(hostname, "getServer");
       const copy = Object.assign({}, server);
       // These fields should be hidden.
       copy.contracts = [];
@@ -1342,9 +1275,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       copy.serversOnNetwork = [];
       return copy;
     },
-    getServerMoneyAvailable: function (ip: any): any {
+    getServerMoneyAvailable: function (hostname: any): any {
       updateDynamicRam("getServerMoneyAvailable", getRamCost("getServerMoneyAvailable"));
-      const server = safeGetServer(ip, "getServerMoneyAvailable");
+      const server = safeGetServer(hostname, "getServerMoneyAvailable");
       if (!(server instanceof Server)) {
         workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
         return 0;
@@ -1366,9 +1299,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       );
       return server.moneyAvailable;
     },
-    getServerSecurityLevel: function (ip: any): any {
+    getServerSecurityLevel: function (hostname: any): any {
       updateDynamicRam("getServerSecurityLevel", getRamCost("getServerSecurityLevel"));
-      const server = safeGetServer(ip, "getServerSecurityLevel");
+      const server = safeGetServer(hostname, "getServerSecurityLevel");
       if (!(server instanceof Server)) {
         workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
         return 1;
@@ -1382,9 +1315,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       );
       return server.hackDifficulty;
     },
-    getServerBaseSecurityLevel: function (ip: any): any {
+    getServerBaseSecurityLevel: function (hostname: any): any {
       updateDynamicRam("getServerBaseSecurityLevel", getRamCost("getServerBaseSecurityLevel"));
-      const server = safeGetServer(ip, "getServerBaseSecurityLevel");
+      const server = safeGetServer(hostname, "getServerBaseSecurityLevel");
       if (!(server instanceof Server)) {
         workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
         return 1;
@@ -1398,9 +1331,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       );
       return server.baseDifficulty;
     },
-    getServerMinSecurityLevel: function (ip: any): any {
+    getServerMinSecurityLevel: function (hostname: any): any {
       updateDynamicRam("getServerMinSecurityLevel", getRamCost("getServerMinSecurityLevel"));
-      const server = safeGetServer(ip, "getServerMinSecurityLevel");
+      const server = safeGetServer(hostname, "getServerMinSecurityLevel");
       if (!(server instanceof Server)) {
         workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
         return 1;
@@ -1414,9 +1347,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       );
       return server.minDifficulty;
     },
-    getServerRequiredHackingLevel: function (ip: any): any {
+    getServerRequiredHackingLevel: function (hostname: any): any {
       updateDynamicRam("getServerRequiredHackingLevel", getRamCost("getServerRequiredHackingLevel"));
-      const server = safeGetServer(ip, "getServerRequiredHackingLevel");
+      const server = safeGetServer(hostname, "getServerRequiredHackingLevel");
       if (!(server instanceof Server)) {
         workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
         return 1;
@@ -1430,9 +1363,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       );
       return server.requiredHackingSkill;
     },
-    getServerMaxMoney: function (ip: any): any {
+    getServerMaxMoney: function (hostname: any): any {
       updateDynamicRam("getServerMaxMoney", getRamCost("getServerMaxMoney"));
-      const server = safeGetServer(ip, "getServerMaxMoney");
+      const server = safeGetServer(hostname, "getServerMaxMoney");
       if (!(server instanceof Server)) {
         workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
         return 0;
@@ -1446,9 +1379,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       );
       return server.moneyMax;
     },
-    getServerGrowth: function (ip: any): any {
+    getServerGrowth: function (hostname: any): any {
       updateDynamicRam("getServerGrowth", getRamCost("getServerGrowth"));
-      const server = safeGetServer(ip, "getServerGrowth");
+      const server = safeGetServer(hostname, "getServerGrowth");
       if (!(server instanceof Server)) {
         workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
         return 1;
@@ -1459,9 +1392,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       workerScript.log("getServerGrowth", `returned ${server.serverGrowth} for '${server.hostname}'`);
       return server.serverGrowth;
     },
-    getServerNumPortsRequired: function (ip: any): any {
+    getServerNumPortsRequired: function (hostname: any): any {
       updateDynamicRam("getServerNumPortsRequired", getRamCost("getServerNumPortsRequired"));
-      const server = safeGetServer(ip, "getServerNumPortsRequired");
+      const server = safeGetServer(hostname, "getServerNumPortsRequired");
       if (!(server instanceof Server)) {
         workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
         return 5;
@@ -1472,40 +1405,37 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       workerScript.log("getServerNumPortsRequired", `returned ${server.numOpenPortsRequired} for '${server.hostname}'`);
       return server.numOpenPortsRequired;
     },
-    getServerRam: function (ip: any): any {
+    getServerRam: function (hostname: any): any {
       updateDynamicRam("getServerRam", getRamCost("getServerRam"));
-      const server = safeGetServer(ip, "getServerRam");
+      const server = safeGetServer(hostname, "getServerRam");
       workerScript.log(
         "getServerRam",
         `returned [${numeralWrapper.formatRAM(server.maxRam)}, ${numeralWrapper.formatRAM(server.ramUsed)}]`,
       );
       return [server.maxRam, server.ramUsed];
     },
-    getServerMaxRam: function (ip: any): any {
+    getServerMaxRam: function (hostname: any): any {
       updateDynamicRam("getServerMaxRam", getRamCost("getServerMaxRam"));
-      const server = safeGetServer(ip, "getServerMaxRam");
+      const server = safeGetServer(hostname, "getServerMaxRam");
       workerScript.log("getServerMaxRam", `returned ${numeralWrapper.formatRAM(server.maxRam)}`);
       return server.maxRam;
     },
-    getServerUsedRam: function (ip: any): any {
+    getServerUsedRam: function (hostname: any): any {
       updateDynamicRam("getServerUsedRam", getRamCost("getServerUsedRam"));
-      const server = safeGetServer(ip, "getServerUsedRam");
+      const server = safeGetServer(hostname, "getServerUsedRam");
       workerScript.log("getServerUsedRam", `returned ${numeralWrapper.formatRAM(server.ramUsed)}`);
       return server.ramUsed;
     },
-    serverExists: function (ip: any): any {
+    serverExists: function (hostname: any): any {
       updateDynamicRam("serverExists", getRamCost("serverExists"));
-      return GetServer(ip) !== null;
+      return GetServer(hostname) !== null;
     },
-    fileExists: function (filename: any, ip: any = workerScript.hostname): any {
+    fileExists: function (filename: any, hostname: any = workerScript.hostname): any {
       updateDynamicRam("fileExists", getRamCost("fileExists"));
       if (filename === undefined) {
         throw makeRuntimeErrorMsg("fileExists", "Usage: fileExists(scriptname, [server])");
       }
-      const server = GetServer(ip);
-      if (server == null) {
-        throw makeRuntimeErrorMsg("fileExists", `Invalid IP/hostname: ${ip}`);
-      }
+      const server = safeGetServer(hostname,"fileExists");
       for (let i = 0; i < server.scripts.length; ++i) {
         if (filename == server.scripts[i].filename) {
           return true;
@@ -1527,15 +1457,15 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return false;
     },
-    isRunning: function (fn: any, ip: any = workerScript.hostname, ...scriptArgs: any): any {
+    isRunning: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any): any {
       updateDynamicRam("isRunning", getRamCost("isRunning"));
-      if (fn === undefined || ip === undefined) {
+      if (fn === undefined || hostname === undefined) {
         throw makeRuntimeErrorMsg("isRunning", "Usage: isRunning(scriptname, server, [arg1], [arg2]...)");
       }
       if (typeof fn === "number") {
         return getRunningScriptByPid(fn, "isRunning") != null;
       } else {
-        return getRunningScript(fn, ip, "isRunning", scriptArgs) != null;
+        return getRunningScript(fn, hostname, "isRunning", scriptArgs) != null;
       }
     },
     ...stockmarket,
@@ -1560,9 +1490,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return cost;
     },
-    purchaseServer: function (hostname: any, ram: any): any {
+    purchaseServer: function (name: any, ram: any): any {
       updateDynamicRam("purchaseServer", getRamCost("purchaseServer"));
-      let hostnameStr = String(hostname);
+      let hostnameStr = String(name);
       hostnameStr = hostnameStr.replace(/\s+/g, "");
       if (hostnameStr == "") {
         workerScript.log("purchaseServer", `Invalid argument: hostname='${hostnameStr}'`);
@@ -1612,16 +1542,12 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       );
       return newServ.hostname;
     },
-    deleteServer: function (hostname: any): any {
+    deleteServer: function (name: any): any {
       updateDynamicRam("deleteServer", getRamCost("deleteServer"));
-      let hostnameStr = String(hostname);
+      let hostnameStr = String(name);
       hostnameStr = hostnameStr.replace(/\s\s+/g, "");
       const server = GetServer(hostnameStr);
       if (!(server instanceof Server)) {
-        workerScript.log("deleteServer", `Invalid argument: hostname='${hostnameStr}'`);
-        return false;
-      }
-      if (server == null) {
         workerScript.log("deleteServer", `Invalid argument: hostname='${hostnameStr}'`);
         return false;
       }
@@ -1631,7 +1557,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return false;
       }
 
-      const ip = server.hostname;
+      const hostname = server.hostname;
 
       // Can't delete server you're currently connected to
       if (server.isConnectedTo) {
@@ -1640,7 +1566,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
 
       // A server cannot delete itself
-      if (ip === workerScript.hostname) {
+      if (hostname === workerScript.hostname) {
         workerScript.log("deleteServer", "Cannot delete the server this script is running on.");
         return false;
       }
@@ -1649,7 +1575,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (server.runningScripts.length > 0) {
         workerScript.log(
           "deleteServer",
-          `Cannot delete server '${server.hostname}' because it still has scripts running.`,
+          `Cannot delete server '${hostname}' because it still has scripts running.`,
         );
         return false;
       }
@@ -1657,7 +1583,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       // Delete from player's purchasedServers array
       let found = false;
       for (let i = 0; i < Player.purchasedServers.length; ++i) {
-        if (ip == Player.purchasedServers[i]) {
+        if (hostname == Player.purchasedServers[i]) {
           found = true;
           Player.purchasedServers.splice(i, 1);
           break;
@@ -1667,19 +1593,19 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (!found) {
         workerScript.log(
           "deleteServer",
-          `Could not identify server ${server.hostname} as a purchased server. This is a bug. Report to dev.`,
+          `Could not identify server ${hostname} as a purchased server. This is a bug. Report to dev.`,
         );
         return false;
       }
 
       // Delete from all servers
-      DeleteServer(ip);
+      DeleteServer(hostname);
 
       // Delete from home computer
       found = false;
       const homeComputer = Player.getHomeComputer();
       for (let i = 0; i < homeComputer.serversOnNetwork.length; ++i) {
-        if (ip == homeComputer.serversOnNetwork[i]) {
+        if (hostname == homeComputer.serversOnNetwork[i]) {
           homeComputer.serversOnNetwork.splice(i, 1);
           workerScript.log("deleteServer", `Deleted server '${hostnameStr}`);
           return true;
@@ -1688,22 +1614,22 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       // Wasn't found on home computer
       workerScript.log(
         "deleteServer",
-        `Could not find server ${server.hostname} as a purchased server. This is a bug. Report to dev.`,
+        `Could not find server ${hostname} as a purchased server. This is a bug. Report to dev.`,
       );
       return false;
     },
-    getPurchasedServers: function (hostname: any = true): any {
+    getPurchasedServers: function (hostnameMode: any = true): any {
       updateDynamicRam("getPurchasedServers", getRamCost("getPurchasedServers"));
       const res: string[] = [];
-      Player.purchasedServers.forEach(function (ip) {
-        if (hostname) {
-          const server = GetServer(ip);
+      Player.purchasedServers.forEach(function (hostname) {
+        if (hostnameMode) {
+          res.push(hostname);
+        } else {
+          const server = GetServer(hostname);
           if (server == null) {
             throw makeRuntimeErrorMsg("getPurchasedServers", "Could not find server. This is a bug. Report to dev.");
           }
-          res.push(server.hostname);
-        } else {
-          res.push(ip);
+          res.push(server.ip);
         }
       });
       return res;
@@ -1915,13 +1841,13 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return iport;
     },
-    rm: function (fn: any, ip: any): any {
+    rm: function (fn: any, hostname: any): any {
       updateDynamicRam("rm", getRamCost("rm"));
 
-      if (ip == null || ip === "") {
-        ip = workerScript.hostname;
+      if (hostname == null || hostname === "") {
+        hostname = workerScript.hostname;
       }
-      const s = safeGetServer(ip, "rm");
+      const s = safeGetServer(hostname, "rm");
 
       const status = s.removeFile(fn);
       if (!status.res) {
@@ -1930,12 +1856,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return status.res;
     },
-    scriptRunning: function (scriptname: any, ip: any): any {
+    scriptRunning: function (scriptname: any, hostname: any): any {
       updateDynamicRam("scriptRunning", getRamCost("scriptRunning"));
-      const server = GetServer(ip);
-      if (server == null) {
-        throw makeRuntimeErrorMsg("scriptRunning", `Invalid IP/hostname: ${ip}`);
-      }
+      const server = safeGetServer(hostname,"scriptRunning");
       for (let i = 0; i < server.runningScripts.length; ++i) {
         if (server.runningScripts[i].filename == scriptname) {
           return true;
@@ -1943,12 +1866,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return false;
     },
-    scriptKill: function (scriptname: any, ip: any): any {
+    scriptKill: function (scriptname: any, hostname: any): any {
       updateDynamicRam("scriptKill", getRamCost("scriptKill"));
-      const server = GetServer(ip);
-      if (server == null) {
-        throw makeRuntimeErrorMsg("scriptKill", `Invalid IP/hostname: ${ip}`);
-      }
+      const server = safeGetServer(hostname,"scriptKill");
       let suc = false;
       for (let i = 0; i < server.runningScripts.length; ++i) {
         if (server.runningScripts[i].filename == scriptname) {
@@ -1961,12 +1881,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     getScriptName: function (): any {
       return workerScript.name;
     },
-    getScriptRam: function (scriptname: any, ip: any = workerScript.hostname): any {
+    getScriptRam: function (scriptname: any, hostname: any = workerScript.hostname): any {
       updateDynamicRam("getScriptRam", getRamCost("getScriptRam"));
-      const server = GetServer(ip);
-      if (server == null) {
-        throw makeRuntimeErrorMsg("getScriptRam", `Invalid IP/hostname: ${ip}`);
-      }
+      const server = safeGetServer(hostname,"getScriptRam");
       for (let i = 0; i < server.scripts.length; ++i) {
         if (server.scripts[i].filename == scriptname) {
           return server.scripts[i].ramUsage;
@@ -1974,7 +1891,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return 0;
     },
-    getRunningScript: function (fn: any, ip: any, ...args: any[]): any {
+    getRunningScript: function (fn: any, hostname: any, ...args: any[]): any {
       updateDynamicRam("getRunningScript", getRamCost("getRunningScript"));
 
       let runningScript;
@@ -1987,7 +1904,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         for (let i = 2; i < args.length; ++i) {
           scriptArgs.push(args[i]);
         }
-        runningScript = getRunningScript(fn, ip, "getRunningScript", scriptArgs);
+        runningScript = getRunningScript(fn, hostname, "getRunningScript", scriptArgs);
       }
       if (runningScript === null) return null;
       return {
@@ -2006,9 +1923,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         threads: runningScript.threads,
       };
     },
-    getHackTime: function (ip: any): any {
+    getHackTime: function (hostname: any): any {
       updateDynamicRam("getHackTime", getRamCost("getHackTime"));
-      const server = safeGetServer(ip, "getHackTime");
+      const server = safeGetServer(hostname, "getHackTime");
       if (!(server instanceof Server)) {
         workerScript.log("getHackTime", "invalid for this kind of server");
         return Infinity;
@@ -2019,9 +1936,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculateHackingTime(server, Player); // Returns seconds
     },
-    getGrowTime: function (ip: any): any {
+    getGrowTime: function (hostname: any): any {
       updateDynamicRam("getGrowTime", getRamCost("getGrowTime"));
-      const server = safeGetServer(ip, "getGrowTime");
+      const server = safeGetServer(hostname, "getGrowTime");
       if (!(server instanceof Server)) {
         workerScript.log("getGrowTime", "invalid for this kind of server");
         return Infinity;
@@ -2032,9 +1949,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculateGrowTime(server, Player); // Returns seconds
     },
-    getWeakenTime: function (ip: any): any {
+    getWeakenTime: function (hostname: any): any {
       updateDynamicRam("getWeakenTime", getRamCost("getWeakenTime"));
-      const server = safeGetServer(ip, "getWeakenTime");
+      const server = safeGetServer(hostname, "getWeakenTime");
       if (!(server instanceof Server)) {
         workerScript.log("getWeakenTime", "invalid for this kind of server");
         return Infinity;
@@ -2045,7 +1962,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculateWeakenTime(server, Player); // Returns seconds
     },
-    getScriptIncome: function (scriptname: any, ip: any, ...args: any[]): any {
+    getScriptIncome: function (scriptname: any, hostname: any, ...args: any[]): any {
       updateDynamicRam("getScriptIncome", getRamCost("getScriptIncome"));
       if (arguments.length === 0) {
         const res = [];
@@ -2062,10 +1979,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return res;
       } else {
         // Get income for a particular script
-        const server = GetServer(ip);
-        if (server == null) {
-          throw makeRuntimeErrorMsg("getScriptIncome", `Invalid IP/hostnamed: ${ip}`);
-        }
+        const server = safeGetServer(hostname,"getScriptIncome");
         const runningScriptObj = findRunningScript(scriptname, args, server);
         if (runningScriptObj == null) {
           workerScript.log(
@@ -2077,7 +1991,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
       }
     },
-    getScriptExpGain: function (scriptname: any, ip: any, ...args: any[]): any {
+    getScriptExpGain: function (scriptname: any, hostname: any, ...args: any[]): any {
       updateDynamicRam("getScriptExpGain", getRamCost("getScriptExpGain"));
       if (arguments.length === 0) {
         let total = 0;
@@ -2087,10 +2001,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return total;
       } else {
         // Get income for a particular script
-        const server = GetServer(ip);
-        if (server == null) {
-          throw makeRuntimeErrorMsg("getScriptExpGain", `Invalid IP/hostnamed: ${ip}`);
-        }
+        const server = safeGetServer(hostname,"getScriptExpGain");
         const runningScriptObj = findRunningScript(scriptname, args, server);
         if (runningScriptObj == null) {
           workerScript.log(
@@ -2136,12 +2047,12 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         });
       });
     },
-    wget: async function (url: any, target: any, ip: any = workerScript.hostname): Promise<boolean> {
+    wget: async function (url: any, target: any, hostname: any = workerScript.hostname): Promise<boolean> {
       if (!isScriptFilename(target) && !target.endsWith(".txt")) {
         workerScript.log("wget", `Invalid target file: '${target}'. Must be a script or text file.`);
         return Promise.resolve(false);
       }
-      const s = safeGetServer(ip, "wget");
+      const s = safeGetServer(hostname, "wget");
       return new Promise(function (resolve) {
         $.get(
           url,
@@ -2157,10 +2068,10 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
               return resolve(false);
             }
             if (res.overwritten) {
-              workerScript.log("wget", `Successfully retrieved content and overwrote '${target}' on '${ip}'`);
+              workerScript.log("wget", `Successfully retrieved content and overwrote '${target}' on '${hostname}'`);
               return resolve(true);
             }
-            workerScript.log("wget", `Successfully retrieved content to new file '${target}' on '${ip}'`);
+            workerScript.log("wget", `Successfully retrieved content to new file '${target}' on '${hostname}'`);
             return resolve(true);
           },
           "text",

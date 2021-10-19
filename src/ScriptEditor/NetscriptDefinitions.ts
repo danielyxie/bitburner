@@ -3249,7 +3249,7 @@ interface NS extends TIX, Singularity {
      * hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
      * \`\`\`
      * @ramCost 0.1 GB
-     * @param {string} host IP or hostname of the target server to hack.
+     * @param {string} host Hostname or IP of the target server to hack.
      * @param {object} [opts] Optional parameters for configuring function behavior.
      * @returns {Promise<number>} The amount of money stolen if the hack is successful, and zero otherwise.
      */
@@ -3274,7 +3274,7 @@ interface NS extends TIX, Singularity {
      * grow("foodnstuff", { threads: 5 }); // Only use 5 threads to grow
      * \`\`\`
      * @ramCost 0.15 GB
-     * @param {string} host IP or hostname of the target server to grow.
+     * @param {string} host Hostname or IP of the target server to grow.
      * @param {object} [opts] Optional parameters for configuring function behavior.
      * @returns {Promise<number>} The number by which the money on the server was multiplied for the growth.
      */
@@ -3295,7 +3295,7 @@ interface NS extends TIX, Singularity {
      * weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
      * \`\`\`
      * @ramCost 0.15 GB
-     * @param {string} host IP or hostname of the target server to weaken.
+     * @param {string} host Hostname or IP of the target server to weaken.
      * @param {object} [opts] Optional parameters for configuring function behavior.
      * @returns {Promise<number>} The amount by which the target server’s security level was decreased. This is equivalent to 0.05 multiplied by the number of script threads.
      */
@@ -3316,7 +3316,7 @@ interface NS extends TIX, Singularity {
      * //If this function returns 50, this means that if your next {@link hack} call is run on a script with 50 threads, it will steal $1m from the foodnstuff server.
      * \`\`\`
      * @ramCost 1 GB
-     * @param {string} host IP or hostname of the target server to analyze.
+     * @param {string} host Hostname or IP of the target server to analyze.
      * @param {number} hackAmount Amount of money you want to hack from the server.
      * @returns {number} The number of threads needed to {@link hack} the server for hackAmount money.
      */
@@ -3334,7 +3334,7 @@ interface NS extends TIX, Singularity {
      * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you {@link hack} using N threads, then you will steal N% of its total money.
      * \`\`\`
      * @ramCost 1 GB
-     * @param {string} host IP or hostname of the target server.
+     * @param {string} host Hostname or IP of the target server.
      * @returns {number} The percentage of money you will steal from the target server with a single hack.
      */
     hackAnalyzePercent (host: Host): number;
@@ -3345,7 +3345,7 @@ interface NS extends TIX, Singularity {
      * This returned value is in decimal form, not percentage.
      *
      * @ramCost 1 GB
-     * @param {string} host IP or hostname of the target server.
+     * @param {string} host Hostname or IP of the target server.
      * @returns {number} The chance you have of successfully hacking the target server.
      */
     hackChance (host: Host): number;
@@ -3364,7 +3364,7 @@ interface NS extends TIX, Singularity {
      * //If this returns 100, then this means you need to call {@link grow} 100 times in order to double the money (or once with 100 threads).
      * \`\`\`
      * @ramCost 1 GB
-     * @param {string} host IP or hostname of the target server.
+     * @param {string} host Hostname or IP of the target server.
      * @param {number} growthAmount Multiplicative factor by which the server is grown. Decimal form..
      * @returns {number} The amount of {@link grow} calls needed to grow the specified server by the specified amount
      */
@@ -3462,11 +3462,11 @@ interface NS extends TIX, Singularity {
      * \`\`\`
      * @ramCost 0 GB
      * @param {string} [fn] Optional. Filename of script to get logs from.
-     * @param {string} [ip] Optional. IP or hostname of the server that the script is on.
+     * @param {string} [host] Optional. Hostname or IP of the server that the script is on.
      * @param {...string} [args] Arguments to identify which scripts to get logs for.
      * @returns {string[]} Returns an string array, where each line is an element in the array. The most recently logged line is at the end of the array.
      */
-    getScriptLogs (fn?: Script, ip?: Host, ...args: any[]): string[];
+    getScriptLogs (fn?: Script, host?: Host, ...args: any[]): string[];
 
     /**
      * Opens a script’s logs. This is functionally the same as the tail Terminal command.
@@ -3492,10 +3492,11 @@ interface NS extends TIX, Singularity {
      * tail("foo.script", "foodnstuff", 1, "test");
      * \`\`\`
      * @ramCost 0 GB
-     * @param {string} host IP or hostname of the server to scan.
-     * @param {boolean} hostnames Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false).
+     * @param {string} [fn] Optional. Filename of the script being tailed. If omitted, the current script is tailed.
+     * @param {string} [host] Optional. Hostname or IP of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional.
+     * @param {any[]} ...args Arguments for the script being tailed.
      */
-    tail (fn?: Script, ip?: Host, ...args: any[]): void;
+    tail (fn?: Script, host?: Host, ...args: any[]): void;
 
     /**
      * Returns an array containing the hostnames or IPs of all servers that are one
@@ -3503,7 +3504,7 @@ interface NS extends TIX, Singularity {
      * array are strings.
      *
      * @ramCost 0.2 GB
-     * @param {string} host IP or hostname of the server to scan.
+     * @param {string} host Hostname or IP of the server to scan.
      * @param {boolean} hostnames Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false).
      * @returns {string[]} Returns an string of hostnames or IP.
      */
@@ -3517,7 +3518,7 @@ interface NS extends TIX, Singularity {
      * nuke("foodnstuff");
      * \`\`\`
      * @ramCost 0.05 GB
-     * @param {string} host IP or hostname of the target server.
+     * @param {string} host Hostname or IP of the target server.
      */
     nuke (host: Host): void;
 
@@ -3529,7 +3530,7 @@ interface NS extends TIX, Singularity {
      * brutessh("foodnstuff");
      * \`\`\`
      * @ramCost 0.05 GB
-     * @param {string} host IP or hostname of the target server.
+     * @param {string} host Hostname or IP of the target server.
      */
     brutessh (host: Host): void;
 
@@ -3541,7 +3542,7 @@ interface NS extends TIX, Singularity {
      * ftpcrack("foodnstuff");
      * \`\`\`
      * @ramCost 0.05 GB
-     * @param {string} host IP or hostname of the target server.
+     * @param {string} host Hostname or IP of the target server.
      */
     ftpcrack (host: Host): void;
 
@@ -3553,7 +3554,7 @@ interface NS extends TIX, Singularity {
      * relaysmtp("foodnstuff");
      * \`\`\`
      * @ramCost 0.05 GB
-     * @param {string} host IP or hostname of the target server.
+     * @param {string} host Hostname or IP of the target server.
      */
     relaysmtp (host: Host): void;
 
@@ -3565,7 +3566,7 @@ interface NS extends TIX, Singularity {
      * httpworm("foodnstuff");
      * \`\`\`
      * @ramCost 0.05 GB
-     * @param {string} host IP or hostname of the target server.
+     * @param {string} host Hostname or IP of the target server.
      */
     httpworm (host: Host): void;
 
@@ -3577,7 +3578,7 @@ interface NS extends TIX, Singularity {
      * sqlinject("foodnstuff");
      * \`\`\`
      * @ramCost 0.05 GB
-     * @param {string} host IP or hostname of the target server.
+     * @param {string} host Hostname or IP of the target server.
      */
     sqlinject (host: Host): void;
 
@@ -3652,7 +3653,7 @@ interface NS extends TIX, Singularity {
      * \`\`\`
      * @ramCost 1.3 GB
      * @param {string} script Filename of script to execute.
-     * @param {string} host IP or hostname of the \`target server\` on which to execute the script.
+     * @param {string} host Hostname or IP of the \`target server\` on which to execute the script.
      * @param {number} [numThreads] Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer.
      * @param {...string} [args] Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value.
      * @returns {number} Returns the PID of a successfully started script, and 0 otherwise.
@@ -3707,7 +3708,7 @@ interface NS extends TIX, Singularity {
      * \`\`\`
      * @ramCost 0.5 GB
      * @param {string} script Filename of the script to kill
-     * @param {string} host IP or hostname of the server on which to kill the script.
+     * @param {string} host Hostname or IP of the server on which to kill the script.
      * @param {...string} [args] Arguments to identify which script to kill.
      * @returns {boolean} True if the script is successfully killed, and false otherwise.
      */
@@ -4128,10 +4129,10 @@ interface NS extends TIX, Singularity {
      * Returns an array with either the hostnames or IPs of all of the servers you have purchased.
      *
      * @ramCost 2.25 GB
-     * @param {boolean} hostname Specifies whether hostnames or IP addresses should be returned. If it’s true then hostnames will be returned, and if false then IPs will be returned. If this argument is omitted then it is true by default.
+     * @param {boolean} [hostnameMode]. Optional. Defaults to true. Returns hostnames if true, and IPs if false.
      * @returns {string[]} Returns an array with either the hostnames or IPs of all of the servers you have purchased.
      */
-    getPurchasedServers (hostname?: boolean): Host[];
+    getPurchasedServers (hostnameMode?: boolean): Host[];
 
     /**
      * Returns the maximum number of servers you can purchase.
