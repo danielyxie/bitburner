@@ -106,6 +106,21 @@ Fork and clone the repo
   # Makes sure you always start from `danielyxie/dev` to avoid merge conflicts.
 ```
 
+### Running locally.
+
+Install
+
+- `npm` (maybe via `nvm`)
+- Github Desktop (windows only)
+- Visual Studio code (optional)
+
+Inside the root of the repo run
+`npm install` to install all the dependencies
+`npm run start:dev` to launch the game in dev mode.
+
+After that you can open any browser and naviguate to `localhost:8000` and play the game.
+Saving a file will reload the game automatically.
+
 #### Submitting a Pull Request
 
 When submitting a pull request with your code contributions, please abide by

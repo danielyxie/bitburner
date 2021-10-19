@@ -122,7 +122,7 @@ const tasks: {
     };
   },
   "Commit Crime": (): ITaskDetails => {
-    return { first: Object.keys(Crimes), second: () => ["------"] };
+    return { first: Object.values(Crimes).map((crime) => crime.name), second: () => ["------"] };
   },
   "Take University Course": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
     let universities: string[] = [];
