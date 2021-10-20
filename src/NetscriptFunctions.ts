@@ -130,6 +130,11 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         * Using map access to do the same
         &nbsp;&nbsp;const myScan = ns['scan'];
 
+        * Saving script in the improper order.
+        &nbsp;&nbsp;Increase the cost of an imported script, save it, then run the
+        &nbsp;&nbsp;parent. To fix this just re-open & save every script in order
+        &nbsp;&nbsp;from most imported to least imported (parent script).
+
         Sorry :(`,
       );
     }
