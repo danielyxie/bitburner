@@ -45,7 +45,9 @@ export function OptionsModal(props: IProps): React.ReactElement {
           <MenuItem value="vs-dark">dark</MenuItem>
           <MenuItem value="light">light</MenuItem>
           <MenuItem value="monokai">monokai</MenuItem>
-        </Select>
+          <MenuItem value="solarish-dark">solarish-dark</MenuItem>
+	  <MenuItem value="solarish-light">solarish-light</MenuItem>
+	</Select>
       </Box>
 
       <Box display="flex" flexDirection="row" alignItems="center">

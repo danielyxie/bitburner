@@ -222,7 +222,7 @@ export function WorkInProgressRoot(): React.ReactElement {
 
   if (player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
     function cancel(): void {
-      player.finishWork(true);
+      player.finishWorkPartTime(true);
       router.toJob();
     }
     function unfocus(): void {
