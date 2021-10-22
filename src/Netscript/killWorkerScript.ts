@@ -66,8 +66,6 @@ function killWorkerScriptByPid(pid: number, rerenderUi = true): boolean {
 }
 
 function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = true): void {
-  workerScript.env.stopFlag = true;
-  killNetscriptDelay(workerScript);
   if (typeof workerScript.atExit === "function") {
     try {
       workerScript.atExit();
@@ -78,6 +76,8 @@ function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = tru
     }
     workerScript.atExit = undefined;
   }
+  workerScript.env.stopFlag = true;
+  killNetscriptDelay(workerScript);
   removeWorkerScript(workerScript, rerenderUi);
 }
 
