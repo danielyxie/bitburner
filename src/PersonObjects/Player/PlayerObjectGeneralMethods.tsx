@@ -59,6 +59,7 @@ import { Money } from "../../ui/React/Money";
 
 import React from "react";
 import { serverMetadata } from "../../Server/data/servers";
+import { SnackbarEvents } from "../../ui/React/Snackbar";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -1530,20 +1531,20 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
             "Crime successful! Gained " +
-              numeralWrapper.formatMoney(this.workMoneyGained) +
-              ", " +
-              numeralWrapper.formatExp(this.workHackExpGained) +
-              " hack exp, " +
-              numeralWrapper.formatExp(this.workStrExpGained) +
-              " str exp, " +
-              numeralWrapper.formatExp(this.workDefExpGained) +
-              " def exp, " +
-              numeralWrapper.formatExp(this.workDexExpGained) +
-              " dex exp, " +
-              numeralWrapper.formatExp(this.workAgiExpGained) +
-              " agi exp, " +
-              numeralWrapper.formatExp(this.workChaExpGained) +
-              " cha exp.",
+            numeralWrapper.formatMoney(this.workMoneyGained) +
+            ", " +
+            numeralWrapper.formatExp(this.workHackExpGained) +
+            " hack exp, " +
+            numeralWrapper.formatExp(this.workStrExpGained) +
+            " str exp, " +
+            numeralWrapper.formatExp(this.workDefExpGained) +
+            " def exp, " +
+            numeralWrapper.formatExp(this.workDexExpGained) +
+            " dex exp, " +
+            numeralWrapper.formatExp(this.workAgiExpGained) +
+            " agi exp, " +
+            numeralWrapper.formatExp(this.workChaExpGained) +
+            " cha exp.",
           );
         }
       } else {
@@ -1582,18 +1583,18 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
             "Crime failed! Gained " +
-              numeralWrapper.formatExp(this.workHackExpGained) +
-              " hack exp, " +
-              numeralWrapper.formatExp(this.workStrExpGained) +
-              " str exp, " +
-              numeralWrapper.formatExp(this.workDefExpGained) +
-              " def exp, " +
-              numeralWrapper.formatExp(this.workDexExpGained) +
-              " dex exp, " +
-              numeralWrapper.formatExp(this.workAgiExpGained) +
-              " agi exp, " +
-              numeralWrapper.formatExp(this.workChaExpGained) +
-              " cha exp.",
+            numeralWrapper.formatExp(this.workHackExpGained) +
+            " hack exp, " +
+            numeralWrapper.formatExp(this.workStrExpGained) +
+            " str exp, " +
+            numeralWrapper.formatExp(this.workDefExpGained) +
+            " def exp, " +
+            numeralWrapper.formatExp(this.workDexExpGained) +
+            " dex exp, " +
+            numeralWrapper.formatExp(this.workAgiExpGained) +
+            " agi exp, " +
+            numeralWrapper.formatExp(this.workChaExpGained) +
+            " cha exp.",
           );
         }
       } else {
@@ -1697,13 +1698,7 @@ export function regenerateHp(this: IPlayer, amt: number): void {
 export function hospitalize(this: IPlayer): number {
   const cost = getHospitalizationCost(this);
   if (Settings.SuppressHospitalizationPopup === false) {
-    dialogBoxCreate(
-      <>
-        You were in critical condition! You were taken to the hospital where luckily they were able to save your life.
-        You were charged&nbsp;
-        <Money money={cost} />
-      </>,
-    );
+    SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, "warning");
   }
 
   this.loseMoney(cost);

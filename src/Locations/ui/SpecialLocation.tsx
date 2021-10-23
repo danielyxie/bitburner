@@ -21,6 +21,7 @@ import { LocationName } from "../data/LocationNames";
 import { use } from "../../ui/Context";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { SnackbarEvents } from "../../ui/React/Snackbar";
 
 type IProps = {
   loc: Location;
@@ -75,7 +76,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   function renderNoodleBar(): React.ReactElement {
     function EatNoodles(): void {
-      dialogBoxCreate(<>You ate some delicious noodles and feel refreshed.</>);
+      SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", "success");
     }
 
     return <Button onClick={EatNoodles}>Eat noodles</Button>;
@@ -111,35 +112,35 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   function renderCotMG(): React.ReactElement {
     // prettier-ignore
-    const symbol = <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>
-        {"                 ``          "}<br />
-        {"             -odmmNmds:      "}<br />
-        {"           `hNmo:..-omNh.    "}<br />
-        {"           yMd`      `hNh    "}<br />
-        {"           mMd        oNm    "}<br />
-        {"           oMNo      .mM/    "}<br />
-        {"           `dMN+    -mM+     "}<br />
-        {"            -mMNo  -mN+      "}<br />
-        {"  .+-        :mMNo/mN/       "}<br />
-        {":yNMd.        :NMNNN/        "}<br />
-        {"-mMMMh.        /NMMh`        "}<br />
-        {" .dMMMd.       /NMMMy`       "}<br />
-        {"  `yMMMd.     /NNyNMMh`      "}<br />
-        {"   `sMMMd.   +Nm: +NMMh.     "}<br />
-        {"     oMMMm- oNm:   /NMMd.    "}<br />
-        {"      +NMMmsMm-     :mMMd.   "}<br />
-        {"       /NMMMm-       -mMMd.  "}<br />
-        {"        /MMMm-        -mMMd. "}<br />
-        {"       `sMNMMm-        .mMmo "}<br />
-        {"      `sMd:hMMm.        ./.  "}<br />
-        {"     `yMy` `yNMd`            "}<br />
-        {"    `hMs`    oMMy            "}<br />
-        {"   `hMh       sMN-           "}<br />
-        {"   /MM-       .NMo           "}<br />
-        {"   +MM:       :MM+           "}<br />
-        {"    sNNo-.`.-omNy`           "}<br />
-        {"     -smNNNNmdo-             "}<br />
-        {"        `..`                 "}</Typography>
+    const symbol = <Typography sx={{ lineHeight: '1em', whiteSpace: 'pre' }}>
+      {"                 ``          "}<br />
+      {"             -odmmNmds:      "}<br />
+      {"           `hNmo:..-omNh.    "}<br />
+      {"           yMd`      `hNh    "}<br />
+      {"           mMd        oNm    "}<br />
+      {"           oMNo      .mM/    "}<br />
+      {"           `dMN+    -mM+     "}<br />
+      {"            -mMNo  -mN+      "}<br />
+      {"  .+-        :mMNo/mN/       "}<br />
+      {":yNMd.        :NMNNN/        "}<br />
+      {"-mMMMh.        /NMMh`        "}<br />
+      {" .dMMMd.       /NMMMy`       "}<br />
+      {"  `yMMMd.     /NNyNMMh`      "}<br />
+      {"   `sMMMd.   +Nm: +NMMh.     "}<br />
+      {"     oMMMm- oNm:   /NMMd.    "}<br />
+      {"      +NMMmsMm-     :mMMd.   "}<br />
+      {"       /NMMMm-       -mMMd.  "}<br />
+      {"        /MMMm-        -mMMd. "}<br />
+      {"       `sMNMMm-        .mMmo "}<br />
+      {"      `sMd:hMMm.        ./.  "}<br />
+      {"     `yMy` `yNMd`            "}<br />
+      {"    `hMs`    oMMy            "}<br />
+      {"   `hMh       sMN-           "}<br />
+      {"   /MM-       .NMo           "}<br />
+      {"   +MM:       :MM+           "}<br />
+      {"    sNNo-.`.-omNy`           "}<br />
+      {"     -smNNNNmdo-             "}<br />
+      {"        `..`                 "}</Typography>
 
     return (
       <>
