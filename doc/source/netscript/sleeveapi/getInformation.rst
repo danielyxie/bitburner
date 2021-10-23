@@ -17,7 +17,7 @@ getInformation() Netscript Function
         maxHp:    max hp of the sleeve,
         jobs:     jobs available to the sleeve,
         jobTitle: job titles available to the sleeve,
-        tor:      does this sleeve have access to the tor router,
+        
         mult: {
             agility:      agility multiplier,
             agilityExp:   agility exp multiplier,
