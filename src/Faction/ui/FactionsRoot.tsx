@@ -13,6 +13,8 @@ import TableBody from "@mui/material/TableBody";
 import { Table, TableCell } from "../../ui/React/Table";
 import TableRow from "@mui/material/TableRow";
 
+export const InvitationsSeen: string[] = [];
+
 interface IProps {
   player: IPlayer;
   router: IRouter;
@@ -27,6 +29,14 @@ export function FactionsRoot(props: IProps): React.ReactElement {
     const id = setInterval(rerender, 200);
     return () => clearInterval(id);
   }, []);
+
+  useEffect(() => {
+    props.player.factionInvitations.forEach((faction) => {
+      if (InvitationsSeen.includes(faction)) return;
+      InvitationsSeen.push(faction);
+    });
+  }, []);
+
   function openFaction(faction: Faction): void {
     props.router.toFaction(faction);
   }

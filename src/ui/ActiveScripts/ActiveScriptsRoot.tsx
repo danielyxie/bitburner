@@ -3,17 +3,16 @@
  * and provides information about all of the player's scripts that are currently running
  */
 import React, { useState, useEffect } from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 
-import { ScriptProduction } from "./ScriptProduction";
-import { ServerAccordions } from "./ServerAccordions";
-
+import { ActiveScriptsPage } from "./ActiveScriptsPage";
+import { RecentScriptsPage } from "./RecentScriptsPage";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 
-import Typography from "@mui/material/Typography";
-
-type IProps = {
+interface IProps {
   workerScripts: Map<number, WorkerScript>;
-};
+}
 
 export function ActiveScriptsRoot(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
@@ -26,17 +25,19 @@ export function ActiveScriptsRoot(props: IProps): React.ReactElement {
     return () => clearInterval(id);
   }, []);
 
+  const [tab, setTab] = useState<"active" | "recent">("active");
+  function handleChange(event: React.SyntheticEvent, tab: "active" | "recent"): void {
+    setTab(tab);
+  }
   return (
     <>
-      <Typography variant="h4">Active Scripts</Typography>
-      <Typography>
-        This page displays a list of all of your scripts that are currently running across every machine. It also
-        provides information about each script's production. The scripts are categorized by the hostname of the servers
-        on which they are running.
-      </Typography>
+      <Tabs variant="fullWidth" value={tab} onChange={handleChange}>
+        <Tab label={"Active"} value={"active"} />
+        <Tab label={"Recent"} value={"recent"} />
+      </Tabs>
 
-      <ScriptProduction />
-      <ServerAccordions {...props} />
+      {tab === "active" && <ActiveScriptsPage workerScripts={props.workerScripts} />}
+      {tab === "recent" && <RecentScriptsPage />}
     </>
   );
 }

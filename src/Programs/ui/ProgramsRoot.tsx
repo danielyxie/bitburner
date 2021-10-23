@@ -5,6 +5,8 @@ import { getAvailableCreatePrograms } from "../ProgramHelpers";
 import { Tooltip, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 
+export const ProgramsSeen: string[] = [];
+
 export function ProgramsRoot(): React.ReactElement {
   const player = use.Player();
   const router = use.Router();
@@ -12,6 +14,15 @@ export function ProgramsRoot(): React.ReactElement {
   function rerender(): void {
     setRerender((old) => !old);
   }
+
+  const programs = getAvailableCreatePrograms(player);
+
+  useEffect(() => {
+    programs.forEach((p) => {
+      if (ProgramsSeen.includes(p.name)) return;
+      ProgramsSeen.push(p.name);
+    });
+  }, []);
 
   useEffect(() => {
     const id = setInterval(rerender, 200);
@@ -27,7 +38,7 @@ export function ProgramsRoot(): React.ReactElement {
         time. Your progress will be saved and you can continue later.
       </Typography>
 
-      {getAvailableCreatePrograms(player).map((program) => {
+      {programs.map((program) => {
         const create = program.create;
         if (create === null) return <></>;
 

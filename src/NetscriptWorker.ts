@@ -539,7 +539,7 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
       return;
     } else if (w instanceof WorkerScript) {
       if (isScriptErrorMessage(w.errorMessage)) {
-        const errorTextArray = w.errorMessage.split("|");
+        const errorTextArray = w.errorMessage.split("|DELIMITER|");
         if (errorTextArray.length != 4) {
           console.error("ERROR: Something wrong with Error text in evaluator...");
           console.error("Error text: " + w.errorMessage);
