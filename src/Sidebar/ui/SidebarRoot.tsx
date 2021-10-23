@@ -51,6 +51,8 @@ import { Settings } from "../../Settings/Settings";
 import { redPillFlag } from "../../RedPill";
 
 import { KEY } from "../../utils/helpers/keyCodes";
+import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
+import { InvitationsSeen } from "../../Faction/ui/FactionsRoot";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),
@@ -133,8 +135,8 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   const flashTutorial = ITutorial.currStep === iTutorialSteps.WorldDescription;
 
   const augmentationCount = props.player.queuedAugmentations.length;
-  const invitationsCount = props.player.factionInvitations.length;
-  const programCount = getAvailableCreatePrograms(props.player).length;
+  const invitationsCount = props.player.factionInvitations.length - InvitationsSeen.length;
+  const programCount = getAvailableCreatePrograms(props.player).length - ProgramsSeen.length;
   const canCreateProgram =
     programCount > 0 ||
     props.player.augmentations.length > 0 ||

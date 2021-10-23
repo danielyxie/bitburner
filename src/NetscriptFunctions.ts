@@ -1882,10 +1882,11 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("scriptKill", getRamCost("scriptKill"));
       const server = safeGetServer(hostname, "scriptKill");
       let suc = false;
-      for (let i = 0; i < server.runningScripts.length; ++i) {
+      for (let i = 0; i < server.runningScripts.length; i++) {
         if (server.runningScripts[i].filename == scriptname) {
           killWorkerScript(server.runningScripts[i], server.hostname);
           suc = true;
+          i--;
         }
       }
       return suc;

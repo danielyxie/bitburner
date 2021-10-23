@@ -27,6 +27,8 @@ import { Terminal } from "./Terminal";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 
 import Decimal from "decimal.js";
+import { ProgramsSeen } from "./Programs/ui/ProgramsRoot";
+import { InvitationsSeen } from "./Faction/ui/FactionsRoot";
 
 const BitNode8StartingMoney = 250e6;
 
@@ -138,6 +140,8 @@ export function prestigeAugmentation(): void {
   }
 
   resetPidCounter();
+  ProgramsSeen.splice(0, ProgramsSeen.length);
+  InvitationsSeen.splice(0, InvitationsSeen.length);
 }
 
 // Prestige by destroying Bit Node and gaining a Source File
