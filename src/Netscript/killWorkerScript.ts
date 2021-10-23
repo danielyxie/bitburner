@@ -11,6 +11,7 @@ import { GetServer } from "../Server/AllServers";
 
 import { compareArrays } from "../utils/helpers/compareArrays";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { AddRecentScript } from "./RecentScripts";
 
 export function killWorkerScript(runningScriptObj: RunningScript, hostname: string, rerenderUi?: boolean): boolean;
 export function killWorkerScript(workerScript: WorkerScript): boolean;
@@ -85,48 +86,43 @@ function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = tru
  * Helper function that removes the script being killed from the global pool.
  * Also handles other cleanup-time operations
  *
- * @param {WorkerScript | number} - Identifier for WorkerScript. Either the object itself, or
+ * @param {WorkerScript} - Identifier for WorkerScript. Either the object itself, or
  *                                  its index in the global workerScripts array
  */
 function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void {
-  if (workerScript instanceof WorkerScript) {
-    const ip = workerScript.hostname;
-    const name = workerScript.name;
+  const ip = workerScript.hostname;
+  const name = workerScript.name;
 
-    // Get the server on which the script runs
-    const server = GetServer(ip);
-    if (server == null) {
-      console.error(`Could not find server on which this script is running: ${ip}`);
-      return;
-    }
-
-    // Delete the RunningScript object from that server
-    for (let i = 0; i < server.runningScripts.length; ++i) {
-      const runningScript = server.runningScripts[i];
-      if (runningScript.filename === name && compareArrays(runningScript.args, workerScript.args)) {
-        server.runningScripts.splice(i, 1);
-        break;
-      }
-    }
-
-    // Recalculate ram used on that server
-    server.ramUsed = 0;
-    for (const rs of server.runningScripts) server.ramUsed += rs.ramUsage * rs.threads;
-
-    // Delete script from global pool (workerScripts)
-    const res = workerScripts.delete(workerScript.pid);
-    if (!res) {
-      console.warn(`removeWorkerScript() called with WorkerScript that wasn't in the global map:`);
-      console.warn(workerScript);
-    }
-
-    if (rerenderUi) {
-      WorkerScriptStartStopEventEmitter.emit();
-    }
-  } else {
-    console.error(`Invalid argument passed into removeWorkerScript():`);
-    console.error(workerScript);
+  // Get the server on which the script runs
+  const server = GetServer(ip);
+  if (server == null) {
+    console.error(`Could not find server on which this script is running: ${ip}`);
     return;
+  }
+
+  // Delete the RunningScript object from that server
+  for (let i = 0; i < server.runningScripts.length; ++i) {
+    const runningScript = server.runningScripts[i];
+    if (runningScript.filename === name && compareArrays(runningScript.args, workerScript.args)) {
+      server.runningScripts.splice(i, 1);
+      break;
+    }
+  }
+
+  // Recalculate ram used on that server
+  server.ramUsed = 0;
+  for (const rs of server.runningScripts) server.ramUsed += rs.ramUsage * rs.threads;
+
+  // Delete script from global pool (workerScripts)
+  const res = workerScripts.delete(workerScript.pid);
+  if (!res) {
+    console.warn(`removeWorkerScript() called with WorkerScript that wasn't in the global map:`);
+    console.warn(workerScript);
+  }
+  AddRecentScript(workerScript);
+
+  if (rerenderUi) {
+    WorkerScriptStartStopEventEmitter.emit();
   }
 }
 
