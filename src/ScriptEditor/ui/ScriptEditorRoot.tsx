@@ -4,7 +4,6 @@ import * as monaco from "monaco-editor";
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 import { OptionsModal } from "./OptionsModal";
 import { Options } from "./Options";
-import { js_beautify as beautifyCode } from "js-beautify";
 import { isValidFilePath } from "../../Terminal/DirectoryHelpers";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
@@ -217,12 +216,13 @@ export function Root(props: IProps): React.ReactElement {
 
   function beautify(): void {
     if (editorRef.current === null) return;
-    const pretty = beautifyCode(code, {
-      indent_with_tabs: !options.insertSpaces,
-      indent_size: 4,
-      brace_style: "preserve-inline",
-    });
-    editorRef.current.setValue(pretty);
+    editorRef.current.getAction("editor.action.formatDocument").run();
+    // const pretty = beautifyCode(code, {
+    //   indent_with_tabs: !options.insertSpaces,
+    //   indent_size: 4,
+    //   brace_style: "preserve-inline",
+    // });
+    // editorRef.current.setValue(pretty);
   }
 
   function onFilenameChange(event: React.ChangeEvent<HTMLInputElement>): void {
