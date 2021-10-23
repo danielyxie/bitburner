@@ -217,12 +217,6 @@ export function Root(props: IProps): React.ReactElement {
   function beautify(): void {
     if (editorRef.current === null) return;
     editorRef.current.getAction("editor.action.formatDocument").run();
-    // const pretty = beautifyCode(code, {
-    //   indent_with_tabs: !options.insertSpaces,
-    //   indent_size: 4,
-    //   brace_style: "preserve-inline",
-    // });
-    // editorRef.current.setValue(pretty);
   }
 
   function onFilenameChange(event: React.ChangeEvent<HTMLInputElement>): void {
