@@ -135,8 +135,8 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   const flashTutorial = ITutorial.currStep === iTutorialSteps.WorldDescription;
 
   const augmentationCount = props.player.queuedAugmentations.length;
-  const invitationsCount = props.player.factionInvitations.length - InvitationsSeen.length;
-  const programCount = getAvailableCreatePrograms(props.player).length - ProgramsSeen.length;
+  const invitationsCount = props.player.factionInvitations.length; //- InvitationsSeen.length;
+  const programCount = getAvailableCreatePrograms(props.player).length; //- ProgramsSeen.length;
   const canCreateProgram =
     programCount > 0 ||
     props.player.augmentations.length > 0 ||
