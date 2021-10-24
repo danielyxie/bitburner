@@ -4492,6 +4492,182 @@ interface NS extends TIX, Singularity {
      * @returns {object} Object containing the current BitNode multipliers.
      */
     getBitNodeMultipliers (url: string, target: string, host: string): BitNodeMultipliers;
+
+    /**
+     canPlace() Netscript Function
+     .. js:function:: canPlace(worldX, worldY, rotation, fragmentId)
+     
+         :RAM cost: 0.5 GB
+         :param int worldX: World X against which to align the top left of the fragment.
+         :param int worldY: World Y against which to align the top left of the fragment.
+         :param int rotation: A number from 0 to 3, the mount of 90 degree turn to take.
+         :param int fragmentId: ID of the fragment to place.
+         :returns: "true" if the fragment can be placed at that position. "false" otherwise.
+     
+         Example:
+     
+         .. code-block:: javascript
+             canPlace(0, 4, 17); // returns true
+    */
+
+    /*
+             charge() Netscript Function
+             .. js:function:: charge(worldX, worldY)
+             
+                 :RAM cost: 0.4 GB
+                 :param int worldX: World X of the fragment to charge.
+                 :param int worldY: World Y of the fragment to charge.
+             
+                 Charge a fragment, increasing it's power but also it's heat. The
+                 effectiveness of the charge depends on the amount of ram the running script
+                 consumes as well as the fragments current heat. This operation takes time to
+                 complete.
+             
+                 Example:
+             
+                 .. code-block:: javascript
+                     charge(0, 4); // Finishes 5 seconds later.
+    */
+
+    /*
+    clear() Netscript Function
+.. js:function:: clear()
+
+    :RAM cost: 0 GB
+
+    Completely clear Stanek's Gift.
+
+    Example:
+
+    .. code-block:: javascript
+        clear(); // No more fragments.
+    */
+
+    /*
+    deleteAt() Netscript Function
+.. js:function:: deleteAt(worldX, worldY)
+
+    :RAM cost: 0.15 GB
+    :param int worldX: World X coordinate of the fragment to delete.
+    :param int worldY: World Y coordinate of the fragment to delete.
+    :returns: "true" if the fragment was deleted. "false" otherwise.
+
+    Delete the fragment located at '[worldX, worldY]'.
+
+    Example:
+
+    .. code-block:: javascript
+        deleteAt(0, 4); // returns true
+    */
+
+/*
+fragmentAt() Netscript Function
+.. js:function:: fragmentAt(worldX, worldY)
+
+    :RAM cost: 2 GB
+    :param int worldX: World X coordinate of the fragment.
+    :param int worldY: World Y coordinate of the fragment.
+    :returns: The fragment located at '[worldX, worldY]' in Stanek's Gift, or null.
+
+    .. code-block:: typescript
+        {
+            // In world coordinates
+            x: number;
+            y: number;
+            heat: number;
+            charge: number;
+            id: number;
+            shape: boolean[][];
+            type: string;
+            magnitude: number;
+            limit: number;
+        }
+    Example:
+
+    .. code-block:: javascript
+        var fragment = fragmentAt(0, 4);
+        print(fragment); // {'heat': 50, 'charge': 98}
+*/
+
+/*
+fragmentDefinitions() Netscript Function
+.. js:function:: fragmentDefinitions()
+
+    :RAM cost: 0 GB
+    :returns: The list of all fragment that can be embedded in Stanek's Gift.
+
+    .. code-block:: typescript
+        [
+            {
+                id: number;
+                shape: boolean[][];
+                type: string;
+                magnitude: number;
+                limit: number;
+            }
+        ]
+    Example:
+
+    .. code-block:: javascript
+        var fragments = fragmentDefinitions();
+        print(fragment); // prints all possible fragments
+*/
+place() Netscript Function
+.. js:function:: place(worldX, worldY, fragmentId)
+
+    :RAM cost: 5 GB
+    :param int worldX: World X against which to align the top left of the fragment.
+    :param int worldY: World Y against which to align the top left of the fragment.
+    :param int rotation: A number from 0 to 3, the mount of 90 degree turn to take.
+    :param int fragmentId: ID of the fragment to place.
+    :returns: 'true' if the fragment has been placed at that position. 'false' otherwise.
+
+    Example:
+
+    .. code-block:: javascript
+        place(0, 4, 17); // returns true
+*/
+
+/*
+placedFragments() Netscript Function
+.. js:function:: placedFragments()
+
+    :RAM cost: 5 GB
+    :returns: The list of all fragment that are embedded in Stanek's Gift.
+
+    .. code-block:: typescript
+        [
+            {
+                // In world coordinates
+                x: number;
+                y: number;
+                charge: number;
+                id: number;
+                shape: boolean[][];
+                type: string;
+                power: number;
+                limit: number;
+            }
+        ]
+    Example:
+
+    .. code-block:: javascript
+        var myFragments = placedFragments();
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 `;
