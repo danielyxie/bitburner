@@ -8,11 +8,12 @@ import { Cities } from "./Cities";
 import { IMap } from "../types";
 
 export function createCityMap<T>(initValue: T): IMap<T> {
-  const map: IMap<any> = {};
+  const map: IMap<T> = {};
   const cities = Object.keys(Cities);
   for (let i = 0; i < cities.length; ++i) {
     map[cities[i]] = initValue;
   }
 
-  return map;
+  // round try JSON so to make sure none of the initial values have the same references.
+  return JSON.parse(JSON.stringify(map));
 }
