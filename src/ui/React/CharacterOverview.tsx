@@ -6,6 +6,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Reputation } from "./Reputation";
+import { KillScriptsModal } from "./KillScriptsModal";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -15,12 +16,14 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import SaveIcon from "@mui/icons-material/Save";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
 
 import { Settings } from "../../Settings/Settings";
 import { use } from "../Context";
 
 interface IProps {
   save: () => void;
+  killScripts: () => void;
 }
 
 function Intelligence(): React.ReactElement {
@@ -136,7 +139,8 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export function CharacterOverview({ save }: IProps): React.ReactElement {
+export function CharacterOverview({ save, killScripts }: IProps): React.ReactElement {
+  const [killOpen, setKillOpen] = useState(false);
   const player = use.Player();
 
   const setRerender = useState(false)[1];
@@ -148,152 +152,162 @@ export function CharacterOverview({ save }: IProps): React.ReactElement {
 
   const classes = useStyles();
   return (
-    <Table sx={{ display: "block", m: 1 }}>
-      <TableBody>
-        <TableRow>
-          <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-            <Typography classes={{ root: classes.hp }}>HP&nbsp;</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cellNone }}>
-            <Typography classes={{ root: classes.hp }}>
-              {numeralWrapper.formatHp(player.hp)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.max_hp)}
-            </Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cellNone }}>
-            <Typography id="overview-hp-hook" classes={{ root: classes.hp }}>
-              {/*Hook for player scripts*/}
-            </Typography>
-          </TableCell>
-        </TableRow>
+    <>
+      <Table sx={{ display: "block", m: 1 }}>
+        <TableBody>
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.hp }}>HP&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.hp }}>
+                {numeralWrapper.formatHp(player.hp)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.max_hp)}
+              </Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-hp-hook" classes={{ root: classes.hp }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
 
-        <TableRow>
-          <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-            <Typography classes={{ root: classes.money }}>Money&nbsp;</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cellNone }}>
-            <Typography classes={{ root: classes.money }}>
-              {numeralWrapper.formatMoney(player.money.toNumber())}
-            </Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cellNone }}>
-            <Typography id="overview-money-hook" classes={{ root: classes.money }}>
-              {/*Hook for player scripts*/}
-            </Typography>
-          </TableCell>
-        </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.money }}>Money&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.money }}>
+                {numeralWrapper.formatMoney(player.money.toNumber())}
+              </Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-money-hook" classes={{ root: classes.money }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
 
-        <TableRow>
-          <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-            <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cell }}>
-            <Typography classes={{ root: classes.hack }}>{numeralWrapper.formatSkill(player.hacking_skill)}</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cell }}>
-            <Typography id="overview-hack-hook" classes={{ root: classes.hack }}>
-              {/*Hook for player scripts*/}
-            </Typography>
-          </TableCell>
-        </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+              <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cell }}>
+              <Typography classes={{ root: classes.hack }}>
+                {numeralWrapper.formatSkill(player.hacking_skill)}
+              </Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cell }}>
+              <Typography id="overview-hack-hook" classes={{ root: classes.hack }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
 
-        <TableRow>
-          <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-            <Typography classes={{ root: classes.combat }}>Str&nbsp;</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cellNone }}>
-            <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.strength)}</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cellNone }}>
-            <Typography id="overview-str-hook" classes={{ root: classes.combat }}>
-              {/*Hook for player scripts*/}
-            </Typography>
-          </TableCell>
-        </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>Str&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.strength)}</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-str-hook" classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
 
-        <TableRow>
-          <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-            <Typography classes={{ root: classes.combat }}>Def&nbsp;</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cellNone }}>
-            <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.defense)}</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cellNone }}>
-            <Typography id="overview-def-hook" classes={{ root: classes.combat }}>
-              {/*Hook for player scripts*/}
-            </Typography>
-          </TableCell>
-        </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>Def&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.defense)}</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-def-hook" classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
 
-        <TableRow>
-          <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-            <Typography classes={{ root: classes.combat }}>Dex&nbsp;</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cellNone }}>
-            <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.dexterity)}</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cellNone }}>
-            <Typography id="overview-dex-hook" classes={{ root: classes.combat }}>
-              {/*Hook for player scripts*/}
-            </Typography>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-            <Typography classes={{ root: classes.combat }}>Agi&nbsp;</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cell }}>
-            <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.agility)}</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cell }}>
-            <Typography id="overview-agi-hook" classes={{ root: classes.combat }}>
-              {/*Hook for player scripts*/}
-            </Typography>
-          </TableCell>
-        </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>Dex&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.dexterity)}</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-dex-hook" classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+              <Typography classes={{ root: classes.combat }}>Agi&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cell }}>
+              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.agility)}</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cell }}>
+              <Typography id="overview-agi-hook" classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
 
-        <TableRow>
-          <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-            <Typography classes={{ root: classes.cha }}>Cha&nbsp;</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cellNone }}>
-            <Typography classes={{ root: classes.cha }}>{numeralWrapper.formatSkill(player.charisma)}</Typography>
-          </TableCell>
-          <TableCell align="right" classes={{ root: classes.cellNone }}>
-            <Typography id="overview-cha-hook" classes={{ root: classes.cha }}>
-              {/*Hook for player scripts*/}
-            </Typography>
-          </TableCell>
-        </TableRow>
-        <Intelligence />
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.cha }}>Cha&nbsp;</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.cha }}>{numeralWrapper.formatSkill(player.charisma)}</Typography>
+            </TableCell>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-cha-hook" classes={{ root: classes.cha }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <Intelligence />
 
-        <TableRow>
-          <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-            <Typography id="overview-extra-hook-0" classes={{ root: classes.hack }}>
-              {/*Hook for player scripts*/}
-            </Typography>
-          </TableCell>
-          <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
-            <Typography id="overview-extra-hook-1" classes={{ root: classes.hack }}>
-              {/*Hook for player scripts*/}
-            </Typography>
-          </TableCell>
-          <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
-            <Typography id="overview-extra-hook-2" classes={{ root: classes.hack }}>
-              {/*Hook for player scripts*/}
-            </Typography>
-          </TableCell>
-        </TableRow>
-        <Work />
-        <Bladeburner />
+          <TableRow>
+            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+              <Typography id="overview-extra-hook-0" classes={{ root: classes.hack }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+            <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
+              <Typography id="overview-extra-hook-1" classes={{ root: classes.hack }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+            <TableCell component="th" scope="row" align="right" classes={{ root: classes.cell }}>
+              <Typography id="overview-extra-hook-2" classes={{ root: classes.hack }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
+          </TableRow>
+          <Work />
+          <Bladeburner />
 
-        <TableRow>
-          <TableCell align="center" colSpan={2} classes={{ root: classes.cellNone }}>
-            <IconButton onClick={save}>
-              <SaveIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
-            </IconButton>
-          </TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+          <TableRow>
+            <TableCell align="center" classes={{ root: classes.cellNone }}>
+              <IconButton onClick={save}>
+                <SaveIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
+              </IconButton>
+            </TableCell>
+            <TableCell align="center" classes={{ root: classes.cellNone }}>
+              <IconButton onClick={() => setKillOpen(true)}>
+                <ClearAllIcon color="error" />
+              </IconButton>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+      <KillScriptsModal open={killOpen} onClose={() => setKillOpen(false)} killScripts={killScripts} />
+    </>
   );
 }
