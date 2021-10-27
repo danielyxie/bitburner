@@ -477,7 +477,8 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
   } else {
     runningScriptObj.threads = 1;
   }
-  const ramUsage = roundToTwo(getRamUsageFromRunningScript(runningScriptObj) * threads);
+  const oneRamUsage = getRamUsageFromRunningScript(runningScriptObj);
+  const ramUsage = roundToTwo(oneRamUsage * threads);
   const ramAvailable = server.maxRam - server.ramUsed;
   if (ramUsage > ramAvailable) {
     dialogBoxCreate(
@@ -502,7 +503,7 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
   // Create the WorkerScript. NOTE: WorkerScript ctor will set the underlying
   // RunningScript's PID as well
   const s = new WorkerScript(runningScriptObj, pid, NetscriptFunctions);
-  s.ramUsage = ramUsage;
+  s.ramUsage = oneRamUsage;
 
   // Add the WorkerScript to the global pool
   workerScripts.set(pid, s);

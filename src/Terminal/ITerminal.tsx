@@ -22,6 +22,12 @@ export class Output {
 export class RawOutput {
   raw: React.ReactNode;
   constructor(node: React.ReactNode) {
+    if (Settings.EnableTimestamps)
+      node = (
+        <>
+          [{getTimestamp()}] {node}
+        </>
+      );
     this.raw = node;
   }
 }
