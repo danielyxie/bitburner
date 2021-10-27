@@ -24,7 +24,7 @@ export function kill(
       if (res) {
         terminal.print(`Killing script with PID ${pid}`);
       } else {
-        terminal.print(`Failed to kill script with PID ${pid}. No such script exists`);
+        terminal.error(`Failed to kill script with PID ${pid}. No such script exists`);
       }
 
       return;

@@ -19,7 +19,7 @@ export function wget(
   const url = args[0] + "";
   const target = terminal.getFilepath(args[1] + "");
   if (!isScriptFilename(target) && !target.endsWith(".txt")) {
-    return terminal.print(`wget failed: Invalid target file. Target file must be script or text file`);
+    return terminal.error(`wget failed: Invalid target file. Target file must be script or text file`);
   }
   $.get(
     url,
@@ -31,7 +31,7 @@ export function wget(
         res = server.writeToTextFile(target, data);
       }
       if (!res.success) {
-        return terminal.print("wget failed");
+        return terminal.error("wget failed");
       }
       if (res.overwritten) {
         return terminal.print(`wget successfully retrieved content and overwrote ${target}`);

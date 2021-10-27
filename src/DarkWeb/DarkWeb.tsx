@@ -1,9 +1,10 @@
+import React from "react";
 import { DarkWebItems } from "./DarkWebItems";
 
 import { Player } from "../Player";
 import { Terminal } from "../Terminal";
 import { SpecialServers } from "../Server/data/SpecialServers";
-import { numeralWrapper } from "../ui/numeralFormat";
+import { Money } from "../ui/React/Money";
 
 //Posts a "help" message if connected to DarkWeb
 export function checkIfConnectedToDarkweb(): void {
@@ -20,7 +21,11 @@ export function checkIfConnectedToDarkweb(): void {
 export function listAllDarkwebItems(): void {
   for (const key in DarkWebItems) {
     const item = DarkWebItems[key];
-    Terminal.print(`${item.program} - ${numeralWrapper.formatMoney(item.price)} - ${item.description}`);
+    Terminal.printRaw(
+      <>
+        {item.program} - <Money money={item.price} /> - {item.description}`
+      </>,
+    );
   }
 }
 
@@ -38,7 +43,7 @@ export function buyDarkwebItem(itemName: string): void {
 
   // return if invalid
   if (item === null) {
-    Terminal.print("Unrecognized item: " + itemName);
+    Terminal.error("Unrecognized item: " + itemName);
     return;
   }
 
@@ -50,7 +55,7 @@ export function buyDarkwebItem(itemName: string): void {
 
   // return if the player doesn't have enough money
   if (Player.money.lt(item.price)) {
-    Terminal.print("Not enough money to purchase " + item.program);
+    Terminal.error("Not enough money to purchase " + item.program);
     return;
   }
 

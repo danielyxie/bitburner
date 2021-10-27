@@ -1,3 +1,4 @@
+import React from "react";
 import { TextFile } from "../TextFile";
 import { Script } from "../Script/Script";
 import { IPlayer } from "../PersonObjects/IPlayer";
@@ -15,6 +16,13 @@ export class Output {
     if (Settings.EnableTimestamps) text = "[" + getTimestamp() + "] " + text;
     this.text = text;
     this.color = color;
+  }
+}
+
+export class RawOutput {
+  raw: React.ReactNode;
+  constructor(node: React.ReactNode) {
+    this.raw = node;
   }
 }
 
@@ -46,7 +54,7 @@ export interface ITerminal {
   commandHistory: string[];
   commandHistoryIndex: number;
 
-  outputHistory: (Output | Link)[];
+  outputHistory: (Output | Link | RawOutput)[];
 
   // True if a Coding Contract prompt is opened
   contractOpen: boolean;
@@ -56,6 +64,7 @@ export interface ITerminal {
   currDir: string;
 
   print(s: string): void;
+  printRaw(node: React.ReactNode): void;
   error(s: string): void;
 
   clear(): void;
