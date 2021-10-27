@@ -1,8 +1,10 @@
+import React from "react";
 import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { getFirstParentDirectory, isValidDirectoryPath, evaluateDirectoryPath } from "../../Terminal/DirectoryHelpers";
+import Typography from "@mui/material/Typography";
 
 export function ls(
   terminal: ITerminal,
@@ -112,7 +114,7 @@ export function ls(
   allMessages.sort();
   folders.sort();
 
-  function postSegments(segments: string[]): void {
+  function postSegments(segments: string[], style?: any): void {
     const maxLength = Math.max(...segments.map((s) => s.length)) + 1;
     const filesPerRow = Math.floor(80 / maxLength);
     for (let i = 0; i < segments.length; i++) {
@@ -124,23 +126,27 @@ export function ls(
         i++;
       }
       i--;
-      terminal.print(row);
+      if (!style) {
+        terminal.print(row);
+      } else {
+        terminal.printRaw(<span style={style}>{row}</span>);
+      }
     }
   }
 
   const groups = [
-    { segments: folders },
+    { segments: folders, style: { color: "cyan" } },
     { segments: allMessages },
     { segments: allTextFiles },
     { segments: allPrograms },
     { segments: allContracts },
-    { segments: allScripts },
+    { segments: allScripts, style: { color: "yellow", fontStyle: "bold" } },
   ].filter((g) => g.segments.length > 0);
   for (let i = 0; i < groups.length; i++) {
     if (i !== 0) {
       terminal.print("");
       terminal.print("");
     }
-    postSegments(groups[i].segments);
+    postSegments(groups[i].segments, groups[i].style);
   }
 }

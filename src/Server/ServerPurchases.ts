@@ -28,7 +28,7 @@ export function getPurchaseServerCost(ram: number): number {
     return Infinity;
   }
 
-  const upg = Math.max(0, Math.log(sanitizedRam) / Math.log(2) - 9);
+  const upg = Math.max(0, Math.log(sanitizedRam) / Math.log(2) - 6);
 
   return (
     sanitizedRam *

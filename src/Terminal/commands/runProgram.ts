@@ -41,5 +41,5 @@ export function runProgram(
     }
   }
 
-  terminal.print("Invalid executable. Cannot be run");
+  terminal.error("Invalid executable. Cannot be run");
 }

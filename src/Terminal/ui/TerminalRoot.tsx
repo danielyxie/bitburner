@@ -7,7 +7,7 @@ import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import Box from "@mui/material/Box";
-import { ITerminal, Output, Link } from "../ITerminal";
+import { ITerminal, Output, Link, RawOutput } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { TerminalInput } from "./TerminalInput";
@@ -91,6 +91,14 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
                 <ListItem key={i} classes={{ root: classes.nopadding }}>
                   <Typography classes={{ root: classes.preformatted }} color={item.color} paragraph={false}>
                     {item.text}
+                  </Typography>
+                </ListItem>
+              );
+            if (item instanceof RawOutput)
+              return (
+                <ListItem key={i} classes={{ root: classes.nopadding }}>
+                  <Typography classes={{ root: classes.preformatted }} paragraph={false}>
+                    {item.raw}
                   </Typography>
                 </ListItem>
               );
