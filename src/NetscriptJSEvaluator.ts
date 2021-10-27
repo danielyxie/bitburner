@@ -8,7 +8,7 @@ function makeScriptBlob(code: string): Blob {
   return new Blob([code], { type: "text/javascript" });
 }
 
-export function compile(script: Script, scripts: Script[]): void {
+export async function compile(script: Script, scripts: Script[]): Promise<void> {
   if (!shouldCompile(script, scripts)) return;
   // The URL at the top is the one we want to import. It will
   // recursively import all the other modules in the urlStack.
@@ -17,7 +17,7 @@ export function compile(script: Script, scripts: Script[]): void {
   // but not really behaves like import. Particularly, it cannot
   // load fully dynamic content. So we hide the import from webpack
   // by placing it inside an eval call.
-  script.markUpdated();
+  await script.updateRamUsage(scripts);
   const uurls = _getScriptUrls(script, scripts, []);
   if (script.url) URL.revokeObjectURL(script.url); // remove the old reference.
   if (script.dependencies.length > 0) script.dependencies.forEach((dep) => URL.revokeObjectURL(dep.url));
@@ -37,7 +37,8 @@ export function compile(script: Script, scripts: Script[]): void {
 export async function executeJSScript(scripts: Script[] = [], workerScript: WorkerScript): Promise<void> {
   const script = workerScript.getScript();
   if (script === null) throw new Error("script is null");
-  compile(script, scripts);
+  await compile(script, scripts);
+  workerScript.ramUsage = script.ramUsage;
   const loadedModule = await script.module;
 
   const ns = workerScript.env.vars;
