@@ -17,6 +17,10 @@ v0.58.0 - 2021-10-27 Road to Steam (hydroflame & community)
 * All stock market functions are now under the 'stock' namespace, like 'hacknet'
   However when you load your game with v0.58.0 for the first time it should automatically convert everything.
 
+** SF -1 **
+
+* new SF -1: Reality Alteration
+
 ** Gang **
 
 * Ascension formula now better
