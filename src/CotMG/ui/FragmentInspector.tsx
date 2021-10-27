@@ -65,7 +65,7 @@ export function FragmentInspector(props: IProps): React.ReactElement {
         <br />
         Effect: {effect}
         <br />
-        Power: {numeralWrapper.formatStaneksGiftPower(f.power)}
+        Base Power: {numeralWrapper.formatStaneksGiftPower(f.power)}
         <br />
         Charge: {charge}
         <br />
