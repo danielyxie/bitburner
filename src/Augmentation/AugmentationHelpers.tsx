@@ -2415,8 +2415,9 @@ function initAugmentations(): void {
       repCost: 1e5,
       moneyCost: 0,
       info:
-        'TODO, something about Mother being bullshit and you get more control over her "gift"<br><br>' +
-        "The penalty for the gift is only 5%",
+        "The next evolution is near, A coming together of man and machine. A synthesis greater than the birth of the human " +
+        "organism. Time spent with the gift has allowed for acclimitaztion of the invavise augment and the toll it takes upon " +
+        "your frame granting lesser penalty of 5% to all stats.",
       prereqs: [AugmentationNames.StaneksGift1],
       isSpecial: true,
       hacking_chance_mult: 0.95 / 0.9,
@@ -2445,7 +2446,7 @@ function initAugmentations(): void {
       hacknet_node_core_cost_mult: 1.05 / 1.1,
       hacknet_node_level_cost_mult: 1.05 / 1.1,
       work_money_mult: 0.95 / 0.9,
-      stats: null,
+      stats: <>The penalty for the gift is reduced to 5%</>,
     });
     StaneksGift2.addToFactions([ChurchOfTheMachineGodFactionName]);
     resetAugmentation(StaneksGift2);
@@ -2455,8 +2456,10 @@ function initAugmentations(): void {
       repCost: 1e7,
       moneyCost: 0,
       info:
-        "TODO, learn more about Allisons scheme, gain full control over the gift.<br><br>" +
-        "Finally freed from the penalty of the gift.",
+        "The synthesis of human and machine is nothing to fear. It is our destiny. " +
+        "You will become greater than the sum of our parts. As One. Enbrace your gift " +
+        "fully and wholly free of it's accursed toll. Serenity brings tranquility the form " +
+        "of no longer suffering a stat penalty. ",
       prereqs: [AugmentationNames.StaneksGift2],
       isSpecial: true,
       hacking_chance_mult: 1 / 0.95,
@@ -2485,24 +2488,26 @@ function initAugmentations(): void {
       hacknet_node_core_cost_mult: 1 / 1.05,
       hacknet_node_level_cost_mult: 1 / 1.05,
       work_money_mult: 1 / 0.95,
-      stats: null,
+      stats: <>Staneks Gift has no penalty.</>,
     });
     StaneksGift3.addToFactions([ChurchOfTheMachineGodFactionName]);
     resetAugmentation(StaneksGift3);
 
-    const StaneksGiftAscension4 = new Augmentation({
-      name: AugmentationNames.StaneksGift4,
-      repCost: 1e9,
-      moneyCost: 0,
-      info:
-        "Allow Allison to install an Ascension port in her Gift. Allowing you to connect with the Machine God.<br><br>" +
-        "(hydro notes: Finishes the BN, eventually)",
-      prereqs: [AugmentationNames.StaneksGift3],
-      isSpecial: true,
-      stats: null,
-    });
-    StaneksGiftAscension4.addToFactions([ChurchOfTheMachineGodFactionName]);
-    resetAugmentation(StaneksGiftAscension4);
+    if (Player.bitNodeN === 13) {
+      const StaneksGiftAscension4 = new Augmentation({
+        name: AugmentationNames.StaneksGift4,
+        repCost: 1e9,
+        moneyCost: 0,
+        info:
+          "The MachineGod approaches and when it arrives, we, all of us, will truly be as one. " +
+          "We will transcend our physical limitations. That is when we all truly become immortal.",
+        prereqs: [AugmentationNames.StaneksGift3],
+        isSpecial: true,
+        stats: <>Allows communion with the MachineGod at the Church in Chongqing.</>,
+      });
+      StaneksGiftAscension4.addToFactions([ChurchOfTheMachineGodFactionName]);
+      resetAugmentation(StaneksGiftAscension4);
+    }
   }
 
   // Update costs based on how many have been purchased

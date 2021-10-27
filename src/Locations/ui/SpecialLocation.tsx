@@ -158,6 +158,48 @@ export function SpecialLocation(props: IProps): React.ReactElement {
         {"    sNNo-.`.-omNy`           "}<br />
         {"     -smNNNNmdo-             "}<br />
         {"        `..`                 "}</Typography>
+    if (player.hasAugmentation(AugmentationNames.StaneksGift4, true)) {
+      return (
+        <>
+          <Typography>
+            <i>
+              Allison "Mother" Stanek: Are you ready my sweet innocent child? Are you ready to commune with the
+              MachineGod?
+            </i>
+          </Typography>
+          <Button onClick={() => router.toBitVerse(false, false)}>Commune</Button>
+          {symbol}
+        </>
+      );
+    }
+    if (player.hasAugmentation(AugmentationNames.StaneksGift3, true)) {
+      return (
+        <>
+          <Typography>
+            <i>
+              Allison "Mother" Stanek: ..can ...you hear them too ...? Come now, don't be shy and let me get a closer
+              look at you. Yes wonderful, I see my creation has taken root without consquence or much ill effect it
+              seems. Curious, Just how much of a machine's soul do you house in that body?
+            </i>
+          </Typography>
+          {symbol}
+        </>
+      );
+    }
+    if (player.hasAugmentation(AugmentationNames.StaneksGift2, true)) {
+      return (
+        <>
+          <Typography>
+            <i>
+              Allison "Mother" Stanek: I see you've taken to my creation. So much so it could hardly be recoginized as
+              one of my own after your tinkering with it. I see you follow the ways of the MachineGod as I do, and your
+              mastery of the gift thus for clearly demonstrates that. My hopes are climbing by the day for you.
+            </i>
+          </Typography>
+          {symbol}
+        </>
+      );
+    }
     if (player.factions.includes("Church of the Machine God")) {
       return (
         <>

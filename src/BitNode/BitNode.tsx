@@ -548,7 +548,7 @@ BitNodes["BitNode13"] = new BitNode(
       In this BitNode:
       <br />
       <br />
-      Every is significantly reduced
+      Every stat is significantly reduced
       <br />
       Stanek's Gift power is significantly increased.
       <br />
