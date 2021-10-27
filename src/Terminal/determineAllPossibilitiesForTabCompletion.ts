@@ -322,7 +322,10 @@ export async function determineAllPossibilitiesForTabCompletion(
           scripts: currServ.scripts.map((script) => script.filename),
           txts: currServ.textFiles.map((txt) => txt.fn),
           flags: (schema: any) => {
-            pos2 = schema.map((f: any) => "--" + f[0]);
+            pos2 = schema.map((f: any) => {
+              if (f[0].length === 1) return "-" + f[0];
+              return "--" + f[0];
+            });
             try {
               return flagFunc(schema);
             } catch (err) {
