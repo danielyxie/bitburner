@@ -24,6 +24,7 @@ import { GangMember } from "./GangMember";
 
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 export class Gang {
   facName: string;
@@ -115,9 +116,10 @@ export class Gang {
       wantedLevelGains += wantedLevelGain;
       if (this.members[i].getTask().baseWanted < 0) justice++; // this member is lowering wanted.
     }
-    this.respectGainRate = respectGains;
-    this.wantedGainRate = wantedLevelGains;
-    this.moneyGainRate = moneyGains;
+    const territoryPenalty = (0.2 * this.getTerritory() + 0.8) * BitNodeMultipliers.GangSoftcap;
+    this.respectGainRate = Math.pow(respectGains, territoryPenalty);
+    this.wantedGainRate = Math.pow(wantedLevelGains, territoryPenalty);
+    this.moneyGainRate = Math.pow(moneyGains, territoryPenalty);
     const gain = respectGains * numCycles;
     this.respect += gain;
     // Faction reputation gains is respect gain divided by some constant
