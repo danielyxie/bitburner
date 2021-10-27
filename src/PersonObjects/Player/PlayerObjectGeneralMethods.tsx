@@ -1,4 +1,5 @@
 import { IPlayer } from "../IPlayer";
+import { PlayerObject } from "./PlayerObject";
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
 import { PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
@@ -78,7 +79,7 @@ export function init(this: IPlayer): void {
   this.getHomeComputer().programs.push(Programs.NukeProgram.name);
 }
 
-export function prestigeAugmentation(this: IPlayer): void {
+export function prestigeAugmentation(this: PlayerObject): void {
   this.currentServer = SpecialServers.Home;
 
   this.numPeopleKilled = 0;
@@ -319,7 +320,7 @@ export function hasProgram(this: IPlayer, programName: string): boolean {
   return false;
 }
 
-export function setMoney(this: IPlayer, money: number): void {
+export function setMoney(this: PlayerObject, money: number): void {
   if (isNaN(money)) {
     console.error("NaN passed into Player.setMoney()");
     return;
@@ -327,7 +328,7 @@ export function setMoney(this: IPlayer, money: number): void {
   this.money = new Decimal(money);
 }
 
-export function gainMoney(this: IPlayer, money: number): void {
+export function gainMoney(this: PlayerObject, money: number): void {
   if (isNaN(money)) {
     console.error("NaN passed into Player.gainMoney()");
     return;
@@ -335,7 +336,7 @@ export function gainMoney(this: IPlayer, money: number): void {
   this.money = this.money.plus(money);
 }
 
-export function loseMoney(this: IPlayer, money: number): void {
+export function loseMoney(this: PlayerObject, money: number): void {
   if (isNaN(money)) {
     console.error("NaN passed into Player.loseMoney()");
     return;
