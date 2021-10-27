@@ -36,8 +36,9 @@ export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript): INe
       real_document.completely_unused_field = undefined;
     },
     alterReality: function (): void {
-      const x = false;
-      console.warn("I am sure that this variable is false");
+      const x = eval("false");
+      console.warn("I am sure that this variable is false.");
+      // add Math.random so webpack doesn't optimise the if away
       if (x !== false) {
         console.warn("Reality has been altered!");
         player.giveExploit(Exploit.RealityAlteration);
