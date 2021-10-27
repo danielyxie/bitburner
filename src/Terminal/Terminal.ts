@@ -1,4 +1,4 @@
-import { ITerminal, Output, Link, TTimer } from "./ITerminal";
+import { ITerminal, Output, Link, RawOutput, TTimer } from "./ITerminal";
 import { IRouter } from "../ui/Router";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { HacknetServer } from "../Hacknet/HacknetServer";
@@ -77,7 +77,7 @@ export class Terminal implements ITerminal {
   commandHistory: string[] = [];
   commandHistoryIndex = 0;
 
-  outputHistory: (Output | Link)[] = [new Output(`Bitburner v${CONSTANTS.Version}`, "primary")];
+  outputHistory: (Output | Link | RawOutput)[] = [new Output(`Bitburner v${CONSTANTS.Version}`, "primary")];
 
   // True if a Coding Contract prompt is opened
   contractOpen = false;
@@ -93,7 +93,7 @@ export class Terminal implements ITerminal {
     TerminalEvents.emit();
   }
 
-  append(item: Output | Link): void {
+  append(item: Output | Link | RawOutput): void {
     this.outputHistory.push(item);
     if (this.outputHistory.length > Settings.MaxTerminalCapacity) {
       this.outputHistory.splice(0, this.outputHistory.length - Settings.MaxTerminalCapacity);
@@ -103,6 +103,10 @@ export class Terminal implements ITerminal {
 
   print(s: string): void {
     this.append(new Output(s, "primary"));
+  }
+
+  printRaw(node: React.ReactNode): void {
+    this.append(new RawOutput(node));
   }
 
   error(s: string): void {
@@ -428,10 +432,10 @@ export class Terminal implements ITerminal {
       case CodingContractResult.Failure:
         ++contract.tries;
         if (contract.tries >= contract.getMaxNumTries()) {
-          this.print("Contract FAILED - Contract is now self-destructing");
+          this.error("Contract FAILED - Contract is now self-destructing");
           serv.removeContract(contract);
         } else {
-          this.print(`Contract FAILED - ${contract.getMaxNumTries() - contract.tries} tries remaining`);
+          this.error(`Contract FAILED - ${contract.getMaxNumTries() - contract.tries} tries remaining`);
         }
         break;
       case CodingContractResult.Cancelled:
@@ -580,7 +584,7 @@ export class Terminal implements ITerminal {
           if (commandArray.length === 1 && commandArray[0] == "help") {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -588,7 +592,7 @@ export class Terminal implements ITerminal {
           if (commandArray.length === 1 && commandArray[0] == "ls") {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -596,7 +600,7 @@ export class Terminal implements ITerminal {
           if (commandArray.length === 1 && commandArray[0] == "scan") {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -604,7 +608,7 @@ export class Terminal implements ITerminal {
           if (commandArray.length == 1 && commandArray[0] == "scan-analyze") {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -612,7 +616,7 @@ export class Terminal implements ITerminal {
           if (commandArray.length == 2 && commandArray[0] == "scan-analyze" && commandArray[1] === 2) {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -624,11 +628,11 @@ export class Terminal implements ITerminal {
             ) {
               iTutorialNextStep();
             } else {
-              this.print("Wrong command! Try again!");
+              this.error("Wrong command! Try again!");
               return;
             }
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -636,7 +640,7 @@ export class Terminal implements ITerminal {
           if (commandArray.length === 1 && commandArray[0] === "analyze") {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -644,7 +648,7 @@ export class Terminal implements ITerminal {
           if (commandArray.length == 2 && commandArray[0] == "run" && commandArray[1] == "NUKE.exe") {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -652,7 +656,7 @@ export class Terminal implements ITerminal {
           if (commandArray.length == 1 && commandArray[0] == "hack") {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -660,7 +664,7 @@ export class Terminal implements ITerminal {
           if (commandArray.length == 1 && commandArray[0] == "home") {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -668,7 +672,7 @@ export class Terminal implements ITerminal {
           if (commandArray.length == 2 && commandArray[0] == "nano" && commandArray[1] == "n00dles.script") {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -676,7 +680,7 @@ export class Terminal implements ITerminal {
           if (commandArray.length == 1 && commandArray[0] == "free") {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -684,7 +688,7 @@ export class Terminal implements ITerminal {
           if (commandArray.length == 2 && commandArray[0] == "run" && commandArray[1] == "n00dles.script") {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
@@ -692,12 +696,12 @@ export class Terminal implements ITerminal {
           if (commandArray.length == 2 && commandArray[0] == "tail" && commandArray[1] == "n00dles.script") {
             iTutorialNextStep();
           } else {
-            this.print("Bad command. Please follow the tutorial");
+            this.error("Bad command. Please follow the tutorial");
             return;
           }
           break;
         default:
-          this.print("Please follow the tutorial, or click 'EXIT' if you'd like to skip it");
+          this.error("Please follow the tutorial, or click 'EXIT' if you'd like to skip it");
           return;
       }
     }

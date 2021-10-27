@@ -153,7 +153,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
       <Typography>This industry uses the following equation for it's production: </Typography>
       <br />
       <Typography>
-        <IndustryProductEquation division={division} />
+        <IndustryProductEquation key={division.name} division={division} />
       </Typography>
       <br />
       <Typography>

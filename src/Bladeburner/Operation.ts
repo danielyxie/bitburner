@@ -37,7 +37,7 @@ export class Operation extends Action {
     const city = inst.getCurrentCity();
     if (city.chaos > BladeburnerConstants.ChaosThreshold) {
       const diff = 1 + (city.chaos - BladeburnerConstants.ChaosThreshold);
-      const mult = Math.pow(diff, 0.1);
+      const mult = Math.pow(diff, 0.5);
       return mult;
     }
 

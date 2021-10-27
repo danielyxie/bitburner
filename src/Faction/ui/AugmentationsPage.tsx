@@ -42,6 +42,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       const augs: string[] = [];
       for (const augName in Augmentations) {
         if (augName === AugmentationNames.NeuroFluxGovernor) continue;
+        if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
         const aug = Augmentations[augName];
         if (!aug.isSpecial) {
           augs.push(augName);

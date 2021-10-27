@@ -598,10 +598,9 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.InfiltrationMoney = 3;
       BitNodeMultipliers.FactionWorkRepGain = 0.5;
       BitNodeMultipliers.FactionPassiveRepGain = 0;
-      BitNodeMultipliers.GangKarmaRequirement = 0;
-      BitNodeMultipliers.PurchasedServerSoftcap = 1.4;
       BitNodeMultipliers.StaneksGiftPowerMultiplier = 2;
       BitNodeMultipliers.StaneksGiftExtraSize = -6;
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.3;
       break;
     case 3: // Corporatocracy
       BitNodeMultipliers.HackingLevelMultiplier = 0.8;
@@ -617,10 +616,10 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.HacknetNodeMoney = 0.25;
       BitNodeMultipliers.HomeComputerRamCost = 1.5;
       BitNodeMultipliers.PurchasedServerCost = 2;
-      BitNodeMultipliers.GangKarmaRequirement = 3;
-      BitNodeMultipliers.PurchasedServerSoftcap = 1.4;
       BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.75;
       BitNodeMultipliers.StaneksGiftExtraSize = -2;
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.3;
+      BitNodeMultipliers.GangSoftcap = 0.9;
       break;
     case 4: // The Singularity
       BitNodeMultipliers.ServerMaxMoney = 0.15;
@@ -635,9 +634,9 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.HackExpGain = 0.4;
       BitNodeMultipliers.CrimeExpGain = 0.5;
       BitNodeMultipliers.FactionWorkRepGain = 0.75;
-      BitNodeMultipliers.PurchasedServerSoftcap = 1.3;
       BitNodeMultipliers.StaneksGiftPowerMultiplier = 1.5;
       BitNodeMultipliers.StaneksGiftExtraSize = 0;
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.2;
       break;
     case 5: // Artificial intelligence
       BitNodeMultipliers.ServerMaxMoney = 2;
@@ -651,9 +650,9 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.AugmentationMoneyCost = 2;
       BitNodeMultipliers.HackExpGain = 0.5;
       BitNodeMultipliers.CorporationValuation = 0.5;
-      BitNodeMultipliers.PurchasedServerSoftcap = 1.3;
       BitNodeMultipliers.StaneksGiftPowerMultiplier = 1.3;
       BitNodeMultipliers.StaneksGiftExtraSize = 0;
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.2;
       break;
     case 6: // Bladeburner
       BitNodeMultipliers.HackingLevelMultiplier = 0.35;
@@ -669,10 +668,10 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.FactionPassiveRepGain = 0;
       BitNodeMultipliers.HackExpGain = 0.25;
       BitNodeMultipliers.DaedalusAugsRequirement = 1.166; // Results in 35 Augs needed
-      BitNodeMultipliers.GangKarmaRequirement = 5;
       BitNodeMultipliers.PurchasedServerSoftcap = 2;
       BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.5;
       BitNodeMultipliers.StaneksGiftExtraSize = 2;
+      BitNodeMultipliers.GangSoftcap = 0.7;
       break;
     case 7: // Bladeburner 2079
       BitNodeMultipliers.BladeburnerRank = 0.6;
@@ -693,10 +692,10 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.FourSigmaMarketDataCost = 2;
       BitNodeMultipliers.FourSigmaMarketDataApiCost = 2;
       BitNodeMultipliers.DaedalusAugsRequirement = 1.166; // Results in 35 Augs needed
-      BitNodeMultipliers.GangKarmaRequirement = 5;
       BitNodeMultipliers.PurchasedServerSoftcap = 2;
       BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.9;
       BitNodeMultipliers.StaneksGiftExtraSize = -1;
+      BitNodeMultipliers.GangSoftcap = 0.7;
       break;
     case 8: // Ghost of Wall Street
       BitNodeMultipliers.ScriptHackMoney = 0.3;
@@ -709,9 +708,9 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.RepToDonateToFaction = 0;
       BitNodeMultipliers.CorporationValuation = 0;
       BitNodeMultipliers.CodingContractMoney = 0;
-      BitNodeMultipliers.GangKarmaRequirement = 10;
-      BitNodeMultipliers.PurchasedServerSoftcap = 5;
       BitNodeMultipliers.StaneksGiftExtraSize = -7;
+      BitNodeMultipliers.PurchasedServerSoftcap = 4;
+      BitNodeMultipliers.GangSoftcap = 0;
       break;
     case 9: // Hacktocracy
       BitNodeMultipliers.HackingLevelMultiplier = 0.4;
@@ -733,9 +732,9 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.FourSigmaMarketDataApiCost = 4;
       BitNodeMultipliers.BladeburnerRank = 0.9;
       BitNodeMultipliers.BladeburnerSkillCost = 1.2;
-      BitNodeMultipliers.GangKarmaRequirement = 3;
       BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.5;
       BitNodeMultipliers.StaneksGiftExtraSize = 2;
+      BitNodeMultipliers.GangSoftcap = 0.8;
       break;
     case 10: // Digital Carbon
       BitNodeMultipliers.HackingLevelMultiplier = 0.2;
@@ -759,10 +758,10 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.PurchasedServerLimit = 0.6;
       BitNodeMultipliers.PurchasedServerMaxRam = 0.5;
       BitNodeMultipliers.BladeburnerRank = 0.8;
-      BitNodeMultipliers.GangKarmaRequirement = 3;
-      BitNodeMultipliers.PurchasedServerSoftcap = 1.2;
       BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.75;
       BitNodeMultipliers.StaneksGiftExtraSize = -3;
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.1;
+      BitNodeMultipliers.GangSoftcap = 0.9;
       break;
     case 11: //The Big Crash
       BitNodeMultipliers.HackingLevelMultiplier = 0.5;
@@ -781,7 +780,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.CodingContractMoney = 0.25;
       BitNodeMultipliers.FourSigmaMarketDataCost = 4;
       BitNodeMultipliers.FourSigmaMarketDataApiCost = 4;
-      BitNodeMultipliers.PurchasedServerSoftcap = 2.2;
+      BitNodeMultipliers.PurchasedServerSoftcap = 2;
       break;
     case 12: {
       //The Recursion
@@ -853,6 +852,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
 
       BitNodeMultipliers.StaneksGiftPowerMultiplier = inc;
       BitNodeMultipliers.StaneksGiftExtraSize = inc;
+      BitNodeMultipliers.GangSoftcap = dec;
       break;
     }
     case 13: {
@@ -893,7 +893,6 @@ export function initBitNodeMultipliers(p: IPlayer): void {
 
       BitNodeMultipliers.BladeburnerRank = 0.1;
       BitNodeMultipliers.BladeburnerSkillCost = 5;
-      BitNodeMultipliers.GangKarmaRequirement = 20;
       BitNodeMultipliers.StaneksGiftPowerMultiplier = 2;
       BitNodeMultipliers.StaneksGiftExtraSize = 1;
       break;

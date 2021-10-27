@@ -18,7 +18,7 @@ export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): s
     throw new Error(`WorkerScript constructed with invalid server ip: ${workerScript.hostname}`);
   }
 
-  return "|" + server.hostname + "|" + workerScript.name + "|" + msg;
+  return "|DELIMITER|" + server.hostname + "|DELIMITER|" + workerScript.name + "|DELIMITER|" + msg;
 }
 
 export function resolveNetscriptRequestedThreads(
@@ -50,7 +50,7 @@ export function isScriptErrorMessage(msg: string): boolean {
   if (!isString(msg)) {
     return false;
   }
-  const splitMsg = msg.split("|");
+  const splitMsg = msg.split("|DELIMITER|");
   if (splitMsg.length != 4) {
     return false;
   }

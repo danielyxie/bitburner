@@ -20,6 +20,8 @@ import { createRandomIp } from "../utils/IPAddress";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
+
+
 interface IConstructorParams {
   adminRights?: boolean;
   hostname: string;
@@ -35,7 +37,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
 
   // Number of cores. Improves hash production
   cores = 1;
-
+  
   // Number of hashes that can be stored by this Hacknet Server
   hashCapacity = 0;
 
@@ -93,6 +95,7 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
   upgradeCore(levels: number, prodMult: number): void {
     this.cores = Math.min(HacknetServerConstants.MaxCores, Math.round(this.cores + levels));
     this.updateHashRate(prodMult);
+    this.cpuCores=this.cores;
   }
 
   upgradeLevel(levels: number, prodMult: number): void {

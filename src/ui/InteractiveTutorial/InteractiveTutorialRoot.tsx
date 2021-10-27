@@ -265,7 +265,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
       content: (
         <>
           <Typography>You now have root access! You can hack the server using </Typography>
-          <Typography classes={{ root: classes.textfield }}>{"[home ~/]> hack"}</Typography>
+          <Typography classes={{ root: classes.textfield }}>{"[n00dles ~/]> hack"}</Typography>
 
           <Typography> Try doing that now.</Typography>
         </>
@@ -296,7 +296,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
       content: (
         <>
           <Typography>From any server you can get back home using</Typography>
-          <Typography classes={{ root: classes.textfield }}>{"[home ~/]> home"}</Typography>
+          <Typography classes={{ root: classes.textfield }}>{"[n00dles ~/]> home"}</Typography>
 
           <Typography>Let's head home before creating our first script!</Typography>
         </>
@@ -468,7 +468,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
     [iTutorialSteps.HacknetNodesIntroduction as number]: {
       content: (
         <Typography>
-          here you can purchase new Hacknet Nodes and upgrade your existing ones. Let's purchase a new one now.
+          Here you can purchase new Hacknet Nodes and upgrade your existing ones. Let's purchase a new one now.
         </Typography>
       ),
       canNext: true,

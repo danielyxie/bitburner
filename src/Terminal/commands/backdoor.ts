@@ -13,7 +13,7 @@ export function backdoor(
   args: (string | number)[],
 ): void {
   if (args.length !== 0) {
-    terminal.print("Incorrect usage of backdoor command. Usage: backdoor");
+    terminal.error("Incorrect usage of backdoor command. Usage: backdoor");
     return;
   }
 

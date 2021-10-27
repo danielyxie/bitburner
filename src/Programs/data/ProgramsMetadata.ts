@@ -190,7 +190,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       time: CONSTANTS.MillisecondsPerQuarterHour,
     },
     run: (router: IRouter, terminal: ITerminal): void => {
-      terminal.print("This executable cannot be run.");
+      terminal.error("This executable cannot be run.");
       terminal.print("DeepscanV1.exe lets you run 'scan-analyze' with a depth up to 5.");
     },
   },
@@ -204,7 +204,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       time: CONSTANTS.MillisecondsPer2Hours,
     },
     run: (router: IRouter, terminal: ITerminal): void => {
-      terminal.print("This executable cannot be run.");
+      terminal.error("This executable cannot be run.");
       terminal.print("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
     },
   },
@@ -219,18 +219,18 @@ export const programsMetadata: IProgramCreationParams[] = [
     },
     run: (router: IRouter, terminal: ITerminal, player: IPlayer, server: BaseServer, args: string[]): void => {
       if (args.length !== 1) {
-        terminal.print("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
+        terminal.error("Must pass a server hostname or IP as an argument for ServerProfiler.exe");
         return;
       }
 
       const targetServer = GetServer(args[0]);
       if (targetServer == null) {
-        terminal.print("Invalid server IP/hostname");
+        terminal.error("Invalid server IP/hostname");
         return;
       }
 
       if (!(targetServer instanceof Server)) {
-        terminal.print(`ServerProfiler.exe can only be run on normal servers.`);
+        terminal.error(`ServerProfiler.exe can only be run on normal servers.`);
         return;
       }
 
@@ -268,7 +268,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       time: CONSTANTS.MillisecondsPerQuarterHour,
     },
     run: (router: IRouter, terminal: ITerminal): void => {
-      terminal.print("This executable cannot be run.");
+      terminal.error("This executable cannot be run.");
       terminal.print("AutoLink.exe lets you automatically connect to other servers when using 'scan-analyze'.");
       terminal.print("When using scan-analyze, click on a server's hostname to connect to it.");
     },

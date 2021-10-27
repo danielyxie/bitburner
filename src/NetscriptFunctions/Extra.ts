@@ -8,6 +8,7 @@ export interface INetscriptExtra {
   };
   exploit(): void;
   bypass(doc: Document): void;
+  alterReality(): void;
 }
 
 export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript): INetscriptExtra {
@@ -33,6 +34,14 @@ export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript): INe
       }
       doc.completely_unused_field = undefined;
       real_document.completely_unused_field = undefined;
+    },
+    alterReality: function (): void {
+      const x = false;
+      console.warn("I am sure that this variable is false");
+      if (x !== false) {
+        console.warn("Reality has been altered!");
+        player.giveExploit(Exploit.RealityAlteration);
+      }
     },
   };
 }

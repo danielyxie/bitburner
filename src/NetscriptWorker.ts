@@ -540,7 +540,7 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
       return;
     } else if (w instanceof WorkerScript) {
       if (isScriptErrorMessage(w.errorMessage)) {
-        const errorTextArray = w.errorMessage.split("|");
+        const errorTextArray = w.errorMessage.split("|DELIMITER|");
         if (errorTextArray.length != 4) {
           console.error("ERROR: Something wrong with Error text in evaluator...");
           console.error("Error text: " + w.errorMessage);
@@ -647,9 +647,9 @@ export function runScriptFromScript(
     return 0;
   }
 
-  args = args.map((arg) => {
-    if (typeof arg === "number") return arg;
-    return arg + ""; // force cast to string
+  args.forEach((arg) => {
+    if (typeof arg !== "string" && typeof arg !== "number")
+      throw new Error("Only strings and numbers can be passed as arguments to otherscripts.");
   });
 
   // Check if the script is already running

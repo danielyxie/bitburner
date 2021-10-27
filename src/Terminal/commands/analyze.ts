@@ -11,7 +11,7 @@ export function analyze(
   args: (string | number)[],
 ): void {
   if (args.length !== 0) {
-    terminal.print("Incorrect usage of analyze command. Usage: analyze");
+    terminal.error("Incorrect usage of analyze command. Usage: analyze");
     return;
   }
   terminal.startAnalyze();

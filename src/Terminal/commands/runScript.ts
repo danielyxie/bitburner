@@ -41,7 +41,7 @@ export function runScript(
 
   // Check if this script is already running
   if (findRunningScript(scriptName, args, server) != null) {
-    terminal.print("ERROR: This script is already running. Cannot run multiple instances");
+    terminal.error("This script is already running. Cannot run multiple instances");
     return;
   }
 
@@ -56,12 +56,12 @@ export function runScript(
     const ramAvailable = server.maxRam - server.ramUsed;
 
     if (!server.hasAdminRights) {
-      terminal.print("Need root access to run script");
+      terminal.error("Need root access to run script");
       return;
     }
 
     if (ramUsage > ramAvailable) {
-      terminal.print(
+      terminal.error(
         "This machine does not have enough RAM to run this script with " +
           numThreads +
           " threads. Script requires " +
@@ -90,5 +90,5 @@ export function runScript(
     return;
   }
 
-  terminal.print("ERROR: No such script");
+  terminal.error("No such script");
 }

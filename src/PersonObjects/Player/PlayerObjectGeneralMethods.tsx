@@ -59,6 +59,7 @@ import { Money } from "../../ui/React/Money";
 
 import React from "react";
 import { serverMetadata } from "../../Server/data/servers";
+import { SnackbarEvents } from "../../ui/React/Snackbar";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -629,6 +630,7 @@ export function work(this: IPlayer, numCycles: number): boolean {
   this.timeWorked += CONSTANTS._idleSpeed * numCycles;
 
   this.workRepGainRate = this.getWorkRepGain();
+  this.workMoneyGainRate = this.getWorkMoneyGain();
   this.processWorkEarnings(numCycles);
 
   const comp = Companies[this.companyName];
@@ -1697,13 +1699,7 @@ export function regenerateHp(this: IPlayer, amt: number): void {
 export function hospitalize(this: IPlayer): number {
   const cost = getHospitalizationCost(this);
   if (Settings.SuppressHospitalizationPopup === false) {
-    dialogBoxCreate(
-      <>
-        You were in critical condition! You were taken to the hospital where luckily they were able to save your life.
-        You were charged&nbsp;
-        <Money money={cost} />
-      </>,
-    );
+    SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, "warning");
   }
 
   this.loseMoney(cost);
@@ -1785,6 +1781,7 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   }
 
   this.jobs[company.name] = pos.name;
+  if (!this.focus && this.isWorking && this.companyName !== this.location) this.resetWorkStatus();
   this.companyName = this.location;
 
   if (!sing) {

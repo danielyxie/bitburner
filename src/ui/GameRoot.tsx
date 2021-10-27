@@ -76,6 +76,8 @@ import { InvitationModal } from "../Faction/ui/InvitationModal";
 import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
 
+const htmlLocation = location;
+
 interface IProps {
   terminal: ITerminal;
   player: IPlayer;
@@ -215,6 +217,14 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     return ITutorialEvents.subscribe(rerender);
   }, []);
 
+  function killAllScripts(): void {
+    for (const server of GetAllServers()) {
+      server.runningScripts = [];
+    }
+    saveObject.saveGame();
+    setTimeout(() => htmlLocation.reload(), 2000);
+  }
+
   Router = {
     page: () => page,
     toActiveScripts: () => setPage(Page.ActiveScripts),
@@ -288,7 +298,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       <Context.Router.Provider value={Router}>
         <Overview>
           {!ITutorial.isRunning ? (
-            <CharacterOverview save={() => saveObject.saveGame()} />
+            <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
           ) : (
             <InteractiveTutorialRoot />
           )}
@@ -372,12 +382,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                     player={player}
                     save={() => saveObject.saveGame()}
                     export={() => saveObject.exportGame()}
-                    forceKill={() => {
-                      for (const server of GetAllServers()) {
-                        server.runningScripts = [];
-                      }
-                      dialogBoxCreate("Forcefully deleted all running scripts. Please save and refresh page.");
-                    }}
+                    forceKill={killAllScripts}
                     softReset={() => {
                       dialogBoxCreate("Soft Reset!");
                       prestigeAugmentation();
