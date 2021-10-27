@@ -163,22 +163,9 @@ async function parseOnlyRamCalculate(
       // If it is, then we need to get its RAM cost.
       try {
         function applyFuncRam(func: any): number {
-          if (typeof func === "function") {
-            try {
-              let res;
-              if (func.constructor.name === "AsyncFunction") {
-                res = 0; // Async functions will always be 0 RAM
-              } else {
-                res = func.apply(null, []);
-              }
-              if (typeof res === "number") {
-                return res;
-              }
-              return 0;
-            } catch (e) {
-              console.error(`Error applying function: ${e}`);
-              return 0;
-            }
+          console.log(func);
+          if (typeof func === "number") {
+            return func;
           } else {
             return 0;
           }
