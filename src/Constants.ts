@@ -314,6 +314,7 @@ export const CONSTANTS: {
     ** Script Editor ** 
 
     * Added Solarized light/dark as theme (@CalvinTrops)
+    * Added theme clo
     * Fixed sleeve namespace smart autocomplete.
 
     ** Hacknet Servers **
@@ -337,6 +338,7 @@ export const CONSTANTS: {
     * Add killall script in character overview.
     * Fixed bug in corp that made last city production be the production for all cities for newly created product.
     * Fix bug that allowed reputation to transfer to new jobs.
+    * Fixed memory leak with ns2.
     * nerf noodle bar
 `,
 };

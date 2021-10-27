@@ -59,6 +59,7 @@ v0.58.0 - 2021-10-27 Road to Steam (hydroflame & community)
 * Add killall script in character overview.
 * Fixed bug in corp that made last city production be the production for all cities for newly created product.
 * Fix bug that allowed reputation to transfer to new jobs.
+* Fixed memory leak with ns2.
 * nerf noodle bar
 
 v0.57.0 - 2021-10-16 It was too cheap! (hydroflame & community)
