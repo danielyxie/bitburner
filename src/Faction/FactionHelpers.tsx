@@ -106,7 +106,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
     }
     Player.queuedAugmentations.push(queuedAugmentation);
 
-    Player.loseMoney(aug.baseCost * factionInfo.augmentationPriceMult);
+    Player.loseMoney(aug.baseCost * factionInfo.augmentationPriceMult, "augmentations");
 
     // If you just purchased Neuroflux Governor, recalculate the cost
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {

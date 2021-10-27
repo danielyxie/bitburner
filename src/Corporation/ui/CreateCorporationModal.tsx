@@ -36,7 +36,7 @@ export function CreateCorporationModal(props: IProps): React.ReactElement {
     }
 
     player.startCorporation(name);
-    player.loseMoney(150e9);
+    player.loseMoney(150e9, "corporation");
 
     props.onClose();
     router.toCorporation();

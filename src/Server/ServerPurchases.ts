@@ -94,7 +94,7 @@ export function purchaseServer(hostname: string, ram: number, cost: number, p: I
   homeComputer.serversOnNetwork.push(newServ.hostname);
   newServ.serversOnNetwork.push(homeComputer.hostname);
 
-  p.loseMoney(cost);
+  p.loseMoney(cost, "servers");
 
   dialogBoxCreate("Server successfully purchased with hostname " + hostname);
 }
@@ -114,5 +114,5 @@ export function purchaseRamForHomeComputer(p: IPlayer): void {
   }
 
   homeComputer.maxRam *= 2;
-  p.loseMoney(cost);
+  p.loseMoney(cost, "servers");
 }

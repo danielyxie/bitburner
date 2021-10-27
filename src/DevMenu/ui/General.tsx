@@ -19,7 +19,7 @@ interface IProps {
 export function General(props: IProps): React.ReactElement {
   function addMoney(n: number) {
     return function () {
-      props.player.gainMoney(n);
+      props.player.gainMoney(n, "other");
     };
   }
 

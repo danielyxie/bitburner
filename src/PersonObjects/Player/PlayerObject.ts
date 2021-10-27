@@ -191,7 +191,7 @@ export class PlayerObject implements IPlayer {
   gainAgilityExp: (exp: number) => void;
   gainCharismaExp: (exp: number) => void;
   gainIntelligenceExp: (exp: number) => void;
-  gainMoney: (money: number) => void;
+  gainMoney: (money: number, source: string) => void;
   getCurrentServer: () => BaseServer;
   getGangFaction: () => Faction;
   getGangName: () => string;
@@ -208,7 +208,7 @@ export class PlayerObject implements IPlayer {
   inBladeburner: () => boolean;
   inGang: () => boolean;
   isQualified: (company: Company, position: CompanyPosition) => boolean;
-  loseMoney: (money: number) => void;
+  loseMoney: (money: number, source: string) => void;
   reapplyAllAugmentations: (resetMultipliers?: boolean) => void;
   reapplyAllSourceFiles: () => void;
   regenerateHp: (amt: number) => void;

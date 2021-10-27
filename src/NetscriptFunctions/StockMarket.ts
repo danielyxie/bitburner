@@ -350,7 +350,7 @@ export function NetscriptStockMarket(
       }
 
       player.has4SData = true;
-      player.loseMoney(getStockMarket4SDataCost());
+      player.loseMoney(getStockMarket4SDataCost(), "stock");
       workerScript.log("purchase4SMarketData", "Purchased 4S Market Data");
       return true;
     },
@@ -369,7 +369,7 @@ export function NetscriptStockMarket(
       }
 
       player.has4SDataTixApi = true;
-      player.loseMoney(getStockMarket4STixApiCost());
+      player.loseMoney(getStockMarket4STixApiCost(), "stock");
       workerScript.log("purchase4SMarketDataTixApi", "Purchased 4S Market Data TIX API");
       return true;
     },

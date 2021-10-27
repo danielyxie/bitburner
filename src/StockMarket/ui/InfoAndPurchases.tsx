@@ -35,7 +35,7 @@ function Purchase4SMarketDataTixApiAccessButton(props: IProps): React.ReactEleme
       return;
     }
     props.p.has4SDataTixApi = true;
-    props.p.loseMoney(getStockMarket4STixApiCost());
+    props.p.loseMoney(getStockMarket4STixApiCost(), "stock");
     props.rerender();
   }
 
@@ -88,7 +88,7 @@ function PurchaseWseAccountButton(props: IProps): React.ReactElement {
     }
     props.p.hasWseAccount = true;
     props.initStockMarket();
-    props.p.loseMoney(CONSTANTS.WSEAccountCost);
+    props.p.loseMoney(CONSTANTS.WSEAccountCost, "stock");
     props.rerender();
   }
 
@@ -113,7 +113,7 @@ function PurchaseTixApiAccessButton(props: IProps): React.ReactElement {
       return;
     }
     props.p.hasTixApiAccess = true;
-    props.p.loseMoney(CONSTANTS.TIXAPICost);
+    props.p.loseMoney(CONSTANTS.TIXAPICost, "stock");
     props.rerender();
   }
 
@@ -143,7 +143,7 @@ function Purchase4SMarketDataButton(props: IProps): React.ReactElement {
       return;
     }
     props.p.has4SData = true;
-    props.p.loseMoney(getStockMarket4SDataCost());
+    props.p.loseMoney(getStockMarket4SDataCost(), "stock");
     props.rerender();
   }
   if (props.p.has4SData) {

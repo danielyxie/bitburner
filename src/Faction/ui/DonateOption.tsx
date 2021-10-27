@@ -52,7 +52,7 @@ export function DonateOption(props: IProps): React.ReactElement {
     const amt = donateAmt;
     if (amt === null) return;
     if (!canDonate()) return;
-    props.p.loseMoney(amt);
+    props.p.loseMoney(amt, "other");
     const repGain = repFromDonation(amt, props.p);
     props.faction.playerReputation += repGain;
     dialogBoxCreate(

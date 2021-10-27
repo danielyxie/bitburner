@@ -395,10 +395,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
         const moneyGained = moneyDrained * BitNodeMultipliers.ScriptHackMoneyGain;
 
-        Player.gainMoney(moneyGained);
+        Player.gainMoney(moneyGained, "hacking");
         workerScript.scriptRef.onlineMoneyMade += moneyGained;
         Player.scriptProdSinceLastAug += moneyGained;
-        Player.recordMoneySource(moneyGained, "hacking");
         workerScript.scriptRef.recordHack(server.hostname, moneyGained, threads);
         Player.gainHackingExp(expGainedOnSuccess);
         workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
@@ -1550,7 +1549,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       const homeComputer = Player.getHomeComputer();
       homeComputer.serversOnNetwork.push(newServ.hostname);
       newServ.serversOnNetwork.push(homeComputer.hostname);
-      Player.loseMoney(cost);
+      Player.loseMoney(cost, "servers");
       workerScript.log(
         "purchaseServer",
         `Purchased new server with hostname '${newServ.hostname}' for ${numeralWrapper.formatMoney(cost)}`,
@@ -2297,7 +2296,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
           if (Player.money.lt(CONSTANTS.TravelCost)) {
             throw makeRuntimeErrorMsg("travelToCity", "Not enough money to travel.");
           }
-          Player.loseMoney(CONSTANTS.TravelCost);
+          Player.loseMoney(CONSTANTS.TravelCost, "other");
           Player.city = cityname;
           workerScript.log("travelToCity", `Traveled to ${cityname}`);
           return true;
@@ -2320,7 +2319,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("purchaseTor", "You cannot afford to purchase a Tor router.");
         return false;
       }
-      Player.loseMoney(CONSTANTS.TorRouterCost);
+      Player.loseMoney(CONSTANTS.TorRouterCost, "other");
 
       const darkweb = safetlyCreateUniqueServer({
         ip: createUniqueRandomIp(),
@@ -2376,7 +2375,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return true;
       }
 
-      Player.loseMoney(item.price);
+      Player.loseMoney(item.price, "other");
       Player.getHomeComputer().programs.push(item.program);
       workerScript.log(
         "purchaseProgram",
@@ -2667,7 +2666,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
 
       homeComputer.cpuCores += 1;
-      Player.loseMoney(cost);
+      Player.loseMoney(cost, "servers");
 
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log(
@@ -2700,7 +2699,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
 
       homeComputer.maxRam *= 2;
-      Player.loseMoney(cost);
+      Player.loseMoney(cost, "servers");
 
       Player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log(
@@ -3061,7 +3060,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       const repGain = (amt / CONSTANTS.DonateMoneyToRepDivisor) * Player.faction_rep_mult;
       faction.playerReputation += repGain;
-      Player.loseMoney(amt);
+      Player.loseMoney(amt, "other");
       workerScript.log(
         "donateToFaction",
         `${numeralWrapper.formatMoney(amt)} donated to '${name}' for ${numeralWrapper.formatReputation(

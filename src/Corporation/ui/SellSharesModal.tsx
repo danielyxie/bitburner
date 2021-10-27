@@ -69,8 +69,7 @@ export function SellSharesModal(props: IProps): React.ReactElement {
     corp.sharePrice = newSharePrice;
     corp.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
     corp.shareSaleCooldown = CorporationConstants.SellSharesCooldown;
-    player.gainMoney(profit);
-    player.recordMoneySource(profit, "corporation");
+    player.gainMoney(profit, "corporation");
     props.onClose();
     dialogBoxCreate(
       <>

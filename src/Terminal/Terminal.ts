@@ -196,8 +196,7 @@ export class Terminal implements ITerminal {
       } // Safety check
 
       server.moneyAvailable -= moneyGained;
-      player.gainMoney(moneyGained);
-      player.recordMoneySource(moneyGained, "hacking");
+      player.gainMoney(moneyGained, "hacking");
       player.gainHackingExp(expGainedOnSuccess);
       player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
 

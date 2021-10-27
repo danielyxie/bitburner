@@ -53,7 +53,7 @@ export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
     if (player.sleevesFromCovenant >= MaxSleevesFromCovenant) return;
 
     if (player.canAfford(purchaseCost())) {
-      player.loseMoney(purchaseCost());
+      player.loseMoney(purchaseCost(), "sleeves");
       player.sleevesFromCovenant += 1;
       player.sleeves.push(new Sleeve(player));
       rerender();
