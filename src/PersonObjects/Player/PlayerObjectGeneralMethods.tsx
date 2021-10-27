@@ -630,6 +630,7 @@ export function work(this: IPlayer, numCycles: number): boolean {
   this.timeWorked += CONSTANTS._idleSpeed * numCycles;
 
   this.workRepGainRate = this.getWorkRepGain();
+  this.workMoneyGainRate = this.getWorkMoneyGain();
   this.processWorkEarnings(numCycles);
 
   const comp = Companies[this.companyName];
@@ -1531,20 +1532,20 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
             "Crime successful! Gained " +
-            numeralWrapper.formatMoney(this.workMoneyGained) +
-            ", " +
-            numeralWrapper.formatExp(this.workHackExpGained) +
-            " hack exp, " +
-            numeralWrapper.formatExp(this.workStrExpGained) +
-            " str exp, " +
-            numeralWrapper.formatExp(this.workDefExpGained) +
-            " def exp, " +
-            numeralWrapper.formatExp(this.workDexExpGained) +
-            " dex exp, " +
-            numeralWrapper.formatExp(this.workAgiExpGained) +
-            " agi exp, " +
-            numeralWrapper.formatExp(this.workChaExpGained) +
-            " cha exp.",
+              numeralWrapper.formatMoney(this.workMoneyGained) +
+              ", " +
+              numeralWrapper.formatExp(this.workHackExpGained) +
+              " hack exp, " +
+              numeralWrapper.formatExp(this.workStrExpGained) +
+              " str exp, " +
+              numeralWrapper.formatExp(this.workDefExpGained) +
+              " def exp, " +
+              numeralWrapper.formatExp(this.workDexExpGained) +
+              " dex exp, " +
+              numeralWrapper.formatExp(this.workAgiExpGained) +
+              " agi exp, " +
+              numeralWrapper.formatExp(this.workChaExpGained) +
+              " cha exp.",
           );
         }
       } else {
@@ -1583,18 +1584,18 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
             "Crime failed! Gained " +
-            numeralWrapper.formatExp(this.workHackExpGained) +
-            " hack exp, " +
-            numeralWrapper.formatExp(this.workStrExpGained) +
-            " str exp, " +
-            numeralWrapper.formatExp(this.workDefExpGained) +
-            " def exp, " +
-            numeralWrapper.formatExp(this.workDexExpGained) +
-            " dex exp, " +
-            numeralWrapper.formatExp(this.workAgiExpGained) +
-            " agi exp, " +
-            numeralWrapper.formatExp(this.workChaExpGained) +
-            " cha exp.",
+              numeralWrapper.formatExp(this.workHackExpGained) +
+              " hack exp, " +
+              numeralWrapper.formatExp(this.workStrExpGained) +
+              " str exp, " +
+              numeralWrapper.formatExp(this.workDefExpGained) +
+              " def exp, " +
+              numeralWrapper.formatExp(this.workDexExpGained) +
+              " dex exp, " +
+              numeralWrapper.formatExp(this.workAgiExpGained) +
+              " agi exp, " +
+              numeralWrapper.formatExp(this.workChaExpGained) +
+              " cha exp.",
           );
         }
       } else {
@@ -1780,6 +1781,7 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   }
 
   this.jobs[company.name] = pos.name;
+  if (!this.focus && this.isWorking && this.companyName !== this.location) this.resetWorkStatus();
   this.companyName = this.location;
 
   if (!sing) {
