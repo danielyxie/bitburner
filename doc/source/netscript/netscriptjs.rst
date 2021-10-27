@@ -90,30 +90,6 @@ Here is a summary of all rules you need to follow when writing Netscript JS code
   These global variables can be thought of as `C++ static class members <https://www.tutorialspoint.com/cplusplus/cpp_static_members.htm>`_,
   where a NetscriptJS script is a class and a global variable is a static member within that class.
 
-Warnings
---------
-The NetscriptJS evaluation engine works by converting your code into a blob URL and then
-using a dynamic import to load your code as a module. Every unique NetscriptJS script
-is loaded as its own module. This means that
-making a small edit to a NetscriptJS script results in a new module being generated.
-
-At this point, we have been unable to find a method for deleting modules from browsers so that
-they get garbage collected.
-
-The result is that these modules from NetscriptJS scripts accumulate in your browser,
-using memory that never gets released. Over time, this results in a memory-leak type
-situation that can slow down your computer.
-
-Therefore, there are two recommendations for those who decide to use NetscriptJS:
-
-1. Every now and then, close and re-open the game. This will clear all of the modules.
-To be safe, I recommend **completely** closing the game's tab and then re-opening it.
-Depending on your browser, a refresh or page reload does not always clear the modules.
-
-2. Only use NetscriptJS scripts when needed. It is very unlikely that NetscriptJS
-is needed for very simple scripts. By doing this, you will reduce the number of modules
-that are loaded.
-
 Examples
 --------
 
