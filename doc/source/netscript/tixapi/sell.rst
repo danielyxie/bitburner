@@ -1,7 +1,7 @@
-sellStock() Netscript Function
+sell() Netscript Function
 ==============================
 
-.. js:function:: sellStock(sym, shares)
+.. js:function:: sell(sym, shares)
 
     :RAM cost: 2.5 GB
     :param string sym: Symbol of stock to sell

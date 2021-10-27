@@ -1,7 +1,7 @@
-getStockPosition() Netscript Function
+getPosition() Netscript Function
 =====================================
 
-.. js:function:: getStockPosition(sym)
+.. js:function:: getPosition(sym)
 
     :RAM cost: 2 GB
     :param string sym: Stock symbol
@@ -21,7 +21,7 @@ getStockPosition() Netscript Function
 
     Example::
 
-        pos = getStockPosition("ECP");
+        pos = getPosition("ECP");
         shares      = pos[0];
         avgPx       = pos[1];
         sharesShort = pos[2];

@@ -1,7 +1,7 @@
-shortStock() Netscript Function
+short() Netscript Function
 ===============================
 
-.. js:function:: shortStock(sym, shares)
+.. js:function:: short(sym, shares)
 
     :RAM cost: 2.5 GB
     :param string sym: Symbol of stock to short

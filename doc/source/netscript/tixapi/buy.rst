@@ -1,7 +1,7 @@
-buyStock() Netscript Function
+buy() Netscript Function
 =============================
 
-.. js:function:: buyStock(sym, shares)
+.. js:function:: buy(sym, shares)
 
     :RAM cost: 2.5 GB
     :param string sym: Symbol of stock to purchase

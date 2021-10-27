@@ -1096,7 +1096,7 @@ interface TIX {
      * @ramCost 2 GB
      * @returns {string[]} Array of the symbols of the tradable stocks.
      */
-    getStockSymbols (): StockSymbol[];
+    getSymbols (): StockSymbol[];
 
     /**
      * Returns the price of a stock, given its symbol (NOT the company name).
@@ -1106,13 +1106,13 @@ interface TIX {
      *
      * @example
      * \`\`\`js
-     * getStockPrice("FISG");
+     * getPrice("FISG");
      * \`\`\`
      * @ramCost 2 GB
      * @param {string} sym Stock symbol.
      * @returns {number} The price of a stock.
      */
-    getStockPrice (sym: StockSymbol): number;
+    getPrice (sym: StockSymbol): number;
 
     /**
      * Given a stock’s symbol (NOT the company name), returns the ask price of that stock.
@@ -1122,7 +1122,7 @@ interface TIX {
      * @param {string} sym Stock symbol.
      * @returns {number} The ask price of a stock.
      */
-    getStockAskPrice (sym: StockSymbol): number;
+    getAskPrice (sym: StockSymbol): number;
 
     /**
      * Given a stock’s symbol (NOT the company name), returns the bid price of that stock.
@@ -1132,7 +1132,7 @@ interface TIX {
      * @param {string} sym Stock symbol.
      * @returns {number} The bid price of a stock.
      */
-    getStockBidPrice (sym: StockSymbol): number;
+    getBidPrice (sym: StockSymbol): number;
 
     /**
      * Returns an array of four elements that represents the player’s position in a stock.
@@ -1149,7 +1149,7 @@ interface TIX {
      *
      * @example
      * \`\`\`js
-     * pos = getStockPosition("ECP");
+     * pos = getPosition("ECP");
      * shares      = pos[0];
      * avgPx       = pos[1];
      * sharesShort = pos[2];
@@ -1159,7 +1159,7 @@ interface TIX {
      * @param {string} sym Stock symbol.
      * @returns {[number,number,number,number]} Array of four elements that represents the player’s position in a stock.
      */
-    getStockPosition (sym: StockSymbol): [number, number, number, number];
+    getPosition (sym: StockSymbol): [number, number, number, number];
 
     /**
      * Returns the maximum number of shares that the stock has.
@@ -1170,7 +1170,7 @@ interface TIX {
      * @param {string} sym Stock symbol.
      * @returns {number} Maximum number of shares that the stock has.
      */
-    getStockMaxShares (sym: StockSymbol): number;
+    getMaxShares (sym: StockSymbol): number;
 
     /**
      * Calculates and returns how much it would cost to buy a given number of shares of a stock.
@@ -1182,7 +1182,7 @@ interface TIX {
      * @param {string} posType Specifies whether the order is a “Long” or “Short” position.
      * @returns {number} Cost to buy a given number of shares of a stock.
      */
-    getStockPurchaseCost (sym: StockSymbol, shares: Number, posType: OrderPos): number;
+    getPurchaseCost (sym: StockSymbol, shares: Number, posType: OrderPos): number;
 
     /**
      * Calculates and returns how much you would gain from selling a given number of shares of a stock.
@@ -1194,7 +1194,7 @@ interface TIX {
      * @param {string} posType Specifies whether the order is a “Long” or “Short” position.
      * @returns {number} Gain from selling a given number of shares of a stock.
      */
-    getStockSaleGain (sym: StockSymbol, shares: Number, posType: OrderPos): number;
+    getSaleGain (sym: StockSymbol, shares: Number, posType: OrderPos): number;
 
 
     /**
@@ -1212,7 +1212,7 @@ interface TIX {
      * @param {number} shares Number of shares to purchased. Must be positive. Will be rounded to nearest integer.
      * @returns {number} The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.
      */
-    buyStock (sym: StockSymbol, shares: number): number;
+    buy (sym: StockSymbol, shares: number): number;
 
     /**
      * Attempts to sell shares of a stock using a Market Order.
@@ -1234,7 +1234,7 @@ interface TIX {
      * @param {number} shares Number of shares to sell. Must be positive. Will be rounded to nearest integer.
      * @returns {number} The stock price at which each share was sold, otherwise 0 if the shares weren't sold.
      */
-    sellStock (sym: StockSymbol, shares: number): number;
+    sell (sym: StockSymbol, shares: number): number;
 
     /**
      * Attempts to purchase a short position of a stock using a Market Order.
@@ -1254,7 +1254,7 @@ interface TIX {
      * @param {number} shares Number of shares to short. Must be positive. Will be rounded to nearest integer.
      * @returns {number} The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.
      */
-    shortStock (sym: StockSymbol, shares: number): number;
+    short (sym: StockSymbol, shares: number): number;
 
     /**
      * Attempts to sell a short position of a stock using a Market Order.
@@ -1400,7 +1400,7 @@ interface TIX {
      * @param {string} sym Stock symbol.
      * @returns {number} Volatility of the specified stock.
      */
-    getStockVolatility (sym: StockSymbol): number;
+    getVolatility (sym: StockSymbol): number;
 
     /**
      * Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.
@@ -1417,7 +1417,7 @@ interface TIX {
      * @param {string} sym Stock symbol.
      * @returns {number} Probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.
      */
-    getStockForecast (sym: StockSymbol): number;
+    getForecast (sym: StockSymbol): number;
 
     /**
      * Purchase 4S Market Data Access.
@@ -3187,7 +3187,7 @@ interface Sleeve {
     purchaseSleeveAug (sleeveNumber: number, augName: AugmentName): boolean;
 }
 
-interface NS extends TIX, Singularity {
+interface NS extends Singularity {
 
     /**
      * Not all functions in the Hacknet Node API are immediately available.
@@ -3215,6 +3215,10 @@ interface NS extends TIX, Singularity {
      * @ramCost 0 GB
      */
     readonly sleeve: Sleeve;
+    /**
+     * @ramCost 0 GB
+     */
+    readonly stock: TIX;
 
     /**
      * Arguments passed into a script can be accessed using a normal

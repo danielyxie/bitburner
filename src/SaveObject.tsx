@@ -5,7 +5,7 @@ import { Factions, loadFactions } from "./Faction/Factions";
 import { loadAllGangs, AllGangs } from "./Gang/AllGangs";
 import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import { Player, loadPlayer } from "./Player";
-import { saveAllServers, loadAllServers } from "./Server/AllServers";
+import { saveAllServers, loadAllServers, GetAllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
@@ -169,6 +169,40 @@ function evaluateVersionCompatibility(ver: string): void {
     for (let i = 0; i < home.messages.length; i++) {
       if (home.messages[i].filename) {
         home.messages[i] = home.messages[i].filename;
+      }
+    }
+  }
+  if (ver < "0.58.0") {
+    const changes: [RegExp, string][] = [
+      [/getStockSymbols/g, "stock.getSymbols"],
+      [/getStockPrice/g, "stock.getPrice"],
+      [/getStockAskPrice/g, "stock.getAskPrice"],
+      [/getStockBidPrice/g, "stock.getBidPrice"],
+      [/getStockPosition/g, "stock.getPosition"],
+      [/getStockMaxShares/g, "stock.getMaxShares"],
+      [/getStockPurchaseCost/g, "stock.getPurchaseCost"],
+      [/getStockSaleGain/g, "stock.getSaleGain"],
+      [/buyStock/g, "stock.buy"],
+      [/sellStock/g, "stock.sell"],
+      [/shortStock/g, "stock.short"],
+      [/sellShort/g, "stock.sellShort"],
+      [/placeOrder/g, "stock.placeOrder"],
+      [/cancelOrder/g, "stock.cancelOrder"],
+      [/getOrders/g, "stock.getOrders"],
+      [/getStockVolatility/g, "stock.getVolatility"],
+      [/getStockForecast/g, "stock.getForecast"],
+      [/purchase4SMarketData/g, "stock.purchase4SMarketData"],
+      [/purchase4SMarketDataTixApi/g, "stock.purchase4SMarketDataTixApi"],
+    ];
+    function convert(code: string): string {
+      for (const change of changes) {
+        code = code.replace(change[0], change[1]);
+      }
+      return code;
+    }
+    for (const server of GetAllServers()) {
+      for (const script of server.scripts) {
+        script.code = convert(script.code);
       }
     }
   }

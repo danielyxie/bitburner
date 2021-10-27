@@ -1,7 +1,7 @@
-getStockSaleGain() Netscript Function
+getSaleGain() Netscript Function
 =====================================
 
-.. js:function:: getStockSaleGain(sym, shares, posType)
+.. js:function:: getSaleGain(sym, shares, posType)
 
     :RAM cost: 2 GB
     :param string sym: Stock symbol

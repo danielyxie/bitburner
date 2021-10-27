@@ -1,7 +1,7 @@
-getStockMaxShares() Netscript Function
+getMaxShares() Netscript Function
 ======================================
 
-.. js:function:: getStockMaxShares(sym)
+.. js:function:: getMaxShares(sym)
 
     :RAM cost: 2 GB
     :param string sym: Stock symbol

@@ -114,7 +114,7 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  Version: "0.57.0",
+  Version: "0.58.0",
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -281,55 +281,58 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v0.57.0 - 2021-10-16 It was too cheap! (hydroflame & community)
+    v0.58.0 - 2021-10-27 Road to Steam (hydroflame & community)
     -------------------------------------------
+
+    ** Announcement **
+
+    * To prepare for Steam we will fix some inconsistencies in the Netscript API. Ideally we can also write a
+      save file migration that will automatically convert all breaking changes in your scripts without any
+      player input.
 
     ** BREAKING (kindof) **
 
-    * purchased server cost now scales exponentially past 2^10.
-      I'm going to actually explain this one: Currently the cost of a 2^20GB server is 57b
-      Most players can get that before their first install. In an effort to nerf good players
-      a softcap was added. This softcap is different for every BN.
+    * All stock market functions are now under the 'stock' namespace, like 'hacknet'
+      However when you load your game with v0.58.0 for the first time it should automatically convert everything.
 
-    ** Script Editor **
+    ** Gang **
 
-    * Added a theme that is close to monokai. Unfortunately a full monokai is impossible because 
-      Monaco doesn't have a very good tokenizer.
-    * Opening a file and connecting to a new server will still save the file on the server that the file
-      was opened.
+    * Ascension formula now better
+    * Karma requirement now much lower in most nodes
+    * Territory heavily penalizes gains
+    * T.R.P. not available outside BN2.
 
     ** Netscript **
 
-    * New function: alert, which creates a textbox.
-    * New function: toast, creates a notification in the bottom right.
-    * New function: upgradeHomeCores (@Saynt_Garmo)
-    * New function: atExit, allows you to set a callback for when the script closes.
-    * New kindof function: autocomplete, this allows you to tell the game what it should
-      autocomplete on the terminal.
+    * It is no longer possible to send anything but strings or numbers to other scripts. (prevents exploits)
+    * Improve code for some netscript functions (@omuretsu)
 
-    ** Augmentation **
+    ** Script Editor ** 
 
-    * ENM Core (the Augmentation from The Black Hand with the highest rep cost) rep cost
-      reduced from 250 to 175. This will help new players transition from TBH to BitRunners more easily.
+    * Added Solarized light/dark as theme (@CalvinTrops)
+    * Fixed sleeve namespace smart autocomplete.
 
-    ** Bladeburner **
+    ** Hacknet Servers **
 
-    * New general action: Incite Violence. This action adds other action counts but increases chaos.
+    * Cores affect grow/weaken like they do on home computer
+
+    ** Infiltration **
+
+    * Slash game modified to be easier.
 
     ** Misc. **
 
-    * Current bladeburner action is shown on the character overview.
-    * Fix blackop being #000 on #000.
-    * The last clicked Tail Box goes in front of the others.
-    * Fixed an issue where some values were loaded as 0 when they should be null.
-    * Implemented toasts.
-    * .msg are no longer saved in the text file.
-    * Tail boxes no longer display all the args, they use "..." after 30 characters.
-    * Fixed cancelation penalty bonus not being properly applied after the IP <-> hostname switch.
-    * Fixed an exploit where you could send non-strings or numbers to other scripts.
-    * Fixed issue when trying to work for a faction with a work type that doesn't exist while
-      already working for that faction.
-    * Fixed not being able to work for the CIA. (Don't ask)
+    * Fix typo in corp (@Saynt_Garmo)
+    * Fixed a bug where corp wouldn't let you buyback shares. (@Saynt_Garmo)
+    * Fixed a bug where sleeves couldn't perform some crimes. (@Saynt_Garmo)
+    * Hospitalization and Eating noodles are now toasts (@Saynt_Garmo)
+    * Fixed some repeated code (@omuretsu)
+    * Fixed Character Overview preventing clicks underneath it even when hidden. (@omuretsu)
+    * Fixed typo in tutorial. (@omuretsu)
+    * Create Programs and Factions invitation badges now dissapear when you open their respective pages.
+    * Add killall script in character overview.
+    * Fixed bug in corp that made last city production be the production for all cities for newly created product.
+    * Fix bug that allowed reputation to transfer to new jobs.
     * nerf noodle bar
 `,
 };

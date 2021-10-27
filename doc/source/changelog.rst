@@ -3,6 +3,60 @@
 Changelog
 =========
 
+v0.58.0 - 2021-10-27 Road to Steam (hydroflame & community)
+-------------------------------------------
+
+** Announcement **
+
+* To prepare for Steam we will fix some inconsistencies in the Netscript API. Ideally we can also write a
+  save file migration that will automatically convert all breaking changes in your scripts without any
+  player input.
+
+** BREAKING (kindof) **
+
+* All stock market functions are now under the 'stock' namespace, like 'hacknet'
+  However when you load your game with v0.58.0 for the first time it should automatically convert everything.
+
+** Gang **
+
+* Ascension formula now better
+* Karma requirement now much lower in most nodes
+* Territory heavily penalizes gains
+* T.R.P. not available outside BN2.
+
+** Netscript **
+
+* It is no longer possible to send anything but strings or numbers to other scripts. (prevents exploits)
+* Improve code for some netscript functions (@omuretsu)
+
+** Script Editor ** 
+
+* Added Solarized light/dark as theme (@CalvinTrops)
+* Fixed sleeve namespace smart autocomplete.
+
+** Hacknet Servers **
+
+* Cores affect grow/weaken like they do on home computer
+
+** Infiltration **
+
+* Slash game modified to be easier.
+
+** Misc. **
+
+* Fix typo in corp (@Saynt_Garmo)
+* Fixed a bug where corp wouldn't let you buyback shares. (@Saynt_Garmo)
+* Fixed a bug where sleeves couldn't perform some crimes. (@Saynt_Garmo)
+* Hospitalization and Eating noodles are now toasts (@Saynt_Garmo)
+* Fixed some repeated code (@omuretsu)
+* Fixed Character Overview preventing clicks underneath it even when hidden. (@omuretsu)
+* Fixed typo in tutorial. (@omuretsu)
+* Create Programs and Factions invitation badges now dissapear when you open their respective pages.
+* Add killall script in character overview.
+* Fixed bug in corp that made last city production be the production for all cities for newly created product.
+* Fix bug that allowed reputation to transfer to new jobs.
+* nerf noodle bar
+
 v0.57.0 - 2021-10-16 It was too cheap! (hydroflame & community)
 -------------------------------------------
 

@@ -89,7 +89,7 @@ import { SnackbarEvents } from "./ui/React/Snackbar";
 import { Locations } from "./Locations/Locations";
 import { Flags } from "./NetscriptFunctions/Flags";
 
-interface NS extends INetscriptExtra, INetscriptAugmentations, INetscriptStockMarket {
+interface NS extends INetscriptExtra, INetscriptAugmentations {
   [key: string]: any;
   hacknet: INetscriptHacknet;
   gang: INetscriptGang;
@@ -98,6 +98,7 @@ interface NS extends INetscriptExtra, INetscriptAugmentations, INetscriptStockMa
   codingcontract: INetscriptCodingContract;
   corporation: INetscriptCorporation;
   formulas: INetscriptFormulas;
+  stock: INetscriptStockMarket;
 }
 
 function NetscriptFunctions(workerScript: WorkerScript): NS {
@@ -1482,7 +1483,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return getRunningScript(fn, hostname, "isRunning", scriptArgs) != null;
       }
     },
-    ...stockmarket,
+    stock: stockmarket,
     getPurchasedServerLimit: function (): any {
       updateDynamicRam("getPurchasedServerLimit", getRamCost("getPurchasedServerLimit"));
 
