@@ -19,6 +19,8 @@ export function compile(script: Script, scripts: Script[]): void {
   // by placing it inside an eval call.
   script.markUpdated();
   const uurls = _getScriptUrls(script, scripts, []);
+  if (script.url) URL.revokeObjectURL(script.url); // remove the old reference.
+  if (script.dependencies.length > 0) script.dependencies.forEach((dep) => URL.revokeObjectURL(dep.url));
   script.url = uurls[uurls.length - 1].url;
   script.module = new Promise((resolve) => resolve(eval("import(uurls[uurls.length - 1].url)")));
   script.dependencies = uurls;
