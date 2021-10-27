@@ -3,6 +3,7 @@ import { Location } from "../../Locations/Location";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { numeralWrapper } from "../../ui/numeralFormat";
 
 interface IProps {
   Location: Location;
@@ -60,6 +61,21 @@ export function Intro(props: IProps): React.ReactElement {
             Maximum level: {props.MaxLevel}
           </Typography>
         </Grid>
+        <Grid item xs={10}>
+          <Typography variant="h5" color="primary">
+            Difficulty: {numeralWrapper.format(props.Difficulty * 33.3333, "0")} / 100
+          </Typography>
+        </Grid>
+
+        {props.Difficulty > 1.5 && (
+          <Grid item xs={10}>
+            <Typography variant="h5" color="primary">
+              Warning: This location is too heavily guarded for your current stats, try training or finding an easier
+              location.
+            </Typography>
+          </Grid>
+        )}
+
         <Grid item xs={10}>
           <Typography sx={{ lineHeight: "1em", whiteSpace: "pre" }}>[{coloredArrow(props.Difficulty)}]</Typography>
           <Typography

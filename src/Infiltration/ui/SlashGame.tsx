@@ -26,12 +26,12 @@ const difficulties: {
 export function SlashGame(props: IMinigameProps): React.ReactElement {
   const difficulty: Difficulty = { window: 0 };
   interpolate(difficulties, props.difficulty, difficulty);
-  const [guarding, setGuarding] = useState(true);
+  const [phase, setPhase] = useState(0);
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     if (event.keyCode !== 32) return;
-    if (guarding) {
+    if (phase !== 2) {
       props.onFailure();
     } else {
       props.onSuccess();
@@ -39,14 +39,15 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
   }
 
   useEffect(() => {
-    let id2 = -1;
-    const id = window.setTimeout(() => {
-      setGuarding(false);
-      id2 = window.setTimeout(() => setGuarding(true), difficulty.window);
+    let id = window.setTimeout(() => {
+      setPhase(1);
+      id = window.setTimeout(() => {
+        setPhase(2);
+        id = window.setTimeout(() => setPhase(0), difficulty.window);
+      }, 250);
     }, Math.random() * 3250 + 1500);
     return () => {
       clearInterval(id);
-      if (id2 !== -1) clearInterval(id2);
     };
   }, []);
 
@@ -55,7 +56,9 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
       <GameTimer millis={5000} onExpire={props.onFailure} />
       <Grid item xs={12}>
         <Typography variant="h4">Slash when his guard is down!</Typography>
-        <Typography variant="h4">{guarding ? "!Guarding!" : "!ATTACKING!"}</Typography>
+        {phase === 0 && <Typography variant="h4">Guarding ...</Typography>}
+        {phase === 1 && <Typography variant="h4">Preparing?</Typography>}
+        {phase === 2 && <Typography variant="h4">ATTACKING!</Typography>}
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
       </Grid>
     </Grid>

@@ -27,6 +27,10 @@ to attempt infiltrations above mid-normal.
 ** Slash when his guard is down! **
 
 Press space when the guard is attacking you.
+There's 3 phase
+The first is guarding, where attacking back will result in failure.
+The 2nd is preparing, this informs you that in 250ms there will be an opening window to attack.
+The 3rd is attack, during this phase you can press space to slash and kill the enemy.
 
 ** Close the brackets **
 
