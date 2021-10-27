@@ -53,7 +53,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.00005,
       baseWanted: 0.0001,
-      baseMoney: 1,
+      baseMoney: 3,
       hackWeight: 100,
       difficulty: 1,
     },
@@ -66,7 +66,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.00008,
       baseWanted: 0.003,
-      baseMoney: 2.5,
+      baseMoney: 7.5,
       hackWeight: 85,
       chaWeight: 15,
       difficulty: 3.5,
@@ -80,7 +80,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.0001,
       baseWanted: 0.075,
-      baseMoney: 6,
+      baseMoney: 18,
       hackWeight: 80,
       chaWeight: 20,
       difficulty: 5,
@@ -118,7 +118,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.0004,
       baseWanted: 0.3,
-      baseMoney: 15,
+      baseMoney: 45,
       hackWeight: 80,
       chaWeight: 20,
       difficulty: 20,
@@ -132,7 +132,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.001,
       baseWanted: 1.25,
-      baseMoney: 120,
+      baseMoney: 360,
       hackWeight: 75,
       chaWeight: 25,
       difficulty: 25,
@@ -158,7 +158,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     name: "Ethical Hacking",
     params: {
       baseWanted: -0.001,
-      baseMoney: 1,
+      baseMoney: 3,
       hackWeight: 90,
       chaWeight: 10,
       difficulty: 1,
@@ -172,7 +172,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.00005,
       baseWanted: 0.00005,
-      baseMoney: 1.2,
+      baseMoney: 3.6,
       strWeight: 25,
       defWeight: 25,
       dexWeight: 25,
@@ -189,7 +189,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.00006,
       baseWanted: 0.002,
-      baseMoney: 5,
+      baseMoney: 15,
       agiWeight: 20,
       dexWeight: 20,
       chaWeight: 60,
@@ -209,7 +209,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.00004,
       baseWanted: 0.02,
-      baseMoney: 2.5,
+      baseMoney: 7.5,
       hackWeight: 10,
       strWeight: 25,
       defWeight: 25,
@@ -232,7 +232,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.00012,
       baseWanted: 0.05,
-      baseMoney: 15,
+      baseMoney: 45,
       strWeight: 5,
       defWeight: 5,
       agiWeight: 25,
@@ -249,7 +249,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.00014,
       baseWanted: 0.1,
-      baseMoney: 38,
+      baseMoney: 114,
       hackWeight: 20,
       strWeight: 15,
       defWeight: 15,
@@ -267,7 +267,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.0002,
       baseWanted: 0.24,
-      baseMoney: 58,
+      baseMoney: 174,
       hackWeight: 15,
       strWeight: 20,
       defWeight: 20,
@@ -289,7 +289,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.0002,
       baseWanted: 0.125,
-      baseMoney: 24,
+      baseMoney: 72,
       hackWeight: 25,
       strWeight: 25,
       dexWeight: 25,
@@ -305,7 +305,7 @@ export const gangMemberTasksMetadata: IGangMemberTaskMetadata[] = [
     params: {
       baseRespect: 0.004,
       baseWanted: 1.25,
-      baseMoney: 120,
+      baseMoney: 360,
       hackWeight: 30,
       strWeight: 5,
       defWeight: 5,

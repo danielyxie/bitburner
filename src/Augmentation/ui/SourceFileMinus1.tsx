@@ -32,7 +32,7 @@ export function SourceFileMinus1(): React.ReactElement {
             <Typography style={{ whiteSpace: "pre-wrap" }}>
               Source-File -1: Exploits in the BitNodes
               <br />
-              Level {exploits.length} / ?
+              Level {exploits.length} / {Object.keys(Exploit).length}
             </Typography>
           }
         />
