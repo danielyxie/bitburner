@@ -26,7 +26,7 @@ export function purchaseResleeve(r: Resleeve, p: IPlayer): boolean {
   if (!p.canAfford(cost)) {
     return false;
   }
-  p.loseMoney(cost);
+  p.loseMoney(cost, "other");
 
   // Set the player's exp
   p.hacking_exp = r.hacking_exp;

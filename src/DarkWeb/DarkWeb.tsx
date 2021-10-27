@@ -60,7 +60,7 @@ export function buyDarkwebItem(itemName: string): void {
   }
 
   // buy and push
-  Player.loseMoney(item.price);
+  Player.loseMoney(item.price, "other");
   Player.getHomeComputer().programs.push(item.program);
   Terminal.print(
     "You have purchased the " + item.program + " program. The new program can be found on your home computer.",

@@ -24,7 +24,7 @@ export function CoresButton(props: IProps): React.ReactElement {
   function buy(): void {
     if (maxCores) return;
     if (!props.p.canAfford(cost)) return;
-    props.p.loseMoney(cost);
+    props.p.loseMoney(cost, "servers");
     homeComputer.cpuCores++;
     props.rerender();
   }

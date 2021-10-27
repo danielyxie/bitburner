@@ -1235,8 +1235,7 @@ export class Bladeburner implements IBladeburner {
             let moneyGain = 0;
             if (!isOperation) {
               moneyGain = BladeburnerConstants.ContractBaseMoneyGain * rewardMultiplier * this.skillMultipliers.money;
-              player.gainMoney(moneyGain);
-              player.recordMoneySource(moneyGain, "bladeburner");
+              player.gainMoney(moneyGain, "bladeburner");
             }
 
             if (isOperation) {

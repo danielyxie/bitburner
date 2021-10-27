@@ -42,8 +42,7 @@ export function Victory(props: IProps): React.ReactElement {
     BitNodeMultipliers.InfiltrationMoney;
 
   function sell(): void {
-    player.gainMoney(moneyGain);
-    player.recordMoneySource(moneyGain, "infiltration");
+    player.gainMoney(moneyGain, "infiltration");
     quitInfiltration();
   }
 

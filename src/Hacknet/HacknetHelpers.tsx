@@ -50,7 +50,7 @@ export function purchaseHacknet(player: IPlayer): number {
     if (!player.canAfford(cost)) {
       return -1;
     }
-    player.loseMoney(cost);
+    player.loseMoney(cost, "hacknet");
     player.createHacknetServer();
     updateHashManagerCapacity(player);
 
@@ -69,7 +69,7 @@ export function purchaseHacknet(player: IPlayer): number {
     const name = "hacknet-node-" + numOwned;
     const node = new HacknetNode(name, player.hacknet_node_money_mult);
 
-    player.loseMoney(cost);
+    player.loseMoney(cost, "hacknet");
     player.hacknetNodes.push(node);
 
     return numOwned;
@@ -266,7 +266,7 @@ export function purchaseLevelUpgrade(player: IPlayer, node: HacknetNode | Hackne
     return false;
   }
 
-  player.loseMoney(cost);
+  player.loseMoney(cost, "hacknet");
   node.upgradeLevel(sanitizedLevels, player.hacknet_node_money_mult);
 
   return true;
@@ -305,7 +305,7 @@ export function purchaseRamUpgrade(player: IPlayer, node: HacknetNode | HacknetS
     return false;
   }
 
-  player.loseMoney(cost);
+  player.loseMoney(cost, "hacknet");
   node.upgradeRam(sanitizedLevels, player.hacknet_node_money_mult);
 
   return true;
@@ -336,7 +336,7 @@ export function purchaseCoreUpgrade(player: IPlayer, node: HacknetNode | Hacknet
     return false;
   }
 
-  player.loseMoney(cost);
+  player.loseMoney(cost, "hacknet");
   node.upgradeCore(sanitizedLevels, player.hacknet_node_money_mult);
 
   return true;
@@ -364,7 +364,7 @@ export function purchaseCacheUpgrade(player: IPlayer, node: HacknetServer, level
     return false;
   }
 
-  player.loseMoney(cost);
+  player.loseMoney(cost, "hacknet");
   node.upgradeCache(sanitizedLevels);
 
   return true;
@@ -398,8 +398,7 @@ function processAllHacknetNodeEarnings(player: IPlayer, numCycles: number): numb
 
 function processSingleHacknetNodeEarnings(player: IPlayer, numCycles: number, nodeObj: HacknetNode): number {
   const totalEarnings = nodeObj.process(numCycles);
-  player.gainMoney(totalEarnings);
-  player.recordMoneySource(totalEarnings, "hacknetnode");
+  player.gainMoney(totalEarnings, "hacknet");
 
   return totalEarnings;
 }
@@ -472,8 +471,7 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
 
     switch (upgName) {
       case "Sell for Money": {
-        player.gainMoney(upg.value);
-        player.recordMoneySource(upg.value, "hacknetnode");
+        player.gainMoney(upg.value, "hacknet");
         break;
       }
       case "Sell for Corporation Funds": {

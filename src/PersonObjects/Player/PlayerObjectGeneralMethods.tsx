@@ -328,21 +328,23 @@ export function setMoney(this: PlayerObject, money: number): void {
   this.money = new Decimal(money);
 }
 
-export function gainMoney(this: PlayerObject, money: number): void {
+export function gainMoney(this: PlayerObject, money: number, source: string): void {
   if (isNaN(money)) {
     console.error("NaN passed into Player.gainMoney()");
     return;
   }
   this.money = this.money.plus(money);
+  this.recordMoneySource(money, source);
 }
 
-export function loseMoney(this: PlayerObject, money: number): void {
+export function loseMoney(this: PlayerObject, money: number, source: string): void {
   if (isNaN(money)) {
     console.error("NaN passed into Player.loseMoney()");
     return;
   }
   if (this.money.eq(Infinity) && money === Infinity) return;
   this.money = this.money.minus(money);
+  this.recordMoneySource(-1 * money, source);
 }
 
 export function canAfford(this: IPlayer, cost: number): boolean {
@@ -353,7 +355,7 @@ export function canAfford(this: IPlayer, cost: number): boolean {
   return this.money.gte(cost);
 }
 
-export function recordMoneySource(this: IPlayer, amt: number, source: string): void {
+export function recordMoneySource(this: PlayerObject, amt: number, source: string): void {
   if (!(this.moneySourceA instanceof MoneySourceTracker)) {
     console.warn(`Player.moneySourceA was not properly initialized. Resetting`);
     this.moneySourceA = new MoneySourceTracker();
@@ -540,12 +542,7 @@ export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
   this.gainDexterityExp(dexExpGain);
   this.gainAgilityExp(agiExpGain);
   this.gainCharismaExp(chaExpGain);
-  this.gainMoney(moneyGain);
-  if (this.className) {
-    this.recordMoneySource(moneyGain, "class");
-  } else {
-    this.recordMoneySource(moneyGain, "work");
-  }
+  this.gainMoney(moneyGain, this.className ? "class" : "work");
   this.workHackExpGained += hackExpGain;
   this.workStrExpGained += strExpGain;
   this.workDefExpGained += defExpGain;
@@ -1513,8 +1510,7 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         );
         return "";
       }
-      this.gainMoney(this.workMoneyGained);
-      this.recordMoneySource(this.workMoneyGained, "crime");
+      this.gainMoney(this.workMoneyGained, "crime");
       this.karma -= crime.karma;
       this.numPeopleKilled += crime.kills;
       if (crime.intelligence_exp > 0) {
@@ -1703,8 +1699,7 @@ export function hospitalize(this: IPlayer): number {
     SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, "warning");
   }
 
-  this.loseMoney(cost);
-  this.recordMoneySource(-1 * cost, "hospitalization");
+  this.loseMoney(cost, "hospitalization");
   this.hp = this.max_hp;
   return cost;
 }
@@ -2601,8 +2596,7 @@ export function gainCodingContractReward(this: IPlayer, reward: ICodingContractR
     case CodingContractRewardType.Money:
     default: {
       const moneyGain = CONSTANTS.CodingContractBaseMoneyGain * difficulty * BitNodeMultipliers.CodingContractMoney;
-      this.gainMoney(moneyGain);
-      this.recordMoneySource(moneyGain, "codingcontract");
+      this.gainMoney(moneyGain, "codingcontract");
       return `Gained ${numeralWrapper.formatMoney(moneyGain)}`;
     }
   }

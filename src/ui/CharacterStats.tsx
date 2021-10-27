@@ -167,8 +167,14 @@ function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
   const player = use.Player();
   function convertMoneySourceTrackerToString(src: MoneySourceTracker): React.ReactElement {
     const parts: any[][] = [[`Total:`, <Money money={src.total} />]];
+    if (src.augmentations) {
+      parts.push([`Augmentations:`, <Money money={src.augmentations} />]);
+    }
     if (src.bladeburner) {
       parts.push([`Bladeburner:`, <Money money={src.bladeburner} />]);
+    }
+    if (src.casino) {
+      parts.push([`Casino:`, <Money money={src.casino} />]);
     }
     if (src.codingcontract) {
       parts.push([`Coding Contracts:`, <Money money={src.codingcontract} />]);
@@ -191,8 +197,8 @@ function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
     if (src.hacking) {
       parts.push([`Hacking:`, <Money money={src.hacking} />]);
     }
-    if (src.hacknetnode) {
-      parts.push([`Hacknet Nodes:`, <Money money={src.hacknetnode} />]);
+    if (src.hacknet) {
+      parts.push([`Hacknet Nodes:`, <Money money={src.hacknet} />]);
     }
     if (src.hospitalization) {
       parts.push([`Hospitalization:`, <Money money={src.hospitalization} />]);
@@ -200,14 +206,17 @@ function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
     if (src.infiltration) {
       parts.push([`Infiltration:`, <Money money={src.infiltration} />]);
     }
+    if (src.servers) {
+      parts.push([`Servers:`, <Money money={src.servers} />]);
+    }
     if (src.stock) {
       parts.push([`Stock Market:`, <Money money={src.stock} />]);
     }
-    if (src.casino) {
-      parts.push([`Casino:`, <Money money={src.casino} />]);
-    }
     if (src.sleeves) {
       parts.push([`Sleeves:`, <Money money={src.sleeves} />]);
+    }
+    if (src.other) {
+      parts.push([`Other:`, <Money money={src.other} />]);
     }
 
     return <StatsTable rows={parts} wide />;

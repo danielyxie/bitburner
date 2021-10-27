@@ -23,7 +23,7 @@ export function purchaseTorRouter(p: IPlayer): void {
     dialogBoxCreate("You cannot afford to purchase the TOR router!");
     return;
   }
-  p.loseMoney(CONSTANTS.TorRouterCost);
+  p.loseMoney(CONSTANTS.TorRouterCost, "other");
 
   const darkweb = safetlyCreateUniqueServer({
     ip: createUniqueRandomIp(),

@@ -253,7 +253,7 @@ const Engine: {
 
       let offlineReputation = 0;
       const offlineHackingIncome = (Player.moneySourceA.hacking / Player.playtimeSinceLastAug) * timeOffline * 0.75;
-      Player.gainMoney(offlineHackingIncome);
+      Player.gainMoney(offlineHackingIncome, "hacknet");
       // Process offline progress
       loadAllRunningScripts(); // This also takes care of offline production for those scripts
       if (Player.isWorking) {

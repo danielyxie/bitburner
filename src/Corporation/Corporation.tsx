@@ -134,8 +134,7 @@ export class Corporation {
             const retainedEarnings = cycleProfit - totalDividends;
             const dividendsPerShare = totalDividends / this.totalShares;
             const profit = this.numShares * dividendsPerShare * (1 - this.dividendTaxPercentage / 100);
-            player.gainMoney(profit);
-            player.recordMoneySource(profit, "corporation");
+            player.gainMoney(profit, "corporation");
             this.addFunds(retainedEarnings);
           }
         } else {

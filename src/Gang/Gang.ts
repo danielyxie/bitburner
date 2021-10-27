@@ -147,8 +147,7 @@ export class Gang {
       this.wanted = newWanted;
       if (this.wanted < 1) this.wanted = 1;
     }
-    player.gainMoney(moneyGains * numCycles);
-    player.recordMoneySource(moneyGains * numCycles, "gang");
+    player.gainMoney(moneyGains * numCycles, "gang");
   }
 
   processTerritoryAndPowerGains(numCycles = 1): void {
