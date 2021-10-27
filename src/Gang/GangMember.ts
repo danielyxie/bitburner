@@ -7,6 +7,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { AllGangs } from "./AllGangs";
 import { IGang } from "./IGang";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 interface IMults {
   hack: number;
@@ -121,9 +122,10 @@ export class GangMember {
       0.005,
       Math.pow(AllGangs[gang.facName].territory * 100, task.territory.respect) / 100,
     );
+    const territoryPenalty = (0.2 * gang.getTerritory() + 0.8) * BitNodeMultipliers.GangSoftcap;
     if (isNaN(territoryMult) || territoryMult <= 0) return 0;
     const respectMult = gang.getWantedPenalty();
-    return 11 * task.baseRespect * statWeight * territoryMult * respectMult;
+    return Math.pow(11 * task.baseRespect * statWeight * territoryMult * respectMult, territoryPenalty);
   }
 
   calculateWantedLevelGain(gang: IGang): number {
@@ -169,7 +171,8 @@ export class GangMember {
     const territoryMult = Math.max(0.005, Math.pow(AllGangs[gang.facName].territory * 100, task.territory.money) / 100);
     if (isNaN(territoryMult) || territoryMult <= 0) return 0;
     const respectMult = gang.getWantedPenalty();
-    return 5 * task.baseMoney * statWeight * territoryMult * respectMult;
+    const territoryPenalty = (0.2 * gang.getTerritory() + 0.8) * BitNodeMultipliers.GangSoftcap;
+    return Math.pow(5 * task.baseMoney * statWeight * territoryMult * respectMult, territoryPenalty);
   }
 
   expMult(): IMults {
