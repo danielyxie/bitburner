@@ -12,23 +12,23 @@ import { getStockMarket4SDataCost, getStockMarket4STixApiCost } from "../StockMa
 import { Stock } from "../StockMarket/Stock";
 
 export interface INetscriptStockMarket {
-  getStockSymbols(): any;
-  getStockPrice(symbol: any): any;
-  getStockAskPrice(symbol: any): any;
-  getStockBidPrice(symbol: any): any;
-  getStockPosition(symbol: any): any;
-  getStockMaxShares(symbol: any): any;
-  getStockPurchaseCost(symbol: any, shares: any, posType: any): any;
-  getStockSaleGain(symbol: any, shares: any, posType: any): any;
-  buyStock(symbol: any, shares: any): any;
-  sellStock(symbol: any, shares: any): any;
-  shortStock(symbol: any, shares: any): any;
+  getSymbols(): any;
+  getPrice(symbol: any): any;
+  getAskPrice(symbol: any): any;
+  getBidPrice(symbol: any): any;
+  getPosition(symbol: any): any;
+  getMaxShares(symbol: any): any;
+  getPurchaseCost(symbol: any, shares: any, posType: any): any;
+  getSaleGain(symbol: any, shares: any, posType: any): any;
+  buy(symbol: any, shares: any): any;
+  sell(symbol: any, shares: any): any;
+  short(symbol: any, shares: any): any;
   sellShort(symbol: any, shares: any): any;
   placeOrder(symbol: any, shares: any, price: any, type: any, pos: any): any;
   cancelOrder(symbol: any, shares: any, price: any, type: any, pos: any): any;
   getOrders(): any;
-  getStockVolatility(symbol: any): any;
-  getStockForecast(symbol: any): any;
+  getVolatility(symbol: any): any;
+  getForecast(symbol: any): any;
   purchase4SMarketData(): void;
   purchase4SMarketDataTixApi(): void;
 }
@@ -59,52 +59,52 @@ export function NetscriptStockMarket(
     return stock;
   };
   return {
-    getStockSymbols: function (): any {
-      helper.updateDynamicRam("getStockSymbols", getRamCost("getStockSymbols"));
-      checkTixApiAccess("getStockSymbols");
+    getSymbols: function (): any {
+      helper.updateDynamicRam("getSymbols", getRamCost("stock", "getSymbols"));
+      checkTixApiAccess("getSymbols");
       return Object.values(StockSymbols);
     },
-    getStockPrice: function (symbol: any): any {
-      helper.updateDynamicRam("getStockPrice", getRamCost("getStockPrice"));
-      checkTixApiAccess("getStockPrice");
-      const stock = getStockFromSymbol(symbol, "getStockPrice");
+    getPrice: function (symbol: any): any {
+      helper.updateDynamicRam("getPrice", getRamCost("stock", "getPrice"));
+      checkTixApiAccess("getPrice");
+      const stock = getStockFromSymbol(symbol, "getPrice");
 
       return stock.price;
     },
-    getStockAskPrice: function (symbol: any): any {
-      helper.updateDynamicRam("getStockAskPrice", getRamCost("getStockAskPrice"));
-      checkTixApiAccess("getStockAskPrice");
-      const stock = getStockFromSymbol(symbol, "getStockAskPrice");
+    getAskPrice: function (symbol: any): any {
+      helper.updateDynamicRam("getAskPrice", getRamCost("stock", "getAskPrice"));
+      checkTixApiAccess("getAskPrice");
+      const stock = getStockFromSymbol(symbol, "getAskPrice");
 
       return stock.getAskPrice();
     },
-    getStockBidPrice: function (symbol: any): any {
-      helper.updateDynamicRam("getStockBidPrice", getRamCost("getStockBidPrice"));
-      checkTixApiAccess("getStockBidPrice");
-      const stock = getStockFromSymbol(symbol, "getStockBidPrice");
+    getBidPrice: function (symbol: any): any {
+      helper.updateDynamicRam("getBidPrice", getRamCost("stock", "getBidPrice"));
+      checkTixApiAccess("getBidPrice");
+      const stock = getStockFromSymbol(symbol, "getBidPrice");
 
       return stock.getBidPrice();
     },
-    getStockPosition: function (symbol: any): any {
-      helper.updateDynamicRam("getStockPosition", getRamCost("getStockPosition"));
-      checkTixApiAccess("getStockPosition");
+    getPosition: function (symbol: any): any {
+      helper.updateDynamicRam("getPosition", getRamCost("stock", "getPosition"));
+      checkTixApiAccess("getPosition");
       const stock = SymbolToStockMap[symbol];
       if (stock == null) {
-        throw helper.makeRuntimeErrorMsg("getStockPosition", `Invalid stock symbol: ${symbol}`);
+        throw helper.makeRuntimeErrorMsg("getPosition", `Invalid stock symbol: ${symbol}`);
       }
       return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
     },
-    getStockMaxShares: function (symbol: any): any {
-      helper.updateDynamicRam("getStockMaxShares", getRamCost("getStockMaxShares"));
-      checkTixApiAccess("getStockMaxShares");
-      const stock = getStockFromSymbol(symbol, "getStockMaxShares");
+    getMaxShares: function (symbol: any): any {
+      helper.updateDynamicRam("getMaxShares", getRamCost("stock", "getMaxShares"));
+      checkTixApiAccess("getMaxShares");
+      const stock = getStockFromSymbol(symbol, "getMaxShares");
 
       return stock.maxShares;
     },
-    getStockPurchaseCost: function (symbol: any, shares: any, posType: any): any {
-      helper.updateDynamicRam("getStockPurchaseCost", getRamCost("getStockPurchaseCost"));
-      checkTixApiAccess("getStockPurchaseCost");
-      const stock = getStockFromSymbol(symbol, "getStockPurchaseCost");
+    getPurchaseCost: function (symbol: any, shares: any, posType: any): any {
+      helper.updateDynamicRam("getPurchaseCost", getRamCost("stock", "getPurchaseCost"));
+      checkTixApiAccess("getPurchaseCost");
+      const stock = getStockFromSymbol(symbol, "getPurchaseCost");
       shares = Math.round(shares);
 
       let pos;
@@ -124,10 +124,10 @@ export function NetscriptStockMarket(
 
       return res;
     },
-    getStockSaleGain: function (symbol: any, shares: any, posType: any): any {
-      helper.updateDynamicRam("getStockSaleGain", getRamCost("getStockSaleGain"));
-      checkTixApiAccess("getStockSaleGain");
-      const stock = getStockFromSymbol(symbol, "getStockSaleGain");
+    getSaleGain: function (symbol: any, shares: any, posType: any): any {
+      helper.updateDynamicRam("getSaleGain", getRamCost("stock", "getSaleGain"));
+      checkTixApiAccess("getSaleGain");
+      const stock = getStockFromSymbol(symbol, "getSaleGain");
       shares = Math.round(shares);
 
       let pos;
@@ -147,39 +147,39 @@ export function NetscriptStockMarket(
 
       return res;
     },
-    buyStock: function (symbol: any, shares: any): any {
-      helper.updateDynamicRam("buyStock", getRamCost("buyStock"));
-      checkTixApiAccess("buyStock");
-      const stock = getStockFromSymbol(symbol, "buyStock");
+    buy: function (symbol: any, shares: any): any {
+      helper.updateDynamicRam("buy", getRamCost("stock", "buy"));
+      checkTixApiAccess("buy");
+      const stock = getStockFromSymbol(symbol, "buy");
       const res = buyStock(stock, shares, workerScript, {});
       return res ? stock.price : 0;
     },
-    sellStock: function (symbol: any, shares: any): any {
-      helper.updateDynamicRam("sellStock", getRamCost("sellStock"));
-      checkTixApiAccess("sellStock");
-      const stock = getStockFromSymbol(symbol, "sellStock");
+    sell: function (symbol: any, shares: any): any {
+      helper.updateDynamicRam("sell", getRamCost("stock", "sell"));
+      checkTixApiAccess("sell");
+      const stock = getStockFromSymbol(symbol, "sell");
       const res = sellStock(stock, shares, workerScript, {});
 
       return res ? stock.price : 0;
     },
-    shortStock: function (symbol: any, shares: any): any {
-      helper.updateDynamicRam("shortStock", getRamCost("shortStock"));
-      checkTixApiAccess("shortStock");
+    short: function (symbol: any, shares: any): any {
+      helper.updateDynamicRam("short", getRamCost("stock", "short"));
+      checkTixApiAccess("short");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 1) {
           throw helper.makeRuntimeErrorMsg(
-            "shortStock",
+            "short",
             "You must either be in BitNode-8 or you must have Source-File 8 Level 2.",
           );
         }
       }
-      const stock = getStockFromSymbol(symbol, "shortStock");
+      const stock = getStockFromSymbol(symbol, "short");
       const res = shortStock(stock, shares, workerScript, {});
 
       return res ? stock.price : 0;
     },
     sellShort: function (symbol: any, shares: any): any {
-      helper.updateDynamicRam("sellShort", getRamCost("sellShort"));
+      helper.updateDynamicRam("sellShort", getRamCost("stock", "sellShort"));
       checkTixApiAccess("sellShort");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 1) {
@@ -195,7 +195,7 @@ export function NetscriptStockMarket(
       return res ? stock.price : 0;
     },
     placeOrder: function (symbol: any, shares: any, price: any, type: any, pos: any): any {
-      helper.updateDynamicRam("placeOrder", getRamCost("placeOrder"));
+      helper.updateDynamicRam("placeOrder", getRamCost("stock", "placeOrder"));
       checkTixApiAccess("placeOrder");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 2) {
@@ -234,7 +234,7 @@ export function NetscriptStockMarket(
       return placeOrder(stock, shares, price, orderType, orderPos, workerScript);
     },
     cancelOrder: function (symbol: any, shares: any, price: any, type: any, pos: any): any {
-      helper.updateDynamicRam("cancelOrder", getRamCost("cancelOrder"));
+      helper.updateDynamicRam("cancelOrder", getRamCost("stock", "cancelOrder"));
       checkTixApiAccess("cancelOrder");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 2) {
@@ -284,7 +284,7 @@ export function NetscriptStockMarket(
       return cancelOrder(params, workerScript);
     },
     getOrders: function (): any {
-      helper.updateDynamicRam("getOrders", getRamCost("getOrders"));
+      helper.updateDynamicRam("getOrders", getRamCost("stock", "getOrders"));
       checkTixApiAccess("getOrders");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 2) {
@@ -315,28 +315,28 @@ export function NetscriptStockMarket(
 
       return orders;
     },
-    getStockVolatility: function (symbol: any): any {
-      helper.updateDynamicRam("getStockVolatility", getRamCost("getStockVolatility"));
+    getVolatility: function (symbol: any): any {
+      helper.updateDynamicRam("getVolatility", getRamCost("stock", "getVolatility"));
       if (!player.has4SDataTixApi) {
-        throw helper.makeRuntimeErrorMsg("getStockVolatility", "You don't have 4S Market Data TIX API Access!");
+        throw helper.makeRuntimeErrorMsg("getVolatility", "You don't have 4S Market Data TIX API Access!");
       }
-      const stock = getStockFromSymbol(symbol, "getStockVolatility");
+      const stock = getStockFromSymbol(symbol, "getVolatility");
 
       return stock.mv / 100; // Convert from percentage to decimal
     },
-    getStockForecast: function (symbol: any): any {
-      helper.updateDynamicRam("getStockForecast", getRamCost("getStockForecast"));
+    getForecast: function (symbol: any): any {
+      helper.updateDynamicRam("getForecast", getRamCost("stock", "getForecast"));
       if (!player.has4SDataTixApi) {
-        throw helper.makeRuntimeErrorMsg("getStockForecast", "You don't have 4S Market Data TIX API Access!");
+        throw helper.makeRuntimeErrorMsg("getForecast", "You don't have 4S Market Data TIX API Access!");
       }
-      const stock = getStockFromSymbol(symbol, "getStockForecast");
+      const stock = getStockFromSymbol(symbol, "getForecast");
 
       let forecast = 50;
       stock.b ? (forecast += stock.otlkMag) : (forecast -= stock.otlkMag);
       return forecast / 100; // Convert from percentage to decimal
     },
     purchase4SMarketData: function () {
-      helper.updateDynamicRam("purchase4SMarketData", getRamCost("purchase4SMarketData"));
+      helper.updateDynamicRam("purchase4SMarketData", getRamCost("stock", "purchase4SMarketData"));
       checkTixApiAccess("purchase4SMarketData");
 
       if (player.has4SData) {
@@ -355,7 +355,7 @@ export function NetscriptStockMarket(
       return true;
     },
     purchase4SMarketDataTixApi: function () {
-      helper.updateDynamicRam("purchase4SMarketDataTixApi", getRamCost("purchase4SMarketDataTixApi"));
+      helper.updateDynamicRam("purchase4SMarketDataTixApi", getRamCost("stock", "purchase4SMarketDataTixApi"));
       checkTixApiAccess("purchase4SMarketDataTixApi");
 
       if (player.has4SDataTixApi) {

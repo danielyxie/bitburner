@@ -1,7 +1,7 @@
-getStockAskPrice() Netscript Function
+getAskPrice() Netscript Function
 =====================================
 
-.. js:function:: getStockAskPrice(sym)
+.. js:function:: getAskPrice(sym)
 
     :RAM cost: 2 GB
     :param string sym: Stock symbol

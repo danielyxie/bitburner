@@ -53,7 +53,7 @@ export function SetupTextEditor(): void {
   }
   symbols = populate(ns);
 
-  const exclude = ["heart", "break", "exploit", "bypass", "corporation"];
+  const exclude = ["heart", "break", "exploit", "bypass", "corporation", "alterReality"];
   symbols = symbols.filter((symbol: string) => !exclude.includes(symbol)).sort();
 }
 

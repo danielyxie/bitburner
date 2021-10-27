@@ -1,7 +1,7 @@
-getStockBidPrice() Netscript Function
+getBidPrice() Netscript Function
 =====================================
 
-.. js:function:: getStockBidPrice(sym)
+.. js:function:: getBidPrice(sym)
 
     :RAM cost: 2 GB
     :param string sym: Stock symbol

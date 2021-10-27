@@ -1,7 +1,7 @@
-getStockPurchaseCost() Netscript Function
+getPurchaseCost() Netscript Function
 =========================================
 
-.. js:function:: getStockPurchaseCost(sym, shares, posType)
+.. js:function:: getPurchaseCost(sym, shares, posType)
 
     :RAM cost: 2 GB
     :param string sym: Stock symbol

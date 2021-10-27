@@ -1,7 +1,7 @@
-getStockSymbols() Netscript Function()
+getSymbols() Netscript Function()
 ======================================
 
-.. js:function:: getStockSymbols()
+.. js:function:: getSymbols()
 
     :RAM cost: 2 GB
 

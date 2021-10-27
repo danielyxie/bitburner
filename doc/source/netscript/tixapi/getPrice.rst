@@ -1,7 +1,7 @@
-getStockPrice() Netscript Function
+getPrice() Netscript Function
 ==================================
 
-.. js:function:: getStockPrice(sym)
+.. js:function:: getPrice(sym)
 
     :RAM cost: 2 GB
     :param string sym: Stock symbol
@@ -15,4 +15,4 @@ getStockPrice() Netscript Function
 
     Example::
 
-        getStockPrice("FSIG");
+        getPrice("FSIG");

@@ -1,7 +1,7 @@
-getStockForecast() Netscript Function
+getForecast() Netscript Function
 =====================================
 
-.. js:function:: getStockForecast(sym)
+.. js:function:: getForecast(sym)
 
     :RAM cost: 2.5 GB
     :param string sym: Symbol of stock
