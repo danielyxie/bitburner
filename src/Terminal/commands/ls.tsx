@@ -143,10 +143,6 @@ export function ls(
     { segments: allScripts, style: { color: "yellow", fontStyle: "bold" } },
   ].filter((g) => g.segments.length > 0);
   for (let i = 0; i < groups.length; i++) {
-    if (i !== 0) {
-      terminal.print("");
-      terminal.print("");
-    }
     postSegments(groups[i].segments, groups[i].style);
   }
 }
