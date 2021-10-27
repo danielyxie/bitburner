@@ -162,10 +162,9 @@ async function parseOnlyRamCalculate(
       // Check if this identifier is a function in the workerScript environment.
       // If it is, then we need to get its RAM cost.
       try {
-        function applyFuncRam(func: any): number {
-          console.log(func);
-          if (typeof func === "number") {
-            return func;
+        function applyFuncRam(cost: any): number {
+          if (typeof cost === "number") {
+            return cost;
           } else {
             return 0;
           }
@@ -188,6 +187,8 @@ async function parseOnlyRamCalculate(
           func = workerScript.env.vars.gang[ref];
         } else if (ref in workerScript.env.vars.sleeve) {
           func = workerScript.env.vars.sleeve[ref];
+        } else if (ref in workerScript.env.vars.stock) {
+          func = workerScript.env.vars.stock[ref];
         } else {
           func = workerScript.env.vars[ref];
         }
