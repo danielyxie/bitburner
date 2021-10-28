@@ -23,7 +23,7 @@ export function listAllDarkwebItems(): void {
     const item = DarkWebItems[key];
     Terminal.printRaw(
       <>
-        {item.program} - <Money money={item.price} /> - {item.description}`
+        {item.program} - <Money money={item.price} /> - {item.description}
       </>,
     );
   }
