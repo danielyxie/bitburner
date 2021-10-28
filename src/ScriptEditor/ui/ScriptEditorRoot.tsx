@@ -15,7 +15,7 @@ import { calculateRamUsage } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { CursorPositions } from "../CursorPositions";
-import { libSource } from "../NetscriptDefinitions";
+
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
@@ -31,6 +31,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
+
+import libSource from "!!raw-loader!../NetscriptDefinitions";
 
 let symbolsLoaded = false;
 let symbols: string[] = [];
@@ -327,8 +329,9 @@ export function Root(props: IProps): React.ReactElement {
       l.language.tokenizer.root.unshift(["this", { token: "this" }]);
     })();
 
-    monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, "netscript.d.ts");
-    monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, "netscript.d.ts");
+    const source = (libSource + "").replace(/export /g, "");
+    monaco.languages.typescript.javascriptDefaults.addExtraLib(source, "netscript.d.ts");
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(source, "netscript.d.ts");
     loadThemes(monaco);
   }
   // 370px  71%, 725px  85.1%, 1085px 90%, 1300px 91.7%
