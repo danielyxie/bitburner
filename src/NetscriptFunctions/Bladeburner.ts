@@ -4,43 +4,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { Bladeburner } from "../Bladeburner/Bladeburner";
 import { getRamCost } from "../Netscript/RamCostGenerator";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-
-export interface INetscriptBladeburner {
-  getContractNames(): any;
-  getOperationNames(): any;
-  getBlackOpNames(): any;
-  getBlackOpRank(name?: any): any;
-  getGeneralActionNames(): any;
-  getSkillNames(): any;
-  startAction(type?: any, name?: any): any;
-  stopBladeburnerAction(): any;
-  getCurrentAction(): any;
-  getActionTime(type?: any, name?: any): any;
-  getActionEstimatedSuccessChance(type?: any, name?: any): any;
-  getActionRepGain(type?: any, name?: any, level?: any): any;
-  getActionCountRemaining(type?: any, name?: any): any;
-  getActionMaxLevel(type?: any, name?: any): any;
-  getActionCurrentLevel(type?: any, name?: any): any;
-  getActionAutolevel(type?: any, name?: any): any;
-  setActionAutolevel(type?: any, name?: any, autoLevel?: any): any;
-  setActionLevel(type?: any, name?: any, level?: any): any;
-  getRank(): any;
-  getSkillPoints(): any;
-  getSkillLevel(skillName?: any): any;
-  getSkillUpgradeCost(skillName?: any): any;
-  upgradeSkill(skillName: any): any;
-  getTeamSize(type?: any, name?: any): any;
-  setTeamSize(type?: any, name?: any, size?: any): any;
-  getCityEstimatedPopulation(cityName: any): any;
-  getCityCommunities(cityName: any): any;
-  getCityChaos(cityName: any): any;
-  getCity(): any;
-  switchCity(cityName: any): any;
-  getStamina(): any;
-  joinBladeburnerFaction(): any;
-  joinBladeburnerDivision(): any;
-  getBonusTime(): any;
-}
+import { Bladeburner as INetscriptBladeburner } from "../ScriptEditor/NetscriptDefinitions";
 
 export function NetscriptBladeburner(
   player: IPlayer,
