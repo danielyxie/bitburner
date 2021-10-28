@@ -526,6 +526,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculatePercentMoneyHacked(server, Player) * 100;
     },
+    hackAnalyzeSecurity: function (threads: any): number {
+      return CONSTANTS.ServerFortifyAmount * threads;
+    },
     hackChance: function (hostname: any): any {
       updateDynamicRam("hackChance", getRamCost("hackChance"));
 
@@ -617,6 +620,9 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return numCycleForGrowth(server, Number(growth), Player, cores);
     },
+    growthAnalyzeSecurity: function (threads: any): number {
+      return 2 * CONSTANTS.ServerFortifyAmount * threads;
+    },
     weaken: function (hostname: any, { threads: requestedThreads }: any = {}): any {
       updateDynamicRam("weaken", getRamCost("weaken"));
       const threads = resolveNetscriptRequestedThreads(workerScript, "weaken", requestedThreads);
@@ -662,8 +668,12 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         );
         workerScript.scriptRef.onlineExpGained += expGain;
         Player.gainHackingExp(expGain);
-        return Promise.resolve(CONSTANTS.ServerWeakenAmount * threads);
+        return Promise.resolve(CONSTANTS.ServerWeakenAmount * threads * coreBonus);
       });
+    },
+    weakenAnalyze: function (threads: any, cores: any = 1): number {
+      const coreBonus = 1 + (cores - 1) / 16;
+      return CONSTANTS.ServerWeakenAmount * threads * coreBonus;
     },
     print: function (...args: any[]): void {
       if (args.length === 0) {
