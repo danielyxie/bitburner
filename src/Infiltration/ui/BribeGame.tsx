@@ -33,16 +33,16 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
-    const k = event.keyCode;
-    if (k === 32) {
+    const k = event.key;
+    if (k === " ") {
       if (positive.includes(choices[index])) props.onSuccess();
       else props.onFailure();
       return;
     }
 
     let newIndex = index;
-    if ([38, 87, 68, 39].includes(k)) newIndex++;
-    if ([65, 37, 83, 40].includes(k)) newIndex--;
+    if (["ArrowUp", "w", "ArrowRight", "d"].includes(k)) newIndex++;
+    if (["ArrowDown", "s", "ArrowLeft", "a"].includes(k)) newIndex--;
     while (newIndex < 0) newIndex += choices.length;
     while (newIndex > choices.length - 1) newIndex -= choices.length;
     setIndex(newIndex);
