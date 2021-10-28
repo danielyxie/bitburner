@@ -44,7 +44,7 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
           <MoneyCost money={cost} corp={corp} />
         </Button>
         <Tooltip title={tooltip}>
-          <Typography>{data[4]} </Typography>
+          <Typography>{data[4]} - lvl {level}</Typography>
         </Tooltip>
       </Box>
     </Grid>
