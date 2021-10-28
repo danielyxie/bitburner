@@ -2408,7 +2408,7 @@ interface HackNet {
   spendHashes(upgName: HashUpgrades, upgTarget?: Host): boolean;
 }
 
-interface BladeBurner {
+export interface Bladeburner {
   /**
    * You have to be employed in the Bladeburner division and be in BitNode-7
    * or have Source-File 7 in order to use this function.
@@ -2804,9 +2804,9 @@ interface BladeBurner {
    *
    * @ramCost 4 GB
    * @param {string} cityName Name of city. Case-sensitive
-   * @returns {number} Estimated number of Synthoids communities in the specified city.
+   * @returns {number} Number of Synthoids communities in the specified city.
    */
-  getCityEstimatedCommunities(name: City): number;
+  getCityCommunities(name: City): number;
 
   /**
    * You have to be employed in the Bladeburner division and be in BitNode-7
@@ -3377,7 +3377,7 @@ export interface NS extends Singularity {
   /**
    * @ramCost 0 GB
    */
-  readonly bladeburner: BladeBurner;
+  readonly bladeburner: Bladeburner;
   /**
    * @ramCost 0 GB
    */
