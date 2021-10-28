@@ -3306,6 +3306,16 @@ interface NS extends Singularity {
     weaken (host: Host, opts?: BasicHGWOptions): Promise<number>;
 
     /**
+     * Returns the security decrease that would occur if a weaken with this many threads happened.
+     *
+     * @ramCost 1 GB
+     * @param {number} threads Amount of threads that will be used.
+     * @param {number} cores Optional. The number of cores of the server that would run weaken.
+     * @returns {number} The security decrease.
+     */
+    weakenAnalyze (threads: number, cores?: number): number;
+
+    /**
      * This function returns the number of script threads you need when running the {@link hack} command
      * to steal the specified amount of money from the target server.
      * If hackAmount is less than zero or greater than the amount of money available on the server,
@@ -3344,6 +3354,15 @@ interface NS extends Singularity {
     hackAnalyzePercent (host: Host): number;
 
     /**
+     * Returns the security increase that would occur if a hack with this many threads happened.
+     *
+     * @ramCost 1 GB
+     * @param {number} threads Amount of threads that will be used.
+     * @returns {number} The security increase.
+     */
+    hackAnalyzeSecurity (threads: number): number;
+
+    /**
      * Returns the chance you have of successfully hacking the specified server.
      *
      * This returned value is in decimal form, not percentage.
@@ -3373,6 +3392,16 @@ interface NS extends Singularity {
      * @returns {number} The amount of {@link grow} calls needed to grow the specified server by the specified amount
      */
     growthAnalyze (host: Host, growthAmount: number): number;
+
+
+    /**
+     * Returns the security increase that would occur if a grow with this many threads happened.
+     *
+     * @ramCost 1 GB
+     * @param {number} threads Amount of threads that will be used.
+     * @returns {number} The security increase.
+     */
+    growthAnalyzeSecurity (threads: number): number;
 
     /**
      * Suspends the script for n milliseconds.
