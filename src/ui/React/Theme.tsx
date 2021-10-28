@@ -15,6 +15,8 @@ declare module "@mui/material/styles" {
       cha: React.CSSProperties["color"];
       int: React.CSSProperties["color"];
       rep: React.CSSProperties["color"];
+      backgroundprimary: React.CSSProperties["color"];
+      backgroundsecondary: React.CSSProperties["color"];
     };
   }
   interface ThemeOptions {
@@ -26,6 +28,8 @@ declare module "@mui/material/styles" {
       cha: React.CSSProperties["color"];
       int: React.CSSProperties["color"];
       rep: React.CSSProperties["color"];
+      backgroundprimary: React.CSSProperties["color"];
+      backgroundsecondary: React.CSSProperties["color"];
     };
   }
 }
@@ -42,6 +46,8 @@ export function refreshTheme(): void {
       cha: Settings.theme.cha,
       int: Settings.theme.int,
       rep: Settings.theme.rep,
+      backgroundprimary: Settings.theme.backgroundprimary,
+      backgroundsecondary: Settings.theme.backgroundsecondary,
     },
     palette: {
       primary: {
@@ -70,7 +76,7 @@ export function refreshTheme(): void {
         dark: Settings.theme.warningdark,
       },
       background: {
-        default: Settings.theme.black,
+        default: Settings.theme.backgroundprimary,
         paper: Settings.theme.well,
       },
       action: {
@@ -138,7 +144,7 @@ export function refreshTheme(): void {
             border: "1px solid " + Settings.theme.well,
             // color: Settings.theme.primary,
             "&:hover": {
-              backgroundColor: Settings.theme.black,
+              backgroundColor: Settings.theme.backgroundsecondary,
             },
 
             borderRadius: 0,
@@ -189,7 +195,7 @@ export function refreshTheme(): void {
       MuiAccordionDetails: {
         styleOverrides: {
           root: {
-            backgroundColor: Settings.theme.black,
+            backgroundColor: Settings.theme.backgroundsecondary,
           },
         },
       },
@@ -231,7 +237,7 @@ export function refreshTheme(): void {
               display: "none",
             },
             scrollbarWidth: "none", // firefox
-            backgroundColor: Settings.theme.black,
+            backgroundColor: Settings.theme.backgroundsecondary,
           },
           paperAnchorDockedLeft: {
             borderRight: "1px solid " + Settings.theme.welllight,
@@ -266,7 +272,7 @@ export function refreshTheme(): void {
         styleOverrides: {
           root: {
             borderRadius: 0,
-            backgroundColor: Settings.theme.black,
+            backgroundColor: Settings.theme.backgroundsecondary,
             border: "1px solid " + Settings.theme.welllight,
           },
         },
