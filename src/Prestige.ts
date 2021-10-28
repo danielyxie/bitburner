@@ -65,6 +65,10 @@ export function prestigeAugmentation(): void {
     homeComp.programs.push(Programs.AutoLink.name);
   }
 
+  if (Player.sourceFileLvl(5) > 0) {
+    homeComp.programs.push(Programs.Formulas.name);
+  }
+
   // Re-create foreign servers
   initForeignServers(Player.getHomeComputer());
 
@@ -215,6 +219,10 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Messages
   initMessages();
+
+  if (Player.sourceFileLvl(5) > 0) {
+    homeComp.programs.push(Programs.Formulas.name);
+  }
 
   // BitNode 3: Corporatocracy
   if (Player.bitNodeN === 3) {

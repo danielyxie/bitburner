@@ -190,7 +190,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       time: CONSTANTS.MillisecondsPerQuarterHour,
     },
     run: (router: IRouter, terminal: ITerminal): void => {
-      terminal.error("This executable cannot be run.");
+      terminal.print("This executable cannot be run.");
       terminal.print("DeepscanV1.exe lets you run 'scan-analyze' with a depth up to 5.");
     },
   },
@@ -204,7 +204,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       time: CONSTANTS.MillisecondsPer2Hours,
     },
     run: (router: IRouter, terminal: ITerminal): void => {
-      terminal.error("This executable cannot be run.");
+      terminal.print("This executable cannot be run.");
       terminal.print("DeepscanV2.exe lets you run 'scan-analyze' with a depth up to 10.");
     },
   },
@@ -268,9 +268,23 @@ export const programsMetadata: IProgramCreationParams[] = [
       time: CONSTANTS.MillisecondsPerQuarterHour,
     },
     run: (router: IRouter, terminal: ITerminal): void => {
-      terminal.error("This executable cannot be run.");
+      terminal.print("This executable cannot be run.");
       terminal.print("AutoLink.exe lets you automatically connect to other servers when using 'scan-analyze'.");
       terminal.print("When using scan-analyze, click on a server's hostname to connect to it.");
+    },
+  },
+  {
+    key: "Formulas",
+    name: "Formulas.exe",
+    create: {
+      level: 1000,
+      tooltip: "This program allows you to use the formulas API",
+      req: requireHackingLevel(1000),
+      time: CONSTANTS.MillisecondsPer4Hours,
+    },
+    run: (router: IRouter, terminal: ITerminal): void => {
+      terminal.print("This executable cannot be run.");
+      terminal.print("Formulas.exe lets you use the formulas API.");
     },
   },
   {
