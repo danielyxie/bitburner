@@ -110,7 +110,6 @@ function WarehouseRoot(props: IProps): React.ReactElement {
 
   let breakdown = <></>;
   for (const matName in props.warehouse.materials) {
-    if (matName === "RealEstate") continue;
     const mat = props.warehouse.materials[matName];
     if (!MaterialSizes.hasOwnProperty(matName)) continue;
     if (mat.qty === 0) continue;
