@@ -5,6 +5,7 @@ import { sanitizeExploits } from "./Exploits/Exploit";
 import { Reviver } from "./utils/JSONReviver";
 
 import Decimal from "decimal.js";
+import { Programs } from "./Programs/Programs";
 
 export let Player = new PlayerObject();
 
@@ -29,4 +30,9 @@ export function loadPlayer(saveString: string): void {
   }
 
   Player.exploits = sanitizeExploits(Player.exploits);
+
+  const home = Player.getHomeComputer();
+  if (Player.sourceFileLvl(5) > 0 && !home.programs.includes(Programs.Formulas.name)) {
+    Player.getHomeComputer().programs.push(Programs.Formulas.name);
+  }
 }
