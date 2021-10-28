@@ -135,6 +135,8 @@ interface IDefaultSettings {
     int: string;
     rep: string;
     disabled: string;
+    backgroundprimary: string;
+    backgroundsecondary: string;
   };
 }
 
@@ -209,6 +211,8 @@ export const defaultSettings: IDefaultSettings = {
     int: "#6495ed",
     rep: "#faffdf",
     disabled: "#66cfbc",
+    backgroundprimary: "#000",
+    backgroundsecondary: "#000",
   },
 };
 
@@ -271,11 +275,17 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     int: defaultSettings.theme.int,
     rep: defaultSettings.theme.rep,
     disabled: defaultSettings.theme.disabled,
+    backgroundprimary: defaultSettings.theme.backgroundprimary,
+    backgroundsecondary: defaultSettings.theme.backgroundsecondary,
   },
   init() {
     Object.assign(Settings, defaultSettings);
   },
   load(saveString: string) {
-    Object.assign(Settings, JSON.parse(saveString));
+    const save = JSON.parse(saveString);
+    Object.assign(Settings.theme, save.theme);
+    delete save.theme;
+    Object.assign(Settings, save);
+    console.log(Settings);
   },
 };

@@ -229,6 +229,18 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
         color={customTheme["black"]}
         defaultColor={defaultSettings.theme["black"]}
       />
+      <ColorEditor
+        name="backgroundprimary"
+        onColorChange={onColorChange}
+        color={customTheme["backgroundprimary"]}
+        defaultColor={defaultSettings.theme["backgroundprimary"]}
+      />
+      <ColorEditor
+        name="backgroundsecondary"
+        onColorChange={onColorChange}
+        color={customTheme["backgroundsecondary"]}
+        defaultColor={defaultSettings.theme["backgroundsecondary"]}
+      />
 
       <br />
       <ColorEditor
