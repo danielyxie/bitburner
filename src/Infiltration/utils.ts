@@ -3,18 +3,18 @@ export function random(min: number, max: number): number {
 }
 
 export function getArrow(event: KeyboardEvent): string {
-  switch (event.keyCode) {
-    case 38:
-    case 87:
+  switch (event.key) {
+    case "ArrowUp":
+    case "w":
       return "↑";
-    case 65:
-    case 37:
+    case "ArrowLeft":
+    case "a":
       return "←";
-    case 40:
-    case 83:
+    case "ArrowDown":
+    case "s":
       return "↓";
-    case 39:
-    case 68:
+    case "ArrowRight":
+    case "d":
       return "→";
   }
   return "";

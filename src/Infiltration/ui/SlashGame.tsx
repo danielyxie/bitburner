@@ -30,7 +30,7 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
-    if (event.keyCode !== 32) return;
+    if (event.key !== " ") return;
     if (phase !== 2) {
       props.onFailure();
     } else {
