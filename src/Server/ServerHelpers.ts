@@ -89,8 +89,8 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
   if (oldMoneyAvailable !== server.moneyAvailable) {
     //Growing increases server security twice as much as hacking
     let usedCycles = numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable, p, cores);
-    usedCycles = Math.min(Math.max(0, usedCycles), threads);
-    server.fortify(2 * CONSTANTS.ServerFortifyAmount * Math.ceil(usedCycles));
+    usedCycles = Math.min(Math.max(0, Math.ceil(usedCycles)), threads);
+    server.fortify(2 * CONSTANTS.ServerFortifyAmount * usedCycles);
   }
   return server.moneyAvailable / oldMoneyAvailable;
 }
