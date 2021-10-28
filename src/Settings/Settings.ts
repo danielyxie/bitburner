@@ -137,6 +137,7 @@ interface IDefaultSettings {
     disabled: string;
     backgroundprimary: string;
     backgroundsecondary: string;
+    button: string;
   };
 }
 
@@ -213,6 +214,7 @@ export const defaultSettings: IDefaultSettings = {
     disabled: "#66cfbc",
     backgroundprimary: "#000",
     backgroundsecondary: "#000",
+    button: "#333",
   },
 };
 
@@ -277,6 +279,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     disabled: defaultSettings.theme.disabled,
     backgroundprimary: defaultSettings.theme.backgroundprimary,
     backgroundsecondary: defaultSettings.theme.backgroundsecondary,
+    button: defaultSettings.theme.button,
   },
   init() {
     Object.assign(Settings, defaultSettings);

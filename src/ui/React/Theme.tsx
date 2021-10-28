@@ -17,6 +17,7 @@ declare module "@mui/material/styles" {
       rep: React.CSSProperties["color"];
       backgroundprimary: React.CSSProperties["color"];
       backgroundsecondary: React.CSSProperties["color"];
+      button: React.CSSProperties["color"];
     };
   }
   interface ThemeOptions {
@@ -30,6 +31,7 @@ declare module "@mui/material/styles" {
       rep: React.CSSProperties["color"];
       backgroundprimary: React.CSSProperties["color"];
       backgroundsecondary: React.CSSProperties["color"];
+      button: React.CSSProperties["color"];
     };
   }
 }
@@ -48,6 +50,7 @@ export function refreshTheme(): void {
       rep: Settings.theme.rep,
       backgroundprimary: Settings.theme.backgroundprimary,
       backgroundsecondary: Settings.theme.backgroundsecondary,
+      button: Settings.theme.button,
     },
     palette: {
       primary: {
@@ -140,7 +143,7 @@ export function refreshTheme(): void {
       MuiButton: {
         styleOverrides: {
           root: {
-            backgroundColor: "#333",
+            backgroundColor: Settings.theme.button,
             border: "1px solid " + Settings.theme.well,
             // color: Settings.theme.primary,
             "&:hover": {
