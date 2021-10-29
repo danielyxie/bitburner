@@ -234,7 +234,6 @@ export function checkInfiniteLoop(code: string): number {
     {
       WhileStatement: (node: acorn.Node, st: any, walkDeeper: walk.WalkerCallback<any>) => {
         if (nodeHasTrueTest((node as any).test) && !hasAwait(node)) {
-          console.log(node);
           missingAwaitLine = (code.slice(0, node.start).match(/\n/g) || []).length + 1;
         } else {
           (node as any).body && walkDeeper((node as any).body, st);
