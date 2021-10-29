@@ -70,8 +70,9 @@ export function GoPublicModal(props: IProps): React.ReactElement {
           type="number"
           placeholder="Shares to issue"
           onKeyDown={onKeyDown}
+          
         />
-        <Button sx={{ mx: 1 }} onClick={goPublic}>
+     <Button disabled={shares < 0||shares>corp.numShares} sx={{ mx: 1 }} onClick={goPublic}>
           Go Public
         </Button>
       </Box>
