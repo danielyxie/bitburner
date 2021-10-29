@@ -27,6 +27,7 @@ export function LogBoxManager(): React.ReactElement {
     () =>
       LogBoxEvents.subscribe((script: RunningScript) => {
         const id = script.server + "-" + script.filename + script.args.map((x: any): string => `${x}`).join("-");
+        if (logs.find((l) => l.id === id)) return;
         setLogs((old) => {
           return [
             ...old,
