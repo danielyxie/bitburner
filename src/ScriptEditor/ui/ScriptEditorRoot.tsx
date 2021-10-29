@@ -11,7 +11,7 @@ import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 import { Script } from "../../Script/Script";
 import { TextFile } from "../../TextFile";
-import { calculateRamUsage } from "../../Script/RamCalculations";
+import { calculateRamUsage, checkInfiniteLoop } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { CursorPositions } from "../CursorPositions";
@@ -90,6 +90,7 @@ export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
   const [filename, setFilename] = useState(props.filename ? props.filename : lastFilename);
   const [code, setCode] = useState<string>(props.filename ? props.code : lastCode);
+  const [decorations, setDecorations] = useState<string[]>([]);
   hostname = props.filename ? props.hostname : hostname;
   if (hostname === "") {
     hostname = props.player.getCurrentServer().hostname;
@@ -231,6 +232,30 @@ export function Root(props: IProps): React.ReactElement {
     lastCode = newCode;
     if (editorRef.current !== null) {
       lastPosition = editorRef.current.getPosition();
+      const awaitWarning = checkInfiniteLoop(newCode);
+      if (awaitWarning !== -1) {
+        const newDecorations = editorRef.current.deltaDecorations(decorations, [
+          {
+            range: {
+              startLineNumber: awaitWarning,
+              startColumn: 1,
+              endLineNumber: awaitWarning,
+              endColumn: 10,
+            },
+            options: {
+              isWholeLine: true,
+              glyphMarginClassName: "myGlyphMarginClass",
+              glyphMarginHoverMessage: {
+                value: "Possible infinite loop, await something.",
+              },
+            },
+          },
+        ]);
+        setDecorations(newDecorations);
+      } else {
+        const newDecorations = editorRef.current.deltaDecorations(decorations, []);
+        setDecorations(newDecorations);
+      }
     }
     setCode(newCode);
     updateRAM(newCode);
@@ -364,7 +389,7 @@ export function Root(props: IProps): React.ReactElement {
         defaultValue={code}
         onChange={updateCode}
         theme={options.theme}
-        options={options}
+        options={{ ...options, glyphMargin: true }}
       />
       <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
         <Button onClick={beautify}>Beautify</Button>
