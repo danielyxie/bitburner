@@ -25,15 +25,15 @@ function BulkPurchaseText(props: IBulkPurchaseTextProps): React.ReactElement {
   const maxAmount = (props.warehouse.size - props.warehouse.sizeUsed) / matSize;
 
   if (parsedAmt * matSize > maxAmount) {
-    return <>Not enough warehouse space to purchase this amount</>;
+    return <><Typography color={"error"}>Not enough warehouse space to purchase this amount</Typography></>;
   } else if (isNaN(cost)) {
-    return <>Invalid put for Bulk Purchase amount</>;
+    return <><Typography color={"error"}>Invalid put for Bulk Purchase amount</Typography></>;
   } else {
     return (
-      <>
+     <><Typography>
         Purchasing {numeralWrapper.format(parsedAmt, "0,0.00")} of {props.mat.name} will cost{" "}
-        {numeralWrapper.formatMoney(cost)}
-      </>
+        {numeralWrapper.formatMoney(cost)}</Typography>
+         </>
     );
   }
 }
