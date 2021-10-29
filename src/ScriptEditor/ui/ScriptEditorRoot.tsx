@@ -227,35 +227,41 @@ export function Root(props: IProps): React.ReactElement {
     setFilename(event.target.value);
   }
 
+  function infLoop(newCode: string): void {
+    if (editorRef.current === null) return;
+    if (!filename.endsWith(".ns") && !filename.endsWith(".js")) return;
+    const awaitWarning = checkInfiniteLoop(newCode);
+    if (awaitWarning !== -1) {
+      const newDecorations = editorRef.current.deltaDecorations(decorations, [
+        {
+          range: {
+            startLineNumber: awaitWarning,
+            startColumn: 1,
+            endLineNumber: awaitWarning,
+            endColumn: 10,
+          },
+          options: {
+            isWholeLine: true,
+            glyphMarginClassName: "myGlyphMarginClass",
+            glyphMarginHoverMessage: {
+              value: "Possible infinite loop, await something.",
+            },
+          },
+        },
+      ]);
+      setDecorations(newDecorations);
+    } else {
+      const newDecorations = editorRef.current.deltaDecorations(decorations, []);
+      setDecorations(newDecorations);
+    }
+  }
+
   function updateCode(newCode?: string): void {
     if (newCode === undefined) return;
     lastCode = newCode;
     if (editorRef.current !== null) {
       lastPosition = editorRef.current.getPosition();
-      const awaitWarning = checkInfiniteLoop(newCode);
-      if (awaitWarning !== -1) {
-        const newDecorations = editorRef.current.deltaDecorations(decorations, [
-          {
-            range: {
-              startLineNumber: awaitWarning,
-              startColumn: 1,
-              endLineNumber: awaitWarning,
-              endColumn: 10,
-            },
-            options: {
-              isWholeLine: true,
-              glyphMarginClassName: "myGlyphMarginClass",
-              glyphMarginHoverMessage: {
-                value: "Possible infinite loop, await something.",
-              },
-            },
-          },
-        ]);
-        setDecorations(newDecorations);
-      } else {
-        const newDecorations = editorRef.current.deltaDecorations(decorations, []);
-        setDecorations(newDecorations);
-      }
+      infLoop(newCode);
     }
     setCode(newCode);
     updateRAM(newCode);
