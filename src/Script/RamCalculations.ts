@@ -6,7 +6,7 @@
  * the way
  */
 import * as walk from "acorn-walk";
-import { parse } from "acorn";
+import acorn, { parse } from "acorn";
 
 import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 
@@ -206,6 +206,46 @@ async function parseOnlyRamCalculate(
   }
 }
 
+export function checkInfiniteLoop(code: string): number {
+  const ast = parse(code, { sourceType: "module", ecmaVersion: "latest" });
+
+  function nodeHasTrueTest(node: acorn.Node): boolean {
+    return node.type === "Literal" && (node as any).raw === "true";
+  }
+
+  function hasAwait(ast: acorn.Node): boolean {
+    let hasAwait = false;
+    walk.recursive(
+      ast,
+      {},
+      {
+        AwaitExpression: () => {
+          hasAwait = true;
+        },
+      },
+    );
+    return hasAwait;
+  }
+
+  let missingAwaitLine = -1;
+  walk.recursive(
+    ast,
+    {},
+    {
+      WhileStatement: (node: acorn.Node, st: any, walkDeeper: walk.WalkerCallback<any>) => {
+        if (nodeHasTrueTest((node as any).test) && !hasAwait(node)) {
+          console.log(node);
+          missingAwaitLine = (code.slice(0, node.start).match(/\n/g) || []).length + 1;
+        } else {
+          (node as any).body && walkDeeper((node as any).body, st);
+        }
+      },
+    },
+  );
+
+  return missingAwaitLine;
+}
+
 /**
  * Helper function that parses a single script. It returns a map of all dependencies,
  * which are items in the code's AST that potentially need to be evaluated
@@ -214,7 +254,6 @@ async function parseOnlyRamCalculate(
  */
 function parseOnlyCalculateDeps(code: string, currentModule: string): any {
   const ast = parse(code, { sourceType: "module", ecmaVersion: "latest" });
-
   // Everything from the global scope goes in ".". Everything else goes in ".function", where only
   // the outermost layer of functions counts.
   const globalKey = currentModule + memCheckGlobalKey;
