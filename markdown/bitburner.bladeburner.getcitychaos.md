@@ -28,5 +28,5 @@ Chaos in the specified city.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

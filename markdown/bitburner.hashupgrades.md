@@ -4,6 +4,8 @@
 
 ## HashUpgrades type
 
+All Hash upgrade names.
+
 <b>Signature:</b>
 
 ```typescript

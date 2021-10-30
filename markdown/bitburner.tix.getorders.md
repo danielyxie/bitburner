@@ -8,7 +8,7 @@ Returns your order book for the stock market.
 
 This is an object containing information for all the Limit and Stop Orders you have in the stock market. The object has the following structure:
 
-```js
+```ts
 {
  StockSymbol1: [ // Array of orders for this stock
      {
@@ -43,12 +43,12 @@ Object containing information for all the Limit and Stop Orders you have in the 
 
 ## Remarks
 
-2.5 GB
+RAM cost: 2.5 GB
 
 ## Example
 
 
-```js
+```ts
 "If you do not have orders in Nova Medical (NVMD), then the returned object will not have a “NVMD” property."
 {
  ECP: [

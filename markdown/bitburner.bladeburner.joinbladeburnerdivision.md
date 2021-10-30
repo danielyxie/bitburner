@@ -25,5 +25,5 @@ True if you successfully join the Bladeburner division, or if you are already a 
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

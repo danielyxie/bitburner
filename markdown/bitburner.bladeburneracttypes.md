@@ -4,6 +4,8 @@
 
 ## BladeburnerActTypes type
 
+All Bladeburner action types.
+
 <b>Signature:</b>
 
 ```typescript

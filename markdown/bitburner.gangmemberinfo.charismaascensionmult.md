@@ -4,7 +4,7 @@
 
 ## GangMemberInfo.charismaAscensionMult property
 
-Charisma multiplier from ascension. Decimal form
+Charisma multiplier from ascension.
 
 <b>Signature:</b>
 

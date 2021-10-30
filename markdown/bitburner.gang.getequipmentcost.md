@@ -28,5 +28,5 @@ Cost to purchase the specified Equipment/Augmentation (number). Infinity for inv
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

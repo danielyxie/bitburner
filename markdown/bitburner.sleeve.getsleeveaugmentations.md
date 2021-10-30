@@ -28,5 +28,5 @@ List of augmentation names that this sleeve has installed.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

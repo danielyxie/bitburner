@@ -9,14 +9,14 @@ Returns the server’s instrinsic “growth parameter”. This growth parameter 
 <b>Signature:</b>
 
 ```typescript
-getServerGrowth(host: Host): number;
+getServerGrowth(host: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server. |
+|  host | string | Host or IP of target server. |
 
 <b>Returns:</b>
 
@@ -26,5 +26,5 @@ Parameter that affects the percentage by which the server’s money is increased
 
 ## Remarks
 
-0.1 GB
+RAM cost: 0.1 GB
 

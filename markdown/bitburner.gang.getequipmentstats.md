@@ -28,5 +28,5 @@ A dictionary containing the stats of the equipment.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

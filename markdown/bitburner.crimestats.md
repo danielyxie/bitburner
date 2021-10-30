@@ -4,6 +4,7 @@
 
 ## CrimeStats interface
 
+Data representing the internal values of a crime.
 
 <b>Signature:</b>
 
@@ -27,7 +28,7 @@ interface CrimeStats
 |  [hacking\_exp](./bitburner.crimestats.hacking_exp.md) | number | hacking exp gained from crime |
 |  [hacking\_success\_weight](./bitburner.crimestats.hacking_success_weight.md) | number | hacking level impact on success change of the crime |
 |  [intelligence\_exp](./bitburner.crimestats.intelligence_exp.md) | number | intelligence exp gained from crime |
-|  [karma](./bitburner.crimestats.karma.md) | number | Amount of karma lost for SUCCESSFULLY committing this crime |
+|  [karma](./bitburner.crimestats.karma.md) | number | Amount of karma lost for successfully committing this crime |
 |  [kills](./bitburner.crimestats.kills.md) | number | How many people die as a result of this crime |
 |  [money](./bitburner.crimestats.money.md) | number | How much money is given |
 |  [name](./bitburner.crimestats.name.md) | number | Name of crime |

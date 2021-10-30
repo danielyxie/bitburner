@@ -19,5 +19,5 @@ Returns the maximum RAM that a purchased server can have.
 
 ## Remarks
 
-0.05 GB
+RAM cost: 0.05 GB
 

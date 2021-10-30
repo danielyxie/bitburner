@@ -9,7 +9,7 @@ Get the data associated with the specific Coding Contract. Note that this is not
 <b>Signature:</b>
 
 ```typescript
-getData(fn: string, host?: Host): string;
+getData(fn: string, host?: string): string;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ getData(fn: string, host?: Host): string;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  fn | string | Filename of the contract. |
-|  host | [Host](./bitburner.host.md) | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  host | string | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
@@ -27,5 +27,5 @@ The specified contract’s data;
 
 ## Remarks
 
-5 GB
+RAM cost: 5 GB
 

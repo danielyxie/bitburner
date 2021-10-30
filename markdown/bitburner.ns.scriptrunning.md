@@ -11,15 +11,15 @@ This is different than the isRunning function because it does not try to identif
 <b>Signature:</b>
 
 ```typescript
-scriptRunning(script: Script, host: Host): boolean;
+scriptRunning(script: string, host: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | [Script](./bitburner.script.md) | Filename of script to check. This is case-sensitive. |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server. |
+|  script | string | Filename of script to check. This is case-sensitive. |
+|  host | string | Host or IP of target server. |
 
 <b>Returns:</b>
 
@@ -29,12 +29,12 @@ True if the specified script is running, and false otherwise.
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 
 ## Example 1
 
 
-```js
+```ts
 //The function call will return true if there is any script named foo.script running on the foodnstuff server, and false otherwise:
 scriptRunning("foo.script", "foodnstuff");
 ```
@@ -42,7 +42,7 @@ scriptRunning("foo.script", "foodnstuff");
 ## Example 2
 
 
-```js
+```ts
 //The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:
 scriptRunning("foo.script", getHostname());
 ```

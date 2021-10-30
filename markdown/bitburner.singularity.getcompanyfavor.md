@@ -28,5 +28,5 @@ Amount of favor you have at the specified company.
 
 ## Remarks
 
-1 GB  Level 2
+Singularity - Level 2
 

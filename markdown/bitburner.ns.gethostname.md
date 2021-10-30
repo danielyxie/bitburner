@@ -9,15 +9,15 @@ Returns a string with the hostname of the server that the script is running on.
 <b>Signature:</b>
 
 ```typescript
-getHostname(): Host;
+getHostname(): string;
 ```
 <b>Returns:</b>
 
-[Host](./bitburner.host.md)
+string
 
 Hostname of the server that the script is on.
 
 ## Remarks
 
-0.05 GB
+RAM cost: 0.05 GB
 

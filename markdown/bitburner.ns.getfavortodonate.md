@@ -19,5 +19,5 @@ Amount of Faction favor required to be able to donate to a faction.
 
 ## Remarks
 
-0.1 GB
+RAM cost: 0.1 GB
 

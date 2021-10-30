@@ -30,5 +30,5 @@ Volatility of the specified stock.
 
 ## Remarks
 
-2.5 GB
+RAM cost: 2.5 GB
 

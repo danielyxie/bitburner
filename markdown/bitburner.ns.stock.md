@@ -4,6 +4,8 @@
 
 ## NS.stock property
 
+Namespace for stock related functions.
+
 <b>Signature:</b>
 
 ```typescript
@@ -12,5 +14,5 @@ readonly stock: TIX;
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB
 

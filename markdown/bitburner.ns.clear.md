@@ -28,5 +28,5 @@ void
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 

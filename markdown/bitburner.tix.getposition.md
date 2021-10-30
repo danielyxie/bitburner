@@ -32,12 +32,12 @@ Array of four elements that represents the player’s position in a stock.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 
 ## Example
 
 
-```js
+```ts
 pos = getPosition("ECP");
 shares      = pos[0];
 avgPx       = pos[1];

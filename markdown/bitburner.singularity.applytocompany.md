@@ -31,5 +31,5 @@ True if the player successfully get a job/promotion, and false otherwise.
 
 ## Remarks
 
-3 GB  Level 2
+Singularity - Level 2
 

@@ -21,5 +21,5 @@ All valid tasks that Gang members can be assigned to.
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 

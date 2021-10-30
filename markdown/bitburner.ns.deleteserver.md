@@ -11,14 +11,14 @@ The hostname argument can be any data type, but it will be converted to a string
 <b>Signature:</b>
 
 ```typescript
-deleteServer(host: Host): boolean;
+deleteServer(host: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Host of the server to delete. |
+|  host | string | Host of the server to delete. |
 
 <b>Returns:</b>
 

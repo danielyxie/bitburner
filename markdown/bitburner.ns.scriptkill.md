@@ -9,15 +9,15 @@ Kills all scripts with the specified filename on the target server specified by 
 <b>Signature:</b>
 
 ```typescript
-scriptKill(script: Script, host: Host): boolean;
+scriptKill(script: string, host: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | [Script](./bitburner.script.md) | Filename of script to kill. This is case-sensitive. |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server. |
+|  script | string | Filename of script to kill. This is case-sensitive. |
+|  host | string | Host or IP of target server. |
 
 <b>Returns:</b>
 
@@ -27,5 +27,5 @@ true if one or more scripts were successfully killed, and false if none were.
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 

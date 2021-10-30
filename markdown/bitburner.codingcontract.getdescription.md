@@ -9,7 +9,7 @@ Get the full text description for the problem posed by the Coding Contract.
 <b>Signature:</b>
 
 ```typescript
-getDescription(fn: string, host?: Host): string;
+getDescription(fn: string, host?: string): string;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ getDescription(fn: string, host?: Host): string;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  fn | string | Filename of the contract. |
-|  host | [Host](./bitburner.host.md) | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  host | string | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
@@ -27,5 +27,5 @@ Contract’s text description.
 
 ## Remarks
 
-5 GB
+RAM cost: 5 GB
 

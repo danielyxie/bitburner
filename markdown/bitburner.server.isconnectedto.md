@@ -4,6 +4,8 @@
 
 ## Server.isConnectedTo property
 
+Flag indicating whether player is curently connected to this server
+
 <b>Signature:</b>
 
 ```typescript

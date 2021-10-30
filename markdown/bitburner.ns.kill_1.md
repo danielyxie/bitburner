@@ -26,12 +26,12 @@ True if the script is successfully killed, and false otherwise.
 
 ## Remarks
 
-0.5 GB
+RAM cost: 0.5 GB
 
 ## Example
 
 
-```js
+```ts
 if (kill(10)) {
     print("Killed script with PID 10!");
 }

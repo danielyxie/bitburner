@@ -4,6 +4,7 @@
 
 ## GangGenInfo interface
 
+Gang general info.
 
 <b>Signature:</b>
 

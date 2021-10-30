@@ -4,6 +4,7 @@
 
 ## ProcessInfo interface
 
+A single process on a server.
 
 <b>Signature:</b>
 
@@ -16,6 +17,6 @@ interface ProcessInfo
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [args](./bitburner.processinfo.args.md) | string\[\] | Script's arguments |
-|  [filename](./bitburner.processinfo.filename.md) | [Script](./bitburner.script.md) | Script name. |
+|  [filename](./bitburner.processinfo.filename.md) | string | Script name. |
 |  [threads](./bitburner.processinfo.threads.md) | number | Number of threads script is running with |
 

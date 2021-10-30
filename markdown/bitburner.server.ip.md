@@ -4,6 +4,8 @@
 
 ## Server.ip property
 
+IP Address. Must be unique
+
 <b>Signature:</b>
 
 ```typescript

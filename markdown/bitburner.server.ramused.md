@@ -4,6 +4,8 @@
 
 ## Server.ramUsed property
 
+RAM (GB) used. i.e. unavailable RAM
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,7 @@
 
 ## BitNodeMultipliers interface
 
+All multipliers affecting the difficulty of the current challenge.
 
 <b>Signature:</b>
 

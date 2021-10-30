@@ -4,6 +4,7 @@
 
 ## Bladeburner interface
 
+
 <b>Signature:</b>
 
 ```typescript

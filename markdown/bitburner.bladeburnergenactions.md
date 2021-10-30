@@ -4,6 +4,8 @@
 
 ## BladeburnerGenActions type
 
+All Bladeburner General Actions.
+
 <b>Signature:</b>
 
 ```typescript

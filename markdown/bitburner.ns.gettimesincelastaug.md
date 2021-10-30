@@ -19,5 +19,5 @@ Time in milliseconds that have passed since you last installed Augmentations.
 
 ## Remarks
 
-0.05 GB
+RAM cost: 0.05 GB
 

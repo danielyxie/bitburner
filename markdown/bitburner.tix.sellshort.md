@@ -33,5 +33,5 @@ The stock price at which each share was sold, otherwise 0 if the shares weren't 
 
 ## Remarks
 
-2.5 GB
+RAM cost: 2.5 GB
 

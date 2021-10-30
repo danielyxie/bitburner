@@ -11,14 +11,14 @@ Warning: The value returned by this function isn’t necessarily a whole number.
 <b>Signature:</b>
 
 ```typescript
-hackAnalyzeThreads(host: Host, hackAmount: number): number;
+hackAnalyzeThreads(host: string, hackAmount: number): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Hostname or IP of the target server to analyze. |
+|  host | string | Hostname of the target server to analyze. |
 |  hackAmount | number | Amount of money you want to hack from the server. |
 
 <b>Returns:</b>
@@ -29,12 +29,12 @@ The number of threads needed to hack the server for hackAmount money.
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 
 ## Example
 
 
-```js
+```ts
 //For example, let’s say the foodnstuff server has $10m and you run:
 hackAnalyzeThreads("foodnstuff", 1e6);
 //If this function returns 50, this means that if your next hack call is run on a script with 50 threads, it will steal $1m from the foodnstuff server.

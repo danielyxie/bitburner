@@ -26,5 +26,5 @@ Maximum number of shares that the stock has.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

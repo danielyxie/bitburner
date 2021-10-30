@@ -11,7 +11,7 @@ The ability to use limit and stop orders is \*\*not\*\* immediately available to
 <b>Signature:</b>
 
 ```typescript
-cancelOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPos): void;
+cancelOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPosition): void;
 ```
 
 ## Parameters
@@ -22,7 +22,7 @@ cancelOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, po
 |  shares | number | Number of shares for order. Must be positive. Will be rounded to nearest integer. |
 |  price | number | Execution price for the order. |
 |  type | [OrderType](./bitburner.ordertype.md) | Type of order. |
-|  pos | [OrderPos](./bitburner.orderpos.md) | Specifies whether the order is a “Long” or “Short” position. |
+|  pos | [OrderPosition](./bitburner.orderposition.md) | Specifies whether the order is a “Long” or “Short” position. |
 
 <b>Returns:</b>
 
@@ -30,5 +30,5 @@ void
 
 ## Remarks
 
-2.5 GB
+RAM cost: 2.5 GB
 

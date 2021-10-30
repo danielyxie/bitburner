@@ -9,14 +9,14 @@ Returns a boolean indicating whether or not the player has root access to the sp
 <b>Signature:</b>
 
 ```typescript
-hasRootAccess(host: Host): boolean;
+hasRootAccess(host: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Host or IP of the target server |
+|  host | string | Host or IP of the target server |
 
 <b>Returns:</b>
 
@@ -26,12 +26,12 @@ True if player has root access to the specified target server, and false otherwi
 
 ## Remarks
 
-0.05 GB
+RAM cost: 0.05 GB
 
 ## Example
 
 
-```js
+```ts
 if (hasRootAccess("foodnstuff") == false) {
    nuke("foodnstuff");
 }

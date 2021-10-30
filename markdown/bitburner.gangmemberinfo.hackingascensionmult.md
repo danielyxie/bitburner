@@ -4,7 +4,7 @@
 
 ## GangMemberInfo.hackingAscensionMult property
 
-Hacking multiplier from ascension. Decimal form
+Hacking multiplier from ascension.
 
 <b>Signature:</b>
 

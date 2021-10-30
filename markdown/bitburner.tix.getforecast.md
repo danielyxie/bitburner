@@ -32,5 +32,5 @@ Probability that the specified stock’s price will increase (as opposed to decr
 
 ## Remarks
 
-2.5 GB
+RAM cost: 2.5 GB
 

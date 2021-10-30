@@ -9,14 +9,14 @@ Returns the maximum amount of money that can be available on a server.
 <b>Signature:</b>
 
 ```typescript
-getServerMaxMoney(host: Host): number;
+getServerMaxMoney(host: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server. |
+|  host | string | Host or IP of target server. |
 
 <b>Returns:</b>
 
@@ -26,5 +26,5 @@ Maximum amount of money available on the server.
 
 ## Remarks
 
-0.1 GB
+RAM cost: 0.1 GB
 

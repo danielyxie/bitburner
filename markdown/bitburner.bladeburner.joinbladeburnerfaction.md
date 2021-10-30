@@ -25,5 +25,5 @@ True if you successfully join the Bladeburner faction, or if you are already a m
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

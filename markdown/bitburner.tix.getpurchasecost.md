@@ -9,7 +9,7 @@ Calculates and returns how much it would cost to buy a given number of shares of
 <b>Signature:</b>
 
 ```typescript
-getPurchaseCost(sym: StockSymbol, shares: number, posType: OrderPos): number;
+getPurchaseCost(sym: StockSymbol, shares: number, posType: OrderPosition): number;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ getPurchaseCost(sym: StockSymbol, shares: number, posType: OrderPos): number;
 |  --- | --- | --- |
 |  sym | [StockSymbol](./bitburner.stocksymbol.md) | Stock symbol. |
 |  shares | number | Number of shares to purchase. |
-|  posType | [OrderPos](./bitburner.orderpos.md) | Specifies whether the order is a “Long” or “Short” position. |
+|  posType | [OrderPosition](./bitburner.orderposition.md) | Specifies whether the order is a “Long” or “Short” position. |
 
 <b>Returns:</b>
 
@@ -28,5 +28,5 @@ Cost to buy a given number of shares of a stock.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

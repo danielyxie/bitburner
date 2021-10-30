@@ -9,14 +9,14 @@ Returns an array with general information about all scripts running on the speci
 <b>Signature:</b>
 
 ```typescript
-ps(host?: Host): ProcessInfo[];
+ps(host?: string): ProcessInfo[];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Host or IP address of the target server. If not specified, it will be the current server’s IP by default. |
+|  host | string | Host or IP address of the target server. If not specified, it will be the current server’s IP by default. |
 
 <b>Returns:</b>
 
@@ -26,12 +26,12 @@ Array with general information about all scripts running on the specified target
 
 ## Remarks
 
-0.2 GB
+RAM cost: 0.2 GB
 
 ## Example
 
 
-```js
+```ts
 //(using NetscriptJS (Netscript 2.0))
 export async function main(ns) {
    const ps = ns.ps("home");

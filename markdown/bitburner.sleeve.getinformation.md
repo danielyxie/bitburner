@@ -28,5 +28,5 @@ Object containing tons of information about this sleeve.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

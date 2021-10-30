@@ -4,20 +4,20 @@
 
 ## NS.kill() method
 
-Kills the script on the target server specified by the script’s name and arguments. Remember that scripts are uniquely identified by both their name and arguments. For example, if \`<!-- -->foo.script<!-- -->\` is run with the argument 1, then this is not the same as \`<!-- -->foo.script<!-- -->\` run with the argument 2, even though they have the same code.
+Kills the script on the target server specified by the script’s name and arguments. Remember that scripts are uniquely identified by both their name and arguments. For example, if `foo.script` is run with the argument 1, then this is not the same as `foo.script` run with the argument 2, even though they have the same code.
 
 <b>Signature:</b>
 
 ```typescript
-kill(script: Script, host: Host, ...args: string[]): boolean;
+kill(script: string, host: string, ...args: string[]): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | [Script](./bitburner.script.md) | Filename of the script to kill |
-|  host | [Host](./bitburner.host.md) | Hostname or IP of the server on which to kill the script. |
+|  script | string | Filename of the script to kill |
+|  host | string | Hostname of the server on which to kill the script. |
 |  args | string\[\] | Arguments to identify which script to kill. |
 
 <b>Returns:</b>
@@ -28,12 +28,12 @@ True if the script is successfully killed, and false otherwise.
 
 ## Remarks
 
-0.5 GB
+RAM cost: 0.5 GB
 
 ## Example 1
 
 
-```js
+```ts
 //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
 kill("foo.script", "foodnstuff");
 ```
@@ -41,7 +41,7 @@ kill("foo.script", "foodnstuff");
 ## Example 2
 
 
-```js
+```ts
 //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
 kill("foo.script", getHostname());
 ```
@@ -49,7 +49,7 @@ kill("foo.script", getHostname());
 ## Example 3
 
 
-```js
+```ts
 //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
 kill("foo.script", getHostname(), 1, "foodnstuff");
 ```

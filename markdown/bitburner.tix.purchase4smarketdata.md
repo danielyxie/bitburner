@@ -21,5 +21,5 @@ True if you successfully purchased it or if you already have access, false other
 
 ## Remarks
 
-2.5 GB
+RAM cost: 2.5 GB
 

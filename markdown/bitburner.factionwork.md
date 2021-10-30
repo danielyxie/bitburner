@@ -4,6 +4,8 @@
 
 ## FactionWork type
 
+All faction work types.
+
 <b>Signature:</b>
 
 ```typescript

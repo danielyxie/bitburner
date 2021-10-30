@@ -28,5 +28,5 @@ Augmentation stats.
 
 ## Remarks
 
-5 GB  Level 3
+Singularity - Level 3
 

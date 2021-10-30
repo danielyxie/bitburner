@@ -28,12 +28,12 @@ The price of a stock.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 
 ## Example
 
 
-```js
+```ts
 getPrice("FISG");
 ```
 

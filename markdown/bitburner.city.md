@@ -4,6 +4,8 @@
 
 ## City type
 
+All cities.
+
 <b>Signature:</b>
 
 ```typescript

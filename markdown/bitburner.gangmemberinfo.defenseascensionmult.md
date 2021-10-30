@@ -4,7 +4,7 @@
 
 ## GangMemberInfo.defenseAscensionMult property
 
-Defense multiplier from ascension. Decimal form
+Defense multiplier from ascension.
 
 <b>Signature:</b>
 

@@ -4,7 +4,7 @@
 
 ## GangMemberInfo.dexterityAscensionMult property
 
-Dexterity multiplier from ascension. Decimal form
+Dexterity multiplier from ascension.
 
 <b>Signature:</b>
 

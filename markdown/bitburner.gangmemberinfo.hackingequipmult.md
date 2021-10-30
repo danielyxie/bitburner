@@ -4,7 +4,7 @@
 
 ## GangMemberInfo.hackingEquipMult property
 
-Hacking multiplier from equipment. Decimal form
+Hacking multiplier from equipment.
 
 <b>Signature:</b>
 

@@ -4,7 +4,7 @@
 
 ## GangMemberAscension.def property
 
-Defense multiplier gained from ascending. Decimal form
+Defense multiplier gained from ascending.
 
 <b>Signature:</b>
 

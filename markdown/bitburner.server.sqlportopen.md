@@ -4,6 +4,8 @@
 
 ## Server.sqlPortOpen property
 
+Flag indicating whether SQL Port is open
+
 <b>Signature:</b>
 
 ```typescript

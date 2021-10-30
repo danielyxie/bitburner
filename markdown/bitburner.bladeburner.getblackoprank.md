@@ -30,5 +30,5 @@ Rank required to complete this BlackOp.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

@@ -9,14 +9,14 @@ Returns an array with two elements that gives information about a server’s mem
 <b>Signature:</b>
 
 ```typescript
-getServerRam(host: Host): [number, number];
+getServerRam(host: string): [number, number];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server. |
+|  host | string | Host or IP of target server. |
 
 <b>Returns:</b>
 
@@ -26,12 +26,12 @@ Array with total and used memory on the specified server.
 
 ## Remarks
 
-0.1 GB
+RAM cost: 0.1 GB
 
 ## Example
 
 
-```js
+```ts
 res = getServerRam("helios");
 totalRam = res[0];
 ramUsed = res[1];

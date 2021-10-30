@@ -21,5 +21,5 @@ Array of strings containing the names of all Bladeburner operations.
 
 ## Remarks
 
-0.4 GB
+RAM cost: 0.4 GB
 

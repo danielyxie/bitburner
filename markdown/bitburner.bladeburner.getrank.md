@@ -21,5 +21,5 @@ Player’s Bladeburner Rank.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

@@ -4,6 +4,8 @@
 
 ## NS.codingcontract property
 
+Namespace for codingcontract related functions.
+
 <b>Signature:</b>
 
 ```typescript
@@ -12,5 +14,5 @@ readonly codingcontract: CodingContract;
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB
 

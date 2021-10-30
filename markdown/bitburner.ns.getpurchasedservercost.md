@@ -26,12 +26,12 @@ The cost to purchase a server with the specified amount of ram.
 
 ## Remarks
 
-0.25 GB
+RAM cost: 0.25 GB
 
 ## Example
 
 
-```js
+```ts
 for (i = 1; i <= 20; i++) {
     tprint(i + " -- " + getPurchasedServerCost(Math.pow(2, i)));
 }

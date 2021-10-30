@@ -4,7 +4,7 @@
 
 ## GangMemberInfo.defenseEquipMult property
 
-Defense multiplier from equipment. Decimal form
+Defense multiplier from equipment.
 
 <b>Signature:</b>
 

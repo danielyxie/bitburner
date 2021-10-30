@@ -11,7 +11,7 @@ If the hostname/ip argument is omitted, then the function will search through th
 <b>Signature:</b>
 
 ```typescript
-fileExists(filename: string, host?: Host): boolean;
+fileExists(filename: string, host?: string): boolean;
 ```
 
 ## Parameters
@@ -19,7 +19,7 @@ fileExists(filename: string, host?: Host): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  filename | string | Filename of file to check. |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server. This is optional. If it is not specified then the function will use the current server as the target server. |
+|  host | string | Host or IP of target server. This is optional. If it is not specified then the function will use the current server as the target server. |
 
 <b>Returns:</b>
 
@@ -29,12 +29,12 @@ True if specified file exists, and false otherwise.
 
 ## Remarks
 
-0.1 GB
+RAM cost: 0.1 GB
 
 ## Example 1
 
 
-```js
+```ts
 //The function call will return true if the script named foo.script exists on the foodnstuff server, and false otherwise.
 fileExists("foo.script", "foodnstuff");
 ```
@@ -42,7 +42,7 @@ fileExists("foo.script", "foodnstuff");
 ## Example 2
 
 
-```js
+```ts
 //The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.
 fileExists("ftpcrack.exe");
 ```

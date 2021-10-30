@@ -4,6 +4,8 @@
 
 ## Server.ftpPortOpen property
 
+Flag indicating whether the FTP port is open
+
 <b>Signature:</b>
 
 ```typescript

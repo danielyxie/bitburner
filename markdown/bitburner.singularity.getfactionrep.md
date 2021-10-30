@@ -28,5 +28,5 @@ Amount of reputation you have for the specified faction.
 
 ## Remarks
 
-1 GB  Level 2
+Singularity - Level 2
 

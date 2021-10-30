@@ -4,6 +4,8 @@
 
 ## NS.gang property
 
+Namespace for gang related functions.
+
 <b>Signature:</b>
 
 ```typescript
@@ -12,5 +14,5 @@ readonly gang: Gang;
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB
 

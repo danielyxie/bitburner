@@ -4,6 +4,8 @@
 
 ## Server.httpPortOpen property
 
+Flag indicating whether HTTP Port is open
+
 <b>Signature:</b>
 
 ```typescript

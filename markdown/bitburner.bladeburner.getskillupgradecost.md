@@ -30,5 +30,5 @@ Number of skill points needed to upgrade the specified skill.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

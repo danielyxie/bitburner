@@ -11,9 +11,9 @@ Copies a script or literature (.lit) file(s) to another server. The files argume
 ```typescript
 scp(
     files: string | ReadonlyArray<string>,
-    source: Host,
+    source: string,
     // tslint:disable-next-line:unified-signatures
-    destination: Host,
+    destination: string,
   ): boolean;
 ```
 
@@ -22,8 +22,8 @@ scp(
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  files | string \| ReadonlyArray&lt;string&gt; | Filename or an array of filenames of script/literature files to copy. |
-|  source | [Host](./bitburner.host.md) | Host or IP of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server. |
-|  destination | [Host](./bitburner.host.md) | Host or IP of the destination server, which is the server to which the file will be copied. |
+|  source | string | Host or IP of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server. |
+|  destination | string | Host or IP of the destination server, which is the server to which the file will be copied. |
 
 <b>Returns:</b>
 
@@ -33,12 +33,12 @@ True if the script/literature file is successfully copied over and false otherwi
 
 ## Remarks
 
-0.6 GB
+RAM cost: 0.6 GB
 
 ## Example 1
 
 
-```js
+```ts
 //Copies foo.lit from the helios server to the home computer:
 scp("foo.lit", "helios", "home");
 ```
@@ -46,7 +46,7 @@ scp("foo.lit", "helios", "home");
 ## Example 2
 
 
-```js
+```ts
 //Tries to copy three files from rothman-uni to home computer:
 files = ["foo1.lit", "foo2.script", "foo3.script"];
 scp(files, "rothman-uni", "home");

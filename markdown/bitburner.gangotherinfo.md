@@ -4,6 +4,7 @@
 
 ## GangOtherInfo type
 
+
 <b>Signature:</b>
 
 ```typescript

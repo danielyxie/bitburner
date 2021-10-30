@@ -4,6 +4,7 @@
 
 ## AugmentationStats interface
 
+Data representing the internal values of an Augmentation.
 
 <b>Signature:</b>
 
@@ -33,7 +34,7 @@ interface AugmentationStats
 |  [faction\_rep\_mult?](./bitburner.augmentationstats.faction_rep_mult.md) | number | <i>(Optional)</i> Multipler to amount of reputation gained when working |
 |  [hacking\_chance\_mult?](./bitburner.augmentationstats.hacking_chance_mult.md) | number | <i>(Optional)</i> Multipler to chance of successfully performing a hack |
 |  [hacking\_exp\_mult?](./bitburner.augmentationstats.hacking_exp_mult.md) | number | <i>(Optional)</i> Multipler to hacking experience gain rate |
-|  [hacking\_grow\_mult?](./bitburner.augmentationstats.hacking_grow_mult.md) | number | <i>(Optional)</i> Multipler to amount of money injected into servers using grow)<!-- -->} |
+|  [hacking\_grow\_mult?](./bitburner.augmentationstats.hacking_grow_mult.md) | number | <i>(Optional)</i> Multipler to amount of money injected into servers using grow |
 |  [hacking\_money\_mult?](./bitburner.augmentationstats.hacking_money_mult.md) | number | <i>(Optional)</i> Multipler to amount of money the player gains from hacking |
 |  [hacking\_mult?](./bitburner.augmentationstats.hacking_mult.md) | number | <i>(Optional)</i> Multipler to hacking skill |
 |  [hacking\_speed\_mult?](./bitburner.augmentationstats.hacking_speed_mult.md) | number | <i>(Optional)</i> Multipler to hacking speed |

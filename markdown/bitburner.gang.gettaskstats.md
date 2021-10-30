@@ -28,5 +28,5 @@ Detailed stats of a task.
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 

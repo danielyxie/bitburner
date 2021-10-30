@@ -4,6 +4,7 @@
 
 ## GangEquipmentStats interface
 
+Object representing data representing a gang member equipment.
 
 <b>Signature:</b>
 

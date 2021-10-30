@@ -9,14 +9,14 @@ Returns the amount of money available on a server. Running this function on the 
 <b>Signature:</b>
 
 ```typescript
-getServerMoneyAvailable(host: Host): number;
+getServerMoneyAvailable(host: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server |
+|  host | string | Host or IP of target server |
 
 <b>Returns:</b>
 
@@ -26,12 +26,12 @@ Amount of money available on the server.
 
 ## Remarks
 
-0.1 GB
+RAM cost: 0.1 GB
 
 ## Example
 
 
-```js
+```ts
 getServerMoneyAvailable("foodnstuff");
 getServerMoneyAvailable("home"); //Returns player's money
 ```

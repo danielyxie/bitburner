@@ -9,14 +9,14 @@ Runs the NUKE.exe program on the target server. NUKE.exe must exist on your home
 <b>Signature:</b>
 
 ```typescript
-nuke(host: Host): void;
+nuke(host: string): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Hostname or IP of the target server. |
+|  host | string | Hostname of the target server. |
 
 <b>Returns:</b>
 
@@ -24,12 +24,12 @@ void
 
 ## Remarks
 
-0.05 GB
+RAM cost: 0.05 GB
 
 ## Example
 
 
-```js
+```ts
 nuke("foodnstuff");
 ```
 

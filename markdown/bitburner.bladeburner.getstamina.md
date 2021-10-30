@@ -21,12 +21,12 @@ Array containing current stamina and max stamina.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 
 ## Example
 
 
-```js
+```ts
 function getStaminaPercentage() {
    let res = bladeburner.getStamina();
    return res[0] / res[1];

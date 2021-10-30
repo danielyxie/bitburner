@@ -11,14 +11,14 @@ Warning: The value returned by this function isn’t necessarily a whole number.
 <b>Signature:</b>
 
 ```typescript
-growthAnalyze(host: Host, growthAmount: number): number;
+growthAnalyze(host: string, growthAmount: number): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Hostname or IP of the target server. |
+|  host | string | Hostname of the target server. |
 |  growthAmount | number | Multiplicative factor by which the server is grown. Decimal form.. |
 
 <b>Returns:</b>
@@ -29,12 +29,12 @@ The amount of grow calls needed to grow the specified server by the specified am
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 
 ## Example
 
 
-```js
+```ts
 //For example, if you want to determine how many grow calls you need to double the amount of money on foodnstuff, you would use:
 growthAnalyze("foodnstuff", 2);
 //If this returns 100, then this means you need to call grow 100 times in order to double the money (or once with 100 threads).

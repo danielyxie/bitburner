@@ -4,6 +4,7 @@
 
 ## HacknetMultipliers interface
 
+Hacknet related multipliers.
 
 <b>Signature:</b>
 

@@ -4,6 +4,8 @@
 
 ## StockSymbol type
 
+All possible stock market symbols.
+
 <b>Signature:</b>
 
 ```typescript

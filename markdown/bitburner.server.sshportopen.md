@@ -4,6 +4,8 @@
 
 ## Server.sshPortOpen property
 
+Flag indicating whether the SSH Port is open
+
 <b>Signature:</b>
 
 ```typescript

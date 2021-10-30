@@ -17,5 +17,5 @@ void
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB
 

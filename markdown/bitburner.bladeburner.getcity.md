@@ -21,5 +21,5 @@ City that the player is currently in (for Bladeburner).
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

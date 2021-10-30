@@ -9,14 +9,14 @@ Returns the required hacking level of the target server.
 <b>Signature:</b>
 
 ```typescript
-getServerRequiredHackingLevel(host: Host): number;
+getServerRequiredHackingLevel(host: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server. |
+|  host | string | Host or IP of target server. |
 
 <b>Returns:</b>
 
@@ -26,5 +26,5 @@ The required hacking level of the target server.
 
 ## Remarks
 
-0.1 GB
+RAM cost: 0.1 GB
 

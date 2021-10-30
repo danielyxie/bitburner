@@ -25,5 +25,5 @@ Bonus time for the Gang mechanic in seconds.
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB
 

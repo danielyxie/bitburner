@@ -9,14 +9,14 @@ Returns an array with the filenames of all files on the specified server (as str
 <b>Signature:</b>
 
 ```typescript
-ls(host: Host, grep?: string): string[];
+ls(host: string, grep?: string): string[];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Host or IP of the target server. |
+|  host | string | Host or IP of the target server. |
 |  grep | string | A substring to search for in the filename. |
 
 <b>Returns:</b>
@@ -27,5 +27,5 @@ Array with the filenames of all files on the specified server.
 
 ## Remarks
 
-0.2 GB
+RAM cost: 0.2 GB
 

@@ -15,14 +15,14 @@ Note that creating a program using this function has the same hacking level requ
 <b>Signature:</b>
 
 ```typescript
-createProgram(program: CreatableProgram): boolean;
+createProgram(program: Programs): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  program | [CreatableProgram](./bitburner.creatableprogram.md) | Name of program to create. |
+|  program | [Programs](./bitburner.programs.md) | Name of program to create. |
 
 <b>Returns:</b>
 
@@ -32,12 +32,12 @@ True if you successfully start working on the specified program, and false other
 
 ## Remarks
 
-5 GB  Level 3
+Singularity - Level 3
 
 ## Example
 
 
-```js
+```ts
 createProgram(“relaysmtp.exe”);
 ```
 

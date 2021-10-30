@@ -26,5 +26,5 @@ True if the player click “Yes” and false if the player clicks “No”.
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB
 

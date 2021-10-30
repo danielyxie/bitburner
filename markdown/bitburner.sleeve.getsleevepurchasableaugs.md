@@ -28,5 +28,5 @@ List of augmentations that the player can buy for this sleeve.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

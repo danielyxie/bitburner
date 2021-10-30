@@ -34,5 +34,5 @@ Remaining count of the specified action.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

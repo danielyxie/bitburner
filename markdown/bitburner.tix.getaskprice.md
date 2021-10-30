@@ -26,5 +26,5 @@ The ask price of a stock.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

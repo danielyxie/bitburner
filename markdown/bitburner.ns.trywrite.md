@@ -27,5 +27,5 @@ True if the data is successfully written to the port, and false otherwise.
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 

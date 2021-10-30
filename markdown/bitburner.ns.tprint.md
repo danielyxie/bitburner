@@ -9,14 +9,14 @@ Prints a value or a variable to the Terminal.
 <b>Signature:</b>
 
 ```typescript
-tprint(msg: string | number | string[] | number[]): void;
+tprint(msg: any): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  msg | string \| number \| string\[\] \| number\[\] | Value to be printed. |
+|  msg | any | Value to be printed. |
 
 <b>Returns:</b>
 
@@ -24,5 +24,5 @@ void
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB
 

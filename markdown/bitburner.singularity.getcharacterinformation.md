@@ -21,5 +21,5 @@ Object with various information about your character.
 
 ## Remarks
 
-0.5 GB  Level 1
+Singularity - Level 1
 

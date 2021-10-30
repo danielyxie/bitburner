@@ -4,6 +4,7 @@
 
 ## CodingAttemptOptions interface
 
+Options to affect the behavior of [CodingContract](./bitburner.codingcontract.md) attempt.
 
 <b>Signature:</b>
 

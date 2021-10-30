@@ -4,6 +4,8 @@
 
 ## StockOrder type
 
+Return value of [getOrders](./bitburner.tix.getorders.md)
+
 <b>Signature:</b>
 
 ```typescript

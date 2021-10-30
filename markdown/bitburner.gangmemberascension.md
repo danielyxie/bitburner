@@ -15,11 +15,11 @@ interface GangMemberAscension
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [agi](./bitburner.gangmemberascension.agi.md) | number | Agility multiplier gained from ascending. Decimal form |
-|  [cha](./bitburner.gangmemberascension.cha.md) | number | Charisma multiplier gained from ascending. Decimal form |
-|  [def](./bitburner.gangmemberascension.def.md) | number | Defense multiplier gained from ascending. Decimal form |
-|  [dex](./bitburner.gangmemberascension.dex.md) | number | Dexterity multiplier gained from ascending. Decimal form |
-|  [hack](./bitburner.gangmemberascension.hack.md) | number | Hacking multiplier gained from ascending. Decimal form |
+|  [agi](./bitburner.gangmemberascension.agi.md) | number | Agility multiplier gained from ascending. |
+|  [cha](./bitburner.gangmemberascension.cha.md) | number | Charisma multiplier gained from ascending. |
+|  [def](./bitburner.gangmemberascension.def.md) | number | Defense multiplier gained from ascending. |
+|  [dex](./bitburner.gangmemberascension.dex.md) | number | Dexterity multiplier gained from ascending. |
+|  [hack](./bitburner.gangmemberascension.hack.md) | number | Hacking multiplier gained from ascending. |
 |  [respect](./bitburner.gangmemberascension.respect.md) | number | Amount of respect lost from ascending |
-|  [str](./bitburner.gangmemberascension.str.md) | number | Strength multiplier gained from ascending. Decimal form |
+|  [str](./bitburner.gangmemberascension.str.md) | number | Strength multiplier gained from ascending. |
 

@@ -4,6 +4,8 @@
 
 ## BladeburnerOperations type
 
+All Bladeburner Ops.
+
 <b>Signature:</b>
 
 ```typescript

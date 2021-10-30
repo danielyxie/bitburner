@@ -4,6 +4,7 @@
 
 ## TIX interface
 
+Stock market API
 
 <b>Signature:</b>
 
@@ -22,7 +23,7 @@ interface TIX
 |  [getForecast(sym)](./bitburner.tix.getforecast.md) | Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.<!-- -->The probability is returned as a decimal value, NOT a percentage (e.g. if a stock has a 60% chance of increasing, then this function will return 0.6, NOT 60).<!-- -->In other words, if this function returned 0.30 for a stock, then this means that the stock’s price has a 30% chance of increasing and a 70% chance of decreasing during the next tick.<!-- -->In order to use this function, you must first purchase access to the Four Sigma (4S) Market Data TIX API. |
 |  [getMaxShares(sym)](./bitburner.tix.getmaxshares.md) | Returns the maximum number of shares that the stock has. This is the maximum amount of the stock that can be purchased in both the Long and Short positions combined. |
 |  [getOrders()](./bitburner.tix.getorders.md) | Returns your order book for the stock market.<!-- -->This is an object containing information for all the Limit and Stop Orders you have in the stock market. The object has the following structure:
-```js
+```ts
 {
  StockSymbol1: [ // Array of orders for this stock
      {

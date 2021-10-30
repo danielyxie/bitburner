@@ -4,6 +4,8 @@
 
 ## OrderType type
 
+All possible stock market order type.
+
 <b>Signature:</b>
 
 ```typescript

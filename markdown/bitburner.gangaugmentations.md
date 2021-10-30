@@ -4,6 +4,8 @@
 
 ## GangAugmentations type
 
+All Gang augmentations.
+
 <b>Signature:</b>
 
 ```typescript

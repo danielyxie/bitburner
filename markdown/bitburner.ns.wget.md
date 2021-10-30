@@ -32,12 +32,12 @@ True if the data was successfully retrieved from the URL, false otherwise.
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB
 
 ## Example
 
 
-```js
+```ts
 wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
 ```
 

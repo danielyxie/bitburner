@@ -4,6 +4,8 @@
 
 ## BladeburnerSkills type
 
+All Bladeburner Skills.
+
 <b>Signature:</b>
 
 ```typescript

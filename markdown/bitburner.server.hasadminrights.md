@@ -4,6 +4,8 @@
 
 ## Server.hasAdminRights property
 
+Flag indicating whether player has admin/root access to this server
+
 <b>Signature:</b>
 
 ```typescript

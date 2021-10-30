@@ -4,7 +4,7 @@
 
 ## NodeStats.name property
 
-Node's name ("hacknet-node-5")
+Node's name
 
 <b>Signature:</b>
 

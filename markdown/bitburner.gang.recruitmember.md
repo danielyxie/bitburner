@@ -30,5 +30,5 @@ True if the member was successfully recruited, false otherwise.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

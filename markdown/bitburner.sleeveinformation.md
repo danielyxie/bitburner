@@ -4,6 +4,7 @@
 
 ## SleeveInformation interface
 
+Object representing sleeve information.
 
 <b>Signature:</b>
 

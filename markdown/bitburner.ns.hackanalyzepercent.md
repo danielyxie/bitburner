@@ -9,14 +9,14 @@ Returns the percentage of the specified server’s money you will steal with a s
 <b>Signature:</b>
 
 ```typescript
-hackAnalyzePercent(host: Host): number;
+hackAnalyzePercent(host: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Hostname or IP of the target server. |
+|  host | string | Hostname of the target server. |
 
 <b>Returns:</b>
 
@@ -26,12 +26,12 @@ The percentage of money you will steal from the target server with a single hack
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 
 ## Example
 
 
-```js
+```ts
 //For example, assume the following returns 1:
 hackAnalyzePercent("foodnstuff");
 //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N% of its total money.

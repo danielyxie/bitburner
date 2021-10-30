@@ -9,14 +9,14 @@ Runs the HTTPWorm.exe program on the target server. HTTPWorm.exe must exist on y
 <b>Signature:</b>
 
 ```typescript
-httpworm(host: Host): void;
+httpworm(host: string): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Hostname or IP of the target server. |
+|  host | string | Hostname of the target server. |
 
 <b>Returns:</b>
 
@@ -24,12 +24,12 @@ void
 
 ## Remarks
 
-0.05 GB
+RAM cost: 0.05 GB
 
 ## Example
 
 
-```js
+```ts
 httpworm("foodnstuff");
 ```
 

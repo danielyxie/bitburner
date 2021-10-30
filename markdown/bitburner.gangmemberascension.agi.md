@@ -4,7 +4,7 @@
 
 ## GangMemberAscension.agi property
 
-Agility multiplier gained from ascending. Decimal form
+Agility multiplier gained from ascending.
 
 <b>Signature:</b>
 

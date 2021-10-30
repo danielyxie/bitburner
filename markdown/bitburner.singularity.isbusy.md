@@ -21,5 +21,5 @@ True if the player is currently performing an ‘action’, false otherwise.
 
 ## Remarks
 
-0.5 GB  Level 1
+Singularity - Level 1
 

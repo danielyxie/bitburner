@@ -9,16 +9,16 @@ Attempts to solve the Coding Contract with the provided solution.
 <b>Signature:</b>
 
 ```typescript
-attempt(answer: string | string[] | number, fn: string, host?: Host): boolean;
+attempt(answer: string | string[] | number, fn: string, host?: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  answer | string \| string\[\] \| number |  |
+|  answer | string \| string\[\] \| number | Solution for the contract. |
 |  fn | string | Filename of the contract. |
-|  host | [Host](./bitburner.host.md) | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  host | string | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
@@ -28,5 +28,5 @@ True if the solution was correct, false otherwise.
 
 ## Remarks
 
-10 GB  - Solution for the contract.
+10 GB
 

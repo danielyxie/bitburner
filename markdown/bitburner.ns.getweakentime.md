@@ -9,14 +9,14 @@ Returns the amount of time in seconds it takes to execute the weaken() Netscript
 <b>Signature:</b>
 
 ```typescript
-getWeakenTime(host: Host, hackLvl?: number, intLvl?: number): number;
+getWeakenTime(host: string, hackLvl?: number, intLvl?: number): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server. |
+|  host | string | Host or IP of target server. |
 |  hackLvl | number | Optional hacking level for the calculation. Defaults to player’s current hacking level. |
 |  intLvl | number | Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5). |
 
@@ -28,5 +28,5 @@ Returns the amount of time in seconds it takes to execute the grow Netscript fun
 
 ## Remarks
 
-0.05 GB
+RAM cost: 0.05 GB
 
