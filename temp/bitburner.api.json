@@ -19462,7 +19462,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "interface TIX "
+              "text": "export interface TIX "
             }
           ],
           "releaseTag": "Public",
@@ -19471,7 +19471,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#buy:member(1)",
-              "docComment": "/**\n * Attempts to purchase shares of a stock using a Market Order.\n *\n * If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased. Remember that every transaction on the stock exchange costs a certain commission fee.\n *\n * If this function successfully purchases the shares, it will return the stock price at which each share was purchased. Otherwise, it will return 0.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to purchased. Must be positive. Will be rounded to nearest integer.\n *\n * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.\n */\n",
+              "docComment": "/**\n * Buy stocks.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB Attempts to purchase shares of a stock using a Market Order.\n *\n * If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased. Remember that every transaction on the stock exchange costs a certain commission fee.\n *\n * If this function successfully purchases the shares, it will return the stock price at which each share was purchased. Otherwise, it will return 0.\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to purchased. Must be positive. Will be rounded to nearest integer.\n *\n * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19531,7 +19531,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#cancelOrder:member(1)",
-              "docComment": "/**\n * Cancels an oustanding Limit or Stop order on the stock market.\n *\n * The ability to use limit and stop orders is **not** immediately available to the player and must be unlocked later on in the game.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares for order. Must be positive. Will be rounded to nearest integer.\n *\n * @param price - Execution price for the order.\n *\n * @param type - Type of order.\n *\n * @param pos - Specifies whether the order is a “Long” or “Short” position.\n */\n",
+              "docComment": "/**\n * Cancel order for stocks.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB Cancels an oustanding Limit or Stop order on the stock market.\n *\n * The ability to use limit and stop orders is **not** immediately available to the player and must be unlocked later on in the game.\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares for order. Must be positive. Will be rounded to nearest integer.\n *\n * @param price - Execution price for the order.\n *\n * @param type - Type of order.\n *\n * @param pos - Specifies whether the order is a “Long” or “Short” position.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19638,7 +19638,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getAskPrice:member(1)",
-              "docComment": "/**\n * Given a stock’s symbol (NOT the company name), returns the ask price of that stock. The symbol is a sequence of two to four capital letters.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @param sym - Stock symbol.\n *\n * @returns The ask price of a stock.\n */\n",
+              "docComment": "/**\n * Returns the ask price of that stock.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @param sym - Stock symbol.\n *\n * @returns The ask price of a stock.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19683,7 +19683,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getBidPrice:member(1)",
-              "docComment": "/**\n * Given a stock’s symbol (NOT the company name), returns the bid price of that stock. The symbol is a sequence of two to four capital letters.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @param sym - Stock symbol.\n *\n * @returns The bid price of a stock.\n */\n",
+              "docComment": "/**\n * Returns the bid price of that stock.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @param sym - Stock symbol.\n *\n * @returns The bid price of a stock.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19728,7 +19728,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getForecast:member(1)",
-              "docComment": "/**\n * Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.\n *\n * The probability is returned as a decimal value, NOT a percentage (e.g. if a stock has a 60% chance of increasing, then this function will return 0.6, NOT 60).\n *\n * In other words, if this function returned 0.30 for a stock, then this means that the stock’s price has a 30% chance of increasing and a 70% chance of decreasing during the next tick.\n *\n * In order to use this function, you must first purchase access to the Four Sigma (4S) Market Data TIX API.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @param sym - Stock symbol.\n *\n * @returns Probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.\n */\n",
+              "docComment": "/**\n * Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB The probability is returned as a decimal value, NOT a percentage (e.g. if a stock has a 60% chance of increasing, then this function will return 0.6, NOT 60).\n *\n * In other words, if this function returned 0.30 for a stock, then this means that the stock’s price has a 30% chance of increasing and a 70% chance of decreasing during the next tick.\n *\n * In order to use this function, you must first purchase access to the Four Sigma (4S) Market Data TIX API.\n *\n * @param sym - Stock symbol.\n *\n * @returns Probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19773,7 +19773,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getMaxShares:member(1)",
-              "docComment": "/**\n * Returns the maximum number of shares that the stock has. This is the maximum amount of the stock that can be purchased in both the Long and Short positions combined.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @param sym - Stock symbol.\n *\n * @returns Maximum number of shares that the stock has.\n */\n",
+              "docComment": "/**\n * Returns the maximum number of shares of a stock.\n *\n * @remarks\n *\n * RAM cost: 2 GB This is the maximum amount of the stock that can be purchased in both the Long and Short positions combined.\n *\n * @param sym - Stock symbol.\n *\n * @returns Maximum number of shares that the stock has.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19818,7 +19818,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getOrders:member(1)",
-              "docComment": "/**\n * Returns your order book for the stock market.\n *\n * This is an object containing information for all the Limit and Stop Orders you have in the stock market. The object has the following structure:\n * ```ts\n * {\n *  StockSymbol1: [ // Array of orders for this stock\n *      {\n *          shares: Order quantity\n *          price: Order price\n *          type: Order type\n *          position: Either \"L\" or \"S\" for Long or Short position\n *      },\n *      {\n *          ...\n *      },\n *      ...\n *  ],\n *  StockSymbol2: [ // Array of orders for this stock\n *      ...\n *  ],\n *  ...\n * }\n * ```\n *\n * The “Order type” property can have one of the following four values: * “Limit Buy Order” * “Limit Sell Order” * “Stop Buy Order” * “Stop Sell Order” Note that the order book will only contain information for stocks that you actually have orders in.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @returns Object containing information for all the Limit and Stop Orders you have in the stock market.\n *\n * @example\n * ```ts\n * \"If you do not have orders in Nova Medical (NVMD), then the returned object will not have a “NVMD” property.\"\n * {\n *  ECP: [\n *      {\n *          shares: 5,\n *          price: 100,000\n *          type: \"Stop Buy Order\",\n *          position: \"S\",\n *      },\n *      {\n *          shares: 25,\n *          price: 125,000\n *          type: \"Limit Sell Order\",\n *          position: \"L\",\n *      },\n *  ],\n *  SYSC: [\n *      {\n *          shares: 100,\n *          price: 10,000\n *          type: \"Limit Buy Order\",\n *          position: \"L\",\n *      },\n *  ],\n * }\n * ```\n *\n */\n",
+              "docComment": "/**\n * Returns your order book for the stock market.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB This is an object containing information for all the Limit and Stop Orders you have in the stock market. The object has the following structure:\n * ```ts\n * {\n *  StockSymbol1: [ // Array of orders for this stock\n *      {\n *          shares: Order quantity\n *          price: Order price\n *          type: Order type\n *          position: Either \"L\" or \"S\" for Long or Short position\n *      },\n *      {\n *          ...\n *      },\n *      ...\n *  ],\n *  StockSymbol2: [ // Array of orders for this stock\n *      ...\n *  ],\n *  ...\n * }\n * ```\n *\n * The “Order type” property can have one of the following four values: \"Limit Buy Order\", \"Limit Sell Order\", \"Stop Buy Order\", \"Stop Sell Order\". Note that the order book will only contain information for stocks that you actually have orders in.\n *\n * @returns Object containing information for all the Limit and Stop Orders you have in the stock market.\n *\n * @example\n * ```ts\n * \"If you do not have orders in Nova Medical (NVMD), then the returned object will not have a “NVMD” property.\"\n * {\n *  ECP: [\n *      {\n *          shares: 5,\n *          price: 100,000\n *          type: \"Stop Buy Order\",\n *          position: \"S\",\n *      },\n *      {\n *          shares: 25,\n *          price: 125,000\n *          type: \"Limit Sell Order\",\n *          position: \"L\",\n *      },\n *  ],\n *  SYSC: [\n *      {\n *          shares: 100,\n *          price: 10,000\n *          type: \"Limit Buy Order\",\n *          position: \"L\",\n *      },\n *  ],\n * }\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19847,7 +19847,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getPosition:member(1)",
-              "docComment": "/**\n * Returns an array of four elements that represents the player’s position in a stock.\n *\n * The first element is the returned array is the number of shares the player owns of the stock in the Long position. The second element in the array is the average price of the player’s shares in the Long position.\n *\n * The third element in the array is the number of shares the player owns of the stock in the Short position. The fourth element in the array is the average price of the player’s Short position.\n *\n * All elements in the returned array are numeric.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @param sym - Stock symbol.\n *\n * @returns Array of four elements that represents the player’s position in a stock.\n *\n * @example\n * ```ts\n * pos = getPosition(\"ECP\");\n * shares      = pos[0];\n * avgPx       = pos[1];\n * sharesShort = pos[2];\n * avgPxShort  = pos[3];\n * ```\n *\n */\n",
+              "docComment": "/**\n * Returns the player’s position in a stock.\n *\n * @remarks\n *\n * RAM cost: 2 GB Returns an array of four elements that represents the player’s position in a stock.\n *\n * The first element is the returned array is the number of shares the player owns of the stock in the Long position. The second element in the array is the average price of the player’s shares in the Long position.\n *\n * The third element in the array is the number of shares the player owns of the stock in the Short position. The fourth element in the array is the average price of the player’s Short position.\n *\n * All elements in the returned array are numeric.\n *\n * @param sym - Stock symbol.\n *\n * @returns Array of four elements that represents the player’s position in a stock.\n *\n * @example\n * ```ts\n * pos = getPosition(\"ECP\");\n * shares      = pos[0];\n * avgPx       = pos[1];\n * sharesShort = pos[2];\n * avgPxShort  = pos[3];\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19892,7 +19892,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getPrice:member(1)",
-              "docComment": "/**\n * Returns the price of a stock, given its symbol (NOT the company name). The symbol is a sequence of two to four capital letters.\n *\n * The stock’s price is the average of its bid and ask price\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @param sym - Stock symbol.\n *\n * @returns The price of a stock.\n *\n * @example\n * ```ts\n * getPrice(\"FISG\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Returns the price of a stock\n *\n * @remarks\n *\n * RAM cost: 2 GB The stock’s price is the average of its bid and ask price.\n *\n * @param sym - Stock symbol.\n *\n * @returns The price of a stock.\n *\n * @example\n * ```ts\n * getPrice(\"FISG\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19937,7 +19937,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getPurchaseCost:member(1)",
-              "docComment": "/**\n * Calculates and returns how much it would cost to buy a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to purchase.\n *\n * @param posType - Specifies whether the order is a “Long” or “Short” position.\n *\n * @returns Cost to buy a given number of shares of a stock.\n */\n",
+              "docComment": "/**\n * Calculates cost of buying stocks.\n *\n * @remarks\n *\n * RAM cost: 2 GB Calculates and returns how much it would cost to buy a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to purchase.\n *\n * @param posType - Specifies whether the order is a “Long” or “Short” position.\n *\n * @returns Cost to buy a given number of shares of a stock.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20013,7 +20013,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getSaleGain:member(1)",
-              "docComment": "/**\n * Calculates and returns how much you would gain from selling a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to sell.\n *\n * @param posType - Specifies whether the order is a “Long” or “Short” position.\n *\n * @returns Gain from selling a given number of shares of a stock.\n */\n",
+              "docComment": "/**\n * Calculate profit of setting stocks.\n *\n * @remarks\n *\n * RAM cost: 2 GB Calculates and returns how much you would gain from selling a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to sell.\n *\n * @param posType - Specifies whether the order is a “Long” or “Short” position.\n *\n * @returns Gain from selling a given number of shares of a stock.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20122,7 +20122,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getVolatility:member(1)",
-              "docComment": "/**\n * Returns the volatility of the specified stock.\n *\n * Volatility represents the maximum percentage by which a stock’s price can change every tick. The volatility is returned as a decimal value, NOT a percentage (e.g. if a stock has a volatility of 3%, then this function will return 0.03, NOT 3).\n *\n * In order to use this function, you must first purchase access to the Four Sigma (4S) Market Data TIX API.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @param sym - Stock symbol.\n *\n * @returns Volatility of the specified stock.\n */\n",
+              "docComment": "/**\n * Returns the volatility of the specified stock.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB Volatility represents the maximum percentage by which a stock’s price can change every tick. The volatility is returned as a decimal value, NOT a percentage (e.g. if a stock has a volatility of 3%, then this function will return 0.03, NOT 3).\n *\n * In order to use this function, you must first purchase access to the Four Sigma (4S) Market Data TIX API.\n *\n * @param sym - Stock symbol.\n *\n * @returns Volatility of the specified stock.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20167,7 +20167,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#placeOrder:member(1)",
-              "docComment": "/**\n * Places an order on the stock market. This function only works for Limit and Stop Orders.\n *\n * The ability to place limit and stop orders is **not** immediately available to the player and must be unlocked later on in the game.\n *\n * Returns true if the order is successfully placed, and false otherwise.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares for order. Must be positive. Will be rounded to nearest integer.\n *\n * @param price - Execution price for the order.\n *\n * @param type - Type of order.\n *\n * @param pos - Specifies whether the order is a “Long” or “Short” position.\n *\n * @returns True if the order is successfully placed, and false otherwise.\n */\n",
+              "docComment": "/**\n * Place order for stocks.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB Places an order on the stock market. This function only works for Limit and Stop Orders.\n *\n * The ability to place limit and stop orders is **not** immediately available to the player and must be unlocked later on in the game.\n *\n * Returns true if the order is successfully placed, and false otherwise.\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares for order. Must be positive. Will be rounded to nearest integer.\n *\n * @param price - Execution price for the order.\n *\n * @param type - Type of order.\n *\n * @param pos - Specifies whether the order is a “Long” or “Short” position.\n *\n * @returns True if the order is successfully placed, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20274,7 +20274,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#purchase4SMarketData:member(1)",
-              "docComment": "/**\n * Purchase 4S Market Data Access.\n *\n * Returns true if you successfully purchased it or if you already have access. Returns false otherwise.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @returns True if you successfully purchased it or if you already have access, false otherwise.\n */\n",
+              "docComment": "/**\n * Purchase 4S Market Data Access.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @returns True if you successfully purchased it or if you already have access, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20302,7 +20302,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#purchase4SMarketDataTixApi:member(1)",
-              "docComment": "/**\n * Purchase 4S Market Data TIX API Access.\n *\n * Returns true if you successfully purchased it or if you already have access. Returns false otherwise.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @returns True if you successfully purchased it or if you already have access, false otherwise.\n */\n",
+              "docComment": "/**\n * Purchase 4S Market Data TIX API Access.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @returns True if you successfully purchased it or if you already have access, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20330,7 +20330,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#sell:member(1)",
-              "docComment": "/**\n * Attempts to sell shares of a stock using a Market Order.\n *\n * If the specified number of shares in the function exceeds the amount that the player actually owns, then this function will sell all owned shares. Remember that every transaction on the stock exchange costs a certain commission fee.\n *\n * The net profit made from selling stocks with this function is reflected in the script’s statistics. This net profit is calculated as:\n *\n * shares * (sell_price - average_price_of_purchased_shares)\n *\n * If the sale is successful, this function will return the stock price at which each share was sold. Otherwise, it will return 0.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to sell. Must be positive. Will be rounded to nearest integer.\n *\n * @returns The stock price at which each share was sold, otherwise 0 if the shares weren't sold.\n */\n",
+              "docComment": "/**\n * Sell stocks.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB Attempts to sell shares of a stock using a Market Order.\n *\n * If the specified number of shares in the function exceeds the amount that the player actually owns, then this function will sell all owned shares. Remember that every transaction on the stock exchange costs a certain commission fee.\n *\n * The net profit made from selling stocks with this function is reflected in the script’s statistics. This net profit is calculated as:\n *\n * shares * (sell_price - average_price_of_purchased_shares)\n *\n * If the sale is successful, this function will return the stock price at which each share was sold. Otherwise, it will return 0.\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to sell. Must be positive. Will be rounded to nearest integer.\n *\n * @returns The stock price at which each share was sold, otherwise 0 if the shares weren't sold.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20390,7 +20390,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#sellShort:member(1)",
-              "docComment": "/**\n * Attempts to sell a short position of a stock using a Market Order.\n *\n * The ability to short a stock is **not** immediately available to the player and must be unlocked later on in the game.\n *\n * If the specified number of shares exceeds the amount that the player actually owns, then this function will sell all owned shares. Remember that every transaction on the stock exchange costs a certain commission fee.\n *\n * If the sale is successful, this function will return the stock price at which each share was sold. Otherwise it will return 0.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to sell. Must be positive. Will be rounded to nearest integer.\n *\n * @returns The stock price at which each share was sold, otherwise 0 if the shares weren't sold.\n */\n",
+              "docComment": "/**\n * Sell short stock.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB Attempts to sell a short position of a stock using a Market Order.\n *\n * The ability to short a stock is **not** immediately available to the player and must be unlocked later on in the game.\n *\n * If the specified number of shares exceeds the amount that the player actually owns, then this function will sell all owned shares. Remember that every transaction on the stock exchange costs a certain commission fee.\n *\n * If the sale is successful, this function will return the stock price at which each share was sold. Otherwise it will return 0.\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to sell. Must be positive. Will be rounded to nearest integer.\n *\n * @returns The stock price at which each share was sold, otherwise 0 if the shares weren't sold.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20450,7 +20450,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#short:member(1)",
-              "docComment": "/**\n * Attempts to purchase a short position of a stock using a Market Order.\n *\n * The ability to short a stock is **not** immediately available to the player and must be unlocked later on in the game.\n *\n * If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased. Remember that every transaction on the stock exchange costs a certain commission fee.\n *\n * If the purchase is successful, this function will return the stock price at which each share was purchased. Otherwise, it will return 0.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to short. Must be positive. Will be rounded to nearest integer.\n *\n * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.\n */\n",
+              "docComment": "/**\n * Short stocks.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB Attempts to purchase a short position of a stock using a Market Order.\n *\n * The ability to short a stock is **not** immediately available to the player and must be unlocked later on in the game.\n *\n * If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased. Remember that every transaction on the stock exchange costs a certain commission fee.\n *\n * If the purchase is successful, this function will return the stock price at which each share was purchased. Otherwise, it will return 0.\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to short. Must be positive. Will be rounded to nearest integer.\n *\n * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",

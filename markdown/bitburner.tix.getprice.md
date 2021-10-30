@@ -4,9 +4,7 @@
 
 ## TIX.getPrice() method
 
-Returns the price of a stock, given its symbol (NOT the company name). The symbol is a sequence of two to four capital letters.
-
-The stock’s price is the average of its bid and ask price
+Returns the price of a stock
 
 <b>Signature:</b>
 
@@ -28,7 +26,7 @@ The price of a stock.
 
 ## Remarks
 
-RAM cost: 2 GB
+RAM cost: 2 GB The stock’s price is the average of its bid and ask price.
 
 ## Example
 

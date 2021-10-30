@@ -4,11 +4,7 @@
 
 ## TIX.placeOrder() method
 
-Places an order on the stock market. This function only works for Limit and Stop Orders.
-
-The ability to place limit and stop orders is \*\*not\*\* immediately available to the player and must be unlocked later on in the game.
-
-Returns true if the order is successfully placed, and false otherwise.
+Place order for stocks.
 
 <b>Signature:</b>
 
@@ -34,5 +30,9 @@ True if the order is successfully placed, and false otherwise.
 
 ## Remarks
 
-RAM cost: 2.5 GB
+RAM cost: 2.5 GB Places an order on the stock market. This function only works for Limit and Stop Orders.
+
+The ability to place limit and stop orders is \*\*not\*\* immediately available to the player and must be unlocked later on in the game.
+
+Returns true if the order is successfully placed, and false otherwise.
 

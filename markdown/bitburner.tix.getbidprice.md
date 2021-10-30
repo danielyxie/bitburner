@@ -4,7 +4,7 @@
 
 ## TIX.getBidPrice() method
 
-Given a stock’s symbol (NOT the company name), returns the bid price of that stock. The symbol is a sequence of two to four capital letters.
+Returns the bid price of that stock.
 
 <b>Signature:</b>
 

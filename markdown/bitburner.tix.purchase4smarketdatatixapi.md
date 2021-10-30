@@ -6,8 +6,6 @@
 
 Purchase 4S Market Data TIX API Access.
 
-Returns true if you successfully purchased it or if you already have access. Returns false otherwise.
-
 <b>Signature:</b>
 
 ```typescript

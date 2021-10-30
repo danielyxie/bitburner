@@ -4448,42 +4448,43 @@ export declare interface TIX {
     getSymbols(): StockSymbol[];
 
     /**
-     * Returns the price of a stock, given its symbol (NOT the company name).
-     * The symbol is a sequence of two to four capital letters.
+     * Returns the price of a stock
      *
-     * The stock’s price is the average of its bid and ask price
+     * @remarks
+     * RAM cost: 2 GB
+     * The stock’s price is the average of its bid and ask price.
      *
      * @example
      * ```ts
      * getPrice("FISG");
      * ```
-     * @remarks RAM cost: 2 GB
      * @param sym - Stock symbol.
      * @returns The price of a stock.
      */
     getPrice(sym: StockSymbol): number;
 
     /**
-     * Given a stock’s symbol (NOT the company name), returns the ask price of that stock.
-     * The symbol is a sequence of two to four capital letters.
-     *
+     * Returns the ask price of that stock.
      * @remarks RAM cost: 2 GB
+     *
      * @param sym - Stock symbol.
      * @returns The ask price of a stock.
      */
     getAskPrice(sym: StockSymbol): number;
 
     /**
-     * Given a stock’s symbol (NOT the company name), returns the bid price of that stock.
-     * The symbol is a sequence of two to four capital letters.
-     *
+     * Returns the bid price of that stock.
      * @remarks RAM cost: 2 GB
+     *
      * @param sym - Stock symbol.
      * @returns The bid price of a stock.
      */
     getBidPrice(sym: StockSymbol): number;
 
     /**
+     * Returns the player’s position in a stock.
+     * @remarks
+     * RAM cost: 2 GB
      * Returns an array of four elements that represents the player’s position in a stock.
      *
      * The first element is the returned array is the number of shares the player owns of
@@ -4504,28 +4505,30 @@ export declare interface TIX {
      * sharesShort = pos[2];
      * avgPxShort  = pos[3];
      * ```
-     * @remarks RAM cost: 2 GB
      * @param sym - Stock symbol.
      * @returns Array of four elements that represents the player’s position in a stock.
      */
     getPosition(sym: StockSymbol): [number, number, number, number];
 
     /**
-     * Returns the maximum number of shares that the stock has.
+     * Returns the maximum number of shares of a stock.
+     * @remarks
+     * RAM cost: 2 GB
      * This is the maximum amount of the stock that can be purchased
      * in both the Long and Short positions combined.
      *
-     * @remarks RAM cost: 2 GB
      * @param sym - Stock symbol.
      * @returns Maximum number of shares that the stock has.
      */
     getMaxShares(sym: StockSymbol): number;
 
     /**
+     * Calculates cost of buying stocks.
+     * @remarks
+     * RAM cost: 2 GB
      * Calculates and returns how much it would cost to buy a given number of shares of a stock.
      * This takes into account spread, large transactions influencing the price of the stock and commission fees.
      *
-     * @remarks RAM cost: 2 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares to purchase.
      * @param posType - Specifies whether the order is a “Long” or “Short” position.
@@ -4534,10 +4537,12 @@ export declare interface TIX {
     getPurchaseCost(sym: StockSymbol, shares: number, posType: OrderPosition): number;
 
     /**
+     * Calculate profit of setting stocks.
+     * @remarks
+     * RAM cost: 2 GB
      * Calculates and returns how much you would gain from selling a given number of shares of a stock.
      * This takes into account spread, large transactions influencing the price of the stock and commission fees.
      *
-     * @remarks RAM cost: 2 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares to sell.
      * @param posType - Specifies whether the order is a “Long” or “Short” position.
@@ -4546,6 +4551,9 @@ export declare interface TIX {
     getSaleGain(sym: StockSymbol, shares: number, posType: OrderPosition): number;
 
     /**
+     * Buy stocks.
+     * @remarks
+     * RAM cost: 2.5 GB
      * Attempts to purchase shares of a stock using a Market Order.
      *
      * If the player does not have enough money to purchase the specified number of shares,
@@ -4555,7 +4563,6 @@ export declare interface TIX {
      * If this function successfully purchases the shares, it will return the stock price at which
      * each share was purchased. Otherwise, it will return 0.
      *
-     * @remarks RAM cost: 2.5 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares to purchased. Must be positive. Will be rounded to nearest integer.
      * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.
@@ -4563,6 +4570,9 @@ export declare interface TIX {
     buy(sym: StockSymbol, shares: number): number;
 
     /**
+     * Sell stocks.
+     * @remarks
+     * RAM cost: 2.5 GB
      * Attempts to sell shares of a stock using a Market Order.
      *
      * If the specified number of shares in the function exceeds the amount that the player
@@ -4577,7 +4587,6 @@ export declare interface TIX {
      * If the sale is successful, this function will return the stock price at
      * which each share was sold. Otherwise, it will return 0.
      *
-     * @remarks RAM cost: 2.5 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares to sell. Must be positive. Will be rounded to nearest integer.
      * @returns The stock price at which each share was sold, otherwise 0 if the shares weren't sold.
@@ -4585,6 +4594,9 @@ export declare interface TIX {
     sell(sym: StockSymbol, shares: number): number;
 
     /**
+     * Short stocks.
+     * @remarks
+     * RAM cost: 2.5 GB
      * Attempts to purchase a short position of a stock using a Market Order.
      *
      * The ability to short a stock is **not** immediately available to the player and
@@ -4597,7 +4609,6 @@ export declare interface TIX {
      * If the purchase is successful, this function will return the stock price at which each
      * share was purchased. Otherwise, it will return 0.
      *
-     * @remarks RAM cost: 2.5 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares to short. Must be positive. Will be rounded to nearest integer.
      * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.
@@ -4605,6 +4616,9 @@ export declare interface TIX {
     short(sym: StockSymbol, shares: number): number;
 
     /**
+     * Sell short stock.
+     * @remarks
+     * RAM cost: 2.5 GB
      * Attempts to sell a short position of a stock using a Market Order.
      *
      * The ability to short a stock is **not** immediately available to the player and
@@ -4617,7 +4631,6 @@ export declare interface TIX {
      * If the sale is successful, this function will return the stock price at which each
      * share was sold. Otherwise it will return 0.
      *
-     * @remarks RAM cost: 2.5 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares to sell. Must be positive. Will be rounded to nearest integer.
      * @returns The stock price at which each share was sold, otherwise 0 if the shares weren't sold.
@@ -4625,6 +4638,9 @@ export declare interface TIX {
     sellShort(sym: StockSymbol, shares: number): number;
 
     /**
+     * Place order for stocks.
+     * @remarks
+     * RAM cost: 2.5 GB
      * Places an order on the stock market. This function only works for Limit and Stop Orders.
      *
      * The ability to place limit and stop orders is **not** immediately available to the player and
@@ -4632,7 +4648,6 @@ export declare interface TIX {
      *
      * Returns true if the order is successfully placed, and false otherwise.
      *
-     * @remarks RAM cost: 2.5 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares for order. Must be positive. Will be rounded to nearest integer.
      * @param price - Execution price for the order.
@@ -4643,12 +4658,14 @@ export declare interface TIX {
     placeOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPosition): boolean;
 
     /**
+     * Cancel order for stocks.
+     * @remarks
+     * RAM cost: 2.5 GB
      * Cancels an oustanding Limit or Stop order on the stock market.
      *
      * The ability to use limit and stop orders is **not** immediately available to the player and
      * must be unlocked later on in the game.
      *
-     * @remarks RAM cost: 2.5 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares for order. Must be positive. Will be rounded to nearest integer.
      * @param price - Execution price for the order.
@@ -4659,7 +4676,8 @@ export declare interface TIX {
 
     /**
      * Returns your order book for the stock market.
-     *
+     * @remarks
+     * RAM cost: 2.5 GB
      * This is an object containing information for all the Limit and Stop Orders you have in the stock market.
      * The object has the following structure:
      *
@@ -4683,11 +4701,7 @@ export declare interface TIX {
      *  ...
      * }
      * ```
-     * The “Order type” property can have one of the following four values:
-     * * “Limit Buy Order”
-     * * “Limit Sell Order”
-     * * “Stop Buy Order”
-     * * “Stop Sell Order”
+     * The “Order type” property can have one of the following four values: "Limit Buy Order", "Limit Sell Order", "Stop Buy Order", "Stop Sell Order".
      * Note that the order book will only contain information for stocks that you actually have orders in.
      *
      * @example
@@ -4718,21 +4732,20 @@ export declare interface TIX {
      *  ],
      * }
      * ```
-     * @remarks RAM cost: 2.5 GB
      * @returns Object containing information for all the Limit and Stop Orders you have in the stock market.
      */
     getOrders(): StockOrder;
 
     /**
      * Returns the volatility of the specified stock.
-     *
+     * @remarks
+     * RAM cost: 2.5 GB
      * Volatility represents the maximum percentage by which a stock’s price can change every tick.
      * The volatility is returned as a decimal value, NOT a percentage
      * (e.g. if a stock has a volatility of 3%, then this function will return 0.03, NOT 3).
      *
      * In order to use this function, you must first purchase access to the Four Sigma (4S) Market Data TIX API.
      *
-     * @remarks RAM cost: 2.5 GB
      * @param sym - Stock symbol.
      * @returns Volatility of the specified stock.
      */
@@ -4740,7 +4753,8 @@ export declare interface TIX {
 
     /**
      * Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.
-     *
+     * @remarks
+     * RAM cost: 2.5 GB
      * The probability is returned as a decimal value, NOT a percentage
      * (e.g. if a stock has a 60% chance of increasing, then this function will return 0.6, NOT 60).
      *
@@ -4749,7 +4763,6 @@ export declare interface TIX {
      *
      * In order to use this function, you must first purchase access to the Four Sigma (4S) Market Data TIX API.
      *
-     * @remarks RAM cost: 2.5 GB
      * @param sym - Stock symbol.
      * @returns Probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.
      */
@@ -4757,9 +4770,6 @@ export declare interface TIX {
 
     /**
      * Purchase 4S Market Data Access.
-     *
-     * Returns true if you successfully purchased it or if you already have access. Returns false otherwise.
-     *
      * @remarks RAM cost: 2.5 GB
      * @returns True if you successfully purchased it or if you already have access, false otherwise.
      */
@@ -4767,9 +4777,6 @@ export declare interface TIX {
 
     /**
      * Purchase 4S Market Data TIX API Access.
-     *
-     * Returns true if you successfully purchased it or if you already have access. Returns false otherwise.
-     *
      * @remarks RAM cost: 2.5 GB
      * @returns True if you successfully purchased it or if you already have access, false otherwise.
      */

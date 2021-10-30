@@ -4,7 +4,7 @@
 
 ## TIX.getSaleGain() method
 
-Calculates and returns how much you would gain from selling a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.
+Calculate profit of setting stocks.
 
 <b>Signature:</b>
 
@@ -28,5 +28,5 @@ Gain from selling a given number of shares of a stock.
 
 ## Remarks
 
-RAM cost: 2 GB
+RAM cost: 2 GB Calculates and returns how much you would gain from selling a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.
 

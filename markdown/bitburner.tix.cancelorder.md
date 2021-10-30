@@ -4,9 +4,7 @@
 
 ## TIX.cancelOrder() method
 
-Cancels an oustanding Limit or Stop order on the stock market.
-
-The ability to use limit and stop orders is \*\*not\*\* immediately available to the player and must be unlocked later on in the game.
+Cancel order for stocks.
 
 <b>Signature:</b>
 
@@ -30,5 +28,7 @@ void
 
 ## Remarks
 
-RAM cost: 2.5 GB
+RAM cost: 2.5 GB Cancels an oustanding Limit or Stop order on the stock market.
+
+The ability to use limit and stop orders is \*\*not\*\* immediately available to the player and must be unlocked later on in the game.
 

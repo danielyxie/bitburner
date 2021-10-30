@@ -4,7 +4,7 @@
 
 ## TIX.getPurchaseCost() method
 
-Calculates and returns how much it would cost to buy a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.
+Calculates cost of buying stocks.
 
 <b>Signature:</b>
 
@@ -28,5 +28,5 @@ Cost to buy a given number of shares of a stock.
 
 ## Remarks
 
-RAM cost: 2 GB
+RAM cost: 2 GB Calculates and returns how much it would cost to buy a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.
 

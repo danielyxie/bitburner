@@ -4,13 +4,7 @@
 
 ## TIX.getPosition() method
 
-Returns an array of four elements that represents the player’s position in a stock.
-
-The first element is the returned array is the number of shares the player owns of the stock in the Long position. The second element in the array is the average price of the player’s shares in the Long position.
-
-The third element in the array is the number of shares the player owns of the stock in the Short position. The fourth element in the array is the average price of the player’s Short position.
-
-All elements in the returned array are numeric.
+Returns the player’s position in a stock.
 
 <b>Signature:</b>
 
@@ -32,7 +26,13 @@ Array of four elements that represents the player’s position in a stock.
 
 ## Remarks
 
-RAM cost: 2 GB
+RAM cost: 2 GB Returns an array of four elements that represents the player’s position in a stock.
+
+The first element is the returned array is the number of shares the player owns of the stock in the Long position. The second element in the array is the average price of the player’s shares in the Long position.
+
+The third element in the array is the number of shares the player owns of the stock in the Short position. The fourth element in the array is the average price of the player’s Short position.
+
+All elements in the returned array are numeric.
 
 ## Example
 

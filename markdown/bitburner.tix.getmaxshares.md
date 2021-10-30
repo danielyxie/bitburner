@@ -4,7 +4,7 @@
 
 ## TIX.getMaxShares() method
 
-Returns the maximum number of shares that the stock has. This is the maximum amount of the stock that can be purchased in both the Long and Short positions combined.
+Returns the maximum number of shares of a stock.
 
 <b>Signature:</b>
 
@@ -26,5 +26,5 @@ Maximum number of shares that the stock has.
 
 ## Remarks
 
-RAM cost: 2 GB
+RAM cost: 2 GB This is the maximum amount of the stock that can be purchased in both the Long and Short positions combined.
 

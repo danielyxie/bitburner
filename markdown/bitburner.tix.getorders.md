@@ -6,7 +6,20 @@
 
 Returns your order book for the stock market.
 
-This is an object containing information for all the Limit and Stop Orders you have in the stock market. The object has the following structure:
+<b>Signature:</b>
+
+```typescript
+getOrders(): StockOrder;
+```
+<b>Returns:</b>
+
+[StockOrder](./bitburner.stockorder.md)
+
+Object containing information for all the Limit and Stop Orders you have in the stock market.
+
+## Remarks
+
+RAM cost: 2.5 GB This is an object containing information for all the Limit and Stop Orders you have in the stock market. The object has the following structure:
 
 ```ts
 {
@@ -28,22 +41,7 @@ This is an object containing information for all the Limit and Stop Orders you h
  ...
 }
 ```
-The “Order type” property can have one of the following four values: \* “Limit Buy Order” \* “Limit Sell Order” \* “Stop Buy Order” \* “Stop Sell Order” Note that the order book will only contain information for stocks that you actually have orders in.
-
-<b>Signature:</b>
-
-```typescript
-getOrders(): StockOrder;
-```
-<b>Returns:</b>
-
-[StockOrder](./bitburner.stockorder.md)
-
-Object containing information for all the Limit and Stop Orders you have in the stock market.
-
-## Remarks
-
-RAM cost: 2.5 GB
+The “Order type” property can have one of the following four values: "Limit Buy Order", "Limit Sell Order", "Stop Buy Order", "Stop Sell Order". Note that the order book will only contain information for stocks that you actually have orders in.
 
 ## Example
 
