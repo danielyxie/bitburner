@@ -16,6 +16,7 @@ import { use } from "../../ui/Context";
 import { IRouter } from "../../ui/Router";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { LocationType } from "../LocationTypeEnum";
 
 type IProps = {
   city: City;
@@ -32,7 +33,19 @@ function toLocation(router: IRouter, location: Location): void {
 }
 
 function LocationLetter(location: Location): React.ReactElement {
+  location.types;
   const router = use.Router();
+  let L = "X";
+  if (location.types.includes(LocationType.Company)) L = "C";
+  if (location.types.includes(LocationType.Gym)) L = "G";
+  if (location.types.includes(LocationType.Hospital)) L = "H";
+  if (location.types.includes(LocationType.Slums)) L = "S";
+  if (location.types.includes(LocationType.StockMarket)) L = "$";
+  if (location.types.includes(LocationType.TechVendor)) L = "T";
+  if (location.types.includes(LocationType.TravelAgency)) L = "T";
+  if (location.types.includes(LocationType.University)) L = "U";
+  if (location.types.includes(LocationType.Casino)) L = "C";
+  if (location.types.includes(LocationType.Special)) L = "?";
   if (!location) return <span>*</span>;
   return (
     <span
@@ -47,7 +60,7 @@ function LocationLetter(location: Location): React.ReactElement {
       }}
       onClick={() => toLocation(router, location)}
     >
-      <b>X</b>
+      <b>{L}</b>
     </span>
   );
 }
