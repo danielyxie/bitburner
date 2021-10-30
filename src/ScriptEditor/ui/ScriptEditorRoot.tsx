@@ -32,7 +32,7 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 
-import libSource from "!!raw-loader!../NetscriptDefinitions";
+import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
 
 let symbolsLoaded = false;
 let symbols: string[] = [];
