@@ -1293,7 +1293,7 @@ export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): stri
   }
 
   if (!cancelled) {
-    this.gainIntelligenceExp(this.createProgramReqLvl / CONSTANTS.IntelligenceProgramBaseExpGain);
+    this.gainIntelligenceExp(CONSTANTS.IntelligenceProgramBaseExpGain * this.timeWorked/1000);
   }
 
   this.isWorking = false;
