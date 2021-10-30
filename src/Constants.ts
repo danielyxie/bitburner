@@ -187,7 +187,7 @@ export const CONSTANTS: {
   IntelligenceCrimeWeight: 0.025, // Weight for how much int affects crime success rates
   IntelligenceInfiltrationWeight: 0.1, // Weight for how much int affects infiltration success rates
   IntelligenceCrimeBaseExpGain: 0.05,
-  IntelligenceProgramBaseExpGain: 2.5, // Program required hack level divided by this to determine int exp gain
+  IntelligenceProgramBaseExpGain: 0.1, // Program required hack level divided by this to determine int exp gain
   IntelligenceTerminalHackBaseExpGain: 200, // Hacking exp divided by this to determine int exp gain
   IntelligenceSingFnBaseExpGain: 1.5,
   IntelligenceClassBaseExpGain: 0.01,
