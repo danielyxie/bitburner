@@ -28,5 +28,5 @@ True if actions is successful, false otherwise.
 
 ## Remarks
 
-2 GB  Level 1
+Singularity - Level 1
 

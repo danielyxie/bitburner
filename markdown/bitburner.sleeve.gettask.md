@@ -28,5 +28,5 @@ Object containing information the current task that the sleeve is performing.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

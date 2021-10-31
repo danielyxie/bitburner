@@ -21,5 +21,5 @@ Number of Bladeburner skill points you have.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

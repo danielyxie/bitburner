@@ -4,7 +4,7 @@
 
 ## TIX.getAskPrice() method
 
-Given a stock’s symbol (NOT the company name), returns the ask price of that stock. The symbol is a sequence of two to four capital letters.
+Returns the ask price of that stock.
 
 <b>Signature:</b>
 
@@ -26,5 +26,5 @@ The ask price of a stock.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

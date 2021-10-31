@@ -4,11 +4,7 @@
 
 ## TIX.buy() method
 
-Attempts to purchase shares of a stock using a Market Order.
-
-If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased. Remember that every transaction on the stock exchange costs a certain commission fee.
-
-If this function successfully purchases the shares, it will return the stock price at which each share was purchased. Otherwise, it will return 0.
+Buy stocks.
 
 <b>Signature:</b>
 
@@ -31,5 +27,9 @@ The stock price at which each share was purchased, otherwise 0 if the shares wer
 
 ## Remarks
 
-2.5 GB
+RAM cost: 2.5 GB Attempts to purchase shares of a stock using a Market Order.
+
+If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased. Remember that every transaction on the stock exchange costs a certain commission fee.
+
+If this function successfully purchases the shares, it will return the stock price at which each share was purchased. Otherwise, it will return 0.
 

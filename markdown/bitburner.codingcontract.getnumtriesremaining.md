@@ -9,7 +9,7 @@ Get the number of tries remaining on the contract before it self-destructs.
 <b>Signature:</b>
 
 ```typescript
-getNumTriesRemaining(fn: string, host?: Host): number;
+getNumTriesRemaining(fn: string, host?: string): number;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ getNumTriesRemaining(fn: string, host?: Host): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  fn | string | Filename of the contract. |
-|  host | [Host](./bitburner.host.md) | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  host | string | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
@@ -27,5 +27,5 @@ How many attempts are remaining for the contract;
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

@@ -33,12 +33,12 @@ True if the player starts working, and false otherwise.
 
 ## Remarks
 
-3 GB  Level 2
+Singularity - Level 2
 
 ## Example
 
 
-```js
+```ts
 //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
 while (getFactionRep(FACTION NAME) < VALUE) {
    workForFaction(FACNAME, WORKTYPE);

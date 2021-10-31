@@ -32,5 +32,5 @@ True if the action was started successfully, and false otherwise.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

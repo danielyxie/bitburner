@@ -6,8 +6,6 @@
 
 Purchase 4S Market Data Access.
 
-Returns true if you successfully purchased it or if you already have access. Returns false otherwise.
-
 <b>Signature:</b>
 
 ```typescript
@@ -21,5 +19,5 @@ True if you successfully purchased it or if you already have access, false other
 
 ## Remarks
 
-2.5 GB
+RAM cost: 2.5 GB
 

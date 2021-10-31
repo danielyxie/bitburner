@@ -4,6 +4,8 @@
 
 ## Server.organizationName property
 
+Name of company/faction/etc. that this server belongs to. Optional, not applicable to all Servers
+
 <b>Signature:</b>
 
 ```typescript

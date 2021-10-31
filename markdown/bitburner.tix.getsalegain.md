@@ -4,12 +4,12 @@
 
 ## TIX.getSaleGain() method
 
-Calculates and returns how much you would gain from selling a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.
+Calculate profit of setting stocks.
 
 <b>Signature:</b>
 
 ```typescript
-getSaleGain(sym: StockSymbol, shares: number, posType: OrderPos): number;
+getSaleGain(sym: StockSymbol, shares: number, posType: OrderPosition): number;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ getSaleGain(sym: StockSymbol, shares: number, posType: OrderPos): number;
 |  --- | --- | --- |
 |  sym | [StockSymbol](./bitburner.stocksymbol.md) | Stock symbol. |
 |  shares | number | Number of shares to sell. |
-|  posType | [OrderPos](./bitburner.orderpos.md) | Specifies whether the order is a “Long” or “Short” position. |
+|  posType | [OrderPosition](./bitburner.orderposition.md) | Specifies whether the order is a “Long” or “Short” position. |
 
 <b>Returns:</b>
 
@@ -28,5 +28,5 @@ Gain from selling a given number of shares of a stock.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB Calculates and returns how much you would gain from selling a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.
 

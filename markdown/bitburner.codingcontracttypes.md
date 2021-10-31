@@ -4,6 +4,8 @@
 
 ## CodingContractTypes type
 
+All Coding contract types.
+
 <b>Signature:</b>
 
 ```typescript

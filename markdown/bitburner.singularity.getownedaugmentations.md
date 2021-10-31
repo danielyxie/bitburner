@@ -28,5 +28,5 @@ Array containing the names (as strings) of all Augmentations you have.
 
 ## Remarks
 
-5 GB  Level 3
+Singularity - Level 3
 

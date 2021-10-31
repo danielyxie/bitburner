@@ -15,15 +15,15 @@ Running this function with a numThreads argument of 0 will return 0 without runn
 <b>Signature:</b>
 
 ```typescript
-exec(script: Script, host: Host, numThreads?: number, ...args: string[]): number;
+exec(script: string, host: string, numThreads?: number, ...args: string[]): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | [Script](./bitburner.script.md) | Filename of script to execute. |
-|  host | [Host](./bitburner.host.md) | Hostname or IP of the \`<!-- -->target server<!-- -->\` on which to execute the script. |
+|  script | string | Filename of script to execute. |
+|  host | string | Hostname of the <code>target server</code> on which to execute the script. |
 |  numThreads | number | Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer. |
 |  args | string\[\] | Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value. |
 
@@ -35,12 +35,12 @@ Returns the PID of a successfully started script, and 0 otherwise.
 
 ## Remarks
 
-1.3 GB
+RAM cost: 1.3 GB
 
 ## Example 1
 
 
-```js
+```ts
 //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
 exec("generic-hack.script", "foodnstuff");
 ```
@@ -48,7 +48,7 @@ exec("generic-hack.script", "foodnstuff");
 ## Example 2
 
 
-```js
+```ts
 //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
 exec("generic-hack.script", "joesguns", 10);
 ```
@@ -56,7 +56,7 @@ exec("generic-hack.script", "joesguns", 10);
 ## Example 3
 
 
-```js
+```ts
 //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
 exec("foo.script", "foodnstuff", 5, 1, "test");
 ```

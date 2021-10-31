@@ -11,17 +11,8 @@ For example, if the CrimeMoney multiplier has a value of 0.1, then that means th
 <b>Signature:</b>
 
 ```typescript
-getBitNodeMultipliers(url: string, target: string, host: string): BitNodeMultipliers;
+getBitNodeMultipliers(): BitNodeMultipliers;
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  url | string |  |
-|  target | string |  |
-|  host | string |  |
-
 <b>Returns:</b>
 
 [BitNodeMultipliers](./bitburner.bitnodemultipliers.md)
@@ -30,12 +21,12 @@ Object containing the current BitNode multipliers.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 
 ## Example
 
 
-```js
+```ts
 mults = getBitNodeMultipliers();
 print(mults.ServerMaxMoney);
 print(mults.HackExpGain);

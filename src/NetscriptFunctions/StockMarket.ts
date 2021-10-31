@@ -10,34 +10,9 @@ import { PositionTypes } from "../StockMarket/data/PositionTypes";
 import { StockSymbols } from "../StockMarket/data/StockSymbols";
 import { getStockMarket4SDataCost, getStockMarket4STixApiCost } from "../StockMarket/StockMarketCosts";
 import { Stock } from "../StockMarket/Stock";
+import { TIX } from "../ScriptEditor/NetscriptDefinitions";
 
-export interface INetscriptStockMarket {
-  getSymbols(): any;
-  getPrice(symbol: any): any;
-  getAskPrice(symbol: any): any;
-  getBidPrice(symbol: any): any;
-  getPosition(symbol: any): any;
-  getMaxShares(symbol: any): any;
-  getPurchaseCost(symbol: any, shares: any, posType: any): any;
-  getSaleGain(symbol: any, shares: any, posType: any): any;
-  buy(symbol: any, shares: any): any;
-  sell(symbol: any, shares: any): any;
-  short(symbol: any, shares: any): any;
-  sellShort(symbol: any, shares: any): any;
-  placeOrder(symbol: any, shares: any, price: any, type: any, pos: any): any;
-  cancelOrder(symbol: any, shares: any, price: any, type: any, pos: any): any;
-  getOrders(): any;
-  getVolatility(symbol: any): any;
-  getForecast(symbol: any): any;
-  purchase4SMarketData(): void;
-  purchase4SMarketDataTixApi(): void;
-}
-
-export function NetscriptStockMarket(
-  player: IPlayer,
-  workerScript: WorkerScript,
-  helper: INetscriptHelper,
-): INetscriptStockMarket {
+export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): TIX {
   /**
    * Checks if the player has TIX API access. Throws an error if the player does not
    */

@@ -28,5 +28,5 @@ Amount of favor you gain at the specified company when you reset by installing A
 
 ## Remarks
 
-0.75 GB  Level 2
+Singularity - Level 2
 

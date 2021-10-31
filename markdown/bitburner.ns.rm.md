@@ -9,7 +9,7 @@ Removes the specified file from the current server. This function works for ever
 <b>Signature:</b>
 
 ```typescript
-rm(name: string, host?: Host): boolean;
+rm(name: string, host?: string): boolean;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ rm(name: string, host?: Host): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string | Filename of file to remove. Must include the extension. |
-|  host | [Host](./bitburner.host.md) | Host or IP Address of the server on which to delete the file. Optional. Defaults to current server. |
+|  host | string | Host or IP Address of the server on which to delete the file. Optional. Defaults to current server. |
 
 <b>Returns:</b>
 
@@ -27,5 +27,5 @@ True if it successfully deletes the file, and false otherwise.
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 

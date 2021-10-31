@@ -9,7 +9,7 @@ Returns an array with either the hostnames or IPs of all of the servers you have
 <b>Signature:</b>
 
 ```typescript
-getPurchasedServers(hostnameMode?: boolean): Host[];
+getPurchasedServers(hostnameMode?: boolean): string[];
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ getPurchasedServers(hostnameMode?: boolean): Host[];
 
 <b>Returns:</b>
 
-[Host](./bitburner.host.md)<!-- -->\[\]
+string\[\]
 
 Returns an array with either the hostnames or IPs of all of the servers you have purchased.
 

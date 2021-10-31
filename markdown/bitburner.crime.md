@@ -4,6 +4,8 @@
 
 ## Crime type
 
+All crimes.
+
 <b>Signature:</b>
 
 ```typescript

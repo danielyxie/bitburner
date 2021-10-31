@@ -9,14 +9,14 @@ Returns the security level of the target server. A server’s security level is 
 <b>Signature:</b>
 
 ```typescript
-getServerSecurityLevel(host: Host): number;
+getServerSecurityLevel(host: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server. |
+|  host | string | Host or IP of target server. |
 
 <b>Returns:</b>
 
@@ -26,5 +26,5 @@ Security level of the target server.
 
 ## Remarks
 
-0.1 GB
+RAM cost: 0.1 GB
 

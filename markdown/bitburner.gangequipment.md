@@ -4,6 +4,8 @@
 
 ## GangEquipment type
 
+All Gang equipment.
+
 <b>Signature:</b>
 
 ```typescript

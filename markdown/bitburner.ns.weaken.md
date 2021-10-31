@@ -6,19 +6,19 @@
 
 Use your hacking skills to attack a server’s security, lowering the server’s security level. The runtime for this command depends on your hacking level and the target server’s security level. This function lowers the security level of the target server by 0.05.
 
-Like hack and grow, \`<!-- -->weaken<!-- -->\` can be called on any server, regardless of where the script is running. This command requires root access to the target server, but there is no required hacking level to run the command.
+Like hack and grow, `weaken` can be called on any server, regardless of where the script is running. This command requires root access to the target server, but there is no required hacking level to run the command.
 
 <b>Signature:</b>
 
 ```typescript
-weaken(host: Host, opts?: BasicHGWOptions): Promise<number>;
+weaken(host: string, opts?: BasicHGWOptions): Promise<number>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Hostname or IP of the target server to weaken. |
+|  host | string | Hostname of the target server to weaken. |
 |  opts | [BasicHGWOptions](./bitburner.basichgwoptions.md) | Optional parameters for configuring function behavior. |
 
 <b>Returns:</b>
@@ -29,12 +29,12 @@ The amount by which the target server’s security level was decreased. This is 
 
 ## Remarks
 
-0.15 GB
+RAM cost: 0.15 GB
 
 ## Example
 
 
-```js
+```ts
 weaken("foodnstuff");
 weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
 ```

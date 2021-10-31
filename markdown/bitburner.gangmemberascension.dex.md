@@ -4,7 +4,7 @@
 
 ## GangMemberAscension.dex property
 
-Dexterity multiplier gained from ascending. Decimal form
+Dexterity multiplier gained from ascending.
 
 <b>Signature:</b>
 

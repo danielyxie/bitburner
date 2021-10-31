@@ -44,7 +44,7 @@ function LocationLetter(location: Location): React.ReactElement {
   if (location.types.includes(LocationType.TechVendor)) L = "T";
   if (location.types.includes(LocationType.TravelAgency)) L = "T";
   if (location.types.includes(LocationType.University)) L = "U";
-  if (location.types.includes(LocationType.Casino)) L = "C";
+  if (location.types.includes(LocationType.Casino)) L = "¢";
   if (location.types.includes(LocationType.Special)) L = "?";
   if (!location) return <span>*</span>;
   return (

@@ -19,5 +19,5 @@ Player’s current hacking level
 
 ## Remarks
 
-0.05 GB
+RAM cost: 0.05 GB
 

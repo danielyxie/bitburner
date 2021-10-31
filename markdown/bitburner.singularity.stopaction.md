@@ -27,5 +27,5 @@ True if the player’s action was ended, false if the player was not performing 
 
 ## Remarks
 
-1 GB  Level 1
+Singularity - Level 1
 

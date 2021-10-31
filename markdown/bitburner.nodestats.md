@@ -4,6 +4,7 @@
 
 ## NodeStats interface
 
+Object representing all the values related to a hacknet node.
 
 <b>Signature:</b>
 
@@ -19,7 +20,7 @@ interface NodeStats
 |  [cores](./bitburner.nodestats.cores.md) | number | Node's number of cores |
 |  [hashCapacity](./bitburner.nodestats.hashcapacity.md) | number | Hash Capacity provided by this Node. Only applicable for Hacknet Servers |
 |  [level](./bitburner.nodestats.level.md) | number | Node's level |
-|  [name](./bitburner.nodestats.name.md) | string | Node's name ("hacknet-node-5") |
+|  [name](./bitburner.nodestats.name.md) | string | Node's name |
 |  [production](./bitburner.nodestats.production.md) | number | Node's production per second |
 |  [ram](./bitburner.nodestats.ram.md) | number | Node's RAM |
 |  [timeOnline](./bitburner.nodestats.timeonline.md) | number | Number of seconds since Node has been purchased |

@@ -21,5 +21,5 @@ number of duplicate sleeves the player has.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

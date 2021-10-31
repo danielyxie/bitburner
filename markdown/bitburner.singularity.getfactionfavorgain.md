@@ -28,5 +28,5 @@ Amount of favor you will gain for the specified faction when you reset by instal
 
 ## Remarks
 
-0.75 GB  Level 2
+Singularity - Level 2
 

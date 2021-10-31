@@ -28,5 +28,5 @@ Array with the names of the prerequisite Augmentation(s) for the specified Augme
 
 ## Remarks
 
-5 GB  Level 3
+Singularity - Level 3
 

@@ -9,7 +9,7 @@ Returns a name describing the type of problem posed by the Coding Contract. (e.g
 <b>Signature:</b>
 
 ```typescript
-getContractType(fn: string, host?: Host): CodingContractTypes;
+getContractType(fn: string, host?: string): CodingContractTypes;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ getContractType(fn: string, host?: Host): CodingContractTypes;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  fn | string | Filename of the contract. |
-|  host | [Host](./bitburner.host.md) | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  host | string | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
@@ -27,5 +27,5 @@ Name describing the type of problem posed by the Coding Contract.
 
 ## Remarks
 
-5 GB
+RAM cost: 5 GB
 

@@ -4,6 +4,8 @@
 
 ## Gym type
 
+All gyms.
+
 <b>Signature:</b>
 
 ```typescript

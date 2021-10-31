@@ -1,4 +1,5 @@
 /**
+ * Data representing the internal values of an Augmentation.
  * @public
  */
 export declare interface AugmentationStats {
@@ -65,6 +66,7 @@ export declare interface AugmentationStats {
 }
 
 /**
+ * All augmentation names.
  * @public
  */
 export declare type AugmentName =
@@ -175,6 +177,7 @@ export declare type AugmentName =
 | "The Blade's Simulacrum";
 
 /**
+ * Return value of {@link Sleeve.getSleevePurchasableAugs | getSleevePurchasableAugs}
  * @public
  */
 export declare interface AugmentPair {
@@ -185,14 +188,18 @@ export declare interface AugmentPair {
 }
 
 /**
+ * Options to affect the behavior of {@link NS.hack | hack}, {@link NS.grow | grow}, and {@link NS.weaken | weaken}.
  * @public
  */
 export declare interface BasicHGWOptions {
     /** Number of threads to use for this function. Must be less than or equal to the number of threads the script is running with. */
     threads: number;
+    /** Set to true this action will affect the stock market. */
+    stock?: boolean;
 }
 
 /**
+ * All multipliers affecting the difficulty of the current challenge.
  * @public
  */
 export declare interface BitNodeMultipliers {
@@ -286,7 +293,7 @@ export declare interface Bladeburner {
      *
      * Returns an array of strings containing the names of all Bladeburner contracts.
      *
-     * @remarks 0.4 GB
+     * @remarks RAM cost: 0.4 GB
      * @returns Array of strings containing the names of all Bladeburner contracts.
      */
     getContractNames(): BladeburnerContracts[];
@@ -297,7 +304,7 @@ export declare interface Bladeburner {
      *
      * Returns an array of strings containing the names of all Bladeburner operations.
      *
-     * @remarks 0.4 GB
+     * @remarks RAM cost: 0.4 GB
      * @returns Array of strings containing the names of all Bladeburner operations.
      */
     getOperationNames(): BladeburnerOperations[];
@@ -308,7 +315,7 @@ export declare interface Bladeburner {
      *
      * Returns an array of strings containing the names of all Bladeburner Black Ops.
      *
-     * @remarks 0.4 GB
+     * @remarks RAM cost: 0.4 GB
      * @returns Array of strings containing the names of all Bladeburner Black Ops.
      */
     getBlackOpNames(): BladeburnerBlackOps[];
@@ -319,7 +326,7 @@ export declare interface Bladeburner {
      *
      * Returns an array of strings containing the names of all general Bladeburner actions.
      *
-     * @remarks 0.4 GB
+     * @remarks RAM cost: 0.4 GB
      * @returns Array of strings containing the names of all general Bladeburner actions.
      */
     getGeneralActionNames(): BladeburnerGenActions[];
@@ -330,7 +337,7 @@ export declare interface Bladeburner {
      *
      * Returns an array of strings containing the names of all general Bladeburner skills.
      *
-     * @remarks 0.4 GB
+     * @remarks RAM cost: 0.4 GB
      * @returns Array of strings containing the names of all general Bladeburner skills.
      */
     getSkillNames(): BladeburnerSkills[];
@@ -342,7 +349,7 @@ export declare interface Bladeburner {
      * Attempts to start the specified Bladeburner action.
      * Returns true if the action was started successfully, and false otherwise.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match
      * @returns True if the action was started successfully, and false otherwise.
@@ -358,7 +365,7 @@ export declare interface Bladeburner {
      *
      * Stops the current Bladeburner action.
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      */
     stopBladeburnerAction(): void;
 
@@ -369,7 +376,7 @@ export declare interface Bladeburner {
      * Returns an object that represents the player’s current Bladeburner action.
      * If the player is not performing an action, the function will return an object with the ‘type’ property set to “Idle”.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @returns Object that represents the player’s current Bladeburner action.
      */
     getCurrentAction(): BladeburnerCurAction;
@@ -380,7 +387,7 @@ export declare interface Bladeburner {
      *
      * Returns the number of seconds it takes to complete the specified action
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns Number of seconds it takes to complete the specified action.
@@ -398,7 +405,7 @@ export declare interface Bladeburner {
      * This chance is returned as a decimal value, NOT a percentage
      * (e.g. if you have an estimated success chance of 80%, then this function will return 0.80, NOT 80).
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns Estimated success chance for the specified action.
@@ -416,7 +423,7 @@ export declare interface Bladeburner {
      * completing the specified action.
      * Note that this value is an ‘average’ and the real reputation gain may vary slightly from this value.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @param level - Optional action level at which to calculate the gain
@@ -439,7 +446,7 @@ export declare interface Bladeburner {
      * This function will return 1 for BlackOps not yet completed regardless of wether
      * the player has the required rank to attempt the mission or not.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns Remaining count of the specified action.
@@ -457,7 +464,7 @@ export declare interface Bladeburner {
      *
      * Returns -1 if an invalid action is specified.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns Maximum level of the specified action.
@@ -475,7 +482,7 @@ export declare interface Bladeburner {
      *
      * Returns -1 if an invalid action is specified.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns Current level of the specified action.
@@ -493,7 +500,7 @@ export declare interface Bladeburner {
      *
      * Returns false if an invalid action is specified.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns True if the action is set to autolevel, and false otherwise.
@@ -509,7 +516,7 @@ export declare interface Bladeburner {
      *
      * Enable/disable autoleveling for the specified action.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @param autoLevel - Whether or not to autolevel this action
@@ -526,7 +533,7 @@ export declare interface Bladeburner {
      *
      * Set the level for the specified action.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @param level - Level to set this action to.
@@ -543,7 +550,7 @@ export declare interface Bladeburner {
      *
      * Returns the player’s Bladeburner Rank.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @returns Player’s Bladeburner Rank.
      */
     getRank(): number;
@@ -556,7 +563,7 @@ export declare interface Bladeburner {
      *
      * Returns -1 if an invalid action is specified.
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @param name - Name of BlackOp. Must be an exact match.
      * @returns Rank required to complete this BlackOp.
      */
@@ -568,7 +575,7 @@ export declare interface Bladeburner {
      *
      * Returns the number of Bladeburner skill points you have.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @returns Number of Bladeburner skill points you have.
      */
     getSkillPoints(): number;
@@ -581,7 +588,7 @@ export declare interface Bladeburner {
      *
      * The function returns -1 if an invalid skill name is passed in.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param skillName - Name of skill. Case-sensitive and must be an exact match
      * @returns Level in the specified skill.
      */
@@ -595,7 +602,7 @@ export declare interface Bladeburner {
      *
      * The function returns -1 if an invalid skill name is passed in.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param skillName - Name of skill. Case-sensitive and must be an exact match
      * @returns Number of skill points needed to upgrade the specified skill.
      */
@@ -609,7 +616,7 @@ export declare interface Bladeburner {
      *
      * Returns true if the skill is successfully upgraded, and false otherwise.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param skillName - Name of skill to be upgraded. Case-sensitive and must be an exact match
      * @returns true if the skill is successfully upgraded, and false otherwise.
      */
@@ -623,7 +630,7 @@ export declare interface Bladeburner {
      *
      * Setting a team is only applicable for Operations and BlackOps. This function will return 0 for other action types.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns Number of Bladeburner team members that were assigned to the specified action.
@@ -641,7 +648,7 @@ export declare interface Bladeburner {
      *
      * Returns the team size that was set, or -1 if the function failed.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @param size - Number of team members to set. Will be converted using Math.round().
@@ -660,7 +667,7 @@ export declare interface Bladeburner {
      * Returns the estimated number of Synthoids in the specified city,
      * or -1 if an invalid city was specified.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param cityName - Name of city. Case-sensitive
      * @returns Estimated number of Synthoids in the specified city.
      */
@@ -673,7 +680,7 @@ export declare interface Bladeburner {
      * Returns the estimated number of Synthoid communities in the specified city,
      * or -1 if an invalid city was specified.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param cityName - Name of city. Case-sensitive
      * @returns Number of Synthoids communities in the specified city.
      */
@@ -686,7 +693,7 @@ export declare interface Bladeburner {
      * Returns the chaos in the specified city,
      * or -1 if an invalid city was specified.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param cityName - Name of city. Case-sensitive
      * @returns Chaos in the specified city.
      */
@@ -698,7 +705,7 @@ export declare interface Bladeburner {
      *
      * Returns the city that the player is currently in (for Bladeburner).
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @returns City that the player is currently in (for Bladeburner).
      */
     getCity(): City;
@@ -711,7 +718,7 @@ export declare interface Bladeburner {
      *
      * Returns true if successful, and false otherwise
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param cityName - Name of city. Case-sensitive
      * @returns true if successful, and false otherwise
      */
@@ -724,13 +731,13 @@ export declare interface Bladeburner {
      * Returns an array with two elements:
      * * [Current stamina, Max stamina]
      * @example
-     * ```js
+     * ```ts
      * function getStaminaPercentage() {
      *    let res = bladeburner.getStamina();
      *    return res[0] / res[1];
      * }
      * ```
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @returns Array containing current stamina and max stamina.
      */
     getStamina(): [number, number];
@@ -745,7 +752,7 @@ export declare interface Bladeburner {
      *
      * Returns false otherwise.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @returns True if you successfully join the Bladeburner faction, or if you are already a member, false otherwise.
      */
     joinBladeburnerFaction(): boolean;
@@ -760,7 +767,7 @@ export declare interface Bladeburner {
      *
      * Returns false otherwise.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @returns True if you successfully join the Bladeburner division, or if you are already a member, false otherwise.
      */
     joinBladeburnerDivision(): boolean;
@@ -777,18 +784,20 @@ export declare interface Bladeburner {
      * For example, if an action takes 30 seconds to complete but you’ve accumulated over
      * 30 seconds in bonus time, then the action will only take 6 seconds in real life to complete.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @returns Amount of accumulated “bonus time” (seconds) for the Bladeburner mechanic.
      */
     getBonusTime(): number;
 }
 
 /**
+ * All Bladeburner action types.
  * @public
  */
 export declare type BladeburnerActTypes = "contracts" | "operations" | "black ops" | "general";
 
 /**
+ * All Bladeburner black ops.
  * @public
  */
 export declare type BladeburnerBlackOps =
@@ -820,6 +829,7 @@ export declare type BladeburnerBlackOps =
 export declare type BladeburnerContracts = "Tracking" | "Bounty Hunter" | "Retirement";
 
 /**
+ * Bladeburner current action.
  * @public
  */
 export declare interface BladeburnerCurAction {
@@ -830,6 +840,7 @@ export declare interface BladeburnerCurAction {
 }
 
 /**
+ * All Bladeburner General Actions.
  * @public
  */
 export declare type BladeburnerGenActions =
@@ -840,6 +851,7 @@ export declare type BladeburnerGenActions =
 | "Hyperbolic Regeneration Chamber";
 
 /**
+ * All Bladeburner Ops.
  * @public
  */
 export declare type BladeburnerOperations =
@@ -851,6 +863,7 @@ export declare type BladeburnerOperations =
 | "Assassination";
 
 /**
+ * All Bladeburner Skills.
  * @public
  */
 export declare type BladeburnerSkills =
@@ -948,11 +961,13 @@ export declare interface CharacterMult {
 }
 
 /**
+ * All cities.
  * @public
  */
 export declare type City = "Aevum" | "Chongqing" | "Sector-12" | "New Tokyo" | "Ishima" | "Volhaven";
 
 /**
+ * Options to affect the behavior of {@link CodingContract} attempt.
  * @public
  */
 export declare interface CodingAttemptOptions {
@@ -961,6 +976,7 @@ export declare interface CodingAttemptOptions {
 }
 
 /**
+ * Coding Contact API
  * @public
  */
 export declare interface CodingContract {
@@ -973,7 +989,7 @@ export declare interface CodingContract {
      * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns True if the solution was correct, false otherwise.
      */
-    attempt(answer: string | string[] | number, fn: string, host?: Host): boolean;
+    attempt(answer: string | string[] | number, fn: string, host?: string): boolean;
 
     /**
      * Attempts to solve the Coding Contract with the provided solution.
@@ -985,53 +1001,54 @@ export declare interface CodingContract {
      * @param opts - Optional parameters for configuring function behavior.
      * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
      */
-    attempt(answer: string | string[] | number, fn: string, host?: Host, opts?: CodingAttemptOptions): boolean | string;
+    attempt(answer: string | string[] | number, fn: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
 
     /**
      * Returns a name describing the type of problem posed by the Coding Contract.
      * (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @param fn - Filename of the contract.
      * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns Name describing the type of problem posed by the Coding Contract.
      */
-    getContractType(fn: string, host?: Host): CodingContractTypes;
+    getContractType(fn: string, host?: string): CodingContractTypes;
 
     /**
      * Get the full text description for the problem posed by the Coding Contract.
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @param fn - Filename of the contract.
      * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns Contract’s text description.
      */
-    getDescription(fn: string, host?: Host): string;
+    getDescription(fn: string, host?: string): string;
 
     /**
      * Get the data associated with the specific Coding Contract.
      * Note that this is not the same as the contract’s description.
      * This is just the data that the contract wants you to act on in order to solve
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @param fn - Filename of the contract.
      * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns The specified contract’s data;
      */
-    getData(fn: string, host?: Host): string;
+    getData(fn: string, host?: string): string;
 
     /**
      * Get the number of tries remaining on the contract before it self-destructs.
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @param fn - Filename of the contract.
      * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns How many attempts are remaining for the contract;
      */
-    getNumTriesRemaining(fn: string, host?: Host): number;
+    getNumTriesRemaining(fn: string, host?: string): number;
 }
 
 /**
+ * All Coding contract types.
  * @public
  */
 export declare type CodingContractTypes =
@@ -1053,6 +1070,7 @@ export declare type CodingContractTypes =
 | "Find All Valid Math Expressions";
 
 /**
+ * All company work fields.
  * @public
  */
 export declare type CompanyField =
@@ -1071,6 +1089,7 @@ export declare type CompanyField =
 | "part-time waiter";
 
 /**
+ * All companies.
  * @public
  */
 export declare type CompanyName =
@@ -1125,11 +1144,7 @@ export declare type CompanyName =
 | "NoodleBar";
 
 /**
- * @public
- */
-export declare type CreatableProgram = PurchaseableProgram | "serverprofiler.exe";
-
-/**
+ * All crimes.
  * @public
  */
 export declare type Crime =
@@ -1147,12 +1162,13 @@ export declare type Crime =
 | "heist";
 
 /**
+ * Data representing the internal values of a crime.
  * @public
  */
 export declare interface CrimeStats {
     /** Number representing the difficulty of the crime. Used for success chance calculations */
     difficulty: number;
-    /** Amount of karma lost for SUCCESSFULLY committing this crime */
+    /** Amount of karma lost for successfully committing this crime */
     karma: number;
     /** How many people die as a result of this crime */
     kills: number;
@@ -1193,6 +1209,7 @@ export declare interface CrimeStats {
 }
 
 /**
+ * All factions.
  * @public
  */
 export declare type FactionName =
@@ -1230,11 +1247,13 @@ export declare type FactionName =
 | "Bladeburners";
 
 /**
+ * All faction work types.
  * @public
  */
 export declare type FactionWork = "hacking" | "field" | "security";
 
 /**
+ * Gang API
  * @public
  */
 export declare interface Gang {
@@ -1243,7 +1262,7 @@ export declare interface Gang {
      *
      * Get the names of all Gang members
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @returns Names of all Gang members.
      */
     getMemberNames(): string[];
@@ -1253,7 +1272,7 @@ export declare interface Gang {
      *
      * Get general information about the gang.
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @returns Object containing general information about the gang.
      */
     getGangInformation(): GangGenInfo;
@@ -1263,7 +1282,7 @@ export declare interface Gang {
      *
      * Get territory and power information about all gangs.
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @returns Object containing territory and power information about all gangs.
      */
     getOtherGangInformation(): GangOtherInfo;
@@ -1273,7 +1292,7 @@ export declare interface Gang {
      *
      * Get stat and equipment-related information about a Gang Member
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @param name - Name of member.
      * @returns Object containing stat and equipment-related information about a Gang Member.
      */
@@ -1284,7 +1303,7 @@ export declare interface Gang {
      *
      * Returns boolean indicating whether a member can currently be recruited
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @returns True if a member can currently be recruited, false otherwise.
      */
     canRecruitMember(): boolean;
@@ -1298,7 +1317,7 @@ export declare interface Gang {
      * * Cannot currently recruit a new member
      * * There already exists a member with the specified name
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @param name - Name of member to recruit.
      * @returns True if the member was successfully recruited, false otherwise.
      */
@@ -1309,7 +1328,7 @@ export declare interface Gang {
      *
      * Get the name of all valid tasks that Gang members can be assigned to.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @returns All valid tasks that Gang members can be assigned to.
      */
     getTaskNames(): GangTasks[];
@@ -1320,7 +1339,7 @@ export declare interface Gang {
      * Attempts to assign the specified Gang Member to the specified task.
      * If an invalid task is specified, the Gang member will be set to idle (“Unassigned”).
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @param memberName - Name of Gang member to assign.
      * @param taskName - Task to assign.
      * @returns True if the Gang Member was successfully assigned to the task, false otherwise.
@@ -1332,7 +1351,7 @@ export declare interface Gang {
      *
      * Get the stats of a gang task stats. This is typically used to evaluate which action should be executed next.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param name -  Name of the task.
      * @returns Detailed stats of a task.
      */
@@ -1344,7 +1363,7 @@ export declare interface Gang {
      * Get the name of all possible equipment/upgrades you can purchase for your Gang Members.
      * This includes Augmentations.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @returns Names of all Equpiment/Augmentations.
      */
     getEquipmentNames(): (GangEquipment | GangAugmentations)[];
@@ -1355,7 +1374,7 @@ export declare interface Gang {
      * Get the amount of money it takes to purchase a piece of Equipment or an Augmentation.
      * If an invalid Equipment/Augmentation is specified, this function will return Infinity.
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @param equipName - Name of equipment.
      * @returns Cost to purchase the specified Equipment/Augmentation (number). Infinity for invalid arguments
      */
@@ -1366,7 +1385,7 @@ export declare interface Gang {
      *
      * Get the specified equipment type.
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @param equipName - Name of equipment.
      * @returns Type of the equipment.
      */
@@ -1377,7 +1396,7 @@ export declare interface Gang {
      *
      * Get the specified equipment stats.
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @param equipName - Name of equipment.
      * @returns A dictionary containing the stats of the equipment.
      */
@@ -1388,7 +1407,7 @@ export declare interface Gang {
      *
      * Attempt to purchase the specified Equipment/Augmentation for the specified Gang member.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param memberName - Name of Gang member to purchase the equipment for.
      * @param equipName - Name of Equipment/Augmentation to purchase.
      * @returns True if the equipment was successfully purchased. False otherwise
@@ -1400,7 +1419,7 @@ export declare interface Gang {
      *
      * Ascend the specified Gang Member.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param memberName - Name of member to ascend.
      * @returns Object with info about the ascension results.
      */
@@ -1411,7 +1430,7 @@ export declare interface Gang {
      *
      * Set whether or not the gang should engage in territory warfare
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @param engage - Whether or not to engage in territory warfare.
      */
     setTerritoryWarfare(engage: boolean): void;
@@ -1421,7 +1440,7 @@ export declare interface Gang {
      *
      * Returns the chance you have to win a clash with the specified gang. The chance is returned in decimal form, not percentage
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param gangName - Target gang
      * @returns Chance you have to win a clash with the specified gang.
      */
@@ -1436,13 +1455,14 @@ export declare interface Gang {
      *
      * “Bonus time” makes the game progress faster, up to 10x the normal speed.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @returns Bonus time for the Gang mechanic in seconds.
      */
     getBonusTime(): number;
 }
 
 /**
+ * All Gang augmentations.
  * @public
  */
 export declare type GangAugmentations =
@@ -1459,6 +1479,7 @@ export declare type GangAugmentations =
 | "Graphene Bone Lacings";
 
 /**
+ * All Gang equipment.
  * @public
  */
 export declare type GangEquipment =
@@ -1485,6 +1506,7 @@ export declare type GangEquipment =
 | "Jack the Ripper";
 
 /**
+ * Object representing data representing a gang member equipment.
  * @public
  */
 export declare interface GangEquipmentStats {
@@ -1503,11 +1525,13 @@ export declare interface GangEquipmentStats {
 }
 
 /**
+ * All Gang equipment type.
  * @public
  */
 export declare type GangEquipmentType = "Weapon" | "Armor" | "Vehicle" | "Rootkit" | "Augmentation";
 
 /**
+ * Gang general info.
  * @public
  */
 export declare interface GangGenInfo {
@@ -1539,17 +1563,17 @@ export declare interface GangGenInfo {
 export declare interface GangMemberAscension {
     /** Amount of respect lost from ascending */
     respect: number;
-    /** Hacking multiplier gained from ascending. Decimal form */
+    /** Hacking multiplier gained from ascending.*/
     hack: number;
-    /** Strength multiplier gained from ascending. Decimal form */
+    /** Strength multiplier gained from ascending.*/
     str: number;
-    /** Defense multiplier gained from ascending. Decimal form */
+    /** Defense multiplier gained from ascending.*/
     def: number;
-    /** Dexterity multiplier gained from ascending. Decimal form */
+    /** Dexterity multiplier gained from ascending.*/
     dex: number;
-    /** Agility multiplier gained from ascending. Decimal form */
+    /** Agility multiplier gained from ascending.*/
     agi: number;
-    /** Charisma multiplier gained from ascending. Decimal form */
+    /** Charisma multiplier gained from ascending.*/
     cha: number;
 }
 
@@ -1559,49 +1583,50 @@ export declare interface GangMemberAscension {
 export declare interface GangMemberInfo {
     /** Agility stat */
     agility: number;
-    /** Agility multiplier from equipment. Decimal form */
+    /** Agility multiplier from equipment.*/
     agilityEquipMult: number;
-    /** Agility multiplier from ascension. Decimal form */
+    /** Agility multiplier from ascension.*/
     agilityAscensionMult: number;
     /** Array of names of all owned Augmentations */
     augmentations: GangAugmentations[];
     /** Charisma stat */
     charisma: number;
-    /** Charisma multiplier from equipment. Decimal form */
+    /** Charisma multiplier from equipment.*/
     charismaEquipMult: number;
-    /** Charisma multiplier from ascension. Decimal form */
+    /** Charisma multiplier from ascension.*/
     charismaAscensionMult: number;
     /** Defense stat */
     defense: number;
-    /** Defense multiplier from equipment. Decimal form */
+    /** Defense multiplier from equipment.*/
     defenseEquipMult: number;
-    /** Defense multiplier from ascension. Decimal form */
+    /** Defense multiplier from ascension.*/
     defenseAscensionMult: number;
     /** Dexterity stat */
     dexterity: number;
-    /** Dexterity multiplier from equipment. Decimal form */
+    /** Dexterity multiplier from equipment.*/
     dexterityEquipMult: number;
-    /** Dexterity multiplier from ascension. Decimal form */
+    /** Dexterity multiplier from ascension.*/
     dexterityAscensionMult: number;
     /** Array of names of all owned Non-Augmentation Equipment */
     equipment: GangEquipment[];
     /** Hacking stat */
     hacking: number;
-    /** Hacking multiplier from equipment. Decimal form */
+    /** Hacking multiplier from equipment.*/
     hackingEquipMult: number;
-    /** Hacking multiplier from ascension. Decimal form */
+    /** Hacking multiplier from ascension.*/
     hackingAscensionMult: number;
     /** Strength stat */
     strength: number;
-    /** Strength multiplier from equipment. Decimal form */
+    /** Strength multiplier from equipment.*/
     strengthEquipMult: number;
-    /** Strength multiplier from ascension. Decimal form */
+    /** Strength multiplier from ascension.*/
     strengthAscensionMult: number;
     /** Name of currently assigned task */
     task: GangTasks;
 }
 
 /**
+ * All factions that can have a gang.
  * @public
  */
 export declare type GangName =
@@ -1632,6 +1657,7 @@ export declare interface GangOtherInfoObject {
 }
 
 /**
+ * All Gang tasks.
  * @public
  */
 export declare type GangTasks =
@@ -1661,6 +1687,7 @@ export declare type GangTasks =
 | "Territory Warfare";
 
 /**
+ * Object representing data representing a gang member task.
  * @public
  */
 export declare interface GangTasksStats {
@@ -1709,16 +1736,19 @@ export declare interface GangTasksTerritory {
 }
 
 /**
+ * All gyms.
  * @public
  */
 export declare type Gym = "Crush Fitness Gym" | "Snap Fitness Gym" | "Iron Gym" | "Powerhouse Gym" | "Millenium Fitness Gym";
 
 /**
+ * All stats that can be trained at gyms.
  * @public
  */
 export declare type GymStat = "str" | "def" | "dex" | "agi";
 
 /**
+ * Hack related multipliers.
  * @public
  */
 export declare interface HackingMultipliers {
@@ -1733,13 +1763,14 @@ export declare interface HackingMultipliers {
 }
 
 /**
+ * Hacknet API
  * @public
  */
-export declare interface HackNet {
+export declare interface Hacknet {
     /**
      * Returns the number of Hacknet Nodes you own.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @returns number of hacknet nodes.
      */
     numNodes(): number;
@@ -1747,12 +1778,12 @@ export declare interface HackNet {
     /**
      * Purchases a new Hacknet Node. Returns a number with the index of the
      * Hacknet Node. This index is equivalent to the number at the end of
-     * the Hacknet Node’s name (e.g The Hacknet Node named \`hacknet-node-4\`
+     * the Hacknet Node’s name (e.g The Hacknet Node named `hacknet-node-4`
      * will have an index of 4).
      *
      * If the player cannot afford to purchase a new Hacknet Node then the function will return -1.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @returns The index of the Hacknet Node or if the player cannot afford to purchase a new Hacknet Node the function will return -1.
      */
     purchaseNode(): number;
@@ -1760,7 +1791,7 @@ export declare interface HackNet {
     /**
      * Returns the cost of purchasing a new Hacknet Node.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @returns Cost of purchasing a new Hacknet Node.
      */
     getPurchaseNodeCost(): number;
@@ -1772,7 +1803,7 @@ export declare interface HackNet {
      * For Hacknet Servers (the upgraded version of Hacknet Nodes), production refers to the
      * amount of hashes the node generates.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node
      * @returns Object containing a variety of stats about the specified Hacknet Node.
      */
@@ -1786,7 +1817,7 @@ export declare interface HackNet {
      *
      * Returns false otherwise.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of levels to purchase. Must be positive. Rounded to nearest integer.
      * @returns True if the Hacknet Node’s level is successfully upgraded, false otherwise.
@@ -1803,7 +1834,7 @@ export declare interface HackNet {
      *
      * Returns false otherwise.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of times to upgrade RAM. Must be positive. Rounded to nearest integer.
      * @returns True if the Hacknet Node’s ram is successfully upgraded, false otherwise.
@@ -1818,7 +1849,7 @@ export declare interface HackNet {
      *
      * Returns false otherwise.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of cores to purchase. Must be positive. Rounded to nearest integer.
      * @returns True if the Hacknet Node’s cores are successfully purchased, false otherwise.
@@ -1835,7 +1866,7 @@ export declare interface HackNet {
      *
      * Returns false otherwise.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of cache levels to purchase. Must be positive. Rounded to nearest integer.
      * @returns True if the Hacknet Node’s cores are successfully purchased, false otherwise.
@@ -1848,7 +1879,7 @@ export declare interface HackNet {
      * If an invalid value for n is provided, then this function returns 0.
      * If the specified Hacknet Node is already at max level, then Infinity is returned.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of levels to upgrade. Must be positive. Rounded to nearest integer.
      * @returns Cost of upgrading the specified Hacknet Node.
@@ -1861,7 +1892,7 @@ export declare interface HackNet {
      * If an invalid value for n is provided, then this function returns 0.
      * If the specified Hacknet Node is already at max level, then Infinity is returned.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of times to upgrade RAM. Must be positive. Rounded to nearest integer.
      * @returns Cost of upgrading the specified Hacknet Node's ram.
@@ -1874,7 +1905,7 @@ export declare interface HackNet {
      * If an invalid value for n is provided, then this function returns 0.
      * If the specified Hacknet Node is already at max level, then Infinity is returned.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of times to upgrade cores. Must be positive. Rounded to nearest integer.
      * @returns Cost of upgrading the specified Hacknet Node's number of cores.
@@ -1889,7 +1920,7 @@ export declare interface HackNet {
      * If an invalid value for n is provided, then this function returns 0.
      * If the specified Hacknet Node is already at max level, then Infinity is returned.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of times to upgrade cache. Must be positive. Rounded to nearest integer.
      * @returns Cost of upgrading the specified Hacknet Node's cache.
@@ -1901,7 +1932,7 @@ export declare interface HackNet {
      *
      * Returns the number of hashes you have.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @returns Number of hashes you have.
      */
     numHashes(): number;
@@ -1912,13 +1943,13 @@ export declare interface HackNet {
      * Returns the number of hashes required for the specified upgrade. The name of the upgrade must be an exact match.
      *
      * @example
-     * ```js
+     * ```ts
      * var upgradeName = "Sell for Corporation Funds";
      * if (hacknet.numHashes() > hacknet.hashCost(upgradeName)) {
      *    hacknet.spendHashes(upgName);
      * }
      * ```
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param upgName - Name of the upgrade of Hacknet Node.
      * @returns Number of hashes required for the specified upgrade.
      */
@@ -1931,23 +1962,24 @@ export declare interface HackNet {
      * Returns a boolean value - true if the upgrade is successfully purchased, and false otherwise.
      *
      * The name of the upgrade must be an exact match.
-     * The \`upgTarget\` argument is used for upgrades such as \`Reduce Minimum Security\`, which applies to a specific server.
-     * In this case, the \`upgTarget\` argument must be the hostname of the server.
+     * The `upgTarget` argument is used for upgrades such as `Reduce Minimum Security`, which applies to a specific server.
+     * In this case, the `upgTarget` argument must be the hostname of the server.
      *
      * @example
-     * ```js
+     * ```ts
      * hacknet.spendHashes("Sell for Corporation Funds");
      * hacknet.spendHashes("Increase Maximum Money", "foodnstuff");
      * ```
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param upgName - Name of the upgrade of Hacknet Node.
      * @param upgTarget - Object to which upgrade applies. Required for certain upgrades.
      * @returns True if the upgrade is successfully purchased, and false otherwise..
      */
-    spendHashes(upgName: HashUpgrades, upgTarget?: Host): boolean;
+    spendHashes(upgName: HashUpgrades, upgTarget?: string): boolean;
 }
 
 /**
+ * Hacknet related multipliers.
  * @public
  */
 export declare interface HacknetMultipliers {
@@ -1969,6 +2001,7 @@ export declare interface HacknetMultipliers {
 export declare type Handle = string | Port;
 
 /**
+ * All Hash upgrade names.
  * @public
  */
 export declare type HashUpgrades =
@@ -1984,15 +2017,11 @@ export declare type HashUpgrades =
 | "Generate Coding Contract";
 
 /**
- * @public
- */
-export declare type Host = string;
-
-/**
+ * Object representing all the values related to a hacknet node.
  * @public
  */
 export declare interface NodeStats {
-    /** Node's name ("hacknet-node-5") */
+    /** Node's name */
     name: string;
     /** Node's level */
     level: number;
@@ -2013,53 +2042,64 @@ export declare interface NodeStats {
 }
 
 /**
+ * Collection of all functions passed to scripts
  * @public
  */
 export declare interface NS extends Singularity {
     /**
+     * Namespace for hacknet related functions.
+     * @remarks
      * Not all functions in the Hacknet Node API are immediately available.
      *
      * Note that none of these functions will write to the script’s logs.
      *
      * If you want to see what your script is doing you will have to print to the logs yourself.
      *
-     * @remarks 4 GB
+     * 4 GB
      */
-    readonly hacknet: HackNet;
+    readonly hacknet: Hacknet;
     /**
-     * @remarks 0 GB
+     *
+     * Namespace for bladeburner related functions.
+     * @remarks RAM cost: 0 GB
      */
     readonly bladeburner: Bladeburner;
     /**
-     * @remarks 0 GB
+     *
+     * Namespace for codingcontract related functions.
+     * @remarks RAM cost: 0 GB
      */
     readonly codingcontract: CodingContract;
     /**
-     * @remarks 0 GB
+     *
+     * Namespace for gang related functions.
+     * @remarks RAM cost: 0 GB
      */
     readonly gang: Gang;
     /**
-     * @remarks 0 GB
+     *
+     * Namespace for sleeve related functions.
+     * @remarks RAM cost: 0 GB
      */
     readonly sleeve: Sleeve;
     /**
-     * @remarks 0 GB
+     *
+     * Namespace for stock related functions.
+     * @remarks RAM cost: 0 GB
      */
     readonly stock: TIX;
 
     /**
+     * Arguments passed into the script.
+     *
+     * @remarks RAM cost: 0 GB
      * Arguments passed into a script can be accessed using a normal
      * array using the [] operator (args[0], args[1], etc…).
      *
-     * It is also possible to get the number of arguments that was passed into a script using:
-     * ```js
-     * args.length
-     * ```
+     * It is also possible to get the number of arguments that was passed into a script using: 'args.length'
      * WARNING: Do not try to modify the args array. This will break the game.
-     *
-     * @remarks 0 GB
      */
-    readonly args: any[];
+    readonly args: (string | number)[];
 
     /**
      * Function that is used to try and hack servers to steal money and gain hacking experience.
@@ -2068,74 +2108,74 @@ export declare interface NS extends Singularity {
      * and also have the required hacking level.
      *
      * A script can hack a server from anywhere. It does not need to be running on the same
-     * server to hack that server. For example, you can create a script that hacks the \`foodnstuff\`
+     * server to hack that server. For example, you can create a script that hacks the `foodnstuff`
      * server and run that script on any server in the game.
      *
-     * A successful \`hack()\` on a server will raise that server’s security level by 0.002.
+     * A successful `hack()` on a server will raise that server’s security level by 0.002.
      *
      * @example
-     * ```js
+     * ```ts
      * hack("foodnstuff");
      * hack("10.1.2.3");
      * hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
      * ```
-     * @remarks 0.1 GB
-     * @param host - Hostname or IP of the target server to hack.
+     * @remarks RAM cost: 0.1 GB
+     * @param host - Hostname of the target server to hack.
      * @param opts - Optional parameters for configuring function behavior.
      * @returns The amount of money stolen if the hack is successful, and zero otherwise.
      */
-    hack(host: Host, opts?: BasicHGWOptions): Promise<number>;
+    hack(host: string, opts?: BasicHGWOptions): Promise<number>;
 
     /**
      * Use your hacking skills to increase the amount of money available on a server.
      * The runtime for this command depends on your hacking level and the target server’s
-     * security level. When \`grow\` completes, the money available on a target server will
+     * security level. When `grow` completes, the money available on a target server will
      * be increased by a certain, fixed percentage. This percentage is determined by the
      * target server’s growth rate (which varies between servers) and security level. Generally,
      * higher-level servers have higher growth rates. The getServerGrowth() function can be used
      * to obtain a server’s growth rate.
      *
-     * Like hack, \`grow\` can be called on any server, regardless of where the script is running.
+     * Like hack, `grow` can be called on any server, regardless of where the script is running.
      * The grow() command requires root access to the target server, but there is no required hacking
      * level to run the command. It also raises the security level of the target server by 0.004.
      *
      * @example
-     * ```js
+     * ```ts
      * grow("foodnstuff");
      * grow("foodnstuff", { threads: 5 }); // Only use 5 threads to grow
      * ```
-     * @remarks 0.15 GB
-     * @param host - Hostname or IP of the target server to grow.
+     * @remarks RAM cost: 0.15 GB
+     * @param host - Hostname of the target server to grow.
      * @param opts - Optional parameters for configuring function behavior.
      * @returns The number by which the money on the server was multiplied for the growth.
      */
-    grow(host: Host, opts?: BasicHGWOptions): Promise<number>;
+    grow(host: string, opts?: BasicHGWOptions): Promise<number>;
 
     /**
      * Use your hacking skills to attack a server’s security, lowering the server’s security level.
      * The runtime for this command depends on your hacking level and the target server’s security
      * level. This function lowers the security level of the target server by 0.05.
      *
-     * Like hack and grow, \`weaken\` can be called on any server, regardless of
+     * Like hack and grow, `weaken` can be called on any server, regardless of
      * where the script is running. This command requires root access to the target server, but
      * there is no required hacking level to run the command.
      *
      * @example
-     * ```js
+     * ```ts
      * weaken("foodnstuff");
      * weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
      * ```
-     * @remarks 0.15 GB
-     * @param host - Hostname or IP of the target server to weaken.
+     * @remarks RAM cost: 0.15 GB
+     * @param host - Hostname of the target server to weaken.
      * @param opts - Optional parameters for configuring function behavior.
      * @returns The amount by which the target server’s security level was decreased. This is equivalent to 0.05 multiplied by the number of script threads.
      */
-    weaken(host: Host, opts?: BasicHGWOptions): Promise<number>;
+    weaken(host: string, opts?: BasicHGWOptions): Promise<number>;
 
     /**
      * Returns the security decrease that would occur if a weaken with this many threads happened.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param threads - Amount of threads that will be used.
      * @param cores - Optional. The number of cores of the server that would run weaken.
      * @returns The security decrease.
@@ -2151,17 +2191,17 @@ export declare interface NS extends Singularity {
      * Warning: The value returned by this function isn’t necessarily a whole number.
      *
      * @example
-     * ```js
+     * ```ts
      * //For example, let’s say the foodnstuff server has $10m and you run:
      * hackAnalyzeThreads("foodnstuff", 1e6);
      * //If this function returns 50, this means that if your next hack call is run on a script with 50 threads, it will steal $1m from the foodnstuff server.
      * ```
-     * @remarks 1 GB
-     * @param host - Hostname or IP of the target server to analyze.
+     * @remarks RAM cost: 1 GB
+     * @param host - Hostname of the target server to analyze.
      * @param hackAmount - Amount of money you want to hack from the server.
      * @returns The number of threads needed to hack the server for hackAmount money.
      */
-    hackAnalyzeThreads(host: Host, hackAmount: number): number;
+    hackAnalyzeThreads(host: string, hackAmount: number): number;
 
     /**
      * Returns the percentage of the specified server’s money you will steal with a single hack.
@@ -2169,21 +2209,21 @@ export declare interface NS extends Singularity {
      * (Netscript functions typically return in decimal form, but not this one).
      *
      * @example
-     * ```js
+     * ```ts
      * //For example, assume the following returns 1:
      * hackAnalyzePercent("foodnstuff");
      * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N% of its total money.
      * ```
-     * @remarks 1 GB
-     * @param host - Hostname or IP of the target server.
+     * @remarks RAM cost: 1 GB
+     * @param host - Hostname of the target server.
      * @returns The percentage of money you will steal from the target server with a single hack.
      */
-    hackAnalyzePercent(host: Host): number;
+    hackAnalyzePercent(host: string): number;
 
     /**
      * Returns the security increase that would occur if a hack with this many threads happened.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param threads - Amount of threads that will be used.
      * @returns The security increase.
      */
@@ -2194,11 +2234,11 @@ export declare interface NS extends Singularity {
      *
      * This returned value is in decimal form, not percentage.
      *
-     * @remarks 1 GB
-     * @param host - Hostname or IP of the target server.
+     * @remarks RAM cost: 1 GB
+     * @param host - Hostname of the target server.
      * @returns The chance you have of successfully hacking the target server.
      */
-    hackChance(host: Host): number;
+    hackChance(host: string): number;
 
     /**
      * This function returns the number of “growths” needed in order to increase
@@ -2208,22 +2248,22 @@ export declare interface NS extends Singularity {
      * Warning: The value returned by this function isn’t necessarily a whole number.
      *
      * @example
-     * ```js
+     * ```ts
      * //For example, if you want to determine how many grow calls you need to double the amount of money on foodnstuff, you would use:
      * growthAnalyze("foodnstuff", 2);
      * //If this returns 100, then this means you need to call grow 100 times in order to double the money (or once with 100 threads).
      * ```
-     * @remarks 1 GB
-     * @param host - Hostname or IP of the target server.
+     * @remarks RAM cost: 1 GB
+     * @param host - Hostname of the target server.
      * @param growthAmount - Multiplicative factor by which the server is grown. Decimal form..
      * @returns The amount of grow calls needed to grow the specified server by the specified amount
      */
-    growthAnalyze(host: Host, growthAmount: number): number;
+    growthAnalyze(host: string, growthAmount: number): number;
 
     /**
      * Returns the security increase that would occur if a grow with this many threads happened.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param threads - Amount of threads that will be used.
      * @returns The security increase.
      */
@@ -2232,7 +2272,7 @@ export declare interface NS extends Singularity {
     /**
      * Suspends the script for n milliseconds.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param millis - Number of milliseconds to sleep.
      * @returns
      */
@@ -2241,29 +2281,31 @@ export declare interface NS extends Singularity {
     /**
      * Prints a value or a variable to the script’s logs.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param msg - Value to be printed.
      */
-    print(msg: string | number | string[] | number[]): void;
+    print(msg: any): void;
 
     /**
      * Prints a value or a variable to the Terminal.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param msg - Value to be printed.
      */
-    tprint(msg: string | number | string[] | number[]): void;
+    tprint(msg: any): void;
 
     /**
      * Clears the script’s logs.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      */
     clearLog(): void;
 
     /**
-     * Disables logging for the given function. Logging can be disabled
-     * for all functions by passing \`ALL\` as the argument.
+     * Disables logging for the given function.
+     * @remarks
+     * RAM cost: 0 GB
+     * Logging can be disabled for all functions by passing `ALL` as the argument.
      *
      * Note that this does not completely remove all logging functionality.
      * This only stops a function from logging when the function is successful.
@@ -2272,16 +2314,15 @@ export declare interface NS extends Singularity {
      * Notable functions that cannot have their logs disabled: run,
      * exec, exit.
      *
-     * @remarks 0 GB
      * @param fn - Name of function for which to disable logging.
      */
     disableLog(fn: string): void;
 
     /**
-     * Re-enables logging for the given function. If \`ALL\` is passed into this
-     * function as an argument, then it will revert the effects of disableLog(\`ALL\`).
+     * Re-enables logging for the given function. If `ALL` is passed into this
+     * function as an argument, then it will revert the effects of disableLog(`ALL`).
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param fn - Name of function for which to enable logging.
      */
     enableLog(fn: string): void;
@@ -2289,9 +2330,9 @@ export declare interface NS extends Singularity {
     /**
      * Checks the status of the logging for the given function.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param fn - Name of function to check.
-     * @returns Returns a boolean indicating whether or not logging is enabled for that function (or \`ALL\`)
+     * @returns Returns a boolean indicating whether or not logging is enabled for that function (or `ALL`)
      */
     isLogEnabled(fn: string): boolean;
 
@@ -2305,27 +2346,27 @@ export declare interface NS extends Singularity {
      * Remember that scripts are uniquely identified by both their names and arguments.
      *
      * @example
-     * ```js
+     * ```ts
      * //Get logs from foo.script on the current server that was run with no args
      * getScriptLogs("foo.script");
      * ```
      * @example
-     * ```js
+     * ```ts
      * //Open logs from foo.script on the foodnstuff server that was run with no args
      * getScriptLogs("foo.script", "foodnstuff");
      * ```
      * @example
-     * ```js
+     * ```ts
      * //Open logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
      * getScriptLogs("foo.script", "foodnstuff", 1, "test");
      * ```
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param fn - Optional. Filename of script to get logs from.
-     * @param host - Optional. Hostname or IP of the server that the script is on.
+     * @param host - Optional. Hostname of the server that the script is on.
      * @param args - Arguments to identify which scripts to get logs for.
      * @returns Returns an string array, where each line is an element in the array. The most recently logged line is at the end of the array.
      */
-    getScriptLogs(fn?: Script, host?: Host, ...args: any[]): string[];
+    getScriptLogs(fn?: string, host?: string, ...args: any[]): string[];
 
     /**
      * Opens a script’s logs. This is functionally the same as the tail Terminal command.
@@ -2336,110 +2377,110 @@ export declare interface NS extends Singularity {
      * Remember that scripts are uniquely identified by both their names and arguments.
      *
      * @example
-     * ```js
+     * ```ts
      * //Open logs from foo.script on the current server that was run with no args
      * tail("foo.script");
      * ```
      * @example
-     * ```js
+     * ```ts
      * //Get logs from foo.script on the foodnstuff server that was run with no args
      * tail("foo.script", "foodnstuff");
      * ```
      * @example
-     * ```js
+     * ```ts
      * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
      * tail("foo.script", "foodnstuff", 1, "test");
      * ```
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param fn - Optional. Filename of the script being tailed. If omitted, the current script is tailed.
-     * @param host - Optional. Hostname or IP of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional.
+     * @param host - Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional.
      * @param args - Arguments for the script being tailed.
      */
-    tail(fn?: Script, host?: Host, ...args: any[]): void;
+    tail(fn?: string, host?: string, ...args: any[]): void;
 
     /**
      * Returns an array containing the hostnames or IPs of all servers that are one
      * node way from the specified target server. The hostnames/IPs in the returned
      * array are strings.
      *
-     * @remarks 0.2 GB
-     * @param host - Hostname or IP of the server to scan.
+     * @remarks RAM cost: 0.2 GB
+     * @param host - Hostname of the server to scan.
      * @param hostnames - Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false).
      * @returns Returns an string of hostnames or IP.
      */
-    scan(host: Host, hostnames?: boolean): Host[];
+    scan(host: string, hostnames?: boolean): string[];
 
     /**
      * Runs the NUKE.exe program on the target server. NUKE.exe must exist on your home computer.
      *
      * @example
-     * ```js
+     * ```ts
      * nuke("foodnstuff");
      * ```
-     * @remarks 0.05 GB
-     * @param host - Hostname or IP of the target server.
+     * @remarks RAM cost: 0.05 GB
+     * @param host - Hostname of the target server.
      */
-    nuke(host: Host): void;
+    nuke(host: string): void;
 
     /**
      * Runs the BruteSSH.exe program on the target server. BruteSSH.exe must exist on your home computer.
      *
      * @example
-     * ```js
+     * ```ts
      * brutessh("foodnstuff");
      * ```
-     * @remarks 0.05 GB
-     * @param host - Hostname or IP of the target server.
+     * @remarks RAM cost: 0.05 GB
+     * @param host - Hostname of the target server.
      */
-    brutessh(host: Host): void;
+    brutessh(host: string): void;
 
     /**
      * Runs the FTPCrack.exe program on the target server. FTPCrack.exe must exist on your home computer.
      *
      * @example
-     * ```js
+     * ```ts
      * ftpcrack("foodnstuff");
      * ```
-     * @remarks 0.05 GB
-     * @param host - Hostname or IP of the target server.
+     * @remarks RAM cost: 0.05 GB
+     * @param host - Hostname of the target server.
      */
-    ftpcrack(host: Host): void;
+    ftpcrack(host: string): void;
 
     /**
      * Runs the relaySMTP.exe program on the target server. relaySMTP.exe must exist on your home computer.
      *
      * @example
-     * ```js
+     * ```ts
      * relaysmtp("foodnstuff");
      * ```
-     * @remarks 0.05 GB
-     * @param host - Hostname or IP of the target server.
+     * @remarks RAM cost: 0.05 GB
+     * @param host - Hostname of the target server.
      */
-    relaysmtp(host: Host): void;
+    relaysmtp(host: string): void;
 
     /**
      * Runs the HTTPWorm.exe program on the target server. HTTPWorm.exe must exist on your home computer.
      *
      * @example
-     * ```js
+     * ```ts
      * httpworm("foodnstuff");
      * ```
-     * @remarks 0.05 GB
-     * @param host - Hostname or IP of the target server.
+     * @remarks RAM cost: 0.05 GB
+     * @param host - Hostname of the target server.
      */
-    httpworm(host: Host): void;
+    httpworm(host: string): void;
 
     /**
      * Runs the SQLInject.exe program on the target server. SQLInject.exe must exist on your home computer.
      *
      * @example
-     * ```js
+     * ```ts
      * sqlinject("foodnstuff");
      * ```
-     * @remarks 0.05 GB
-     * @param host - Hostname or IP of the target server.
+     * @remarks RAM cost: 0.05 GB
+     * @param host - Hostname of the target server.
      */
-    sqlinject(host: Host): void;
+    sqlinject(host: string): void;
 
     /**
      * Run a script as a separate process. This function can only be used to run scripts located on the
@@ -2456,27 +2497,27 @@ export declare interface NS extends Singularity {
      * However, running this function with a negative numThreads argument will cause a runtime error.
      *
      * @example
-     * ```js
+     * ```ts
      * //The simplest way to use the run command is to call it with just the script name. The following example will run ‘foo.script’ single-threaded with no arguments:
      * run("foo.script");
      * ```
      * @example
-     * ```js
+     * ```ts
      * //The following example will run ‘foo.script’ but with 5 threads instead of single-threaded:
      * run("foo.script", 5);
      * ```
      * @example
-     * ```js
+     * ```ts
      * //This next example will run ‘foo.script’ single-threaded, and will pass the string ‘foodnstuff’ into the script as an argument:
      * run("foo.script", 1, 'foodnstuff');
      * ```
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param script - Filename of script to run.
      * @param numThreads - Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer.
      * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the second argument numThreads must be filled in with a value.
      * @returns Returns the PID of a successfully started script, and 0 otherwise.
      */
-    run(script: Script, numThreads?: number, ...args: string[]): number;
+    run(script: string, numThreads?: number, ...args: string[]): number;
 
     /**
      * Run a script as a separate process on a specified server. This is similar to the run function
@@ -2492,28 +2533,28 @@ export declare interface NS extends Singularity {
      * However, running this function with a negative numThreads argument will cause a runtime error.
      *
      * @example
-     * ```js
+     * ```ts
      * //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
      * exec("generic-hack.script", "foodnstuff");
      * ```
      * @example
-     * ```js
+     * ```ts
      * //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
      * exec("generic-hack.script", "joesguns", 10);
      * ```
      * @example
-     * ```js
+     * ```ts
      * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
      * exec("foo.script", "foodnstuff", 5, 1, "test");
      * ```
-     * @remarks 1.3 GB
+     * @remarks RAM cost: 1.3 GB
      * @param script - Filename of script to execute.
-     * @param host - Hostname or IP of the \`target server\` on which to execute the script.
+     * @param host - Hostname of the `target server` on which to execute the script.
      * @param numThreads - Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer.
      * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value.
      * @returns Returns the PID of a successfully started script, and 0 otherwise.
      */
-    exec(script: Script, host: Host, numThreads?: number, ...args: string[]): number;
+    exec(script: string, host: string, numThreads?: number, ...args: string[]): number;
 
     /**
      * Terminates the current script, and then after a delay of about 10 seconds it will execute the
@@ -2524,45 +2565,45 @@ export declare interface NS extends Singularity {
      * Because this function immediately terminates the script, it does not have a return value.
      *
      * @example
-     * ```js
+     * ```ts
      * //The following example will execute the script ‘foo.script’ with 10 threads and the arguments ‘foodnstuff’ and 90:
      * spawn('foo.script', 10, 'foodnstuff', 90);
      * ```
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @param script - Filename of script to execute.
      * @param numThreads - Number of threads to spawn new script with. Will be rounded to nearest integer.
      * @param args - Additional arguments to pass into the new script that is being run.
      */
-    spawn(script: Script, numThreads?: number, ...args: string[]): void;
+    spawn(script: string, numThreads?: number, ...args: string[]): void;
 
     /**
      * Kills the script on the target server specified by the script’s name and arguments.
      * Remember that scripts are uniquely identified by both their name and arguments.
-     * For example, if \`foo.script\` is run with the argument 1, then this is not the same as
-     * \`foo.script\` run with the argument 2, even though they have the same code.
+     * For example, if `foo.script` is run with the argument 1, then this is not the same as
+     * `foo.script` run with the argument 2, even though they have the same code.
      *
      * @example
-     * ```js
+     * ```ts
      * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
      * kill("foo.script", "foodnstuff");
      * ```
      * @example
-     * ```js
+     * ```ts
      * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
      * kill("foo.script", getHostname());
      * ```
      * @example
-     * ```js
+     * ```ts
      * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
      * kill("foo.script", getHostname(), 1, "foodnstuff");
      * ```
-     * @remarks 0.5 GB
+     * @remarks RAM cost: 0.5 GB
      * @param script - Filename of the script to kill
-     * @param host - Hostname or IP of the server on which to kill the script.
+     * @param host - Hostname of the server on which to kill the script.
      * @param args - Arguments to identify which script to kill.
      * @returns True if the script is successfully killed, and false otherwise.
      */
-    kill(script: Script, host: Host, ...args: string[]): boolean;
+    kill(script: string, host: string, ...args: string[]): boolean;
 
     /**
      * Kills the script with the specified PID.
@@ -2572,12 +2613,12 @@ export declare interface NS extends Singularity {
      * Otherwise, it will return false.
      *
      * @example
-     * ```js
+     * ```ts
      * if (kill(10)) {
      *     print("Killed script with PID 10!");
      * }
      * ```
-     * @remarks 0.5 GB
+     * @remarks RAM cost: 0.5 GB
      * @param scriptPid - PID of the script to kill
      * @returns True if the script is successfully killed, and false otherwise.
      */
@@ -2588,16 +2629,16 @@ export declare interface NS extends Singularity {
      * if any scripts were killed, and false otherwise. In other words, it will return
      * true if there are any scripts running on the target server.
      *
-     * @remarks 0.5 GB
+     * @remarks RAM cost: 0.5 GB
      * @param host - IP or hostname of the server on which to kill all scripts.
      * @returns True if any scripts were killed, and false otherwise.
      */
-    killall(host: Host): boolean;
+    killall(host: string): boolean;
 
     /**
      * Terminates the current script immediately.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      */
     exit(): void;
 
@@ -2606,33 +2647,33 @@ export declare interface NS extends Singularity {
      * specifying a single file to copy, or an array of strings specifying multiple files to copy.
      *
      * @example
-     * ```js
+     * ```ts
      * //Copies hack-template.script from the current server to foodnstuff:
      * scp("hack-template.script", "foodnstuff");
      * ```
-     * @remarks 0.6 GB
+     * @remarks RAM cost: 0.6 GB
      * @param files - Filename or an array of filenames of script/literature files to copy.
      * @param destination - Host or IP of the destination server, which is the server to which the file will be copied.
      * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
      */
-    scp(files: string | ReadonlyArray<string>, destination: Host): boolean;
+    scp(files: string | ReadonlyArray<string>, destination: string): boolean;
 
     /**
      * Copies a script or literature (.lit) file(s) to another server. The files argument can be either a string
      * specifying a single file to copy, or an array of strings specifying multiple files to copy.
      *
      * @example
-     * ```js
+     * ```ts
      * //Copies foo.lit from the helios server to the home computer:
      * scp("foo.lit", "helios", "home");
      * ```
      * @example
-     * ```js
+     * ```ts
      * //Tries to copy three files from rothman-uni to home computer:
      * files = ["foo1.lit", "foo2.script", "foo3.script"];
      * scp(files, "rothman-uni", "home");
      * ```
-     * @remarks 0.6 GB
+     * @remarks RAM cost: 0.6 GB
      * @param files - Filename or an array of filenames of script/literature files to copy.
      * @param source - Host or IP of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
      * @param destination - Host or IP of the destination server, which is the server to which the file will be copied.
@@ -2640,27 +2681,27 @@ export declare interface NS extends Singularity {
      */
     scp(
     files: string | ReadonlyArray<string>,
-    source: Host,
+    source: string,
     // tslint:disable-next-line:unified-signatures
-    destination: Host,
+    destination: string,
     ): boolean;
 
     /**
      * Returns an array with the filenames of all files on the specified server
      * (as strings). The returned array is sorted in alphabetic order.
      *
-     * @remarks 0.2 GB
+     * @remarks RAM cost: 0.2 GB
      * @param host - Host or IP of the target server.
      * @param grep - A substring to search for in the filename.
      * @returns Array with the filenames of all files on the specified server.
      */
-    ls(host: Host, grep?: string): string[];
+    ls(host: string, grep?: string): string[];
 
     /**
      * Returns an array with general information about all scripts running on the specified target server.
      *
      * @example
-     * ```js
+     * ```ts
      * //(using NetscriptJS (Netscript 2.0))
      * export async function main(ns) {
      *    const ps = ns.ps("home");
@@ -2670,39 +2711,39 @@ export declare interface NS extends Singularity {
      *    }
      * }
      * ```
-     * @remarks 0.2 GB
+     * @remarks RAM cost: 0.2 GB
      * @param host - Host or IP address of the target server. If not specified, it will be the current server’s IP by default.
      * @returns Array with general information about all scripts running on the specified target server.
      */
-    ps(host?: Host): ProcessInfo[];
+    ps(host?: string): ProcessInfo[];
 
     /**
      * Returns a boolean indicating whether or not the player has root access to the specified target server.
      *
      * @example
-     * ```js
+     * ```ts
      * if (hasRootAccess("foodnstuff") == false) {
      *    nuke("foodnstuff");
      * }
      * ```
-     * @remarks 0.05 GB
+     * @remarks RAM cost: 0.05 GB
      * @param host - Host or IP of the target server
      * @returns True if player has root access to the specified target server, and false otherwise.
      */
-    hasRootAccess(host: Host): boolean;
+    hasRootAccess(host: string): boolean;
 
     /**
      * Returns a string with the hostname of the server that the script is running on.
      *
-     * @remarks 0.05 GB
+     * @remarks RAM cost: 0.05 GB
      * @returns Hostname of the server that the script is on.
      */
-    getHostname(): Host;
+    getHostname(): string;
 
     /**
      * Returns the player’s current hacking level.
      *
-     * @remarks 0.05 GB
+     * @remarks RAM cost: 0.05 GB
      * @returns Player’s current hacking level
      */
     getHackingLevel(): number;
@@ -2713,13 +2754,13 @@ export declare interface NS extends Singularity {
      * (e.g. 1.5 instead of 150%).
      *
      * @example
-     * ```js
+     * ```ts
      * //Example of how this can be used:
      * mults = getHackingMultipliers();
      * print(mults.chance);
      * print(mults.growth);
      * ```
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @returns Object containing the Player’s hacking related multipliers.
      */
     getHackingMultipliers(): HackingMultipliers;
@@ -2730,13 +2771,13 @@ export declare interface NS extends Singularity {
      * (e.g. 1.5 instead of 150%).
      *
      * @example
-     * ```js
+     * ```ts
      * //Example of how this can be used:
      * mults = getHacknetMultipliers();
      * print(mults.production);
      * print(mults.purchaseCost);
      * ```
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @returns Object containing the Player’s hacknet related multipliers.
      */
     getHacknetMultipliers(): HacknetMultipliers;
@@ -2744,35 +2785,35 @@ export declare interface NS extends Singularity {
     /**
      * Returns a server object for the given server. Defaults to the running script's server if host is not specified.
      *
-     * @remarks 2 GB
-     * @param host - Optional. Hostname or IP for the requested server object.
+     * @remarks RAM cost: 2 GB
+     * @param host - Optional. Hostname for the requested server object.
      * @returns The requested server object.
      */
-    getServer(host?: Host): Server;
+    getServer(host?: string): Server;
 
     /**
      * Returns the amount of money available on a server.
      * Running this function on the home computer will return the player’s money.
      *
      * @example
-     * ```js
+     * ```ts
      * getServerMoneyAvailable("foodnstuff");
      * getServerMoneyAvailable("home"); //Returns player's money
      * ```
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param host - Host or IP of target server
      * @returns Amount of money available on the server.
      */
-    getServerMoneyAvailable(host: Host): number;
+    getServerMoneyAvailable(host: string): number;
 
     /**
      * Returns the maximum amount of money that can be available on a server.
      *
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param host - Host or IP of target server.
      * @returns Maximum amount of money available on the server.
      */
-    getServerMaxMoney(host: Host): number;
+    getServerMaxMoney(host: string): number;
 
     /**
      * Returns the server’s instrinsic “growth parameter”. This growth
@@ -2782,22 +2823,22 @@ export declare interface NS extends Singularity {
      * grow function. A higher growth parameter will result in a
      * higher percentage increase from grow.
      *
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param host - Host or IP of target server.
      * @returns Parameter that affects the percentage by which the server’s money is increased when using the grow function.
      */
-    getServerGrowth(host: Host): number;
+    getServerGrowth(host: string): number;
 
     /**
      * Returns the security level of the target server. A server’s security
      * level is denoted by a number, typically between 1 and 100
      * (but it can go above 100).
      *
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param host - Host or IP of target server.
      * @returns Security level of the target server.
      */
-    getServerSecurityLevel(host: Host): number;
+    getServerSecurityLevel(host: string): number;
 
     /**
      * Returns the base security level of the target server. This is the security
@@ -2808,38 +2849,38 @@ export declare interface NS extends Singularity {
      * The base security level will stay the same until you reset by
      * installing an Augmentation(s).
      *
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param host - Host or IP of target server.
      * @returns Base security level of the target server.
      */
-    getServerBaseSecurityLevel(host: Host): number;
+    getServerBaseSecurityLevel(host: string): number;
 
     /**
      * Returns the minimum security level of the target server.
      *
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param host - Host or IP of target server.
      * @returns Minimum security level of the target server.
      */
-    getServerMinSecurityLevel(host: Host): number;
+    getServerMinSecurityLevel(host: string): number;
 
     /**
      * Returns the required hacking level of the target server.
      *
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param host - Host or IP of target server.
      * @returns The required hacking level of the target server.
      */
-    getServerRequiredHackingLevel(host: Host): number;
+    getServerRequiredHackingLevel(host: string): number;
 
     /**
      * Returns the number of open ports required to successfully run NUKE.exe on the specified server.
      *
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param host - Host or IP of target server.
      * @returns The number of open ports required to successfully run NUKE.exe on the specified server.
      */
-    getServerNumPortsRequired(host: Host): number;
+    getServerNumPortsRequired(host: string): number;
 
     /**
      * Returns an array with two elements that gives information about a server’s memory (RAM).
@@ -2848,25 +2889,25 @@ export declare interface NS extends Singularity {
      * the server (in GB).
      *
      * @example
-     * ```js
+     * ```ts
      * res = getServerRam("helios");
      * totalRam = res[0];
      * ramUsed = res[1];
      * ```
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param host - Host or IP of target server.
      * @returns Array with total and used memory on the specified server.
      */
-    getServerRam(host: Host): [number, number];
+    getServerRam(host: string): [number, number];
 
     /**
      * Returns a boolean denoting whether or not the specified server exists.
      *
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param host - Host or IP of target server.
      * @returns True if specified server exists, and false otherwise.
      */
-    serverExists(host: Host): boolean;
+    serverExists(host: string): boolean;
 
     /**
      * Returns a boolean indicating whether the specified file exists on the target server.
@@ -2878,59 +2919,59 @@ export declare interface NS extends Singularity {
      * server (the server running the script that calls this function) for the file.
      *
      * @example
-     * ```js
+     * ```ts
      * //The function call will return true if the script named foo.script exists on the foodnstuff server, and false otherwise.
      * fileExists("foo.script", "foodnstuff");
      * ```
      * @example
-     * ```js
+     * ```ts
      * //The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.
      * fileExists("ftpcrack.exe");
      * ```
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param filename - Filename of file to check.
      * @param host - Host or IP of target server. This is optional. If it is not specified then the function will use the current server as the target server.
      * @returns True if specified file exists, and false otherwise.
      */
-    fileExists(filename: string, host?: Host): boolean;
+    fileExists(filename: string, host?: string): boolean;
 
     /**
      * Returns a boolean indicating whether the specified script is running on the target server.
      * Remember that a script is uniquely identified by both its name and its arguments.
      *
      * @example
-     * ```js
+     * ```ts
      * //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:
      * isRunning("foo.script", "foodnstuff");
      * ```
      * @example
-     * ```js
+     * ```ts
      * //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:
      * isRunning("foo.script", getHostname());
      * ```
      * @example
-     * ```js
+     * ```ts
      * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:
      * isRunning("foo.script", "joesguns", 1, 5, "test");
      * ```
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param script - Filename of script to check. This is case-sensitive.
      * @param host - Host or IP of target server.
      * @param args - Arguments to specify/identify which scripts to search for.
      * @returns True if specified script is running on the target server, and false otherwise.
      */
-    isRunning(script: Script, host: Host, ...args: string[]): boolean;
+    isRunning(script: string, host: string, ...args: string[]): boolean;
 
     /**
      * Returns the cost to purchase a server with the specified amount of ram.
      *
      * @example
-     * ```js
+     * ```ts
      * for (i = 1; i <= 20; i++) {
      *     tprint(i + " -- " + getPurchasedServerCost(Math.pow(2, i)));
      * }
      * ```
-     * @remarks 0.25 GB
+     * @remarks RAM cost: 0.25 GB
      * @param ram - Amount of RAM of a potential purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
      * @returns The cost to purchase a server with the specified amount of ram.
      */
@@ -2944,9 +2985,9 @@ export declare interface NS extends Singularity {
      * the function to fail. If there is already a server with the specified hostname,
      * then the function will automatically append a number at the end of the hostname
      * argument value until it finds a unique hostname. For example, if the script calls
-     * \`purchaseServer(“foo”, 4)\` but a server named “foo” already exists, the it will
-     * automatically change the hostname to \`foo-0\`. If there is already a server with the
-     * hostname \`foo-0\`, then it will change the hostname to \`foo-1\`, and so on.
+     * `purchaseServer(“foo”, 4)` but a server named “foo” already exists, the it will
+     * automatically change the hostname to `foo-0`. If there is already a server with the
+     * hostname `foo-0`, then it will change the hostname to `foo-1`, and so on.
      *
      * Note that there is a maximum limit to the amount of servers you can purchase.
      *
@@ -2957,7 +2998,7 @@ export declare interface NS extends Singularity {
      * amount of servers.
      *
      * @example
-     * ```js
+     * ```ts
      * ram = 64;
      * hn = "pserv-";
      * for (i = 0; i < 5; ++i) {
@@ -2969,7 +3010,7 @@ export declare interface NS extends Singularity {
      * @param ram - Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
      * @returns The hostname of the newly purchased server.
      */
-    purchaseServer(hostname: Host, ram: number): Host | "";
+    purchaseServer(hostname: string, ram: number): string | "";
 
     /**
      * Deletes one of your purchased servers, which is specified by its hostname.
@@ -2982,7 +3023,7 @@ export declare interface NS extends Singularity {
      * @param host - Host of the server to delete.
      * @returns True if successful, and false otherwise.
      */
-    deleteServer(host: Host): boolean;
+    deleteServer(host: string): boolean;
 
     /**
      * Returns an array with either the hostnames or IPs of all of the servers you have purchased.
@@ -2991,12 +3032,12 @@ export declare interface NS extends Singularity {
      * @param hostnameMode -] Optional. Defaults to true. Returns hostnames if true, and IPs if false.
      * @returns Returns an array with either the hostnames or IPs of all of the servers you have purchased.
      */
-    getPurchasedServers(hostnameMode?: boolean): Host[];
+    getPurchasedServers(hostnameMode?: boolean): string[];
 
     /**
      * Returns the maximum number of servers you can purchase.
      *
-     * @remarks 0.05 GB
+     * @remarks RAM cost: 0.05 GB
      * @returns Returns the maximum number of servers you can purchase.
      */
     getPurchasedServerLimit(): number;
@@ -3004,7 +3045,7 @@ export declare interface NS extends Singularity {
     /**
      * Returns the maximum RAM that a purchased server can have.
      *
-     * @remarks 0.05 GB
+     * @remarks RAM cost: 0.05 GB
      * @returns Returns the maximum RAM that a purchased server can have.
      */
     getPurchasedServerMaxRam(): number;
@@ -3024,7 +3065,7 @@ export declare interface NS extends Singularity {
      * then the data will be written in “append” mode which means that the data will be added at the
      * end of the text file.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param handle - Port or text file that will be written to.
      * @param data - Data to write.
      * @param mode - Defines the write mode. Only valid when writing to text files.
@@ -3036,7 +3077,7 @@ export declare interface NS extends Singularity {
      * If the port is full, the data will not be written.
      * Otherwise, the data will be written normally.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param port - Port or text file that will be written to.
      * @param data - Data to write.
      * @returns True if the data is successfully written to the port, and false otherwise.
@@ -3055,7 +3096,7 @@ export declare interface NS extends Singularity {
      * file (.txt) and this function will return the data in the specified text
      * file. If the text file does not exist, an empty string will be returned.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param handle - Port or text file to read from.
      * @returns Data in the specified text file or port.
      */
@@ -3066,7 +3107,7 @@ export declare interface NS extends Singularity {
      * first element in the specified port without removing that element. If
      * the port is empty, the string “NULL PORT DATA” will be returned.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param port - Port to peek. Must be an integer between 1 and 20.
      * @returns Data in the specified port.
      */
@@ -3081,7 +3122,7 @@ export declare interface NS extends Singularity {
      * If the port/fn argument is a string, then it specifies the name of a
      * text file (.txt) and will delete all data from that text file.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param handle - Port or text file to clear.
      */
     clear(handle: Handle): void;
@@ -3102,12 +3143,12 @@ export declare interface NS extends Singularity {
      * Removes the specified file from the current server. This function works for every file
      * type except message (.msg) files.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param name - Filename of file to remove. Must include the extension.
      * @param host - Host or IP Address of the server on which to delete the file. Optional. Defaults to current server.
      * @returns True if it successfully deletes the file, and false otherwise.
      */
-    rm(name: string, host?: Host): boolean;
+    rm(name: string, host?: string): boolean;
 
     /**
      * Returns a boolean indicating whether any instance of the specified script is running
@@ -3117,37 +3158,37 @@ export declare interface NS extends Singularity {
      * identify a specific instance of a running script by its arguments.
      *
      * @example
-     * ```js
+     * ```ts
      * //The function call will return true if there is any script named foo.script running on the foodnstuff server, and false otherwise:
      * scriptRunning("foo.script", "foodnstuff");
      * ```
      * @example
-     * ```js
+     * ```ts
      * //The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:
      * scriptRunning("foo.script", getHostname());
      * ```
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param script - Filename of script to check. This is case-sensitive.
      * @param host - Host or IP of target server.
      * @returns True if the specified script is running, and false otherwise.
      */
-    scriptRunning(script: Script, host: Host): boolean;
+    scriptRunning(script: string, host: string): boolean;
 
     /**
      * Kills all scripts with the specified filename on the target server specified by hostname/ip,
      * regardless of arguments.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @param script - Filename of script to kill. This is case-sensitive.
      * @param host - Host or IP of target server.
      * @returns true if one or more scripts were successfully killed, and false if none were.
      */
-    scriptKill(script: Script, host: Host): boolean;
+    scriptKill(script: string, host: string): boolean;
 
     /**
      * Returns the current script name.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @returns Current script name.
      */
     getScriptName(): string;
@@ -3156,48 +3197,48 @@ export declare interface NS extends Singularity {
      * Returns the amount of RAM required to run the specified script on the target server.
      * Returns 0 if the script does not exist.
      *
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param script - Filename of script. This is case-sensitive.
      * @param host - Host or IP of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
      * @returns Amount of RAM required to run the specified script on the target server, and 0 if the script does not exist.
      */
-    getScriptRam(script: Script, host?: Host): number;
+    getScriptRam(script: string, host?: string): number;
 
     /**
      * Returns the amount of time in seconds it takes to execute the hack Netscript function on the target server.
      * The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels.
      *
-     * @remarks 0.05 GB
+     * @remarks RAM cost: 0.05 GB
      * @param host - Host or IP of target server.
      * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
      * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
      * @returns Returns the amount of time in seconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
      */
-    getHackTime(host: Host, hackLvl?: number, intLvl?: number): number;
+    getHackTime(host: string, hackLvl?: number, intLvl?: number): number;
 
     /**
      * Returns the amount of time in seconds it takes to execute the grow Netscript function on the target server.
      * The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels.
      *
-     * @remarks 0.05 GB
+     * @remarks RAM cost: 0.05 GB
      * @param host - Host or IP of target server.
      * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
      * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
      * @returns Returns the amount of time in seconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
      */
-    getGrowTime(host: Host, hackLvl?: number, intLvl?: number): number;
+    getGrowTime(host: string, hackLvl?: number, intLvl?: number): number;
 
     /**
      * Returns the amount of time in seconds it takes to execute the weaken() Netscript function on the target server.
      * The function takes in an optional hackLvl parameter that can be specified to see what the weaken time would be at different hacking levels.
      *
-     * @remarks 0.05 GB
+     * @remarks RAM cost: 0.05 GB
      * @param host - Host or IP of target server.
      * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
      * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
      * @returns Returns the amount of time in seconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
      */
-    getWeakenTime(host: Host, hackLvl?: number, intLvl?: number): number;
+    getWeakenTime(host: string, hackLvl?: number, intLvl?: number): number;
 
     /**
      * Returns the amount of income the specified script generates while online
@@ -3209,18 +3250,18 @@ export declare interface NS extends Singularity {
      *
      * This function can also be called with no arguments.
      * If called with no arguments, then this function will return an array of two values.
-     * The first value is the total income ($ / second) of all of your active scripts
+     * The first value is the total income (dollar / second) of all of your active scripts
      * (scripts that are currently running on any server).
-     * The second value is the total income ($ / second) that you’ve earned from scripts
+     * The second value is the total income (dollar / second) that you’ve earned from scripts
      * since you last installed Augmentations.
      *
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param script - Filename of script.
      * @param host - Server on which script is running.
      * @param args - Arguments that the script is running with.
      * @returns Amount of income the specified script generates while online.
      */
-    getScriptIncome(script: Script, host: Host, ...args: string[]): number | [number, number];
+    getScriptIncome(script: string, host: string, ...args: string[]): number | [number, number];
 
     /**
      * Returns the amount of hacking experience the specified script generates while online
@@ -3230,18 +3271,18 @@ export declare interface NS extends Singularity {
      * This function can also return the total experience gain rate of all of your active
      * scripts by running the function with no arguments.
      *
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @param script - Filename of script.
      * @param host - Server on which script is running.
      * @param args - Arguments that the script is running with.
      * @returns Amount of hacking experience the specified script generates while online.
      */
-    getScriptExpGain(script: Script, host: Host, ...args: string[]): number;
+    getScriptExpGain(script: string, host: string, ...args: string[]): number;
 
     /**
      * Returns the amount of time in milliseconds that have passed since you last installed Augmentations.
      *
-     * @remarks 0.05 GB
+     * @remarks RAM cost: 0.05 GB
      * @returns Time in milliseconds that have passed since you last installed Augmentations.
      */
     getTimeSinceLastAug(): number;
@@ -3250,7 +3291,7 @@ export declare interface NS extends Singularity {
      * Complete open source JavaScript sprintf implementation
      *
      * @see https://github.com/alexei/sprintf.js
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param format - String to format.
      * @param args - Formating arguments.
      * @returns Formated text.
@@ -3261,7 +3302,7 @@ export declare interface NS extends Singularity {
      * Complete open source JavaScript sprintf implementation
      *
      * @see https://github.com/alexei/sprintf.js
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param format - String to format.
      * @param args - Formating arguments.
      * @returns Formated text.
@@ -3274,7 +3315,7 @@ export declare interface NS extends Singularity {
      * This is the same function that the game itself uses to display numbers.
      *
      * @see http://numeraljs.com/
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param n - Number to format.
      * @param format - Formatter.
      * @returns Formated number.
@@ -3287,7 +3328,7 @@ export declare interface NS extends Singularity {
      * the player clicks “No”. The script’s execution is halted until the player
      * selects one of the options.
      *
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param txt - Text to appear in the prompt dialog box.
      * @returns True if the player click “Yes” and false if the player clicks “No”.
      */
@@ -3312,10 +3353,10 @@ export declare interface NS extends Singularity {
      * you will not be able to process the returned value of wget in Netscript 1.0.
      *
      * @example
-     * ```js
+     * ```ts
      * wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
      * ```
-     * @remarks 0 GB
+     * @remarks RAM cost: 0 GB
      * @param url - URL to pull data from.
      * @param target - Filename to write data to. Must be script or text file.
      * @param host - Optional hostname/ip of server for target file.
@@ -3326,7 +3367,7 @@ export declare interface NS extends Singularity {
     /**
      * Returns the amount of Faction favor required to be able to donate to a faction.
      *
-     * @remarks 0.1 GB
+     * @remarks RAM cost: 0.1 GB
      * @returns Amount of Faction favor required to be able to donate to a faction.
      */
     getFavorToDonate(): number;
@@ -3343,31 +3384,34 @@ export declare interface NS extends Singularity {
      * you would have received in BitNode-1.
      *
      * @example
-     * ```js
+     * ```ts
      * mults = getBitNodeMultipliers();
      * print(mults.ServerMaxMoney);
      * print(mults.HackExpGain);
      * ```
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @returns Object containing the current BitNode multipliers.
      */
-    getBitNodeMultipliers(url: string, target: string, host: string): BitNodeMultipliers;
+    getBitNodeMultipliers(): BitNodeMultipliers;
 }
 
 /**
+ * All possible stock market order positions.
  * @public
  */
-export declare type OrderPos = "long" | "short";
+export declare type OrderPosition = "long" | "short";
 
 /**
+ * All possible stock market order type.
  * @public
  */
 export declare type OrderType = "limitbuy" | "limitsell" | "stopbuy" | "stopsell";
 
 /**
+ * Short summary of the players skills.
  * @public
  */
-export declare interface PlayerStats {
+export declare interface PlayerSkills {
     /** Hacking level */
     hacking: number;
     /** Strength level */
@@ -3385,6 +3429,8 @@ export declare interface PlayerStats {
 }
 
 /**
+ * Queue used to send and receive messages.
+ * @remarks
  * A port is implemented as a sort of serialized queue,
  * where you can only write and read one element at a time from the port.
  * When you read data from a port, the element that is read is removed from the port.
@@ -3397,11 +3443,12 @@ export declare interface PlayerStats {
 export declare type Port = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;
 
 /**
+ * A single process on a server.
  * @public
  */
 export declare interface ProcessInfo {
     /** Script name. */
-    filename: Script;
+    filename: string;
     /** Number of threads script is running with */
     threads: number;
     /** Script's arguments */
@@ -3409,70 +3456,73 @@ export declare interface ProcessInfo {
 }
 
 /**
+ * All programs.
  * @public
  */
-export declare type PurchaseableProgram =
+export declare type Programs =
+| "autolink.exe"
 | "brutessh.exe"
-| "ftpcrack.exe"
-| "relaysmtp.exe"
-| "httpworm.exe"
-| "sqlinject.exe"
 | "deepscanv1.exe"
 | "deepscanv2.exe"
-| "autolink.exe";
+| "ftpcrack.exe"
+| "httpworm.exe"
+| "relaysmtp.exe"
+| "serverprofiler.exe"
+| "sqlinject.exe";
 
 /**
- * @public
- */
-export declare type Script = string;
-
-/**
+ * A single server.
  * @public
  */
 export declare interface Server {
-    // How many CPU cores this server has. Maximum of 8.
-    // Currently, this only affects hacking missions
+    /**
+     * How many CPU cores this server has. Maximum of 8.
+     * Affects magnitude of grow and weaken.
+     */
     cpuCores: number;
 
-    // Flag indicating whether the FTP port is open
+    /** Flag indicating whether the FTP port is open */
     ftpPortOpen: boolean;
 
-    // Flag indicating whether player has admin/root access to this server
+    /** Flag indicating whether player has admin/root access to this server */
     hasAdminRights: boolean;
 
-    // Hostname. Must be unique
+    /** Hostname. Must be unique */
     hostname: string;
 
-    // Flag indicating whether HTTP Port is open
+    /** Flag indicating whether HTTP Port is open */
     httpPortOpen: boolean;
 
-    // IP Address. Must be unique
+    /** IP Address. Must be unique */
     ip: string;
 
-    // Flag indicating whether player is curently connected to this server
+    /** Flag indicating whether player is curently connected to this server */
     isConnectedTo: boolean;
 
-    // RAM (GB) available on this server
+    /** RAM (GB) available on this server */
     maxRam: number;
 
-    // Name of company/faction/etc. that this server belongs to.
-    // Optional, not applicable to all Servers
+    /**
+     * Name of company/faction/etc. that this server belongs to.
+     * Optional, not applicable to all Servers
+     */
     organizationName: string;
 
-    // RAM (GB) used. i.e. unavailable RAM
+    /** RAM (GB) used. i.e. unavailable RAM */
     ramUsed: number;
 
-    // Flag indicating whether SMTP Port is open
+    /** Flag indicating whether SMTP Port is open */
     smtpPortOpen: boolean;
 
-    // Flag indicating whether SQL Port is open
+    /** Flag indicating whether SQL Port is open */
     sqlPortOpen: boolean;
 
-    // Flag indicating whether the SSH Port is open
+    /** Flag indicating whether the SSH Port is open */
     sshPortOpen: boolean;
 }
 
 /**
+ * Singularity API
  * @public
  */
 export declare interface Singularity {
@@ -3487,7 +3537,7 @@ export declare interface Singularity {
      * The cost and experience gains for all of these universities and classes are the same as
      * if you were to manually visit and take these classes.
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @remarks Singularity - Level 1
      * @param universityName - Name of university. You must be in the correct city for whatever university you specify.
      * @param courseName - Name of course.
@@ -3506,7 +3556,7 @@ export declare interface Singularity {
      * The cost and experience gains for all of these gyms are the same as if you were
      * to manually visit these gyms and train
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @remarks Singularity - Level 1
      * @param gymName - Name of gym. You must be in the correct city for whatever gym you specify.
      * @param stat - The stat you want to train.
@@ -3520,7 +3570,7 @@ export declare interface Singularity {
      * This function allows the player to travel to any city. The cost for using this
      * function is the same as the cost for traveling through the Travel Agency.
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @remarks Singularity - Level 1
      * @param city - City to travel to.
      * @returns True if actions is successful, false otherwise.
@@ -3534,7 +3584,7 @@ export declare interface Singularity {
      * purchasing a TOR router using this function is the same as if you were to
      * manually purchase one.
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @remarks Singularity - Level 1
      * @returns True if actions is successful, false otherwise.
      */
@@ -3549,15 +3599,15 @@ export declare interface Singularity {
      * Web using the Terminal buy command.
      *
      * @example
-     * ```js
+     * ```ts
      * purchaseProgram("brutessh.exe");
      * ```
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @remarks Singularity - Level 1
      * @param programName - Name of program to purchase.
      * @returns True if the specified program is purchased, and false otherwise.
      */
-    purchaseProgram(programName: PurchaseableProgram): boolean;
+    purchaseProgram(programName: Programs): boolean;
 
     /**
      * If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
@@ -3565,22 +3615,22 @@ export declare interface Singularity {
      * Returns an object with the Player’s stats.
      *
      * @example
-     * ```js
+     * ```ts
      * res = getStats();
      * print('My charisma level is: ' + res.charisma);
      * ```
-     * @remarks 0.5 GB
+     * @remarks RAM cost: 0.5 GB
      * @remarks Singularity - Level 1
      * @returns Object with the Player’s stats.
      */
-    getStats(): PlayerStats;
+    getStats(): PlayerSkills;
 
     /**
      * If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
      *
      * Returns an object with various information about your character.
      *
-     * @remarks 0.5 GB
+     * @remarks RAM cost: 0.5 GB
      * @remarks Singularity - Level 1
      * @returns Object with various information about your character.
      */
@@ -3593,7 +3643,7 @@ export declare interface Singularity {
      * ‘action’. These actions include working for a company/faction, studying at a univeristy,
      * working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.
      *
-     * @remarks 0.5 GB
+     * @remarks RAM cost: 0.5 GB
      * @remarks Singularity - Level 1
      * @returns True if the player is currently performing an ‘action’, false otherwise.
      */
@@ -3615,7 +3665,7 @@ export declare interface Singularity {
      * This function will return true if the player’s action was ended.
      * It will return false if the player was not performing an action when this function was called.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @remarks Singularity - Level 1
      * @returns True if the player’s action was ended, false if the player was not performing an action.
      */
@@ -3629,7 +3679,7 @@ export declare interface Singularity {
      *
      * This function will return true if the player’s home computer RAM is successfully upgraded, and false otherwise.
      *
-     * @remarks 3 GB
+     * @remarks RAM cost: 3 GB
      * @remarks Singularity - Level 2
      * @returns True if the player’s home computer RAM is successfully upgraded, and false otherwise.
      */
@@ -3640,7 +3690,7 @@ export declare interface Singularity {
      *
      * Returns the cost of upgrading the player’s home computer RAM.
      *
-     * @remarks 1.5 GB
+     * @remarks RAM cost: 1.5 GB
      * @remarks Singularity - Level 2
      * @returns Cost of upgrading the player’s home computer RAM.
      */
@@ -3660,7 +3710,7 @@ export declare interface Singularity {
      * Note that when you are working for a company, you will not actually receive your earnings (reputation, money, experience) until you FINISH the action.
      *
      * @example
-     * ```js
+     * ```ts
      * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
      * while (getCompanyRep(COMPANY HERE) < VALUE) {
      *    workForCompany();
@@ -3668,7 +3718,7 @@ export declare interface Singularity {
      * }
      * //This way, your company reputation will be updated every minute.
      * ```
-     * @remarks 3 GB
+     * @remarks RAM cost: 3 GB
      * @remarks Singularity - Level 2
      * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked
      * @returns True if the player starts working, and false otherwise.
@@ -3687,7 +3737,7 @@ export declare interface Singularity {
      * and false otherwise. Note that if you are trying to use this function to
      * apply for a promotion and you don’t get one, it will return false.
      *
-     * @remarks 3 GB
+     * @remarks RAM cost: 3 GB
      * @remarks Singularity - Level 2
      * @param companyName - Name of company to apply to.
      * @param field - Field to which you want to apply.
@@ -3701,7 +3751,7 @@ export declare interface Singularity {
      * This function will return the amount of reputation you have at the specified company.
      * If the company passed in as an argument is invalid, -1 will be returned.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @remarks Singularity - Level 2
      * @param companyName - Name of the company.
      * @returns Amount of reputation you have at the specified company.
@@ -3714,7 +3764,7 @@ export declare interface Singularity {
      * This function will return the amount of favor you have at the specified company.
      * If the company passed in as an argument is invalid, -1 will be returned.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @remarks Singularity - Level 2
      * @param companyName - Name of the company.
      * @returns Amount of favor you have at the specified company.
@@ -3727,7 +3777,7 @@ export declare interface Singularity {
      * This function will return the amount of favor you will gain for the specified
      * company when you reset by installing Augmentations.
      *
-     * @remarks 0.75 GB
+     * @remarks RAM cost: 0.75 GB
      * @remarks Singularity - Level 2
      * @param companyName - Name of the company.
      * @returns Amount of favor you gain at the specified company when you reset by installing Augmentations.
@@ -3739,7 +3789,7 @@ export declare interface Singularity {
      *
      * Returns an array with the name of all Factions you currently have oustanding invitations from.
      *
-     * @remarks 3 GB
+     * @remarks RAM cost: 3 GB
      * @remarks Singularity - Level 2
      * @returns Array with the name of all Factions you currently have oustanding invitations from.
      */
@@ -3750,7 +3800,7 @@ export declare interface Singularity {
      *
      * This function will automatically accept an invitation from a faction and join it.
      *
-     * @remarks 3 GB
+     * @remarks RAM cost: 3 GB
      * @remarks Singularity - Level 2
      * @param faction - Name of faction to join.
      * @returns True if player joined the faction, and false otherwise.
@@ -3771,7 +3821,7 @@ export declare interface Singularity {
      * Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience) until you FINISH the action.
      *
      * @example
-     * ```js
+     * ```ts
      * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
      * while (getFactionRep(FACTION NAME) < VALUE) {
      *    workForFaction(FACNAME, WORKTYPE);
@@ -3779,7 +3829,7 @@ export declare interface Singularity {
      * }
      * //This way, your faction reputation will be updated every minute.
      * ```
-     * @remarks 3 GB
+     * @remarks RAM cost: 3 GB
      * @remarks Singularity - Level 2
      * @param faction - Name of faction to work for.
      * @param workType - Type of work to perform for the faction.
@@ -3792,7 +3842,7 @@ export declare interface Singularity {
      *
      * This function returns the amount of reputation you have for the specified faction.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @remarks Singularity - Level 2
      * @param faction - Name of faction to work for.
      * @returns Amount of reputation you have for the specified faction.
@@ -3804,7 +3854,7 @@ export declare interface Singularity {
      *
      * This function returns the amount of favor you have for the specified faction.
      *
-     * @remarks 1 GB
+     * @remarks RAM cost: 1 GB
      * @remarks Singularity - Level 2
      * @param faction - Name of faction.
      * @returns Amount of favor you have for the specified faction.
@@ -3817,7 +3867,7 @@ export declare interface Singularity {
      * This function returns the amount of favor you will gain for the specified
      * faction when you reset by installing Augmentations.
      *
-     * @remarks 0.75 GB
+     * @remarks RAM cost: 0.75 GB
      * @remarks Singularity - Level 2
      * @param faction - Name of faction.
      * @returns Amount of favor you will gain for the specified faction when you reset by installing Augmentations.
@@ -3830,7 +3880,7 @@ export declare interface Singularity {
      * Attempts to donate money to the specified faction in exchange for reputation.
      * Returns true if you successfully donate the money, and false otherwise.
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @param faction - Name of faction to donate to.
      * @param amount - Amount of money to donate.
@@ -3861,15 +3911,15 @@ export declare interface Singularity {
      * * AutoLink.exe: 25
      *
      * @example
-     * ```js
+     * ```ts
      * createProgram(“relaysmtp.exe”);
      * ```
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @param program - Name of program to create.
      * @returns True if you successfully start working on the specified program, and false otherwise.
      */
-    createProgram(program: CreatableProgram): boolean;
+    createProgram(program: Programs): boolean;
 
     /**
      * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
@@ -3882,7 +3932,7 @@ export declare interface Singularity {
      *
      * This function returns the number of seconds it takes to attempt the specified
      * crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, so running
-     * \`commitCrime('rob store')\` will return 60).
+     * `commitCrime('rob store')` will return 60).
      *
      * Warning: I do not recommend using the time returned from this function to try
      * and schedule your crime attempts. Instead, I would use the isBusy Singularity
@@ -3890,7 +3940,7 @@ export declare interface Singularity {
      * although the game sets a certain crime to be X amount of seconds, there is no
      * guarantee that your browser will follow that time limit.
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @param crime - Name of crime to attempt.
      * @returns True if you successfully start working on the specified program, and false otherwise.
@@ -3903,7 +3953,7 @@ export declare interface Singularity {
      * This function returns your chance of success at commiting the specified crime.
      * The chance is returned as a decimal (i.e. 60% would be returned as 0.6).
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @param crime - Name of crime.
      * @returns Chance of success at commiting the specified crime as a decimal.
@@ -3915,7 +3965,7 @@ export declare interface Singularity {
      *
      * Returns the stats of the crime.
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @param crime - Name of crime. Not case-sensitive
      * @returns The stats of the crime.
@@ -3927,7 +3977,7 @@ export declare interface Singularity {
      *
      * This function returns an array containing the names (as strings) of all Augmentations you have.
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @param purchased - Specifies whether the returned array should include Augmentations you have purchased but not yet installed. By default, this argument is false which means that the return value will NOT have the purchased Augmentations.
      * @returns Array containing the names (as strings) of all Augmentations you have.
@@ -3939,7 +3989,7 @@ export declare interface Singularity {
      *
      * Returns an array of source files
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @returns Array containing an object with number and level of the source file.
      */
@@ -3951,7 +4001,7 @@ export declare interface Singularity {
      * Returns an array containing the names (as strings) of all Augmentations
      * that are available from the specified faction.
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @param faction - Name of faction.
      * @returns Array containing the names of all Augmentations.
@@ -3964,7 +4014,7 @@ export declare interface Singularity {
      * This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation.
      * If there are no prerequisites, a blank array is returned.
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @param augName - Name of Augmentation.
      * @returns Array with the names of the prerequisite Augmentation(s) for the specified Augmentation.
@@ -3982,7 +4032,7 @@ export declare interface Singularity {
      * If an invalid Augmentation name is passed in for the augName argument, this
      * function will return the array [-1, -1].
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @param augName - Name of Augmentation.
      * @returns Array with first element as a reputation requirement and second element as the money cost.
@@ -3996,7 +4046,7 @@ export declare interface Singularity {
      *
      * This function will return true if the Augmentation is successfully purchased, and false otherwise.
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @param faction - Name of faction to purchase Augmentation from.
      * @param augmnet - Name of Augmentation to purchase.
@@ -4009,7 +4059,7 @@ export declare interface Singularity {
      *
      * This function returns augmentation stats.
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @param name - Name of Augmentation. CASE-SENSITIVE.
      * @returns Augmentation stats.
@@ -4021,24 +4071,25 @@ export declare interface Singularity {
      *
      * This function will automatically install your Augmentations, resetting the game as usual.
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      * @param cbScript - Optional callback script. This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.
      */
-    installAugmentations(cbScript?: Script): void;
+    installAugmentations(cbScript?: string): void;
 
     /**
      * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
      *
      * This function will perform a reset even if you don’t have any augmentation installed.
      *
-     * @remarks 5 GB
+     * @remarks RAM cost: 5 GB
      * @remarks Singularity - Level 3
      */
     softReset(): void;
 }
 
 /**
+ * Sleeve API
  * @public
  */
 export declare interface Sleeve {
@@ -4047,7 +4098,7 @@ export declare interface Sleeve {
      *
      * Return the number of duplicate sleeves the player has.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @returns number of duplicate sleeves the player has.
      */
     getNumSleeves(): number;
@@ -4057,18 +4108,18 @@ export declare interface Sleeve {
      *
      * Return a structure containing the stats of the sleeve.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to get stats of.
      * @returns Object containing the stats of the sleeve.
      */
-    getSleeveStats(sleeveNumber: number): SleeveStats;
+    getSleeveStats(sleeveNumber: number): SleeveSkills;
 
     /**
      * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
      *
      * Return a struct containing tons of information about this sleeve
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to retrieve information.
      * @returns Object containing tons of information about this sleeve.
      */
@@ -4079,7 +4130,7 @@ export declare interface Sleeve {
      *
      * Return the current task that the sleeve is performing. type is set to “Idle” if the sleeve isn’t doing anything.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to retrieve task from.
      * @returns Object containing information the current task that the sleeve is performing.
      */
@@ -4090,7 +4141,7 @@ export declare interface Sleeve {
      *
      * Return a boolean indicating whether or not this action was set successfully.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to start recovery.
      * @returns True if this action was set successfully, false otherwise.
      */
@@ -4101,7 +4152,7 @@ export declare interface Sleeve {
      *
      * Return a boolean indicating whether or not this action was set successfully.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to start synchronizing.
      * @returns True if this action was set successfully, false otherwise.
      */
@@ -4114,7 +4165,7 @@ export declare interface Sleeve {
      *
      * Returns false if an invalid action is specified.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to start commiting crime.
      * @param name - Name of the crime. Must be an exact match.
      * @returns True if this action was set successfully, false otherwise.
@@ -4126,7 +4177,7 @@ export declare interface Sleeve {
      *
      * Return a boolean indicating whether or not the sleeve started working or this faction.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to work for the faction.
      * @param factionName - Name of the faction to work for.
      * @param factionWorkType - Name of the action to perform for this faction.
@@ -4139,7 +4190,7 @@ export declare interface Sleeve {
      *
      * Return a boolean indicating whether or not the sleeve started working or this company.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to work for the company.
      * @param companyName - Name of the company to work for.
      * @returns True if the sleeve started working on this company, false otherwise.
@@ -4151,7 +4202,7 @@ export declare interface Sleeve {
      *
      * Return a boolean indicating whether or not this action was set successfully.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to start taking class.
      * @param university - Name of the university to attend.
      * @param className - Name of the class to follow.
@@ -4164,7 +4215,7 @@ export declare interface Sleeve {
      *
      * Return a boolean indicating whether or not the sleeve started working out.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to workout at the gym.
      * @param gymName - Name of the gym.
      * @param stat - Name of the stat to train.
@@ -4177,7 +4228,7 @@ export declare interface Sleeve {
      *
      * Return a boolean indicating whether or not the sleeve reached destination.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to travel.
      * @param cityName - Name of the destination city.
      * @returns True if the sleeve reached destination, false otherwise.
@@ -4189,7 +4240,7 @@ export declare interface Sleeve {
      *
      * Return a list of augmentation names that this sleeve has installed.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to retrieve augmentations from.
      * @returns List of augmentation names that this sleeve has installed.
      */
@@ -4200,7 +4251,7 @@ export declare interface Sleeve {
      *
      * Return a list of augmentations that the player can buy for this sleeve.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to retrieve purchasable augmentations from.
      * @returns List of augmentations that the player can buy for this sleeve.
      */
@@ -4211,7 +4262,7 @@ export declare interface Sleeve {
      *
      * Return true if the aug was purchased and installed on the sleeve.
      *
-     * @remarks 4 GB
+     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to buy an aug for.
      * @param augName - Name of the aug to buy. Must be an exact match.
      * @returns True if the aug was purchased and installed on the sleeve, false otherwise.
@@ -4220,6 +4271,7 @@ export declare interface Sleeve {
 }
 
 /**
+ * Object representing sleeve information.
  * @public
  */
 export declare interface SleeveInformation {
@@ -4250,215 +4302,14 @@ export declare interface SleeveInformation {
 }
 
 /**
+ * Object representing a sleeve stats.
  * @public
  */
-export declare interface SleeveStats {
+export declare interface SleeveSkills {
     /** current shock of the sleeve [0-100] */
-    shock:
-    | 0
-    | 1
-    | 2
-    | 3
-    | 4
-    | 5
-    | 6
-    | 7
-    | 8
-    | 9
-    | 10
-    | 11
-    | 12
-    | 13
-    | 14
-    | 15
-    | 16
-    | 17
-    | 18
-    | 19
-    | 20
-    | 21
-    | 22
-    | 23
-    | 24
-    | 25
-    | 26
-    | 27
-    | 28
-    | 29
-    | 30
-    | 31
-    | 32
-    | 33
-    | 34
-    | 35
-    | 36
-    | 37
-    | 38
-    | 39
-    | 40
-    | 41
-    | 42
-    | 43
-    | 44
-    | 45
-    | 46
-    | 47
-    | 48
-    | 49
-    | 50
-    | 51
-    | 52
-    | 53
-    | 54
-    | 55
-    | 56
-    | 57
-    | 58
-    | 59
-    | 60
-    | 61
-    | 62
-    | 63
-    | 64
-    | 65
-    | 66
-    | 67
-    | 68
-    | 69
-    | 70
-    | 71
-    | 72
-    | 73
-    | 74
-    | 75
-    | 76
-    | 77
-    | 78
-    | 79
-    | 80
-    | 81
-    | 82
-    | 83
-    | 84
-    | 85
-    | 86
-    | 87
-    | 88
-    | 89
-    | 90
-    | 91
-    | 92
-    | 93
-    | 94
-    | 95
-    | 96
-    | 97
-    | 98
-    | 99
-    | 100;
+    shock: number;
     /** current sync of the sleeve [0-100] */
-    sync:
-    | 0
-    | 1
-    | 2
-    | 3
-    | 4
-    | 5
-    | 6
-    | 7
-    | 8
-    | 9
-    | 10
-    | 11
-    | 12
-    | 13
-    | 14
-    | 15
-    | 16
-    | 17
-    | 18
-    | 19
-    | 20
-    | 21
-    | 22
-    | 23
-    | 24
-    | 25
-    | 26
-    | 27
-    | 28
-    | 29
-    | 30
-    | 31
-    | 32
-    | 33
-    | 34
-    | 35
-    | 36
-    | 37
-    | 38
-    | 39
-    | 40
-    | 41
-    | 42
-    | 43
-    | 44
-    | 45
-    | 46
-    | 47
-    | 48
-    | 49
-    | 50
-    | 51
-    | 52
-    | 53
-    | 54
-    | 55
-    | 56
-    | 57
-    | 58
-    | 59
-    | 60
-    | 61
-    | 62
-    | 63
-    | 64
-    | 65
-    | 66
-    | 67
-    | 68
-    | 69
-    | 70
-    | 71
-    | 72
-    | 73
-    | 74
-    | 75
-    | 76
-    | 77
-    | 78
-    | 79
-    | 80
-    | 81
-    | 82
-    | 83
-    | 84
-    | 85
-    | 86
-    | 87
-    | 88
-    | 89
-    | 90
-    | 91
-    | 92
-    | 93
-    | 94
-    | 95
-    | 96
-    | 97
-    | 98
-    | 99
-    | 100;
+    sync: number;
     /** current hacking skill of the sleeve */
     hacking_skill: number;
     /** current strength of the sleeve */
@@ -4474,6 +4325,7 @@ export declare interface SleeveStats {
 }
 
 /**
+ * Object representing a sleeve current task.
  * @public
  */
 export declare interface SleeveTask {
@@ -4520,6 +4372,7 @@ export declare interface SourceFileLvl {
 }
 
 /**
+ * Return value of {@link TIX.getOrders | getOrders}
  * @public
  */
 export declare type StockOrder = {
@@ -4528,6 +4381,7 @@ export declare type StockOrder = {
 };
 
 /**
+ * Value in map of {@link StockOrder}
  * @public
  */
 export declare interface StockOrderObject {
@@ -4542,6 +4396,7 @@ export declare interface StockOrderObject {
 }
 
 /**
+ * All possible stock market symbols.
  * @public
  */
 export declare type StockSymbol =
@@ -4580,54 +4435,56 @@ export declare type StockSymbol =
 | "TITN";
 
 /**
+ * Stock market API
  * @public
  */
 export declare interface TIX {
     /**
      * Returns an array of the symbols of the tradable stocks
      *
-     * @remarks 2 GB
+     * @remarks RAM cost: 2 GB
      * @returns Array of the symbols of the tradable stocks.
      */
     getSymbols(): StockSymbol[];
 
     /**
-     * Returns the price of a stock, given its symbol (NOT the company name).
-     * The symbol is a sequence of two to four capital letters.
+     * Returns the price of a stock
      *
-     * The stock’s price is the average of its bid and ask price
+     * @remarks
+     * RAM cost: 2 GB
+     * The stock’s price is the average of its bid and ask price.
      *
      * @example
-     * ```js
+     * ```ts
      * getPrice("FISG");
      * ```
-     * @remarks 2 GB
      * @param sym - Stock symbol.
      * @returns The price of a stock.
      */
     getPrice(sym: StockSymbol): number;
 
     /**
-     * Given a stock’s symbol (NOT the company name), returns the ask price of that stock.
-     * The symbol is a sequence of two to four capital letters.
+     * Returns the ask price of that stock.
+     * @remarks RAM cost: 2 GB
      *
-     * @remarks 2 GB
      * @param sym - Stock symbol.
      * @returns The ask price of a stock.
      */
     getAskPrice(sym: StockSymbol): number;
 
     /**
-     * Given a stock’s symbol (NOT the company name), returns the bid price of that stock.
-     * The symbol is a sequence of two to four capital letters.
+     * Returns the bid price of that stock.
+     * @remarks RAM cost: 2 GB
      *
-     * @remarks 2 GB
      * @param sym - Stock symbol.
      * @returns The bid price of a stock.
      */
     getBidPrice(sym: StockSymbol): number;
 
     /**
+     * Returns the player’s position in a stock.
+     * @remarks
+     * RAM cost: 2 GB
      * Returns an array of four elements that represents the player’s position in a stock.
      *
      * The first element is the returned array is the number of shares the player owns of
@@ -4641,55 +4498,62 @@ export declare interface TIX {
      * All elements in the returned array are numeric.
      *
      * @example
-     * ```js
+     * ```ts
      * pos = getPosition("ECP");
      * shares      = pos[0];
      * avgPx       = pos[1];
      * sharesShort = pos[2];
      * avgPxShort  = pos[3];
      * ```
-     * @remarks 2 GB
      * @param sym - Stock symbol.
      * @returns Array of four elements that represents the player’s position in a stock.
      */
     getPosition(sym: StockSymbol): [number, number, number, number];
 
     /**
-     * Returns the maximum number of shares that the stock has.
+     * Returns the maximum number of shares of a stock.
+     * @remarks
+     * RAM cost: 2 GB
      * This is the maximum amount of the stock that can be purchased
      * in both the Long and Short positions combined.
      *
-     * @remarks 2 GB
      * @param sym - Stock symbol.
      * @returns Maximum number of shares that the stock has.
      */
     getMaxShares(sym: StockSymbol): number;
 
     /**
+     * Calculates cost of buying stocks.
+     * @remarks
+     * RAM cost: 2 GB
      * Calculates and returns how much it would cost to buy a given number of shares of a stock.
      * This takes into account spread, large transactions influencing the price of the stock and commission fees.
      *
-     * @remarks 2 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares to purchase.
      * @param posType - Specifies whether the order is a “Long” or “Short” position.
      * @returns Cost to buy a given number of shares of a stock.
      */
-    getPurchaseCost(sym: StockSymbol, shares: number, posType: OrderPos): number;
+    getPurchaseCost(sym: StockSymbol, shares: number, posType: OrderPosition): number;
 
     /**
+     * Calculate profit of setting stocks.
+     * @remarks
+     * RAM cost: 2 GB
      * Calculates and returns how much you would gain from selling a given number of shares of a stock.
      * This takes into account spread, large transactions influencing the price of the stock and commission fees.
      *
-     * @remarks 2 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares to sell.
      * @param posType - Specifies whether the order is a “Long” or “Short” position.
      * @returns Gain from selling a given number of shares of a stock.
      */
-    getSaleGain(sym: StockSymbol, shares: number, posType: OrderPos): number;
+    getSaleGain(sym: StockSymbol, shares: number, posType: OrderPosition): number;
 
     /**
+     * Buy stocks.
+     * @remarks
+     * RAM cost: 2.5 GB
      * Attempts to purchase shares of a stock using a Market Order.
      *
      * If the player does not have enough money to purchase the specified number of shares,
@@ -4699,7 +4563,6 @@ export declare interface TIX {
      * If this function successfully purchases the shares, it will return the stock price at which
      * each share was purchased. Otherwise, it will return 0.
      *
-     * @remarks 2.5 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares to purchased. Must be positive. Will be rounded to nearest integer.
      * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.
@@ -4707,6 +4570,9 @@ export declare interface TIX {
     buy(sym: StockSymbol, shares: number): number;
 
     /**
+     * Sell stocks.
+     * @remarks
+     * RAM cost: 2.5 GB
      * Attempts to sell shares of a stock using a Market Order.
      *
      * If the specified number of shares in the function exceeds the amount that the player
@@ -4721,7 +4587,6 @@ export declare interface TIX {
      * If the sale is successful, this function will return the stock price at
      * which each share was sold. Otherwise, it will return 0.
      *
-     * @remarks 2.5 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares to sell. Must be positive. Will be rounded to nearest integer.
      * @returns The stock price at which each share was sold, otherwise 0 if the shares weren't sold.
@@ -4729,6 +4594,9 @@ export declare interface TIX {
     sell(sym: StockSymbol, shares: number): number;
 
     /**
+     * Short stocks.
+     * @remarks
+     * RAM cost: 2.5 GB
      * Attempts to purchase a short position of a stock using a Market Order.
      *
      * The ability to short a stock is **not** immediately available to the player and
@@ -4741,7 +4609,6 @@ export declare interface TIX {
      * If the purchase is successful, this function will return the stock price at which each
      * share was purchased. Otherwise, it will return 0.
      *
-     * @remarks 2.5 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares to short. Must be positive. Will be rounded to nearest integer.
      * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.
@@ -4749,6 +4616,9 @@ export declare interface TIX {
     short(sym: StockSymbol, shares: number): number;
 
     /**
+     * Sell short stock.
+     * @remarks
+     * RAM cost: 2.5 GB
      * Attempts to sell a short position of a stock using a Market Order.
      *
      * The ability to short a stock is **not** immediately available to the player and
@@ -4761,7 +4631,6 @@ export declare interface TIX {
      * If the sale is successful, this function will return the stock price at which each
      * share was sold. Otherwise it will return 0.
      *
-     * @remarks 2.5 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares to sell. Must be positive. Will be rounded to nearest integer.
      * @returns The stock price at which each share was sold, otherwise 0 if the shares weren't sold.
@@ -4769,6 +4638,9 @@ export declare interface TIX {
     sellShort(sym: StockSymbol, shares: number): number;
 
     /**
+     * Place order for stocks.
+     * @remarks
+     * RAM cost: 2.5 GB
      * Places an order on the stock market. This function only works for Limit and Stop Orders.
      *
      * The ability to place limit and stop orders is **not** immediately available to the player and
@@ -4776,7 +4648,6 @@ export declare interface TIX {
      *
      * Returns true if the order is successfully placed, and false otherwise.
      *
-     * @remarks 2.5 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares for order. Must be positive. Will be rounded to nearest integer.
      * @param price - Execution price for the order.
@@ -4784,30 +4655,33 @@ export declare interface TIX {
      * @param pos - Specifies whether the order is a “Long” or “Short” position.
      * @returns True if the order is successfully placed, and false otherwise.
      */
-    placeOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPos): boolean;
+    placeOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPosition): boolean;
 
     /**
+     * Cancel order for stocks.
+     * @remarks
+     * RAM cost: 2.5 GB
      * Cancels an oustanding Limit or Stop order on the stock market.
      *
      * The ability to use limit and stop orders is **not** immediately available to the player and
      * must be unlocked later on in the game.
      *
-     * @remarks 2.5 GB
      * @param sym - Stock symbol.
      * @param shares - Number of shares for order. Must be positive. Will be rounded to nearest integer.
      * @param price - Execution price for the order.
      * @param type - Type of order.
      * @param pos - Specifies whether the order is a “Long” or “Short” position.
      */
-    cancelOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPos): void;
+    cancelOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPosition): void;
 
     /**
      * Returns your order book for the stock market.
-     *
+     * @remarks
+     * RAM cost: 2.5 GB
      * This is an object containing information for all the Limit and Stop Orders you have in the stock market.
      * The object has the following structure:
      *
-     * ```js
+     * ```ts
      * {
      *  StockSymbol1: [ // Array of orders for this stock
      *      {
@@ -4827,15 +4701,11 @@ export declare interface TIX {
      *  ...
      * }
      * ```
-     * The “Order type” property can have one of the following four values:
-     * * “Limit Buy Order”
-     * * “Limit Sell Order”
-     * * “Stop Buy Order”
-     * * “Stop Sell Order”
+     * The “Order type” property can have one of the following four values: "Limit Buy Order", "Limit Sell Order", "Stop Buy Order", "Stop Sell Order".
      * Note that the order book will only contain information for stocks that you actually have orders in.
      *
      * @example
-     * ```js
+     * ```ts
      * "If you do not have orders in Nova Medical (NVMD), then the returned object will not have a “NVMD” property."
      * {
      *  ECP: [
@@ -4862,21 +4732,20 @@ export declare interface TIX {
      *  ],
      * }
      * ```
-     * @remarks 2.5 GB
      * @returns Object containing information for all the Limit and Stop Orders you have in the stock market.
      */
     getOrders(): StockOrder;
 
     /**
      * Returns the volatility of the specified stock.
-     *
+     * @remarks
+     * RAM cost: 2.5 GB
      * Volatility represents the maximum percentage by which a stock’s price can change every tick.
      * The volatility is returned as a decimal value, NOT a percentage
      * (e.g. if a stock has a volatility of 3%, then this function will return 0.03, NOT 3).
      *
      * In order to use this function, you must first purchase access to the Four Sigma (4S) Market Data TIX API.
      *
-     * @remarks 2.5 GB
      * @param sym - Stock symbol.
      * @returns Volatility of the specified stock.
      */
@@ -4884,7 +4753,8 @@ export declare interface TIX {
 
     /**
      * Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.
-     *
+     * @remarks
+     * RAM cost: 2.5 GB
      * The probability is returned as a decimal value, NOT a percentage
      * (e.g. if a stock has a 60% chance of increasing, then this function will return 0.6, NOT 60).
      *
@@ -4893,7 +4763,6 @@ export declare interface TIX {
      *
      * In order to use this function, you must first purchase access to the Four Sigma (4S) Market Data TIX API.
      *
-     * @remarks 2.5 GB
      * @param sym - Stock symbol.
      * @returns Probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.
      */
@@ -4901,31 +4770,27 @@ export declare interface TIX {
 
     /**
      * Purchase 4S Market Data Access.
-     *
-     * Returns true if you successfully purchased it or if you already have access. Returns false otherwise.
-     *
-     * @remarks 2.5 GB
+     * @remarks RAM cost: 2.5 GB
      * @returns True if you successfully purchased it or if you already have access, false otherwise.
      */
     purchase4SMarketData(): boolean;
 
     /**
      * Purchase 4S Market Data TIX API Access.
-     *
-     * Returns true if you successfully purchased it or if you already have access. Returns false otherwise.
-     *
-     * @remarks 2.5 GB
+     * @remarks RAM cost: 2.5 GB
      * @returns True if you successfully purchased it or if you already have access, false otherwise.
      */
     purchase4SMarketDataTixApi(): boolean;
 }
 
 /**
+ * All universities.
  * @public
  */
 export declare type University = "Summit University" | "Rothman University" | "ZB Institute Of Technology";
 
 /**
+ * All university courses.
  * @public
  */
 export declare type UniversityCourse =

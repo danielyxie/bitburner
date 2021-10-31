@@ -4,19 +4,21 @@
 
 ## NS.hacknet property
 
+Namespace for hacknet related functions.
+
+<b>Signature:</b>
+
+```typescript
+readonly hacknet: Hacknet;
+```
+
+## Remarks
+
 Not all functions in the Hacknet Node API are immediately available.
 
 Note that none of these functions will write to the script’s logs.
 
 If you want to see what your script is doing you will have to print to the logs yourself.
-
-<b>Signature:</b>
-
-```typescript
-readonly hacknet: HackNet;
-```
-
-## Remarks
 
 4 GB
 

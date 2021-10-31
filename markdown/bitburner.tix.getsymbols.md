@@ -19,5 +19,5 @@ Array of the symbols of the tradable stocks.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

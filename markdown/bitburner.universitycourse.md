@@ -4,6 +4,8 @@
 
 ## UniversityCourse type
 
+All university courses.
+
 <b>Signature:</b>
 
 ```typescript

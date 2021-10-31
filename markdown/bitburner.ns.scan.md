@@ -9,23 +9,23 @@ Returns an array containing the hostnames or IPs of all servers that are one nod
 <b>Signature:</b>
 
 ```typescript
-scan(host: Host, hostnames?: boolean): Host[];
+scan(host: string, hostnames?: boolean): string[];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Hostname or IP of the server to scan. |
+|  host | string | Hostname of the server to scan. |
 |  hostnames | boolean | Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false). |
 
 <b>Returns:</b>
 
-[Host](./bitburner.host.md)<!-- -->\[\]
+string\[\]
 
 Returns an string of hostnames or IP.
 
 ## Remarks
 
-0.2 GB
+RAM cost: 0.2 GB
 

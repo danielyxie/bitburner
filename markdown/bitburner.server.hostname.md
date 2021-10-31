@@ -4,6 +4,8 @@
 
 ## Server.hostname property
 
+Hostname. Must be unique
+
 <b>Signature:</b>
 
 ```typescript

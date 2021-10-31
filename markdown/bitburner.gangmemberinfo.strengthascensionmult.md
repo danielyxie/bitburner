@@ -4,7 +4,7 @@
 
 ## GangMemberInfo.strengthAscensionMult property
 
-Strength multiplier from ascension. Decimal form
+Strength multiplier from ascension.
 
 <b>Signature:</b>
 

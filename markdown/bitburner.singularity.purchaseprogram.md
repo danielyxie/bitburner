@@ -11,14 +11,14 @@ This function allows you to automatically purchase programs. You MUST have a TOR
 <b>Signature:</b>
 
 ```typescript
-purchaseProgram(programName: PurchaseableProgram): boolean;
+purchaseProgram(programName: Programs): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  programName | [PurchaseableProgram](./bitburner.purchaseableprogram.md) | Name of program to purchase. |
+|  programName | [Programs](./bitburner.programs.md) | Name of program to purchase. |
 
 <b>Returns:</b>
 
@@ -28,12 +28,12 @@ True if the specified program is purchased, and false otherwise.
 
 ## Remarks
 
-2 GB  Level 1
+Singularity - Level 1
 
 ## Example
 
 
-```js
+```ts
 purchaseProgram("brutessh.exe");
 ```
 

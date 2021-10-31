@@ -4,6 +4,8 @@
 
 ## FactionName type
 
+All factions.
+
 <b>Signature:</b>
 
 ```typescript

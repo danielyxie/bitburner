@@ -21,5 +21,5 @@ Object containing general information about the gang.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

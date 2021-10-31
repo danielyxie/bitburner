@@ -9,14 +9,14 @@ Kills all running scripts on the specified server. This function returns true if
 <b>Signature:</b>
 
 ```typescript
-killall(host: Host): boolean;
+killall(host: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | IP or hostname of the server on which to kill all scripts. |
+|  host | string | IP or hostname of the server on which to kill all scripts. |
 
 <b>Returns:</b>
 
@@ -26,5 +26,5 @@ True if any scripts were killed, and false otherwise.
 
 ## Remarks
 
-0.5 GB
+RAM cost: 0.5 GB
 

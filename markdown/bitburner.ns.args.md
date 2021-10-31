@@ -4,22 +4,17 @@
 
 ## NS.args property
 
-Arguments passed into a script can be accessed using a normal array using the \[\] operator (args\[0\], args\[1\], etc…).
-
-It is also possible to get the number of arguments that was passed into a script using:
-
-```js
-args.length
-```
-WARNING: Do not try to modify the args array. This will break the game.
+Arguments passed into the script.
 
 <b>Signature:</b>
 
 ```typescript
-readonly args: any[];
+readonly args: (string | number)[];
 ```
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB Arguments passed into a script can be accessed using a normal array using the \[\] operator (args\[0\], args\[1\], etc…).
+
+It is also possible to get the number of arguments that was passed into a script using: 'args.length' WARNING: Do not try to modify the args array. This will break the game.
 

@@ -11,15 +11,15 @@ Otherwise, the fn, hostname/ip, and args… arguments can be used to get the log
 <b>Signature:</b>
 
 ```typescript
-getScriptLogs(fn?: Script, host?: Host, ...args: any[]): string[];
+getScriptLogs(fn?: string, host?: string, ...args: any[]): string[];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  fn | [Script](./bitburner.script.md) | Optional. Filename of script to get logs from. |
-|  host | [Host](./bitburner.host.md) | Optional. Hostname or IP of the server that the script is on. |
+|  fn | string | Optional. Filename of script to get logs from. |
+|  host | string | Optional. Hostname of the server that the script is on. |
 |  args | any\[\] | Arguments to identify which scripts to get logs for. |
 
 <b>Returns:</b>
@@ -30,12 +30,12 @@ Returns an string array, where each line is an element in the array. The most re
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB
 
 ## Example 1
 
 
-```js
+```ts
 //Get logs from foo.script on the current server that was run with no args
 getScriptLogs("foo.script");
 ```
@@ -43,7 +43,7 @@ getScriptLogs("foo.script");
 ## Example 2
 
 
-```js
+```ts
 //Open logs from foo.script on the foodnstuff server that was run with no args
 getScriptLogs("foo.script", "foodnstuff");
 ```
@@ -51,7 +51,7 @@ getScriptLogs("foo.script", "foodnstuff");
 ## Example 3
 
 
-```js
+```ts
 //Open logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
 getScriptLogs("foo.script", "foodnstuff", 1, "test");
 ```

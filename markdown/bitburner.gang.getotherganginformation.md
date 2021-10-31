@@ -21,5 +21,5 @@ Object containing territory and power information about all gangs.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

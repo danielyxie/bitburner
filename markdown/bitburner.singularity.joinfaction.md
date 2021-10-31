@@ -28,5 +28,5 @@ True if player joined the faction, and false otherwise.
 
 ## Remarks
 
-3 GB  Level 2
+Singularity - Level 2
 

@@ -9,14 +9,14 @@ Returns a server object for the given server. Defaults to the running script's s
 <b>Signature:</b>
 
 ```typescript
-getServer(host?: Host): Server;
+getServer(host?: string): Server;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Optional. Hostname or IP for the requested server object. |
+|  host | string | Optional. Hostname for the requested server object. |
 
 <b>Returns:</b>
 
@@ -26,5 +26,5 @@ The requested server object.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

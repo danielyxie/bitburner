@@ -11,14 +11,14 @@ This function will automatically install your Augmentations, resetting the game 
 <b>Signature:</b>
 
 ```typescript
-installAugmentations(cbScript?: Script): void;
+installAugmentations(cbScript?: string): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  cbScript | [Script](./bitburner.script.md) | Optional callback script. This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer. |
+|  cbScript | string | Optional callback script. This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer. |
 
 <b>Returns:</b>
 
@@ -26,5 +26,5 @@ void
 
 ## Remarks
 
-5 GB  Level 3
+Singularity - Level 3
 

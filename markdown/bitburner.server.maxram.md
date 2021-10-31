@@ -4,6 +4,8 @@
 
 ## Server.maxRam property
 
+RAM (GB) available on this server
+
 <b>Signature:</b>
 
 ```typescript

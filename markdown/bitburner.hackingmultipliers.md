@@ -4,6 +4,7 @@
 
 ## HackingMultipliers interface
 
+Hack related multipliers.
 
 <b>Signature:</b>
 

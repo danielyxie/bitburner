@@ -11,15 +11,15 @@ This function can also return the total experience gain rate of all of your acti
 <b>Signature:</b>
 
 ```typescript
-getScriptExpGain(script: Script, host: Host, ...args: string[]): number;
+getScriptExpGain(script: string, host: string, ...args: string[]): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | [Script](./bitburner.script.md) | Filename of script. |
-|  host | [Host](./bitburner.host.md) | Server on which script is running. |
+|  script | string | Filename of script. |
+|  host | string | Server on which script is running. |
 |  args | string\[\] | Arguments that the script is running with. |
 
 <b>Returns:</b>
@@ -30,5 +30,5 @@ Amount of hacking experience the specified script generates while online.
 
 ## Remarks
 
-0.1 GB
+RAM cost: 0.1 GB
 

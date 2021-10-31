@@ -4,6 +4,8 @@
 
 ## GymStat type
 
+All stats that can be trained at gyms.
+
 <b>Signature:</b>
 
 ```typescript

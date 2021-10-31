@@ -29,5 +29,5 @@ True if the aug was purchased and installed on the sleeve, false otherwise.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

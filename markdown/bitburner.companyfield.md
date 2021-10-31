@@ -4,6 +4,8 @@
 
 ## CompanyField type
 
+All company work fields.
+
 <b>Signature:</b>
 
 ```typescript

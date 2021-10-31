@@ -4,6 +4,8 @@
 
 ## GangTasks type
 
+All Gang tasks.
+
 <b>Signature:</b>
 
 ```typescript

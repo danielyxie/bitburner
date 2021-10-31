@@ -30,5 +30,5 @@ Array with first element as a reputation requirement and second element as the m
 
 ## Remarks
 
-5 GB  Level 3
+Singularity - Level 3
 

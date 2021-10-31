@@ -28,5 +28,5 @@ True if this action was set successfully, false otherwise.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

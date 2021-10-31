@@ -4,6 +4,7 @@
 
 ## StockOrderObject interface
 
+Value in map of [StockOrder](./bitburner.stockorder.md)
 
 <b>Signature:</b>
 

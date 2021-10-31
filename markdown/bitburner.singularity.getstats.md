@@ -11,22 +11,22 @@ Returns an object with the Player’s stats.
 <b>Signature:</b>
 
 ```typescript
-getStats(): PlayerStats;
+getStats(): PlayerSkills;
 ```
 <b>Returns:</b>
 
-[PlayerStats](./bitburner.playerstats.md)
+[PlayerSkills](./bitburner.playerskills.md)
 
 Object with the Player’s stats.
 
 ## Remarks
 
-0.5 GB  Level 1
+Singularity - Level 1
 
 ## Example
 
 
-```js
+```ts
 res = getStats();
 print('My charisma level is: ' + res.charisma);
 ```

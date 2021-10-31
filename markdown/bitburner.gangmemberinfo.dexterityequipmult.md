@@ -4,7 +4,7 @@
 
 ## GangMemberInfo.dexterityEquipMult property
 
-Dexterity multiplier from equipment. Decimal form
+Dexterity multiplier from equipment.
 
 <b>Signature:</b>
 

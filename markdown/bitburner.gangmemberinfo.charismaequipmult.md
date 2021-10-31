@@ -4,7 +4,7 @@
 
 ## GangMemberInfo.charismaEquipMult property
 
-Charisma multiplier from equipment. Decimal form
+Charisma multiplier from equipment.
 
 <b>Signature:</b>
 

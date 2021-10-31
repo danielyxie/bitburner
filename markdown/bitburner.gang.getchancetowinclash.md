@@ -28,5 +28,5 @@ Chance you have to win a clash with the specified gang.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

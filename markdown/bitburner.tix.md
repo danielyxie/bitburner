@@ -4,55 +4,35 @@
 
 ## TIX interface
 
+Stock market API
 
 <b>Signature:</b>
 
 ```typescript
-interface TIX 
+export interface TIX 
 ```
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [buy(sym, shares)](./bitburner.tix.buy.md) | Attempts to purchase shares of a stock using a Market Order.<!-- -->If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased. Remember that every transaction on the stock exchange costs a certain commission fee.<!-- -->If this function successfully purchases the shares, it will return the stock price at which each share was purchased. Otherwise, it will return 0. |
-|  [cancelOrder(sym, shares, price, type, pos)](./bitburner.tix.cancelorder.md) | Cancels an oustanding Limit or Stop order on the stock market.<!-- -->The ability to use limit and stop orders is \*\*not\*\* immediately available to the player and must be unlocked later on in the game. |
-|  [getAskPrice(sym)](./bitburner.tix.getaskprice.md) | Given a stock’s symbol (NOT the company name), returns the ask price of that stock. The symbol is a sequence of two to four capital letters. |
-|  [getBidPrice(sym)](./bitburner.tix.getbidprice.md) | Given a stock’s symbol (NOT the company name), returns the bid price of that stock. The symbol is a sequence of two to four capital letters. |
-|  [getForecast(sym)](./bitburner.tix.getforecast.md) | Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.<!-- -->The probability is returned as a decimal value, NOT a percentage (e.g. if a stock has a 60% chance of increasing, then this function will return 0.6, NOT 60).<!-- -->In other words, if this function returned 0.30 for a stock, then this means that the stock’s price has a 30% chance of increasing and a 70% chance of decreasing during the next tick.<!-- -->In order to use this function, you must first purchase access to the Four Sigma (4S) Market Data TIX API. |
-|  [getMaxShares(sym)](./bitburner.tix.getmaxshares.md) | Returns the maximum number of shares that the stock has. This is the maximum amount of the stock that can be purchased in both the Long and Short positions combined. |
-|  [getOrders()](./bitburner.tix.getorders.md) | Returns your order book for the stock market.<!-- -->This is an object containing information for all the Limit and Stop Orders you have in the stock market. The object has the following structure:
-```js
-{
- StockSymbol1: [ // Array of orders for this stock
-     {
-         shares: Order quantity
-         price: Order price
-         type: Order type
-         position: Either "L" or "S" for Long or Short position
-     },
-     {
-         ...
-     },
-     ...
- ],
- StockSymbol2: [ // Array of orders for this stock
-     ...
- ],
- ...
-}
-```
-The “Order type” property can have one of the following four values: \* “Limit Buy Order” \* “Limit Sell Order” \* “Stop Buy Order” \* “Stop Sell Order” Note that the order book will only contain information for stocks that you actually have orders in. |
-|  [getPosition(sym)](./bitburner.tix.getposition.md) | Returns an array of four elements that represents the player’s position in a stock.<!-- -->The first element is the returned array is the number of shares the player owns of the stock in the Long position. The second element in the array is the average price of the player’s shares in the Long position.<!-- -->The third element in the array is the number of shares the player owns of the stock in the Short position. The fourth element in the array is the average price of the player’s Short position.<!-- -->All elements in the returned array are numeric. |
-|  [getPrice(sym)](./bitburner.tix.getprice.md) | Returns the price of a stock, given its symbol (NOT the company name). The symbol is a sequence of two to four capital letters.<!-- -->The stock’s price is the average of its bid and ask price |
-|  [getPurchaseCost(sym, shares, posType)](./bitburner.tix.getpurchasecost.md) | Calculates and returns how much it would cost to buy a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees. |
-|  [getSaleGain(sym, shares, posType)](./bitburner.tix.getsalegain.md) | Calculates and returns how much you would gain from selling a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees. |
+|  [buy(sym, shares)](./bitburner.tix.buy.md) | Buy stocks. |
+|  [cancelOrder(sym, shares, price, type, pos)](./bitburner.tix.cancelorder.md) | Cancel order for stocks. |
+|  [getAskPrice(sym)](./bitburner.tix.getaskprice.md) | Returns the ask price of that stock. |
+|  [getBidPrice(sym)](./bitburner.tix.getbidprice.md) | Returns the bid price of that stock. |
+|  [getForecast(sym)](./bitburner.tix.getforecast.md) | Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick. |
+|  [getMaxShares(sym)](./bitburner.tix.getmaxshares.md) | Returns the maximum number of shares of a stock. |
+|  [getOrders()](./bitburner.tix.getorders.md) | Returns your order book for the stock market. |
+|  [getPosition(sym)](./bitburner.tix.getposition.md) | Returns the player’s position in a stock. |
+|  [getPrice(sym)](./bitburner.tix.getprice.md) | Returns the price of a stock |
+|  [getPurchaseCost(sym, shares, posType)](./bitburner.tix.getpurchasecost.md) | Calculates cost of buying stocks. |
+|  [getSaleGain(sym, shares, posType)](./bitburner.tix.getsalegain.md) | Calculate profit of setting stocks. |
 |  [getSymbols()](./bitburner.tix.getsymbols.md) | Returns an array of the symbols of the tradable stocks |
-|  [getVolatility(sym)](./bitburner.tix.getvolatility.md) | Returns the volatility of the specified stock.<!-- -->Volatility represents the maximum percentage by which a stock’s price can change every tick. The volatility is returned as a decimal value, NOT a percentage (e.g. if a stock has a volatility of 3%, then this function will return 0.03, NOT 3).<!-- -->In order to use this function, you must first purchase access to the Four Sigma (4S) Market Data TIX API. |
-|  [placeOrder(sym, shares, price, type, pos)](./bitburner.tix.placeorder.md) | Places an order on the stock market. This function only works for Limit and Stop Orders.<!-- -->The ability to place limit and stop orders is \*\*not\*\* immediately available to the player and must be unlocked later on in the game.<!-- -->Returns true if the order is successfully placed, and false otherwise. |
-|  [purchase4SMarketData()](./bitburner.tix.purchase4smarketdata.md) | Purchase 4S Market Data Access.<!-- -->Returns true if you successfully purchased it or if you already have access. Returns false otherwise. |
-|  [purchase4SMarketDataTixApi()](./bitburner.tix.purchase4smarketdatatixapi.md) | Purchase 4S Market Data TIX API Access.<!-- -->Returns true if you successfully purchased it or if you already have access. Returns false otherwise. |
-|  [sell(sym, shares)](./bitburner.tix.sell.md) | Attempts to sell shares of a stock using a Market Order.<!-- -->If the specified number of shares in the function exceeds the amount that the player actually owns, then this function will sell all owned shares. Remember that every transaction on the stock exchange costs a certain commission fee.<!-- -->The net profit made from selling stocks with this function is reflected in the script’s statistics. This net profit is calculated as:<!-- -->shares \* (sell\_price - average\_price\_of\_purchased\_shares)<!-- -->If the sale is successful, this function will return the stock price at which each share was sold. Otherwise, it will return 0. |
-|  [sellShort(sym, shares)](./bitburner.tix.sellshort.md) | Attempts to sell a short position of a stock using a Market Order.<!-- -->The ability to short a stock is \*\*not\*\* immediately available to the player and must be unlocked later on in the game.<!-- -->If the specified number of shares exceeds the amount that the player actually owns, then this function will sell all owned shares. Remember that every transaction on the stock exchange costs a certain commission fee.<!-- -->If the sale is successful, this function will return the stock price at which each share was sold. Otherwise it will return 0. |
-|  [short(sym, shares)](./bitburner.tix.short.md) | Attempts to purchase a short position of a stock using a Market Order.<!-- -->The ability to short a stock is \*\*not\*\* immediately available to the player and must be unlocked later on in the game.<!-- -->If the player does not have enough money to purchase the specified number of shares, then no shares will be purchased. Remember that every transaction on the stock exchange costs a certain commission fee.<!-- -->If the purchase is successful, this function will return the stock price at which each share was purchased. Otherwise, it will return 0. |
+|  [getVolatility(sym)](./bitburner.tix.getvolatility.md) | Returns the volatility of the specified stock. |
+|  [placeOrder(sym, shares, price, type, pos)](./bitburner.tix.placeorder.md) | Place order for stocks. |
+|  [purchase4SMarketData()](./bitburner.tix.purchase4smarketdata.md) | Purchase 4S Market Data Access. |
+|  [purchase4SMarketDataTixApi()](./bitburner.tix.purchase4smarketdatatixapi.md) | Purchase 4S Market Data TIX API Access. |
+|  [sell(sym, shares)](./bitburner.tix.sell.md) | Sell stocks. |
+|  [sellShort(sym, shares)](./bitburner.tix.sellshort.md) | Sell short stock. |
+|  [short(sym, shares)](./bitburner.tix.short.md) | Short stocks. |
 

@@ -4,6 +4,8 @@
 
 ## AugmentName type
 
+All augmentation names.
+
 <b>Signature:</b>
 
 ```typescript

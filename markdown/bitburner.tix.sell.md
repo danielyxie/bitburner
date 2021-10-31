@@ -4,15 +4,7 @@
 
 ## TIX.sell() method
 
-Attempts to sell shares of a stock using a Market Order.
-
-If the specified number of shares in the function exceeds the amount that the player actually owns, then this function will sell all owned shares. Remember that every transaction on the stock exchange costs a certain commission fee.
-
-The net profit made from selling stocks with this function is reflected in the script’s statistics. This net profit is calculated as:
-
-shares \* (sell\_price - average\_price\_of\_purchased\_shares)
-
-If the sale is successful, this function will return the stock price at which each share was sold. Otherwise, it will return 0.
+Sell stocks.
 
 <b>Signature:</b>
 
@@ -35,5 +27,13 @@ The stock price at which each share was sold, otherwise 0 if the shares weren't 
 
 ## Remarks
 
-2.5 GB
+RAM cost: 2.5 GB Attempts to sell shares of a stock using a Market Order.
+
+If the specified number of shares in the function exceeds the amount that the player actually owns, then this function will sell all owned shares. Remember that every transaction on the stock exchange costs a certain commission fee.
+
+The net profit made from selling stocks with this function is reflected in the script’s statistics. This net profit is calculated as:
+
+shares \* (sell\_price - average\_price\_of\_purchased\_shares)
+
+If the sale is successful, this function will return the stock price at which each share was sold. Otherwise, it will return 0.
 

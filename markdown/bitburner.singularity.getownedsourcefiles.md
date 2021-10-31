@@ -21,5 +21,5 @@ Array containing an object with number and level of the source file.
 
 ## Remarks
 
-5 GB  Level 3
+Singularity - Level 3
 

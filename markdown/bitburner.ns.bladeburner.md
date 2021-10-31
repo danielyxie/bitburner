@@ -4,6 +4,8 @@
 
 ## NS.bladeburner property
 
+Namespace for bladeburner related functions.
+
 <b>Signature:</b>
 
 ```typescript
@@ -12,5 +14,5 @@ readonly bladeburner: Bladeburner;
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB
 

@@ -4,6 +4,7 @@
 
 ## Server interface
 
+A single server.
 
 <b>Signature:</b>
 
@@ -15,17 +16,17 @@ interface Server
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [cpuCores](./bitburner.server.cpucores.md) | number |  |
-|  [ftpPortOpen](./bitburner.server.ftpportopen.md) | boolean |  |
-|  [hasAdminRights](./bitburner.server.hasadminrights.md) | boolean |  |
-|  [hostname](./bitburner.server.hostname.md) | string |  |
-|  [httpPortOpen](./bitburner.server.httpportopen.md) | boolean |  |
-|  [ip](./bitburner.server.ip.md) | string |  |
-|  [isConnectedTo](./bitburner.server.isconnectedto.md) | boolean |  |
-|  [maxRam](./bitburner.server.maxram.md) | number |  |
-|  [organizationName](./bitburner.server.organizationname.md) | string |  |
-|  [ramUsed](./bitburner.server.ramused.md) | number |  |
-|  [smtpPortOpen](./bitburner.server.smtpportopen.md) | boolean |  |
-|  [sqlPortOpen](./bitburner.server.sqlportopen.md) | boolean |  |
-|  [sshPortOpen](./bitburner.server.sshportopen.md) | boolean |  |
+|  [cpuCores](./bitburner.server.cpucores.md) | number | How many CPU cores this server has. Maximum of 8. Affects magnitude of grow and weaken. |
+|  [ftpPortOpen](./bitburner.server.ftpportopen.md) | boolean | Flag indicating whether the FTP port is open |
+|  [hasAdminRights](./bitburner.server.hasadminrights.md) | boolean | Flag indicating whether player has admin/root access to this server |
+|  [hostname](./bitburner.server.hostname.md) | string | Hostname. Must be unique |
+|  [httpPortOpen](./bitburner.server.httpportopen.md) | boolean | Flag indicating whether HTTP Port is open |
+|  [ip](./bitburner.server.ip.md) | string | IP Address. Must be unique |
+|  [isConnectedTo](./bitburner.server.isconnectedto.md) | boolean | Flag indicating whether player is curently connected to this server |
+|  [maxRam](./bitburner.server.maxram.md) | number | RAM (GB) available on this server |
+|  [organizationName](./bitburner.server.organizationname.md) | string | Name of company/faction/etc. that this server belongs to. Optional, not applicable to all Servers |
+|  [ramUsed](./bitburner.server.ramused.md) | number | RAM (GB) used. i.e. unavailable RAM |
+|  [smtpPortOpen](./bitburner.server.smtpportopen.md) | boolean | Flag indicating whether SMTP Port is open |
+|  [sqlPortOpen](./bitburner.server.sqlportopen.md) | boolean | Flag indicating whether SQL Port is open |
+|  [sshPortOpen](./bitburner.server.sshportopen.md) | boolean | Flag indicating whether the SSH Port is open |
 

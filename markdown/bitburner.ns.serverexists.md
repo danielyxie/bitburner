@@ -9,14 +9,14 @@ Returns a boolean denoting whether or not the specified server exists.
 <b>Signature:</b>
 
 ```typescript
-serverExists(host: Host): boolean;
+serverExists(host: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server. |
+|  host | string | Host or IP of target server. |
 
 <b>Returns:</b>
 
@@ -26,5 +26,5 @@ True if specified server exists, and false otherwise.
 
 ## Remarks
 
-0.1 GB
+RAM cost: 0.1 GB
 

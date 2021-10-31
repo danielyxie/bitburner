@@ -30,5 +30,5 @@ True if the sleeve started working on this faction, false otherwise.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

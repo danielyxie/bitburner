@@ -4,6 +4,7 @@
 
 ## SleeveTask interface
 
+Object representing a sleeve current task.
 
 <b>Signature:</b>
 

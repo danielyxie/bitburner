@@ -4,6 +4,8 @@
 
 ## BladeburnerBlackOps type
 
+All Bladeburner black ops.
+
 <b>Signature:</b>
 
 ```typescript

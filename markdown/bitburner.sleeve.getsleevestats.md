@@ -11,7 +11,7 @@ Return a structure containing the stats of the sleeve.
 <b>Signature:</b>
 
 ```typescript
-getSleeveStats(sleeveNumber: number): SleeveStats;
+getSleeveStats(sleeveNumber: number): SleeveSkills;
 ```
 
 ## Parameters
@@ -22,11 +22,11 @@ getSleeveStats(sleeveNumber: number): SleeveStats;
 
 <b>Returns:</b>
 
-[SleeveStats](./bitburner.sleevestats.md)
+[SleeveSkills](./bitburner.sleeveskills.md)
 
 Object containing the stats of the sleeve.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

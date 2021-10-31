@@ -4,13 +4,7 @@
 
 ## TIX.sellShort() method
 
-Attempts to sell a short position of a stock using a Market Order.
-
-The ability to short a stock is \*\*not\*\* immediately available to the player and must be unlocked later on in the game.
-
-If the specified number of shares exceeds the amount that the player actually owns, then this function will sell all owned shares. Remember that every transaction on the stock exchange costs a certain commission fee.
-
-If the sale is successful, this function will return the stock price at which each share was sold. Otherwise it will return 0.
+Sell short stock.
 
 <b>Signature:</b>
 
@@ -33,5 +27,11 @@ The stock price at which each share was sold, otherwise 0 if the shares weren't 
 
 ## Remarks
 
-2.5 GB
+RAM cost: 2.5 GB Attempts to sell a short position of a stock using a Market Order.
+
+The ability to short a stock is \*\*not\*\* immediately available to the player and must be unlocked later on in the game.
+
+If the specified number of shares exceeds the amount that the player actually owns, then this function will sell all owned shares. Remember that every transaction on the stock exchange costs a certain commission fee.
+
+If the sale is successful, this function will return the stock price at which each share was sold. Otherwise it will return 0.
 

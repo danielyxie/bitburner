@@ -4,7 +4,7 @@
 
 ## GangMemberInfo.strengthEquipMult property
 
-Strength multiplier from equipment. Decimal form
+Strength multiplier from equipment.
 
 <b>Signature:</b>
 

@@ -4,6 +4,8 @@
 
 ## University type
 
+All universities.
+
 <b>Signature:</b>
 
 ```typescript

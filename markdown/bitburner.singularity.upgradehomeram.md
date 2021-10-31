@@ -23,5 +23,5 @@ True if the player’s home computer RAM is successfully upgraded, and false oth
 
 ## Remarks
 
-3 GB  Level 2
+Singularity - Level 2
 

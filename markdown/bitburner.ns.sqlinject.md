@@ -9,14 +9,14 @@ Runs the SQLInject.exe program on the target server. SQLInject.exe must exist on
 <b>Signature:</b>
 
 ```typescript
-sqlinject(host: Host): void;
+sqlinject(host: string): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Hostname or IP of the target server. |
+|  host | string | Hostname of the target server. |
 
 <b>Returns:</b>
 
@@ -24,12 +24,12 @@ void
 
 ## Remarks
 
-0.05 GB
+RAM cost: 0.05 GB
 
 ## Example
 
 
-```js
+```ts
 sqlinject("foodnstuff");
 ```
 

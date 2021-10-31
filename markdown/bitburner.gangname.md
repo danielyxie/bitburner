@@ -4,6 +4,8 @@
 
 ## GangName type
 
+All factions that can have a gang.
+
 <b>Signature:</b>
 
 ```typescript

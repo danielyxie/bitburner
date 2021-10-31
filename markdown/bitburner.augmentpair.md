@@ -4,6 +4,7 @@
 
 ## AugmentPair interface
 
+Return value of [getSleevePurchasableAugs](./bitburner.sleeve.getsleevepurchasableaugs.md)
 
 <b>Signature:</b>
 

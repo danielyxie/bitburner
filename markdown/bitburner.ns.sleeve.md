@@ -4,6 +4,8 @@
 
 ## NS.sleeve property
 
+Namespace for sleeve related functions.
+
 <b>Signature:</b>
 
 ```typescript
@@ -12,5 +14,5 @@ readonly sleeve: Sleeve;
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB
 

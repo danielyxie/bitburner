@@ -34,5 +34,5 @@ Average Bladeburner reputation gain for successfully completing the specified ac
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

@@ -4,7 +4,7 @@
 
 ```ts
 
-// @public (undocumented)
+// @public
 export interface AugmentationStats {
     agility_exp_mult?: number;
     agility_mult?: number;
@@ -38,7 +38,7 @@ export interface AugmentationStats {
     work_money_mult?: number;
 }
 
-// @public (undocumented)
+// @public
 export type AugmentName =
 | "Augmented Targeting I"
 | "Augmented Targeting II"
@@ -146,18 +146,19 @@ export type AugmentName =
 | "BLADE-51b Tesla Armor: IPU Upgrade"
 | "The Blade's Simulacrum";
 
-// @public (undocumented)
+// @public
 export interface AugmentPair {
     cost: number;
     name: AugmentName;
 }
 
-// @public (undocumented)
+// @public
 export interface BasicHGWOptions {
+    stock?: boolean;
     threads: number;
 }
 
-// @public (undocumented)
+// @public
 export interface BitNodeMultipliers {
     AgilityLevelMultiplier: number;
     AugmentationMoneyCost: number;
@@ -311,10 +312,10 @@ export interface Bladeburner {
     upgradeSkill(name: BladeburnerSkills): boolean;
 }
 
-// @public (undocumented)
+// @public
 export type BladeburnerActTypes = "contracts" | "operations" | "black ops" | "general";
 
-// @public (undocumented)
+// @public
 export type BladeburnerBlackOps =
 | "Operation Typhoon"
 | "Operation Zero"
@@ -341,13 +342,13 @@ export type BladeburnerBlackOps =
 // @public (undocumented)
 export type BladeburnerContracts = "Tracking" | "Bounty Hunter" | "Retirement";
 
-// @public (undocumented)
+// @public
 export interface BladeburnerCurAction {
     name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps;
     type: BladeburnerActTypes | "Idle";
 }
 
-// @public (undocumented)
+// @public
 export type BladeburnerGenActions =
 | "Training"
 | "Field Analysis"
@@ -355,7 +356,7 @@ export type BladeburnerGenActions =
 | "Diplomacy"
 | "Hyperbolic Regeneration Chamber";
 
-// @public (undocumented)
+// @public
 export type BladeburnerOperations =
 | "Investigation"
 | "Undercover Operation"
@@ -364,7 +365,7 @@ export type BladeburnerOperations =
 | "Stealth Retirement Operation"
 | "Assassination";
 
-// @public (undocumented)
+// @public
 export type BladeburnerSkills =
 | "Blade's Intuition"
 | "Cloak"
@@ -422,30 +423,30 @@ export interface CharacterMult {
     workMoney: number;
 }
 
-// @public (undocumented)
+// @public
 export type City = "Aevum" | "Chongqing" | "Sector-12" | "New Tokyo" | "Ishima" | "Volhaven";
 
-// @public (undocumented)
+// @public
 export interface CodingAttemptOptions {
     returnReward: boolean;
 }
 
-// @public (undocumented)
+// @public
 export interface CodingContract {
-    attempt(answer: string | string[] | number, fn: string, host?: Host): boolean;
+    attempt(answer: string | string[] | number, fn: string, host?: string): boolean;
 
-    attempt(answer: string | string[] | number, fn: string, host?: Host, opts?: CodingAttemptOptions): boolean | string;
+    attempt(answer: string | string[] | number, fn: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
 
-    getContractType(fn: string, host?: Host): CodingContractTypes;
+    getContractType(fn: string, host?: string): CodingContractTypes;
 
-    getData(fn: string, host?: Host): string;
+    getData(fn: string, host?: string): string;
 
-    getDescription(fn: string, host?: Host): string;
+    getDescription(fn: string, host?: string): string;
 
-    getNumTriesRemaining(fn: string, host?: Host): number;
+    getNumTriesRemaining(fn: string, host?: string): number;
 }
 
-// @public (undocumented)
+// @public
 export type CodingContractTypes =
 | "Find Largest Prime Factor"
 | "Subarray with Maximum Sum"
@@ -464,7 +465,7 @@ export type CodingContractTypes =
 | "Sanitize Parentheses in Expression"
 | "Find All Valid Math Expressions";
 
-// @public (undocumented)
+// @public
 export type CompanyField =
 | "software"
 | "software consultant"
@@ -480,7 +481,7 @@ export type CompanyField =
 | "waiter"
 | "part-time waiter";
 
-// @public (undocumented)
+// @public
 export type CompanyName =
 // Sector-12
 | "MegaCorp"
@@ -532,10 +533,7 @@ export type CompanyName =
 | "GlobalPharmaceuticals"
 | "NoodleBar";
 
-// @public (undocumented)
-export type CreatableProgram = PurchaseableProgram | "serverprofiler.exe";
-
-// @public (undocumented)
+// @public
 export type Crime =
 | "shoplift"
 | "rob store"
@@ -550,7 +548,7 @@ export type Crime =
 | "assassinate"
 | "heist";
 
-// @public (undocumented)
+// @public
 export interface CrimeStats {
     agility_exp: number;
     agility_success_weight: number;
@@ -574,7 +572,7 @@ export interface CrimeStats {
     type: string;
 }
 
-// @public (undocumented)
+// @public
 export type FactionName =
 | "Illuminati"
 | "Daedalus"
@@ -609,10 +607,10 @@ export type FactionName =
 | "CyberSec"
 | "Bladeburners";
 
-// @public (undocumented)
+// @public
 export type FactionWork = "hacking" | "field" | "security";
 
-// @public (undocumented)
+// @public
 export interface Gang {
     ascendMember(memberName: string): GangMemberAscension;
 
@@ -651,7 +649,7 @@ export interface Gang {
     setTerritoryWarfare(engage: boolean): void;
 }
 
-// @public (undocumented)
+// @public
 export type GangAugmentations =
 | "Bionic Arms"
 | "Bionic Legs"
@@ -665,7 +663,7 @@ export type GangAugmentations =
 | "DataJack"
 | "Graphene Bone Lacings";
 
-// @public (undocumented)
+// @public
 export type GangEquipment =
 | "Baseball Bat"
 | "Katana"
@@ -689,7 +687,7 @@ export type GangEquipment =
 | "Hmap Node"
 | "Jack the Ripper";
 
-// @public (undocumented)
+// @public
 export interface GangEquipmentStats {
     agi: number;
     cha: number;
@@ -699,10 +697,10 @@ export interface GangEquipmentStats {
     str: number;
 }
 
-// @public (undocumented)
+// @public
 export type GangEquipmentType = "Weapon" | "Armor" | "Vehicle" | "Rootkit" | "Augmentation";
 
-// @public (undocumented)
+// @public
 export interface GangGenInfo {
     faction: GangName;
     isHacking: boolean;
@@ -752,7 +750,7 @@ export interface GangMemberInfo {
     task: GangTasks;
 }
 
-// @public (undocumented)
+// @public
 export type GangName =
 | "Slum Snakes"
 | "Tetrads"
@@ -774,7 +772,7 @@ export interface GangOtherInfoObject {
     territory: number;
 }
 
-// @public (undocumented)
+// @public
 export type GangTasks =
 | "Unassigned"
 | "Ransomware"
@@ -801,7 +799,7 @@ export type GangTasks =
 | "Train Charisma"
 | "Territory Warfare";
 
-// @public (undocumented)
+// @public
 export interface GangTasksStats {
     agiWeight: number;
     baseMoney: number;
@@ -827,13 +825,13 @@ export interface GangTasksTerritory {
     wanted: number;
 }
 
-// @public (undocumented)
+// @public
 export type Gym = "Crush Fitness Gym" | "Snap Fitness Gym" | "Iron Gym" | "Powerhouse Gym" | "Millenium Fitness Gym";
 
-// @public (undocumented)
+// @public
 export type GymStat = "str" | "def" | "dex" | "agi";
 
-// @public (undocumented)
+// @public
 export interface HackingMultipliers {
     chance: number;
     growth: number;
@@ -841,8 +839,8 @@ export interface HackingMultipliers {
     speed: number;
 }
 
-// @public (undocumented)
-export interface HackNet {
+// @public
+export interface Hacknet {
     getCacheUpgradeCost(index: number, n: number): number;
 
     getCoreUpgradeCost(index: number, n: number): number;
@@ -863,7 +861,7 @@ export interface HackNet {
 
     purchaseNode(): number;
 
-    spendHashes(upgName: HashUpgrades, upgTarget?: Host): boolean;
+    spendHashes(upgName: HashUpgrades, upgTarget?: string): boolean;
 
     upgradeCache(index: number, n: number): boolean;
 
@@ -874,7 +872,7 @@ export interface HackNet {
     upgradeRam(index: number, n: number): boolean;
 }
 
-// @public (undocumented)
+// @public
 export interface HacknetMultipliers {
     coreCost: number;
     levelCost: number;
@@ -886,7 +884,7 @@ export interface HacknetMultipliers {
 // @public (undocumented)
 export type Handle = string | Port;
 
-// @public (undocumented)
+// @public
 export type HashUpgrades =
 | "Sell for Money"
 | "Sell for Corporation Funds"
@@ -899,10 +897,7 @@ export type HashUpgrades =
 | "Exchange for Bladeburner SP"
 | "Generate Coding Contract";
 
-// @public (undocumented)
-export type Host = string;
-
-// @public (undocumented)
+// @public
 export interface NodeStats {
     cache: number;
     cores: number;
@@ -915,120 +910,115 @@ export interface NodeStats {
     totalProduction: number;
 }
 
-// @public (undocumented)
+// @public
 export interface NS extends Singularity {
-    readonly args: any[];
-    // (undocumented)
+    readonly args: (string | number)[];
     readonly bladeburner: Bladeburner;
-    brutessh(host: Host): void;
+    brutessh(host: string): void;
     clear(handle: Handle): void;
     clearLog(): void;
-    // (undocumented)
     readonly codingcontract: CodingContract;
-    deleteServer(host: Host): boolean;
+    deleteServer(host: string): boolean;
     disableLog(fn: string): void;
     enableLog(fn: string): void;
-    exec(script: Script, host: Host, numThreads?: number, ...args: string[]): number;
+    exec(script: string, host: string, numThreads?: number, ...args: string[]): number;
     exit(): void;
-    fileExists(filename: string, host?: Host): boolean;
-    ftpcrack(host: Host): void;
-    // (undocumented)
+    fileExists(filename: string, host?: string): boolean;
+    ftpcrack(host: string): void;
     readonly gang: Gang;
-    getBitNodeMultipliers(url: string, target: string, host: string): BitNodeMultipliers;
+    getBitNodeMultipliers(): BitNodeMultipliers;
     getFavorToDonate(): number;
-    getGrowTime(host: Host, hackLvl?: number, intLvl?: number): number;
+    getGrowTime(host: string, hackLvl?: number, intLvl?: number): number;
     getHackingLevel(): number;
     getHackingMultipliers(): HackingMultipliers;
     getHacknetMultipliers(): HacknetMultipliers;
-    getHackTime(host: Host, hackLvl?: number, intLvl?: number): number;
-    getHostname(): Host;
+    getHackTime(host: string, hackLvl?: number, intLvl?: number): number;
+    getHostname(): string;
     getPortHandle(port: Port): any[];
     getPurchasedServerCost(ram: number): number;
     getPurchasedServerLimit(): number;
     getPurchasedServerMaxRam(): number;
-    getPurchasedServers(hostnameMode?: boolean): Host[];
-    getScriptExpGain(script: Script, host: Host, ...args: string[]): number;
-    getScriptIncome(script: Script, host: Host, ...args: string[]): number | [number, number];
-    getScriptLogs(fn?: Script, host?: Host, ...args: any[]): string[];
+    getPurchasedServers(hostnameMode?: boolean): string[];
+    getScriptExpGain(script: string, host: string, ...args: string[]): number;
+    getScriptIncome(script: string, host: string, ...args: string[]): number | [number, number];
+    getScriptLogs(fn?: string, host?: string, ...args: any[]): string[];
     getScriptName(): string;
-    getScriptRam(script: Script, host?: Host): number;
-    getServer(host?: Host): Server;
-    getServerBaseSecurityLevel(host: Host): number;
-    getServerGrowth(host: Host): number;
-    getServerMaxMoney(host: Host): number;
-    getServerMinSecurityLevel(host: Host): number;
-    getServerMoneyAvailable(host: Host): number;
-    getServerNumPortsRequired(host: Host): number;
-    getServerRam(host: Host): [number, number];
-    getServerRequiredHackingLevel(host: Host): number;
-    getServerSecurityLevel(host: Host): number;
+    getScriptRam(script: string, host?: string): number;
+    getServer(host?: string): Server;
+    getServerBaseSecurityLevel(host: string): number;
+    getServerGrowth(host: string): number;
+    getServerMaxMoney(host: string): number;
+    getServerMinSecurityLevel(host: string): number;
+    getServerMoneyAvailable(host: string): number;
+    getServerNumPortsRequired(host: string): number;
+    getServerRam(host: string): [number, number];
+    getServerRequiredHackingLevel(host: string): number;
+    getServerSecurityLevel(host: string): number;
     getTimeSinceLastAug(): number;
-    getWeakenTime(host: Host, hackLvl?: number, intLvl?: number): number;
-    grow(host: Host, opts?: BasicHGWOptions): Promise<number>;
-    growthAnalyze(host: Host, growthAmount: number): number;
+    getWeakenTime(host: string, hackLvl?: number, intLvl?: number): number;
+    grow(host: string, opts?: BasicHGWOptions): Promise<number>;
+    growthAnalyze(host: string, growthAmount: number): number;
     growthAnalyzeSecurity(threads: number): number;
-    hack(host: Host, opts?: BasicHGWOptions): Promise<number>;
-    hackAnalyzePercent(host: Host): number;
+    hack(host: string, opts?: BasicHGWOptions): Promise<number>;
+    hackAnalyzePercent(host: string): number;
     hackAnalyzeSecurity(threads: number): number;
-    hackAnalyzeThreads(host: Host, hackAmount: number): number;
-    hackChance(host: Host): number;
-    readonly hacknet: HackNet;
-    hasRootAccess(host: Host): boolean;
-    httpworm(host: Host): void;
+    hackAnalyzeThreads(host: string, hackAmount: number): number;
+    hackChance(host: string): number;
+    readonly hacknet: Hacknet;
+    hasRootAccess(host: string): boolean;
+    httpworm(host: string): void;
     isLogEnabled(fn: string): boolean;
-    isRunning(script: Script, host: Host, ...args: string[]): boolean;
-    kill(script: Script, host: Host, ...args: string[]): boolean;
+    isRunning(script: string, host: string, ...args: string[]): boolean;
+    kill(script: string, host: string, ...args: string[]): boolean;
     kill(scriptPid: number): boolean;
-    killall(host: Host): boolean;
-    ls(host: Host, grep?: string): string[];
+    killall(host: string): boolean;
+    ls(host: string, grep?: string): string[];
     nFormat(n: number, format: string): number;
-    nuke(host: Host): void;
+    nuke(host: string): void;
     peek(port: Port): string | number | object;
-    print(msg: string | number | string[] | number[]): void;
+    print(msg: any): void;
     prompt(txt: string): Promise<boolean>;
-    ps(host?: Host): ProcessInfo[];
-    purchaseServer(hostname: Host, ram: number): Host | "";
+    ps(host?: string): ProcessInfo[];
+    purchaseServer(hostname: string, ram: number): string | "";
     read(handle: Handle): string | number | object;
-    relaysmtp(host: Host): void;
-    rm(name: string, host?: Host): boolean;
-    run(script: Script, numThreads?: number, ...args: string[]): number;
-    scan(host: Host, hostnames?: boolean): Host[];
-    scp(files: string | ReadonlyArray<string>, destination: Host): boolean;
+    relaysmtp(host: string): void;
+    rm(name: string, host?: string): boolean;
+    run(script: string, numThreads?: number, ...args: string[]): number;
+    scan(host: string, hostnames?: boolean): string[];
+    scp(files: string | ReadonlyArray<string>, destination: string): boolean;
     scp(
     files: string | ReadonlyArray<string>,
-    source: Host,
+    source: string,
     // tslint:disable-next-line:unified-signatures
-    destination: Host,
+    destination: string,
     ): boolean;
-    scriptKill(script: Script, host: Host): boolean;
-    scriptRunning(script: Script, host: Host): boolean;
-    serverExists(host: Host): boolean;
+    scriptKill(script: string, host: string): boolean;
+    scriptRunning(script: string, host: string): boolean;
+    serverExists(host: string): boolean;
     sleep(millis: number): Promise<void>;
-    // (undocumented)
     readonly sleeve: Sleeve;
-    spawn(script: Script, numThreads?: number, ...args: string[]): void;
+    spawn(script: string, numThreads?: number, ...args: string[]): void;
     sprintf(format: string, ...args: string[]): string;
-    sqlinject(host: Host): void;
-    // (undocumented)
+    sqlinject(host: string): void;
     readonly stock: TIX;
-    tail(fn?: Script, host?: Host, ...args: any[]): void;
-    tprint(msg: string | number | string[] | number[]): void;
+    tail(fn?: string, host?: string, ...args: any[]): void;
+    tprint(msg: any): void;
     tryWrite(port: Handle, data: string | string[] | number): boolean;
     vsprintf(format: string, args: string[]): string;
-    weaken(host: Host, opts?: BasicHGWOptions): Promise<number>;
+    weaken(host: string, opts?: BasicHGWOptions): Promise<number>;
     weakenAnalyze(threads: number, cores?: number): number;
     wget(url: string, target: string, host?: string): Promise<boolean>;
     write(handle: Handle, data?: string | string[] | number, mode?: "w" | "a"): void;
 }
 
-// @public (undocumented)
-export type OrderPos = "long" | "short";
+// @public
+export type OrderPosition = "long" | "short";
 
-// @public (undocumented)
+// @public
 export type OrderType = "limitbuy" | "limitsell" | "stopbuy" | "stopsell";
 
-// @public (undocumented)
-export interface PlayerStats {
+// @public
+export interface PlayerSkills {
     agility: number;
     charisma: number;
     defense: number;
@@ -1041,84 +1031,55 @@ export interface PlayerStats {
 // @public
 export type Port = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;
 
-// @public (undocumented)
+// @public
 export interface ProcessInfo {
     args: string[];
-    filename: Script;
+    filename: string;
     threads: number;
 }
 
-// @public (undocumented)
-export type PurchaseableProgram =
+// @public
+export type Programs =
+| "autolink.exe"
 | "brutessh.exe"
-| "ftpcrack.exe"
-| "relaysmtp.exe"
-| "httpworm.exe"
-| "sqlinject.exe"
 | "deepscanv1.exe"
 | "deepscanv2.exe"
-| "autolink.exe";
+| "ftpcrack.exe"
+| "httpworm.exe"
+| "relaysmtp.exe"
+| "serverprofiler.exe"
+| "sqlinject.exe";
 
-// @public (undocumented)
-export type Script = string;
-
-// @public (undocumented)
+// @public
 export interface Server {
-    // How many CPU cores this server has. Maximum of 8.
-    // Currently, this only affects hacking missions
-    // (undocumented)
     cpuCores: number;
 
-    // Flag indicating whether the FTP port is open
-    // (undocumented)
     ftpPortOpen: boolean;
 
-    // Flag indicating whether the FTP port is open
-    // (undocumented)
     hasAdminRights: boolean;
 
-    // Flag indicating whether the FTP port is open
-    // (undocumented)
     hostname: string;
 
-    // Flag indicating whether the FTP port is open
-    // (undocumented)
     httpPortOpen: boolean;
 
-    // Flag indicating whether the FTP port is open
-    // (undocumented)
     ip: string;
 
-    // Flag indicating whether the FTP port is open
-    // (undocumented)
     isConnectedTo: boolean;
 
-    // Flag indicating whether the FTP port is open
-    // (undocumented)
     maxRam: number;
 
-    // Flag indicating whether the FTP port is open
-    // (undocumented)
     organizationName: string;
 
-    // Flag indicating whether the FTP port is open
-    // (undocumented)
     ramUsed: number;
 
-    // Flag indicating whether the FTP port is open
-    // (undocumented)
     smtpPortOpen: boolean;
 
-    // Flag indicating whether the FTP port is open
-    // (undocumented)
     sqlPortOpen: boolean;
 
-    // Flag indicating whether the FTP port is open
-    // (undocumented)
     sshPortOpen: boolean;
 }
 
-// @public (undocumented)
+// @public
 export interface Singularity {
     applyToCompany(companyName: CompanyName, field: CompanyField): boolean;
 
@@ -1126,7 +1087,7 @@ export interface Singularity {
 
     commitCrime(crime: Crime): number;
 
-    createProgram(program: CreatableProgram): boolean;
+    createProgram(program: Programs): boolean;
 
     donateToFaction(faction: FactionName, amount: number): boolean;
 
@@ -1160,13 +1121,13 @@ export interface Singularity {
 
     getOwnedSourceFiles(): SourceFileLvl[];
 
-    getStats(): PlayerStats;
+    getStats(): PlayerSkills;
 
     getUpgradeHomeRamCost(): number;
 
     gymWorkout(gymName: Gym, stat: GymStat): boolean;
 
-    installAugmentations(cbScript?: Script): void;
+    installAugmentations(cbScript?: string): void;
 
     isBusy(): boolean;
 
@@ -1174,7 +1135,7 @@ export interface Singularity {
 
     purchaseAugmentation(faction: FactionName, augmnet: AugmentName): boolean;
 
-    purchaseProgram(programName: PurchaseableProgram): boolean;
+    purchaseProgram(programName: Programs): boolean;
 
     purchaseTor(): boolean;
 
@@ -1193,7 +1154,7 @@ export interface Singularity {
     workForFaction(faction: FactionName, workType: FactionWork): boolean;
 }
 
-// @public (undocumented)
+// @public
 export interface Sleeve {
     getInformation(sleeveNumber: number): SleeveInformation;
 
@@ -1203,7 +1164,7 @@ export interface Sleeve {
 
     getSleevePurchasableAugs(sleeveNumber: number): AugmentPair[];
 
-    getSleeveStats(sleeveNumber: number): SleeveStats;
+    getSleeveStats(sleeveNumber: number): SleeveSkills;
 
     getTask(sleeveNumber: number): SleeveTask;
 
@@ -1226,7 +1187,7 @@ export interface Sleeve {
     travel(sleeveNumber: number, cityName: City): boolean;
 }
 
-// @public (undocumented)
+// @public
 export interface SleeveInformation {
     city: City;
     earningsForPlayer: SleeveWorkGains;
@@ -1242,221 +1203,19 @@ export interface SleeveInformation {
     workRepGain: number;
 }
 
-// @public (undocumented)
-export interface SleeveStats {
+// @public
+export interface SleeveSkills {
     agility: number;
     charisma: number;
     defense: number;
     dexterity: number;
     hacking_skill: number;
-    shock:
-    | 0
-    | 1
-    | 2
-    | 3
-    | 4
-    | 5
-    | 6
-    | 7
-    | 8
-    | 9
-    | 10
-    | 11
-    | 12
-    | 13
-    | 14
-    | 15
-    | 16
-    | 17
-    | 18
-    | 19
-    | 20
-    | 21
-    | 22
-    | 23
-    | 24
-    | 25
-    | 26
-    | 27
-    | 28
-    | 29
-    | 30
-    | 31
-    | 32
-    | 33
-    | 34
-    | 35
-    | 36
-    | 37
-    | 38
-    | 39
-    | 40
-    | 41
-    | 42
-    | 43
-    | 44
-    | 45
-    | 46
-    | 47
-    | 48
-    | 49
-    | 50
-    | 51
-    | 52
-    | 53
-    | 54
-    | 55
-    | 56
-    | 57
-    | 58
-    | 59
-    | 60
-    | 61
-    | 62
-    | 63
-    | 64
-    | 65
-    | 66
-    | 67
-    | 68
-    | 69
-    | 70
-    | 71
-    | 72
-    | 73
-    | 74
-    | 75
-    | 76
-    | 77
-    | 78
-    | 79
-    | 80
-    | 81
-    | 82
-    | 83
-    | 84
-    | 85
-    | 86
-    | 87
-    | 88
-    | 89
-    | 90
-    | 91
-    | 92
-    | 93
-    | 94
-    | 95
-    | 96
-    | 97
-    | 98
-    | 99
-    | 100;
+    shock: number;
     strength: number;
-    sync:
-    | 0
-    | 1
-    | 2
-    | 3
-    | 4
-    | 5
-    | 6
-    | 7
-    | 8
-    | 9
-    | 10
-    | 11
-    | 12
-    | 13
-    | 14
-    | 15
-    | 16
-    | 17
-    | 18
-    | 19
-    | 20
-    | 21
-    | 22
-    | 23
-    | 24
-    | 25
-    | 26
-    | 27
-    | 28
-    | 29
-    | 30
-    | 31
-    | 32
-    | 33
-    | 34
-    | 35
-    | 36
-    | 37
-    | 38
-    | 39
-    | 40
-    | 41
-    | 42
-    | 43
-    | 44
-    | 45
-    | 46
-    | 47
-    | 48
-    | 49
-    | 50
-    | 51
-    | 52
-    | 53
-    | 54
-    | 55
-    | 56
-    | 57
-    | 58
-    | 59
-    | 60
-    | 61
-    | 62
-    | 63
-    | 64
-    | 65
-    | 66
-    | 67
-    | 68
-    | 69
-    | 70
-    | 71
-    | 72
-    | 73
-    | 74
-    | 75
-    | 76
-    | 77
-    | 78
-    | 79
-    | 80
-    | 81
-    | 82
-    | 83
-    | 84
-    | 85
-    | 86
-    | 87
-    | 88
-    | 89
-    | 90
-    | 91
-    | 92
-    | 93
-    | 94
-    | 95
-    | 96
-    | 97
-    | 98
-    | 99
-    | 100;
+    sync: number;
 }
 
-// @public (undocumented)
+// @public
 export interface SleeveTask {
     crime: Crime | "";
     factionWorkType: FactionWork | "";
@@ -1482,13 +1241,13 @@ export interface SourceFileLvl {
     n: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 }
 
-// @public (undocumented)
+// @public
 export type StockOrder = {
     /** Stock Symbol */
     [key in StockSymbol]?: StockOrderObject[];
 };
 
-// @public (undocumented)
+// @public
 export interface StockOrderObject {
     position: "S" | "L";
     price: number;
@@ -1496,7 +1255,7 @@ export interface StockOrderObject {
     type: "Limit Buy Order" | "Limit Sell Order" | "Stop Buy Order" | "Stop Buy Order";
 }
 
-// @public (undocumented)
+// @public
 export type StockSymbol =
 | "ECP"
 | "MGCP"
@@ -1532,11 +1291,11 @@ export type StockSymbol =
 | "MDYN"
 | "TITN";
 
-// @public (undocumented)
+// @public
 export interface TIX {
     buy(sym: StockSymbol, shares: number): number;
 
-    cancelOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPos): void;
+    cancelOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPosition): void;
 
     getAskPrice(sym: StockSymbol): number;
 
@@ -1552,15 +1311,15 @@ export interface TIX {
 
     getPrice(sym: StockSymbol): number;
 
-    getPurchaseCost(sym: StockSymbol, shares: number, posType: OrderPos): number;
+    getPurchaseCost(sym: StockSymbol, shares: number, posType: OrderPosition): number;
 
-    getSaleGain(sym: StockSymbol, shares: number, posType: OrderPos): number;
+    getSaleGain(sym: StockSymbol, shares: number, posType: OrderPosition): number;
 
     getSymbols(): StockSymbol[];
 
     getVolatility(sym: StockSymbol): number;
 
-    placeOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPos): boolean;
+    placeOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPosition): boolean;
 
     purchase4SMarketData(): boolean;
 
@@ -1573,10 +1332,10 @@ export interface TIX {
     short(sym: StockSymbol, shares: number): number;
 }
 
-// @public (undocumented)
+// @public
 export type University = "Summit University" | "Rothman University" | "ZB Institute Of Technology";
 
-// @public (undocumented)
+// @public
 export type UniversityCourse =
 | "Study Computer Science"
 | "Data Strucures"

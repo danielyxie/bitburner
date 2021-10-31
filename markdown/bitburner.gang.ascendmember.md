@@ -28,5 +28,5 @@ Object with info about the ascension results.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

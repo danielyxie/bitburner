@@ -21,5 +21,5 @@ Names of all Equpiment/Augmentations.
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 

@@ -19,12 +19,12 @@ Object containing the Player’s hacknet related multipliers.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 
 ## Example
 
 
-```js
+```ts
 //Example of how this can be used:
 mults = getHacknetMultipliers();
 print(mults.production);

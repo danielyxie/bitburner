@@ -75,13 +75,13 @@ import { INetscriptGang, NetscriptGang } from "./NetscriptFunctions/Gang";
 import { INetscriptSleeve, NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { INetscriptExtra, NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { INetscriptHacknet, NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
-import { Bladeburner as INetscriptBladeburner } from "./ScriptEditor/NetscriptDefinitions";
+import { Bladeburner as INetscriptBladeburner, TIX } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
 import { INetscriptCodingContract, NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
 import { INetscriptCorporation, NetscriptCorporation } from "./NetscriptFunctions/Corporation";
 import { INetscriptFormulas, NetscriptFormulas } from "./NetscriptFunctions/Formulas";
 import { INetscriptAugmentations, NetscriptAugmentations } from "./NetscriptFunctions/Augmentations";
-import { INetscriptStockMarket, NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
+import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
 
 import { toNative } from "./NetscriptFunctions/toNative";
 
@@ -99,7 +99,7 @@ interface NS extends INetscriptExtra, INetscriptAugmentations {
   codingcontract: INetscriptCodingContract;
   corporation: INetscriptCorporation;
   formulas: INetscriptFormulas;
-  stock: INetscriptStockMarket;
+  stock: TIX;
 }
 
 function NetscriptFunctions(workerScript: WorkerScript): NS {

@@ -11,14 +11,14 @@ Because this function immediately terminates the script, it does not have a retu
 <b>Signature:</b>
 
 ```typescript
-spawn(script: Script, numThreads?: number, ...args: string[]): void;
+spawn(script: string, numThreads?: number, ...args: string[]): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | [Script](./bitburner.script.md) | Filename of script to execute. |
+|  script | string | Filename of script to execute. |
 |  numThreads | number | Number of threads to spawn new script with. Will be rounded to nearest integer. |
 |  args | string\[\] | Additional arguments to pass into the new script that is being run. |
 
@@ -28,12 +28,12 @@ void
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 
 ## Example
 
 
-```js
+```ts
 //The following example will execute the script ‘foo.script’ with 10 threads and the arguments ‘foodnstuff’ and 90:
 spawn('foo.script', 10, 'foodnstuff', 90);
 ```

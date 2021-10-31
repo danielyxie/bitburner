@@ -4,6 +4,7 @@
 
 ## BladeburnerCurAction interface
 
+Bladeburner current action.
 
 <b>Signature:</b>
 

@@ -9,15 +9,15 @@ Returns the amount of RAM required to run the specified script on the target ser
 <b>Signature:</b>
 
 ```typescript
-getScriptRam(script: Script, host?: Host): number;
+getScriptRam(script: string, host?: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | [Script](./bitburner.script.md) | Filename of script. This is case-sensitive. |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server. |
+|  script | string | Filename of script. This is case-sensitive. |
+|  host | string | Host or IP of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server. |
 
 <b>Returns:</b>
 
@@ -27,5 +27,5 @@ Amount of RAM required to run the specified script on the target server, and 0 i
 
 ## Remarks
 
-0.1 GB
+RAM cost: 0.1 GB
 

@@ -13,15 +13,15 @@ Otherwise, the fn, hostname/ip, and args… arguments can be used to get the log
 <b>Signature:</b>
 
 ```typescript
-tail(fn?: Script, host?: Host, ...args: any[]): void;
+tail(fn?: string, host?: string, ...args: any[]): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  fn | [Script](./bitburner.script.md) | Optional. Filename of the script being tailed. If omitted, the current script is tailed. |
-|  host | [Host](./bitburner.host.md) | Optional. Hostname or IP of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional. |
+|  fn | string | Optional. Filename of the script being tailed. If omitted, the current script is tailed. |
+|  host | string | Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional. |
 |  args | any\[\] | Arguments for the script being tailed. |
 
 <b>Returns:</b>
@@ -30,12 +30,12 @@ void
 
 ## Remarks
 
-0 GB
+RAM cost: 0 GB
 
 ## Example 1
 
 
-```js
+```ts
 //Open logs from foo.script on the current server that was run with no args
 tail("foo.script");
 ```
@@ -43,7 +43,7 @@ tail("foo.script");
 ## Example 2
 
 
-```js
+```ts
 //Get logs from foo.script on the foodnstuff server that was run with no args
 tail("foo.script", "foodnstuff");
 ```
@@ -51,7 +51,7 @@ tail("foo.script", "foodnstuff");
 ## Example 3
 
 
-```js
+```ts
 //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
 tail("foo.script", "foodnstuff", 1, "test");
 ```

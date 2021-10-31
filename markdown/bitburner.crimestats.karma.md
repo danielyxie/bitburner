@@ -4,7 +4,7 @@
 
 ## CrimeStats.karma property
 
-Amount of karma lost for SUCCESSFULLY committing this crime
+Amount of karma lost for successfully committing this crime
 
 <b>Signature:</b>
 

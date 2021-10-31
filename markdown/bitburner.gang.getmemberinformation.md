@@ -28,5 +28,5 @@ Object containing stat and equipment-related information about a Gang Member.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

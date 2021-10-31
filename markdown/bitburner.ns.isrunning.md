@@ -9,15 +9,15 @@ Returns a boolean indicating whether the specified script is running on the targ
 <b>Signature:</b>
 
 ```typescript
-isRunning(script: Script, host: Host, ...args: string[]): boolean;
+isRunning(script: string, host: string, ...args: string[]): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | [Script](./bitburner.script.md) | Filename of script to check. This is case-sensitive. |
-|  host | [Host](./bitburner.host.md) | Host or IP of target server. |
+|  script | string | Filename of script to check. This is case-sensitive. |
+|  host | string | Host or IP of target server. |
 |  args | string\[\] | Arguments to specify/identify which scripts to search for. |
 
 <b>Returns:</b>
@@ -28,12 +28,12 @@ True if specified script is running on the target server, and false otherwise.
 
 ## Remarks
 
-0.1 GB
+RAM cost: 0.1 GB
 
 ## Example 1
 
 
-```js
+```ts
 //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:
 isRunning("foo.script", "foodnstuff");
 ```
@@ -41,7 +41,7 @@ isRunning("foo.script", "foodnstuff");
 ## Example 2
 
 
-```js
+```ts
 //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:
 isRunning("foo.script", getHostname());
 ```
@@ -49,7 +49,7 @@ isRunning("foo.script", getHostname());
 ## Example 3
 
 
-```js
+```ts
 //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:
 isRunning("foo.script", "joesguns", 1, 5, "test");
 ```

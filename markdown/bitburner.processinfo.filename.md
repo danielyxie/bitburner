@@ -9,5 +9,5 @@ Script name.
 <b>Signature:</b>
 
 ```typescript
-filename: Script;
+filename: string;
 ```

@@ -31,5 +31,5 @@ True if the Augmentation is successfully purchased, and false otherwise.
 
 ## Remarks
 
-5 GB  Level 3
+Singularity - Level 3
 

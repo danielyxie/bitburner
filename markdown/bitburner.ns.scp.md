@@ -9,7 +9,7 @@ Copies a script or literature (.lit) file(s) to another server. The files argume
 <b>Signature:</b>
 
 ```typescript
-scp(files: string | ReadonlyArray<string>, destination: Host): boolean;
+scp(files: string | ReadonlyArray<string>, destination: string): boolean;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ scp(files: string | ReadonlyArray<string>, destination: Host): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  files | string \| ReadonlyArray&lt;string&gt; | Filename or an array of filenames of script/literature files to copy. |
-|  destination | [Host](./bitburner.host.md) | Host or IP of the destination server, which is the server to which the file will be copied. |
+|  destination | string | Host or IP of the destination server, which is the server to which the file will be copied. |
 
 <b>Returns:</b>
 
@@ -27,12 +27,12 @@ True if the script/literature file is successfully copied over and false otherwi
 
 ## Remarks
 
-0.6 GB
+RAM cost: 0.6 GB
 
 ## Example
 
 
-```js
+```ts
 //Copies hack-template.script from the current server to foodnstuff:
 scp("hack-template.script", "foodnstuff");
 ```

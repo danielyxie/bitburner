@@ -19,5 +19,5 @@ Returns the maximum number of servers you can purchase.
 
 ## Remarks
 
-0.05 GB
+RAM cost: 0.05 GB
 

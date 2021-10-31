@@ -4,6 +4,8 @@
 
 ## Server.cpuCores property
 
+How many CPU cores this server has. Maximum of 8. Affects magnitude of grow and weaken.
+
 <b>Signature:</b>
 
 ```typescript

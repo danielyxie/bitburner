@@ -31,5 +31,5 @@ True if actions is successfully started, false otherwise.
 
 ## Remarks
 
-2 GB  Level 1
+Singularity - Level 1
 

@@ -34,5 +34,5 @@ Number of Bladeburner team members that were assigned to the specified action.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

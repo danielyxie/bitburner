@@ -21,5 +21,5 @@ Cost of upgrading the player’s home computer RAM.
 
 ## Remarks
 
-1.5 GB  Level 2
+Singularity - Level 2
 

@@ -30,5 +30,5 @@ true if the skill is successfully upgraded, and false otherwise.
 
 ## Remarks
 
-4 GB
+RAM cost: 4 GB
 

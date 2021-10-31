@@ -4,7 +4,7 @@
 
 ## GangMemberInfo.agilityEquipMult property
 
-Agility multiplier from equipment. Decimal form
+Agility multiplier from equipment.
 
 <b>Signature:</b>
 

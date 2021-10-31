@@ -4,6 +4,8 @@
 
 ## Server.smtpPortOpen property
 
+Flag indicating whether SMTP Port is open
+
 <b>Signature:</b>
 
 ```typescript

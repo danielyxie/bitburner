@@ -4,6 +4,8 @@
 
 ## CompanyName type
 
+All companies.
+
 <b>Signature:</b>
 
 ```typescript

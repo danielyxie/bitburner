@@ -29,5 +29,5 @@ True if the Gang Member was successfully assigned to the task, false otherwise.
 
 ## Remarks
 
-2 GB
+RAM cost: 2 GB
 

@@ -11,14 +11,14 @@ This returned value is in decimal form, not percentage.
 <b>Signature:</b>
 
 ```typescript
-hackChance(host: Host): number;
+hackChance(host: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | [Host](./bitburner.host.md) | Hostname or IP of the target server. |
+|  host | string | Hostname of the target server. |
 
 <b>Returns:</b>
 
@@ -28,5 +28,5 @@ The chance you have of successfully hacking the target server.
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 

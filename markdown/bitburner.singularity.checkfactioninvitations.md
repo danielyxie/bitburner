@@ -21,5 +21,5 @@ Array with the name of all Factions you currently have oustanding invitations fr
 
 ## Remarks
 
-3 GB  Level 2
+Singularity - Level 2
 

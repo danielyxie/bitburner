@@ -21,5 +21,5 @@ Object that represents the player’s current Bladeburner action.
 
 ## Remarks
 
-1 GB
+RAM cost: 1 GB
 
