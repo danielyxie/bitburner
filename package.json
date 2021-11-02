@@ -94,7 +94,7 @@
     "cy:dev": "start-server-and-test start:dev http://localhost:8000 cy:open",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "doc": "npx api-extractor run; cp temp/bitburner.api.json input/; cp temp/bitburner.api.md markdown/; npx api-documenter markdown;",
+    "doc": "npx api-extractor run && npx api-documenter markdown",
     "format": "prettier --write .",
     "start": "http-server -p 8000",
     "start:dev": "webpack-dev-server --progress --env.devServer --mode development",
