@@ -14,6 +14,7 @@ import { Engine } from "../engine";
 import { GameRoot } from "./GameRoot";
 
 import { CONSTANTS } from "../Constants";
+import { ActivateRecoveryMode } from "./React/RecoveryRoot";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,7 +40,14 @@ export function LoadingScreen(): React.ReactElement {
     async function doLoad(): Promise<void> {
       await load()
         .then((saveString) => {
-          Engine.load(saveString);
+          try {
+            Engine.load(saveString);
+          } catch (err: any) {
+            ActivateRecoveryMode();
+            setLoaded(true);
+            throw err;
+          }
+
           setLoaded(true);
         })
         .catch((reason) => {

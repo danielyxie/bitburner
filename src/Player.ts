@@ -4,7 +4,6 @@ import { sanitizeExploits } from "./Exploits/Exploit";
 
 import { Reviver } from "./utils/JSONReviver";
 import Decimal from "decimal.js";
-import { Programs } from "./Programs/Programs";
 
 export let Player = new PlayerObject();
 

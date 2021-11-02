@@ -34,6 +34,7 @@ export enum Page {
   BladeburnerCinematic,
   Location,
   Loading,
+  Recovery,
 }
 
 /**
