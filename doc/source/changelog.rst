@@ -4,7 +4,7 @@ Changelog
 =========
 
 v0.58.0 - 2021-10-27 Road to Steam (hydroflame & community)
--------------------------------------------
+-----------------------------------------------------------
 
 ** Announcement **
 
@@ -63,7 +63,7 @@ v0.58.0 - 2021-10-27 Road to Steam (hydroflame & community)
 * nerf noodle bar
 
 v0.57.0 - 2021-10-16 It was too cheap! (hydroflame & community)
--------------------------------------------
+---------------------------------------------------------------
 
 ** BREAKING (kindof) **
 
@@ -114,7 +114,7 @@ v0.57.0 - 2021-10-16 It was too cheap! (hydroflame & community)
 * nerf noodle bar
 
 v0.56.0 - 2021-10-11 Trimming the backlog (hydroflame & community)
--------------------------------------------
+------------------------------------------------------------------
 
 ** BREAKING **
 
@@ -217,7 +217,7 @@ v0.56.0 - 2021-10-11 Trimming the backlog (hydroflame & community)
 * nerf noodle bar
 
 v0.55.0 - 2021-09-20 Material UI (hydroflame & community)
--------------------------------------------
+---------------------------------------------------------
 
 ** Global ** 
 
@@ -239,7 +239,7 @@ v0.55.0 - 2021-09-20 Material UI (hydroflame & community)
 * nerf noodle bar
 
 v0.54.0 - 2021-09-20 One big react node (hydroflame & community)
--------------------------------------------
+----------------------------------------------------------------
 
 ** UI **
 
@@ -283,7 +283,7 @@ v0.54.0 - 2021-09-20 One big react node (hydroflame & community)
 * nerf noodle bar
 
 v0.53.0 - 2021-09-09 Way too many things. (hydroflame & community)
--------------------------------------------
+------------------------------------------------------------------
 
 ** Dev? **
 
@@ -362,7 +362,7 @@ v0.53.0 - 2021-09-09 Way too many things. (hydroflame & community)
 * nerf noodle bar
 
 v0.52.9 - 2021-08-27 Less lag! (hydroflame & community)
--------------------------------------------
+-------------------------------------------------------
 
 ** Active Scripts page **
 
@@ -393,7 +393,7 @@ v0.52.9 - 2021-08-27 Less lag! (hydroflame & community)
 * nerf noodle bar
 
 v0.52.8 - 2021-08-23 Fixing the previous patch tbh ROUND 2 (hydroflame)
--------------------------------------------
+-----------------------------------------------------------------------
 
 ** Script editor **
 
@@ -413,7 +413,7 @@ v0.52.8 - 2021-08-23 Fixing the previous patch tbh ROUND 2 (hydroflame)
 * nerf noodle bar
 
 v0.52.7 - 2021-08-21 Fixing the previous patch tbh (hydroflame)
--------------------------------------------
+---------------------------------------------------------------
 
 ** Netscript ** 
 
@@ -441,7 +441,7 @@ v0.52.7 - 2021-08-21 Fixing the previous patch tbh (hydroflame)
 * nerf noodle bar
 
 v0.52.6 - 2021-08-21 Logboxes and VS-code (hydroflame)
--------------------------------------------
+------------------------------------------------------
 
 ** Text Editor **
 
@@ -463,7 +463,7 @@ v0.52.6 - 2021-08-21 Logboxes and VS-code (hydroflame)
 * nerf noodle bar
 
 v0.52.5 - 2021-08-19 CPU cores are useful!? (hydroflame)
--------------------------------------------
+--------------------------------------------------------
 
 ** Terminal ** 
 
@@ -489,7 +489,7 @@ v0.52.5 - 2021-08-19 CPU cores are useful!? (hydroflame)
 * nerf noodle bar
 
 v0.52.4 - 2021-08-19 Bladeburner in React (hydroflame)
--------------------------------------------
+------------------------------------------------------
 
 ** Bladeburner **
 
@@ -511,7 +511,7 @@ v0.52.4 - 2021-08-19 Bladeburner in React (hydroflame)
 * nerf noodle bar
 
 v0.52.3 - 2021-08-15 Gangs were OP (hydroflame)
--------------------------------------------
+-----------------------------------------------
 
 ** Gang **
 
@@ -534,7 +534,7 @@ v0.52.3 - 2021-08-15 Gangs were OP (hydroflame)
 * nerf noodle bar
 
 v0.52.2 - 2021-08-15 Oh yeah, BN11 is a thing (drunk hydroflame tbh)
--------------------------------------------
+--------------------------------------------------------------------
 
 ** Source-Files **
 
@@ -552,19 +552,17 @@ v0.52.2 - 2021-08-15 Oh yeah, BN11 is a thing (drunk hydroflame tbh)
 * nerf noodle bar
 
 v0.52.1 - 2021-08-10 bugfixing (hydroflame & community)
--------------------------------------------
+-------------------------------------------------------
 
-**Misc.**
+** Misc. **
 
 * Fix game crash/corruption when quitting a job while working for it unfocused.
 * Fix typo in corporation Market Data.
 * Fix typo in docs for hackPercent.
 * The tutorial encourages the players to connect to home before creating `n00dles.script`
-* The dark web `buy` command now accepts `-1` (one) and `--list` instead of just
- `-l`. Helps some confused players.
+* The dark web `buy` command now accepts `-1` (one) and `--list` instead of just `-l`. Helps some confused players.
 * Character overview screen no longer hidden on the corporation screen.
-* Infiltration difficulty display is now more explicit (It's a big arrow instead
- of just one word.)
+* Infiltration difficulty display is now more explicit (It's a big arrow instead of just one word.)
 * Fix wrong ram value in tutorial. (@MageKing17)
 * Plenty of augmentation description cleanup (@Kwazygloo)
 * Plenty of typo/description fixed (@MageKing17)
@@ -667,7 +665,7 @@ v0.51.10 - 2021-05-31 Focus Mark, Focus! (hydroflame)
 * nerf noodle bar
 
 v0.51.9 - 2021-05-17 offline progress and exports! (hydroflame & community)
----------------------------------------------------------------
+---------------------------------------------------------------------------
 
 **Alias**
 
@@ -722,7 +720,7 @@ v0.51.9 - 2021-05-17 offline progress and exports! (hydroflame & community)
 
 
 v0.51.8 - 2021-05-07 It was there all along (hydroflame & community)
---------------------------------------------------------
+--------------------------------------------------------------------
 
 **Servers**
 
@@ -779,7 +777,7 @@ v0.51.8 - 2021-05-07 It was there all along (hydroflame & community)
 * nerf noodle bar
 
 v0.51.7 - 2021-04-28 n00dles (hydroflame & community)
------------------------------------------
+-----------------------------------------------------
 
 **Tutorial servers**
 
@@ -838,7 +836,7 @@ v0.51.7 - 2021-04-28 n00dles (hydroflame & community)
 
 
 v0.51.6 - 2021-04-28 Backdoor! (hydroflame & community)
-------------------------------------------
+-------------------------------------------------------
 
 **Backdoor**
 
