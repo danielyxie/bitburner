@@ -93,6 +93,9 @@ This includes information such as function signatures, what they do, and their r
     wget() <basicfunctions/wget>
     getFavorToDonate() <basicfunctions/getFavorToDonate>
     flags() <basicfunctions/flags>
+    alert() <basicfunctions/alert>
+    toast() <basicfunctions/toast>
+    tprintf() <basicfunctions/tprintf>
 
 .. toctree::
     :caption: Deprecated:
