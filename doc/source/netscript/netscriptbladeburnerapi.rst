@@ -54,7 +54,7 @@ In :ref:`netscriptjs`::
     getTeamSize() <bladeburnerapi/getTeamSize>
     setTeamSize() <bladeburnerapi/setTeamSize>
     getCityEstimatedPopulation() <bladeburnerapi/getCityEstimatedPopulation>
-    getCityEstimatedCommunities() <bladeburnerapi/getCityEstimatedCommunities>
+    getCityCommunities() <bladeburnerapi/getCityCommunities>
     getCityChaos() <bladeburnerapi/getCityChaos>
     getCity() <bladeburnerapi/getCity>
     switchCity() <bladeburnerapi/switchCity>

@@ -16,10 +16,5 @@ export const DarkWebItems: IMap<DarkWebItem> = {
   DeepscanV1: new DarkWebItem(Programs.DeepscanV1.name, 500000, "Enables 'scan-analyze' with a depth up to 5."),
   DeepscanV2: new DarkWebItem(Programs.DeepscanV2.name, 25e6, "Enables 'scan-analyze' with a depth up to 10."),
   AutolinkProgram: new DarkWebItem(Programs.AutoLink.name, 1e6, "Enables direct connect via 'scan-analyze."),
-  ServerProfilerProgram: new DarkWebItem(
-    Programs.ServerProfiler.name,
-    1e6,
-    "Displays hacking and Netscript-related information about a server.",
-  ),
   FormulasProgram: new DarkWebItem(Programs.Formulas.name, 5e9, "Unlock access to the formulas API."),
 };
