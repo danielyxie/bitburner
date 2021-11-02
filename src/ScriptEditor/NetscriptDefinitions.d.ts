@@ -3507,6 +3507,9 @@ export interface NS extends Singularity {
   readonly args: (string | number)[];
 
   /**
+   * Steal a servers money.
+   * @remarks
+   * RAM cost: 0.1 GB
    * Function that is used to try and hack servers to steal money and gain hacking experience.
    * The runtime for this command depends on your hacking level and the target server’s
    * security level. In order to hack a server you must first gain root access to that server
@@ -3521,10 +3524,8 @@ export interface NS extends Singularity {
    * @example
    * ```ts
    * hack("foodnstuff");
-   * hack("10.1.2.3");
    * hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
    * ```
-   * @remarks RAM cost: 0.1 GB
    * @param host - Hostname of the target server to hack.
    * @param opts - Optional parameters for configuring function behavior.
    * @returns The amount of money stolen if the hack is successful, and zero otherwise.
@@ -3532,6 +3533,9 @@ export interface NS extends Singularity {
   hack(host: string, opts?: BasicHGWOptions): Promise<number>;
 
   /**
+   * Spoof money in a servers bank account, increasing the amount available.
+   * @remarks
+   * RAM cost: 0.15 GB
    * Use your hacking skills to increase the amount of money available on a server.
    * The runtime for this command depends on your hacking level and the target server’s
    * security level. When `grow` completes, the money available on a target server will
@@ -3549,7 +3553,6 @@ export interface NS extends Singularity {
    * grow("foodnstuff");
    * grow("foodnstuff", { threads: 5 }); // Only use 5 threads to grow
    * ```
-   * @remarks RAM cost: 0.15 GB
    * @param host - Hostname of the target server to grow.
    * @param opts - Optional parameters for configuring function behavior.
    * @returns The number by which the money on the server was multiplied for the growth.
@@ -3557,6 +3560,9 @@ export interface NS extends Singularity {
   grow(host: string, opts?: BasicHGWOptions): Promise<number>;
 
   /**
+   * Reduce a server security level.
+   * @remarks
+   * RAM cost: 0.15 GB
    * Use your hacking skills to attack a server’s security, lowering the server’s security level.
    * The runtime for this command depends on your hacking level and the target server’s security
    * level. This function lowers the security level of the target server by 0.05.
@@ -3570,7 +3576,6 @@ export interface NS extends Singularity {
    * weaken("foodnstuff");
    * weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
    * ```
-   * @remarks RAM cost: 0.15 GB
    * @param host - Hostname of the target server to weaken.
    * @param opts - Optional parameters for configuring function behavior.
    * @returns The amount by which the target server’s security level was decreased. This is equivalent to 0.05 multiplied by the number of script threads.
@@ -3578,9 +3583,11 @@ export interface NS extends Singularity {
   weaken(host: string, opts?: BasicHGWOptions): Promise<number>;
 
   /**
+   * Predict the effect of weaken.
+   * @remarks
+   * RAM cost: 1 GB
    * Returns the security decrease that would occur if a weaken with this many threads happened.
    *
-   * @remarks RAM cost: 1 GB
    * @param threads - Amount of threads that will be used.
    * @param cores - Optional. The number of cores of the server that would run weaken.
    * @returns The security decrease.
@@ -3588,6 +3595,9 @@ export interface NS extends Singularity {
   weakenAnalyze(threads: number, cores?: number): number;
 
   /**
+   * Predict the effect of hack.
+   * @remarks
+   * RAM cost: 1 GB
    * This function returns the number of script threads you need when running the hack command
    * to steal the specified amount of money from the target server.
    * If hackAmount is less than zero or greater than the amount of money available on the server,
@@ -3601,7 +3611,6 @@ export interface NS extends Singularity {
    * hackAnalyzeThreads("foodnstuff", 1e6);
    * //If this function returns 50, this means that if your next hack call is run on a script with 50 threads, it will steal $1m from the foodnstuff server.
    * ```
-   * @remarks RAM cost: 1 GB
    * @param host - Hostname of the target server to analyze.
    * @param hackAmount - Amount of money you want to hack from the server.
    * @returns The number of threads needed to hack the server for hackAmount money.
