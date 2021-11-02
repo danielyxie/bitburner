@@ -289,6 +289,5 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     Object.assign(Settings.theme, save.theme);
     delete save.theme;
     Object.assign(Settings, save);
-    console.log(Settings);
   },
 };
