@@ -8,6 +8,15 @@ const changes: [RegExp, string][] = [
   [/ns.bladeburner.getActionTime/g, "((...a)=>ns.bladeburner.getActionTime(...a)/1000)"],
   [/ns.hackAnalyzePercent/g, "((...a)=>ns.hackAnalyze(...a)*100)"],
   [/ns.hackChance/g, "ns.hackAnalyzeChance"],
+  [/formulas.basic.calculateSkill/g, "formulas.skills.calculateSkill"],
+  [/formulas.basic.calculateExp/g, "formulas.skills.calculateExp"],
+  [/formulas.basic.hackChance/g, "formulas.hacking.hackChance"],
+  [/formulas.basic.hackExp/g, "formulas.hacking.hackExp"],
+  [/formulas.basic.hackPercent/g, "formulas.hacking.hackPercent"],
+  [/formulas.basic.growPercent/g, "formulas.hacking.growPercent"],
+  [/formulas.basic.hackTime/g, "formulas.hacking.hackTime"],
+  [/formulas.basic.growTime/g, "formulas.hacking.growTime"],
+  [/formulas.basic.weakenTime/g, "formulas.hacking.weakenTime"],
 ];
 function hasChanges(code: string): boolean {
   for (const change of changes) {

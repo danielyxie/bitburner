@@ -3,7 +3,7 @@ v1.0.0 Migration Guide
 
 In v1.0.0 a few API have been broken.
 
-migrated: 
+migrated (only for ns2): 
 
 * bladeburner.getActionTime will return milliseconds instead of seconds.
 * getHackTime will return milliseconds instead of seconds.
@@ -12,6 +12,7 @@ migrated:
 * hackAnalyzePercent renamed to hackAnalyze
 * hackAnalyzePercent will return decimal instead of percentage
 * hackChance (not formulas.basic.hackChance) renamed to hackAnalyzeChance
+* formulas.basic is split into formulas.skills and formulas.hacking
 
 not migrated (require manual changes sometimes):
 

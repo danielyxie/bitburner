@@ -30,9 +30,11 @@ import {
 import { Programs } from "../Programs/Programs";
 
 export interface INetscriptFormulas {
-  basic: {
+  skills: {
     calculateSkill(exp: any, mult?: any): any;
     calculateExp(skill: any, mult?: any): any;
+  };
+  hacking: {
     hackChance(server: any, player: any): any;
     hackExp(server: any, player: any): any;
     hackPercent(server: any, player: any): any;
@@ -72,7 +74,7 @@ export function NetscriptFormulas(
     }
   };
   return {
-    basic: {
+    skills: {
       calculateSkill: function (exp: any, mult: any = 1): any {
         checkFormulasAccess("basic.calculateSkill");
         return calculateSkill(exp, mult);
@@ -81,6 +83,8 @@ export function NetscriptFormulas(
         checkFormulasAccess("basic.calculateExp");
         return calculateExp(skill, mult);
       },
+    },
+    hacking: {
       hackChance: function (server: any, player: any): any {
         checkFormulasAccess("basic.hackChance");
         return calculateHackingChance(server, player);
