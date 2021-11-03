@@ -73,6 +73,7 @@ import { InvitationModal } from "../Faction/ui/InvitationModal";
 
 import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
+import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
 
 const htmlLocation = location;
 
@@ -183,6 +184,7 @@ export let Router: IRouter = {
 };
 
 function determineStartPage(player: IPlayer): Page {
+  if (RecoveryMode) return Page.Recovery;
   if (player.isWorking) return Page.Work;
   return Page.Terminal;
 }
@@ -295,7 +297,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
             <InteractiveTutorialRoot />
           )}
         </Overview>
-        {page === Page.BitVerse ? (
+        {page === Page.Recovery ? (
+          <RecoveryRoot router={Router} />
+        ) : page === Page.BitVerse ? (
           <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />
         ) : page === Page.Infiltration ? (
           <InfiltrationRoot location={location} />

@@ -259,12 +259,14 @@ export function Root(props: IProps): React.ReactElement {
   function updateCode(newCode?: string): void {
     if (newCode === undefined) return;
     lastCode = newCode;
-    if (editorRef.current !== null) {
-      lastPosition = editorRef.current.getPosition();
-      infLoop(newCode);
-    }
     setCode(newCode);
     updateRAM(newCode);
+    try {
+      if (editorRef.current !== null) {
+        lastPosition = editorRef.current.getPosition();
+        infLoop(newCode);
+      }
+    } catch (err) {}
   }
 
   // calculate it once the first time the file is loaded.
