@@ -22,6 +22,7 @@ import { use } from "../../ui/Context";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { SnackbarEvents } from "../../ui/React/Snackbar";
+import { N00dles } from "../../utils/helpers/N00dles";
 
 type IProps = {
   loc: Location;
@@ -77,6 +78,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   function renderNoodleBar(): React.ReactElement {
     function EatNoodles(): void {
       SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", "success");
+      N00dles();
     }
 
     return <Button onClick={EatNoodles}>Eat noodles</Button>;
