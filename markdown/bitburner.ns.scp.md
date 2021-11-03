@@ -4,7 +4,7 @@
 
 ## NS.scp() method
 
-Copies a script or literature (.lit) file(s) to another server. The files argument can be either a string specifying a single file to copy, or an array of strings specifying multiple files to copy.
+Copy file between servers.
 
 <b>Signature:</b>
 
@@ -28,6 +28,8 @@ True if the script/literature file is successfully copied over and false otherwi
 ## Remarks
 
 RAM cost: 0.6 GB
+
+Copies a script or literature (.lit) file(s) to another server. The files argument can be either a string specifying a single file to copy, or an array of strings specifying multiple files to copy.
 
 ## Example
 

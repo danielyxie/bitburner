@@ -27,5 +27,7 @@ The security decrease.
 
 ## Remarks
 
-RAM cost: 1 GB Returns the security decrease that would occur if a weaken with this many threads happened.
+RAM cost: 1 GB
+
+Returns the security decrease that would occur if a weaken with this many threads happened.
 

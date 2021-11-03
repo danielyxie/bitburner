@@ -9,7 +9,7 @@ Object representing a sleeve stats.
 <b>Signature:</b>
 
 ```typescript
-interface SleeveSkills 
+export interface SleeveSkills 
 ```
 
 ## Properties

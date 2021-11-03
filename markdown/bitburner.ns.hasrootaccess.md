@@ -4,7 +4,7 @@
 
 ## NS.hasRootAccess() method
 
-Returns a boolean indicating whether or not the player has root access to the specified target server.
+Check if your have root access on a server.
 
 <b>Signature:</b>
 
@@ -27,6 +27,8 @@ True if player has root access to the specified target server, and false otherwi
 ## Remarks
 
 RAM cost: 0.05 GB
+
+Returns a boolean indicating whether or not the player has root access to the specified target server.
 
 ## Example
 

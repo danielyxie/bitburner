@@ -9,7 +9,7 @@ Hacknet API
 <b>Signature:</b>
 
 ```typescript
-interface Hacknet 
+export interface Hacknet 
 ```
 
 ## Remarks

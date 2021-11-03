@@ -9,7 +9,7 @@ Coding Contact API
 <b>Signature:</b>
 
 ```typescript
-interface CodingContract 
+export interface CodingContract 
 ```
 
 ## Methods

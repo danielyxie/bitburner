@@ -9,7 +9,7 @@ Sleeve API
 <b>Signature:</b>
 
 ```typescript
-interface Sleeve 
+export interface Sleeve 
 ```
 
 ## Remarks

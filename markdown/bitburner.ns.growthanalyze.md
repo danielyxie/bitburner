@@ -4,9 +4,7 @@
 
 ## NS.growthAnalyze() method
 
-This function returns the number of “growths” needed in order to increase the amount of money available on the specified server by the specified amount. The specified amount is multiplicative and is in decimal form, not percentage.
-
-Warning: The value returned by this function isn’t necessarily a whole number.
+Calculate the number of grow thread needed to grow a server by a certain multiplier.
 
 <b>Signature:</b>
 
@@ -30,6 +28,10 @@ The amount of grow calls needed to grow the specified server by the specified am
 ## Remarks
 
 RAM cost: 1 GB
+
+This function returns the number of “growths” needed in order to increase the amount of money available on the specified server by the specified amount. The specified amount is multiplicative and is in decimal form, not percentage.
+
+Warning: The value returned by this function isn’t necessarily a whole number.
 
 ## Example
 

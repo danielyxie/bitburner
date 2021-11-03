@@ -4,7 +4,7 @@
 
 ## NS.peek() method
 
-This function is used to peek at the data from a port. It returns the first element in the specified port without removing that element. If the port is empty, the string “NULL PORT DATA” will be returned.
+Get a copy of the data from a port without popping it.
 
 <b>Signature:</b>
 
@@ -27,4 +27,6 @@ Data in the specified port.
 ## Remarks
 
 RAM cost: 1 GB
+
+This function is used to peek at the data from a port. It returns the first element in the specified port without removing that element. If the port is empty, the string “NULL PORT DATA” will be returned.
 

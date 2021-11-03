@@ -16,7 +16,7 @@ getPurchasedServers(hostnameMode?: boolean): string[];
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  hostnameMode | boolean | \] Optional. Defaults to true. Returns hostnames if true, and IPs if false. |
+|  hostnameMode | boolean | Optional. Defaults to true. Returns hostnames if true, and IPs if false. |
 
 <b>Returns:</b>
 

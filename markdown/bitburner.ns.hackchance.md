@@ -4,9 +4,7 @@
 
 ## NS.hackChance() method
 
-Returns the chance you have of successfully hacking the specified server.
-
-This returned value is in decimal form, not percentage.
+Get the chance of successfully hacking a server.
 
 <b>Signature:</b>
 
@@ -29,4 +27,8 @@ The chance you have of successfully hacking the target server.
 ## Remarks
 
 RAM cost: 1 GB
+
+Returns the chance you have of successfully hacking the specified server.
+
+This returned value is in decimal form, not percentage.
 

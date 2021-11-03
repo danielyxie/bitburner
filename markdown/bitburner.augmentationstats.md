@@ -9,7 +9,7 @@ Data representing the internal values of an Augmentation.
 <b>Signature:</b>
 
 ```typescript
-interface AugmentationStats 
+export interface AugmentationStats 
 ```
 
 ## Properties

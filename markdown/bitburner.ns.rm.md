@@ -4,7 +4,7 @@
 
 ## NS.rm() method
 
-Removes the specified file from the current server. This function works for every file type except message (.msg) files.
+Delete a file.
 
 <b>Signature:</b>
 
@@ -28,4 +28,6 @@ True if it successfully deletes the file, and false otherwise.
 ## Remarks
 
 RAM cost: 1 GB
+
+Removes the specified file from the current server. This function works for every file type except message (.msg) files.
 

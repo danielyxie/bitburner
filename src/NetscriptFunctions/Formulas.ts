@@ -28,6 +28,7 @@ import {
   calculateWeakenTime,
 } from "../Hacking";
 import { Programs } from "../Programs/Programs";
+import { Formulas as IFormulas } from "../ScriptEditor/NetscriptDefinitions";
 
 export interface INetscriptFormulas {
   skills: {
@@ -63,11 +64,7 @@ export interface INetscriptFormulas {
   };
 }
 
-export function NetscriptFormulas(
-  player: IPlayer,
-  workerScript: WorkerScript,
-  helper: INetscriptHelper,
-): INetscriptFormulas {
+export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IFormulas {
   const checkFormulasAccess = function (func: string): void {
     if (!player.hasProgram(Programs.Formulas.name)) {
       throw helper.makeRuntimeErrorMsg(`formulas.${func}`, `Requires Formulas.exe to run.`);

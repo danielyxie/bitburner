@@ -4,7 +4,7 @@
 
 ## NS.getServerSecurityLevel() method
 
-Returns the security level of the target server. A server’s security level is denoted by a number, typically between 1 and 100 (but it can go above 100).
+Get server security level.
 
 <b>Signature:</b>
 
@@ -27,4 +27,6 @@ Security level of the target server.
 ## Remarks
 
 RAM cost: 0.1 GB
+
+Returns the security level of the target server. A server’s security level is denoted by a number, typically between 1 and 100 (but it can go above 100).
 

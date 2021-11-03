@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface CharacterInfo 
+export interface CharacterInfo 
 ```
 
 ## Properties

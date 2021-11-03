@@ -4,7 +4,7 @@
 
 ## NS.kill() method
 
-Kills the script with the specified PID. Killing a script by its PID will typically have better performance, especially if you have many scripts running. If this function successfully kills the specified script, then it will return true. Otherwise, it will return false.
+Terminate another script.
 
 <b>Signature:</b>
 
@@ -27,6 +27,8 @@ True if the script is successfully killed, and false otherwise.
 ## Remarks
 
 RAM cost: 0.5 GB
+
+Kills the script with the specified PID. Killing a script by its PID will typically have better performance, especially if you have many scripts running. If this function successfully kills the specified script, then it will return true. Otherwise, it will return false.
 
 ## Example
 

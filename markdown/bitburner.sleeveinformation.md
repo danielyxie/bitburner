@@ -9,7 +9,7 @@ Object representing sleeve information.
 <b>Signature:</b>
 
 ```typescript
-interface SleeveInformation 
+export interface SleeveInformation 
 ```
 
 ## Properties

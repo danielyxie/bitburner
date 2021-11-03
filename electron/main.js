@@ -5,7 +5,7 @@ function createWindow() {
   const win = new BrowserWindow({
     show: false,
     webPreferences: {
-      devTools: true,
+      // devTools: true,
     },
   });
 
@@ -13,7 +13,7 @@ function createWindow() {
   win.maximize();
   win.loadFile("index.html");
   win.show();
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
   globalShortcut.register("f5", function () {
     win.loadFile("index.html");
   });

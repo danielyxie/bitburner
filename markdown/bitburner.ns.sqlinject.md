@@ -4,7 +4,7 @@
 
 ## NS.sqlinject() method
 
-Runs the SQLInject.exe program on the target server. SQLInject.exe must exist on your home computer.
+Runs SQLInject.exe on a server.
 
 <b>Signature:</b>
 

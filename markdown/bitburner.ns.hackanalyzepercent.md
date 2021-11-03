@@ -4,7 +4,7 @@
 
 ## NS.hackAnalyzePercent() method
 
-Returns the percentage of the specified server’s money you will steal with a single hack. This value is returned in percentage form, not decimal (Netscript functions typically return in decimal form, but not this one).
+Get the percent of money stolen with a single thread.
 
 <b>Signature:</b>
 
@@ -27,6 +27,8 @@ The percentage of money you will steal from the target server with a single hack
 ## Remarks
 
 RAM cost: 1 GB
+
+Returns the percentage of the specified server’s money you will steal with a single hack. This value is returned in percentage form, not decimal (Netscript functions typically return in decimal form, but not this one).
 
 ## Example
 

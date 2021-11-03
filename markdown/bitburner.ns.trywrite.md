@@ -4,7 +4,7 @@
 
 ## NS.tryWrite() method
 
-Attempts to write data to the specified Netscript Port. If the port is full, the data will not be written. Otherwise, the data will be written normally.
+Attempt to write to a port.
 
 <b>Signature:</b>
 
@@ -28,4 +28,6 @@ True if the data is successfully written to the port, and false otherwise.
 ## Remarks
 
 RAM cost: 1 GB
+
+Attempts to write data to the specified Netscript Port. If the port is full, the data will not be written. Otherwise, the data will be written normally.
 

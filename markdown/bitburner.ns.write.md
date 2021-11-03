@@ -4,11 +4,7 @@
 
 ## NS.write() method
 
-This function can be used to either write data to a port or to a text file (.txt).
-
-If the first argument is a number between 1 and 20, then it specifies a port and this function will write data to that port. The third argument, mode, is not used when writing to a port.
-
-If the first argument is a string, then it specifies the name of a text file (.txt) and this function will write data to that text file. If the specified text file does not exist, then it will be created. The third argument mode, defines how the data will be written to the text file. If \*mode is set to “w”, then the data is written in “write” mode which means that it will overwrite all existing data on the text file. If mode is set to any other value then the data will be written in “append” mode which means that the data will be added at the end of the text file.
+Write data to a file.
 
 <b>Signature:</b>
 
@@ -31,4 +27,10 @@ void
 ## Remarks
 
 RAM cost: 1 GB
+
+This function can be used to either write data to a port or to a text file (.txt).
+
+If the first argument is a number between 1 and 20, then it specifies a port and this function will write data to that port. The third argument, mode, is not used when writing to a port.
+
+If the first argument is a string, then it specifies the name of a text file (.txt) and this function will write data to that text file. If the specified text file does not exist, then it will be created. The third argument mode, defines how the data will be written to the text file. If \*mode is set to “w”, then the data is written in “write” mode which means that it will overwrite all existing data on the text file. If mode is set to any other value then the data will be written in “append” mode which means that the data will be added at the end of the text file.
 

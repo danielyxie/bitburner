@@ -4,20 +4,13 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { getRamCost } from "../Netscript/RamCostGenerator";
 import { is2DArray } from "../utils/helpers/is2DArray";
 import { CodingContract } from "../CodingContracts";
-
-export interface INetscriptCodingContract {
-  attempt(answer: any, fn: any, ip?: any, options?: { returnReward: any }): any;
-  getContractType(fn: any, ip?: any): any;
-  getData(fn: any, ip?: any): any;
-  getDescription(fn: any, ip?: any): any;
-  getNumTriesRemaining(fn: any, ip?: any): any;
-}
+import { CodingContract as ICodingContract } from "../ScriptEditor/NetscriptDefinitions";
 
 export function NetscriptCodingContract(
   player: IPlayer,
   workerScript: WorkerScript,
   helper: INetscriptHelper,
-): INetscriptCodingContract {
+): ICodingContract {
   const getCodingContract = function (func: any, ip: any, fn: any): CodingContract {
     const server = helper.getServer(ip, func);
     const contract = server.getContract(fn);

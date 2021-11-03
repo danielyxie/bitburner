@@ -9,7 +9,7 @@ Object representing a sleeve current task.
 <b>Signature:</b>
 
 ```typescript
-interface SleeveTask 
+export interface SleeveTask 
 ```
 
 ## Properties

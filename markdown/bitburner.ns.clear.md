@@ -4,11 +4,7 @@
 
 ## NS.clear() method
 
-This function is used to clear data in a Netscript Ports or a text file.
-
-If the port/fn argument is a number between 1 and 20, then it specifies a port and will clear it (deleting all data from the underlying queue).
-
-If the port/fn argument is a string, then it specifies the name of a text file (.txt) and will delete all data from that text file.
+Clear data from a port.
 
 <b>Signature:</b>
 
@@ -28,5 +24,11 @@ void
 
 ## Remarks
 
-RAM cost: 1 GB
+RAM cost: 0 GB
+
+This function is used to clear data in a Netscript Ports or a text file.
+
+If the port/fn argument is a number between 1 and 20, then it specifies a port and will clear it (deleting all data from the underlying queue).
+
+If the port/fn argument is a string, then it specifies the name of a text file (.txt) and will delete all data from that text file.
 

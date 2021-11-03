@@ -4,7 +4,7 @@
 
 ## NS.ls() method
 
-Returns an array with the filenames of all files on the specified server (as strings). The returned array is sorted in alphabetic order.
+List files on a server.
 
 <b>Signature:</b>
 
@@ -28,4 +28,6 @@ Array with the filenames of all files on the specified server.
 ## Remarks
 
 RAM cost: 0.2 GB
+
+Returns an array with the filenames of all files on the specified server (as strings). The returned array is sorted in alphabetic order.
 

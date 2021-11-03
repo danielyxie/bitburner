@@ -109,6 +109,6 @@
     "test:watch": "jest --watch",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development",
-    "package-electron": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png"
+    "electron": "cp -r electron/* .package && cp index.html .package && cp main.bundle.js .package && cp dist/vendor.bundle.js .package && electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png"
   }
 }

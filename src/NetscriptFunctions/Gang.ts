@@ -9,30 +9,9 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
 
-export interface INetscriptGang {
-  createGang(faction: string): boolean;
-  inGang(): boolean;
-  getMemberNames(): string[];
-  getGangInformation(): any;
-  getOtherGangInformation(): any;
-  getMemberInformation(name: string): any;
-  canRecruitMember(): boolean;
-  recruitMember(name: string): boolean;
-  getTaskNames(): string[];
-  setMemberTask(memberName: string, taskName: string): boolean;
-  getTaskStats(taskName: string): any;
-  getEquipmentNames(): string[];
-  getEquipmentCost(equipName: string): number;
-  getEquipmentType(equipName: string): string;
-  getEquipmentStats(equipName: string): any;
-  purchaseEquipment(memberName: string, equipName: string): any;
-  ascendMember(name: string): any;
-  setTerritoryWarfare(engage: boolean): void;
-  getChanceToWinClash(otherGang: string): number;
-  getBonusTime(): number;
-}
+import { Gang as IGang } from "../ScriptEditor/NetscriptDefinitions";
 
-export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): INetscriptGang {
+export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IGang {
   const checkGangApiAccess = function (func: string): void {
     const gang = player.gang;
     if (gang === null) throw new Error("Must have joined gang");

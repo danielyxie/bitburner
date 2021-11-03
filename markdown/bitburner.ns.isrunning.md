@@ -4,7 +4,7 @@
 
 ## NS.isRunning() method
 
-Returns a boolean indicating whether the specified script is running on the target server. Remember that a script is uniquely identified by both its name and its arguments.
+Check if a script is running.
 
 <b>Signature:</b>
 
@@ -29,6 +29,8 @@ True if specified script is running on the target server, and false otherwise.
 ## Remarks
 
 RAM cost: 0.1 GB
+
+Returns a boolean indicating whether the specified script is running on the target server. Remember that a script is uniquely identified by both its name and its arguments.
 
 ## Example 1
 

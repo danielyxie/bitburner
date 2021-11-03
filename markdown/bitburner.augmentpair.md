@@ -9,7 +9,7 @@ Return value of [getSleevePurchasableAugs](./bitburner.sleeve.getsleevepurchasab
 <b>Signature:</b>
 
 ```typescript
-interface AugmentPair 
+export interface AugmentPair 
 ```
 
 ## Properties

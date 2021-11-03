@@ -18,34 +18,9 @@ import { HacknetServer } from "../Hacknet/HacknetServer";
 import { HacknetNode } from "../Hacknet/HacknetNode";
 import { GetServer } from "../Server/AllServers";
 
-export interface INetscriptHacknet {
-  numNodes(): number;
-  maxNumNodes(): number;
-  purchaseNode(): any;
-  getPurchaseNodeCost(): number;
-  getNodeStats(i: number): any;
-  upgradeLevel(i: number, n: number): boolean;
-  upgradeRam(i: number, n: number): boolean;
-  upgradeCore(i: number, n: number): boolean;
-  upgradeCache(i: number, n: number): boolean;
-  getLevelUpgradeCost(i: number, n: number): number;
-  getRamUpgradeCost(i: number, n: number): number;
-  getCoreUpgradeCost(i: number, n: number): number;
-  getCacheUpgradeCost(i: number, n: number): number;
-  numHashes(): number;
-  hashCapacity(): number;
-  hashCost(upgName: string): number;
-  spendHashes(upgName: string, upgTarget: string): any;
-  getHashUpgradeLevel(upgName: string): number;
-  getStudyMult(): number;
-  getTrainingMult(): number;
-}
+import { Hacknet as IHacknet } from "../ScriptEditor/NetscriptDefinitions";
 
-export function NetscriptHacknet(
-  player: IPlayer,
-  workerScript: WorkerScript,
-  helper: INetscriptHelper,
-): INetscriptHacknet {
+export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IHacknet {
   // Utility function to get Hacknet Node object
   const getHacknetNode = function (i: any, callingFn = ""): HacknetNode | HacknetServer {
     if (isNaN(i)) {

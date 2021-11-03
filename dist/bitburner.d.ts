@@ -902,6 +902,24 @@ export declare interface EquipmentStats {
  */
 export declare interface Gang {
     /**
+     * Create a gang.
+     * @remarks
+     * RAM cost: 1GB
+     *
+     * Create a gang with the specified faction.
+     * @returns True if the gang was created, false otherwise.
+     */
+    createGang(faction: string): boolean;
+
+    /**
+     * Check if you're in a gang.
+     * @remarks
+     * RAM cost: 1GB
+     * @returns True if you're in a gang, false otherwise.
+     */
+    inGang(): boolean;
+
+    /**
      * List all gang members.
      * @remarks
      * RAM cost: 1 GB
@@ -1642,14 +1660,17 @@ export declare interface NS extends Singularity {
     /**
      *
      * Namespace for stock related functions.
-     * @remarks RAM cost: 0 GB
+     * @remarks
+     * RAM cost: 0 GB
      */
     readonly stock: TIX;
 
     /**
      * Arguments passed into the script.
      *
-     * @remarks RAM cost: 0 GB
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Arguments passed into a script can be accessed using a normal
      * array using the [] operator (args[0], args[1], etc…).
      *
@@ -1662,6 +1683,7 @@ export declare interface NS extends Singularity {
      * Steal a servers money.
      * @remarks
      * RAM cost: 0.1 GB
+     *
      * Function that is used to try and hack servers to steal money and gain hacking experience.
      * The runtime for this command depends on your hacking level and the target server’s
      * security level. In order to hack a server you must first gain root access to that server
@@ -1688,6 +1710,7 @@ export declare interface NS extends Singularity {
      * Spoof money in a servers bank account, increasing the amount available.
      * @remarks
      * RAM cost: 0.15 GB
+     *
      * Use your hacking skills to increase the amount of money available on a server.
      * The runtime for this command depends on your hacking level and the target server’s
      * security level. When `grow` completes, the money available on a target server will
@@ -1715,6 +1738,7 @@ export declare interface NS extends Singularity {
      * Reduce a server security level.
      * @remarks
      * RAM cost: 0.15 GB
+     *
      * Use your hacking skills to attack a server’s security, lowering the server’s security level.
      * The runtime for this command depends on your hacking level and the target server’s security
      * level. This function lowers the security level of the target server by 0.05.
@@ -1738,6 +1762,7 @@ export declare interface NS extends Singularity {
      * Predict the effect of weaken.
      * @remarks
      * RAM cost: 1 GB
+     *
      * Returns the security decrease that would occur if a weaken with this many threads happened.
      *
      * @param threads - Amount of threads that will be used.
@@ -1750,6 +1775,7 @@ export declare interface NS extends Singularity {
      * Predict the effect of hack.
      * @remarks
      * RAM cost: 1 GB
+     *
      * This function returns the number of script threads you need when running the hack command
      * to steal the specified amount of money from the target server.
      * If hackAmount is less than zero or greater than the amount of money available on the server,
@@ -1770,6 +1796,10 @@ export declare interface NS extends Singularity {
     hackAnalyzeThreads(host: string, hackAmount: number): number;
 
     /**
+     * Get the percent of money stolen with a single thread.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * Returns the percentage of the specified server’s money you will steal with a single hack.
      * This value is returned in percentage form, not decimal
      * (Netscript functions typically return in decimal form, but not this one).
@@ -1780,33 +1810,42 @@ export declare interface NS extends Singularity {
      * hackAnalyzePercent("foodnstuff");
      * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N% of its total money.
      * ```
-     * @remarks RAM cost: 1 GB
      * @param host - Hostname of the target server.
      * @returns The percentage of money you will steal from the target server with a single hack.
      */
     hackAnalyzePercent(host: string): number;
 
     /**
+     * Get the security increase for a number of thread.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * Returns the security increase that would occur if a hack with this many threads happened.
      *
-     * @remarks RAM cost: 1 GB
      * @param threads - Amount of threads that will be used.
      * @returns The security increase.
      */
     hackAnalyzeSecurity(threads: number): number;
 
     /**
+     * Get the chance of successfully hacking a server.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * Returns the chance you have of successfully hacking the specified server.
      *
      * This returned value is in decimal form, not percentage.
      *
-     * @remarks RAM cost: 1 GB
      * @param host - Hostname of the target server.
      * @returns The chance you have of successfully hacking the target server.
      */
     hackChance(host: string): number;
 
     /**
+     * Calculate the number of grow thread needed to grow a server by a certain multiplier.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * This function returns the number of “growths” needed in order to increase
      * the amount of money available on the specified server by the specified amount.
      * The specified amount is multiplicative and is in decimal form, not percentage.
@@ -1819,7 +1858,6 @@ export declare interface NS extends Singularity {
      * growthAnalyze("foodnstuff", 2);
      * //If this returns 100, then this means you need to call grow 100 times in order to double the money (or once with 100 threads).
      * ```
-     * @remarks RAM cost: 1 GB
      * @param host - Hostname of the target server.
      * @param growthAmount - Multiplicative factor by which the server is grown. Decimal form..
      * @returns The amount of grow calls needed to grow the specified server by the specified amount
@@ -1827,9 +1865,12 @@ export declare interface NS extends Singularity {
     growthAnalyze(host: string, growthAmount: number): number;
 
     /**
+     * Calculate the security increase for a number of thread.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * Returns the security increase that would occur if a grow with this many threads happened.
      *
-     * @remarks RAM cost: 1 GB
      * @param threads - Amount of threads that will be used.
      * @returns The security increase.
      */
@@ -1837,8 +1878,9 @@ export declare interface NS extends Singularity {
 
     /**
      * Suspends the script for n milliseconds.
+     * @remarks
+     * RAM cost: 0 GB
      *
-     * @remarks RAM cost: 0 GB
      * @param millis - Number of milliseconds to sleep.
      * @returns
      */
@@ -1846,24 +1888,26 @@ export declare interface NS extends Singularity {
 
     /**
      * Prints a value or a variable to the script’s logs.
+     * @remarks
+     * RAM cost: 0 GB
      *
-     * @remarks RAM cost: 0 GB
      * @param msg - Value to be printed.
      */
     print(msg: any): void;
 
     /**
      * Prints a value or a variable to the Terminal.
+     * @remarks
+     * RAM cost: 0 GB
      *
-     * @remarks RAM cost: 0 GB
      * @param msg - Value to be printed.
      */
     tprint(msg: any): void;
 
     /**
      * Clears the script’s logs.
-     *
-     * @remarks RAM cost: 0 GB
+     * @remarks
+     * RAM cost: 0 GB
      */
     clearLog(): void;
 
@@ -1871,6 +1915,7 @@ export declare interface NS extends Singularity {
      * Disables logging for the given function.
      * @remarks
      * RAM cost: 0 GB
+     *
      * Logging can be disabled for all functions by passing `ALL` as the argument.
      *
      * Note that this does not completely remove all logging functionality.
@@ -1885,24 +1930,32 @@ export declare interface NS extends Singularity {
     disableLog(fn: string): void;
 
     /**
+     * Enable logging for a certain function.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Re-enables logging for the given function. If `ALL` is passed into this
      * function as an argument, then it will revert the effects of disableLog(`ALL`).
      *
-     * @remarks RAM cost: 0 GB
      * @param fn - Name of function for which to enable logging.
      */
     enableLog(fn: string): void;
 
     /**
      * Checks the status of the logging for the given function.
+     * @remarks
+     * RAM cost: 0 GB
      *
-     * @remarks RAM cost: 0 GB
      * @param fn - Name of function to check.
      * @returns Returns a boolean indicating whether or not logging is enabled for that function (or `ALL`)
      */
     isLogEnabled(fn: string): boolean;
 
     /**
+     * Get all the logs of a script.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Returns a script’s logs. The logs are returned as an array, where each line is an element in the array.
      * The most recently logged line is at the end of the array.
      * Note that there is a maximum number of lines that a script stores in its logs. This is configurable in the game’s options.
@@ -1926,7 +1979,6 @@ export declare interface NS extends Singularity {
      * //Open logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
      * getScriptLogs("foo.script", "foodnstuff", 1, "test");
      * ```
-     * @remarks RAM cost: 0 GB
      * @param fn - Optional. Filename of script to get logs from.
      * @param host - Optional. Hostname of the server that the script is on.
      * @param args - Arguments to identify which scripts to get logs for.
@@ -1935,6 +1987,10 @@ export declare interface NS extends Singularity {
     getScriptLogs(fn?: string, host?: string, ...args: any[]): string[];
 
     /**
+     * Open the tail window of a script.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Opens a script’s logs. This is functionally the same as the tail Terminal command.
      *
      * If the function is called with no arguments, it will open the current script’s logs.
@@ -1957,7 +2013,6 @@ export declare interface NS extends Singularity {
      * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
      * tail("foo.script", "foodnstuff", 1, "test");
      * ```
-     * @remarks RAM cost: 0 GB
      * @param fn - Optional. Filename of the script being tailed. If omitted, the current script is tailed.
      * @param host - Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional.
      * @param args - Arguments for the script being tailed.
@@ -1965,11 +2020,14 @@ export declare interface NS extends Singularity {
     tail(fn?: string, host?: string, ...args: any[]): void;
 
     /**
+     * Get the list servers connected to a server.
+     * @remarks
+     * RAM cost: 0.2 GB
+     *
      * Returns an array containing the hostnames or IPs of all servers that are one
      * node way from the specified target server. The hostnames/IPs in the returned
      * array are strings.
      *
-     * @remarks RAM cost: 0.2 GB
      * @param host - Hostname of the server to scan.
      * @param hostnames - Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false).
      * @returns Returns an string of hostnames or IP.
@@ -1977,66 +2035,85 @@ export declare interface NS extends Singularity {
     scan(host: string, hostnames?: boolean): string[];
 
     /**
+     * Runs NUKE.exe on a server.
+     * @remarks
+     * RAM cost: 0.05 GB
+     *
      * Runs the NUKE.exe program on the target server. NUKE.exe must exist on your home computer.
      *
      * @example
      * ```ts
      * nuke("foodnstuff");
      * ```
-     * @remarks RAM cost: 0.05 GB
      * @param host - Hostname of the target server.
      */
     nuke(host: string): void;
 
     /**
+     * Runs BruteSSH.exe on a server.
+     * @remarks
+     * RAM cost: 0.05 GB
+     *
      * Runs the BruteSSH.exe program on the target server. BruteSSH.exe must exist on your home computer.
      *
      * @example
      * ```ts
      * brutessh("foodnstuff");
      * ```
-     * @remarks RAM cost: 0.05 GB
      * @param host - Hostname of the target server.
      */
     brutessh(host: string): void;
 
     /**
+     * Runs FTPCrack.exe on a server.
+     * @remarks
+     * RAM cost: 0.05 GB
+     *
      * Runs the FTPCrack.exe program on the target server. FTPCrack.exe must exist on your home computer.
      *
      * @example
      * ```ts
      * ftpcrack("foodnstuff");
      * ```
-     * @remarks RAM cost: 0.05 GB
      * @param host - Hostname of the target server.
      */
     ftpcrack(host: string): void;
 
     /**
+     * Runs relaySMTP.exe on a server.
+     * @remarks
+     * RAM cost: 0.05 GB
+     *
      * Runs the relaySMTP.exe program on the target server. relaySMTP.exe must exist on your home computer.
      *
      * @example
      * ```ts
      * relaysmtp("foodnstuff");
      * ```
-     * @remarks RAM cost: 0.05 GB
      * @param host - Hostname of the target server.
      */
     relaysmtp(host: string): void;
 
     /**
+     * Runs HTTPWorm.exe on a server.
+     * @remarks
+     * RAM cost: 0.05 GB
+     *
      * Runs the HTTPWorm.exe program on the target server. HTTPWorm.exe must exist on your home computer.
      *
      * @example
      * ```ts
      * httpworm("foodnstuff");
      * ```
-     * @remarks RAM cost: 0.05 GB
      * @param host - Hostname of the target server.
      */
     httpworm(host: string): void;
 
     /**
+     * Runs SQLInject.exe on a server.
+     * @remarks
+     * RAM cost: 0.05 GB
+     *
      * Runs the SQLInject.exe program on the target server. SQLInject.exe must exist on your home computer.
      *
      * @example
@@ -2049,6 +2126,10 @@ export declare interface NS extends Singularity {
     sqlinject(host: string): void;
 
     /**
+     * Start another script on the current server.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * Run a script as a separate process. This function can only be used to run scripts located on the
      * current server (the server running the script that calls this function). Requires a significant
      * amount of RAM to run this command.
@@ -2077,7 +2158,6 @@ export declare interface NS extends Singularity {
      * //This next example will run ‘foo.script’ single-threaded, and will pass the string ‘foodnstuff’ into the script as an argument:
      * run("foo.script", 1, 'foodnstuff');
      * ```
-     * @remarks RAM cost: 1 GB
      * @param script - Filename of script to run.
      * @param numThreads - Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer.
      * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the second argument numThreads must be filled in with a value.
@@ -2086,6 +2166,10 @@ export declare interface NS extends Singularity {
     run(script: string, numThreads?: number, ...args: string[]): number;
 
     /**
+     * Start another script on any server.
+     * @remarks
+     * RAM cost: 1.3 GB
+     *
      * Run a script as a separate process on a specified server. This is similar to the run function
      * except that it can be used to run a script on any server, instead of just the current server.
      *
@@ -2113,7 +2197,6 @@ export declare interface NS extends Singularity {
      * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
      * exec("foo.script", "foodnstuff", 5, 1, "test");
      * ```
-     * @remarks RAM cost: 1.3 GB
      * @param script - Filename of script to execute.
      * @param host - Hostname of the `target server` on which to execute the script.
      * @param numThreads - Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer.
@@ -2123,6 +2206,10 @@ export declare interface NS extends Singularity {
     exec(script: string, host: string, numThreads?: number, ...args: string[]): number;
 
     /**
+     * Terminate current script and start another in 10s.
+     * @remarks
+     * RAM cost: 2 GB
+     *
      * Terminates the current script, and then after a delay of about 10 seconds it will execute the
      * newly-specified script. The purpose of this function is to execute a new script without being
      * constrained by the RAM usage of the current one. This function can only be used to run scripts
@@ -2135,7 +2222,6 @@ export declare interface NS extends Singularity {
      * //The following example will execute the script ‘foo.script’ with 10 threads and the arguments ‘foodnstuff’ and 90:
      * spawn('foo.script', 10, 'foodnstuff', 90);
      * ```
-     * @remarks RAM cost: 2 GB
      * @param script - Filename of script to execute.
      * @param numThreads - Number of threads to spawn new script with. Will be rounded to nearest integer.
      * @param args - Additional arguments to pass into the new script that is being run.
@@ -2143,6 +2229,10 @@ export declare interface NS extends Singularity {
     spawn(script: string, numThreads?: number, ...args: string[]): void;
 
     /**
+     * Terminate another script.
+     * @remarks
+     * RAM cost: 0.5 GB
+     *
      * Kills the script on the target server specified by the script’s name and arguments.
      * Remember that scripts are uniquely identified by both their name and arguments.
      * For example, if `foo.script` is run with the argument 1, then this is not the same as
@@ -2163,7 +2253,6 @@ export declare interface NS extends Singularity {
      * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
      * kill("foo.script", getHostname(), 1, "foodnstuff");
      * ```
-     * @remarks RAM cost: 0.5 GB
      * @param script - Filename of the script to kill
      * @param host - Hostname of the server on which to kill the script.
      * @param args - Arguments to identify which script to kill.
@@ -2172,6 +2261,10 @@ export declare interface NS extends Singularity {
     kill(script: string, host: string, ...args: string[]): boolean;
 
     /**
+     * Terminate another script.
+     * @remarks
+     * RAM cost: 0.5 GB
+     *
      * Kills the script with the specified PID.
      * Killing a script by its PID will typically have better performance,
      * especially if you have many scripts running.
@@ -2184,18 +2277,20 @@ export declare interface NS extends Singularity {
      *     print("Killed script with PID 10!");
      * }
      * ```
-     * @remarks RAM cost: 0.5 GB
      * @param scriptPid - PID of the script to kill
      * @returns True if the script is successfully killed, and false otherwise.
      */
     kill(scriptPid: number): boolean;
 
     /**
+     * Terminate all scripts on a server.
+     * @remarks
+     * RAM cost: 0.5 GB
+     *
      * Kills all running scripts on the specified server. This function returns true
      * if any scripts were killed, and false otherwise. In other words, it will return
      * true if there are any scripts running on the target server.
      *
-     * @remarks RAM cost: 0.5 GB
      * @param host - IP or hostname of the server on which to kill all scripts.
      * @returns True if any scripts were killed, and false otherwise.
      */
@@ -2203,12 +2298,16 @@ export declare interface NS extends Singularity {
 
     /**
      * Terminates the current script immediately.
-     *
-     * @remarks RAM cost: 0 GB
+     * @remarks
+     * RAM cost: 0 GB
      */
     exit(): void;
 
     /**
+     * Copy file between servers.
+     * @remarks
+     * RAM cost: 0.6 GB
+     *
      * Copies a script or literature (.lit) file(s) to another server. The files argument can be either a string
      * specifying a single file to copy, or an array of strings specifying multiple files to copy.
      *
@@ -2217,7 +2316,6 @@ export declare interface NS extends Singularity {
      * //Copies hack-template.script from the current server to foodnstuff:
      * scp("hack-template.script", "foodnstuff");
      * ```
-     * @remarks RAM cost: 0.6 GB
      * @param files - Filename or an array of filenames of script/literature files to copy.
      * @param destination - Host of the destination server, which is the server to which the file will be copied.
      * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
@@ -2225,6 +2323,10 @@ export declare interface NS extends Singularity {
     scp(files: string[], destination: string): boolean;
 
     /**
+     * Copy file between servers.
+     * @remarks
+     * RAM cost: 0.6 GB
+     *
      * Copies a script or literature (.lit) file(s) to another server. The files argument can be either a string
      * specifying a single file to copy, or an array of strings specifying multiple files to copy.
      *
@@ -2239,7 +2341,6 @@ export declare interface NS extends Singularity {
      * files = ["foo1.lit", "foo2.script", "foo3.script"];
      * scp(files, "rothman-uni", "home");
      * ```
-     * @remarks RAM cost: 0.6 GB
      * @param files - Filename or an array of filenames of script/literature files to copy.
      * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
      * @param destination - Host of the destination server, which is the server to which the file will be copied.
@@ -2253,10 +2354,13 @@ export declare interface NS extends Singularity {
     ): boolean;
 
     /**
+     * List files on a server.
+     * @remarks
+     * RAM cost: 0.2 GB
+     *
      * Returns an array with the filenames of all files on the specified server
      * (as strings). The returned array is sorted in alphabetic order.
      *
-     * @remarks RAM cost: 0.2 GB
      * @param host - Host of the target server.
      * @param grep - A substring to search for in the filename.
      * @returns Array with the filenames of all files on the specified server.
@@ -2264,6 +2368,10 @@ export declare interface NS extends Singularity {
     ls(host: string, grep?: string): string[];
 
     /**
+     * List running scripts on a server.
+     * @remarks
+     * RAM cost: 0.2 GB
+     *
      * Returns an array with general information about all scripts running on the specified target server.
      *
      * @example
@@ -2277,13 +2385,16 @@ export declare interface NS extends Singularity {
      *    }
      * }
      * ```
-     * @remarks RAM cost: 0.2 GB
      * @param host - Host address of the target server. If not specified, it will be the current server’s IP by default.
      * @returns Array with general information about all scripts running on the specified target server.
      */
     ps(host?: string): ProcessInfo[];
 
     /**
+     * Check if your have root access on a server.
+     * @remarks
+     * RAM cost: 0.05 GB
+     *
      * Returns a boolean indicating whether or not the player has root access to the specified target server.
      *
      * @example
@@ -2292,7 +2403,6 @@ export declare interface NS extends Singularity {
      *    nuke("foodnstuff");
      * }
      * ```
-     * @remarks RAM cost: 0.05 GB
      * @param host - Host of the target server
      * @returns True if player has root access to the specified target server, and false otherwise.
      */
@@ -2301,7 +2411,8 @@ export declare interface NS extends Singularity {
     /**
      * Returns a string with the hostname of the server that the script is running on.
      *
-     * @remarks RAM cost: 0.05 GB
+     * @remarks
+     * RAM cost: 0.05 GB
      * @returns Hostname of the server that the script is on.
      */
     getHostname(): string;
@@ -2309,12 +2420,17 @@ export declare interface NS extends Singularity {
     /**
      * Returns the player’s current hacking level.
      *
-     * @remarks RAM cost: 0.05 GB
+     * @remarks
+     * RAM cost: 0.05 GB
      * @returns Player’s current hacking level
      */
     getHackingLevel(): number;
 
     /**
+     * Get hacking related multipliers.
+     * @remarks
+     * RAM cost: 4 GB
+     *
      * Returns an object containing the Player’s hacking related multipliers.
      * These multipliers are returned in fractional forms, not percentages
      * (e.g. 1.5 instead of 150%).
@@ -2326,12 +2442,15 @@ export declare interface NS extends Singularity {
      * print(mults.chance);
      * print(mults.growth);
      * ```
-     * @remarks RAM cost: 4 GB
      * @returns Object containing the Player’s hacking related multipliers.
      */
     getHackingMultipliers(): HackingMultipliers;
 
     /**
+     * Get hacknet related multipliers.
+     * @remarks
+     * RAM cost: 4 GB
+     *
      * Returns an object containing the Player’s hacknet related multipliers.
      * These multipliers are returned in fractional forms, not percentages
      * (e.g. 1.5 instead of 150%).
@@ -2343,7 +2462,6 @@ export declare interface NS extends Singularity {
      * print(mults.production);
      * print(mults.purchaseCost);
      * ```
-     * @remarks RAM cost: 4 GB
      * @returns Object containing the Player’s hacknet related multipliers.
      */
     getHacknetMultipliers(): HacknetMultipliers;
@@ -2351,13 +2469,18 @@ export declare interface NS extends Singularity {
     /**
      * Returns a server object for the given server. Defaults to the running script's server if host is not specified.
      *
-     * @remarks RAM cost: 2 GB
+     * @remarks
+     * RAM cost: 2 GB
      * @param host - Optional. Hostname for the requested server object.
      * @returns The requested server object.
      */
     getServer(host?: string): Server;
 
     /**
+     * Get money available on a server.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
      * Returns the amount of money available on a server.
      * Running this function on the home computer will return the player’s money.
      *
@@ -2366,22 +2489,28 @@ export declare interface NS extends Singularity {
      * getServerMoneyAvailable("foodnstuff");
      * getServerMoneyAvailable("home"); //Returns player's money
      * ```
-     * @remarks RAM cost: 0.1 GB
      * @param host - Host of target server
      * @returns Amount of money available on the server.
      */
     getServerMoneyAvailable(host: string): number;
 
     /**
+     * Get maximum money available on a server.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
      * Returns the maximum amount of money that can be available on a server.
      *
-     * @remarks RAM cost: 0.1 GB
      * @param host - Host of target server.
      * @returns Maximum amount of money available on the server.
      */
     getServerMaxMoney(host: string): number;
 
     /**
+     * Get a server growth parameter.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
      * Returns the server’s instrinsic “growth parameter”. This growth
      * parameter is a number between 1 and 100 that represents how
      * quickly the server’s money grows. This parameter affects the
@@ -2389,37 +2518,24 @@ export declare interface NS extends Singularity {
      * grow function. A higher growth parameter will result in a
      * higher percentage increase from grow.
      *
-     * @remarks RAM cost: 0.1 GB
      * @param host - Host of target server.
      * @returns Parameter that affects the percentage by which the server’s money is increased when using the grow function.
      */
     getServerGrowth(host: string): number;
 
     /**
+     * Get server security level.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
      * Returns the security level of the target server. A server’s security
      * level is denoted by a number, typically between 1 and 100
      * (but it can go above 100).
      *
-     * @remarks RAM cost: 0.1 GB
      * @param host - Host of target server.
      * @returns Security level of the target server.
      */
     getServerSecurityLevel(host: string): number;
-
-    /**
-     * Returns the base security level of the target server. This is the security
-     * level that the server starts out with. This is different than
-     * getServerSecurityLevel because getServerSecurityLevel returns
-     * the current security level of a server, which can constantly change due to
-     * hack, grow, and weaken, calls on that server.
-     * The base security level will stay the same until you reset by
-     * installing an Augmentation(s).
-     *
-     * @remarks RAM cost: 0.1 GB
-     * @param host - Host of target server.
-     * @returns Base security level of the target server.
-     */
-    getServerBaseSecurityLevel(host: string): number;
 
     /**
      * Returns the minimum security level of the target server.
@@ -2449,24 +2565,6 @@ export declare interface NS extends Singularity {
     getServerNumPortsRequired(host: string): number;
 
     /**
-     * Returns an array with two elements that gives information about a server’s memory (RAM).
-     * The first element in the array is the amount of RAM that the server has total (in GB).
-     * The second element in the array is the amount of RAM that is currently being used on
-     * the server (in GB).
-     *
-     * @example
-     * ```ts
-     * res = getServerRam("helios");
-     * totalRam = res[0];
-     * ramUsed = res[1];
-     * ```
-     * @remarks RAM cost: 0.1 GB
-     * @param host - Host of target server.
-     * @returns Array with total and used memory on the specified server.
-     */
-    getServerRam(host: string): [number, number];
-
-    /**
      * Returns a boolean denoting whether or not the specified server exists.
      *
      * @remarks RAM cost: 0.1 GB
@@ -2476,6 +2574,10 @@ export declare interface NS extends Singularity {
     serverExists(host: string): boolean;
 
     /**
+     * Check if a file exists.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
      * Returns a boolean indicating whether the specified file exists on the target server.
      * The filename for scripts is case-sensitive, but for other types of files it is not.
      * For example, fileExists(“brutessh.exe”) will work fine, even though the actual program
@@ -2494,7 +2596,6 @@ export declare interface NS extends Singularity {
      * //The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.
      * fileExists("ftpcrack.exe");
      * ```
-     * @remarks RAM cost: 0.1 GB
      * @param filename - Filename of file to check.
      * @param host - Host of target server. This is optional. If it is not specified then the function will use the current server as the target server.
      * @returns True if specified file exists, and false otherwise.
@@ -2502,6 +2603,10 @@ export declare interface NS extends Singularity {
     fileExists(filename: string, host?: string): boolean;
 
     /**
+     * Check if a script is running.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
      * Returns a boolean indicating whether the specified script is running on the target server.
      * Remember that a script is uniquely identified by both its name and its arguments.
      *
@@ -2520,7 +2625,6 @@ export declare interface NS extends Singularity {
      * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:
      * isRunning("foo.script", "joesguns", 1, 5, "test");
      * ```
-     * @remarks RAM cost: 0.1 GB
      * @param script - Filename of script to check. This is case-sensitive.
      * @param host - Host of target server.
      * @param args - Arguments to specify/identify which scripts to search for.
@@ -2529,6 +2633,10 @@ export declare interface NS extends Singularity {
     isRunning(script: string, host: string, ...args: string[]): boolean;
 
     /**
+     * Get cost of purchasing a server.
+     * @remarks
+     * RAM cost: 0.25 GB
+     *
      * Returns the cost to purchase a server with the specified amount of ram.
      *
      * @example
@@ -2537,13 +2645,16 @@ export declare interface NS extends Singularity {
      *     tprint(i + " -- " + getPurchasedServerCost(Math.pow(2, i)));
      * }
      * ```
-     * @remarks RAM cost: 0.25 GB
      * @param ram - Amount of RAM of a potential purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
      * @returns The cost to purchase a server with the specified amount of ram.
      */
     getPurchasedServerCost(ram: number): number;
 
     /**
+     * Purchase a server.
+     * @remarks
+     * 2.25 GB
+     *
      * Purchased a server with the specified hostname and amount of RAM.
      *
      * The hostname argument can be any data type, but it will be converted to a string
@@ -2571,7 +2682,6 @@ export declare interface NS extends Singularity {
      *    purchaseServer(hn + i, ram);
      * }
      * ```
-     * @remarks 2.25 GB
      * @param hostname - Host of the purchased server.
      * @param ram - Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
      * @returns The hostname of the newly purchased server.
@@ -2579,13 +2689,16 @@ export declare interface NS extends Singularity {
     purchaseServer(hostname: string, ram: number): string;
 
     /**
+     * Delete a purchased server.
+     * @remarks
+     * 2.25 GB
+     *
      * Deletes one of your purchased servers, which is specified by its hostname.
      *
      * The hostname argument can be any data type, but it will be converted to a string.
      * Whitespace is automatically removed from the string. This function will not delete a
      * server that still has scripts running on it.
      *
-     * @remarks 2.25 GB
      * @param host - Host of the server to delete.
      * @returns True if successful, and false otherwise.
      */
@@ -2595,7 +2708,7 @@ export declare interface NS extends Singularity {
      * Returns an array with either the hostnames or IPs of all of the servers you have purchased.
      *
      * @remarks 2.25 GB
-     * @param hostnameMode -] Optional. Defaults to true. Returns hostnames if true, and IPs if false.
+     * @param hostnameMode - Optional. Defaults to true. Returns hostnames if true, and IPs if false.
      * @returns Returns an array with either the hostnames or IPs of all of the servers you have purchased.
      */
     getPurchasedServers(hostnameMode?: boolean): string[];
@@ -2617,6 +2730,10 @@ export declare interface NS extends Singularity {
     getPurchasedServerMaxRam(): number;
 
     /**
+     * Write data to a file.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * This function can be used to either write data to a port or to a text file (.txt).
      *
      * If the first argument is a number between 1 and 20, then it specifies a port and this
@@ -2631,7 +2748,6 @@ export declare interface NS extends Singularity {
      * then the data will be written in “append” mode which means that the data will be added at the
      * end of the text file.
      *
-     * @remarks RAM cost: 1 GB
      * @param handle - Port or text file that will be written to.
      * @param data - Data to write.
      * @param mode - Defines the write mode. Only valid when writing to text files.
@@ -2639,11 +2755,14 @@ export declare interface NS extends Singularity {
     write(handle: string | number, data?: string[] | number, mode?: "w" | "a"): void;
 
     /**
+     * Attempt to write to a port.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * Attempts to write data to the specified Netscript Port.
      * If the port is full, the data will not be written.
      * Otherwise, the data will be written normally.
      *
-     * @remarks RAM cost: 1 GB
      * @param port - Port or text file that will be written to.
      * @param data - Data to write.
      * @returns True if the data is successfully written to the port, and false otherwise.
@@ -2651,6 +2770,10 @@ export declare interface NS extends Singularity {
     tryWrite(port: number, data: string[] | number): boolean;
 
     /**
+     * Read content of a file.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * This function is used to read data from a port or from a text file (.txt).
      *
      * If the argument port/fn is a number between 1 and 20, then it specifies a
@@ -2662,24 +2785,30 @@ export declare interface NS extends Singularity {
      * file (.txt) and this function will return the data in the specified text
      * file. If the text file does not exist, an empty string will be returned.
      *
-     * @remarks RAM cost: 1 GB
      * @param handle - Port or text file to read from.
      * @returns Data in the specified text file or port.
      */
     read(handle: string | number): string | number | object;
 
     /**
+     * Get a copy of the data from a port without popping it.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * This function is used to peek at the data from a port. It returns the
      * first element in the specified port without removing that element. If
      * the port is empty, the string “NULL PORT DATA” will be returned.
      *
-     * @remarks RAM cost: 1 GB
      * @param port - Port to peek. Must be an integer between 1 and 20.
      * @returns Data in the specified port.
      */
     peek(port: number): string | number | object;
 
     /**
+     * Clear data from a port.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * This function is used to clear data in a Netscript Ports or a text file.
      *
      * If the port/fn argument is a number between 1 and 20, then it specifies a
@@ -2688,28 +2817,33 @@ export declare interface NS extends Singularity {
      * If the port/fn argument is a string, then it specifies the name of a
      * text file (.txt) and will delete all data from that text file.
      *
-     * @remarks RAM cost: 1 GB
      * @param handle - Port or text file to clear.
      */
     clear(handle: string | number): void;
 
     /**
+     * Get all data on a port.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Get a handle to a Netscript Port.
      *
      * WARNING: Port Handles only work in NetscriptJS (Netscript 2.0). They will not work in Netscript 1.0.
      *
      * @see https://bitburner.readthedocs.io/en/latest/netscript/netscriptmisc.html#netscript-ports
-     * @remarks RAM cost: 10 GB
      * @param port - Port number. Must be an integer between 1 and 20.
      * @returns Data in the specified port.
      */
     getPortHandle(port: number): any[];
 
     /**
+     * Delete a file.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * Removes the specified file from the current server. This function works for every file
      * type except message (.msg) files.
      *
-     * @remarks RAM cost: 1 GB
      * @param name - Filename of file to remove. Must include the extension.
      * @param host - Host Address of the server on which to delete the file. Optional. Defaults to current server.
      * @returns True if it successfully deletes the file, and false otherwise.
@@ -2717,6 +2851,10 @@ export declare interface NS extends Singularity {
     rm(name: string, host?: string): boolean;
 
     /**
+     * Check if any script with a filename is running.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * Returns a boolean indicating whether any instance of the specified script is running
      * on the target server, regardless of its arguments.
      *
@@ -2733,7 +2871,6 @@ export declare interface NS extends Singularity {
      * //The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:
      * scriptRunning("foo.script", getHostname());
      * ```
-     * @remarks RAM cost: 1 GB
      * @param script - Filename of script to check. This is case-sensitive.
      * @param host - Host of target server.
      * @returns True if the specified script is running, and false otherwise.
@@ -2741,10 +2878,13 @@ export declare interface NS extends Singularity {
     scriptRunning(script: string, host: string): boolean;
 
     /**
+     * Kill all scripts with a filename.
+     * @remarks
+     * RAM cost: 1 GB
+     *
      * Kills all scripts with the specified filename on the target server specified by hostname,
      * regardless of arguments.
      *
-     * @remarks RAM cost: 1 GB
      * @param script - Filename of script to kill. This is case-sensitive.
      * @param host - Host of target server.
      * @returns true if one or more scripts were successfully killed, and false if none were.
@@ -2760,10 +2900,13 @@ export declare interface NS extends Singularity {
     getScriptName(): string;
 
     /**
+     * Get the ram cost of a script.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
      * Returns the amount of RAM required to run the specified script on the target server.
      * Returns 0 if the script does not exist.
      *
-     * @remarks RAM cost: 0.1 GB
      * @param script - Filename of script. This is case-sensitive.
      * @param host - Host of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
      * @returns Amount of RAM required to run the specified script on the target server, and 0 if the script does not exist.
@@ -2771,42 +2914,55 @@ export declare interface NS extends Singularity {
     getScriptRam(script: string, host?: string): number;
 
     /**
-     * Returns the amount of time in seconds it takes to execute the hack Netscript function on the target server.
+     * Get the execution time of a hack() call.
+     * @remarks
+     * RAM cost: 0.05 GB
+     *
+     * Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server.
      * The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels.
      *
-     * @remarks RAM cost: 0.05 GB
      * @param host - Host of target server.
      * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
      * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
-     * @returns Returns the amount of time in seconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
+     * @returns Returns the amount of time in milliseconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
      */
-    getHackTime(host: string, hackLvl?: number, intLvl?: number): number;
+    getHackTime(host: string): number;
 
     /**
+     * Get the execution time of a grow() call.
+     * @remarks
+     * RAM cost: 0.05 GB
+     *
      * Returns the amount of time in seconds it takes to execute the grow Netscript function on the target server.
      * The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels.
      *
-     * @remarks RAM cost: 0.05 GB
      * @param host - Host of target server.
      * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
      * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
      * @returns Returns the amount of time in seconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
      */
-    getGrowTime(host: string, hackLvl?: number, intLvl?: number): number;
+    getGrowTime(host: string): number;
 
     /**
+     * Get the execution time of a weaken() call.
+     * @remarks
+     * RAM cost: 0.05 GB
+     *
      * Returns the amount of time in seconds it takes to execute the weaken() Netscript function on the target server.
      * The function takes in an optional hackLvl parameter that can be specified to see what the weaken time would be at different hacking levels.
      *
-     * @remarks RAM cost: 0.05 GB
      * @param host - Host of target server.
      * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
      * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
      * @returns Returns the amount of time in seconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
      */
-    getWeakenTime(host: string, hackLvl?: number, intLvl?: number): number;
+    getWeakenTime(host: string): number;
 
     /**
+     * Get the income of a script.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
      * Returns the amount of income the specified script generates while online
      * (when the game is open, does not apply for offline income). Remember that
      * a script is uniquely identified by both its name and its arguments. So for
@@ -2821,7 +2977,6 @@ export declare interface NS extends Singularity {
      * The second value is the total income (dollar / second) that you’ve earned from scripts
      * since you last installed Augmentations.
      *
-     * @remarks RAM cost: 0.1 GB
      * @param script - Filename of script.
      * @param host - Server on which script is running.
      * @param args - Arguments that the script is running with.
@@ -2830,6 +2985,10 @@ export declare interface NS extends Singularity {
     getScriptIncome(script: string, host: string, ...args: string[]): number | [number, number];
 
     /**
+     * Get the exp gain of a script.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
      * Returns the amount of hacking experience the specified script generates while online
      * (when the game is open, does not apply for offline experience gains). Remember that a
      * script is uniquely identified by both its name and its arguments.
@@ -2837,7 +2996,6 @@ export declare interface NS extends Singularity {
      * This function can also return the total experience gain rate of all of your active
      * scripts by running the function with no arguments.
      *
-     * @remarks RAM cost: 0.1 GB
      * @param script - Filename of script.
      * @param host - Server on which script is running.
      * @param args - Arguments that the script is running with.
@@ -2854,10 +3012,12 @@ export declare interface NS extends Singularity {
     getTimeSinceLastAug(): number;
 
     /**
-     * Complete open source JavaScript sprintf implementation
+     * Format a string.
      *
-     * @see https://github.com/alexei/sprintf.js
-     * @remarks RAM cost: 0 GB
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * see: https://github.com/alexei/sprintf.js
      * @param format - String to format.
      * @param args - Formating arguments.
      * @returns Formated text.
@@ -2865,10 +3025,11 @@ export declare interface NS extends Singularity {
     sprintf(format: string, ...args: string[]): string;
 
     /**
-     * Complete open source JavaScript sprintf implementation
+     * Format a string with an array of arguments.
+     * @remarks
+     * RAM cost: 0 GB
      *
-     * @see https://github.com/alexei/sprintf.js
-     * @remarks RAM cost: 0 GB
+     * see: https://github.com/alexei/sprintf.js
      * @param format - String to format.
      * @param args - Formating arguments.
      * @returns Formated text.
@@ -2876,12 +3037,15 @@ export declare interface NS extends Singularity {
     vsprintf(format: string, args: string[]): string;
 
     /**
+     * Format a number
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Converts a number into a string with the specified formatter.
      * This uses the numeraljs library, so the formatters must be compatible with that.
      * This is the same function that the game itself uses to display numbers.
      *
-     * @see http://numeraljs.com/
-     * @remarks RAM cost: 0 GB
+     * see: http://numeraljs.com/
      * @param n - Number to format.
      * @param format - Formatter.
      * @returns Formated number.
@@ -2889,18 +3053,25 @@ export declare interface NS extends Singularity {
     nFormat(n: number, format: string): number;
 
     /**
+     * Prompt the player with a Yes/No modal.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Prompts the player with a dialog box with two options: “Yes” and “No”.
      * This function will return true if the player click “Yes” and false if
      * the player clicks “No”. The script’s execution is halted until the player
      * selects one of the options.
      *
-     * @remarks RAM cost: 0 GB
      * @param txt - Text to appear in the prompt dialog box.
      * @returns True if the player click “Yes” and false if the player clicks “No”.
      */
     prompt(txt: string): Promise<boolean>;
 
     /**
+     * Download a file from the internet.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Retrieves data from a URL and downloads it to a file on the specified server.
      * The data can only be downloaded to a script (.script, .ns, .js) or a text file (.txt).
      * If the file already exists, it will be overwritten by this command.
@@ -2922,7 +3093,6 @@ export declare interface NS extends Singularity {
      * ```ts
      * wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
      * ```
-     * @remarks RAM cost: 0 GB
      * @param url - URL to pull data from.
      * @param target - Filename to write data to. Must be script or text file.
      * @param host - Optional hostname/ip of server for target file.
@@ -2939,6 +3109,10 @@ export declare interface NS extends Singularity {
     getFavorToDonate(): number;
 
     /**
+     * Get the current Bitnode multipliers.
+     * @remarks
+     * RAM cost: 4 GB
+     *
      * Returns an object containing the current BitNode multipliers.
      * This function requires Source-File 5 in order to run.
      * The multipliers are returned in decimal forms (e.g. 1.5 instead of 150%).
@@ -2955,7 +3129,6 @@ export declare interface NS extends Singularity {
      * print(mults.ServerMaxMoney);
      * print(mults.HackExpGain);
      * ```
-     * @remarks RAM cost: 4 GB
      * @returns Object containing the current BitNode multipliers.
      */
     getBitNodeMultipliers(): BitNodeMultipliers;

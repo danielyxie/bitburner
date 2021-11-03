@@ -9,7 +9,7 @@ Gang API
 <b>Signature:</b>
 
 ```typescript
-interface Gang 
+export interface Gang 
 ```
 
 ## Remarks
@@ -22,6 +22,7 @@ If you are not in BitNode-2, then you must have Source-File 2 in order to use th
 |  --- | --- |
 |  [ascendMember(memberName)](./bitburner.gang.ascendmember.md) | Ascend a gang member. |
 |  [canRecruitMember()](./bitburner.gang.canrecruitmember.md) | Check if you can recruit a new gang member. |
+|  [createGang(faction)](./bitburner.gang.creategang.md) | Create a gang. |
 |  [getBonusTime()](./bitburner.gang.getbonustime.md) | Get bonus time. |
 |  [getChanceToWinClash(gangName)](./bitburner.gang.getchancetowinclash.md) | Get chance to win clash with other gang. |
 |  [getEquipmentCost(equipName)](./bitburner.gang.getequipmentcost.md) | Get cost of equipment. |
@@ -34,6 +35,7 @@ If you are not in BitNode-2, then you must have Source-File 2 in order to use th
 |  [getOtherGangInformation()](./bitburner.gang.getotherganginformation.md) | Get information about the other gangs. |
 |  [getTaskNames()](./bitburner.gang.gettasknames.md) | List member task names. |
 |  [getTaskStats(name)](./bitburner.gang.gettaskstats.md) | Get stats of a task. |
+|  [inGang()](./bitburner.gang.ingang.md) | Check if you're in a gang. |
 |  [purchaseEquipment(memberName, equipName)](./bitburner.gang.purchaseequipment.md) | Purchase an equipment for a gang member. |
 |  [recruitMember(name)](./bitburner.gang.recruitmember.md) | Recruit a new gang member. |
 |  [setMemberTask(memberName, taskName)](./bitburner.gang.setmembertask.md) | Set gang member to task. |

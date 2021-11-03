@@ -4,7 +4,7 @@
 
 ## NS.getScriptRam() method
 
-Returns the amount of RAM required to run the specified script on the target server. Returns 0 if the script does not exist.
+Get the ram cost of a script.
 
 <b>Signature:</b>
 
@@ -28,4 +28,6 @@ Amount of RAM required to run the specified script on the target server, and 0 i
 ## Remarks
 
 RAM cost: 0.1 GB
+
+Returns the amount of RAM required to run the specified script on the target server. Returns 0 if the script does not exist.
 

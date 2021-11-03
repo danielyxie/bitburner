@@ -4,7 +4,7 @@
 
 ## NS.ps() method
 
-Returns an array with general information about all scripts running on the specified target server.
+List running scripts on a server.
 
 <b>Signature:</b>
 
@@ -27,6 +27,8 @@ Array with general information about all scripts running on the specified target
 ## Remarks
 
 RAM cost: 0.2 GB
+
+Returns an array with general information about all scripts running on the specified target server.
 
 ## Example
 

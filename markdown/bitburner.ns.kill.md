@@ -4,7 +4,7 @@
 
 ## NS.kill() method
 
-Kills the script on the target server specified by the script’s name and arguments. Remember that scripts are uniquely identified by both their name and arguments. For example, if `foo.script` is run with the argument 1, then this is not the same as `foo.script` run with the argument 2, even though they have the same code.
+Terminate another script.
 
 <b>Signature:</b>
 
@@ -29,6 +29,8 @@ True if the script is successfully killed, and false otherwise.
 ## Remarks
 
 RAM cost: 0.5 GB
+
+Kills the script on the target server specified by the script’s name and arguments. Remember that scripts are uniquely identified by both their name and arguments. For example, if `foo.script` is run with the argument 1, then this is not the same as `foo.script` run with the argument 2, even though they have the same code.
 
 ## Example 1
 

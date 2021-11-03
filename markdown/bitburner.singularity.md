@@ -9,7 +9,7 @@ Singularity API
 <b>Signature:</b>
 
 ```typescript
-interface Singularity 
+export interface Singularity 
 ```
 
 ## Remarks

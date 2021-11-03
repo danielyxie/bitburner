@@ -4,11 +4,7 @@
 
 ## NS.tail() method
 
-Opens a script’s logs. This is functionally the same as the tail Terminal command.
-
-If the function is called with no arguments, it will open the current script’s logs.
-
-Otherwise, the fn, hostname/ip, and args… arguments can be used to get the logs from another script. Remember that scripts are uniquely identified by both their names and arguments.
+Open the tail window of a script.
 
 <b>Signature:</b>
 
@@ -31,6 +27,12 @@ void
 ## Remarks
 
 RAM cost: 0 GB
+
+Opens a script’s logs. This is functionally the same as the tail Terminal command.
+
+If the function is called with no arguments, it will open the current script’s logs.
+
+Otherwise, the fn, hostname/ip, and args… arguments can be used to get the logs from another script. Remember that scripts are uniquely identified by both their names and arguments.
 
 ## Example 1
 
