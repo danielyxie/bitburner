@@ -893,7 +893,7 @@ interface SleeveWorkGains {
  */
 interface SourceFileLvl {
   /** The number of the source file */
-  n: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+  n: number;
   /** The level of the source file */
   lvl: number;
 }
@@ -2994,7 +2994,7 @@ interface CodingContract {
    * @remarks 10 GB
    * @param answer - Solution for the contract.
    * @param fn - Filename of the contract.
-   * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns True if the solution was correct, false otherwise.
    */
   attempt(answer: string | string[] | number, fn: string, host?: string): boolean;
@@ -3005,7 +3005,7 @@ interface CodingContract {
    * @remarks 10 GB
    * @param answer - Solution for the contract.
    * @param fn - Filename of the contract.
-   * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @param opts - Optional parameters for configuring function behavior.
    * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
    */
@@ -3017,7 +3017,7 @@ interface CodingContract {
    *
    * @remarks RAM cost: 5 GB
    * @param fn - Filename of the contract.
-   * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Name describing the type of problem posed by the Coding Contract.
    */
   getContractType(fn: string, host?: string): CodingContractTypes;
@@ -3027,7 +3027,7 @@ interface CodingContract {
    *
    * @remarks RAM cost: 5 GB
    * @param fn - Filename of the contract.
-   * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Contract’s text description.
    */
   getDescription(fn: string, host?: string): string;
@@ -3039,7 +3039,7 @@ interface CodingContract {
    *
    * @remarks RAM cost: 5 GB
    * @param fn - Filename of the contract.
-   * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns The specified contract’s data;
    */
   getData(fn: string, host?: string): string;
@@ -3049,7 +3049,7 @@ interface CodingContract {
    *
    * @remarks RAM cost: 2 GB
    * @param fn - Filename of the contract.
-   * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
+   * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns How many attempts are remaining for the contract;
    */
   getNumTriesRemaining(fn: string, host?: string): number;
@@ -4067,10 +4067,10 @@ export interface NS extends Singularity {
    * ```
    * @remarks RAM cost: 0.6 GB
    * @param files - Filename or an array of filenames of script/literature files to copy.
-   * @param destination - Host or IP of the destination server, which is the server to which the file will be copied.
+   * @param destination - Host of the destination server, which is the server to which the file will be copied.
    * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
    */
-  scp(files: string | ReadonlyArray<string>, destination: string): boolean;
+  scp(files: string | string[], destination: string): boolean;
 
   /**
    * Copies a script or literature (.lit) file(s) to another server. The files argument can be either a string
@@ -4089,12 +4089,12 @@ export interface NS extends Singularity {
    * ```
    * @remarks RAM cost: 0.6 GB
    * @param files - Filename or an array of filenames of script/literature files to copy.
-   * @param source - Host or IP of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
-   * @param destination - Host or IP of the destination server, which is the server to which the file will be copied.
+   * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
+   * @param destination - Host of the destination server, which is the server to which the file will be copied.
    * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
    */
   scp(
-    files: string | ReadonlyArray<string>,
+    files: string | string[],
     source: string,
     // tslint:disable-next-line:unified-signatures
     destination: string,
@@ -4105,7 +4105,7 @@ export interface NS extends Singularity {
    * (as strings). The returned array is sorted in alphabetic order.
    *
    * @remarks RAM cost: 0.2 GB
-   * @param host - Host or IP of the target server.
+   * @param host - Host of the target server.
    * @param grep - A substring to search for in the filename.
    * @returns Array with the filenames of all files on the specified server.
    */
@@ -4126,7 +4126,7 @@ export interface NS extends Singularity {
    * }
    * ```
    * @remarks RAM cost: 0.2 GB
-   * @param host - Host or IP address of the target server. If not specified, it will be the current server’s IP by default.
+   * @param host - Host address of the target server. If not specified, it will be the current server’s IP by default.
    * @returns Array with general information about all scripts running on the specified target server.
    */
   ps(host?: string): ProcessInfo[];
@@ -4141,7 +4141,7 @@ export interface NS extends Singularity {
    * }
    * ```
    * @remarks RAM cost: 0.05 GB
-   * @param host - Host or IP of the target server
+   * @param host - Host of the target server
    * @returns True if player has root access to the specified target server, and false otherwise.
    */
   hasRootAccess(host: string): boolean;
@@ -4215,7 +4215,7 @@ export interface NS extends Singularity {
    * getServerMoneyAvailable("home"); //Returns player's money
    * ```
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host or IP of target server
+   * @param host - Host of target server
    * @returns Amount of money available on the server.
    */
   getServerMoneyAvailable(host: string): number;
@@ -4224,7 +4224,7 @@ export interface NS extends Singularity {
    * Returns the maximum amount of money that can be available on a server.
    *
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @returns Maximum amount of money available on the server.
    */
   getServerMaxMoney(host: string): number;
@@ -4238,7 +4238,7 @@ export interface NS extends Singularity {
    * higher percentage increase from grow.
    *
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @returns Parameter that affects the percentage by which the server’s money is increased when using the grow function.
    */
   getServerGrowth(host: string): number;
@@ -4249,7 +4249,7 @@ export interface NS extends Singularity {
    * (but it can go above 100).
    *
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @returns Security level of the target server.
    */
   getServerSecurityLevel(host: string): number;
@@ -4264,7 +4264,7 @@ export interface NS extends Singularity {
    * installing an Augmentation(s).
    *
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @returns Base security level of the target server.
    */
   getServerBaseSecurityLevel(host: string): number;
@@ -4273,7 +4273,7 @@ export interface NS extends Singularity {
    * Returns the minimum security level of the target server.
    *
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @returns Minimum security level of the target server.
    */
   getServerMinSecurityLevel(host: string): number;
@@ -4282,7 +4282,7 @@ export interface NS extends Singularity {
    * Returns the required hacking level of the target server.
    *
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @returns The required hacking level of the target server.
    */
   getServerRequiredHackingLevel(host: string): number;
@@ -4291,7 +4291,7 @@ export interface NS extends Singularity {
    * Returns the number of open ports required to successfully run NUKE.exe on the specified server.
    *
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @returns The number of open ports required to successfully run NUKE.exe on the specified server.
    */
   getServerNumPortsRequired(host: string): number;
@@ -4309,7 +4309,7 @@ export interface NS extends Singularity {
    * ramUsed = res[1];
    * ```
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @returns Array with total and used memory on the specified server.
    */
   getServerRam(host: string): [number, number];
@@ -4318,7 +4318,7 @@ export interface NS extends Singularity {
    * Returns a boolean denoting whether or not the specified server exists.
    *
    * @remarks RAM cost: 0.1 GB
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @returns True if specified server exists, and false otherwise.
    */
   serverExists(host: string): boolean;
@@ -4344,7 +4344,7 @@ export interface NS extends Singularity {
    * ```
    * @remarks RAM cost: 0.1 GB
    * @param filename - Filename of file to check.
-   * @param host - Host or IP of target server. This is optional. If it is not specified then the function will use the current server as the target server.
+   * @param host - Host of target server. This is optional. If it is not specified then the function will use the current server as the target server.
    * @returns True if specified file exists, and false otherwise.
    */
   fileExists(filename: string, host?: string): boolean;
@@ -4370,7 +4370,7 @@ export interface NS extends Singularity {
    * ```
    * @remarks RAM cost: 0.1 GB
    * @param script - Filename of script to check. This is case-sensitive.
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @param args - Arguments to specify/identify which scripts to search for.
    * @returns True if specified script is running on the target server, and false otherwise.
    */
@@ -4559,7 +4559,7 @@ export interface NS extends Singularity {
    *
    * @remarks RAM cost: 1 GB
    * @param name - Filename of file to remove. Must include the extension.
-   * @param host - Host or IP Address of the server on which to delete the file. Optional. Defaults to current server.
+   * @param host - Host Address of the server on which to delete the file. Optional. Defaults to current server.
    * @returns True if it successfully deletes the file, and false otherwise.
    */
   rm(name: string, host?: string): boolean;
@@ -4583,18 +4583,18 @@ export interface NS extends Singularity {
    * ```
    * @remarks RAM cost: 1 GB
    * @param script - Filename of script to check. This is case-sensitive.
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @returns True if the specified script is running, and false otherwise.
    */
   scriptRunning(script: string, host: string): boolean;
 
   /**
-   * Kills all scripts with the specified filename on the target server specified by hostname/ip,
+   * Kills all scripts with the specified filename on the target server specified by hostname,
    * regardless of arguments.
    *
    * @remarks RAM cost: 1 GB
    * @param script - Filename of script to kill. This is case-sensitive.
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @returns true if one or more scripts were successfully killed, and false if none were.
    */
   scriptKill(script: string, host: string): boolean;
@@ -4613,7 +4613,7 @@ export interface NS extends Singularity {
    *
    * @remarks RAM cost: 0.1 GB
    * @param script - Filename of script. This is case-sensitive.
-   * @param host - Host or IP of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
+   * @param host - Host of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
    * @returns Amount of RAM required to run the specified script on the target server, and 0 if the script does not exist.
    */
   getScriptRam(script: string, host?: string): number;
@@ -4623,7 +4623,7 @@ export interface NS extends Singularity {
    * The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels.
    *
    * @remarks RAM cost: 0.05 GB
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
    * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in seconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
@@ -4635,7 +4635,7 @@ export interface NS extends Singularity {
    * The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels.
    *
    * @remarks RAM cost: 0.05 GB
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
    * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in seconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
@@ -4647,7 +4647,7 @@ export interface NS extends Singularity {
    * The function takes in an optional hackLvl parameter that can be specified to see what the weaken time would be at different hacking levels.
    *
    * @remarks RAM cost: 0.05 GB
-   * @param host - Host or IP of target server.
+   * @param host - Host of target server.
    * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
    * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in seconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
