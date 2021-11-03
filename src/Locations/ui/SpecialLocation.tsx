@@ -81,7 +81,12 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       N00dles();
     }
 
-    return <Button onClick={EatNoodles}>Eat noodles</Button>;
+    return (
+      <>
+        <br />
+        <Button onClick={EatNoodles}>Eat noodles</Button>
+      </>
+    );
   }
 
   function CreateCorporation(): React.ReactElement {
