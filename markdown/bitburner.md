@@ -19,11 +19,15 @@
 |  [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Options to affect the behavior of [CodingContract](./bitburner.codingcontract.md) attempt. |
 |  [CodingContract](./bitburner.codingcontract.md) | Coding Contact API |
 |  [CrimeStats](./bitburner.crimestats.md) | Data representing the internal values of a crime. |
+|  [EquipmentStats](./bitburner.equipmentstats.md) | Object representing data representing a gang member equipment. |
 |  [Gang](./bitburner.gang.md) | Gang API |
 |  [GangGenInfo](./bitburner.ganggeninfo.md) | Gang general info. |
 |  [GangMemberAscension](./bitburner.gangmemberascension.md) |  |
 |  [GangMemberInfo](./bitburner.gangmemberinfo.md) |  |
+|  [GangOtherInfo](./bitburner.gangotherinfo.md) |  |
 |  [GangOtherInfoObject](./bitburner.gangotherinfoobject.md) |  |
+|  [GangTaskStats](./bitburner.gangtaskstats.md) | Object representing data representing a gang member task. |
+|  [GangTerritory](./bitburner.gangterritory.md) |  |
 |  [HackingMultipliers](./bitburner.hackingmultipliers.md) | Hack related multipliers. |
 |  [Hacknet](./bitburner.hacknet.md) | Hacknet API |
 |  [HacknetMultipliers](./bitburner.hacknetmultipliers.md) | Hacknet related multipliers. |
@@ -39,17 +43,7 @@
 |  [SleeveTask](./bitburner.sleevetask.md) | Object representing a sleeve current task. |
 |  [SleeveWorkGains](./bitburner.sleeveworkgains.md) |  |
 |  [SourceFileLvl](./bitburner.sourcefilelvl.md) |  |
-|  [StockOrderObject](./bitburner.stockorderobject.md) | Value in map of [StockOrder](./bitburner.stockorder.md) |
-|  [stringStats](./bitburner.stringstats.md) | Object representing data representing a gang member task. |
-|  [stringTerritory](./bitburner.stringterritory.md) |  |
-|  [TIX](./bitburner.tix.md) | Stock market API |
-
-## Type Aliases
-
-|  Type Alias | Description |
-|  --- | --- |
-|  [GangOtherInfo](./bitburner.gangotherinfo.md) |  |
-|  [Handle](./bitburner.handle.md) |  |
-|  [Port](./bitburner.port.md) | Queue used to send and receive messages. |
 |  [StockOrder](./bitburner.stockorder.md) | Return value of [getOrders](./bitburner.tix.getorders.md) |
+|  [StockOrderObject](./bitburner.stockorderobject.md) | Value in map of [StockOrder](./bitburner.stockorder.md) |
+|  [TIX](./bitburner.tix.md) | Stock market API |
 

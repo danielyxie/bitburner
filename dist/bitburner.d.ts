@@ -876,6 +876,25 @@ export declare interface CrimeStats {
 }
 
 /**
+ * Object representing data representing a gang member equipment.
+ * @public
+ */
+export declare interface EquipmentStats {
+    /** Strength multiplier */
+    str: number;
+    /** Defense multiplier */
+    def: number;
+    /** Dexterity multiplier */
+    dex: number;
+    /** Agility multiplier */
+    agi: number;
+    /** Charisma multiplier */
+    cha: number;
+    /** Hacking multiplier */
+    hack: number;
+}
+
+/**
  * Gang API
  * @remarks
  * If you are not in BitNode-2, then you must have Source-File 2 in order to use this API.
@@ -989,7 +1008,7 @@ export declare interface Gang {
      * @param name -  Name of the task.
      * @returns Detailed stats of a task.
      */
-    getTaskStats(name: string): stringStats;
+    getTaskStats(name: string): GangTaskStats;
 
     /**
      * List equipment names.
@@ -1038,7 +1057,7 @@ export declare interface Gang {
      * @param equipName - Name of equipment.
      * @returns A dictionary containing the stats of the equipment.
      */
-    getEquipmentStats(equipName: string): stringStats;
+    getEquipmentStats(equipName: string): EquipmentStats;
 
     /**
      * Purchase an equipment for a gang member.
@@ -1202,10 +1221,10 @@ export declare interface GangMemberInfo {
 /**
  * @public
  */
-export declare type GangOtherInfo = {
+export declare interface GangOtherInfo {
     /** Stock Symbol */
     [key: string]: GangOtherInfoObject[];
-};
+}
 
 /**
  * @public
@@ -1215,6 +1234,55 @@ export declare interface GangOtherInfoObject {
     power: number;
     /** Gang territory, in decimal form */
     territory: number;
+}
+
+/**
+ * Object representing data representing a gang member task.
+ * @public
+ */
+export declare interface GangTaskStats {
+    /** Task name */
+    name: string;
+    /** Task Description */
+    desc: string;
+    /** Is a task of a hacking gang */
+    isHacking: boolean;
+    /** Is a task of a combat gang */
+    isCombat: boolean;
+    /** Base respect earned */
+    baseRespect: number;
+    /** Base wanted earned */
+    baseWanted: number;
+    /** Base money earned */
+    baseMoney: number;
+    /** Hacking skill impact on task scaling */
+    hackWeight: number;
+    /** Stength skill impact on task scaling */
+    strWeight: number;
+    /** Defense skill impact on task scaling */
+    defWeight: number;
+    /** Dexterity skill impact on task scaling */
+    dexWeight: number;
+    /** Agility skill impact on task scaling */
+    agiWeight: number;
+    /** Charisma skill impact on task scaling */
+    chaWeight: number;
+    /** Number representing the difficulty of the task */
+    difficulty: number;
+    /** Territory impact on task scaling */
+    territory: GangTerritory;
+}
+
+/**
+ * @public
+ */
+export declare interface GangTerritory {
+    /** Money gain impact on task scaling */
+    money: number;
+    /** Respect gain impact on task scaling */
+    respect: number;
+    /** Wanted gain impact on task scaling */
+    wanted: number;
 }
 
 /**
@@ -1511,11 +1579,6 @@ export declare interface HacknetMultipliers {
     /** Player's hacknet level cost multiplier */
     levelCost: number;
 }
-
-/**
- * @public
- */
-export declare type Handle = string | Port;
 
 /**
  * Object representing all the values related to a hacknet node.
@@ -2573,7 +2636,7 @@ export declare interface NS extends Singularity {
      * @param data - Data to write.
      * @param mode - Defines the write mode. Only valid when writing to text files.
      */
-    write(handle: Handle, data?: string[] | number, mode?: "w" | "a"): void;
+    write(handle: string | number, data?: string[] | number, mode?: "w" | "a"): void;
 
     /**
      * Attempts to write data to the specified Netscript Port.
@@ -2585,7 +2648,7 @@ export declare interface NS extends Singularity {
      * @param data - Data to write.
      * @returns True if the data is successfully written to the port, and false otherwise.
      */
-    tryWrite(port: Handle, data: string[] | number): boolean;
+    tryWrite(port: number, data: string[] | number): boolean;
 
     /**
      * This function is used to read data from a port or from a text file (.txt).
@@ -2603,7 +2666,7 @@ export declare interface NS extends Singularity {
      * @param handle - Port or text file to read from.
      * @returns Data in the specified text file or port.
      */
-    read(handle: Handle): string | number | object;
+    read(handle: string | number): string | number | object;
 
     /**
      * This function is used to peek at the data from a port. It returns the
@@ -2614,7 +2677,7 @@ export declare interface NS extends Singularity {
      * @param port - Port to peek. Must be an integer between 1 and 20.
      * @returns Data in the specified port.
      */
-    peek(port: Port): string | number | object;
+    peek(port: number): string | number | object;
 
     /**
      * This function is used to clear data in a Netscript Ports or a text file.
@@ -2628,7 +2691,7 @@ export declare interface NS extends Singularity {
      * @remarks RAM cost: 1 GB
      * @param handle - Port or text file to clear.
      */
-    clear(handle: Handle): void;
+    clear(handle: string | number): void;
 
     /**
      * Get a handle to a Netscript Port.
@@ -2640,7 +2703,7 @@ export declare interface NS extends Singularity {
      * @param port - Port number. Must be an integer between 1 and 20.
      * @returns Data in the specified port.
      */
-    getPortHandle(port: Port): any[];
+    getPortHandle(port: number): any[];
 
     /**
      * Removes the specified file from the current server. This function works for every file
@@ -2918,20 +2981,6 @@ export declare interface PlayerSkills {
     /** Intelligence level */
     intelligence: number;
 }
-
-/**
- * Queue used to send and receive messages.
- * @remarks
- * A port is implemented as a sort of serialized queue,
- * where you can only write and read one element at a time from the port.
- * When you read data from a port, the element that is read is removed from the port.
- *
- * IMPORTANT: The data inside ports are not saved!
- * This means if you close and re-open the game, or reload the page
- * then you will lose all of the data in the ports!
- * @public
- */
-export declare type Port = number;
 
 /**
  * A single process on a server.
@@ -3892,10 +3941,10 @@ export declare interface SourceFileLvl {
  * Return value of {@link TIX.getOrders | getOrders}
  * @public
  */
-export declare type StockOrder = {
+export declare interface StockOrder {
     /** Stock Symbol */
     [key: string]: StockOrderObject[];
-};
+}
 
 /**
  * Value in map of {@link StockOrder}
@@ -3910,74 +3959,6 @@ export declare interface StockOrderObject {
     type: string;
     /** Order position */
     position: string;
-}
-
-/**
- * Object representing data representing a gang member task.
- * @public
- */
-export declare interface stringStats {
-    /** Task name */
-    name: string;
-    /** Task Description */
-    desc: string;
-    /** Is a task of a hacking gang */
-    isHacking: boolean;
-    /** Is a task of a combat gang */
-    isCombat: boolean;
-    /** Base respect earned */
-    baseRespect: number;
-    /** Base wanted earned */
-    baseWanted: number;
-    /** Base money earned */
-    baseMoney: number;
-    /** Hacking skill impact on task scaling */
-    hackWeight: number;
-    /** Stength skill impact on task scaling */
-    strWeight: number;
-    /** Defense skill impact on task scaling */
-    defWeight: number;
-    /** Dexterity skill impact on task scaling */
-    dexWeight: number;
-    /** Agility skill impact on task scaling */
-    agiWeight: number;
-    /** Charisma skill impact on task scaling */
-    chaWeight: number;
-    /** Number representing the difficulty of the task */
-    difficulty: number;
-    /** Territory impact on task scaling */
-    territory: stringTerritory;
-}
-
-/**
- * Object representing data representing a gang member equipment.
- * @public
- */
-export declare interface stringStats {
-    /** Strength multiplier */
-    str: number;
-    /** Defense multiplier */
-    def: number;
-    /** Dexterity multiplier */
-    dex: number;
-    /** Agility multiplier */
-    agi: number;
-    /** Charisma multiplier */
-    cha: number;
-    /** Hacking multiplier */
-    hack: number;
-}
-
-/**
- * @public
- */
-export declare interface stringTerritory {
-    /** Money gain impact on task scaling */
-    money: number;
-    /** Respect gain impact on task scaling */
-    respect: number;
-    /** Wanted gain impact on task scaling */
-    wanted: number;
 }
 
 /**

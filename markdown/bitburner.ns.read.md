@@ -13,14 +13,14 @@ If the argument port/fn is a string, then it specifies the name of a text file (
 <b>Signature:</b>
 
 ```typescript
-read(handle: Handle): string | number | object;
+read(handle: string | number): string | number | object;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  handle | [Handle](./bitburner.handle.md) | Port or text file to read from. |
+|  handle | string \| number | Port or text file to read from. |
 
 <b>Returns:</b>
 

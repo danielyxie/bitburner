@@ -9,7 +9,7 @@ Get stats of an equipment.
 <b>Signature:</b>
 
 ```typescript
-getEquipmentStats(equipName: string): stringStats;
+getEquipmentStats(equipName: string): EquipmentStats;
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ getEquipmentStats(equipName: string): stringStats;
 
 <b>Returns:</b>
 
-[stringStats](./bitburner.stringstats.md)
+[EquipmentStats](./bitburner.equipmentstats.md)
 
 A dictionary containing the stats of the equipment.
 

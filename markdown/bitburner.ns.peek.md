@@ -9,14 +9,14 @@ This function is used to peek at the data from a port. It returns the first elem
 <b>Signature:</b>
 
 ```typescript
-peek(port: Port): string | number | object;
+peek(port: number): string | number | object;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  port | [Port](./bitburner.port.md) | Port to peek. Must be an integer between 1 and 20. |
+|  port | number | Port to peek. Must be an integer between 1 and 20. |
 
 <b>Returns:</b>
 

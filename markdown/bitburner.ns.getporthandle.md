@@ -11,14 +11,14 @@ WARNING: Port Handles only work in NetscriptJS (Netscript 2.0). They will not wo
 <b>Signature:</b>
 
 ```typescript
-getPortHandle(port: Port): any[];
+getPortHandle(port: number): any[];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  port | [Port](./bitburner.port.md) | Port number. Must be an integer between 1 and 20. |
+|  port | number | Port number. Must be an integer between 1 and 20. |
 
 <b>Returns:</b>
 

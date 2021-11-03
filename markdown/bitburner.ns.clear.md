@@ -13,14 +13,14 @@ If the port/fn argument is a string, then it specifies the name of a text file (
 <b>Signature:</b>
 
 ```typescript
-clear(handle: Handle): void;
+clear(handle: string | number): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  handle | [Handle](./bitburner.handle.md) | Port or text file to clear. |
+|  handle | string \| number | Port or text file to clear. |
 
 <b>Returns:</b>
 

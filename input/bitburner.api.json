@@ -5615,6 +5615,178 @@
         },
         {
           "kind": "Interface",
+          "canonicalReference": "bitburner!EquipmentStats:interface",
+          "docComment": "/**\n * Object representing data representing a gang member equipment.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "interface EquipmentStats "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "EquipmentStats",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!EquipmentStats#agi:member",
+              "docComment": "/**\n * Agility multiplier\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "agi: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "agi",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!EquipmentStats#cha:member",
+              "docComment": "/**\n * Charisma multiplier\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "cha: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "cha",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!EquipmentStats#def:member",
+              "docComment": "/**\n * Defense multiplier\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "def: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "def",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!EquipmentStats#dex:member",
+              "docComment": "/**\n * Dexterity multiplier\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "dex: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "dex",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!EquipmentStats#hack:member",
+              "docComment": "/**\n * Hacking multiplier\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "hack: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "hack",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!EquipmentStats#str:member",
+              "docComment": "/**\n * Strength multiplier\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "str: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "str",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
           "canonicalReference": "bitburner!Gang:interface",
           "docComment": "/**\n * Gang API\n *\n * @remarks\n *\n * If you are not in BitNode-2, then you must have Source-File 2 in order to use this API.\n *\n * @public\n */\n",
           "excerptTokens": [
@@ -5862,8 +6034,8 @@
                 },
                 {
                   "kind": "Reference",
-                  "text": "stringStats",
-                  "canonicalReference": "bitburner!stringStats:interface"
+                  "text": "EquipmentStats",
+                  "canonicalReference": "bitburner!EquipmentStats:interface"
                 },
                 {
                   "kind": "Content",
@@ -6046,7 +6218,7 @@
                 {
                   "kind": "Reference",
                   "text": "GangOtherInfo",
-                  "canonicalReference": "bitburner!GangOtherInfo:type"
+                  "canonicalReference": "bitburner!GangOtherInfo:interface"
                 },
                 {
                   "kind": "Content",
@@ -6110,8 +6282,8 @@
                 },
                 {
                   "kind": "Reference",
-                  "text": "stringStats",
-                  "canonicalReference": "bitburner!stringStats:interface"
+                  "text": "GangTaskStats",
+                  "canonicalReference": "bitburner!GangTaskStats:interface"
                 },
                 {
                   "kind": "Content",
@@ -7382,38 +7554,67 @@
           "extendsTokenRanges": []
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "bitburner!GangOtherInfo:type",
+          "kind": "Interface",
+          "canonicalReference": "bitburner!GangOtherInfo:interface",
           "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "type GangOtherInfo = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n  [key: string]: "
-            },
-            {
-              "kind": "Reference",
-              "text": "GangOtherInfoObject",
-              "canonicalReference": "bitburner!GangOtherInfoObject:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "[];\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
+              "text": "interface GangOtherInfo "
             }
           ],
           "releaseTag": "Public",
           "name": "GangOtherInfo",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "members": [
+            {
+              "kind": "IndexSignature",
+              "canonicalReference": "bitburner!GangOtherInfo:index(1)",
+              "docComment": "/**\n * Stock Symbol\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "[key: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "]: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangOtherInfoObject",
+                  "canonicalReference": "bitburner!GangOtherInfoObject:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "key",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ]
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
           "kind": "Interface",
@@ -7475,6 +7676,507 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "territory",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "bitburner!GangTaskStats:interface",
+          "docComment": "/**\n * Object representing data representing a gang member task.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "interface GangTaskStats "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "GangTaskStats",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#agiWeight:member",
+              "docComment": "/**\n * Agility skill impact on task scaling\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "agiWeight: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "agiWeight",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#baseMoney:member",
+              "docComment": "/**\n * Base money earned\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "baseMoney: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "baseMoney",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#baseRespect:member",
+              "docComment": "/**\n * Base respect earned\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "baseRespect: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "baseRespect",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#baseWanted:member",
+              "docComment": "/**\n * Base wanted earned\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "baseWanted: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "baseWanted",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#chaWeight:member",
+              "docComment": "/**\n * Charisma skill impact on task scaling\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "chaWeight: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "chaWeight",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#defWeight:member",
+              "docComment": "/**\n * Defense skill impact on task scaling\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "defWeight: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "defWeight",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#desc:member",
+              "docComment": "/**\n * Task Description\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "desc: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "desc",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#dexWeight:member",
+              "docComment": "/**\n * Dexterity skill impact on task scaling\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "dexWeight: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "dexWeight",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#difficulty:member",
+              "docComment": "/**\n * Number representing the difficulty of the task\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "difficulty: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "difficulty",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#hackWeight:member",
+              "docComment": "/**\n * Hacking skill impact on task scaling\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "hackWeight: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "hackWeight",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#isCombat:member",
+              "docComment": "/**\n * Is a task of a combat gang\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "isCombat: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "isCombat",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#isHacking:member",
+              "docComment": "/**\n * Is a task of a hacking gang\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "isHacking: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "isHacking",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#name:member",
+              "docComment": "/**\n * Task name\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "name: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "name",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#strWeight:member",
+              "docComment": "/**\n * Stength skill impact on task scaling\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "strWeight: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "strWeight",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTaskStats#territory:member",
+              "docComment": "/**\n * Territory impact on task scaling\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "territory: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangTerritory",
+                  "canonicalReference": "bitburner!GangTerritory:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "territory",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "bitburner!GangTerritory:interface",
+          "docComment": "/**\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "interface GangTerritory "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "GangTerritory",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTerritory#money:member",
+              "docComment": "/**\n * Money gain impact on task scaling\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "money: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "money",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTerritory#respect:member",
+              "docComment": "/**\n * Respect gain impact on task scaling\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "respect: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "respect",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangTerritory#wanted:member",
+              "docComment": "/**\n * Wanted gain impact on task scaling\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "wanted: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "wanted",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -8498,36 +9200,6 @@
           "extendsTokenRanges": []
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "bitburner!Handle:type",
-          "docComment": "/**\n * @public\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "type Handle = "
-            },
-            {
-              "kind": "Content",
-              "text": "string | "
-            },
-            {
-              "kind": "Reference",
-              "text": "Port",
-              "canonicalReference": "bitburner!Port:type"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "Handle",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 3
-          }
-        },
-        {
           "kind": "Interface",
           "canonicalReference": "bitburner!NodeStats:interface",
           "docComment": "/**\n * Object representing all the values related to a hacknet node.\n *\n * @public\n */\n",
@@ -8906,9 +9578,8 @@
                   "text": "clear(handle: "
                 },
                 {
-                  "kind": "Reference",
-                  "text": "Handle",
-                  "canonicalReference": "bitburner!Handle:type"
+                  "kind": "Content",
+                  "text": "string | number"
                 },
                 {
                   "kind": "Content",
@@ -9704,9 +10375,8 @@
                   "text": "getPortHandle(port: "
                 },
                 {
-                  "kind": "Reference",
-                  "text": "Port",
-                  "canonicalReference": "bitburner!Port:type"
+                  "kind": "Content",
+                  "text": "number"
                 },
                 {
                   "kind": "Content",
@@ -11726,9 +12396,8 @@
                   "text": "peek(port: "
                 },
                 {
-                  "kind": "Reference",
-                  "text": "Port",
-                  "canonicalReference": "bitburner!Port:type"
+                  "kind": "Content",
+                  "text": "number"
                 },
                 {
                   "kind": "Content",
@@ -11972,9 +12641,8 @@
                   "text": "read(handle: "
                 },
                 {
-                  "kind": "Reference",
-                  "text": "Handle",
-                  "canonicalReference": "bitburner!Handle:type"
+                  "kind": "Content",
+                  "text": "string | number"
                 },
                 {
                   "kind": "Content",
@@ -12946,9 +13614,8 @@
                   "text": "tryWrite(port: "
                 },
                 {
-                  "kind": "Reference",
-                  "text": "Handle",
-                  "canonicalReference": "bitburner!Handle:type"
+                  "kind": "Content",
+                  "text": "number"
                 },
                 {
                   "kind": "Content",
@@ -13268,9 +13935,8 @@
                   "text": "write(handle: "
                 },
                 {
-                  "kind": "Reference",
-                  "text": "Handle",
-                  "canonicalReference": "bitburner!Handle:type"
+                  "kind": "Content",
+                  "text": "string | number"
                 },
                 {
                   "kind": "Content",
@@ -13538,31 +14204,6 @@
             }
           ],
           "extendsTokenRanges": []
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "bitburner!Port:type",
-          "docComment": "/**\n * Queue used to send and receive messages.\n *\n * @remarks\n *\n * A port is implemented as a sort of serialized queue, where you can only write and read one element at a time from the port. When you read data from a port, the element that is read is removed from the port.\n *\n * IMPORTANT: The data inside ports are not saved! This means if you close and re-open the game, or reload the page then you will lose all of the data in the ports!\n *\n * @public\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "type Port = "
-            },
-            {
-              "kind": "Content",
-              "text": "number"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "Port",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
         },
         {
           "kind": "Interface",
@@ -17236,38 +17877,67 @@
           "extendsTokenRanges": []
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "bitburner!StockOrder:type",
+          "kind": "Interface",
+          "canonicalReference": "bitburner!StockOrder:interface",
           "docComment": "/**\n * Return value of {@link TIX.getOrders | getOrders}\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "type StockOrder = "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n  [key: string]: "
-            },
-            {
-              "kind": "Reference",
-              "text": "StockOrderObject",
-              "canonicalReference": "bitburner!StockOrderObject:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "[];\n}"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
+              "text": "interface StockOrder "
             }
           ],
           "releaseTag": "Public",
           "name": "StockOrder",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
+          "members": [
+            {
+              "kind": "IndexSignature",
+              "canonicalReference": "bitburner!StockOrder:index(1)",
+              "docComment": "/**\n * Stock Symbol\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "[key: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "]: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StockOrderObject",
+                  "canonicalReference": "bitburner!StockOrderObject:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "key",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ]
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
           "kind": "Interface",
@@ -17381,663 +18051,6 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "type",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "bitburner!stringStats:interface",
-          "docComment": "/**\n * Object representing data representing a gang member task.\n *\n * @public\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "interface stringStats "
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "stringStats",
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#agi:member",
-              "docComment": "/**\n * Agility multiplier\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "agi: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "agi",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#agiWeight:member",
-              "docComment": "/**\n * Agility skill impact on task scaling\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "agiWeight: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "agiWeight",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#baseMoney:member",
-              "docComment": "/**\n * Base money earned\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "baseMoney: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "baseMoney",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#baseRespect:member",
-              "docComment": "/**\n * Base respect earned\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "baseRespect: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "baseRespect",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#baseWanted:member",
-              "docComment": "/**\n * Base wanted earned\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "baseWanted: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "baseWanted",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#cha:member",
-              "docComment": "/**\n * Charisma multiplier\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "cha: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "cha",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#chaWeight:member",
-              "docComment": "/**\n * Charisma skill impact on task scaling\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "chaWeight: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "chaWeight",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#def:member",
-              "docComment": "/**\n * Defense multiplier\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "def: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "def",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#defWeight:member",
-              "docComment": "/**\n * Defense skill impact on task scaling\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "defWeight: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "defWeight",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#desc:member",
-              "docComment": "/**\n * Task Description\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "desc: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "desc",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#dex:member",
-              "docComment": "/**\n * Dexterity multiplier\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "dex: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "dex",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#dexWeight:member",
-              "docComment": "/**\n * Dexterity skill impact on task scaling\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "dexWeight: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "dexWeight",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#difficulty:member",
-              "docComment": "/**\n * Number representing the difficulty of the task\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "difficulty: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "difficulty",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#hack:member",
-              "docComment": "/**\n * Hacking multiplier\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "hack: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "hack",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#hackWeight:member",
-              "docComment": "/**\n * Hacking skill impact on task scaling\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "hackWeight: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "hackWeight",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#isCombat:member",
-              "docComment": "/**\n * Is a task of a combat gang\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "isCombat: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "boolean"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "isCombat",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#isHacking:member",
-              "docComment": "/**\n * Is a task of a hacking gang\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "isHacking: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "boolean"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "isHacking",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#name:member",
-              "docComment": "/**\n * Task name\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "name: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "name",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#str:member",
-              "docComment": "/**\n * Strength multiplier\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "str: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "str",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#strWeight:member",
-              "docComment": "/**\n * Stength skill impact on task scaling\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "strWeight: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "strWeight",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringStats#territory:member",
-              "docComment": "/**\n * Territory impact on task scaling\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "territory: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "stringTerritory",
-                  "canonicalReference": "bitburner!stringTerritory:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "territory",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "bitburner!stringTerritory:interface",
-          "docComment": "/**\n * @public\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "interface stringTerritory "
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "stringTerritory",
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringTerritory#money:member",
-              "docComment": "/**\n * Money gain impact on task scaling\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "money: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "money",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringTerritory#respect:member",
-              "docComment": "/**\n * Respect gain impact on task scaling\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "respect: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "respect",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "bitburner!stringTerritory#wanted:member",
-              "docComment": "/**\n * Wanted gain impact on task scaling\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "wanted: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "wanted",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -18410,7 +18423,7 @@
                 {
                   "kind": "Reference",
                   "text": "StockOrder",
-                  "canonicalReference": "bitburner!StockOrder:type"
+                  "canonicalReference": "bitburner!StockOrder:interface"
                 },
                 {
                   "kind": "Content",

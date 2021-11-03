@@ -2,16 +2,12 @@
 
 [Home](./index.md) &gt; [bitburner](./bitburner.md) &gt; [StockOrder](./bitburner.stockorder.md)
 
-## StockOrder type
+## StockOrder interface
 
 Return value of [getOrders](./bitburner.tix.getorders.md)
 
 <b>Signature:</b>
 
 ```typescript
-type StockOrder = {
-  [key: string]: StockOrderObject[];
-};
+interface StockOrder 
 ```
-<b>References:</b> [StockOrderObject](./bitburner.stockorderobject.md)
-

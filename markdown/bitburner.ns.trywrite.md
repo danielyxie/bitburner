@@ -9,14 +9,14 @@ Attempts to write data to the specified Netscript Port. If the port is full, the
 <b>Signature:</b>
 
 ```typescript
-tryWrite(port: Handle, data: string[] | number): boolean;
+tryWrite(port: number, data: string[] | number): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  port | [Handle](./bitburner.handle.md) | Port or text file that will be written to. |
+|  port | number | Port or text file that will be written to. |
 |  data | string\[\] \| number | Data to write. |
 
 <b>Returns:</b>
