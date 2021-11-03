@@ -9,5 +9,5 @@ Array of names of all owned Non-Augmentation Equipment
 <b>Signature:</b>
 
 ```typescript
-equipment: GangEquipment[];
+equipment: string[];
 ```

@@ -18,7 +18,7 @@ interface GangMemberInfo
 |  [agility](./bitburner.gangmemberinfo.agility.md) | number | Agility stat |
 |  [agilityAscensionMult](./bitburner.gangmemberinfo.agilityascensionmult.md) | number | Agility multiplier from ascension. |
 |  [agilityEquipMult](./bitburner.gangmemberinfo.agilityequipmult.md) | number | Agility multiplier from equipment. |
-|  [augmentations](./bitburner.gangmemberinfo.augmentations.md) | [GangAugmentations](./bitburner.gangaugmentations.md)<!-- -->\[\] | Array of names of all owned Augmentations |
+|  [augmentations](./bitburner.gangmemberinfo.augmentations.md) | string\[\] | Array of names of all owned Augmentations |
 |  [charisma](./bitburner.gangmemberinfo.charisma.md) | number | Charisma stat |
 |  [charismaAscensionMult](./bitburner.gangmemberinfo.charismaascensionmult.md) | number | Charisma multiplier from ascension. |
 |  [charismaEquipMult](./bitburner.gangmemberinfo.charismaequipmult.md) | number | Charisma multiplier from equipment. |
@@ -28,12 +28,12 @@ interface GangMemberInfo
 |  [dexterity](./bitburner.gangmemberinfo.dexterity.md) | number | Dexterity stat |
 |  [dexterityAscensionMult](./bitburner.gangmemberinfo.dexterityascensionmult.md) | number | Dexterity multiplier from ascension. |
 |  [dexterityEquipMult](./bitburner.gangmemberinfo.dexterityequipmult.md) | number | Dexterity multiplier from equipment. |
-|  [equipment](./bitburner.gangmemberinfo.equipment.md) | [GangEquipment](./bitburner.gangequipment.md)<!-- -->\[\] | Array of names of all owned Non-Augmentation Equipment |
+|  [equipment](./bitburner.gangmemberinfo.equipment.md) | string\[\] | Array of names of all owned Non-Augmentation Equipment |
 |  [hacking](./bitburner.gangmemberinfo.hacking.md) | number | Hacking stat |
 |  [hackingAscensionMult](./bitburner.gangmemberinfo.hackingascensionmult.md) | number | Hacking multiplier from ascension. |
 |  [hackingEquipMult](./bitburner.gangmemberinfo.hackingequipmult.md) | number | Hacking multiplier from equipment. |
 |  [strength](./bitburner.gangmemberinfo.strength.md) | number | Strength stat |
 |  [strengthAscensionMult](./bitburner.gangmemberinfo.strengthascensionmult.md) | number | Strength multiplier from ascension. |
 |  [strengthEquipMult](./bitburner.gangmemberinfo.strengthequipmult.md) | number | Strength multiplier from equipment. |
-|  [task](./bitburner.gangmemberinfo.task.md) | [GangTasks](./bitburner.gangtasks.md) | Name of currently assigned task |
+|  [task](./bitburner.gangmemberinfo.task.md) | string | Name of currently assigned task |
 

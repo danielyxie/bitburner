@@ -16,7 +16,7 @@ getServerMoneyAvailable(host: string): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host or IP of target server |
+|  host | string | Host of target server |
 
 <b>Returns:</b>
 

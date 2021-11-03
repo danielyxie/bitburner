@@ -4,9 +4,7 @@
 
 ## Hacknet.getCoreUpgradeCost() method
 
-Returns the cost of upgrading the number of cores of the specified Hacknet Node by n.
-
-If an invalid value for n is provided, then this function returns 0. If the specified Hacknet Node is already at max level, then Infinity is returned.
+Calculate the cost of upgrading hacknet node cores.
 
 <b>Signature:</b>
 
@@ -30,4 +28,8 @@ Cost of upgrading the specified Hacknet Node's number of cores.
 ## Remarks
 
 RAM cost: 0 GB
+
+Returns the cost of upgrading the number of cores of the specified Hacknet Node by n.
+
+If an invalid value for n is provided, then this function returns 0. If the specified Hacknet Node is already at max level, then Infinity is returned.
 

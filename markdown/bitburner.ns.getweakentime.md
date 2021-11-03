@@ -16,7 +16,7 @@ getWeakenTime(host: string, hackLvl?: number, intLvl?: number): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host or IP of target server. |
+|  host | string | Host of target server. |
 |  hackLvl | number | Optional hacking level for the calculation. Defaults to player’s current hacking level. |
 |  intLvl | number | Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5). |
 

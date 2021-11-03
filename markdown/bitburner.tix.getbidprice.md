@@ -9,14 +9,14 @@ Returns the bid price of that stock.
 <b>Signature:</b>
 
 ```typescript
-getBidPrice(sym: StockSymbol): number;
+getBidPrice(sym: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sym | [StockSymbol](./bitburner.stocksymbol.md) | Stock symbol. |
+|  sym | string | Stock symbol. |
 
 <b>Returns:</b>
 

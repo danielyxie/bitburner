@@ -4,9 +4,7 @@
 
 ## Sleeve.setToSynchronize() method
 
-If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
-
-Return a boolean indicating whether or not this action was set successfully.
+Set a sleeve to synchronize.
 
 <b>Signature:</b>
 
@@ -29,4 +27,6 @@ True if this action was set successfully, false otherwise.
 ## Remarks
 
 RAM cost: 4 GB
+
+Return a boolean indicating whether or not this action was set successfully.
 

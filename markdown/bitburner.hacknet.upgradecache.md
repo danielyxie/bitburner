@@ -4,13 +4,7 @@
 
 ## Hacknet.upgradeCache() method
 
-This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
-
-Tries to upgrade the specified Hacknet Server’s cache n times.
-
-Returns true if it successfully upgrades the Server’s cache n times, or if it purchases some positive amount and the Server reaches its max cache level.
-
-Returns false otherwise.
+Upgrade the cache of a hacknet node.
 
 <b>Signature:</b>
 
@@ -34,4 +28,12 @@ True if the Hacknet Node’s cores are successfully purchased, false otherwise.
 ## Remarks
 
 RAM cost: 0 GB
+
+This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
+
+Tries to upgrade the specified Hacknet Server’s cache n times.
+
+Returns true if it successfully upgrades the Server’s cache n times, or if it purchases some positive amount and the Server reaches its max cache level.
+
+Returns false otherwise.
 

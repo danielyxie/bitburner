@@ -16,7 +16,7 @@ hasRootAccess(host: string): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host or IP of the target server |
+|  host | string | Host of the target server |
 
 <b>Returns:</b>
 

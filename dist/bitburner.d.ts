@@ -66,123 +66,12 @@ export declare interface AugmentationStats {
 }
 
 /**
- * All augmentation names.
- * @public
- */
-export declare type AugmentName =
-| "Augmented Targeting I"
-| "Augmented Targeting II"
-| "Augmented Targeting III"
-| "Synthetic Heart"
-| "Synfibril Muscle"
-| "Combat Rib I"
-| "Combat Rib II"
-| "Combat Rib III"
-| "Nanofiber Weave"
-| "NEMEAN Subdermal Weave"
-| "Wired Reflexes"
-| "Graphene Bone Lacings"
-| "Bionic Spine"
-| "Graphene Bionic Spine Upgrade"
-| "Bionic Legs"
-| "Graphene Bionic Legs Upgrade"
-| "Speech Processor Implant"
-| "TITN-41 Gene-Modification Injection"
-| "Enhanced Social Interaction Implant"
-| "BitWire"
-| "Artificial Bio-neural Network Implant"
-| "Artificial Synaptic Potentiation"
-| "Enhanced Myelin Sheathing"
-| "Synaptic Enhancement Implant"
-| "Neural-Retention Enhancement"
-| "DataJack"
-| "Embedded Netburner Module"
-| "Embedded Netburner Module Core Implant"
-| "Embedded Netburner Module Core V2 Upgrade"
-| "Embedded Netburner Module Core V3 Upgrade"
-| "Embedded Netburner Module Analyze Engine"
-| "Embedded Netburner Module Direct Memory Access Upgrade"
-| "Neuralstimulator"
-| "Neural Accelerator"
-| "Cranial Signal Processors - Gen I"
-| "Cranial Signal Processors - Gen II"
-| "Cranial Signal Processors - Gen III"
-| "Cranial Signal Processors - Gen IV"
-| "Cranial Signal Processors - Gen V"
-| "Neuronal Densification"
-| "Nuoptimal Nootropic Injector Implant"
-| "Speech Enhancement"
-| "FocusWire"
-| "PC Direct-Neural Interface"
-| "PC Direct-Neural Interface Optimization Submodule"
-| "PC Direct-Neural Interface NeuroNet Injector"
-| "ADR-V1 Pheromone Gene"
-| "ADR-V2 Pheromone Gene"
-| "The Shadow's Simulacrum"
-| "Hacknet Node CPU Architecture Neural-Upload"
-| "Hacknet Node Cache Architecture Neural-Upload"
-| "Hacknet Node NIC Architecture Neural-Upload"
-| "Hacknet Node Kernel Direct-Neural Interface"
-| "Hacknet Node Core Direct-Neural Interface"
-| "NeuroFlux Governor"
-| "Neurotrainer I"
-| "Neurotrainer II"
-| "Neurotrainer III"
-| "HyperSight Corneal Implant"
-| "LuminCloaking-V1 Skin Implant"
-| "LuminCloaking-V2 Skin Implant"
-| "HemoRecirculator"
-| "SmartSonar Implant"
-| "Power Recirculation Core"
-| "QLink"
-| "The Red Pill"
-| "SPTN-97 Gene Modification"
-| "ECorp HVMind Implant"
-| "CordiARC Fusion Reactor"
-| "SmartJaw"
-| "Neotra"
-| "Xanipher"
-| "nextSENS Gene Modification"
-| "OmniTek InfoLoad"
-| "Photosynthetic Cells"
-| "BitRunners Neurolink"
-| "The Black Hand"
-| "CRTX42-AA Gene Modification"
-| "Neuregen Gene Modification"
-| "CashRoot Starter Kit"
-| "NutriGen Implant"
-| "INFRARET Enhancement"
-| "DermaForce Particle Barrier"
-| "Graphene BranchiBlades Upgrade"
-| "Graphene Bionic Arms Upgrade"
-| "BrachiBlades"
-| "Bionic Arms"
-| "Social Negotiation Assistant (S.N.A)"
-| "EsperTech Bladeburner Eyewear"
-| "EMS-4 Recombination"
-| "ORION-MKIV Shoulder"
-| "Hyperion Plasma Cannon V1"
-| "Hyperion Plasma Cannon V2"
-| "GOLEM Serum"
-| "Vangelis Virus"
-| "Vangelis Virus 3.0"
-| "I.N.T.E.R.L.I.N.K.E.D"
-| "Blade's Runners"
-| "BLADE-51b Tesla Armor"
-| "BLADE-51b Tesla Armor: Power Cells Upgrade"
-| "BLADE-51b Tesla Armor: Energy Shielding Upgrade"
-| "BLADE-51b Tesla Armor: Unibeam Upgrade"
-| "BLADE-51b Tesla Armor: Omnibeam Upgrade"
-| "BLADE-51b Tesla Armor: IPU Upgrade"
-| "The Blade's Simulacrum";
-
-/**
  * Return value of {@link Sleeve.getSleevePurchasableAugs | getSleevePurchasableAugs}
  * @public
  */
 export declare interface AugmentPair {
     /** augmentation name */
-    name: AugmentName;
+    name: string;
     /** augmentation cost */
     cost: number;
 }
@@ -284,160 +173,152 @@ export declare interface BitNodeMultipliers {
 }
 
 /**
+ * Bladeburner API
+ * @remarks
+ * You have to be employed in the Bladeburner division and be in BitNode-7
+ * or have Source-File 7 in order to use this API.
  * @public
  */
 export declare interface Bladeburner {
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * List all contracts.
+     * @remarks
+     * RAM cost: 0.4 GB
      *
      * Returns an array of strings containing the names of all Bladeburner contracts.
      *
-     * @remarks RAM cost: 0.4 GB
      * @returns Array of strings containing the names of all Bladeburner contracts.
      */
-    getContractNames(): BladeburnerContracts[];
+    getContractNames(): string[];
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * List all operations.
+     * @remarks
+     * RAM cost: 0.4 GB
      *
      * Returns an array of strings containing the names of all Bladeburner operations.
      *
-     * @remarks RAM cost: 0.4 GB
      * @returns Array of strings containing the names of all Bladeburner operations.
      */
-    getOperationNames(): BladeburnerOperations[];
+    getOperationNames(): string[];
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * List all black ops.
+     * @remarks
+     * RAM cost: 0.4 GB
      *
      * Returns an array of strings containing the names of all Bladeburner Black Ops.
      *
-     * @remarks RAM cost: 0.4 GB
      * @returns Array of strings containing the names of all Bladeburner Black Ops.
      */
-    getBlackOpNames(): BladeburnerBlackOps[];
+    getBlackOpNames(): string[];
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * List all general actions.
+     * @remarks
+     * RAM cost: 0.4 GB
      *
      * Returns an array of strings containing the names of all general Bladeburner actions.
      *
-     * @remarks RAM cost: 0.4 GB
      * @returns Array of strings containing the names of all general Bladeburner actions.
      */
-    getGeneralActionNames(): BladeburnerGenActions[];
+    getGeneralActionNames(): string[];
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * List all skills.
+     * @remarks
+     * RAM cost: 0.4 GB
      *
      * Returns an array of strings containing the names of all general Bladeburner skills.
      *
-     * @remarks RAM cost: 0.4 GB
      * @returns Array of strings containing the names of all general Bladeburner skills.
      */
-    getSkillNames(): BladeburnerSkills[];
+    getSkillNames(): string[];
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Start an action.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Attempts to start the specified Bladeburner action.
      * Returns true if the action was started successfully, and false otherwise.
      *
-     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match
      * @returns True if the action was started successfully, and false otherwise.
      */
-    startAction(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    ): boolean;
+    startAction(type: string, name: string): boolean;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Stop current action.
+     * @remarks
+     * RAM cost: 2 GB
      *
      * Stops the current Bladeburner action.
      *
-     * @remarks RAM cost: 2 GB
      */
     stopBladeburnerAction(): void;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get current action.
+     * @remarks
+     * RAM cost: 1 GB
      *
      * Returns an object that represents the player’s current Bladeburner action.
      * If the player is not performing an action, the function will return an object with the ‘type’ property set to “Idle”.
      *
-     * @remarks RAM cost: 1 GB
      * @returns Object that represents the player’s current Bladeburner action.
      */
     getCurrentAction(): BladeburnerCurAction;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get the time to complete an action.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the number of seconds it takes to complete the specified action
      *
-     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
-     * @returns Number of seconds it takes to complete the specified action.
+     * @returns Number of milliseconds it takes to complete the specified action.
      */
-    getActionTime(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    ): number;
+    getActionTime(type: string, name: string): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get estimate success chance of an action.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the estimated success chance for the specified action.
      * This chance is returned as a decimal value, NOT a percentage
      * (e.g. if you have an estimated success chance of 80%, then this function will return 0.80, NOT 80).
      *
-     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns Estimated success chance for the specified action.
      */
-    getActionEstimatedSuccessChance(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    ): number;
+    getActionEstimatedSuccessChance(type: string, name: string): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get the reputation gain of an action.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the average Bladeburner reputation gain for successfully
      * completing the specified action.
      * Note that this value is an ‘average’ and the real reputation gain may vary slightly from this value.
      *
-     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @param level - Optional action level at which to calculate the gain
      * @returns Average Bladeburner reputation gain for successfully completing the specified action.
      */
-    getActionRepGain(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    level: number,
-    ): number;
+    getActionRepGain(type: string, name: string, level: number): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get action count remaining.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the remaining count of the specified action.
      *
@@ -446,288 +327,259 @@ export declare interface Bladeburner {
      * This function will return 1 for BlackOps not yet completed regardless of wether
      * the player has the required rank to attempt the mission or not.
      *
-     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns Remaining count of the specified action.
      */
-    getActionCountRemaining(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    ): number;
+    getActionCountRemaining(type: string, name: string): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get the maximum level of an action.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the maximum level for this action.
      *
      * Returns -1 if an invalid action is specified.
      *
-     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns Maximum level of the specified action.
      */
-    getActionMaxLevel(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    ): number;
+    getActionMaxLevel(type: string, name: string): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get the current level of an action.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the current level of this action.
      *
      * Returns -1 if an invalid action is specified.
      *
-     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns Current level of the specified action.
      */
-    getActionCurrentLevel(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    ): number;
+    getActionCurrentLevel(type: string, name: string): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get wether an action is set to autolevel.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a boolean indicating whether or not this action is currently set to autolevel.
      *
      * Returns false if an invalid action is specified.
      *
-     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns True if the action is set to autolevel, and false otherwise.
      */
-    getActionAutolevel(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    ): boolean;
+    getActionAutolevel(type: string, name: string): boolean;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Set an action autolevel.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Enable/disable autoleveling for the specified action.
      *
-     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @param autoLevel - Whether or not to autolevel this action
      */
-    setActionAutolevel(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    autoLevel: boolean,
-    ): void;
+    setActionAutolevel(type: string, name: string, autoLevel: boolean): void;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Set the level of an action.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Set the level for the specified action.
      *
-     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @param level - Level to set this action to.
      */
-    setActionLevel(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    level: number,
-    ): void;
+    setActionLevel(type: string, name: string, level: number): void;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get player bladeburner rank.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the player’s Bladeburner Rank.
      *
-     * @remarks RAM cost: 4 GB
      * @returns Player’s Bladeburner Rank.
      */
     getRank(): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get black op required rank.
+     * @remarks
+     * RAM cost: 2 GB
      *
      * Returns the rank required to complete this BlackOp.
      *
      * Returns -1 if an invalid action is specified.
      *
-     * @remarks RAM cost: 2 GB
      * @param name - Name of BlackOp. Must be an exact match.
      * @returns Rank required to complete this BlackOp.
      */
-    getBlackOpRank(name: BladeburnerBlackOps): number;
+    getBlackOpRank(name: string): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get bladeburner skill points.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the number of Bladeburner skill points you have.
      *
-     * @remarks RAM cost: 4 GB
      * @returns Number of Bladeburner skill points you have.
      */
     getSkillPoints(): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get skill level.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * This function returns your level in the specified skill.
      *
      * The function returns -1 if an invalid skill name is passed in.
      *
-     * @remarks RAM cost: 4 GB
      * @param skillName - Name of skill. Case-sensitive and must be an exact match
      * @returns Level in the specified skill.
      */
-    getSkillLevel(name: BladeburnerSkills): number;
+    getSkillLevel(name: string): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get cost to upgrade skill.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * This function returns the number of skill points needed to upgrade the specified skill.
      *
      * The function returns -1 if an invalid skill name is passed in.
      *
-     * @remarks RAM cost: 4 GB
      * @param skillName - Name of skill. Case-sensitive and must be an exact match
      * @returns Number of skill points needed to upgrade the specified skill.
      */
-    getSkillUpgradeCost(name: BladeburnerSkills): number;
+    getSkillUpgradeCost(name: string): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Upgrade skill.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Attempts to upgrade the specified Bladeburner skill.
      *
      * Returns true if the skill is successfully upgraded, and false otherwise.
      *
-     * @remarks RAM cost: 4 GB
      * @param skillName - Name of skill to be upgraded. Case-sensitive and must be an exact match
      * @returns true if the skill is successfully upgraded, and false otherwise.
      */
-    upgradeSkill(name: BladeburnerSkills): boolean;
+    upgradeSkill(name: string): boolean;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get team size.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the number of Bladeburner team members you have assigned to the specified action.
      *
      * Setting a team is only applicable for Operations and BlackOps. This function will return 0 for other action types.
      *
-     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @returns Number of Bladeburner team members that were assigned to the specified action.
      */
-    getTeamSize(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    ): number;
+    getTeamSize(type: string, name: string): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Set team size.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Set the team size for the specified Bladeburner action.
      *
      * Returns the team size that was set, or -1 if the function failed.
      *
-     * @remarks RAM cost: 4 GB
      * @param type - Type of action.
      * @param name - Name of action. Must be an exact match.
      * @param size - Number of team members to set. Will be converted using Math.round().
      * @returns Number of Bladeburner team members you assigned to the specified action.
      */
-    setTeamSize(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    size: number,
-    ): number;
+    setTeamSize(type: string, name: string, size: number): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get estimated population in city.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the estimated number of Synthoids in the specified city,
      * or -1 if an invalid city was specified.
      *
-     * @remarks RAM cost: 4 GB
      * @param cityName - Name of city. Case-sensitive
      * @returns Estimated number of Synthoids in the specified city.
      */
-    getCityEstimatedPopulation(name: City): number;
+    getCityEstimatedPopulation(name: string): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get number of communities in a city.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the estimated number of Synthoid communities in the specified city,
      * or -1 if an invalid city was specified.
      *
-     * @remarks RAM cost: 4 GB
      * @param cityName - Name of city. Case-sensitive
      * @returns Number of Synthoids communities in the specified city.
      */
-    getCityCommunities(name: City): number;
+    getCityCommunities(name: string): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get chaos of a city.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the chaos in the specified city,
      * or -1 if an invalid city was specified.
      *
-     * @remarks RAM cost: 4 GB
      * @param cityName - Name of city. Case-sensitive
      * @returns Chaos in the specified city.
      */
-    getCityChaos(name: City): number;
+    getCityChaos(name: string): number;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get current city.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the city that the player is currently in (for Bladeburner).
      *
-     * @remarks RAM cost: 4 GB
      * @returns City that the player is currently in (for Bladeburner).
      */
-    getCity(): City;
+    getCity(): string;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
-     *
+     * Travel to another city in bladeburner.
+     * @remarks
+     * RAM cost: 4 GB
      * Attempts to switch to the specified city (for Bladeburner only).
      *
      * Returns true if successful, and false otherwise
      *
-     * @remarks RAM cost: 4 GB
      * @param cityName - Name of city. Case-sensitive
      * @returns true if successful, and false otherwise
      */
-    switchCity(name: City): boolean;
+    switchCity(name: string): boolean;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
-     *
+     * Get bladeburner stamina.
+     * @remarks
+     * RAM cost: 4 GB
      * Returns an array with two elements:
      * * [Current stamina, Max stamina]
      * @example
@@ -737,29 +589,28 @@ export declare interface Bladeburner {
      *    return res[0] / res[1];
      * }
      * ```
-     * @remarks RAM cost: 4 GB
      * @returns Array containing current stamina and max stamina.
      */
     getStamina(): [number, number];
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
-     *
+     * Join the bladeburner faction.
+     * @remarks
+     * RAM cost: 4 GB
      * Attempts to join the Bladeburner faction.
      *
      * Returns true if you successfully join the Bladeburner faction, or if you are already a member.
      *
      * Returns false otherwise.
      *
-     * @remarks RAM cost: 4 GB
      * @returns True if you successfully join the Bladeburner faction, or if you are already a member, false otherwise.
      */
     joinBladeburnerFaction(): boolean;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Join the bladeburner division.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Attempts to join the Bladeburner division.
      *
@@ -767,14 +618,14 @@ export declare interface Bladeburner {
      *
      * Returns false otherwise.
      *
-     * @remarks RAM cost: 4 GB
      * @returns True if you successfully join the Bladeburner division, or if you are already a member, false otherwise.
      */
     joinBladeburnerDivision(): boolean;
 
     /**
-     * You have to be employed in the Bladeburner division and be in BitNode-7
-     * or have Source-File 7 in order to use this function.
+     * Get bladeburner bonus time.
+     * @remarks
+     * RAM cost: 0 GB
      *
      * Returns the amount of accumulated “bonus time” (seconds) for the Bladeburner mechanic.
      *
@@ -784,49 +635,10 @@ export declare interface Bladeburner {
      * For example, if an action takes 30 seconds to complete but you’ve accumulated over
      * 30 seconds in bonus time, then the action will only take 6 seconds in real life to complete.
      *
-     * @remarks RAM cost: 0 GB
-     * @returns Amount of accumulated “bonus time” (seconds) for the Bladeburner mechanic.
+     * @returns Amount of accumulated “bonus time” (milliseconds) for the Bladeburner mechanic.
      */
     getBonusTime(): number;
 }
-
-/**
- * All Bladeburner action types.
- * @public
- */
-export declare type BladeburnerActTypes = "contracts" | "operations" | "black ops" | "general";
-
-/**
- * All Bladeburner black ops.
- * @public
- */
-export declare type BladeburnerBlackOps =
-| "Operation Typhoon"
-| "Operation Zero"
-| "Operation X"
-| "Operation Titan"
-| "Operation Ares"
-| "Operation Archangel"
-| "Operation Juggernaut"
-| "Operation Red Dragon"
-| "Operation K"
-| "Operation Deckard"
-| "Operation Tyrell"
-| "Operation Wallace"
-| "Operation Shoulder of Orion"
-| "Operation Hyron"
-| "Operation Morpheus"
-| "Operation Ion Storm"
-| "Operation Annihilus"
-| "Operation Ultron"
-| "Operation Centurion"
-| "Operation Vindictus"
-| "Operation Daedalus";
-
-/**
- * @public
- */
-export declare type BladeburnerContracts = "Tracking" | "Bounty Hunter" | "Retirement";
 
 /**
  * Bladeburner current action.
@@ -834,53 +646,10 @@ export declare type BladeburnerContracts = "Tracking" | "Bounty Hunter" | "Retir
  */
 export declare interface BladeburnerCurAction {
     /** Type of Action */
-    type: BladeburnerActTypes | "Idle";
+    type: string;
     /** Name of Action */
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps;
+    name: string;
 }
-
-/**
- * All Bladeburner General Actions.
- * @public
- */
-export declare type BladeburnerGenActions =
-| "Training"
-| "Field Analysis"
-| "Recruitment"
-| "Diplomacy"
-| "Hyperbolic Regeneration Chamber";
-
-/**
- * All Bladeburner Ops.
- * @public
- */
-export declare type BladeburnerOperations =
-| "Investigation"
-| "Undercover Operation"
-| "Sting Operation"
-| "Raid"
-| "Stealth Retirement Operation"
-| "Assassination";
-
-/**
- * All Bladeburner Skills.
- * @public
- */
-export declare type BladeburnerSkills =
-| "Blade's Intuition"
-| "Cloak"
-| "Marksman"
-| "Weapon Proficiency"
-| "Short-Circuit"
-| "Digital Observer"
-| "Tracer"
-| "Overclock"
-| "Reaper"
-| "Evasive System"
-| "Datamancer"
-| "Cyber's Edge"
-| "Hands of Midas"
-| "Hyperdrive";
 
 /**
  * @public
@@ -889,15 +658,15 @@ export declare interface CharacterInfo {
     /** Current BitNode number */
     bitnode: number;
     /** Name of city you are currently in */
-    city: City;
+    city: string;
     /** Array of factions you are currently a member of */
-    factions: FactionName[];
+    factions: string[];
     /** Current health points */
     hp: number;
     /** Array of all companies at which you have jobs */
-    company: CompanyName[];
+    company: string[];
     /** Array of job positions for all companies you are employed at. Same order as 'jobs' */
-    jobTitle: CompanyField[];
+    jobTitle: string[];
     /** Maximum health points */
     maxHp: number;
     /** Boolean indicating whether or not you have a tor router */
@@ -961,12 +730,6 @@ export declare interface CharacterMult {
 }
 
 /**
- * All cities.
- * @public
- */
-export declare type City = "Aevum" | "Chongqing" | "Sector-12" | "New Tokyo" | "Ishima" | "Volhaven";
-
-/**
  * Options to affect the behavior of {@link CodingContract} attempt.
  * @public
  */
@@ -981,185 +744,89 @@ export declare interface CodingAttemptOptions {
  */
 export declare interface CodingContract {
     /**
+     * Attemps a coding contract.
+     * @remarks
+     * RAM cost: 10 GB
+     *
      * Attempts to solve the Coding Contract with the provided solution.
      *
-     * @remarks 10 GB
      * @param answer - Solution for the contract.
      * @param fn - Filename of the contract.
-     * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
+     * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns True if the solution was correct, false otherwise.
      */
-    attempt(answer: string | string[] | number, fn: string, host?: string): boolean;
+    attempt(answer: string[] | number, fn: string, host?: string): boolean;
 
     /**
+     * Attemps a coding contract.
+     * @remarks
+     * RAM cost: 10 GB
+     *
      * Attempts to solve the Coding Contract with the provided solution.
      *
-     * @remarks 10 GB
      * @param answer - Solution for the contract.
      * @param fn - Filename of the contract.
-     * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
+     * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @param opts - Optional parameters for configuring function behavior.
      * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
      */
-    attempt(answer: string | string[] | number, fn: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
+    attempt(answer: string[] | number, fn: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
 
     /**
+     * Get the type of a coding contract.
+     * @remarks
+     * RAM cost: 5 GB
+     *
      * Returns a name describing the type of problem posed by the Coding Contract.
      * (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
      *
-     * @remarks RAM cost: 5 GB
      * @param fn - Filename of the contract.
-     * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
+     * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns Name describing the type of problem posed by the Coding Contract.
      */
-    getContractType(fn: string, host?: string): CodingContractTypes;
+    getContractType(fn: string, host?: string): string;
 
     /**
+     * Get the description.
+     * @remarks
+     * RAM cost: 5 GB
+     *
      * Get the full text description for the problem posed by the Coding Contract.
      *
-     * @remarks RAM cost: 5 GB
      * @param fn - Filename of the contract.
-     * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
+     * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns Contract’s text description.
      */
     getDescription(fn: string, host?: string): string;
 
     /**
+     * Get the input data.
+     * @remarks
+     * RAM cost: 5 GB
+     *
      * Get the data associated with the specific Coding Contract.
      * Note that this is not the same as the contract’s description.
      * This is just the data that the contract wants you to act on in order to solve
      *
-     * @remarks RAM cost: 5 GB
      * @param fn - Filename of the contract.
-     * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
+     * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns The specified contract’s data;
      */
     getData(fn: string, host?: string): string;
 
     /**
+     * Get the number of attempt remaining.
+     * @remarks
+     * RAM cost: 2 GB
+     *
      * Get the number of tries remaining on the contract before it self-destructs.
      *
-     * @remarks RAM cost: 2 GB
      * @param fn - Filename of the contract.
-     * @param host - Host or IP of the server containing the contract. Optional. Defaults to current server if not provided.
+     * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns How many attempts are remaining for the contract;
      */
     getNumTriesRemaining(fn: string, host?: string): number;
 }
-
-/**
- * All Coding contract types.
- * @public
- */
-export declare type CodingContractTypes =
-| "Find Largest Prime Factor"
-| "Subarray with Maximum Sum"
-| "Total Ways to Sum"
-| "Spiralize Matrix"
-| "Array Jumping Game"
-| "Merge Overlapping Intervals"
-| "Generate IP Addresses"
-| "Algorithmic Stock Trader I"
-| "Algorithmic Stock Trader II"
-| "Algorithmic Stock Trader III"
-| "Algorithmic Stock Trader IV"
-| "Minimum Path Sum in a Triangle"
-| "Unique Paths in a Grid I"
-| "Unique Paths in a Grid II"
-| "Sanitize Parentheses in Expression"
-| "Find All Valid Math Expressions";
-
-/**
- * All company work fields.
- * @public
- */
-export declare type CompanyField =
-| "software"
-| "software consultant"
-| "it"
-| "security engineer"
-| "network engineer"
-| "business"
-| "business consultant"
-| "security"
-| "agent"
-| "employee"
-| "part-time employee"
-| "waiter"
-| "part-time waiter";
-
-/**
- * All companies.
- * @public
- */
-export declare type CompanyName =
-// Sector-12
-| "MegaCorp"
-| "BladeIndustries"
-| "FourSigma"
-| "IcarusMicrosystems"
-| "UniversalEnergy"
-| "DeltaOne"
-| "CIA"
-| "NSA"
-| "AlphaEnterprises"
-| "CarmichaelSecurity"
-| "FoodNStuff"
-| "JoesGuns"
-
-// Aevum
-| "ECorp"
-| "BachmanAndAssociates"
-| "ClarkeIncorporated"
-| "OmniTekIncorporated"
-| "FulcrumTechnologies"
-| "GalacticCybersystems"
-| "AeroCorp"
-| "WatchdogSecurity"
-| "RhoConstruction"
-| "AevumPolice"
-| "NetLinkTechnologies"
-
-// Volhaven
-| "NWO"
-| "HeliosLabs"
-| "OmniaCybersystems"
-| "LexoCorp"
-| "SysCoreSecurities"
-| "CompuTek"
-
-// Chongqing
-| "KuaiGongInternational"
-| "SolarisSpaceSystems"
-
-// Ishima
-| "StormTechnologies"
-| "NovaMedical"
-| "OmegaSoftware"
-
-// New Tokyo
-| "DefComm"
-| "VitaLife"
-| "GlobalPharmaceuticals"
-| "NoodleBar";
-
-/**
- * All crimes.
- * @public
- */
-export declare type Crime =
-| "shoplift"
-| "rob store"
-| "mug"
-| "larceny"
-| "deal drugs"
-| "bond forgery"
-| "traffick arms"
-| "homicide"
-| "grand theft auto"
-| "kidnap"
-| "assassinate"
-| "heist";
 
 /**
  * Data representing the internal values of a crime.
@@ -1209,107 +876,72 @@ export declare interface CrimeStats {
 }
 
 /**
- * All factions.
- * @public
- */
-export declare type FactionName =
-| "Illuminati"
-| "Daedalus"
-| "The Covenant"
-| "ECorp"
-| "MegaCorp"
-| "Bachman & Associates"
-| "Blade Industries"
-| "NWO"
-| "Clarke Incorporated"
-| "OmniTek Incorporated"
-| "Four Sigma"
-| "KuaiGong International"
-| "Fulcrum Secret Technologies"
-| "BitRunners"
-| "The Black Hand"
-| "NiteSec"
-| "Aevum"
-| "Chongqing"
-| "Ishima"
-| "New Tokyo"
-| "Sector-12"
-| "Volhaven"
-| "Speakers for the Dead"
-| "The Dark Army"
-| "The Syndicate"
-| "Silhouette"
-| "Tetrads"
-| "Slum Snakes"
-| "Netburners"
-| "Tian Di Hui"
-| "CyberSec"
-| "Bladeburners";
-
-/**
- * All faction work types.
- * @public
- */
-export declare type FactionWork = "hacking" | "field" | "security";
-
-/**
  * Gang API
+ * @remarks
+ * If you are not in BitNode-2, then you must have Source-File 2 in order to use this API.
  * @public
  */
 export declare interface Gang {
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * List all gang members.
+     * @remarks
+     * RAM cost: 1 GB
      *
      * Get the names of all Gang members
      *
-     * @remarks RAM cost: 1 GB
      * @returns Names of all Gang members.
      */
     getMemberNames(): string[];
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Get information about your gang.
+     * @remarks
+     * RAM cost: 2 GB
      *
      * Get general information about the gang.
      *
-     * @remarks RAM cost: 2 GB
      * @returns Object containing general information about the gang.
      */
     getGangInformation(): GangGenInfo;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Get information about the other gangs.
+     * @remarks
+     * RAM cost: 2 GB
      *
      * Get territory and power information about all gangs.
      *
-     * @remarks RAM cost: 2 GB
      * @returns Object containing territory and power information about all gangs.
      */
     getOtherGangInformation(): GangOtherInfo;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Get information about a specific gang member.
+     * @remarks
+     * RAM cost: 2 GB
      *
      * Get stat and equipment-related information about a Gang Member
      *
-     * @remarks RAM cost: 2 GB
      * @param name - Name of member.
      * @returns Object containing stat and equipment-related information about a Gang Member.
      */
     getMemberInformation(name: string): GangMemberInfo;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Check if you can recruit a new gang member.
+     * @remarks
+     * RAM cost: 1 GB
      *
      * Returns boolean indicating whether a member can currently be recruited
      *
-     * @remarks RAM cost: 1 GB
      * @returns True if a member can currently be recruited, false otherwise.
      */
     canRecruitMember(): boolean;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Recruit a new gang member.
+     * @remarks
+     * RAM cost: 2 GB
      *
      * Attempt to recruit a new gang member.
      *
@@ -1317,137 +949,149 @@ export declare interface Gang {
      * * Cannot currently recruit a new member
      * * There already exists a member with the specified name
      *
-     * @remarks RAM cost: 2 GB
      * @param name - Name of member to recruit.
      * @returns True if the member was successfully recruited, false otherwise.
      */
     recruitMember(name: string): boolean;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * List member task names.
+     * @remarks
+     * RAM cost: 1 GB
      *
      * Get the name of all valid tasks that Gang members can be assigned to.
      *
-     * @remarks RAM cost: 1 GB
      * @returns All valid tasks that Gang members can be assigned to.
      */
-    getTaskNames(): GangTasks[];
+    getTaskNames(): string[];
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Set gang member to task.
+     * @remarks
+     * RAM cost: 2 GB
      *
      * Attempts to assign the specified Gang Member to the specified task.
      * If an invalid task is specified, the Gang member will be set to idle (“Unassigned”).
      *
-     * @remarks RAM cost: 2 GB
      * @param memberName - Name of Gang member to assign.
      * @param taskName - Task to assign.
      * @returns True if the Gang Member was successfully assigned to the task, false otherwise.
      */
-    setMemberTask(memberName: string, taskName: GangTasks): boolean;
+    setMemberTask(memberName: string, taskName: string): boolean;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Get stats of a task.
+     * @remarks
+     * RAM cost: 1 GB
      *
      * Get the stats of a gang task stats. This is typically used to evaluate which action should be executed next.
      *
-     * @remarks RAM cost: 1 GB
      * @param name -  Name of the task.
      * @returns Detailed stats of a task.
      */
-    getTaskStats(name: GangTasks): GangTasksStats;
+    getTaskStats(name: string): stringStats;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * List equipment names.
+     * @remarks
+     * RAM cost: 1 GB
      *
      * Get the name of all possible equipment/upgrades you can purchase for your Gang Members.
      * This includes Augmentations.
      *
-     * @remarks RAM cost: 1 GB
      * @returns Names of all Equpiment/Augmentations.
      */
-    getEquipmentNames(): (GangEquipment | GangAugmentations)[];
+    getEquipmentNames(): string[];
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Get cost of equipment.
+     * @remarks
+     * RAM cost: 2 GB
      *
      * Get the amount of money it takes to purchase a piece of Equipment or an Augmentation.
      * If an invalid Equipment/Augmentation is specified, this function will return Infinity.
      *
-     * @remarks RAM cost: 2 GB
      * @param equipName - Name of equipment.
      * @returns Cost to purchase the specified Equipment/Augmentation (number). Infinity for invalid arguments
      */
-    getEquipmentCost(equipName: GangEquipment | GangAugmentations): number;
+    getEquipmentCost(equipName: string): number;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Get type of an equipment.
+     * @remarks
+     * RAM cost: 2 GB
      *
      * Get the specified equipment type.
      *
-     * @remarks RAM cost: 2 GB
      * @param equipName - Name of equipment.
      * @returns Type of the equipment.
      */
-    getEquipmentType(equipName: GangEquipment | GangAugmentations): GangEquipmentType;
+    getEquipmentType(equipName: string): string;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Get stats of an equipment.
+     * @remarks
+     * RAM cost: 2 GB
      *
      * Get the specified equipment stats.
      *
-     * @remarks RAM cost: 2 GB
      * @param equipName - Name of equipment.
      * @returns A dictionary containing the stats of the equipment.
      */
-    getEquipmentStats(equipName: GangEquipment | GangAugmentations): GangEquipmentStats;
+    getEquipmentStats(equipName: string): stringStats;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Purchase an equipment for a gang member.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Attempt to purchase the specified Equipment/Augmentation for the specified Gang member.
      *
-     * @remarks RAM cost: 4 GB
      * @param memberName - Name of Gang member to purchase the equipment for.
      * @param equipName - Name of Equipment/Augmentation to purchase.
      * @returns True if the equipment was successfully purchased. False otherwise
      */
-    purchaseEquipment(memberName: string, equipName: GangEquipment | GangAugmentations): boolean;
+    purchaseEquipment(memberName: string, equipName: string): boolean;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Ascend a gang member.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Ascend the specified Gang Member.
      *
-     * @remarks RAM cost: 4 GB
      * @param memberName - Name of member to ascend.
      * @returns Object with info about the ascension results.
      */
     ascendMember(memberName: string): GangMemberAscension;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Enable/Disable territory warfare.
+     * @remarks
+     * RAM cost: 2 GB
      *
      * Set whether or not the gang should engage in territory warfare
      *
-     * @remarks RAM cost: 2 GB
      * @param engage - Whether or not to engage in territory warfare.
      */
     setTerritoryWarfare(engage: boolean): void;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Get chance to win clash with other gang.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Returns the chance you have to win a clash with the specified gang. The chance is returned in decimal form, not percentage
      *
-     * @remarks RAM cost: 4 GB
      * @param gangName - Target gang
      * @returns Chance you have to win a clash with the specified gang.
      */
-    getChanceToWinClash(gangName: GangName): number;
+    getChanceToWinClash(gangName: string): number;
 
     /**
-     * If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
+     * Get bonus time.
+     * @remarks
+     * RAM cost: 0 GB
      *
      * Returns the amount of accumulated “bonus time” (seconds) for the Gang mechanic.
      *
@@ -1455,80 +1099,10 @@ export declare interface Gang {
      *
      * “Bonus time” makes the game progress faster, up to 10x the normal speed.
      *
-     * @remarks RAM cost: 0 GB
-     * @returns Bonus time for the Gang mechanic in seconds.
+     * @returns Bonus time for the Gang mechanic in milliseconds.
      */
     getBonusTime(): number;
 }
-
-/**
- * All Gang augmentations.
- * @public
- */
-export declare type GangAugmentations =
-| "Bionic Arms"
-| "Bionic Legs"
-| "Bionic Spine"
-| "BrachiBlades"
-| "Nanofiber Weave"
-| "Synthetic Heart"
-| "Synfibril Muscle"
-| "BitWire"
-| "Neuralstimulator"
-| "DataJack"
-| "Graphene Bone Lacings";
-
-/**
- * All Gang equipment.
- * @public
- */
-export declare type GangEquipment =
-| "Baseball Bat"
-| "Katana"
-| "Glock 18C"
-| "P90C"
-| "Steyr AUG"
-| "AK-47"
-| "M15A10 Assault Rifle"
-| "AWM Sniper Rifle"
-| "Bulletproof Vest"
-| "Full Body Armor"
-| "Liquid Body Armor"
-| "Graphene Plating Armor"
-| "Ford Flex V20"
-| "ATX1070 Superbike"
-| "Mercedes-Benz S9001"
-| "White Ferrari"
-| "NUKE Rootkit"
-| "Soulstealer Rootkit"
-| "Demon Rootkit"
-| "Hmap Node"
-| "Jack the Ripper";
-
-/**
- * Object representing data representing a gang member equipment.
- * @public
- */
-export declare interface GangEquipmentStats {
-    /** Strength multiplier */
-    str: number;
-    /** Defense multiplier */
-    def: number;
-    /** Dexterity multiplier */
-    dex: number;
-    /** Agility multiplier */
-    agi: number;
-    /** Charisma multiplier */
-    cha: number;
-    /** Hacking multiplier */
-    hack: number;
-}
-
-/**
- * All Gang equipment type.
- * @public
- */
-export declare type GangEquipmentType = "Weapon" | "Armor" | "Vehicle" | "Rootkit" | "Augmentation";
 
 /**
  * Gang general info.
@@ -1536,7 +1110,7 @@ export declare type GangEquipmentType = "Weapon" | "Armor" | "Vehicle" | "Rootki
  */
 export declare interface GangGenInfo {
     /** Name of faction that the gang belongs to ("Slum Snakes", etc.) */
-    faction: GangName;
+    faction: string;
     /** Boolean indicating whether or not its a hacking gang */
     isHacking: boolean;
     /** Money earned per second */
@@ -1588,7 +1162,7 @@ export declare interface GangMemberInfo {
     /** Agility multiplier from ascension.*/
     agilityAscensionMult: number;
     /** Array of names of all owned Augmentations */
-    augmentations: GangAugmentations[];
+    augmentations: string[];
     /** Charisma stat */
     charisma: number;
     /** Charisma multiplier from equipment.*/
@@ -1608,7 +1182,7 @@ export declare interface GangMemberInfo {
     /** Dexterity multiplier from ascension.*/
     dexterityAscensionMult: number;
     /** Array of names of all owned Non-Augmentation Equipment */
-    equipment: GangEquipment[];
+    equipment: string[];
     /** Hacking stat */
     hacking: number;
     /** Hacking multiplier from equipment.*/
@@ -1622,28 +1196,15 @@ export declare interface GangMemberInfo {
     /** Strength multiplier from ascension.*/
     strengthAscensionMult: number;
     /** Name of currently assigned task */
-    task: GangTasks;
+    task: string;
 }
-
-/**
- * All factions that can have a gang.
- * @public
- */
-export declare type GangName =
-| "Slum Snakes"
-| "Tetrads"
-| "The Syndicate"
-| "The Dark Army"
-| "Speakers for the Dead"
-| "NiteSec"
-| "The Black Hand";
 
 /**
  * @public
  */
 export declare type GangOtherInfo = {
     /** Stock Symbol */
-    [key in GangName]: GangOtherInfoObject[];
+    [key: string]: GangOtherInfoObject[];
 };
 
 /**
@@ -1655,97 +1216,6 @@ export declare interface GangOtherInfoObject {
     /** Gang territory, in decimal form */
     territory: number;
 }
-
-/**
- * All Gang tasks.
- * @public
- */
-export declare type GangTasks =
-| "Unassigned"
-| "Ransomware"
-| "Phishing"
-| "Identity Theft"
-| "DDoS Attacks"
-| "Plant Virus"
-| "Fraud & Counterfeiting"
-| "Money Laundering"
-| "Cyberterrorism"
-| "Ethical Hacking"
-| "Mug People"
-| "Deal Drugs"
-| "Strongarm Civilians"
-| "Run a Con"
-| "Armed Robbery"
-| "Traffick Illegal Arms"
-| "Threaten & Blackmail"
-| "Human Trafficking"
-| "Terrorism"
-| "Vigilante Justice"
-| "Train Combat"
-| "Train Hacking"
-| "Train Charisma"
-| "Territory Warfare";
-
-/**
- * Object representing data representing a gang member task.
- * @public
- */
-export declare interface GangTasksStats {
-    /** Task name */
-    name: GangTasks;
-    /** Task Description */
-    desc: string;
-    /** Is a task of a hacking gang */
-    isHacking: boolean;
-    /** Is a task of a combat gang */
-    isCombat: boolean;
-    /** Base respect earned */
-    baseRespect: number;
-    /** Base wanted earned */
-    baseWanted: number;
-    /** Base money earned */
-    baseMoney: number;
-    /** Hacking skill impact on task scaling */
-    hackWeight: number;
-    /** Stength skill impact on task scaling */
-    strWeight: number;
-    /** Defense skill impact on task scaling */
-    defWeight: number;
-    /** Dexterity skill impact on task scaling */
-    dexWeight: number;
-    /** Agility skill impact on task scaling */
-    agiWeight: number;
-    /** Charisma skill impact on task scaling */
-    chaWeight: number;
-    /** Number representing the difficulty of the task */
-    difficulty: number;
-    /** Territory impact on task scaling */
-    territory: GangTasksTerritory;
-}
-
-/**
- * @public
- */
-export declare interface GangTasksTerritory {
-    /** Money gain impact on task scaling */
-    money: number;
-    /** Respect gain impact on task scaling */
-    respect: number;
-    /** Wanted gain impact on task scaling */
-    wanted: number;
-}
-
-/**
- * All gyms.
- * @public
- */
-export declare type Gym = "Crush Fitness Gym" | "Snap Fitness Gym" | "Iron Gym" | "Powerhouse Gym" | "Millenium Fitness Gym";
-
-/**
- * All stats that can be trained at gyms.
- * @public
- */
-export declare type GymStat = "str" | "def" | "dex" | "agi";
 
 /**
  * Hack related multipliers.
@@ -1764,18 +1234,27 @@ export declare interface HackingMultipliers {
 
 /**
  * Hacknet API
+ * @remarks
+ * Not all these functions are immediately available.
  * @public
  */
 export declare interface Hacknet {
     /**
+     * Get the number of hacknet nodes you own.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Returns the number of Hacknet Nodes you own.
      *
-     * @remarks RAM cost: 0 GB
      * @returns number of hacknet nodes.
      */
     numNodes(): number;
 
     /**
+     * Purchase a new hacknet node.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Purchases a new Hacknet Node. Returns a number with the index of the
      * Hacknet Node. This index is equivalent to the number at the end of
      * the Hacknet Node’s name (e.g The Hacknet Node named `hacknet-node-4`
@@ -1783,33 +1262,42 @@ export declare interface Hacknet {
      *
      * If the player cannot afford to purchase a new Hacknet Node then the function will return -1.
      *
-     * @remarks RAM cost: 0 GB
      * @returns The index of the Hacknet Node or if the player cannot afford to purchase a new Hacknet Node the function will return -1.
      */
     purchaseNode(): number;
 
     /**
+     * Get the price of the next hacknet node.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Returns the cost of purchasing a new Hacknet Node.
      *
-     * @remarks RAM cost: 0 GB
      * @returns Cost of purchasing a new Hacknet Node.
      */
     getPurchaseNodeCost(): number;
 
     /**
+     * Get the stats of a hacknet node.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Returns an object containing a variety of stats about the specified Hacknet Node.
      *
      * Note that for Hacknet Nodes, production refers to the amount of money the node generates.
      * For Hacknet Servers (the upgraded version of Hacknet Nodes), production refers to the
      * amount of hashes the node generates.
      *
-     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node
      * @returns Object containing a variety of stats about the specified Hacknet Node.
      */
     getNodeStats(index: number): NodeStats;
 
     /**
+     * Upgrade the level of a hacknet node.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Tries to upgrade the level of the specified Hacknet Node by n.
      *
      * Returns true if the Hacknet Node’s level is successfully upgraded by n
@@ -1817,7 +1305,6 @@ export declare interface Hacknet {
      *
      * Returns false otherwise.
      *
-     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of levels to purchase. Must be positive. Rounded to nearest integer.
      * @returns True if the Hacknet Node’s level is successfully upgraded, false otherwise.
@@ -1825,6 +1312,10 @@ export declare interface Hacknet {
     upgradeLevel(index: number, n: number): boolean;
 
     /**
+     * Upgrade the RAM of a hacknet node.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Tries to upgrade the specified Hacknet Node’s RAM n times.
      * Note that each upgrade doubles the Node’s RAM.
      * So this is equivalent to multiplying the Node’s RAM by 2 n.
@@ -1834,7 +1325,6 @@ export declare interface Hacknet {
      *
      * Returns false otherwise.
      *
-     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of times to upgrade RAM. Must be positive. Rounded to nearest integer.
      * @returns True if the Hacknet Node’s ram is successfully upgraded, false otherwise.
@@ -1842,6 +1332,10 @@ export declare interface Hacknet {
     upgradeRam(index: number, n: number): boolean;
 
     /**
+     * Upgrade the core of a hacknet node.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Tries to purchase n cores for the specified Hacknet Node.
      *
      * Returns true if it successfully purchases n cores for the Hacknet Node
@@ -1849,7 +1343,6 @@ export declare interface Hacknet {
      *
      * Returns false otherwise.
      *
-     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of cores to purchase. Must be positive. Rounded to nearest integer.
      * @returns True if the Hacknet Node’s cores are successfully purchased, false otherwise.
@@ -1857,6 +1350,10 @@ export declare interface Hacknet {
     upgradeCore(index: number, n: number): boolean;
 
     /**
+     * Upgrade the cache of a hacknet node.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
      *
      * Tries to upgrade the specified Hacknet Server’s cache n times.
@@ -1866,7 +1363,6 @@ export declare interface Hacknet {
      *
      * Returns false otherwise.
      *
-     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of cache levels to purchase. Must be positive. Rounded to nearest integer.
      * @returns True if the Hacknet Node’s cores are successfully purchased, false otherwise.
@@ -1874,12 +1370,15 @@ export declare interface Hacknet {
     upgradeCache(index: number, n: number): boolean;
 
     /**
+     * Calculate the cost of upgrading hacknet node levels.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Returns the cost of upgrading the specified Hacknet Node by n levels.
      *
      * If an invalid value for n is provided, then this function returns 0.
      * If the specified Hacknet Node is already at max level, then Infinity is returned.
      *
-     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of levels to upgrade. Must be positive. Rounded to nearest integer.
      * @returns Cost of upgrading the specified Hacknet Node.
@@ -1887,12 +1386,15 @@ export declare interface Hacknet {
     getLevelUpgradeCost(index: number, n: number): number;
 
     /**
+     * Calculate the cost of upgrading hacknet node RAM.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Returns the cost of upgrading the RAM of the specified Hacknet Node n times.
      *
      * If an invalid value for n is provided, then this function returns 0.
      * If the specified Hacknet Node is already at max level, then Infinity is returned.
      *
-     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of times to upgrade RAM. Must be positive. Rounded to nearest integer.
      * @returns Cost of upgrading the specified Hacknet Node's ram.
@@ -1900,12 +1402,15 @@ export declare interface Hacknet {
     getRamUpgradeCost(index: number, n: number): number;
 
     /**
+     * Calculate the cost of upgrading hacknet node cores.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * Returns the cost of upgrading the number of cores of the specified Hacknet Node by n.
      *
      * If an invalid value for n is provided, then this function returns 0.
      * If the specified Hacknet Node is already at max level, then Infinity is returned.
      *
-     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of times to upgrade cores. Must be positive. Rounded to nearest integer.
      * @returns Cost of upgrading the specified Hacknet Node's number of cores.
@@ -1913,6 +1418,10 @@ export declare interface Hacknet {
     getCoreUpgradeCost(index: number, n: number): number;
 
     /**
+     * Calculate the cost of upgrading hacknet node cache.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
      *
      * Returns the cost of upgrading the cache level of the specified Hacknet Server by n.
@@ -1920,7 +1429,6 @@ export declare interface Hacknet {
      * If an invalid value for n is provided, then this function returns 0.
      * If the specified Hacknet Node is already at max level, then Infinity is returned.
      *
-     * @remarks RAM cost: 0 GB
      * @param index - Index/Identifier of Hacknet Node.
      * @param n - Number of times to upgrade cache. Must be positive. Rounded to nearest integer.
      * @returns Cost of upgrading the specified Hacknet Node's cache.
@@ -1928,16 +1436,23 @@ export declare interface Hacknet {
     getCacheUpgradeCost(index: number, n: number): number;
 
     /**
+     * Get the total number of hashes stored.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
      *
      * Returns the number of hashes you have.
      *
-     * @remarks RAM cost: 0 GB
      * @returns Number of hashes you have.
      */
     numHashes(): number;
 
     /**
+     * Get the cost of a hash upgrade.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
      *
      * Returns the number of hashes required for the specified upgrade. The name of the upgrade must be an exact match.
@@ -1949,13 +1464,16 @@ export declare interface Hacknet {
      *    hacknet.spendHashes(upgName);
      * }
      * ```
-     * @remarks RAM cost: 0 GB
      * @param upgName - Name of the upgrade of Hacknet Node.
      * @returns Number of hashes required for the specified upgrade.
      */
-    hashCost(upgName: HashUpgrades): number;
+    hashCost(upgName: string): number;
 
     /**
+     * Purchase a hash upgrade.
+     * @remarks
+     * RAM cost: 0 GB
+     *
      * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
      *
      * Spend the hashes generated by your Hacknet Servers on an upgrade.
@@ -1970,12 +1488,11 @@ export declare interface Hacknet {
      * hacknet.spendHashes("Sell for Corporation Funds");
      * hacknet.spendHashes("Increase Maximum Money", "foodnstuff");
      * ```
-     * @remarks RAM cost: 0 GB
      * @param upgName - Name of the upgrade of Hacknet Node.
      * @param upgTarget - Object to which upgrade applies. Required for certain upgrades.
      * @returns True if the upgrade is successfully purchased, and false otherwise..
      */
-    spendHashes(upgName: HashUpgrades, upgTarget?: string): boolean;
+    spendHashes(upgName: string, upgTarget?: string): boolean;
 }
 
 /**
@@ -1999,22 +1516,6 @@ export declare interface HacknetMultipliers {
  * @public
  */
 export declare type Handle = string | Port;
-
-/**
- * All Hash upgrade names.
- * @public
- */
-export declare type HashUpgrades =
-| "Sell for Money"
-| "Sell for Corporation Funds"
-| "Reduce Minimum Security"
-| "Increase Maximum Money"
-| "Improve Studying"
-| "Improve Gym Training"
-| "Exchange for Corporation Research"
-| "Exchange for Bladeburner Rank"
-| "Exchange for Bladeburner SP"
-| "Generate Coding Contract";
 
 /**
  * Object representing all the values related to a hacknet node.
@@ -2048,14 +1549,7 @@ export declare interface NodeStats {
 export declare interface NS extends Singularity {
     /**
      * Namespace for hacknet related functions.
-     * @remarks
-     * Not all functions in the Hacknet Node API are immediately available.
-     *
-     * Note that none of these functions will write to the script’s logs.
-     *
-     * If you want to see what your script is doing you will have to print to the logs yourself.
-     *
-     * 4 GB
+     * @remarks RAM cost: 4 GB
      */
     readonly hacknet: Hacknet;
     /**
@@ -2102,6 +1596,9 @@ export declare interface NS extends Singularity {
     readonly args: (string | number)[];
 
     /**
+     * Steal a servers money.
+     * @remarks
+     * RAM cost: 0.1 GB
      * Function that is used to try and hack servers to steal money and gain hacking experience.
      * The runtime for this command depends on your hacking level and the target server’s
      * security level. In order to hack a server you must first gain root access to that server
@@ -2116,10 +1613,8 @@ export declare interface NS extends Singularity {
      * @example
      * ```ts
      * hack("foodnstuff");
-     * hack("10.1.2.3");
      * hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
      * ```
-     * @remarks RAM cost: 0.1 GB
      * @param host - Hostname of the target server to hack.
      * @param opts - Optional parameters for configuring function behavior.
      * @returns The amount of money stolen if the hack is successful, and zero otherwise.
@@ -2127,6 +1622,9 @@ export declare interface NS extends Singularity {
     hack(host: string, opts?: BasicHGWOptions): Promise<number>;
 
     /**
+     * Spoof money in a servers bank account, increasing the amount available.
+     * @remarks
+     * RAM cost: 0.15 GB
      * Use your hacking skills to increase the amount of money available on a server.
      * The runtime for this command depends on your hacking level and the target server’s
      * security level. When `grow` completes, the money available on a target server will
@@ -2144,7 +1642,6 @@ export declare interface NS extends Singularity {
      * grow("foodnstuff");
      * grow("foodnstuff", { threads: 5 }); // Only use 5 threads to grow
      * ```
-     * @remarks RAM cost: 0.15 GB
      * @param host - Hostname of the target server to grow.
      * @param opts - Optional parameters for configuring function behavior.
      * @returns The number by which the money on the server was multiplied for the growth.
@@ -2152,6 +1649,9 @@ export declare interface NS extends Singularity {
     grow(host: string, opts?: BasicHGWOptions): Promise<number>;
 
     /**
+     * Reduce a server security level.
+     * @remarks
+     * RAM cost: 0.15 GB
      * Use your hacking skills to attack a server’s security, lowering the server’s security level.
      * The runtime for this command depends on your hacking level and the target server’s security
      * level. This function lowers the security level of the target server by 0.05.
@@ -2165,7 +1665,6 @@ export declare interface NS extends Singularity {
      * weaken("foodnstuff");
      * weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
      * ```
-     * @remarks RAM cost: 0.15 GB
      * @param host - Hostname of the target server to weaken.
      * @param opts - Optional parameters for configuring function behavior.
      * @returns The amount by which the target server’s security level was decreased. This is equivalent to 0.05 multiplied by the number of script threads.
@@ -2173,9 +1672,11 @@ export declare interface NS extends Singularity {
     weaken(host: string, opts?: BasicHGWOptions): Promise<number>;
 
     /**
+     * Predict the effect of weaken.
+     * @remarks
+     * RAM cost: 1 GB
      * Returns the security decrease that would occur if a weaken with this many threads happened.
      *
-     * @remarks RAM cost: 1 GB
      * @param threads - Amount of threads that will be used.
      * @param cores - Optional. The number of cores of the server that would run weaken.
      * @returns The security decrease.
@@ -2183,6 +1684,9 @@ export declare interface NS extends Singularity {
     weakenAnalyze(threads: number, cores?: number): number;
 
     /**
+     * Predict the effect of hack.
+     * @remarks
+     * RAM cost: 1 GB
      * This function returns the number of script threads you need when running the hack command
      * to steal the specified amount of money from the target server.
      * If hackAmount is less than zero or greater than the amount of money available on the server,
@@ -2196,7 +1700,6 @@ export declare interface NS extends Singularity {
      * hackAnalyzeThreads("foodnstuff", 1e6);
      * //If this function returns 50, this means that if your next hack call is run on a script with 50 threads, it will steal $1m from the foodnstuff server.
      * ```
-     * @remarks RAM cost: 1 GB
      * @param host - Hostname of the target server to analyze.
      * @param hackAmount - Amount of money you want to hack from the server.
      * @returns The number of threads needed to hack the server for hackAmount money.
@@ -2653,10 +2156,10 @@ export declare interface NS extends Singularity {
      * ```
      * @remarks RAM cost: 0.6 GB
      * @param files - Filename or an array of filenames of script/literature files to copy.
-     * @param destination - Host or IP of the destination server, which is the server to which the file will be copied.
+     * @param destination - Host of the destination server, which is the server to which the file will be copied.
      * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
      */
-    scp(files: string | ReadonlyArray<string>, destination: string): boolean;
+    scp(files: string[], destination: string): boolean;
 
     /**
      * Copies a script or literature (.lit) file(s) to another server. The files argument can be either a string
@@ -2675,12 +2178,12 @@ export declare interface NS extends Singularity {
      * ```
      * @remarks RAM cost: 0.6 GB
      * @param files - Filename or an array of filenames of script/literature files to copy.
-     * @param source - Host or IP of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
-     * @param destination - Host or IP of the destination server, which is the server to which the file will be copied.
+     * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
+     * @param destination - Host of the destination server, which is the server to which the file will be copied.
      * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
      */
     scp(
-    files: string | ReadonlyArray<string>,
+    files: string[],
     source: string,
     // tslint:disable-next-line:unified-signatures
     destination: string,
@@ -2691,7 +2194,7 @@ export declare interface NS extends Singularity {
      * (as strings). The returned array is sorted in alphabetic order.
      *
      * @remarks RAM cost: 0.2 GB
-     * @param host - Host or IP of the target server.
+     * @param host - Host of the target server.
      * @param grep - A substring to search for in the filename.
      * @returns Array with the filenames of all files on the specified server.
      */
@@ -2712,7 +2215,7 @@ export declare interface NS extends Singularity {
      * }
      * ```
      * @remarks RAM cost: 0.2 GB
-     * @param host - Host or IP address of the target server. If not specified, it will be the current server’s IP by default.
+     * @param host - Host address of the target server. If not specified, it will be the current server’s IP by default.
      * @returns Array with general information about all scripts running on the specified target server.
      */
     ps(host?: string): ProcessInfo[];
@@ -2727,7 +2230,7 @@ export declare interface NS extends Singularity {
      * }
      * ```
      * @remarks RAM cost: 0.05 GB
-     * @param host - Host or IP of the target server
+     * @param host - Host of the target server
      * @returns True if player has root access to the specified target server, and false otherwise.
      */
     hasRootAccess(host: string): boolean;
@@ -2801,7 +2304,7 @@ export declare interface NS extends Singularity {
      * getServerMoneyAvailable("home"); //Returns player's money
      * ```
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host or IP of target server
+     * @param host - Host of target server
      * @returns Amount of money available on the server.
      */
     getServerMoneyAvailable(host: string): number;
@@ -2810,7 +2313,7 @@ export declare interface NS extends Singularity {
      * Returns the maximum amount of money that can be available on a server.
      *
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @returns Maximum amount of money available on the server.
      */
     getServerMaxMoney(host: string): number;
@@ -2824,7 +2327,7 @@ export declare interface NS extends Singularity {
      * higher percentage increase from grow.
      *
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @returns Parameter that affects the percentage by which the server’s money is increased when using the grow function.
      */
     getServerGrowth(host: string): number;
@@ -2835,7 +2338,7 @@ export declare interface NS extends Singularity {
      * (but it can go above 100).
      *
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @returns Security level of the target server.
      */
     getServerSecurityLevel(host: string): number;
@@ -2850,7 +2353,7 @@ export declare interface NS extends Singularity {
      * installing an Augmentation(s).
      *
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @returns Base security level of the target server.
      */
     getServerBaseSecurityLevel(host: string): number;
@@ -2859,7 +2362,7 @@ export declare interface NS extends Singularity {
      * Returns the minimum security level of the target server.
      *
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @returns Minimum security level of the target server.
      */
     getServerMinSecurityLevel(host: string): number;
@@ -2868,7 +2371,7 @@ export declare interface NS extends Singularity {
      * Returns the required hacking level of the target server.
      *
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @returns The required hacking level of the target server.
      */
     getServerRequiredHackingLevel(host: string): number;
@@ -2877,7 +2380,7 @@ export declare interface NS extends Singularity {
      * Returns the number of open ports required to successfully run NUKE.exe on the specified server.
      *
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @returns The number of open ports required to successfully run NUKE.exe on the specified server.
      */
     getServerNumPortsRequired(host: string): number;
@@ -2895,7 +2398,7 @@ export declare interface NS extends Singularity {
      * ramUsed = res[1];
      * ```
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @returns Array with total and used memory on the specified server.
      */
     getServerRam(host: string): [number, number];
@@ -2904,7 +2407,7 @@ export declare interface NS extends Singularity {
      * Returns a boolean denoting whether or not the specified server exists.
      *
      * @remarks RAM cost: 0.1 GB
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @returns True if specified server exists, and false otherwise.
      */
     serverExists(host: string): boolean;
@@ -2930,7 +2433,7 @@ export declare interface NS extends Singularity {
      * ```
      * @remarks RAM cost: 0.1 GB
      * @param filename - Filename of file to check.
-     * @param host - Host or IP of target server. This is optional. If it is not specified then the function will use the current server as the target server.
+     * @param host - Host of target server. This is optional. If it is not specified then the function will use the current server as the target server.
      * @returns True if specified file exists, and false otherwise.
      */
     fileExists(filename: string, host?: string): boolean;
@@ -2956,7 +2459,7 @@ export declare interface NS extends Singularity {
      * ```
      * @remarks RAM cost: 0.1 GB
      * @param script - Filename of script to check. This is case-sensitive.
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @param args - Arguments to specify/identify which scripts to search for.
      * @returns True if specified script is running on the target server, and false otherwise.
      */
@@ -3010,7 +2513,7 @@ export declare interface NS extends Singularity {
      * @param ram - Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
      * @returns The hostname of the newly purchased server.
      */
-    purchaseServer(hostname: string, ram: number): string | "";
+    purchaseServer(hostname: string, ram: number): string;
 
     /**
      * Deletes one of your purchased servers, which is specified by its hostname.
@@ -3070,7 +2573,7 @@ export declare interface NS extends Singularity {
      * @param data - Data to write.
      * @param mode - Defines the write mode. Only valid when writing to text files.
      */
-    write(handle: Handle, data?: string | string[] | number, mode?: "w" | "a"): void;
+    write(handle: Handle, data?: string[] | number, mode?: "w" | "a"): void;
 
     /**
      * Attempts to write data to the specified Netscript Port.
@@ -3082,7 +2585,7 @@ export declare interface NS extends Singularity {
      * @param data - Data to write.
      * @returns True if the data is successfully written to the port, and false otherwise.
      */
-    tryWrite(port: Handle, data: string | string[] | number): boolean;
+    tryWrite(port: Handle, data: string[] | number): boolean;
 
     /**
      * This function is used to read data from a port or from a text file (.txt).
@@ -3133,7 +2636,7 @@ export declare interface NS extends Singularity {
      * WARNING: Port Handles only work in NetscriptJS (Netscript 2.0). They will not work in Netscript 1.0.
      *
      * @see https://bitburner.readthedocs.io/en/latest/netscript/netscriptmisc.html#netscript-ports
-     * @remarks 10 GB
+     * @remarks RAM cost: 10 GB
      * @param port - Port number. Must be an integer between 1 and 20.
      * @returns Data in the specified port.
      */
@@ -3145,7 +2648,7 @@ export declare interface NS extends Singularity {
      *
      * @remarks RAM cost: 1 GB
      * @param name - Filename of file to remove. Must include the extension.
-     * @param host - Host or IP Address of the server on which to delete the file. Optional. Defaults to current server.
+     * @param host - Host Address of the server on which to delete the file. Optional. Defaults to current server.
      * @returns True if it successfully deletes the file, and false otherwise.
      */
     rm(name: string, host?: string): boolean;
@@ -3169,18 +2672,18 @@ export declare interface NS extends Singularity {
      * ```
      * @remarks RAM cost: 1 GB
      * @param script - Filename of script to check. This is case-sensitive.
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @returns True if the specified script is running, and false otherwise.
      */
     scriptRunning(script: string, host: string): boolean;
 
     /**
-     * Kills all scripts with the specified filename on the target server specified by hostname/ip,
+     * Kills all scripts with the specified filename on the target server specified by hostname,
      * regardless of arguments.
      *
      * @remarks RAM cost: 1 GB
      * @param script - Filename of script to kill. This is case-sensitive.
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @returns true if one or more scripts were successfully killed, and false if none were.
      */
     scriptKill(script: string, host: string): boolean;
@@ -3199,7 +2702,7 @@ export declare interface NS extends Singularity {
      *
      * @remarks RAM cost: 0.1 GB
      * @param script - Filename of script. This is case-sensitive.
-     * @param host - Host or IP of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
+     * @param host - Host of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
      * @returns Amount of RAM required to run the specified script on the target server, and 0 if the script does not exist.
      */
     getScriptRam(script: string, host?: string): number;
@@ -3209,7 +2712,7 @@ export declare interface NS extends Singularity {
      * The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels.
      *
      * @remarks RAM cost: 0.05 GB
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
      * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
      * @returns Returns the amount of time in seconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
@@ -3221,7 +2724,7 @@ export declare interface NS extends Singularity {
      * The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels.
      *
      * @remarks RAM cost: 0.05 GB
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
      * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
      * @returns Returns the amount of time in seconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
@@ -3233,7 +2736,7 @@ export declare interface NS extends Singularity {
      * The function takes in an optional hackLvl parameter that can be specified to see what the weaken time would be at different hacking levels.
      *
      * @remarks RAM cost: 0.05 GB
-     * @param host - Host or IP of target server.
+     * @param host - Host of target server.
      * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
      * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
      * @returns Returns the amount of time in seconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
@@ -3396,18 +2899,6 @@ export declare interface NS extends Singularity {
 }
 
 /**
- * All possible stock market order positions.
- * @public
- */
-export declare type OrderPosition = "long" | "short";
-
-/**
- * All possible stock market order type.
- * @public
- */
-export declare type OrderType = "limitbuy" | "limitsell" | "stopbuy" | "stopsell";
-
-/**
  * Short summary of the players skills.
  * @public
  */
@@ -3440,7 +2931,7 @@ export declare interface PlayerSkills {
  * then you will lose all of the data in the ports!
  * @public
  */
-export declare type Port = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;
+export declare type Port = number;
 
 /**
  * A single process on a server.
@@ -3454,21 +2945,6 @@ export declare interface ProcessInfo {
     /** Script's arguments */
     args: string[];
 }
-
-/**
- * All programs.
- * @public
- */
-export declare type Programs =
-| "autolink.exe"
-| "brutessh.exe"
-| "deepscanv1.exe"
-| "deepscanv2.exe"
-| "ftpcrack.exe"
-| "httpworm.exe"
-| "relaysmtp.exe"
-| "serverprofiler.exe"
-| "sqlinject.exe";
 
 /**
  * A single server.
@@ -3523,11 +2999,18 @@ export declare interface Server {
 
 /**
  * Singularity API
+ * @remarks
+ * This API requires Source-File 4 level 1 / 2 / 3 to use.
  * @public
  */
 export declare interface Singularity {
     /**
-     * If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Take university class.
+     *
+     * @remarks
+     * RAM cost: 2 GB
+     *
+     * Singularity - Level 1
      *
      * This function will automatically set you to start taking a course at a university.
      * If you are already in the middle of some “working” action (such as working at a
@@ -3537,17 +3020,20 @@ export declare interface Singularity {
      * The cost and experience gains for all of these universities and classes are the same as
      * if you were to manually visit and take these classes.
      *
-     * @remarks RAM cost: 2 GB
-     * @remarks Singularity - Level 1
      * @param universityName - Name of university. You must be in the correct city for whatever university you specify.
      * @param courseName - Name of course.
      * @returns True if actions is successfully started, false otherwise.
      */
-    universityCourse(universityName: University, courseName: UniversityCourse): boolean;
+    universityCourse(universityName: string, courseName: string): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
-     *
+     * Workout at the gym.
+     * 
+     * @remarks
+     * RAM cost: 2 GB
+     * 
+     * Singularity - Level 1
+
      * This function will automatically set you to start working out at a gym to train
      * a particular stat. If you are already in the middle of some “working” action
      * (such as working at a company, for a faction, or on a program), then running
@@ -3556,42 +3042,48 @@ export declare interface Singularity {
      * The cost and experience gains for all of these gyms are the same as if you were
      * to manually visit these gyms and train
      *
-     * @remarks RAM cost: 2 GB
-     * @remarks Singularity - Level 1
      * @param gymName - Name of gym. You must be in the correct city for whatever gym you specify.
      * @param stat - The stat you want to train.
      * @returns True if actions is successfully started, false otherwise.
      */
-    gymWorkout(gymName: Gym, stat: GymStat): boolean;
+    gymWorkout(gymName: string, stat: string): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Travel to another city.
+     * @remarks
+     * RAM cost: 2 GB
+     *
+     * Singularity - Level 1
      *
      * This function allows the player to travel to any city. The cost for using this
      * function is the same as the cost for traveling through the Travel Agency.
      *
-     * @remarks RAM cost: 2 GB
-     * @remarks Singularity - Level 1
      * @param city - City to travel to.
      * @returns True if actions is successful, false otherwise.
      */
-    travelToCity(city: City): boolean;
+    travelToCity(city: string): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Purchase the TOR router.
+     * @remarks
+     * RAM cost: 2 GB
+     *
+     * Singularity - Level 1
      *
      * This function allows you to automatically purchase a TOR router. The cost for
      * purchasing a TOR router using this function is the same as if you were to
      * manually purchase one.
      *
-     * @remarks RAM cost: 2 GB
-     * @remarks Singularity - Level 1
      * @returns True if actions is successful, false otherwise.
      */
     purchaseTor(): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Purchase a program from the dark web.
+     * @remarks
+     * RAM cost: 2 GB
+     *
+     * Singularity - Level 1
      *
      * This function allows you to automatically purchase programs. You MUST have a
      * TOR router in order to use this function. The cost of purchasing programs
@@ -3602,55 +3094,32 @@ export declare interface Singularity {
      * ```ts
      * purchaseProgram("brutessh.exe");
      * ```
-     * @remarks RAM cost: 2 GB
-     * @remarks Singularity - Level 1
      * @param programName - Name of program to purchase.
      * @returns True if the specified program is purchased, and false otherwise.
      */
-    purchaseProgram(programName: Programs): boolean;
+    purchaseProgram(programName: string): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Check if the player is busy.
+     * @remarks
+     * RAM cost: 0.5 GB
      *
-     * Returns an object with the Player’s stats.
-     *
-     * @example
-     * ```ts
-     * res = getStats();
-     * print('My charisma level is: ' + res.charisma);
-     * ```
-     * @remarks RAM cost: 0.5 GB
-     * @remarks Singularity - Level 1
-     * @returns Object with the Player’s stats.
-     */
-    getStats(): PlayerSkills;
-
-    /**
-     * If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
-     *
-     * Returns an object with various information about your character.
-     *
-     * @remarks RAM cost: 0.5 GB
-     * @remarks Singularity - Level 1
-     * @returns Object with various information about your character.
-     */
-    getCharacterInformation(): CharacterInfo;
-
-    /**
-     * If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Singularity - Level 1
      *
      * Returns a boolean indicating whether or not the player is currently performing an
      * ‘action’. These actions include working for a company/faction, studying at a univeristy,
      * working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.
      *
-     * @remarks RAM cost: 0.5 GB
-     * @remarks Singularity - Level 1
      * @returns True if the player is currently performing an ‘action’, false otherwise.
      */
     isBusy(): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Stop the current action.
+     * @remarks
+     * RAM cost: 1 GB
+     *
+     * Singularity - Level 1
      *
      * This function is used to end whatever ‘action’ the player is currently performing.
      * The player will receive whatever money/experience/etc. he has earned from that action.
@@ -3665,39 +3134,45 @@ export declare interface Singularity {
      * This function will return true if the player’s action was ended.
      * It will return false if the player was not performing an action when this function was called.
      *
-     * @remarks RAM cost: 1 GB
-     * @remarks Singularity - Level 1
      * @returns True if the player’s action was ended, false if the player was not performing an action.
      */
     stopAction(): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Upgrade home computer RAM.
+     * @remarks
+     * RAM cost: 3 GB
+     *
+     * Singularity - Level 2
      *
      * This function will upgrade amount of RAM on the player’s home computer. The cost is
      * the same as if you were to do it manually.
      *
      * This function will return true if the player’s home computer RAM is successfully upgraded, and false otherwise.
      *
-     * @remarks RAM cost: 3 GB
-     * @remarks Singularity - Level 2
      * @returns True if the player’s home computer RAM is successfully upgraded, and false otherwise.
      */
     upgradeHomeRam(): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get the price of upgrading home RAM.
+     * @remarks
+     * RAM cost: 1.5 GB
+     *
+     * Singularity - Level 2
      *
      * Returns the cost of upgrading the player’s home computer RAM.
      *
-     * @remarks RAM cost: 1.5 GB
-     * @remarks Singularity - Level 2
      * @returns Cost of upgrading the player’s home computer RAM.
      */
     getUpgradeHomeRamCost(): number;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Work for a company.
+     * @remarks
+     * RAM cost: 3 GB
+     *
+     * Singularity - Level 2
      *
      * This function will automatically set you to start working at the company
      * at which you are employed. If you are already in the middle of some “working”
@@ -3718,15 +3193,17 @@ export declare interface Singularity {
      * }
      * //This way, your company reputation will be updated every minute.
      * ```
-     * @remarks RAM cost: 3 GB
-     * @remarks Singularity - Level 2
      * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked
      * @returns True if the player starts working, and false otherwise.
      */
-    workForCompany(companyName?: CompanyName): boolean;
+    workForCompany(companyName?: string): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Apply for a job at a company.
+     * @remarks
+     * RAM cost: 3 GB
+     *
+     * Singularity - Level 2
      *
      * This function will automatically try to apply to the specified company
      * for a position in the specified field. This function can also be used to
@@ -3737,78 +3214,90 @@ export declare interface Singularity {
      * and false otherwise. Note that if you are trying to use this function to
      * apply for a promotion and you don’t get one, it will return false.
      *
-     * @remarks RAM cost: 3 GB
-     * @remarks Singularity - Level 2
      * @param companyName - Name of company to apply to.
      * @param field - Field to which you want to apply.
      * @returns True if the player successfully get a job/promotion, and false otherwise.
      */
-    applyToCompany(companyName: CompanyName, field: CompanyField): boolean;
+    applyToCompany(companyName: string, field: string): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get company reputation.
+     * @remarks
+     * RAM cost: 1 GB
+     *
+     * Singularity - Level 2
      *
      * This function will return the amount of reputation you have at the specified company.
      * If the company passed in as an argument is invalid, -1 will be returned.
      *
-     * @remarks RAM cost: 1 GB
-     * @remarks Singularity - Level 2
      * @param companyName - Name of the company.
      * @returns Amount of reputation you have at the specified company.
      */
-    getCompanyRep(companyName: CompanyName): number;
+    getCompanyRep(companyName: string): number;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get company favor.
+     * @remarks
+     * RAM cost: 1 GB
+     *
+     * Singularity - Level 2
      *
      * This function will return the amount of favor you have at the specified company.
      * If the company passed in as an argument is invalid, -1 will be returned.
      *
-     * @remarks RAM cost: 1 GB
-     * @remarks Singularity - Level 2
      * @param companyName - Name of the company.
      * @returns Amount of favor you have at the specified company.
      */
-    getCompanyFavor(companyName: CompanyName): number;
+    getCompanyFavor(companyName: string): number;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get company favor gain.
+     * @remarks
+     * RAM cost: 0.75 GB
+     *
+     * Singularity - Level 2
      *
      * This function will return the amount of favor you will gain for the specified
      * company when you reset by installing Augmentations.
      *
-     * @remarks RAM cost: 0.75 GB
-     * @remarks Singularity - Level 2
      * @param companyName - Name of the company.
      * @returns Amount of favor you gain at the specified company when you reset by installing Augmentations.
      */
-    getCompanyFavorGain(companyName: CompanyName): number;
+    getCompanyFavorGain(companyName: string): number;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * List all current faction invitations.
+     * @remarks
+     * RAM cost: 3 GB
+     *
+     * Singularity - Level 2
      *
      * Returns an array with the name of all Factions you currently have oustanding invitations from.
      *
-     * @remarks RAM cost: 3 GB
-     * @remarks Singularity - Level 2
      * @returns Array with the name of all Factions you currently have oustanding invitations from.
      */
-    checkFactionInvitations(): FactionName[];
+    checkFactionInvitations(): string[];
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Join a faction.
+     * @remarks
+     * RAM cost: 3 GB
+     *
+     * Singularity - Level 2
      *
      * This function will automatically accept an invitation from a faction and join it.
      *
-     * @remarks RAM cost: 3 GB
-     * @remarks Singularity - Level 2
      * @param faction - Name of faction to join.
      * @returns True if player joined the faction, and false otherwise.
      */
-    joinFaction(faction: FactionName): boolean;
+    joinFaction(faction: string): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Work for a faction.
+     * @remarks
+     * RAM cost: 3 GB
+     *
+     * Singularity - Level 2
      *
      * This function will automatically set you to start working for the specified faction.
      * Obviously, you must be a member of the faction or else this function will fail. If
@@ -3829,67 +3318,77 @@ export declare interface Singularity {
      * }
      * //This way, your faction reputation will be updated every minute.
      * ```
-     * @remarks RAM cost: 3 GB
-     * @remarks Singularity - Level 2
      * @param faction - Name of faction to work for.
      * @param workType - Type of work to perform for the faction.
      * @returns True if the player starts working, and false otherwise.
      */
-    workForFaction(faction: FactionName, workType: FactionWork): boolean;
+    workForFaction(faction: string, workType: string): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get faction reputation.
+     * @remarks
+     * RAM cost: 1 GB
+     *
+     * Singularity - Level 2
      *
      * This function returns the amount of reputation you have for the specified faction.
      *
-     * @remarks RAM cost: 1 GB
-     * @remarks Singularity - Level 2
      * @param faction - Name of faction to work for.
      * @returns Amount of reputation you have for the specified faction.
      */
-    getFactionRep(faction: FactionName): number;
+    getFactionRep(faction: string): number;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get faction favor.
+     * @remarks
+     * RAM cost: 1 GB
+     *
+     * Singularity - Level 2
      *
      * This function returns the amount of favor you have for the specified faction.
      *
-     * @remarks RAM cost: 1 GB
-     * @remarks Singularity - Level 2
      * @param faction - Name of faction.
      * @returns Amount of favor you have for the specified faction.
      */
-    getFactionFavor(faction: FactionName): number;
+    getFactionFavor(faction: string): number;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get faction favor gain.
+     * @remarks
+     * RAM cost: 0.75 GB
+     *
+     * Singularity - Level 2
      *
      * This function returns the amount of favor you will gain for the specified
      * faction when you reset by installing Augmentations.
      *
-     * @remarks RAM cost: 0.75 GB
-     * @remarks Singularity - Level 2
      * @param faction - Name of faction.
      * @returns Amount of favor you will gain for the specified faction when you reset by installing Augmentations.
      */
-    getFactionFavorGain(faction: FactionName): number;
+    getFactionFavorGain(faction: string): number;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Donate to a faction.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
      *
      * Attempts to donate money to the specified faction in exchange for reputation.
      * Returns true if you successfully donate the money, and false otherwise.
      *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
      * @param faction - Name of faction to donate to.
      * @param amount - Amount of money to donate.
      * @returns True if the money was donated, and false otherwise.
      */
-    donateToFaction(faction: FactionName, amount: number): boolean;
+    donateToFaction(faction: string, amount: number): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Create a program.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
      *
      * This function will automatically set you to start working on creating the
      * specified program. If you are already in the middle of some “working” action
@@ -3914,15 +3413,17 @@ export declare interface Singularity {
      * ```ts
      * createProgram(“relaysmtp.exe”);
      * ```
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
      * @param program - Name of program to create.
      * @returns True if you successfully start working on the specified program, and false otherwise.
      */
-    createProgram(program: Programs): boolean;
+    createProgram(program: string): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Commit a crime.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
      *
      * This function is used to automatically attempt to commit crimes.
      * If you are already in the middle of some ‘working’ action (such
@@ -3940,334 +3441,350 @@ export declare interface Singularity {
      * although the game sets a certain crime to be X amount of seconds, there is no
      * guarantee that your browser will follow that time limit.
      *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
      * @param crime - Name of crime to attempt.
      * @returns True if you successfully start working on the specified program, and false otherwise.
      */
-    commitCrime(crime: Crime): number;
+    commitCrime(crime: string): number;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get chance to successfully commit a crime.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
      *
      * This function returns your chance of success at commiting the specified crime.
-     * The chance is returned as a decimal (i.e. 60% would be returned as 0.6).
      *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
      * @param crime - Name of crime.
-     * @returns Chance of success at commiting the specified crime as a decimal.
+     * @returns Chance of success at commiting the specified crime.
      */
-    getCrimeChance(crime: Crime): number;
+    getCrimeChance(crime: string): number;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get stats related to a crime.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
      *
      * Returns the stats of the crime.
      *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
      * @param crime - Name of crime. Not case-sensitive
      * @returns The stats of the crime.
      */
-    getCrimeStats(crime: Crime): CrimeStats;
+    getCrimeStats(crime: string): CrimeStats;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get a list of owned augmentation.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
      *
      * This function returns an array containing the names (as strings) of all Augmentations you have.
      *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
      * @param purchased - Specifies whether the returned array should include Augmentations you have purchased but not yet installed. By default, this argument is false which means that the return value will NOT have the purchased Augmentations.
      * @returns Array containing the names (as strings) of all Augmentations you have.
      */
-    getOwnedAugmentations(purchased?: boolean): AugmentName[];
+    getOwnedAugmentations(purchased?: boolean): string[];
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get a list of acquired Source-Files.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
      *
      * Returns an array of source files
      *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
      * @returns Array containing an object with number and level of the source file.
      */
     getOwnedSourceFiles(): SourceFileLvl[];
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get a list of augmentation available from a faction.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
      *
      * Returns an array containing the names (as strings) of all Augmentations
      * that are available from the specified faction.
      *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
      * @param faction - Name of faction.
      * @returns Array containing the names of all Augmentations.
      */
-    getAugmentationsFromFaction(faction: FactionName): AugmentName[];
+    getAugmentationsFromFaction(faction: string): string[];
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get the pre-requisite of an augmentation.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
      *
      * This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation.
      * If there are no prerequisites, a blank array is returned.
      *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
      * @param augName - Name of Augmentation.
      * @returns Array with the names of the prerequisite Augmentation(s) for the specified Augmentation.
      */
-    getAugmentationPrereq(augName: AugmentName): AugmentName[];
+    getAugmentationPrereq(augName: string): string[];
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Purchase an augmentation
+     * @remarks
+     * RAM cost: 5 GB
      *
-     * This function returns an array with two elements that gives the cost for
-     * the specified Augmentation. The first element in the returned array is the
-     * reputation requirement of the Augmentation, and the second element is the
-     * money cost.
-     *
-     * If an invalid Augmentation name is passed in for the augName argument, this
-     * function will return the array [-1, -1].
-     *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
-     * @param augName - Name of Augmentation.
-     * @returns Array with first element as a reputation requirement and second element as the money cost.
-     */
-    getAugmentationCost(augName: AugmentName): [number, number];
-
-    /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Singularity - Level 3
      *
      * This function will try to purchase the specified Augmentation through the given Faction.
      *
      * This function will return true if the Augmentation is successfully purchased, and false otherwise.
      *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
      * @param faction - Name of faction to purchase Augmentation from.
-     * @param augmnet - Name of Augmentation to purchase.
+     * @param augmentation - Name of Augmentation to purchase.
      * @returns True if the Augmentation is successfully purchased, and false otherwise.
      */
-    purchaseAugmentation(faction: FactionName, augmnet: AugmentName): boolean;
+    purchaseAugmentation(faction: string, augmentation: string): boolean;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Get the stats of an augmentation.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
      *
      * This function returns augmentation stats.
      *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
      * @param name - Name of Augmentation. CASE-SENSITIVE.
      * @returns Augmentation stats.
      */
-    getAugmentationStats(name: AugmentName): AugmentationStats;
+    getAugmentationStats(name: string): AugmentationStats;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Install your purchased augmentations.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
      *
      * This function will automatically install your Augmentations, resetting the game as usual.
      *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
-     * @param cbScript - Optional callback script. This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.
+     * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.
      */
     installAugmentations(cbScript?: string): void;
 
     /**
-     * If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
+     * Soft reset the game.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
      *
      * This function will perform a reset even if you don’t have any augmentation installed.
      *
-     * @remarks RAM cost: 5 GB
-     * @remarks Singularity - Level 3
      */
     softReset(): void;
 }
 
 /**
  * Sleeve API
+ * @remarks
+ * If you are not in BitNode-10, then you must have Source-File 10 in order to use this API.
  * @public
  */
 export declare interface Sleeve {
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Get the number of sleeves you own.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return the number of duplicate sleeves the player has.
      *
-     * @remarks RAM cost: 4 GB
      * @returns number of duplicate sleeves the player has.
      */
     getNumSleeves(): number;
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Get the stats of a sleeve.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a structure containing the stats of the sleeve.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to get stats of.
      * @returns Object containing the stats of the sleeve.
      */
     getSleeveStats(sleeveNumber: number): SleeveSkills;
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Get information about a sleeve.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a struct containing tons of information about this sleeve
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to retrieve information.
      * @returns Object containing tons of information about this sleeve.
      */
     getInformation(sleeveNumber: number): SleeveInformation;
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Get task of a sleeve.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return the current task that the sleeve is performing. type is set to “Idle” if the sleeve isn’t doing anything.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to retrieve task from.
      * @returns Object containing information the current task that the sleeve is performing.
      */
     getTask(sleeveNumber: number): SleeveTask;
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Set a sleeve to shock recovery.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a boolean indicating whether or not this action was set successfully.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to start recovery.
      * @returns True if this action was set successfully, false otherwise.
      */
     setToShockRecovery(sleeveNumber: number): boolean;
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Set a sleeve to synchronize.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a boolean indicating whether or not this action was set successfully.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to start synchronizing.
      * @returns True if this action was set successfully, false otherwise.
      */
     setToSynchronize(sleeveNumber: number): boolean;
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Set a sleeve to commit crime.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a boolean indicating whether or not this action was set successfully.
      *
      * Returns false if an invalid action is specified.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to start commiting crime.
      * @param name - Name of the crime. Must be an exact match.
      * @returns True if this action was set successfully, false otherwise.
      */
-    setToCommitCrime(sleeveNumber: number, name: Crime): boolean;
+    setToCommitCrime(sleeveNumber: number, name: string): boolean;
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Set a sleeve to work for a faction.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a boolean indicating whether or not the sleeve started working or this faction.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to work for the faction.
      * @param factionName - Name of the faction to work for.
      * @param factionWorkType - Name of the action to perform for this faction.
      * @returns True if the sleeve started working on this faction, false otherwise.
      */
-    setToFactionWork(sleeveNumber: number, factionName: FactionName, factionWorkType: FactionWork): boolean;
+    setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean;
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Set a sleeve to work for a company.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a boolean indicating whether or not the sleeve started working or this company.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to work for the company.
      * @param companyName - Name of the company to work for.
      * @returns True if the sleeve started working on this company, false otherwise.
      */
-    setToCompanyWork(sleeveNumber: number, companyName: CompanyName): boolean;
+    setToCompanyWork(sleeveNumber: number, companyName: string): boolean;
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Set a sleeve to take a class at a university.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a boolean indicating whether or not this action was set successfully.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to start taking class.
      * @param university - Name of the university to attend.
      * @param className - Name of the class to follow.
      * @returns True if this action was set successfully, false otherwise.
      */
-    setToUniversityCourse(sleeveNumber: number, university: University, className: UniversityCourse): boolean;
+    setToUniversityCourse(sleeveNumber: number, university: string, className: string): boolean;
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Set a sleeve to workout at the gym.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a boolean indicating whether or not the sleeve started working out.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to workout at the gym.
      * @param gymName - Name of the gym.
      * @param stat - Name of the stat to train.
      * @returns True if the sleeve started working out, false otherwise.
      */
-    setToGymWorkout(sleeveNumber: number, gymName: Gym, stat: GymStat): boolean;
+    setToGymWorkout(sleeveNumber: number, gymName: string, stat: string): boolean;
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Make a sleeve travel to another city.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a boolean indicating whether or not the sleeve reached destination.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to travel.
      * @param cityName - Name of the destination city.
      * @returns True if the sleeve reached destination, false otherwise.
      */
-    travel(sleeveNumber: number, cityName: City): boolean;
+    travel(sleeveNumber: number, cityName: string): boolean;
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Get augmentations installed on a sleeve.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a list of augmentation names that this sleeve has installed.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to retrieve augmentations from.
      * @returns List of augmentation names that this sleeve has installed.
      */
-    getSleeveAugmentations(sleeveNumber: number): AugmentName[];
+    getSleeveAugmentations(sleeveNumber: number): string[];
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * List purchasable augs for a sleeve.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return a list of augmentations that the player can buy for this sleeve.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to retrieve purchasable augmentations from.
      * @returns List of augmentations that the player can buy for this sleeve.
      */
     getSleevePurchasableAugs(sleeveNumber: number): AugmentPair[];
 
     /**
-     * If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
+     * Purchase an aug for a sleeve.
+     * @remarks
+     * RAM cost: 4 GB
      *
      * Return true if the aug was purchased and installed on the sleeve.
      *
-     * @remarks RAM cost: 4 GB
      * @param sleeveNumber - Index of the sleeve to buy an aug for.
      * @param augName - Name of the aug to buy. Must be an exact match.
      * @returns True if the aug was purchased and installed on the sleeve, false otherwise.
      */
-    purchaseSleeveAug(sleeveNumber: number, augName: AugmentName): boolean;
+    purchaseSleeveAug(sleeveNumber: number, augName: string): boolean;
 }
 
 /**
@@ -4276,7 +3793,7 @@ export declare interface Sleeve {
  */
 export declare interface SleeveInformation {
     /** location of the sleeve */
-    city: City;
+    city: string;
     /** current hp of the sleeve */
     hp: number;
     /** max hp of the sleeve */
@@ -4284,7 +3801,7 @@ export declare interface SleeveInformation {
     /** jobs available to the sleeve */
     jobs: string[];
     /** job titles available to the sleeve */
-    jobTitle: CompanyField[];
+    jobTitle: string[];
     /** does this sleeve have access to the tor router */
     tor: boolean;
     /** sleeve multipliers */
@@ -4332,13 +3849,13 @@ export declare interface SleeveTask {
     /** task type */
     task: string;
     /** crime currently attempting, if any */
-    crime: Crime | "";
+    crime: string;
     /** location of the task, if any */
-    location: City | "";
+    location: string;
     /** stat being trained at the gym, if any */
-    gymStatType: GymStat | "";
+    gymStatType: string;
     /** faction work type being performed, if any */
-    factionWorkType: FactionWork | "";
+    factionWorkType: string;
 }
 
 /**
@@ -4366,7 +3883,7 @@ export declare interface SleeveWorkGains {
  */
 export declare interface SourceFileLvl {
     /** The number of the source file */
-    n: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+    n: number;
     /** The level of the source file */
     lvl: number;
 }
@@ -4377,7 +3894,7 @@ export declare interface SourceFileLvl {
  */
 export declare type StockOrder = {
     /** Stock Symbol */
-    [key in StockSymbol]?: StockOrderObject[];
+    [key: string]: StockOrderObject[];
 };
 
 /**
@@ -4390,49 +3907,78 @@ export declare interface StockOrderObject {
     /** Price per share */
     price: number;
     /** Order type */
-    type: "Limit Buy Order" | "Limit Sell Order" | "Stop Buy Order" | "Stop Buy Order";
+    type: string;
     /** Order position */
-    position: "S" | "L";
+    position: string;
 }
 
 /**
- * All possible stock market symbols.
+ * Object representing data representing a gang member task.
  * @public
  */
-export declare type StockSymbol =
-| "ECP"
-| "MGCP"
-| "BLD"
-| "CLRK"
-| "OMTK"
-| "FSIG"
-| "KGI"
-| "FLCM"
-| "STM"
-| "DCOMM"
-| "HLS"
-| "VITA"
-| "ICRS"
-| "UNV"
-| "AERO"
-| "OMN"
-| "SLRS"
-| "GPH"
-| "NVMD"
-| "WDS"
-| "LXO"
-| "RHOC"
-| "APHE"
-| "SYSC"
-| "CTK"
-| "NTLK"
-| "OMGA"
-| "FNS"
-| "SGC"
-| "JGN"
-| "CTYS"
-| "MDYN"
-| "TITN";
+export declare interface stringStats {
+    /** Task name */
+    name: string;
+    /** Task Description */
+    desc: string;
+    /** Is a task of a hacking gang */
+    isHacking: boolean;
+    /** Is a task of a combat gang */
+    isCombat: boolean;
+    /** Base respect earned */
+    baseRespect: number;
+    /** Base wanted earned */
+    baseWanted: number;
+    /** Base money earned */
+    baseMoney: number;
+    /** Hacking skill impact on task scaling */
+    hackWeight: number;
+    /** Stength skill impact on task scaling */
+    strWeight: number;
+    /** Defense skill impact on task scaling */
+    defWeight: number;
+    /** Dexterity skill impact on task scaling */
+    dexWeight: number;
+    /** Agility skill impact on task scaling */
+    agiWeight: number;
+    /** Charisma skill impact on task scaling */
+    chaWeight: number;
+    /** Number representing the difficulty of the task */
+    difficulty: number;
+    /** Territory impact on task scaling */
+    territory: stringTerritory;
+}
+
+/**
+ * Object representing data representing a gang member equipment.
+ * @public
+ */
+export declare interface stringStats {
+    /** Strength multiplier */
+    str: number;
+    /** Defense multiplier */
+    def: number;
+    /** Dexterity multiplier */
+    dex: number;
+    /** Agility multiplier */
+    agi: number;
+    /** Charisma multiplier */
+    cha: number;
+    /** Hacking multiplier */
+    hack: number;
+}
+
+/**
+ * @public
+ */
+export declare interface stringTerritory {
+    /** Money gain impact on task scaling */
+    money: number;
+    /** Respect gain impact on task scaling */
+    respect: number;
+    /** Wanted gain impact on task scaling */
+    wanted: number;
+}
 
 /**
  * Stock market API
@@ -4445,7 +3991,7 @@ export declare interface TIX {
      * @remarks RAM cost: 2 GB
      * @returns Array of the symbols of the tradable stocks.
      */
-    getSymbols(): StockSymbol[];
+    getSymbols(): string[];
 
     /**
      * Returns the price of a stock
@@ -4461,7 +4007,7 @@ export declare interface TIX {
      * @param sym - Stock symbol.
      * @returns The price of a stock.
      */
-    getPrice(sym: StockSymbol): number;
+    getPrice(sym: string): number;
 
     /**
      * Returns the ask price of that stock.
@@ -4470,7 +4016,7 @@ export declare interface TIX {
      * @param sym - Stock symbol.
      * @returns The ask price of a stock.
      */
-    getAskPrice(sym: StockSymbol): number;
+    getAskPrice(sym: string): number;
 
     /**
      * Returns the bid price of that stock.
@@ -4479,7 +4025,7 @@ export declare interface TIX {
      * @param sym - Stock symbol.
      * @returns The bid price of a stock.
      */
-    getBidPrice(sym: StockSymbol): number;
+    getBidPrice(sym: string): number;
 
     /**
      * Returns the player’s position in a stock.
@@ -4508,7 +4054,7 @@ export declare interface TIX {
      * @param sym - Stock symbol.
      * @returns Array of four elements that represents the player’s position in a stock.
      */
-    getPosition(sym: StockSymbol): [number, number, number, number];
+    getPosition(sym: string): [number, number, number, number];
 
     /**
      * Returns the maximum number of shares of a stock.
@@ -4520,7 +4066,7 @@ export declare interface TIX {
      * @param sym - Stock symbol.
      * @returns Maximum number of shares that the stock has.
      */
-    getMaxShares(sym: StockSymbol): number;
+    getMaxShares(sym: string): number;
 
     /**
      * Calculates cost of buying stocks.
@@ -4534,7 +4080,7 @@ export declare interface TIX {
      * @param posType - Specifies whether the order is a “Long” or “Short” position.
      * @returns Cost to buy a given number of shares of a stock.
      */
-    getPurchaseCost(sym: StockSymbol, shares: number, posType: OrderPosition): number;
+    getPurchaseCost(sym: string, shares: number, posType: string): number;
 
     /**
      * Calculate profit of setting stocks.
@@ -4548,7 +4094,7 @@ export declare interface TIX {
      * @param posType - Specifies whether the order is a “Long” or “Short” position.
      * @returns Gain from selling a given number of shares of a stock.
      */
-    getSaleGain(sym: StockSymbol, shares: number, posType: OrderPosition): number;
+    getSaleGain(sym: string, shares: number, posType: string): number;
 
     /**
      * Buy stocks.
@@ -4567,7 +4113,7 @@ export declare interface TIX {
      * @param shares - Number of shares to purchased. Must be positive. Will be rounded to nearest integer.
      * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.
      */
-    buy(sym: StockSymbol, shares: number): number;
+    buy(sym: string, shares: number): number;
 
     /**
      * Sell stocks.
@@ -4591,7 +4137,7 @@ export declare interface TIX {
      * @param shares - Number of shares to sell. Must be positive. Will be rounded to nearest integer.
      * @returns The stock price at which each share was sold, otherwise 0 if the shares weren't sold.
      */
-    sell(sym: StockSymbol, shares: number): number;
+    sell(sym: string, shares: number): number;
 
     /**
      * Short stocks.
@@ -4613,7 +4159,7 @@ export declare interface TIX {
      * @param shares - Number of shares to short. Must be positive. Will be rounded to nearest integer.
      * @returns The stock price at which each share was purchased, otherwise 0 if the shares weren't purchased.
      */
-    short(sym: StockSymbol, shares: number): number;
+    short(sym: string, shares: number): number;
 
     /**
      * Sell short stock.
@@ -4635,7 +4181,7 @@ export declare interface TIX {
      * @param shares - Number of shares to sell. Must be positive. Will be rounded to nearest integer.
      * @returns The stock price at which each share was sold, otherwise 0 if the shares weren't sold.
      */
-    sellShort(sym: StockSymbol, shares: number): number;
+    sellShort(sym: string, shares: number): number;
 
     /**
      * Place order for stocks.
@@ -4655,7 +4201,7 @@ export declare interface TIX {
      * @param pos - Specifies whether the order is a “Long” or “Short” position.
      * @returns True if the order is successfully placed, and false otherwise.
      */
-    placeOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPosition): boolean;
+    placeOrder(sym: string, shares: number, price: number, type: string, pos: string): boolean;
 
     /**
      * Cancel order for stocks.
@@ -4672,7 +4218,7 @@ export declare interface TIX {
      * @param type - Type of order.
      * @param pos - Specifies whether the order is a “Long” or “Short” position.
      */
-    cancelOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPosition): void;
+    cancelOrder(sym: string, shares: number, price: number, type: string, pos: string): void;
 
     /**
      * Returns your order book for the stock market.
@@ -4683,7 +4229,7 @@ export declare interface TIX {
      *
      * ```ts
      * {
-     *  StockSymbol1: [ // Array of orders for this stock
+     *  string1: [ // Array of orders for this stock
      *      {
      *          shares: Order quantity
      *          price: Order price
@@ -4695,7 +4241,7 @@ export declare interface TIX {
      *      },
      *      ...
      *  ],
-     *  StockSymbol2: [ // Array of orders for this stock
+     *  string2: [ // Array of orders for this stock
      *      ...
      *  ],
      *  ...
@@ -4749,7 +4295,7 @@ export declare interface TIX {
      * @param sym - Stock symbol.
      * @returns Volatility of the specified stock.
      */
-    getVolatility(sym: StockSymbol): number;
+    getVolatility(sym: string): number;
 
     /**
      * Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.
@@ -4766,7 +4312,7 @@ export declare interface TIX {
      * @param sym - Stock symbol.
      * @returns Probability that the specified stock’s price will increase (as opposed to decrease) during the next tick.
      */
-    getForecast(sym: StockSymbol): number;
+    getForecast(sym: string): number;
 
     /**
      * Purchase 4S Market Data Access.
@@ -4782,23 +4328,5 @@ export declare interface TIX {
      */
     purchase4SMarketDataTixApi(): boolean;
 }
-
-/**
- * All universities.
- * @public
- */
-export declare type University = "Summit University" | "Rothman University" | "ZB Institute Of Technology";
-
-/**
- * All university courses.
- * @public
- */
-export declare type UniversityCourse =
-| "Study Computer Science"
-| "Data Strucures"
-| "Networks"
-| "Algorithms"
-| "Management"
-| "Leadership";
 
 export { }

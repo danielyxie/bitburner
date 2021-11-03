@@ -9,5 +9,5 @@ Array of factions you are currently a member of
 <b>Signature:</b>
 
 ```typescript
-factions: FactionName[];
+factions: string[];
 ```

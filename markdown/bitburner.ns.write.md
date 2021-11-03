@@ -13,7 +13,7 @@ If the first argument is a string, then it specifies the name of a text file (.t
 <b>Signature:</b>
 
 ```typescript
-write(handle: Handle, data?: string | string[] | number, mode?: "w" | "a"): void;
+write(handle: Handle, data?: string[] | number, mode?: "w" | "a"): void;
 ```
 
 ## Parameters
@@ -21,7 +21,7 @@ write(handle: Handle, data?: string | string[] | number, mode?: "w" | "a"): void
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  handle | [Handle](./bitburner.handle.md) | Port or text file that will be written to. |
-|  data | string \| string\[\] \| number | Data to write. |
+|  data | string\[\] \| number | Data to write. |
 |  mode | "w" \| "a" | Defines the write mode. Only valid when writing to text files. |
 
 <b>Returns:</b>

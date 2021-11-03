@@ -4,21 +4,19 @@
 
 ## Gang.getChanceToWinClash() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Returns the chance you have to win a clash with the specified gang. The chance is returned in decimal form, not percentage
+Get chance to win clash with other gang.
 
 <b>Signature:</b>
 
 ```typescript
-getChanceToWinClash(gangName: GangName): number;
+getChanceToWinClash(gangName: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  gangName | [GangName](./bitburner.gangname.md) | Target gang |
+|  gangName | string | Target gang |
 
 <b>Returns:</b>
 
@@ -29,4 +27,6 @@ Chance you have to win a clash with the specified gang.
 ## Remarks
 
 RAM cost: 4 GB
+
+Returns the chance you have to win a clash with the specified gang. The chance is returned in decimal form, not percentage
 

@@ -4,26 +4,20 @@
 
 ## Singularity.workForFaction() method
 
-If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function will automatically set you to start working for the specified faction. Obviously, you must be a member of the faction or else this function will fail. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.
-
-This function will return true if you successfully start working for the specified faction, and false otherwise.
-
-Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience) until you FINISH the action.
+Work for a faction.
 
 <b>Signature:</b>
 
 ```typescript
-workForFaction(faction: FactionName, workType: FactionWork): boolean;
+workForFaction(faction: string, workType: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  faction | [FactionName](./bitburner.factionname.md) | Name of faction to work for. |
-|  workType | [FactionWork](./bitburner.factionwork.md) | Type of work to perform for the faction. |
+|  faction | string | Name of faction to work for. |
+|  workType | string | Type of work to perform for the faction. |
 
 <b>Returns:</b>
 
@@ -33,7 +27,15 @@ True if the player starts working, and false otherwise.
 
 ## Remarks
 
+RAM cost: 3 GB
+
 Singularity - Level 2
+
+This function will automatically set you to start working for the specified faction. Obviously, you must be a member of the faction or else this function will fail. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.
+
+This function will return true if you successfully start working for the specified faction, and false otherwise.
+
+Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience) until you FINISH the action.
 
 ## Example
 

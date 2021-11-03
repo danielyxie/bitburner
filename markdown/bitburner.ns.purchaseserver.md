@@ -15,7 +15,7 @@ Returns the hostname of the newly purchased server as a string. If the function 
 <b>Signature:</b>
 
 ```typescript
-purchaseServer(hostname: string, ram: number): string | "";
+purchaseServer(hostname: string, ram: number): string;
 ```
 
 ## Parameters
@@ -27,7 +27,7 @@ purchaseServer(hostname: string, ram: number): string | "";
 
 <b>Returns:</b>
 
-string \| ""
+string
 
 The hostname of the newly purchased server.
 

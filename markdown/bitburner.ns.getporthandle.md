@@ -28,5 +28,5 @@ Data in the specified port.
 
 ## Remarks
 
-10 GB
+RAM cost: 10 GB
 

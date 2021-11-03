@@ -17,7 +17,7 @@ getScriptRam(script: string, host?: string): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  script | string | Filename of script. This is case-sensitive. |
-|  host | string | Host or IP of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server. |
+|  host | string | Host of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server. |
 
 <b>Returns:</b>
 

@@ -10,7 +10,7 @@ Copies a script or literature (.lit) file(s) to another server. The files argume
 
 ```typescript
 scp(
-    files: string | ReadonlyArray<string>,
+    files: string[],
     source: string,
     // tslint:disable-next-line:unified-signatures
     destination: string,
@@ -21,9 +21,9 @@ scp(
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  files | string \| ReadonlyArray&lt;string&gt; | Filename or an array of filenames of script/literature files to copy. |
-|  source | string | Host or IP of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server. |
-|  destination | string | Host or IP of the destination server, which is the server to which the file will be copied. |
+|  files | string\[\] | Filename or an array of filenames of script/literature files to copy. |
+|  source | string | Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server. |
+|  destination | string | Host of the destination server, which is the server to which the file will be copied. |
 
 <b>Returns:</b>
 

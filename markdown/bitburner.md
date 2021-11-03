@@ -12,7 +12,7 @@
 |  [AugmentPair](./bitburner.augmentpair.md) | Return value of [getSleevePurchasableAugs](./bitburner.sleeve.getsleevepurchasableaugs.md) |
 |  [BasicHGWOptions](./bitburner.basichgwoptions.md) | Options to affect the behavior of [hack](./bitburner.ns.hack.md)<!-- -->, [grow](./bitburner.ns.grow.md)<!-- -->, and [weaken](./bitburner.ns.weaken.md)<!-- -->. |
 |  [BitNodeMultipliers](./bitburner.bitnodemultipliers.md) | All multipliers affecting the difficulty of the current challenge. |
-|  [Bladeburner](./bitburner.bladeburner.md) |  |
+|  [Bladeburner](./bitburner.bladeburner.md) | Bladeburner API |
 |  [BladeburnerCurAction](./bitburner.bladeburnercuraction.md) | Bladeburner current action. |
 |  [CharacterInfo](./bitburner.characterinfo.md) |  |
 |  [CharacterMult](./bitburner.charactermult.md) |  |
@@ -20,13 +20,10 @@
 |  [CodingContract](./bitburner.codingcontract.md) | Coding Contact API |
 |  [CrimeStats](./bitburner.crimestats.md) | Data representing the internal values of a crime. |
 |  [Gang](./bitburner.gang.md) | Gang API |
-|  [GangEquipmentStats](./bitburner.gangequipmentstats.md) | Object representing data representing a gang member equipment. |
 |  [GangGenInfo](./bitburner.ganggeninfo.md) | Gang general info. |
 |  [GangMemberAscension](./bitburner.gangmemberascension.md) |  |
 |  [GangMemberInfo](./bitburner.gangmemberinfo.md) |  |
 |  [GangOtherInfoObject](./bitburner.gangotherinfoobject.md) |  |
-|  [GangTasksStats](./bitburner.gangtasksstats.md) | Object representing data representing a gang member task. |
-|  [GangTasksTerritory](./bitburner.gangtasksterritory.md) |  |
 |  [HackingMultipliers](./bitburner.hackingmultipliers.md) | Hack related multipliers. |
 |  [Hacknet](./bitburner.hacknet.md) | Hacknet API |
 |  [HacknetMultipliers](./bitburner.hacknetmultipliers.md) | Hacknet related multipliers. |
@@ -43,42 +40,16 @@
 |  [SleeveWorkGains](./bitburner.sleeveworkgains.md) |  |
 |  [SourceFileLvl](./bitburner.sourcefilelvl.md) |  |
 |  [StockOrderObject](./bitburner.stockorderobject.md) | Value in map of [StockOrder](./bitburner.stockorder.md) |
+|  [stringStats](./bitburner.stringstats.md) | Object representing data representing a gang member task. |
+|  [stringTerritory](./bitburner.stringterritory.md) |  |
 |  [TIX](./bitburner.tix.md) | Stock market API |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [AugmentName](./bitburner.augmentname.md) | All augmentation names. |
-|  [BladeburnerActTypes](./bitburner.bladeburneracttypes.md) | All Bladeburner action types. |
-|  [BladeburnerBlackOps](./bitburner.bladeburnerblackops.md) | All Bladeburner black ops. |
-|  [BladeburnerContracts](./bitburner.bladeburnercontracts.md) |  |
-|  [BladeburnerGenActions](./bitburner.bladeburnergenactions.md) | All Bladeburner General Actions. |
-|  [BladeburnerOperations](./bitburner.bladeburneroperations.md) | All Bladeburner Ops. |
-|  [BladeburnerSkills](./bitburner.bladeburnerskills.md) | All Bladeburner Skills. |
-|  [City](./bitburner.city.md) | All cities. |
-|  [CodingContractTypes](./bitburner.codingcontracttypes.md) | All Coding contract types. |
-|  [CompanyField](./bitburner.companyfield.md) | All company work fields. |
-|  [CompanyName](./bitburner.companyname.md) | All companies. |
-|  [Crime](./bitburner.crime.md) | All crimes. |
-|  [FactionName](./bitburner.factionname.md) | All factions. |
-|  [FactionWork](./bitburner.factionwork.md) | All faction work types. |
-|  [GangAugmentations](./bitburner.gangaugmentations.md) | All Gang augmentations. |
-|  [GangEquipment](./bitburner.gangequipment.md) | All Gang equipment. |
-|  [GangEquipmentType](./bitburner.gangequipmenttype.md) | All Gang equipment type. |
-|  [GangName](./bitburner.gangname.md) | All factions that can have a gang. |
 |  [GangOtherInfo](./bitburner.gangotherinfo.md) |  |
-|  [GangTasks](./bitburner.gangtasks.md) | All Gang tasks. |
-|  [Gym](./bitburner.gym.md) | All gyms. |
-|  [GymStat](./bitburner.gymstat.md) | All stats that can be trained at gyms. |
 |  [Handle](./bitburner.handle.md) |  |
-|  [HashUpgrades](./bitburner.hashupgrades.md) | All Hash upgrade names. |
-|  [OrderPosition](./bitburner.orderposition.md) | All possible stock market order positions. |
-|  [OrderType](./bitburner.ordertype.md) | All possible stock market order type. |
 |  [Port](./bitburner.port.md) | Queue used to send and receive messages. |
-|  [Programs](./bitburner.programs.md) | All programs. |
 |  [StockOrder](./bitburner.stockorder.md) | Return value of [getOrders](./bitburner.tix.getorders.md) |
-|  [StockSymbol](./bitburner.stocksymbol.md) | All possible stock market symbols. |
-|  [University](./bitburner.university.md) | All universities. |
-|  [UniversityCourse](./bitburner.universitycourse.md) | All university courses. |
 

@@ -4,16 +4,12 @@
 
 ## Sleeve.setToCommitCrime() method
 
-If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
-
-Return a boolean indicating whether or not this action was set successfully.
-
-Returns false if an invalid action is specified.
+Set a sleeve to commit crime.
 
 <b>Signature:</b>
 
 ```typescript
-setToCommitCrime(sleeveNumber: number, name: Crime): boolean;
+setToCommitCrime(sleeveNumber: number, name: string): boolean;
 ```
 
 ## Parameters
@@ -21,7 +17,7 @@ setToCommitCrime(sleeveNumber: number, name: Crime): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  sleeveNumber | number | Index of the sleeve to start commiting crime. |
-|  name | [Crime](./bitburner.crime.md) | Name of the crime. Must be an exact match. |
+|  name | string | Name of the crime. Must be an exact match. |
 
 <b>Returns:</b>
 
@@ -32,4 +28,8 @@ True if this action was set successfully, false otherwise.
 ## Remarks
 
 RAM cost: 4 GB
+
+Return a boolean indicating whether or not this action was set successfully.
+
+Returns false if an invalid action is specified.
 

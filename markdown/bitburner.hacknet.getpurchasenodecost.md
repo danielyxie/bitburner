@@ -4,7 +4,7 @@
 
 ## Hacknet.getPurchaseNodeCost() method
 
-Returns the cost of purchasing a new Hacknet Node.
+Get the price of the next hacknet node.
 
 <b>Signature:</b>
 
@@ -20,4 +20,6 @@ Cost of purchasing a new Hacknet Node.
 ## Remarks
 
 RAM cost: 0 GB
+
+Returns the cost of purchasing a new Hacknet Node.
 

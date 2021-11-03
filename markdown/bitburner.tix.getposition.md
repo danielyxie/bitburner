@@ -9,14 +9,14 @@ Returns the player’s position in a stock.
 <b>Signature:</b>
 
 ```typescript
-getPosition(sym: StockSymbol): [number, number, number, number];
+getPosition(sym: string): [number, number, number, number];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sym | [StockSymbol](./bitburner.stocksymbol.md) | Stock symbol. |
+|  sym | string | Stock symbol. |
 
 <b>Returns:</b>
 

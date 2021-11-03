@@ -9,14 +9,14 @@ Returns the probability that the specified stock’s price will increase (as opp
 <b>Signature:</b>
 
 ```typescript
-getForecast(sym: StockSymbol): number;
+getForecast(sym: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sym | [StockSymbol](./bitburner.stocksymbol.md) | Stock symbol. |
+|  sym | string | Stock symbol. |
 
 <b>Returns:</b>
 

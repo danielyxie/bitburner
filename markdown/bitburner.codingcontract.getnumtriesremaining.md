@@ -4,7 +4,7 @@
 
 ## CodingContract.getNumTriesRemaining() method
 
-Get the number of tries remaining on the contract before it self-destructs.
+Get the number of attempt remaining.
 
 <b>Signature:</b>
 
@@ -17,7 +17,7 @@ getNumTriesRemaining(fn: string, host?: string): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  fn | string | Filename of the contract. |
-|  host | string | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
@@ -28,4 +28,6 @@ How many attempts are remaining for the contract;
 ## Remarks
 
 RAM cost: 2 GB
+
+Get the number of tries remaining on the contract before it self-destructs.
 

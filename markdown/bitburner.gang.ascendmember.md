@@ -4,9 +4,7 @@
 
 ## Gang.ascendMember() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Ascend the specified Gang Member.
+Ascend a gang member.
 
 <b>Signature:</b>
 
@@ -29,4 +27,6 @@ Object with info about the ascension results.
 ## Remarks
 
 RAM cost: 4 GB
+
+Ascend the specified Gang Member.
 

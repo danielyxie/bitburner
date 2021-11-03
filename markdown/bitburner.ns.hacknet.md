@@ -14,11 +14,5 @@ readonly hacknet: Hacknet;
 
 ## Remarks
 
-Not all functions in the Hacknet Node API are immediately available.
-
-Note that none of these functions will write to the script’s logs.
-
-If you want to see what your script is doing you will have to print to the logs yourself.
-
-4 GB
+RAM cost: 4 GB
 

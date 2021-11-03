@@ -9,5 +9,5 @@ Order position
 <b>Signature:</b>
 
 ```typescript
-position: "S" | "L";
+position: string;
 ```

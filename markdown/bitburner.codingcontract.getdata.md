@@ -4,7 +4,7 @@
 
 ## CodingContract.getData() method
 
-Get the data associated with the specific Coding Contract. Note that this is not the same as the contract’s description. This is just the data that the contract wants you to act on in order to solve
+Get the input data.
 
 <b>Signature:</b>
 
@@ -17,7 +17,7 @@ getData(fn: string, host?: string): string;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  fn | string | Filename of the contract. |
-|  host | string | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
@@ -28,4 +28,6 @@ The specified contract’s data;
 ## Remarks
 
 RAM cost: 5 GB
+
+Get the data associated with the specific Coding Contract. Note that this is not the same as the contract’s description. This is just the data that the contract wants you to act on in order to solve
 

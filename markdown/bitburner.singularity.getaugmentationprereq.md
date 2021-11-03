@@ -4,29 +4,31 @@
 
 ## Singularity.getAugmentationPrereq() method
 
-If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation. If there are no prerequisites, a blank array is returned.
+Get the pre-requisite of an augmentation.
 
 <b>Signature:</b>
 
 ```typescript
-getAugmentationPrereq(augName: AugmentName): AugmentName[];
+getAugmentationPrereq(augName: string): string[];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  augName | [AugmentName](./bitburner.augmentname.md) | Name of Augmentation. |
+|  augName | string | Name of Augmentation. |
 
 <b>Returns:</b>
 
-[AugmentName](./bitburner.augmentname.md)<!-- -->\[\]
+string\[\]
 
 Array with the names of the prerequisite Augmentation(s) for the specified Augmentation.
 
 ## Remarks
 
+RAM cost: 5 GB
+
 Singularity - Level 3
+
+This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation. If there are no prerequisites, a blank array is returned.
 

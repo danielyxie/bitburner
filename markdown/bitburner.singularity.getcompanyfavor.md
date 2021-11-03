@@ -4,21 +4,19 @@
 
 ## Singularity.getCompanyFavor() method
 
-If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function will return the amount of favor you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.
+Get company favor.
 
 <b>Signature:</b>
 
 ```typescript
-getCompanyFavor(companyName: CompanyName): number;
+getCompanyFavor(companyName: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  companyName | [CompanyName](./bitburner.companyname.md) | Name of the company. |
+|  companyName | string | Name of the company. |
 
 <b>Returns:</b>
 
@@ -28,5 +26,9 @@ Amount of favor you have at the specified company.
 
 ## Remarks
 
+RAM cost: 1 GB
+
 Singularity - Level 2
+
+This function will return the amount of favor you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.
 

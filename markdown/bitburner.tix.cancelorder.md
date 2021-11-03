@@ -9,18 +9,18 @@ Cancel order for stocks.
 <b>Signature:</b>
 
 ```typescript
-cancelOrder(sym: StockSymbol, shares: number, price: number, type: OrderType, pos: OrderPosition): void;
+cancelOrder(sym: string, shares: number, price: number, type: string, pos: string): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sym | [StockSymbol](./bitburner.stocksymbol.md) | Stock symbol. |
+|  sym | string | Stock symbol. |
 |  shares | number | Number of shares for order. Must be positive. Will be rounded to nearest integer. |
 |  price | number | Execution price for the order. |
-|  type | [OrderType](./bitburner.ordertype.md) | Type of order. |
-|  pos | [OrderPosition](./bitburner.orderposition.md) | Specifies whether the order is a “Long” or “Short” position. |
+|  type | string | Type of order. |
+|  pos | string | Specifies whether the order is a “Long” or “Short” position. |
 
 <b>Returns:</b>
 

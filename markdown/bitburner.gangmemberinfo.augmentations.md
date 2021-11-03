@@ -9,5 +9,5 @@ Array of names of all owned Augmentations
 <b>Signature:</b>
 
 ```typescript
-augmentations: GangAugmentations[];
+augmentations: string[];
 ```

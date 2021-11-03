@@ -9,5 +9,5 @@ location of the sleeve
 <b>Signature:</b>
 
 ```typescript
-city: City;
+city: string;
 ```

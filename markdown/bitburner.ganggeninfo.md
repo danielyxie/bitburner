@@ -16,7 +16,7 @@ interface GangGenInfo
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [faction](./bitburner.ganggeninfo.faction.md) | [GangName](./bitburner.gangname.md) | Name of faction that the gang belongs to ("Slum Snakes", etc.) |
+|  [faction](./bitburner.ganggeninfo.faction.md) | string | Name of faction that the gang belongs to ("Slum Snakes", etc.) |
 |  [isHacking](./bitburner.ganggeninfo.ishacking.md) | boolean | Boolean indicating whether or not its a hacking gang |
 |  [moneyGainRate](./bitburner.ganggeninfo.moneygainrate.md) | number | Money earned per second |
 |  [power](./bitburner.ganggeninfo.power.md) | number | Gang's power for territory warfare |

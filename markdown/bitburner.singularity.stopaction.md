@@ -4,15 +4,7 @@
 
 ## Singularity.stopAction() method
 
-If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function is used to end whatever ‘action’ the player is currently performing. The player will receive whatever money/experience/etc. he has earned from that action.
-
-The actions that can be stopped with this function are:
-
-\* Studying at a university \* Working for a company/faction \* Creating a program \* Committing a Crime
-
-This function will return true if the player’s action was ended. It will return false if the player was not performing an action when this function was called.
+Stop the current action.
 
 <b>Signature:</b>
 
@@ -27,5 +19,15 @@ True if the player’s action was ended, false if the player was not performing 
 
 ## Remarks
 
+RAM cost: 1 GB
+
 Singularity - Level 1
+
+This function is used to end whatever ‘action’ the player is currently performing. The player will receive whatever money/experience/etc. he has earned from that action.
+
+The actions that can be stopped with this function are:
+
+\* Studying at a university \* Working for a company/faction \* Creating a program \* Committing a Crime
+
+This function will return true if the player’s action was ended. It will return false if the player was not performing an action when this function was called.
 

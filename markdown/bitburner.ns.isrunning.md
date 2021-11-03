@@ -17,7 +17,7 @@ isRunning(script: string, host: string, ...args: string[]): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  script | string | Filename of script to check. This is case-sensitive. |
-|  host | string | Host or IP of target server. |
+|  host | string | Host of target server. |
 |  args | string\[\] | Arguments to specify/identify which scripts to search for. |
 
 <b>Returns:</b>

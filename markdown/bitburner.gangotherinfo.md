@@ -9,9 +9,8 @@
 
 ```typescript
 type GangOtherInfo = {
-  /** Stock Symbol */
-  [key in GangName]: GangOtherInfoObject[];
+  [key: string]: GangOtherInfoObject[];
 };
 ```
-<b>References:</b> [GangName](./bitburner.gangname.md)<!-- -->, [GangOtherInfoObject](./bitburner.gangotherinfoobject.md)
+<b>References:</b> [GangOtherInfoObject](./bitburner.gangotherinfoobject.md)
 

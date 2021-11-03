@@ -4,29 +4,31 @@
 
 ## Singularity.getCrimeChance() method
 
-If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function returns your chance of success at commiting the specified crime. The chance is returned as a decimal (i.e. 60% would be returned as 0.6).
+Get chance to successfully commit a crime.
 
 <b>Signature:</b>
 
 ```typescript
-getCrimeChance(crime: Crime): number;
+getCrimeChance(crime: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  crime | [Crime](./bitburner.crime.md) | Name of crime. |
+|  crime | string | Name of crime. |
 
 <b>Returns:</b>
 
 number
 
-Chance of success at commiting the specified crime as a decimal.
+Chance of success at commiting the specified crime.
 
 ## Remarks
 
+RAM cost: 5 GB
+
 Singularity - Level 3
+
+This function returns your chance of success at commiting the specified crime.
 

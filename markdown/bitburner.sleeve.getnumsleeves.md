@@ -4,9 +4,7 @@
 
 ## Sleeve.getNumSleeves() method
 
-If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
-
-Return the number of duplicate sleeves the player has.
+Get the number of sleeves you own.
 
 <b>Signature:</b>
 
@@ -22,4 +20,6 @@ number of duplicate sleeves the player has.
 ## Remarks
 
 RAM cost: 4 GB
+
+Return the number of duplicate sleeves the player has.
 

@@ -9,14 +9,14 @@ Returns the ask price of that stock.
 <b>Signature:</b>
 
 ```typescript
-getAskPrice(sym: StockSymbol): number;
+getAskPrice(sym: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sym | [StockSymbol](./bitburner.stocksymbol.md) | Stock symbol. |
+|  sym | string | Stock symbol. |
 
 <b>Returns:</b>
 

@@ -9,5 +9,5 @@ Name of city you are currently in
 <b>Signature:</b>
 
 ```typescript
-city: City;
+city: string;
 ```

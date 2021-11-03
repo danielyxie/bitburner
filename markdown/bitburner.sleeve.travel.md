@@ -4,14 +4,12 @@
 
 ## Sleeve.travel() method
 
-If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
-
-Return a boolean indicating whether or not the sleeve reached destination.
+Make a sleeve travel to another city.
 
 <b>Signature:</b>
 
 ```typescript
-travel(sleeveNumber: number, cityName: City): boolean;
+travel(sleeveNumber: number, cityName: string): boolean;
 ```
 
 ## Parameters
@@ -19,7 +17,7 @@ travel(sleeveNumber: number, cityName: City): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  sleeveNumber | number | Index of the sleeve to travel. |
-|  cityName | [City](./bitburner.city.md) | Name of the destination city. |
+|  cityName | string | Name of the destination city. |
 
 <b>Returns:</b>
 
@@ -30,4 +28,6 @@ True if the sleeve reached destination, false otherwise.
 ## Remarks
 
 RAM cost: 4 GB
+
+Return a boolean indicating whether or not the sleeve reached destination.
 

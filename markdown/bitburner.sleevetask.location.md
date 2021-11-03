@@ -9,5 +9,5 @@ location of the task, if any
 <b>Signature:</b>
 
 ```typescript
-location: City | "";
+location: string;
 ```

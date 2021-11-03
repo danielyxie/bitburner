@@ -4,23 +4,19 @@
 
 ## Bladeburner.upgradeSkill() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Attempts to upgrade the specified Bladeburner skill.
-
-Returns true if the skill is successfully upgraded, and false otherwise.
+Upgrade skill.
 
 <b>Signature:</b>
 
 ```typescript
-upgradeSkill(name: BladeburnerSkills): boolean;
+upgradeSkill(name: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | [BladeburnerSkills](./bitburner.bladeburnerskills.md) |  |
+|  name | string |  |
 
 <b>Returns:</b>
 
@@ -31,4 +27,8 @@ true if the skill is successfully upgraded, and false otherwise.
 ## Remarks
 
 RAM cost: 4 GB
+
+Attempts to upgrade the specified Bladeburner skill.
+
+Returns true if the skill is successfully upgraded, and false otherwise.
 

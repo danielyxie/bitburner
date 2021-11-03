@@ -4,14 +4,12 @@
 
 ## Gang.purchaseEquipment() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Attempt to purchase the specified Equipment/Augmentation for the specified Gang member.
+Purchase an equipment for a gang member.
 
 <b>Signature:</b>
 
 ```typescript
-purchaseEquipment(memberName: string, equipName: GangEquipment | GangAugmentations): boolean;
+purchaseEquipment(memberName: string, equipName: string): boolean;
 ```
 
 ## Parameters
@@ -19,7 +17,7 @@ purchaseEquipment(memberName: string, equipName: GangEquipment | GangAugmentatio
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  memberName | string | Name of Gang member to purchase the equipment for. |
-|  equipName | [GangEquipment](./bitburner.gangequipment.md) \| [GangAugmentations](./bitburner.gangaugmentations.md) | Name of Equipment/Augmentation to purchase. |
+|  equipName | string | Name of Equipment/Augmentation to purchase. |
 
 <b>Returns:</b>
 
@@ -30,4 +28,6 @@ True if the equipment was successfully purchased. False otherwise
 ## Remarks
 
 RAM cost: 4 GB
+
+Attempt to purchase the specified Equipment/Augmentation for the specified Gang member.
 

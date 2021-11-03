@@ -4,13 +4,7 @@
 
 ## Bladeburner.joinBladeburnerDivision() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Attempts to join the Bladeburner division.
-
-Returns true if you successfully join the Bladeburner division, or if you are already a member.
-
-Returns false otherwise.
+Join the bladeburner division.
 
 <b>Signature:</b>
 
@@ -26,4 +20,10 @@ True if you successfully join the Bladeburner division, or if you are already a 
 ## Remarks
 
 RAM cost: 4 GB
+
+Attempts to join the Bladeburner division.
+
+Returns true if you successfully join the Bladeburner division, or if you are already a member.
+
+Returns false otherwise.
 

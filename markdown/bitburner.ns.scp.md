@@ -9,15 +9,15 @@ Copies a script or literature (.lit) file(s) to another server. The files argume
 <b>Signature:</b>
 
 ```typescript
-scp(files: string | ReadonlyArray<string>, destination: string): boolean;
+scp(files: string[], destination: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  files | string \| ReadonlyArray&lt;string&gt; | Filename or an array of filenames of script/literature files to copy. |
-|  destination | string | Host or IP of the destination server, which is the server to which the file will be copied. |
+|  files | string\[\] | Filename or an array of filenames of script/literature files to copy. |
+|  destination | string | Host of the destination server, which is the server to which the file will be copied. |
 
 <b>Returns:</b>
 

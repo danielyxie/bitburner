@@ -4,14 +4,12 @@
 
 ## Sleeve.setToFactionWork() method
 
-If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
-
-Return a boolean indicating whether or not the sleeve started working or this faction.
+Set a sleeve to work for a faction.
 
 <b>Signature:</b>
 
 ```typescript
-setToFactionWork(sleeveNumber: number, factionName: FactionName, factionWorkType: FactionWork): boolean;
+setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean;
 ```
 
 ## Parameters
@@ -19,8 +17,8 @@ setToFactionWork(sleeveNumber: number, factionName: FactionName, factionWorkType
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  sleeveNumber | number | Index of the sleeve to work for the faction. |
-|  factionName | [FactionName](./bitburner.factionname.md) | Name of the faction to work for. |
-|  factionWorkType | [FactionWork](./bitburner.factionwork.md) | Name of the action to perform for this faction. |
+|  factionName | string | Name of the faction to work for. |
+|  factionWorkType | string | Name of the action to perform for this faction. |
 
 <b>Returns:</b>
 
@@ -31,4 +29,6 @@ True if the sleeve started working on this faction, false otherwise.
 ## Remarks
 
 RAM cost: 4 GB
+
+Return a boolean indicating whether or not the sleeve started working or this faction.
 

@@ -4,21 +4,19 @@
 
 ## Gang.getEquipmentCost() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Get the amount of money it takes to purchase a piece of Equipment or an Augmentation. If an invalid Equipment/Augmentation is specified, this function will return Infinity.
+Get cost of equipment.
 
 <b>Signature:</b>
 
 ```typescript
-getEquipmentCost(equipName: GangEquipment | GangAugmentations): number;
+getEquipmentCost(equipName: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  equipName | [GangEquipment](./bitburner.gangequipment.md) \| [GangAugmentations](./bitburner.gangaugmentations.md) | Name of equipment. |
+|  equipName | string | Name of equipment. |
 
 <b>Returns:</b>
 
@@ -29,4 +27,6 @@ Cost to purchase the specified Equipment/Augmentation (number). Infinity for inv
 ## Remarks
 
 RAM cost: 2 GB
+
+Get the amount of money it takes to purchase a piece of Equipment or an Augmentation. If an invalid Equipment/Augmentation is specified, this function will return Infinity.
 

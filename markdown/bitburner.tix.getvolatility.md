@@ -9,14 +9,14 @@ Returns the volatility of the specified stock.
 <b>Signature:</b>
 
 ```typescript
-getVolatility(sym: StockSymbol): number;
+getVolatility(sym: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sym | [StockSymbol](./bitburner.stocksymbol.md) | Stock symbol. |
+|  sym | string | Stock symbol. |
 
 <b>Returns:</b>
 

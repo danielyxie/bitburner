@@ -16,7 +16,7 @@ ps(host?: string): ProcessInfo[];
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host or IP address of the target server. If not specified, it will be the current server’s IP by default. |
+|  host | string | Host address of the target server. If not specified, it will be the current server’s IP by default. |
 
 <b>Returns:</b>
 

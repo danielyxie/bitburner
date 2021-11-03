@@ -9,5 +9,5 @@ faction work type being performed, if any
 <b>Signature:</b>
 
 ```typescript
-factionWorkType: FactionWork | "";
+factionWorkType: string;
 ```

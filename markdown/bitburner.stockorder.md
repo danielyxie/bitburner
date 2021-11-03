@@ -10,9 +10,8 @@ Return value of [getOrders](./bitburner.tix.getorders.md)
 
 ```typescript
 type StockOrder = {
-  /** Stock Symbol */
-  [key in StockSymbol]?: StockOrderObject[];
+  [key: string]: StockOrderObject[];
 };
 ```
-<b>References:</b> [StockSymbol](./bitburner.stocksymbol.md)<!-- -->, [StockOrderObject](./bitburner.stockorderobject.md)
+<b>References:</b> [StockOrderObject](./bitburner.stockorderobject.md)
 

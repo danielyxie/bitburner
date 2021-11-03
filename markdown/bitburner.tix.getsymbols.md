@@ -9,11 +9,11 @@ Returns an array of the symbols of the tradable stocks
 <b>Signature:</b>
 
 ```typescript
-getSymbols(): StockSymbol[];
+getSymbols(): string[];
 ```
 <b>Returns:</b>
 
-[StockSymbol](./bitburner.stocksymbol.md)<!-- -->\[\]
+string\[\]
 
 Array of the symbols of the tradable stocks.
 

@@ -19,7 +19,7 @@ fileExists(filename: string, host?: string): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  filename | string | Filename of file to check. |
-|  host | string | Host or IP of target server. This is optional. If it is not specified then the function will use the current server as the target server. |
+|  host | string | Host of target server. This is optional. If it is not specified then the function will use the current server as the target server. |
 
 <b>Returns:</b>
 

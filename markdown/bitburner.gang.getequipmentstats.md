@@ -4,29 +4,29 @@
 
 ## Gang.getEquipmentStats() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Get the specified equipment stats.
+Get stats of an equipment.
 
 <b>Signature:</b>
 
 ```typescript
-getEquipmentStats(equipName: GangEquipment | GangAugmentations): GangEquipmentStats;
+getEquipmentStats(equipName: string): stringStats;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  equipName | [GangEquipment](./bitburner.gangequipment.md) \| [GangAugmentations](./bitburner.gangaugmentations.md) | Name of equipment. |
+|  equipName | string | Name of equipment. |
 
 <b>Returns:</b>
 
-[GangEquipmentStats](./bitburner.gangequipmentstats.md)
+[stringStats](./bitburner.stringstats.md)
 
 A dictionary containing the stats of the equipment.
 
 ## Remarks
 
 RAM cost: 2 GB
+
+Get the specified equipment stats.
 

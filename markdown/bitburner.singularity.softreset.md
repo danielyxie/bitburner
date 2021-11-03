@@ -4,9 +4,7 @@
 
 ## Singularity.softReset() method
 
-If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function will perform a reset even if you don’t have any augmentation installed.
+Soft reset the game.
 
 <b>Signature:</b>
 
@@ -19,5 +17,9 @@ void
 
 ## Remarks
 
+RAM cost: 5 GB
+
 Singularity - Level 3
+
+This function will perform a reset even if you don’t have any augmentation installed.
 

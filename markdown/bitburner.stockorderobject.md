@@ -16,8 +16,8 @@ interface StockOrderObject
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [position](./bitburner.stockorderobject.position.md) | "S" \| "L" | Order position |
+|  [position](./bitburner.stockorderobject.position.md) | string | Order position |
 |  [price](./bitburner.stockorderobject.price.md) | number | Price per share |
 |  [shares](./bitburner.stockorderobject.shares.md) | number | Number of shares |
-|  [type](./bitburner.stockorderobject.type.md) | "Limit Buy Order" \| "Limit Sell Order" \| "Stop Buy Order" \| "Stop Buy Order" | Order type |
+|  [type](./bitburner.stockorderobject.type.md) | string | Order type |
 

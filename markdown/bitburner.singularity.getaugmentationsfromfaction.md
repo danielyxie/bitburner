@@ -4,29 +4,31 @@
 
 ## Singularity.getAugmentationsFromFaction() method
 
-If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-Returns an array containing the names (as strings) of all Augmentations that are available from the specified faction.
+Get a list of augmentation available from a faction.
 
 <b>Signature:</b>
 
 ```typescript
-getAugmentationsFromFaction(faction: FactionName): AugmentName[];
+getAugmentationsFromFaction(faction: string): string[];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  faction | [FactionName](./bitburner.factionname.md) | Name of faction. |
+|  faction | string | Name of faction. |
 
 <b>Returns:</b>
 
-[AugmentName](./bitburner.augmentname.md)<!-- -->\[\]
+string\[\]
 
 Array containing the names of all Augmentations.
 
 ## Remarks
 
+RAM cost: 5 GB
+
 Singularity - Level 3
+
+Returns an array containing the names (as strings) of all Augmentations that are available from the specified faction.
 

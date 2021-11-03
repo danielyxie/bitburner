@@ -4,22 +4,22 @@
 
 ## Bladeburner.getSkillNames() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns an array of strings containing the names of all general Bladeburner skills.
+List all skills.
 
 <b>Signature:</b>
 
 ```typescript
-getSkillNames(): BladeburnerSkills[];
+getSkillNames(): string[];
 ```
 <b>Returns:</b>
 
-[BladeburnerSkills](./bitburner.bladeburnerskills.md)<!-- -->\[\]
+string\[\]
 
 Array of strings containing the names of all general Bladeburner skills.
 
 ## Remarks
 
 RAM cost: 0.4 GB
+
+Returns an array of strings containing the names of all general Bladeburner skills.
 

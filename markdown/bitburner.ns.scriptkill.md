@@ -4,7 +4,7 @@
 
 ## NS.scriptKill() method
 
-Kills all scripts with the specified filename on the target server specified by hostname/ip, regardless of arguments.
+Kills all scripts with the specified filename on the target server specified by hostname, regardless of arguments.
 
 <b>Signature:</b>
 
@@ -17,7 +17,7 @@ scriptKill(script: string, host: string): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  script | string | Filename of script to kill. This is case-sensitive. |
-|  host | string | Host or IP of target server. |
+|  host | string | Host of target server. |
 
 <b>Returns:</b>
 

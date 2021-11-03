@@ -19,7 +19,7 @@ scriptRunning(script: string, host: string): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  script | string | Filename of script to check. This is case-sensitive. |
-|  host | string | Host or IP of target server. |
+|  host | string | Host of target server. |
 
 <b>Returns:</b>
 

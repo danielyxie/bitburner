@@ -9,5 +9,5 @@ Name of currently assigned task
 <b>Signature:</b>
 
 ```typescript
-task: GangTasks;
+task: string;
 ```

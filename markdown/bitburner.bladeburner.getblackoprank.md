@@ -4,23 +4,19 @@
 
 ## Bladeburner.getBlackOpRank() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns the rank required to complete this BlackOp.
-
-Returns -1 if an invalid action is specified.
+Get black op required rank.
 
 <b>Signature:</b>
 
 ```typescript
-getBlackOpRank(name: BladeburnerBlackOps): number;
+getBlackOpRank(name: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | [BladeburnerBlackOps](./bitburner.bladeburnerblackops.md) | Name of BlackOp. Must be an exact match. |
+|  name | string | Name of BlackOp. Must be an exact match. |
 
 <b>Returns:</b>
 
@@ -31,4 +27,8 @@ Rank required to complete this BlackOp.
 ## Remarks
 
 RAM cost: 2 GB
+
+Returns the rank required to complete this BlackOp.
+
+Returns -1 if an invalid action is specified.
 

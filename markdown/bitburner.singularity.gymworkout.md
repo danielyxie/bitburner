@@ -4,24 +4,20 @@
 
 ## Singularity.gymWorkout() method
 
-If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function will automatically set you to start working out at a gym to train a particular stat. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.
-
-The cost and experience gains for all of these gyms are the same as if you were to manually visit these gyms and train
+Workout at the gym.
 
 <b>Signature:</b>
 
 ```typescript
-gymWorkout(gymName: Gym, stat: GymStat): boolean;
+gymWorkout(gymName: string, stat: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  gymName | [Gym](./bitburner.gym.md) | Name of gym. You must be in the correct city for whatever gym you specify. |
-|  stat | [GymStat](./bitburner.gymstat.md) | The stat you want to train. |
+|  gymName | string | Name of gym. You must be in the correct city for whatever gym you specify. |
+|  stat | string | The stat you want to train. |
 
 <b>Returns:</b>
 
@@ -31,5 +27,11 @@ True if actions is successfully started, false otherwise.
 
 ## Remarks
 
+RAM cost: 2 GB
+
 Singularity - Level 1
+
+This function will automatically set you to start working out at a gym to train a particular stat. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.
+
+The cost and experience gains for all of these gyms are the same as if you were to manually visit these gyms and train
 
