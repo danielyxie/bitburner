@@ -179,7 +179,7 @@ export class Action implements IAction {
 
     baseTime = Math.max(1, (baseTime * skillFac) / statFac);
 
-    return Math.ceil(baseTime * this.getActionTimePenalty()) * 1000;
+    return Math.ceil(baseTime * this.getActionTimePenalty());
   }
 
   // For actions that have teams. To be implemented by subtypes.
