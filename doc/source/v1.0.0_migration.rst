@@ -1,0 +1,32 @@
+v1.0.0 Migration Guide
+======================
+
+In v1.0.0 a few API have been broken.
+
+migrated: 
+
+* bladeburner.getActionTime will return milliseconds instead of seconds.
+* getHackTime will return milliseconds instead of seconds.
+* getGrowTime will return milliseconds instead of seconds.
+* getWeakenTime will return milliseconds instead of seconds.
+* hackAnalyzePercent renamed to hackAnalyze
+* hackAnalyzePercent will return decimal instead of percentage
+* hackChance (not formulas.basic.hackChance) renamed to hackAnalyzeChance
+
+not migrated (require manual changes sometimes):
+
+* getPurchasedServers won't let you query for ips instead of hostnames.
+* getStats is deprecated in favor getPlayer
+* getCharacterInformation is deprecated in favor getPlayer
+* getServerRam deprecated in favor of getServerMaxRam and getServerUsedRam
+* getServerBaseSecurityLevel will be deprecated in favor of nothing, it's not really used.
+* sleep can no longer be called simultenaously, a new function called asleep will let you.
+* write returns promise (needs to be await ed).
+* scp returns a promise (needs to be await ed).
+* free port, write, read
+* write, read does not support port anymore, writePort and readPort does.
+
+Upon loading v1.0.0 the game will apply some rules to change everything.
+The game never changes a file before making a backup called `BACKUP_filename.ext`, then,
+in the script it will change whatever it thinks it should change.
+But will prefix the modified line with the original line.

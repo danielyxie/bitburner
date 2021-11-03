@@ -4,7 +4,8 @@
  * Constants for specific mechanics or features will NOT be here.
  */
 export const CONSTANTS: {
-  Version: string;
+  VersionString: string;
+  VersionNumber: number;
   _idleSpeed: number;
   MaxSkillLevel: number;
   MilliPerCycle: number;
@@ -114,7 +115,8 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  Version: "1.0.0",
+  VersionString: "1.0.0",
+  VersionNumber: 1,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,

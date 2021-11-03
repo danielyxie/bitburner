@@ -27,7 +27,9 @@ function convert(code: string): string {
     }
     if (line != orig) {
       out.push(`// =============================== original line ===============================`);
-      out.push(`// ${orig}`);
+      out.push(`/**`);
+      out.push(` * ${orig}`);
+      out.push(" */");
       out.push(`// =============================================================================`);
     }
     out.push(line);
@@ -36,6 +38,7 @@ function convert(code: string): string {
 }
 
 export function v1APIBreak(): void {
+  console.log("Running v1 api migration");
   for (const server of GetAllServers()) {
     const backups: Script[] = [];
     for (const script of server.scripts) {

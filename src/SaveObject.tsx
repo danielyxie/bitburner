@@ -48,7 +48,7 @@ class BitburnerSaveObject {
     this.MessagesSave = JSON.stringify(Messages);
     this.StockMarketSave = JSON.stringify(StockMarket);
     this.SettingsSave = JSON.stringify(Settings);
-    this.VersionSave = JSON.stringify(CONSTANTS.Version);
+    this.VersionSave = JSON.stringify(CONSTANTS.VersionNumber);
     this.LastExportBonus = JSON.stringify(ExportBonus.LastExportBonus);
     if (Player.inGang()) {
       this.AllGangsSave = JSON.stringify(AllGangs);
@@ -293,12 +293,13 @@ function loadGame(saveString: string): boolean {
   if (saveObj.hasOwnProperty("VersionSave")) {
     try {
       const ver = JSON.parse(saveObj.VersionSave, Reviver);
+      console.log(ver);
       evaluateVersionCompatibility(ver);
 
       if (window.location.href.toLowerCase().includes("bitburner-beta")) {
         // Beta branch, always show changes
         createBetaUpdateText();
-      } else if (ver != CONSTANTS.Version) {
+      } else if (ver !== CONSTANTS.VersionNumber) {
         createNewUpdateText();
       }
     } catch (e) {
