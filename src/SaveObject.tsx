@@ -17,6 +17,7 @@ import * as ExportBonus from "./ExportBonus";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "./utils/JSONReviver";
 import { save } from "./db";
+import { v1APIBreak } from "./utils/v1APIBreak";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -103,108 +104,111 @@ class BitburnerSaveObject {
 
 // Makes necessary changes to the loaded/imported data to ensure
 // the game stills works with new versions
-function evaluateVersionCompatibility(ver: string): void {
+function evaluateVersionCompatibility(ver: string | number): void {
   // We have to do this because ts won't let us otherwise
   const anyPlayer = Player as any;
-  // This version refactored the Company/job-related code
-  if (ver <= "0.41.2") {
-    // Player's company position is now a string
-    if (anyPlayer.companyPosition != null && typeof anyPlayer.companyPosition !== "string") {
-      anyPlayer.companyPosition = anyPlayer.companyPosition.data.positionName;
-      if (anyPlayer.companyPosition == null) {
-        anyPlayer.companyPosition = "";
-      }
-    }
-
-    // The "companyName" property of all Companies is renamed to "name"
-    for (const companyName in Companies) {
-      const company: any = Companies[companyName];
-      if (company.name == 0 && company.companyName != null) {
-        company.name = company.companyName;
-      }
-
-      if (company.companyPositions instanceof Array) {
-        const pos: any = {};
-
-        for (let i = 0; i < company.companyPositions.length; ++i) {
-          pos[company.companyPositions[i]] = true;
+  if (typeof ver === "string") {
+    // This version refactored the Company/job-related code
+    if (ver <= "0.41.2") {
+      // Player's company position is now a string
+      if (anyPlayer.companyPosition != null && typeof anyPlayer.companyPosition !== "string") {
+        anyPlayer.companyPosition = anyPlayer.companyPosition.data.positionName;
+        if (anyPlayer.companyPosition == null) {
+          anyPlayer.companyPosition = "";
         }
-        company.companyPositions = pos;
       }
-    }
-  }
 
-  // This version allowed players to hold multiple jobs
-  if (ver < "0.43.0") {
-    if (anyPlayer.companyName !== "" && anyPlayer.companyPosition != null && anyPlayer.companyPosition !== "") {
-      anyPlayer.jobs[anyPlayer.companyName] = anyPlayer.companyPosition;
+      // The "companyName" property of all Companies is renamed to "name"
+      for (const companyName in Companies) {
+        const company: any = Companies[companyName];
+        if (company.name == 0 && company.companyName != null) {
+          company.name = company.companyName;
+        }
+
+        if (company.companyPositions instanceof Array) {
+          const pos: any = {};
+
+          for (let i = 0; i < company.companyPositions.length; ++i) {
+            pos[company.companyPositions[i]] = true;
+          }
+          company.companyPositions = pos;
+        }
+      }
     }
 
-    delete anyPlayer.companyPosition;
-  }
-  if (ver < "0.56.0") {
-    for (const q of anyPlayer.queuedAugmentations) {
-      if (q.name === "Graphene BranchiBlades Upgrade") {
-        q.name = "Graphene BrachiBlades Upgrade";
+    // This version allowed players to hold multiple jobs
+    if (ver < "0.43.0") {
+      if (anyPlayer.companyName !== "" && anyPlayer.companyPosition != null && anyPlayer.companyPosition !== "") {
+        anyPlayer.jobs[anyPlayer.companyName] = anyPlayer.companyPosition;
+      }
+
+      delete anyPlayer.companyPosition;
+    }
+    if (ver < "0.56.0") {
+      for (const q of anyPlayer.queuedAugmentations) {
+        if (q.name === "Graphene BranchiBlades Upgrade") {
+          q.name = "Graphene BrachiBlades Upgrade";
+        }
+      }
+      for (const q of anyPlayer.augmentations) {
+        if (q.name === "Graphene BranchiBlades Upgrade") {
+          q.name = "Graphene BrachiBlades Upgrade";
+        }
       }
     }
-    for (const q of anyPlayer.augmentations) {
-      if (q.name === "Graphene BranchiBlades Upgrade") {
-        q.name = "Graphene BrachiBlades Upgrade";
+    if (ver < "0.56.1") {
+      if (anyPlayer.bladeburner === 0) {
+        anyPlayer.bladeburner = null;
+      }
+      if (anyPlayer.gang === 0) {
+        anyPlayer.gang = null;
+      }
+      if (anyPlayer.corporation === 0) {
+        anyPlayer.corporation = null;
+      }
+      // convert all Messages to just filename to save space.
+      const home = anyPlayer.getHomeComputer();
+      for (let i = 0; i < home.messages.length; i++) {
+        if (home.messages[i].filename) {
+          home.messages[i] = home.messages[i].filename;
+        }
       }
     }
-  }
-  if (ver < "0.56.1") {
-    if (anyPlayer.bladeburner === 0) {
-      anyPlayer.bladeburner = null;
-    }
-    if (anyPlayer.gang === 0) {
-      anyPlayer.gang = null;
-    }
-    if (anyPlayer.corporation === 0) {
-      anyPlayer.corporation = null;
-    }
-    // convert all Messages to just filename to save space.
-    const home = anyPlayer.getHomeComputer();
-    for (let i = 0; i < home.messages.length; i++) {
-      if (home.messages[i].filename) {
-        home.messages[i] = home.messages[i].filename;
+    if (ver < "0.58.0") {
+      const changes: [RegExp, string][] = [
+        [/getStockSymbols/g, "stock.getSymbols"],
+        [/getStockPrice/g, "stock.getPrice"],
+        [/getStockAskPrice/g, "stock.getAskPrice"],
+        [/getStockBidPrice/g, "stock.getBidPrice"],
+        [/getStockPosition/g, "stock.getPosition"],
+        [/getStockMaxShares/g, "stock.getMaxShares"],
+        [/getStockPurchaseCost/g, "stock.getPurchaseCost"],
+        [/getStockSaleGain/g, "stock.getSaleGain"],
+        [/buyStock/g, "stock.buy"],
+        [/sellStock/g, "stock.sell"],
+        [/shortStock/g, "stock.short"],
+        [/sellShort/g, "stock.sellShort"],
+        [/placeOrder/g, "stock.placeOrder"],
+        [/cancelOrder/g, "stock.cancelOrder"],
+        [/getOrders/g, "stock.getOrders"],
+        [/getStockVolatility/g, "stock.getVolatility"],
+        [/getStockForecast/g, "stock.getForecast"],
+        [/purchase4SMarketData/g, "stock.purchase4SMarketData"],
+        [/purchase4SMarketDataTixApi/g, "stock.purchase4SMarketDataTixApi"],
+      ];
+      function convert(code: string): string {
+        for (const change of changes) {
+          code = code.replace(change[0], change[1]);
+        }
+        return code;
+      }
+      for (const server of GetAllServers()) {
+        for (const script of server.scripts) {
+          script.code = convert(script.code);
+        }
       }
     }
-  }
-  if (ver < "0.58.0") {
-    const changes: [RegExp, string][] = [
-      [/getStockSymbols/g, "stock.getSymbols"],
-      [/getStockPrice/g, "stock.getPrice"],
-      [/getStockAskPrice/g, "stock.getAskPrice"],
-      [/getStockBidPrice/g, "stock.getBidPrice"],
-      [/getStockPosition/g, "stock.getPosition"],
-      [/getStockMaxShares/g, "stock.getMaxShares"],
-      [/getStockPurchaseCost/g, "stock.getPurchaseCost"],
-      [/getStockSaleGain/g, "stock.getSaleGain"],
-      [/buyStock/g, "stock.buy"],
-      [/sellStock/g, "stock.sell"],
-      [/shortStock/g, "stock.short"],
-      [/sellShort/g, "stock.sellShort"],
-      [/placeOrder/g, "stock.placeOrder"],
-      [/cancelOrder/g, "stock.cancelOrder"],
-      [/getOrders/g, "stock.getOrders"],
-      [/getStockVolatility/g, "stock.getVolatility"],
-      [/getStockForecast/g, "stock.getForecast"],
-      [/purchase4SMarketData/g, "stock.purchase4SMarketData"],
-      [/purchase4SMarketDataTixApi/g, "stock.purchase4SMarketDataTixApi"],
-    ];
-    function convert(code: string): string {
-      for (const change of changes) {
-        code = code.replace(change[0], change[1]);
-      }
-      return code;
-    }
-    for (const server of GetAllServers()) {
-      for (const script of server.scripts) {
-        script.code = convert(script.code);
-      }
-    }
+    v1APIBreak();
   }
 }
 

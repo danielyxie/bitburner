@@ -75,7 +75,7 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
         throw workerScript;
       }
 
-      if (propName === "sleep") return f(...args); // OK for multiple simultaneous calls to sleep.
+      if (propName === "asleep") return f(...args); // OK for multiple simultaneous calls to sleep.
 
       const msg =
         "Concurrent calls to Netscript functions not allowed! " +

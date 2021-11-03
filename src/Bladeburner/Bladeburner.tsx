@@ -1007,7 +1007,7 @@ export class Bladeburner implements IBladeburner {
   getRecruitmentTime(player: IPlayer): number {
     const effCharisma = player.charisma * this.skillMultipliers.effCha;
     const charismaFactor = Math.pow(effCharisma, 0.81) + effCharisma / 90;
-    return Math.max(10, Math.round(BladeburnerConstants.BaseRecruitmentTimeNeeded - charismaFactor));
+    return Math.max(10, Math.round(BladeburnerConstants.BaseRecruitmentTimeNeeded - charismaFactor)) * 1000;
   }
 
   resetSkillMultipliers(): void {
@@ -2108,13 +2108,13 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["Training"]:
       case ActionTypes["Field Analysis"]:
       case ActionTypes["FieldAnalysis"]:
-        return 30;
+        return 30000;
       case ActionTypes["Recruitment"]:
         return this.getRecruitmentTime(player);
       case ActionTypes["Diplomacy"]:
       case ActionTypes["Hyperbolic Regeneration Chamber"]:
       case ActionTypes["Incite Violence"]:
-        return 60;
+        return 60000;
       default:
         workerScript.log("bladeburner.getActionTime", errorLogText);
         return -1;

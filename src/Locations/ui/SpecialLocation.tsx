@@ -23,6 +23,7 @@ import { use } from "../../ui/Context";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { SnackbarEvents } from "../../ui/React/Snackbar";
 import { N00dles } from "../../utils/helpers/N00dles";
+import { Exploit } from "../../Exploits/Exploit";
 
 type IProps = {
   loc: Location;
@@ -79,6 +80,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     function EatNoodles(): void {
       SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", "success");
       N00dles();
+      if (player.sourceFiles.length > 0) player.giveExploit(Exploit.N00dles);
     }
 
     return (

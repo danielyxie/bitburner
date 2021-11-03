@@ -114,7 +114,7 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  Version: "0.58.0",
+  Version: "1.0.0",
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -281,64 +281,31 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v0.58.0 - 2021-10-27 Road to Steam (hydroflame & community)
+    v1.0.0 - 2021-XX-XX Pre-Steam
     -------------------------------------------
 
-    ** Announcement **
+    ** API BREAKS ** 
 
-    * To prepare for Steam we will fix some inconsistencies in the Netscript API. Ideally we can also write a
-      save file migration that will automatically convert all breaking changes in your scripts without any
-      player input.
-
-    ** BREAKING (kindof) **
-
-    * All stock market functions are now under the 'stock' namespace, like 'hacknet'
-      However when you load your game with v0.58.0 for the first time it should automatically convert everything.
-
-    ** SF -1 **
-
-    * new SF -1: Reality Alteration
-      
-    ** Gang **
-
-    * Ascension formula now better
-    * Karma requirement now much lower in most nodes
-    * Territory heavily penalizes gains
-    * T.R.P. not available outside BN2.
-
-    ** Netscript **
-
-    * It is no longer possible to send anything but strings or numbers to other scripts. (prevents exploits)
-    * Improve code for some netscript functions (@omuretsu)
-
-    ** Script Editor ** 
-
-    * Added Solarized light/dark as theme (@CalvinTrops)
-    * Added theme clo
-    * Fixed sleeve namespace smart autocomplete.
-
-    ** Hacknet Servers **
-
-    * Cores affect grow/weaken like they do on home computer
-
-    ** Infiltration **
-
-    * Slash game modified to be easier.
+    * bladeburner.getActionTime will return milliseconds instead of seconds.
+    * getHackTime will return milliseconds instead of seconds.
+    * getGrowTime will return milliseconds instead of seconds.
+    * getWeakenTime will return milliseconds instead of seconds.
+    * hackAnalyzePercent renamed to hackAnalyze
+    * hackAnalyzePercent will return decimal instead of percentage
+    * hackChance (not formulas.basic.hackChance) renamed to hackAnalyzeChance
+    * getPurchasedServers won't let you query for ips instead of hostnames.
+    * getStats is deprecated in favor getPlayer
+    * getCharacterInformation is deprecated in favor getPlayer
+    * getServerRam deprecated in favor of getServerMaxRam and getServerUsedRam
+    * getServerBaseSecurityLevel will be deprecated in favor of nothing, it's not really used.
+    * sleep can no longer be called simultenaously, a new function called asleep will let you.
+    * write returns promise (needs to be awaited).
+    * scp returns a promise (needs to be awaited).
+    * free port, write, read
+    * write, read does not support port anymore, writePort and readPort does.
 
     ** Misc. **
 
-    * Fix typo in corp (@Saynt_Garmo)
-    * Fixed a bug where corp wouldn't let you buyback shares. (@Saynt_Garmo)
-    * Fixed a bug where sleeves couldn't perform some crimes. (@Saynt_Garmo)
-    * Hospitalization and Eating noodles are now toasts (@Saynt_Garmo)
-    * Fixed some repeated code (@omuretsu)
-    * Fixed Character Overview preventing clicks underneath it even when hidden. (@omuretsu)
-    * Fixed typo in tutorial. (@omuretsu)
-    * Create Programs and Factions invitation badges now dissapear when you open their respective pages.
-    * Add killall script in character overview.
-    * Fixed bug in corp that made last city production be the production for all cities for newly created product.
-    * Fix bug that allowed reputation to transfer to new jobs.
-    * Fixed memory leak with ns2.
     * nerf noodle bar
 `,
 };
