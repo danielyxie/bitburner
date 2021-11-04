@@ -2,8 +2,8 @@
 
 NetscriptJS (Netscript 2.0)
 ===========================
-Netscript 2.0, or Netscript JS, is the new and improved version of Netscript that
-allows users to write (almost) full-fledged Javascript code in their scripts, while
+Netscript 2.0, or Netscript JS, is the improved version of Netscript that
+allows users to write full-fledged Javascript code in their scripts, while
 still being able to access the Netscript functions.
 
 NetscriptJS was developed primarily by `Github user jaguilar <https://github.com/jaguilar>`_
@@ -53,6 +53,9 @@ Here is a summary of all rules you need to follow when writing Netscript JS code
     * sleep
     * prompt
     * wget
+    * scp
+    * write
+    * writePort
 
 * Any function that contains :code:`await` must be declared as :code:`async`
 
@@ -60,7 +63,7 @@ Here is a summary of all rules you need to follow when writing Netscript JS code
 
 * Any functions that you want to be visible from other scripts must be marked with :code:`export`.
 
-* **Do not write any infinite loops without using a** :code:`sleep` **or one of the timed Netscript functions like** :code:`hack`. Doing so will crash your game.
+* **Do not write any infinite loops without using a** :code:`sleep` **or one of the timed Netscript functions like** :code:`hack`. Doing so will freeze your game.
 
 * Any global variable declared in a NetscriptJS script is shared between all instances of that
   script. For example, assume you write a script *foo.ns* and declared a global variable like so::

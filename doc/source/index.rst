@@ -24,7 +24,6 @@ secrets that you've been searching for.
     Basic Gameplay <basicgameplay>
     Advanced Gameplay <advancedgameplay>
     Keyboard Shortcuts <shortcuts>
-    Script Editors <scripteditors>
     Game Frozen or Stuck? <gamefrozen>
     Guides & Tips <guidesandtips>
     Tools & Resources <toolsandresources>
