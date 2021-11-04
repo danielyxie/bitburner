@@ -2126,7 +2126,7 @@ export class Bladeburner implements IBladeburner {
     type: string,
     name: string,
     workerScript: WorkerScript,
-  ): number[] {
+  ): [number, number] {
     const errorLogText = `Invalid action: type='${type}' name='${name}'`;
     const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {

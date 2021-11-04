@@ -9,5 +9,5 @@ Charisma multiplier
 <b>Signature:</b>
 
 ```typescript
-cha: number;
+cha?: number;
 ```

@@ -61,21 +61,12 @@ import { isString } from "./utils/helpers/isString";
 import { BaseServer } from "./Server/BaseServer";
 import { NetscriptGang } from "./NetscriptFunctions/Gang";
 import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
-import { INetscriptExtra, NetscriptExtra } from "./NetscriptFunctions/Extra";
+import { NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
-import {
-  Bladeburner as IBladeburner,
-  TIX,
-  CodingContract as ICodingContract,
-  Gang as IGang,
-  Hacknet as IHacknet,
-  Sleeve as ISleeve,
-  Singularity as ISingularity,
-  Formulas as IFormulas,
-} from "./ScriptEditor/NetscriptDefinitions";
+import { NS as INS } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
 import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
-import { INetscriptCorporation, NetscriptCorporation } from "./NetscriptFunctions/Corporation";
+import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
 import { NetscriptFormulas } from "./NetscriptFunctions/Formulas";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
@@ -87,19 +78,11 @@ import { SnackbarEvents } from "./ui/React/Snackbar";
 
 import { Flags } from "./NetscriptFunctions/Flags";
 
-interface NS extends INetscriptExtra, ISingularity {
+interface NS extends INS {
   [key: string]: any;
-  hacknet: IHacknet;
-  gang: IGang;
-  sleeve: ISleeve;
-  bladeburner: IBladeburner;
-  codingcontract: ICodingContract;
-  corporation: INetscriptCorporation;
-  formulas: IFormulas;
-  stock: TIX;
 }
 
-function NetscriptFunctions(workerScript: WorkerScript): NS {
+export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const updateDynamicRam = function (fnName: string, ramCost: number): void {
     if (workerScript.dynamicLoadedFns[fnName]) {
       return;
@@ -448,10 +431,20 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
   const codingcontract = NetscriptCodingContract(Player, workerScript, helper);
   const corporation = NetscriptCorporation(Player, workerScript, helper);
   const formulas = NetscriptFormulas(Player, workerScript, helper);
-  const augmentations = NetscriptSingularity(Player, workerScript, helper);
+  const singularity = NetscriptSingularity(Player, workerScript, helper);
   const stockmarket = NetscriptStockMarket(Player, workerScript, helper);
 
-  const functions = {
+  const base: INS = {
+    ...singularity,
+
+    gang: gang,
+    bladeburner: bladeburner,
+    codingcontract: codingcontract,
+    sleeve: sleeve,
+
+    formulas: formulas,
+    stock: stockmarket,
+    args: workerScript.args,
     hacknet: hacknet,
     sprintf: sprintf,
     vsprintf: vsprintf,
@@ -990,7 +983,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("exit", "Failed. This is a bug. Report to dev.");
       }
     },
-    scp: function (scriptname: any, hostname1: any, hostname2: any): Promise<boolean> {
+    scp: async function (scriptname: any, hostname1: any, hostname2: any): Promise<boolean> {
       updateDynamicRam("scp", getRamCost("scp"));
       if (arguments.length !== 2 && arguments.length !== 3) {
         throw makeRuntimeErrorMsg("scp", "Takes 2 or 3 arguments");
@@ -998,8 +991,8 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (scriptname && scriptname.constructor === Array) {
         // Recursively call scp on all elements of array
         let res = false;
-        scriptname.forEach(function (script) {
-          if (NetscriptFunctions(workerScript).scp(script, hostname1, hostname2)) {
+        await scriptname.forEach(async function (script) {
+          if (await NetscriptFunctions(workerScript).scp(script, hostname1, hostname2)) {
             res = true;
           }
         });
@@ -1223,14 +1216,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       const server = safeGetServer(hostname, "hasRootAccess");
       return server.hasAdminRights;
-    },
-    getIp: function (): any {
-      updateDynamicRam("getIp", getRamCost("getIp"));
-      const scriptServer = GetServer(workerScript.hostname);
-      if (scriptServer == null) {
-        throw makeRuntimeErrorMsg("getIp", "Could not find server. This is a bug. Report to dev.");
-      }
-      return scriptServer.hostname;
     },
     getHostname: function (): any {
       updateDynamicRam("getHostname", getRamCost("getHostname"));
@@ -1485,7 +1470,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         return getRunningScript(fn, hostname, "isRunning", scriptArgs) != null;
       }
     },
-    stock: stockmarket,
     getPurchasedServerLimit: function (): any {
       updateDynamicRam("getPurchasedServerLimit", getRamCost("getPurchasedServerLimit"));
 
@@ -1723,7 +1707,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
         if (iport == null || !(iport instanceof Object)) {
           throw makeRuntimeErrorMsg("tryWrite", `Could not find port: ${port}. This is a bug. Report to dev.`);
         }
-        return iport.tryWrite(data);
+        return Promise.resolve(iport.tryWrite(data));
       } else {
         throw makeRuntimeErrorMsg("tryWrite", `Invalid argument: ${port}`);
       }
@@ -1796,25 +1780,11 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       const x = iport.peek();
       return x;
     },
-    clear: function (port: any): any {
+    clear: function (file: any): any {
       updateDynamicRam("clear", getRamCost("clear"));
-      if (!isNaN(port)) {
-        // Clear port
-        port = Math.round(port);
-        if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-          throw makeRuntimeErrorMsg(
-            "clear",
-            `Trying to clear invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid`,
-          );
-        }
-        const iport = NetscriptPorts[port - 1];
-        if (iport == null || !(iport instanceof Object)) {
-          throw makeRuntimeErrorMsg("clear", `Could not find port: ${port}. This is a bug. Report to dev.`);
-        }
-        return iport.clear();
-      } else if (isString(port)) {
+      if (isString(file)) {
         // Clear text file
-        const fn = port;
+        const fn = file;
         const server = GetServer(workerScript.hostname);
         if (server == null) {
           throw makeRuntimeErrorMsg("clear", "Error getting Server. This is a bug. Report to dev.");
@@ -1824,9 +1794,24 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
           txtFile.write("");
         }
       } else {
-        throw makeRuntimeErrorMsg("clear", `Invalid argument: ${port}`);
+        throw makeRuntimeErrorMsg("clear", `Invalid argument: ${file}`);
       }
       return 0;
+    },
+    clearPort: function (port: any): any {
+      // Clear port
+      port = Math.round(port);
+      if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
+        throw makeRuntimeErrorMsg(
+          "clear",
+          `Trying to clear invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid`,
+        );
+      }
+      const iport = NetscriptPorts[port - 1];
+      if (iport == null || !(iport instanceof Object)) {
+        throw makeRuntimeErrorMsg("clear", `Could not find port: ${port}. This is a bug. Report to dev.`);
+      }
+      return iport.clear();
     },
     getPortHandle: function (port: any): any {
       updateDynamicRam("getPortHandle", getRamCost("getPortHandle"));
@@ -2095,8 +2080,8 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       return Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
     },
 
-    getplayer: function (): any {
-      helper.updateDynamicRam("getplayer", getRamCost("getplayer"));
+    getPlayer: function (): any {
+      helper.updateDynamicRam("getPlayer", getRamCost("getPlayer"));
 
       const data = {
         hacking_skill: Player.hacking_skill,
@@ -2190,16 +2175,6 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       return data;
     },
 
-    ...augmentations,
-
-    gang: gang,
-    bladeburner: bladeburner,
-    codingcontract: codingcontract,
-    sleeve: sleeve,
-    corporation: corporation,
-
-    formulas: formulas,
-
     atExit: function (f: any): void {
       if (typeof f !== "function") {
         throw makeRuntimeErrorMsg("atExit", "argument should be function");
@@ -2207,9 +2182,14 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
       workerScript.atExit = f;
     },
     flags: Flags(workerScript.args),
-    ...extra,
   };
 
+  // add undocumented functions
+  const ns = {
+    ...base,
+    corporation: corporation,
+    ...extra,
+  };
   function getFunctionNames(obj: NS, prefix: string): string[] {
     const functionNames: string[] = [];
     for (const [key, value] of Object.entries(obj)) {
@@ -2222,9 +2202,7 @@ function NetscriptFunctions(workerScript: WorkerScript): NS {
     return functionNames;
   }
 
-  const possibleLogs = Object.fromEntries([...getFunctionNames(functions, "")].map((a) => [a, true]));
+  const possibleLogs = Object.fromEntries([...getFunctionNames(ns, "")].map((a) => [a, true]));
 
-  return functions;
-} // End NetscriptFunction()
-
-export { NetscriptFunctions };
+  return ns;
+}

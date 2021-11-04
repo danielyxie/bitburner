@@ -297,7 +297,7 @@ export declare interface Bladeburner {
      * @param name - Name of action. Must be an exact match.
      * @returns Estimated success chance for the specified action.
      */
-    getActionEstimatedSuccessChance(type: string, name: string): number;
+    getActionEstimatedSuccessChance(type: string, name: string): [number, number];
 
     /**
      * Get the reputation gain of an action.
@@ -753,20 +753,6 @@ export declare interface CodingContract {
      * @param answer - Solution for the contract.
      * @param fn - Filename of the contract.
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
-     * @returns True if the solution was correct, false otherwise.
-     */
-    attempt(answer: string[] | number, fn: string, host?: string): boolean;
-
-    /**
-     * Attemps a coding contract.
-     * @remarks
-     * RAM cost: 10 GB
-     *
-     * Attempts to solve the Coding Contract with the provided solution.
-     *
-     * @param answer - Solution for the contract.
-     * @param fn - Filename of the contract.
-     * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @param opts - Optional parameters for configuring function behavior.
      * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
      */
@@ -881,17 +867,27 @@ export declare interface CrimeStats {
  */
 export declare interface EquipmentStats {
     /** Strength multiplier */
-    str: number;
+    str?: number;
     /** Defense multiplier */
-    def: number;
+    def?: number;
     /** Dexterity multiplier */
-    dex: number;
+    dex?: number;
     /** Agility multiplier */
-    agi: number;
+    agi?: number;
     /** Charisma multiplier */
-    cha: number;
+    cha?: number;
     /** Hacking multiplier */
-    hack: number;
+    hack?: number;
+}
+
+/**
+ * @public
+ */
+export declare interface Formulas {
+    skills: SkillsFormulas;
+    hacking: HackingFormulas;
+    hacknetNodes: HacknetNodesFormulas;
+    hacknetServers: HacknetServersFormulas;
 }
 
 /**
@@ -1098,9 +1094,9 @@ export declare interface Gang {
      * Ascend the specified Gang Member.
      *
      * @param memberName - Name of member to ascend.
-     * @returns Object with info about the ascension results.
+     * @returns Object with info about the ascension results. undefined if ascension did not occur.
      */
-    ascendMember(memberName: string): GangMemberAscension;
+    ascendMember(memberName: string): GangMemberAscension | undefined;
 
     /**
      * Enable/Disable territory warfare.
@@ -1166,6 +1162,8 @@ export declare interface GangGenInfo {
     wantedLevel: number;
     /** Wanted level gained/lost per second (negative for losses) */
     wantedLevelGainRate: number;
+    /** Boolean indicating if territory warfare is enabled. */
+    territoryWarfareEngaged: boolean;
 }
 
 /**
@@ -1192,48 +1190,46 @@ export declare interface GangMemberAscension {
  * @public
  */
 export declare interface GangMemberInfo {
-    /** Agility stat */
-    agility: number;
-    /** Agility multiplier from equipment.*/
-    agilityEquipMult: number;
-    /** Agility multiplier from ascension.*/
-    agilityAscensionMult: number;
-    /** Array of names of all owned Augmentations */
-    augmentations: string[];
-    /** Charisma stat */
-    charisma: number;
-    /** Charisma multiplier from equipment.*/
-    charismaEquipMult: number;
-    /** Charisma multiplier from ascension.*/
-    charismaAscensionMult: number;
-    /** Defense stat */
-    defense: number;
-    /** Defense multiplier from equipment.*/
-    defenseEquipMult: number;
-    /** Defense multiplier from ascension.*/
-    defenseAscensionMult: number;
-    /** Dexterity stat */
-    dexterity: number;
-    /** Dexterity multiplier from equipment.*/
-    dexterityEquipMult: number;
-    /** Dexterity multiplier from ascension.*/
-    dexterityAscensionMult: number;
-    /** Array of names of all owned Non-Augmentation Equipment */
-    equipment: string[];
-    /** Hacking stat */
-    hacking: number;
-    /** Hacking multiplier from equipment.*/
-    hackingEquipMult: number;
-    /** Hacking multiplier from ascension.*/
-    hackingAscensionMult: number;
-    /** Strength stat */
-    strength: number;
-    /** Strength multiplier from equipment.*/
-    strengthEquipMult: number;
-    /** Strength multiplier from ascension.*/
-    strengthAscensionMult: number;
-    /** Name of currently assigned task */
+    name: string;
     task: string;
+    earnedRespect: number;
+    hack: number;
+    str: number;
+    def: number;
+    dex: number;
+    agi: number;
+    cha: number;
+
+    hack_exp: number;
+    str_exp: number;
+    def_exp: number;
+    dex_exp: number;
+    agi_exp: number;
+    cha_exp: number;
+
+    hack_mult: number;
+    str_mult: number;
+    def_mult: number;
+    dex_mult: number;
+    agi_mult: number;
+    cha_mult: number;
+
+    hack_asc_mult: number;
+    str_asc_mult: number;
+    def_asc_mult: number;
+    dex_asc_mult: number;
+    agi_asc_mult: number;
+    cha_asc_mult: number;
+
+    hack_asc_points: number;
+    str_asc_points: number;
+    def_asc_points: number;
+    dex_asc_points: number;
+    agi_asc_points: number;
+    cha_asc_points: number;
+
+    upgrades: string[];
+    augmentations: string[];
 }
 
 /**
@@ -1304,6 +1300,19 @@ export declare interface GangTerritory {
 }
 
 /**
+ * @public
+ */
+export declare interface HackingFormulas {
+    hackChance(server: number, player: number): number;
+    hackExp(server: number, player: number): number;
+    hackPercent(server: number, player: number): number;
+    growPercent(server: number, threads: number, player: number, cores?: number): number;
+    hackTime(server: number, player: number): number;
+    growTime(server: number, player: number): number;
+    weakenTime(server: number, player: number): number;
+}
+
+/**
  * Hack related multipliers.
  * @public
  */
@@ -1335,6 +1344,15 @@ export declare interface Hacknet {
      * @returns number of hacknet nodes.
      */
     numNodes(): number;
+
+    /**
+     * Get the maximum number of hacknet nodes.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * @returns maximum number of hacknet nodes.
+     */
+    maxNumNodes(): number;
 
     /**
      * Purchase a new hacknet node.
@@ -1535,6 +1553,19 @@ export declare interface Hacknet {
     numHashes(): number;
 
     /**
+     * Get the maximum number of hashes you can store.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
+     *
+     * Returns the number of hashes you can store.
+     *
+     * @returns Number of hashes you can store.
+     */
+    hashCapacity(): number;
+
+    /**
      * Get the cost of a hash upgrade.
      * @remarks
      * RAM cost: 0 GB
@@ -1579,6 +1610,39 @@ export declare interface Hacknet {
      * @returns True if the upgrade is successfully purchased, and false otherwise..
      */
     spendHashes(upgName: string, upgTarget?: string): boolean;
+
+    /**
+     * Get the level of a hash upgrade.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
+     *
+     * @returns Level of the upgrade.
+     */
+    getHashUpgradeLevel(upgName: string): number;
+
+    /**
+     * Get the multipler to study.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
+     *
+     * @returns Multiplier.
+     */
+    getStudyMult(): number;
+
+    /**
+     * Get the multipler to training.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
+     *
+     * @returns Multiplier.
+     */
+    getTrainingMult(): number;
 }
 
 /**
@@ -1596,6 +1660,32 @@ export declare interface HacknetMultipliers {
     coreCost: number;
     /** Player's hacknet level cost multiplier */
     levelCost: number;
+}
+
+/**
+ * @public
+ */
+export declare interface HacknetNodesFormulas {
+    moneyGainRate(level: number, ram: number, cores: number, mult?: number): number;
+    levelUpgradeCost(startingLevel: number, extraLevels?: number, costMult?: number): number;
+    ramUpgradeCost(startingRam: number, extraLevels?: number, costMult?: number): number;
+    coreUpgradeCost(startingCore: number, extraCores?: number, costMult?: number): number;
+    hacknetNodeCost(n: number, mult: number): number;
+    constants(): number;
+}
+
+/**
+ * @public
+ */
+export declare interface HacknetServersFormulas {
+    hashGainRate(level: number, ramUsed: number, maxRam: number, cores: number, mult?: number): number;
+    levelUpgradeCost(startingLevel: number, extraLevels?: number, costMult?: number): number;
+    ramUpgradeCost(startingRam: number, extraLevels?: number, costMult?: number): number;
+    coreUpgradeCost(startingCore: number, extraCores?: number, costMult?: number): number;
+    cacheUpgradeCost(startingCache: number, extraCache?: number): number;
+    hashUpgradeCost(upgName: number, level: number): number;
+    hacknetServerCost(n: number, mult: number): number;
+    constants(): any;
 }
 
 /**
@@ -1629,41 +1719,49 @@ export declare interface NodeStats {
  */
 export declare interface NS extends Singularity {
     /**
-     * Namespace for hacknet related functions.
+     * Namespace for hacknet functions.
      * @remarks RAM cost: 4 GB
      */
     readonly hacknet: Hacknet;
     /**
      *
-     * Namespace for bladeburner related functions.
+     * Namespace for bladeburner functions.
      * @remarks RAM cost: 0 GB
      */
     readonly bladeburner: Bladeburner;
     /**
      *
-     * Namespace for codingcontract related functions.
+     * Namespace for codingcontract functions.
      * @remarks RAM cost: 0 GB
      */
     readonly codingcontract: CodingContract;
     /**
      *
-     * Namespace for gang related functions.
+     * Namespace for gang functions.
      * @remarks RAM cost: 0 GB
      */
     readonly gang: Gang;
     /**
      *
-     * Namespace for sleeve related functions.
+     * Namespace for sleeve functions.
      * @remarks RAM cost: 0 GB
      */
     readonly sleeve: Sleeve;
     /**
      *
-     * Namespace for stock related functions.
+     * Namespace for stock functions.
      * @remarks
      * RAM cost: 0 GB
      */
     readonly stock: TIX;
+
+    /**
+     *
+     * Namespace for formulas functions.
+     * @remarks
+     * RAM cost: 0 GB
+     */
+    readonly formulas: Formulas;
 
     /**
      * Arguments passed into the script.
@@ -1807,13 +1905,13 @@ export declare interface NS extends Singularity {
      * @example
      * ```ts
      * //For example, assume the following returns 1:
-     * hackAnalyzePercent("foodnstuff");
+     * hackAnalyze("foodnstuff");
      * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N% of its total money.
      * ```
      * @param host - Hostname of the target server.
      * @returns The percentage of money you will steal from the target server with a single hack.
      */
-    hackAnalyzePercent(host: string): number;
+    hackAnalyze(host: string): number;
 
     /**
      * Get the security increase for a number of thread.
@@ -1839,7 +1937,7 @@ export declare interface NS extends Singularity {
      * @param host - Hostname of the target server.
      * @returns The chance you have of successfully hacking the target server.
      */
-    hackChance(host: string): number;
+    hackAnalyzeChance(host: string): number;
 
     /**
      * Calculate the number of grow thread needed to grow a server by a certain multiplier.
@@ -1887,6 +1985,16 @@ export declare interface NS extends Singularity {
     sleep(millis: number): Promise<void>;
 
     /**
+     * Suspends the script for n milliseconds. Doesn't block with concurrent calls.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * @param millis - Number of milliseconds to sleep.
+     * @returns
+     */
+    asleep(millis: number): Promise<void>;
+
+    /**
      * Prints a value or a variable to the script’s logs.
      * @remarks
      * RAM cost: 0 GB
@@ -1903,6 +2011,15 @@ export declare interface NS extends Singularity {
      * @param msg - Value to be printed.
      */
     tprint(msg: any): void;
+
+    /**
+     * Prints a raw value or a variable to the Terminal.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * @param msg - Value to be printed.
+     */
+    tprintf(msg: any): void;
 
     /**
      * Clears the script’s logs.
@@ -2253,34 +2370,12 @@ export declare interface NS extends Singularity {
      * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
      * kill("foo.script", getHostname(), 1, "foodnstuff");
      * ```
-     * @param script - Filename of the script to kill
+     * @param script - Filename or pid of the script to kill
      * @param host - Hostname of the server on which to kill the script.
      * @param args - Arguments to identify which script to kill.
      * @returns True if the script is successfully killed, and false otherwise.
      */
-    kill(script: string, host: string, ...args: string[]): boolean;
-
-    /**
-     * Terminate another script.
-     * @remarks
-     * RAM cost: 0.5 GB
-     *
-     * Kills the script with the specified PID.
-     * Killing a script by its PID will typically have better performance,
-     * especially if you have many scripts running.
-     * If this function successfully kills the specified script, then it will return true.
-     * Otherwise, it will return false.
-     *
-     * @example
-     * ```ts
-     * if (kill(10)) {
-     *     print("Killed script with PID 10!");
-     * }
-     * ```
-     * @param scriptPid - PID of the script to kill
-     * @returns True if the script is successfully killed, and false otherwise.
-     */
-    kill(scriptPid: number): boolean;
+    kill(script: string | number, host: string, ...args: string[]): boolean;
 
     /**
      * Terminate all scripts on a server.
@@ -2313,25 +2408,6 @@ export declare interface NS extends Singularity {
      *
      * @example
      * ```ts
-     * //Copies hack-template.script from the current server to foodnstuff:
-     * scp("hack-template.script", "foodnstuff");
-     * ```
-     * @param files - Filename or an array of filenames of script/literature files to copy.
-     * @param destination - Host of the destination server, which is the server to which the file will be copied.
-     * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
-     */
-    scp(files: string[], destination: string): boolean;
-
-    /**
-     * Copy file between servers.
-     * @remarks
-     * RAM cost: 0.6 GB
-     *
-     * Copies a script or literature (.lit) file(s) to another server. The files argument can be either a string
-     * specifying a single file to copy, or an array of strings specifying multiple files to copy.
-     *
-     * @example
-     * ```ts
      * //Copies foo.lit from the helios server to the home computer:
      * scp("foo.lit", "helios", "home");
      * ```
@@ -2351,7 +2427,7 @@ export declare interface NS extends Singularity {
     source: string,
     // tslint:disable-next-line:unified-signatures
     destination: string,
-    ): boolean;
+    ): Promise<boolean>;
 
     /**
      * List files on a server.
@@ -2547,6 +2623,65 @@ export declare interface NS extends Singularity {
     getServerMinSecurityLevel(host: string): number;
 
     /**
+     * @deprecated
+     * DEPRECATED
+     * @remarks
+     * RAM cost: 0.1 GB
+     * Returns the base security level of the target server. This is the security
+     * level that the server starts out with. This is different than
+     * getServerSecurityLevel because getServerSecurityLevel returns
+     * the current security level of a server, which can constantly change due to
+     * hack, grow, and weaken, calls on that server.
+     * The base security level will stay the same until you reset by
+     * installing an Augmentation(s).
+     *
+     * @param host - Host of target server.
+     * @returns Base security level of the target server.
+     */
+    getServerBaseSecurityLevel(host: string): number;
+
+    /**
+     * @deprecated
+     * DEPRECATED
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
+     * Returns an array with two elements that gives information about a server’s memory (RAM).
+     * The first element in the array is the amount of RAM that the server has total (in GB).
+     * The second element in the array is the amount of RAM that is currently being used on
+     * the server (in GB).
+     *
+     * @example
+     * ```ts
+     * res = getServerRam("helios");
+     * totalRam = res[0];
+     * ramUsed = res[1];
+     * ```
+     * @param host - Host of target server.
+     * @returns Array with total and used memory on the specified server.
+     */
+    getServerRam(host: string): [number, number];
+
+    /**
+     * Get the max RAM on a server.
+     * @remarks
+     * RAM cost: 0.05 GB
+     *
+     * @param host - Hostname of the target server.
+     * @returns max ram
+     */
+    getServerMaxRam(host: string): number;
+    /**
+     * Get the used RAM on a server.
+     * @remarks
+     * RAM cost: 0.05 GB
+     *
+     * @param host - Hostname of the target server.
+     * @returns used ram
+     */
+    getServerUsedRam(host: string): number;
+
+    /**
      * Returns the required hacking level of the target server.
      *
      * @remarks RAM cost: 0.1 GB
@@ -2631,6 +2766,14 @@ export declare interface NS extends Singularity {
      * @returns True if specified script is running on the target server, and false otherwise.
      */
     isRunning(script: string, host: string, ...args: string[]): boolean;
+
+    /**
+     * Get general info about a running script.
+     * @remarks
+     * RAM cost: 0.3 GB
+     * @returns info about a running script
+     */
+    getRunningScript(fn: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
 
     /**
      * Get cost of purchasing a server.
@@ -2734,14 +2877,9 @@ export declare interface NS extends Singularity {
      * @remarks
      * RAM cost: 1 GB
      *
-     * This function can be used to either write data to a port or to a text file (.txt).
+     * This function can be used to either write data to a text file (.txt).
      *
-     * If the first argument is a number between 1 and 20, then it specifies a port and this
-     * function will write data to that port. The third argument, mode, is not used when writing
-     * to a port.
-     *
-     * If the first argument is a string, then it specifies the name of a text file (.txt) and
-     * this function will write data to that text file. If the specified text file does not exist,
+     * This function will write data to that text file. If the specified text file does not exist,
      * then it will be created. The third argument mode, defines how the data will be written to
      * the text file. If *mode is set to “w”, then the data is written in “write” mode which means
      * that it will overwrite all existing data on the text file. If mode is set to any other value
@@ -2752,7 +2890,7 @@ export declare interface NS extends Singularity {
      * @param data - Data to write.
      * @param mode - Defines the write mode. Only valid when writing to text files.
      */
-    write(handle: string | number, data?: string[] | number, mode?: "w" | "a"): void;
+    write(handle: string, data?: string[] | number, mode?: "w" | "a"): Promise<void>;
 
     /**
      * Attempt to write to a port.
@@ -2767,7 +2905,7 @@ export declare interface NS extends Singularity {
      * @param data - Data to write.
      * @returns True if the data is successfully written to the port, and false otherwise.
      */
-    tryWrite(port: number, data: string[] | number): boolean;
+    tryWrite(port: number, data: string[] | number): Promise<boolean>;
 
     /**
      * Read content of a file.
@@ -2776,19 +2914,13 @@ export declare interface NS extends Singularity {
      *
      * This function is used to read data from a port or from a text file (.txt).
      *
-     * If the argument port/fn is a number between 1 and 20, then it specifies a
-     * port and it will read data from that port. A port is a serialized queue.
-     * This function will remove the first element from that queue and return it.
-     * If the queue is empty, then the string “NULL PORT DATA” will be returned.
-     *
-     * If the argument port/fn is a string, then it specifies the name of a text
-     * file (.txt) and this function will return the data in the specified text
+     * This function will return the data in the specified text
      * file. If the text file does not exist, an empty string will be returned.
      *
      * @param handle - Port or text file to read from.
      * @returns Data in the specified text file or port.
      */
-    read(handle: string | number): string | number | object;
+    read(handle: string): any;
 
     /**
      * Get a copy of the data from a port without popping it.
@@ -2802,24 +2934,50 @@ export declare interface NS extends Singularity {
      * @param port - Port to peek. Must be an integer between 1 and 20.
      * @returns Data in the specified port.
      */
-    peek(port: number): string | number | object;
+    peek(port: number): any;
+
+    /**
+     * Clear data from a file.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * Delete all data from that text file.
+     *
+     * @param handle - Text file to clear.
+     */
+    clear(handle: string): void;
 
     /**
      * Clear data from a port.
      * @remarks
      * RAM cost: 0 GB
      *
-     * This function is used to clear data in a Netscript Ports or a text file.
+     * Deleta all data from the underlying queue.
      *
-     * If the port/fn argument is a number between 1 and 20, then it specifies a
-     * port and will clear it (deleting all data from the underlying queue).
-     *
-     * If the port/fn argument is a string, then it specifies the name of a
-     * text file (.txt) and will delete all data from that text file.
-     *
-     * @param handle - Port or text file to clear.
+     * @param handle - Port to clear.
      */
-    clear(handle: string | number): void;
+    clearPort(handle: number): void;
+
+    /**
+     * Write data to a port.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * Write data to that netscript port.
+     * @returns The data popped off the queue if it was full.
+     */
+    writePort(port: number, data: any): Promise<any>;
+    /**
+     * Read data from a port.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * Read data from that port. A port is a serialized queue.
+     * This function will remove the first element from that queue and return it.
+     * If the queue is empty, then the string “NULL PORT DATA” will be returned.
+     * @returns the data read.
+     */
+    readPort(port: number): any;
 
     /**
      * Get all data on a port.
@@ -3053,6 +3211,17 @@ export declare interface NS extends Singularity {
     nFormat(n: number, format: string): number;
 
     /**
+     * Format time to readable string
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * @param milliseconds - Number of millisecond to format.
+     * @param milliPrecision - Format time with subsecond precision, defaults to false.
+     * @returns The formatted time.
+     */
+    tFormat(milliseconds: number, milliPrecision?: boolean): string;
+
+    /**
      * Prompt the player with a Yes/No modal.
      * @remarks
      * RAM cost: 0 GB
@@ -3066,6 +3235,19 @@ export declare interface NS extends Singularity {
      * @returns True if the player click “Yes” and false if the player clicks “No”.
      */
     prompt(txt: string): Promise<boolean>;
+
+    /**
+     * Open up a message box.
+     * @param msg - Message to alert.
+     */
+    alert(msg: any): void;
+
+    /**
+     * Queue a toast (bottom-right notification).
+     * @param msg - Message in the toast.
+     * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.
+     */
+    toast(msg: any, variant?: string): void;
 
     /**
      * Download a file from the internet.
@@ -3132,6 +3314,148 @@ export declare interface NS extends Singularity {
      * @returns Object containing the current BitNode multipliers.
      */
     getBitNodeMultipliers(): BitNodeMultipliers;
+
+    /**
+     * Get information about the player.
+     * @returns Player info
+     */
+    getPlayer(): Player;
+
+    /**
+     * Add callback function when the script dies
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * NS2 exclusive
+     *
+     * Add callback to be executed when the script dies.
+     */
+    atExit(f: () => void): void;
+
+    /**
+     * Parse command line flags.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * Allows unix like flag parsing.
+     * @example
+     * ```ts
+     * // example.script
+     * var data = flags([
+     *     ['delay', 0], // a default number means this flag is a number
+     *     ['server', 'foodnstuff'], //  a default string means this flag is a string
+     *     ['exclude', []], // a default array means this flag is a default array of string
+     *     ['help', false], // a default boolean means this flag is a boolean
+     * ]);
+     * tprint(data);
+     *
+     * // [home ~/]> run example.script
+     * // {"_":[],"delay":0,"server":"foodnstuff","exclude":[],"help":false}
+     * // [home ~/]> run example.script --delay 3000
+     * // {"_":[],"server":"foodnstuff","exclude":[],"help":false,"delay":3000}
+     * // [home ~/]> run example.script --delay 3000 --server harakiri-sushi
+     * // {"_":[],"exclude":[],"help":false,"delay":3000,"server":"harakiri-sushi"}
+     * // [home ~/]> run example.script --delay 3000 --server harakiri-sushi hello world
+     * // {"_":["hello","world"],"exclude":[],"help":false,"delay":3000,"server":"harakiri-sushi"}
+     * // [home ~/]> run example.script --delay 3000 --server harakiri-sushi hello world --exclude a --exclude b
+     * // {"_":["hello","world"],"help":false,"delay":3000,"server":"harakiri-sushi","exclude":["a","b"]}
+     * // [home ~/]> run example.script --help
+     * // {"_":[],"delay":0,"server":"foodnstuff","exclude":[],"help":true}
+     * ```
+     */
+    flags(schema: [string, string | number | boolean | string[]][]): any;
+}
+
+/**
+ * @public
+ */
+export declare interface Player {
+    hacking_skill: number;
+    hp: number;
+    max_hp: number;
+    strength: number;
+    defense: number;
+    dexterity: number;
+    agility: number;
+    charisma: number;
+    intelligence: number;
+    hacking_chance_mult: number;
+    hacking_speed_mult: number;
+    hacking_money_mult: number;
+    hacking_grow_mult: number;
+    hacking_exp: number;
+    strength_exp: number;
+    defense_exp: number;
+    dexterity_exp: number;
+    agility_exp: number;
+    charisma_exp: number;
+    hacking_mult: number;
+    strength_mult: number;
+    defense_mult: number;
+    dexterity_mult: number;
+    agility_mult: number;
+    charisma_mult: number;
+    hacking_exp_mult: number;
+    strength_exp_mult: number;
+    defense_exp_mult: number;
+    dexterity_exp_mult: number;
+    agility_exp_mult: number;
+    charisma_exp_mult: number;
+    company_rep_mult: number;
+    faction_rep_mult: number;
+    numPeopleKilled: number;
+    money: number;
+    city: string;
+    location: string;
+    companyName: string;
+    crime_money_mult: number;
+    crime_success_mult: number;
+    isWorking: boolean;
+    workType: string;
+    currentWorkFactionName: string;
+    currentWorkFactionDescription: string;
+    workHackExpGainRate: number;
+    workStrExpGainRate: number;
+    workDefExpGainRate: number;
+    workDexExpGainRate: number;
+    workAgiExpGainRate: number;
+    workChaExpGainRate: number;
+    workRepGainRate: number;
+    workMoneyGainRate: number;
+    workMoneyLossRate: number;
+    workHackExpGained: number;
+    workStrExpGained: number;
+    workDefExpGained: number;
+    workDexExpGained: number;
+    workAgiExpGained: number;
+    workChaExpGained: number;
+    workRepGained: number;
+    workMoneyGained: number;
+    createProgramName: string;
+    createProgramReqLvl: number;
+    className: string;
+    crimeType: string;
+    work_money_mult: number;
+    hacknet_node_money_mult: number;
+    hacknet_node_purchase_cost_mult: number;
+    hacknet_node_ram_cost_mult: number;
+    hacknet_node_core_cost_mult: number;
+    hacknet_node_level_cost_mult: number;
+    hasWseAccount: boolean;
+    hasTixApiAccess: boolean;
+    has4SData: boolean;
+    has4SDataTixApi: boolean;
+    bladeburner_max_stamina_mult: number;
+    bladeburner_stamina_gain_mult: number;
+    bladeburner_analysis_mult: number;
+    bladeburner_success_chance_mult: number;
+    bitNodeN: number;
+    totalPlaytime: number;
+    playtimeSinceLastAug: number;
+    playtimeSinceLastBitnode: number;
+    jobs: any;
+    factions: string[];
+    tor: boolean;
 }
 
 /**
@@ -3166,6 +3490,25 @@ export declare interface ProcessInfo {
     threads: number;
     /** Script's arguments */
     args: string[];
+}
+
+/**
+ * @public
+ */
+export declare interface RunningScript {
+    args: string[];
+    filename: string;
+    logs: string[];
+    offlineExpGained: number;
+    offlineMoneyMade: number;
+    offlineRunningTime: number;
+    onlineExpGained: number;
+    onlineMoneyMade: number;
+    onlineRunningTime: number;
+    pid: number;
+    ramUsage: number;
+    server: string;
+    threads: number;
 }
 
 /**
@@ -3377,6 +3720,22 @@ export declare interface Singularity {
     upgradeHomeRam(): boolean;
 
     /**
+     * Upgrade home computer cores.
+     * @remarks
+     * RAM cost: 3 GB
+     *
+     * Singularity - Level 2
+     *
+     * This function will upgrade amount of cores on the player’s home computer. The cost is
+     * the same as if you were to do it manually.
+     *
+     * This function will return true if the player’s home computer cores is successfully upgraded, and false otherwise.
+     *
+     * @returns True if the player’s home computer cores is successfully upgraded, and false otherwise.
+     */
+    upgradeHomeCores(): boolean;
+
+    /**
      * Get the price of upgrading home RAM.
      * @remarks
      * RAM cost: 1.5 GB
@@ -3388,6 +3747,19 @@ export declare interface Singularity {
      * @returns Cost of upgrading the player’s home computer RAM.
      */
     getUpgradeHomeRamCost(): number;
+
+    /**
+     * Get the price of upgrading home cores.
+     * @remarks
+     * RAM cost: 1.5 GB
+     *
+     * Singularity - Level 2
+     *
+     * Returns the cost of upgrading the player’s home computer cores.
+     *
+     * @returns Cost of upgrading the player’s home computer cores.
+     */
+    getUpgradeHomeCoresCost(): number;
 
     /**
      * Work for a company.
@@ -3754,6 +4126,51 @@ export declare interface Singularity {
     getAugmentationPrereq(augName: string): string[];
 
     /**
+     * @deprecated
+     * Get the price and reputation of an augmentation.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
+     *
+     * This function returns an array with two elements that gives the cost for
+     * the specified Augmentation. The first element in the returned array is the
+     * reputation requirement of the Augmentation, and the second element is the
+     * money cost.
+     *
+     * If an invalid Augmentation name is passed in for the augName argument, this
+     * function will return the array [-1, -1].
+     *
+     * @param augName - Name of Augmentation.
+     * @returns Array with first element as a reputation requirement and second element as the money cost.
+     */
+    getAugmentationCost(augName: string): [number, number];
+
+    /**
+     * Get price of an augmentation.
+     * @remarks
+     * RAM cost: 2.5 GB
+     *
+     * Singularity - Level 3
+     *
+     * @param augName - Name of Augmentation.
+     * @returns Price of the augmentation.
+     */
+    getAugmentationPrice(augName: string): number;
+
+    /**
+     * Get reputation requirement of an augmentation.
+     * @remarks
+     * RAM cost: 2.5 GB
+     *
+     * Singularity - Level 3
+     *
+     * @param augName - Name of Augmentation.
+     * @returns Reputation requirement of the augmentation.
+     */
+    getAugmentationRepReq(augName: string): number;
+
+    /**
      * Purchase an augmentation
      * @remarks
      * RAM cost: 5 GB
@@ -3798,6 +4215,48 @@ export declare interface Singularity {
     installAugmentations(cbScript?: string): void;
 
     /**
+     * @deprecated
+     * Returns an object with the Player’s stats.
+     *
+     * @remarks
+     * RAM cost: 0.5 GB
+     *
+     * Singularity - Level 1
+     *
+     * @example
+     * ```ts
+     * res = getStats();
+     * print('My charisma level is: ' + res.charisma);
+     * ```
+     * @returns Object with the Player’s stats.
+     */
+    getStats(): PlayerSkills;
+
+    /**
+     * @deprecated
+     * Returns an object with various information about your character.
+     *
+     * @remarks
+     * RAM cost: 0.5 GB
+     *
+     * Singularity - Level 1
+     *
+     * @returns Object with various information about your character.
+     */
+    getCharacterInformation(): CharacterInfo;
+
+    /**
+     * Hospitalize the player.
+     * @remarks
+     * RAM cost: 0.25 GB
+     *
+     * Singularity - Level 1
+     *
+     * @returns The cost of the hospitalization.
+     */
+    hospitalize(): number;
+
+    /**
      * Soft reset the game.
      * @remarks
      * RAM cost: 5 GB
@@ -3806,8 +4265,77 @@ export declare interface Singularity {
      *
      * This function will perform a reset even if you don’t have any augmentation installed.
      *
+     * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.
      */
-    softReset(): void;
+    softReset(cbScript: string): void;
+
+    /**
+     * Go to a location.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Singularity - Level 3
+     *
+     * Move the player to a specific location.
+     *
+     * @param locationName - Name of the location.
+     * @returns True if the player was moved there, false otherwise.
+     */
+    goToLocation(locationName: string): boolean;
+
+    /**
+     * Get the current server.
+     * @remarks
+     * RAM cost: 2 GB
+     *
+     * Singularity - Level 1
+     *
+     * @returns Name of the current server.
+     */
+    getCurrentServer(): string;
+
+    /**
+     * Connect to a server.
+     * @remarks
+     * RAM cost: 2 GB
+     *
+     * Singularity - Level 1
+     *
+     * Run the connect HOSTNAME command in the terminal. Can only connect to neighbors.
+     *
+     * @returns True if the connect command was successful, false otherwise.
+     */
+    connect(hostname: string): boolean;
+
+    /**
+     * Run the hack command in the terminal.
+     * @remarks
+     * RAM cost: 2 GB
+     *
+     * Singularity - Level 1
+     *
+     * @returns Amount of money stolen by manual hacking.
+     */
+    manualHack(): Promise<number>;
+
+    /**
+     * Run the backdoor command in the terminal.
+     * @remarks
+     * RAM cost: 2 GB
+     *
+     * Singularity - Level 1
+     *
+     * @returns True if the installation was successful.
+     */
+    installBackdoor(): Promise<boolean>;
+}
+
+/**
+ * @public
+ */
+export declare interface SkillsFormulas {
+    calculateSkill(exp: number, mult?: number): number;
+    calculateExp(skill: number, mult?: number): number;
 }
 
 /**

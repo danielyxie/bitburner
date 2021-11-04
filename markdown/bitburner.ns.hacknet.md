@@ -4,7 +4,7 @@
 
 ## NS.hacknet property
 
-Namespace for hacknet related functions.
+Namespace for hacknet functions.
 
 <b>Signature:</b>
 

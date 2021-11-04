@@ -16,10 +16,10 @@ export interface EquipmentStats
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [agi](./bitburner.equipmentstats.agi.md) | number | Agility multiplier |
-|  [cha](./bitburner.equipmentstats.cha.md) | number | Charisma multiplier |
-|  [def](./bitburner.equipmentstats.def.md) | number | Defense multiplier |
-|  [dex](./bitburner.equipmentstats.dex.md) | number | Dexterity multiplier |
-|  [hack](./bitburner.equipmentstats.hack.md) | number | Hacking multiplier |
-|  [str](./bitburner.equipmentstats.str.md) | number | Strength multiplier |
+|  [agi?](./bitburner.equipmentstats.agi.md) | number | <i>(Optional)</i> Agility multiplier |
+|  [cha?](./bitburner.equipmentstats.cha.md) | number | <i>(Optional)</i> Charisma multiplier |
+|  [def?](./bitburner.equipmentstats.def.md) | number | <i>(Optional)</i> Defense multiplier |
+|  [dex?](./bitburner.equipmentstats.dex.md) | number | <i>(Optional)</i> Dexterity multiplier |
+|  [hack?](./bitburner.equipmentstats.hack.md) | number | <i>(Optional)</i> Hacking multiplier |
+|  [str?](./bitburner.equipmentstats.str.md) | number | <i>(Optional)</i> Strength multiplier |
 

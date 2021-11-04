@@ -22,11 +22,16 @@ Not all these functions are immediately available.
 |  --- | --- |
 |  [getCacheUpgradeCost(index, n)](./bitburner.hacknet.getcacheupgradecost.md) | Calculate the cost of upgrading hacknet node cache. |
 |  [getCoreUpgradeCost(index, n)](./bitburner.hacknet.getcoreupgradecost.md) | Calculate the cost of upgrading hacknet node cores. |
+|  [getHashUpgradeLevel(upgName)](./bitburner.hacknet.gethashupgradelevel.md) | Get the level of a hash upgrade. |
 |  [getLevelUpgradeCost(index, n)](./bitburner.hacknet.getlevelupgradecost.md) | Calculate the cost of upgrading hacknet node levels. |
 |  [getNodeStats(index)](./bitburner.hacknet.getnodestats.md) | Get the stats of a hacknet node. |
 |  [getPurchaseNodeCost()](./bitburner.hacknet.getpurchasenodecost.md) | Get the price of the next hacknet node. |
 |  [getRamUpgradeCost(index, n)](./bitburner.hacknet.getramupgradecost.md) | Calculate the cost of upgrading hacknet node RAM. |
+|  [getStudyMult()](./bitburner.hacknet.getstudymult.md) | Get the multipler to study. |
+|  [getTrainingMult()](./bitburner.hacknet.gettrainingmult.md) | Get the multipler to training. |
+|  [hashCapacity()](./bitburner.hacknet.hashcapacity.md) | Get the maximum number of hashes you can store. |
 |  [hashCost(upgName)](./bitburner.hacknet.hashcost.md) | Get the cost of a hash upgrade. |
+|  [maxNumNodes()](./bitburner.hacknet.maxnumnodes.md) | Get the maximum number of hacknet nodes. |
 |  [numHashes()](./bitburner.hacknet.numhashes.md) | Get the total number of hashes stored. |
 |  [numNodes()](./bitburner.hacknet.numnodes.md) | Get the number of hacknet nodes you own. |
 |  [purchaseNode()](./bitburner.hacknet.purchasenode.md) | Purchase a new hacknet node. |

@@ -16,8 +16,7 @@ export interface CodingContract
 
 |  Method | Description |
 |  --- | --- |
-|  [attempt(answer, fn, host)](./bitburner.codingcontract.attempt.md) | Attemps a coding contract. |
-|  [attempt(answer, fn, host, opts)](./bitburner.codingcontract.attempt_1.md) | Attemps a coding contract. |
+|  [attempt(answer, fn, host, opts)](./bitburner.codingcontract.attempt.md) | Attemps a coding contract. |
 |  [getContractType(fn, host)](./bitburner.codingcontract.getcontracttype.md) | Get the type of a coding contract. |
 |  [getData(fn, host)](./bitburner.codingcontract.getdata.md) | Get the input data. |
 |  [getDescription(fn, host)](./bitburner.codingcontract.getdescription.md) | Get the description. |

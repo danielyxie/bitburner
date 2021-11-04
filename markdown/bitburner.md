@@ -20,6 +20,7 @@
 |  [CodingContract](./bitburner.codingcontract.md) | Coding Contact API |
 |  [CrimeStats](./bitburner.crimestats.md) | Data representing the internal values of a crime. |
 |  [EquipmentStats](./bitburner.equipmentstats.md) | Object representing data representing a gang member equipment. |
+|  [Formulas](./bitburner.formulas.md) |  |
 |  [Gang](./bitburner.gang.md) | Gang API |
 |  [GangGenInfo](./bitburner.ganggeninfo.md) | Gang general info. |
 |  [GangMemberAscension](./bitburner.gangmemberascension.md) |  |
@@ -28,15 +29,21 @@
 |  [GangOtherInfoObject](./bitburner.gangotherinfoobject.md) |  |
 |  [GangTaskStats](./bitburner.gangtaskstats.md) | Object representing data representing a gang member task. |
 |  [GangTerritory](./bitburner.gangterritory.md) |  |
+|  [HackingFormulas](./bitburner.hackingformulas.md) |  |
 |  [HackingMultipliers](./bitburner.hackingmultipliers.md) | Hack related multipliers. |
 |  [Hacknet](./bitburner.hacknet.md) | Hacknet API |
 |  [HacknetMultipliers](./bitburner.hacknetmultipliers.md) | Hacknet related multipliers. |
+|  [HacknetNodesFormulas](./bitburner.hacknetnodesformulas.md) |  |
+|  [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) |  |
 |  [NodeStats](./bitburner.nodestats.md) | Object representing all the values related to a hacknet node. |
 |  [NS](./bitburner.ns.md) | Collection of all functions passed to scripts |
+|  [Player](./bitburner.player.md) |  |
 |  [PlayerSkills](./bitburner.playerskills.md) | Short summary of the players skills. |
 |  [ProcessInfo](./bitburner.processinfo.md) | A single process on a server. |
+|  [RunningScript](./bitburner.runningscript.md) |  |
 |  [Server](./bitburner.server.md) | A single server. |
 |  [Singularity](./bitburner.singularity.md) | Singularity API |
+|  [SkillsFormulas](./bitburner.skillsformulas.md) |  |
 |  [Sleeve](./bitburner.sleeve.md) | Sleeve API |
 |  [SleeveInformation](./bitburner.sleeveinformation.md) | Object representing sleeve information. |
 |  [SleeveSkills](./bitburner.sleeveskills.md) | Object representing a sleeve stats. |

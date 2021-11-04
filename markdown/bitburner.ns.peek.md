@@ -9,7 +9,7 @@ Get a copy of the data from a port without popping it.
 <b>Signature:</b>
 
 ```typescript
-peek(port: number): string | number | object;
+peek(port: number): any;
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ peek(port: number): string | number | object;
 
 <b>Returns:</b>
 
-string \| number \| object
+any
 
 Data in the specified port.
 

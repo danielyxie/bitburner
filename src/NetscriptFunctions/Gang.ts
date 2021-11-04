@@ -9,7 +9,15 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { GangMember } from "../Gang/GangMember";
 import { GangMemberTask } from "../Gang/GangMemberTask";
 
-import { Gang as IGang } from "../ScriptEditor/NetscriptDefinitions";
+import {
+  Gang as IGang,
+  GangGenInfo,
+  GangOtherInfo,
+  GangMemberInfo,
+  GangMemberAscension,
+  EquipmentStats,
+  GangTaskStats,
+} from "../ScriptEditor/NetscriptDefinitions";
 
 export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IGang {
   const checkGangApiAccess = function (func: string): void {
@@ -58,18 +66,18 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       player.startGang(faction, isHacking);
       return true;
     },
-    inGang: function (): any {
+    inGang: function (): boolean {
       helper.updateDynamicRam("inGang", getRamCost("gang", "inGang"));
       return player.inGang();
     },
-    getMemberNames: function (): any {
+    getMemberNames: function (): string[] {
       helper.updateDynamicRam("getMemberNames", getRamCost("gang", "getMemberNames"));
       checkGangApiAccess("getMemberNames");
       const gang = player.gang;
       if (gang === null) throw new Error("Should not be called without Gang");
       return gang.members.map((member) => member.name);
     },
-    getGangInformation: function (): any {
+    getGangInformation: function (): GangGenInfo {
       helper.updateDynamicRam("getGangInformation", getRamCost("gang", "getGangInformation"));
       checkGangApiAccess("getGangInformation");
       const gang = player.gang;
@@ -88,7 +96,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
         wantedLevelGainRate: gang.wantedGainRate,
       };
     },
-    getOtherGangInformation: function (): any {
+    getOtherGangInformation: function (): GangOtherInfo {
       helper.updateDynamicRam("getOtherGangInformation", getRamCost("gang", "getOtherGangInformation"));
       checkGangApiAccess("getOtherGangInformation");
       const cpy: any = {};
@@ -98,7 +106,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
 
       return cpy;
     },
-    getMemberInformation: function (name: any): any {
+    getMemberInformation: function (name: any): GangMemberInfo {
       helper.updateDynamicRam("getMemberInformation", getRamCost("gang", "getMemberInformation"));
       checkGangApiAccess("getMemberInformation");
       const member = getGangMember("getMemberInformation", name);
@@ -145,14 +153,14 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
         augmentations: member.augmentations.slice(),
       };
     },
-    canRecruitMember: function (): any {
+    canRecruitMember: function (): boolean {
       helper.updateDynamicRam("canRecruitMember", getRamCost("gang", "canRecruitMember"));
       checkGangApiAccess("canRecruitMember");
       const gang = player.gang;
       if (gang === null) throw new Error("Should not be called without Gang");
       return gang.canRecruitMember();
     },
-    recruitMember: function (name: any): any {
+    recruitMember: function (name: any): boolean {
       helper.updateDynamicRam("recruitMember", getRamCost("gang", "recruitMember"));
       checkGangApiAccess("recruitMember");
       const gang = player.gang;
@@ -166,7 +174,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
 
       return recruited;
     },
-    getTaskNames: function (): any {
+    getTaskNames: function (): string[] {
       helper.updateDynamicRam("getTaskNames", getRamCost("gang", "getTaskNames"));
       checkGangApiAccess("getTaskNames");
       const gang = player.gang;
@@ -175,7 +183,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       tasks.unshift("Unassigned");
       return tasks;
     },
-    setMemberTask: function (memberName: any, taskName: any): any {
+    setMemberTask: function (memberName: any, taskName: any): boolean {
       helper.updateDynamicRam("setMemberTask", getRamCost("gang", "setMemberTask"));
       checkGangApiAccess("setMemberTask");
       const member = getGangMember("setMemberTask", memberName);
@@ -191,7 +199,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
 
       return success;
     },
-    getTaskStats: function (taskName: any): any {
+    getTaskStats: function (taskName: any): GangTaskStats {
       helper.updateDynamicRam("getTaskStats", getRamCost("gang", "getTaskStats"));
       checkGangApiAccess("getTaskStats");
       const task = getGangTask("getTaskStats", taskName);
@@ -199,12 +207,12 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       copy.territory = Object.assign({}, task.territory);
       return copy;
     },
-    getEquipmentNames: function (): any {
+    getEquipmentNames: function (): string[] {
       helper.updateDynamicRam("getEquipmentNames", getRamCost("gang", "getEquipmentNames"));
       checkGangApiAccess("getEquipmentNames");
       return Object.keys(GangMemberUpgrades);
     },
-    getEquipmentCost: function (equipName: any): any {
+    getEquipmentCost: function (equipName: any): number {
       helper.updateDynamicRam("getEquipmentCost", getRamCost("gang", "getEquipmentCost"));
       checkGangApiAccess("getEquipmentCost");
       const gang = player.gang;
@@ -213,23 +221,24 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       if (upg === null) return Infinity;
       return gang.getUpgradeCost(upg);
     },
-    getEquipmentType: function (equipName: any): any {
+    getEquipmentType: function (equipName: any): string {
       helper.updateDynamicRam("getEquipmentType", getRamCost("gang", "getEquipmentType"));
       checkGangApiAccess("getEquipmentType");
       const upg = GangMemberUpgrades[equipName];
       if (upg == null) return "";
       return upg.getType();
     },
-    getEquipmentStats: function (equipName: any): any {
+    getEquipmentStats: function (equipName: any): EquipmentStats {
       helper.updateDynamicRam("getEquipmentStats", getRamCost("gang", "getEquipmentStats"));
       checkGangApiAccess("getEquipmentStats");
       const equipment = GangMemberUpgrades[equipName];
       if (!equipment) {
         throw helper.makeRuntimeErrorMsg("getEquipmentStats", `Invalid equipment: ${equipName}`);
       }
-      return Object.assign({}, equipment.mults);
+      const typecheck: EquipmentStats = equipment.mults;
+      return Object.assign({}, typecheck) as any;
     },
-    purchaseEquipment: function (memberName: any, equipName: any): any {
+    purchaseEquipment: function (memberName: any, equipName: any): boolean {
       helper.updateDynamicRam("purchaseEquipment", getRamCost("gang", "purchaseEquipment"));
       checkGangApiAccess("purchaseEquipment");
       const gang = player.gang;
@@ -246,7 +255,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
 
       return res;
     },
-    ascendMember: function (name: any): any {
+    ascendMember: function (name: any): GangMemberAscension | undefined {
       helper.updateDynamicRam("ascendMember", getRamCost("gang", "ascendMember"));
       checkGangApiAccess("ascendMember");
       const gang = player.gang;
@@ -268,7 +277,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
         workerScript.log("setTerritoryWarfare", "Disengaging in Gang Territory Warfare");
       }
     },
-    getChanceToWinClash: function (otherGang: any): any {
+    getChanceToWinClash: function (otherGang: any): number {
       helper.updateDynamicRam("getChanceToWinClash", getRamCost("gang", "getChanceToWinClash"));
       checkGangApiAccess("getChanceToWinClash");
       const gang = player.gang;
@@ -282,7 +291,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
 
       return playerPower / (otherPower + playerPower);
     },
-    getBonusTime: function (): any {
+    getBonusTime: function (): number {
       helper.updateDynamicRam("getBonusTime", getRamCost("gang", "getBonusTime"));
       checkGangApiAccess("getBonusTime");
       const gang = player.gang;

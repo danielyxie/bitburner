@@ -9,5 +9,5 @@ Defense multiplier
 <b>Signature:</b>
 
 ```typescript
-def: number;
+def?: number;
 ```

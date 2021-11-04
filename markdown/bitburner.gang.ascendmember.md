@@ -9,7 +9,7 @@ Ascend a gang member.
 <b>Signature:</b>
 
 ```typescript
-ascendMember(memberName: string): GangMemberAscension;
+ascendMember(memberName: string): GangMemberAscension | undefined;
 ```
 
 ## Parameters
@@ -20,9 +20,9 @@ ascendMember(memberName: string): GangMemberAscension;
 
 <b>Returns:</b>
 
-[GangMemberAscension](./bitburner.gangmemberascension.md)
+[GangMemberAscension](./bitburner.gangmemberascension.md) \| undefined
 
-Object with info about the ascension results.
+Object with info about the ascension results. undefined if ascension did not occur.
 
 ## Remarks
 

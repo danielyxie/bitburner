@@ -213,7 +213,7 @@ export class Action implements IAction {
     return 1;
   }
 
-  getEstSuccessChance(inst: IBladeburner): number[] {
+  getEstSuccessChance(inst: IBladeburner): [number, number] {
     function clamp(x: number): number {
       return Math.max(0, Math.min(x, 1));
     }

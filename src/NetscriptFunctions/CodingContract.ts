@@ -22,7 +22,12 @@ export function NetscriptCodingContract(
   };
 
   return {
-    attempt: function (answer: any, fn: any, ip: any = workerScript.hostname, { returnReward }: any = {}): any {
+    attempt: function (
+      answer: any,
+      fn: any,
+      ip: any = workerScript.hostname,
+      { returnReward }: any = {},
+    ): boolean | string {
       helper.updateDynamicRam("attempt", getRamCost("codingcontract", "attempt"));
       const contract = getCodingContract("attempt", ip, fn);
 
@@ -63,7 +68,7 @@ export function NetscriptCodingContract(
         return returnReward ? "" : false;
       }
     },
-    getContractType: function (fn: any, ip: any = workerScript.hostname): any {
+    getContractType: function (fn: any, ip: any = workerScript.hostname): string {
       helper.updateDynamicRam("getContractType", getRamCost("codingcontract", "getContractType"));
       const contract = getCodingContract("getContractType", ip, fn);
       return contract.getType();
@@ -88,12 +93,12 @@ export function NetscriptCodingContract(
         return data;
       }
     },
-    getDescription: function (fn: any, ip: any = workerScript.hostname): any {
+    getDescription: function (fn: any, ip: any = workerScript.hostname): string {
       helper.updateDynamicRam("getDescription", getRamCost("codingcontract", "getDescription"));
       const contract = getCodingContract("getDescription", ip, fn);
       return contract.getDescription();
     },
-    getNumTriesRemaining: function (fn: any, ip: any = workerScript.hostname): any {
+    getNumTriesRemaining: function (fn: any, ip: any = workerScript.hostname): number {
       helper.updateDynamicRam("getNumTriesRemaining", getRamCost("codingcontract", "getNumTriesRemaining"));
       const contract = getCodingContract("getNumTriesRemaining", ip, fn);
       return contract.getMaxNumTries() - contract.tries;

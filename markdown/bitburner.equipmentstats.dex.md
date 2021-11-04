@@ -9,5 +9,5 @@ Dexterity multiplier
 <b>Signature:</b>
 
 ```typescript
-dex: number;
+dex?: number;
 ```

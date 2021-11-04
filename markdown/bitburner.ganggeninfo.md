@@ -24,6 +24,7 @@ export interface GangGenInfo
 |  [respectGainRate](./bitburner.ganggeninfo.respectgainrate.md) | number | Respect earned per second |
 |  [territory](./bitburner.ganggeninfo.territory.md) | number | Amount of territory held. Returned in decimal form, not percentage |
 |  [territoryClashChance](./bitburner.ganggeninfo.territoryclashchance.md) | number | Clash chance. Returned in decimal form, not percentage |
+|  [territoryWarfareEngaged](./bitburner.ganggeninfo.territorywarfareengaged.md) | boolean | Boolean indicating if territory warfare is enabled. |
 |  [wantedLevel](./bitburner.ganggeninfo.wantedlevel.md) | number | Gang's wanted level |
 |  [wantedLevelGainRate](./bitburner.ganggeninfo.wantedlevelgainrate.md) | number | Wanted level gained/lost per second (negative for losses) |
 

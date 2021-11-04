@@ -4,7 +4,7 @@
 
 ## NS.stock property
 
-Namespace for stock related functions.
+Namespace for stock functions.
 
 <b>Signature:</b>
 

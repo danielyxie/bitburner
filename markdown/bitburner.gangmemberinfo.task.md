@@ -4,8 +4,6 @@
 
 ## GangMemberInfo.task property
 
-Name of currently assigned task
-
 <b>Signature:</b>
 
 ```typescript

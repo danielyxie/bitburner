@@ -9,7 +9,7 @@ Get estimate success chance of an action.
 <b>Signature:</b>
 
 ```typescript
-getActionEstimatedSuccessChance(type: string, name: string): number;
+getActionEstimatedSuccessChance(type: string, name: string): [number, number];
 ```
 
 ## Parameters
@@ -21,7 +21,7 @@ getActionEstimatedSuccessChance(type: string, name: string): number;
 
 <b>Returns:</b>
 
-number
+\[number, number\]
 
 Estimated success chance for the specified action.
 

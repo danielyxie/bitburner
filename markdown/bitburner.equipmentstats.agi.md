@@ -9,5 +9,5 @@ Agility multiplier
 <b>Signature:</b>
 
 ```typescript
-agi: number;
+agi?: number;
 ```

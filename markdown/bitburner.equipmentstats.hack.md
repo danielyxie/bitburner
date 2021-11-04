@@ -9,5 +9,5 @@ Hacking multiplier
 <b>Signature:</b>
 
 ```typescript
-hack: number;
+hack?: number;
 ```

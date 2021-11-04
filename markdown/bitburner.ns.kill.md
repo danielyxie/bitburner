@@ -9,14 +9,14 @@ Terminate another script.
 <b>Signature:</b>
 
 ```typescript
-kill(script: string, host: string, ...args: string[]): boolean;
+kill(script: string | number, host: string, ...args: string[]): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | string | Filename of the script to kill |
+|  script | string \| number | Filename or pid of the script to kill |
 |  host | string | Hostname of the server on which to kill the script. |
 |  args | string\[\] | Arguments to identify which script to kill. |
 

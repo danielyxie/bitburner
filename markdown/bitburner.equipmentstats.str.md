@@ -9,5 +9,5 @@ Strength multiplier
 <b>Signature:</b>
 
 ```typescript
-str: number;
+str?: number;
 ```
