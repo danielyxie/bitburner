@@ -908,7 +908,7 @@ export function NetscriptSingularity(
       helper.updateDynamicRam("getCompanyFavorGain", getRamCost("getCompanyFavorGain"));
       helper.checkSingularityAccess("getCompanyFavorGain", 2);
       const company = getCompany("getCompanyFavorGain", companyName);
-      return company.getFavorGain()[0];
+      return company.getFavorGain();
     },
     checkFactionInvitations: function (): any {
       helper.updateDynamicRam("checkFactionInvitations", getRamCost("checkFactionInvitations"));
@@ -1096,7 +1096,7 @@ export function NetscriptSingularity(
       helper.updateDynamicRam("getFactionFavorGain", getRamCost("getFactionFavorGain"));
       helper.checkSingularityAccess("getFactionFavorGain", 2);
       const faction = getFaction("getFactionFavorGain", name);
-      return faction.getFavorGain()[0];
+      return faction.getFavorGain();
     },
     donateToFaction: function (name: any, amt: any): any {
       helper.updateDynamicRam("donateToFaction", getRamCost("donateToFaction"));

@@ -44,7 +44,7 @@ export function Info(props: IProps): React.ReactElement {
 
   const classes = useStyles();
 
-  const favorGain = props.faction.getFavorGain()[0];
+  const favorGain = props.faction.getFavorGain();
   return (
     <>
       <Typography classes={{ root: classes.noformat }}>{props.factionInfo.infoText}</Typography>
@@ -54,15 +54,17 @@ export function Info(props: IProps): React.ReactElement {
           title={
             <>
               <Typography>
-                You will have <Favor favor={props.faction.favor + favorGain} /> faction favor after installing an
-                Augmentation.
+                You will have <Favor favor={Math.floor(props.faction.favor + favorGain)} /> faction favor after
+                installing an Augmentation.
               </Typography>
               <MathJaxContext>
                 <MathJax>{"\\(\\huge{r = \\text{total faction reputation}}\\)"}</MathJax>
               </MathJaxContext>
               <MathJaxContext>
                 <MathJax>
-                  {"\\(\\huge{favor=\\left\\lfloor\\log_{1.02}\\left(\\frac{r+25000}{25500}\\right)\\right\\rfloor}\\)"}
+                  {
+                    "\\(\\huge{favor=1+\\left\\lfloor\\log_{1.02}\\left(\\frac{r+25000}{25500}\\right)\\right\\rfloor}\\)"
+                  }
                 </MathJax>
               </MathJaxContext>
             </>
@@ -96,7 +98,7 @@ export function Info(props: IProps): React.ReactElement {
           }
         >
           <Typography>
-            Faction Favor: <Favor favor={props.faction.favor} />
+            Faction Favor: <Favor favor={Math.floor(props.faction.favor)} />
           </Typography>
         </Tooltip>
       </Box>
