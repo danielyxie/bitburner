@@ -30,19 +30,4 @@ export function Snackbar(): React.ReactElement {
     ),
   );
   return <></>;
-  // return (
-  //   <S
-  //     open={open}
-  //     anchorOrigin={{
-  //       vertical: "top",
-  //       horizontal: "center",
-  //     }}
-  //     autoHideDuration={2000}
-  //     onClose={() => setOpen(false)}
-  //   >
-  //     <Paper sx={{ p: 2 }}>
-  //       <Typography>Game Saved!</Typography>
-  //     </Paper>
-  //   </S>
-  // );
 }

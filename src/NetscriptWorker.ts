@@ -266,7 +266,14 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
           return reject(workerScript);
         }
 
-        if (interpreter.step()) {
+        let more = true;
+        let i = 0;
+        while (i < 3 && more) {
+          more = more && interpreter.step();
+          i++;
+        }
+
+        if (more) {
           setTimeout(runInterpreter, Settings.CodeInstructionRunTime);
         } else {
           resolve(workerScript);
