@@ -110,7 +110,7 @@ export class Crime {
 
   successRate(p: IPlayerOrSleeve): number {
     let chance: number =
-      this.hacking_success_weight * p.hacking_skill +
+      this.hacking_success_weight * p.hacking +
       this.strength_success_weight * p.strength +
       this.defense_success_weight * p.defense +
       this.dexterity_success_weight * p.dexterity +

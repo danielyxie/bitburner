@@ -139,7 +139,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     getSleeveStats: function (asleeveNumber: any = 0): {
       shock: number;
       sync: number;
-      hacking_skill: number;
+      hacking: number;
       strength: number;
       defense: number;
       dexterity: number;
@@ -155,7 +155,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       return {
         shock: 100 - sl.shock,
         sync: sl.sync,
-        hacking_skill: sl.hacking_skill,
+        hacking: sl.hacking,
         strength: sl.strength,
         defense: sl.defense,
         dexterity: sl.dexterity,

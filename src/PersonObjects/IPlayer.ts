@@ -73,7 +73,7 @@ export interface IPlayer {
   totalPlaytime: number;
 
   // Stats
-  hacking_skill: number;
+  hacking: number;
   strength: number;
   defense: number;
   dexterity: number;

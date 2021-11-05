@@ -1424,7 +1424,7 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["Field Analysis"]: {
         // Does not use stamina. Effectiveness depends on hacking, int, and cha
         let eff =
-          0.04 * Math.pow(player.hacking_skill, 0.3) +
+          0.04 * Math.pow(player.hacking, 0.3) +
           0.04 * Math.pow(player.intelligence, 0.9) +
           0.02 * Math.pow(player.charisma, 0.3);
         eff *= player.bladeburner_analysis_mult;

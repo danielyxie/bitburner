@@ -293,7 +293,6 @@ function loadGame(saveString: string): boolean {
   if (saveObj.hasOwnProperty("VersionSave")) {
     try {
       const ver = JSON.parse(saveObj.VersionSave, Reviver);
-      console.log(ver);
       evaluateVersionCompatibility(ver);
 
       if (window.location.href.toLowerCase().includes("bitburner-beta")) {

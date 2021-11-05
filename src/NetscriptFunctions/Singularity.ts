@@ -630,7 +630,7 @@ export function NetscriptSingularity(
       workerScript.log("getStats", `getStats is deprecated, please use getplayer`);
 
       return {
-        hacking: player.hacking_skill,
+        hacking: player.hacking,
         strength: player.strength,
         defense: player.defense,
         dexterity: player.dexterity,

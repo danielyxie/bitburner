@@ -2,7 +2,7 @@
  * @public
  */
 interface Player {
-  hacking_skill: number;
+  hacking: number;
   hp: number;
   max_hp: number;
   strength: number;
@@ -815,7 +815,7 @@ export interface SleeveSkills {
   /** current sync of the sleeve [0-100] */
   sync: number;
   /** current hacking skill of the sleeve */
-  hacking_skill: number;
+  hacking: number;
   /** current strength of the sleeve */
   strength: number;
   /** current defense of the sleeve */

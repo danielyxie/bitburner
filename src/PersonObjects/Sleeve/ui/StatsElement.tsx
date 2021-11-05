@@ -17,7 +17,7 @@ export function StatsElement(props: IProps): React.ReactElement {
       </>,
     ],
     ["City: ", <>{props.sleeve.city}</>],
-    ["Hacking: ", <>{numeralWrapper.formatSkill(props.sleeve.hacking_skill)}</>],
+    ["Hacking: ", <>{numeralWrapper.formatSkill(props.sleeve.hacking)}</>],
     ["Strength: ", <>{numeralWrapper.formatSkill(props.sleeve.strength)}</>],
     ["Defense: ", <>{numeralWrapper.formatSkill(props.sleeve.defense)}</>],
     ["Dexterity: ", <>{numeralWrapper.formatSkill(props.sleeve.dexterity)}</>],

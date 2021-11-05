@@ -14,13 +14,13 @@ import { calculateHackingTime, calculateGrowTime, calculateWeakenTime } from "..
 
 function requireHackingLevel(lvl: number) {
   return function (p: IPlayer) {
-    return p.hacking_skill >= lvl;
+    return p.hacking >= lvl;
   };
 }
 
 function bitFlumeRequirements() {
   return function (p: IPlayer) {
-    return p.sourceFiles.length > 0 && p.hacking_skill >= 1;
+    return p.sourceFiles.length > 0 && p.hacking >= 1;
   };
 }
 
@@ -306,12 +306,11 @@ export const programsMetadata: IProgramCreationParams[] = [
     create: null,
     run: (router: IRouter, terminal: ITerminal, player: IPlayer): void => {
       const numAugReq = Math.round(BitNodeMultipliers.DaedalusAugsRequirement * 30);
-      const fulfilled =
-        player.augmentations.length >= numAugReq && player.money.gt(1e11) && player.hacking_skill >= 2500;
+      const fulfilled = player.augmentations.length >= numAugReq && player.money.gt(1e11) && player.hacking >= 2500;
       if (!fulfilled) {
         terminal.print(`Augmentations: ${player.augmentations.length} / ${numAugReq}`);
         terminal.print(`Money: ${numeralWrapper.formatMoney(player.money.toNumber())} / $100b`);
-        terminal.print(`Hacking skill: ${player.hacking_skill} / 2500`);
+        terminal.print(`Hacking skill: ${player.hacking} / 2500`);
         return;
       }
 

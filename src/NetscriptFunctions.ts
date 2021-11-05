@@ -1229,8 +1229,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getHackingLevel: function (): any {
       updateDynamicRam("getHackingLevel", getRamCost("getHackingLevel"));
       Player.updateSkillLevels();
-      workerScript.log("getHackingLevel", `returned ${Player.hacking_skill}`);
-      return Player.hacking_skill;
+      workerScript.log("getHackingLevel", `returned ${Player.hacking}`);
+      return Player.hacking;
     },
     getHackingMultipliers: function (): any {
       updateDynamicRam("getHackingMultipliers", getRamCost("getHackingMultipliers"));
@@ -2085,7 +2085,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       helper.updateDynamicRam("getPlayer", getRamCost("getPlayer"));
 
       const data = {
-        hacking_skill: Player.hacking_skill,
+        hacking: Player.hacking,
         hp: Player.hp,
         max_hp: Player.max_hp,
         strength: Player.strength,

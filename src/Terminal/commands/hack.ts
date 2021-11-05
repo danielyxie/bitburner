@@ -34,7 +34,7 @@ export function hack(
     terminal.error("You do not have admin rights for this machine! Cannot hack");
     return;
   }
-  if (normalServer.requiredHackingSkill > player.hacking_skill) {
+  if (normalServer.requiredHackingSkill > player.hacking) {
     terminal.error(
       "Your hacking skill is not high enough to attempt hacking this machine. Try analyzing the machine to determine the required hacking skill",
     );

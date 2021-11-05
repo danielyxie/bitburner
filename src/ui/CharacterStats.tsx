@@ -303,7 +303,7 @@ export function CharacterStats(): React.ReactElement {
                 <Typography noWrap>Hacking:&nbsp;</Typography>
               </TableCell>
               <TableCell align="right">
-                <Typography noWrap>{numeralWrapper.formatSkill(player.hacking_skill)}&nbsp;</Typography>
+                <Typography noWrap>{numeralWrapper.formatSkill(player.hacking)}&nbsp;</Typography>
               </TableCell>
               <TableCell align="right">
                 <Typography noWrap>({numeralWrapper.formatExp(player.hacking_exp)} exp)</Typography>

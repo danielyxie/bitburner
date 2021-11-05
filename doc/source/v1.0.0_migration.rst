@@ -16,6 +16,8 @@ migrated (only for ns2):
 
 not migrated (require manual changes sometimes):
 
+* getPlayer().hacking_skill renamed `hacking`
+* same thing in sleeves
 * getPurchasedServers won't let you query for ips instead of hostnames.
 * getStats is deprecated in favor getPlayer
 * getCharacterInformation is deprecated in favor getPlayer
