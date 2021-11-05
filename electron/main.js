@@ -15,8 +15,7 @@ function createWindow() {
   win.maximize();
   win.loadFile("index.html");
   win.show();
-  if(debug)
-    win.webContents.openDevTools();
+  if (debug) win.webContents.openDevTools();
   globalShortcut.register("f5", function () {
     win.loadFile("index.html");
   });
