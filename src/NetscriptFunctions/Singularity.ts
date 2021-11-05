@@ -266,6 +266,7 @@ export function NetscriptSingularity(
         return false;
       }
       Router.toLocation(location);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 100);
       return true;
     },
     universityCourse: function (universityName: any, className: any): any {
@@ -455,6 +456,7 @@ export function NetscriptSingularity(
           player.loseMoney(CONSTANTS.TravelCost, "other");
           player.city = cityname;
           workerScript.log("travelToCity", `Traveled to ${cityname}`);
+          player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
           return true;
         default:
           workerScript.log("travelToCity", `Invalid city name: '${cityname}'.`);
@@ -528,6 +530,7 @@ export function NetscriptSingularity(
 
       if (player.hasProgram(item.program)) {
         workerScript.log("purchaseProgram", `You already have the '${item.program}' program`);
+        player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
         return true;
       }
 
