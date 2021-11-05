@@ -1276,7 +1276,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("getServerMoneyAvailable", getRamCost("getServerMoneyAvailable"));
       const server = safeGetServer(hostname, "getServerMoneyAvailable");
       if (!(server instanceof Server)) {
-        workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
+        workerScript.log("getServerMoneyAvailable", "Cannot be executed on this server.");
         return 0;
       }
       if (failOnHacknetServer(server, "getServerMoneyAvailable")) {
@@ -1300,7 +1300,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("getServerSecurityLevel", getRamCost("getServerSecurityLevel"));
       const server = safeGetServer(hostname, "getServerSecurityLevel");
       if (!(server instanceof Server)) {
-        workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
+        workerScript.log("getServerSecurityLevel", "Cannot be executed on this server.");
         return 1;
       }
       if (failOnHacknetServer(server, "getServerSecurityLevel")) {
@@ -1320,7 +1320,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       );
       const server = safeGetServer(hostname, "getServerBaseSecurityLevel");
       if (!(server instanceof Server)) {
-        workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
+        workerScript.log("getServerBaseSecurityLevel", "Cannot be executed on this server.");
         return 1;
       }
       if (failOnHacknetServer(server, "getServerBaseSecurityLevel")) {
@@ -1336,7 +1336,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("getServerMinSecurityLevel", getRamCost("getServerMinSecurityLevel"));
       const server = safeGetServer(hostname, "getServerMinSecurityLevel");
       if (!(server instanceof Server)) {
-        workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
+        workerScript.log("getServerMinSecurityLevel", "Cannot be executed on this server.");
         return 1;
       }
       if (failOnHacknetServer(server, "getServerMinSecurityLevel")) {
@@ -1352,7 +1352,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("getServerRequiredHackingLevel", getRamCost("getServerRequiredHackingLevel"));
       const server = safeGetServer(hostname, "getServerRequiredHackingLevel");
       if (!(server instanceof Server)) {
-        workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
+        workerScript.log("getServerRequiredHackingLevel", "Cannot be executed on this server.");
         return 1;
       }
       if (failOnHacknetServer(server, "getServerRequiredHackingLevel")) {
@@ -1368,7 +1368,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("getServerMaxMoney", getRamCost("getServerMaxMoney"));
       const server = safeGetServer(hostname, "getServerMaxMoney");
       if (!(server instanceof Server)) {
-        workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
+        workerScript.log("getServerMaxMoney", "Cannot be executed on this server.");
         return 0;
       }
       if (failOnHacknetServer(server, "getServerMaxMoney")) {
@@ -1384,7 +1384,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("getServerGrowth", getRamCost("getServerGrowth"));
       const server = safeGetServer(hostname, "getServerGrowth");
       if (!(server instanceof Server)) {
-        workerScript.log("getServerNumPortsRequired", "Cannot be executed on this server.");
+        workerScript.log("getServerGrowth", "Cannot be executed on this server.");
         return 1;
       }
       if (failOnHacknetServer(server, "getServerGrowth")) {

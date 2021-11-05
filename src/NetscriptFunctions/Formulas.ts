@@ -100,15 +100,15 @@ export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, h
       },
       hackTime: function (server: any, player: any): any {
         checkFormulasAccess("basic.hackTime");
-        return calculateHackingTime(server, player);
+        return calculateHackingTime(server, player) / 1000;
       },
       growTime: function (server: any, player: any): any {
         checkFormulasAccess("basic.growTime");
-        return calculateGrowTime(server, player);
+        return calculateGrowTime(server, player) / 1000;
       },
       weakenTime: function (server: any, player: any): any {
         checkFormulasAccess("basic.weakenTime");
-        return calculateWeakenTime(server, player);
+        return calculateWeakenTime(server, player) / 1000;
       },
     },
     hacknetNodes: {
