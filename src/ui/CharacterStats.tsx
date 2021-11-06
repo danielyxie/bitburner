@@ -200,6 +200,9 @@ function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
     if (src.hacknet) {
       parts.push([`Hacknet Nodes:`, <Money money={src.hacknet} />]);
     }
+    if (src.hacknet_expenses) {
+      parts.push([`Hacknet Nodes Expenses:`, <Money money={src.hacknet_expenses} />]);
+    }
     if (src.hospitalization) {
       parts.push([`Hospitalization:`, <Money money={src.hospitalization} />]);
     }

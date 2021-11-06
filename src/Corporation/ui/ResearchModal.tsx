@@ -47,6 +47,11 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
     );
   }
 
+  let color: "primary" | "info" = "primary";
+  if (n.researched) {
+    color = "info";
+  }
+
   const but = (
     <Box>
       <Tooltip
@@ -59,7 +64,7 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
         }
       >
         <span>
-          <Button disabled={disabled} onClick={research}>
+          <Button color={color} disabled={disabled && !n.researched} onClick={research}>
             {n.text}
           </Button>
         </span>

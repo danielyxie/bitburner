@@ -152,7 +152,7 @@ export class Corporation {
     const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
     const dividendsPerShare = totalDividends / this.totalShares;
     const dividends = this.numShares * dividendsPerShare * (1 - this.dividendTaxPercentage / 100);
-    return Math.pow(dividends, BitNodeMultipliers.CorporationSoftcap);
+    return Math.pow(dividends, BitNodeMultipliers.CorporationSoftCap);
   }
 
   determineValuation(): number {
