@@ -30,7 +30,7 @@ export function CovenantPurchasesRoot(props: IProps): React.ReactElement {
    * Get the cost to purchase a new Duplicate Sleeve
    */
   function purchaseCost(): number {
-    return (player.sleevesFromCovenant + 1) * BaseCostPerSleeve;
+    return Math.pow(10, player.sleevesFromCovenant) * BaseCostPerSleeve;
   }
 
   /**

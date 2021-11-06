@@ -198,7 +198,7 @@ export const RamCosts: IMap<any> = {
   installBackdoor: RamCostConstants.ScriptSingularityFn1RamCost,
   getStats: RamCostConstants.ScriptSingularityFn1RamCost / 4,
   getCharacterInformation: RamCostConstants.ScriptSingularityFn1RamCost / 4,
-  getPlayer: RamCostConstants.ScriptSingularityFn5RamCost,
+  getPlayer: RamCostConstants.ScriptSingularityFn1RamCost / 4,
   hospitalize: RamCostConstants.ScriptSingularityFn1RamCost / 4,
   isBusy: RamCostConstants.ScriptSingularityFn1RamCost / 4,
   stopAction: RamCostConstants.ScriptSingularityFn1RamCost / 2,
