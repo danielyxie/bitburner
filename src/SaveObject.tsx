@@ -290,11 +290,14 @@ function loadGame(saveString: string): boolean {
     try {
       const ver = JSON.parse(saveObj.VersionSave, Reviver);
       evaluateVersionCompatibility(ver);
-
+      console.log(ver);
+      console.log(CONSTANTS.Version);
       if (window.location.href.toLowerCase().includes("bitburner-beta")) {
         // Beta branch, always show changes
         createBetaUpdateText();
       } else if (ver != CONSTANTS.Version) {
+        createNewUpdateText();
+        createNewUpdateText();
         createNewUpdateText();
       }
     } catch (e) {
@@ -304,15 +307,22 @@ function loadGame(saveString: string): boolean {
     createNewUpdateText();
   }
 
+  createNewUpdateText();
+  createNewUpdateText();
+  createNewUpdateText();
   return true;
 }
 
 function createNewUpdateText(): void {
-  dialogBoxCreate(
-    "New update!<br>" +
-      "Please report any bugs/issues through the github repository " +
-      "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
-      CONSTANTS.LatestUpdate,
+  setTimeout(
+    () =>
+      dialogBoxCreate(
+        "New update!<br>" +
+          "Please report any bugs/issues through the github repository " +
+          "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
+          CONSTANTS.LatestUpdate,
+      ),
+    1000,
   );
 }
 
