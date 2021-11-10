@@ -70,8 +70,6 @@ function convert(code: string): string {
 }
 
 export function v1APIBreak(): void {
-  console.log("Running v1 api migration");
-
   interface IFileLine {
     file: string;
     line: number;
@@ -109,7 +107,8 @@ export function v1APIBreak(): void {
     const backups: Script[] = [];
     for (const script of server.scripts) {
       if (!hasChanges(script.code)) continue;
-      backups.push(new Script("BACKUP_" + script.filename, script.code, script.server));
+      const prefix = script.filename.includes("/") ? "/BACKUP_" : "BACKUP_";
+      backups.push(new Script(prefix + script.filename, script.code, script.server));
       script.code = convert(script.code);
     }
     server.scripts = server.scripts.concat(backups);
