@@ -1,7 +1,7 @@
 {
   "name": "bitburner",
   "license": "SEE LICENSE IN license.txt",
-  "version": "0.58.0",
+  "version": "1.0.0",
   "main": "electron-main.js",
   "author": {
     "name": "Daniel Xie"

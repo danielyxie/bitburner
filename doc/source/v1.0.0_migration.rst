@@ -33,3 +33,5 @@ Upon loading v1.0.0 the game will apply some rules to change everything.
 The game never changes a file before making a backup called `BACKUP_filename.ext`, then,
 in the script it will change whatever it thinks it should change.
 But will prefix the modified line with the original line.
+
+A file called `v1_DETECTED_CHANGES.txt` will point out every file with some possible problem.

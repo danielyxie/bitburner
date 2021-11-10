@@ -18,6 +18,8 @@ import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "./utils/JSONReviver";
 import { save } from "./db";
 import { v1APIBreak } from "./utils/v1APIBreak";
+import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
+import { PlayerOwnedAugmentation } from "./Augmentation/PlayerOwnedAugmentation";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -209,6 +211,22 @@ function evaluateVersionCompatibility(ver: string | number): void {
       }
     }
     v1APIBreak();
+    ver = 1;
+  }
+  if (typeof ver === "number") {
+    if (ver < 2) {
+      // Give 10 neuroflux because v1 API break.
+      const nf = Player.augmentations.find((a) => a.name === AugmentationNames.NeuroFluxGovernor);
+      if (nf) {
+        nf.level += 10;
+      } else {
+        const nf = new PlayerOwnedAugmentation(AugmentationNames.NeuroFluxGovernor);
+        nf.level = 10;
+        Player.augmentations.push(nf);
+      }
+      Player.reapplyAllAugmentations(true);
+      Player.reapplyAllSourceFiles();
+    }
   }
 }
 
