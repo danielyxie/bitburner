@@ -109,7 +109,10 @@ export function v1APIBreak(): void {
     const backups: Script[] = [];
     for (const script of server.scripts) {
       if (!hasChanges(script.code)) continue;
-      backups.push(new Script("BACKUP_" + script.filename, script.code, script.server));
+      console.log(script.filename);
+      const prefix = script.filename.includes("/") ? "/BACKUP_" : "BACKUP_";
+      console.log(prefix + script.filename);
+      backups.push(new Script(prefix + script.filename, script.code, script.server));
       script.code = convert(script.code);
     }
     server.scripts = server.scripts.concat(backups);
