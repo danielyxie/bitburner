@@ -1010,7 +1010,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("scp", "Only works for .script, .lit, and .txt files");
       }
 
-      let destServer, currServ;
+      let destServer: BaseServer | null;
+      let currServ: BaseServer | null;
 
       if (hostname2 != null) {
         // 3 Argument version: scriptname, source, destination
@@ -1126,7 +1127,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       newScript.server = destServer.hostname;
       destServer.scripts.push(newScript);
       workerScript.log("scp", `File '${scriptname}' copied over to '${destServer.hostname}'.`);
-      return Promise.resolve(true);
+      return new Promise((resolve) => {
+        if (destServer === null) {
+          resolve(false);
+          return;
+        }
+        newScript.updateRamUsage(destServer.scripts).then(() => resolve(true));
+      });
     },
     ls: function (hostname: any, grep: any): any {
       updateDynamicRam("ls", getRamCost("ls"));
