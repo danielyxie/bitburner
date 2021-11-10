@@ -9,7 +9,7 @@ Short summary of the players skills.
 <b>Signature:</b>
 
 ```typescript
-interface PlayerSkills 
+export interface PlayerSkills 
 ```
 
 ## Properties

@@ -4,9 +4,7 @@
 
 ## NS.scriptRunning() method
 
-Returns a boolean indicating whether any instance of the specified script is running on the target server, regardless of its arguments.
-
-This is different than the isRunning function because it does not try to identify a specific instance of a running script by its arguments.
+Check if any script with a filename is running.
 
 <b>Signature:</b>
 
@@ -19,7 +17,7 @@ scriptRunning(script: string, host: string): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  script | string | Filename of script to check. This is case-sensitive. |
-|  host | string | Host or IP of target server. |
+|  host | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -30,6 +28,10 @@ True if the specified script is running, and false otherwise.
 ## Remarks
 
 RAM cost: 1 GB
+
+Returns a boolean indicating whether any instance of the specified script is running on the target server, regardless of its arguments.
+
+This is different than the isRunning function because it does not try to identify a specific instance of a running script by its arguments.
 
 ## Example 1
 

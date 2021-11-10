@@ -4,7 +4,7 @@
 
 ## NS.rm() method
 
-Removes the specified file from the current server. This function works for every file type except message (.msg) files.
+Delete a file.
 
 <b>Signature:</b>
 
@@ -17,7 +17,7 @@ rm(name: string, host?: string): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string | Filename of file to remove. Must include the extension. |
-|  host | string | Host or IP Address of the server on which to delete the file. Optional. Defaults to current server. |
+|  host | string | Host Address of the server on which to delete the file. Optional. Defaults to current server. |
 
 <b>Returns:</b>
 
@@ -28,4 +28,6 @@ True if it successfully deletes the file, and false otherwise.
 ## Remarks
 
 RAM cost: 1 GB
+
+Removes the specified file from the current server. This function works for every file type except message (.msg) files.
 

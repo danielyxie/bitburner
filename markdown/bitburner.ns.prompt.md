@@ -4,7 +4,7 @@
 
 ## NS.prompt() method
 
-Prompts the player with a dialog box with two options: “Yes” and “No”. This function will return true if the player click “Yes” and false if the player clicks “No”. The script’s execution is halted until the player selects one of the options.
+Prompt the player with a Yes/No modal.
 
 <b>Signature:</b>
 
@@ -27,4 +27,6 @@ True if the player click “Yes” and false if the player clicks “No”.
 ## Remarks
 
 RAM cost: 0 GB
+
+Prompts the player with a dialog box with two options: “Yes” and “No”. This function will return true if the player click “Yes” and false if the player clicks “No”. The script’s execution is halted until the player selects one of the options.
 

@@ -4,9 +4,7 @@
 
 ## Bladeburner.getStamina() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns an array with two elements: \* \[Current stamina, Max stamina\]
+Get bladeburner stamina.
 
 <b>Signature:</b>
 
@@ -21,7 +19,7 @@ Array containing current stamina and max stamina.
 
 ## Remarks
 
-RAM cost: 4 GB
+RAM cost: 4 GB Returns an array with two elements: \* \[Current stamina, Max stamina\]
 
 ## Example
 

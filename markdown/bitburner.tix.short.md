@@ -9,14 +9,14 @@ Short stocks.
 <b>Signature:</b>
 
 ```typescript
-short(sym: StockSymbol, shares: number): number;
+short(sym: string, shares: number): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sym | [StockSymbol](./bitburner.stocksymbol.md) | Stock symbol. |
+|  sym | string | Stock symbol. |
 |  shares | number | Number of shares to short. Must be positive. Will be rounded to nearest integer. |
 
 <b>Returns:</b>

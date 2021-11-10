@@ -9,14 +9,14 @@ Gang general info.
 <b>Signature:</b>
 
 ```typescript
-interface GangGenInfo 
+export interface GangGenInfo 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [faction](./bitburner.ganggeninfo.faction.md) | [GangName](./bitburner.gangname.md) | Name of faction that the gang belongs to ("Slum Snakes", etc.) |
+|  [faction](./bitburner.ganggeninfo.faction.md) | string | Name of faction that the gang belongs to ("Slum Snakes", etc.) |
 |  [isHacking](./bitburner.ganggeninfo.ishacking.md) | boolean | Boolean indicating whether or not its a hacking gang |
 |  [moneyGainRate](./bitburner.ganggeninfo.moneygainrate.md) | number | Money earned per second |
 |  [power](./bitburner.ganggeninfo.power.md) | number | Gang's power for territory warfare |
@@ -24,6 +24,7 @@ interface GangGenInfo
 |  [respectGainRate](./bitburner.ganggeninfo.respectgainrate.md) | number | Respect earned per second |
 |  [territory](./bitburner.ganggeninfo.territory.md) | number | Amount of territory held. Returned in decimal form, not percentage |
 |  [territoryClashChance](./bitburner.ganggeninfo.territoryclashchance.md) | number | Clash chance. Returned in decimal form, not percentage |
+|  [territoryWarfareEngaged](./bitburner.ganggeninfo.territorywarfareengaged.md) | boolean | Boolean indicating if territory warfare is enabled. |
 |  [wantedLevel](./bitburner.ganggeninfo.wantedlevel.md) | number | Gang's wanted level |
 |  [wantedLevelGainRate](./bitburner.ganggeninfo.wantedlevelgainrate.md) | number | Wanted level gained/lost per second (negative for losses) |
 

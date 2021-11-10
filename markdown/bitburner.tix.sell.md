@@ -9,14 +9,14 @@ Sell stocks.
 <b>Signature:</b>
 
 ```typescript
-sell(sym: StockSymbol, shares: number): number;
+sell(sym: string, shares: number): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sym | [StockSymbol](./bitburner.stocksymbol.md) | Stock symbol. |
+|  sym | string | Stock symbol. |
 |  shares | number | Number of shares to sell. Must be positive. Will be rounded to nearest integer. |
 
 <b>Returns:</b>

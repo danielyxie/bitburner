@@ -4,22 +4,22 @@
 
 ## Bladeburner.getContractNames() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns an array of strings containing the names of all Bladeburner contracts.
+List all contracts.
 
 <b>Signature:</b>
 
 ```typescript
-getContractNames(): BladeburnerContracts[];
+getContractNames(): string[];
 ```
 <b>Returns:</b>
 
-[BladeburnerContracts](./bitburner.bladeburnercontracts.md)<!-- -->\[\]
+string\[\]
 
 Array of strings containing the names of all Bladeburner contracts.
 
 ## Remarks
 
 RAM cost: 0.4 GB
+
+Returns an array of strings containing the names of all Bladeburner contracts.
 

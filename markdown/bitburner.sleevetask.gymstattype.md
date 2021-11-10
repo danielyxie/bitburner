@@ -9,5 +9,5 @@ stat being trained at the gym, if any
 <b>Signature:</b>
 
 ```typescript
-gymStatType: GymStat | "";
+gymStatType: string;
 ```

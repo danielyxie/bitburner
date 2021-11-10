@@ -62,7 +62,7 @@ export interface IAction {
   getActionTypeSkillSuccessBonus(inst: IBladeburner): number;
   getChaosCompetencePenalty(inst: IBladeburner, params: ISuccessChanceParams): number;
   getChaosDifficultyBonus(inst: IBladeburner): number;
-  getEstSuccessChance(inst: IBladeburner): number[];
+  getEstSuccessChance(inst: IBladeburner): [number, number];
   getSuccessChance(inst: IBladeburner, params: ISuccessChanceParams): number;
   getSuccessesNeededForNextLevel(baseSuccessesPerLevel: number): number;
   setMaxLevel(baseSuccessesPerLevel: number): void;

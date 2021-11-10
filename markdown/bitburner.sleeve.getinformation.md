@@ -4,9 +4,7 @@
 
 ## Sleeve.getInformation() method
 
-If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
-
-Return a struct containing tons of information about this sleeve
+Get information about a sleeve.
 
 <b>Signature:</b>
 
@@ -29,4 +27,6 @@ Object containing tons of information about this sleeve.
 ## Remarks
 
 RAM cost: 4 GB
+
+Return a struct containing tons of information about this sleeve
 

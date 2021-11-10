@@ -9,5 +9,5 @@ augmentation name
 <b>Signature:</b>
 
 ```typescript
-name: AugmentName;
+name: string;
 ```

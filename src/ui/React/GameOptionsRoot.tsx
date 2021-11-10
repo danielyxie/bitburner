@@ -229,7 +229,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 value={execTime}
                 onChange={handleExecTimeChange}
                 step={1}
-                min={10}
+                min={5}
                 max={100}
                 valueLabelDisplay="auto"
               />

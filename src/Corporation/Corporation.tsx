@@ -132,9 +132,7 @@ export class Corporation {
           } else {
             const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
             const retainedEarnings = cycleProfit - totalDividends;
-            const dividendsPerShare = totalDividends / this.totalShares;
-            const profit = this.numShares * dividendsPerShare * (1 - this.dividendTaxPercentage / 100);
-            player.gainMoney(profit, "corporation");
+            player.gainMoney(this.getDividends(), "corporation");
             this.addFunds(retainedEarnings);
           }
         } else {
@@ -146,6 +144,15 @@ export class Corporation {
 
       this.state.nextState();
     }
+  }
+
+  getDividends(): number {
+    const profit = this.revenue.minus(this.expenses);
+    const cycleProfit = profit.times(CorporationConstants.SecsPerMarketCycle);
+    const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
+    const dividendsPerShare = totalDividends / this.totalShares;
+    const dividends = this.numShares * dividendsPerShare * (1 - this.dividendTaxPercentage / 100);
+    return Math.pow(dividends, BitNodeMultipliers.CorporationSoftCap);
   }
 
   determineValuation(): number {

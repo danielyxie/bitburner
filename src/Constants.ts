@@ -4,7 +4,8 @@
  * Constants for specific mechanics or features will NOT be here.
  */
 export const CONSTANTS: {
-  Version: string;
+  VersionString: string;
+  VersionNumber: number;
   _idleSpeed: number;
   MaxSkillLevel: number;
   MilliPerCycle: number;
@@ -114,7 +115,8 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  Version: "0.58.1",
+  VersionString: "1.0.0",
+  VersionNumber: 2,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -281,6 +283,11 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v1.0.0 cutover on 2021-11-10
+    v1.0.0 - 2021-11-10 Breaking the API :(
+    -----------------------------
+
+    This update is very important. Please see the patch notes at 
+    https://bitburner.readthedocs.io/en/latest/changelog.html
+
 `,
 };

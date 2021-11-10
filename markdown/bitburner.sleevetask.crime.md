@@ -9,5 +9,5 @@ crime currently attempting, if any
 <b>Signature:</b>
 
 ```typescript
-crime: Crime | "";
+crime: string;
 ```

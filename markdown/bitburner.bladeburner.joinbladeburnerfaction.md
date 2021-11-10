@@ -4,13 +4,7 @@
 
 ## Bladeburner.joinBladeburnerFaction() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Attempts to join the Bladeburner faction.
-
-Returns true if you successfully join the Bladeburner faction, or if you are already a member.
-
-Returns false otherwise.
+Join the bladeburner faction.
 
 <b>Signature:</b>
 
@@ -25,5 +19,9 @@ True if you successfully join the Bladeburner faction, or if you are already a m
 
 ## Remarks
 
-RAM cost: 4 GB
+RAM cost: 4 GB Attempts to join the Bladeburner faction.
+
+Returns true if you successfully join the Bladeburner faction, or if you are already a member.
+
+Returns false otherwise.
 

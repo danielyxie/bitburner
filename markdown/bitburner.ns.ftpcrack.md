@@ -4,7 +4,7 @@
 
 ## NS.ftpcrack() method
 
-Runs the FTPCrack.exe program on the target server. FTPCrack.exe must exist on your home computer.
+Runs FTPCrack.exe on a server.
 
 <b>Signature:</b>
 
@@ -25,6 +25,8 @@ void
 ## Remarks
 
 RAM cost: 0.05 GB
+
+Runs the FTPCrack.exe program on the target server. FTPCrack.exe must exist on your home computer.
 
 ## Example
 

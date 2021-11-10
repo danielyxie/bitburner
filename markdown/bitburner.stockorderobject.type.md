@@ -9,5 +9,5 @@ Order type
 <b>Signature:</b>
 
 ```typescript
-type: "Limit Buy Order" | "Limit Sell Order" | "Stop Buy Order" | "Stop Buy Order";
+type: string;
 ```

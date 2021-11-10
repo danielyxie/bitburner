@@ -4,9 +4,7 @@
 
 ## Singularity.getOwnedSourceFiles() method
 
-If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-Returns an array of source files
+Get a list of acquired Source-Files.
 
 <b>Signature:</b>
 
@@ -21,5 +19,9 @@ Array containing an object with number and level of the source file.
 
 ## Remarks
 
+RAM cost: 5 GB
+
 Singularity - Level 3
+
+Returns an array of source files
 

@@ -4,21 +4,19 @@
 
 ## Singularity.getFactionFavorGain() method
 
-If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function returns the amount of favor you will gain for the specified faction when you reset by installing Augmentations.
+Get faction favor gain.
 
 <b>Signature:</b>
 
 ```typescript
-getFactionFavorGain(faction: FactionName): number;
+getFactionFavorGain(faction: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  faction | [FactionName](./bitburner.factionname.md) | Name of faction. |
+|  faction | string | Name of faction. |
 
 <b>Returns:</b>
 
@@ -28,5 +26,9 @@ Amount of favor you will gain for the specified faction when you reset by instal
 
 ## Remarks
 
+RAM cost: 0.75 GB
+
 Singularity - Level 2
+
+This function returns the amount of favor you will gain for the specified faction when you reset by installing Augmentations.
 

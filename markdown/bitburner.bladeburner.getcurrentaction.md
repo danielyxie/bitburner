@@ -4,9 +4,7 @@
 
 ## Bladeburner.getCurrentAction() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns an object that represents the player’s current Bladeburner action. If the player is not performing an action, the function will return an object with the ‘type’ property set to “Idle”.
+Get current action.
 
 <b>Signature:</b>
 
@@ -22,4 +20,6 @@ Object that represents the player’s current Bladeburner action.
 ## Remarks
 
 RAM cost: 1 GB
+
+Returns an object that represents the player’s current Bladeburner action. If the player is not performing an action, the function will return an object with the ‘type’ property set to “Idle”.
 

@@ -4,14 +4,12 @@
 
 ## Sleeve.getSleeveAugmentations() method
 
-If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
-
-Return a list of augmentation names that this sleeve has installed.
+Get augmentations installed on a sleeve.
 
 <b>Signature:</b>
 
 ```typescript
-getSleeveAugmentations(sleeveNumber: number): AugmentName[];
+getSleeveAugmentations(sleeveNumber: number): string[];
 ```
 
 ## Parameters
@@ -22,11 +20,13 @@ getSleeveAugmentations(sleeveNumber: number): AugmentName[];
 
 <b>Returns:</b>
 
-[AugmentName](./bitburner.augmentname.md)<!-- -->\[\]
+string\[\]
 
 List of augmentation names that this sleeve has installed.
 
 ## Remarks
 
 RAM cost: 4 GB
+
+Return a list of augmentation names that this sleeve has installed.
 

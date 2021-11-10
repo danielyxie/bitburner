@@ -4,21 +4,19 @@
 
 ## Bladeburner.getCityChaos() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns the chaos in the specified city, or -1 if an invalid city was specified.
+Get chaos of a city.
 
 <b>Signature:</b>
 
 ```typescript
-getCityChaos(name: City): number;
+getCityChaos(name: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | [City](./bitburner.city.md) |  |
+|  name | string |  |
 
 <b>Returns:</b>
 
@@ -29,4 +27,6 @@ Chaos in the specified city.
 ## Remarks
 
 RAM cost: 4 GB
+
+Returns the chaos in the specified city, or -1 if an invalid city was specified.
 

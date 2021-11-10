@@ -4,9 +4,7 @@
 
 ## Gang.getMemberInformation() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Get stat and equipment-related information about a Gang Member
+Get information about a specific gang member.
 
 <b>Signature:</b>
 
@@ -29,4 +27,6 @@ Object containing stat and equipment-related information about a Gang Member.
 ## Remarks
 
 RAM cost: 2 GB
+
+Get stat and equipment-related information about a Gang Member
 

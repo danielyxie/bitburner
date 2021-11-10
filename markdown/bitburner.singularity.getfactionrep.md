@@ -4,21 +4,19 @@
 
 ## Singularity.getFactionRep() method
 
-If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function returns the amount of reputation you have for the specified faction.
+Get faction reputation.
 
 <b>Signature:</b>
 
 ```typescript
-getFactionRep(faction: FactionName): number;
+getFactionRep(faction: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  faction | [FactionName](./bitburner.factionname.md) | Name of faction to work for. |
+|  faction | string | Name of faction to work for. |
 
 <b>Returns:</b>
 
@@ -28,5 +26,9 @@ Amount of reputation you have for the specified faction.
 
 ## Remarks
 
+RAM cost: 1 GB
+
 Singularity - Level 2
+
+This function returns the amount of reputation you have for the specified faction.
 

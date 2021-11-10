@@ -32,6 +32,7 @@ export function StartButton(props: IProps): React.ReactElement {
     if (disabled) return;
     props.bladeburner.action.type = props.type;
     props.bladeburner.action.name = props.name;
+    player.singularityStopWork();
     props.bladeburner.startAction(player, props.bladeburner.action);
     props.rerender();
   }

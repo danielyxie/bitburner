@@ -4,26 +4,20 @@
 
 ## Bladeburner.getActionRepGain() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns the average Bladeburner reputation gain for successfully completing the specified action. Note that this value is an ‘average’ and the real reputation gain may vary slightly from this value.
+Get the reputation gain of an action.
 
 <b>Signature:</b>
 
 ```typescript
-getActionRepGain(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-    level: number,
-  ): number;
+getActionRepGain(type: string, name: string, level: number): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  type | [BladeburnerActTypes](./bitburner.bladeburneracttypes.md) | Type of action. |
-|  name | [BladeburnerGenActions](./bitburner.bladeburnergenactions.md) \| [BladeburnerContracts](./bitburner.bladeburnercontracts.md) \| [BladeburnerOperations](./bitburner.bladeburneroperations.md) \| [BladeburnerBlackOps](./bitburner.bladeburnerblackops.md) | Name of action. Must be an exact match. |
+|  type | string | Type of action. |
+|  name | string | Name of action. Must be an exact match. |
 |  level | number | Optional action level at which to calculate the gain |
 
 <b>Returns:</b>
@@ -35,4 +29,6 @@ Average Bladeburner reputation gain for successfully completing the specified ac
 ## Remarks
 
 RAM cost: 4 GB
+
+Returns the average Bladeburner reputation gain for successfully completing the specified action. Note that this value is an ‘average’ and the real reputation gain may vary slightly from this value.
 

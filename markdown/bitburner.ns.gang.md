@@ -4,7 +4,7 @@
 
 ## NS.gang property
 
-Namespace for gang related functions.
+Namespace for gang functions.
 
 <b>Signature:</b>
 

@@ -4,22 +4,24 @@
 
 ## Singularity.checkFactionInvitations() method
 
-If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-Returns an array with the name of all Factions you currently have oustanding invitations from.
+List all current faction invitations.
 
 <b>Signature:</b>
 
 ```typescript
-checkFactionInvitations(): FactionName[];
+checkFactionInvitations(): string[];
 ```
 <b>Returns:</b>
 
-[FactionName](./bitburner.factionname.md)<!-- -->\[\]
+string\[\]
 
 Array with the name of all Factions you currently have oustanding invitations from.
 
 ## Remarks
 
+RAM cost: 3 GB
+
 Singularity - Level 2
+
+Returns an array with the name of all Factions you currently have oustanding invitations from.
 

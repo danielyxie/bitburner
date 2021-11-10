@@ -4,7 +4,7 @@
 
 ## NS.growthAnalyzeSecurity() method
 
-Returns the security increase that would occur if a grow with this many threads happened.
+Calculate the security increase for a number of thread.
 
 <b>Signature:</b>
 
@@ -27,4 +27,6 @@ The security increase.
 ## Remarks
 
 RAM cost: 1 GB
+
+Returns the security increase that would occur if a grow with this many threads happened.
 

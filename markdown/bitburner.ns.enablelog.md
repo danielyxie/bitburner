@@ -4,7 +4,7 @@
 
 ## NS.enableLog() method
 
-Re-enables logging for the given function. If `ALL` is passed into this function as an argument, then it will revert the effects of disableLog(`ALL`<!-- -->).
+Enable logging for a certain function.
 
 <b>Signature:</b>
 
@@ -25,4 +25,6 @@ void
 ## Remarks
 
 RAM cost: 0 GB
+
+Re-enables logging for the given function. If `ALL` is passed into this function as an argument, then it will revert the effects of disableLog(`ALL`<!-- -->).
 

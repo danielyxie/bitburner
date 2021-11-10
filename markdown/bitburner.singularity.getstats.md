@@ -4,9 +4,10 @@
 
 ## Singularity.getStats() method
 
-If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-Returns an object with the Player’s stats.
+> Warning: This API is now obsolete.
+> 
+> Returns an object with the Player’s stats.
+> 
 
 <b>Signature:</b>
 
@@ -20,6 +21,8 @@ getStats(): PlayerSkills;
 Object with the Player’s stats.
 
 ## Remarks
+
+RAM cost: 0.5 GB
 
 Singularity - Level 1
 

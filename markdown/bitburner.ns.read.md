@@ -4,31 +4,31 @@
 
 ## NS.read() method
 
-This function is used to read data from a port or from a text file (.txt).
-
-If the argument port/fn is a number between 1 and 20, then it specifies a port and it will read data from that port. A port is a serialized queue. This function will remove the first element from that queue and return it. If the queue is empty, then the string “NULL PORT DATA” will be returned.
-
-If the argument port/fn is a string, then it specifies the name of a text file (.txt) and this function will return the data in the specified text file. If the text file does not exist, an empty string will be returned.
+Read content of a file.
 
 <b>Signature:</b>
 
 ```typescript
-read(handle: Handle): string | number | object;
+read(handle: string): any;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  handle | [Handle](./bitburner.handle.md) | Port or text file to read from. |
+|  handle | string | Port or text file to read from. |
 
 <b>Returns:</b>
 
-string \| number \| object
+any
 
 Data in the specified text file or port.
 
 ## Remarks
 
 RAM cost: 1 GB
+
+This function is used to read data from a port or from a text file (.txt).
+
+This function will return the data in the specified text file. If the text file does not exist, an empty string will be returned.
 

@@ -4,9 +4,7 @@
 
 ## Sleeve.getSleevePurchasableAugs() method
 
-If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
-
-Return a list of augmentations that the player can buy for this sleeve.
+List purchasable augs for a sleeve.
 
 <b>Signature:</b>
 
@@ -29,4 +27,6 @@ List of augmentations that the player can buy for this sleeve.
 ## Remarks
 
 RAM cost: 4 GB
+
+Return a list of augmentations that the player can buy for this sleeve.
 

@@ -4,9 +4,10 @@
 
 ## Singularity.getCharacterInformation() method
 
-If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-Returns an object with various information about your character.
+> Warning: This API is now obsolete.
+> 
+> Returns an object with various information about your character.
+> 
 
 <b>Signature:</b>
 
@@ -20,6 +21,8 @@ getCharacterInformation(): CharacterInfo;
 Object with various information about your character.
 
 ## Remarks
+
+RAM cost: 0.5 GB
 
 Singularity - Level 1
 

@@ -4,14 +4,12 @@
 
 ## Sleeve.setToCompanyWork() method
 
-If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
-
-Return a boolean indicating whether or not the sleeve started working or this company.
+Set a sleeve to work for a company.
 
 <b>Signature:</b>
 
 ```typescript
-setToCompanyWork(sleeveNumber: number, companyName: CompanyName): boolean;
+setToCompanyWork(sleeveNumber: number, companyName: string): boolean;
 ```
 
 ## Parameters
@@ -19,7 +17,7 @@ setToCompanyWork(sleeveNumber: number, companyName: CompanyName): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  sleeveNumber | number | Index of the sleeve to work for the company. |
-|  companyName | [CompanyName](./bitburner.companyname.md) | Name of the company to work for. |
+|  companyName | string | Name of the company to work for. |
 
 <b>Returns:</b>
 
@@ -30,4 +28,6 @@ True if the sleeve started working on this company, false otherwise.
 ## Remarks
 
 RAM cost: 4 GB
+
+Return a boolean indicating whether or not the sleeve started working or this company.
 

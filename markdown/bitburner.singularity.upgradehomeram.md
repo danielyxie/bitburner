@@ -4,11 +4,7 @@
 
 ## Singularity.upgradeHomeRam() method
 
-If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function will upgrade amount of RAM on the player’s home computer. The cost is the same as if you were to do it manually.
-
-This function will return true if the player’s home computer RAM is successfully upgraded, and false otherwise.
+Upgrade home computer RAM.
 
 <b>Signature:</b>
 
@@ -23,5 +19,11 @@ True if the player’s home computer RAM is successfully upgraded, and false oth
 
 ## Remarks
 
+RAM cost: 3 GB
+
 Singularity - Level 2
+
+This function will upgrade amount of RAM on the player’s home computer. The cost is the same as if you were to do it manually.
+
+This function will return true if the player’s home computer RAM is successfully upgraded, and false otherwise.
 

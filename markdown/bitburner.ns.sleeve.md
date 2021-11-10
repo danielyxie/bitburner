@@ -4,7 +4,7 @@
 
 ## NS.sleeve property
 
-Namespace for sleeve related functions.
+Namespace for sleeve functions.
 
 <b>Signature:</b>
 

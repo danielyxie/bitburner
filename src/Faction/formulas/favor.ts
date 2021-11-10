@@ -9,11 +9,13 @@ export function favorToRep(f: number): number {
   function fma(a: number, b: number, c: number): number {
     return a * b + c;
   }
-  const ex = fma(f, Math.log(51.0) - Math.log(50.0), Math.log(51.0));
-  return fma(500.0, Math.exp(ex), -25000.0);
+  const ex = fma(f - 1, Math.log(51.0) - Math.log(50.0), Math.log(51.0));
+  const raw = fma(500.0, Math.exp(ex), -25000.0);
+  return Math.round(raw * 10000) / 10000; // round to make things easier.
 }
 
 // Wolfram Alpha: 500 (50^(-n) 51^(n + 1) - 50) solve for n
 export function repToFavor(r: number): number {
-  return -Math.log(25500 / (r + 25000)) / Math.log(51 / 50);
+  const raw = Math.log((r + 25000) / 25500) / Math.log(1.02) + 1;
+  return Math.round(raw * 10000) / 10000; // round to make things easier.
 }

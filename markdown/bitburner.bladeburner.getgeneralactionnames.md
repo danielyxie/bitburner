@@ -4,22 +4,22 @@
 
 ## Bladeburner.getGeneralActionNames() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns an array of strings containing the names of all general Bladeburner actions.
+List all general actions.
 
 <b>Signature:</b>
 
 ```typescript
-getGeneralActionNames(): BladeburnerGenActions[];
+getGeneralActionNames(): string[];
 ```
 <b>Returns:</b>
 
-[BladeburnerGenActions](./bitburner.bladeburnergenactions.md)<!-- -->\[\]
+string\[\]
 
 Array of strings containing the names of all general Bladeburner actions.
 
 ## Remarks
 
 RAM cost: 0.4 GB
+
+Returns an array of strings containing the names of all general Bladeburner actions.
 

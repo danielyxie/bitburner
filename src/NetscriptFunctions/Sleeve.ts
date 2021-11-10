@@ -10,47 +10,9 @@ import { Augmentations } from "../Augmentation/Augmentations";
 import { CityName } from "../Locations/data/CityNames";
 import { findCrime } from "../Crime/CrimeHelpers";
 
-export interface INetscriptSleeve {
-  getNumSleeves(): number;
-  setToShockRecovery(sleeveNumber?: number): boolean;
-  setToSynchronize(sleeveNumber?: number): boolean;
-  setToCommitCrime(sleeveNumber?: number, crimeName?: string): boolean;
-  setToUniversityCourse(sleeveNumber?: number, universityName?: string, className?: string): boolean;
-  travel(sleeveNumber?: number, cityName?: string): boolean;
-  setToCompanyWork(sleeveNumber?: number, companyName?: string): boolean;
-  setToFactionWork(sleeveNumber?: number, factionName?: string, workType?: string): boolean;
-  setToGymWorkout(sleeveNumber?: number, gymName?: string, stat?: string): boolean;
-  getSleeveStats(sleeveNumber?: number): {
-    shock: number;
-    sync: number;
-    hacking_skill: number;
-    strength: number;
-    defense: number;
-    dexterity: number;
-    agility: number;
-    charisma: number;
-  };
-  getTask(sleeveNumber?: number): {
-    task: string;
-    crime: string;
-    location: string;
-    gymStatType: string;
-    factionWorkType: string;
-  };
-  getInformation(sleeveNumber?: number): any;
-  getSleeveAugmentations(sleeveNumber?: number): string[];
-  getSleevePurchasableAugs(sleeveNumber?: number): {
-    name: string;
-    cost: number;
-  }[];
-  purchaseSleeveAug(sleeveNumber?: number, augName?: string): boolean;
-}
+import { Sleeve as ISleeve } from "../ScriptEditor/NetscriptDefinitions";
 
-export function NetscriptSleeve(
-  player: IPlayer,
-  workerScript: WorkerScript,
-  helper: INetscriptHelper,
-): INetscriptSleeve {
+export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): ISleeve {
   const checkSleeveAPIAccess = function (func: any): void {
     if (player.bitNodeN !== 10 && !SourceFileFlags[10]) {
       throw helper.makeRuntimeErrorMsg(
@@ -177,7 +139,7 @@ export function NetscriptSleeve(
     getSleeveStats: function (asleeveNumber: any = 0): {
       shock: number;
       sync: number;
-      hacking_skill: number;
+      hacking: number;
       strength: number;
       defense: number;
       dexterity: number;
@@ -193,7 +155,7 @@ export function NetscriptSleeve(
       return {
         shock: 100 - sl.shock,
         sync: sl.sync,
-        hacking_skill: sl.hacking_skill,
+        hacking: sl.hacking,
         strength: sl.strength,
         defense: sl.defense,
         dexterity: sl.dexterity,

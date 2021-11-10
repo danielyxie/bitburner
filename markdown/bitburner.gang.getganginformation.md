@@ -4,9 +4,7 @@
 
 ## Gang.getGangInformation() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Get general information about the gang.
+Get information about your gang.
 
 <b>Signature:</b>
 
@@ -22,4 +20,6 @@ Object containing general information about the gang.
 ## Remarks
 
 RAM cost: 2 GB
+
+Get general information about the gang.
 

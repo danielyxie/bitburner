@@ -9,5 +9,5 @@ Name of Action
 <b>Signature:</b>
 
 ```typescript
-name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps;
+name: string;
 ```

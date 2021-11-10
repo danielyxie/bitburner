@@ -4,22 +4,22 @@
 
 ## Bladeburner.getOperationNames() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns an array of strings containing the names of all Bladeburner operations.
+List all operations.
 
 <b>Signature:</b>
 
 ```typescript
-getOperationNames(): BladeburnerOperations[];
+getOperationNames(): string[];
 ```
 <b>Returns:</b>
 
-[BladeburnerOperations](./bitburner.bladeburneroperations.md)<!-- -->\[\]
+string\[\]
 
 Array of strings containing the names of all Bladeburner operations.
 
 ## Remarks
 
 RAM cost: 0.4 GB
+
+Returns an array of strings containing the names of all Bladeburner operations.
 

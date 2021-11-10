@@ -4,7 +4,7 @@
 
 ## NS.isRunning() method
 
-Returns a boolean indicating whether the specified script is running on the target server. Remember that a script is uniquely identified by both its name and its arguments.
+Check if a script is running.
 
 <b>Signature:</b>
 
@@ -17,7 +17,7 @@ isRunning(script: string, host: string, ...args: string[]): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  script | string | Filename of script to check. This is case-sensitive. |
-|  host | string | Host or IP of target server. |
+|  host | string | Host of target server. |
 |  args | string\[\] | Arguments to specify/identify which scripts to search for. |
 
 <b>Returns:</b>
@@ -29,6 +29,8 @@ True if specified script is running on the target server, and false otherwise.
 ## Remarks
 
 RAM cost: 0.1 GB
+
+Returns a boolean indicating whether the specified script is running on the target server. Remember that a script is uniquely identified by both its name and its arguments.
 
 ## Example 1
 

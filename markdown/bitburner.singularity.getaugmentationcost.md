@@ -4,23 +4,22 @@
 
 ## Singularity.getAugmentationCost() method
 
-If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function returns an array with two elements that gives the cost for the specified Augmentation. The first element in the returned array is the reputation requirement of the Augmentation, and the second element is the money cost.
-
-If an invalid Augmentation name is passed in for the augName argument, this function will return the array \[-1, -1\].
+> Warning: This API is now obsolete.
+> 
+> Get the price and reputation of an augmentation.
+> 
 
 <b>Signature:</b>
 
 ```typescript
-getAugmentationCost(augName: AugmentName): [number, number];
+getAugmentationCost(augName: string): [number, number];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  augName | [AugmentName](./bitburner.augmentname.md) | Name of Augmentation. |
+|  augName | string | Name of Augmentation. |
 
 <b>Returns:</b>
 
@@ -30,5 +29,11 @@ Array with first element as a reputation requirement and second element as the m
 
 ## Remarks
 
+RAM cost: 5 GB
+
 Singularity - Level 3
+
+This function returns an array with two elements that gives the cost for the specified Augmentation. The first element in the returned array is the reputation requirement of the Augmentation, and the second element is the money cost.
+
+If an invalid Augmentation name is passed in for the augName argument, this function will return the array \[-1, -1\].
 

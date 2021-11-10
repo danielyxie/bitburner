@@ -4,9 +4,7 @@
 
 ## Gang.getOtherGangInformation() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Get territory and power information about all gangs.
+Get information about the other gangs.
 
 <b>Signature:</b>
 
@@ -22,4 +20,6 @@ Object containing territory and power information about all gangs.
 ## Remarks
 
 RAM cost: 2 GB
+
+Get territory and power information about all gangs.
 

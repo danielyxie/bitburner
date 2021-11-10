@@ -9,29 +9,35 @@ Gang API
 <b>Signature:</b>
 
 ```typescript
-interface Gang 
+export interface Gang 
 ```
+
+## Remarks
+
+If you are not in BitNode-2, then you must have Source-File 2 in order to use this API.
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [ascendMember(memberName)](./bitburner.gang.ascendmember.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Ascend the specified Gang Member. |
-|  [canRecruitMember()](./bitburner.gang.canrecruitmember.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Returns boolean indicating whether a member can currently be recruited |
-|  [getBonusTime()](./bitburner.gang.getbonustime.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Returns the amount of accumulated “bonus time” (seconds) for the Gang mechanic.<!-- -->“Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.<!-- -->“Bonus time” makes the game progress faster, up to 10x the normal speed. |
-|  [getChanceToWinClash(gangName)](./bitburner.gang.getchancetowinclash.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Returns the chance you have to win a clash with the specified gang. The chance is returned in decimal form, not percentage |
-|  [getEquipmentCost(equipName)](./bitburner.gang.getequipmentcost.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Get the amount of money it takes to purchase a piece of Equipment or an Augmentation. If an invalid Equipment/Augmentation is specified, this function will return Infinity. |
-|  [getEquipmentNames()](./bitburner.gang.getequipmentnames.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Get the name of all possible equipment/upgrades you can purchase for your Gang Members. This includes Augmentations. |
-|  [getEquipmentStats(equipName)](./bitburner.gang.getequipmentstats.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Get the specified equipment stats. |
-|  [getEquipmentType(equipName)](./bitburner.gang.getequipmenttype.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Get the specified equipment type. |
-|  [getGangInformation()](./bitburner.gang.getganginformation.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Get general information about the gang. |
-|  [getMemberInformation(name)](./bitburner.gang.getmemberinformation.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Get stat and equipment-related information about a Gang Member |
-|  [getMemberNames()](./bitburner.gang.getmembernames.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Get the names of all Gang members |
-|  [getOtherGangInformation()](./bitburner.gang.getotherganginformation.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Get territory and power information about all gangs. |
-|  [getTaskNames()](./bitburner.gang.gettasknames.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Get the name of all valid tasks that Gang members can be assigned to. |
-|  [getTaskStats(name)](./bitburner.gang.gettaskstats.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Get the stats of a gang task stats. This is typically used to evaluate which action should be executed next. |
-|  [purchaseEquipment(memberName, equipName)](./bitburner.gang.purchaseequipment.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Attempt to purchase the specified Equipment/Augmentation for the specified Gang member. |
-|  [recruitMember(name)](./bitburner.gang.recruitmember.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Attempt to recruit a new gang member.<!-- -->Possible reasons for failure: \* Cannot currently recruit a new member \* There already exists a member with the specified name |
-|  [setMemberTask(memberName, taskName)](./bitburner.gang.setmembertask.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Attempts to assign the specified Gang Member to the specified task. If an invalid task is specified, the Gang member will be set to idle (“Unassigned”). |
-|  [setTerritoryWarfare(engage)](./bitburner.gang.setterritorywarfare.md) | If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.<!-- -->Set whether or not the gang should engage in territory warfare |
+|  [ascendMember(memberName)](./bitburner.gang.ascendmember.md) | Ascend a gang member. |
+|  [canRecruitMember()](./bitburner.gang.canrecruitmember.md) | Check if you can recruit a new gang member. |
+|  [createGang(faction)](./bitburner.gang.creategang.md) | Create a gang. |
+|  [getBonusTime()](./bitburner.gang.getbonustime.md) | Get bonus time. |
+|  [getChanceToWinClash(gangName)](./bitburner.gang.getchancetowinclash.md) | Get chance to win clash with other gang. |
+|  [getEquipmentCost(equipName)](./bitburner.gang.getequipmentcost.md) | Get cost of equipment. |
+|  [getEquipmentNames()](./bitburner.gang.getequipmentnames.md) | List equipment names. |
+|  [getEquipmentStats(equipName)](./bitburner.gang.getequipmentstats.md) | Get stats of an equipment. |
+|  [getEquipmentType(equipName)](./bitburner.gang.getequipmenttype.md) | Get type of an equipment. |
+|  [getGangInformation()](./bitburner.gang.getganginformation.md) | Get information about your gang. |
+|  [getMemberInformation(name)](./bitburner.gang.getmemberinformation.md) | Get information about a specific gang member. |
+|  [getMemberNames()](./bitburner.gang.getmembernames.md) | List all gang members. |
+|  [getOtherGangInformation()](./bitburner.gang.getotherganginformation.md) | Get information about the other gangs. |
+|  [getTaskNames()](./bitburner.gang.gettasknames.md) | List member task names. |
+|  [getTaskStats(name)](./bitburner.gang.gettaskstats.md) | Get stats of a task. |
+|  [inGang()](./bitburner.gang.ingang.md) | Check if you're in a gang. |
+|  [purchaseEquipment(memberName, equipName)](./bitburner.gang.purchaseequipment.md) | Purchase an equipment for a gang member. |
+|  [recruitMember(name)](./bitburner.gang.recruitmember.md) | Recruit a new gang member. |
+|  [setMemberTask(memberName, taskName)](./bitburner.gang.setmembertask.md) | Set gang member to task. |
+|  [setTerritoryWarfare(engage)](./bitburner.gang.setterritorywarfare.md) | Enable/Disable territory warfare. |
 

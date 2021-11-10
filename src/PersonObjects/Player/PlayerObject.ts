@@ -80,7 +80,7 @@ export class PlayerObject implements IPlayer {
   totalPlaytime: number;
 
   // Stats
-  hacking_skill: number;
+  hacking: number;
   strength: number;
   defense: number;
   dexterity: number;
@@ -287,7 +287,7 @@ export class PlayerObject implements IPlayer {
 
   constructor() {
     //Skills and stats
-    this.hacking_skill = 1;
+    this.hacking = 1;
 
     //Combat stats
     this.hp = 10;

@@ -4,7 +4,7 @@
 
 ## NS.codingcontract property
 
-Namespace for codingcontract related functions.
+Namespace for codingcontract functions.
 
 <b>Signature:</b>
 

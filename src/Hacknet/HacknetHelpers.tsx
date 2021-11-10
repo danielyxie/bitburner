@@ -50,7 +50,7 @@ export function purchaseHacknet(player: IPlayer): number {
     if (!player.canAfford(cost)) {
       return -1;
     }
-    player.loseMoney(cost, "hacknet");
+    player.loseMoney(cost, "hacknet_expenses");
     player.createHacknetServer();
     updateHashManagerCapacity(player);
 
@@ -69,7 +69,7 @@ export function purchaseHacknet(player: IPlayer): number {
     const name = "hacknet-node-" + numOwned;
     const node = new HacknetNode(name, player.hacknet_node_money_mult);
 
-    player.loseMoney(cost, "hacknet");
+    player.loseMoney(cost, "hacknet_expenses");
     player.hacknetNodes.push(node);
 
     return numOwned;
@@ -266,7 +266,7 @@ export function purchaseLevelUpgrade(player: IPlayer, node: HacknetNode | Hackne
     return false;
   }
 
-  player.loseMoney(cost, "hacknet");
+  player.loseMoney(cost, "hacknet_expenses");
   node.upgradeLevel(sanitizedLevels, player.hacknet_node_money_mult);
 
   return true;
@@ -305,7 +305,7 @@ export function purchaseRamUpgrade(player: IPlayer, node: HacknetNode | HacknetS
     return false;
   }
 
-  player.loseMoney(cost, "hacknet");
+  player.loseMoney(cost, "hacknet_expenses");
   node.upgradeRam(sanitizedLevels, player.hacknet_node_money_mult);
 
   return true;
@@ -336,7 +336,7 @@ export function purchaseCoreUpgrade(player: IPlayer, node: HacknetNode | Hacknet
     return false;
   }
 
-  player.loseMoney(cost, "hacknet");
+  player.loseMoney(cost, "hacknet_expenses");
   node.upgradeCore(sanitizedLevels, player.hacknet_node_money_mult);
 
   return true;
@@ -364,7 +364,7 @@ export function purchaseCacheUpgrade(player: IPlayer, node: HacknetServer, level
     return false;
   }
 
-  player.loseMoney(cost, "hacknet");
+  player.loseMoney(cost, "hacknet_expenses");
   node.upgradeCache(sanitizedLevels);
 
   return true;

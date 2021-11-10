@@ -23,7 +23,7 @@ RAM cost: 2.5 GB This is an object containing information for all the Limit and 
 
 ```ts
 {
- StockSymbol1: [ // Array of orders for this stock
+ string1: [ // Array of orders for this stock
      {
          shares: Order quantity
          price: Order price
@@ -35,7 +35,7 @@ RAM cost: 2.5 GB This is an object containing information for all the Limit and 
      },
      ...
  ],
- StockSymbol2: [ // Array of orders for this stock
+ string2: [ // Array of orders for this stock
      ...
  ],
  ...

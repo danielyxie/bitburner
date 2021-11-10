@@ -4,7 +4,7 @@
 
 ## NS.ps() method
 
-Returns an array with general information about all scripts running on the specified target server.
+List running scripts on a server.
 
 <b>Signature:</b>
 
@@ -16,7 +16,7 @@ ps(host?: string): ProcessInfo[];
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host or IP address of the target server. If not specified, it will be the current server’s IP by default. |
+|  host | string | Host address of the target server. If not specified, it will be the current server’s IP by default. |
 
 <b>Returns:</b>
 
@@ -27,6 +27,8 @@ Array with general information about all scripts running on the specified target
 ## Remarks
 
 RAM cost: 0.2 GB
+
+Returns an array with general information about all scripts running on the specified target server.
 
 ## Example
 

@@ -4,9 +4,7 @@
 
 ## Singularity.getUpgradeHomeRamCost() method
 
-If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-Returns the cost of upgrading the player’s home computer RAM.
+Get the price of upgrading home RAM.
 
 <b>Signature:</b>
 
@@ -21,5 +19,9 @@ Cost of upgrading the player’s home computer RAM.
 
 ## Remarks
 
+RAM cost: 1.5 GB
+
 Singularity - Level 2
+
+Returns the cost of upgrading the player’s home computer RAM.
 

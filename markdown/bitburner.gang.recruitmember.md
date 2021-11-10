@@ -4,11 +4,7 @@
 
 ## Gang.recruitMember() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Attempt to recruit a new gang member.
-
-Possible reasons for failure: \* Cannot currently recruit a new member \* There already exists a member with the specified name
+Recruit a new gang member.
 
 <b>Signature:</b>
 
@@ -31,4 +27,8 @@ True if the member was successfully recruited, false otherwise.
 ## Remarks
 
 RAM cost: 2 GB
+
+Attempt to recruit a new gang member.
+
+Possible reasons for failure: \* Cannot currently recruit a new member \* There already exists a member with the specified name
 

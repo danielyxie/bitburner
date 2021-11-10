@@ -4,13 +4,7 @@
 
 ## Gang.getBonusTime() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Returns the amount of accumulated “bonus time” (seconds) for the Gang mechanic.
-
-“Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
-
-“Bonus time” makes the game progress faster, up to 10x the normal speed.
+Get bonus time.
 
 <b>Signature:</b>
 
@@ -21,9 +15,15 @@ getBonusTime(): number;
 
 number
 
-Bonus time for the Gang mechanic in seconds.
+Bonus time for the Gang mechanic in milliseconds.
 
 ## Remarks
 
 RAM cost: 0 GB
+
+Returns the amount of accumulated “bonus time” (seconds) for the Gang mechanic.
+
+“Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
+
+“Bonus time” makes the game progress faster, up to 10x the normal speed.
 

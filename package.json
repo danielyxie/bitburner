@@ -1,7 +1,7 @@
 {
   "name": "bitburner",
   "license": "SEE LICENSE IN license.txt",
-  "version": "0.58.0",
+  "version": "1.0.0",
   "main": "electron-main.js",
   "author": {
     "name": "Daniel Xie"
@@ -109,6 +109,6 @@
     "test:watch": "jest --watch",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development",
-    "package-electron": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png"
+    "electron": "cp -r electron/* .package && cp index.html .package && cp main.bundle.js .package && cp dist/vendor.bundle.js .package/dist && electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png"
   }
 }

@@ -4,21 +4,19 @@
 
 ## Singularity.travelToCity() method
 
-If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function allows the player to travel to any city. The cost for using this function is the same as the cost for traveling through the Travel Agency.
+Travel to another city.
 
 <b>Signature:</b>
 
 ```typescript
-travelToCity(city: City): boolean;
+travelToCity(city: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  city | [City](./bitburner.city.md) | City to travel to. |
+|  city | string | City to travel to. |
 
 <b>Returns:</b>
 
@@ -28,5 +26,9 @@ True if actions is successful, false otherwise.
 
 ## Remarks
 
+RAM cost: 2 GB
+
 Singularity - Level 1
+
+This function allows the player to travel to any city. The cost for using this function is the same as the cost for traveling through the Travel Agency.
 

@@ -4,7 +4,7 @@
 
 ## NS.getPurchasedServerCost() method
 
-Returns the cost to purchase a server with the specified amount of ram.
+Get cost of purchasing a server.
 
 <b>Signature:</b>
 
@@ -27,6 +27,8 @@ The cost to purchase a server with the specified amount of ram.
 ## Remarks
 
 RAM cost: 0.25 GB
+
+Returns the cost to purchase a server with the specified amount of ram.
 
 ## Example
 

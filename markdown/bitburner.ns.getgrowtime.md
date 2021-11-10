@@ -4,21 +4,19 @@
 
 ## NS.getGrowTime() method
 
-Returns the amount of time in seconds it takes to execute the grow Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels.
+Get the execution time of a grow() call.
 
 <b>Signature:</b>
 
 ```typescript
-getGrowTime(host: string, hackLvl?: number, intLvl?: number): number;
+getGrowTime(host: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host or IP of target server. |
-|  hackLvl | number | Optional hacking level for the calculation. Defaults to player’s current hacking level. |
-|  intLvl | number | Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5). |
+|  host | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -29,4 +27,6 @@ Returns the amount of time in seconds it takes to execute the grow Netscript fun
 ## Remarks
 
 RAM cost: 0.05 GB
+
+Returns the amount of time in seconds it takes to execute the grow Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels.
 

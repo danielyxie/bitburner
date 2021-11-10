@@ -4,19 +4,19 @@
 
 ## NS.kill() method
 
-Kills the script on the target server specified by the script’s name and arguments. Remember that scripts are uniquely identified by both their name and arguments. For example, if `foo.script` is run with the argument 1, then this is not the same as `foo.script` run with the argument 2, even though they have the same code.
+Terminate another script.
 
 <b>Signature:</b>
 
 ```typescript
-kill(script: string, host: string, ...args: string[]): boolean;
+kill(script: string | number, host: string, ...args: string[]): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | string | Filename of the script to kill |
+|  script | string \| number | Filename or pid of the script to kill |
 |  host | string | Hostname of the server on which to kill the script. |
 |  args | string\[\] | Arguments to identify which script to kill. |
 
@@ -29,6 +29,8 @@ True if the script is successfully killed, and false otherwise.
 ## Remarks
 
 RAM cost: 0.5 GB
+
+Kills the script on the target server specified by the script’s name and arguments. Remember that scripts are uniquely identified by both their name and arguments. For example, if `foo.script` is run with the argument 1, then this is not the same as `foo.script` run with the argument 2, even though they have the same code.
 
 ## Example 1
 

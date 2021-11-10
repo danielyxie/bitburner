@@ -63,6 +63,14 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
     ...Settings.theme,
   });
 
+  function resetTheme(): void {
+    setCustomTheme({
+      ...defaultSettings.theme,
+    });
+    Object.assign(Settings.theme, defaultSettings.theme);
+    ThemeEvents.emit();
+  }
+
   function onThemeChange(event: React.ChangeEvent<HTMLInputElement>): void {
     try {
       const importedTheme = JSON.parse(event.target.value);
@@ -299,7 +307,18 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
       />
       <br />
       <br />
-      <TextField label={"import / export theme"} value={JSON.stringify(customTheme)} onChange={onThemeChange} />
+      <TextField
+        label={"import / export theme"}
+        value={JSON.stringify(customTheme)}
+        onChange={onThemeChange}
+        InputProps={{
+          endAdornment: (
+            <IconButton onClick={resetTheme} size="large">
+              <ReplyIcon />
+            </IconButton>
+          ),
+        }}
+      />
     </Modal>
   );
 }

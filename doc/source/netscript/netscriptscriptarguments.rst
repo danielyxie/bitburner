@@ -22,5 +22,4 @@ into a script using::
 
     args.length
 
-**WARNING: Do not try to modify the args array. This will break the game.
-I will do my best to prevent players from doing this.**
+**WARNING: Do not try to modify the args array. This will break the game.**

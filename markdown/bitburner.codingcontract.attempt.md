@@ -4,29 +4,32 @@
 
 ## CodingContract.attempt() method
 
-Attempts to solve the Coding Contract with the provided solution.
+Attemps a coding contract.
 
 <b>Signature:</b>
 
 ```typescript
-attempt(answer: string | string[] | number, fn: string, host?: string): boolean;
+attempt(answer: string[] | number, fn: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  answer | string \| string\[\] \| number | Solution for the contract. |
+|  answer | string\[\] \| number | Solution for the contract. |
 |  fn | string | Filename of the contract. |
-|  host | string | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  opts | [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Optional parameters for configuring function behavior. |
 
 <b>Returns:</b>
 
-boolean
+boolean \| string
 
-True if the solution was correct, false otherwise.
+True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
 
 ## Remarks
 
-10 GB
+RAM cost: 10 GB
+
+Attempts to solve the Coding Contract with the provided solution.
 

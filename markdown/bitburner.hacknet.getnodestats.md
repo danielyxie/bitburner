@@ -4,9 +4,7 @@
 
 ## Hacknet.getNodeStats() method
 
-Returns an object containing a variety of stats about the specified Hacknet Node.
-
-Note that for Hacknet Nodes, production refers to the amount of money the node generates. For Hacknet Servers (the upgraded version of Hacknet Nodes), production refers to the amount of hashes the node generates.
+Get the stats of a hacknet node.
 
 <b>Signature:</b>
 
@@ -29,4 +27,8 @@ Object containing a variety of stats about the specified Hacknet Node.
 ## Remarks
 
 RAM cost: 0 GB
+
+Returns an object containing a variety of stats about the specified Hacknet Node.
+
+Note that for Hacknet Nodes, production refers to the amount of money the node generates. For Hacknet Servers (the upgraded version of Hacknet Nodes), production refers to the amount of hashes the node generates.
 

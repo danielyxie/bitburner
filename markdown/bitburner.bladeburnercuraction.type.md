@@ -9,5 +9,5 @@ Type of Action
 <b>Signature:</b>
 
 ```typescript
-type: BladeburnerActTypes | "Idle";
+type: string;
 ```

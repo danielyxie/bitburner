@@ -4,14 +4,12 @@
 
 ## Sleeve.setToUniversityCourse() method
 
-If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
-
-Return a boolean indicating whether or not this action was set successfully.
+Set a sleeve to take a class at a university.
 
 <b>Signature:</b>
 
 ```typescript
-setToUniversityCourse(sleeveNumber: number, university: University, className: UniversityCourse): boolean;
+setToUniversityCourse(sleeveNumber: number, university: string, className: string): boolean;
 ```
 
 ## Parameters
@@ -19,8 +17,8 @@ setToUniversityCourse(sleeveNumber: number, university: University, className: U
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  sleeveNumber | number | Index of the sleeve to start taking class. |
-|  university | [University](./bitburner.university.md) | Name of the university to attend. |
-|  className | [UniversityCourse](./bitburner.universitycourse.md) | Name of the class to follow. |
+|  university | string | Name of the university to attend. |
+|  className | string | Name of the class to follow. |
 
 <b>Returns:</b>
 
@@ -31,4 +29,6 @@ True if this action was set successfully, false otherwise.
 ## Remarks
 
 RAM cost: 4 GB
+
+Return a boolean indicating whether or not this action was set successfully.
 

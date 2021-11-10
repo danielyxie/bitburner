@@ -24,7 +24,7 @@ import { GangMember } from "./GangMember";
 
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { PowerMultiplier } from "./data/power";
 
 export class Gang {
   facName: string;
@@ -171,7 +171,9 @@ export class Gang {
             AllGangs[name].power += Math.min(0.85, multiplicativeGain);
           } else {
             // Additive gain (50% chance)
-            const additiveGain = 0.75 * gainRoll * AllGangs[name].territory;
+            const powerMult = PowerMultiplier[name];
+            if (powerMult === undefined) throw new Error("Should not be undefined");
+            const additiveGain = 0.75 * gainRoll * AllGangs[name].territory * powerMult;
             AllGangs[name].power += additiveGain;
           }
         }

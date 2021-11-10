@@ -4,14 +4,12 @@
 
 ## Sleeve.setToGymWorkout() method
 
-If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
-
-Return a boolean indicating whether or not the sleeve started working out.
+Set a sleeve to workout at the gym.
 
 <b>Signature:</b>
 
 ```typescript
-setToGymWorkout(sleeveNumber: number, gymName: Gym, stat: GymStat): boolean;
+setToGymWorkout(sleeveNumber: number, gymName: string, stat: string): boolean;
 ```
 
 ## Parameters
@@ -19,8 +17,8 @@ setToGymWorkout(sleeveNumber: number, gymName: Gym, stat: GymStat): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  sleeveNumber | number | Index of the sleeve to workout at the gym. |
-|  gymName | [Gym](./bitburner.gym.md) | Name of the gym. |
-|  stat | [GymStat](./bitburner.gymstat.md) | Name of the stat to train. |
+|  gymName | string | Name of the gym. |
+|  stat | string | Name of the stat to train. |
 
 <b>Returns:</b>
 
@@ -31,4 +29,6 @@ True if the sleeve started working out, false otherwise.
 ## Remarks
 
 RAM cost: 4 GB
+
+Return a boolean indicating whether or not the sleeve started working out.
 

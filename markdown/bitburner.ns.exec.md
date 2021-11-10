@@ -4,13 +4,7 @@
 
 ## NS.exec() method
 
-Run a script as a separate process on a specified server. This is similar to the run function except that it can be used to run a script on any server, instead of just the current server.
-
-If the script was successfully started, then this functions returns the PID of that script. Otherwise, it returns 0.
-
-PID stands for Process ID. The PID is a unique identifier for each script. The PID will always be a positive integer.
-
-Running this function with a numThreads argument of 0 will return 0 without running the script. However, running this function with a negative numThreads argument will cause a runtime error.
+Start another script on any server.
 
 <b>Signature:</b>
 
@@ -36,6 +30,14 @@ Returns the PID of a successfully started script, and 0 otherwise.
 ## Remarks
 
 RAM cost: 1.3 GB
+
+Run a script as a separate process on a specified server. This is similar to the run function except that it can be used to run a script on any server, instead of just the current server.
+
+If the script was successfully started, then this functions returns the PID of that script. Otherwise, it returns 0.
+
+PID stands for Process ID. The PID is a unique identifier for each script. The PID will always be a positive integer.
+
+Running this function with a numThreads argument of 0 will return 0 without running the script. However, running this function with a negative numThreads argument will cause a runtime error.
 
 ## Example 1
 

@@ -41,6 +41,8 @@ export function TerritorySubpage(): React.ReactElement {
         and wanted level. It is very beneficial to have high territory control.
         <br />
         <br />
+        To increase your chances of winning territory assign gang members to "Territory Warfare", this will build your
+        gang power. Then enable "Engage in Territory Warfare" to start fighting over territory.
       </Typography>
       <FormControlLabel
         control={

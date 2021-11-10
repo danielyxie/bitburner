@@ -4,22 +4,22 @@
 
 ## Bladeburner.getCity() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns the city that the player is currently in (for Bladeburner).
+Get current city.
 
 <b>Signature:</b>
 
 ```typescript
-getCity(): City;
+getCity(): string;
 ```
 <b>Returns:</b>
 
-[City](./bitburner.city.md)
+string
 
 City that the player is currently in (for Bladeburner).
 
 ## Remarks
 
 RAM cost: 4 GB
+
+Returns the city that the player is currently in (for Bladeburner).
 

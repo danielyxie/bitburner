@@ -76,7 +76,7 @@ export interface IBladeburner {
     type: string,
     name: string,
     workerScript: WorkerScript,
-  ): number[];
+  ): [number, number];
   getActionCountRemainingNetscriptFn(type: string, name: string, workerScript: WorkerScript): number;
   getSkillLevelNetscriptFn(skillName: string, workerScript: WorkerScript): number;
   getSkillUpgradeCostNetscriptFn(skillName: string, workerScript: WorkerScript): number;

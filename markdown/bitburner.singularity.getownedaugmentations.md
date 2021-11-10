@@ -4,14 +4,12 @@
 
 ## Singularity.getOwnedAugmentations() method
 
-If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function returns an array containing the names (as strings) of all Augmentations you have.
+Get a list of owned augmentation.
 
 <b>Signature:</b>
 
 ```typescript
-getOwnedAugmentations(purchased?: boolean): AugmentName[];
+getOwnedAugmentations(purchased?: boolean): string[];
 ```
 
 ## Parameters
@@ -22,11 +20,15 @@ getOwnedAugmentations(purchased?: boolean): AugmentName[];
 
 <b>Returns:</b>
 
-[AugmentName](./bitburner.augmentname.md)<!-- -->\[\]
+string\[\]
 
 Array containing the names (as strings) of all Augmentations you have.
 
 ## Remarks
 
+RAM cost: 5 GB
+
 Singularity - Level 3
+
+This function returns an array containing the names (as strings) of all Augmentations you have.
 

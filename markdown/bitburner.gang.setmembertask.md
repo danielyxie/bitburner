@@ -4,14 +4,12 @@
 
 ## Gang.setMemberTask() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Attempts to assign the specified Gang Member to the specified task. If an invalid task is specified, the Gang member will be set to idle (“Unassigned”).
+Set gang member to task.
 
 <b>Signature:</b>
 
 ```typescript
-setMemberTask(memberName: string, taskName: GangTasks): boolean;
+setMemberTask(memberName: string, taskName: string): boolean;
 ```
 
 ## Parameters
@@ -19,7 +17,7 @@ setMemberTask(memberName: string, taskName: GangTasks): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  memberName | string | Name of Gang member to assign. |
-|  taskName | [GangTasks](./bitburner.gangtasks.md) | Task to assign. |
+|  taskName | string | Task to assign. |
 
 <b>Returns:</b>
 
@@ -30,4 +28,6 @@ True if the Gang Member was successfully assigned to the task, false otherwise.
 ## Remarks
 
 RAM cost: 2 GB
+
+Attempts to assign the specified Gang Member to the specified task. If an invalid task is specified, the Gang member will be set to idle (“Unassigned”).
 

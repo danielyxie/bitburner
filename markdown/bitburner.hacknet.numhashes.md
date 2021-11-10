@@ -4,9 +4,7 @@
 
 ## Hacknet.numHashes() method
 
-This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
-
-Returns the number of hashes you have.
+Get the total number of hashes stored.
 
 <b>Signature:</b>
 
@@ -22,4 +20,8 @@ Number of hashes you have.
 ## Remarks
 
 RAM cost: 0 GB
+
+This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
+
+Returns the number of hashes you have.
 

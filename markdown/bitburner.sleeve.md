@@ -9,26 +9,30 @@ Sleeve API
 <b>Signature:</b>
 
 ```typescript
-interface Sleeve 
+export interface Sleeve 
 ```
+
+## Remarks
+
+If you are not in BitNode-10, then you must have Source-File 10 in order to use this API.
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [getInformation(sleeveNumber)](./bitburner.sleeve.getinformation.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return a struct containing tons of information about this sleeve |
-|  [getNumSleeves()](./bitburner.sleeve.getnumsleeves.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return the number of duplicate sleeves the player has. |
-|  [getSleeveAugmentations(sleeveNumber)](./bitburner.sleeve.getsleeveaugmentations.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return a list of augmentation names that this sleeve has installed. |
-|  [getSleevePurchasableAugs(sleeveNumber)](./bitburner.sleeve.getsleevepurchasableaugs.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return a list of augmentations that the player can buy for this sleeve. |
-|  [getSleeveStats(sleeveNumber)](./bitburner.sleeve.getsleevestats.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return a structure containing the stats of the sleeve. |
-|  [getTask(sleeveNumber)](./bitburner.sleeve.gettask.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return the current task that the sleeve is performing. type is set to “Idle” if the sleeve isn’t doing anything. |
-|  [purchaseSleeveAug(sleeveNumber, augName)](./bitburner.sleeve.purchasesleeveaug.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return true if the aug was purchased and installed on the sleeve. |
-|  [setToCommitCrime(sleeveNumber, name)](./bitburner.sleeve.settocommitcrime.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return a boolean indicating whether or not this action was set successfully.<!-- -->Returns false if an invalid action is specified. |
-|  [setToCompanyWork(sleeveNumber, companyName)](./bitburner.sleeve.settocompanywork.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return a boolean indicating whether or not the sleeve started working or this company. |
-|  [setToFactionWork(sleeveNumber, factionName, factionWorkType)](./bitburner.sleeve.settofactionwork.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return a boolean indicating whether or not the sleeve started working or this faction. |
-|  [setToGymWorkout(sleeveNumber, gymName, stat)](./bitburner.sleeve.settogymworkout.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return a boolean indicating whether or not the sleeve started working out. |
-|  [setToShockRecovery(sleeveNumber)](./bitburner.sleeve.settoshockrecovery.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return a boolean indicating whether or not this action was set successfully. |
-|  [setToSynchronize(sleeveNumber)](./bitburner.sleeve.settosynchronize.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return a boolean indicating whether or not this action was set successfully. |
-|  [setToUniversityCourse(sleeveNumber, university, className)](./bitburner.sleeve.settouniversitycourse.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return a boolean indicating whether or not this action was set successfully. |
-|  [travel(sleeveNumber, cityName)](./bitburner.sleeve.travel.md) | If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.<!-- -->Return a boolean indicating whether or not the sleeve reached destination. |
+|  [getInformation(sleeveNumber)](./bitburner.sleeve.getinformation.md) | Get information about a sleeve. |
+|  [getNumSleeves()](./bitburner.sleeve.getnumsleeves.md) | Get the number of sleeves you own. |
+|  [getSleeveAugmentations(sleeveNumber)](./bitburner.sleeve.getsleeveaugmentations.md) | Get augmentations installed on a sleeve. |
+|  [getSleevePurchasableAugs(sleeveNumber)](./bitburner.sleeve.getsleevepurchasableaugs.md) | List purchasable augs for a sleeve. |
+|  [getSleeveStats(sleeveNumber)](./bitburner.sleeve.getsleevestats.md) | Get the stats of a sleeve. |
+|  [getTask(sleeveNumber)](./bitburner.sleeve.gettask.md) | Get task of a sleeve. |
+|  [purchaseSleeveAug(sleeveNumber, augName)](./bitburner.sleeve.purchasesleeveaug.md) | Purchase an aug for a sleeve. |
+|  [setToCommitCrime(sleeveNumber, name)](./bitburner.sleeve.settocommitcrime.md) | Set a sleeve to commit crime. |
+|  [setToCompanyWork(sleeveNumber, companyName)](./bitburner.sleeve.settocompanywork.md) | Set a sleeve to work for a company. |
+|  [setToFactionWork(sleeveNumber, factionName, factionWorkType)](./bitburner.sleeve.settofactionwork.md) | Set a sleeve to work for a faction. |
+|  [setToGymWorkout(sleeveNumber, gymName, stat)](./bitburner.sleeve.settogymworkout.md) | Set a sleeve to workout at the gym. |
+|  [setToShockRecovery(sleeveNumber)](./bitburner.sleeve.settoshockrecovery.md) | Set a sleeve to shock recovery. |
+|  [setToSynchronize(sleeveNumber)](./bitburner.sleeve.settosynchronize.md) | Set a sleeve to synchronize. |
+|  [setToUniversityCourse(sleeveNumber, university, className)](./bitburner.sleeve.settouniversitycourse.md) | Set a sleeve to take a class at a university. |
+|  [travel(sleeveNumber, cityName)](./bitburner.sleeve.travel.md) | Make a sleeve travel to another city. |
 

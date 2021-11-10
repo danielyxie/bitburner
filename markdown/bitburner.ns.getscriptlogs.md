@@ -4,9 +4,7 @@
 
 ## NS.getScriptLogs() method
 
-Returns a script’s logs. The logs are returned as an array, where each line is an element in the array. The most recently logged line is at the end of the array. Note that there is a maximum number of lines that a script stores in its logs. This is configurable in the game’s options. If the function is called with no arguments, it will return the current script’s logs.
-
-Otherwise, the fn, hostname/ip, and args… arguments can be used to get the logs from another script. Remember that scripts are uniquely identified by both their names and arguments.
+Get all the logs of a script.
 
 <b>Signature:</b>
 
@@ -31,6 +29,10 @@ Returns an string array, where each line is an element in the array. The most re
 ## Remarks
 
 RAM cost: 0 GB
+
+Returns a script’s logs. The logs are returned as an array, where each line is an element in the array. The most recently logged line is at the end of the array. Note that there is a maximum number of lines that a script stores in its logs. This is configurable in the game’s options. If the function is called with no arguments, it will return the current script’s logs.
+
+Otherwise, the fn, hostname/ip, and args… arguments can be used to get the logs from another script. Remember that scripts are uniquely identified by both their names and arguments.
 
 ## Example 1
 

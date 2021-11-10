@@ -4,27 +4,20 @@
 
 ## Bladeburner.getActionMaxLevel() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns the maximum level for this action.
-
-Returns -1 if an invalid action is specified.
+Get the maximum level of an action.
 
 <b>Signature:</b>
 
 ```typescript
-getActionMaxLevel(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-  ): number;
+getActionMaxLevel(type: string, name: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  type | [BladeburnerActTypes](./bitburner.bladeburneracttypes.md) | Type of action. |
-|  name | [BladeburnerGenActions](./bitburner.bladeburnergenactions.md) \| [BladeburnerContracts](./bitburner.bladeburnercontracts.md) \| [BladeburnerOperations](./bitburner.bladeburneroperations.md) \| [BladeburnerBlackOps](./bitburner.bladeburnerblackops.md) | Name of action. Must be an exact match. |
+|  type | string | Type of action. |
+|  name | string | Name of action. Must be an exact match. |
 
 <b>Returns:</b>
 
@@ -35,4 +28,8 @@ Maximum level of the specified action.
 ## Remarks
 
 RAM cost: 4 GB
+
+Returns the maximum level for this action.
+
+Returns -1 if an invalid action is specified.
 
