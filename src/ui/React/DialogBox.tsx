@@ -7,5 +7,6 @@ export function dialogBoxCreate(txt: string | JSX.Element): void {
     AlertEvents.emit(txt);
   } else {
     AlertEvents.emit(<span dangerouslySetInnerHTML={{ __html: txt }} />);
+    console.log('emit"');
   }
 }
