@@ -4,22 +4,22 @@
 
 ## Bladeburner.getBlackOpNames() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns an array of strings containing the names of all Bladeburner Black Ops.
+List all black ops.
 
 <b>Signature:</b>
 
 ```typescript
-getBlackOpNames(): BladeburnerBlackOps[];
+getBlackOpNames(): string[];
 ```
 <b>Returns:</b>
 
-[BladeburnerBlackOps](./bitburner.bladeburnerblackops.md)<!-- -->\[\]
+string\[\]
 
 Array of strings containing the names of all Bladeburner Black Ops.
 
 ## Remarks
 
 RAM cost: 0.4 GB
+
+Returns an array of strings containing the names of all Bladeburner Black Ops.
 

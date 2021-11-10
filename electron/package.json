@@ -3,5 +3,22 @@
   "version": "1.0.0",
   "description": "A cyberpunk-themed programming incremental game",
   "main": "main.js",
-  "author": "Daniel Xie"
+  "author": "Daniel Xie & Olivier Gagnon",
+  "mac": {
+    "icon": "./public/icons/mac/icon.icns",    
+    "category": "public.app-category.games"
+  },
+  "win": {
+    "icon": "./public/icons/png/256x256.png" 
+  },
+  "files": [
+    "./build/**/*",
+    "./dist/**/*",
+    "./node_modules/**/*",
+    "./public/**/*",      
+    "*.js"
+  ],
+  "directories": {
+    "buildResources": "public"
+  }
 }

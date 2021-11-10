@@ -4,27 +4,20 @@
 
 ## Bladeburner.getActionCurrentLevel() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns the current level of this action.
-
-Returns -1 if an invalid action is specified.
+Get the current level of an action.
 
 <b>Signature:</b>
 
 ```typescript
-getActionCurrentLevel(
-    type: BladeburnerActTypes,
-    name: BladeburnerGenActions | BladeburnerContracts | BladeburnerOperations | BladeburnerBlackOps,
-  ): number;
+getActionCurrentLevel(type: string, name: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  type | [BladeburnerActTypes](./bitburner.bladeburneracttypes.md) | Type of action. |
-|  name | [BladeburnerGenActions](./bitburner.bladeburnergenactions.md) \| [BladeburnerContracts](./bitburner.bladeburnercontracts.md) \| [BladeburnerOperations](./bitburner.bladeburneroperations.md) \| [BladeburnerBlackOps](./bitburner.bladeburnerblackops.md) | Name of action. Must be an exact match. |
+|  type | string | Type of action. |
+|  name | string | Name of action. Must be an exact match. |
 
 <b>Returns:</b>
 
@@ -35,4 +28,8 @@ Current level of the specified action.
 ## Remarks
 
 RAM cost: 4 GB
+
+Returns the current level of this action.
+
+Returns -1 if an invalid action is specified.
 

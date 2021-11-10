@@ -9,13 +9,13 @@ Bladeburner current action.
 <b>Signature:</b>
 
 ```typescript
-interface BladeburnerCurAction 
+export interface BladeburnerCurAction 
 ```
 
 ## Properties
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [name](./bitburner.bladeburnercuraction.name.md) | [BladeburnerGenActions](./bitburner.bladeburnergenactions.md) \| [BladeburnerContracts](./bitburner.bladeburnercontracts.md) \| [BladeburnerOperations](./bitburner.bladeburneroperations.md) \| [BladeburnerBlackOps](./bitburner.bladeburnerblackops.md) | Name of Action |
-|  [type](./bitburner.bladeburnercuraction.type.md) | [BladeburnerActTypes](./bitburner.bladeburneracttypes.md) \| "Idle" | Type of Action |
+|  [name](./bitburner.bladeburnercuraction.name.md) | string | Name of Action |
+|  [type](./bitburner.bladeburnercuraction.type.md) | string | Type of Action |
 

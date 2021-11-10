@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface CharacterInfo 
+export interface CharacterInfo 
 ```
 
 ## Properties
@@ -16,11 +16,11 @@ interface CharacterInfo
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [bitnode](./bitburner.characterinfo.bitnode.md) | number | Current BitNode number |
-|  [city](./bitburner.characterinfo.city.md) | [City](./bitburner.city.md) | Name of city you are currently in |
-|  [company](./bitburner.characterinfo.company.md) | [CompanyName](./bitburner.companyname.md)<!-- -->\[\] | Array of all companies at which you have jobs |
-|  [factions](./bitburner.characterinfo.factions.md) | [FactionName](./bitburner.factionname.md)<!-- -->\[\] | Array of factions you are currently a member of |
+|  [city](./bitburner.characterinfo.city.md) | string | Name of city you are currently in |
+|  [company](./bitburner.characterinfo.company.md) | string\[\] | Array of all companies at which you have jobs |
+|  [factions](./bitburner.characterinfo.factions.md) | string\[\] | Array of factions you are currently a member of |
 |  [hp](./bitburner.characterinfo.hp.md) | number | Current health points |
-|  [jobTitle](./bitburner.characterinfo.jobtitle.md) | [CompanyField](./bitburner.companyfield.md)<!-- -->\[\] | Array of job positions for all companies you are employed at. Same order as 'jobs' |
+|  [jobTitle](./bitburner.characterinfo.jobtitle.md) | string\[\] | Array of job positions for all companies you are employed at. Same order as 'jobs' |
 |  [maxHp](./bitburner.characterinfo.maxhp.md) | number | Maximum health points |
 |  [mult](./bitburner.characterinfo.mult.md) | [CharacterMult](./bitburner.charactermult.md) | Object with many of the player's multipliers from Augmentations/Source Files |
 |  [timeWorked](./bitburner.characterinfo.timeworked.md) | number | Timed worked in ms |

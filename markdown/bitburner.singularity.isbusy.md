@@ -4,9 +4,7 @@
 
 ## Singularity.isBusy() method
 
-If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-Returns a boolean indicating whether or not the player is currently performing an ‘action’. These actions include working for a company/faction, studying at a univeristy, working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.
+Check if the player is busy.
 
 <b>Signature:</b>
 
@@ -21,5 +19,9 @@ True if the player is currently performing an ‘action’, false otherwise.
 
 ## Remarks
 
+RAM cost: 0.5 GB
+
 Singularity - Level 1
+
+Returns a boolean indicating whether or not the player is currently performing an ‘action’. These actions include working for a company/faction, studying at a univeristy, working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.
 

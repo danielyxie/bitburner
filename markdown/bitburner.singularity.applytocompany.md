@@ -4,24 +4,20 @@
 
 ## Singularity.applyToCompany() method
 
-If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function will automatically try to apply to the specified company for a position in the specified field. This function can also be used to apply for promotions by specifying the company and field you are already employed at.
-
-This function will return true if you successfully get a job/promotion, and false otherwise. Note that if you are trying to use this function to apply for a promotion and you don’t get one, it will return false.
+Apply for a job at a company.
 
 <b>Signature:</b>
 
 ```typescript
-applyToCompany(companyName: CompanyName, field: CompanyField): boolean;
+applyToCompany(companyName: string, field: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  companyName | [CompanyName](./bitburner.companyname.md) | Name of company to apply to. |
-|  field | [CompanyField](./bitburner.companyfield.md) | Field to which you want to apply. |
+|  companyName | string | Name of company to apply to. |
+|  field | string | Field to which you want to apply. |
 
 <b>Returns:</b>
 
@@ -31,5 +27,11 @@ True if the player successfully get a job/promotion, and false otherwise.
 
 ## Remarks
 
+RAM cost: 3 GB
+
 Singularity - Level 2
+
+This function will automatically try to apply to the specified company for a position in the specified field. This function can also be used to apply for promotions by specifying the company and field you are already employed at.
+
+This function will return true if you successfully get a job/promotion, and false otherwise. Note that if you are trying to use this function to apply for a promotion and you don’t get one, it will return false.
 

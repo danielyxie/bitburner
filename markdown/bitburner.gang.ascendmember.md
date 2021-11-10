@@ -4,14 +4,12 @@
 
 ## Gang.ascendMember() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Ascend the specified Gang Member.
+Ascend a gang member.
 
 <b>Signature:</b>
 
 ```typescript
-ascendMember(memberName: string): GangMemberAscension;
+ascendMember(memberName: string): GangMemberAscension | undefined;
 ```
 
 ## Parameters
@@ -22,11 +20,13 @@ ascendMember(memberName: string): GangMemberAscension;
 
 <b>Returns:</b>
 
-[GangMemberAscension](./bitburner.gangmemberascension.md)
+[GangMemberAscension](./bitburner.gangmemberascension.md) \| undefined
 
-Object with info about the ascension results.
+Object with info about the ascension results. undefined if ascension did not occur.
 
 ## Remarks
 
 RAM cost: 4 GB
+
+Ascend the specified Gang Member.
 

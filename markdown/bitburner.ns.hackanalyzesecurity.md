@@ -4,7 +4,7 @@
 
 ## NS.hackAnalyzeSecurity() method
 
-Returns the security increase that would occur if a hack with this many threads happened.
+Get the security increase for a number of thread.
 
 <b>Signature:</b>
 
@@ -27,4 +27,6 @@ The security increase.
 ## Remarks
 
 RAM cost: 1 GB
+
+Returns the security increase that would occur if a hack with this many threads happened.
 

@@ -4,21 +4,19 @@
 
 ## Singularity.getAugmentationStats() method
 
-If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function returns augmentation stats.
+Get the stats of an augmentation.
 
 <b>Signature:</b>
 
 ```typescript
-getAugmentationStats(name: AugmentName): AugmentationStats;
+getAugmentationStats(name: string): AugmentationStats;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | [AugmentName](./bitburner.augmentname.md) | Name of Augmentation. CASE-SENSITIVE. |
+|  name | string | Name of Augmentation. CASE-SENSITIVE. |
 
 <b>Returns:</b>
 
@@ -28,5 +26,9 @@ Augmentation stats.
 
 ## Remarks
 
+RAM cost: 5 GB
+
 Singularity - Level 3
+
+This function returns augmentation stats.
 

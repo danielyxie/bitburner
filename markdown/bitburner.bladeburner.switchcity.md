@@ -4,23 +4,19 @@
 
 ## Bladeburner.switchCity() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Attempts to switch to the specified city (for Bladeburner only).
-
-Returns true if successful, and false otherwise
+Travel to another city in bladeburner.
 
 <b>Signature:</b>
 
 ```typescript
-switchCity(name: City): boolean;
+switchCity(name: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | [City](./bitburner.city.md) |  |
+|  name | string |  |
 
 <b>Returns:</b>
 
@@ -30,5 +26,7 @@ true if successful, and false otherwise
 
 ## Remarks
 
-RAM cost: 4 GB
+RAM cost: 4 GB Attempts to switch to the specified city (for Bladeburner only).
+
+Returns true if successful, and false otherwise
 

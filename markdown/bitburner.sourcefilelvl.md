@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface SourceFileLvl 
+export interface SourceFileLvl 
 ```
 
 ## Properties
@@ -16,5 +16,5 @@ interface SourceFileLvl
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [lvl](./bitburner.sourcefilelvl.lvl.md) | number | The level of the source file |
-|  [n](./bitburner.sourcefilelvl.n.md) | 1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9 \| 10 \| 11 \| 12 | The number of the source file |
+|  [n](./bitburner.sourcefilelvl.n.md) | number | The number of the source file |
 

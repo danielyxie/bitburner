@@ -397,7 +397,7 @@ export class Sleeve extends Person {
       }
 
       const jobPerformance: number = companyPosition.calculateJobPerformance(
-        this.hacking_skill,
+        this.hacking,
         this.strength,
         this.defense,
         this.dexterity,

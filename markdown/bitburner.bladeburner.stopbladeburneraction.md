@@ -4,9 +4,7 @@
 
 ## Bladeburner.stopBladeburnerAction() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Stops the current Bladeburner action.
+Stop current action.
 
 <b>Signature:</b>
 
@@ -20,4 +18,6 @@ void
 ## Remarks
 
 RAM cost: 2 GB
+
+Stops the current Bladeburner action.
 

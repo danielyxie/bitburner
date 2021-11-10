@@ -4,7 +4,7 @@
 
 ## NS.brutessh() method
 
-Runs the BruteSSH.exe program on the target server. BruteSSH.exe must exist on your home computer.
+Runs BruteSSH.exe on a server.
 
 <b>Signature:</b>
 
@@ -25,6 +25,8 @@ void
 ## Remarks
 
 RAM cost: 0.05 GB
+
+Runs the BruteSSH.exe program on the target server. BruteSSH.exe must exist on your home computer.
 
 ## Example
 

@@ -9,14 +9,14 @@ Returns the maximum number of shares of a stock.
 <b>Signature:</b>
 
 ```typescript
-getMaxShares(sym: StockSymbol): number;
+getMaxShares(sym: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sym | [StockSymbol](./bitburner.stocksymbol.md) | Stock symbol. |
+|  sym | string | Stock symbol. |
 
 <b>Returns:</b>
 

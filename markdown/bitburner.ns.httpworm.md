@@ -4,7 +4,7 @@
 
 ## NS.httpworm() method
 
-Runs the HTTPWorm.exe program on the target server. HTTPWorm.exe must exist on your home computer.
+Runs HTTPWorm.exe on a server.
 
 <b>Signature:</b>
 
@@ -25,6 +25,8 @@ void
 ## Remarks
 
 RAM cost: 0.05 GB
+
+Runs the HTTPWorm.exe program on the target server. HTTPWorm.exe must exist on your home computer.
 
 ## Example
 

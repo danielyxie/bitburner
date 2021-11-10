@@ -213,7 +213,7 @@ export class Action implements IAction {
     return 1;
   }
 
-  getEstSuccessChance(inst: IBladeburner): number[] {
+  getEstSuccessChance(inst: IBladeburner): [number, number] {
     function clamp(x: number): number {
       return Math.max(0, Math.min(x, 1));
     }
@@ -224,7 +224,7 @@ export class Action implements IAction {
     let high = real + diff;
     const city = inst.getCurrentCity();
     const r = city.pop / city.popEst;
-
+    console.log(`${est} ${real}`);
     if (r < 1) low *= r;
     else high *= r;
     return [clamp(low), clamp(high)];

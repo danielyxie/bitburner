@@ -4,22 +4,22 @@
 
 ## Gang.getTaskNames() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Get the name of all valid tasks that Gang members can be assigned to.
+List member task names.
 
 <b>Signature:</b>
 
 ```typescript
-getTaskNames(): GangTasks[];
+getTaskNames(): string[];
 ```
 <b>Returns:</b>
 
-[GangTasks](./bitburner.gangtasks.md)<!-- -->\[\]
+string\[\]
 
 All valid tasks that Gang members can be assigned to.
 
 ## Remarks
 
 RAM cost: 1 GB
+
+Get the name of all valid tasks that Gang members can be assigned to.
 

@@ -4,7 +4,7 @@
 
 ## NS.getServerMoneyAvailable() method
 
-Returns the amount of money available on a server. Running this function on the home computer will return the player’s money.
+Get money available on a server.
 
 <b>Signature:</b>
 
@@ -16,7 +16,7 @@ getServerMoneyAvailable(host: string): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host or IP of target server |
+|  host | string | Host of target server |
 
 <b>Returns:</b>
 
@@ -27,6 +27,8 @@ Amount of money available on the server.
 ## Remarks
 
 RAM cost: 0.1 GB
+
+Returns the amount of money available on a server. Running this function on the home computer will return the player’s money.
 
 ## Example
 

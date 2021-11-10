@@ -4,21 +4,19 @@
 
 ## Hacknet.hashCost() method
 
-This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
-
-Returns the number of hashes required for the specified upgrade. The name of the upgrade must be an exact match.
+Get the cost of a hash upgrade.
 
 <b>Signature:</b>
 
 ```typescript
-hashCost(upgName: HashUpgrades): number;
+hashCost(upgName: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  upgName | [HashUpgrades](./bitburner.hashupgrades.md) | Name of the upgrade of Hacknet Node. |
+|  upgName | string | Name of the upgrade of Hacknet Node. |
 
 <b>Returns:</b>
 
@@ -29,6 +27,10 @@ Number of hashes required for the specified upgrade.
 ## Remarks
 
 RAM cost: 0 GB
+
+This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
+
+Returns the number of hashes required for the specified upgrade. The name of the upgrade must be an exact match.
 
 ## Example
 

@@ -274,6 +274,7 @@ export const BitNodeMultipliers: IBitNodeMultipliers = {
   FourSigmaMarketDataApiCost: 1,
 
   CorporationValuation: 1,
+  CorporationSoftCap: 1,
 
   BladeburnerRank: 1,
   BladeburnerSkillCost: 1,

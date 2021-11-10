@@ -4,7 +4,7 @@
 
 ## NS.getServerMaxMoney() method
 
-Returns the maximum amount of money that can be available on a server.
+Get maximum money available on a server.
 
 <b>Signature:</b>
 
@@ -16,7 +16,7 @@ getServerMaxMoney(host: string): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host or IP of target server. |
+|  host | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -27,4 +27,6 @@ Maximum amount of money available on the server.
 ## Remarks
 
 RAM cost: 0.1 GB
+
+Returns the maximum amount of money that can be available on a server.
 

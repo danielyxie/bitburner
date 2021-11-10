@@ -4,24 +4,20 @@
 
 ## Singularity.purchaseAugmentation() method
 
-If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function will try to purchase the specified Augmentation through the given Faction.
-
-This function will return true if the Augmentation is successfully purchased, and false otherwise.
+Purchase an augmentation
 
 <b>Signature:</b>
 
 ```typescript
-purchaseAugmentation(faction: FactionName, augmnet: AugmentName): boolean;
+purchaseAugmentation(faction: string, augmentation: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  faction | [FactionName](./bitburner.factionname.md) | Name of faction to purchase Augmentation from. |
-|  augmnet | [AugmentName](./bitburner.augmentname.md) | Name of Augmentation to purchase. |
+|  faction | string | Name of faction to purchase Augmentation from. |
+|  augmentation | string | Name of Augmentation to purchase. |
 
 <b>Returns:</b>
 
@@ -31,5 +27,11 @@ True if the Augmentation is successfully purchased, and false otherwise.
 
 ## Remarks
 
+RAM cost: 5 GB
+
 Singularity - Level 3
+
+This function will try to purchase the specified Augmentation through the given Faction.
+
+This function will return true if the Augmentation is successfully purchased, and false otherwise.
 

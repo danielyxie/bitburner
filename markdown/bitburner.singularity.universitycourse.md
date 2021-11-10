@@ -4,24 +4,20 @@
 
 ## Singularity.universityCourse() method
 
-If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function will automatically set you to start taking a course at a university. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.
-
-The cost and experience gains for all of these universities and classes are the same as if you were to manually visit and take these classes.
+Take university class.
 
 <b>Signature:</b>
 
 ```typescript
-universityCourse(universityName: University, courseName: UniversityCourse): boolean;
+universityCourse(universityName: string, courseName: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  universityName | [University](./bitburner.university.md) | Name of university. You must be in the correct city for whatever university you specify. |
-|  courseName | [UniversityCourse](./bitburner.universitycourse.md) | Name of course. |
+|  universityName | string | Name of university. You must be in the correct city for whatever university you specify. |
+|  courseName | string | Name of course. |
 
 <b>Returns:</b>
 
@@ -31,5 +27,11 @@ True if actions is successfully started, false otherwise.
 
 ## Remarks
 
+RAM cost: 2 GB
+
 Singularity - Level 1
+
+This function will automatically set you to start taking a course at a university. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.
+
+The cost and experience gains for all of these universities and classes are the same as if you were to manually visit and take these classes.
 

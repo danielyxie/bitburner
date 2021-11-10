@@ -4,9 +4,7 @@
 
 ## Bladeburner.getSkillPoints() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-Returns the number of Bladeburner skill points you have.
+Get bladeburner skill points.
 
 <b>Signature:</b>
 
@@ -22,4 +20,6 @@ Number of Bladeburner skill points you have.
 ## Remarks
 
 RAM cost: 4 GB
+
+Returns the number of Bladeburner skill points you have.
 

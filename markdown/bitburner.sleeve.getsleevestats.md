@@ -4,9 +4,7 @@
 
 ## Sleeve.getSleeveStats() method
 
-If you are not in BitNode-10, then you must have Source-File 10 in order to use this function.
-
-Return a structure containing the stats of the sleeve.
+Get the stats of a sleeve.
 
 <b>Signature:</b>
 
@@ -29,4 +27,6 @@ Object containing the stats of the sleeve.
 ## Remarks
 
 RAM cost: 4 GB
+
+Return a structure containing the stats of the sleeve.
 

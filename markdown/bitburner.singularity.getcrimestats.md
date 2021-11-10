@@ -4,21 +4,19 @@
 
 ## Singularity.getCrimeStats() method
 
-If you are not in BitNode-4, then you must have Level 3 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-Returns the stats of the crime.
+Get stats related to a crime.
 
 <b>Signature:</b>
 
 ```typescript
-getCrimeStats(crime: Crime): CrimeStats;
+getCrimeStats(crime: string): CrimeStats;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  crime | [Crime](./bitburner.crime.md) | Name of crime. Not case-sensitive |
+|  crime | string | Name of crime. Not case-sensitive |
 
 <b>Returns:</b>
 
@@ -28,5 +26,9 @@ The stats of the crime.
 
 ## Remarks
 
+RAM cost: 5 GB
+
 Singularity - Level 3
+
+Returns the stats of the crime.
 

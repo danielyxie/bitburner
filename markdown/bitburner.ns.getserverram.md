@@ -4,7 +4,10 @@
 
 ## NS.getServerRam() method
 
-Returns an array with two elements that gives information about a server’s memory (RAM). The first element in the array is the amount of RAM that the server has total (in GB). The second element in the array is the amount of RAM that is currently being used on the server (in GB).
+> Warning: This API is now obsolete.
+> 
+> DEPRECATED
+> 
 
 <b>Signature:</b>
 
@@ -16,7 +19,7 @@ getServerRam(host: string): [number, number];
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host or IP of target server. |
+|  host | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -27,6 +30,8 @@ Array with total and used memory on the specified server.
 ## Remarks
 
 RAM cost: 0.1 GB
+
+Returns an array with two elements that gives information about a server’s memory (RAM). The first element in the array is the amount of RAM that the server has total (in GB). The second element in the array is the amount of RAM that is currently being used on the server (in GB).
 
 ## Example
 

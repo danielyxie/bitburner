@@ -9,7 +9,7 @@ import { Server } from "./Server/Server";
 export function calculateHackingChance(server: Server, player: IPlayer): number {
   const hackFactor = 1.75;
   const difficultyMult = (100 - server.hackDifficulty) / 100;
-  const skillMult = hackFactor * player.hacking_skill;
+  const skillMult = hackFactor * player.hacking;
   const skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
   const chance =
     skillChance * difficultyMult * player.hacking_chance_mult * calculateIntelligenceBonus(player.intelligence, 1);
@@ -48,7 +48,7 @@ export function calculatePercentMoneyHacked(server: Server, player: IPlayer): nu
   const balanceFactor = 240;
 
   const difficultyMult = (100 - server.hackDifficulty) / 100;
-  const skillMult = (player.hacking_skill - (server.requiredHackingSkill - 1)) / player.hacking_skill;
+  const skillMult = (player.hacking - (server.requiredHackingSkill - 1)) / player.hacking;
   const percentMoneyHacked = (difficultyMult * skillMult * player.hacking_money_mult) / balanceFactor;
   if (percentMoneyHacked < 0) {
     return 0;
@@ -71,7 +71,7 @@ export function calculateHackingTime(server: Server, player: IPlayer): number {
   const diffFactor = 2.5;
   let skillFactor = diffFactor * difficultyMult + baseDiff;
   // tslint:disable-next-line
-  skillFactor /= player.hacking_skill + baseSkill;
+  skillFactor /= player.hacking + baseSkill;
 
   const hackTimeMultiplier = 5;
   const hackingTime =

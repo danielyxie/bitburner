@@ -4,29 +4,29 @@
 
 ## Gang.getTaskStats() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Get the stats of a gang task stats. This is typically used to evaluate which action should be executed next.
+Get stats of a task.
 
 <b>Signature:</b>
 
 ```typescript
-getTaskStats(name: GangTasks): GangTasksStats;
+getTaskStats(name: string): GangTaskStats;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | [GangTasks](./bitburner.gangtasks.md) | Name of the task. |
+|  name | string | Name of the task. |
 
 <b>Returns:</b>
 
-[GangTasksStats](./bitburner.gangtasksstats.md)
+[GangTaskStats](./bitburner.gangtaskstats.md)
 
 Detailed stats of a task.
 
 ## Remarks
 
 RAM cost: 1 GB
+
+Get the stats of a gang task stats. This is typically used to evaluate which action should be executed next.
 

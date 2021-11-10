@@ -9,16 +9,16 @@ Calculates cost of buying stocks.
 <b>Signature:</b>
 
 ```typescript
-getPurchaseCost(sym: StockSymbol, shares: number, posType: OrderPosition): number;
+getPurchaseCost(sym: string, shares: number, posType: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sym | [StockSymbol](./bitburner.stocksymbol.md) | Stock symbol. |
+|  sym | string | Stock symbol. |
 |  shares | number | Number of shares to purchase. |
-|  posType | [OrderPosition](./bitburner.orderposition.md) | Specifies whether the order is a “Long” or “Short” position. |
+|  posType | string | Specifies whether the order is a “Long” or “Short” position. |
 
 <b>Returns:</b>
 

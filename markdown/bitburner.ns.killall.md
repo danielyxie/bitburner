@@ -4,7 +4,7 @@
 
 ## NS.killall() method
 
-Kills all running scripts on the specified server. This function returns true if any scripts were killed, and false otherwise. In other words, it will return true if there are any scripts running on the target server.
+Terminate all scripts on a server.
 
 <b>Signature:</b>
 
@@ -27,4 +27,6 @@ True if any scripts were killed, and false otherwise.
 ## Remarks
 
 RAM cost: 0.5 GB
+
+Kills all running scripts on the specified server. This function returns true if any scripts were killed, and false otherwise. In other words, it will return true if there are any scripts running on the target server.
 

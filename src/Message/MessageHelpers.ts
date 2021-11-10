@@ -73,26 +73,26 @@ function checkForMessagesToSend(): void {
     if (!redPillFlag) {
       sendMessage(redpill);
     }
-  } else if (jumper0 && !jumper0.recvd && Player.hacking_skill >= 25) {
+  } else if (jumper0 && !jumper0.recvd && Player.hacking >= 25) {
     sendMessage(jumper0);
     const flightName = Programs.Flight.name;
     const homeComp = Player.getHomeComputer();
     if (!homeComp.programs.includes(flightName)) {
       homeComp.programs.push(flightName);
     }
-  } else if (jumper1 && !jumper1.recvd && Player.hacking_skill >= 40) {
+  } else if (jumper1 && !jumper1.recvd && Player.hacking >= 40) {
     sendMessage(jumper1);
-  } else if (cybersecTest && !cybersecTest.recvd && Player.hacking_skill >= 50) {
+  } else if (cybersecTest && !cybersecTest.recvd && Player.hacking >= 50) {
     sendMessage(cybersecTest);
-  } else if (jumper2 && !jumper2.recvd && Player.hacking_skill >= 175) {
+  } else if (jumper2 && !jumper2.recvd && Player.hacking >= 175) {
     sendMessage(jumper2);
-  } else if (nitesecTest && !nitesecTest.recvd && Player.hacking_skill >= 200) {
+  } else if (nitesecTest && !nitesecTest.recvd && Player.hacking >= 200) {
     sendMessage(nitesecTest);
-  } else if (jumper3 && !jumper3.recvd && Player.hacking_skill >= 350) {
+  } else if (jumper3 && !jumper3.recvd && Player.hacking >= 350) {
     sendMessage(jumper3);
-  } else if (jumper4 && !jumper4.recvd && Player.hacking_skill >= 490) {
+  } else if (jumper4 && !jumper4.recvd && Player.hacking >= 490) {
     sendMessage(jumper4);
-  } else if (bitrunnersTest && !bitrunnersTest.recvd && Player.hacking_skill >= 500) {
+  } else if (bitrunnersTest && !bitrunnersTest.recvd && Player.hacking >= 500) {
     sendMessage(bitrunnersTest);
   }
 }

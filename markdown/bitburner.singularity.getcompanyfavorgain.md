@@ -4,21 +4,19 @@
 
 ## Singularity.getCompanyFavorGain() method
 
-If you are not in BitNode-4, then you must have Level 2 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function will return the amount of favor you will gain for the specified company when you reset by installing Augmentations.
+Get company favor gain.
 
 <b>Signature:</b>
 
 ```typescript
-getCompanyFavorGain(companyName: CompanyName): number;
+getCompanyFavorGain(companyName: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  companyName | [CompanyName](./bitburner.companyname.md) | Name of the company. |
+|  companyName | string | Name of the company. |
 
 <b>Returns:</b>
 
@@ -28,5 +26,9 @@ Amount of favor you gain at the specified company when you reset by installing A
 
 ## Remarks
 
+RAM cost: 0.75 GB
+
 Singularity - Level 2
+
+This function will return the amount of favor you will gain for the specified company when you reset by installing Augmentations.
 

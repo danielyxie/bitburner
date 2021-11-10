@@ -4,7 +4,7 @@
 
 ## NS.scan() method
 
-Returns an array containing the hostnames or IPs of all servers that are one node way from the specified target server. The hostnames/IPs in the returned array are strings.
+Get the list servers connected to a server.
 
 <b>Signature:</b>
 
@@ -28,4 +28,6 @@ Returns an string of hostnames or IP.
 ## Remarks
 
 RAM cost: 0.2 GB
+
+Returns an array containing the hostnames or IPs of all servers that are one node way from the specified target server. The hostnames/IPs in the returned array are strings.
 

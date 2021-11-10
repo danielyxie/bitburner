@@ -127,14 +127,7 @@ function getRandomReward(): ICodingContractReward {
   reward.type = sanitizeRewardType(reward.type);
 
   // Add additional information based on the reward type
-  const factionsThatAllowHacking = Player.factions.filter((fac) => {
-    try {
-      return Factions[fac].getInfo().offerHackingWork;
-    } catch (e) {
-      console.error(`Error when trying to filter Hacking Factions for Coding Contract Generation: ${e}`);
-      return false;
-    }
-  });
+  const factionsThatAllowHacking = Player.factions.filter((fac) => Factions[fac].getInfo().offerHackingWork);
 
   switch (reward.type) {
     case CodingContractRewardType.FactionReputation: {

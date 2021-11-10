@@ -55,4 +55,5 @@ export interface ICorporation {
   getScientificResearchMultiplier(): number;
   getStarterGuide(player: IPlayer): void;
   toJSON(): any;
+  getDividends(): number;
 }

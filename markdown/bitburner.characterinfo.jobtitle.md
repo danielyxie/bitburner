@@ -9,5 +9,5 @@ Array of job positions for all companies you are employed at. Same order as 'job
 <b>Signature:</b>
 
 ```typescript
-jobTitle: CompanyField[];
+jobTitle: string[];
 ```

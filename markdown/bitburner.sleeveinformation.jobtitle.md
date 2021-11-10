@@ -9,5 +9,5 @@ job titles available to the sleeve
 <b>Signature:</b>
 
 ```typescript
-jobTitle: CompanyField[];
+jobTitle: string[];
 ```

@@ -4,11 +4,7 @@
 
 ## Hacknet.upgradeCore() method
 
-Tries to purchase n cores for the specified Hacknet Node.
-
-Returns true if it successfully purchases n cores for the Hacknet Node or if it purchases some positive amount and the Node reaches its max number of cores.
-
-Returns false otherwise.
+Upgrade the core of a hacknet node.
 
 <b>Signature:</b>
 
@@ -32,4 +28,10 @@ True if the Hacknet Node’s cores are successfully purchased, false otherwise.
 ## Remarks
 
 RAM cost: 0 GB
+
+Tries to purchase n cores for the specified Hacknet Node.
+
+Returns true if it successfully purchases n cores for the Hacknet Node or if it purchases some positive amount and the Node reaches its max number of cores.
+
+Returns false otherwise.
 

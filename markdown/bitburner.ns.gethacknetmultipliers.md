@@ -4,7 +4,7 @@
 
 ## NS.getHacknetMultipliers() method
 
-Returns an object containing the Player’s hacknet related multipliers. These multipliers are returned in fractional forms, not percentages (e.g. 1.5 instead of 150%).
+Get hacknet related multipliers.
 
 <b>Signature:</b>
 
@@ -20,6 +20,8 @@ Object containing the Player’s hacknet related multipliers.
 ## Remarks
 
 RAM cost: 4 GB
+
+Returns an object containing the Player’s hacknet related multipliers. These multipliers are returned in fractional forms, not percentages (e.g. 1.5 instead of 150%).
 
 ## Example
 

@@ -18,34 +18,9 @@ import { HacknetServer } from "../Hacknet/HacknetServer";
 import { HacknetNode } from "../Hacknet/HacknetNode";
 import { GetServer } from "../Server/AllServers";
 
-export interface INetscriptHacknet {
-  numNodes(): number;
-  maxNumNodes(): number;
-  purchaseNode(): any;
-  getPurchaseNodeCost(): number;
-  getNodeStats(i: number): any;
-  upgradeLevel(i: number, n: number): boolean;
-  upgradeRam(i: number, n: number): boolean;
-  upgradeCore(i: number, n: number): boolean;
-  upgradeCache(i: number, n: number): boolean;
-  getLevelUpgradeCost(i: number, n: number): number;
-  getRamUpgradeCost(i: number, n: number): number;
-  getCoreUpgradeCost(i: number, n: number): number;
-  getCacheUpgradeCost(i: number, n: number): number;
-  numHashes(): number;
-  hashCapacity(): number;
-  hashCost(upgName: string): number;
-  spendHashes(upgName: string, upgTarget: string): any;
-  getHashUpgradeLevel(upgName: string): number;
-  getStudyMult(): number;
-  getTrainingMult(): number;
-}
+import { Hacknet as IHacknet, NodeStats } from "../ScriptEditor/NetscriptDefinitions";
 
-export function NetscriptHacknet(
-  player: IPlayer,
-  workerScript: WorkerScript,
-  helper: INetscriptHelper,
-): INetscriptHacknet {
+export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IHacknet {
   // Utility function to get Hacknet Node object
   const getHacknetNode = function (i: any, callingFn = ""): HacknetNode | HacknetServer {
     if (isNaN(i)) {
@@ -76,26 +51,26 @@ export function NetscriptHacknet(
   };
 
   return {
-    numNodes: function (): any {
+    numNodes: function (): number {
       return player.hacknetNodes.length;
     },
-    maxNumNodes: function (): any {
+    maxNumNodes: function (): number {
       if (hasHacknetServers(player)) {
         return HacknetServerConstants.MaxServers;
       }
       return Infinity;
     },
-    purchaseNode: function (): any {
+    purchaseNode: function (): number {
       return purchaseHacknet(player);
     },
-    getPurchaseNodeCost: function (): any {
+    getPurchaseNodeCost: function (): number {
       if (hasHacknetServers(player)) {
         return getCostOfNextHacknetServer(player);
       } else {
         return getCostOfNextHacknetNode(player);
       }
     },
-    getNodeStats: function (i: any): any {
+    getNodeStats: function (i: any): NodeStats {
       const node = getHacknetNode(i, "getNodeStats");
       const hasUpgraded = hasHacknetServers(player);
       const res: any = {
@@ -115,19 +90,19 @@ export function NetscriptHacknet(
 
       return res;
     },
-    upgradeLevel: function (i: any, n: any): any {
+    upgradeLevel: function (i: any, n: any): boolean {
       const node = getHacknetNode(i, "upgradeLevel");
       return purchaseLevelUpgrade(player, node, n);
     },
-    upgradeRam: function (i: any, n: any): any {
+    upgradeRam: function (i: any, n: any): boolean {
       const node = getHacknetNode(i, "upgradeRam");
       return purchaseRamUpgrade(player, node, n);
     },
-    upgradeCore: function (i: any, n: any): any {
+    upgradeCore: function (i: any, n: any): boolean {
       const node = getHacknetNode(i, "upgradeCore");
       return purchaseCoreUpgrade(player, node, n);
     },
-    upgradeCache: function (i: any, n: any): any {
+    upgradeCache: function (i: any, n: any): boolean {
       if (!hasHacknetServers(player)) {
         return false;
       }
@@ -142,19 +117,19 @@ export function NetscriptHacknet(
       }
       return res;
     },
-    getLevelUpgradeCost: function (i: any, n: any): any {
+    getLevelUpgradeCost: function (i: any, n: any): number {
       const node = getHacknetNode(i, "upgradeLevel");
       return node.calculateLevelUpgradeCost(n, player.hacknet_node_level_cost_mult);
     },
-    getRamUpgradeCost: function (i: any, n: any): any {
+    getRamUpgradeCost: function (i: any, n: any): number {
       const node = getHacknetNode(i, "upgradeRam");
       return node.calculateRamUpgradeCost(n, player.hacknet_node_ram_cost_mult);
     },
-    getCoreUpgradeCost: function (i: any, n: any): any {
+    getCoreUpgradeCost: function (i: any, n: any): number {
       const node = getHacknetNode(i, "upgradeCore");
       return node.calculateCoreUpgradeCost(n, player.hacknet_node_core_cost_mult);
     },
-    getCacheUpgradeCost: function (i: any, n: any): any {
+    getCacheUpgradeCost: function (i: any, n: any): number {
       if (!hasHacknetServers(player)) {
         return Infinity;
       }
@@ -165,47 +140,47 @@ export function NetscriptHacknet(
       }
       return node.calculateCacheUpgradeCost(n);
     },
-    numHashes: function (): any {
+    numHashes: function (): number {
       if (!hasHacknetServers(player)) {
         return 0;
       }
       return player.hashManager.hashes;
     },
-    hashCapacity: function (): any {
+    hashCapacity: function (): number {
       if (!hasHacknetServers(player)) {
         return 0;
       }
       return player.hashManager.capacity;
     },
-    hashCost: function (upgName: any): any {
+    hashCost: function (upgName: any): number {
       if (!hasHacknetServers(player)) {
         return Infinity;
       }
 
       return player.hashManager.getUpgradeCost(upgName);
     },
-    spendHashes: function (upgName: any, upgTarget: any): any {
+    spendHashes: function (upgName: any, upgTarget: any): boolean {
       if (!hasHacknetServers(player)) {
         return false;
       }
       return purchaseHashUpgrade(player, upgName, upgTarget);
     },
-    getHashUpgradeLevel: function (upgName: any): any {
+    getHashUpgradeLevel: function (upgName: any): number {
       const level = player.hashManager.upgrades[upgName];
       if (level === undefined) {
         throw helper.makeRuntimeErrorMsg("hacknet.hashUpgradeLevel", `Invalid Hash Upgrade: ${upgName}`);
       }
       return level;
     },
-    getStudyMult: function (): any {
+    getStudyMult: function (): number {
       if (!hasHacknetServers(player)) {
-        return false;
+        return 1;
       }
       return player.hashManager.getStudyMult();
     },
-    getTrainingMult: function (): any {
+    getTrainingMult: function (): number {
       if (!hasHacknetServers(player)) {
-        return false;
+        return 1;
       }
       return player.hashManager.getTrainingMult();
     },

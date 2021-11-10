@@ -4,23 +4,19 @@
 
 ## Bladeburner.getSkillLevel() method
 
-You have to be employed in the Bladeburner division and be in BitNode-7 or have Source-File 7 in order to use this function.
-
-This function returns your level in the specified skill.
-
-The function returns -1 if an invalid skill name is passed in.
+Get skill level.
 
 <b>Signature:</b>
 
 ```typescript
-getSkillLevel(name: BladeburnerSkills): number;
+getSkillLevel(name: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | [BladeburnerSkills](./bitburner.bladeburnerskills.md) |  |
+|  name | string |  |
 
 <b>Returns:</b>
 
@@ -31,4 +27,8 @@ Level in the specified skill.
 ## Remarks
 
 RAM cost: 4 GB
+
+This function returns your level in the specified skill.
+
+The function returns -1 if an invalid skill name is passed in.
 

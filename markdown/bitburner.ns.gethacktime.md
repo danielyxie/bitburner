@@ -4,29 +4,29 @@
 
 ## NS.getHackTime() method
 
-Returns the amount of time in seconds it takes to execute the hack Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels.
+Get the execution time of a hack() call.
 
 <b>Signature:</b>
 
 ```typescript
-getHackTime(host: string, hackLvl?: number, intLvl?: number): number;
+getHackTime(host: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host or IP of target server. |
-|  hackLvl | number | Optional hacking level for the calculation. Defaults to player’s current hacking level. |
-|  intLvl | number | Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5). |
+|  host | string | Host of target server. |
 
 <b>Returns:</b>
 
 number
 
-Returns the amount of time in seconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
+Returns the amount of time in milliseconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
 
 ## Remarks
 
 RAM cost: 0.05 GB
+
+Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels.
 

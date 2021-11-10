@@ -4,9 +4,7 @@
 
 ## Gang.canRecruitMember() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Returns boolean indicating whether a member can currently be recruited
+Check if you can recruit a new gang member.
 
 <b>Signature:</b>
 
@@ -22,4 +20,6 @@ True if a member can currently be recruited, false otherwise.
 ## Remarks
 
 RAM cost: 1 GB
+
+Returns boolean indicating whether a member can currently be recruited
 

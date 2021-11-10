@@ -4,9 +4,7 @@
 
 ## Singularity.purchaseTor() method
 
-If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function allows you to automatically purchase a TOR router. The cost for purchasing a TOR router using this function is the same as if you were to manually purchase one.
+Purchase the TOR router.
 
 <b>Signature:</b>
 
@@ -21,5 +19,9 @@ True if actions is successful, false otherwise.
 
 ## Remarks
 
+RAM cost: 2 GB
+
 Singularity - Level 1
+
+This function allows you to automatically purchase a TOR router. The cost for purchasing a TOR router using this function is the same as if you were to manually purchase one.
 

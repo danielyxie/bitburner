@@ -9,7 +9,7 @@ Data representing the internal values of a crime.
 <b>Signature:</b>
 
 ```typescript
-interface CrimeStats 
+export interface CrimeStats 
 ```
 
 ## Properties

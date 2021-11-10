@@ -24,11 +24,11 @@ secrets that you've been searching for.
     Basic Gameplay <basicgameplay>
     Advanced Gameplay <advancedgameplay>
     Keyboard Shortcuts <shortcuts>
-    Script Editors <scripteditors>
     Game Frozen or Stuck? <gamefrozen>
     Guides & Tips <guidesandtips>
     Tools & Resources <toolsandresources>
     Changelog <changelog>
+    v1.0.0 script migration guide <v1.0.0_migration.rst>
     Donate <https://paypal.me/danielyxie>
 
 Indices and tables

@@ -9,5 +9,5 @@ Array of all companies at which you have jobs
 <b>Signature:</b>
 
 ```typescript
-company: CompanyName[];
+company: string[];
 ```

@@ -28,11 +28,14 @@ import {
   calculateWeakenTime,
 } from "../Hacking";
 import { Programs } from "../Programs/Programs";
+import { Formulas as IFormulas } from "../ScriptEditor/NetscriptDefinitions";
 
 export interface INetscriptFormulas {
-  basic: {
+  skills: {
     calculateSkill(exp: any, mult?: any): any;
     calculateExp(skill: any, mult?: any): any;
+  };
+  hacking: {
     hackChance(server: any, player: any): any;
     hackExp(server: any, player: any): any;
     hackPercent(server: any, player: any): any;
@@ -61,18 +64,14 @@ export interface INetscriptFormulas {
   };
 }
 
-export function NetscriptFormulas(
-  player: IPlayer,
-  workerScript: WorkerScript,
-  helper: INetscriptHelper,
-): INetscriptFormulas {
+export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IFormulas {
   const checkFormulasAccess = function (func: string): void {
     if (!player.hasProgram(Programs.Formulas.name)) {
       throw helper.makeRuntimeErrorMsg(`formulas.${func}`, `Requires Formulas.exe to run.`);
     }
   };
   return {
-    basic: {
+    skills: {
       calculateSkill: function (exp: any, mult: any = 1): any {
         checkFormulasAccess("basic.calculateSkill");
         return calculateSkill(exp, mult);
@@ -81,6 +80,8 @@ export function NetscriptFormulas(
         checkFormulasAccess("basic.calculateExp");
         return calculateExp(skill, mult);
       },
+    },
+    hacking: {
       hackChance: function (server: any, player: any): any {
         checkFormulasAccess("basic.hackChance");
         return calculateHackingChance(server, player);
@@ -99,15 +100,15 @@ export function NetscriptFormulas(
       },
       hackTime: function (server: any, player: any): any {
         checkFormulasAccess("basic.hackTime");
-        return calculateHackingTime(server, player);
+        return calculateHackingTime(server, player) * 1000;
       },
       growTime: function (server: any, player: any): any {
         checkFormulasAccess("basic.growTime");
-        return calculateGrowTime(server, player);
+        return calculateGrowTime(server, player) * 1000;
       },
       weakenTime: function (server: any, player: any): any {
         checkFormulasAccess("basic.weakenTime");
-        return calculateWeakenTime(server, player);
+        return calculateWeakenTime(server, player) * 1000;
       },
     },
     hacknetNodes: {

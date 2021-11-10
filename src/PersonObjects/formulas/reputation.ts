@@ -13,7 +13,7 @@ function mult(f: Faction): number {
 
 export function getHackingWorkRepGain(p: IPlayer, f: Faction): number {
   return (
-    ((p.hacking_skill + p.intelligence / 3) / CONSTANTS.MaxSkillLevel) *
+    ((p.hacking + p.intelligence / 3) / CONSTANTS.MaxSkillLevel) *
     p.faction_rep_mult *
     p.getIntelligenceBonus(1) *
     mult(f)
@@ -23,7 +23,7 @@ export function getHackingWorkRepGain(p: IPlayer, f: Faction): number {
 export function getFactionSecurityWorkRepGain(p: IPlayer, f: Faction): number {
   const t =
     (0.9 *
-      (p.hacking_skill / CONSTANTS.MaxSkillLevel +
+      (p.hacking / CONSTANTS.MaxSkillLevel +
         p.strength / CONSTANTS.MaxSkillLevel +
         p.defense / CONSTANTS.MaxSkillLevel +
         p.dexterity / CONSTANTS.MaxSkillLevel +
@@ -36,7 +36,7 @@ export function getFactionSecurityWorkRepGain(p: IPlayer, f: Faction): number {
 export function getFactionFieldWorkRepGain(p: IPlayer, f: Faction): number {
   const t =
     (0.9 *
-      (p.hacking_skill / CONSTANTS.MaxSkillLevel +
+      (p.hacking / CONSTANTS.MaxSkillLevel +
         p.strength / CONSTANTS.MaxSkillLevel +
         p.defense / CONSTANTS.MaxSkillLevel +
         p.dexterity / CONSTANTS.MaxSkillLevel +

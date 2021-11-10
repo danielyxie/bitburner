@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface SleeveWorkGains 
+export interface SleeveWorkGains 
 ```
 
 ## Properties

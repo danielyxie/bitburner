@@ -290,25 +290,25 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   return (
     <Context.Player.Provider value={player}>
       <Context.Router.Provider value={Router}>
-        <Overview>
-          {!ITutorial.isRunning ? (
-            <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
+        <SnackbarProvider>
+          <Overview>
+            {!ITutorial.isRunning ? (
+              <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
+            ) : (
+              <InteractiveTutorialRoot />
+            )}
+          </Overview>
+          {page === Page.Recovery ? (
+            <RecoveryRoot router={Router} />
+          ) : page === Page.BitVerse ? (
+            <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />
+          ) : page === Page.Infiltration ? (
+            <InfiltrationRoot location={location} />
+          ) : page === Page.BladeburnerCinematic ? (
+            <BladeburnerCinematic />
+          ) : page === Page.Work ? (
+            <WorkInProgressRoot />
           ) : (
-            <InteractiveTutorialRoot />
-          )}
-        </Overview>
-        {page === Page.Recovery ? (
-          <RecoveryRoot router={Router} />
-        ) : page === Page.BitVerse ? (
-          <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />
-        ) : page === Page.Infiltration ? (
-          <InfiltrationRoot location={location} />
-        ) : page === Page.BladeburnerCinematic ? (
-          <BladeburnerCinematic />
-        ) : page === Page.Work ? (
-          <WorkInProgressRoot />
-        ) : (
-          <SnackbarProvider>
             <Box display="flex" flexDirection="row" width="100%">
               <SidebarRoot player={player} router={Router} page={page} />
               <Box className={classes.root} flexGrow={1} display="block" px={1} height="100vh">
@@ -401,14 +401,14 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                 )}
               </Box>
             </Box>
-            <Snackbar />
-          </SnackbarProvider>
-        )}
-        <Unclickable />
-        <LogBoxManager />
-        <AlertManager />
-        <PromptManager />
-        <InvitationModal />
+          )}
+          <Unclickable />
+          <LogBoxManager />
+          <AlertManager />
+          <PromptManager />
+          <InvitationModal />
+          <Snackbar />
+        </SnackbarProvider>
       </Context.Router.Provider>
     </Context.Player.Provider>
   );

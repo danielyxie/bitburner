@@ -4,7 +4,7 @@
 
 ## NS.sprintf() method
 
-Complete open source JavaScript sprintf implementation
+Format a string.
 
 <b>Signature:</b>
 
@@ -28,4 +28,6 @@ Formated text.
 ## Remarks
 
 RAM cost: 0 GB
+
+see: https://github.com/alexei/sprintf.js
 

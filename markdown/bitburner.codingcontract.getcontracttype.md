@@ -4,12 +4,12 @@
 
 ## CodingContract.getContractType() method
 
-Returns a name describing the type of problem posed by the Coding Contract. (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
+Get the type of a coding contract.
 
 <b>Signature:</b>
 
 ```typescript
-getContractType(fn: string, host?: string): CodingContractTypes;
+getContractType(fn: string, host?: string): string;
 ```
 
 ## Parameters
@@ -17,15 +17,17 @@ getContractType(fn: string, host?: string): CodingContractTypes;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  fn | string | Filename of the contract. |
-|  host | string | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
-[CodingContractTypes](./bitburner.codingcontracttypes.md)
+string
 
 Name describing the type of problem posed by the Coding Contract.
 
 ## Remarks
 
 RAM cost: 5 GB
+
+Returns a name describing the type of problem posed by the Coding Contract. (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
 

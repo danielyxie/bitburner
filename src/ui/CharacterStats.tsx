@@ -200,6 +200,9 @@ function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
     if (src.hacknet) {
       parts.push([`Hacknet Nodes:`, <Money money={src.hacknet} />]);
     }
+    if (src.hacknet_expenses) {
+      parts.push([`Hacknet Nodes Expenses:`, <Money money={src.hacknet_expenses} />]);
+    }
     if (src.hospitalization) {
       parts.push([`Hospitalization:`, <Money money={src.hospitalization} />]);
     }
@@ -303,7 +306,7 @@ export function CharacterStats(): React.ReactElement {
                 <Typography noWrap>Hacking:&nbsp;</Typography>
               </TableCell>
               <TableCell align="right">
-                <Typography noWrap>{numeralWrapper.formatSkill(player.hacking_skill)}&nbsp;</Typography>
+                <Typography noWrap>{numeralWrapper.formatSkill(player.hacking)}&nbsp;</Typography>
               </TableCell>
               <TableCell align="right">
                 <Typography noWrap>({numeralWrapper.formatExp(player.hacking_exp)} exp)</Typography>

@@ -4,22 +4,22 @@
 
 ## Gang.getEquipmentNames() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Get the name of all possible equipment/upgrades you can purchase for your Gang Members. This includes Augmentations.
+List equipment names.
 
 <b>Signature:</b>
 
 ```typescript
-getEquipmentNames(): (GangEquipment | GangAugmentations)[];
+getEquipmentNames(): string[];
 ```
 <b>Returns:</b>
 
-([GangEquipment](./bitburner.gangequipment.md) \| [GangAugmentations](./bitburner.gangaugmentations.md)<!-- -->)\[\]
+string\[\]
 
 Names of all Equpiment/Augmentations.
 
 ## Remarks
 
 RAM cost: 1 GB
+
+Get the name of all possible equipment/upgrades you can purchase for your Gang Members. This includes Augmentations.
 

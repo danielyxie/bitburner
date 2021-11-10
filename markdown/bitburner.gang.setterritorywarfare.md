@@ -4,9 +4,7 @@
 
 ## Gang.setTerritoryWarfare() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Set whether or not the gang should engage in territory warfare
+Enable/Disable territory warfare.
 
 <b>Signature:</b>
 
@@ -27,4 +25,6 @@ void
 ## Remarks
 
 RAM cost: 2 GB
+
+Set whether or not the gang should engage in territory warfare
 

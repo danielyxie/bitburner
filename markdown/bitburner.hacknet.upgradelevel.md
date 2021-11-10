@@ -4,11 +4,7 @@
 
 ## Hacknet.upgradeLevel() method
 
-Tries to upgrade the level of the specified Hacknet Node by n.
-
-Returns true if the Hacknet Node’s level is successfully upgraded by n or if it is upgraded by some positive amount and the Node reaches its max level.
-
-Returns false otherwise.
+Upgrade the level of a hacknet node.
 
 <b>Signature:</b>
 
@@ -32,4 +28,10 @@ True if the Hacknet Node’s level is successfully upgraded, false otherwise.
 ## Remarks
 
 RAM cost: 0 GB
+
+Tries to upgrade the level of the specified Hacknet Node by n.
+
+Returns true if the Hacknet Node’s level is successfully upgraded by n or if it is upgraded by some positive amount and the Node reaches its max level.
+
+Returns false otherwise.
 

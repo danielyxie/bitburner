@@ -4,9 +4,7 @@
 
 ## NS.hackAnalyzeThreads() method
 
-This function returns the number of script threads you need when running the hack command to steal the specified amount of money from the target server. If hackAmount is less than zero or greater than the amount of money available on the server, then this function returns -1.
-
-Warning: The value returned by this function isn’t necessarily a whole number.
+Predict the effect of hack.
 
 <b>Signature:</b>
 
@@ -30,6 +28,10 @@ The number of threads needed to hack the server for hackAmount money.
 ## Remarks
 
 RAM cost: 1 GB
+
+This function returns the number of script threads you need when running the hack command to steal the specified amount of money from the target server. If hackAmount is less than zero or greater than the amount of money available on the server, then this function returns -1.
+
+Warning: The value returned by this function isn’t necessarily a whole number.
 
 ## Example
 

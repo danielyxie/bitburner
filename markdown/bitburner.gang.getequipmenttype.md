@@ -4,29 +4,29 @@
 
 ## Gang.getEquipmentType() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Get the specified equipment type.
+Get type of an equipment.
 
 <b>Signature:</b>
 
 ```typescript
-getEquipmentType(equipName: GangEquipment | GangAugmentations): GangEquipmentType;
+getEquipmentType(equipName: string): string;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  equipName | [GangEquipment](./bitburner.gangequipment.md) \| [GangAugmentations](./bitburner.gangaugmentations.md) | Name of equipment. |
+|  equipName | string | Name of equipment. |
 
 <b>Returns:</b>
 
-[GangEquipmentType](./bitburner.gangequipmenttype.md)
+string
 
 Type of the equipment.
 
 ## Remarks
 
 RAM cost: 2 GB
+
+Get the specified equipment type.
 

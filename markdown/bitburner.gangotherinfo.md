@@ -2,16 +2,11 @@
 
 [Home](./index.md) &gt; [bitburner](./bitburner.md) &gt; [GangOtherInfo](./bitburner.gangotherinfo.md)
 
-## GangOtherInfo type
+## GangOtherInfo interface
 
 
 <b>Signature:</b>
 
 ```typescript
-type GangOtherInfo = {
-  /** Stock Symbol */
-  [key in GangName]: GangOtherInfoObject[];
-};
+export interface GangOtherInfo 
 ```
-<b>References:</b> [GangName](./bitburner.gangname.md)<!-- -->, [GangOtherInfoObject](./bitburner.gangotherinfoobject.md)
-

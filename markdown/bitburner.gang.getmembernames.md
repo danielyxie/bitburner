@@ -4,9 +4,7 @@
 
 ## Gang.getMemberNames() method
 
-If you are not in BitNode-2, then you must have Source-File 2 in order to use this function.
-
-Get the names of all Gang members
+List all gang members.
 
 <b>Signature:</b>
 
@@ -22,4 +20,6 @@ Names of all Gang members.
 ## Remarks
 
 RAM cost: 1 GB
+
+Get the names of all Gang members
 

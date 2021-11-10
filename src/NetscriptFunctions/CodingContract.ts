@@ -4,20 +4,13 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { getRamCost } from "../Netscript/RamCostGenerator";
 import { is2DArray } from "../utils/helpers/is2DArray";
 import { CodingContract } from "../CodingContracts";
-
-export interface INetscriptCodingContract {
-  attempt(answer: any, fn: any, ip?: any, options?: { returnReward: any }): any;
-  getContractType(fn: any, ip?: any): any;
-  getData(fn: any, ip?: any): any;
-  getDescription(fn: any, ip?: any): any;
-  getNumTriesRemaining(fn: any, ip?: any): any;
-}
+import { CodingContract as ICodingContract } from "../ScriptEditor/NetscriptDefinitions";
 
 export function NetscriptCodingContract(
   player: IPlayer,
   workerScript: WorkerScript,
   helper: INetscriptHelper,
-): INetscriptCodingContract {
+): ICodingContract {
   const getCodingContract = function (func: any, ip: any, fn: any): CodingContract {
     const server = helper.getServer(ip, func);
     const contract = server.getContract(fn);
@@ -29,7 +22,12 @@ export function NetscriptCodingContract(
   };
 
   return {
-    attempt: function (answer: any, fn: any, ip: any = workerScript.hostname, { returnReward }: any = {}): any {
+    attempt: function (
+      answer: any,
+      fn: any,
+      ip: any = workerScript.hostname,
+      { returnReward }: any = {},
+    ): boolean | string {
       helper.updateDynamicRam("attempt", getRamCost("codingcontract", "attempt"));
       const contract = getCodingContract("attempt", ip, fn);
 
@@ -70,7 +68,7 @@ export function NetscriptCodingContract(
         return returnReward ? "" : false;
       }
     },
-    getContractType: function (fn: any, ip: any = workerScript.hostname): any {
+    getContractType: function (fn: any, ip: any = workerScript.hostname): string {
       helper.updateDynamicRam("getContractType", getRamCost("codingcontract", "getContractType"));
       const contract = getCodingContract("getContractType", ip, fn);
       return contract.getType();
@@ -95,12 +93,12 @@ export function NetscriptCodingContract(
         return data;
       }
     },
-    getDescription: function (fn: any, ip: any = workerScript.hostname): any {
+    getDescription: function (fn: any, ip: any = workerScript.hostname): string {
       helper.updateDynamicRam("getDescription", getRamCost("codingcontract", "getDescription"));
       const contract = getCodingContract("getDescription", ip, fn);
       return contract.getDescription();
     },
-    getNumTriesRemaining: function (fn: any, ip: any = workerScript.hostname): any {
+    getNumTriesRemaining: function (fn: any, ip: any = workerScript.hostname): number {
       helper.updateDynamicRam("getNumTriesRemaining", getRamCost("codingcontract", "getNumTriesRemaining"));
       const contract = getCodingContract("getNumTriesRemaining", ip, fn);
       return contract.getMaxNumTries() - contract.tries;

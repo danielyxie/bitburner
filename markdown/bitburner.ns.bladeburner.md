@@ -4,7 +4,7 @@
 
 ## NS.bladeburner property
 
-Namespace for bladeburner related functions.
+Namespace for bladeburner functions.
 
 <b>Signature:</b>
 

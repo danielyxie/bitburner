@@ -4,7 +4,7 @@
 
 ## CodingContract.getDescription() method
 
-Get the full text description for the problem posed by the Coding Contract.
+Get the description.
 
 <b>Signature:</b>
 
@@ -17,7 +17,7 @@ getDescription(fn: string, host?: string): string;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  fn | string | Filename of the contract. |
-|  host | string | Host or IP of the server containing the contract. Optional. Defaults to current server if not provided. |
+|  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
@@ -28,4 +28,6 @@ Contract’s text description.
 ## Remarks
 
 RAM cost: 5 GB
+
+Get the full text description for the problem posed by the Coding Contract.
 

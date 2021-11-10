@@ -4,21 +4,19 @@
 
 ## Singularity.purchaseProgram() method
 
-If you are not in BitNode-4, then you must have Level 1 of Source-File 4 in order to use this function and the RAM cost is doubled.
-
-This function allows you to automatically purchase programs. You MUST have a TOR router in order to use this function. The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web using the Terminal buy command.
+Purchase a program from the dark web.
 
 <b>Signature:</b>
 
 ```typescript
-purchaseProgram(programName: Programs): boolean;
+purchaseProgram(programName: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  programName | [Programs](./bitburner.programs.md) | Name of program to purchase. |
+|  programName | string | Name of program to purchase. |
 
 <b>Returns:</b>
 
@@ -28,7 +26,11 @@ True if the specified program is purchased, and false otherwise.
 
 ## Remarks
 
+RAM cost: 2 GB
+
 Singularity - Level 1
+
+This function allows you to automatically purchase programs. You MUST have a TOR router in order to use this function. The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web using the Terminal buy command.
 
 ## Example
 

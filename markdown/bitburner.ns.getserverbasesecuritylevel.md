@@ -4,7 +4,10 @@
 
 ## NS.getServerBaseSecurityLevel() method
 
-Returns the base security level of the target server. This is the security level that the server starts out with. This is different than getServerSecurityLevel because getServerSecurityLevel returns the current security level of a server, which can constantly change due to hack, grow, and weaken, calls on that server. The base security level will stay the same until you reset by installing an Augmentation(s).
+> Warning: This API is now obsolete.
+> 
+> DEPRECATED
+> 
 
 <b>Signature:</b>
 
@@ -16,7 +19,7 @@ getServerBaseSecurityLevel(host: string): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Host or IP of target server. |
+|  host | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -26,5 +29,5 @@ Base security level of the target server.
 
 ## Remarks
 
-RAM cost: 0.1 GB
+RAM cost: 0.1 GB Returns the base security level of the target server. This is the security level that the server starts out with. This is different than getServerSecurityLevel because getServerSecurityLevel returns the current security level of a server, which can constantly change due to hack, grow, and weaken, calls on that server. The base security level will stay the same until you reset by installing an Augmentation(s).
 

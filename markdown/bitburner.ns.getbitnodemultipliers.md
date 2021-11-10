@@ -4,9 +4,7 @@
 
 ## NS.getBitNodeMultipliers() method
 
-Returns an object containing the current BitNode multipliers. This function requires Source-File 5 in order to run. The multipliers are returned in decimal forms (e.g. 1.5 instead of 150%). The multipliers represent the difference between the current BitNode and the original BitNode (BitNode-1).
-
-For example, if the CrimeMoney multiplier has a value of 0.1, then that means that committing crimes in the current BitNode will only give 10% of the money you would have received in BitNode-1.
+Get the current Bitnode multipliers.
 
 <b>Signature:</b>
 
@@ -22,6 +20,10 @@ Object containing the current BitNode multipliers.
 ## Remarks
 
 RAM cost: 4 GB
+
+Returns an object containing the current BitNode multipliers. This function requires Source-File 5 in order to run. The multipliers are returned in decimal forms (e.g. 1.5 instead of 150%). The multipliers represent the difference between the current BitNode and the original BitNode (BitNode-1).
+
+For example, if the CrimeMoney multiplier has a value of 0.1, then that means that committing crimes in the current BitNode will only give 10% of the money you would have received in BitNode-1.
 
 ## Example
 
