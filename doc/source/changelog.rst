@@ -8,7 +8,8 @@ v1.0.0 - 2021-11-10 Breaking the API :( (blame hydroflame)
 
 ** Announcement ** 
 
-* Several API breaks have been implemented, a guide was written to help players migrate.
+* Several API breaks have been implemented.
+* See the v1.0.0 migration guide https://bitburner.readthedocs.io/en/latest/v1.0.0_migration.html
 * Everyone gets 10 free neuroflux level.
 
 ** Netscript **

@@ -318,6 +318,8 @@ function loadGame(saveString: string): boolean {
         createBetaUpdateText();
       } else if (ver !== CONSTANTS.VersionNumber) {
         createNewUpdateText();
+        createNewUpdateText();
+        createNewUpdateText();
       }
     } catch (e) {
       createNewUpdateText();

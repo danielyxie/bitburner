@@ -283,32 +283,11 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v1.0.0 - 2021-XX-XX Pre-Steam
-    -------------------------------------------
+    v1.0.0 - 2021-11-10 Breaking the API :(
+    -----------------------------
 
-    ** API BREAKS ** 
-
-    * bladeburner.getActionTime will return milliseconds instead of seconds.
-    * getHackTime will return milliseconds instead of seconds.
-    * getGrowTime will return milliseconds instead of seconds.
-    * getWeakenTime will return milliseconds instead of seconds.
-    * hackAnalyzePercent renamed to hackAnalyze
-    * hackAnalyzePercent will return decimal instead of percentage
-    * hackChance (not formulas.basic.hackChance) renamed to hackAnalyzeChance
-    * getPurchasedServers won't let you query for ips instead of hostnames.
-    * getStats is deprecated in favor getPlayer
-    * getCharacterInformation is deprecated in favor getPlayer
-    * getServerRam deprecated in favor of getServerMaxRam and getServerUsedRam
-    * getServerBaseSecurityLevel will be deprecated in favor of nothing, it's not really used.
-    * sleep can no longer be called simultenaously, a new function called asleep will let you.
-    * write returns promise (needs to be awaited).
-    * scp returns a promise (needs to be awaited).
-    * free port, write, read
-    * write, read does not support port anymore, writePort and readPort does.
-
-    ** Misc. **
-
-    * nerf noodle bar
+    This update is very important. Please see the patch notes at 
+    https://bitburner.readthedocs.io/en/latest/changelog.html
 
 `,
 };
