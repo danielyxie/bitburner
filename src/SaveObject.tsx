@@ -228,7 +228,6 @@ function evaluateVersionCompatibility(ver: string | number): void {
       Player.reapplyAllSourceFiles();
     }
   }
-  v1APIBreak();
 }
 
 function loadGame(saveString: string): boolean {
