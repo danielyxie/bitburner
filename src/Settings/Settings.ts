@@ -44,9 +44,9 @@ interface IDefaultSettings {
   EnableBashHotkeys: boolean;
 
   /**
-   * Enable timestamps
+   * Timestamps format
    */
-  EnableTimestamps: boolean;
+  TimestampsFormat: string;
 
   /**
    * Locale used for display numbers
@@ -82,11 +82,6 @@ interface IDefaultSettings {
    * Whether the user should be prompted to join each faction via a dialog box.
    */
   SuppressFactionInvites: boolean;
-
-  /**
-   * Whether to show a popup message when player is hospitalized from taking too much damage
-   */
-  SuppressHospitalizationPopup: boolean;
 
   /**
    * Whether the user should be shown a dialog box whenever they receive a new message file.
@@ -171,7 +166,7 @@ export const defaultSettings: IDefaultSettings = {
   DisableHotkeys: false,
   DisableTextEffects: false,
   EnableBashHotkeys: false,
-  EnableTimestamps: false,
+  TimestampsFormat: "",
   Locale: "en",
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
@@ -179,7 +174,6 @@ export const defaultSettings: IDefaultSettings = {
   SaveGameOnFileSave: true,
   SuppressBuyAugmentationConfirmation: false,
   SuppressFactionInvites: false,
-  SuppressHospitalizationPopup: false,
   SuppressMessages: false,
   SuppressTravelConfirmation: false,
   SuppressBladeburnerPopup: false,
@@ -231,7 +225,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   DisableHotkeys: defaultSettings.DisableHotkeys,
   DisableTextEffects: defaultSettings.DisableTextEffects,
   EnableBashHotkeys: defaultSettings.EnableBashHotkeys,
-  EnableTimestamps: defaultSettings.EnableTimestamps,
+  TimestampsFormat: defaultSettings.TimestampsFormat,
   Locale: "en",
   MaxLogCapacity: defaultSettings.MaxLogCapacity,
   MaxPortCapacity: defaultSettings.MaxPortCapacity,
@@ -241,7 +235,6 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SaveGameOnFileSave: defaultSettings.SaveGameOnFileSave,
   SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
   SuppressFactionInvites: defaultSettings.SuppressFactionInvites,
-  SuppressHospitalizationPopup: defaultSettings.SuppressHospitalizationPopup,
   SuppressMessages: defaultSettings.SuppressMessages,
   SuppressTravelConfirmation: defaultSettings.SuppressTravelConfirmation,
   SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,
@@ -289,5 +282,6 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     Object.assign(Settings.theme, save.theme);
     delete save.theme;
     Object.assign(Settings, save);
+    console.log(Settings.TimestampsFormat);
   },
 };

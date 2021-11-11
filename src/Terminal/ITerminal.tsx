@@ -4,7 +4,7 @@ import { Script } from "../Script/Script";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IRouter } from "../ui/Router";
 import { Settings } from "../Settings/Settings";
-import { getTimestamp } from "../utils/helpers/getTimestamp";
+import { formatTime } from "../utils/helpers/formatTime";
 
 export class Output {
   text: string;
@@ -13,7 +13,7 @@ export class Output {
     text: string,
     color: "inherit" | "initial" | "primary" | "secondary" | "error" | "textPrimary" | "textSecondary" | undefined,
   ) {
-    if (Settings.EnableTimestamps) text = "[" + getTimestamp() + "] " + text;
+    if (Settings.TimestampsFormat) text = "[" + formatTime(Settings.TimestampsFormat) + "] " + text;
     this.text = text;
     this.color = color;
   }
@@ -22,10 +22,10 @@ export class Output {
 export class RawOutput {
   raw: React.ReactNode;
   constructor(node: React.ReactNode) {
-    if (Settings.EnableTimestamps)
+    if (Settings.TimestampsFormat)
       node = (
         <>
-          [{getTimestamp()}] {node}
+          [{formatTime(Settings.TimestampsFormat)}] {node}
         </>
       );
     this.raw = node;
@@ -36,7 +36,7 @@ export class Link {
   hostname: string;
   dashes: string;
   constructor(dashes: string, hostname: string) {
-    if (Settings.EnableTimestamps) dashes = "[" + getTimestamp() + "] " + dashes;
+    if (Settings.TimestampsFormat) dashes = "[" + formatTime(Settings.TimestampsFormat) + "] " + dashes;
     this.hostname = hostname;
     this.dashes = dashes;
   }

@@ -10,7 +10,7 @@ getPlayer() Netscript Function
     Returns an object with the Player's stats. The object has the following properties::
 
         {
-            hacking_skill:                   Current Hacking skill level
+            hacking:                         Current Hacking skill level
             hp:                              Current health points
             max_hp:                          Maximum health points
             strength:                        Current Strength skill level

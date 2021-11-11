@@ -855,10 +855,7 @@ export function startFactionHackWork(this: IPlayer, router: IRouter, faction: Fa
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkHacking);
 
   this.workHackExpGainRate = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workRepGainRate =
-    ((this.hacking + this.intelligence) / CONSTANTS.MaxSkillLevel) *
-    this.faction_rep_mult *
-    this.getIntelligenceBonus(0.5);
+  this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
 
   this.factionWorkType = CONSTANTS.FactionWorkHacking;
   this.currentWorkFactionDescription = "carrying out hacking contracts";
@@ -1695,9 +1692,7 @@ export function regenerateHp(this: IPlayer, amt: number): void {
 
 export function hospitalize(this: IPlayer): number {
   const cost = getHospitalizationCost(this);
-  if (Settings.SuppressHospitalizationPopup === false) {
-    SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, "warning");
-  }
+  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, "warning");
 
   this.loseMoney(cost, "hospitalization");
   this.hp = this.max_hp;
@@ -2631,6 +2626,7 @@ export function canAccessResleeving(this: IPlayer): boolean {
 export function giveExploit(this: IPlayer, exploit: Exploit): void {
   if (!this.exploits.includes(exploit)) {
     this.exploits.push(exploit);
+    SnackbarEvents.emit("SF -1 acquired!", "success");
   }
 }
 

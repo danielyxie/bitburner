@@ -42,11 +42,11 @@ export function OptionsModal(props: IProps): React.ReactElement {
       <Box display="flex" flexDirection="row" alignItems="center">
         <Typography>Theme: </Typography>
         <Select onChange={(event) => setTheme(event.target.value)} value={theme}>
-          <MenuItem value="vs-dark">dark</MenuItem>
-          <MenuItem value="light">light</MenuItem>
           <MenuItem value="monokai">monokai</MenuItem>
           <MenuItem value="solarized-dark">solarized-dark</MenuItem>
           <MenuItem value="solarized-light">solarized-light</MenuItem>
+          <MenuItem value="vs-dark">dark</MenuItem>
+          <MenuItem value="light">light</MenuItem>
         </Select>
       </Box>
 
