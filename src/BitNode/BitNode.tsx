@@ -67,7 +67,7 @@ BitNodes["BitNode2"] = new BitNode(
       <br />
       <br />
       Organized crime groups quickly filled the void of power left behind from the collapse of Western government in the
-      2050s. As society and civlization broke down, people quickly succumbed to the innate human impulse of evil and
+      2050s. As society and civilization broke down, people quickly succumbed to the innate human impulse of evil and
       savagery. The organized crime factions quickly rose to the top of the modern world.
       <br />
       <br />

@@ -82,7 +82,7 @@ List of Factions and their Requirements
 |                     |                |   server                                |                               |
 |                     |                |                                         |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
-|                     | Bitrunners     | * Install a backdoor on the run4theh111z|                               |
+|                     | BitRunners     | * Install a backdoor on the run4theh111z|                               |
 |                     |                |   server                                |                               |
 |                     |                |                                         |                               |
 +---------------------+----------------+-----------------------------------------+-------------------------------+

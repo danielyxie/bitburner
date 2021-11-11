@@ -84,11 +84,6 @@ interface IDefaultSettings {
   SuppressFactionInvites: boolean;
 
   /**
-   * Whether to show a popup message when player is hospitalized from taking too much damage
-   */
-  SuppressHospitalizationPopup: boolean;
-
-  /**
    * Whether the user should be shown a dialog box whenever they receive a new message file.
    */
   SuppressMessages: boolean;
@@ -179,7 +174,6 @@ export const defaultSettings: IDefaultSettings = {
   SaveGameOnFileSave: true,
   SuppressBuyAugmentationConfirmation: false,
   SuppressFactionInvites: false,
-  SuppressHospitalizationPopup: false,
   SuppressMessages: false,
   SuppressTravelConfirmation: false,
   SuppressBladeburnerPopup: false,
@@ -241,7 +235,6 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SaveGameOnFileSave: defaultSettings.SaveGameOnFileSave,
   SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
   SuppressFactionInvites: defaultSettings.SuppressFactionInvites,
-  SuppressHospitalizationPopup: defaultSettings.SuppressHospitalizationPopup,
   SuppressMessages: defaultSettings.SuppressMessages,
   SuppressTravelConfirmation: defaultSettings.SuppressTravelConfirmation,
   SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,

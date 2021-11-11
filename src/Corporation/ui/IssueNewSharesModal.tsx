@@ -38,7 +38,7 @@ function EffectText(props: IEffectTextProps): React.ReactElement {
 
   return (
     <Typography>
-      Issue ${numeralWrapper.format(newShares, "0.000a")} new shares for{" "}
+      Issue {numeralWrapper.format(newShares, "0.000a")} new shares for{" "}
       {numeralWrapper.formatMoney(newShares * newSharePrice)}?
     </Typography>
   );

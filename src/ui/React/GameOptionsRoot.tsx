@@ -66,9 +66,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [suppressBuyAugmentationConfirmation, setSuppressBuyAugmentationConfirmation] = useState(
     Settings.SuppressBuyAugmentationConfirmation,
   );
-  const [suppressHospitalizationPopup, setSuppressHospitalizationPopup] = useState(
-    Settings.SuppressHospitalizationPopup,
-  );
 
   const [suppressBladeburnerPopup, setSuppressBladeburnerPopup] = useState(Settings.SuppressBladeburnerPopup);
 
@@ -127,11 +124,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handleSuppressBuyAugmentationConfirmationChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setSuppressBuyAugmentationConfirmation(event.target.checked);
     Settings.SuppressBuyAugmentationConfirmation = event.target.checked;
-  }
-
-  function handleSuppressHospitalizationPopupChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setSuppressHospitalizationPopup(event.target.checked);
-    Settings.SuppressHospitalizationPopup = event.target.checked;
   }
 
   function handleSuppressBladeburnerPopupChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -326,7 +318,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Suppress messages</Typography>
+                    <Typography>Suppress story messages</Typography>
                   </Tooltip>
                 }
               />
@@ -384,25 +376,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                     }
                   >
                     <Typography>Suppress buy augmentation confirmation</Typography>
-                  </Tooltip>
-                }
-              />
-            </ListItem>
-            <ListItem>
-              <FormControlLabel
-                control={
-                  <Switch checked={suppressHospitalizationPopup} onChange={handleSuppressHospitalizationPopupChange} />
-                }
-                label={
-                  <Tooltip
-                    title={
-                      <Typography>
-                        If this is set, a popup message will no longer be shown when you are hospitalized after taking
-                        too much damage.
-                      </Typography>
-                    }
-                  >
-                    <Typography>Suppress hospitalization popup</Typography>
                   </Tooltip>
                 }
               />

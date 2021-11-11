@@ -64,7 +64,7 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
     },
   });
 
-  monaco.editor.defineTheme("solarish-dark", {
+  monaco.editor.defineTheme("solarized-dark", {
     base: "vs-dark",
     inherit: true,
     rules: [
@@ -113,16 +113,16 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         foreground: "268bd2",
       },
       {
-      	token: "type.identifier.js",
-	foreground: "b58900",
+        token: "type.identifier.js",
+        foreground: "b58900",
       },
       {
-      	token: "delimiter.square.js",
-	foreground: "0087ff",
+        token: "delimiter.square.js",
+        foreground: "0087ff",
       },
       {
-      	token: "delimiter.bracket.js",
-	foreground: "0087ff",
+        token: "delimiter.bracket.js",
+        foreground: "0087ff",
       },
       {
         token: "this",
@@ -141,13 +141,13 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
     },
   });
 
-  monaco.editor.defineTheme("solarish-light", {
+  monaco.editor.defineTheme("solarized-light", {
     base: "vs",
     inherit: true,
     rules: [
       {
         foreground: "657b83",
-	background: "fdf6e3",
+        background: "fdf6e3",
         token: "",
       },
       {
@@ -191,16 +191,16 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         foreground: "268bd2",
       },
       {
-      	token: "type.identifier.js",
-	foreground: "b58900",
+        token: "type.identifier.js",
+        foreground: "b58900",
       },
       {
-      	token: "delimiter.square.js",
-	foreground: "0087ff",
+        token: "delimiter.square.js",
+        foreground: "0087ff",
       },
       {
-      	token: "delimiter.bracket.js",
-	foreground: "0087ff",
+        token: "delimiter.bracket.js",
+        foreground: "0087ff",
       },
       {
         token: "this",

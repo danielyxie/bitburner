@@ -35,8 +35,6 @@ export const Literatures: IMap<Literature> = {};
     "<u>Getting Started with Corporations</u><br>" +
     "To get started, visit the City Hall in Sector-12 in order to create a Corporation. This requires " +
     "$150b of your own money, but this $150b will get put into your Corporation's funds. " +
-    "After creating your Corporation, you will see it listed as one of the locations in the city. Click on " +
-    "your Corporation in order to manage it.<br><br>" +
     "Your Corporation can have many different divisions, each in a different Industry. There are many different " +
     "types of Industries, each with different properties. To create your first division, click the " +
     "'Expand into new Industry' button at the top of the management UI. The Agriculture " +

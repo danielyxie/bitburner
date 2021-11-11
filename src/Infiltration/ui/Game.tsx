@@ -119,7 +119,6 @@ export function Game(props: IProps): React.ReactElement {
   }
 
   function Progress(): React.ReactElement {
-    console.log(results);
     return (
       <Typography variant="h4">
         <span style={{ color: "gray" }}>{results.slice(0, results.length - 1)}</span>
