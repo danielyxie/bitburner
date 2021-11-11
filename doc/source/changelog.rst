@@ -61,7 +61,7 @@ v1.0.0 - 2021-11-10 Breaking the API :( (blame hydroflame)
 * Button colors can be edited.
 * Added 2 new colors in the theme editor: background primary and background secondary.
 * infiltration uses key instead of keycode so it should work better on non-american keyboards.
-* nerf noodle bar.
+* buff noodle bar.
 
 v0.58.0 - 2021-10-27 Road to Steam (hydroflame & community)
 -----------------------------------------------------------
