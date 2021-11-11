@@ -44,9 +44,9 @@ interface IDefaultSettings {
   EnableBashHotkeys: boolean;
 
   /**
-   * Enable timestamps
+   * Timestamps format
    */
-  EnableTimestamps: boolean;
+  TimestampsFormat: string;
 
   /**
    * Locale used for display numbers
@@ -166,7 +166,7 @@ export const defaultSettings: IDefaultSettings = {
   DisableHotkeys: false,
   DisableTextEffects: false,
   EnableBashHotkeys: false,
-  EnableTimestamps: false,
+  TimestampsFormat: "YYYY-MM-DD HH:MM:SS",
   Locale: "en",
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
@@ -225,7 +225,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   DisableHotkeys: defaultSettings.DisableHotkeys,
   DisableTextEffects: defaultSettings.DisableTextEffects,
   EnableBashHotkeys: defaultSettings.EnableBashHotkeys,
-  EnableTimestamps: defaultSettings.EnableTimestamps,
+  TimestampsFormat: defaultSettings.TimestampsFormat,
   Locale: "en",
   MaxLogCapacity: defaultSettings.MaxLogCapacity,
   MaxPortCapacity: defaultSettings.MaxPortCapacity,
@@ -282,5 +282,6 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     Object.assign(Settings.theme, save.theme);
     delete save.theme;
     Object.assign(Settings, save);
+    console.log(Settings.TimestampsFormat);
   },
 };

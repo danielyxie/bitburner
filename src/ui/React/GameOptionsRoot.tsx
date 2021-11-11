@@ -73,7 +73,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [disableASCIIArt, setDisableASCIIArt] = useState(Settings.DisableASCIIArt);
   const [disableTextEffects, setDisableTextEffects] = useState(Settings.DisableTextEffects);
   const [enableBashHotkeys, setEnableBashHotkeys] = useState(Settings.EnableBashHotkeys);
-  const [enableTimestamps, setEnableTimestamps] = useState(Settings.EnableTimestamps);
+  const [enableTimestamps, setEnableTimestamps] = useState(!!Settings.TimestampsFormat);
   const [saveGameOnFileSave, setSaveGameOnFileSave] = useState(Settings.SaveGameOnFileSave);
 
   const [locale, setLocale] = useState(Settings.Locale);
@@ -156,7 +156,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   }
   function handleEnableTimestampsChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setEnableTimestamps(event.target.checked);
-    Settings.EnableTimestamps = event.target.checked;
+    Settings.TimestampsFormat = event.target.checked ? "YYYY-MM-DD HH:MM:SS" : "";
   }
   function handleSaveGameOnFile(event: React.ChangeEvent<HTMLInputElement>): void {
     setSaveGameOnFileSave(event.target.checked);

@@ -354,7 +354,8 @@ export function Root(props: IProps): React.ReactElement {
         .find((l: any) => l.id === "javascript")
         .loader();
       l.language.tokenizer.root.unshift(["ns", { token: "ns" }]);
-      for (const symbol of symbols) l.language.tokenizer.root.unshift([symbol, { token: "netscriptfunction" }]);
+      for (const symbol of symbols)
+        l.language.tokenizer.root.unshift(["[^a-zA-Z]" + symbol + "[^a-zA-Z]", { token: "netscriptfunction" }]);
       const otherKeywords = ["let", "const", "var", "function"];
       const otherKeyvars = ["true", "false", "null", "undefined"];
       otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeywords" }]));
