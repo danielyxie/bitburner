@@ -134,6 +134,8 @@ export interface IPlayer {
   className: string;
   currentWorkFactionName: string;
   workType: string;
+  workCostMult: number;
+  workExpMult: number;
   currentWorkFactionDescription: string;
   timeWorked: number;
   workMoneyGained: number;

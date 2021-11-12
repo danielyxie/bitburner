@@ -139,6 +139,8 @@ export class PlayerObject implements IPlayer {
   className: string;
   currentWorkFactionName: string;
   workType: string;
+  workCostMult: number;
+  workExpMult: number;
   currentWorkFactionDescription: string;
   timeWorked: number;
   workMoneyGained: number;
@@ -377,6 +379,8 @@ export class PlayerObject implements IPlayer {
     this.isWorking = false;
     this.focus = false;
     this.workType = "";
+    this.workCostMult = 1;
+    this.workExpMult = 1;
 
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";

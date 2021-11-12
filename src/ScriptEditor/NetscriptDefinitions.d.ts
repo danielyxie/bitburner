@@ -470,6 +470,8 @@ export interface NodeStats {
   level: number;
   /** Node's RAM */
   ram: number;
+  /** Node's used RAM */
+  ramUsed: number;
   /** Node's number of cores */
   cores: number;
   /** Cache level. Only applicable for Hacknet Servers */

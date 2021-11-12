@@ -77,6 +77,7 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript, he
         name: node instanceof HacknetServer ? node.hostname : node.name,
         level: node.level,
         ram: node instanceof HacknetServer ? node.maxRam : node.ram,
+        ramUsed: node instanceof HacknetServer ? node.ramUsed : undefined,
         cores: node.cores,
         production: node instanceof HacknetServer ? node.hashRate : node.moneyGainRatePerSecond,
         timeOnline: node.onlineTimeSeconds,
