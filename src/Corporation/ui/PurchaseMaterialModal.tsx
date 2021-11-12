@@ -25,15 +25,25 @@ function BulkPurchaseText(props: IBulkPurchaseTextProps): React.ReactElement {
   const maxAmount = (props.warehouse.size - props.warehouse.sizeUsed) / matSize;
 
   if (parsedAmt * matSize > maxAmount) {
-    return <><Typography color={"error"}>Not enough warehouse space to purchase this amount</Typography></>;
+    return (
+      <>
+        <Typography color={"error"}>Not enough warehouse space to purchase this amount</Typography>
+      </>
+    );
   } else if (isNaN(cost)) {
-    return <><Typography color={"error"}>Invalid put for Bulk Purchase amount</Typography></>;
+    return (
+      <>
+        <Typography color={"error"}>Invalid put for Bulk Purchase amount</Typography>
+      </>
+    );
   } else {
     return (
-     <><Typography>
-        Purchasing {numeralWrapper.format(parsedAmt, "0,0.00")} of {props.mat.name} will cost{" "}
-        {numeralWrapper.formatMoney(cost)}</Typography>
-         </>
+      <>
+        <Typography>
+          Purchasing {numeralWrapper.format(parsedAmt, "0,0.00")} of {props.mat.name} will cost{" "}
+          {numeralWrapper.formatMoney(cost)}
+        </Typography>
+      </>
     );
   }
 }
@@ -62,8 +72,8 @@ function BulkPurchase(props: IBPProps): React.ReactElement {
       dialogBoxCreate("Invalid input amount");
     } else {
       const cost = amount * props.mat.bCost;
-      if (corp.funds.gt(cost)) {
-        corp.funds = corp.funds.minus(cost);
+      if (corp.funds > cost) {
+        corp.funds = corp.funds - cost;
         props.mat.qty += amount;
       } else {
         dialogBoxCreate(`You cannot afford this purchase.`);

@@ -319,7 +319,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
         return true;
       }
 
-      if (player.money.lt(getStockMarket4SDataCost())) {
+      if (player.money < getStockMarket4SDataCost()) {
         workerScript.log("purchase4SMarketData", "Not enough money to purchase 4S Market Data.");
         return false;
       }
@@ -338,7 +338,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
         return true;
       }
 
-      if (player.money.lt(getStockMarket4STixApiCost())) {
+      if (player.money < getStockMarket4STixApiCost()) {
         workerScript.log("purchase4SMarketDataTixApi", "Not enough money to purchase 4S Market Data TIX API");
         return false;
       }

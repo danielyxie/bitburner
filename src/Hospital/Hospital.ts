@@ -2,18 +2,11 @@ import { CONSTANTS } from "../Constants";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 export function getHospitalizationCost(p: IPlayer): number {
-  let money;
-  if (typeof p.money === "number") {
-    money = p.money;
-  } else {
-    money = p.money.toNumber();
-  }
-
-  if (money < 0) {
+  if (p.money < 0) {
     return 0;
   }
 
-  return Math.min(money * 0.1, (p.max_hp - p.hp) * CONSTANTS.HospitalCostPerHp);
+  return Math.min(p.money * 0.1, (p.max_hp - p.hp) * CONSTANTS.HospitalCostPerHp);
 }
 
 export function calculateHospitalizationCost(p: IPlayer, damage: number): number {

@@ -136,7 +136,7 @@ function iTutorialPrevStep(): void {
 
 function iTutorialEnd(): void {
   ITutorial.isRunning = false;
-
+  ITutorial.currStep = iTutorialSteps.End;
   Player.getHomeComputer().messages.push(LiteratureNames.HackersStartingHandbook);
   ITutorialEvents.emit();
 }
