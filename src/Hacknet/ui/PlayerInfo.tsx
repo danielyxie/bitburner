@@ -33,7 +33,7 @@ export function PlayerInfo(props: IProps): React.ReactElement {
     <>
       <Typography>
         Money:
-        <Money money={props.player.money.toNumber()} />
+        <Money money={props.player.money} />
       </Typography>
 
       {hasServers && (

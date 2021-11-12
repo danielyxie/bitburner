@@ -23,7 +23,7 @@ interface IUpgradeButton {
 function UpgradeSizeButton(props: IUpgradeButton): React.ReactElement {
   const corp = useCorporation();
   function upgradeSize(cost: number, size: number): void {
-    if (corp.funds.lt(cost)) {
+    if (corp.funds < cost) {
       return;
     }
 
@@ -34,7 +34,7 @@ function UpgradeSizeButton(props: IUpgradeButton): React.ReactElement {
   return (
     <Tooltip title={numeralWrapper.formatMoney(props.cost)}>
       <span>
-        <Button disabled={corp.funds.lt(props.cost)} onClick={() => upgradeSize(props.cost, props.size)}>
+        <Button disabled={corp.funds < props.cost} onClick={() => upgradeSize(props.cost, props.size)}>
           +{props.size}
         </Button>
       </span>
@@ -63,7 +63,7 @@ export function UpgradeOfficeSizeModal(props: IProps): React.ReactElement {
   const upgradeCost15 = CorporationConstants.OfficeInitialCost * mult;
 
   //Calculate max upgrade size and cost
-  const maxMult = corp.funds.dividedBy(CorporationConstants.OfficeInitialCost).toNumber();
+  const maxMult = corp.funds / CorporationConstants.OfficeInitialCost;
   let maxNum = 1;
   mult = Math.pow(costMultiplier, initialPriceMult);
   while (maxNum < 50) {

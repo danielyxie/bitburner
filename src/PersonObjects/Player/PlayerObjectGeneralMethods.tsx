@@ -36,7 +36,7 @@ import {
 import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
 import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
-import { Settings } from "../../Settings/Settings";
+
 import { SpecialServers } from "../../Server/data/SpecialServers";
 import { applySourceFile } from "../../SourceFile/applySourceFile";
 import { applyExploit } from "../../Exploits/applyExploits";
@@ -46,8 +46,6 @@ import { influenceStockThroughCompanyWork } from "../../StockMarket/PlayerInflue
 import { getHospitalizationCost } from "../../Hospital/Hospital";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
-
-import Decimal from "decimal.js";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { IRouter } from "../../ui/Router";
@@ -102,7 +100,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.agility_exp = 0;
   this.charisma_exp = 0;
 
-  this.money = new Decimal(1000);
+  this.money = 1000;
 
   this.city = CityName.Sector12;
   this.location = LocationName.TravelAgency;
@@ -325,7 +323,7 @@ export function setMoney(this: PlayerObject, money: number): void {
     console.error("NaN passed into Player.setMoney()");
     return;
   }
-  this.money = new Decimal(money);
+  this.money = money;
 }
 
 export function gainMoney(this: PlayerObject, money: number, source: string): void {
@@ -333,6 +331,7 @@ export function gainMoney(this: PlayerObject, money: number, source: string): vo
     console.error("NaN passed into Player.gainMoney()");
     return;
   }
+
   this.money = this.money + money;
   this.recordMoneySource(money, source);
 }
@@ -352,7 +351,7 @@ export function canAfford(this: IPlayer, cost: number): boolean {
     console.error(`NaN passed into Player.canAfford()`);
     return false;
   }
-  return this.money.gte(cost);
+  return this.money >= cost;
 }
 
 export function recordMoneySource(this: PlayerObject, amt: number, source: string): void {
@@ -535,7 +534,6 @@ export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
   const agiExpGain = focusBonus * this.workAgiExpGainRate * numCycles;
   const chaExpGain = focusBonus * this.workChaExpGainRate * numCycles;
   const moneyGain = (this.workMoneyGainRate - this.workMoneyLossRate) * numCycles;
-
   this.gainHackingExp(hackExpGain);
   this.gainStrengthExp(strExpGain);
   this.gainDefenseExp(defExpGain);
@@ -2070,7 +2068,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !illuminatiFac.isMember &&
     !illuminatiFac.alreadyInvited &&
     numAugmentations >= 30 &&
-    this.money.gte(150000000000) &&
+    this.money >= 150000000000 &&
     this.hacking >= 1500 &&
     this.strength >= 1200 &&
     this.defense >= 1200 &&
@@ -2087,7 +2085,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !daedalusFac.isMember &&
     !daedalusFac.alreadyInvited &&
     numAugmentations >= Math.round(30 * BitNodeMultipliers.DaedalusAugsRequirement) &&
-    this.money.gte(100000000000) &&
+    this.money >= 100000000000 &&
     (this.hacking >= 2500 ||
       (this.strength >= 1500 && this.defense >= 1500 && this.dexterity >= 1500 && this.agility >= 1500))
   ) {
@@ -2101,7 +2099,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !covenantFac.isMember &&
     !covenantFac.alreadyInvited &&
     numAugmentations >= 20 &&
-    this.money.gte(75000000000) &&
+    this.money >= 75000000000 &&
     this.hacking >= 850 &&
     this.strength >= 850 &&
     this.defense >= 850 &&
@@ -2280,7 +2278,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !chongqingFac.isBanned &&
     !chongqingFac.isMember &&
     !chongqingFac.alreadyInvited &&
-    this.money.gte(20000000) &&
+    this.money >= 20000000 &&
     this.city == CityName.Chongqing
   ) {
     invitedFactions.push(chongqingFac);
@@ -2292,7 +2290,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !sector12Fac.isBanned &&
     !sector12Fac.isMember &&
     !sector12Fac.alreadyInvited &&
-    this.money.gte(15000000) &&
+    this.money >= 15000000 &&
     this.city == CityName.Sector12
   ) {
     invitedFactions.push(sector12Fac);
@@ -2304,7 +2302,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !newtokyoFac.isBanned &&
     !newtokyoFac.isMember &&
     !newtokyoFac.alreadyInvited &&
-    this.money.gte(20000000) &&
+    this.money >= 20000000 &&
     this.city == CityName.NewTokyo
   ) {
     invitedFactions.push(newtokyoFac);
@@ -2316,7 +2314,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !aevumFac.isBanned &&
     !aevumFac.isMember &&
     !aevumFac.alreadyInvited &&
-    this.money.gte(40000000) &&
+    this.money >= 40000000 &&
     this.city == CityName.Aevum
   ) {
     invitedFactions.push(aevumFac);
@@ -2328,7 +2326,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !ishimaFac.isBanned &&
     !ishimaFac.isMember &&
     !ishimaFac.alreadyInvited &&
-    this.money.gte(30000000) &&
+    this.money >= 30000000 &&
     this.city == CityName.Ishima
   ) {
     invitedFactions.push(ishimaFac);
@@ -2340,7 +2338,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !volhavenFac.isBanned &&
     !volhavenFac.isMember &&
     !volhavenFac.alreadyInvited &&
-    this.money.gte(50000000) &&
+    this.money >= 50000000 &&
     this.city == CityName.Volhaven
   ) {
     invitedFactions.push(volhavenFac);
@@ -2397,7 +2395,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     this.dexterity >= 200 &&
     this.agility >= 200 &&
     (this.city == CityName.Aevum || this.city == CityName.Sector12) &&
-    this.money.gte(10000000) &&
+    this.money >= 10000000 &&
     this.karma <= -90 &&
     !allCompanies.includes(LocationName.Sector12CIA) &&
     !allCompanies.includes(LocationName.Sector12NSA)
@@ -2414,7 +2412,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     (allPositions.includes("Chief Technology Officer") ||
       allPositions.includes("Chief Financial Officer") ||
       allPositions.includes("Chief Executive Officer")) &&
-    this.money.gte(15000000) &&
+    this.money >= 15000000 &&
     this.karma <= -22
   ) {
     invitedFactions.push(silhouetteFac);
@@ -2447,7 +2445,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     this.dexterity >= 30 &&
     this.agility >= 30 &&
     this.karma <= -9 &&
-    this.money.gte(1000000)
+    this.money >= 1000000
   ) {
     invitedFactions.push(slumsnakesFac);
   }
@@ -2490,7 +2488,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !tiandihuiFac.isBanned &&
     !tiandihuiFac.isMember &&
     !tiandihuiFac.alreadyInvited &&
-    this.money.gte(1000000) &&
+    this.money >= 1000000 &&
     this.hacking >= 50 &&
     (this.city == CityName.Chongqing || this.city == CityName.NewTokyo || this.city == CityName.Ishima)
   ) {

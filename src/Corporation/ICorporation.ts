@@ -9,9 +9,9 @@ export interface ICorporation {
 
   divisions: Industry[];
 
-  funds: any;
-  revenue: any;
-  expenses: any;
+  funds: number;
+  revenue: number;
+  expenses: number;
   fundingRound: number;
   public: boolean;
   totalShares: number;

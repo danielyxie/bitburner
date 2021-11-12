@@ -35,8 +35,6 @@ import { CityName } from "../../Locations/data/CityNames";
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
 
-import Decimal from "decimal.js";
-
 export class PlayerObject implements IPlayer {
   // Class members
   augmentations: IPlayerOwnedAugmentation[];
@@ -336,7 +334,7 @@ export class PlayerObject implements IPlayer {
     this.faction_rep_mult = 1;
 
     //Money
-    this.money = new Decimal(1000);
+    this.money = 1000;
 
     //Location information
     this.city = CityName.Sector12;

@@ -56,7 +56,7 @@ export interface IPlayer {
   numPeopleKilled: number;
   location: LocationName;
   max_hp: number;
-  readonly money: any;
+  readonly money: number;
   moneySourceA: MoneySourceTracker;
   moneySourceB: MoneySourceTracker;
   playtimeSinceLastAug: number;

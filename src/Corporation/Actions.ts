@@ -27,12 +27,12 @@ export function NewIndustry(corporation: ICorporation, industry: string, name: s
   if (cost === undefined) {
     throw new Error(`Invalid industry: '${industry}'`);
   }
-  if (corporation.funds.lt(cost)) {
+  if (corporation.funds < cost) {
     throw new Error("Not enough money to create a new division in this industry");
   } else if (name === "") {
     throw new Error("New division must have a name!");
   } else {
-    corporation.funds = corporation.funds.minus(cost);
+    corporation.funds = corporation.funds - cost;
     corporation.divisions.push(
       new Industry({
         corp: corporation,
@@ -44,10 +44,10 @@ export function NewIndustry(corporation: ICorporation, industry: string, name: s
 }
 
 export function NewCity(corporation: ICorporation, division: IIndustry, city: string): void {
-  if (corporation.funds.lt(CorporationConstants.OfficeInitialCost)) {
+  if (corporation.funds < CorporationConstants.OfficeInitialCost) {
     throw new Error("You don't have enough company funds to open a new office!");
   } else {
-    corporation.funds = corporation.funds.minus(CorporationConstants.OfficeInitialCost);
+    corporation.funds = corporation.funds - CorporationConstants.OfficeInitialCost;
     division.offices[city] = new OfficeSpace({
       loc: city,
       size: CorporationConstants.OfficeInitialSize,
@@ -56,7 +56,7 @@ export function NewCity(corporation: ICorporation, division: IIndustry, city: st
 }
 
 export function UnlockUpgrade(corporation: ICorporation, upgrade: CorporationUnlockUpgrade): void {
-  if (corporation.funds.lt(upgrade[1])) {
+  if (corporation.funds < upgrade[1]) {
     throw new Error("Insufficient funds");
   }
   corporation.unlock(upgrade);
@@ -67,7 +67,7 @@ export function LevelUpgrade(corporation: ICorporation, upgrade: CorporationUpgr
   const priceMult = upgrade[2];
   const level = corporation.upgrades[upgrade[0]];
   const cost = baseCost * Math.pow(priceMult, level);
-  if (corporation.funds.lt(cost)) {
+  if (corporation.funds < cost) {
     throw new Error("Insufficient funds");
   } else {
     corporation.upgrade(upgrade);
@@ -259,15 +259,15 @@ export function UpgradeOfficeSize(corp: ICorporation, office: OfficeSpace, size:
     mult += Math.pow(costMultiplier, initialPriceMult + i);
   }
   const cost = CorporationConstants.OfficeInitialCost * mult;
-  if (corp.funds.lt(cost)) return;
+  if (corp.funds < cost) return;
   office.size += size;
-  corp.funds = corp.funds.minus(cost);
+  corp.funds = corp.funds - cost;
 }
 
 export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmployee: number): number {
   const totalCost = costPerEmployee * office.employees.length;
-  if (corp.funds.lt(totalCost)) return 0;
-  corp.funds = corp.funds.minus(totalCost);
+  if (corp.funds < totalCost) return 0;
+  corp.funds = corp.funds - totalCost;
   let mult = 0;
   for (let i = 0; i < office.employees.length; ++i) {
     mult = office.employees[i].throwParty(costPerEmployee);
@@ -277,7 +277,7 @@ export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmplo
 }
 
 export function PurchaseWarehouse(corp: ICorporation, division: IIndustry, city: string): void {
-  if (corp.funds.lt(CorporationConstants.WarehouseInitialCost)) return;
+  if (corp.funds < CorporationConstants.WarehouseInitialCost) return;
   if (division.warehouses[city] instanceof Warehouse) return;
   division.warehouses[city] = new Warehouse({
     corp: corp,
@@ -285,21 +285,21 @@ export function PurchaseWarehouse(corp: ICorporation, division: IIndustry, city:
     loc: city,
     size: CorporationConstants.WarehouseInitialSize,
   });
-  corp.funds = corp.funds.minus(CorporationConstants.WarehouseInitialCost);
+  corp.funds = corp.funds - CorporationConstants.WarehouseInitialCost;
 }
 
 export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, warehouse: Warehouse): void {
   const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
   ++warehouse.level;
   warehouse.updateSize(corp, division);
-  corp.funds = corp.funds.minus(sizeUpgradeCost);
+  corp.funds = corp.funds - sizeUpgradeCost;
 }
 
 export function BuyCoffee(corp: ICorporation, division: IIndustry, office: OfficeSpace): void {
   const upgrade = IndustryUpgrades[0];
   const cost = office.employees.length * upgrade[1];
-  if (corp.funds.lt(cost)) return;
-  corp.funds = corp.funds.minus(cost);
+  if (corp.funds < cost) return;
+  corp.funds = corp.funds - cost;
   division.upgrade(upgrade, {
     corporation: corp,
     office: office,
@@ -309,8 +309,8 @@ export function BuyCoffee(corp: ICorporation, division: IIndustry, office: Offic
 export function HireAdVert(corp: ICorporation, division: IIndustry, office: OfficeSpace): void {
   const upgrade = IndustryUpgrades[1];
   const cost = upgrade[1] * Math.pow(upgrade[2], division.upgrades[1]);
-  if (corp.funds.lt(cost)) return;
-  corp.funds = corp.funds.minus(cost);
+  if (corp.funds < cost) return;
+  corp.funds = corp.funds - cost;
   division.upgrade(upgrade, {
     corporation: corp,
     office: office,
@@ -340,7 +340,7 @@ export function MakeProduct(
   if (isNaN(marketingInvest)) {
     throw new Error("Invalid value for marketing investment");
   }
-  if (corp.funds.lt(designInvest + marketingInvest)) {
+  if (corp.funds < designInvest + marketingInvest) {
     throw new Error("You don't have enough company funds to make this large of an investment");
   }
   const product = new Product({
@@ -352,7 +352,7 @@ export function MakeProduct(
   if (division.products[product.name] instanceof Product) {
     throw new Error(`You already have a product with this name!`);
   }
-  corp.funds = corp.funds.minus(designInvest + marketingInvest);
+  corp.funds = corp.funds - (designInvest + marketingInvest);
   division.products[product.name] = product;
 }
 
