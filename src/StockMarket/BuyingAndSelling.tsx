@@ -64,7 +64,7 @@ export function buyStock(
   if (totalPrice == null) {
     return false;
   }
-  if (Player.money.lt(totalPrice)) {
+  if (Player.money < totalPrice) {
     if (workerScript) {
       workerScript.log(
         "buyStock",
@@ -241,7 +241,7 @@ export function shortStock(
   if (totalPrice == null) {
     return false;
   }
-  if (Player.money.lt(totalPrice)) {
+  if (Player.money < totalPrice) {
     if (workerScript) {
       workerScript.log(
         "shortStock",

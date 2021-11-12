@@ -63,7 +63,7 @@ export class PlayerObject implements IPlayer {
   numPeopleKilled: number;
   location: LocationName;
   max_hp: number;
-  money: any;
+  money: number;
   moneySourceA: MoneySourceTracker;
   moneySourceB: MoneySourceTracker;
   playtimeSinceLastAug: number;

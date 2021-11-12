@@ -333,7 +333,7 @@ export function gainMoney(this: PlayerObject, money: number, source: string): vo
     console.error("NaN passed into Player.gainMoney()");
     return;
   }
-  this.money = this.money.plus(money);
+  this.money = this.money + money;
   this.recordMoneySource(money, source);
 }
 
@@ -342,8 +342,8 @@ export function loseMoney(this: PlayerObject, money: number, source: string): vo
     console.error("NaN passed into Player.loseMoney()");
     return;
   }
-  if (this.money.eq(Infinity) && money === Infinity) return;
-  this.money = this.money.minus(money);
+  if (this.money === Infinity && money === Infinity) return;
+  this.money = this.money - money;
   this.recordMoneySource(-1 * money, source);
 }
 
