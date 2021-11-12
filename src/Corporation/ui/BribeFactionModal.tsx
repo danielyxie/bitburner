@@ -38,7 +38,7 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
     isNaN(stock) ||
     money < 0 ||
     stock < 0 ||
-    corp.funds < money ||
+    corp.funds.lt(money) ||
     stock > corp.numShares;
 
   function onMoneyChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -61,7 +61,7 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
     if (money === 0 && stock === 0) return "";
     if (isNaN(money) || isNaN(stock) || money < 0 || stock < 0) {
       return "ERROR: Invalid value(s) entered";
-    } else if (corp.funds < money) {
+    } else if (corp.funds.lt(money)) {
       return "ERROR: You do not have this much money to bribe with";
     } else if (stock > corp.numShares) {
       return "ERROR: You do not have this many shares to bribe with";
@@ -84,7 +84,7 @@ export function BribeFactionModal(props: IProps): React.ReactElement {
       "You gained " + numeralWrapper.formatReputation(rep) + " reputation with " + fac.name + " by bribing them.",
     );
     fac.playerReputation += rep;
-    corp.funds = corp.funds - money;
+    corp.funds = corp.funds.minus(money);
     corp.numShares -= stock;
     props.onClose();
   }

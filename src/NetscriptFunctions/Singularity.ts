@@ -450,7 +450,7 @@ export function NetscriptSingularity(
         case CityName.NewTokyo:
         case CityName.Ishima:
         case CityName.Volhaven:
-          if (player.money < CONSTANTS.TravelCost) {
+          if (player.money.lt(CONSTANTS.TravelCost)) {
             throw helper.makeRuntimeErrorMsg("travelToCity", "Not enough money to travel.");
           }
           player.loseMoney(CONSTANTS.TravelCost, "other");
@@ -473,7 +473,7 @@ export function NetscriptSingularity(
         return false;
       }
 
-      if (player.money < CONSTANTS.TorRouterCost) {
+      if (player.money.lt(CONSTANTS.TorRouterCost)) {
         workerScript.log("purchaseTor", "You cannot afford to purchase a Tor router.");
         return false;
       }
@@ -520,7 +520,7 @@ export function NetscriptSingularity(
         return false;
       }
 
-      if (player.money < item.price) {
+      if (player.money.lt(item.price)) {
         workerScript.log(
           "purchaseProgram",
           `Not enough money to purchase '${item.program}'. Need ${numeralWrapper.formatMoney(item.price)}`,
@@ -724,7 +724,7 @@ export function NetscriptSingularity(
       }
 
       const cost = player.getUpgradeHomeCoresCost();
-      if (player.money < cost) {
+      if (player.money.lt(cost)) {
         workerScript.log("upgradeHomeCores", `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`);
         return false;
       }
@@ -757,7 +757,7 @@ export function NetscriptSingularity(
       }
 
       const cost = player.getUpgradeHomeRamCost();
-      if (player.money < cost) {
+      if (player.money.lt(cost)) {
         workerScript.log("upgradeHomeRam", `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`);
         return false;
       }
@@ -1107,7 +1107,7 @@ export function NetscriptSingularity(
         workerScript.log("donateToFaction", `Invalid donation amount: '${amt}'.`);
         return false;
       }
-      if (player.money < amt) {
+      if (player.money.lt(amt)) {
         workerScript.log(
           "donateToFaction",
           `You do not have enough money to donate ${numeralWrapper.formatMoney(amt)} to '${name}'`,

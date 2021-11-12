@@ -176,7 +176,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.money }}>Money&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.money }}>{numeralWrapper.formatMoney(player.money)}</Typography>
+              <Typography classes={{ root: classes.money }}>
+                {numeralWrapper.formatMoney(player.money.toNumber())}
+              </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-money-hook" classes={{ root: classes.money }}>

@@ -32,7 +32,7 @@ export function ExpandIndustryTab(props: IProps): React.ReactElement {
   if (cost === undefined) {
     throw new Error(`Invalid industry: '${industry}'`);
   }
-  const disabled = corp.funds < cost || name === "";
+  const disabled = corp.funds.lt(cost) || name === "";
 
   function newIndustry(): void {
     if (disabled) return;

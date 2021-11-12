@@ -79,7 +79,11 @@ function MakeProductButton(): React.ReactElement {
           )
         }
       >
-        <Button color={shouldFlash() ? "error" : "primary"} onClick={() => setMakeOpen(true)} disabled={corp.funds < 0}>
+        <Button
+          color={shouldFlash() ? "error" : "primary"}
+          onClick={() => setMakeOpen(true)}
+          disabled={corp.funds.lt(0)}
+        >
           {createProductButtonText}
         </Button>
       </Tooltip>
@@ -93,7 +97,7 @@ function Text(): React.ReactElement {
   const [helpOpen, setHelpOpen] = useState(false);
   const [researchOpen, setResearchOpen] = useState(false);
   const vechain = corp.unlockUpgrades[4] === 1;
-  const profit = division.lastCycleRevenue - division.lastCycleExpenses;
+  const profit = division.lastCycleRevenue.minus(division.lastCycleExpenses).toNumber();
 
   let advertisingInfo = false;
   const advertisingFactors = division.getAdvertisingFactors();
@@ -115,7 +119,7 @@ function Text(): React.ReactElement {
   return (
     <>
       <Typography>
-        Industry: {division.type} (Corp Funds: <Money money={corp.funds} />)
+        Industry: {division.type} (Corp Funds: <Money money={corp.funds.toNumber()} />)
       </Typography>
       <br />
       <StatsTable
@@ -145,8 +149,8 @@ function Text(): React.ReactElement {
       <br />
       <StatsTable
         rows={[
-          ["Revenue:", <MoneyRate money={division.lastCycleRevenue} />],
-          ["Expenses:", <MoneyRate money={division.lastCycleExpenses} />],
+          ["Revenue:", <MoneyRate money={division.lastCycleRevenue.toNumber()} />],
+          ["Expenses:", <MoneyRate money={division.lastCycleExpenses.toNumber()} />],
           ["Profit:", <MoneyRate money={profit} />],
         ]}
       />
@@ -237,8 +241,8 @@ function Upgrades(props: { office: OfficeSpace; rerender: () => void }): React.R
     }
 
     function onClick(): void {
-      if (corp.funds < cost) return;
-      corp.funds = corp.funds - cost;
+      if (corp.funds.lt(cost)) return;
+      corp.funds = corp.funds.minus(cost);
       division.upgrade(upgrade, {
         corporation: corp,
         office: props.office,
@@ -249,7 +253,7 @@ function Upgrades(props: { office: OfficeSpace; rerender: () => void }): React.R
     upgrades.push(
       <Tooltip key={index} title={upgrade[5]}>
         <span>
-          <Button disabled={corp.funds < cost} onClick={onClick}>
+          <Button disabled={corp.funds.lt(cost)} onClick={onClick}>
             {upgrade[4]} -&nbsp;
             <MoneyCost money={cost} corp={corp} />
           </Button>

@@ -36,7 +36,7 @@ interface IProps {
 export function Overview({ rerender }: IProps): React.ReactElement {
   const player = use.Player();
   const corp = useCorporation();
-  const profit: number = corp.revenue - corp.expenses;
+  const profit: number = corp.revenue.minus(corp.expenses).toNumber();
 
   const multRows: any[][] = [];
   function appendMult(name: string, value: number): void {
@@ -57,9 +57,9 @@ export function Overview({ rerender }: IProps): React.ReactElement {
     <>
       <StatsTable
         rows={[
-          ["Total Funds:", <Money money={corp.funds} />],
-          ["Total Revenue:", <MoneyRate money={corp.revenue} />],
-          ["Total Expenses:", <MoneyRate money={corp.expenses} />],
+          ["Total Funds:", <Money money={corp.funds.toNumber()} />],
+          ["Total Revenue:", <MoneyRate money={corp.revenue.toNumber()} />],
+          ["Total Expenses:", <MoneyRate money={corp.expenses.toNumber()} />],
           ["Publicly Traded:", corp.public ? "Yes" : "No"],
           ["Owned Stock Shares:", numeralWrapper.format(corp.numShares, "0.000a")],
           ["Stock Price:", corp.public ? <Money money={corp.sharePrice} /> : "N/A"],

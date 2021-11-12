@@ -26,6 +26,7 @@ import { Terminal } from "./Terminal";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 
+import Decimal from "decimal.js";
 import { ProgramsSeen } from "./Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "./Faction/ui/FactionsRoot";
 
@@ -119,7 +120,7 @@ export function prestigeAugmentation(): void {
 
   // BitNode 8: Ghost of Wall Street
   if (Player.bitNodeN === 8) {
-    Player.money = BitNode8StartingMoney;
+    Player.money = new Decimal(BitNode8StartingMoney);
   }
   if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {
     Player.hasWseAccount = true;
@@ -234,7 +235,7 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // BitNode 8: Ghost of Wall Street
   if (Player.bitNodeN === 8) {
-    Player.money = BitNode8StartingMoney;
+    Player.money = new Decimal(BitNode8StartingMoney);
   }
   if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {
     Player.hasWseAccount = true;

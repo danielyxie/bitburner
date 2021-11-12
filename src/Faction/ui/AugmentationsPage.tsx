@@ -93,7 +93,8 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       const repCost = aug.baseRepRequirement * props.faction.getInfo().augmentationRepRequirementMult;
       const hasReq = props.faction.playerReputation >= repCost;
       const hasRep = hasAugmentationPrereqs(aug);
-      const hasCost = aug.baseCost !== 0 && player.money > aug.baseCost * props.faction.getInfo().augmentationPriceMult;
+      const hasCost =
+        aug.baseCost !== 0 && player.money.gt(aug.baseCost * props.faction.getInfo().augmentationPriceMult);
       return hasCost && hasReq && hasRep;
     }
     const buy = augs.filter(canBuy).sort((augName1, augName2) => {
