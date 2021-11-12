@@ -23,7 +23,7 @@ interface IProps {
 
 export function MoneyCost(props: IProps): React.ReactElement {
   const classes = useStyles();
-  if (!props.corp.funds.gt(props.money))
+  if (props.corp.funds <= props.money)
     return <span className={classes.unbuyable}>{numeralWrapper.formatMoney(props.money)}</span>;
 
   return <span className={classes.money}>{numeralWrapper.formatMoney(props.money)}</span>;

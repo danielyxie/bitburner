@@ -56,7 +56,7 @@ export interface IPlayer {
   numPeopleKilled: number;
   location: LocationName;
   max_hp: number;
-  readonly money: any;
+  readonly money: number;
   moneySourceA: MoneySourceTracker;
   moneySourceB: MoneySourceTracker;
   playtimeSinceLastAug: number;
@@ -134,6 +134,8 @@ export interface IPlayer {
   className: string;
   currentWorkFactionName: string;
   workType: string;
+  workCostMult: number;
+  workExpMult: number;
   currentWorkFactionDescription: string;
   timeWorked: number;
   workMoneyGained: number;

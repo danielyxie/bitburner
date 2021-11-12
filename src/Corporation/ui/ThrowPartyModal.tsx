@@ -23,7 +23,7 @@ export function ThrowPartyModal(props: IProps): React.ReactElement {
   const [cost, setCost] = useState(0);
 
   const totalCost = cost * props.office.employees.length;
-  const canParty = corp.funds.gte(totalCost);
+  const canParty = corp.funds >= totalCost;
   function changeCost(event: React.ChangeEvent<HTMLInputElement>): void {
     let x = parseFloat(event.target.value);
     if (isNaN(x)) x = 0;
