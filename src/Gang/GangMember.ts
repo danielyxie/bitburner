@@ -316,7 +316,7 @@ export class GangMember {
     // Prevent purchasing of already-owned upgrades
     if (this.augmentations.includes(upg.name) || this.upgrades.includes(upg.name)) return false;
 
-    if (player.money < gang.getUpgradeCost(upg)) return false;
+    if (player.money.lt(gang.getUpgradeCost(upg))) return false;
     player.loseMoney(gang.getUpgradeCost(upg), "gang");
     if (upg.type === "g") {
       this.augmentations.push(upg.name);

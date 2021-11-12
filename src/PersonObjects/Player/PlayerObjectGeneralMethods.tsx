@@ -36,6 +36,7 @@ import {
 import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
 import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
+import { Settings } from "../../Settings/Settings";
 import { SpecialServers } from "../../Server/data/SpecialServers";
 import { applySourceFile } from "../../SourceFile/applySourceFile";
 import { applyExploit } from "../../Exploits/applyExploits";
@@ -45,6 +46,8 @@ import { influenceStockThroughCompanyWork } from "../../StockMarket/PlayerInflue
 import { getHospitalizationCost } from "../../Hospital/Hospital";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
+
+import Decimal from "decimal.js";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { IRouter } from "../../ui/Router";
@@ -58,7 +61,6 @@ import { Money } from "../../ui/React/Money";
 import React from "react";
 import { serverMetadata } from "../../Server/data/servers";
 import { SnackbarEvents } from "../../ui/React/Snackbar";
-import { calculateClassEarnings } from "../formulas/work";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -100,7 +102,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.agility_exp = 0;
   this.charisma_exp = 0;
 
-  this.money = 1000;
+  this.money = new Decimal(1000);
 
   this.city = CityName.Sector12;
   this.location = LocationName.TravelAgency;
@@ -323,7 +325,7 @@ export function setMoney(this: PlayerObject, money: number): void {
     console.error("NaN passed into Player.setMoney()");
     return;
   }
-  this.money = money;
+  this.money = new Decimal(money);
 }
 
 export function gainMoney(this: PlayerObject, money: number, source: string): void {
@@ -331,7 +333,7 @@ export function gainMoney(this: PlayerObject, money: number, source: string): vo
     console.error("NaN passed into Player.gainMoney()");
     return;
   }
-  this.money = this.money + money;
+  this.money = this.money.plus(money);
   this.recordMoneySource(money, source);
 }
 
@@ -340,8 +342,8 @@ export function loseMoney(this: PlayerObject, money: number, source: string): vo
     console.error("NaN passed into Player.loseMoney()");
     return;
   }
-  if (this.money == Infinity && money === Infinity) return;
-  this.money = this.money - money;
+  if (this.money.eq(Infinity) && money === Infinity) return;
+  this.money = this.money.minus(money);
   this.recordMoneySource(-1 * money, source);
 }
 
@@ -350,7 +352,7 @@ export function canAfford(this: IPlayer, cost: number): boolean {
     console.error(`NaN passed into Player.canAfford()`);
     return false;
   }
-  return this.money >= cost;
+  return this.money.gte(cost);
 }
 
 export function recordMoneySource(this: PlayerObject, amt: number, source: string): void {
@@ -1303,30 +1305,77 @@ export function startClass(this: IPlayer, router: IRouter, costMult: number, exp
   this.isWorking = true;
   this.focus = true;
   this.workType = CONSTANTS.WorkTypeStudyClass;
-  this.workCostMult = costMult;
-  this.workExpMult = expMult;
+
   this.className = className;
-  const earnings = calculateClassEarnings(this);
-  this.workMoneyLossRate = earnings.workMoneyLossRate;
-  this.workHackExpGainRate = earnings.workHackExpGainRate;
-  this.workStrExpGainRate = earnings.workStrExpGainRate;
-  this.workDefExpGainRate = earnings.workDefExpGainRate;
-  this.workDexExpGainRate = earnings.workDexExpGainRate;
-  this.workAgiExpGainRate = earnings.workAgiExpGainRate;
-  this.workChaExpGainRate = earnings.workChaExpGainRate;
+
+  const gameCPS = 1000 / CONSTANTS._idleSpeed;
+
+  //Find cost and exp gain per game cycle
+  let cost = 0;
+  let hackExp = 0,
+    strExp = 0,
+    defExp = 0,
+    dexExp = 0,
+    agiExp = 0,
+    chaExp = 0;
+  const hashManager = this.hashManager;
+  switch (className) {
+    case CONSTANTS.ClassStudyComputerScience:
+      hackExp = ((CONSTANTS.ClassStudyComputerScienceBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
+      break;
+    case CONSTANTS.ClassDataStructures:
+      cost = (CONSTANTS.ClassDataStructuresBaseCost * costMult) / gameCPS;
+      hackExp = ((CONSTANTS.ClassDataStructuresBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
+      break;
+    case CONSTANTS.ClassNetworks:
+      cost = (CONSTANTS.ClassNetworksBaseCost * costMult) / gameCPS;
+      hackExp = ((CONSTANTS.ClassNetworksBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
+      break;
+    case CONSTANTS.ClassAlgorithms:
+      cost = (CONSTANTS.ClassAlgorithmsBaseCost * costMult) / gameCPS;
+      hackExp = ((CONSTANTS.ClassAlgorithmsBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
+      break;
+    case CONSTANTS.ClassManagement:
+      cost = (CONSTANTS.ClassManagementBaseCost * costMult) / gameCPS;
+      chaExp = ((CONSTANTS.ClassManagementBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
+      break;
+    case CONSTANTS.ClassLeadership:
+      cost = (CONSTANTS.ClassLeadershipBaseCost * costMult) / gameCPS;
+      chaExp = ((CONSTANTS.ClassLeadershipBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
+      break;
+    case CONSTANTS.ClassGymStrength:
+      cost = (CONSTANTS.ClassGymBaseCost * costMult) / gameCPS;
+      strExp = (expMult / gameCPS) * hashManager.getTrainingMult();
+      break;
+    case CONSTANTS.ClassGymDefense:
+      cost = (CONSTANTS.ClassGymBaseCost * costMult) / gameCPS;
+      defExp = (expMult / gameCPS) * hashManager.getTrainingMult();
+      break;
+    case CONSTANTS.ClassGymDexterity:
+      cost = (CONSTANTS.ClassGymBaseCost * costMult) / gameCPS;
+      dexExp = (expMult / gameCPS) * hashManager.getTrainingMult();
+      break;
+    case CONSTANTS.ClassGymAgility:
+      cost = (CONSTANTS.ClassGymBaseCost * costMult) / gameCPS;
+      agiExp = (expMult / gameCPS) * hashManager.getTrainingMult();
+      break;
+    default:
+      throw new Error("ERR: Invalid/unrecognized class name");
+      return;
+  }
+
+  this.workMoneyLossRate = cost;
+  this.workHackExpGainRate = hackExp * this.hacking_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  this.workStrExpGainRate = strExp * this.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  this.workDefExpGainRate = defExp * this.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  this.workDexExpGainRate = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  this.workAgiExpGainRate = agiExp * this.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  this.workChaExpGainRate = chaExp * this.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain;
   router.toWork();
 }
 
 export function takeClass(this: IPlayer, numCycles: number): boolean {
   this.timeWorked += CONSTANTS._idleSpeed * numCycles;
-  const earnings = calculateClassEarnings(this);
-  this.workMoneyLossRate = earnings.workMoneyLossRate;
-  this.workHackExpGainRate = earnings.workHackExpGainRate;
-  this.workStrExpGainRate = earnings.workStrExpGainRate;
-  this.workDefExpGainRate = earnings.workDefExpGainRate;
-  this.workDexExpGainRate = earnings.workDexExpGainRate;
-  this.workAgiExpGainRate = earnings.workAgiExpGainRate;
-  this.workChaExpGainRate = earnings.workChaExpGainRate;
   this.processWorkEarnings(numCycles);
   return false;
 }
@@ -2021,7 +2070,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !illuminatiFac.isMember &&
     !illuminatiFac.alreadyInvited &&
     numAugmentations >= 30 &&
-    this.money >= 150000000000 &&
+    this.money.gte(150000000000) &&
     this.hacking >= 1500 &&
     this.strength >= 1200 &&
     this.defense >= 1200 &&
@@ -2038,7 +2087,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !daedalusFac.isMember &&
     !daedalusFac.alreadyInvited &&
     numAugmentations >= Math.round(30 * BitNodeMultipliers.DaedalusAugsRequirement) &&
-    this.money >= 100000000000 &&
+    this.money.gte(100000000000) &&
     (this.hacking >= 2500 ||
       (this.strength >= 1500 && this.defense >= 1500 && this.dexterity >= 1500 && this.agility >= 1500))
   ) {
@@ -2052,7 +2101,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !covenantFac.isMember &&
     !covenantFac.alreadyInvited &&
     numAugmentations >= 20 &&
-    this.money >= 75000000000 &&
+    this.money.gte(75000000000) &&
     this.hacking >= 850 &&
     this.strength >= 850 &&
     this.defense >= 850 &&
@@ -2231,7 +2280,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !chongqingFac.isBanned &&
     !chongqingFac.isMember &&
     !chongqingFac.alreadyInvited &&
-    this.money >= 20000000 &&
+    this.money.gte(20000000) &&
     this.city == CityName.Chongqing
   ) {
     invitedFactions.push(chongqingFac);
@@ -2243,7 +2292,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !sector12Fac.isBanned &&
     !sector12Fac.isMember &&
     !sector12Fac.alreadyInvited &&
-    this.money >= 15000000 &&
+    this.money.gte(15000000) &&
     this.city == CityName.Sector12
   ) {
     invitedFactions.push(sector12Fac);
@@ -2255,7 +2304,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !newtokyoFac.isBanned &&
     !newtokyoFac.isMember &&
     !newtokyoFac.alreadyInvited &&
-    this.money >= 20000000 &&
+    this.money.gte(20000000) &&
     this.city == CityName.NewTokyo
   ) {
     invitedFactions.push(newtokyoFac);
@@ -2267,7 +2316,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !aevumFac.isBanned &&
     !aevumFac.isMember &&
     !aevumFac.alreadyInvited &&
-    this.money >= 40000000 &&
+    this.money.gte(40000000) &&
     this.city == CityName.Aevum
   ) {
     invitedFactions.push(aevumFac);
@@ -2279,7 +2328,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !ishimaFac.isBanned &&
     !ishimaFac.isMember &&
     !ishimaFac.alreadyInvited &&
-    this.money >= 30000000 &&
+    this.money.gte(30000000) &&
     this.city == CityName.Ishima
   ) {
     invitedFactions.push(ishimaFac);
@@ -2291,7 +2340,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !volhavenFac.isBanned &&
     !volhavenFac.isMember &&
     !volhavenFac.alreadyInvited &&
-    this.money >= 50000000 &&
+    this.money.gte(50000000) &&
     this.city == CityName.Volhaven
   ) {
     invitedFactions.push(volhavenFac);
@@ -2348,7 +2397,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     this.dexterity >= 200 &&
     this.agility >= 200 &&
     (this.city == CityName.Aevum || this.city == CityName.Sector12) &&
-    this.money >= 10000000 &&
+    this.money.gte(10000000) &&
     this.karma <= -90 &&
     !allCompanies.includes(LocationName.Sector12CIA) &&
     !allCompanies.includes(LocationName.Sector12NSA)
@@ -2365,7 +2414,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     (allPositions.includes("Chief Technology Officer") ||
       allPositions.includes("Chief Financial Officer") ||
       allPositions.includes("Chief Executive Officer")) &&
-    this.money >= 15000000 &&
+    this.money.gte(15000000) &&
     this.karma <= -22
   ) {
     invitedFactions.push(silhouetteFac);
@@ -2398,7 +2447,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     this.dexterity >= 30 &&
     this.agility >= 30 &&
     this.karma <= -9 &&
-    this.money >= 1000000
+    this.money.gte(1000000)
   ) {
     invitedFactions.push(slumsnakesFac);
   }
@@ -2441,7 +2490,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !tiandihuiFac.isBanned &&
     !tiandihuiFac.isMember &&
     !tiandihuiFac.alreadyInvited &&
-    this.money >= 1000000 &&
+    this.money.gte(1000000) &&
     this.hacking >= 50 &&
     (this.city == CityName.Chongqing || this.city == CityName.NewTokyo || this.city == CityName.Ishima)
   ) {

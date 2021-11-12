@@ -155,7 +155,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
         <Money money={upgradeCacheCost} player={props.player} />
       </>
     );
-    if (props.player.money < upgradeCacheCost) {
+    if (props.player.money.lt(upgradeCacheCost)) {
     } else {
     }
   }

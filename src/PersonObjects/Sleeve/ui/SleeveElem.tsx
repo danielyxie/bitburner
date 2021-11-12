@@ -174,9 +174,9 @@ export function SleeveElem(props: IProps): React.ReactElement {
         <Grid item xs={3}>
           <StatsElement sleeve={props.sleeve} />
           <Button onClick={() => setStatsOpen(true)}>More Stats</Button>
-          <Tooltip title={player.money < CONSTANTS.TravelCost ? <Typography>Insufficient funds</Typography> : ""}>
+          <Tooltip title={player.money.lt(CONSTANTS.TravelCost) ? <Typography>Insufficient funds</Typography> : ""}>
             <span>
-              <Button onClick={() => setTravelOpen(true)} disabled={player.money < CONSTANTS.TravelCost}>
+              <Button onClick={() => setTravelOpen(true)} disabled={player.money.lt(CONSTANTS.TravelCost)}>
                 Travel
               </Button>
             </span>

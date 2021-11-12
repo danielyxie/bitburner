@@ -14,6 +14,10 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
 import { isString } from "../utils/helpers/isString";
 
+// UI Related Imports
+
+import Decimal from "decimal.js";
+
 interface IParams {
   name?: string;
 }
@@ -25,9 +29,9 @@ export class Corporation {
   divisions: Industry[] = [];
 
   //Financial stats
-  funds = 150e9;
-  revenue = 0;
-  expenses = 0;
+  funds = new Decimal(150e9);
+  revenue = new Decimal(0);
+  expenses = new Decimal(0);
   fundingRound = 0;
   public = false; //Publicly traded
   totalShares = CorporationConstants.INITIALSHARES; // Total existing shares
@@ -61,7 +65,7 @@ export class Corporation {
       console.error("Trying to add invalid amount of funds. Report to a developper.");
       return;
     }
-    this.funds = this.funds + amt;
+    this.funds = this.funds.plus(amt);
   }
 
   getState(): string {
@@ -93,8 +97,8 @@ export class Corporation {
 
       //At the start of a new cycle, calculate profits from previous cycle
       if (state === "START") {
-        this.revenue = 0;
-        this.expenses = 0;
+        this.revenue = new Decimal(0);
+        this.expenses = new Decimal(0);
         this.divisions.forEach((ind) => {
           if (ind.lastCycleRevenue === -Infinity || ind.lastCycleRevenue === Infinity) {
             return;
@@ -102,18 +106,18 @@ export class Corporation {
           if (ind.lastCycleExpenses === -Infinity || ind.lastCycleExpenses === Infinity) {
             return;
           }
-          this.revenue = this.revenue + ind.lastCycleRevenue;
-          this.expenses = this.expenses + ind.lastCycleExpenses;
+          this.revenue = this.revenue.plus(ind.lastCycleRevenue);
+          this.expenses = this.expenses.plus(ind.lastCycleExpenses);
         });
-        const profit = this.revenue - this.expenses;
-        const cycleProfit = profit * (marketCycles * CorporationConstants.SecsPerMarketCycle);
+        const profit = this.revenue.minus(this.expenses);
+        const cycleProfit = profit.times(marketCycles * CorporationConstants.SecsPerMarketCycle);
         if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
           dialogBoxCreate(
             "There was an error calculating your Corporations funds and they got reset to 0. " +
               "This is a bug. Please report to game developer.<br><br>" +
               "(Your funds have been set to $150b for the inconvenience)",
           );
-          this.funds = 150e9;
+          this.funds = new Decimal(150e9);
         }
 
         // Process dividends
@@ -143,8 +147,8 @@ export class Corporation {
   }
 
   getDividends(): number {
-    const profit = this.revenue - this.expenses;
-    const cycleProfit = profit * CorporationConstants.SecsPerMarketCycle;
+    const profit = this.revenue.minus(this.expenses);
+    const cycleProfit = profit.times(CorporationConstants.SecsPerMarketCycle);
     const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
     const dividendsPerShare = totalDividends / this.totalShares;
     const dividends = this.numShares * dividendsPerShare * (1 - this.dividendTaxPercentage / 100);
@@ -153,18 +157,18 @@ export class Corporation {
 
   determineValuation(): number {
     let val,
-      profit = this.revenue - this.expenses;
+      profit = this.revenue.minus(this.expenses).toNumber();
     if (this.public) {
       // Account for dividends
       if (this.dividendPercentage > 0) {
         profit *= (100 - this.dividendPercentage) / 100;
       }
 
-      val = this.funds + profit * 85e3;
+      val = this.funds.toNumber() + profit * 85e3;
       val *= Math.pow(1.1, this.divisions.length);
       val = Math.max(val, 0);
     } else {
-      val = 10e9 + Math.max(this.funds, 0) / 3; //Base valuation
+      val = 10e9 + Math.max(this.funds.toNumber(), 0) / 3; //Base valuation
       if (profit > 0) {
         val += profit * 315e3;
         val *= Math.pow(1.1, this.divisions.length);
@@ -258,12 +262,12 @@ export class Corporation {
     while (this.unlockUpgrades.length <= upgN) {
       this.unlockUpgrades.push(0);
     }
-    if (this.funds < price) {
+    if (this.funds.lt(price)) {
       dialogBoxCreate("You don't have enough funds to unlock this!");
       return;
     }
     this.unlockUpgrades[upgN] = 1;
-    this.funds = this.funds - price;
+    this.funds = this.funds.minus(price);
 
     // Apply effects for one-time upgrades
     if (upgN === 5) {
@@ -286,12 +290,12 @@ export class Corporation {
       this.upgradeMultipliers.push(1);
     }
     const totalCost = basePrice * Math.pow(priceMult, this.upgrades[upgN]);
-    if (this.funds < totalCost) {
+    if (this.funds.lt(totalCost)) {
       dialogBoxCreate("You don't have enough funds to purchase this!");
       return;
     }
     ++this.upgrades[upgN];
-    this.funds = this.funds - totalCost;
+    this.funds = this.funds.minus(totalCost);
 
     //Increase upgrade multiplier
     this.upgradeMultipliers[upgN] = 1 + this.upgrades[upgN] * upgradeAmt;

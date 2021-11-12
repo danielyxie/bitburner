@@ -98,14 +98,14 @@ export function getMaxNumberLevelUpgrades(
     throw new Error(`getMaxNumberLevelUpgrades() called without maxLevel arg`);
   }
 
-  if (player.money < nodeObj.calculateLevelUpgradeCost(1, player.hacknet_node_level_cost_mult)) {
+  if (player.money.lt(nodeObj.calculateLevelUpgradeCost(1, player.hacknet_node_level_cost_mult))) {
     return 0;
   }
 
   let min = 1;
   let max = maxLevel - 1;
   const levelsToMax = maxLevel - nodeObj.level;
-  if (player.money > nodeObj.calculateLevelUpgradeCost(levelsToMax, player.hacknet_node_level_cost_mult)) {
+  if (player.money.gt(nodeObj.calculateLevelUpgradeCost(levelsToMax, player.hacknet_node_level_cost_mult))) {
     return levelsToMax;
   }
 
@@ -113,13 +113,13 @@ export function getMaxNumberLevelUpgrades(
     const curr = ((min + max) / 2) | 0;
     if (
       curr !== maxLevel &&
-      player.money > nodeObj.calculateLevelUpgradeCost(curr, player.hacknet_node_level_cost_mult) &&
-      player.money < nodeObj.calculateLevelUpgradeCost(curr + 1, player.hacknet_node_level_cost_mult)
+      player.money.gt(nodeObj.calculateLevelUpgradeCost(curr, player.hacknet_node_level_cost_mult)) &&
+      player.money.lt(nodeObj.calculateLevelUpgradeCost(curr + 1, player.hacknet_node_level_cost_mult))
     ) {
       return Math.min(levelsToMax, curr);
-    } else if (player.money < nodeObj.calculateLevelUpgradeCost(curr, player.hacknet_node_level_cost_mult)) {
+    } else if (player.money.lt(nodeObj.calculateLevelUpgradeCost(curr, player.hacknet_node_level_cost_mult))) {
       max = curr - 1;
-    } else if (player.money > nodeObj.calculateLevelUpgradeCost(curr, player.hacknet_node_level_cost_mult)) {
+    } else if (player.money.gt(nodeObj.calculateLevelUpgradeCost(curr, player.hacknet_node_level_cost_mult))) {
       min = curr + 1;
     } else {
       return Math.min(levelsToMax, curr);
@@ -138,7 +138,7 @@ export function getMaxNumberRamUpgrades(
     throw new Error(`getMaxNumberRamUpgrades() called without maxLevel arg`);
   }
 
-  if (player.money < nodeObj.calculateRamUpgradeCost(1, player.hacknet_node_ram_cost_mult)) {
+  if (player.money.lt(nodeObj.calculateRamUpgradeCost(1, player.hacknet_node_ram_cost_mult))) {
     return 0;
   }
 
@@ -148,13 +148,13 @@ export function getMaxNumberRamUpgrades(
   } else {
     levelsToMax = Math.round(Math.log2(maxLevel / nodeObj.ram));
   }
-  if (player.money > nodeObj.calculateRamUpgradeCost(levelsToMax, player.hacknet_node_ram_cost_mult)) {
+  if (player.money.gt(nodeObj.calculateRamUpgradeCost(levelsToMax, player.hacknet_node_ram_cost_mult))) {
     return levelsToMax;
   }
 
   //We'll just loop until we find the max
   for (let i = levelsToMax - 1; i >= 0; --i) {
-    if (player.money > nodeObj.calculateRamUpgradeCost(i, player.hacknet_node_ram_cost_mult)) {
+    if (player.money.gt(nodeObj.calculateRamUpgradeCost(i, player.hacknet_node_ram_cost_mult))) {
       return i;
     }
   }
@@ -171,14 +171,14 @@ export function getMaxNumberCoreUpgrades(
     throw new Error(`getMaxNumberCoreUpgrades() called without maxLevel arg`);
   }
 
-  if (player.money < nodeObj.calculateCoreUpgradeCost(1, player.hacknet_node_core_cost_mult)) {
+  if (player.money.lt(nodeObj.calculateCoreUpgradeCost(1, player.hacknet_node_core_cost_mult))) {
     return 0;
   }
 
   let min = 1;
   let max = maxLevel - 1;
   const levelsToMax = maxLevel - nodeObj.cores;
-  if (player.money > nodeObj.calculateCoreUpgradeCost(levelsToMax, player.hacknet_node_core_cost_mult)) {
+  if (player.money.gt(nodeObj.calculateCoreUpgradeCost(levelsToMax, player.hacknet_node_core_cost_mult))) {
     return levelsToMax;
   }
 
@@ -187,13 +187,13 @@ export function getMaxNumberCoreUpgrades(
     const curr = ((min + max) / 2) | 0;
     if (
       curr != maxLevel &&
-      player.money > nodeObj.calculateCoreUpgradeCost(curr, player.hacknet_node_core_cost_mult) &&
-      player.money < nodeObj.calculateCoreUpgradeCost(curr + 1, player.hacknet_node_core_cost_mult)
+      player.money.gt(nodeObj.calculateCoreUpgradeCost(curr, player.hacknet_node_core_cost_mult)) &&
+      player.money.lt(nodeObj.calculateCoreUpgradeCost(curr + 1, player.hacknet_node_core_cost_mult))
     ) {
       return Math.min(levelsToMax, curr);
-    } else if (player.money < nodeObj.calculateCoreUpgradeCost(curr, player.hacknet_node_core_cost_mult)) {
+    } else if (player.money.lt(nodeObj.calculateCoreUpgradeCost(curr, player.hacknet_node_core_cost_mult))) {
       max = curr - 1;
-    } else if (player.money > nodeObj.calculateCoreUpgradeCost(curr, player.hacknet_node_core_cost_mult)) {
+    } else if (player.money.gt(nodeObj.calculateCoreUpgradeCost(curr, player.hacknet_node_core_cost_mult))) {
       min = curr + 1;
     } else {
       return Math.min(levelsToMax, curr);
@@ -480,7 +480,7 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
           player.hashManager.refundUpgrade(upgName);
           return false;
         }
-        corp.funds = corp.funds + upg.value;
+        corp.funds = corp.funds.plus(upg.value);
         break;
       }
       case "Reduce Minimum Security": {
