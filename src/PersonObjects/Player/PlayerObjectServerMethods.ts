@@ -24,7 +24,6 @@ export function getCurrentServer(this: IPlayer): BaseServer {
 
 export function getHomeComputer(this: IPlayer): Server {
   const home = GetServer("home");
-  console.log(home);
   if (home instanceof Server) return home;
   throw new Error("home computer was not a normal server");
 }

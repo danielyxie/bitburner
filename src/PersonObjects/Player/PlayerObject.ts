@@ -35,6 +35,8 @@ import { CityName } from "../../Locations/data/CityNames";
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
 
+import Decimal from "decimal.js";
+
 export class PlayerObject implements IPlayer {
   // Class members
   augmentations: IPlayerOwnedAugmentation[];
@@ -61,7 +63,7 @@ export class PlayerObject implements IPlayer {
   numPeopleKilled: number;
   location: LocationName;
   max_hp: number;
-  money: any;
+  money: number;
   moneySourceA: MoneySourceTracker;
   moneySourceB: MoneySourceTracker;
   playtimeSinceLastAug: number;
@@ -139,8 +141,6 @@ export class PlayerObject implements IPlayer {
   className: string;
   currentWorkFactionName: string;
   workType: string;
-  workCostMult: number;
-  workExpMult: number;
   currentWorkFactionDescription: string;
   timeWorked: number;
   workMoneyGained: number;
@@ -336,7 +336,7 @@ export class PlayerObject implements IPlayer {
     this.faction_rep_mult = 1;
 
     //Money
-    this.money = 1000;
+    this.money = new Decimal(1000);
 
     //Location information
     this.city = CityName.Sector12;
@@ -379,8 +379,6 @@ export class PlayerObject implements IPlayer {
     this.isWorking = false;
     this.focus = false;
     this.workType = "";
-    this.workCostMult = 1;
-    this.workExpMult = 1;
 
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";

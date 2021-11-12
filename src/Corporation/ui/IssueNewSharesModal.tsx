@@ -81,7 +81,7 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
     privateShares = Math.round(privateShares / 1e6) * 1e6;
 
     corp.issuedShares += newShares - privateShares;
-    corp.funds = corp.funds + profit;
+    corp.funds = corp.funds.plus(profit);
     corp.immediatelyUpdateSharePrice();
     props.onClose();
     dialogBoxCreate(

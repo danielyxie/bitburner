@@ -45,14 +45,14 @@ function WarehouseRoot(props: IProps): React.ReactElement {
 
   // Upgrade Warehouse size button
   const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, props.warehouse.level + 1);
-  const canAffordUpgrade = corp.funds > sizeUpgradeCost;
+  const canAffordUpgrade = corp.funds.gt(sizeUpgradeCost);
   function upgradeWarehouseOnClick(): void {
     if (division === null) return;
     if (props.warehouse === 0) return;
     if (!canAffordUpgrade) return;
     ++props.warehouse.level;
     props.warehouse.updateSize(corp, division);
-    corp.funds = corp.funds - sizeUpgradeCost;
+    corp.funds = corp.funds.minus(sizeUpgradeCost);
     props.rerender();
   }
 
@@ -197,7 +197,7 @@ interface IEmptyProps {
 function EmptyWarehouse(props: IEmptyProps): React.ReactElement {
   const corp = useCorporation();
   const division = useDivision();
-  const disabled = corp.funds < CorporationConstants.WarehouseInitialCost;
+  const disabled = corp.funds.lt(CorporationConstants.WarehouseInitialCost);
   function purchaseWarehouse(): void {
     if (disabled) return;
     PurchaseWarehouse(corp, division, props.city);

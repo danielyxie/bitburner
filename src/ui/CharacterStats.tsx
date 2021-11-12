@@ -290,7 +290,7 @@ export function CharacterStats(): React.ReactElement {
         <Employers />
 
         <Typography>
-          Money: <Money money={player.money} />
+          Money: <Money money={player.money.toNumber()} />
           <IconButton onClick={() => setMoneyOpen(true)}>
             <MoreHorizIcon color="info" />
           </IconButton>

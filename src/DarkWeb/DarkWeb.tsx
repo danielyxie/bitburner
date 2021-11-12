@@ -54,7 +54,7 @@ export function buyDarkwebItem(itemName: string): void {
   }
 
   // return if the player doesn't have enough money
-  if (Player.money.lt(item.price)) {
+  if (Player.money < item.price) {
     Terminal.error("Not enough money to purchase " + item.program);
     return;
   }
