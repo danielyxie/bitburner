@@ -22,6 +22,7 @@ const detect: [string, string][] = [
   ["scp", "needs to be awaited"],
   ["sleep", "Can no longer be called simultenaously."],
   ["hacking_skill", "renamed 'hacking'"],
+  ["tryWrite", "renamed 'tryWritePort'"],
 ];
 
 const changes: [RegExp, string][] = [
@@ -31,6 +32,7 @@ const changes: [RegExp, string][] = [
   [/ns.bladeburner.getActionTime/g, "((...a)=>ns.bladeburner.getActionTime(...a)/1000)"],
   [/ns.hackAnalyzePercent/g, "((...a)=>ns.hackAnalyze(...a)*100)"],
   [/ns.hackChance/g, "ns.hackAnalyzeChance"],
+  [/ns.tryWrite/g, "ns.tryWritePort"],
   [/formulas.basic.calculateSkill/g, "formulas.skills.calculateSkill"],
   [/formulas.basic.calculateExp/g, "formulas.skills.calculateExp"],
   [/formulas.basic.hackChance/g, "formulas.hacking.hackChance"],
