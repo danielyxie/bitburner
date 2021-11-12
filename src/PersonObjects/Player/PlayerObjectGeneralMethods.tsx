@@ -59,6 +59,7 @@ import { Money } from "../../ui/React/Money";
 import React from "react";
 import { serverMetadata } from "../../Server/data/servers";
 import { SnackbarEvents } from "../../ui/React/Snackbar";
+import { calculateClassEarnings } from "../formulas/work";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -1296,84 +1297,36 @@ export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): stri
   this.resetWorkStatus();
   return "You've finished creating " + programName + "! The new program can be found on your home computer.";
 }
-
 /* Studying/Taking Classes */
 export function startClass(this: IPlayer, router: IRouter, costMult: number, expMult: number, className: string): void {
   this.resetWorkStatus();
   this.isWorking = true;
   this.focus = true;
   this.workType = CONSTANTS.WorkTypeStudyClass;
-
+  this.workCostMult = costMult;
+  this.workExpMult = expMult;
   this.className = className;
-
-  const gameCPS = 1000 / CONSTANTS._idleSpeed;
-
-  //Find cost and exp gain per game cycle
-  let cost = 0;
-  let hackExp = 0,
-    strExp = 0,
-    defExp = 0,
-    dexExp = 0,
-    agiExp = 0,
-    chaExp = 0;
-  const hashManager = this.hashManager;
-  switch (className) {
-    case CONSTANTS.ClassStudyComputerScience:
-      hackExp = ((CONSTANTS.ClassStudyComputerScienceBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
-      break;
-    case CONSTANTS.ClassDataStructures:
-      cost = (CONSTANTS.ClassDataStructuresBaseCost * costMult) / gameCPS;
-      hackExp = ((CONSTANTS.ClassDataStructuresBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
-      break;
-    case CONSTANTS.ClassNetworks:
-      cost = (CONSTANTS.ClassNetworksBaseCost * costMult) / gameCPS;
-      hackExp = ((CONSTANTS.ClassNetworksBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
-      break;
-    case CONSTANTS.ClassAlgorithms:
-      cost = (CONSTANTS.ClassAlgorithmsBaseCost * costMult) / gameCPS;
-      hackExp = ((CONSTANTS.ClassAlgorithmsBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
-      break;
-    case CONSTANTS.ClassManagement:
-      cost = (CONSTANTS.ClassManagementBaseCost * costMult) / gameCPS;
-      chaExp = ((CONSTANTS.ClassManagementBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
-      break;
-    case CONSTANTS.ClassLeadership:
-      cost = (CONSTANTS.ClassLeadershipBaseCost * costMult) / gameCPS;
-      chaExp = ((CONSTANTS.ClassLeadershipBaseExp * expMult) / gameCPS) * hashManager.getStudyMult();
-      break;
-    case CONSTANTS.ClassGymStrength:
-      cost = (CONSTANTS.ClassGymBaseCost * costMult) / gameCPS;
-      strExp = (expMult / gameCPS) * hashManager.getTrainingMult();
-      break;
-    case CONSTANTS.ClassGymDefense:
-      cost = (CONSTANTS.ClassGymBaseCost * costMult) / gameCPS;
-      defExp = (expMult / gameCPS) * hashManager.getTrainingMult();
-      break;
-    case CONSTANTS.ClassGymDexterity:
-      cost = (CONSTANTS.ClassGymBaseCost * costMult) / gameCPS;
-      dexExp = (expMult / gameCPS) * hashManager.getTrainingMult();
-      break;
-    case CONSTANTS.ClassGymAgility:
-      cost = (CONSTANTS.ClassGymBaseCost * costMult) / gameCPS;
-      agiExp = (expMult / gameCPS) * hashManager.getTrainingMult();
-      break;
-    default:
-      throw new Error("ERR: Invalid/unrecognized class name");
-      return;
-  }
-
-  this.workMoneyLossRate = cost;
-  this.workHackExpGainRate = hackExp * this.hacking_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-  this.workStrExpGainRate = strExp * this.strength_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-  this.workDefExpGainRate = defExp * this.defense_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-  this.workDexExpGainRate = dexExp * this.dexterity_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-  this.workAgiExpGainRate = agiExp * this.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain;
-  this.workChaExpGainRate = chaExp * this.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain;
+  const earnings = calculateClassEarnings(this);
+  this.workMoneyLossRate = earnings.workMoneyLossRate;
+  this.workHackExpGainRate = earnings.workHackExpGainRate;
+  this.workStrExpGainRate = earnings.workStrExpGainRate;
+  this.workDefExpGainRate = earnings.workDefExpGainRate;
+  this.workDexExpGainRate = earnings.workDexExpGainRate;
+  this.workAgiExpGainRate = earnings.workAgiExpGainRate;
+  this.workChaExpGainRate = earnings.workChaExpGainRate;
   router.toWork();
 }
 
 export function takeClass(this: IPlayer, numCycles: number): boolean {
   this.timeWorked += CONSTANTS._idleSpeed * numCycles;
+  const earnings = calculateClassEarnings(this);
+  this.workMoneyLossRate = earnings.workMoneyLossRate;
+  this.workHackExpGainRate = earnings.workHackExpGainRate;
+  this.workStrExpGainRate = earnings.workStrExpGainRate;
+  this.workDefExpGainRate = earnings.workDefExpGainRate;
+  this.workDexExpGainRate = earnings.workDexExpGainRate;
+  this.workAgiExpGainRate = earnings.workAgiExpGainRate;
+  this.workChaExpGainRate = earnings.workChaExpGainRate;
   this.processWorkEarnings(numCycles);
   return false;
 }
