@@ -155,7 +155,6 @@ export class Corporation {
     if (this.unlockUpgrades[6] === 1) {
       upgrades += 0.1;
     }
-    console.log(upgrades);
     return Math.pow(dividends, BitNodeMultipliers.CorporationSoftCap + upgrades);
   }
 

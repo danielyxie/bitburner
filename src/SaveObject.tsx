@@ -227,6 +227,22 @@ function evaluateVersionCompatibility(ver: string | number): void {
       Player.reapplyAllAugmentations(true);
       Player.reapplyAllSourceFiles();
     }
+    if (ver < 3) {
+      anyPlayer.money = parseFloat(anyPlayer.money);
+      if (anyPlayer.corporation) {
+        anyPlayer.corporation.funds = parseFloat(anyPlayer.corporation.funds);
+        anyPlayer.corporation.revenue = parseFloat(anyPlayer.corporation.revenue);
+        anyPlayer.corporation.expenses = parseFloat(anyPlayer.corporation.expenses);
+
+        for (let i = 0; i < anyPlayer.corporation.divisions.length; ++i) {
+          const ind = anyPlayer.corporation.divisions[i];
+          ind.lastCycleRevenue = parseFloat(ind.lastCycleRevenue);
+          ind.lastCycleExpenses = parseFloat(ind.lastCycleExpenses);
+          ind.thisCycleRevenue = parseFloat(ind.thisCycleRevenue);
+          ind.thisCycleExpenses = parseFloat(ind.thisCycleExpenses);
+        }
+      }
+    }
   }
 }
 
