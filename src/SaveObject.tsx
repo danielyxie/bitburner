@@ -75,24 +75,7 @@ class BitburnerSaveObject {
     const epochTime = Math.round(Date.now() / 1000);
     const bn = Player.bitNodeN;
     const filename = `bitburnerSave_BN${bn}x${SourceFileFlags[bn]}_${epochTime}.json`;
-    const file = new Blob([saveString], { type: "text/plain" });
-    const navigator = window.navigator as any;
-    if (navigator.msSaveOrOpenBlob) {
-      // IE10+
-      navigator.msSaveOrOpenBlob(file, filename);
-    } else {
-      // Others
-      const a = document.createElement("a"),
-        url = URL.createObjectURL(file);
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(function () {
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      }, 0);
-    }
+    download(filename, saveString);
   }
 
   toJSON(): any {
@@ -372,8 +355,29 @@ function createBetaUpdateText(): void {
   );
 }
 
+function download(filename: string, content: string): void {
+  const file = new Blob([content], { type: "text/plain" });
+  const navigator = window.navigator as any;
+  if (navigator.msSaveOrOpenBlob) {
+    // IE10+
+    navigator.msSaveOrOpenBlob(file, filename);
+  } else {
+    // Others
+    const a = document.createElement("a"),
+      url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
+  }
+}
+
 Reviver.constructors.BitburnerSaveObject = BitburnerSaveObject;
 
-export { saveObject, loadGame };
+export { saveObject, loadGame, download };
 
 const saveObject = new BitburnerSaveObject();

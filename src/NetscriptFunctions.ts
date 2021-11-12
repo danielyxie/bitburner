@@ -430,7 +430,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
   const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
   const codingcontract = NetscriptCodingContract(Player, workerScript, helper);
-  const corporation = NetscriptCorporation(Player, workerScript, helper);
+  const corporation = NetscriptCorporation(Player);
   const formulas = NetscriptFormulas(Player, workerScript, helper);
   const singularity = NetscriptSingularity(Player, workerScript, helper);
   const stockmarket = NetscriptStockMarket(Player, workerScript, helper);

@@ -3,7 +3,6 @@ import { determineAllPossibilitiesForTabCompletion } from "../../src/Terminal/de
 import { Server } from "../../src/Server/Server";
 import { AddToAllServers, prestigeAllServers } from "../../src/Server/AllServers";
 import { LocationName } from "../../src/Locations/data/LocationNames";
-import { Message } from "../../src/Message/Message";
 import { CodingContract } from "../../src/CodingContracts";
 
 describe("determineAllPossibilitiesForTabCompletion", function () {

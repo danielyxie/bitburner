@@ -3,8 +3,9 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import { Settings } from "../../Settings/Settings";
-import { saveObject } from "../../SaveObject";
+import { load } from "../../db";
 import { IRouter } from "../Router";
+import { download } from "../../SaveObject";
 
 export let RecoveryMode = false;
 
@@ -22,7 +23,9 @@ export function RecoveryRoot({ router }: IProps): React.ReactElement {
     router.toTerminal();
   }
   Settings.AutosaveInterval = 0;
-  saveObject.exportGame();
+  load().then((content) => {
+    download("RECOVERY.json", content);
+  });
   return (
     <>
       <Typography variant="h3">RECOVERY MODE ACTIVATED</Typography>

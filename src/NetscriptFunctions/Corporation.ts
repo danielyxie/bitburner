@@ -1,5 +1,3 @@
-import { INetscriptHelper } from "./INetscriptHelper";
-import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 import { OfficeSpace } from "../Corporation/OfficeSpace";
@@ -88,11 +86,7 @@ export interface INetscriptCorporation {
   getEmployee(divisionName: any, cityName: any, employeeName: any): any;
 }
 
-export function NetscriptCorporation(
-  player: IPlayer,
-  workerScript: WorkerScript,
-  helper: INetscriptHelper,
-): INetscriptCorporation {
+export function NetscriptCorporation(player: IPlayer): INetscriptCorporation {
   function getDivision(divisionName: any): IIndustry {
     const corporation = player.corporation;
     if (corporation === null) throw new Error("cannot be called without a corporation");

@@ -508,7 +508,6 @@ export function purchaseHashUpgrade(player: IPlayer, upgName: string, upgTarget:
           }
           if (!(target instanceof Server)) throw new Error(`'${upgTarget}' is not a normal server.`);
 
-          const old = target.moneyMax;
           target.changeMaximumMoney(upg.value);
         } catch (e) {
           player.hashManager.refundUpgrade(upgName);

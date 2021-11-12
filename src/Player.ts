@@ -1,4 +1,3 @@
-import { Corporation } from "./Corporation/Corporation";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { sanitizeExploits } from "./Exploits/Exploit";
 

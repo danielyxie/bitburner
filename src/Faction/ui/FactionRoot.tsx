@@ -14,7 +14,6 @@ import { CONSTANTS } from "../../Constants";
 
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Faction } from "../../Faction/Faction";
-import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 
 import { use } from "../../ui/Context";
 import { CreateGangModal } from "./CreateGangModal";

@@ -33,8 +33,8 @@ function getDB(): Promise<IDBObjectStore> {
 }
 
 export function load(): Promise<string> {
-  return new Promise(async (resolve, reject) => {
-    await getDB()
+  return new Promise((resolve, reject) => {
+    getDB()
       .then((db) => {
         return new Promise<string>((resolve, reject) => {
           const request: IDBRequest<string> = db.get("save");
