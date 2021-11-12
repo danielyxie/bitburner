@@ -1,0 +1,6 @@
+Hi there, hello
+===============
+
+It looks like you found a page that doesn't exist!
+
+If you're looking for documentation of the netscript API. It moved to 
