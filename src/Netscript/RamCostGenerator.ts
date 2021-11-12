@@ -161,7 +161,7 @@ export const RamCosts: IMap<any> = {
   deleteServer: RamCostConstants.ScriptPurchaseServerRamCost,
   getPurchasedServers: RamCostConstants.ScriptPurchaseServerRamCost,
   write: 0,
-  tryWrite: 0,
+  tryWritePort: 0,
   read: 0,
   peek: 0,
   clear: 0,

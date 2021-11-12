@@ -11488,6 +11488,32 @@
             },
             {
               "kind": "PropertySignature",
+              "canonicalReference": "bitburner!NodeStats#ramUsed:member",
+              "docComment": "/**\n * Node's used RAM\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ramUsed: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "ramUsed",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "bitburner!NodeStats#timeOnline:member",
               "docComment": "/**\n * Number of seconds since Node has been purchased\n */\n",
               "excerptTokens": [
@@ -14791,7 +14817,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#peek:member(1)",
-              "docComment": "/**\n * Get a copy of the data from a port without popping it.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function is used to peek at the data from a port. It returns the first element in the specified port without removing that element. If the port is empty, the string “NULL PORT DATA” will be returned.\n *\n * @param port - Port to peek. Must be an integer between 1 and 20.\n *\n * @returns Data in the specified port.\n */\n",
+              "docComment": "/**\n * Get a copy of the data from a port without popping it.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function is used to peek at the data from a port. It returns the first element in the specified port without removing that element. If the port is empty, the string “NULL PORT DATA” will be returned.\n *\n * @param port - Port to peek. Must be an integer between 1 and 20.\n *\n * @returns Data in the specified port.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15036,7 +15062,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#read:member(1)",
-              "docComment": "/**\n * Read content of a file.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function is used to read data from a port or from a text file (.txt).\n *\n * This function will return the data in the specified text file. If the text file does not exist, an empty string will be returned.\n *\n * @param handle - Port or text file to read from.\n *\n * @returns Data in the specified text file or port.\n */\n",
+              "docComment": "/**\n * Read content of a file.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function is used to read data from a port or from a text file (.txt).\n *\n * This function will return the data in the specified text file. If the text file does not exist, an empty string will be returned.\n *\n * @param handle - Port or text file to read from.\n *\n * @returns Data in the specified text file or port.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -16160,12 +16186,12 @@
             },
             {
               "kind": "MethodSignature",
-              "canonicalReference": "bitburner!NS#tryWrite:member(1)",
-              "docComment": "/**\n * Attempt to write to a port.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Attempts to write data to the specified Netscript Port. If the port is full, the data will not be written. Otherwise, the data will be written normally.\n *\n * @param port - Port or text file that will be written to.\n *\n * @param data - Data to write.\n *\n * @returns True if the data is successfully written to the port, and false otherwise.\n */\n",
+              "canonicalReference": "bitburner!NS#tryWritePort:member(1)",
+              "docComment": "/**\n * Attempt to write to a port.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Attempts to write data to the specified Netscript Port. If the port is full, the data will not be written. Otherwise, the data will be written normally.\n *\n * @param port - Port or text file that will be written to.\n *\n * @param data - Data to write.\n *\n * @returns True if the data is successfully written to the port, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "tryWrite(port: "
+                  "text": "tryWritePort(port: "
                 },
                 {
                   "kind": "Content",
@@ -16220,7 +16246,7 @@
                   }
                 }
               ],
-              "name": "tryWrite"
+              "name": "tryWritePort"
             },
             {
               "kind": "MethodSignature",
@@ -16487,7 +16513,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#write:member(1)",
-              "docComment": "/**\n * Write data to a file.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function can be used to either write data to a text file (.txt).\n *\n * This function will write data to that text file. If the specified text file does not exist, then it will be created. The third argument mode, defines how the data will be written to the text file. If *mode is set to “w”, then the data is written in “write” mode which means that it will overwrite all existing data on the text file. If mode is set to any other value then the data will be written in “append” mode which means that the data will be added at the end of the text file.\n *\n * @param handle - Port or text file that will be written to.\n *\n * @param data - Data to write.\n *\n * @param mode - Defines the write mode. Only valid when writing to text files.\n */\n",
+              "docComment": "/**\n * Write data to a file.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function can be used to either write data to a text file (.txt).\n *\n * This function will write data to that text file. If the specified text file does not exist, then it will be created. The third argument mode, defines how the data will be written to the text file. If *mode is set to “w”, then the data is written in “write” mode which means that it will overwrite all existing data on the text file. If mode is set to any other value then the data will be written in “append” mode which means that the data will be added at the end of the text file.\n *\n * @param handle - Port or text file that will be written to.\n *\n * @param data - Data to write.\n *\n * @param mode - Defines the write mode. Only valid when writing to text files.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -16582,7 +16608,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "any"
+                  "text": "string | number"
                 },
                 {
                   "kind": "Content",
@@ -17690,32 +17716,6 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "bitburner!Player#hacking_skill:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "hacking_skill: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "number"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "hacking_skill",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
               "canonicalReference": "bitburner!Player#hacking_speed_mult:member",
               "docComment": "",
               "excerptTokens": [
@@ -17735,6 +17735,32 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "hacking_speed_mult",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Player#hacking:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "hacking: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "hacking",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -23199,12 +23225,12 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "bitburner!SleeveSkills#hacking_skill:member",
+              "canonicalReference": "bitburner!SleeveSkills#hacking:member",
               "docComment": "/**\n * current hacking skill of the sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "hacking_skill: "
+                  "text": "hacking: "
                 },
                 {
                   "kind": "Content",
@@ -23217,7 +23243,7 @@
               ],
               "isOptional": false,
               "releaseTag": "Public",
-              "name": "hacking_skill",
+              "name": "hacking",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2

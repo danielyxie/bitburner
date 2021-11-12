@@ -63,7 +63,7 @@ import { NetscriptGang } from "./NetscriptFunctions/Gang";
 import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
-import { NS as INS } from "./ScriptEditor/NetscriptDefinitions";
+import { NS as INS, Player as INetscriptPlayer } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
 import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
 import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
@@ -1635,6 +1635,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     writePort: function (port: any, data: any = ""): any {
       // Write to port
       // Port 1-10
+      if (typeof data !== "string" && typeof data !== "number") {
+        throw makeRuntimeErrorMsg(
+          "writePort",
+          `Trying to write invalid data to a port: only strings and numbers are valid.`,
+        );
+      }
       port = Math.round(port);
       if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
         throw makeRuntimeErrorMsg(
@@ -1701,23 +1707,23 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("write", `Invalid argument: ${port}`);
       }
     },
-    tryWrite: function (port: any, data: any = ""): any {
-      updateDynamicRam("tryWrite", getRamCost("tryWrite"));
+    tryWritePort: function (port: any, data: any = ""): any {
+      updateDynamicRam("tryWritePort", getRamCost("tryWritePort"));
       if (!isNaN(port)) {
         port = Math.round(port);
         if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
           throw makeRuntimeErrorMsg(
-            "tryWrite",
+            "tryWritePort",
             `Invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
           );
         }
         const iport = NetscriptPorts[port - 1];
         if (iport == null || !(iport instanceof Object)) {
-          throw makeRuntimeErrorMsg("tryWrite", `Could not find port: ${port}. This is a bug. Report to dev.`);
+          throw makeRuntimeErrorMsg("tryWritePort", `Could not find port: ${port}. This is a bug. Report to dev.`);
         }
         return Promise.resolve(iport.tryWrite(data));
       } else {
-        throw makeRuntimeErrorMsg("tryWrite", `Invalid argument: ${port}`);
+        throw makeRuntimeErrorMsg("tryWritePort", `Invalid argument: ${port}`);
       }
     },
     readPort: function (port: any): any {
@@ -2088,7 +2094,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
     },
 
-    getPlayer: function (): any {
+    getPlayer: function (): INetscriptPlayer {
       helper.updateDynamicRam("getPlayer", getRamCost("getPlayer"));
 
       const data = {

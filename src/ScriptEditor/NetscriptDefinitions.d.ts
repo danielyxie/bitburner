@@ -4522,7 +4522,7 @@ export interface NS extends Singularity {
   /**
    * Write data to a file.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 0 GB
    *
    * This function can be used to either write data to a text file (.txt).
    *
@@ -4542,7 +4542,7 @@ export interface NS extends Singularity {
   /**
    * Attempt to write to a port.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 0 GB
    *
    * Attempts to write data to the specified Netscript Port.
    * If the port is full, the data will not be written.
@@ -4552,12 +4552,12 @@ export interface NS extends Singularity {
    * @param data - Data to write.
    * @returns True if the data is successfully written to the port, and false otherwise.
    */
-  tryWrite(port: number, data: string[] | number): Promise<boolean>;
+  tryWritePort(port: number, data: string[] | number): Promise<boolean>;
 
   /**
    * Read content of a file.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 0 GB
    *
    * This function is used to read data from a port or from a text file (.txt).
    *
@@ -4572,7 +4572,7 @@ export interface NS extends Singularity {
   /**
    * Get a copy of the data from a port without popping it.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 0 GB
    *
    * This function is used to peek at the data from a port. It returns the
    * first element in the specified port without removing that element. If
@@ -4613,7 +4613,7 @@ export interface NS extends Singularity {
    * Write data to that netscript port.
    * @returns The data popped off the queue if it was full.
    */
-  writePort(port: number, data: any): Promise<any>;
+  writePort(port: number, data: string | number): Promise<any>;
   /**
    * Read data from a port.
    * @remarks

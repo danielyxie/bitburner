@@ -23,6 +23,7 @@ export interface NodeStats
 |  [name](./bitburner.nodestats.name.md) | string | Node's name |
 |  [production](./bitburner.nodestats.production.md) | number | Node's production per second |
 |  [ram](./bitburner.nodestats.ram.md) | number | Node's RAM |
+|  [ramUsed](./bitburner.nodestats.ramused.md) | number | Node's used RAM |
 |  [timeOnline](./bitburner.nodestats.timeonline.md) | number | Number of seconds since Node has been purchased |
 |  [totalProduction](./bitburner.nodestats.totalproduction.md) | number | Total number of money Node has produced |
 
