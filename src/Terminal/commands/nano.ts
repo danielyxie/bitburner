@@ -3,6 +3,7 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
+import { CursorPositions } from "../../ScriptEditor/CursorPositions";
 
 export function nano(
   terminal: ITerminal,
@@ -24,13 +25,15 @@ export function nano(
       if (script == null) {
         let code = "";
         if (filename.endsWith(".ns") || filename.endsWith(".js")) {
-          code = `/**
- * @param {NS} ns
- **/
+          code = `/** @param {NS} ns **/
 export async function main(ns) {
-
+    
 }`;
         }
+        CursorPositions.saveCursor(filename, {
+          row: 3,
+          column: 5,
+        });
         router.toScriptEditor(filepath, code);
       } else {
         router.toScriptEditor(filepath, script.code);

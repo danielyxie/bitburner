@@ -3,7 +3,7 @@ import { IMap } from "../types";
 
 export const GeneralActions: IMap<Action> = {};
 
-let actionNames : Array<string> = [
+const actionNames : Array<string> = [
   "Training",
   "Field Analysis",
   "Recruitment",
@@ -12,7 +12,7 @@ let actionNames : Array<string> = [
   "Incite Violence"
 ];
 
-for (let actionName of actionNames){
+for (const actionName of actionNames){
   GeneralActions[actionName] = new Action({
     name: actionName,
   });

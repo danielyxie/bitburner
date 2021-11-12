@@ -78,7 +78,6 @@ interface IProps {
 
 // Create a popup that lets the player use the Market TA research for Products
 export function ProductMarketTaModal(props: IProps): React.ReactElement {
-  const division = useDivision();
   const markupLimit = props.product.rat / props.product.mku;
   const setRerender = useState(false)[1];
   function rerender(): void {

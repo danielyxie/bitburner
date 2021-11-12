@@ -147,7 +147,7 @@ export class Corporation {
     const cycleProfit = profit * CorporationConstants.SecsPerMarketCycle;
     const totalDividends = (this.dividendPercentage / 100) * cycleProfit;
     const dividendsPerShare = totalDividends / this.totalShares;
-    const dividends = this.numShares * dividendsPerShare * (1 - this.dividendTaxPercentage / 100);
+    const dividends = this.numShares * dividendsPerShare;
     let upgrades = -0.15;
     if (this.unlockUpgrades[5] === 1) {
       upgrades += 0.05;

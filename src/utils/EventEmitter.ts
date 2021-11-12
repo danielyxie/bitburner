@@ -1,21 +1,6 @@
 /**
  * Generic Event Emitter class following a subscribe/publish paradigm.
  */
-
-type cbFn = (...args: any[]) => any;
-
-interface ISubscriber {
-  /**
-   * Callback function that will be run when an event is emitted
-   */
-  cb: cbFn;
-
-  /**
-   * Name/identifier for this subscriber
-   */
-  id: string;
-}
-
 function uuidv4(): string {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0,

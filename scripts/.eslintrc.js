@@ -132,7 +132,6 @@ module.exports = {
         ],
         "new-cap": ["error"],
         "new-parens": ["error"],
-        // TODO: configure this...
         "newline-before-return": ["error"],
         "newline-per-chained-call": ["error"],
         "no-alert": ["error"],
