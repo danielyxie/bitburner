@@ -19,13 +19,13 @@ interface IProps {
 export function Corporation(props: IProps): React.ReactElement {
   function addTonsCorporationFunds(): void {
     if (props.player.corporation) {
-      props.player.corporation.funds = props.player.corporation.funds.plus(1e99);
+      props.player.corporation.funds = props.player.corporation.funds + 1e99;
     }
   }
 
   function resetCorporationFunds(): void {
     if (props.player.corporation) {
-      props.player.corporation.funds = props.player.corporation.funds.minus(props.player.corporation.funds);
+      props.player.corporation.funds = props.player.corporation.funds - props.player.corporation.funds;
     }
   }
 

@@ -48,9 +48,6 @@ export class Server extends BaseServer {
   // How many ports are currently opened on the server
   openPortCount = 0;
 
-  // Flag indicating wehther this is a purchased server
-  purchasedByPlayer = false;
-
   // Hacking level required to hack this server
   requiredHackingSkill = 1;
 

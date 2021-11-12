@@ -94,6 +94,9 @@ export class BaseServer {
   // Text files on this server
   textFiles: TextFile[] = [];
 
+  // Flag indicating wehther this is a purchased server
+  purchasedByPlayer = false;
+
   constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {
     this.ip = params.ip ? params.ip : createRandomIp();
 

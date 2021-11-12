@@ -31,10 +31,10 @@ export interface IIndustry {
   prodMult: number;
 
   // Decimal
-  lastCycleRevenue: any;
-  lastCycleExpenses: any;
-  thisCycleRevenue: any;
-  thisCycleExpenses: any;
+  lastCycleRevenue: number;
+  lastCycleExpenses: number;
+  thisCycleRevenue: number;
+  thisCycleExpenses: number;
 
   upgrades: number[];
 

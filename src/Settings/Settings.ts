@@ -166,7 +166,7 @@ export const defaultSettings: IDefaultSettings = {
   DisableHotkeys: false,
   DisableTextEffects: false,
   EnableBashHotkeys: false,
-  TimestampsFormat: "YYYY-MM-DD HH:MM:SS",
+  TimestampsFormat: "",
   Locale: "en",
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,

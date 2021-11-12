@@ -856,7 +856,7 @@ describe("Stock Market Tests", function () {
         expect(buyStock(stock, shares, null, suppressDialogOpt)).equal(true);
         expect(stock.playerShares).equal(shares);
         expect(stock.playerAvgPx).greaterThan(0);
-        expect(Player.money.toNumber()).equal(0);
+        expect(Player.money).equal(0);
       });
     });
 
@@ -888,7 +888,7 @@ describe("Stock Market Tests", function () {
         expect(sellStock(stock, shares, null, suppressDialogOpt)).equal(true);
         expect(stock.playerShares).equal(0);
         expect(stock.playerAvgPx).equal(0);
-        expect(Player.money.toNumber()).equal(gain);
+        expect(Player.money).equal(gain);
       });
 
       it("should cap the number of sharse sold to however many the player owns", function () {
@@ -902,7 +902,7 @@ describe("Stock Market Tests", function () {
         expect(sellStock(stock, attemptedShares, null, suppressDialogOpt)).equal(true);
         expect(stock.playerShares).equal(0);
         expect(stock.playerAvgPx).equal(0);
-        expect(Player.money.toNumber()).equal(gain);
+        expect(Player.money).equal(gain);
       });
 
       it("should properly update stock properties for partial transactions", function () {
@@ -916,7 +916,7 @@ describe("Stock Market Tests", function () {
         expect(sellStock(stock, shares, null, suppressDialogOpt)).equal(true);
         expect(stock.playerShares).equal(shares);
         expect(stock.playerAvgPx).equal(origPrice);
-        expect(Player.money.toNumber()).equal(gain);
+        expect(Player.money).equal(gain);
       });
     });
 
@@ -950,7 +950,7 @@ describe("Stock Market Tests", function () {
         expect(shortStock(stock, shares, null, suppressDialogOpt)).equal(true);
         expect(stock.playerShortShares).equal(shares);
         expect(stock.playerAvgShortPx).greaterThan(0);
-        expect(Player.money.toNumber()).equal(0);
+        expect(Player.money).equal(0);
       });
     });
 
@@ -982,7 +982,7 @@ describe("Stock Market Tests", function () {
         expect(sellShort(stock, shares, null, suppressDialogOpt)).equal(true);
         expect(stock.playerShortShares).equal(0);
         expect(stock.playerAvgShortPx).equal(0);
-        expect(Player.money.toNumber()).equal(gain);
+        expect(Player.money).equal(gain);
       });
 
       it("should cap the number of sharse sold to however many the player owns", function () {
@@ -996,7 +996,7 @@ describe("Stock Market Tests", function () {
         expect(sellShort(stock, attemptedShares, null, suppressDialogOpt)).equal(true);
         expect(stock.playerShortShares).equal(0);
         expect(stock.playerAvgShortPx).equal(0);
-        expect(Player.money.toNumber()).equal(gain);
+        expect(Player.money).equal(gain);
       });
 
       it("should properly update stock properties for partial transactions", function () {
@@ -1010,7 +1010,7 @@ describe("Stock Market Tests", function () {
         expect(sellShort(stock, shares, null, suppressDialogOpt)).equal(true);
         expect(stock.playerShortShares).equal(shares);
         expect(stock.playerAvgShortPx).equal(origPrice);
-        expect(Player.money.toNumber()).equal(gain);
+        expect(Player.money).equal(gain);
       });
     });
   });

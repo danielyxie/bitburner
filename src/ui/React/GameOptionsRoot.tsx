@@ -19,6 +19,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Link from "@mui/material/Link";
 import Tooltip from "@mui/material/Tooltip";
+import TextField from "@mui/material/TextField";
 
 import DownloadIcon from "@mui/icons-material/Download";
 import UploadIcon from "@mui/icons-material/Upload";
@@ -30,6 +31,7 @@ import { ThemeEditorModal } from "./ThemeEditorModal";
 
 import { Settings } from "../../Settings/Settings";
 import { save, deleteGame } from "../../db";
+import { formatTime } from "../../utils/helpers/formatTime";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -73,7 +75,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [disableASCIIArt, setDisableASCIIArt] = useState(Settings.DisableASCIIArt);
   const [disableTextEffects, setDisableTextEffects] = useState(Settings.DisableTextEffects);
   const [enableBashHotkeys, setEnableBashHotkeys] = useState(Settings.EnableBashHotkeys);
-  const [enableTimestamps, setEnableTimestamps] = useState(!!Settings.TimestampsFormat);
+  const [timestampFormat, setTimestampFormat] = useState(Settings.TimestampsFormat);
   const [saveGameOnFileSave, setSaveGameOnFileSave] = useState(Settings.SaveGameOnFileSave);
 
   const [locale, setLocale] = useState(Settings.Locale);
@@ -154,9 +156,9 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
     setEnableBashHotkeys(event.target.checked);
     Settings.EnableBashHotkeys = event.target.checked;
   }
-  function handleEnableTimestampsChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setEnableTimestamps(event.target.checked);
-    Settings.TimestampsFormat = event.target.checked ? "YYYY-MM-DD HH:MM:SS" : "";
+  function handleTimestampFormatChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setTimestampFormat(event.target.value);
+    Settings.TimestampsFormat = event.target.value;
   }
   function handleSaveGameOnFile(event: React.ChangeEvent<HTMLInputElement>): void {
     setSaveGameOnFileSave(event.target.checked);
@@ -466,21 +468,28 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               />
             </ListItem>
             <ListItem>
-              <FormControlLabel
-                control={<Switch checked={enableTimestamps} onChange={handleEnableTimestampsChange} />}
-                label={
-                  <Tooltip
-                    title={
-                      <Typography>
-                        Terminal commands and log entries will be timestamped. The timestamp will have the format: M/D
-                        h:m
-                      </Typography>
-                    }
-                  >
-                    <Typography>Enable timestamps</Typography>
-                  </Tooltip>
+              <Tooltip
+                title={
+                  <Typography>
+                    Terminal commands and log entries will be timestamped. See
+                    https://date-fns.org/docs/Getting-Started/
+                  </Typography>
                 }
-              />
+              >
+                <span>
+                  <TextField
+                    InputProps={{
+                      startAdornment: (
+                        <Typography color={formatTime(timestampFormat) === "format error" ? "error" : "success"}>
+                          Timestamp&nbsp;format:&nbsp;
+                        </Typography>
+                      ),
+                    }}
+                    value={timestampFormat}
+                    onChange={handleTimestampFormatChange}
+                  />
+                </span>
+              </Tooltip>
             </ListItem>
 
             <ListItem>

@@ -440,7 +440,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
       <br />
       <Tooltip title={<Typography>Upgrade the office's size so that it can hold more employees!</Typography>}>
         <span>
-          <Button disabled={corp.funds.lt(0)} onClick={() => setUpgradeOfficeSizeOpen(true)}>
+          <Button disabled={corp.funds < 0} onClick={() => setUpgradeOfficeSizeOpen(true)}>
             Upgrade size
           </Button>
         </span>
@@ -458,7 +458,7 @@ export function IndustryOffice(props: IProps): React.ReactElement {
             title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
           >
             <span>
-              <Button disabled={corp.funds.lt(0)} onClick={() => setThrowPartyOpen(true)}>
+              <Button disabled={corp.funds < 0} onClick={() => setThrowPartyOpen(true)}>
                 Throw Party
               </Button>
             </span>
