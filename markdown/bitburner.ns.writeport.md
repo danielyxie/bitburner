@@ -9,7 +9,7 @@ Write data to a port.
 <b>Signature:</b>
 
 ```typescript
-writePort(port: number, data: any): Promise<any>;
+writePort(port: number, data: string | number): Promise<any>;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ writePort(port: number, data: any): Promise<any>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  port | number |  |
-|  data | any |  |
+|  data | string \| number |  |
 
 <b>Returns:</b>
 

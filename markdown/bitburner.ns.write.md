@@ -26,7 +26,7 @@ Promise&lt;void&gt;
 
 ## Remarks
 
-RAM cost: 1 GB
+RAM cost: 0 GB
 
 This function can be used to either write data to a text file (.txt).
 

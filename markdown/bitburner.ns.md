@@ -120,7 +120,7 @@ export interface NS extends Singularity
 |  [toast(msg, variant)](./bitburner.ns.toast.md) | Queue a toast (bottom-right notification). |
 |  [tprint(msg)](./bitburner.ns.tprint.md) | Prints a value or a variable to the Terminal. |
 |  [tprintf(msg)](./bitburner.ns.tprintf.md) | Prints a raw value or a variable to the Terminal. |
-|  [tryWrite(port, data)](./bitburner.ns.trywrite.md) | Attempt to write to a port. |
+|  [tryWritePort(port, data)](./bitburner.ns.trywriteport.md) | Attempt to write to a port. |
 |  [vsprintf(format, args)](./bitburner.ns.vsprintf.md) | Format a string with an array of arguments. |
 |  [weaken(host, opts)](./bitburner.ns.weaken.md) | Reduce a server security level. |
 |  [weakenAnalyze(threads, cores)](./bitburner.ns.weakenanalyze.md) | Predict the effect of weaken. |

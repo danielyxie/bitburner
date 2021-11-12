@@ -26,7 +26,7 @@ Data in the specified text file or port.
 
 ## Remarks
 
-RAM cost: 1 GB
+RAM cost: 0 GB
 
 This function is used to read data from a port or from a text file (.txt).
 
