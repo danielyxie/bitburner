@@ -28,7 +28,7 @@ function NextReveal(props: INextRevealProps): React.ReactElement {
   const upgrades = Object.keys(GangMemberUpgrades)
     .filter((upgName: string) => {
       const upg = GangMemberUpgrades[upgName];
-      if (player.money > gang.getUpgradeCost(upg)) return false;
+      if (player.money.gt(gang.getUpgradeCost(upg))) return false;
       if (upg.type !== props.type) return false;
       if (props.upgrades.includes(upgName)) return false;
       return true;
@@ -96,7 +96,7 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
     return Object.keys(GangMemberUpgrades)
       .filter((upgName: string) => {
         const upg = GangMemberUpgrades[upgName];
-        if (player.money < gang.getUpgradeCost(upg)) return false;
+        if (player.money.lt(gang.getUpgradeCost(upg))) return false;
         if (upg.type !== type) return false;
         if (list.includes(upgName)) return false;
         return true;

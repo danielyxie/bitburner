@@ -480,13 +480,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                   <TextField
                     InputProps={{
                       startAdornment: (
-                        <Typography
-                          color={
-                            formatTime(timestampFormat) === "format error" && timestampFormat !== ""
-                              ? "error"
-                              : "success"
-                          }
-                        >
+                        <Typography color={formatTime(timestampFormat) === "format error" ? "error" : "success"}>
                           Timestamp&nbsp;format:&nbsp;
                         </Typography>
                       ),
