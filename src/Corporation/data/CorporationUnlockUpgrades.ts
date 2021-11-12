@@ -53,14 +53,14 @@ export const CorporationUnlockUpgrades: IMap<CorporationUnlockUpgrade> = {
   ],
   "5": [
     5,
-    500e9,
+    500e12,
     "Shady Accounting",
     "Utilize unscrupulous accounting practices and pay off government officials to save money " +
       "on taxes. This reduces the dividend tax rate by 5%.",
   ],
   "6": [
     6,
-    2e12,
+    2e15,
     "Government Partnership",
     "Help national governments further their agendas in exchange for lowered taxes. " +
       "This reduces the dividend tax rate by 10%",

@@ -1294,9 +1294,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         // Return player's money
         workerScript.log(
           "getServerMoneyAvailable",
-          `returned player's money: ${numeralWrapper.formatMoney(Player.money.toNumber())}`,
+          `returned player's money: ${numeralWrapper.formatMoney(Player.money)}`,
         );
-        return Player.money.toNumber();
+        return Player.money;
       }
       workerScript.log(
         "getServerMoneyAvailable",
@@ -1522,7 +1522,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         return "";
       }
 
-      if (Player.money.lt(cost)) {
+      if (Player.money < cost) {
         workerScript.log(
           "purchaseServer",
           `Not enough money to purchase server. Need ${numeralWrapper.formatMoney(cost)}`,
@@ -2126,7 +2126,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         company_rep_mult: Player.company_rep_mult,
         faction_rep_mult: Player.faction_rep_mult,
         numPeopleKilled: Player.numPeopleKilled,
-        money: Player.money.toNumber(),
+        money: Player.money,
         city: Player.city,
         location: Player.location,
         companyName: Player.companyName,
