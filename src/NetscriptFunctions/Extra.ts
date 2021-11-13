@@ -44,7 +44,6 @@ export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript): INe
         recur(depth - 1);
       };
       recur(2);
-      console.log(x);
       console.warn("I am sure that this variable is false.");
       if (x !== false) {
         console.warn("Reality has been altered!");
