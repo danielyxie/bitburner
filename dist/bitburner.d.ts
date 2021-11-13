@@ -3093,13 +3093,13 @@ export declare interface NS extends Singularity {
      * @remarks
      * RAM cost: 0.05 GB
      *
-     * Returns the amount of time in seconds it takes to execute the grow Netscript function on the target server.
+     * Returns the amount of time in milliseconds it takes to execute the grow Netscript function on the target server.
      * The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels.
      *
      * @param host - Host of target server.
      * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
      * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
-     * @returns Returns the amount of time in seconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
+     * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
      */
     getGrowTime(host: string): number;
 
@@ -3108,13 +3108,13 @@ export declare interface NS extends Singularity {
      * @remarks
      * RAM cost: 0.05 GB
      *
-     * Returns the amount of time in seconds it takes to execute the weaken() Netscript function on the target server.
+     * Returns the amount of time in milliseconds it takes to execute the weaken() Netscript function on the target server.
      * The function takes in an optional hackLvl parameter that can be specified to see what the weaken time would be at different hacking levels.
      *
      * @param host - Host of target server.
      * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
      * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
-     * @returns Returns the amount of time in seconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
+     * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
      */
     getWeakenTime(host: string): number;
 
