@@ -138,8 +138,7 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
       workerScript.errorMessage = e;
       throw workerScript;
     }
-    workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, "Unknown error: " + JSON.stringify(e));
-    throw workerScript;
+    throw e; // Don't know what to do with it, let's rethrow.
   });
 }
 
