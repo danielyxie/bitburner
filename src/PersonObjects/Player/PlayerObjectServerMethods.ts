@@ -18,7 +18,7 @@ export function hasTorRouter(this: IPlayer): boolean {
 
 export function getCurrentServer(this: IPlayer): BaseServer {
   const server = GetServer(this.currentServer);
-  if (server === null) throw new Error("somehow connected to a server that does not exist.");
+  if (server === null) throw new Error(`somehow connected to a server that does not exist. ${this.currentServer}`);
   return server;
 }
 

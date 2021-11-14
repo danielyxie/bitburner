@@ -44,7 +44,7 @@ export function NetscriptStanek(
           return Promise.reject(workerScript);
         }
         const ram = workerScript.scriptRef.ramUsage * workerScript.scriptRef.threads;
-        const charge = staneksGift.charge(rootX, rootY, ram);
+        const charge = staneksGift.charge(rootX, rootY, workerScript.scriptRef.threads);
         workerScript.log("stanek.charge", `Charged fragment for ${charge} charge.`);
         return Promise.resolve(charge);
       });

@@ -60,7 +60,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
     next[1] = (next[1] + minefield.length) % minefield.length;
     setPos(next);
 
-    if (event.keyCode == 32) {
+    if (event.key == " ") {
       if (!minefield[pos[1]][pos[0]]) {
         props.onFailure();
         return;

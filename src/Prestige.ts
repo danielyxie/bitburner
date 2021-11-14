@@ -26,10 +26,10 @@ import { Terminal } from "./Terminal";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 
-import Decimal from "decimal.js";
 import { staneksGift } from "./CotMG/Helper";
 import { ProgramsSeen } from "./Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "./Faction/ui/FactionsRoot";
+import { CONSTANTS } from "./Constants";
 
 const BitNode8StartingMoney = 250e6;
 
@@ -64,6 +64,10 @@ export function prestigeAugmentation(): void {
   if (augmentationExists(AugmentationNames.PCMatrix) && Augmentations[AugmentationNames.PCMatrix].owned) {
     homeComp.programs.push(Programs.DeepscanV1.name);
     homeComp.programs.push(Programs.AutoLink.name);
+  }
+
+  if (Player.sourceFileLvl(5) > 0 || Player.bitNodeN === 5) {
+    homeComp.programs.push(Programs.Formulas.name);
   }
 
   // Re-create foreign servers
@@ -117,7 +121,7 @@ export function prestigeAugmentation(): void {
 
   // BitNode 8: Ghost of Wall Street
   if (Player.bitNodeN === 8) {
-    Player.money = new Decimal(BitNode8StartingMoney);
+    Player.money = BitNode8StartingMoney;
   }
   if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {
     Player.hasWseAccount = true;
@@ -225,6 +229,10 @@ export function prestigeSourceFile(flume: boolean): void {
   // Messages
   initMessages();
 
+  if (Player.sourceFileLvl(5) > 0) {
+    homeComp.programs.push(Programs.Formulas.name);
+  }
+
   // BitNode 3: Corporatocracy
   if (Player.bitNodeN === 3) {
     homeComp.messages.push(LiteratureNames.CorporationManagementHandbook);
@@ -236,7 +244,7 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // BitNode 8: Ghost of Wall Street
   if (Player.bitNodeN === 8) {
-    Player.money = new Decimal(BitNode8StartingMoney);
+    Player.money = BitNode8StartingMoney;
   }
   if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {
     Player.hasWseAccount = true;
@@ -277,6 +285,9 @@ export function prestigeSourceFile(flume: boolean): void {
     updateHashManagerCapacity(Player);
   }
 
+  if (Player.bitNodeN === 13) {
+    Player.money = CONSTANTS.TravelCost;
+  }
   staneksGift.prestigeSourceFile();
 
   // Gain int exp

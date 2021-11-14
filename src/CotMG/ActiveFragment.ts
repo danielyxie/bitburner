@@ -1,8 +1,5 @@
 import { Fragment, FragmentById } from "./Fragment";
-import { FragmentType } from "./FragmentType";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
-
-const noCharge = [FragmentType.None, FragmentType.Delete, FragmentType.Booster];
 
 export interface IActiveFragmentParams {
   x: number;
@@ -13,7 +10,8 @@ export interface IActiveFragmentParams {
 
 export class ActiveFragment {
   id: number;
-  charge: number;
+  avgCharge: number;
+  numCharge: number;
   rotation: number;
   x: number;
   y: number;
@@ -23,13 +21,15 @@ export class ActiveFragment {
       this.id = params.fragment.id;
       this.x = params.x;
       this.y = params.y;
-      this.charge = 0;
+      this.avgCharge = 0;
+      this.numCharge = 0;
       this.rotation = params.rotation;
     } else {
       this.id = -1;
       this.x = -1;
       this.y = -1;
-      this.charge = -1;
+      this.avgCharge = -1;
+      this.numCharge = -1;
       this.rotation = -1;
     }
   }
@@ -66,12 +66,21 @@ export class ActiveFragment {
       .map((cell) => [this.x + cell[0], this.y + cell[1]]);
   }
 
+  cool(): void {
+    console.log(Math.log(this.numCharge + 1) / (Math.log(50) * 10));
+    this.numCharge = this.numCharge - Math.log(this.numCharge + 1) / (Math.log(50) * 10);
+    if (this.numCharge < 0) {
+      this.numCharge = 0;
+    }
+  }
+
   copy(): ActiveFragment {
     // We have to do a round trip because the constructor.
     const fragment = FragmentById(this.id);
     if (fragment === null) throw new Error("ActiveFragment id refers to unknown Fragment.");
     const c = new ActiveFragment({ x: this.x, y: this.y, rotation: this.rotation, fragment: fragment });
-    c.charge = this.charge;
+    c.avgCharge = this.avgCharge;
+    c.numCharge = this.numCharge;
     return c;
   }
 

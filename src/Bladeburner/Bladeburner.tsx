@@ -1235,8 +1235,7 @@ export class Bladeburner implements IBladeburner {
             let moneyGain = 0;
             if (!isOperation) {
               moneyGain = BladeburnerConstants.ContractBaseMoneyGain * rewardMultiplier * this.skillMultipliers.money;
-              player.gainMoney(moneyGain);
-              player.recordMoneySource(moneyGain, "bladeburner");
+              player.gainMoney(moneyGain, "bladeburner");
             }
 
             if (isOperation) {
@@ -1425,7 +1424,7 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["Field Analysis"]: {
         // Does not use stamina. Effectiveness depends on hacking, int, and cha
         let eff =
-          0.04 * Math.pow(player.hacking_skill, 0.3) +
+          0.04 * Math.pow(player.hacking, 0.3) +
           0.04 * Math.pow(player.intelligence, 0.9) +
           0.02 * Math.pow(player.charisma, 0.3);
         eff *= player.bladeburner_analysis_mult;
@@ -2105,17 +2104,17 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["Operation"]:
       case ActionTypes["BlackOp"]:
       case ActionTypes["BlackOperation"]:
-        return actionObj.getActionTime(this);
+        return actionObj.getActionTime(this) * 1000;
       case ActionTypes["Training"]:
       case ActionTypes["Field Analysis"]:
       case ActionTypes["FieldAnalysis"]:
-        return 30;
+        return 30000;
       case ActionTypes["Recruitment"]:
-        return this.getRecruitmentTime(player);
+        return this.getRecruitmentTime(player) * 1000;
       case ActionTypes["Diplomacy"]:
       case ActionTypes["Hyperbolic Regeneration Chamber"]:
       case ActionTypes["Incite Violence"]:
-        return 60;
+        return 60000;
       default:
         workerScript.log("bladeburner.getActionTime", errorLogText);
         return -1;
@@ -2127,7 +2126,7 @@ export class Bladeburner implements IBladeburner {
     type: string,
     name: string,
     workerScript: WorkerScript,
-  ): number[] {
+  ): [number, number] {
     const errorLogText = `Invalid action: type='${type}' name='${name}'`;
     const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {

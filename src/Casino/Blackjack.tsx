@@ -76,7 +76,7 @@ export class Blackjack extends Game<Props, State> {
 
     // Take money from player right away so that player's dont just "leave" to avoid the loss (I mean they could
     // always reload without saving but w.e)
-    this.props.p.loseMoney(this.state.bet);
+    this.props.p.loseMoney(this.state.bet, "casino");
 
     const playerHand = new Hand([this.deck.safeDrawCard(), this.deck.safeDrawCard()]);
     const dealerHand = new Hand([this.deck.safeDrawCard(), this.deck.safeDrawCard()]);

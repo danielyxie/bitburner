@@ -1,7 +1,7 @@
 {
   "name": "bitburner",
   "license": "SEE LICENSE IN license.txt",
-  "version": "0.56.0",
+  "version": "1.0.0",
   "main": "electron-main.js",
   "author": {
     "name": "Daniel Xie"
@@ -12,10 +12,13 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "@microsoft/api-documenter": "^7.13.65",
+    "@microsoft/api-extractor": "^7.18.17",
     "@monaco-editor/react": "^4.2.2",
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.3",
     "@mui/styles": "^5.0.1",
+    "@types/acorn": "^4.0.6",
     "@types/escodegen": "^0.0.7",
     "@types/numeral": "0.0.25",
     "@types/react": "^17.0.21",
@@ -26,7 +29,7 @@
     "arg": "^5.0.0",
     "better-react-mathjax": "^1.0.3",
     "clsx": "^1.1.1",
-    "decimal.js": "7.2.3",
+    "date-fns": "^2.25.0",
     "escodegen": "^1.11.0",
     "file-saver": "^1.3.8",
     "jquery": "^3.5.0",
@@ -35,6 +38,7 @@
     "monaco-editor": "^0.27.0",
     "notistack": "^2.0.2",
     "numeral": "2.0.6",
+    "raw-loader": "^4.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-draggable": "^4.4.4",
@@ -90,6 +94,7 @@
     "cy:dev": "start-server-and-test start:dev http://localhost:8000 cy:open",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
+    "doc": "npx api-extractor run && npx api-documenter markdown",
     "format": "prettier --write .",
     "start": "http-server -p 8000",
     "start:dev": "webpack-dev-server --progress --env.devServer --mode development",
@@ -97,13 +102,12 @@
     "start:container": "webpack-dev-server --progress --env.devServer --mode development --env.runInContainer",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
-    "lint": "npm run lint:jsts & npm run lint:style",
-    "lint:jsts": "eslint --fix . --ext js,jsx,ts,tsx",
+    "lint": "eslint --fix . --ext js,jsx,ts,tsx",
     "preinstall": "node ./scripts/engines-check.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development",
-    "package-electron": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png"
+    "electron": "cp -r electron/* .package && cp index.html .package && cp main.bundle.js .package && cp dist/vendor.bundle.js .package/dist && electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png"
   }
 }

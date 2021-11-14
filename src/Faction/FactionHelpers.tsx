@@ -87,7 +87,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
     } else {
       dialogBoxCreate(txt);
     }
-  } else if (aug.baseCost !== 0 && Player.money.lt(aug.baseCost * factionInfo.augmentationPriceMult)) {
+  } else if (aug.baseCost !== 0 && Player.money < aug.baseCost * factionInfo.augmentationPriceMult) {
     const txt = "You don't have enough money to purchase " + aug.name;
     if (sing) {
       return txt;
@@ -99,14 +99,14 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
       return txt;
     }
     dialogBoxCreate(txt);
-  } else if (aug.baseCost === 0 || Player.money.gte(aug.baseCost * factionInfo.augmentationPriceMult)) {
+  } else if (aug.baseCost === 0 || Player.money >= aug.baseCost * factionInfo.augmentationPriceMult) {
     const queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {
       queuedAugmentation.level = getNextNeurofluxLevel();
     }
     Player.queuedAugmentations.push(queuedAugmentation);
 
-    Player.loseMoney(aug.baseCost * factionInfo.augmentationPriceMult);
+    Player.loseMoney(aug.baseCost * factionInfo.augmentationPriceMult, "augmentations");
 
     // If you just purchased Neuroflux Governor, recalculate the cost
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {

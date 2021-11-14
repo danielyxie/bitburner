@@ -53,7 +53,7 @@ export function CovenantSleeveMemoryUpgrade(props: IProps): React.ReactElement {
     const cost = getPurchaseCost();
     if (props.p.canAfford(cost)) {
       props.sleeve.upgradeMemory(amt);
-      props.p.loseMoney(cost);
+      props.p.loseMoney(cost, "sleeves");
       props.rerender();
     }
   }

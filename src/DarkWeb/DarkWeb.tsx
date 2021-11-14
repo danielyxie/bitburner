@@ -23,7 +23,7 @@ export function listAllDarkwebItems(): void {
     const item = DarkWebItems[key];
     Terminal.printRaw(
       <>
-        {item.program} - <Money money={item.price} /> - {item.description}`
+        {item.program} - <Money money={item.price} /> - {item.description}
       </>,
     );
   }
@@ -54,13 +54,13 @@ export function buyDarkwebItem(itemName: string): void {
   }
 
   // return if the player doesn't have enough money
-  if (Player.money.lt(item.price)) {
+  if (Player.money < item.price) {
     Terminal.error("Not enough money to purchase " + item.program);
     return;
   }
 
   // buy and push
-  Player.loseMoney(item.price);
+  Player.loseMoney(item.price, "other");
   Player.getHomeComputer().programs.push(item.program);
   Terminal.print(
     "You have purchased the " + item.program + " program. The new program can be found on your home computer.",

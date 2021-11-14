@@ -31,7 +31,7 @@ List of all Source-Files
 |                                    | * Each level of this Source-File opens up more of the Singularity Functions to use. |
 +------------------------------------+-------------------------------------------------------------------------------------+
 | BitNode-5: Artificial Intelligence | * Unlocks :ref:`gameplay_intelligence`.                                             |
-|                                    | * Unlocks :js:func:`getBitNodeMultipliers` and :js:func:`getServer`                 |
+|                                    | * Unlocks :js:func:`getBitNodeMultipliers` and start with Formulas.exe              |
 |                                    |   Netscript functions, as well as :ref:`netscriptformulas`.                         |
 |                                    | * Increases all of the player's hacking-related multipliers by 8%/12%/14%.          |
 +------------------------------------+-------------------------------------------------------------------------------------+

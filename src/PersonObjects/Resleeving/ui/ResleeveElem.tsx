@@ -123,7 +123,7 @@ export function ResleeveElem(props: IProps): React.ReactElement {
       <Grid container>
         <Grid item xs={3}>
           <Typography>
-            Hacking: {numeralWrapper.formatSkill(props.resleeve.hacking_skill)} (
+            Hacking: {numeralWrapper.formatSkill(props.resleeve.hacking)} (
             {numeralWrapper.formatExp(props.resleeve.hacking_exp)} exp)
             <br />
             Strength: {numeralWrapper.formatSkill(props.resleeve.strength)} (

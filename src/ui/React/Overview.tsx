@@ -35,7 +35,8 @@ export function Overview({ children }: IProps): React.ReactElement {
   const [open, setOpen] = useState(true);
   const classes = useStyles();
   const router = use.Router();
-  if (router.page() === Page.BitVerse || router.page() === Page.Loading) return <></>;
+  if (router.page() === Page.BitVerse || router.page() === Page.Loading || router.page() === Page.Recovery)
+    return <></>;
   let icon;
   if (open) {
     icon = <VisibilityOffIcon color="primary" />;

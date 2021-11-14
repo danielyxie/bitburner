@@ -32,6 +32,7 @@ import { sprintf } from "sprintf-js";
 
 import { parse } from "acorn";
 import { simple as walksimple } from "acorn-walk";
+import { areFilesEqual } from "./Terminal/DirectoryHelpers";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
@@ -75,7 +76,7 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
         throw workerScript;
       }
 
-      if (propName === "sleep") return f(...args); // OK for multiple simultaneous calls to sleep.
+      if (propName === "asleep") return f(...args); // OK for multiple simultaneous calls to sleep.
 
       const msg =
         "Concurrent calls to Netscript functions not allowed! " +
@@ -167,14 +168,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
       const entry = ns[name];
       if (typeof entry === "function") {
         //Async functions need to be wrapped. See JS-Interpreter documentation
-        if (
-          name === "hack" ||
-          name === "grow" ||
-          name === "weaken" ||
-          name === "sleep" ||
-          name === "prompt" ||
-          name === "manualHack"
-        ) {
+        if (["hack", "grow", "weaken", "sleep", "prompt", "manualHack", "scp", "write"].includes(name)) {
           const tempWrapper = function (...args: any[]): void {
             const fnArgs = [];
 
@@ -267,7 +261,14 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
           return reject(workerScript);
         }
 
-        if (interpreter.step()) {
+        let more = true;
+        let i = 0;
+        while (i < 3 && more) {
+          more = more && interpreter.step();
+          i++;
+        }
+
+        if (more) {
           setTimeout(runInterpreter, Settings.CodeInstructionRunTime);
         } else {
           resolve(workerScript);
@@ -478,7 +479,8 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
   } else {
     runningScriptObj.threads = 1;
   }
-  const ramUsage = roundToTwo(getRamUsageFromRunningScript(runningScriptObj) * threads);
+  const oneRamUsage = getRamUsageFromRunningScript(runningScriptObj);
+  const ramUsage = roundToTwo(oneRamUsage * threads);
   const ramAvailable = server.maxRam - server.ramUsed;
   if (ramUsage > ramAvailable) {
     dialogBoxCreate(
@@ -503,7 +505,7 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
   // Create the WorkerScript. NOTE: WorkerScript ctor will set the underlying
   // RunningScript's PID as well
   const s = new WorkerScript(runningScriptObj, pid, NetscriptFunctions);
-  s.ramUsage = ramUsage;
+  s.ramUsage = oneRamUsage;
 
   // Add the WorkerScript to the global pool
   workerScripts.set(pid, s);
@@ -669,38 +671,38 @@ export function runScriptFromScript(
 
   // Check if the script exists and if it does run it
   for (let i = 0; i < server.scripts.length; ++i) {
-    if (server.scripts[i].filename === scriptname) {
-      // Check for admin rights and that there is enough RAM availble to run
-      const script = server.scripts[i];
-      let ramUsage = script.ramUsage;
-      threads = Math.round(Number(threads));
-      if (threads === 0) {
-        return 0;
-      }
-      ramUsage = ramUsage * threads;
-      const ramAvailable = server.maxRam - server.ramUsed;
-
-      if (server.hasAdminRights == false) {
-        workerScript.log(caller, `You do not have root access on '${server.hostname}'`);
-        return 0;
-      } else if (ramUsage > ramAvailable) {
-        workerScript.log(
-          caller,
-          `Cannot run script '${scriptname}' (t=${threads}) on '${server.hostname}' because there is not enough available RAM!`,
-        );
-        return 0;
-      } else {
-        // Able to run script
-        workerScript.log(
-          caller,
-          `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
-        );
-        const runningScriptObj = new RunningScript(script, args);
-        runningScriptObj.threads = threads;
-
-        return startWorkerScript(runningScriptObj, server, workerScript);
-      }
+    if (!areFilesEqual(server.scripts[i].filename, scriptname)) continue;
+    // Check for admin rights and that there is enough RAM availble to run
+    const script = server.scripts[i];
+    let ramUsage = script.ramUsage;
+    threads = Math.round(Number(threads));
+    if (threads === 0) {
+      return 0;
     }
+    ramUsage = ramUsage * threads;
+    const ramAvailable = server.maxRam - server.ramUsed;
+
+    if (server.hasAdminRights == false) {
+      workerScript.log(caller, `You do not have root access on '${server.hostname}'`);
+      return 0;
+    } else if (ramUsage > ramAvailable) {
+      workerScript.log(
+        caller,
+        `Cannot run script '${scriptname}' (t=${threads}) on '${server.hostname}' because there is not enough available RAM!`,
+      );
+      return 0;
+    } else {
+      // Able to run script
+      workerScript.log(
+        caller,
+        `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
+      );
+      const runningScriptObj = new RunningScript(script, args);
+      runningScriptObj.threads = threads;
+
+      return startWorkerScript(runningScriptObj, server, workerScript);
+    }
+    break;
   }
 
   workerScript.log(caller, `Could not find script '${scriptname}' on '${server.hostname}'`);

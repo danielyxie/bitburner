@@ -1,5 +1,4 @@
 import { BaseServer } from "../Server/BaseServer";
-import { Faction } from "../Faction/Faction";
 
 export interface INetscriptHelper {
   updateDynamicRam(functionName: string, ram: number): void;
@@ -9,5 +8,5 @@ export interface INetscriptHelper {
   boolean(v: any): boolean;
   getServer(ip: any, fn: any): BaseServer;
   checkSingularityAccess(func: string, n: number): void;
-  getFaction(func: string, name: string): Faction;
+  hack(hostname: string, manual: boolean): Promise<number>;
 }

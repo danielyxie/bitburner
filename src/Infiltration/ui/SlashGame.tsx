@@ -30,7 +30,7 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
-    if (event.keyCode !== 32) return;
+    if (event.key !== " ") return;
     if (phase !== 2) {
       props.onFailure();
     } else {
@@ -45,7 +45,7 @@ export function SlashGame(props: IMinigameProps): React.ReactElement {
         setPhase(2);
         id = window.setTimeout(() => setPhase(0), difficulty.window);
       }, 250);
-    }, Math.random() * 3250 + 1500);
+    }, Math.random() * 3250 + 1500 - (250 + difficulty.window));
     return () => {
       clearInterval(id);
     };

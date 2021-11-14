@@ -35,7 +35,7 @@ export abstract class Person {
   /**
    * Stats
    */
-  hacking_skill = 1;
+  hacking = 1;
   strength = 1;
   defense = 1;
   dexterity = 1;
@@ -136,7 +136,7 @@ export abstract class Person {
   getFactionFieldWorkRepGain(): number {
     const t =
       (0.9 *
-        (this.hacking_skill / CONSTANTS.MaxSkillLevel +
+        (this.hacking / CONSTANTS.MaxSkillLevel +
           this.strength / CONSTANTS.MaxSkillLevel +
           this.defense / CONSTANTS.MaxSkillLevel +
           this.dexterity / CONSTANTS.MaxSkillLevel +
@@ -151,7 +151,7 @@ export abstract class Person {
    * when doing Hacking Work for a faction
    */
   getFactionHackingWorkRepGain(): number {
-    return (this.hacking_skill / CONSTANTS.MaxSkillLevel) * this.faction_rep_mult;
+    return (this.hacking / CONSTANTS.MaxSkillLevel) * this.faction_rep_mult;
   }
 
   /**
@@ -161,7 +161,7 @@ export abstract class Person {
   getFactionSecurityWorkRepGain(): number {
     const t =
       (0.9 *
-        (this.hacking_skill / CONSTANTS.MaxSkillLevel +
+        (this.hacking / CONSTANTS.MaxSkillLevel +
           this.strength / CONSTANTS.MaxSkillLevel +
           this.defense / CONSTANTS.MaxSkillLevel +
           this.dexterity / CONSTANTS.MaxSkillLevel +
@@ -201,7 +201,7 @@ export abstract class Person {
    * Update all stat levels
    */
   updateStatLevels(): void {
-    this.hacking_skill = Math.max(
+    this.hacking = Math.max(
       1,
       Math.floor(this.calculateStat(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier)),
     );

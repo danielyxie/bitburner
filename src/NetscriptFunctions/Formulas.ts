@@ -27,11 +27,15 @@ import {
   calculateGrowTime,
   calculateWeakenTime,
 } from "../Hacking";
+import { Programs } from "../Programs/Programs";
+import { Formulas as IFormulas } from "../ScriptEditor/NetscriptDefinitions";
 
 export interface INetscriptFormulas {
-  basic: {
+  skills: {
     calculateSkill(exp: any, mult?: any): any;
     calculateExp(skill: any, mult?: any): any;
+  };
+  hacking: {
     hackChance(server: any, player: any): any;
     hackExp(server: any, player: any): any;
     hackPercent(server: any, player: any): any;
@@ -60,111 +64,102 @@ export interface INetscriptFormulas {
   };
 }
 
-export function NetscriptFormulas(
-  player: IPlayer,
-  workerScript: WorkerScript,
-  helper: INetscriptHelper,
-): INetscriptFormulas {
-  const checkFormulasAccess = function (func: any, n: any): void {
-    if (
-      (player.sourceFileLvl(5) < 1 && player.bitNodeN !== 5) ||
-      (player.sourceFileLvl(n) < 1 && player.bitNodeN !== n)
-    ) {
-      let extra = "";
-      if (n !== 5) {
-        extra = ` and Source-File ${n}-1`;
-      }
-      throw helper.makeRuntimeErrorMsg(`formulas.${func}`, `Requires Source-File 5-1${extra} to run.`);
+export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IFormulas {
+  const checkFormulasAccess = function (func: string): void {
+    if (!player.hasProgram(Programs.Formulas.name)) {
+      throw helper.makeRuntimeErrorMsg(`formulas.${func}`, `Requires Formulas.exe to run.`);
     }
   };
   return {
-    basic: {
+    skills: {
       calculateSkill: function (exp: any, mult: any = 1): any {
-        checkFormulasAccess("basic.calculateSkill", 5);
+        checkFormulasAccess("basic.calculateSkill");
         return calculateSkill(exp, mult);
       },
       calculateExp: function (skill: any, mult: any = 1): any {
-        checkFormulasAccess("basic.calculateExp", 5);
+        checkFormulasAccess("basic.calculateExp");
         return calculateExp(skill, mult);
       },
+    },
+    hacking: {
       hackChance: function (server: any, player: any): any {
-        checkFormulasAccess("basic.hackChance", 5);
+        checkFormulasAccess("basic.hackChance");
         return calculateHackingChance(server, player);
       },
       hackExp: function (server: any, player: any): any {
-        checkFormulasAccess("basic.hackExp", 5);
+        checkFormulasAccess("basic.hackExp");
         return calculateHackingExpGain(server, player);
       },
       hackPercent: function (server: any, player: any): any {
-        checkFormulasAccess("basic.hackPercent", 5);
+        checkFormulasAccess("basic.hackPercent");
         return calculatePercentMoneyHacked(server, player);
       },
       growPercent: function (server: any, threads: any, player: any, cores: any = 1): any {
-        checkFormulasAccess("basic.growPercent", 5);
+        checkFormulasAccess("basic.growPercent");
         return calculateServerGrowth(server, threads, player, cores);
       },
       hackTime: function (server: any, player: any): any {
-        checkFormulasAccess("basic.hackTime", 5);
-        return calculateHackingTime(server, player);
+        checkFormulasAccess("basic.hackTime");
+        return calculateHackingTime(server, player) * 1000;
       },
       growTime: function (server: any, player: any): any {
-        checkFormulasAccess("basic.growTime", 5);
-        return calculateGrowTime(server, player);
+        checkFormulasAccess("basic.growTime");
+        return calculateGrowTime(server, player) * 1000;
       },
       weakenTime: function (server: any, player: any): any {
-        checkFormulasAccess("basic.weakenTime", 5);
-        return calculateWeakenTime(server, player);
+        checkFormulasAccess("basic.weakenTime");
+        return calculateWeakenTime(server, player) * 1000;
       },
     },
     hacknetNodes: {
       moneyGainRate: function (level: any, ram: any, cores: any, mult: any = 1): any {
-        checkFormulasAccess("hacknetNodes.moneyGainRate", 5);
+        checkFormulasAccess("hacknetNodes.moneyGainRate");
         return calculateMoneyGainRate(level, ram, cores, mult);
       },
       levelUpgradeCost: function (startingLevel: any, extraLevels: any = 1, costMult: any = 1): any {
-        checkFormulasAccess("hacknetNodes.levelUpgradeCost", 5);
+        checkFormulasAccess("hacknetNodes.levelUpgradeCost");
         return calculateLevelUpgradeCost(startingLevel, extraLevels, costMult);
       },
       ramUpgradeCost: function (startingRam: any, extraLevels: any = 1, costMult: any = 1): any {
-        checkFormulasAccess("hacknetNodes.ramUpgradeCost", 5);
+        checkFormulasAccess("hacknetNodes.ramUpgradeCost");
         return calculateRamUpgradeCost(startingRam, extraLevels, costMult);
       },
       coreUpgradeCost: function (startingCore: any, extraCores: any = 1, costMult: any = 1): any {
-        checkFormulasAccess("hacknetNodes.coreUpgradeCost", 5);
+        checkFormulasAccess("hacknetNodes.coreUpgradeCost");
         return calculateCoreUpgradeCost(startingCore, extraCores, costMult);
       },
       hacknetNodeCost: function (n: any, mult: any): any {
-        checkFormulasAccess("hacknetNodes.hacknetNodeCost", 5);
+        checkFormulasAccess("hacknetNodes.hacknetNodeCost");
         return calculateNodeCost(n, mult);
       },
       constants: function (): any {
-        checkFormulasAccess("hacknetNodes.constants", 5);
+        checkFormulasAccess("hacknetNodes.constants");
         return Object.assign({}, HacknetNodeConstants);
       },
     },
     hacknetServers: {
       hashGainRate: function (level: any, ramUsed: any, maxRam: any, cores: any, mult: any = 1): any {
-        checkFormulasAccess("hacknetServers.hashGainRate", 9);
+        checkFormulasAccess("hacknetServers.hashGainRate");
         return HScalculateHashGainRate(level, ramUsed, maxRam, cores, mult);
       },
       levelUpgradeCost: function (startingLevel: any, extraLevels: any = 1, costMult: any = 1): any {
-        checkFormulasAccess("hacknetServers.levelUpgradeCost", 9);
+        checkFormulasAccess("hacknetServers.levelUpgradeCost");
         return HScalculateLevelUpgradeCost(startingLevel, extraLevels, costMult);
       },
       ramUpgradeCost: function (startingRam: any, extraLevels: any = 1, costMult: any = 1): any {
-        checkFormulasAccess("hacknetServers.ramUpgradeCost", 9);
+        checkFormulasAccess("hacknetServers.ramUpgradeCost");
         return HScalculateRamUpgradeCost(startingRam, extraLevels, costMult);
       },
       coreUpgradeCost: function (startingCore: any, extraCores: any = 1, costMult: any = 1): any {
-        checkFormulasAccess("hacknetServers.coreUpgradeCost", 9);
+        checkFormulasAccess("hacknetServers.coreUpgradeCost");
         return HScalculateCoreUpgradeCost(startingCore, extraCores, costMult);
       },
       cacheUpgradeCost: function (startingCache: any, extraCache: any = 1): any {
-        checkFormulasAccess("hacknetServers.cacheUpgradeCost", 9);
+        checkFormulasAccess("hacknetServers.cacheUpgradeCost");
         return HScalculateCacheUpgradeCost(startingCache, extraCache);
       },
       hashUpgradeCost: function (upgName: any, level: any): any {
-        checkFormulasAccess("hacknetServers.hashUpgradeCost", 9);
+        checkFormulasAccess("hacknetServers.hashUpgradeCost");
         const upg = player.hashManager.getUpgrade(upgName);
         if (!upg) {
           throw helper.makeRuntimeErrorMsg(
@@ -175,11 +170,11 @@ export function NetscriptFormulas(
         return upg.getCost(level);
       },
       hacknetServerCost: function (n: any, mult: any): any {
-        checkFormulasAccess("hacknetServers.hacknetServerCost", 9);
+        checkFormulasAccess("hacknetServers.hacknetServerCost");
         return HScalculateServerCost(n, mult);
       },
       constants: function (): any {
-        checkFormulasAccess("hacknetServers.constants", 9);
+        checkFormulasAccess("hacknetServers.constants");
         return Object.assign({}, HacknetServerConstants);
       },
     },

@@ -35,8 +35,6 @@ import { CityName } from "../../Locations/data/CityNames";
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
 
-import Decimal from "decimal.js";
-
 export class PlayerObject implements IPlayer {
   // Class members
   augmentations: IPlayerOwnedAugmentation[];
@@ -63,7 +61,7 @@ export class PlayerObject implements IPlayer {
   numPeopleKilled: number;
   location: LocationName;
   max_hp: number;
-  money: any;
+  money: number;
   moneySourceA: MoneySourceTracker;
   moneySourceB: MoneySourceTracker;
   playtimeSinceLastAug: number;
@@ -80,7 +78,7 @@ export class PlayerObject implements IPlayer {
   totalPlaytime: number;
 
   // Stats
-  hacking_skill: number;
+  hacking: number;
   strength: number;
   defense: number;
   dexterity: number;
@@ -141,6 +139,8 @@ export class PlayerObject implements IPlayer {
   className: string;
   currentWorkFactionName: string;
   workType: string;
+  workCostMult: number;
+  workExpMult: number;
   currentWorkFactionDescription: string;
   timeWorked: number;
   workMoneyGained: number;
@@ -191,7 +191,7 @@ export class PlayerObject implements IPlayer {
   gainAgilityExp: (exp: number) => void;
   gainCharismaExp: (exp: number) => void;
   gainIntelligenceExp: (exp: number) => void;
-  gainMoney: (money: number) => void;
+  gainMoney: (money: number, source: string) => void;
   getCurrentServer: () => BaseServer;
   getGangFaction: () => Faction;
   getGangName: () => string;
@@ -208,7 +208,7 @@ export class PlayerObject implements IPlayer {
   inBladeburner: () => boolean;
   inGang: () => boolean;
   isQualified: (company: Company, position: CompanyPosition) => boolean;
-  loseMoney: (money: number) => void;
+  loseMoney: (money: number, source: string) => void;
   reapplyAllAugmentations: (resetMultipliers?: boolean) => void;
   reapplyAllSourceFiles: () => void;
   regenerateHp: (amt: number) => void;
@@ -288,7 +288,7 @@ export class PlayerObject implements IPlayer {
 
   constructor() {
     //Skills and stats
-    this.hacking_skill = 1;
+    this.hacking = 1;
 
     //Combat stats
     this.hp = 10;
@@ -337,7 +337,7 @@ export class PlayerObject implements IPlayer {
     this.faction_rep_mult = 1;
 
     //Money
-    this.money = new Decimal(1000);
+    this.money = 1000;
 
     //Location information
     this.city = CityName.Sector12;
@@ -380,6 +380,8 @@ export class PlayerObject implements IPlayer {
     this.isWorking = false;
     this.focus = false;
     this.workType = "";
+    this.workCostMult = 1;
+    this.workExpMult = 1;
 
     this.currentWorkFactionName = "";
     this.currentWorkFactionDescription = "";

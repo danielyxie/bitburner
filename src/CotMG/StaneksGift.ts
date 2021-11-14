@@ -29,16 +29,16 @@ export class StaneksGift implements IStaneksGift {
     return Math.floor(this.baseSize() / 2 + 0.6);
   }
 
-  charge(rootX: number, rootY: number, ram: number): number {
+  charge(rootX: number, rootY: number, threads: number): number {
     const af = this.findFragment(rootX, rootY);
     if (af === undefined) return 0;
 
-    const charge = CalculateCharge(ram);
-    af.charge += charge;
+    af.avgCharge = (af.numCharge * af.avgCharge + threads) / (af.numCharge + 1);
+    af.numCharge++;
 
-    Factions["Church of the Machine God"].playerReputation += Math.log(ram) / Math.log(2);
+    Factions["Church of the Machine God"].playerReputation += Math.log(threads) / Math.log(2);
 
-    return ram;
+    return threads;
   }
 
   inBonus(): boolean {
@@ -47,6 +47,7 @@ export class StaneksGift implements IStaneksGift {
 
   process(p: IPlayer, numCycles = 1): void {
     if (!p.hasAugmentation(AugmentationNames.StaneksGift1)) return;
+    this.fragments.filter((f) => f.fragment().type !== FragmentType.Booster).forEach((f) => f.cool());
     this.storedCycles += numCycles;
     this.storedCycles -= 5;
     this.storedCycles = Math.max(0, this.storedCycles);
@@ -65,11 +66,12 @@ export class StaneksGift implements IStaneksGift {
 
     neighboors = neighboors.filter((fragment) => fragment.fragment().type === FragmentType.Booster);
     let boost = 1;
+
+    neighboors = neighboors.filter((v, i, s) => s.indexOf(v) === i);
     for (const neighboor of neighboors) {
       boost *= neighboor.fragment().power;
     }
-
-    return CalculateEffect(fragment.charge, fragment.fragment().power, boost);
+    return CalculateEffect(fragment.avgCharge, fragment.numCharge, fragment.fragment().power, boost);
   }
 
   canPlace(worldX: number, worldY: number, rotation: number, fragment: Fragment): boolean {
@@ -128,7 +130,10 @@ export class StaneksGift implements IStaneksGift {
   }
 
   clearCharge(): void {
-    this.fragments.forEach((f) => (f.charge = 0));
+    this.fragments.forEach((f) => {
+      f.avgCharge = 0;
+      f.numCharge = 0;
+    });
   }
 
   updateMults(p: IPlayer): void {

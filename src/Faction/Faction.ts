@@ -39,12 +39,6 @@ export class Faction {
    */
   playerReputation = 0;
 
-  /**
-   * Reputation from the last "prestige" that was not converted to favor.
-   * This reputation rolls over and is used for the next favor calculation
-   */
-  rolloverRep = 0;
-
   constructor(name = "") {
     this.name = name;
   }
@@ -64,31 +58,18 @@ export class Faction {
     if (this.favor == null) {
       this.favor = 0;
     }
-    if (this.rolloverRep == null) {
-      this.rolloverRep = 0;
-    }
-    const res = this.getFavorGain();
-    if (res.length !== 2) {
-      console.error("Invalid result from getFavorGain() function");
-      return;
-    }
-    this.favor += res[0];
-    this.rolloverRep = res[1];
+    this.favor += this.getFavorGain();
   }
 
   //Returns an array with [How much favor would be gained, how much rep would be left over]
-  getFavorGain(): number[] {
+  getFavorGain(): number {
     if (this.favor == null) {
       this.favor = 0;
     }
-    if (this.rolloverRep == null) {
-      this.rolloverRep = 0;
-    }
-    const storedRep = Math.max(0, favorToRep(this.favor - 1));
-    const totalRep = storedRep + this.rolloverRep + this.playerReputation;
-    const newFavor = Math.floor(repToFavor(totalRep));
-    const newRep = favorToRep(newFavor);
-    return [newFavor - this.favor + 1, totalRep - newRep];
+    const storedRep = Math.max(0, favorToRep(this.favor));
+    const totalRep = storedRep + this.playerReputation;
+    const newFavor = repToFavor(totalRep);
+    return newFavor - this.favor;
   }
 
   /**

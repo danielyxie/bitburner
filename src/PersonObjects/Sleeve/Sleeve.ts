@@ -331,8 +331,7 @@ export class Sleeve extends Person {
     const gain: number = task.money * numCycles;
     this.earningsForTask.money += gain;
     this.earningsForPlayer.money += gain;
-    p.gainMoney(gain);
-    p.recordMoneySource(gain, "sleeves");
+    p.gainMoney(gain, "sleeves");
   }
 
   /**
@@ -398,7 +397,7 @@ export class Sleeve extends Person {
       }
 
       const jobPerformance: number = companyPosition.calculateJobPerformance(
-        this.hacking_skill,
+        this.hacking,
         this.strength,
         this.defense,
         this.dexterity,
@@ -668,7 +667,7 @@ export class Sleeve extends Person {
    * Travel to another City. Costs money from player
    */
   travel(p: IPlayer, newCity: CityName): boolean {
-    p.loseMoney(CONSTANTS.TravelCost);
+    p.loseMoney(CONSTANTS.TravelCost, "sleeves");
     this.city = newCity;
 
     return true;
@@ -684,7 +683,7 @@ export class Sleeve extends Person {
       return false;
     }
 
-    p.loseMoney(aug.startingCost);
+    p.loseMoney(aug.startingCost, "sleeves");
     this.installAugmentation(aug);
     return true;
   }

@@ -16,13 +16,17 @@ export class MoneySourceTracker {
   crime = 0;
   gang = 0;
   hacking = 0;
-  hacknetnode = 0;
+  hacknet = 0;
+  hacknet_expenses = 0;
   hospitalization = 0;
   infiltration = 0;
   sleeves = 0;
   stock = 0;
   total = 0;
   work = 0;
+  servers = 0;
+  other = 0;
+  augmentations = 0;
 
   // Record money earned
   record(amt: number, source: string): void {

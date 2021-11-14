@@ -36,7 +36,7 @@ interface IProps {
 export function Overview({ rerender }: IProps): React.ReactElement {
   const player = use.Player();
   const corp = useCorporation();
-  const profit: number = corp.revenue.minus(corp.expenses).toNumber();
+  const profit: number = corp.revenue - corp.expenses;
 
   const multRows: any[][] = [];
   function appendMult(name: string, value: number): void {
@@ -57,9 +57,9 @@ export function Overview({ rerender }: IProps): React.ReactElement {
     <>
       <StatsTable
         rows={[
-          ["Total Funds:", <Money money={corp.funds.toNumber()} />],
-          ["Total Revenue:", <MoneyRate money={corp.revenue.toNumber()} />],
-          ["Total Expenses:", <MoneyRate money={corp.expenses.toNumber()} />],
+          ["Total Funds:", <Money money={corp.funds} />],
+          ["Total Revenue:", <MoneyRate money={corp.revenue} />],
+          ["Total Expenses:", <MoneyRate money={corp.expenses} />],
           ["Publicly Traded:", corp.public ? "Yes" : "No"],
           ["Owned Stock Shares:", numeralWrapper.format(corp.numShares, "0.000a")],
           ["Stock Price:", corp.public ? <Money money={corp.sharePrice} /> : "N/A"],
@@ -221,7 +221,7 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
       <SellSharesModal open={sellSharesOpen} onClose={() => setSellSharesOpen(false)} rerender={rerender} />
       <Tooltip title={<Typography>Buy back shares you that previously issued or sold at market price.</Typography>}>
         <span>
-          <Button  disabled={corp.issuedShares <1}  onClick={() => setBuybackSharesOpen(true)}>
+          <Button disabled={corp.issuedShares < 1} onClick={() => setBuybackSharesOpen(true)}>
             Buyback shares
           </Button>
         </span>
@@ -289,18 +289,17 @@ function DividendsStats({ profit }: IDividendsStatsProps): React.ReactElement {
   const totalDividends = (corp.dividendPercentage / 100) * profit;
   const retainedEarnings = profit - totalDividends;
   const dividendsPerShare = totalDividends / corp.totalShares;
-  const playerEarnings = corp.numShares * dividendsPerShare;
   return (
     <StatsTable
       rows={[
         ["Retained Profits (after dividends):", <MoneyRate money={retainedEarnings} />],
         ["Dividend Percentage:", numeralWrapper.format(corp.dividendPercentage / 100, "0%")],
         ["Dividends per share:", <MoneyRate money={dividendsPerShare} />],
-        ["Your earnings as a shareholder (Pre-Tax):", <MoneyRate money={playerEarnings} />],
+        ["Your earnings as a shareholder (Pre-Tax):", <MoneyRate money={corp.getDividends()} />],
         ["Dividend Tax Rate:", <>{corp.dividendTaxPercentage}%</>],
         [
           "Your earnings as a shareholder (Post-Tax):",
-          <MoneyRate money={playerEarnings * (1 - corp.dividendTaxPercentage / 100)} />,
+          <MoneyRate money={corp.getDividends() * (1 - corp.dividendTaxPercentage / 100)} />,
         ],
       ]}
     />

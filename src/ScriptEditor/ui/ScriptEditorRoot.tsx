@@ -11,11 +11,11 @@ import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 import { Script } from "../../Script/Script";
 import { TextFile } from "../../TextFile";
-import { calculateRamUsage } from "../../Script/RamCalculations";
+import { calculateRamUsage, checkInfiniteLoop } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { CursorPositions } from "../CursorPositions";
-import { libSource } from "../NetscriptDefinitions";
+
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
@@ -31,6 +31,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
+
+import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
 
 let symbolsLoaded = false;
 let symbols: string[] = [];
@@ -53,7 +55,7 @@ export function SetupTextEditor(): void {
   }
   symbols = populate(ns);
 
-  const exclude = ["heart", "break", "exploit", "bypass", "corporation"];
+  const exclude = ["heart", "break", "exploit", "bypass", "corporation", "alterReality"];
   symbols = symbols.filter((symbol: string) => !exclude.includes(symbol)).sort();
 }
 
@@ -88,6 +90,7 @@ export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
   const [filename, setFilename] = useState(props.filename ? props.filename : lastFilename);
   const [code, setCode] = useState<string>(props.filename ? props.code : lastCode);
+  const [decorations, setDecorations] = useState<string[]>([]);
   hostname = props.filename ? props.hostname : hostname;
   if (hostname === "") {
     hostname = props.player.getCurrentServer().hostname;
@@ -224,14 +227,46 @@ export function Root(props: IProps): React.ReactElement {
     setFilename(event.target.value);
   }
 
+  function infLoop(newCode: string): void {
+    if (editorRef.current === null) return;
+    if (!filename.endsWith(".ns") && !filename.endsWith(".js")) return;
+    const awaitWarning = checkInfiniteLoop(newCode);
+    if (awaitWarning !== -1) {
+      const newDecorations = editorRef.current.deltaDecorations(decorations, [
+        {
+          range: {
+            startLineNumber: awaitWarning,
+            startColumn: 1,
+            endLineNumber: awaitWarning,
+            endColumn: 10,
+          },
+          options: {
+            isWholeLine: true,
+            glyphMarginClassName: "myGlyphMarginClass",
+            glyphMarginHoverMessage: {
+              value: "Possible infinite loop, await something.",
+            },
+          },
+        },
+      ]);
+      setDecorations(newDecorations);
+    } else {
+      const newDecorations = editorRef.current.deltaDecorations(decorations, []);
+      setDecorations(newDecorations);
+    }
+  }
+
   function updateCode(newCode?: string): void {
     if (newCode === undefined) return;
     lastCode = newCode;
-    if (editorRef.current !== null) {
-      lastPosition = editorRef.current.getPosition();
-    }
     setCode(newCode);
     updateRAM(newCode);
+    try {
+      if (editorRef.current !== null) {
+        lastPosition = editorRef.current.getPosition();
+        infLoop(newCode);
+      }
+    } catch (err) {}
   }
 
   // calculate it once the first time the file is loaded.
@@ -319,7 +354,7 @@ export function Root(props: IProps): React.ReactElement {
         .find((l: any) => l.id === "javascript")
         .loader();
       l.language.tokenizer.root.unshift(["ns", { token: "ns" }]);
-      for (const symbol of symbols) l.language.tokenizer.root.unshift(["\\." + symbol, { token: "netscriptfunction" }]);
+      for (const symbol of symbols) l.language.tokenizer.root.unshift([symbol, { token: "netscriptfunction" }]);
       const otherKeywords = ["let", "const", "var", "function"];
       const otherKeyvars = ["true", "false", "null", "undefined"];
       otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeywords" }]));
@@ -327,8 +362,9 @@ export function Root(props: IProps): React.ReactElement {
       l.language.tokenizer.root.unshift(["this", { token: "this" }]);
     })();
 
-    monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, "netscript.d.ts");
-    monaco.languages.typescript.typescriptDefaults.addExtraLib(libSource, "netscript.d.ts");
+    const source = (libSource + "").replace(/export /g, "");
+    monaco.languages.typescript.javascriptDefaults.addExtraLib(source, "netscript.d.ts");
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(source, "netscript.d.ts");
     loadThemes(monaco);
   }
   // 370px  71%, 725px  85.1%, 1085px 90%, 1300px 91.7%
@@ -361,7 +397,7 @@ export function Root(props: IProps): React.ReactElement {
         defaultValue={code}
         onChange={updateCode}
         theme={options.theme}
-        options={options}
+        options={{ ...options, glyphMargin: true }}
       />
       <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
         <Button onClick={beautify}>Beautify</Button>

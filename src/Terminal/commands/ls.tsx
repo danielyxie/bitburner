@@ -4,7 +4,6 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { getFirstParentDirectory, isValidDirectoryPath, evaluateDirectoryPath } from "../../Terminal/DirectoryHelpers";
-import Typography from "@mui/material/Typography";
 
 export function ls(
   terminal: ITerminal,
@@ -143,10 +142,6 @@ export function ls(
     { segments: allScripts, style: { color: "yellow", fontStyle: "bold" } },
   ].filter((g) => g.segments.length > 0);
   for (let i = 0; i < groups.length; i++) {
-    if (i !== 0) {
-      terminal.print("");
-      terminal.print("");
-    }
     postSegments(groups[i].segments, groups[i].style);
   }
 }

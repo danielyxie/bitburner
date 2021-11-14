@@ -295,8 +295,8 @@ export function FragmentById(id: number): Fragment | null {
       103, // id
       [
         // shape
-        [_, X, X, X],
-        [X, X, _, _],
+        [X, X, X, _],
+        [_, _, X, X],
       ],
       FragmentType.Booster, // type
       1.1, // power

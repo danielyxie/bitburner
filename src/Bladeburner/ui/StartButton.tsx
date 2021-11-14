@@ -4,6 +4,7 @@ import { IBladeburner } from "../IBladeburner";
 import { BlackOperation } from "../BlackOperation";
 import { use } from "../../ui/Context";
 import Button from "@mui/material/Button";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 interface IProps {
   bladeburner: IBladeburner;
@@ -32,6 +33,7 @@ export function StartButton(props: IProps): React.ReactElement {
     if (disabled) return;
     props.bladeburner.action.type = props.type;
     props.bladeburner.action.name = props.name;
+    if (!player.hasAugmentation(AugmentationNames.BladesSimulacrum, true)) player.singularityStopWork();
     props.bladeburner.startAction(player, props.bladeburner.action);
     props.rerender();
   }

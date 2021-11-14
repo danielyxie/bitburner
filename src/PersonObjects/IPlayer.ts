@@ -56,7 +56,7 @@ export interface IPlayer {
   numPeopleKilled: number;
   location: LocationName;
   max_hp: number;
-  money: any;
+  readonly money: number;
   moneySourceA: MoneySourceTracker;
   moneySourceB: MoneySourceTracker;
   playtimeSinceLastAug: number;
@@ -73,7 +73,7 @@ export interface IPlayer {
   totalPlaytime: number;
 
   // Stats
-  hacking_skill: number;
+  hacking: number;
   strength: number;
   defense: number;
   dexterity: number;
@@ -134,6 +134,8 @@ export interface IPlayer {
   className: string;
   currentWorkFactionName: string;
   workType: string;
+  workCostMult: number;
+  workExpMult: number;
   currentWorkFactionDescription: string;
   timeWorked: number;
   workMoneyGained: number;
@@ -184,7 +186,7 @@ export interface IPlayer {
   gainAgilityExp(exp: number): void;
   gainCharismaExp(exp: number): void;
   gainIntelligenceExp(exp: number): void;
-  gainMoney(money: number): void;
+  gainMoney(money: number, source: string): void;
   getCurrentServer(): BaseServer;
   getGangFaction(): Faction;
   getGangName(): string;
@@ -201,12 +203,11 @@ export interface IPlayer {
   inBladeburner(): boolean;
   inGang(): boolean;
   isQualified(company: Company, position: CompanyPosition): boolean;
-  loseMoney(money: number): void;
+  loseMoney(money: number, source: string): void;
   process(router: IRouter, numCycles?: number): void;
   reapplyAllAugmentations(resetMultipliers?: boolean): void;
   reapplyAllSourceFiles(): void;
   regenerateHp(amt: number): void;
-  recordMoneySource(amt: number, source: string): void;
   setMoney(amt: number): void;
   singularityStopWork(): string;
   startBladeburner(p: any): void;

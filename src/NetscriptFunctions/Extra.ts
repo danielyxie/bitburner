@@ -36,8 +36,15 @@ export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript): INe
       real_document.completely_unused_field = undefined;
     },
     alterReality: function (): void {
-      const x = false;
-      console.warn("I am sure that this variable is false");
+      // We need to trick webpack into not optimizing a variable that is guaranteed to be false (and doesn't use prototypes)
+      let x = false;
+      const recur = function (depth: number): void {
+        if (depth === 0) return;
+        x = !x;
+        recur(depth - 1);
+      };
+      recur(2);
+      console.warn("I am sure that this variable is false.");
       if (x !== false) {
         console.warn("Reality has been altered!");
         player.giveExploit(Exploit.RealityAlteration);

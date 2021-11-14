@@ -8,7 +8,7 @@ import { IMap } from "../types";
 import { Terminal } from "../Terminal";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
-import { getTimestamp } from "../utils/helpers/getTimestamp";
+import { formatTime } from "../utils/helpers/formatTime";
 
 export class RunningScript {
   // Script arguments
@@ -74,8 +74,8 @@ export class RunningScript {
     }
 
     let logEntry = txt;
-    if (Settings.EnableTimestamps) {
-      logEntry = "[" + getTimestamp() + "] " + logEntry;
+    if (Settings.TimestampsFormat) {
+      logEntry = "[" + formatTime(Settings.TimestampsFormat) + "] " + logEntry;
     }
 
     this.logs.push(logEntry);

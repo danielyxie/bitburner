@@ -64,7 +64,7 @@ export function buyStock(
   if (totalPrice == null) {
     return false;
   }
-  if (Player.money.lt(totalPrice)) {
+  if (Player.money < totalPrice) {
     if (workerScript) {
       workerScript.log(
         "buyStock",
@@ -102,7 +102,7 @@ export function buyStock(
   }
 
   const origTotal = stock.playerShares * stock.playerAvgPx;
-  Player.loseMoney(totalPrice);
+  Player.loseMoney(totalPrice, "stock");
   const newTotal = origTotal + totalPrice - CONSTANTS.StockMarketCommission;
   stock.playerShares = Math.round(stock.playerShares + shares);
   stock.playerAvgPx = newTotal / stock.playerShares;
@@ -171,8 +171,7 @@ export function sellStock(
   if (isNaN(netProfit)) {
     netProfit = 0;
   }
-  Player.gainMoney(gains);
-  Player.recordMoneySource(netProfit, "stock");
+  Player.gainMoney(gains, "stock");
   if (workerScript) {
     workerScript.scriptRef.onlineMoneyMade += netProfit;
     Player.scriptProdSinceLastAug += netProfit;
@@ -242,7 +241,7 @@ export function shortStock(
   if (totalPrice == null) {
     return false;
   }
-  if (Player.money.lt(totalPrice)) {
+  if (Player.money < totalPrice) {
     if (workerScript) {
       workerScript.log(
         "shortStock",
@@ -280,7 +279,7 @@ export function shortStock(
   }
 
   const origTotal = stock.playerShortShares * stock.playerAvgShortPx;
-  Player.loseMoney(totalPrice);
+  Player.loseMoney(totalPrice, "stock");
   const newTotal = origTotal + totalPrice - CONSTANTS.StockMarketCommission;
   stock.playerShortShares = Math.round(stock.playerShortShares + shares);
   stock.playerAvgShortPx = newTotal / stock.playerShortShares;
@@ -364,8 +363,7 @@ export function sellShort(
   if (isNaN(profit)) {
     profit = 0;
   }
-  Player.gainMoney(totalGain);
-  Player.recordMoneySource(profit, "stock");
+  Player.gainMoney(totalGain, "stock");
   if (workerScript) {
     workerScript.scriptRef.onlineMoneyMade += profit;
     Player.scriptProdSinceLastAug += profit;

@@ -176,9 +176,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.money }}>Money&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.money }}>
-                {numeralWrapper.formatMoney(player.money.toNumber())}
-              </Typography>
+              <Typography classes={{ root: classes.money }}>{numeralWrapper.formatMoney(player.money)}</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-money-hook" classes={{ root: classes.money }}>
@@ -192,9 +190,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cell }}>
-              <Typography classes={{ root: classes.hack }}>
-                {numeralWrapper.formatSkill(player.hacking_skill)}
-              </Typography>
+              <Typography classes={{ root: classes.hack }}>{numeralWrapper.formatSkill(player.hacking)}</Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cell }}>
               <Typography id="overview-hack-hook" classes={{ root: classes.hack }}>

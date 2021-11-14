@@ -9,9 +9,9 @@ export interface ICorporation {
 
   divisions: Industry[];
 
-  funds: any;
-  revenue: any;
-  expenses: any;
+  funds: number;
+  revenue: number;
+  expenses: number;
   fundingRound: number;
   public: boolean;
   totalShares: number;
@@ -55,4 +55,5 @@ export interface ICorporation {
   getScientificResearchMultiplier(): number;
   getStarterGuide(player: IPlayer): void;
   toJSON(): any;
+  getDividends(): number;
 }

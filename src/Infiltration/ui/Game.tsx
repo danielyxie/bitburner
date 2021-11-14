@@ -120,10 +120,10 @@ export function Game(props: IProps): React.ReactElement {
 
   function Progress(): React.ReactElement {
     return (
-      <h4>
+      <Typography variant="h4">
         <span style={{ color: "gray" }}>{results.slice(0, results.length - 1)}</span>
         {results[results.length - 1]}
-      </h4>
+      </Typography>
     );
   }
 

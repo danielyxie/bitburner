@@ -173,7 +173,7 @@ export function StockTicker(props: IProps): React.ReactElement {
   }
 
   function handleBuyMaxButtonClick(): void {
-    const playerMoney: number = props.p.money.toNumber();
+    const playerMoney: number = props.p.money;
 
     const stock = props.stock;
     let maxShares = calculateBuyMaxAmount(stock, position, playerMoney);

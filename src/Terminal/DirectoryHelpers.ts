@@ -265,3 +265,9 @@ export function evaluateFilePath(path: string, currPath?: string): string | null
 
   return "/" + reconstructedPath.join("/");
 }
+
+export function areFilesEqual(f0: string, f1: string): boolean {
+  if (!f0.startsWith("/")) f0 = "/" + f0;
+  if (!f1.startsWith("/")) f1 = "/" + f1;
+  return f0 === f1;
+}

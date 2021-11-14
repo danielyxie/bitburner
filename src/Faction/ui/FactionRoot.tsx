@@ -14,7 +14,6 @@ import { CONSTANTS } from "../../Constants";
 
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Faction } from "../../Faction/Faction";
-import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 
 import { use } from "../../ui/Context";
 import { CreateGangModal } from "./CreateGangModal";
@@ -104,7 +103,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
   const favorToDonate = Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
   const canDonate = faction.favor >= favorToDonate;
 
-  const canPurchaseSleeves = faction.name === "The Covenant" && p.bitNodeN >= 10 && SourceFileFlags[10];
+  const canPurchaseSleeves = faction.name === "The Covenant" && p.bitNodeN === 10;
 
   let canAccessGang = p.canAccessGang() && GangNames.includes(faction.name);
   if (p.inGang()) {

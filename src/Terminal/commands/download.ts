@@ -27,7 +27,11 @@ export function download(
           const file = new Blob([server.scripts[i].code], {
             type: "text/plain",
           });
-          zip.file(server.scripts[i].filename + ".js", file);
+          let name = server.scripts[i].filename;
+          if (name.startsWith("/")) {
+            name = name.slice(1);
+          }
+          zip.file(name + ".js", file);
         }
       }
       if (fn === "*" || fn === "*.txt") {

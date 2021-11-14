@@ -17,7 +17,7 @@ export function MoreStatsModal(props: IProps): React.ReactElement {
         rows={[
           [
             <>Hacking:&nbsp;</>,
-            props.sleeve.hacking_skill,
+            props.sleeve.hacking,
             <>&nbsp;({numeralWrapper.formatExp(props.sleeve.hacking_exp)} exp)</>,
           ],
           [

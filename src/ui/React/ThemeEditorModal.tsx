@@ -63,6 +63,14 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
     ...Settings.theme,
   });
 
+  function resetTheme(): void {
+    setCustomTheme({
+      ...defaultSettings.theme,
+    });
+    Object.assign(Settings.theme, defaultSettings.theme);
+    ThemeEvents.emit();
+  }
+
   function onThemeChange(event: React.ChangeEvent<HTMLInputElement>): void {
     try {
       const importedTheme = JSON.parse(event.target.value);
@@ -229,6 +237,24 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
         color={customTheme["black"]}
         defaultColor={defaultSettings.theme["black"]}
       />
+      <ColorEditor
+        name="backgroundprimary"
+        onColorChange={onColorChange}
+        color={customTheme["backgroundprimary"]}
+        defaultColor={defaultSettings.theme["backgroundprimary"]}
+      />
+      <ColorEditor
+        name="backgroundsecondary"
+        onColorChange={onColorChange}
+        color={customTheme["backgroundsecondary"]}
+        defaultColor={defaultSettings.theme["backgroundsecondary"]}
+      />
+      <ColorEditor
+        name="button"
+        onColorChange={onColorChange}
+        color={customTheme["button"]}
+        defaultColor={defaultSettings.theme["button"]}
+      />
 
       <br />
       <ColorEditor
@@ -281,7 +307,18 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
       />
       <br />
       <br />
-      <TextField label={"import / export theme"} value={JSON.stringify(customTheme)} onChange={onThemeChange} />
+      <TextField
+        label={"import / export theme"}
+        value={JSON.stringify(customTheme)}
+        onChange={onThemeChange}
+        InputProps={{
+          endAdornment: (
+            <IconButton onClick={resetTheme} size="large">
+              <ReplyIcon />
+            </IconButton>
+          ),
+        }}
+      />
     </Modal>
   );
 }

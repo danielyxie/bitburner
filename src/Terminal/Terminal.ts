@@ -77,7 +77,7 @@ export class Terminal implements ITerminal {
   commandHistory: string[] = [];
   commandHistoryIndex = 0;
 
-  outputHistory: (Output | Link | RawOutput)[] = [new Output(`Bitburner v${CONSTANTS.Version}`, "primary")];
+  outputHistory: (Output | Link | RawOutput)[] = [new Output(`Bitburner v${CONSTANTS.VersionString}`, "primary")];
 
   // True if a Coding Contract prompt is opened
   contractOpen = false;
@@ -196,8 +196,7 @@ export class Terminal implements ITerminal {
       } // Safety check
 
       server.moneyAvailable -= moneyGained;
-      player.gainMoney(moneyGained);
-      player.recordMoneySource(moneyGained, "hacking");
+      player.gainMoney(moneyGained, "hacking");
       player.gainHackingExp(expGainedOnSuccess);
       player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
 
@@ -226,7 +225,7 @@ export class Terminal implements ITerminal {
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
     const expGain = calculateHackingExpGain(server, player);
-    const growth = processSingleServerGrowth(server, 1, player, server.cpuCores) - 1;
+    const growth = processSingleServerGrowth(server, 25, player, server.cpuCores) - 1;
     this.print(
       `Available money on '${server.hostname}' grown by ${numeralWrapper.formatPercentage(
         growth,
@@ -547,7 +546,7 @@ export class Terminal implements ITerminal {
   }
 
   clear(): void {
-    this.outputHistory = [new Output(`Bitburner v${CONSTANTS.Version}`, "primary")];
+    this.outputHistory = [new Output(`Bitburner v${CONSTANTS.VersionString}`, "primary")];
     TerminalEvents.emit();
     TerminalClearEvents.emit();
   }

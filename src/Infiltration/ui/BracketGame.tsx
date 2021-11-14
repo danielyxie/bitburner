@@ -38,10 +38,10 @@ function generateLeftSide(difficulty: Difficulty): string {
 }
 
 function getChar(event: KeyboardEvent): string {
-  if (event.keyCode == 48 && event.shiftKey) return ")";
-  if (event.keyCode == 221 && !event.shiftKey) return "]";
-  if (event.keyCode == 221 && event.shiftKey) return "}";
-  if (event.keyCode == 190 && event.shiftKey) return ">";
+  if (event.key === ")") return ")";
+  if (event.key === "]") return "]";
+  if (event.key === "}") return "}";
+  if (event.key === ">") return ">";
   return "";
 }
 

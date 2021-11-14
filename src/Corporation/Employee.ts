@@ -61,13 +61,6 @@ export class Employee {
       det = gain * Math.random();
     this.exp += gain;
 
-    // Employee salaries slowly go up over time
-    this.cyclesUntilRaise -= marketCycles;
-    if (this.cyclesUntilRaise <= 0) {
-      this.sal += CorporationConstants.EmployeeRaiseAmount;
-      this.cyclesUntilRaise += CorporationConstants.CyclesPerEmployeeRaise;
-    }
-
     //Training
     const trainingEff = gain * Math.random();
     if (this.pos === EmployeePositions.Training) {

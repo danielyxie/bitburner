@@ -26,17 +26,23 @@ export function Stanek(): React.ReactElement {
   }
 
   function addCharge(): void {
-    staneksGift.fragments.forEach((f) => (f.charge = 1e21));
+    staneksGift.fragments.forEach((f) => {
+      f.avgCharge = 1e21;
+      f.numCharge = 1e21;
+    });
   }
 
   function modCharge(modify: number): (x: number) => void {
     return function (cycles: number): void {
-      staneksGift.fragments.forEach((f) => (f.charge += cycles * modify));
+      staneksGift.fragments.forEach((f) => (f.avgCharge += cycles * modify));
     };
   }
 
   function resetCharge(): void {
-    staneksGift.fragments.forEach((f) => (f.charge = 0));
+    staneksGift.fragments.forEach((f) => {
+      f.avgCharge = 0;
+      f.numCharge = 0;
+    });
   }
 
   return (

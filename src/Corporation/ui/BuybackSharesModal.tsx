@@ -48,7 +48,7 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
       }
     }
     corp.issuedShares -= shares;
-    player.loseMoney(shares * buybackPrice);
+    player.loseMoney(shares * buybackPrice, "corporation");
     props.onClose();
     props.rerender();
   }

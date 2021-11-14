@@ -337,7 +337,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         <ListItemIcon>
           {!open ? <ChevronRightIcon color="primary" /> : <ChevronLeftIcon color="primary" />}
         </ListItemIcon>
-        <ListItemText primary={<Typography>Bitburner v{CONSTANTS.Version}</Typography>} />
+        <ListItemText primary={<Typography>Bitburner v{CONSTANTS.VersionString}</Typography>} />
       </ListItem>
       <Divider />
       <List>

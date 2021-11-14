@@ -24,7 +24,7 @@ import { GangMember } from "./GangMember";
 
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { PowerMultiplier } from "./data/power";
 
 export class Gang {
   facName: string;
@@ -116,10 +116,9 @@ export class Gang {
       wantedLevelGains += wantedLevelGain;
       if (this.members[i].getTask().baseWanted < 0) justice++; // this member is lowering wanted.
     }
-    const territoryPenalty = (0.2 * this.getTerritory() + 0.8) * BitNodeMultipliers.GangSoftcap;
-    this.respectGainRate = Math.pow(respectGains, territoryPenalty);
-    this.wantedGainRate = Math.pow(wantedLevelGains, territoryPenalty);
-    this.moneyGainRate = Math.pow(moneyGains, territoryPenalty);
+    this.respectGainRate = respectGains;
+    this.wantedGainRate = wantedLevelGains;
+    this.moneyGainRate = moneyGains;
     const gain = respectGains * numCycles;
     this.respect += gain;
     // Faction reputation gains is respect gain divided by some constant
@@ -148,8 +147,7 @@ export class Gang {
       this.wanted = newWanted;
       if (this.wanted < 1) this.wanted = 1;
     }
-    player.gainMoney(moneyGains * numCycles);
-    player.recordMoneySource(moneyGains * numCycles, "gang");
+    player.gainMoney(moneyGains * numCycles, "gang");
   }
 
   processTerritoryAndPowerGains(numCycles = 1): void {
@@ -173,7 +171,9 @@ export class Gang {
             AllGangs[name].power += Math.min(0.85, multiplicativeGain);
           } else {
             // Additive gain (50% chance)
-            const additiveGain = 0.75 * gainRoll * AllGangs[name].territory;
+            const powerMult = PowerMultiplier[name];
+            if (powerMult === undefined) throw new Error("Should not be undefined");
+            const additiveGain = 0.75 * gainRoll * AllGangs[name].territory * powerMult;
             AllGangs[name].power += additiveGain;
           }
         }

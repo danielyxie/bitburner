@@ -1,6 +1,5 @@
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
 import { CityName } from "../Locations/data/CityNames";
-import Decimal from "decimal.js";
 import { Industries, IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
 import { CorporationConstants } from "./data/Constants";
 import { EmployeePositions } from "./EmployeePositions";
@@ -55,10 +54,10 @@ export class Industry implements IIndustry {
   prodMult = 0; //Production multiplier
 
   //Financials
-  lastCycleRevenue: any;
-  lastCycleExpenses: any;
-  thisCycleRevenue: any;
-  thisCycleExpenses: any;
+  lastCycleRevenue: number;
+  lastCycleExpenses: number;
+  thisCycleRevenue: number;
+  thisCycleExpenses: number;
 
   //Upgrades
   upgrades: number[] = Array(Object.keys(IndustryUpgrades).length).fill(0);
@@ -87,10 +86,10 @@ export class Industry implements IIndustry {
     this.type = params.type ? params.type : Industries.Agriculture;
 
     //Financials
-    this.lastCycleRevenue = new Decimal(0);
-    this.lastCycleExpenses = new Decimal(0);
-    this.thisCycleRevenue = new Decimal(0);
-    this.thisCycleExpenses = new Decimal(0);
+    this.lastCycleRevenue = 0;
+    this.lastCycleExpenses = 0;
+    this.thisCycleRevenue = 0;
+    this.thisCycleExpenses = 0;
 
     this.warehouses = {
       [CityName.Aevum]: 0,
@@ -399,17 +398,17 @@ export class Industry implements IIndustry {
         dialogBoxCreate(
           "Something went wrong when compting Corporation's revenue/expenses. This is a bug. Please report to game developer",
         );
-        this.thisCycleRevenue = new Decimal(0);
-        this.thisCycleExpenses = new Decimal(0);
+        this.thisCycleRevenue = 0;
+        this.thisCycleExpenses = 0;
       }
-      this.lastCycleRevenue = this.thisCycleRevenue.dividedBy(marketCycles * CorporationConstants.SecsPerMarketCycle);
-      this.lastCycleExpenses = this.thisCycleExpenses.dividedBy(marketCycles * CorporationConstants.SecsPerMarketCycle);
-      this.thisCycleRevenue = new Decimal(0);
-      this.thisCycleExpenses = new Decimal(0);
+      this.lastCycleRevenue = this.thisCycleRevenue / (marketCycles * CorporationConstants.SecsPerMarketCycle);
+      this.lastCycleExpenses = this.thisCycleExpenses / (marketCycles * CorporationConstants.SecsPerMarketCycle);
+      this.thisCycleRevenue = 0;
+      this.thisCycleExpenses = 0;
 
       // Once you start making revenue, the player should no longer be
       // considered new, and therefore no longer needs the 'tutorial' UI elements
-      if (this.lastCycleRevenue.gt(0)) {
+      if (this.lastCycleRevenue > 0) {
         this.newInd = false;
       }
 
@@ -422,7 +421,7 @@ export class Industry implements IIndustry {
           employeeSalary += office.process(marketCycles, corporation, this);
         }
       }
-      this.thisCycleExpenses = this.thisCycleExpenses.plus(employeeSalary);
+      this.thisCycleExpenses = this.thisCycleExpenses + employeeSalary;
 
       // Process change in demand/competition of materials/products
       this.processMaterialMarket();
@@ -446,15 +445,15 @@ export class Industry implements IIndustry {
     // Process production, purchase, and import/export of materials
     let res = this.processMaterials(marketCycles, corporation);
     if (Array.isArray(res)) {
-      this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
-      this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
+      this.thisCycleRevenue = this.thisCycleRevenue + res[0];
+      this.thisCycleExpenses = this.thisCycleExpenses + res[1];
     }
 
     // Process creation, production & sale of products
     res = this.processProducts(marketCycles, corporation);
     if (Array.isArray(res)) {
-      this.thisCycleRevenue = this.thisCycleRevenue.plus(res[0]);
-      this.thisCycleExpenses = this.thisCycleExpenses.plus(res[1]);
+      this.thisCycleRevenue = this.thisCycleRevenue + res[0];
+      this.thisCycleExpenses = this.thisCycleExpenses + res[1];
     }
   }
 
@@ -563,11 +562,8 @@ export class Industry implements IIndustry {
               }
               buyAmt = mat.buy * CorporationConstants.SecsPerMarketCycle * marketCycles;
 
-              if (matName == "RealEstate") {
-                maxAmt = corporation.funds.toNumber() / mat.bCost;
-              } else {
-                maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / MaterialSizes[matName]);
-              }
+              maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / MaterialSizes[matName]);
+
               buyAmt = Math.min(buyAmt, maxAmt);
               if (buyAmt > 0) {
                 mat.qty += buyAmt;
@@ -1479,10 +1475,10 @@ export class Industry implements IIndustry {
     division.prodMult = this.prodMult;
     division.state = this.state;
     division.newInd = this.newInd;
-    division.lastCycleRevenue = this.lastCycleRevenue.plus(0);
-    division.lastCycleExpenses = this.lastCycleExpenses.plus(0);
-    division.thisCycleRevenue = this.thisCycleRevenue.plus(0);
-    division.thisCycleExpenses = this.thisCycleExpenses.plus(0);
+    division.lastCycleRevenue = this.lastCycleRevenue + 0;
+    division.lastCycleExpenses = this.lastCycleExpenses + 0;
+    division.thisCycleRevenue = this.thisCycleRevenue + 0;
+    division.thisCycleExpenses = this.thisCycleExpenses + 0;
     division.upgrades = this.upgrades.slice();
     division.prodMats = this.prodMats.slice();
     return division;

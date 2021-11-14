@@ -57,9 +57,8 @@ export class HospitalLocation extends React.Component<IProps, IState> {
     }
 
     const cost = this.getCost();
-    this.props.p.loseMoney(cost);
+    this.props.p.loseMoney(cost, "hospitalization");
     this.props.p.hp = this.props.p.max_hp;
-    this.props.p.recordMoneySource(-1 * cost, "hospitalization");
 
     // This just forces a re-render to update the cost
     this.setState({

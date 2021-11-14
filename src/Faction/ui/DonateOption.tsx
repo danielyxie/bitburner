@@ -37,7 +37,7 @@ export function DonateOption(props: IProps): React.ReactElement {
   function canDonate(): boolean {
     if (donateAmt === null) return false;
     if (isNaN(donateAmt) || donateAmt <= 0) return false;
-    if (props.p.money.lt(donateAmt)) return false;
+    if (props.p.money < donateAmt) return false;
     return true;
   }
 
@@ -52,7 +52,7 @@ export function DonateOption(props: IProps): React.ReactElement {
     const amt = donateAmt;
     if (amt === null) return;
     if (!canDonate()) return;
-    props.p.loseMoney(amt);
+    props.p.loseMoney(amt, "other");
     const repGain = repFromDonation(amt, props.p);
     props.faction.playerReputation += repGain;
     dialogBoxCreate(
@@ -66,7 +66,7 @@ export function DonateOption(props: IProps): React.ReactElement {
   function Status(): React.ReactElement {
     if (donateAmt === null) return <></>;
     if (!canDonate()) {
-      if (props.p.money.lt(donateAmt)) return <Typography>Insufficient funds</Typography>;
+      if (props.p.money < donateAmt) return <Typography>Insufficient funds</Typography>;
       return <Typography>Invalid donate amount entered!</Typography>;
     }
     return (

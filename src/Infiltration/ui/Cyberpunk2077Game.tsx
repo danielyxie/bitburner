@@ -59,7 +59,7 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
     next[1] = (next[1] + grid.length) % grid.length;
     setPos(next);
 
-    if (event.keyCode == 32) {
+    if (event.key === " ") {
       const selected = grid[pos[1]][pos[0]];
       const expected = answer[index];
       if (selected !== expected) {

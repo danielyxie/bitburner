@@ -38,7 +38,7 @@ function EffectText(props: IEffectTextProps): React.ReactElement {
 
   return (
     <Typography>
-      Issue ${numeralWrapper.format(newShares, "0.000a")} new shares for{" "}
+      Issue {numeralWrapper.format(newShares, "0.000a")} new shares for{" "}
       {numeralWrapper.formatMoney(newShares * newSharePrice)}?
     </Typography>
   );
@@ -81,7 +81,7 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
     privateShares = Math.round(privateShares / 1e6) * 1e6;
 
     corp.issuedShares += newShares - privateShares;
-    corp.funds = corp.funds.plus(profit);
+    corp.funds = corp.funds + profit;
     corp.immediatelyUpdateSharePrice();
     props.onClose();
     dialogBoxCreate(

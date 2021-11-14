@@ -9,7 +9,7 @@
     "target": "es6",
     "sourceMap": true,
     "strict": true,
-    "types": ["cypress", "@testing-library/cypress", "node"]
+    "types": ["cypress", "@testing-library/cypress", "node", "raw-loader.d.ts"]
   },
   "exclude": ["node_modules"]
 }

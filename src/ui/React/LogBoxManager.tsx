@@ -21,27 +21,30 @@ interface Log {
   script: RunningScript;
 }
 
+let logs: Log[] = [];
+
 export function LogBoxManager(): React.ReactElement {
-  const [logs, setLogs] = useState<Log[]>([]);
+  const setRerender = useState(true)[1];
+  function rerender(): void {
+    setRerender((o) => !o);
+  }
   useEffect(
     () =>
       LogBoxEvents.subscribe((script: RunningScript) => {
         const id = script.server + "-" + script.filename + script.args.map((x: any): string => `${x}`).join("-");
-        setLogs((old) => {
-          return [
-            ...old,
-            {
-              id: id,
-              script: script,
-            },
-          ];
+        if (logs.find((l) => l.id === id)) return;
+        logs.push({
+          id: id,
+          script: script,
         });
+        rerender();
       }),
     [],
   );
 
   function close(id: string): void {
-    setLogs((old) => old.filter((l) => l.id !== id));
+    logs = logs.filter((l) => l.id !== id);
+    rerender();
   }
 
   return (

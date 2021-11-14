@@ -28,7 +28,7 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
 
   const tooltip = data[5];
   function onClick(): void {
-    if (corp.funds.lt(cost)) return;
+    if (corp.funds < cost) return;
     try {
       LevelUpgrade(corp, props.upgrade);
     } catch (err) {
@@ -40,11 +40,13 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
   return (
     <Grid item xs={4}>
       <Box display="flex" alignItems="center" flexDirection="row-reverse">
-        <Button disabled={corp.funds.lt(cost)} sx={{ mx: 1 }} onClick={onClick}>
+        <Button disabled={corp.funds < cost} sx={{ mx: 1 }} onClick={onClick}>
           <MoneyCost money={cost} corp={corp} />
         </Button>
         <Tooltip title={tooltip}>
-          <Typography>{data[4]} </Typography>
+          <Typography>
+            {data[4]} - lvl {level}
+          </Typography>
         </Tooltip>
       </Box>
     </Grid>
