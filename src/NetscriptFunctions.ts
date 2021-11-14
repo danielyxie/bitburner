@@ -70,7 +70,13 @@ import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
 import { NetscriptFormulas } from "./NetscriptFunctions/Formulas";
 import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
 
-import { NS as INS, Player as INetscriptPlayer } from "./ScriptEditor/NetscriptDefinitions";
+import {
+  NS as INS,
+  Player as INetscriptPlayer,
+  Gang as IGang,
+  Bladeburner as IBladeburner,
+  Stanek as IStanek,
+} from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 
 import { toNative } from "./NetscriptFunctions/toNative";
@@ -82,6 +88,9 @@ import { Flags } from "./NetscriptFunctions/Flags";
 
 interface NS extends INS {
   [key: string]: any;
+  gang: IGang;
+  bladeburner: IBladeburner;
+  stanek: IStanek;
 }
 
 export function NetscriptFunctions(workerScript: WorkerScript): NS {

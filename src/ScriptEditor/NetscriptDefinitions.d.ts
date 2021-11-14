@@ -3360,20 +3360,123 @@ export interface Formulas {
   hacknetServers: HacknetServersFormulas;
 }
 
+export interface Fragment {
+  id: number;
+  shape: boolean[][];
+  type: number;
+  power: number;
+  limit: number;
+}
+
+export interface ActiveFragment {
+  id: number;
+  avgCharge: number;
+  numCharge: number;
+  rotation: number;
+  x: number;
+  y: number;
+}
+
 /**
  * Stanek's Gift API.
  * @public
  */
 interface Stanek {
   /**
-   * @ramCost cost: 0.5 GB
-   * @param {number} rootX Root X against which to align the top left of the fragment.
-   * @param {number} rootY Root Y against which to align the top left of the fragment.
-   * @param {number} rotation A number from 0 to 3, the mount of 90 degree turn to take.
-   * @param {number} fragmentId ID of the fragment to place.
-   * @returns {boolean} true if the fragment can be placed at that position. false otherwise.
+   * Stanek's Gift width.
+   * @remarks
+   * RAM cost: 0.4 GB
+   * @returns The width of the gift.
+   */
+  width(): number;
+  /**
+   * Stanek's Gift height.
+   * @remarks
+   * RAM cost: 0.4 GB
+   * @returns The height of the gift.
+   */
+  height(): number;
+
+  /**
+   * Charge a fragment, increasing it's power.
+   * @remarks
+   * RAM cost: 0.4 GB
+   * @param rootX - rootX Root X against which to align the top left of the fragment.
+   * @param rootY - rootY Root Y against which to align the top left of the fragment.
+   * @returns Promise that lasts until the charge action is over.
+   */
+  charge(rootX: number, rootY: number): Promise<void>;
+
+  /**
+   * List possible fragments.
+   * @remarks
+   * RAM cost: cost: 0 GB
+   *
+   * @returns List of possible fragments.
+   */
+  fragmentDefinitions(): Fragment[];
+
+  /**
+   * List of fragments in Stanek's Gift.
+   * @remarks
+   * RAM cost: cost: 5 GB
+   *
+   * @returns List of active fragments placed on Stanek's Gift.
+   */
+  activeFragments(): ActiveFragment[];
+
+  /**
+   * Clear the board of all fragments.
+   * @remarks
+   * RAM cost: cost: 0 GB
+   */
+  clear(): void;
+
+  /**
+   * Check if fragment can be placed at specified location.
+   * @remarks
+   * RAM cost: cost: 0.5 GB
+   *
+   * @param rootX - rootX Root X against which to align the top left of the fragment.
+   * @param rootY - rootY Root Y against which to align the top left of the fragment.
+   * @param rotation - rotation A number from 0 to 3, the mount of 90 degree turn to take.
+   * @param fragmentId - fragmentId ID of the fragment to place.
+   * @returns true if the fragment can be placed at that position. false otherwise.
    */
   canPlace(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+  /**
+   * Place fragment on Stanek's Gift.
+   * @remarks
+   * RAM cost: cost: 5 GB
+   *
+   * @param rootX - X against which to align the top left of the fragment.
+   * @param rootY - Y against which to align the top left of the fragment.
+   * @param rotation - A number from 0 to 3, the mount of 90 degree turn to take.
+   * @param fragmentId - ID of the fragment to place.
+   * @returns true if the fragment can be placed at that position. false otherwise.
+   */
+  place(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+  /**
+   * Get placed fragment at location.
+   * @remarks
+   * RAM cost: cost: 5 GB
+   *
+   * @param rootX - X against which to align the top left of the fragment.
+   * @param rootY - Y against which to align the top left of the fragment.
+   * @returns The fragment at [rootX, rootY], if any.
+   */
+  get(rootX: number, rootY: number): ActiveFragment | undefined;
+
+  /**
+   * Remove fragment at location.
+   * @remarks
+   * RAM cost: cost: 0.15 GB
+   *
+   * @param rootX - X against which to align the top left of the fragment.
+   * @param rootY - Y against which to align the top left of the fragment.
+   * @returns The fragment at [rootX, rootY], if any.
+   */
+  remove(rootX: number, rootY: number): boolean;
 }
 
 /**

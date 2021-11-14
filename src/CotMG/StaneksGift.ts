@@ -29,16 +29,11 @@ export class StaneksGift implements IStaneksGift {
     return Math.floor(this.baseSize() / 2 + 0.6);
   }
 
-  charge(rootX: number, rootY: number, threads: number): number {
-    const af = this.findFragment(rootX, rootY);
-    if (af === undefined) return 0;
-
+  charge(af: ActiveFragment, threads: number): void {
     af.avgCharge = (af.numCharge * af.avgCharge + threads) / (af.numCharge + 1);
     af.numCharge++;
 
     Factions["Church of the Machine God"].playerReputation += Math.log(threads) / Math.log(2);
-
-    return threads;
   }
 
   inBonus(): boolean {
@@ -74,21 +69,21 @@ export class StaneksGift implements IStaneksGift {
     return CalculateEffect(fragment.avgCharge, fragment.numCharge, fragment.fragment().power, boost);
   }
 
-  canPlace(worldX: number, worldY: number, rotation: number, fragment: Fragment): boolean {
-    if (worldX < 0 || worldY < 0) return false;
-    if (worldX + fragment.width(rotation) > this.width()) return false;
-    if (worldY + fragment.height(rotation) > this.height()) return false;
+  canPlace(rootX: number, rootY: number, rotation: number, fragment: Fragment): boolean {
+    if (rootX < 0 || rootY < 0) return false;
+    if (rootX + fragment.width(rotation) > this.width()) return false;
+    if (rootY + fragment.height(rotation) > this.height()) return false;
     if (this.count(fragment) >= fragment.limit) return false;
-    const newFrag = new ActiveFragment({ x: worldX, y: worldY, rotation: rotation, fragment: fragment });
+    const newFrag = new ActiveFragment({ x: rootX, y: rootY, rotation: rotation, fragment: fragment });
     for (const aFrag of this.fragments) {
       if (aFrag.collide(newFrag)) return false;
     }
     return true;
   }
 
-  place(worldX: number, worldY: number, rotation: number, fragment: Fragment): boolean {
-    if (!this.canPlace(worldX, worldY, rotation, fragment)) return false;
-    this.fragments.push(new ActiveFragment({ x: worldX, y: worldY, rotation: rotation, fragment: fragment }));
+  place(rootX: number, rootY: number, rotation: number, fragment: Fragment): boolean {
+    if (!this.canPlace(rootX, rootY, rotation, fragment)) return false;
+    this.fragments.push(new ActiveFragment({ x: rootX, y: rootY, rotation: rotation, fragment: fragment }));
     return true;
   }
 
@@ -114,9 +109,9 @@ export class StaneksGift implements IStaneksGift {
     return amt;
   }
 
-  deleteAt(worldX: number, worldY: number): boolean {
+  delete(rootX: number, rootY: number): boolean {
     for (let i = 0; i < this.fragments.length; i++) {
-      if (this.fragments[i].fullAt(worldX, worldY)) {
+      if (this.fragments[i].x === rootX && this.fragments[i].y === rootY) {
         this.fragments.splice(i, 1);
         return true;
       }

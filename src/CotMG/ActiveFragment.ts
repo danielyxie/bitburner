@@ -67,7 +67,6 @@ export class ActiveFragment {
   }
 
   cool(): void {
-    console.log(Math.log(this.numCharge + 1) / (Math.log(50) * 10));
     this.numCharge = this.numCharge - Math.log(this.numCharge + 1) / (Math.log(50) * 10);
     if (this.numCharge < 0) {
       this.numCharge = 0;

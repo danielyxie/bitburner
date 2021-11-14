@@ -80,7 +80,9 @@ export function MainBoard(props: IProps): React.ReactElement {
   }
 
   function deleteAt(worldX: number, worldY: number): boolean {
-    return props.gift.deleteAt(worldX, worldY);
+    const f = props.gift.fragmentAt(worldX, worldY);
+    if (f === undefined) return false;
+    return props.gift.delete(f.x, f.y);
   }
 
   function clickAt(worldX: number, worldY: number): void {
