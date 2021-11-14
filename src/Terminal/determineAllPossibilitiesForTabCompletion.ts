@@ -302,7 +302,7 @@ export async function determineAllPossibilitiesForTabCompletion(
     const script = currServ.scripts.find((script) => script.filename === filename);
     if (!script) return; // Doesn't exist.
     if (!script.module) {
-      compile(script, currServ.scripts);
+      await compile(script, currServ.scripts);
     }
     const loadedModule = await script.module;
     if (!loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
