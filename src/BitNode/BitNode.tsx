@@ -901,7 +901,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
 
       BitNodeMultipliers.BladeburnerRank = 0.1;
       BitNodeMultipliers.BladeburnerSkillCost = 5;
-      BitNodeMultipliers.StaneksGiftPowerMultiplier = 2;
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = 1.2;
       BitNodeMultipliers.StaneksGiftExtraSize = 1;
       BitNodeMultipliers.GangSoftcap = 0.2;
       BitNodeMultipliers.CorporationSoftCap = 0.2;
