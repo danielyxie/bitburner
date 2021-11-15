@@ -33,7 +33,7 @@ export class StaneksGift implements IStaneksGift {
     af.avgCharge = (af.numCharge * af.avgCharge + threads) / (af.numCharge + 1);
     af.numCharge++;
 
-    Factions["Church of the Machine God"].playerReputation += Math.log(threads) / Math.log(2);
+    Factions["Church of the Machine God"].playerReputation += Math.log(threads + 1) / Math.log(2);
   }
 
   inBonus(): boolean {
