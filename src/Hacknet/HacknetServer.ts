@@ -19,6 +19,7 @@ import {
 import { createRandomIp } from "../utils/IPAddress";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { IPlayer } from "../PersonObjects/IPlayer";
 
 interface IConstructorParams {
   adminRights?: boolean;
@@ -120,6 +121,11 @@ export class HacknetServer extends BaseServer implements IHacknetNode {
     if (prodMult != null && typeof prodMult === "number") {
       this.updateHashRate(prodMult);
     }
+  }
+
+  updateRamUsed(ram: number, player: IPlayer): void {
+    super.updateRamUsed(ram, player);
+    this.updateHashRate(player.hacknet_node_money_mult);
   }
 
   updateHashCapacity(): void {

@@ -86,7 +86,7 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
   if (price === "") price = "0";
   if (amt === "") amt = "0";
   let cost = price.replace(/\s+/g, "");
-  cost = cost.replace(/[^-()\d/*+.MP]/g, ""); //Sanitize cost
+  cost = cost.replace(/[^-()\d/*+.MPe]/g, ""); //Sanitize cost
   let temp = cost.replace(/MP/g, mat.bCost + "");
   try {
     temp = eval(temp);
