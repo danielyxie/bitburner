@@ -43,6 +43,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       router.toFaction(faction);
       player.stopFocusing();
     }
+    console.log(`${player.currentWorkFactionName} ${player.workRepGainRate}`);
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
         <Grid item>

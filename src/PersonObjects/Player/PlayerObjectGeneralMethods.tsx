@@ -854,7 +854,7 @@ export function startFactionHackWork(this: IPlayer, router: IRouter, faction: Fa
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkHacking);
 
   this.workHackExpGainRate = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
-  this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
+  this.workRepGainRate = getHackingWorkRepGain(this, faction);
 
   this.factionWorkType = CONSTANTS.FactionWorkHacking;
   this.currentWorkFactionDescription = "carrying out hacking contracts";
@@ -872,6 +872,7 @@ export function startFactionFieldWork(this: IPlayer, router: IRouter, faction: F
   this.workAgiExpGainRate = 0.1 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workChaExpGainRate = 0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
+  console.log(this.workRepGainRate);
 
   this.factionWorkType = CONSTANTS.FactionWorkField;
   this.currentWorkFactionDescription = "carrying out field missions";
@@ -906,6 +907,7 @@ export function workForFaction(this: IPlayer, numCycles: number): boolean {
       break;
     case CONSTANTS.FactionWorkField:
       this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
+      console.log(this.workRepGainRate);
       break;
     case CONSTANTS.FactionWorkSecurity:
       this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
@@ -913,6 +915,12 @@ export function workForFaction(this: IPlayer, numCycles: number): boolean {
     default:
       break;
   }
+  let favorMult = 1 + faction.favor / 100;
+  if (isNaN(favorMult)) {
+    favorMult = 1;
+  }
+  this.workRepGainRate *= favorMult;
+  this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
 
   //Cap the number of cycles being processed to whatever would put you at limit (20 hours)
   let overMax = false;

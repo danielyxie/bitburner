@@ -32,6 +32,8 @@ import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
 import TableRow from "@mui/material/TableRow";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { calculateHashGainRate } from "../formulas/HacknetServers";
+import Tooltip from "@mui/material/Tooltip";
 
 interface IProps {
   node: HacknetServer;
@@ -46,9 +48,9 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
   const rerender = props.rerender;
 
   // Upgrade Level Button
-  let upgradeLevelContent;
+  let upgradeLevelButton;
   if (node.level >= HacknetServerConstants.MaxLevel) {
-    upgradeLevelContent = <>MAX LEVEL</>;
+    upgradeLevelButton = <Button disabled>MAX LEVEL</Button>;
   } else {
     let multiplier = 0;
     if (purchaseMult === "MAX") {
@@ -58,12 +60,23 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       multiplier = Math.min(levelsToMax, purchaseMult as number);
     }
 
+    const increase =
+      calculateHashGainRate(node.level + multiplier, 0, node.maxRam, node.cores, props.player.hacknet_node_money_mult) -
+      node.hashRate;
     const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, props.player.hacknet_node_level_cost_mult);
-    upgradeLevelContent = (
-      <>
-        +{multiplier}&nbsp;-&nbsp;
-        <Money money={upgradeLevelCost} player={props.player} />
-      </>
+    upgradeLevelButton = (
+      <Tooltip
+        title={
+          <Typography>
+            +<HashRate hashes={increase} />
+          </Typography>
+        }
+      >
+        <Button onClick={upgradeLevelOnClick}>
+          +{multiplier}&nbsp;-&nbsp;
+          <Money money={upgradeLevelCost} player={props.player} />
+        </Button>
+      </Tooltip>
     );
   }
   function upgradeLevelOnClick(): void {
@@ -75,10 +88,18 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
     rerender();
   }
 
+  function upgradeRamOnClick(): void {
+    let numUpgrades = purchaseMult;
+    if (purchaseMult === "MAX") {
+      numUpgrades = getMaxNumberRamUpgrades(props.player, node, HacknetServerConstants.MaxRam);
+    }
+    purchaseRamUpgrade(props.player, node, numUpgrades as number);
+    rerender();
+  }
   // Upgrade RAM Button
-  let upgradeRamContent;
+  let upgradeRamButton;
   if (node.maxRam >= HacknetServerConstants.MaxRam) {
-    upgradeRamContent = <>MAX RAM</>;
+    upgradeRamButton = <Button disabled>MAX RAM</Button>;
   } else {
     let multiplier = 0;
     if (purchaseMult === "MAX") {
@@ -88,27 +109,43 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       multiplier = Math.min(levelsToMax, purchaseMult as number);
     }
 
+    const increase =
+      calculateHashGainRate(
+        node.level,
+        0,
+        node.maxRam * Math.pow(2, multiplier),
+        node.cores,
+        props.player.hacknet_node_money_mult,
+      ) - node.hashRate;
     const upgradeRamCost = node.calculateRamUpgradeCost(multiplier, props.player.hacknet_node_ram_cost_mult);
-    upgradeRamContent = (
-      <>
-        +{multiplier}&nbsp;-&nbsp;
-        <Money money={upgradeRamCost} player={props.player} />
-      </>
+    upgradeRamButton = (
+      <Tooltip
+        title={
+          <Typography>
+            +<HashRate hashes={increase} />
+          </Typography>
+        }
+      >
+        <Button onClick={upgradeRamOnClick}>
+          +{multiplier}&nbsp;-&nbsp;
+          <Money money={upgradeRamCost} player={props.player} />
+        </Button>
+      </Tooltip>
     );
   }
-  function upgradeRamOnClick(): void {
+
+  function upgradeCoresOnClick(): void {
     let numUpgrades = purchaseMult;
     if (purchaseMult === "MAX") {
-      numUpgrades = getMaxNumberRamUpgrades(props.player, node, HacknetServerConstants.MaxRam);
+      numUpgrades = getMaxNumberCoreUpgrades(props.player, node, HacknetServerConstants.MaxCores);
     }
-    purchaseRamUpgrade(props.player, node, numUpgrades as number);
+    purchaseCoreUpgrade(props.player, node, numUpgrades as number);
     rerender();
   }
-
   // Upgrade Cores Button
-  let upgradeCoresContent;
+  let upgradeCoresButton;
   if (node.cores >= HacknetServerConstants.MaxCores) {
-    upgradeCoresContent = <>MAX CORES</>;
+    upgradeCoresButton = <Button disabled>MAX CORES</Button>;
   } else {
     let multiplier = 0;
     if (purchaseMult === "MAX") {
@@ -118,27 +155,30 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       multiplier = Math.min(levelsToMax, purchaseMult as number);
     }
 
+    const increase =
+      calculateHashGainRate(node.level, 0, node.maxRam, node.cores + multiplier, props.player.hacknet_node_money_mult) -
+      node.hashRate;
     const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, props.player.hacknet_node_core_cost_mult);
-    upgradeCoresContent = (
-      <>
-        +{multiplier}&nbsp;-&nbsp;
-        <Money money={upgradeCoreCost} player={props.player} />
-      </>
+    upgradeCoresButton = (
+      <Tooltip
+        title={
+          <Typography>
+            +<HashRate hashes={increase} />
+          </Typography>
+        }
+      >
+        <Button onClick={upgradeCoresOnClick}>
+          +{multiplier}&nbsp;-&nbsp;
+          <Money money={upgradeCoreCost} player={props.player} />
+        </Button>
+      </Tooltip>
     );
-  }
-  function upgradeCoresOnClick(): void {
-    let numUpgrades = purchaseMult;
-    if (purchaseMult === "MAX") {
-      numUpgrades = getMaxNumberCoreUpgrades(props.player, node, HacknetServerConstants.MaxCores);
-    }
-    purchaseCoreUpgrade(props.player, node, numUpgrades as number);
-    rerender();
   }
 
   // Upgrade Cache button
-  let upgradeCacheContent;
+  let upgradeCacheButton;
   if (node.cache >= HacknetServerConstants.MaxCache) {
-    upgradeCacheContent = <>MAX CACHE</>;
+    upgradeCacheButton = <Button disabled>MAX CACHE</Button>;
   } else {
     let multiplier = 0;
     if (purchaseMult === "MAX") {
@@ -149,11 +189,19 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
     }
 
     const upgradeCacheCost = node.calculateCacheUpgradeCost(multiplier);
-    upgradeCacheContent = (
-      <>
-        +{multiplier}&nbsp;-&nbsp;
-        <Money money={upgradeCacheCost} player={props.player} />
-      </>
+    upgradeCacheButton = (
+      <Tooltip
+        title={
+          <Typography>
+            +<Hashes hashes={32 * Math.pow(2, node.cache)} /> hashes
+          </Typography>
+        }
+      >
+        <Button onClick={upgradeCacheOnClick}>
+          +{multiplier}&nbsp;-&nbsp;
+          <Money money={upgradeCacheCost} player={props.player} />
+        </Button>
+      </Tooltip>
     );
     if (props.player.money < upgradeCacheCost) {
     } else {
@@ -205,9 +253,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
             <TableCell>
               <Typography>{node.level}</Typography>
             </TableCell>
-            <TableCell>
-              <Button onClick={upgradeLevelOnClick}>{upgradeLevelContent}</Button>
-            </TableCell>
+            <TableCell>{upgradeLevelButton}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -216,9 +262,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
             <TableCell>
               <Typography>{numeralWrapper.formatRAM(node.maxRam)}</Typography>
             </TableCell>
-            <TableCell>
-              <Button onClick={upgradeRamOnClick}>{upgradeRamContent}</Button>
-            </TableCell>
+            <TableCell>{upgradeRamButton}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -227,9 +271,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
             <TableCell>
               <Typography>{node.cores}</Typography>
             </TableCell>
-            <TableCell>
-              <Button onClick={upgradeCoresOnClick}>{upgradeCoresContent}</Button>
-            </TableCell>
+            <TableCell>{upgradeCoresButton}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>
@@ -238,9 +280,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
             <TableCell>
               <Typography>{node.cache}</Typography>
             </TableCell>
-            <TableCell>
-              <Button onClick={upgradeCacheOnClick}>{upgradeCacheContent}</Button>
-            </TableCell>
+            <TableCell>{upgradeCacheButton}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
