@@ -148,7 +148,7 @@ function LogWindow(props: IProps): React.ReactElement {
               </Box>
             </Box>
           </Paper>
-          <Paper sx={{ overflow: "scroll", overflowWrap: "break-word", whiteSpace: "pre-line" }}>
+          <Paper sx={{ overflow: "scroll", overflowWrap: "break-word", whiteSpace: "pre-wrap" }}>
             <ResizableBox
               className={classes.logs}
               height={500}
