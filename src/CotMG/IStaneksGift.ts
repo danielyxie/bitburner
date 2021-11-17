@@ -7,7 +7,7 @@ export interface IStaneksGift {
   fragments: ActiveFragment[];
   width(): number;
   height(): number;
-  charge(fragment: ActiveFragment, threads: number): void;
+  charge(player: IPlayer, fragment: ActiveFragment, threads: number): void;
   process(p: IPlayer, n: number): void;
   effect(fragment: ActiveFragment): number;
   canPlace(x: number, y: number, rotation: number, fragment: Fragment): boolean;

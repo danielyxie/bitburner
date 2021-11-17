@@ -41,7 +41,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
         if (workerScript.env.stopFlag) {
           return Promise.reject(workerScript);
         }
-        const charge = staneksGift.charge(fragment, workerScript.scriptRef.threads);
+        const charge = staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
         workerScript.log("stanek.charge", `Charged fragment for ${charge} charge.`);
         return Promise.resolve();
       });

@@ -5,7 +5,6 @@ import { IStaneksGift } from "./IStaneksGift";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Factions } from "../Faction/Factions";
 import { CalculateEffect } from "./formulas/effect";
-import { CalculateCharge } from "./formulas/charge";
 import { StaneksGiftEvents } from "./StaneksGiftEvents";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { CONSTANTS } from "../Constants";
@@ -29,11 +28,12 @@ export class StaneksGift implements IStaneksGift {
     return Math.floor(this.baseSize() / 2 + 0.6);
   }
 
-  charge(af: ActiveFragment, threads: number): void {
+  charge(player: IPlayer, af: ActiveFragment, threads: number): void {
     af.avgCharge = (af.numCharge * af.avgCharge + threads) / (af.numCharge + 1);
     af.numCharge++;
 
-    Factions["Church of the Machine God"].playerReputation += Math.pow(threads, 0.95);
+    const cotmg = Factions["Church of the Machine God"];
+    cotmg.playerReputation += (player.faction_rep_mult * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 100;
   }
 
   inBonus(): boolean {
