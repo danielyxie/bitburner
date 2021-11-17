@@ -27,6 +27,7 @@ import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { SnackbarEvents } from "../../ui/React/Snackbar";
 import { N00dles } from "../../utils/helpers/N00dles";
 import { Exploit } from "../../Exploits/Exploit";
+import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
 
 type IProps = {
   loc: Location;
@@ -131,7 +132,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       !player.augmentations.some((a) => a.name === AugmentationNames.StaneksGift1) &&
       !player.queuedAugmentations.some((a) => a.name === AugmentationNames.StaneksGift1)
     ) {
-      player.queueAugmentation(AugmentationNames.StaneksGift1);
+      applyAugmentation({ name: AugmentationNames.StaneksGift1, level: 1 });
     }
 
     router.toFaction(faction);

@@ -868,29 +868,29 @@ export function initBitNodeMultipliers(p: IPlayer): void {
 
       BitNodeMultipliers.PurchasedServerSoftcap = 2.2;
 
-      BitNodeMultipliers.HackingLevelMultiplier = 0.2;
-      BitNodeMultipliers.StrengthLevelMultiplier = 0.2;
-      BitNodeMultipliers.DefenseLevelMultiplier = 0.2;
-      BitNodeMultipliers.DexterityLevelMultiplier = 0.2;
-      BitNodeMultipliers.AgilityLevelMultiplier = 0.2;
-      BitNodeMultipliers.CharismaLevelMultiplier = 0.2;
+      BitNodeMultipliers.HackingLevelMultiplier = 0.4;
+      BitNodeMultipliers.StrengthLevelMultiplier = 0.4;
+      BitNodeMultipliers.DefenseLevelMultiplier = 0.4;
+      BitNodeMultipliers.DexterityLevelMultiplier = 0.4;
+      BitNodeMultipliers.AgilityLevelMultiplier = 0.4;
+      BitNodeMultipliers.CharismaLevelMultiplier = 0.4;
 
-      BitNodeMultipliers.ServerMaxMoney = 0.15;
+      BitNodeMultipliers.ServerMaxMoney = 0.45;
       BitNodeMultipliers.ServerStartingMoney = 0.75;
 
       BitNodeMultipliers.ServerStartingSecurity = 2;
 
-      BitNodeMultipliers.ScriptHackMoney = 0.2;
-      BitNodeMultipliers.CompanyWorkMoney = 0.2;
-      BitNodeMultipliers.CrimeMoney = 0.2;
-      BitNodeMultipliers.HacknetNodeMoney = 0.2;
-      BitNodeMultipliers.CodingContractMoney = 0.2;
+      BitNodeMultipliers.ScriptHackMoney = 0.4;
+      BitNodeMultipliers.CompanyWorkMoney = 0.4;
+      BitNodeMultipliers.CrimeMoney = 0.4;
+      BitNodeMultipliers.HacknetNodeMoney = 0.4;
+      BitNodeMultipliers.CodingContractMoney = 0.4;
 
-      BitNodeMultipliers.CompanyWorkExpGain = 0.1;
-      BitNodeMultipliers.ClassGymExpGain = 0.1;
-      BitNodeMultipliers.FactionWorkExpGain = 0.1;
-      BitNodeMultipliers.HackExpGain = 0.1;
-      BitNodeMultipliers.CrimeExpGain = 0.1;
+      BitNodeMultipliers.CompanyWorkExpGain = 0.5;
+      BitNodeMultipliers.ClassGymExpGain = 0.5;
+      BitNodeMultipliers.FactionWorkExpGain = 0.5;
+      BitNodeMultipliers.HackExpGain = 0.5;
+      BitNodeMultipliers.CrimeExpGain = 0.5;
 
       BitNodeMultipliers.FactionWorkRepGain = 0.4;
 
@@ -899,8 +899,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
 
       BitNodeMultipliers.CorporationValuation = 0.001;
 
-      BitNodeMultipliers.BladeburnerRank = 0.1;
-      BitNodeMultipliers.BladeburnerSkillCost = 5;
+      BitNodeMultipliers.BladeburnerRank = 0.2;
+      BitNodeMultipliers.BladeburnerSkillCost = 3;
       BitNodeMultipliers.StaneksGiftPowerMultiplier = 1.2;
       BitNodeMultipliers.StaneksGiftExtraSize = 1;
       BitNodeMultipliers.GangSoftcap = 0.2;

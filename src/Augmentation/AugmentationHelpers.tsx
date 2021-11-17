@@ -2412,7 +2412,7 @@ function initAugmentations(): void {
 
     const StaneksGift2 = new Augmentation({
       name: AugmentationNames.StaneksGift2,
-      repCost: 1e5,
+      repCost: 1e6,
       moneyCost: 0,
       info:
         "The next evolution is near, A coming together of man and machine. A synthesis greater than the birth of the human " +
@@ -2453,7 +2453,7 @@ function initAugmentations(): void {
 
     const StaneksGift3 = new Augmentation({
       name: AugmentationNames.StaneksGift3,
-      repCost: 1e7,
+      repCost: 1e8,
       moneyCost: 0,
       info:
         "The synthesis of human and machine is nothing to fear. It is our destiny. " +
