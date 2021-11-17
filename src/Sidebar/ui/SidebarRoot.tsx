@@ -753,7 +753,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               <Typography color={props.page !== Page.Options ? "secondary" : "primary"}>Options</Typography>
             </ListItemText>
           </ListItem>
-          {true && (
+          {process.env.NODE_ENV === "development" && (
             <ListItem
               classes={{ root: classes.listitem }}
               button
