@@ -1,5 +1,5 @@
 autocomplete() Netscript Function
-============================
+=================================
 
 .. warning:: This feature is not officially supported yet and the API might change. It is also only supported in ns2
 
@@ -32,7 +32,7 @@ autocomplete() Netscript Function
 
     Terminal:
 
-    .. code-block:: javascript
+    .. code-block:: bash
 
         $ run demo.ns mega\t
         // results in

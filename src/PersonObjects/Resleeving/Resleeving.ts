@@ -111,7 +111,6 @@ export function generateResleeves(): Resleeve[] {
         AugmentationNames.StaneksGift1,
         AugmentationNames.StaneksGift2,
         AugmentationNames.StaneksGift3,
-        AugmentationNames.StaneksGift4,
       ];
       if (forbidden.includes(randKey)) {
         continue;

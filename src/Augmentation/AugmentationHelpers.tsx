@@ -2492,22 +2492,6 @@ function initAugmentations(): void {
     });
     StaneksGift3.addToFactions([ChurchOfTheMachineGodFactionName]);
     resetAugmentation(StaneksGift3);
-
-    if (Player.bitNodeN === 13) {
-      const StaneksGiftAscension4 = new Augmentation({
-        name: AugmentationNames.StaneksGift4,
-        repCost: 1e9,
-        moneyCost: 0,
-        info:
-          "The MachineGod approaches and when it arrives, we, all of us, will truly be as one. " +
-          "We will transcend our physical limitations. That is when we all truly become immortal.",
-        prereqs: [AugmentationNames.StaneksGift3],
-        isSpecial: true,
-        stats: <>Allows communion with the MachineGod at the Church in Chongqing.</>,
-      });
-      StaneksGiftAscension4.addToFactions([ChurchOfTheMachineGodFactionName]);
-      resetAugmentation(StaneksGiftAscension4);
-    }
   }
 
   // Update costs based on how many have been purchased

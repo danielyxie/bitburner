@@ -530,7 +530,6 @@ export function NetscriptSingularity(
 
       if (player.hasProgram(item.program)) {
         workerScript.log("purchaseProgram", `You already have the '${item.program}' program`);
-        player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
         return true;
       }
 
@@ -540,6 +539,7 @@ export function NetscriptSingularity(
         "purchaseProgram",
         `You have purchased the '${item.program}' program. The new program can be found on your home computer.`,
       );
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
       return true;
     },
     getCurrentServer: function (): any {

@@ -111,7 +111,6 @@ export const AugmentationNames: {
   StaneksGift1: string;
   StaneksGift2: string;
   StaneksGift3: string;
-  StaneksGift4: string;
 } = {
   Targeting1: "Augmented Targeting I",
   Targeting2: "Augmented Targeting II",
@@ -226,7 +225,6 @@ export const AugmentationNames: {
   StaneksGift1: "Stanek's Gift - Genesis",
   StaneksGift2: "Stanek's Gift - Awakening",
   StaneksGift3: "Stanek's Gift - Serenity",
-  StaneksGift4: "Stanek's Gift - Ascension",
 
   //Wasteland Augs
   //PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System

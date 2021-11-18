@@ -39,7 +39,7 @@ export function IssueDividendsModal(props: IProps): React.ReactElement {
     if (event.target.value === "") setPercent(0);
     else {
       let p = parseFloat(event.target.value);
-      if (p > 50) p = 50;
+      if (p > 100) p = 100;
       if (p < 0) p = 0;
       setPercent(p);
     }
@@ -53,15 +53,12 @@ export function IssueDividendsModal(props: IProps): React.ReactElement {
         <br />
         <br />
         In order to issue dividends, simply allocate some percentage of your corporation's profits to dividends. This
-        percentage must be an integer between 0 and 50. (A percentage of 0
-        means no dividends will be issued)
+        percentage must be an integer between 0 and 100. (A percentage of 0 means no dividends will be issued)
         <br />
         <br />
         Two important things to note:
         <br />
         * Issuing dividends will negatively affect your corporation's stock price
-        <br />
-        * Dividends are taxed. Taxes start at 50%, but can be decreased
         <br />
         <br />
         Example: Assume your corporation makes $100m / sec in profit and you allocate 40% of that towards dividends.

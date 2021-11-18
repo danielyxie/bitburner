@@ -12,6 +12,7 @@ import { GetServer } from "../Server/AllServers";
 import { compareArrays } from "../utils/helpers/compareArrays";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { AddRecentScript } from "./RecentScripts";
+import { Player } from "../Player";
 
 export function killWorkerScript(runningScriptObj: RunningScript, hostname: string, rerenderUi?: boolean): boolean;
 export function killWorkerScript(workerScript: WorkerScript): boolean;
@@ -110,8 +111,9 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void
   }
 
   // Recalculate ram used on that server
-  server.ramUsed = 0;
-  for (const rs of server.runningScripts) server.ramUsed += rs.ramUsage * rs.threads;
+
+  server.updateRamUsed(0, Player);
+  for (const rs of server.runningScripts) server.updateRamUsed(server.ramUsed + rs.ramUsage * rs.threads, Player);
 
   // Delete script from global pool (workerScripts)
   const res = workerScripts.delete(workerScript.pid);

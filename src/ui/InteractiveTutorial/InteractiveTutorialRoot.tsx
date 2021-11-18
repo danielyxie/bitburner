@@ -345,6 +345,10 @@ export function InteractiveTutorialRoot(): React.ReactElement {
             continuously hack the n00dles server.
             <br />
             <br />
+            If you're an intermediate programmer you should use ns2 instead. It is much faster and offers more
+            possibilities.
+            <br />
+            <br />
             To save and close the script editor, press the button in the bottom left, or press ctrl + b.
           </Typography>
         </>

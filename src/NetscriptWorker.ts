@@ -33,6 +33,7 @@ import { sprintf } from "sprintf-js";
 import { parse } from "acorn";
 import { simple as walksimple } from "acorn-walk";
 import { areFilesEqual } from "./Terminal/DirectoryHelpers";
+import { Player } from "./Player";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
@@ -491,7 +492,8 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
     );
     return false;
   }
-  server.ramUsed = roundToTwo(server.ramUsed + ramUsage);
+
+  server.updateRamUsed(roundToTwo(server.ramUsed + ramUsage), Player);
 
   // Get the pid
   const pid = generateNextPid();

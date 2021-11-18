@@ -1992,7 +1992,7 @@ export interface Singularity {
    *
    * @returns True if the installation was successful.
    */
-  installBackdoor(): Promise<boolean>;
+  installBackdoor(): Promise<void>;
 }
 
 /**
@@ -3731,7 +3731,7 @@ export interface NS extends Singularity {
    * @param growthAmount - Multiplicative factor by which the server is grown. Decimal form..
    * @returns The amount of grow calls needed to grow the specified server by the specified amount
    */
-  growthAnalyze(host: string, growthAmount: number): number;
+  growthAnalyze(host: string, growthAmount: number, cores?: number): number;
 
   /**
    * Calculate the security increase for a number of thread.

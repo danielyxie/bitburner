@@ -864,16 +864,16 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       break;
     }
     case 13: {
-      BitNodeMultipliers.DaedalusAugsRequirement = 100;
+      BitNodeMultipliers.DaedalusAugsRequirement = 1.5;
 
-      BitNodeMultipliers.PurchasedServerSoftcap = 2.2;
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.5;
 
-      BitNodeMultipliers.HackingLevelMultiplier = 0.4;
-      BitNodeMultipliers.StrengthLevelMultiplier = 0.4;
-      BitNodeMultipliers.DefenseLevelMultiplier = 0.4;
-      BitNodeMultipliers.DexterityLevelMultiplier = 0.4;
-      BitNodeMultipliers.AgilityLevelMultiplier = 0.4;
-      BitNodeMultipliers.CharismaLevelMultiplier = 0.4;
+      BitNodeMultipliers.HackingLevelMultiplier = 0.3;
+      BitNodeMultipliers.StrengthLevelMultiplier = 0.3;
+      BitNodeMultipliers.DefenseLevelMultiplier = 0.3;
+      BitNodeMultipliers.DexterityLevelMultiplier = 0.3;
+      BitNodeMultipliers.AgilityLevelMultiplier = 0.3;
+      BitNodeMultipliers.CharismaLevelMultiplier = 0.3;
 
       BitNodeMultipliers.ServerMaxMoney = 0.45;
       BitNodeMultipliers.ServerStartingMoney = 0.75;
@@ -892,19 +892,19 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.HackExpGain = 0.5;
       BitNodeMultipliers.CrimeExpGain = 0.5;
 
-      BitNodeMultipliers.FactionWorkRepGain = 0.4;
+      BitNodeMultipliers.FactionWorkRepGain = 0.6;
 
       BitNodeMultipliers.FourSigmaMarketDataCost = 10;
       BitNodeMultipliers.FourSigmaMarketDataApiCost = 10;
 
       BitNodeMultipliers.CorporationValuation = 0.001;
 
-      BitNodeMultipliers.BladeburnerRank = 0.2;
-      BitNodeMultipliers.BladeburnerSkillCost = 3;
-      BitNodeMultipliers.StaneksGiftPowerMultiplier = 1.2;
+      BitNodeMultipliers.BladeburnerRank = 0.45;
+      BitNodeMultipliers.BladeburnerSkillCost = 2;
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = 2;
       BitNodeMultipliers.StaneksGiftExtraSize = 1;
-      BitNodeMultipliers.GangSoftcap = 0.2;
-      BitNodeMultipliers.CorporationSoftCap = 0.2;
+      BitNodeMultipliers.GangSoftcap = 0.3;
+      BitNodeMultipliers.CorporationSoftCap = 0.3;
       break;
     }
     default:

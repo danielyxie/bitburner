@@ -169,20 +169,6 @@ export function SpecialLocation(props: IProps): React.ReactElement {
         {"    sNNo-.`.-omNy`           "}<br />
         {"     -smNNNNmdo-             "}<br />
         {"        `..`                 "}</Typography>
-    if (player.hasAugmentation(AugmentationNames.StaneksGift4, true)) {
-      return (
-        <>
-          <Typography>
-            <i>
-              Allison "Mother" Stanek: Are you ready my sweet innocent child? Are you ready to commune with the
-              MachineGod?
-            </i>
-          </Typography>
-          <Button onClick={() => router.toBitVerse(false, false)}>Commune</Button>
-          {symbol}
-        </>
-      );
-    }
     if (player.hasAugmentation(AugmentationNames.StaneksGift3, true)) {
       return (
         <>
