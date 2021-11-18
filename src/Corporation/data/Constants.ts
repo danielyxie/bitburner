@@ -50,7 +50,7 @@ export const CorporationConstants: {
 
   ProductProductionCostRatio: 5, //Ratio of material cost of a product to its production cost
 
-  DividendMaxPercentage: 0.5,
+  DividendMaxPercentage: 1,
 
   EmployeeSalaryMultiplier: 3, // Employee stats multiplied by this to determine initial salary
   CyclesPerEmployeeRaise: 400, // All employees get a raise every X market cycles
