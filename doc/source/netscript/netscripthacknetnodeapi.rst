@@ -29,7 +29,6 @@ In :ref:`netscriptjs`::
     :caption: Hacknet Nodes API Functions:
 
     numNodes() <hacknetnodeapi/numNodes>
-    maxNumNodes() <hacknetnodeapi/maxNumNodes>
     purchaseNode() <hacknetnodeapi/purchaseNode>
     getPurchaseNodeCost() <hacknetnodeapi/getPurchaseNodeCost>
     getNodeStats() <hacknetnodeapi/getNodeStats>
@@ -39,19 +38,6 @@ In :ref:`netscriptjs`::
     getLevelUpgradeCost() <hacknetnodeapi/getLevelUpgradeCost>
     getRamUpgradeCost() <hacknetnodeapi/getRamUpgradeCost>
     getCoreUpgradeCost() <hacknetnodeapi/getCoreUpgradeCost>
-
-.. toctree::
-    :caption: Hacknet Servers API Functions:
-
-    upgradeCache() <hacknetnodeapi/upgradeCache>
-    getCacheUpgradeCost() <hacknetnodeapi/getCacheUpgradeCost>
-    numHashes() <hacknetnodeapi/numHashes>
-    hashCapacity() <hacknetnodeapi/hashCapacity>
-    hashCost() <hacknetnodeapi/hashCost>
-    spendHashes() <hacknetnodeapi/spendHashes>
-    getHashUpgradeLevel() <hacknetnodeapi/getHashUpgradeLevel>
-    getTrainingMult() <hacknetnodeapi/getTrainingMult>
-    getStudyMult() <hacknetnodeapi/getStudyMult>
 
 .. _netscript_hacknetnodeapi_referencingahacknetnode:
 
