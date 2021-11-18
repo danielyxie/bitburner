@@ -42,7 +42,6 @@ export class StaneksGift implements IStaneksGift {
 
   process(p: IPlayer, numCycles = 1): void {
     if (!p.hasAugmentation(AugmentationNames.StaneksGift1)) return;
-    this.fragments.filter((f) => f.fragment().type !== FragmentType.Booster).forEach((f) => f.cool());
     this.storedCycles += numCycles;
     this.storedCycles -= 5;
     this.storedCycles = Math.max(0, this.storedCycles);

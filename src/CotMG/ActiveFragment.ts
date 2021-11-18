@@ -66,13 +66,6 @@ export class ActiveFragment {
       .map((cell) => [this.x + cell[0], this.y + cell[1]]);
   }
 
-  cool(): void {
-    this.numCharge = this.numCharge - Math.log(this.numCharge + 1) / (Math.log(50) * 10);
-    if (this.numCharge < 0) {
-      this.numCharge = 0;
-    }
-  }
-
   copy(): ActiveFragment {
     // We have to do a round trip because the constructor.
     const fragment = FragmentById(this.id);
