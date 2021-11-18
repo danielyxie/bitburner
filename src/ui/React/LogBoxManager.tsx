@@ -11,6 +11,9 @@ import { ResizableBox } from "react-resizable";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { workerScripts } from "../../Netscript/WorkerScripts";
+import { startWorkerScript } from "../../NetscriptWorker";
+import { GetServer } from "../../Server/AllServers";
 
 let layerCounter = 0;
 
@@ -21,28 +24,30 @@ interface Log {
   script: RunningScript;
 }
 
+let logs: Log[] = [];
+
 export function LogBoxManager(): React.ReactElement {
-  const [logs, setLogs] = useState<Log[]>([]);
+  const setRerender = useState(true)[1];
+  function rerender(): void {
+    setRerender((o) => !o);
+  }
   useEffect(
     () =>
       LogBoxEvents.subscribe((script: RunningScript) => {
         const id = script.server + "-" + script.filename + script.args.map((x: any): string => `${x}`).join("-");
         if (logs.find((l) => l.id === id)) return;
-        setLogs((old) => {
-          return [
-            ...old,
-            {
-              id: id,
-              script: script,
-            },
-          ];
+        logs.push({
+          id: id,
+          script: script,
         });
+        rerender();
       }),
     [],
   );
 
   function close(id: string): void {
-    setLogs((old) => old.filter((l) => l.id !== id));
+    logs = logs.filter((l) => l.id !== id);
+    rerender();
   }
 
   return (
@@ -87,7 +92,12 @@ function LogWindow(props: IProps): React.ReactElement {
 
   function kill(): void {
     killWorkerScript(props.script, props.script.server, true);
-    props.onClose();
+  }
+
+  function run(): void {
+    const server = GetServer(props.script.server);
+    if (server === null) return;
+    startWorkerScript(props.script, server);
   }
 
   function updateLayer(): void {
@@ -132,12 +142,13 @@ function LogWindow(props: IProps): React.ReactElement {
               </Typography>
 
               <Box position="absolute" right={0}>
-                <Button onClick={kill}>Kill Script</Button>
+                {!workerScripts.has(props.script.pid) && <Button onClick={run}>Run</Button>}
+                {workerScripts.has(props.script.pid) && <Button onClick={kill}>Kill</Button>}
                 <Button onClick={props.onClose}>Close</Button>
               </Box>
             </Box>
           </Paper>
-          <Paper sx={{ overflow: "scroll", overflowWrap: "break-word", whiteSpace: "pre-line" }}>
+          <Paper sx={{ overflow: "scroll", overflowWrap: "break-word", whiteSpace: "pre-wrap" }}>
             <ResizableBox
               className={classes.logs}
               height={500}

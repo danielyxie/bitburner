@@ -1,7 +1,7 @@
 import { evaluateDirectoryPath, getAllParentDirectories } from "./DirectoryHelpers";
 import { getSubdirectories } from "./DirectoryServerHelpers";
 
-import { Aliases, GlobalAliases } from "../Alias";
+import { Aliases, GlobalAliases, substituteAliases } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { GetServer, GetAllServers } from "../Server/AllServers";
@@ -58,6 +58,7 @@ export async function determineAllPossibilitiesForTabCompletion(
   index: number,
   currPath = "",
 ): Promise<string[]> {
+  input = substituteAliases(input);
   let allPos: string[] = [];
   allPos = allPos.concat(Object.keys(GlobalAliases));
   const currServ = p.getCurrentServer();
@@ -302,7 +303,7 @@ export async function determineAllPossibilitiesForTabCompletion(
     const script = currServ.scripts.find((script) => script.filename === filename);
     if (!script) return; // Doesn't exist.
     if (!script.module) {
-      compile(script, currServ.scripts);
+      await compile(script, currServ.scripts);
     }
     const loadedModule = await script.module;
     if (!loadedModule.autocomplete) return; // Doesn't have an autocomplete function.

@@ -16,10 +16,13 @@ import { use } from "../../ui/Context";
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
 
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
+import { CONSTANTS } from "../../Constants";
 
 type IProps = {
   faction: Faction;
@@ -176,7 +179,10 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       </>
     );
   }
-
+  const mult = Math.pow(
+    CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][player.sourceFileLvl(11)],
+    player.queuedAugmentations.length,
+  );
   return (
     <>
       <Button onClick={props.routeToMainPage}>Back</Button>
@@ -188,6 +194,18 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         Reputation: <Reputation reputation={props.faction.playerReputation} /> Favor:{" "}
         <Favor favor={props.faction.favor} />
       </Typography>
+      <Box display="flex">
+        <Tooltip
+          title={
+            <Typography>
+              The price of every Augmentation increases for every queued Augmentation and it is reset when you install
+              them.
+            </Typography>
+          }
+        >
+          <Typography>Price multiplier: x {mult.toFixed(3)}</Typography>
+        </Tooltip>
+      </Box>
       <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)}>Sort by Cost</Button>
       <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Reputation)}>Sort by Reputation</Button>
       <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Default)}>Sort by Default Order</Button>

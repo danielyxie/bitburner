@@ -12,6 +12,7 @@ import { isScriptFilename } from "../Script/isScriptFilename";
 
 import { createRandomIp } from "../utils/IPAddress";
 import { compareArrays } from "../utils/helpers/compareArrays";
+import { IPlayer } from "../PersonObjects/IPlayer";
 
 interface IConstructorParams {
   adminRights?: boolean;
@@ -243,6 +244,10 @@ export class BaseServer {
 
   setMaxRam(ram: number): void {
     this.maxRam = ram;
+  }
+
+  updateRamUsed(ram: number, player: IPlayer): void {
+    this.ramUsed = ram;
   }
 
   /**

@@ -225,7 +225,7 @@ export class Terminal implements ITerminal {
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
     const expGain = calculateHackingExpGain(server, player);
-    const growth = processSingleServerGrowth(server, 1, player, server.cpuCores) - 1;
+    const growth = processSingleServerGrowth(server, 25, player, server.cpuCores) - 1;
     this.print(
       `Available money on '${server.hostname}' grown by ${numeralWrapper.formatPercentage(
         growth,
