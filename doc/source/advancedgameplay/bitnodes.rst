@@ -32,7 +32,7 @@ Nodes are significantly less profitable. Servers have less money on them and low
 growth rates, but it is easier to lower their security level using the weaken() Netscript function.
 
 Furthermore, some BitNodes introduce new content and mechanics. For example there is one
-BitNode that grants access to the :ref:`Netscript Singularity Functions <netscript_singularityfunctions>`.
+BitNode that grants access to the `Singularity API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.singularity.md>`_.
 There is another BitNode in which you can manage a gang to earn money and reputation.
 
 How to destroy a BitNode

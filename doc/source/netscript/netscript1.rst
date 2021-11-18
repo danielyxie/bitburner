@@ -21,16 +21,12 @@ Which ES6+ features are supported?
 Netscript 1.0 is a ES5 interpreter, but the following features from versions ES6 and
 above are supported as well.
 
-If there is an additional ES6+ feature you would like to see implemented with a polyfill,
-feel free to `open an issue <https://github.com/danielyxie/bitburner/issues>`_ (and provide
-the polyfill if possible).
-
 * import - See :ref:`netscriptimporting`
 * `Array <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array>`_
-    * `find() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find>`_
-    * `findIndex() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex>`_
-    * `includes() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes>`_
+* `Array find() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find>`_
+* `Array findIndex() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex>`_
+* `Array includes() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes>`_
 * `String <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String>`_
-    * `endsWith() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith>`_
-    * `includes() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes>`_
-    * `startsWith() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith>`_
+* `String endsWith() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith>`_
+* `String includes() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes>`_
+* `String startsWith() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith>`_

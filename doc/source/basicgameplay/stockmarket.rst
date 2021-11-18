@@ -180,7 +180,7 @@ Working for a Company
 Automating the Stock Market
 ---------------------------
 You can write scripts to perform automatic and algorithmic trading on the Stock Market.
-See :ref:`netscript_tixapi` for more details.
+See `TIX API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.tix.md>`_ for more details.
 
 Under the Hood
 --------------

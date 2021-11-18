@@ -20,7 +20,8 @@ secrets that you've been searching for.
    :maxdepth: 5
    :caption: Contents:
 
-    Netscript <netscript>
+    Full documentation <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md>
+    Basic documentation <netscript>
     Basic Gameplay <basicgameplay>
     Advanced Gameplay <advancedgameplay>
     Keyboard Shortcuts <shortcuts>
@@ -29,6 +30,7 @@ secrets that you've been searching for.
     Tools & Resources <toolsandresources>
     Changelog <changelog>
     v1.0.0 script migration guide <v1.0.0_migration.rst>
+    404 <404.rst>
     Donate <https://paypal.me/danielyxie>
 
 Indices and tables

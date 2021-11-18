@@ -7,7 +7,7 @@ exchange for solving programming problems.
 
 Coding Contracts are files with the ".cct" extensions. They can
 be accessed through the :ref:`terminal`  or through scripts using
-the :ref:`netscriptcodingcontractapi`
+the `Coding Contract API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.codingcontract.md>`_
 
 Each contract has a limited number of attempts. If you
 provide the wrong answer too many times and exceed the
@@ -31,7 +31,7 @@ an area to provide an answer.
 
 Interacting through Scripts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-See :ref:`netscriptcodingcontractapi`.
+See the `Coding Contract API <https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.codingcontract.md>`_.
 
 Submitting Solutions
 ^^^^^^^^^^^^^^^^^^^^
