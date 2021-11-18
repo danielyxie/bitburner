@@ -295,12 +295,7 @@ function DividendsStats({ profit }: IDividendsStatsProps): React.ReactElement {
         ["Retained Profits (after dividends):", <MoneyRate money={retainedEarnings} />],
         ["Dividend Percentage:", numeralWrapper.format(corp.dividendPercentage / 100, "0%")],
         ["Dividends per share:", <MoneyRate money={dividendsPerShare} />],
-        ["Your earnings as a shareholder (Pre-Tax):", <MoneyRate money={corp.getDividends()} />],
-        ["Dividend Tax Rate:", <>{corp.dividendTaxPercentage}%</>],
-        [
-          "Your earnings as a shareholder (Post-Tax):",
-          <MoneyRate money={corp.getDividends() * (1 - corp.dividendTaxPercentage / 100)} />,
-        ],
+        ["Your earnings as a shareholder:", <MoneyRate money={corp.getDividends()} />],
       ]}
     />
   );

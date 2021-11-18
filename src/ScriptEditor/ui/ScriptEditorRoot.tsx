@@ -405,9 +405,17 @@ export function Root(props: IProps): React.ReactElement {
           {ram}
         </Typography>
         <Button onClick={save}>Save & Close (Ctrl/Cmd + b)</Button>
-        <Link sx={{ mx: 1 }} target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
-          <Typography> Netscript Documentation</Typography>
-        </Link>
+        <Typography sx={{ mx: 1 }}>
+          {" "}
+          Documentation:{" "}
+          <Link target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
+            Basic
+          </Link>{" "}
+          |
+          <Link target="_blank" href="https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md">
+            Full
+          </Link>
+        </Typography>
       </Box>
       <OptionsModal
         open={optionsOpen}

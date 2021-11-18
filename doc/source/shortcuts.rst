@@ -35,10 +35,6 @@ Alt + g    Switch to 'Gang' page
 Alt + b    Switch to 'Bladeburner' page
 ========== ===========================================================================
 
-Script Editor
--------------
-See the :ref:`Script Editor <scripteditors>` documentation for more details.
-
 Terminal Shortcuts
 ------------------
 These shortcuts are available only in the :ref:`terminal`

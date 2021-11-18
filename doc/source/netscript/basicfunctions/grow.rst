@@ -20,8 +20,7 @@ grow() Netscript Function
     server will be increased by a certain, fixed percentage. This percentage is
     determined by the target server's growth rate (which varies between servers)
     and security level. Generally, higher-level servers have higher growth
-    rates. The :doc:`getServerGrowth<getServerGrowth>` function can be used to
-    obtain a server's growth rate.
+    rates.
 
     Like :doc:`hack<hack>`, :doc:`grow<grow>` can be called on any server, from
     any server. The :doc:`grow<grow>` command requires root access to the target
