@@ -889,7 +889,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const server = safeGetServer(hostname, "exec");
       return runScriptFromScript("exec", server, scriptname, args, workerScript, threads);
     },
-    spawn: function (scriptname: any, threads: any, ...args: any[]): any {
+    spawn: function (scriptname: any, threads: any = 1, ...args: any[]): any {
       updateDynamicRam("spawn", getRamCost("spawn"));
       if (!scriptname || !threads) {
         throw makeRuntimeErrorMsg("spawn", "Usage: spawn(scriptname, threads)");
