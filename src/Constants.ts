@@ -293,8 +293,9 @@ export const CONSTANTS: {
 
     ** Misc. **
 
-    * scripts logs are colorized.
+    * scripts logs are colorized. Start your log with SUCCESS, ERROR, FAIL, WARN, INFO.
     * documentation for scp not say string | string[]
+    * Donation link updated.
     * nerf noodle bar
 `,
 };
