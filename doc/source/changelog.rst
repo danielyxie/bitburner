@@ -3,6 +3,21 @@
 Changelog
 =========
 
+v1.0.2 - 2021-11-17 It's the little things (hydroflame)
+-------------------------------------------------------
+
+** Breaking (very small I promise!) **
+
+* buy / sell now return getAskPrice / getBidPrice instead of just price. 
+  This should help solve some inconsistencies.
+
+** Misc. **
+
+* scripts logs are colorized. Start your log with SUCCESS, ERROR, FAIL, WARN, INFO.
+* documentation for scp not say string | string[]
+* Donation link updated.
+* nerf noodle bar
+
 v1.0.1 - 2021-11-17 New documentation (hydroflame)
 --------------------------------------------------
 

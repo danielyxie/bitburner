@@ -872,7 +872,6 @@ export function startFactionFieldWork(this: IPlayer, router: IRouter, faction: F
   this.workAgiExpGainRate = 0.1 * this.agility_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workChaExpGainRate = 0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
-  console.log(this.workRepGainRate);
 
   this.factionWorkType = CONSTANTS.FactionWorkField;
   this.currentWorkFactionDescription = "carrying out field missions";
@@ -907,7 +906,6 @@ export function workForFaction(this: IPlayer, numCycles: number): boolean {
       break;
     case CONSTANTS.FactionWorkField:
       this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
-      console.log(this.workRepGainRate);
       break;
     case CONSTANTS.FactionWorkSecurity:
       this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
@@ -1484,7 +1482,7 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
       if (this.committingCrimeThruSingFn && ws !== null) {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
-            "Crime successful! Gained " +
+            "SUCCESS: Crime successful! Gained " +
               numeralWrapper.formatMoney(this.workMoneyGained) +
               ", " +
               numeralWrapper.formatExp(this.workHackExpGained) +
@@ -1536,7 +1534,7 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
       if (this.committingCrimeThruSingFn && ws !== null) {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
-            "Crime failed! Gained " +
+            "FAIL: Crime failed! Gained " +
               numeralWrapper.formatExp(this.workHackExpGained) +
               " hack exp, " +
               numeralWrapper.formatExp(this.workStrExpGained) +

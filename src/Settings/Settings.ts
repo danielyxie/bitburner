@@ -106,6 +106,9 @@ interface IDefaultSettings {
     primarylight: string;
     primary: string;
     primarydark: string;
+    successlight: string;
+    success: string;
+    successdark: string;
     errorlight: string;
     error: string;
     errordark: string;
@@ -182,6 +185,9 @@ export const defaultSettings: IDefaultSettings = {
     primarylight: "#0f0",
     primary: "#0c0",
     primarydark: "#090",
+    successlight: "#0f0",
+    success: "#0c0",
+    successdark: "#090",
     errorlight: "#f00",
     error: "#c00",
     errordark: "#900",
@@ -246,6 +252,9 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     primarylight: defaultSettings.theme.primarylight,
     primary: defaultSettings.theme.primary,
     primarydark: defaultSettings.theme.primarydark,
+    successlight: defaultSettings.theme.successlight,
+    success: defaultSettings.theme.success,
+    successdark: defaultSettings.theme.successdark,
     errorlight: defaultSettings.theme.errorlight,
     error: defaultSettings.theme.error,
     errordark: defaultSettings.theme.errordark,
