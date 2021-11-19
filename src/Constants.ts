@@ -115,8 +115,8 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  VersionString: "1.0.1",
-  VersionNumber: 4,
+  VersionString: "1.0.2",
+  VersionNumber: 5,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -283,55 +283,17 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v1.0.1 - 2021-11-17 New documentation (hydroflame)
-    --------------------------------------------------
+    v1.0.2 - 2021-11-17 It's the little things (hydroflame)
+    -------------------------------------------------------
 
-    ** Documentation **
+    ** Breaking (very small I promise!) **
 
-    * The new documentation for the netscript API is available at
-      https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md
-      This documentation is used in-game to validate the code, in-editor to autocomplete, and
-      for users to reference. This is a huge quality of life improvements for me.
-
-    ** Reputation **
-
-    * Fixed favor not affecting faction work reputation gain (Yeah, I know right?)
-
-    ** Hacknet **
-
-    * Servers are now considerd "purchasedByPlayers"
-
-    ** Script Editor **
-
-    * solarized themes now work.
-
-    ** Corporation ** 
-
-    * Dividends are now much more taxed.
-    * The 2 upgrades that reduced taxes are now much stronger.
+    * buy / sell now return getAskPrice / getBidPrice instead of just price. 
+      This should help solve some inconsistencies.
 
     ** Misc. **
 
-    * Starting / Stopping scripts on hashnet servers immediately updates their hash rate (instead of on the next tick)
-    * Hacknet has tooltip showing what the result of the upgrade would be.
-    * Augmentations page displayes current price multiplier as well as explains the mechanic.
-    * Terminal now is 25x stronger.
-    * Tail boxes use pre-wrap for it's lines.
-    * Tail boxes allow you to rerun dead scripts.
-    * Tail boxes can no longer open the same one twice.
-    * Terminal now autocompletes through aliases.
-    * Make alter reality harder.
-    * Fix bladeburner cancelling actions when manually starting anything with Simulacrum.
-    * Buying hash upgrade to increase uni class or gym training will apply to current class.
-    * Internally the game no longer uses the decimal library.
-    * Fix an issue where 'download *' would generate weird windows files.
-    * Timestamps can be set to any format in the options.
-    * Fix typo in documentation share popup.
-    * Remove bunch of debug log.
-    * Fix typo in corporation handbook literature.
-    * Fix typo in documentation
-    * Fix duplicate SF -1 exploit. (Yeah, an exploit of exploits, now were meta)
-    * Fix offline hacking earning being attributed to hacknet.
+    * documentation for scp not say string | string[]
     * nerf noodle bar
 `,
 };
