@@ -670,10 +670,45 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (args.length === 0) {
         throw makeRuntimeErrorMsg("tprint", "Takes at least 1 argument.");
       }
-      Terminal.print(`${workerScript.scriptRef.filename}: ${argsToString(args)}`);
+      const str = argsToString(args);
+      if (str.startsWith("ERROR") || str.startsWith("FAIL")) {
+        Terminal.error(`${workerScript.scriptRef.filename}: ${str}`);
+        return;
+      }
+      if (str.startsWith("SUCCESS")) {
+        Terminal.success(`${workerScript.scriptRef.filename}: ${str}`);
+        return;
+      }
+      if (str.startsWith("WARN")) {
+        Terminal.warn(`${workerScript.scriptRef.filename}: ${str}`);
+        return;
+      }
+      if (str.startsWith("INFO")) {
+        Terminal.info(`${workerScript.scriptRef.filename}: ${str}`);
+        return;
+      }
+      Terminal.print(`${workerScript.scriptRef.filename}: ${str}`);
     },
     tprintf: function (format: any, ...args: any): any {
-      Terminal.print(vsprintf(format, args));
+      const str = vsprintf(format, args);
+
+      if (str.startsWith("ERROR") || str.startsWith("FAIL")) {
+        Terminal.error(`${workerScript.scriptRef.filename}: ${str}`);
+        return;
+      }
+      if (str.startsWith("SUCCESS")) {
+        Terminal.success(`${workerScript.scriptRef.filename}: ${str}`);
+        return;
+      }
+      if (str.startsWith("WARN")) {
+        Terminal.warn(`${workerScript.scriptRef.filename}: ${str}`);
+        return;
+      }
+      if (str.startsWith("INFO")) {
+        Terminal.info(`${workerScript.scriptRef.filename}: ${str}`);
+        return;
+      }
+      Terminal.print(`${workerScript.scriptRef.filename}: ${str}`);
     },
     clearLog: function (): any {
       workerScript.scriptRef.clearLog();

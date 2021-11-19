@@ -133,6 +133,27 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
       />
 
       <br />
+
+      <ColorEditor
+        name="successlight"
+        onColorChange={onColorChange}
+        color={customTheme["successlight"]}
+        defaultColor={defaultSettings.theme["successlight"]}
+      />
+      <ColorEditor
+        name="success"
+        onColorChange={onColorChange}
+        color={customTheme["success"]}
+        defaultColor={defaultSettings.theme["success"]}
+      />
+      <ColorEditor
+        name="successdark"
+        onColorChange={onColorChange}
+        color={customTheme["successdark"]}
+        defaultColor={defaultSettings.theme["successdark"]}
+      />
+
+      <br />
       <ColorEditor
         name="errorlight"
         onColorChange={onColorChange}

@@ -293,6 +293,7 @@ export const CONSTANTS: {
 
     ** Misc. **
 
+    * scripts logs are colorized.
     * documentation for scp not say string | string[]
     * nerf noodle bar
 `,
