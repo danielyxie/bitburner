@@ -3,6 +3,7 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
+import { getDestinationFilepath, areFilesEqual } from "../DirectoryHelpers";
 
 export function cp(
   terminal: ITerminal,
@@ -16,9 +17,23 @@ export function cp(
       terminal.error("Incorrect usage of cp command. Usage: cp [src] [dst]");
       return;
     }
-    const src = args[0] + "";
-    const dst = args[1] + "";
-    if (src === dst) {
+    // Convert a relative path source file to the absolute path.
+    const src = terminal.getFilepath(args[0] + "");
+    if (src === null) {
+      terminal.error("src cannot be a directory");
+      return;
+    }
+
+    // Get the destination based on the source file and the current directory
+    const t_dst = getDestinationFilepath(args[1] + "", src, terminal.cwd());
+    if (t_dst === null) {
+      terminal.error("error parsing dst file");
+      return;
+    }
+
+    // Convert a relative path destination file to the absolute path.
+    const dst = terminal.getFilepath(t_dst);
+    if (areFilesEqual(src, dst)) {
       terminal.error("src and dst cannot be the same");
       return;
     }
@@ -50,7 +65,7 @@ export function cp(
 
       const tRes = server.writeToTextFile(dst, txtFile.text);
       if (!tRes.success) {
-        terminal.error("scp failed");
+        terminal.error("cp failed");
         return;
       }
       if (tRes.overwritten) {
@@ -71,13 +86,13 @@ export function cp(
       }
     }
     if (sourceScript == null) {
-      terminal.error("cp() failed. No such script exists");
+      terminal.error("cp failed. No such script exists");
       return;
     }
 
     const sRes = server.writeToScriptFile(dst, sourceScript.code);
     if (!sRes.success) {
-      terminal.error(`scp failed`);
+      terminal.error(`cp failed`);
       return;
     }
     if (sRes.overwritten) {

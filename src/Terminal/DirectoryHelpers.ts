@@ -170,6 +170,45 @@ export function getAllParentDirectories(path: string): string {
 }
 
 /**
+ * Given a destination that only contains a directory part, returns the
+ * path to the source filename inside the new destination directory.
+ * Otherwise, returns the path to the destination file.
+ * @param destination The destination path or file name
+ * @param source The source path
+ * @param cwd The current working directory
+ * @returns A file path which may be absolute or relative
+ */
+export function getDestinationFilepath(destination: string, source: string, cwd: string) {
+  const dstDir = evaluateDirectoryPath(destination, cwd);
+  // If evaluating the directory for this destination fails, we have a filename or full path.
+  if (dstDir === null) {
+    return destination;
+  } else {
+    // Append the filename to the directory provided.
+    let t_path = removeTrailingSlash(dstDir);
+    const fileName = getFileName(source);
+    return t_path + "/" + fileName;
+  }
+}
+
+/**
+ * Given a filepath, returns the file name (e.g. without directory parts)
+ * For example:
+ * /home/var/test.js -> test.js
+ * ./var/test.js -> test.js
+ * test.js -> test.js
+ */
+export function getFileName(path: string): string {
+  const t_path = path;
+  const lastSlash = t_path.lastIndexOf("/");
+  if (lastSlash === -1) {
+    return t_path;
+  }
+
+  return t_path.slice(lastSlash + 1);
+}
+
+/**
  * Checks if a file path refers to a file in the root directory.
  */
 export function isInRootDirectory(path: string): boolean {
