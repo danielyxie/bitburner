@@ -113,6 +113,18 @@ export class Terminal implements ITerminal {
     this.append(new Output(s, "error"));
   }
 
+  success(s: string): void {
+    this.append(new Output(s, "success"));
+  }
+
+  info(s: string): void {
+    this.append(new Output(s, "info"));
+  }
+
+  warn(s: string): void {
+    this.append(new Output(s, "warn"));
+  }
+
   startHack(player: IPlayer): void {
     // Hacking through Terminal should be faster than hacking through a script
     const server = player.getCurrentServer();

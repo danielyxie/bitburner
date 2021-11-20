@@ -127,7 +127,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       checkTixApiAccess("buy");
       const stock = getStockFromSymbol(symbol, "buy");
       const res = buyStock(stock, shares, workerScript, {});
-      return res ? stock.price : 0;
+      return res ? stock.getAskPrice() : 0;
     },
     sell: function (symbol: any, shares: any): any {
       helper.updateDynamicRam("sell", getRamCost("stock", "sell"));
@@ -135,7 +135,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       const stock = getStockFromSymbol(symbol, "sell");
       const res = sellStock(stock, shares, workerScript, {});
 
-      return res ? stock.price : 0;
+      return res ? stock.getBidPrice() : 0;
     },
     short: function (symbol: any, shares: any): any {
       helper.updateDynamicRam("short", getRamCost("stock", "short"));

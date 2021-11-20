@@ -14,6 +14,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { workerScripts } from "../../Netscript/WorkerScripts";
 import { startWorkerScript } from "../../NetscriptWorker";
 import { GetServer } from "../../Server/AllServers";
+import { Theme } from "@mui/material";
 
 let layerCounter = 0;
 
@@ -65,7 +66,7 @@ interface IProps {
   onClose: () => void;
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     logs: {
       overflowY: "scroll",
@@ -73,6 +74,21 @@ const useStyles = makeStyles(() =>
       scrollbarWidth: "auto",
       display: "flex",
       flexDirection: "column-reverse",
+    },
+    success: {
+      color: theme.colors.success,
+    },
+    error: {
+      color: theme.palette.error.main,
+    },
+    primary: {
+      color: theme.palette.primary.main,
+    },
+    info: {
+      color: theme.palette.info.main,
+    },
+    warning: {
+      color: theme.palette.warning.main,
     },
   }),
 );
@@ -115,6 +131,22 @@ function LogWindow(props: IProps): React.ReactElement {
       return t;
     }
     return t.slice(0, maxLength - 3) + "...";
+  }
+
+  function lineClass(s: string): string {
+    if (s.startsWith("ERROR") || s.startsWith("FAIL")) {
+      return classes.error;
+    }
+    if (s.startsWith("SUCCESS")) {
+      return classes.success;
+    }
+    if (s.startsWith("WARN")) {
+      return classes.warning;
+    }
+    if (s.startsWith("INFO")) {
+      return classes.info;
+    }
+    return classes.primary;
   }
 
   return (
@@ -162,7 +194,7 @@ function LogWindow(props: IProps): React.ReactElement {
               <Box>
                 {props.script.logs.map(
                   (line: string, i: number): JSX.Element => (
-                    <Typography key={i}>
+                    <Typography key={i} className={lineClass(line)}>
                       {line}
                       <br />
                     </Typography>

@@ -493,6 +493,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                     }}
                     value={timestampFormat}
                     onChange={handleTimestampFormatChange}
+                    placeholder="yyyy-MM-dd hh:mm:ss"
                   />
                 </span>
               </Tooltip>

@@ -8,11 +8,8 @@ import { formatTime } from "../utils/helpers/formatTime";
 
 export class Output {
   text: string;
-  color: "inherit" | "initial" | "primary" | "secondary" | "error" | "textPrimary" | "textSecondary" | undefined;
-  constructor(
-    text: string,
-    color: "inherit" | "initial" | "primary" | "secondary" | "error" | "textPrimary" | "textSecondary" | undefined,
-  ) {
+  color: "primary" | "error" | "success" | "info" | "warn";
+  constructor(text: string, color: "primary" | "error" | "success" | "info" | "warn") {
     if (Settings.TimestampsFormat) text = "[" + formatTime(Settings.TimestampsFormat) + "] " + text;
     this.text = text;
     this.color = color;
@@ -72,6 +69,9 @@ export interface ITerminal {
   print(s: string): void;
   printRaw(node: React.ReactNode): void;
   error(s: string): void;
+  success(s: string): void;
+  info(s: string): void;
+  warn(s: string): void;
 
   clear(): void;
   startAnalyze(): void;

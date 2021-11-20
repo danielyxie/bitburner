@@ -43,6 +43,37 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(0),
       height: "100%",
     },
+
+    success: {
+      whiteSpace: "pre-wrap",
+      overflowWrap: "anywhere",
+      margin: theme.spacing(0),
+      color: theme.colors.success,
+    },
+    error: {
+      whiteSpace: "pre-wrap",
+      overflowWrap: "anywhere",
+      margin: theme.spacing(0),
+      color: theme.palette.error.main,
+    },
+    primary: {
+      whiteSpace: "pre-wrap",
+      overflowWrap: "anywhere",
+      margin: theme.spacing(0),
+      color: theme.palette.primary.main,
+    },
+    info: {
+      whiteSpace: "pre-wrap",
+      overflowWrap: "anywhere",
+      margin: theme.spacing(0),
+      color: theme.palette.info.main,
+    },
+    warning: {
+      whiteSpace: "pre-wrap",
+      overflowWrap: "anywhere",
+      margin: theme.spacing(0),
+      color: theme.palette.warning.main,
+    },
   }),
 );
 
@@ -80,6 +111,23 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
     setTimeout(doScroll, 50);
   }, []);
 
+  function lineClass(s: string): string {
+    if (s === "error") {
+      return classes.error;
+    }
+    if (s === "success") {
+      return classes.success;
+    }
+    if (s === "info") {
+      return classes.info;
+    }
+    if (s === "warn") {
+      return classes.warning;
+    }
+
+    return classes.primary;
+  }
+
   const classes = useStyles();
   return (
     <>
@@ -89,7 +137,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
             if (item instanceof Output)
               return (
                 <ListItem key={i} classes={{ root: classes.nopadding }}>
-                  <Typography classes={{ root: classes.preformatted }} color={item.color} paragraph={false}>
+                  <Typography classes={{ root: lineClass(item.color) }} paragraph={false}>
                     {item.text}
                   </Typography>
                 </ListItem>

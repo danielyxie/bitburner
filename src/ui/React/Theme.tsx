@@ -18,6 +18,9 @@ declare module "@mui/material/styles" {
       backgroundprimary: React.CSSProperties["color"];
       backgroundsecondary: React.CSSProperties["color"];
       button: React.CSSProperties["color"];
+      successlight: React.CSSProperties["color"];
+      success: React.CSSProperties["color"];
+      successdark: React.CSSProperties["color"];
     };
   }
   interface ThemeOptions {
@@ -32,6 +35,9 @@ declare module "@mui/material/styles" {
       backgroundprimary: React.CSSProperties["color"];
       backgroundsecondary: React.CSSProperties["color"];
       button: React.CSSProperties["color"];
+      successlight: React.CSSProperties["color"];
+      success: React.CSSProperties["color"];
+      successdark: React.CSSProperties["color"];
     };
   }
 }
@@ -51,6 +57,9 @@ export function refreshTheme(): void {
       backgroundprimary: Settings.theme.backgroundprimary,
       backgroundsecondary: Settings.theme.backgroundsecondary,
       button: Settings.theme.button,
+      successlight: Settings.theme.successlight,
+      success: Settings.theme.success,
+      successdark: Settings.theme.successdark,
     },
     palette: {
       primary: {
