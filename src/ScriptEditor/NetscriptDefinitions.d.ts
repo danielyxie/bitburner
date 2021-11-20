@@ -3664,9 +3664,10 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0 GB
    *
+   * @param format - format of the message
    * @param msg - Value to be printed.
    */
-  tprintf(msg: any): void;
+  tprintf(format: string, ...values: any[]): void;
 
   /**
    * Clears the script’s logs.

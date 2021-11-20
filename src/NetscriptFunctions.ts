@@ -690,6 +690,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       Terminal.print(`${workerScript.scriptRef.filename}: ${str}`);
     },
     tprintf: function (format: any, ...args: any): any {
+      if (typeof format !== "string") {
+        throw makeRuntimeErrorMsg("tprintf", "First argument must be string for the format.");
+      }
       const str = vsprintf(format, args);
 
       if (str.startsWith("ERROR") || str.startsWith("FAIL")) {
