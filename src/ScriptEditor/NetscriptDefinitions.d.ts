@@ -2799,7 +2799,7 @@ export interface CodingContract {
    * @param opts - Optional parameters for configuring function behavior.
    * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
    */
-  attempt(answer: string[] | number, fn: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
+  attempt(answer: string[] | number, filename: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
 
   /**
    * Get the type of a coding contract.
@@ -2813,7 +2813,7 @@ export interface CodingContract {
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Name describing the type of problem posed by the Coding Contract.
    */
-  getContractType(fn: string, host?: string): string;
+  getContractType(filename: string, host?: string): string;
 
   /**
    * Get the description.
@@ -2826,7 +2826,7 @@ export interface CodingContract {
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Contract’s text description.
    */
-  getDescription(fn: string, host?: string): string;
+  getDescription(filename: string, host?: string): string;
 
   /**
    * Get the input data.
@@ -2837,11 +2837,11 @@ export interface CodingContract {
    * Note that this is not the same as the contract’s description.
    * This is just the data that the contract wants you to act on in order to solve
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns The specified contract’s data;
    */
-  getData(fn: string, host?: string): string;
+  getData(filename: string, host?: string): string;
 
   /**
    * Get the number of attempt remaining.
@@ -2854,7 +2854,7 @@ export interface CodingContract {
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns How many attempts are remaining for the contract;
    */
-  getNumTriesRemaining(fn: string, host?: string): number;
+  getNumTriesRemaining(filename: string, host?: string): number;
 }
 
 /**
@@ -4416,7 +4416,7 @@ export interface NS extends Singularity {
    * RAM cost: 0.3 GB
    * @returns info about a running script
    */
-  getRunningScript(fn: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
+  getRunningScript(filename: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
 
   /**
    * Get cost of purchasing a server.

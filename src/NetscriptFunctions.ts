@@ -696,22 +696,22 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const str = vsprintf(format, args);
 
       if (str.startsWith("ERROR") || str.startsWith("FAIL")) {
-        Terminal.error(`${workerScript.scriptRef.filename}: ${str}`);
+        Terminal.error(`${str}`);
         return;
       }
       if (str.startsWith("SUCCESS")) {
-        Terminal.success(`${workerScript.scriptRef.filename}: ${str}`);
+        Terminal.success(`${str}`);
         return;
       }
       if (str.startsWith("WARN")) {
-        Terminal.warn(`${workerScript.scriptRef.filename}: ${str}`);
+        Terminal.warn(`${str}`);
         return;
       }
       if (str.startsWith("INFO")) {
-        Terminal.info(`${workerScript.scriptRef.filename}: ${str}`);
+        Terminal.info(`${str}`);
         return;
       }
-      Terminal.print(`${workerScript.scriptRef.filename}: ${str}`);
+      Terminal.print(`${str}`);
     },
     clearLog: function (): any {
       workerScript.scriptRef.clearLog();
