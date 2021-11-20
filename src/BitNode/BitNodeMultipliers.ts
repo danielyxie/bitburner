@@ -227,6 +227,11 @@ interface IBitNodeMultipliers {
    */
   StaneksGiftExtraSize: number;
 
+  /**
+   * Influences the hacking skill required to backdoor the world daemon.
+   */
+  WorldDaemonDifficulty: number;
+
   // Index signature
   [key: string]: number;
 }
@@ -295,4 +300,6 @@ export const BitNodeMultipliers: IBitNodeMultipliers = {
 
   StaneksGiftPowerMultiplier: 1,
   StaneksGiftExtraSize: 0,
+
+  WorldDaemonDifficulty: 1,
 };

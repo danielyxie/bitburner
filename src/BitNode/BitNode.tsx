@@ -864,8 +864,6 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       break;
     }
     case 13: {
-      BitNodeMultipliers.DaedalusAugsRequirement = 1.5;
-
       BitNodeMultipliers.PurchasedServerSoftcap = 1.5;
 
       BitNodeMultipliers.HackingLevelMultiplier = 0.3;
@@ -905,6 +903,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.StaneksGiftExtraSize = 1;
       BitNodeMultipliers.GangSoftcap = 0.3;
       BitNodeMultipliers.CorporationSoftCap = 0.3;
+      BitNodeMultipliers.WorldDaemonDifficulty = 2.5;
       break;
     }
     default:
