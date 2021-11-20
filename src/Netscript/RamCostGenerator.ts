@@ -286,7 +286,7 @@ export const RamCosts: IMap<any> = {
     getTeamSize: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     setTeamSize: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     getCityEstimatedPopulation: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
-    getCityEstimatedCommunities: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
+    getCityCommunities: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     getCityChaos: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     getCity: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
     switchCity: RamCostConstants.ScriptBladeburnerApiBaseRamCost,
