@@ -9,14 +9,14 @@ Get the input data.
 <b>Signature:</b>
 
 ```typescript
-getData(fn: string, host?: string): string;
+getData(filename: string, host?: string): string;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  fn | string | Filename of the contract. |
+|  filename | string | Filename of the contract. |
 |  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>

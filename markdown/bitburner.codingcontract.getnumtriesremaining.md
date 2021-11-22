@@ -9,14 +9,14 @@ Get the number of attempt remaining.
 <b>Signature:</b>
 
 ```typescript
-getNumTriesRemaining(fn: string, host?: string): number;
+getNumTriesRemaining(filename: string, host?: string): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  fn | string | Filename of the contract. |
+|  filename | string |  |
 |  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>

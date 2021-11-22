@@ -192,7 +192,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         powerful upgrades that will enhance your abilities.
         <br />
         Reputation: <Reputation reputation={props.faction.playerReputation} /> Favor:{" "}
-        <Favor favor={props.faction.favor} />
+        <Favor favor={Math.floor(props.faction.favor)} />
       </Typography>
       <Box display="flex">
         <Tooltip

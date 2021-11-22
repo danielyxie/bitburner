@@ -22,7 +22,7 @@ interface IServerProps {
 
 function ServerAccordion(props: IServerProps): React.ReactElement {
   const server = GetServer(props.hostname);
-  if (server === null) throw new Error("server should not be null");
+  if (server === null) throw new Error(`server '${props.hostname}' should not be null`);
   let totalSize = 0;
   for (const f of server.scripts) {
     totalSize += f.code.length;
@@ -100,8 +100,8 @@ interface IProps {
 
 export function FileDiagnosticModal(props: IProps): React.ReactElement {
   const keys: string[] = [];
-  for (const key in GetAllServers()) {
-    keys.push(key);
+  for (const key of GetAllServers()) {
+    keys.push(key.hostname);
   }
 
   return (

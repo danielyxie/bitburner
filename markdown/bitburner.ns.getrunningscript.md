@@ -9,14 +9,14 @@ Get general info about a running script.
 <b>Signature:</b>
 
 ```typescript
-getRunningScript(fn: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
+getRunningScript(filename: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  fn | string \| number |  |
+|  filename | string \| number |  |
 |  hostname | string |  |
 |  args | (string \| number)\[\] |  |
 

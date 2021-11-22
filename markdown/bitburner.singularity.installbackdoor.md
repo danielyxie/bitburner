@@ -9,11 +9,11 @@ Run the backdoor command in the terminal.
 <b>Signature:</b>
 
 ```typescript
-installBackdoor(): Promise<boolean>;
+installBackdoor(): Promise<void>;
 ```
 <b>Returns:</b>
 
-Promise&lt;boolean&gt;
+Promise&lt;void&gt;
 
 True if the installation was successful.
 
