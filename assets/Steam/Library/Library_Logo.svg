@@ -31,9 +31,9 @@
      inkscape:window-width="2405"
      inkscape:window-height="1224"
      inkscape:window-x="122"
-     inkscape:window-y="32"
+     inkscape:window-y="23"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer1">
+     inkscape:current-layer="layer6">
     <inkscape:grid
        type="xygrid"
        id="grid5128" />
@@ -43,15 +43,7 @@
   <g
      inkscape:groupmode="layer"
      id="layer6"
-     inkscape:label="Layer 2">
-    <rect
-       style="fill:#000000;stroke-width:0.141;fill-opacity:1"
-       id="rect5130"
-       width="338.66666"
-       height="190.5"
-       x="0"
-       y="0" />
-  </g>
+     inkscape:label="Layer 2" />
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
