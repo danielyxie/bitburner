@@ -9,19 +9,14 @@ Copy file between servers.
 <b>Signature:</b>
 
 ```typescript
-scp(
-    files: string[],
-    source: string,
-    // tslint:disable-next-line:unified-signatures
-    destination: string,
-  ): Promise<boolean>;
+scp(files: string | string[], source: string, destination: string): Promise<boolean>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  files | string\[\] | Filename or an array of filenames of script/literature files to copy. |
+|  files | string \| string\[\] | Filename or an array of filenames of script/literature files to copy. |
 |  source | string | Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server. |
 |  destination | string | Host of the destination server, which is the server to which the file will be copied. |
 

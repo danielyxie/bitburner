@@ -9,7 +9,7 @@ Attemps a coding contract.
 <b>Signature:</b>
 
 ```typescript
-attempt(answer: string[] | number, fn: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
+attempt(answer: string[] | number, filename: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ attempt(answer: string[] | number, fn: string, host?: string, opts?: CodingAttem
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  answer | string\[\] \| number | Solution for the contract. |
-|  fn | string | Filename of the contract. |
+|  filename | string |  |
 |  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 |  opts | [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Optional parameters for configuring function behavior. |
 

@@ -756,7 +756,7 @@ export declare interface CodingContract {
      * @param opts - Optional parameters for configuring function behavior.
      * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
      */
-    attempt(answer: string[] | number, fn: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
+    attempt(answer: string[] | number, filename: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
 
     /**
      * Get the type of a coding contract.
@@ -770,7 +770,7 @@ export declare interface CodingContract {
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns Name describing the type of problem posed by the Coding Contract.
      */
-    getContractType(fn: string, host?: string): string;
+    getContractType(filename: string, host?: string): string;
 
     /**
      * Get the description.
@@ -783,7 +783,7 @@ export declare interface CodingContract {
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns Contract’s text description.
      */
-    getDescription(fn: string, host?: string): string;
+    getDescription(filename: string, host?: string): string;
 
     /**
      * Get the input data.
@@ -794,11 +794,11 @@ export declare interface CodingContract {
      * Note that this is not the same as the contract’s description.
      * This is just the data that the contract wants you to act on in order to solve
      *
-     * @param fn - Filename of the contract.
+     * @param filename - Filename of the contract.
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns The specified contract’s data;
      */
-    getData(fn: string, host?: string): string;
+    getData(filename: string, host?: string): string;
 
     /**
      * Get the number of attempt remaining.
@@ -811,7 +811,7 @@ export declare interface CodingContract {
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns How many attempts are remaining for the contract;
      */
-    getNumTriesRemaining(fn: string, host?: string): number;
+    getNumTriesRemaining(filename: string, host?: string): number;
 }
 
 /**
@@ -1962,7 +1962,7 @@ export declare interface NS extends Singularity {
      * @param growthAmount - Multiplicative factor by which the server is grown. Decimal form..
      * @returns The amount of grow calls needed to grow the specified server by the specified amount
      */
-    growthAnalyze(host: string, growthAmount: number): number;
+    growthAnalyze(host: string, growthAmount: number, cores?: number): number;
 
     /**
      * Calculate the security increase for a number of thread.
@@ -2019,9 +2019,10 @@ export declare interface NS extends Singularity {
      * @remarks
      * RAM cost: 0 GB
      *
+     * @param format - format of the message
      * @param msg - Value to be printed.
      */
-    tprintf(msg: any): void;
+    tprintf(format: string, ...values: any[]): void;
 
     /**
      * Clears the script’s logs.
@@ -2424,12 +2425,7 @@ export declare interface NS extends Singularity {
      * @param destination - Host of the destination server, which is the server to which the file will be copied.
      * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
      */
-    scp(
-    files: string[],
-    source: string,
-    // tslint:disable-next-line:unified-signatures
-    destination: string,
-    ): Promise<boolean>;
+    scp(files: string | string[], source: string, destination: string): Promise<boolean>;
 
     /**
      * List files on a server.
@@ -2775,7 +2771,7 @@ export declare interface NS extends Singularity {
      * RAM cost: 0.3 GB
      * @returns info about a running script
      */
-    getRunningScript(fn: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
+    getRunningScript(filename: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
 
     /**
      * Get cost of purchasing a server.
@@ -4329,7 +4325,7 @@ export declare interface Singularity {
      *
      * @returns True if the installation was successful.
      */
-    installBackdoor(): Promise<boolean>;
+    installBackdoor(): Promise<void>;
 }
 
 /**
