@@ -190,56 +190,62 @@ export class Gang {
     }
 
     // Then process territory
-    for (let i = 0; i < GangConstants.Names.length; ++i) {
-      const others = GangConstants.Names.filter((e) => {
-        return e !== GangConstants.Names[i];
-      });
-      const other = getRandomInt(0, others.length - 1);
+    const gangs = GangConstants.Names.filter((g) => AllGangs[g].territory > 0);
+    if (gangs.length > 1) {
+      for (let i = 0; i < gangs.length; ++i) {
+        const others = gangs.filter((e) => {
+          return e !== gangs[i];
+        });
+        const other = getRandomInt(0, others.length - 1);
 
-      const thisGang = GangConstants.Names[i];
-      const otherGang = others[other];
+        const thisGang = gangs[i];
+        const otherGang = others[other];
 
-      // If either of the gangs involved in this clash is the player, determine
-      // whether to skip or process it using the clash chance
-      if (thisGang === gangName || otherGang === gangName) {
-        if (!(Math.random() < this.territoryClashChance)) continue;
-      }
-
-      const thisPwr = AllGangs[thisGang].power;
-      const otherPwr = AllGangs[otherGang].power;
-      const thisChance = thisPwr / (thisPwr + otherPwr);
-
-      function calculateTerritoryGain(winGang: string, loseGang: string): number {
-        const powerBonus = Math.max(1, 1 + Math.log(AllGangs[winGang].power / AllGangs[loseGang].power) / Math.log(50));
-        const gains = Math.min(AllGangs[loseGang].territory, powerBonus * 0.0001 * (Math.random() + 0.5));
-        return gains;
-      }
-
-      if (Math.random() < thisChance) {
-        if (AllGangs[otherGang].territory <= 0) return;
-        const territoryGain = calculateTerritoryGain(thisGang, otherGang);
-        AllGangs[thisGang].territory += territoryGain;
-        AllGangs[otherGang].territory -= territoryGain;
-        if (thisGang === gangName) {
-          this.clash(true); // Player won
-          AllGangs[otherGang].power *= 1 / 1.01;
-        } else if (otherGang === gangName) {
-          this.clash(false); // Player lost
-        } else {
-          AllGangs[otherGang].power *= 1 / 1.01;
+        // If either of the gangs involved in this clash is the player, determine
+        // whether to skip or process it using the clash chance
+        if (thisGang === gangName || otherGang === gangName) {
+          if (!(Math.random() < this.territoryClashChance)) continue;
         }
-      } else {
-        if (AllGangs[thisGang].territory <= 0) return;
-        const territoryGain = calculateTerritoryGain(otherGang, thisGang);
-        AllGangs[thisGang].territory -= territoryGain;
-        AllGangs[otherGang].territory += territoryGain;
-        if (thisGang === gangName) {
-          this.clash(false); // Player lost
-        } else if (otherGang === gangName) {
-          this.clash(true); // Player won
-          AllGangs[thisGang].power *= 1 / 1.01;
+
+        const thisPwr = AllGangs[thisGang].power;
+        const otherPwr = AllGangs[otherGang].power;
+        const thisChance = thisPwr / (thisPwr + otherPwr);
+
+        function calculateTerritoryGain(winGang: string, loseGang: string): number {
+          const powerBonus = Math.max(
+            1,
+            1 + Math.log(AllGangs[winGang].power / AllGangs[loseGang].power) / Math.log(50),
+          );
+          const gains = Math.min(AllGangs[loseGang].territory, powerBonus * 0.0001 * (Math.random() + 0.5));
+          return gains;
+        }
+
+        if (Math.random() < thisChance) {
+          if (AllGangs[otherGang].territory <= 0) return;
+          const territoryGain = calculateTerritoryGain(thisGang, otherGang);
+          AllGangs[thisGang].territory += territoryGain;
+          AllGangs[otherGang].territory -= territoryGain;
+          if (thisGang === gangName) {
+            this.clash(true); // Player won
+            AllGangs[otherGang].power *= 1 / 1.01;
+          } else if (otherGang === gangName) {
+            this.clash(false); // Player lost
+          } else {
+            AllGangs[otherGang].power *= 1 / 1.01;
+          }
         } else {
-          AllGangs[thisGang].power *= 1 / 1.01;
+          if (AllGangs[thisGang].territory <= 0) return;
+          const territoryGain = calculateTerritoryGain(otherGang, thisGang);
+          AllGangs[thisGang].territory -= territoryGain;
+          AllGangs[otherGang].territory += territoryGain;
+          if (thisGang === gangName) {
+            this.clash(false); // Player lost
+          } else if (otherGang === gangName) {
+            this.clash(true); // Player won
+            AllGangs[thisGang].power *= 1 / 1.01;
+          } else {
+            AllGangs[thisGang].power *= 1 / 1.01;
+          }
         }
       }
     }
