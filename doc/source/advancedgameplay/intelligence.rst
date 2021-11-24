@@ -15,7 +15,6 @@ Intelligence will boost your production for many actions in the game, including:
 
 * Hacking
 * Infiltration
-* Hacking Missions
 * Crime success rate
 * Bladeburner
 * Reputation gain for companies & factions
