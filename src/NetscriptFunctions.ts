@@ -372,7 +372,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         );
         server.fortify(CONSTANTS.ServerFortifyAmount * Math.min(threads, maxThreadNeeded));
         if (stock) {
-          influenceStockThroughServerHack(server, moneyGained);
+          influenceStockThroughServerHack(server, moneyDrained);
         }
         if (manual) {
           server.backdoorInstalled = true;

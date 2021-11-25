@@ -151,7 +151,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       const stock = getStockFromSymbol(symbol, "short");
       const res = shortStock(stock, shares, workerScript, {});
 
-      return res ? stock.price : 0;
+      return res ? stock.getBidPrice() : 0;
     },
     sellShort: function (symbol: any, shares: any): any {
       helper.updateDynamicRam("sellShort", getRamCost("stock", "sellShort"));
@@ -167,7 +167,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       const stock = getStockFromSymbol(symbol, "sellShort");
       const res = sellShort(stock, shares, workerScript, {});
 
-      return res ? stock.price : 0;
+      return res ? stock.getAskPrice() : 0;
     },
     placeOrder: function (symbol: any, shares: any, price: any, type: any, pos: any): any {
       helper.updateDynamicRam("placeOrder", getRamCost("stock", "placeOrder"));
