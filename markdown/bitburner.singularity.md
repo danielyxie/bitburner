@@ -53,11 +53,13 @@ This API requires Source-File 4 level 1 / 2 / 3 to use.
 |  [installAugmentations(cbScript)](./bitburner.singularity.installaugmentations.md) | Install your purchased augmentations. |
 |  [installBackdoor()](./bitburner.singularity.installbackdoor.md) | Run the backdoor command in the terminal. |
 |  [isBusy()](./bitburner.singularity.isbusy.md) | Check if the player is busy. |
+|  [isFocused()](./bitburner.singularity.isfocused.md) | Check if the player is focused. |
 |  [joinFaction(faction)](./bitburner.singularity.joinfaction.md) | Join a faction. |
 |  [manualHack()](./bitburner.singularity.manualhack.md) | Run the hack command in the terminal. |
 |  [purchaseAugmentation(faction, augmentation)](./bitburner.singularity.purchaseaugmentation.md) | Purchase an augmentation |
 |  [purchaseProgram(programName)](./bitburner.singularity.purchaseprogram.md) | Purchase a program from the dark web. |
 |  [purchaseTor()](./bitburner.singularity.purchasetor.md) | Purchase the TOR router. |
+|  [setFocus(focus)](./bitburner.singularity.setfocus.md) | Set the players focus. |
 |  [softReset(cbScript)](./bitburner.singularity.softreset.md) | Soft reset the game. |
 |  [stopAction()](./bitburner.singularity.stopaction.md) | Stop the current action. |
 |  [travelToCity(city)](./bitburner.singularity.traveltocity.md) | Travel to another city. |

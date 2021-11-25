@@ -233,6 +233,8 @@ export const RamCosts: IMap<any> = {
   purchaseAugmentation: RamCostConstants.ScriptSingularityFn3RamCost,
   softReset: RamCostConstants.ScriptSingularityFn3RamCost,
   installAugmentations: RamCostConstants.ScriptSingularityFn3RamCost,
+  isFocused: 0.1,
+  setFocus: 0.1,
 
   // Gang API
   gang: {

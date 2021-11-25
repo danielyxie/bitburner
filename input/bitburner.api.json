@@ -21309,6 +21309,34 @@
             },
             {
               "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Singularity#isFocused:member(1)",
+              "docComment": "/**\n * Check if the player is focused.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Singularity - Level 2\n *\n * @returns True if the player is focused.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "isFocused(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "isFocused"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#joinFaction:member(1)",
               "docComment": "/**\n * Join a faction.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * Singularity - Level 2\n *\n * This function will automatically accept an invitation from a faction and join it.\n *\n * @param faction - Name of faction to join.\n *\n * @returns True if player joined the faction, and false otherwise.\n */\n",
               "excerptTokens": [
@@ -21514,6 +21542,50 @@
               "overloadIndex": 1,
               "parameters": [],
               "name": "purchaseTor"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Singularity#setFocus:member(1)",
+              "docComment": "/**\n * Set the players focus.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Singularity - Level 2\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setFocus(focus: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "focus",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "setFocus"
             },
             {
               "kind": "MethodSignature",

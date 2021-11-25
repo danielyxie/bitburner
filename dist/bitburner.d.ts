@@ -4326,6 +4326,26 @@ export declare interface Singularity {
      * @returns True if the installation was successful.
      */
     installBackdoor(): Promise<void>;
+
+    /**
+     * Check if the player is focused.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
+     * Singularity - Level 2
+     *
+     * @returns True if the player is focused.
+     */
+    isFocused(): void;
+
+    /**
+     * Set the players focus.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
+     * Singularity - Level 2
+     */
+    setFocus(focus: boolean): void;
 }
 
 /**
