@@ -47,9 +47,7 @@ export async function main(ns) {
         router.toScriptEditor(filepath, txt.text);
       }
     } else {
-      terminal.error(
-        "Invalid file. Only scripts (.script, .ns, .js), text files (.txt), or .fconf can be edited with nano",
-      );
+      terminal.error("Invalid file. Only scripts (.script, .ns, .js), or text files (.txt) can be edited with nano");
       return;
     }
   } catch (e) {

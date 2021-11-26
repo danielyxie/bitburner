@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Money } from "../ui/React/Money";
-import { Game } from "./Game";
+import { Game, reachedLimit } from "./Game";
 import { Deck } from "./CardDeck/Deck";
 import { Hand } from "./CardDeck/Hand";
 import { InputAdornment } from "@mui/material";
@@ -70,7 +70,7 @@ export class Blackjack extends Game<Props, State> {
   };
 
   startGame = (): void => {
-    if (!this.canStartGame()) {
+    if (!this.canStartGame() || reachedLimit(this.props.p)) {
       return;
     }
 
@@ -217,11 +217,18 @@ export class Blackjack extends Game<Props, State> {
   };
 
   finishGame = (result: Result): void => {
-    const gains = result === Result.DealerWon ? 0 : // We took away the bet at the start, don't need to take more
-      result === Result.Tie ? this.state.bet : // We took away the bet at the start, give it back
-      result === Result.PlayerWon ? 2 * this.state.bet : // Give back their bet plus their winnings
-      result === Result.PlayerWonByBlackjack ? 2.5 * this.state.bet : // Blackjack pays out 1.5x bet!
-      (() => { throw new Error(`Unexpected result: ${result}`); })(); // This can't happen, right?
+    const gains =
+      result === Result.DealerWon
+        ? 0 // We took away the bet at the start, don't need to take more
+        : result === Result.Tie
+        ? this.state.bet // We took away the bet at the start, give it back
+        : result === Result.PlayerWon
+        ? 2 * this.state.bet // Give back their bet plus their winnings
+        : result === Result.PlayerWonByBlackjack
+        ? 2.5 * this.state.bet // Blackjack pays out 1.5x bet!
+        : (() => {
+            throw new Error(`Unexpected result: ${result}`);
+          })(); // This can't happen, right?
     this.win(this.props.p, gains);
     this.setState({
       gameInProgress: false,
@@ -345,7 +352,7 @@ export class Blackjack extends Game<Props, State> {
         )}
 
         {/* Main game part. Displays both if the game is in progress OR if there's a result so you can see
-        * the cards that led to that result. */}
+         * the cards that led to that result. */}
         {(gameInProgress || result !== Result.Pending) && (
           <>
             <Box display="flex">
@@ -355,10 +362,12 @@ export class Blackjack extends Game<Props, State> {
                   <ReactCard card={card} key={i} />
                 ))}
 
-                <Typography>Count: {
-                  playerHandValues.map<React.ReactNode>((value, i) => <span key={i}>{value}</span>)
-                    .reduce((prev, curr) => [prev, ' or ', curr])
-                }</Typography>
+                <Typography>
+                  Count:{" "}
+                  {playerHandValues
+                    .map<React.ReactNode>((value, i) => <span key={i}>{value}</span>)
+                    .reduce((prev, curr) => [prev, " or ", curr])}
+                </Typography>
               </Paper>
             </Box>
 
@@ -374,10 +383,12 @@ export class Blackjack extends Game<Props, State> {
 
                 {!gameInProgress && (
                   <>
-                    <Typography>Count: {
-                      dealerHandValues.map<React.ReactNode>((value, i) => <span key={i}>{value}</span>)
-                        .reduce((prev, curr) => [prev, ' or ', curr])
-                    }</Typography>
+                    <Typography>
+                      Count:{" "}
+                      {dealerHandValues
+                        .map<React.ReactNode>((value, i) => <span key={i}>{value}</span>)
+                        .reduce((prev, curr) => [prev, " or ", curr])}
+                    </Typography>
                   </>
                 )}
               </Paper>

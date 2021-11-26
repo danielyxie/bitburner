@@ -151,7 +151,7 @@ You may have noticed that every new ns2 file will contains the following comment
     * @param {NS} ns
     **/
 
-This command is used to help the text editor autocomplete functions in the Netscript API. You can enabling it by pressing ctrl+space after `ns.`
+This comment is used to help the text editor autocomplete functions in the Netscript API. You can enabling it by pressing ctrl+space after `ns.`
 
 .. image:: autocomplete.png
 
