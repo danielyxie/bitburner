@@ -47,7 +47,7 @@ export function purchaseHacknet(player: IPlayer): number {
       throw new Error(`Calculated cost of purchasing HacknetServer is NaN`);
     }
 
-    if (!player.canAfford(cost)) {
+    if (!player.canAfford(cost) || numOwned >= HacknetServerConstants.MaxServers) {
       return -1;
     }
     player.loseMoney(cost, "hacknet_expenses");
