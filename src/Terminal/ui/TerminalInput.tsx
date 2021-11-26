@@ -283,7 +283,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       }
     }
 
-    // Extra Bash Emulation Hotkeys, must be enabled through .fconf
+    // Extra Bash Emulation Hotkeys, must be enabled through options
     if (Settings.EnableBashHotkeys) {
       if (event.keyCode === KEY.A && event.ctrlKey) {
         event.preventDefault();
