@@ -134,16 +134,16 @@ function LogWindow(props: IProps): React.ReactElement {
   }
 
   function lineClass(s: string): string {
-    if (s.match(/\[[^\]]+\] ERROR/) || s.match(/\[[^\]]+\] FAIL/)) {
+    if (s.match(/(^\[[^\]]+\] )?ERROR/) || s.match(/(^\[[^\]]+\] )?FAIL/)) {
       return classes.error;
     }
-    if (s.match(/\[[^\]]+\] SUCCESS/)) {
+    if (s.match(/(^\[[^\]]+\] )?SUCCESS/)) {
       return classes.success;
     }
-    if (s.match(/\[[^\]]+\] WARN/)) {
+    if (s.match(/(^\[[^\]]+\] )?WARN/)) {
       return classes.warning;
     }
-    if (s.match(/\[[^\]]+\] INFO/)) {
+    if (s.match(/(^\[[^\]]+\] )?INFO/)) {
       return classes.info;
     }
     return classes.primary;
