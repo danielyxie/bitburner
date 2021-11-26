@@ -315,18 +315,18 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       checkTixApiAccess("purchase4SMarketData");
 
       if (player.has4SData) {
-        workerScript.log("purchase4SMarketData", () => "Already purchased 4S Market Data.");
+        workerScript.log("stock.purchase4SMarketData", () => "Already purchased 4S Market Data.");
         return true;
       }
 
       if (player.money < getStockMarket4SDataCost()) {
-        workerScript.log("purchase4SMarketData", () => "Not enough money to purchase 4S Market Data.");
+        workerScript.log("stock.purchase4SMarketData", () => "Not enough money to purchase 4S Market Data.");
         return false;
       }
 
       player.has4SData = true;
       player.loseMoney(getStockMarket4SDataCost(), "stock");
-      workerScript.log("purchase4SMarketData", () => "Purchased 4S Market Data");
+      workerScript.log("stock.purchase4SMarketData", () => "Purchased 4S Market Data");
       return true;
     },
     purchase4SMarketDataTixApi: function () {
@@ -334,18 +334,21 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       checkTixApiAccess("purchase4SMarketDataTixApi");
 
       if (player.has4SDataTixApi) {
-        workerScript.log("purchase4SMarketDataTixApi", () => "Already purchased 4S Market Data TIX API");
+        workerScript.log("stock.purchase4SMarketDataTixApi", () => "Already purchased 4S Market Data TIX API");
         return true;
       }
 
       if (player.money < getStockMarket4STixApiCost()) {
-        workerScript.log("purchase4SMarketDataTixApi", () => "Not enough money to purchase 4S Market Data TIX API");
+        workerScript.log(
+          "stock.purchase4SMarketDataTixApi",
+          () => "Not enough money to purchase 4S Market Data TIX API",
+        );
         return false;
       }
 
       player.has4SDataTixApi = true;
       player.loseMoney(getStockMarket4STixApiCost(), "stock");
-      workerScript.log("purchase4SMarketDataTixApi", () => "Purchased 4S Market Data TIX API");
+      workerScript.log("stock.purchase4SMarketDataTixApi", () => "Purchased 4S Market Data TIX API");
       return true;
     },
   };
