@@ -19,6 +19,7 @@ import { Theme } from "@mui/material";
 let layerCounter = 0;
 
 export const LogBoxEvents = new EventEmitter<[RunningScript]>();
+export const LogBoxClearEvents = new EventEmitter<[]>();
 
 interface Log {
   id: string;
@@ -44,6 +45,13 @@ export function LogBoxManager(): React.ReactElement {
         rerender();
       }),
     [],
+  );
+
+  useEffect(() =>
+    LogBoxClearEvents.subscribe(() => {
+      logs = [];
+      rerender();
+    }),
   );
 
   function close(id: string): void {

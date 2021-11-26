@@ -28,6 +28,7 @@ import { dialogBoxCreate } from "./ui/React/DialogBox";
 
 import { ProgramsSeen } from "./Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "./Faction/ui/FactionsRoot";
+import { LogBoxClearEvents } from "./ui/React/LogBoxManager";
 
 const BitNode8StartingMoney = 250e6;
 
@@ -85,11 +86,12 @@ export function prestigeAugmentation(): void {
     }
   }
 
-  // Stop a Terminal action if there is onerror
+  // Stop a Terminal action if there is one.
   if (Terminal.action !== null) {
     Terminal.finishAction(Router, Player, true);
   }
   Terminal.clear();
+  LogBoxClearEvents.emit();
 
   // Re-initialize things - This will update any changes
   initFactions(); // Factions must be initialized before augmentations
