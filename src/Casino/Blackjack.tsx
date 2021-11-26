@@ -75,7 +75,7 @@ export class Blackjack extends Game<Props, State> {
     }
 
     // Take money from player right away so that player's dont just "leave" to avoid the loss (I mean they could
-    // always reload without saving but w.e)
+    // always reload without saving but w.e) TODO: Save/Restore the RNG state to limit the value of save-scumming.
     this.props.p.loseMoney(this.state.bet, "casino");
 
     const playerHand = new Hand([this.deck.safeDrawCard(), this.deck.safeDrawCard()]);
@@ -220,12 +220,11 @@ export class Blackjack extends Game<Props, State> {
     let gains = 0;
     if (this.isPlayerWinResult(result)) {
       gains = this.state.bet;
-
       // We 2x the gains because we took away money at the start, so we need to give the original bet back.
       this.win(this.props.p, 2 * gains);
     } else if (result === Result.DealerWon) {
       gains = -1 * this.state.bet;
-      this.win(this.props.p, -this.state.bet); // Get the original bet back
+      this.win(this.props.p, 0); // We took away the bet at the start, don't need to take more
       // Dont need to take money here since we already did it at the start
     } else if (result === Result.Tie) {
       this.win(this.props.p, this.state.bet); // Get the original bet back
