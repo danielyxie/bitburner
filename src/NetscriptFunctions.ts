@@ -1961,16 +1961,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("getRunningScript", getRamCost("getRunningScript"));
 
       let runningScript;
-      if (args.length === 0) {
+      if (fn === undefined && hostname === undefined && args.length === 0) {
         runningScript = workerScript.scriptRef;
       } else if (typeof fn === "number") {
         runningScript = getRunningScriptByPid(fn, "getRunningScript");
       } else {
-        const scriptArgs = [];
-        for (let i = 2; i < args.length; ++i) {
-          scriptArgs.push(args[i]);
-        }
-        runningScript = getRunningScript(fn, hostname, "getRunningScript", scriptArgs);
+        runningScript = getRunningScript(fn, hostname, "getRunningScript", args);
       }
       if (runningScript === null) return null;
       return {
