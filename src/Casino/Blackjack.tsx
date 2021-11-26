@@ -75,7 +75,7 @@ export class Blackjack extends Game<Props, State> {
     }
 
     // Take money from player right away so that player's dont just "leave" to avoid the loss (I mean they could
-    // always reload without saving but w.e)
+    // always reload without saving but w.e) TODO: Save/Restore the RNG state to limit the value of save-scumming.
     this.props.p.loseMoney(this.state.bet, "casino");
 
     const playerHand = new Hand([this.deck.safeDrawCard(), this.deck.safeDrawCard()]);
@@ -217,29 +217,17 @@ export class Blackjack extends Game<Props, State> {
   };
 
   finishGame = (result: Result): void => {
-    let gains = 0;
-    if (this.isPlayerWinResult(result)) {
-      gains = this.state.bet;
-
-      // We 2x the gains because we took away money at the start, so we need to give the original bet back.
-      this.win(this.props.p, 2 * gains);
-    } else if (result === Result.DealerWon) {
-      gains = -1 * this.state.bet;
-      this.win(this.props.p, -this.state.bet); // Get the original bet back
-      // Dont need to take money here since we already did it at the start
-    } else if (result === Result.Tie) {
-      this.win(this.props.p, this.state.bet); // Get the original bet back
-    }
-
+    const gains = result === Result.DealerWon ? 0 : // We took away the bet at the start, don't need to take more
+      result === Result.Tie ? this.state.bet : // We took away the bet at the start, give it back
+      result === Result.PlayerWon ? 2 * this.state.bet : // Give back their bet plus their winnings
+      result === Result.PlayerWonByBlackjack ? 2.5 * this.state.bet : // Blackjack pays out 1.5x bet!
+      (() => { throw new Error(`Unexpected result: ${result}`); })(); // This can't happen, right?
+    this.win(this.props.p, gains);
     this.setState({
       gameInProgress: false,
       result,
-      gains: this.state.gains + gains,
+      gains: this.state.gains + gains - this.state.bet, // Not updated upfront - only tracks the final outcome
     });
-  };
-
-  isPlayerWinResult = (result: Result): boolean => {
-    return result === Result.PlayerWon || result === Result.PlayerWonByBlackjack;
   };
 
   wagerOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -357,20 +345,20 @@ export class Blackjack extends Game<Props, State> {
         )}
 
         {/* Main game part. Displays both if the game is in progress OR if there's a result so you can see
-         * the cards that led to that result. */}
+        * the cards that led to that result. */}
         {(gameInProgress || result !== Result.Pending) && (
           <>
             <Box display="flex">
               <Paper elevation={2}>
-                <pre>Player</pre>
+                <Typography>Player</Typography>
                 {playerHand.cards.map((card, i) => (
                   <ReactCard card={card} key={i} />
                 ))}
 
-                <pre>Value(s): </pre>
-                {playerHandValues.map((value, i) => (
-                  <pre key={i}>{value}</pre>
-                ))}
+                <Typography>Count: {
+                  playerHandValues.map<React.ReactNode>((value, i) => <span key={i}>{value}</span>)
+                    .reduce((prev, curr) => [prev, ' or ', curr])
+                }</Typography>
               </Paper>
             </Box>
 
@@ -378,7 +366,7 @@ export class Blackjack extends Game<Props, State> {
 
             <Box display="flex">
               <Paper elevation={2}>
-                <pre>Dealer</pre>
+                <Typography>Dealer</Typography>
                 {dealerHand.cards.map((card, i) => (
                   // Hide every card except the first while game is in progress
                   <ReactCard card={card} hidden={gameInProgress && i !== 0} key={i} />
@@ -386,10 +374,10 @@ export class Blackjack extends Game<Props, State> {
 
                 {!gameInProgress && (
                   <>
-                    <pre>Value(s): </pre>
-                    {dealerHandValues.map((value, i) => (
-                      <pre key={i}>{value}</pre>
-                    ))}
+                    <Typography>Count: {
+                      dealerHandValues.map<React.ReactNode>((value, i) => <span key={i}>{value}</span>)
+                        .reduce((prev, curr) => [prev, ' or ', curr])
+                    }</Typography>
                   </>
                 )}
               </Paper>
@@ -400,9 +388,10 @@ export class Blackjack extends Game<Props, State> {
         {/* Results from previous round */}
         {result !== Result.Pending && (
           <Typography>
-            {result}
-            {this.isPlayerWinResult(result) && <Money money={this.state.bet} />}
-            {result === Result.DealerWon && <Money money={this.state.bet} />}
+            {result}&nbsp;
+            {result === Result.PlayerWon && <Money money={this.state.bet} />}
+            {result === Result.PlayerWonByBlackjack && <Money money={this.state.bet * 1.5} />}
+            {result === Result.DealerWon && <Money money={-this.state.bet} />}
           </Typography>
         )}
       </>
