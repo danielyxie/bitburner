@@ -535,7 +535,7 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
     }
 
     killWorkerScript(s);
-    w.log("", "Script finished running");
+    w.log("", () => "Script finished running");
   }).catch(function (w) {
     if (w instanceof Error) {
       dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
@@ -561,9 +561,9 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
         msg += errorMsg;
 
         dialogBoxCreate(msg);
-        w.log("", "Script crashed with runtime error");
+        w.log("", () => "Script crashed with runtime error");
       } else {
-        w.log("", "Script killed");
+        w.log("", () => "Script killed");
         return; // Already killed, so stop here
       }
       w.running = false;
@@ -645,7 +645,7 @@ export function runScriptFromScript(
   }
 
   if (typeof scriptname !== "string" || !Array.isArray(args)) {
-    workerScript.log(caller, `Invalid arguments: scriptname='${scriptname} args='${args}'`);
+    workerScript.log(caller, () => `Invalid arguments: scriptname='${scriptname} args='${args}'`);
     console.error(`runScriptFromScript() failed due to invalid arguments`);
     return 0;
   }
@@ -658,14 +658,14 @@ export function runScriptFromScript(
   // Check if the script is already running
   const runningScriptObj = server.getRunningScript(scriptname, args);
   if (runningScriptObj != null) {
-    workerScript.log(caller, `'${scriptname}' is already running on '${server.hostname}'`);
+    workerScript.log(caller, () => `'${scriptname}' is already running on '${server.hostname}'`);
     return 0;
   }
 
   // 'null/undefined' arguments are not allowed
   for (let i = 0; i < args.length; ++i) {
     if (args[i] == null) {
-      workerScript.log(caller, "Cannot execute a script with null/undefined as an argument");
+      workerScript.log(caller, () => "Cannot execute a script with null/undefined as an argument");
       return 0;
     }
   }
@@ -684,19 +684,20 @@ export function runScriptFromScript(
     const ramAvailable = server.maxRam - server.ramUsed;
 
     if (server.hasAdminRights == false) {
-      workerScript.log(caller, `You do not have root access on '${server.hostname}'`);
+      workerScript.log(caller, () => `You do not have root access on '${server.hostname}'`);
       return 0;
     } else if (ramUsage > ramAvailable) {
       workerScript.log(
         caller,
-        `Cannot run script '${scriptname}' (t=${threads}) on '${server.hostname}' because there is not enough available RAM!`,
+        () =>
+          `Cannot run script '${scriptname}' (t=${threads}) on '${server.hostname}' because there is not enough available RAM!`,
       );
       return 0;
     } else {
       // Able to run script
       workerScript.log(
         caller,
-        `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
+        () => `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
       );
       const runningScriptObj = new RunningScript(script, args);
       runningScriptObj.threads = threads;
@@ -706,6 +707,6 @@ export function runScriptFromScript(
     break;
   }
 
-  workerScript.log(caller, `Could not find script '${scriptname}' on '${server.hostname}'`);
+  workerScript.log(caller, () => `Could not find script '${scriptname}' on '${server.hostname}'`);
   return 0;
 }

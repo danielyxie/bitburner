@@ -51,7 +51,7 @@ export function buyStock(
   }
   if (stock == null || isNaN(shares)) {
     if (workerScript) {
-      workerScript.log("buyStock", `Invalid arguments: stock='${stock}' shares='${shares}'`);
+      workerScript.log("buyStock", () => `Invalid arguments: stock='${stock}' shares='${shares}'`);
     } else if (opts.suppressDialog !== true) {
       dialogBoxCreate("Failed to buy stock. This may be a bug, contact developer");
     }
@@ -68,7 +68,8 @@ export function buyStock(
     if (workerScript) {
       workerScript.log(
         "buyStock",
-        `You do not have enough money to purchase this position. You need ${numeralWrapper.formatMoney(totalPrice)}.`,
+        () =>
+          `You do not have enough money to purchase this position. You need ${numeralWrapper.formatMoney(totalPrice)}.`,
       );
     } else if (opts.suppressDialog !== true) {
       dialogBoxCreate(
@@ -86,9 +87,10 @@ export function buyStock(
     if (workerScript) {
       workerScript.log(
         "buyStock",
-        `Purchasing '${shares + stock.playerShares + stock.playerShortShares}' shares would exceed ${
-          stock.symbol
-        }'s maximum (${stock.maxShares}) number of shares`,
+        () =>
+          `Purchasing '${shares + stock.playerShares + stock.playerShortShares}' shares would exceed ${
+            stock.symbol
+          }'s maximum (${stock.maxShares}) number of shares`,
       );
     } else if (opts.suppressDialog !== true) {
       dialogBoxCreate(
@@ -116,7 +118,7 @@ export function buyStock(
       `Bought ${numeralWrapper.formatShares(shares)} shares of ${stock.symbol} for ${numeralWrapper.formatMoney(
         totalPrice,
       )}. ` + `Paid ${numeralWrapper.formatMoney(CONSTANTS.StockMarketCommission)} in commission fees.`;
-    workerScript.log("buyStock", resultTxt);
+    workerScript.log("buyStock", () => resultTxt);
   } else if (opts.suppressDialog !== true) {
     dialogBoxCreate(
       <>
@@ -146,7 +148,7 @@ export function sellStock(
   // Sanitize/Validate arguments
   if (stock == null || shares < 0 || isNaN(shares)) {
     if (workerScript) {
-      workerScript.log("sellStock", `Invalid arguments: stock='${stock}' shares='${shares}'`);
+      workerScript.log("sellStock", () => `Invalid arguments: stock='${stock}' shares='${shares}'`);
     } else if (opts.suppressDialog !== true) {
       dialogBoxCreate(
         "Failed to sell stock. This is probably due to an invalid quantity. Otherwise, this may be a bug, contact developer",
@@ -192,7 +194,7 @@ export function sellStock(
     const resultTxt =
       `Sold ${numeralWrapper.formatShares(shares)} shares of ${stock.symbol}. ` +
       `After commissions, you gained a total of ${numeralWrapper.formatMoney(gains)}.`;
-    workerScript.log("sellStock", resultTxt);
+    workerScript.log("sellStock", () => resultTxt);
   } else if (opts.suppressDialog !== true) {
     dialogBoxCreate(
       <>
@@ -226,7 +228,7 @@ export function shortStock(
   }
   if (stock == null || isNaN(shares)) {
     if (workerScript) {
-      workerScript.log("shortStock", `Invalid arguments: stock='${stock}' shares='${shares}'`);
+      workerScript.log("shortStock", () => `Invalid arguments: stock='${stock}' shares='${shares}'`);
     } else if (opts.suppressDialog !== true) {
       dialogBoxCreate(
         "Failed to initiate a short position in a stock. This is probably " +
@@ -245,7 +247,8 @@ export function shortStock(
     if (workerScript) {
       workerScript.log(
         "shortStock",
-        "You do not have enough " +
+        () =>
+          "You do not have enough " +
           "money to purchase this short position. You need " +
           numeralWrapper.formatMoney(totalPrice),
       );
@@ -265,9 +268,10 @@ export function shortStock(
     if (workerScript) {
       workerScript.log(
         "shortStock",
-        `This '${shares + stock.playerShares + stock.playerShortShares}' short shares would exceed ${
-          stock.symbol
-        }'s maximum (${stock.maxShares}) number of shares.`,
+        () =>
+          `This '${shares + stock.playerShares + stock.playerShortShares}' short shares would exceed ${
+            stock.symbol
+          }'s maximum (${stock.maxShares}) number of shares.`,
       );
     } else if (opts.suppressDialog !== true) {
       dialogBoxCreate(
@@ -296,7 +300,7 @@ export function shortStock(
         CONSTANTS.StockMarketCommission,
       )} ` +
       `in commission fees.`;
-    workerScript.log("shortStock", resultTxt);
+    workerScript.log("shortStock", () => resultTxt);
   } else if (!opts.suppressDialog) {
     dialogBoxCreate(
       <>
@@ -325,7 +329,7 @@ export function sellShort(
 ): boolean {
   if (stock == null || isNaN(shares) || shares < 0) {
     if (workerScript) {
-      workerScript.log("sellShort", `Invalid arguments: stock='${stock}' shares='${shares}'`);
+      workerScript.log("sellShort", () => `Invalid arguments: stock='${stock}' shares='${shares}'`);
     } else if (!opts.suppressDialog) {
       dialogBoxCreate(
         "Failed to sell a short position in a stock. This is probably " +
@@ -349,7 +353,7 @@ export function sellShort(
     if (workerScript) {
       workerScript.log(
         "sellShort",
-        `Failed to sell short position in a stock. This is probably either due to invalid arguments, or a bug`,
+        () => `Failed to sell short position in a stock. This is probably either due to invalid arguments, or a bug`,
       );
     } else if (!opts.suppressDialog) {
       dialogBoxCreate(
@@ -383,7 +387,7 @@ export function sellShort(
     const resultTxt =
       `Sold your short position of ${numeralWrapper.formatShares(shares)} shares of ${stock.symbol}. ` +
       `After commissions, you gained a total of ${numeralWrapper.formatMoney(totalGain)}`;
-    workerScript.log("sellShort", resultTxt);
+    workerScript.log("sellShort", () => resultTxt);
   } else if (!opts.suppressDialog) {
     dialogBoxCreate(
       <>

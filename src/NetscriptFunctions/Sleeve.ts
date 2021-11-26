@@ -25,7 +25,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
   const checkSleeveNumber = function (func: any, sleeveNumber: any): void {
     if (sleeveNumber >= player.sleeves.length || sleeveNumber < 0) {
       const msg = `Invalid sleeve number: ${sleeveNumber}`;
-      workerScript.log(func, msg);
+      workerScript.log(func, () => msg);
       throw helper.makeRuntimeErrorMsg(`sleeve.${func}`, msg);
     }
   };

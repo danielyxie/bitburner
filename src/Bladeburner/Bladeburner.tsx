@@ -2026,7 +2026,7 @@ export class Bladeburner implements IBladeburner {
     const errorLogText = `Invalid action: type='${type}' name='${name}'`;
     const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-      workerScript.log("bladeburner.startAction", errorLogText);
+      workerScript.log("bladeburner.startAction", () => errorLogText);
       return false;
     }
 
@@ -2038,13 +2038,13 @@ export class Bladeburner implements IBladeburner {
       if (!(action instanceof BlackOperation)) throw new Error(`Action should be BlackOperation but isn't`);
       //const blackOp = (action as BlackOperation);
       if (action.reqdRank > this.rank) {
-        workerScript.log("bladeburner.startAction", `Insufficient rank to start Black Op '${actionId.name}'.`);
+        workerScript.log("bladeburner.startAction", () => `Insufficient rank to start Black Op '${actionId.name}'.`);
         return false;
       }
 
       // Can't start a BlackOp if its already been done
       if (this.blackops[actionId.name] != null) {
-        workerScript.log("bladeburner.startAction", `Black Op ${actionId.name} has already been completed.`);
+        workerScript.log("bladeburner.startAction", () => `Black Op ${actionId.name} has already been completed.`);
         return false;
       }
 
@@ -2061,14 +2061,14 @@ export class Bladeburner implements IBladeburner {
 
       const i = blackops.indexOf(actionId.name);
       if (i === -1) {
-        workerScript.log("bladeburner.startAction", `Invalid Black Op: '${name}'`);
+        workerScript.log("bladeburner.startAction", () => `Invalid Black Op: '${name}'`);
         return false;
       }
 
       if (i > 0 && this.blackops[blackops[i - 1]] == null) {
         workerScript.log(
           "bladeburner.startAction",
-          `Preceding Black Op must be completed before starting '${actionId.name}'.`,
+          () => `Preceding Black Op must be completed before starting '${actionId.name}'.`,
         );
         return false;
       }
@@ -2076,11 +2076,14 @@ export class Bladeburner implements IBladeburner {
 
     try {
       this.startAction(player, actionId);
-      workerScript.log("bladeburner.startAction", `Starting bladeburner action with type '${type}' and name ${name}"`);
+      workerScript.log(
+        "bladeburner.startAction",
+        () => `Starting bladeburner action with type '${type}' and name ${name}"`,
+      );
       return true;
     } catch (e: any) {
       this.resetAction();
-      workerScript.log("bladeburner.startAction", errorLogText);
+      workerScript.log("bladeburner.startAction", () => errorLogText);
       return false;
     }
   }
@@ -2089,13 +2092,13 @@ export class Bladeburner implements IBladeburner {
     const errorLogText = `Invalid action: type='${type}' name='${name}'`;
     const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-      workerScript.log("bladeburner.getActionTime", errorLogText);
+      workerScript.log("bladeburner.getActionTime", () => errorLogText);
       return -1;
     }
 
     const actionObj = this.getActionObject(actionId);
     if (actionObj == null) {
-      workerScript.log("bladeburner.getActionTime", errorLogText);
+      workerScript.log("bladeburner.getActionTime", () => errorLogText);
       return -1;
     }
 
@@ -2116,7 +2119,7 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["Incite Violence"]:
         return 60000;
       default:
-        workerScript.log("bladeburner.getActionTime", errorLogText);
+        workerScript.log("bladeburner.getActionTime", () => errorLogText);
         return -1;
     }
   }
@@ -2130,13 +2133,13 @@ export class Bladeburner implements IBladeburner {
     const errorLogText = `Invalid action: type='${type}' name='${name}'`;
     const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-      workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
+      workerScript.log("bladeburner.getActionEstimatedSuccessChance", () => errorLogText);
       return [-1, -1];
     }
 
     const actionObj = this.getActionObject(actionId);
     if (actionObj == null) {
-      workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
+      workerScript.log("bladeburner.getActionEstimatedSuccessChance", () => errorLogText);
       return [-1, -1];
     }
 
@@ -2158,7 +2161,7 @@ export class Bladeburner implements IBladeburner {
         return [recChance, recChance];
       }
       default:
-        workerScript.log("bladeburner.getActionEstimatedSuccessChance", errorLogText);
+        workerScript.log("bladeburner.getActionEstimatedSuccessChance", () => errorLogText);
         return [-1, -1];
     }
   }
@@ -2167,13 +2170,13 @@ export class Bladeburner implements IBladeburner {
     const errorLogText = `Invalid action: type='${type}' name='${name}'`;
     const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-      workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
+      workerScript.log("bladeburner.getActionCountRemaining", () => errorLogText);
       return -1;
     }
 
     const actionObj = this.getActionObject(actionId);
     if (actionObj == null) {
-      workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
+      workerScript.log("bladeburner.getActionCountRemaining", () => errorLogText);
       return -1;
     }
 
@@ -2197,14 +2200,14 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["Incite Violence"]:
         return Infinity;
       default:
-        workerScript.log("bladeburner.getActionCountRemaining", errorLogText);
+        workerScript.log("bladeburner.getActionCountRemaining", () => errorLogText);
         return -1;
     }
   }
 
   getSkillLevelNetscriptFn(skillName: string, workerScript: WorkerScript): number {
     if (skillName === "" || !Skills.hasOwnProperty(skillName)) {
-      workerScript.log("bladeburner.getSkillLevel", `Invalid skill: '${skillName}'`);
+      workerScript.log("bladeburner.getSkillLevel", () => `Invalid skill: '${skillName}'`);
       return -1;
     }
 
@@ -2217,7 +2220,7 @@ export class Bladeburner implements IBladeburner {
 
   getSkillUpgradeCostNetscriptFn(skillName: string, workerScript: WorkerScript): number {
     if (skillName === "" || !Skills.hasOwnProperty(skillName)) {
-      workerScript.log("bladeburner.getSkillUpgradeCost", `Invalid skill: '${skillName}'`);
+      workerScript.log("bladeburner.getSkillUpgradeCost", () => `Invalid skill: '${skillName}'`);
       return -1;
     }
 
@@ -2232,7 +2235,7 @@ export class Bladeburner implements IBladeburner {
   upgradeSkillNetscriptFn(skillName: string, workerScript: WorkerScript): boolean {
     const errorLogText = `Invalid skill: '${skillName}'`;
     if (!Skills.hasOwnProperty(skillName)) {
-      workerScript.log("bladeburner.upgradeSkill", errorLogText);
+      workerScript.log("bladeburner.upgradeSkill", () => errorLogText);
       return false;
     }
 
@@ -2244,21 +2247,22 @@ export class Bladeburner implements IBladeburner {
     const cost = skill.calculateCost(currentLevel);
 
     if (skill.maxLvl && currentLevel >= skill.maxLvl) {
-      workerScript.log("bladeburner.upgradeSkill", `Skill '${skillName}' is already maxed.`);
+      workerScript.log("bladeburner.upgradeSkill", () => `Skill '${skillName}' is already maxed.`);
       return false;
     }
 
     if (this.skillPoints < cost) {
       workerScript.log(
         "bladeburner.upgradeSkill",
-        `You do not have enough skill points to upgrade ${skillName} (You have ${this.skillPoints}, you need ${cost})`,
+        () =>
+          `You do not have enough skill points to upgrade ${skillName} (You have ${this.skillPoints}, you need ${cost})`,
       );
       return false;
     }
 
     this.skillPoints -= cost;
     this.upgradeSkill(skill);
-    workerScript.log("bladeburner.upgradeSkill", `'${skillName}' upgraded to level ${this.skills[skillName]}`);
+    workerScript.log("bladeburner.upgradeSkill", () => `'${skillName}' upgraded to level ${this.skills[skillName]}`);
     return true;
   }
 
@@ -2270,13 +2274,13 @@ export class Bladeburner implements IBladeburner {
     const errorLogText = `Invalid action: type='${type}' name='${name}'`;
     const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-      workerScript.log("bladeburner.getTeamSize", errorLogText);
+      workerScript.log("bladeburner.getTeamSize", () => errorLogText);
       return -1;
     }
 
     const actionObj = this.getActionObject(actionId);
     if (actionObj == null) {
-      workerScript.log("bladeburner.getTeamSize", errorLogText);
+      workerScript.log("bladeburner.getTeamSize", () => errorLogText);
       return -1;
     }
 
@@ -2295,7 +2299,7 @@ export class Bladeburner implements IBladeburner {
     const errorLogText = `Invalid action: type='${type}' name='${name}'`;
     const actionId = this.getActionIdFromTypeAndName(type, name);
     if (actionId == null) {
-      workerScript.log("bladeburner.setTeamSize", errorLogText);
+      workerScript.log("bladeburner.setTeamSize", () => errorLogText);
       return -1;
     }
 
@@ -2304,26 +2308,26 @@ export class Bladeburner implements IBladeburner {
       actionId.type !== ActionTypes["BlackOp"] &&
       actionId.type !== ActionTypes["BlackOperation"]
     ) {
-      workerScript.log("bladeburner.setTeamSize", "Only valid for 'Operations' and 'BlackOps'");
+      workerScript.log("bladeburner.setTeamSize", () => "Only valid for 'Operations' and 'BlackOps'");
       return -1;
     }
 
     const actionObj = this.getActionObject(actionId);
     if (actionObj == null) {
-      workerScript.log("bladeburner.setTeamSize", errorLogText);
+      workerScript.log("bladeburner.setTeamSize", () => errorLogText);
       return -1;
     }
 
     let sanitizedSize = Math.round(size);
     if (isNaN(sanitizedSize) || sanitizedSize < 0) {
-      workerScript.log("bladeburner.setTeamSize", `Invalid size: ${size}`);
+      workerScript.log("bladeburner.setTeamSize", () => `Invalid size: ${size}`);
       return -1;
     }
     if (this.teamSize < sanitizedSize) {
       sanitizedSize = this.teamSize;
     }
     actionObj.teamCount = sanitizedSize;
-    workerScript.log("bladeburner.setTeamSize", `Team size for '${name}' set to ${sanitizedSize}.`);
+    workerScript.log("bladeburner.setTeamSize", () => `Team size for '${name}' set to ${sanitizedSize}.`);
     return sanitizedSize;
   }
 
@@ -2333,12 +2337,12 @@ export class Bladeburner implements IBladeburner {
       return true;
     } else if (this.rank >= BladeburnerConstants.RankNeededForFaction) {
       joinFaction(bladeburnerFac);
-      workerScript.log("bladeburner.joinBladeburnerFaction", "Joined Bladeburners faction.");
+      workerScript.log("bladeburner.joinBladeburnerFaction", () => "Joined Bladeburners faction.");
       return true;
     } else {
       workerScript.log(
         "bladeburner.joinBladeburnerFaction",
-        `You do not have the required rank (${this.rank}/${BladeburnerConstants.RankNeededForFaction}).`,
+        () => `You do not have the required rank (${this.rank}/${BladeburnerConstants.RankNeededForFaction}).`,
       );
       return false;
     }

@@ -344,13 +344,13 @@ export function NetscriptBladeburner(
           player.agility >= 100
         ) {
           player.bladeburner = new Bladeburner(player);
-          workerScript.log("joinBladeburnerDivision", "You have been accepted into the Bladeburner division");
+          workerScript.log("joinBladeburnerDivision", () => "You have been accepted into the Bladeburner division");
 
           return true;
         } else {
           workerScript.log(
             "joinBladeburnerDivision",
-            "You do not meet the requirements for joining the Bladeburner division",
+            () => "You do not meet the requirements for joining the Bladeburner division",
           );
           return false;
         }
