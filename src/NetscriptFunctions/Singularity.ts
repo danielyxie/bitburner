@@ -1242,8 +1242,8 @@ export function NetscriptSingularity(
       return player.focus;
     },
     setFocus: function (focus: any): void {
-      helper.updateDynamicRam("isFocused", getRamCost("isFocused"));
-      helper.checkSingularityAccess("isFocused", 2);
+      helper.updateDynamicRam("setFocus", getRamCost("setFocus"));
+      helper.checkSingularityAccess("setFocus", 2);
       if (focus === true) {
         player.startFocusing();
       } else if (focus === false) {
