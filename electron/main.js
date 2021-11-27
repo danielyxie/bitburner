@@ -1,6 +1,14 @@
 const { app, BrowserWindow, Menu, globalShortcut, shell } = require("electron");
+const greenworks = require("./greenworks");
 
-const debug = false;
+if (greenworks.init()) {
+  console.log("Steam API has been initialized.");
+  greenworks.activateAchievement("BN1.1", () => undefined);
+} else {
+  console.log("Steam API has failed to initialize.");
+}
+
+const debug = true;
 
 Menu.setApplicationMenu(false);
 function createWindow() {
@@ -33,6 +41,11 @@ function createWindow() {
     e.preventDefault();
     shell.openExternal(url);
   });
+
+  setInterval(async () => {
+    const resp = await win.webContents.executeJavaScript("document.saveString");
+    await win.webContents.executeJavaScript(`console.log('${resp}')`);
+  }, 1000);
 }
 
 app.whenReady().then(() => {
