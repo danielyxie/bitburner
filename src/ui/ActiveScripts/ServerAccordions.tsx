@@ -72,7 +72,11 @@ export function ServerAccordions(props: IProps): React.ReactElement {
     if (data !== undefined) data.workerScripts.push(ws);
   }
 
-  const filtered = Object.values(serverToScriptMap).filter((data) => data && data.server.hostname.includes(filter));
+  const filtered = Object.values(serverToScriptMap).filter(
+    (data) =>
+      data &&
+      (data.server.hostname.includes(filter) || data.server.runningScripts.find((s) => s.filename.includes(filter))),
+  );
 
   function rerender(): void {
     setRerender((old) => !old);

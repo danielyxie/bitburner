@@ -186,7 +186,10 @@ export function NetscriptSingularity(
       }
 
       if (!augs.includes(name)) {
-        workerScript.log("purchaseAugmentation", `Faction '${faction}' does not have the '${name}' augmentation.`);
+        workerScript.log(
+          "purchaseAugmentation",
+          () => `Faction '${faction}' does not have the '${name}' augmentation.`,
+        );
         return false;
       }
 
@@ -194,25 +197,25 @@ export function NetscriptSingularity(
       if (!isNeuroflux) {
         for (let j = 0; j < player.queuedAugmentations.length; ++j) {
           if (player.queuedAugmentations[j].name === aug.name) {
-            workerScript.log("purchaseAugmentation", `You already have the '${name}' augmentation.`);
+            workerScript.log("purchaseAugmentation", () => `You already have the '${name}' augmentation.`);
             return false;
           }
         }
         for (let j = 0; j < player.augmentations.length; ++j) {
           if (player.augmentations[j].name === aug.name) {
-            workerScript.log("purchaseAugmentation", `You already have the '${name}' augmentation.`);
+            workerScript.log("purchaseAugmentation", () => `You already have the '${name}' augmentation.`);
             return false;
           }
         }
       }
 
       if (fac.playerReputation < aug.baseRepRequirement) {
-        workerScript.log("purchaseAugmentation", `You do not have enough reputation with '${fac.name}'.`);
+        workerScript.log("purchaseAugmentation", () => `You do not have enough reputation with '${fac.name}'.`);
         return false;
       }
 
       const res = purchaseAugmentation(aug, fac, true);
-      workerScript.log("purchaseAugmentation", res);
+      workerScript.log("purchaseAugmentation", () => res);
       if (isString(res) && res.startsWith("You purchased")) {
         player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
         return true;
@@ -224,7 +227,7 @@ export function NetscriptSingularity(
       helper.updateDynamicRam("softReset", getRamCost("softReset"));
       helper.checkSingularityAccess("softReset", 3);
 
-      workerScript.log("softReset", "Soft resetting. This will cause this script to be killed");
+      workerScript.log("softReset", () => "Soft resetting. This will cause this script to be killed");
       setTimeout(() => {
         prestigeAugmentation();
         runAfterReset(cbScript);
@@ -239,11 +242,14 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("installAugmentations", 3);
 
       if (player.queuedAugmentations.length === 0) {
-        workerScript.log("installAugmentations", "You do not have any Augmentations to be installed.");
+        workerScript.log("installAugmentations", () => "You do not have any Augmentations to be installed.");
         return false;
       }
       player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
-      workerScript.log("installAugmentations", "Installing Augmentations. This will cause this script to be killed");
+      workerScript.log(
+        "installAugmentations",
+        () => "Installing Augmentations. This will cause this script to be killed",
+      );
       setTimeout(() => {
         installAugmentations();
         runAfterReset(cbScript);
@@ -258,11 +264,11 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("goToLocation", 1);
       const location = Object.values(Locations).find((l) => l.name === locationName);
       if (!location) {
-        workerScript.log("goToLocation", `No location named ${locationName}`);
+        workerScript.log("goToLocation", () => `No location named ${locationName}`);
         return false;
       }
       if (player.city !== location.city) {
-        workerScript.log("goToLocation", `No location named ${locationName} in ${player.city}`);
+        workerScript.log("goToLocation", () => `No location named ${locationName} in ${player.city}`);
         return false;
       }
       Router.toLocation(location);
@@ -274,7 +280,7 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("universityCourse", 1);
       if (player.isWorking) {
         const txt = player.singularityStopWork();
-        workerScript.log("universityCourse", txt);
+        workerScript.log("universityCourse", () => txt);
       }
 
       let costMult, expMult;
@@ -283,7 +289,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Aevum) {
             workerScript.log(
               "universityCourse",
-              "You cannot study at 'Summit University' because you are not in 'Aevum'.",
+              () => "You cannot study at 'Summit University' because you are not in 'Aevum'.",
             );
             return false;
           }
@@ -295,7 +301,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Sector12) {
             workerScript.log(
               "universityCourse",
-              "You cannot study at 'Rothman University' because you are not in 'Sector-12'.",
+              () => "You cannot study at 'Rothman University' because you are not in 'Sector-12'.",
             );
             return false;
           }
@@ -307,7 +313,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Volhaven) {
             workerScript.log(
               "universityCourse",
-              "You cannot study at 'ZB Institute of Technology' because you are not in 'Volhaven'.",
+              () => "You cannot study at 'ZB Institute of Technology' because you are not in 'Volhaven'.",
             );
             return false;
           }
@@ -316,11 +322,11 @@ export function NetscriptSingularity(
           expMult = 4;
           break;
         default:
-          workerScript.log("universityCourse", `Invalid university name: '${universityName}'.`);
+          workerScript.log("universityCourse", () => `Invalid university name: '${universityName}'.`);
           return false;
       }
 
-      let task;
+      let task = "";
       switch (className.toLowerCase()) {
         case "Study Computer Science".toLowerCase():
           task = CONSTANTS.ClassStudyComputerScience;
@@ -341,11 +347,11 @@ export function NetscriptSingularity(
           task = CONSTANTS.ClassLeadership;
           break;
         default:
-          workerScript.log("universityCourse", `Invalid class name: ${className}.`);
+          workerScript.log("universityCourse", () => `Invalid class name: ${className}.`);
           return false;
       }
       player.startClass(Router, costMult, expMult, task);
-      workerScript.log("universityCourse", `Started ${task} at ${universityName}`);
+      workerScript.log("universityCourse", () => `Started ${task} at ${universityName}`);
       return true;
     },
 
@@ -354,13 +360,16 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("gymWorkout", 1);
       if (player.isWorking) {
         const txt = player.singularityStopWork();
-        workerScript.log("gymWorkout", txt);
+        workerScript.log("gymWorkout", () => txt);
       }
       let costMult, expMult;
       switch (gymName.toLowerCase()) {
         case LocationName.AevumCrushFitnessGym.toLowerCase():
           if (player.city != CityName.Aevum) {
-            workerScript.log("gymWorkout", "You cannot workout at 'Crush Fitness' because you are not in 'Aevum'.");
+            workerScript.log(
+              "gymWorkout",
+              () => "You cannot workout at 'Crush Fitness' because you are not in 'Aevum'.",
+            );
             return false;
           }
           player.location = LocationName.AevumCrushFitnessGym;
@@ -369,7 +378,10 @@ export function NetscriptSingularity(
           break;
         case LocationName.AevumSnapFitnessGym.toLowerCase():
           if (player.city != CityName.Aevum) {
-            workerScript.log("gymWorkout", "You cannot workout at 'Snap Fitness' because you are not in 'Aevum'.");
+            workerScript.log(
+              "gymWorkout",
+              () => "You cannot workout at 'Snap Fitness' because you are not in 'Aevum'.",
+            );
             return false;
           }
           player.location = LocationName.AevumSnapFitnessGym;
@@ -378,7 +390,10 @@ export function NetscriptSingularity(
           break;
         case LocationName.Sector12IronGym.toLowerCase():
           if (player.city != CityName.Sector12) {
-            workerScript.log("gymWorkout", "You cannot workout at 'Iron Gym' because you are not in 'Sector-12'.");
+            workerScript.log(
+              "gymWorkout",
+              () => "You cannot workout at 'Iron Gym' because you are not in 'Sector-12'.",
+            );
             return false;
           }
           player.location = LocationName.Sector12IronGym;
@@ -389,7 +404,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Sector12) {
             workerScript.log(
               "gymWorkout",
-              "You cannot workout at 'Powerhouse Gym' because you are not in 'Sector-12'.",
+              () => "You cannot workout at 'Powerhouse Gym' because you are not in 'Sector-12'.",
             );
             return false;
           }
@@ -401,7 +416,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Volhaven) {
             workerScript.log(
               "gymWorkout",
-              "You cannot workout at 'Millenium Fitness Gym' because you are not in 'Volhaven'.",
+              () => "You cannot workout at 'Millenium Fitness Gym' because you are not in 'Volhaven'.",
             );
             return false;
           }
@@ -410,7 +425,7 @@ export function NetscriptSingularity(
           expMult = 4;
           break;
         default:
-          workerScript.log("gymWorkout", `Invalid gym name: ${gymName}. gymWorkout() failed`);
+          workerScript.log("gymWorkout", () => `Invalid gym name: ${gymName}. gymWorkout() failed`);
           return false;
       }
 
@@ -432,10 +447,10 @@ export function NetscriptSingularity(
           player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymAgility);
           break;
         default:
-          workerScript.log("gymWorkout", `Invalid stat: ${stat}.`);
+          workerScript.log("gymWorkout", () => `Invalid stat: ${stat}.`);
           return false;
       }
-      workerScript.log("gymWorkout", `Started training ${stat} at ${gymName}`);
+      workerScript.log("gymWorkout", () => `Started training ${stat} at ${gymName}`);
       return true;
     },
 
@@ -455,11 +470,11 @@ export function NetscriptSingularity(
           }
           player.loseMoney(CONSTANTS.TravelCost, "other");
           player.city = cityname;
-          workerScript.log("travelToCity", `Traveled to ${cityname}`);
+          workerScript.log("travelToCity", () => `Traveled to ${cityname}`);
           player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
           return true;
         default:
-          workerScript.log("travelToCity", `Invalid city name: '${cityname}'.`);
+          workerScript.log("travelToCity", () => `Invalid city name: '${cityname}'.`);
           return false;
       }
     },
@@ -469,12 +484,12 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("purchaseTor", 1);
 
       if (player.hasTorRouter()) {
-        workerScript.log("purchaseTor", "You already have a TOR router!");
+        workerScript.log("purchaseTor", () => "You already have a TOR router!");
         return false;
       }
 
       if (player.money < CONSTANTS.TorRouterCost) {
-        workerScript.log("purchaseTor", "You cannot afford to purchase a Tor router.");
+        workerScript.log("purchaseTor", () => "You cannot afford to purchase a Tor router.");
         return false;
       }
       player.loseMoney(CONSTANTS.TorRouterCost, "other");
@@ -493,7 +508,7 @@ export function NetscriptSingularity(
       player.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
       darkweb.serversOnNetwork.push(player.getHomeComputer().hostname);
       player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
-      workerScript.log("purchaseTor", "You have purchased a Tor router!");
+      workerScript.log("purchaseTor", () => "You have purchased a Tor router!");
       return true;
     },
     purchaseProgram: function (programName: any): any {
@@ -501,35 +516,28 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("purchaseProgram", 1);
 
       if (!player.hasTorRouter()) {
-        workerScript.log("purchaseProgram", "You do not have the TOR router.");
+        workerScript.log("purchaseProgram", () => "You do not have the TOR router.");
         return false;
       }
 
       programName = programName.toLowerCase();
 
-      let item = null;
-      for (const key in DarkWebItems) {
-        const i = DarkWebItems[key];
-        if (i.program.toLowerCase() == programName) {
-          item = i;
-        }
-      }
-
+      const item = Object.values(DarkWebItems).find((i) => i.program.toLowerCase() === programName);
       if (item == null) {
-        workerScript.log("purchaseProgram", `Invalid program name: '${programName}.`);
+        workerScript.log("purchaseProgram", () => `Invalid program name: '${programName}.`);
         return false;
       }
 
       if (player.money < item.price) {
         workerScript.log(
           "purchaseProgram",
-          `Not enough money to purchase '${item.program}'. Need ${numeralWrapper.formatMoney(item.price)}`,
+          () => `Not enough money to purchase '${item.program}'. Need ${numeralWrapper.formatMoney(item.price)}`,
         );
         return false;
       }
 
       if (player.hasProgram(item.program)) {
-        workerScript.log("purchaseProgram", `You already have the '${item.program}' program`);
+        workerScript.log("purchaseProgram", () => `You already have the '${item.program}' program`);
         return true;
       }
 
@@ -537,7 +545,7 @@ export function NetscriptSingularity(
       player.getHomeComputer().programs.push(item.program);
       workerScript.log(
         "purchaseProgram",
-        `You have purchased the '${item.program}' program. The new program can be found on your home computer.`,
+        () => `You have purchased the '${item.program}' program. The new program can be found on your home computer.`,
       );
       player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
       return true;
@@ -593,7 +601,7 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("installBackdoor", 1);
       const baseserver = player.getCurrentServer();
       if (!(baseserver instanceof Server)) {
-        workerScript.log("installBackdoor", "cannot backdoor this kind of server");
+        workerScript.log("installBackdoor", () => "cannot backdoor this kind of server");
         return Promise.resolve();
       }
       const server = baseserver as Server;
@@ -607,14 +615,14 @@ export function NetscriptSingularity(
 
       workerScript.log(
         "installBackdoor",
-        `Installing backdoor on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(installTime, true)}`,
+        () => `Installing backdoor on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(installTime, true)}`,
       );
 
       return netscriptDelay(installTime, workerScript).then(function () {
         if (workerScript.env.stopFlag) {
           return Promise.reject(workerScript);
         }
-        workerScript.log("installBackdoor", `Successfully installed backdoor on '${server.hostname}'`);
+        workerScript.log("installBackdoor", () => `Successfully installed backdoor on '${server.hostname}'`);
 
         server.backdoorInstalled = true;
 
@@ -627,7 +635,7 @@ export function NetscriptSingularity(
     getStats: function (): any {
       helper.updateDynamicRam("getStats", getRamCost("getStats"));
       helper.checkSingularityAccess("getStats", 1);
-      workerScript.log("getStats", `getStats is deprecated, please use getplayer`);
+      workerScript.log("getStats", () => `getStats is deprecated, please use getplayer`);
 
       return {
         hacking: player.hacking,
@@ -642,7 +650,7 @@ export function NetscriptSingularity(
     getCharacterInformation: function (): any {
       helper.updateDynamicRam("getCharacterInformation", getRamCost("getCharacterInformation"));
       helper.checkSingularityAccess("getCharacterInformation", 1);
-      workerScript.log("getCharacterInformation", `getCharacterInformation is deprecated, please use getplayer`);
+      workerScript.log("getCharacterInformation", () => `getCharacterInformation is deprecated, please use getplayer`);
 
       return {
         bitnode: player.bitNodeN,
@@ -691,7 +699,7 @@ export function NetscriptSingularity(
       helper.updateDynamicRam("hospitalize", getRamCost("hospitalize"));
       helper.checkSingularityAccess("hospitalize", 1);
       if (player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse) {
-        workerScript.log("hospitalize", "Cannot go to the hospital because the player is busy.");
+        workerScript.log("hospitalize", () => "Cannot go to the hospital because the player is busy.");
         return;
       }
       return player.hospitalize();
@@ -707,7 +715,7 @@ export function NetscriptSingularity(
       if (player.isWorking) {
         Router.toTerminal();
         const txt = player.singularityStopWork();
-        workerScript.log("stopAction", txt);
+        workerScript.log("stopAction", () => txt);
         return true;
       }
       return false;
@@ -719,13 +727,16 @@ export function NetscriptSingularity(
       // Check if we're at max cores
       const homeComputer = player.getHomeComputer();
       if (homeComputer.cpuCores >= 8) {
-        workerScript.log("upgradeHomeCores", `Your home computer is at max cores.`);
+        workerScript.log("upgradeHomeCores", () => `Your home computer is at max cores.`);
         return false;
       }
 
       const cost = player.getUpgradeHomeCoresCost();
       if (player.money < cost) {
-        workerScript.log("upgradeHomeCores", `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`);
+        workerScript.log(
+          "upgradeHomeCores",
+          () => `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`,
+        );
         return false;
       }
 
@@ -735,7 +746,7 @@ export function NetscriptSingularity(
       player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log(
         "upgradeHomeCores",
-        `Purchased an additional core for home computer! It now has ${homeComputer.cpuCores} cores.`,
+        () => `Purchased an additional core for home computer! It now has ${homeComputer.cpuCores} cores.`,
       );
       return true;
     },
@@ -752,13 +763,16 @@ export function NetscriptSingularity(
       // Check if we're at max RAM
       const homeComputer = player.getHomeComputer();
       if (homeComputer.maxRam >= CONSTANTS.HomeComputerMaxRam) {
-        workerScript.log("upgradeHomeRam", `Your home computer is at max RAM.`);
+        workerScript.log("upgradeHomeRam", () => `Your home computer is at max RAM.`);
         return false;
       }
 
       const cost = player.getUpgradeHomeRamCost();
       if (player.money < cost) {
-        workerScript.log("upgradeHomeRam", `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`);
+        workerScript.log(
+          "upgradeHomeRam",
+          () => `You don't have enough money. Need ${numeralWrapper.formatMoney(cost)}`,
+        );
         return false;
       }
 
@@ -768,9 +782,10 @@ export function NetscriptSingularity(
       player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
       workerScript.log(
         "upgradeHomeRam",
-        `Purchased additional RAM for home computer! It now has ${numeralWrapper.formatRAM(
-          homeComputer.maxRam,
-        )} of RAM.`,
+        () =>
+          `Purchased additional RAM for home computer! It now has ${numeralWrapper.formatRAM(
+            homeComputer.maxRam,
+          )} of RAM.`,
       );
       return true;
     },
@@ -791,13 +806,13 @@ export function NetscriptSingularity(
 
       // Make sure its a valid company
       if (companyName == null || companyName === "" || !(Companies[companyName] instanceof Company)) {
-        workerScript.log("workForCompany", `Invalid company: '${companyName}'`);
+        workerScript.log("workForCompany", () => `Invalid company: '${companyName}'`);
         return false;
       }
 
       // Make sure player is actually employed at the comapny
       if (!Object.keys(player.jobs).includes(companyName)) {
-        workerScript.log("workForCompany", `You do not have a job at '${companyName}'`);
+        workerScript.log("workForCompany", () => `You do not have a job at '${companyName}'`);
         return false;
       }
 
@@ -805,13 +820,13 @@ export function NetscriptSingularity(
       const companyPositionName = player.jobs[companyName];
       const companyPosition = CompanyPositions[companyPositionName];
       if (companyPositionName === "" || !(companyPosition instanceof CompanyPosition)) {
-        workerScript.log("workForCompany", "You do not have a job");
+        workerScript.log("workForCompany", () => "You do not have a job");
         return false;
       }
 
       if (player.isWorking) {
         const txt = player.singularityStopWork();
-        workerScript.log("workForCompany", txt);
+        workerScript.log("workForCompany", () => txt);
       }
 
       if (companyPosition.isPartTimeJob()) {
@@ -819,7 +834,10 @@ export function NetscriptSingularity(
       } else {
         player.startWork(Router, companyName);
       }
-      workerScript.log("workForCompany", `Began working at '${player.companyName}' as a '${companyPositionName}'`);
+      workerScript.log(
+        "workForCompany",
+        () => `Began working at '${player.companyName}' as a '${companyPositionName}'`,
+      );
       return true;
     },
     applyToCompany: function (companyName: any, field: any): any {
@@ -870,24 +888,24 @@ export function NetscriptSingularity(
           res = player.applyForPartTimeWaiterJob(true);
           break;
         default:
-          workerScript.log("applyToCompany", `Invalid job: '${field}'.`);
+          workerScript.log("applyToCompany", () => `Invalid job: '${field}'.`);
           return false;
       }
       // TODO https://github.com/danielyxie/bitburner/issues/1378
       // The player object's applyForJob function can return string with special error messages
       // if (isString(res)) {
-      //   workerScript.log("applyToCompany", res);
+      //   workerScript.log("applyToCompany",()=> res);
       //   return false;
       // }
       if (res) {
         workerScript.log(
           "applyToCompany",
-          `You were offered a new job at '${companyName}' as a '${player.jobs[companyName]}'`,
+          () => `You were offered a new job at '${companyName}' as a '${player.jobs[companyName]}'`,
         );
       } else {
         workerScript.log(
           "applyToCompany",
-          `You failed to get a new job/promotion at '${companyName}' in the '${field}' field.`,
+          () => `You failed to get a new job/promotion at '${companyName}' in the '${field}' field.`,
         );
       }
       return res;
@@ -922,7 +940,7 @@ export function NetscriptSingularity(
       getFaction("joinFaction", name);
 
       if (!player.factionInvitations.includes(name)) {
-        workerScript.log("joinFaction", `You have not been invited by faction '${name}'`);
+        workerScript.log("joinFaction", () => `You have not been invited by faction '${name}'`);
         return false;
       }
       const fac = Factions[name];
@@ -936,7 +954,7 @@ export function NetscriptSingularity(
         }
       }
       player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
-      workerScript.log("joinFaction", `Joined the '${name}' faction.`);
+      workerScript.log("joinFaction", () => `Joined the '${name}' faction.`);
       return true;
     },
     workForFaction: function (name: any, type: any): any {
@@ -946,18 +964,18 @@ export function NetscriptSingularity(
 
       // if the player is in a gang and the target faction is any of the gang faction, fail
       if (player.inGang() && AllGangs[name] !== undefined) {
-        workerScript.log("workForFaction", `Faction '${name}' does not offer work at the moment.`);
+        workerScript.log("workForFaction", () => `Faction '${name}' does not offer work at the moment.`);
         return;
       }
 
       if (!player.factions.includes(name)) {
-        workerScript.log("workForFaction", `You are not a member of '${name}'`);
+        workerScript.log("workForFaction", () => `You are not a member of '${name}'`);
         return false;
       }
 
       if (player.isWorking) {
         const txt = player.singularityStopWork();
-        workerScript.log("workForFaction", txt);
+        workerScript.log("workForFaction", () => txt);
       }
 
       const fac = Factions[name];
@@ -1049,34 +1067,34 @@ export function NetscriptSingularity(
         case "hacking contracts":
         case "hackingcontracts":
           if (!hackAvailable.includes(fac.name)) {
-            workerScript.log("workForFaction", `Faction '${fac.name}' do not need help with hacking contracts.`);
+            workerScript.log("workForFaction", () => `Faction '${fac.name}' do not need help with hacking contracts.`);
             return false;
           }
           player.startFactionHackWork(Router, fac);
-          workerScript.log("workForFaction", `Started carrying out hacking contracts for '${fac.name}'`);
+          workerScript.log("workForFaction", () => `Started carrying out hacking contracts for '${fac.name}'`);
           return true;
         case "field":
         case "fieldwork":
         case "field work":
           if (!fdWkAvailable.includes(fac.name)) {
-            workerScript.log("workForFaction", `Faction '${fac.name}' do not need help with field missions.`);
+            workerScript.log("workForFaction", () => `Faction '${fac.name}' do not need help with field missions.`);
             return false;
           }
           player.startFactionFieldWork(Router, fac);
-          workerScript.log("workForFaction", `Started carrying out field missions for '${fac.name}'`);
+          workerScript.log("workForFaction", () => `Started carrying out field missions for '${fac.name}'`);
           return true;
         case "security":
         case "securitywork":
         case "security work":
           if (!scWkAvailable.includes(fac.name)) {
-            workerScript.log("workForFaction", `Faction '${fac.name}' do not need help with security work.`);
+            workerScript.log("workForFaction", () => `Faction '${fac.name}' do not need help with security work.`);
             return false;
           }
           player.startFactionSecurityWork(Router, fac);
-          workerScript.log("workForFaction", `Started carrying out security work for '${fac.name}'`);
+          workerScript.log("workForFaction", () => `Started carrying out security work for '${fac.name}'`);
           return true;
         default:
-          workerScript.log("workForFaction", `Invalid work type: '${type}`);
+          workerScript.log("workForFaction", () => `Invalid work type: '${type}`);
       }
       return true;
     },
@@ -1104,13 +1122,13 @@ export function NetscriptSingularity(
       const faction = getFaction("donateToFaction", name);
 
       if (typeof amt !== "number" || amt <= 0) {
-        workerScript.log("donateToFaction", `Invalid donation amount: '${amt}'.`);
+        workerScript.log("donateToFaction", () => `Invalid donation amount: '${amt}'.`);
         return false;
       }
       if (player.money < amt) {
         workerScript.log(
           "donateToFaction",
-          `You do not have enough money to donate ${numeralWrapper.formatMoney(amt)} to '${name}'`,
+          () => `You do not have enough money to donate ${numeralWrapper.formatMoney(amt)} to '${name}'`,
         );
         return false;
       }
@@ -1118,7 +1136,8 @@ export function NetscriptSingularity(
       if (faction.favor < repNeededToDonate) {
         workerScript.log(
           "donateToFaction",
-          `You do not have enough favor to donate to this faction. Have ${faction.favor}, need ${repNeededToDonate}`,
+          () =>
+            `You do not have enough favor to donate to this faction. Have ${faction.favor}, need ${repNeededToDonate}`,
         );
         return false;
       }
@@ -1127,9 +1146,10 @@ export function NetscriptSingularity(
       player.loseMoney(amt, "other");
       workerScript.log(
         "donateToFaction",
-        `${numeralWrapper.formatMoney(amt)} donated to '${name}' for ${numeralWrapper.formatReputation(
-          repGain,
-        )} reputation`,
+        () =>
+          `${numeralWrapper.formatMoney(amt)} donated to '${name}' for ${numeralWrapper.formatReputation(
+            repGain,
+          )} reputation`,
       );
       return true;
     },
@@ -1139,41 +1159,39 @@ export function NetscriptSingularity(
 
       if (player.isWorking) {
         const txt = player.singularityStopWork();
-        workerScript.log("createProgram", txt);
+        workerScript.log("createProgram", () => txt);
       }
 
       name = name.toLowerCase();
 
-      let p = null;
-      for (const key in Programs) {
-        if (Programs[key].name.toLowerCase() == name) {
-          p = Programs[key];
-        }
-      }
+      const p = Object.values(Programs).find((p) => p.name.toLowerCase() === name);
 
       if (p == null) {
-        workerScript.log("createProgram", `The specified program does not exist: '${name}`);
+        workerScript.log("createProgram", () => `The specified program does not exist: '${name}`);
         return false;
       }
 
       if (player.hasProgram(p.name)) {
-        workerScript.log("createProgram", `You already have the '${p.name}' program`);
+        workerScript.log("createProgram", () => `You already have the '${p.name}' program`);
         return false;
       }
 
       const create = p.create;
       if (create === null) {
-        workerScript.log("createProgram", `You cannot create the '${p.name}' program`);
+        workerScript.log("createProgram", () => `You cannot create the '${p.name}' program`);
         return false;
       }
 
       if (!create.req(player)) {
-        workerScript.log("createProgram", `Hacking level is too low to create '${p.name}' (level ${create.level} req)`);
+        workerScript.log(
+          "createProgram",
+          () => `Hacking level is too low to create '${p.name}' (level ${create.level} req)`,
+        );
         return false;
       }
 
       player.startCreateProgramWork(Router, p.name, create.time, create.level);
-      workerScript.log("createProgram", `Began creating program: '${name}'`);
+      workerScript.log("createProgram", () => `Began creating program: '${name}'`);
       return true;
     },
     commitCrime: function (crimeRoughName: any): any {
@@ -1182,7 +1200,7 @@ export function NetscriptSingularity(
 
       if (player.isWorking) {
         const txt = player.singularityStopWork();
-        workerScript.log("commitCrime", txt);
+        workerScript.log("commitCrime", () => txt);
       }
 
       // Set Location to slums
@@ -1193,7 +1211,7 @@ export function NetscriptSingularity(
         // couldn't find crime
         throw helper.makeRuntimeErrorMsg("commitCrime", `Invalid crime: '${crimeRoughName}'`);
       }
-      workerScript.log("commitCrime", `Attempting to commit ${crime.name}...`);
+      workerScript.log("commitCrime", () => `Attempting to commit ${crime.name}...`);
       return crime.commit(Router, player, 1, workerScript);
     },
     getCrimeChance: function (crimeRoughName: any): any {

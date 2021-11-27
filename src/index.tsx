@@ -24,3 +24,10 @@ function rerender(): void {
 (function () {
   ThemeEvents.subscribe(rerender);
 })();
+
+(function () {
+  if (process.env.NODE_ENV === "development") return;
+  window.onbeforeunload = function () {
+    return "Your work will be lost.";
+  };
+})();

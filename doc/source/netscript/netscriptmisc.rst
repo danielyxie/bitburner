@@ -34,7 +34,7 @@ Let's assume Port 1 starts out empty (no data inside). We'll represent the port 
 Now assume we ran the following simple script::
 
     for (i = 0; i < 10; ++i) {
-        write(1, i); //Writes the value of i to port 1
+        writePort(1, i); //Writes the value of i to port 1
     }
 
 After this script executes, our script will contain every number from 0 through 9, as so::
@@ -44,7 +44,7 @@ After this script executes, our script will contain every number from 0 through 
 Then, assume we run the following script::
 
     for (i = 0; i < 3; ++i) {
-        print(read(1)); //Reads a value from port 1 and then prints it
+        print(readPort(1)); //Reads a value from port 1 and then prints it
     }
 
 This script above will read the first three values from port 1 and then print them to the script's log. The log will end up looking like::
@@ -69,7 +69,7 @@ The :js:func:`getPortHandle` Netscript function can be used to get a handle to a
 This handle allows you to access several new port-related functions and the
 port's underlying data structure, which is just a JavaScript array. The functions are:
 
-.. js:method:: NetscriptPort.write(data)
+.. js:method:: NetscriptPort.writePort(data)
 
     :param data: Data to write to the port
     :returns: If the port is full, the item that is removed from the port is returned.
@@ -77,7 +77,7 @@ port's underlying data structure, which is just a JavaScript array. The function
 
     Writes `data` to the port. Works the same as the Netscript function `write`.
 
-.. js:method:: NetscriptPort.tryWrite(data)
+.. js:method:: NetscriptPort.tryWritePort(data)
 
     :param data: Data to try to write to the port
     :returns: True if the data is successfully written to the port, and false otherwise.
@@ -85,7 +85,7 @@ port's underlying data structure, which is just a JavaScript array. The function
     Attempts to write `data` to the Netscript port. If the port is full, the data will
     not be written. Otherwise, the data will be written normally.
 
-.. js::method:: NetscriptPort.read()
+.. js::method:: NetscriptPort.readPort()
 
     :returns: The data read from the port. If the port is empty, "NULL PORT DATA" is returned
 

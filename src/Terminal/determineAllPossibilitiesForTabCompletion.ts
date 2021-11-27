@@ -275,7 +275,6 @@ export async function determineAllPossibilitiesForTabCompletion(
   if (isCommand("nano")) {
     addAllScripts();
     addAllTextFiles();
-    allPos.push(".fconf");
     addAllDirectories();
 
     return allPos;
