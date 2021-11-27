@@ -96,8 +96,7 @@ export function prestigeAugmentation(): void {
   // Re-initialize things - This will update any changes
   initFactions(); // Factions must be initialized before augmentations
 
-  Player.factions = Player.factions.concat(maintainMembership);
-  Player.factions.map((f) => (Factions[f].isMember = true));
+  Player.factionInvitations = Player.factionInvitations.concat(maintainMembership);
   initAugmentations(); // Calls reapplyAllAugmentations() and resets Player multipliers
   Player.reapplyAllSourceFiles();
   initCompanies();
