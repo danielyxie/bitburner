@@ -192,14 +192,11 @@ export class Terminal implements ITerminal {
     const expGainedOnFailure = expGainedOnSuccess / 4;
     if (rand < hackChance) {
       // Success!
+      server.backdoorInstalled = true;
       if (SpecialServers.WorldDaemon === server.hostname) {
-        if (player.bitNodeN == null) {
-          player.bitNodeN = 1;
-        }
         router.toBitVerse(false, false);
         return;
       }
-      server.backdoorInstalled = true;
       let moneyGained = calculatePercentMoneyHacked(server, player);
       moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 

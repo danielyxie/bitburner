@@ -3,12 +3,11 @@ const greenworks = require("./greenworks");
 
 if (greenworks.init()) {
   console.log("Steam API has been initialized.");
-  greenworks.activateAchievement("BN1.1", () => undefined);
 } else {
   console.log("Steam API has failed to initialize.");
 }
 
-const debug = true;
+const debug = false;
 
 Menu.setApplicationMenu(false);
 function createWindow() {
@@ -42,9 +41,15 @@ function createWindow() {
     shell.openExternal(url);
   });
 
+  // This is backward but the game fills in an array called `document.achievements` and we retrieve it from
+  // here. Hey if it works it works.
+  const achievements = greenworks.getAchievementNames();
   setInterval(async () => {
-    const resp = await win.webContents.executeJavaScript("document.saveString");
-    await win.webContents.executeJavaScript(`console.log('${resp}')`);
+    const achs = await win.webContents.executeJavaScript("document.achievements");
+    for (const ach of achs) {
+      if (!achievements.includes(ach)) continue;
+      greenworks.activateAchievement(ach, () => undefined);
+    }
   }, 1000);
 }
 
