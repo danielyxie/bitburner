@@ -124,6 +124,9 @@ module.exports = (env, argv) => {
       isFastRefresh && new ReactRefreshWebpackPlugin(),
     ].filter(Boolean),
     target: "web",
+    // node: {
+    //   fs: "mock",
+    // },
     entry: entry,
     output: {
       path: path.resolve(__dirname, "./"),

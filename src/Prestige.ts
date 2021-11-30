@@ -36,7 +36,7 @@ const BitNode8StartingMoney = 250e6;
 export function prestigeAugmentation(): void {
   initBitNodeMultipliers(Player);
 
-  const maintainMembership = Player.factions.filter(function (faction) {
+  const maintainMembership = Player.factions.concat(Player.factionInvitations).filter(function (faction) {
     return Factions[faction].getInfo().keep;
   });
   Player.prestigeAugmentation();
