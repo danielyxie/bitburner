@@ -7,8 +7,9 @@ import { Exploit } from "./Exploits/Exploit";
 import { Factions } from "./Faction/Factions";
 import { AllGangs } from "./Gang/AllGangs";
 import { GangConstants } from "./Gang/data/Constants";
-import { HacknetServerConstants } from "./Hacknet/data/Constants";
+import { HacknetNodeConstants, HacknetServerConstants } from "./Hacknet/data/Constants";
 import { hasHacknetServers } from "./Hacknet/HacknetHelpers";
+import { HacknetNode } from "./Hacknet/HacknetNode";
 import { HacknetServer } from "./Hacknet/HacknetServer";
 import { CityName } from "./Locations/data/CityNames";
 import { Player } from "./Player";
@@ -45,24 +46,31 @@ function sfAchievement(): Achievement[] {
 }
 
 const achievements: Achievement[] = [
-  {
-    ID: "UNACHIEVABLE",
-    // Hey Players! Yes, you're supposed to modify this to get the achievement!
-    Condition: () => false,
-  },
-  ...sfAchievement(),
-  {
-    ID: "SF12.100",
-    Condition: () => Player.sourceFileLvl(12) >= 100,
-  },
-  { ID: "BYPASS", Condition: () => Player.exploits.includes(Exploit.Bypass) },
-  { ID: "PROTOTYPETAMPERING", Condition: () => Player.exploits.includes(Exploit.PrototypeTampering) },
-  { ID: "UNCLICKABLE", Condition: () => Player.exploits.includes(Exploit.Unclickable) },
-  { ID: "UNDOCUMENTEDFUNCTIONCALL", Condition: () => Player.exploits.includes(Exploit.UndocumentedFunctionCall) },
-  { ID: "TIMECOMPRESSION", Condition: () => Player.exploits.includes(Exploit.TimeCompression) },
-  { ID: "REALITYALTERATION", Condition: () => Player.exploits.includes(Exploit.RealityAlteration) },
-  { ID: "N00DLES", Condition: () => Player.exploits.includes(Exploit.N00dles) },
-  { ID: "EDITSAVEFILE", Condition: () => Player.exploits.includes(Exploit.EditSaveFile) },
+  { ID: "CYBERSEC", Condition: () => Player.factions.includes("CyberSec") },
+  { ID: "NITESEC", Condition: () => Player.factions.includes("NiteSec") },
+  { ID: "THE_BLACK_HAND", Condition: () => Player.factions.includes("The Black Hand") },
+  { ID: "BITRUNNERS", Condition: () => Player.factions.includes("BitRunners") },
+  { ID: "THE_COVENANT", Condition: () => Player.factions.includes("The Covenant") },
+  { ID: "DAEDALUS", Condition: () => Player.factions.includes("Daedalus") },
+  { ID: "ILLUMINATI", Condition: () => Player.factions.includes("Illuminati") },
+  { ID: "BRUTESSH.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.BruteSSHProgram.name) },
+  { ID: "FTPCRACK.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.FTPCrackProgram.name) },
+  { ID: "RELAYSMTP.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.RelaySMTPProgram.name) },
+  { ID: "HTTPWORM.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.HTTPWormProgram.name) },
+  { ID: "SQLINJECT.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.SQLInjectProgram.name) },
+  { ID: "FORMULAS.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.Formulas.name) },
+  { ID: "SF1.1", Condition: () => Player.sourceFileLvl(1) >= 1 },
+  { ID: "SF2.1", Condition: () => Player.sourceFileLvl(2) >= 1 },
+  { ID: "SF3.1", Condition: () => Player.sourceFileLvl(3) >= 1 },
+  { ID: "SF4.1", Condition: () => Player.sourceFileLvl(4) >= 1 },
+  { ID: "SF5.1", Condition: () => Player.sourceFileLvl(5) >= 1 },
+  { ID: "SF6.1", Condition: () => Player.sourceFileLvl(6) >= 1 },
+  { ID: "SF7.1", Condition: () => Player.sourceFileLvl(7) >= 1 },
+  { ID: "SF8.1", Condition: () => Player.sourceFileLvl(8) >= 1 },
+  { ID: "SF9.1", Condition: () => Player.sourceFileLvl(9) >= 1 },
+  { ID: "SF10.1", Condition: () => Player.sourceFileLvl(10) >= 1 },
+  { ID: "SF11.1", Condition: () => Player.sourceFileLvl(11) >= 1 },
+  { ID: "SF12.1", Condition: () => Player.sourceFileLvl(12) >= 1 },
   {
     ID: "MONEY_1Q",
     Condition: () => Player.money >= 1e18,
@@ -84,16 +92,8 @@ const achievements: Achievement[] = [
     Condition: () => Player.queuedAugmentations.length >= 40,
   },
   {
-    ID: "SLEEVE_8",
-    Condition: () => Player.sleeves.length === 8,
-  },
-  {
     ID: "HACKING_100000",
     Condition: () => Player.hacking >= 100000,
-  },
-  {
-    ID: "INTELLIGENCE_255",
-    Condition: () => Player.intelligence >= 255,
   },
   {
     ID: "COMBAT_3000",
@@ -104,52 +104,6 @@ const achievements: Achievement[] = [
     ID: "NEUROFLUX_255",
     Condition: () => Player.augmentations.some((a) => a.name === AugmentationNames.NeuroFluxGovernor && a.level >= 255),
   },
-  { ID: "ILLUMINATI", Condition: () => Player.factions.includes("Illuminati") },
-  { ID: "DAEDALUS", Condition: () => Player.factions.includes("Daedalus") },
-  { ID: "THE_COVENANT", Condition: () => Player.factions.includes("The Covenant") },
-  { ID: "ECORP", Condition: () => Player.factions.includes("ECorp") },
-  { ID: "MEGACORP", Condition: () => Player.factions.includes("MegaCorp") },
-  { ID: "BACHMAN_&_ASSOCIATES", Condition: () => Player.factions.includes("Bachman & Associates") },
-  { ID: "BLADE_INDUSTRIES", Condition: () => Player.factions.includes("Blade Industries") },
-  { ID: "NWO", Condition: () => Player.factions.includes("NWO") },
-  { ID: "CLARKE_INCORPORATED", Condition: () => Player.factions.includes("Clarke Incorporated") },
-  { ID: "OMNITEK_INCORPORATED", Condition: () => Player.factions.includes("OmniTek Incorporated") },
-  { ID: "FOUR_SIGMA", Condition: () => Player.factions.includes("Four Sigma") },
-  { ID: "KUAIGONG_INTERNATIONAL", Condition: () => Player.factions.includes("KuaiGong International") },
-  { ID: "FULCRUM_SECRET_TECHNOLOGIES", Condition: () => Player.factions.includes("Fulcrum Secret Technologies") },
-  { ID: "BITRUNNERS", Condition: () => Player.factions.includes("BitRunners") },
-  { ID: "THE_BLACK_HAND", Condition: () => Player.factions.includes("The Black Hand") },
-  { ID: "NITESEC", Condition: () => Player.factions.includes("NiteSec") },
-  { ID: "AEVUM", Condition: () => Player.factions.includes("Aevum") },
-  { ID: "CHONGQING", Condition: () => Player.factions.includes("Chongqing") },
-  { ID: "ISHIMA", Condition: () => Player.factions.includes("Ishima") },
-  { ID: "NEW_TOKYO", Condition: () => Player.factions.includes("New Tokyo") },
-  { ID: "SECTOR-12", Condition: () => Player.factions.includes("Sector-12") },
-  { ID: "VOLHAVEN", Condition: () => Player.factions.includes("Volhaven") },
-  { ID: "SPEAKERS_FOR_THE_DEAD", Condition: () => Player.factions.includes("Speakers for the Dead") },
-  { ID: "THE_DARK_ARMY", Condition: () => Player.factions.includes("The Dark Army") },
-  { ID: "THE_SYNDICATE", Condition: () => Player.factions.includes("The Syndicate") },
-  { ID: "SILHOUETTE", Condition: () => Player.factions.includes("Silhouette") },
-  { ID: "TETRADS", Condition: () => Player.factions.includes("Tetrads") },
-  { ID: "SLUM_SNAKES", Condition: () => Player.factions.includes("Slum Snakes") },
-  { ID: "NETBURNERS", Condition: () => Player.factions.includes("Netburners") },
-  { ID: "TIAN_DI_HUI", Condition: () => Player.factions.includes("Tian Di Hui") },
-  { ID: "CYBERSEC", Condition: () => Player.factions.includes("CyberSec") },
-  { ID: "BLADEBURNERS", Condition: () => Player.factions.includes("Bladeburners") },
-  { ID: "BRUTESSH.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.BruteSSHProgram.name) },
-  { ID: "FTPCRACK.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.FTPCrackProgram.name) },
-  { ID: "RELAYSMTP.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.RelaySMTPProgram.name) },
-  { ID: "HTTPWORM.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.HTTPWormProgram.name) },
-  { ID: "SQLINJECT.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.SQLInjectProgram.name) },
-  { ID: "DEEPSCANV1.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.DeepscanV1.name) },
-  { ID: "DEEPSCANV2.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.DeepscanV2.name) },
-  {
-    ID: "SERVERPROFILER.EXE",
-    Condition: () => Player.getHomeComputer().programs.includes(Programs.ServerProfiler.name),
-  },
-  { ID: "AUTOLINK.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.AutoLink.name) },
-  { ID: "FORMULAS.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.Formulas.name) },
-  { ID: "FLIGHT.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.Flight.name) },
   {
     ID: "NS2",
     Condition: () =>
@@ -190,35 +144,29 @@ const achievements: Achievement[] = [
       return p.backdoorInstalled;
     },
   },
-
   { ID: "SCRIPT_32GB", Condition: () => Player.getHomeComputer().scripts.some((s) => s.ramUsage >= 32) },
-  { ID: "FIRST_HACKNET_SERVER", Condition: () => hasHacknetServers(Player) && Player.hacknetNodes.length > 0 },
+  { ID: "FIRST_HACKNET_NODE", Condition: () => !hasHacknetServers(Player) && Player.hacknetNodes.length > 0 },
   {
-    ID: "ALL_HACKNET_SERVER",
-    Condition: () => hasHacknetServers(Player) && Player.hacknetNodes.length === HacknetServerConstants.MaxServers,
+    ID: "30_HACKNET_NODE",
+    Condition: () => !hasHacknetServers(Player) && Player.hacknetNodes.length >= 30,
   },
   {
-    ID: "MAX_HACKNET_SERVER",
+    ID: "MAX_HACKNET_NODE",
     Condition: () => {
-      if (!hasHacknetServers(Player)) return false;
+      if (hasHacknetServers(Player)) return false;
       for (const h of Player.hacknetNodes) {
-        if (!(h instanceof HacknetServer)) return false;
+        if (!(h instanceof HacknetNode)) return false;
         if (
-          h.maxRam === HacknetServerConstants.MaxRam &&
-          h.cores === HacknetServerConstants.MaxCores &&
-          h.level === HacknetServerConstants.MaxLevel &&
-          h.cache === HacknetServerConstants.MaxCache
+          h.ram === HacknetNodeConstants.MaxRam &&
+          h.cores === HacknetNodeConstants.MaxCores &&
+          h.level === HacknetNodeConstants.MaxLevel
         )
           return true;
       }
       return false;
     },
   },
-  { ID: "HACKNET_SERVER_1B", Condition: () => hasHacknetServers(Player) && Player.moneySourceB.hacknet >= 1e9 },
-  {
-    ID: "MAX_CACHE",
-    Condition: () => hasHacknetServers(Player) && Player.hashManager.hashes === Player.hashManager.capacity,
-  },
+  { ID: "HACKNET_NODE_10M", Condition: () => !hasHacknetServers(Player) && Player.moneySourceB.hacknet >= 10e6 },
   { ID: "REPUTATION_10M", Condition: () => Object.values(Factions).some((f) => f.playerReputation >= 10e6) },
   { ID: "DONATION", Condition: () => Object.values(Factions).some((f) => f.favor >= 150) },
   { ID: "TRAVEL", Condition: () => Player.city !== CityName.Sector12 },
@@ -233,7 +181,7 @@ const achievements: Achievement[] = [
       ].includes(Player.className),
   },
   { ID: "TOR", Condition: () => Player.hasTorRouter() },
-  { ID: "4S", Condition: () => Player.has4SData },
+  { ID: "HOSPITALIZED", Condition: () => Player.moneySourceB.hospitalization !== 0 },
   { ID: "GANG", Condition: () => Player.gang !== null },
   {
     ID: "FULL_GANG",
@@ -251,16 +199,6 @@ const achievements: Achievement[] = [
         (m) =>
           m.hack >= 10000 || m.str >= 10000 || m.def >= 10000 || m.dex >= 10000 || m.agi >= 10000 || m.cha >= 10000,
       ),
-  },
-  { ID: "BLADEBURNER_DIVISION", Condition: () => Player.bladeburner !== null },
-  {
-    ID: "BLADEBURNER_OVERCLOCK",
-    Condition: () =>
-      Player.bladeburner !== null && Player.bladeburner.skills[SkillNames.Overclock] === Skills[SkillNames.Overclock],
-  },
-  {
-    ID: "BLADEBURNER_UNSPENT_100000",
-    Condition: () => Player.bladeburner !== null && Player.bladeburner.skillPoints >= 100000,
   },
   { ID: "CORPORATION", Condition: () => Player.corporation !== null },
   {
@@ -288,6 +226,67 @@ const achievements: Achievement[] = [
     ID: "CORPORATION_REAL_ESTATE",
     Condition: () =>
       Player.corporation !== null && Player.corporation.divisions.some((d) => d.type === Industries.RealEstate),
+  },
+  { ID: "INTELLIGENCE_255", Condition: () => Player.intelligence >= 255 },
+  { ID: "BLADEBURNER_DIVISION", Condition: () => Player.bladeburner !== null },
+  {
+    ID: "BLADEBURNER_OVERCLOCK",
+    Condition: () =>
+      Player.bladeburner !== null && Player.bladeburner.skills[SkillNames.Overclock] === Skills[SkillNames.Overclock],
+  },
+  {
+    ID: "BLADEBURNER_UNSPENT_100000",
+    Condition: () => Player.bladeburner !== null && Player.bladeburner.skillPoints >= 100000,
+  },
+  { ID: "4S", Condition: () => Player.has4SData },
+  { ID: "FIRST_HACKNET_SERVER", Condition: () => hasHacknetServers(Player) && Player.hacknetNodes.length > 0 },
+  {
+    ID: "ALL_HACKNET_SERVER",
+    Condition: () => hasHacknetServers(Player) && Player.hacknetNodes.length === HacknetServerConstants.MaxServers,
+  },
+  {
+    ID: "MAX_HACKNET_SERVER",
+    Condition: () => {
+      if (!hasHacknetServers(Player)) return false;
+      for (const h of Player.hacknetNodes) {
+        if (!(h instanceof HacknetServer)) return false;
+        if (
+          h.maxRam === HacknetServerConstants.MaxRam &&
+          h.cores === HacknetServerConstants.MaxCores &&
+          h.level === HacknetServerConstants.MaxLevel &&
+          h.cache === HacknetServerConstants.MaxCache
+        )
+          return true;
+      }
+      return false;
+    },
+  },
+  { ID: "HACKNET_SERVER_1B", Condition: () => hasHacknetServers(Player) && Player.moneySourceB.hacknet >= 1e9 },
+  {
+    ID: "MAX_CACHE",
+    Condition: () => hasHacknetServers(Player) && Player.hashManager.hashes === Player.hashManager.capacity,
+  },
+  {
+    ID: "SLEEVE_8",
+    Condition: () => Player.sleeves.length === 8,
+  },
+  {
+    ID: "FAST_BN",
+    Condition: () => bitNodeFinishedState() && Player.playtimeSinceLastBitnode < 1000 * 60 * 60 * 24 * 2,
+  },
+  {
+    ID: "INDECISIVE",
+    Condition: (function () {
+      let c = 0;
+      setInterval(() => {
+        if (Router.page() === Page.BitVerse) {
+          c++;
+        } else {
+          c = 0;
+        }
+      }, 60 * 1000);
+      return () => c > 60;
+    })(),
   },
   {
     ID: "CHALLENGE_BN1",
@@ -341,25 +340,55 @@ const achievements: Achievement[] = [
           s.charisma_exp > 0,
       ),
   },
+  { ID: "CHALLENGE_BN12", Condition: () => Player.sourceFileLvl(12) >= 50 },
+  { ID: "BYPASS", Condition: () => Player.exploits.includes(Exploit.Bypass) },
+  { ID: "PROTOTYPETAMPERING", Condition: () => Player.exploits.includes(Exploit.PrototypeTampering) },
+  { ID: "UNCLICKABLE", Condition: () => Player.exploits.includes(Exploit.Unclickable) },
+  { ID: "UNDOCUMENTEDFUNCTIONCALL", Condition: () => Player.exploits.includes(Exploit.UndocumentedFunctionCall) },
+  { ID: "TIMECOMPRESSION", Condition: () => Player.exploits.includes(Exploit.TimeCompression) },
+  { ID: "REALITYALTERATION", Condition: () => Player.exploits.includes(Exploit.RealityAlteration) },
+  { ID: "N00DLES", Condition: () => Player.exploits.includes(Exploit.N00dles) },
+  { ID: "EDITSAVEFILE", Condition: () => Player.exploits.includes(Exploit.EditSaveFile) },
   {
-    ID: "FAST_BN",
-    Condition: () => bitNodeFinishedState() && Player.playtimeSinceLastBitnode < 1000 * 60 * 60 * 24 * 2,
+    ID: "UNACHIEVABLE",
+    // Hey Players! Yes, you're supposed to modify this to get the achievement!
+    Condition: () => false,
   },
-  {
-    ID: "INDECISIVE",
-    Condition: (function () {
-      let c = 0;
-      setInterval(() => {
-        if (Router.page() === Page.BitVerse) {
-          c++;
-        } else {
-          c = 0;
-        }
-      }, 60 * 1000);
-      return () => c > 60;
-    })(),
-  },
-  { ID: "HOSPITALIZED", Condition: () => Player.moneySourceB.hospitalization !== 0 },
+
+  // Steam has a limit of 100 achievement. So these were planned but commented for now.
+  // { ID: "ECORP", Condition: () => Player.factions.includes("ECorp") },
+  // { ID: "MEGACORP", Condition: () => Player.factions.includes("MegaCorp") },
+  // { ID: "BACHMAN_&_ASSOCIATES", Condition: () => Player.factions.includes("Bachman & Associates") },
+  // { ID: "BLADE_INDUSTRIES", Condition: () => Player.factions.includes("Blade Industries") },
+  // { ID: "NWO", Condition: () => Player.factions.includes("NWO") },
+  // { ID: "CLARKE_INCORPORATED", Condition: () => Player.factions.includes("Clarke Incorporated") },
+  // { ID: "OMNITEK_INCORPORATED", Condition: () => Player.factions.includes("OmniTek Incorporated") },
+  // { ID: "FOUR_SIGMA", Condition: () => Player.factions.includes("Four Sigma") },
+  // { ID: "KUAIGONG_INTERNATIONAL", Condition: () => Player.factions.includes("KuaiGong International") },
+  // { ID: "FULCRUM_SECRET_TECHNOLOGIES", Condition: () => Player.factions.includes("Fulcrum Secret Technologies") },
+  // { ID: "AEVUM", Condition: () => Player.factions.includes("Aevum") },
+  // { ID: "CHONGQING", Condition: () => Player.factions.includes("Chongqing") },
+  // { ID: "ISHIMA", Condition: () => Player.factions.includes("Ishima") },
+  // { ID: "NEW_TOKYO", Condition: () => Player.factions.includes("New Tokyo") },
+  // { ID: "SECTOR-12", Condition: () => Player.factions.includes("Sector-12") },
+  // { ID: "VOLHAVEN", Condition: () => Player.factions.includes("Volhaven") },
+  // { ID: "SPEAKERS_FOR_THE_DEAD", Condition: () => Player.factions.includes("Speakers for the Dead") },
+  // { ID: "THE_DARK_ARMY", Condition: () => Player.factions.includes("The Dark Army") },
+  // { ID: "THE_SYNDICATE", Condition: () => Player.factions.includes("The Syndicate") },
+  // { ID: "SILHOUETTE", Condition: () => Player.factions.includes("Silhouette") },
+  // { ID: "TETRADS", Condition: () => Player.factions.includes("Tetrads") },
+  // { ID: "SLUM_SNAKES", Condition: () => Player.factions.includes("Slum Snakes") },
+  // { ID: "NETBURNERS", Condition: () => Player.factions.includes("Netburners") },
+  // { ID: "TIAN_DI_HUI", Condition: () => Player.factions.includes("Tian Di Hui") },
+  // { ID: "BLADEBURNERS", Condition: () => Player.factions.includes("Bladeburners") },
+  // { ID: "DEEPSCANV1.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.DeepscanV1.name) },
+  // { ID: "DEEPSCANV2.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.DeepscanV2.name) },
+  // {
+  //   ID: "SERVERPROFILER.EXE",
+  //   Condition: () => Player.getHomeComputer().programs.includes(Programs.ServerProfiler.name),
+  // },
+  // { ID: "AUTOLINK.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.AutoLink.name) },
+  // { ID: "FLIGHT.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.Flight.name) },
 ];
 
 function setAchievements(achs: string[]): void {
