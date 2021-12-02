@@ -44,6 +44,9 @@ function createWindow() {
   // This is backward but the game fills in an array called `document.achievements` and we retrieve it from
   // here. Hey if it works it works.
   const achievements = greenworks.getAchievementNames();
+  // for (const ach of achievements) {
+  //   greenworks.clearAchievement(ach, () => undefined);
+  // }
   setInterval(async () => {
     const achs = await win.webContents.executeJavaScript("document.achievements");
     for (const ach of achs) {
