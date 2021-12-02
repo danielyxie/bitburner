@@ -3006,7 +3006,7 @@ export interface Gang {
    * Get the name of all possible equipment/upgrades you can purchase for your Gang Members.
    * This includes Augmentations.
    *
-   * @returns Names of all Equpiment/Augmentations.
+   * @returns Names of all Equipments/Augmentations.
    */
   getEquipmentNames(): string[];
 
@@ -4974,7 +4974,7 @@ export interface NS extends Singularity {
    *
    * @returns Array containing an object with number and level of the source file.
    */
-   getOwnedSourceFiles(): SourceFileLvl[];
+  getOwnedSourceFiles(): SourceFileLvl[];
 
   /**
    * Get information about the player.

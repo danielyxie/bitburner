@@ -15,7 +15,7 @@ getEquipmentNames(): string[];
 
 string\[\]
 
-Names of all Equpiment/Augmentations.
+Names of all Equipments/Augmentations.
 
 ## Remarks
 

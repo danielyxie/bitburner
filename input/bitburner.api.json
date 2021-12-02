@@ -6088,7 +6088,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Gang#getEquipmentNames:member(1)",
-              "docComment": "/**\n * List equipment names.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Get the name of all possible equipment/upgrades you can purchase for your Gang Members. This includes Augmentations.\n *\n * @returns Names of all Equpiment/Augmentations.\n */\n",
+              "docComment": "/**\n * List equipment names.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Get the name of all possible equipment/upgrades you can purchase for your Gang Members. This includes Augmentations.\n *\n * @returns Names of all Equipments/Augmentations.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -12674,6 +12674,39 @@
               "overloadIndex": 1,
               "parameters": [],
               "name": "getHostname"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NS#getOwnedSourceFiles:member(1)",
+              "docComment": "/**\n * Get a list of acquired Source-Files.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Returns an array of source files\n *\n * @returns Array containing an object with number and level of the source file.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getOwnedSourceFiles(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SourceFileLvl",
+                  "canonicalReference": "bitburner!SourceFileLvl:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "getOwnedSourceFiles"
             },
             {
               "kind": "MethodSignature",
@@ -20952,39 +20985,6 @@
                 }
               ],
               "name": "getOwnedAugmentations"
-            },
-            {
-              "kind": "MethodSignature",
-              "canonicalReference": "bitburner!Singularity#getOwnedSourceFiles:member(1)",
-              "docComment": "/**\n * Get a list of acquired Source-Files.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * Returns an array of source files\n *\n * @returns Array containing an object with number and level of the source file.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "getOwnedSourceFiles(): "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "SourceFileLvl",
-                  "canonicalReference": "bitburner!SourceFileLvl:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              },
-              "releaseTag": "Public",
-              "overloadIndex": 1,
-              "parameters": [],
-              "name": "getOwnedSourceFiles"
             },
             {
               "kind": "MethodSignature",
