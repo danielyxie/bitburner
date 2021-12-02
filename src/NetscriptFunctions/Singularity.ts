@@ -105,18 +105,6 @@ export function NetscriptSingularity(
       }
       return res;
     },
-    getOwnedSourceFiles: function (): any {
-      helper.updateDynamicRam("getOwnedSourceFiles", getRamCost("getOwnedSourceFiles"));
-      helper.checkSingularityAccess("getOwnedSourceFiles", 3);
-      const res = [];
-      for (let i = 0; i < player.sourceFiles.length; ++i) {
-        res.push({
-          n: player.sourceFiles[i].n,
-          lvl: player.sourceFiles[i].lvl,
-        });
-      }
-      return res;
-    },
     getAugmentationsFromFaction: function (facname: any): any {
       helper.updateDynamicRam("getAugmentationsFromFaction", getRamCost("getAugmentationsFromFaction"));
       helper.checkSingularityAccess("getAugmentationsFromFaction", 3);

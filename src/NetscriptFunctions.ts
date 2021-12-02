@@ -2150,7 +2150,17 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("getFavorToDonate", getRamCost("getFavorToDonate"));
       return Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
     },
-
+    getOwnedSourceFiles: function (): any {
+      helper.updateDynamicRam("getOwnedSourceFiles", getRamCost("getOwnedSourceFiles"));
+      const res = [];
+      for (let i = 0; i < Player.sourceFiles.length; ++i) {
+        res.push({
+          n: Player.sourceFiles[i].n,
+          lvl: Player.sourceFiles[i].lvl,
+        });
+      }
+      return res;
+    },
     getPlayer: function (): INetscriptPlayer {
       helper.updateDynamicRam("getPlayer", getRamCost("getPlayer"));
 
