@@ -63,7 +63,7 @@ import { NetscriptGang } from "./NetscriptFunctions/Gang";
 import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
-import { NS as INS, Player as INetscriptPlayer } from "./ScriptEditor/NetscriptDefinitions";
+import { NS as INS, Player as INetscriptPlayer, SourceFileLvl } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
 import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
 import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
@@ -2150,7 +2150,17 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("getFavorToDonate", getRamCost("getFavorToDonate"));
       return Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
     },
-
+    getOwnedSourceFiles: function (): SourceFileLvl[] {
+      helper.updateDynamicRam("getOwnedSourceFiles", getRamCost("getOwnedSourceFiles"));
+      const res: SourceFileLvl[] = [];
+      for (let i = 0; i < Player.sourceFiles.length; ++i) {
+        res.push({
+          n: Player.sourceFiles[i].n,
+          lvl: Player.sourceFiles[i].lvl,
+        } as SourceFileLvl);
+      }
+      return res;
+    },
     getPlayer: function (): INetscriptPlayer {
       helper.updateDynamicRam("getPlayer", getRamCost("getPlayer"));
 

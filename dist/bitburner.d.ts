@@ -4085,8 +4085,6 @@ export declare interface Singularity {
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
-     *
      * Returns an array of source files
      *
      * @returns Array containing an object with number and level of the source file.
