@@ -16,6 +16,7 @@ import Typography from "@mui/material/Typography";
 interface IProps {
   StartingDifficulty: number;
   Difficulty: number;
+  Reward: number;
   MaxLevel: number;
 }
 
@@ -112,6 +113,7 @@ export function Game(props: IProps): React.ReactElement {
         <Victory
           StartingDifficulty={props.StartingDifficulty}
           Difficulty={props.Difficulty}
+          Reward={props.Reward}
           MaxLevel={props.MaxLevel}
         />
       );
