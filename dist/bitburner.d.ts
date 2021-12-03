@@ -1032,7 +1032,7 @@ export declare interface Gang {
      * Get the name of all possible equipment/upgrades you can purchase for your Gang Members.
      * This includes Augmentations.
      *
-     * @returns Names of all Equpiment/Augmentations.
+     * @returns Names of all Equipments/Augmentations.
      */
     getEquipmentNames(): string[];
 
@@ -3314,6 +3314,17 @@ export declare interface NS extends Singularity {
     getBitNodeMultipliers(): BitNodeMultipliers;
 
     /**
+     * Get a list of acquired Source-Files.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Returns an array of source files
+     *
+     * @returns Array containing an object with number and level of the source file.
+     */
+    getOwnedSourceFiles(): SourceFileLvl[];
+
+    /**
      * Get information about the player.
      * @returns Player info
      */
@@ -4079,17 +4090,6 @@ export declare interface Singularity {
      * @returns Array containing the names (as strings) of all Augmentations you have.
      */
     getOwnedAugmentations(purchased?: boolean): string[];
-
-    /**
-     * Get a list of acquired Source-Files.
-     * @remarks
-     * RAM cost: 5 GB
-     *
-     * Returns an array of source files
-     *
-     * @returns Array containing an object with number and level of the source file.
-     */
-    getOwnedSourceFiles(): SourceFileLvl[];
 
     /**
      * Get a list of augmentation available from a faction.
