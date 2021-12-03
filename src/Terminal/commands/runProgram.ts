@@ -9,7 +9,7 @@ export function runProgram(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   if (args.length < 1) {
     return;

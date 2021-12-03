@@ -718,7 +718,7 @@ export class Terminal implements ITerminal {
     /****************** END INTERACTIVE TUTORIAL ******************/
     /* Command parser */
     const commandName = commandArray[0];
-    if (typeof commandName === "number") {
+    if (typeof commandName === "number" || typeof commandName === "boolean") {
       this.error(`Command ${commandArray[0]} not found`);
       return;
     }
@@ -729,7 +729,7 @@ export class Terminal implements ITerminal {
         router: IRouter,
         player: IPlayer,
         server: BaseServer,
-        args: (string | number)[],
+        args: (string | number | boolean)[],
       ) => void;
     } = {
       "scan-analyze": scananalyze,

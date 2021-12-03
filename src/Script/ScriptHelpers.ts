@@ -87,7 +87,7 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
 //designated server, and false otherwise
 export function findRunningScript(
   filename: string,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
   server: BaseServer,
 ): RunningScript | null {
   for (let i = 0; i < server.runningScripts.length; ++i) {

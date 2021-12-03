@@ -9,7 +9,7 @@ export function scan(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   if (args.length !== 0) {
     terminal.error("Incorrect usage of netstat/scan command. Usage: netstat/scan");

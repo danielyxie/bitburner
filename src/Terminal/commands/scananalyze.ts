@@ -9,7 +9,7 @@ export function scananalyze(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   if (args.length === 0) {
     terminal.executeScanAnalyzeCommand(player, 1);

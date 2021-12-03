@@ -265,13 +265,6 @@ export async function determineAllPossibilitiesForTabCompletion(
     return allPos;
   }
 
-  if (isCommand("kill") || isCommand("tail") || isCommand("mem") || isCommand("check")) {
-    addAllScripts();
-    addAllDirectories();
-
-    return allPos;
-  }
-
   if (isCommand("nano")) {
     addAllScripts();
     addAllTextFiles();
@@ -292,7 +285,7 @@ export async function determineAllPossibilitiesForTabCompletion(
   }
 
   async function scriptAutocomplete(): Promise<string[] | undefined> {
-    if (!isCommand("run")) return;
+    if (!isCommand("run") && !isCommand("tail") && !isCommand("kill")) return;
     const commands = ParseCommands(input);
     if (commands.length === 0) return;
     const command = ParseCommand(commands[commands.length - 1]);
@@ -346,6 +339,13 @@ export async function determineAllPossibilitiesForTabCompletion(
     addAllPrograms();
     addAllCodingContracts();
     addAllDirectories();
+  }
+
+  if (isCommand("kill") || isCommand("tail") || isCommand("mem") || isCommand("check")) {
+    addAllScripts();
+    addAllDirectories();
+
+    return allPos;
   }
 
   if (isCommand("cat")) {

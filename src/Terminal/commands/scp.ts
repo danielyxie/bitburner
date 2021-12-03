@@ -10,7 +10,7 @@ export function scp(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   try {
     if (args.length !== 2) {

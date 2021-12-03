@@ -8,7 +8,7 @@ export function ps(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   if (args.length !== 0) {
     terminal.error("Incorrect usage of ps command. Usage: ps");

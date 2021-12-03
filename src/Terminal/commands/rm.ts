@@ -9,7 +9,7 @@ export function rm(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   if (args.length !== 1) {
     terminal.error("Incorrect number of arguments. Usage: rm [program/script]");
