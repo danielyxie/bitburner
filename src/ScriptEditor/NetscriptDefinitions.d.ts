@@ -372,6 +372,45 @@ export interface Server {
 
   /** Flag indicating whether the SSH Port is open */
   sshPortOpen: boolean;
+
+  /** Flag indicating whether this is a purchased server */
+  purchasedByPlayer: boolean;
+
+  /** Flag indicating whether this server has a backdoor installed by a player */
+  backdoorInstalled: boolean;
+
+  /**
+   * Initial server security level
+   * (i.e. security level when the server was created)
+   */
+  baseDifficulty: number;
+
+  /** Server Security Level */
+  hackDifficulty: number;
+
+  /** Minimum server security level that this server can be weakened to */
+  minDifficulty: number;
+
+  /** How much money currently resides on the server and can be hacked */
+  moneyAvailable: number;
+
+  /** Maximum amount of money that this server can hold */
+  moneyMax: number;
+
+  /** Number of open ports required in order to gain admin/root access */
+  numOpenPortsRequired: number;
+
+  /** How many ports are currently opened on the server */
+  openPortCount: number;
+
+  /** Hacking level required to hack this server */
+  requiredHackingSkill: number;
+
+  /**
+   * Parameter that affects how effectively this server's money can
+   * be increased using the grow() Netscript function
+   */
+  serverGrowth: number;
 }
 
 /**
