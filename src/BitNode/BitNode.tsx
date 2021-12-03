@@ -723,7 +723,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.CorporationSoftCap = 0;
       break;
     case 9: // Hacktocracy
-      BitNodeMultipliers.HackingLevelMultiplier = 0.4;
+      BitNodeMultipliers.HackingLevelMultiplier = 0.5;
       BitNodeMultipliers.StrengthLevelMultiplier = 0.45;
       BitNodeMultipliers.DefenseLevelMultiplier = 0.45;
       BitNodeMultipliers.DexterityLevelMultiplier = 0.45;
@@ -749,7 +749,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.WorldDaemonDifficulty = 2;
       break;
     case 10: // Digital Carbon
-      BitNodeMultipliers.HackingLevelMultiplier = 0.2;
+      BitNodeMultipliers.HackingLevelMultiplier = 0.35;
       BitNodeMultipliers.StrengthLevelMultiplier = 0.4;
       BitNodeMultipliers.DefenseLevelMultiplier = 0.4;
       BitNodeMultipliers.DexterityLevelMultiplier = 0.4;
@@ -778,7 +778,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.WorldDaemonDifficulty = 2;
       break;
     case 11: //The Big Crash
-      BitNodeMultipliers.HackingLevelMultiplier = 0.5;
+      BitNodeMultipliers.HackingLevelMultiplier = 0.6;
       BitNodeMultipliers.HackExpGain = 0.5;
       BitNodeMultipliers.ServerMaxMoney = 0.1;
       BitNodeMultipliers.ServerStartingMoney = 0.1;
