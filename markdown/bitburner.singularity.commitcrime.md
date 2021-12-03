@@ -4,7 +4,7 @@
 
 ## Singularity.commitCrime() method
 
-Commit a crime.
+SF4.3 - Commit a crime.
 
 <b>Signature:</b>
 
@@ -27,8 +27,6 @@ True if you successfully start working on the specified program, and false other
 ## Remarks
 
 RAM cost: 5 GB
-
-Singularity - Level 3
 
 This function is used to automatically attempt to commit crimes. If you are already in the middle of some ‘working’ action (such as working for a company or training at a gym), then running this function will automatically cancel that action and give you your earnings.
 

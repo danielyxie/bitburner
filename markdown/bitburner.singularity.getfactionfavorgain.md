@@ -4,7 +4,7 @@
 
 ## Singularity.getFactionFavorGain() method
 
-Get faction favor gain.
+SF4.2 - Get faction favor gain.
 
 <b>Signature:</b>
 
@@ -27,8 +27,6 @@ Amount of favor you will gain for the specified faction when you reset by instal
 ## Remarks
 
 RAM cost: 0.75 GB
-
-Singularity - Level 2
 
 This function returns the amount of favor you will gain for the specified faction when you reset by installing Augmentations.
 

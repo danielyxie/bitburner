@@ -4,7 +4,7 @@
 
 ## Singularity.manualHack() method
 
-Run the hack command in the terminal.
+SF4.1 - Run the hack command in the terminal.
 
 <b>Signature:</b>
 
@@ -20,6 +20,4 @@ Amount of money stolen by manual hacking.
 ## Remarks
 
 RAM cost: 2 GB
-
-Singularity - Level 1
 

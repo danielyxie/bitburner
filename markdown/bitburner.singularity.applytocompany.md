@@ -4,7 +4,7 @@
 
 ## Singularity.applyToCompany() method
 
-Apply for a job at a company.
+SF4.2 - Apply for a job at a company.
 
 <b>Signature:</b>
 
@@ -28,8 +28,6 @@ True if the player successfully get a job/promotion, and false otherwise.
 ## Remarks
 
 RAM cost: 3 GB
-
-Singularity - Level 2
 
 This function will automatically try to apply to the specified company for a position in the specified field. This function can also be used to apply for promotions by specifying the company and field you are already employed at.
 

@@ -4,7 +4,7 @@
 
 ## Singularity.upgradeHomeRam() method
 
-Upgrade home computer RAM.
+SF4.2 - Upgrade home computer RAM.
 
 <b>Signature:</b>
 
@@ -20,8 +20,6 @@ True if the player’s home computer RAM is successfully upgraded, and false oth
 ## Remarks
 
 RAM cost: 3 GB
-
-Singularity - Level 2
 
 This function will upgrade amount of RAM on the player’s home computer. The cost is the same as if you were to do it manually.
 

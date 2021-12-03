@@ -10,3 +10,16 @@
 ```typescript
 export interface GangOtherInfo 
 ```
+
+## Properties
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  ["Slum Snakes"](./bitburner.gangotherinfo._slum_snakes_.md) | [GangOtherInfoObject](./bitburner.gangotherinfoobject.md) |  |
+|  ["Speakers for the Dead"](./bitburner.gangotherinfo._speakers_for_the_dead_.md) | [GangOtherInfoObject](./bitburner.gangotherinfoobject.md) |  |
+|  ["The Black Hand"](./bitburner.gangotherinfo._the_black_hand_.md) | [GangOtherInfoObject](./bitburner.gangotherinfoobject.md) |  |
+|  ["The Dark Army"](./bitburner.gangotherinfo._the_dark_army_.md) | [GangOtherInfoObject](./bitburner.gangotherinfoobject.md) |  |
+|  ["The Syndicate"](./bitburner.gangotherinfo._the_syndicate_.md) | [GangOtherInfoObject](./bitburner.gangotherinfoobject.md) |  |
+|  [NiteSec](./bitburner.gangotherinfo.nitesec.md) | [GangOtherInfoObject](./bitburner.gangotherinfoobject.md) |  |
+|  [Tetrads](./bitburner.gangotherinfo.tetrads.md) | [GangOtherInfoObject](./bitburner.gangotherinfoobject.md) |  |
+

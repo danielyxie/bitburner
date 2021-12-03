@@ -110,6 +110,7 @@ function LogWindow(props: IProps): React.ReactElement {
   }
 
   useEffect(() => {
+    updateLayer();
     const id = setInterval(rerender, 1000);
     return () => clearInterval(id);
   }, []);

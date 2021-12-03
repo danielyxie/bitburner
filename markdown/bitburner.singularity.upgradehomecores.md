@@ -4,7 +4,7 @@
 
 ## Singularity.upgradeHomeCores() method
 
-Upgrade home computer cores.
+SF4.2 - Upgrade home computer cores.
 
 <b>Signature:</b>
 
@@ -20,8 +20,6 @@ True if the player’s home computer cores is successfully upgraded, and false o
 ## Remarks
 
 RAM cost: 3 GB
-
-Singularity - Level 2
 
 This function will upgrade amount of cores on the player’s home computer. The cost is the same as if you were to do it manually.
 

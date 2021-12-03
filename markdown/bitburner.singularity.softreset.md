@@ -4,7 +4,7 @@
 
 ## Singularity.softReset() method
 
-Soft reset the game.
+SF4.3 - Soft reset the game.
 
 <b>Signature:</b>
 
@@ -25,8 +25,6 @@ void
 ## Remarks
 
 RAM cost: 5 GB
-
-Singularity - Level 3
 
 This function will perform a reset even if you don’t have any augmentation installed.
 

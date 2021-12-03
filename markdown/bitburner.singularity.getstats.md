@@ -6,8 +6,10 @@
 
 > Warning: This API is now obsolete.
 > 
-> Returns an object with the Player’s stats.
+> use getPlayer
 > 
+
+SF4.1 - Returns an object with the Player’s stats.
 
 <b>Signature:</b>
 
@@ -23,8 +25,6 @@ Object with the Player’s stats.
 ## Remarks
 
 RAM cost: 0.5 GB
-
-Singularity - Level 1
 
 ## Example
 

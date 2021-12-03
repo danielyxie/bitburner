@@ -4,7 +4,7 @@
 
 ## Singularity.installBackdoor() method
 
-Run the backdoor command in the terminal.
+SF4.1 - Run the backdoor command in the terminal.
 
 <b>Signature:</b>
 
@@ -20,6 +20,4 @@ True if the installation was successful.
 ## Remarks
 
 RAM cost: 2 GB
-
-Singularity - Level 1
 
