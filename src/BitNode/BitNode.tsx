@@ -205,8 +205,8 @@ BitNodes["BitNode5"] = new BitNode(
       experience is much slower than other stats, and it is also hidden (you won't know when you gain experience and how
       much). Higher Intelligence levels will boost your production for many actions in the game. <br />
       <br />
-      In addition, this Source-File will unlock the getBitNodeMultipliers() and getServer() Netscript functions, as well
-      as the formulas API, and will also raise all of your hacking-related multipliers by:
+      In addition, this Source-File will unlock the getBitNodeMultipliers() Netscript function and let you start with
+      Formulas.exe, and will also raise all of your hacking-related multipliers by:
       <br />
       <br />
       Level 1: 8%
