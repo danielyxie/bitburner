@@ -2,6 +2,7 @@ import { IPlayer } from "./PersonObjects/IPlayer";
 import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { IEngine } from "./IEngine";
 import { IRouter } from "./ui/Router";
+import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 
 import React from "react";
 
@@ -19,6 +20,7 @@ import { Corporation } from "./DevMenu/ui/Corporation";
 import { CodingContracts } from "./DevMenu/ui/CodingContracts";
 import { StockMarket } from "./DevMenu/ui/StockMarket";
 import { Sleeves } from "./DevMenu/ui/Sleeves";
+import { Stanek } from "./DevMenu/ui/Stanek";
 import { TimeSkip } from "./DevMenu/ui/TimeSkip";
 import Typography from "@mui/material/Typography";
 
@@ -52,6 +54,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
       {props.player.hasWseAccount && <StockMarket />}
 
       {props.player.sleeves.length > 0 && <Sleeves player={props.player} />}
+      {props.player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1) && <Stanek />}
 
       <TimeSkip player={props.player} engine={props.engine} />
     </>

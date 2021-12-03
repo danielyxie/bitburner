@@ -26,8 +26,10 @@ import { Terminal } from "./Terminal";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 
+import { staneksGift } from "./CotMG/Helper";
 import { ProgramsSeen } from "./Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "./Faction/ui/FactionsRoot";
+import { CONSTANTS } from "./Constants";
 import { LogBoxClearEvents } from "./ui/React/LogBoxManager";
 
 const BitNode8StartingMoney = 250e6;
@@ -143,6 +145,14 @@ export function prestigeAugmentation(): void {
     }
   }
 
+  if (augmentationExists(AugmentationNames.StaneksGift1) && Augmentations[AugmentationNames.StaneksGift1].owned) {
+    // TODO(hydroflame): refactor faction names so we don't have to hard
+    // code strings.
+    joinFaction(Factions["Church of the Machine God"]);
+  }
+
+  staneksGift.prestigeAugmentation();
+
   resetPidCounter();
   ProgramsSeen.splice(0, ProgramsSeen.length);
   InvitationsSeen.splice(0, InvitationsSeen.length);
@@ -247,6 +257,10 @@ export function prestigeSourceFile(flume: boolean): void {
     dialogBoxCreate("Visit VitaLife in New Tokyo if you'd like to purchase a new sleeve!");
   }
 
+  if (Player.bitNodeN === 13) {
+    dialogBoxCreate("Trouble is brewing in Chongqing");
+  }
+
   // Reset Stock market, gang, and corporation
   if (Player.hasWseAccount) {
     initStockMarket();
@@ -271,6 +285,11 @@ export function prestigeSourceFile(flume: boolean): void {
     hserver.updateHashCapacity();
     updateHashManagerCapacity(Player);
   }
+
+  if (Player.bitNodeN === 13) {
+    Player.money = CONSTANTS.TravelCost;
+  }
+  staneksGift.prestigeSourceFile();
 
   // Gain int exp
   if (SourceFileFlags[5] !== 0 && !flume) Player.gainIntelligenceExp(300);

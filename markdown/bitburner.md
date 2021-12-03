@@ -8,6 +8,7 @@
 
 |  Interface | Description |
 |  --- | --- |
+|  [ActiveFragment](./bitburner.activefragment.md) |  |
 |  [AugmentationStats](./bitburner.augmentationstats.md) | Data representing the internal values of an Augmentation. |
 |  [AugmentPair](./bitburner.augmentpair.md) | Return value of [getSleevePurchasableAugs](./bitburner.sleeve.getsleevepurchasableaugs.md) |
 |  [BasicHGWOptions](./bitburner.basichgwoptions.md) | Options to affect the behavior of [hack](./bitburner.ns.hack.md)<!-- -->, [grow](./bitburner.ns.grow.md)<!-- -->, and [weaken](./bitburner.ns.weaken.md)<!-- -->. |
@@ -21,6 +22,7 @@
 |  [CrimeStats](./bitburner.crimestats.md) | Data representing the internal values of a crime. |
 |  [EquipmentStats](./bitburner.equipmentstats.md) | Object representing data representing a gang member equipment. |
 |  [Formulas](./bitburner.formulas.md) |  |
+|  [Fragment](./bitburner.fragment.md) |  |
 |  [Gang](./bitburner.gang.md) | Gang API |
 |  [GangGenInfo](./bitburner.ganggeninfo.md) | Gang general info. |
 |  [GangMemberAscension](./bitburner.gangmemberascension.md) |  |
@@ -50,6 +52,7 @@
 |  [SleeveTask](./bitburner.sleevetask.md) | Object representing a sleeve current task. |
 |  [SleeveWorkGains](./bitburner.sleeveworkgains.md) |  |
 |  [SourceFileLvl](./bitburner.sourcefilelvl.md) |  |
+|  [Stanek](./bitburner.stanek.md) | Stanek's Gift API. |
 |  [StockOrder](./bitburner.stockorder.md) | Return value of [getOrders](./bitburner.tix.getorders.md) |
 |  [StockOrderObject](./bitburner.stockorderobject.md) | Value in map of [StockOrder](./bitburner.stockorder.md) |
 |  [TIX](./bitburner.tix.md) | Stock market API |

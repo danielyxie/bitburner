@@ -3,6 +3,68 @@
 Changelog
 =========
 
+v1.1.0 - 2021-12-03 BN13: They're Lunatics (hydroflame & community)
+-------------------------------------------------------
+
+** BN13: They're Lunatics **
+
+* BN13 added.
+
+** Steam **
+
+* Tested on all 3 major OS.
+* 94 achievements added
+* Release is 2021-12-10.
+
+** Netscript **
+
+* tprintf crashes when not giving a format as first arg.
+* tprintf no longer prints filename (@BartKoppelmans)
+* TIX buy/sell/sellShort all return askprice/bidprice (@Insight)
+* getRunningScript now works.
+* Fix disableLog for gang and TIX API
+* getOwnedSourceFiles is not singularity anymore (makes it easier to share scripts.)  (@theit8514)
+* true/false is a valid value to send to other scripts.
+* workForFaction no longer returns null when trying to work for gang.
+* Scripts logging no longer generates the string if logging is disabled.
+  This should give performance boost for some scripts.
+
+** Gang **
+
+* Gang with 0 territory can no longer fight
+* Territory now caps at exactly 0 or 1.
+
+** Misc. **
+
+* Clicking "previous" on the browser will not pretend you had unsaved information
+  allowing you to cancel if needs be.
+* Fixed some tail box coloring issue.
+* Fixed BladeBurner getCityCommunities ram cost
+* The download terminal command no longer duplicate extensions (@Insight)
+* Fix #000 on #000 text in blackjack. (@Insight)
+* Remove reference to .fconf
+* Tail boxes all die on soft reset.
+* Fix codign contract focus bug.
+* Megacorp factions simply re-invite you instead of auto added on reset. (@theit8514)
+* Tail window is bound to html body.
+* Infiltration reward is tied to your potential stats, not your actual stats
+  So you won't lose reward for doing the same thing over and over.
+* intelligence lowers program creation requirements.
+* Terminal parses true as the boolean, not the string.
+* Tail and kill autocomplete using the ns2 autocomplete feature.
+* scan-analyze doesn't take up as many terminal entries.
+* GangOtherInfo documentation now renders correctly.
+* ActiveScripts search box also searches for script names.
+* Infinite money no longer allows for infinite hacknet server.
+* Blackjack doesn't make you lose money twice.
+* Recent Scripts is now from most to least recent.
+* Fix mathjax ascii art bug in NiteSec.
+* Remove warning that the theme editor is slow, it's only slow in dev mode.
+* In BN8 is it possible to reduce the money on a server without gaining any.
+* In the options, the timestamp feature has a placeholder explaining the expected format.
+* Bunch of doc typo fix. (hydroflame & @BartKoppelmans & @cvr-119)
+* nerf noodle bar
+
 v1.0.2 - 2021-11-17 It's the little things (hydroflame)
 -------------------------------------------------------
 

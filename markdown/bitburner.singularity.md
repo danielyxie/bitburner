@@ -52,13 +52,11 @@ This API requires Source-File 4 level 1 / 2 / 3 to use.
 |  [installAugmentations(cbScript)](./bitburner.singularity.installaugmentations.md) | SF4.3 - Install your purchased augmentations. |
 |  [installBackdoor()](./bitburner.singularity.installbackdoor.md) | SF4.1 - Run the backdoor command in the terminal. |
 |  [isBusy()](./bitburner.singularity.isbusy.md) | SF4.1 - Check if the player is busy. |
-|  [isFocused()](./bitburner.singularity.isfocused.md) | SF4.2 - Check if the player is focused. |
 |  [joinFaction(faction)](./bitburner.singularity.joinfaction.md) | SF4.2 - Join a faction. |
 |  [manualHack()](./bitburner.singularity.manualhack.md) | SF4.1 - Run the hack command in the terminal. |
 |  [purchaseAugmentation(faction, augmentation)](./bitburner.singularity.purchaseaugmentation.md) | SF4.3 - Purchase an augmentation |
 |  [purchaseProgram(programName)](./bitburner.singularity.purchaseprogram.md) | SF4.1 - Purchase a program from the dark web. |
 |  [purchaseTor()](./bitburner.singularity.purchasetor.md) | SF4.1 - Purchase the TOR router. |
-|  [setFocus(focus)](./bitburner.singularity.setfocus.md) | SF4.2 - Set the players focus. |
 |  [softReset(cbScript)](./bitburner.singularity.softreset.md) | SF4.3 - Soft reset the game. |
 |  [stopAction()](./bitburner.singularity.stopaction.md) | SF4.1 - Stop the current action. |
 |  [travelToCity(city)](./bitburner.singularity.traveltocity.md) | SF4.1 - Travel to another city. |

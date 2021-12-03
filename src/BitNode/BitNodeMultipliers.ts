@@ -217,6 +217,21 @@ interface IBitNodeMultipliers {
    */
   StrengthLevelMultiplier: number;
 
+  /**
+   * Influences the power of the gift.
+   */
+  StaneksGiftPowerMultiplier: number;
+
+  /**
+   * Influences the size of the gift.
+   */
+  StaneksGiftExtraSize: number;
+
+  /**
+   * Influences the hacking skill required to backdoor the world daemon.
+   */
+  WorldDaemonDifficulty: number;
+
   // Index signature
   [key: string]: number;
 }
@@ -282,4 +297,9 @@ export const BitNodeMultipliers: IBitNodeMultipliers = {
   GangSoftcap: 1,
 
   DaedalusAugsRequirement: 1,
+
+  StaneksGiftPowerMultiplier: 1,
+  StaneksGiftExtraSize: 0,
+
+  WorldDaemonDifficulty: 1,
 };

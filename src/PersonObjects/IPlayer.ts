@@ -277,5 +277,6 @@ export interface IPlayer {
   setBitNodeNumber(n: number): void;
   getMult(name: string): number;
   setMult(name: string, mult: number): void;
+  canAccessCotMG(): boolean;
   sourceFileLvl(n: number): number;
 }

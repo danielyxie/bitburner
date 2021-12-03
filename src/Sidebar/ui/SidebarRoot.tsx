@@ -49,6 +49,7 @@ import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../../InteractiveT
 import { getAvailableCreatePrograms } from "../../Programs/ProgramHelpers";
 import { Settings } from "../../Settings/Settings";
 import { redPillFlag } from "../../RedPill";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 import { KEY } from "../../utils/helpers/keyCodes";
 import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
@@ -157,13 +158,12 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   const canOpenSleeves = props.player.sleeves.length > 0;
 
-  // TODO(hydroflame): these should not as any but right now the def is that it
-  // can only be defined;
   const canCorporation = !!(props.player.corporation as any);
   const canGang = !!(props.player.gang as any);
   const canJob = props.player.companyName !== "";
   const canStockMarket = props.player.hasWseAccount;
   const canBladeburner = !!(props.player.bladeburner as any);
+  const canStaneksGift = props.player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1);
 
   function clickTerminal(): void {
     props.router.toTerminal();
@@ -186,6 +186,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   function clickCreateProgram(): void {
     props.router.toCreateProgram();
+  }
+
+  function clickStaneksGift(): void {
+    props.router.toStaneksGift();
   }
 
   function clickFactions(): void {
@@ -423,6 +427,25 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 <ListItemText>
                   <Typography color={props.page !== Page.CreateProgram ? "secondary" : "primary"}>
                     Create Program
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+            )}
+            {canStaneksGift && (
+              <ListItem
+                button
+                key={"Staneks Gift"}
+                className={clsx({
+                  [classes.active]: props.page === Page.StaneksGift,
+                })}
+                onClick={clickStaneksGift}
+              >
+                <ListItemIcon>
+                  <DeveloperBoardIcon color={props.page !== Page.StaneksGift ? "secondary" : "primary"} />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography color={props.page !== Page.StaneksGift ? "secondary" : "primary"}>
+                    Stanek's Gift
                   </Typography>
                 </ListItemText>
               </ListItem>

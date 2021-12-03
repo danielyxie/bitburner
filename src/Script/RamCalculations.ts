@@ -183,6 +183,8 @@ async function parseOnlyRamCalculate(
           func = workerScript.env.vars.bladeburner[ref];
         } else if (ref in workerScript.env.vars.codingcontract) {
           func = workerScript.env.vars.codingcontract[ref];
+        } else if (ref in workerScript.env.vars.stanek) {
+          func = workerScript.env.vars.stanek[ref];
         } else if (ref in workerScript.env.vars.gang) {
           func = workerScript.env.vars.gang[ref];
         } else if (ref in workerScript.env.vars.sleeve) {

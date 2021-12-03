@@ -105,7 +105,14 @@ export function generateResleeves(): Resleeve[] {
       const randKey: string = augKeys[randIndex];
 
       // Forbidden augmentations
-      if (randKey === AugmentationNames.TheRedPill || randKey === AugmentationNames.NeuroFluxGovernor) {
+      const forbidden = [
+        AugmentationNames.TheRedPill,
+        AugmentationNames.NeuroFluxGovernor,
+        AugmentationNames.StaneksGift1,
+        AugmentationNames.StaneksGift2,
+        AugmentationNames.StaneksGift3,
+      ];
+      if (forbidden.includes(randKey)) {
         continue;
       }
 

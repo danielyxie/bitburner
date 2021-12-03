@@ -34,6 +34,7 @@ export enum Page {
   BladeburnerCinematic,
   Location,
   Loading,
+  StaneksGift,
   Recovery,
 }
 
@@ -74,4 +75,5 @@ export interface IRouter {
   toWork(): void;
   toBladeburnerCinematic(): void;
   toLocation(location: Location): void;
+  toStaneksGift(): void;
 }

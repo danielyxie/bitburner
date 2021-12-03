@@ -63,13 +63,23 @@ import { NetscriptGang } from "./NetscriptFunctions/Gang";
 import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
-import { NS as INS, Player as INetscriptPlayer, SourceFileLvl } from "./ScriptEditor/NetscriptDefinitions";
+import { NetscriptStanek } from "./NetscriptFunctions/Stanek";
+
 import { NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
 import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
 import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
 import { NetscriptFormulas } from "./NetscriptFunctions/Formulas";
-import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
+
+import {
+  NS as INS,
+  Player as INetscriptPlayer,
+  Gang as IGang,
+  Bladeburner as IBladeburner,
+  Stanek as IStanek,
+  SourceFileLvl,
+} from "./ScriptEditor/NetscriptDefinitions";
+import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 
 import { toNative } from "./NetscriptFunctions/toNative";
 
@@ -80,6 +90,9 @@ import { Flags } from "./NetscriptFunctions/Flags";
 
 interface NS extends INS {
   [key: string]: any;
+  gang: IGang;
+  bladeburner: IBladeburner;
+  stanek: IStanek;
 }
 
 export function NetscriptFunctions(workerScript: WorkerScript): NS {
@@ -431,6 +444,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const sleeve = NetscriptSleeve(Player, workerScript, helper);
   const extra = NetscriptExtra(Player, workerScript);
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
+  const stanek = NetscriptStanek(Player, workerScript, helper);
   const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
   const codingcontract = NetscriptCodingContract(Player, workerScript, helper);
   const corporation = NetscriptCorporation(Player);
@@ -445,6 +459,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     bladeburner: bladeburner,
     codingcontract: codingcontract,
     sleeve: sleeve,
+    stanek: stanek,
 
     formulas: formulas,
     stock: stockmarket,
@@ -2255,7 +2270,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       Object.assign(data.jobs, Player.jobs);
       return data;
     },
-
     atExit: function (f: any): void {
       if (typeof f !== "function") {
         throw makeRuntimeErrorMsg("atExit", "argument should be function");

@@ -55,6 +55,15 @@ export const RamCostConstants: IMap<number> = {
   ScriptGangApiBaseRamCost: 4,
 
   ScriptBladeburnerApiBaseRamCost: 4,
+
+  ScriptStanekCharge: 0.4,
+  ScriptStanekFragmentDefinitions: 0,
+  ScriptStanekPlacedFragments: 5,
+  ScriptStanekClear: 0,
+  ScriptStanekCanPlace: 0.5,
+  ScriptStanekPlace: 5,
+  ScriptStanekFragmentAt: 2,
+  ScriptStanekDeleteAt: 0.15,
 };
 
 export const RamCosts: IMap<any> = {
@@ -324,6 +333,17 @@ export const RamCosts: IMap<any> = {
     getSleeveAugmentations: RamCostConstants.ScriptSleeveBaseRamCost,
     getSleevePurchasableAugs: RamCostConstants.ScriptSleeveBaseRamCost,
     purchaseSleeveAug: RamCostConstants.ScriptSleeveBaseRamCost,
+  },
+
+  stanek: {
+    charge: RamCostConstants.ScriptStanekCharge,
+    fragmentDefinitions: RamCostConstants.ScriptStanekFragmentDefinitions,
+    activeFragments: RamCostConstants.ScriptStanekPlacedFragments,
+    clear: RamCostConstants.ScriptStanekClear,
+    canPlace: RamCostConstants.ScriptStanekCanPlace,
+    place: RamCostConstants.ScriptStanekPlace,
+    get: RamCostConstants.ScriptStanekFragmentAt,
+    remove: RamCostConstants.ScriptStanekDeleteAt,
   },
 
   heart: {

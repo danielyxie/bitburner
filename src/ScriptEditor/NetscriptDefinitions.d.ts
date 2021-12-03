@@ -372,6 +372,45 @@ export interface Server {
 
   /** Flag indicating whether the SSH Port is open */
   sshPortOpen: boolean;
+
+  /** Flag indicating whether this is a purchased server */
+  purchasedByPlayer: boolean;
+
+  /** Flag indicating whether this server has a backdoor installed by a player */
+  backdoorInstalled: boolean;
+
+  /**
+   * Initial server security level
+   * (i.e. security level when the server was created)
+   */
+  baseDifficulty: number;
+
+  /** Server Security Level */
+  hackDifficulty: number;
+
+  /** Minimum server security level that this server can be weakened to */
+  minDifficulty: number;
+
+  /** How much money currently resides on the server and can be hacked */
+  moneyAvailable: number;
+
+  /** Maximum amount of money that this server can hold */
+  moneyMax: number;
+
+  /** Number of open ports required in order to gain admin/root access */
+  numOpenPortsRequired: number;
+
+  /** How many ports are currently opened on the server */
+  openPortCount: number;
+
+  /** Hacking level required to hack this server */
+  requiredHackingSkill: number;
+
+  /**
+   * Parameter that affects how effectively this server's money can
+   * be increased using the grow() Netscript function
+   */
+  serverGrowth: number;
 }
 
 /**
@@ -1940,24 +1979,6 @@ export interface Singularity {
    * @returns True if the installation was successful.
    */
   installBackdoor(): Promise<void>;
-
-  /**
-   * SF4.2 - Check if the player is focused.
-   * @remarks
-   * RAM cost: 0.1 GB
-   *
-   *
-   * @returns True if the player is focused.
-   */
-  isFocused(): void;
-
-  /**
-   * SF4.2 - Set the players focus.
-   * @remarks
-   * RAM cost: 0.1 GB
-   *
-   */
-  setFocus(focus: boolean): void;
 }
 
 /**
@@ -3326,6 +3347,131 @@ export interface Formulas {
 }
 
 /**
+ * @public
+ */
+export interface Fragment {
+  id: number;
+  shape: boolean[][];
+  type: number;
+  power: number;
+  limit: number;
+}
+
+/**
+ * @public
+ */
+export interface ActiveFragment {
+  id: number;
+  avgCharge: number;
+  numCharge: number;
+  rotation: number;
+  x: number;
+  y: number;
+}
+
+/**
+ * Stanek's Gift API.
+ * @public
+ */
+interface Stanek {
+  /**
+   * Stanek's Gift width.
+   * @remarks
+   * RAM cost: 0.4 GB
+   * @returns The width of the gift.
+   */
+  width(): number;
+  /**
+   * Stanek's Gift height.
+   * @remarks
+   * RAM cost: 0.4 GB
+   * @returns The height of the gift.
+   */
+  height(): number;
+
+  /**
+   * Charge a fragment, increasing it's power.
+   * @remarks
+   * RAM cost: 0.4 GB
+   * @param rootX - rootX Root X against which to align the top left of the fragment.
+   * @param rootY - rootY Root Y against which to align the top left of the fragment.
+   * @returns Promise that lasts until the charge action is over.
+   */
+  charge(rootX: number, rootY: number): Promise<void>;
+
+  /**
+   * List possible fragments.
+   * @remarks
+   * RAM cost: cost: 0 GB
+   *
+   * @returns List of possible fragments.
+   */
+  fragmentDefinitions(): Fragment[];
+
+  /**
+   * List of fragments in Stanek's Gift.
+   * @remarks
+   * RAM cost: cost: 5 GB
+   *
+   * @returns List of active fragments placed on Stanek's Gift.
+   */
+  activeFragments(): ActiveFragment[];
+
+  /**
+   * Clear the board of all fragments.
+   * @remarks
+   * RAM cost: cost: 0 GB
+   */
+  clear(): void;
+
+  /**
+   * Check if fragment can be placed at specified location.
+   * @remarks
+   * RAM cost: cost: 0.5 GB
+   *
+   * @param rootX - rootX Root X against which to align the top left of the fragment.
+   * @param rootY - rootY Root Y against which to align the top left of the fragment.
+   * @param rotation - rotation A number from 0 to 3, the mount of 90 degree turn to take.
+   * @param fragmentId - fragmentId ID of the fragment to place.
+   * @returns true if the fragment can be placed at that position. false otherwise.
+   */
+  canPlace(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+  /**
+   * Place fragment on Stanek's Gift.
+   * @remarks
+   * RAM cost: cost: 5 GB
+   *
+   * @param rootX - X against which to align the top left of the fragment.
+   * @param rootY - Y against which to align the top left of the fragment.
+   * @param rotation - A number from 0 to 3, the mount of 90 degree turn to take.
+   * @param fragmentId - ID of the fragment to place.
+   * @returns true if the fragment can be placed at that position. false otherwise.
+   */
+  place(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+  /**
+   * Get placed fragment at location.
+   * @remarks
+   * RAM cost: cost: 5 GB
+   *
+   * @param rootX - X against which to align the top left of the fragment.
+   * @param rootY - Y against which to align the top left of the fragment.
+   * @returns The fragment at [rootX, rootY], if any.
+   */
+  get(rootX: number, rootY: number): ActiveFragment | undefined;
+
+  /**
+   * Remove fragment at location.
+   * @remarks
+   * RAM cost: cost: 0.15 GB
+   *
+   * @param rootX - X against which to align the top left of the fragment.
+   * @param rootY - Y against which to align the top left of the fragment.
+   * @returns The fragment at [rootX, rootY], if any.
+   */
+  remove(rootX: number, rootY: number): boolean;
+}
+
+/**
  * Collection of all functions passed to scripts
  * @public
  */
@@ -3374,6 +3520,11 @@ export interface NS extends Singularity {
    * RAM cost: 0 GB
    */
   readonly formulas: Formulas;
+  /**
+   * Namespace for stanek functions.
+   * RAM cost: 0 GB
+   */
+  readonly stanek: Stanek;
 
   /**
    * Arguments passed into the script.
