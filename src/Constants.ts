@@ -332,7 +332,7 @@ export const CONSTANTS: {
     * Remove warning that the theme editor is slow, it's only slow in dev mode.
     * In BN8 is it possible to reduce the money on a server without gaining any.
     * In the options, the timestamp feature has a placeholder explaining the expected format.
-    * Bunch of doc typo fix. (hydroflame & @BartKoppelmans)
+    * Bunch of doc typo fix. (hydroflame & @BartKoppelmans & @cvr-119)
     * nerf noodle bar
 `,
 };

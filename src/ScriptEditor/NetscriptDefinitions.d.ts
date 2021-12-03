@@ -3346,6 +3346,9 @@ export interface Formulas {
   hacknetServers: HacknetServersFormulas;
 }
 
+/**
+ * @public
+ */
 export interface Fragment {
   id: number;
   shape: boolean[][];
@@ -3354,6 +3357,9 @@ export interface Fragment {
   limit: number;
 }
 
+/**
+ * @public
+ */
 export interface ActiveFragment {
   id: number;
   avgCharge: number;
@@ -3516,7 +3522,7 @@ export interface NS extends Singularity {
   readonly formulas: Formulas;
   /**
    * Namespace for stanek functions.
-   * @ramCost 0 GB
+   * RAM cost: 0 GB
    */
   readonly stanek: Stanek;
 

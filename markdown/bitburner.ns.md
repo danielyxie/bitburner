@@ -24,6 +24,7 @@ export interface NS extends Singularity
 |  [gang](./bitburner.ns.gang.md) | [Gang](./bitburner.gang.md) | Namespace for gang functions. |
 |  [hacknet](./bitburner.ns.hacknet.md) | [Hacknet](./bitburner.hacknet.md) | Namespace for hacknet functions. |
 |  [sleeve](./bitburner.ns.sleeve.md) | [Sleeve](./bitburner.sleeve.md) | Namespace for sleeve functions. |
+|  [stanek](./bitburner.ns.stanek.md) | [Stanek](./bitburner.stanek.md) | Namespace for stanek functions. RAM cost: 0 GB |
 |  [stock](./bitburner.ns.stock.md) | [TIX](./bitburner.tix.md) | Namespace for stock functions. |
 
 ## Methods

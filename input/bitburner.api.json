@@ -171,6 +171,178 @@
       "members": [
         {
           "kind": "Interface",
+          "canonicalReference": "bitburner!ActiveFragment:interface",
+          "docComment": "/**\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface ActiveFragment "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ActiveFragment",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!ActiveFragment#avgCharge:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "avgCharge: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "avgCharge",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!ActiveFragment#id:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "id: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "id",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!ActiveFragment#numCharge:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "numCharge: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "numCharge",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!ActiveFragment#rotation:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "rotation: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "rotation",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!ActiveFragment#x:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "x: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "x",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!ActiveFragment#y:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "y: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "y",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
           "canonicalReference": "bitburner!AugmentationStats:interface",
           "docComment": "/**\n * Data representing the internal values of an Augmentation.\n *\n * @public\n */\n",
           "excerptTokens": [
@@ -5827,6 +5999,152 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "skills",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "bitburner!Fragment:interface",
+          "docComment": "/**\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface Fragment "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "Fragment",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Fragment#id:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "id: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "id",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Fragment#limit:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "limit: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "limit",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Fragment#power:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "power: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "power",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Fragment#shape:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "shape: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean[][]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "shape",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Fragment#type:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "type: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "type",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -16069,6 +16387,33 @@
             },
             {
               "kind": "PropertySignature",
+              "canonicalReference": "bitburner!NS#stanek:member",
+              "docComment": "/**\n * Namespace for stanek functions. RAM cost: 0 GB\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly stanek: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Stanek",
+                  "canonicalReference": "bitburner!Stanek:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "stanek",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "bitburner!NS#stock:member",
               "docComment": "/**\n * Namespace for stock functions.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n */\n",
               "excerptTokens": [
@@ -19779,6 +20124,58 @@
           "members": [
             {
               "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Server#backdoorInstalled:member",
+              "docComment": "/**\n * Flag indicating whether this server has a backdoor installed by a player\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "backdoorInstalled: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "backdoorInstalled",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Server#baseDifficulty:member",
+              "docComment": "/**\n * Initial server security level (i.e. security level when the server was created)\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "baseDifficulty: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "baseDifficulty",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "bitburner!Server#cpuCores:member",
               "docComment": "/**\n * How many CPU cores this server has. Maximum of 8. Affects magnitude of grow and weaken.\n */\n",
               "excerptTokens": [
@@ -19824,6 +20221,32 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "ftpPortOpen",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Server#hackDifficulty:member",
+              "docComment": "/**\n * Server Security Level\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "hackDifficulty: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "hackDifficulty",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -19987,6 +20410,136 @@
             },
             {
               "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Server#minDifficulty:member",
+              "docComment": "/**\n * Minimum server security level that this server can be weakened to\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "minDifficulty: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "minDifficulty",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Server#moneyAvailable:member",
+              "docComment": "/**\n * How much money currently resides on the server and can be hacked\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "moneyAvailable: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "moneyAvailable",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Server#moneyMax:member",
+              "docComment": "/**\n * Maximum amount of money that this server can hold\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "moneyMax: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "moneyMax",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Server#numOpenPortsRequired:member",
+              "docComment": "/**\n * Number of open ports required in order to gain admin/root access\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "numOpenPortsRequired: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "numOpenPortsRequired",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Server#openPortCount:member",
+              "docComment": "/**\n * How many ports are currently opened on the server\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "openPortCount: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "openPortCount",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "bitburner!Server#organizationName:member",
               "docComment": "/**\n * Name of company/faction/etc. that this server belongs to. Optional, not applicable to all Servers\n */\n",
               "excerptTokens": [
@@ -20013,6 +20566,32 @@
             },
             {
               "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Server#purchasedByPlayer:member",
+              "docComment": "/**\n * Flag indicating whether this is a purchased server\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "purchasedByPlayer: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "purchasedByPlayer",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "bitburner!Server#ramUsed:member",
               "docComment": "/**\n * RAM (GB) used. i.e. unavailable RAM\n */\n",
               "excerptTokens": [
@@ -20032,6 +20611,58 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "ramUsed",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Server#requiredHackingSkill:member",
+              "docComment": "/**\n * Hacking level required to hack this server\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "requiredHackingSkill: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "requiredHackingSkill",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Server#serverGrowth:member",
+              "docComment": "/**\n * Parameter that affects how effectively this server's money can be increased using the grow() Netscript function\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "serverGrowth: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "serverGrowth",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -21451,34 +22082,6 @@
             },
             {
               "kind": "MethodSignature",
-              "canonicalReference": "bitburner!Singularity#isFocused:member(1)",
-              "docComment": "/**\n * SF4.2 - Check if the player is focused.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * @returns True if the player is focused.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "isFocused(): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "releaseTag": "Public",
-              "overloadIndex": 1,
-              "parameters": [],
-              "name": "isFocused"
-            },
-            {
-              "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#joinFaction:member(1)",
               "docComment": "/**\n * SF4.2 - Join a faction.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically accept an invitation from a faction and join it.\n *\n * @param faction - Name of faction to join.\n *\n * @returns True if player joined the faction, and false otherwise.\n */\n",
               "excerptTokens": [
@@ -21684,50 +22287,6 @@
               "overloadIndex": 1,
               "parameters": [],
               "name": "purchaseTor"
-            },
-            {
-              "kind": "MethodSignature",
-              "canonicalReference": "bitburner!Singularity#setFocus:member(1)",
-              "docComment": "/**\n * SF4.2 - Set the players focus.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "setFocus(focus: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "boolean"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "focus",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  }
-                }
-              ],
-              "name": "setFocus"
             },
             {
               "kind": "MethodSignature",
@@ -23982,6 +24541,537 @@
                 "startIndex": 1,
                 "endIndex": 2
               }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "bitburner!Stanek:interface",
+          "docComment": "/**\n * Stanek's Gift API.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "interface Stanek "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "Stanek",
+          "members": [
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Stanek#activeFragments:member(1)",
+              "docComment": "/**\n * List of fragments in Stanek's Gift.\n *\n * @remarks\n *\n * RAM cost: cost: 5 GB\n *\n * @returns List of active fragments placed on Stanek's Gift.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "activeFragments(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ActiveFragment",
+                  "canonicalReference": "bitburner!ActiveFragment:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "activeFragments"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Stanek#canPlace:member(1)",
+              "docComment": "/**\n * Check if fragment can be placed at specified location.\n *\n * @remarks\n *\n * RAM cost: cost: 0.5 GB\n *\n * @param rootX - rootX Root X against which to align the top left of the fragment.\n *\n * @param rootY - rootY Root Y against which to align the top left of the fragment.\n *\n * @param rotation - rotation A number from 0 to 3, the mount of 90 degree turn to take.\n *\n * @param fragmentId - fragmentId ID of the fragment to place.\n *\n * @returns true if the fragment can be placed at that position. false otherwise.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "canPlace(rootX: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", rootY: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", rotation: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", fragmentId: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 10
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "rootX",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "rootY",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "rotation",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                },
+                {
+                  "parameterName": "fragmentId",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 7,
+                    "endIndex": 8
+                  }
+                }
+              ],
+              "name": "canPlace"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Stanek#charge:member(1)",
+              "docComment": "/**\n * Charge a fragment, increasing it's power.\n *\n * @remarks\n *\n * RAM cost: 0.4 GB\n *\n * @param rootX - rootX Root X against which to align the top left of the fragment.\n *\n * @param rootY - rootY Root Y against which to align the top left of the fragment.\n *\n * @returns Promise that lasts until the charge action is over.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "charge(rootX: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", rootY: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 7
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "rootX",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "rootY",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "charge"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Stanek#clear:member(1)",
+              "docComment": "/**\n * Clear the board of all fragments.\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "clear(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "clear"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Stanek#fragmentDefinitions:member(1)",
+              "docComment": "/**\n * List possible fragments.\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n *\n * @returns List of possible fragments.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "fragmentDefinitions(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Fragment",
+                  "canonicalReference": "bitburner!Fragment:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "fragmentDefinitions"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Stanek#get:member(1)",
+              "docComment": "/**\n * Get placed fragment at location.\n *\n * @remarks\n *\n * RAM cost: cost: 5 GB\n *\n * @param rootX - X against which to align the top left of the fragment.\n *\n * @param rootY - Y against which to align the top left of the fragment.\n *\n * @returns The fragment at [rootX, rootY], if any.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get(rootX: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", rootY: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ActiveFragment",
+                  "canonicalReference": "bitburner!ActiveFragment:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | undefined"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 7
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "rootX",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "rootY",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "get"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Stanek#height:member(1)",
+              "docComment": "/**\n * Stanek's Gift height.\n *\n * @remarks\n *\n * RAM cost: 0.4 GB\n *\n * @returns The height of the gift.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "height(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "height"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Stanek#place:member(1)",
+              "docComment": "/**\n * Place fragment on Stanek's Gift.\n *\n * @remarks\n *\n * RAM cost: cost: 5 GB\n *\n * @param rootX - X against which to align the top left of the fragment.\n *\n * @param rootY - Y against which to align the top left of the fragment.\n *\n * @param rotation - A number from 0 to 3, the mount of 90 degree turn to take.\n *\n * @param fragmentId - ID of the fragment to place.\n *\n * @returns true if the fragment can be placed at that position. false otherwise.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "place(rootX: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", rootY: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", rotation: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", fragmentId: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 10
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "rootX",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "rootY",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "rotation",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                },
+                {
+                  "parameterName": "fragmentId",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 7,
+                    "endIndex": 8
+                  }
+                }
+              ],
+              "name": "place"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Stanek#remove:member(1)",
+              "docComment": "/**\n * Remove fragment at location.\n *\n * @remarks\n *\n * RAM cost: cost: 0.15 GB\n *\n * @param rootX - X against which to align the top left of the fragment.\n *\n * @param rootY - Y against which to align the top left of the fragment.\n *\n * @returns The fragment at [rootX, rootY], if any.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "remove(rootX: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", rootY: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "rootX",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "rootY",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "remove"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Stanek#width:member(1)",
+              "docComment": "/**\n * Stanek's Gift width.\n *\n * @remarks\n *\n * RAM cost: 0.4 GB\n *\n * @returns The width of the gift.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "width(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "width"
             }
           ],
           "extendsTokenRanges": []
