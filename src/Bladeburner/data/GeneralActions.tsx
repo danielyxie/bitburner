@@ -19,7 +19,7 @@ export const GeneralActions: {
   "Field Analysis": {
     desc: (
       <>
-        Mine and analyze Synthoid-related data. This improves the Bladeburner's unit intelligence on Synthoid locations
+        Mine and analyze Synthoid-related data. This improves the Bladeburner unit's intelligence on Synthoid locations
         and activities. Completing this action will improve the accuracy of your Synthoid population estimated in the
         current city.
         <br />
