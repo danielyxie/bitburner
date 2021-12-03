@@ -1226,19 +1226,5 @@ export function NetscriptSingularity(
 
       return Object.assign({}, crime);
     },
-    isFocused: function (): boolean {
-      helper.updateDynamicRam("isFocused", getRamCost("isFocused"));
-      helper.checkSingularityAccess("isFocused", 2);
-      return player.focus;
-    },
-    setFocus: function (focus: any): void {
-      helper.updateDynamicRam("setFocus", getRamCost("setFocus"));
-      helper.checkSingularityAccess("setFocus", 2);
-      if (focus === true) {
-        player.startFocusing();
-      } else if (focus === false) {
-        player.stopFocusing();
-      }
-    },
   };
 }
