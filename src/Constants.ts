@@ -333,6 +333,8 @@ export const CONSTANTS: {
     * In BN8 is it possible to reduce the money on a server without gaining any.
     * In the options, the timestamp feature has a placeholder explaining the expected format.
     * Bunch of doc typo fix. (hydroflame & @BartKoppelmans & @cvr-119)
+    * World Daemon difficulty is increased depending on BitNode.
+    * hacking skill nerf was loosened in some BNs.
     * nerf noodle bar
 `,
 };

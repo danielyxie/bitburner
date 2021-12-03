@@ -116,11 +116,12 @@ function removeWorkerScript(workerScript: WorkerScript, rerenderUi = true): void
   for (const rs of server.runningScripts) server.updateRamUsed(server.ramUsed + rs.ramUsage * rs.threads, Player);
 
   // Delete script from global pool (workerScripts)
-  const res = workerScripts.delete(workerScript.pid);
-  if (!res) {
-    console.warn(`removeWorkerScript() called with WorkerScript that wasn't in the global map:`);
-    console.warn(workerScript);
-  }
+  workerScripts.delete(workerScript.pid);
+  // const res = workerScripts.delete(workerScript.pid);
+  // if (!res) {
+  //   console.warn(`removeWorkerScript() called with WorkerScript that wasn't in the global map:`);
+  //   console.warn(workerScript);
+  // }
   AddRecentScript(workerScript);
 
   if (rerenderUi) {
