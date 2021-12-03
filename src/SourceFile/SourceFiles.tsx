@@ -204,3 +204,7 @@ SourceFiles["SourceFile12"] = new SourceFile(
   12,
   <>This Source-File lets the player start with Neuroflux Governor equal to the level of this Source-File.</>,
 );
+SourceFiles["SourceFile13"] = new SourceFile(
+  13,
+  <>Each level of this Source-File increases the size of Stanek's Gift.</>,
+);

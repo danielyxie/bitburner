@@ -108,6 +108,9 @@ export const AugmentationNames: {
   BladeArmorOmnibeam: string;
   BladeArmorIPU: string;
   BladesSimulacrum: string;
+  StaneksGift1: string;
+  StaneksGift2: string;
+  StaneksGift3: string;
 } = {
   Targeting1: "Augmented Targeting I",
   Targeting2: "Augmented Targeting II",
@@ -218,6 +221,10 @@ export const AugmentationNames: {
   BladeArmorOmnibeam: "BLADE-51b Tesla Armor: Omnibeam Upgrade",
   BladeArmorIPU: "BLADE-51b Tesla Armor: IPU Upgrade",
   BladesSimulacrum: "The Blade's Simulacrum",
+
+  StaneksGift1: "Stanek's Gift - Genesis",
+  StaneksGift2: "Stanek's Gift - Awakening",
+  StaneksGift3: "Stanek's Gift - Serenity",
 
   //Wasteland Augs
   //PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System

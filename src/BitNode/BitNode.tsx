@@ -530,8 +530,38 @@ BitNodes["BitNode12"] = new BitNode(
     </>
   ),
 );
+BitNodes["BitNode13"] = new BitNode(
+  13,
+  2,
+  "They're lunatics",
+  "1 step back, 2 steps forward",
+  (
+    <>
+      With the invention of Augmentations in the 2040s a religious group known as the Church of the Machine God has
+      rallied far more support than anyone would have hoped.
+      <br />
+      <br />
+      Their leader, Allison "Mother" Stanek is said to have created her own Augmentation whose power goes beyond any
+      other. Find her in Chongquing and gain her trust.
+      <br />
+      <br />
+      In this BitNode:
+      <br />
+      <br />
+      Every stat is significantly reduced
+      <br />
+      Stanek's Gift power is significantly increased.
+      <br />
+      <br />
+      Destroying this BitNode will give you Source-File 13, or if you already have this Source-File it will upgrade its
+      level up to a maximum of 3. This Source-File lets the Church of the Machine God appear in other BitNodes.
+      <br />
+      <br />
+      Each level of this Source-File increases the size of Stanek's Gift.
+    </>
+  ),
+);
 // Books: Frontera, Shiner
-BitNodes["BitNode13"] = new BitNode(13, 2, "fOS", "COMING SOON"); //Unlocks the new game mode and the rest of the BitNodes
 BitNodes["BitNode14"] = new BitNode(14, 2, "", "COMING SOON");
 BitNodes["BitNode15"] = new BitNode(15, 2, "", "COMING SOON");
 BitNodes["BitNode16"] = new BitNode(16, 2, "", "COMING SOON");
@@ -553,6 +583,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers[mult] = 1;
     }
   }
+  // Special case.
+  BitNodeMultipliers.StaneksGiftExtraSize = 0;
 
   switch (p.bitNodeN) {
     case 1: // Source Genesis (every multiplier is 1)
@@ -566,6 +598,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.InfiltrationMoney = 3;
       BitNodeMultipliers.FactionWorkRepGain = 0.5;
       BitNodeMultipliers.FactionPassiveRepGain = 0;
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = 2;
+      BitNodeMultipliers.StaneksGiftExtraSize = -6;
       BitNodeMultipliers.PurchasedServerSoftcap = 1.3;
       BitNodeMultipliers.CorporationSoftCap = 0.9;
       break;
@@ -583,6 +617,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.HacknetNodeMoney = 0.25;
       BitNodeMultipliers.HomeComputerRamCost = 1.5;
       BitNodeMultipliers.PurchasedServerCost = 2;
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.75;
+      BitNodeMultipliers.StaneksGiftExtraSize = -2;
       BitNodeMultipliers.PurchasedServerSoftcap = 1.3;
       BitNodeMultipliers.GangSoftcap = 0.9;
       break;
@@ -599,6 +635,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.HackExpGain = 0.4;
       BitNodeMultipliers.CrimeExpGain = 0.5;
       BitNodeMultipliers.FactionWorkRepGain = 0.75;
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = 1.5;
+      BitNodeMultipliers.StaneksGiftExtraSize = 0;
       BitNodeMultipliers.PurchasedServerSoftcap = 1.2;
       break;
     case 5: // Artificial intelligence
@@ -613,6 +651,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.AugmentationMoneyCost = 2;
       BitNodeMultipliers.HackExpGain = 0.5;
       BitNodeMultipliers.CorporationValuation = 0.5;
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = 1.3;
+      BitNodeMultipliers.StaneksGiftExtraSize = 0;
       BitNodeMultipliers.PurchasedServerSoftcap = 1.2;
       break;
     case 6: // Bladeburner
@@ -630,6 +670,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.HackExpGain = 0.25;
       BitNodeMultipliers.DaedalusAugsRequirement = 1.166; // Results in 35 Augs needed
       BitNodeMultipliers.PurchasedServerSoftcap = 2;
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.5;
+      BitNodeMultipliers.StaneksGiftExtraSize = 2;
       BitNodeMultipliers.GangSoftcap = 0.7;
       BitNodeMultipliers.CorporationSoftCap = 0.9;
       break;
@@ -653,6 +695,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.FourSigmaMarketDataApiCost = 2;
       BitNodeMultipliers.DaedalusAugsRequirement = 1.166; // Results in 35 Augs needed
       BitNodeMultipliers.PurchasedServerSoftcap = 2;
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.9;
+      BitNodeMultipliers.StaneksGiftExtraSize = -1;
       BitNodeMultipliers.GangSoftcap = 0.7;
       BitNodeMultipliers.CorporationSoftCap = 0.9;
       break;
@@ -667,6 +711,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.RepToDonateToFaction = 0;
       BitNodeMultipliers.CorporationValuation = 0;
       BitNodeMultipliers.CodingContractMoney = 0;
+      BitNodeMultipliers.StaneksGiftExtraSize = -7;
       BitNodeMultipliers.PurchasedServerSoftcap = 4;
       BitNodeMultipliers.GangSoftcap = 0;
       BitNodeMultipliers.CorporationSoftCap = 0;
@@ -691,6 +736,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.FourSigmaMarketDataApiCost = 4;
       BitNodeMultipliers.BladeburnerRank = 0.9;
       BitNodeMultipliers.BladeburnerSkillCost = 1.2;
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.5;
+      BitNodeMultipliers.StaneksGiftExtraSize = 2;
       BitNodeMultipliers.GangSoftcap = 0.8;
       BitNodeMultipliers.CorporationSoftCap = 0.9;
       break;
@@ -716,6 +763,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.PurchasedServerLimit = 0.6;
       BitNodeMultipliers.PurchasedServerMaxRam = 0.5;
       BitNodeMultipliers.BladeburnerRank = 0.8;
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.75;
+      BitNodeMultipliers.StaneksGiftExtraSize = -3;
       BitNodeMultipliers.PurchasedServerSoftcap = 1.1;
       BitNodeMultipliers.GangSoftcap = 0.9;
       BitNodeMultipliers.CorporationSoftCap = 0.9;
@@ -807,8 +856,54 @@ export function initBitNodeMultipliers(p: IPlayer): void {
 
       BitNodeMultipliers.BladeburnerRank = dec;
       BitNodeMultipliers.BladeburnerSkillCost = inc;
+
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = inc;
+      BitNodeMultipliers.StaneksGiftExtraSize = inc;
       BitNodeMultipliers.GangSoftcap = 0.8;
       BitNodeMultipliers.CorporationSoftCap = 0.8;
+      break;
+    }
+    case 13: {
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.5;
+
+      BitNodeMultipliers.HackingLevelMultiplier = 0.3;
+      BitNodeMultipliers.StrengthLevelMultiplier = 0.3;
+      BitNodeMultipliers.DefenseLevelMultiplier = 0.3;
+      BitNodeMultipliers.DexterityLevelMultiplier = 0.3;
+      BitNodeMultipliers.AgilityLevelMultiplier = 0.3;
+      BitNodeMultipliers.CharismaLevelMultiplier = 0.3;
+
+      BitNodeMultipliers.ServerMaxMoney = 0.45;
+      BitNodeMultipliers.ServerStartingMoney = 0.75;
+
+      BitNodeMultipliers.ServerStartingSecurity = 2;
+
+      BitNodeMultipliers.ScriptHackMoney = 0.4;
+      BitNodeMultipliers.CompanyWorkMoney = 0.4;
+      BitNodeMultipliers.CrimeMoney = 0.4;
+      BitNodeMultipliers.HacknetNodeMoney = 0.4;
+      BitNodeMultipliers.CodingContractMoney = 0.4;
+
+      BitNodeMultipliers.CompanyWorkExpGain = 0.5;
+      BitNodeMultipliers.ClassGymExpGain = 0.5;
+      BitNodeMultipliers.FactionWorkExpGain = 0.5;
+      BitNodeMultipliers.HackExpGain = 0.5;
+      BitNodeMultipliers.CrimeExpGain = 0.5;
+
+      BitNodeMultipliers.FactionWorkRepGain = 0.6;
+
+      BitNodeMultipliers.FourSigmaMarketDataCost = 10;
+      BitNodeMultipliers.FourSigmaMarketDataApiCost = 10;
+
+      BitNodeMultipliers.CorporationValuation = 0.001;
+
+      BitNodeMultipliers.BladeburnerRank = 0.45;
+      BitNodeMultipliers.BladeburnerSkillCost = 2;
+      BitNodeMultipliers.StaneksGiftPowerMultiplier = 2;
+      BitNodeMultipliers.StaneksGiftExtraSize = 1;
+      BitNodeMultipliers.GangSoftcap = 0.3;
+      BitNodeMultipliers.CorporationSoftCap = 0.3;
+      BitNodeMultipliers.WorldDaemonDifficulty = 2.5;
       break;
     }
     default:

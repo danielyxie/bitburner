@@ -2366,6 +2366,134 @@ function initAugmentations(): void {
     resetAugmentation(BladesSimulacrum);
   }
 
+  // Special CotMG Augmentations
+  const ChurchOfTheMachineGodFactionName = "Church of the Machine God";
+  if (factionExists(ChurchOfTheMachineGodFactionName)) {
+    const StaneksGift1 = new Augmentation({
+      name: AugmentationNames.StaneksGift1,
+      repCost: 0,
+      moneyCost: 0,
+      info:
+        'Allison "Mother" Stanek imparts you with her gift. An ' +
+        "experimental Augmentation implanted at the base of the neck. " +
+        "It allows you to overclock your entire system by carefully " +
+        "changing the configuration.",
+      isSpecial: true,
+      hacking_chance_mult: 0.9,
+      hacking_speed_mult: 0.9,
+      hacking_money_mult: 0.9,
+      hacking_grow_mult: 0.9,
+      hacking_mult: 0.9,
+      strength_mult: 0.9,
+      defense_mult: 0.9,
+      dexterity_mult: 0.9,
+      agility_mult: 0.9,
+      charisma_mult: 0.9,
+      hacking_exp_mult: 0.9,
+      strength_exp_mult: 0.9,
+      defense_exp_mult: 0.9,
+      dexterity_exp_mult: 0.9,
+      agility_exp_mult: 0.9,
+      charisma_exp_mult: 0.9,
+      company_rep_mult: 0.9,
+      faction_rep_mult: 0.9,
+      crime_money_mult: 0.9,
+      crime_success_mult: 0.9,
+      hacknet_node_money_mult: 0.9,
+      hacknet_node_purchase_cost_mult: 1.1,
+      hacknet_node_ram_cost_mult: 1.1,
+      hacknet_node_core_cost_mult: 1.1,
+      hacknet_node_level_cost_mult: 1.1,
+      work_money_mult: 0.9,
+      stats: <>Its unstable nature decreases all your stats by 10%</>,
+    });
+    StaneksGift1.addToFactions([ChurchOfTheMachineGodFactionName]);
+    resetAugmentation(StaneksGift1);
+
+    const StaneksGift2 = new Augmentation({
+      name: AugmentationNames.StaneksGift2,
+      repCost: 1e6,
+      moneyCost: 0,
+      info:
+        "The next evolution is near, A coming together of man and machine. A synthesis greater than the birth of the human " +
+        "organism. Time spent with the gift has allowed for acclimitaztion of the invavise augment and the toll it takes upon " +
+        "your frame granting lesser penalty of 5% to all stats.",
+      prereqs: [AugmentationNames.StaneksGift1],
+      isSpecial: true,
+      hacking_chance_mult: 0.95 / 0.9,
+      hacking_speed_mult: 0.95 / 0.9,
+      hacking_money_mult: 0.95 / 0.9,
+      hacking_grow_mult: 0.95 / 0.9,
+      hacking_mult: 0.95 / 0.9,
+      strength_mult: 0.95 / 0.9,
+      defense_mult: 0.95 / 0.9,
+      dexterity_mult: 0.95 / 0.9,
+      agility_mult: 0.95 / 0.9,
+      charisma_mult: 0.95 / 0.9,
+      hacking_exp_mult: 0.95 / 0.9,
+      strength_exp_mult: 0.95 / 0.9,
+      defense_exp_mult: 0.95 / 0.9,
+      dexterity_exp_mult: 0.95 / 0.9,
+      agility_exp_mult: 0.95 / 0.9,
+      charisma_exp_mult: 0.95 / 0.9,
+      company_rep_mult: 0.95 / 0.9,
+      faction_rep_mult: 0.95 / 0.9,
+      crime_money_mult: 0.95 / 0.9,
+      crime_success_mult: 0.95 / 0.9,
+      hacknet_node_money_mult: 0.95 / 0.9,
+      hacknet_node_purchase_cost_mult: 1.05 / 1.1,
+      hacknet_node_ram_cost_mult: 1.05 / 1.1,
+      hacknet_node_core_cost_mult: 1.05 / 1.1,
+      hacknet_node_level_cost_mult: 1.05 / 1.1,
+      work_money_mult: 0.95 / 0.9,
+      stats: <>The penalty for the gift is reduced to 5%</>,
+    });
+    StaneksGift2.addToFactions([ChurchOfTheMachineGodFactionName]);
+    resetAugmentation(StaneksGift2);
+
+    const StaneksGift3 = new Augmentation({
+      name: AugmentationNames.StaneksGift3,
+      repCost: 1e8,
+      moneyCost: 0,
+      info:
+        "The synthesis of human and machine is nothing to fear. It is our destiny. " +
+        "You will become greater than the sum of our parts. As One. Enbrace your gift " +
+        "fully and wholly free of it's accursed toll. Serenity brings tranquility the form " +
+        "of no longer suffering a stat penalty. ",
+      prereqs: [AugmentationNames.StaneksGift2],
+      isSpecial: true,
+      hacking_chance_mult: 1 / 0.95,
+      hacking_speed_mult: 1 / 0.95,
+      hacking_money_mult: 1 / 0.95,
+      hacking_grow_mult: 1 / 0.95,
+      hacking_mult: 1 / 0.95,
+      strength_mult: 1 / 0.95,
+      defense_mult: 1 / 0.95,
+      dexterity_mult: 1 / 0.95,
+      agility_mult: 1 / 0.95,
+      charisma_mult: 1 / 0.95,
+      hacking_exp_mult: 1 / 0.95,
+      strength_exp_mult: 1 / 0.95,
+      defense_exp_mult: 1 / 0.95,
+      dexterity_exp_mult: 1 / 0.95,
+      agility_exp_mult: 1 / 0.95,
+      charisma_exp_mult: 1 / 0.95,
+      company_rep_mult: 1 / 0.95,
+      faction_rep_mult: 1 / 0.95,
+      crime_money_mult: 1 / 0.95,
+      crime_success_mult: 1 / 0.95,
+      hacknet_node_money_mult: 1 / 0.95,
+      hacknet_node_purchase_cost_mult: 1 / 1.05,
+      hacknet_node_ram_cost_mult: 1 / 1.05,
+      hacknet_node_core_cost_mult: 1 / 1.05,
+      hacknet_node_level_cost_mult: 1 / 1.05,
+      work_money_mult: 1 / 0.95,
+      stats: <>Staneks Gift has no penalty.</>,
+    });
+    StaneksGift3.addToFactions([ChurchOfTheMachineGodFactionName]);
+    resetAugmentation(StaneksGift3);
+  }
+
   // Update costs based on how many have been purchased
   mult = Math.pow(
     CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]],

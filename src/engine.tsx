@@ -12,6 +12,7 @@ import { initCompanies } from "./Company/Companies";
 import { Corporation } from "./Corporation/Corporation";
 import { CONSTANTS } from "./Constants";
 import { Factions, initFactions } from "./Faction/Factions";
+import { staneksGift } from "./CotMG/Helper";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { Router } from "./ui/GameRoot";
 import { SetupTextEditor } from "./ScriptEditor/ui/ScriptEditorRoot";
@@ -100,6 +101,9 @@ const Engine: {
     if (Player.inGang() && Player.gang !== null) {
       Player.gang.process(numCycles, Player);
     }
+
+    // Staneks gift
+    staneksGift.process(Player, numCycles);
 
     // Corporation
     if (Player.corporation instanceof Corporation) {
@@ -344,6 +348,8 @@ const Engine: {
       if (Player.bladeburner instanceof Bladeburner) {
         Player.bladeburner.storeCycles(numCyclesOffline);
       }
+
+      staneksGift.process(Player, numCyclesOffline);
 
       // Sleeves offline progress
       for (let i = 0; i < Player.sleeves.length; ++i) {

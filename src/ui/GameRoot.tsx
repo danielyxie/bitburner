@@ -61,6 +61,8 @@ import { CharacterStats } from "./CharacterStats";
 import { TravelAgencyRoot } from "../Locations/ui/TravelAgencyRoot";
 import { StockMarketRoot } from "../StockMarket/ui/StockMarketRoot";
 import { BitverseRoot } from "../BitNode/ui/BitverseRoot";
+import { StaneksGiftRoot } from "../CotMG/ui/StaneksGiftRoot";
+import { staneksGift } from "../CotMG/Helper";
 import { CharacterOverview } from "./React/CharacterOverview";
 import { BladeburnerCinematic } from "../Bladeburner/ui/BladeburnerCinematic";
 import { workerScripts } from "../Netscript/WorkerScripts";
@@ -181,6 +183,9 @@ export let Router: IRouter = {
   toLocation: () => {
     throw new Error("Router called before initialization");
   },
+  toStaneksGift: () => {
+    throw new Error("Router called before initialization");
+  },
 };
 
 function determineStartPage(player: IPlayer): Page {
@@ -279,6 +284,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       setLocation(location);
       setPage(Page.Location);
     },
+    toStaneksGift: () => {
+      setPage(Page.StaneksGift);
+    },
   };
 
   useEffect(() => {
@@ -316,6 +324,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                   <TerminalRoot terminal={terminal} router={Router} player={player} />
                 ) : page === Page.Sleeves ? (
                   <SleeveRoot />
+                ) : page === Page.StaneksGift ? (
+                  <StaneksGiftRoot staneksGift={staneksGift} />
                 ) : page === Page.Stats ? (
                   <CharacterStats />
                 ) : page === Page.ScriptEditor ? (

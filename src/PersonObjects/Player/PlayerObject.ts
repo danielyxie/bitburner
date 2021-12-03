@@ -283,6 +283,7 @@ export class PlayerObject implements IPlayer {
   setBitNodeNumber: (n: number) => void;
   getMult: (name: string) => number;
   setMult: (name: string, mult: number) => void;
+  canAccessCotMG: () => boolean;
   sourceFileLvl: (n: number) => number;
 
   constructor() {
@@ -579,6 +580,8 @@ export class PlayerObject implements IPlayer {
 
     this.getMult = generalMethods.getMult;
     this.setMult = generalMethods.setMult;
+
+    this.canAccessCotMG = generalMethods.canAccessCotMG;
     this.sourceFileLvl = generalMethods.sourceFileLvl;
   }
 
