@@ -144,15 +144,6 @@ export function FragmentById(id: number): Fragment | null {
   );
   Fragments.push(
     new Fragment(
-      8, // id
-      Shapes.O,
-      FragmentType.Hacking, // type
-      1, // power
-      1, // limit
-    ),
-  );
-  Fragments.push(
-    new Fragment(
       10, // id
       Shapes.T,
       FragmentType.Strength, // type

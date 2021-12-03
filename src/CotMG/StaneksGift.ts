@@ -33,7 +33,7 @@ export class StaneksGift implements IStaneksGift {
     af.numCharge++;
 
     const cotmg = Factions["Church of the Machine God"];
-    cotmg.playerReputation += (player.faction_rep_mult * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 100;
+    cotmg.playerReputation += (player.faction_rep_mult * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
   }
 
   inBonus(): boolean {
@@ -43,7 +43,7 @@ export class StaneksGift implements IStaneksGift {
   process(p: IPlayer, numCycles = 1): void {
     if (!p.hasAugmentation(AugmentationNames.StaneksGift1)) return;
     this.storedCycles += numCycles;
-    this.storedCycles -= 5;
+    this.storedCycles -= 10;
     this.storedCycles = Math.max(0, this.storedCycles);
     this.updateMults(p);
     StaneksGiftEvents.emit();
