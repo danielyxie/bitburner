@@ -99,7 +99,6 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
       const arg = command.substr(start, i - start);
 
       // If this is a number, convert it from a string to number
-      console.log(arg);
       if (isNumber(arg)) {
         args.push(parseFloat(arg));
       } else if (arg === "true") {
@@ -120,7 +119,6 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
     const arg = command.substr(start, i - start);
 
     // If this is a number, convert it from string to number
-    console.log(arg);
     if (isNumber(arg)) {
       args.push(parseFloat(arg));
     } else if (arg === "true") {
