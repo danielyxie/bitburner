@@ -14,7 +14,7 @@ import { calculateHackingTime, calculateGrowTime, calculateWeakenTime } from "..
 
 function requireHackingLevel(lvl: number) {
   return function (p: IPlayer) {
-    return p.hacking >= lvl;
+    return p.hacking + p.intelligence / 2 >= lvl;
   };
 }
 
