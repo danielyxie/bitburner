@@ -9,7 +9,7 @@ export function wget(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   if (args.length !== 2) {
     terminal.error("Incorrect usage of wget command. Usage: wget [url] [target file]");

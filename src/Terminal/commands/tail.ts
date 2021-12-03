@@ -12,7 +12,7 @@ export function tail(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  commandArray: (string | number)[],
+  commandArray: (string | number | boolean)[],
 ): void {
   try {
     if (commandArray.length < 1) {
@@ -67,7 +67,7 @@ export function tail(
 
       // if there's no candidate then we just don't know.
       terminal.error("No such script exists.");
-    } else {
+    } else if (typeof commandArray[0] === "number") {
       const runningScript = findRunningScriptByPid(commandArray[0], server);
       if (runningScript == null) {
         terminal.error("No such script exists");

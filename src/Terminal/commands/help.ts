@@ -9,7 +9,7 @@ export function help(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   if (args.length !== 0 && args.length !== 1) {
     terminal.error("Incorrect usage of help command. Usage: help");
@@ -18,7 +18,7 @@ export function help(
   if (args.length === 0) {
     TerminalHelpText.forEach((line) => terminal.print(line));
   } else {
-    const cmd = args[0];
+    const cmd = args[0] + "";
     const txt = HelpTexts[cmd];
     if (txt == null) {
       terminal.error("No help topics match '" + cmd + "'");

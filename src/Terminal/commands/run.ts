@@ -11,7 +11,7 @@ export function run(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   // Run a program or a script
   if (args.length < 1) {

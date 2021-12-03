@@ -9,7 +9,7 @@ export function connect(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   // Disconnect from current server in terminal and connect to new one
   if (args.length !== 1) {
