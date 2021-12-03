@@ -9,7 +9,7 @@ export function weaken(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   if (args.length !== 0) {
     terminal.error("Incorrect usage of weaken command. Usage: weaken");

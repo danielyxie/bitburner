@@ -42,20 +42,20 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
           return Promise.reject(workerScript);
         }
         const charge = staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
-        workerScript.log("stanek.charge", `Charged fragment for ${charge} charge.`);
+        workerScript.log("stanek.charge", () => `Charged fragment for ${charge} charge.`);
         return Promise.resolve();
       });
     },
     fragmentDefinitions: function (): IFragment[] {
       helper.updateDynamicRam("fragmentDefinitions", getRamCost("stanek", "fragmentDefinitions"));
       checkStanekAPIAccess("fragmentDefinitions");
-      workerScript.log("stanek.fragmentDefinitions", `Returned ${Fragments.length} fragments`);
+      workerScript.log("stanek.fragmentDefinitions", () => `Returned ${Fragments.length} fragments`);
       return Fragments.map((f) => f.copy());
     },
     activeFragments: function (): IActiveFragment[] {
       helper.updateDynamicRam("activeFragments", getRamCost("stanek", "activeFragments"));
       checkStanekAPIAccess("activeFragments");
-      workerScript.log("stanek.activeFragments", `Returned ${staneksGift.fragments.length} fragments`);
+      workerScript.log("stanek.activeFragments", () => `Returned ${staneksGift.fragments.length} fragments`);
       return staneksGift.fragments.map((af) => {
         return { ...af.copy(), ...af.fragment().copy() };
       });
@@ -63,7 +63,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
     clear: function (): void {
       helper.updateDynamicRam("clear", getRamCost("stanek", "clear"));
       checkStanekAPIAccess("clear");
-      workerScript.log("stanek.clear", `Cleared Stanek's Gift.`);
+      workerScript.log("stanek.clear", () => `Cleared Stanek's Gift.`);
       staneksGift.clear();
     },
     canPlace: function (arootX: any, arootY: any, arotation: any, afragmentId: any): boolean {

@@ -431,7 +431,6 @@ const Engine: {
       Player.lastUpdate = _thisUpdate - offset;
       Engine.updateGame(diff);
     }
-
     window.requestAnimationFrame(Engine.start);
   },
 };

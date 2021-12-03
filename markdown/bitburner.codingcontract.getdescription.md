@@ -9,14 +9,14 @@ Get the description.
 <b>Signature:</b>
 
 ```typescript
-getDescription(fn: string, host?: string): string;
+getDescription(filename: string, host?: string): string;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  fn | string | Filename of the contract. |
+|  filename | string |  |
 |  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>

@@ -53,13 +53,14 @@ export interface NS extends Singularity
 |  [getHacknetMultipliers()](./bitburner.ns.gethacknetmultipliers.md) | Get hacknet related multipliers. |
 |  [getHackTime(host)](./bitburner.ns.gethacktime.md) | Get the execution time of a hack() call. |
 |  [getHostname()](./bitburner.ns.gethostname.md) | Returns a string with the hostname of the server that the script is running on. |
+|  [getOwnedSourceFiles()](./bitburner.ns.getownedsourcefiles.md) | Get a list of acquired Source-Files. |
 |  [getPlayer()](./bitburner.ns.getplayer.md) | Get information about the player. |
 |  [getPortHandle(port)](./bitburner.ns.getporthandle.md) | Get all data on a port. |
 |  [getPurchasedServerCost(ram)](./bitburner.ns.getpurchasedservercost.md) | Get cost of purchasing a server. |
 |  [getPurchasedServerLimit()](./bitburner.ns.getpurchasedserverlimit.md) | Returns the maximum number of servers you can purchase. |
 |  [getPurchasedServerMaxRam()](./bitburner.ns.getpurchasedservermaxram.md) | Returns the maximum RAM that a purchased server can have. |
 |  [getPurchasedServers(hostnameMode)](./bitburner.ns.getpurchasedservers.md) | Returns an array with either the hostnames or IPs of all of the servers you have purchased. |
-|  [getRunningScript(fn, hostname, args)](./bitburner.ns.getrunningscript.md) | Get general info about a running script. |
+|  [getRunningScript(filename, hostname, args)](./bitburner.ns.getrunningscript.md) | Get general info about a running script. |
 |  [getScriptExpGain(script, host, args)](./bitburner.ns.getscriptexpgain.md) | Get the exp gain of a script. |
 |  [getScriptIncome(script, host, args)](./bitburner.ns.getscriptincome.md) | Get the income of a script. |
 |  [getScriptLogs(fn, host, args)](./bitburner.ns.getscriptlogs.md) | Get all the logs of a script. |
@@ -80,7 +81,7 @@ export interface NS extends Singularity
 |  [getTimeSinceLastAug()](./bitburner.ns.gettimesincelastaug.md) | Returns the amount of time in milliseconds that have passed since you last installed Augmentations. |
 |  [getWeakenTime(host)](./bitburner.ns.getweakentime.md) | Get the execution time of a weaken() call. |
 |  [grow(host, opts)](./bitburner.ns.grow.md) | Spoof money in a servers bank account, increasing the amount available. |
-|  [growthAnalyze(host, growthAmount)](./bitburner.ns.growthanalyze.md) | Calculate the number of grow thread needed to grow a server by a certain multiplier. |
+|  [growthAnalyze(host, growthAmount, cores)](./bitburner.ns.growthanalyze.md) | Calculate the number of grow thread needed to grow a server by a certain multiplier. |
 |  [growthAnalyzeSecurity(threads)](./bitburner.ns.growthanalyzesecurity.md) | Calculate the security increase for a number of thread. |
 |  [hack(host, opts)](./bitburner.ns.hack.md) | Steal a servers money. |
 |  [hackAnalyze(host)](./bitburner.ns.hackanalyze.md) | Get the percent of money stolen with a single thread. |
@@ -119,7 +120,7 @@ export interface NS extends Singularity
 |  [tFormat(milliseconds, milliPrecision)](./bitburner.ns.tformat.md) | Format time to readable string |
 |  [toast(msg, variant)](./bitburner.ns.toast.md) | Queue a toast (bottom-right notification). |
 |  [tprint(msg)](./bitburner.ns.tprint.md) | Prints a value or a variable to the Terminal. |
-|  [tprintf(msg)](./bitburner.ns.tprintf.md) | Prints a raw value or a variable to the Terminal. |
+|  [tprintf(format, values)](./bitburner.ns.tprintf.md) | Prints a raw value or a variable to the Terminal. |
 |  [tryWritePort(port, data)](./bitburner.ns.trywriteport.md) | Attempt to write to a port. |
 |  [vsprintf(format, args)](./bitburner.ns.vsprintf.md) | Format a string with an array of arguments. |
 |  [weaken(host, opts)](./bitburner.ns.weaken.md) | Reduce a server security level. |

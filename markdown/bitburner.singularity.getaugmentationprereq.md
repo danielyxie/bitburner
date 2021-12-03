@@ -4,7 +4,7 @@
 
 ## Singularity.getAugmentationPrereq() method
 
-Get the pre-requisite of an augmentation.
+SF4.3 - Get the pre-requisite of an augmentation.
 
 <b>Signature:</b>
 
@@ -27,8 +27,6 @@ Array with the names of the prerequisite Augmentation(s) for the specified Augme
 ## Remarks
 
 RAM cost: 5 GB
-
-Singularity - Level 3
 
 This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation. If there are no prerequisites, a blank array is returned.
 

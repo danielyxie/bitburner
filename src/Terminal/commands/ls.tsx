@@ -10,7 +10,7 @@ export function ls(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   const numArgs = args.length;
   function incorrectUsage(): void {

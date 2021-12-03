@@ -4,7 +4,7 @@
 
 ## Singularity.getFactionRep() method
 
-Get faction reputation.
+SF4.2 - Get faction reputation.
 
 <b>Signature:</b>
 
@@ -27,8 +27,6 @@ Amount of reputation you have for the specified faction.
 ## Remarks
 
 RAM cost: 1 GB
-
-Singularity - Level 2
 
 This function returns the amount of reputation you have for the specified faction.
 

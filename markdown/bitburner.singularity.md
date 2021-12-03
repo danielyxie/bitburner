@@ -20,50 +20,51 @@ This API requires Source-File 4 level 1 / 2 / 3 to use.
 
 |  Method | Description |
 |  --- | --- |
-|  [applyToCompany(companyName, field)](./bitburner.singularity.applytocompany.md) | Apply for a job at a company. |
-|  [checkFactionInvitations()](./bitburner.singularity.checkfactioninvitations.md) | List all current faction invitations. |
-|  [commitCrime(crime)](./bitburner.singularity.commitcrime.md) | Commit a crime. |
-|  [connect(hostname)](./bitburner.singularity.connect.md) | Connect to a server. |
-|  [createProgram(program)](./bitburner.singularity.createprogram.md) | Create a program. |
-|  [donateToFaction(faction, amount)](./bitburner.singularity.donatetofaction.md) | Donate to a faction. |
-|  [getAugmentationCost(augName)](./bitburner.singularity.getaugmentationcost.md) |  |
-|  [getAugmentationPrereq(augName)](./bitburner.singularity.getaugmentationprereq.md) | Get the pre-requisite of an augmentation. |
-|  [getAugmentationPrice(augName)](./bitburner.singularity.getaugmentationprice.md) | Get price of an augmentation. |
-|  [getAugmentationRepReq(augName)](./bitburner.singularity.getaugmentationrepreq.md) | Get reputation requirement of an augmentation. |
-|  [getAugmentationsFromFaction(faction)](./bitburner.singularity.getaugmentationsfromfaction.md) | Get a list of augmentation available from a faction. |
-|  [getAugmentationStats(name)](./bitburner.singularity.getaugmentationstats.md) | Get the stats of an augmentation. |
-|  [getCharacterInformation()](./bitburner.singularity.getcharacterinformation.md) |  |
-|  [getCompanyFavor(companyName)](./bitburner.singularity.getcompanyfavor.md) | Get company favor. |
-|  [getCompanyFavorGain(companyName)](./bitburner.singularity.getcompanyfavorgain.md) | Get company favor gain. |
-|  [getCompanyRep(companyName)](./bitburner.singularity.getcompanyrep.md) | Get company reputation. |
-|  [getCrimeChance(crime)](./bitburner.singularity.getcrimechance.md) | Get chance to successfully commit a crime. |
-|  [getCrimeStats(crime)](./bitburner.singularity.getcrimestats.md) | Get stats related to a crime. |
-|  [getCurrentServer()](./bitburner.singularity.getcurrentserver.md) | Get the current server. |
-|  [getFactionFavor(faction)](./bitburner.singularity.getfactionfavor.md) | Get faction favor. |
-|  [getFactionFavorGain(faction)](./bitburner.singularity.getfactionfavorgain.md) | Get faction favor gain. |
-|  [getFactionRep(faction)](./bitburner.singularity.getfactionrep.md) | Get faction reputation. |
-|  [getOwnedAugmentations(purchased)](./bitburner.singularity.getownedaugmentations.md) | Get a list of owned augmentation. |
-|  [getOwnedSourceFiles()](./bitburner.singularity.getownedsourcefiles.md) | Get a list of acquired Source-Files. |
-|  [getStats()](./bitburner.singularity.getstats.md) |  |
-|  [getUpgradeHomeCoresCost()](./bitburner.singularity.getupgradehomecorescost.md) | Get the price of upgrading home cores. |
-|  [getUpgradeHomeRamCost()](./bitburner.singularity.getupgradehomeramcost.md) | Get the price of upgrading home RAM. |
-|  [goToLocation(locationName)](./bitburner.singularity.gotolocation.md) | Go to a location. |
-|  [gymWorkout(gymName, stat)](./bitburner.singularity.gymworkout.md) | Workout at the gym. |
-|  [hospitalize()](./bitburner.singularity.hospitalize.md) | Hospitalize the player. |
-|  [installAugmentations(cbScript)](./bitburner.singularity.installaugmentations.md) | Install your purchased augmentations. |
-|  [installBackdoor()](./bitburner.singularity.installbackdoor.md) | Run the backdoor command in the terminal. |
-|  [isBusy()](./bitburner.singularity.isbusy.md) | Check if the player is busy. |
-|  [joinFaction(faction)](./bitburner.singularity.joinfaction.md) | Join a faction. |
-|  [manualHack()](./bitburner.singularity.manualhack.md) | Run the hack command in the terminal. |
-|  [purchaseAugmentation(faction, augmentation)](./bitburner.singularity.purchaseaugmentation.md) | Purchase an augmentation |
-|  [purchaseProgram(programName)](./bitburner.singularity.purchaseprogram.md) | Purchase a program from the dark web. |
-|  [purchaseTor()](./bitburner.singularity.purchasetor.md) | Purchase the TOR router. |
-|  [softReset(cbScript)](./bitburner.singularity.softreset.md) | Soft reset the game. |
-|  [stopAction()](./bitburner.singularity.stopaction.md) | Stop the current action. |
-|  [travelToCity(city)](./bitburner.singularity.traveltocity.md) | Travel to another city. |
-|  [universityCourse(universityName, courseName)](./bitburner.singularity.universitycourse.md) | Take university class. |
-|  [upgradeHomeCores()](./bitburner.singularity.upgradehomecores.md) | Upgrade home computer cores. |
-|  [upgradeHomeRam()](./bitburner.singularity.upgradehomeram.md) | Upgrade home computer RAM. |
-|  [workForCompany(companyName)](./bitburner.singularity.workforcompany.md) | Work for a company. |
-|  [workForFaction(faction, workType)](./bitburner.singularity.workforfaction.md) | Work for a faction. |
+|  [applyToCompany(companyName, field)](./bitburner.singularity.applytocompany.md) | SF4.2 - Apply for a job at a company. |
+|  [checkFactionInvitations()](./bitburner.singularity.checkfactioninvitations.md) | SF4.2 - List all current faction invitations. |
+|  [commitCrime(crime)](./bitburner.singularity.commitcrime.md) | SF4.3 - Commit a crime. |
+|  [connect(hostname)](./bitburner.singularity.connect.md) | SF4.1 - Connect to a server. |
+|  [createProgram(program)](./bitburner.singularity.createprogram.md) | SF4.3 - Create a program. |
+|  [donateToFaction(faction, amount)](./bitburner.singularity.donatetofaction.md) | SF4.3 - Donate to a faction. |
+|  [getAugmentationCost(augName)](./bitburner.singularity.getaugmentationcost.md) | SF4.3 - Get the price and reputation of an augmentation. |
+|  [getAugmentationPrereq(augName)](./bitburner.singularity.getaugmentationprereq.md) | SF4.3 - Get the pre-requisite of an augmentation. |
+|  [getAugmentationPrice(augName)](./bitburner.singularity.getaugmentationprice.md) | SF4.3 - Get price of an augmentation. |
+|  [getAugmentationRepReq(augName)](./bitburner.singularity.getaugmentationrepreq.md) | SF4.3 - Get reputation requirement of an augmentation. |
+|  [getAugmentationsFromFaction(faction)](./bitburner.singularity.getaugmentationsfromfaction.md) | SF4.3 - Get a list of augmentation available from a faction. |
+|  [getAugmentationStats(name)](./bitburner.singularity.getaugmentationstats.md) | SF4.3 - Get the stats of an augmentation. |
+|  [getCharacterInformation()](./bitburner.singularity.getcharacterinformation.md) | SF4.1 - Returns an object with various information about your character. |
+|  [getCompanyFavor(companyName)](./bitburner.singularity.getcompanyfavor.md) | SF4.2 - Get company favor. |
+|  [getCompanyFavorGain(companyName)](./bitburner.singularity.getcompanyfavorgain.md) | SF4.2 - Get company favor gain. |
+|  [getCompanyRep(companyName)](./bitburner.singularity.getcompanyrep.md) | SF4.2 - Get company reputation. |
+|  [getCrimeChance(crime)](./bitburner.singularity.getcrimechance.md) | SF4.3 - Get chance to successfully commit a crime. |
+|  [getCrimeStats(crime)](./bitburner.singularity.getcrimestats.md) | SF4.3 - Get stats related to a crime. |
+|  [getCurrentServer()](./bitburner.singularity.getcurrentserver.md) | SF4.1 - Get the current server. |
+|  [getFactionFavor(faction)](./bitburner.singularity.getfactionfavor.md) | SF4.2 - Get faction favor. |
+|  [getFactionFavorGain(faction)](./bitburner.singularity.getfactionfavorgain.md) | SF4.2 - Get faction favor gain. |
+|  [getFactionRep(faction)](./bitburner.singularity.getfactionrep.md) | SF4.2 - Get faction reputation. |
+|  [getOwnedAugmentations(purchased)](./bitburner.singularity.getownedaugmentations.md) | SF4.3 - Get a list of owned augmentation. |
+|  [getStats()](./bitburner.singularity.getstats.md) | SF4.1 - Returns an object with the Player’s stats. |
+|  [getUpgradeHomeCoresCost()](./bitburner.singularity.getupgradehomecorescost.md) | SF4.2 - Get the price of upgrading home cores. |
+|  [getUpgradeHomeRamCost()](./bitburner.singularity.getupgradehomeramcost.md) | SF4.2 - Get the price of upgrading home RAM. |
+|  [goToLocation(locationName)](./bitburner.singularity.gotolocation.md) | SF4.3 - Go to a location. |
+|  [gymWorkout(gymName, stat)](./bitburner.singularity.gymworkout.md) | SF4.1 - Workout at the gym. |
+|  [hospitalize()](./bitburner.singularity.hospitalize.md) | SF4.1 - Hospitalize the player. |
+|  [installAugmentations(cbScript)](./bitburner.singularity.installaugmentations.md) | SF4.3 - Install your purchased augmentations. |
+|  [installBackdoor()](./bitburner.singularity.installbackdoor.md) | SF4.1 - Run the backdoor command in the terminal. |
+|  [isBusy()](./bitburner.singularity.isbusy.md) | SF4.1 - Check if the player is busy. |
+|  [isFocused()](./bitburner.singularity.isfocused.md) | SF4.2 - Check if the player is focused. |
+|  [joinFaction(faction)](./bitburner.singularity.joinfaction.md) | SF4.2 - Join a faction. |
+|  [manualHack()](./bitburner.singularity.manualhack.md) | SF4.1 - Run the hack command in the terminal. |
+|  [purchaseAugmentation(faction, augmentation)](./bitburner.singularity.purchaseaugmentation.md) | SF4.3 - Purchase an augmentation |
+|  [purchaseProgram(programName)](./bitburner.singularity.purchaseprogram.md) | SF4.1 - Purchase a program from the dark web. |
+|  [purchaseTor()](./bitburner.singularity.purchasetor.md) | SF4.1 - Purchase the TOR router. |
+|  [setFocus(focus)](./bitburner.singularity.setfocus.md) | SF4.2 - Set the players focus. |
+|  [softReset(cbScript)](./bitburner.singularity.softreset.md) | SF4.3 - Soft reset the game. |
+|  [stopAction()](./bitburner.singularity.stopaction.md) | SF4.1 - Stop the current action. |
+|  [travelToCity(city)](./bitburner.singularity.traveltocity.md) | SF4.1 - Travel to another city. |
+|  [universityCourse(universityName, courseName)](./bitburner.singularity.universitycourse.md) | SF4.1 - Take university class. |
+|  [upgradeHomeCores()](./bitburner.singularity.upgradehomecores.md) | SF4.2 - Upgrade home computer cores. |
+|  [upgradeHomeRam()](./bitburner.singularity.upgradehomeram.md) | SF4.2 - Upgrade home computer RAM. |
+|  [workForCompany(companyName)](./bitburner.singularity.workforcompany.md) | SF4.2 - Work for a company. |
+|  [workForFaction(faction, workType)](./bitburner.singularity.workforfaction.md) | SF4.2 - Work for a faction. |
 

@@ -11,11 +11,14 @@ export function NetscriptCodingContract(
   workerScript: WorkerScript,
   helper: INetscriptHelper,
 ): ICodingContract {
-  const getCodingContract = function (func: any, ip: any, fn: any): CodingContract {
-    const server = helper.getServer(ip, func);
-    const contract = server.getContract(fn);
+  const getCodingContract = function (func: any, hostname: any, filename: any): CodingContract {
+    const server = helper.getServer(hostname, func);
+    const contract = server.getContract(filename);
     if (contract == null) {
-      throw helper.makeRuntimeErrorMsg(`codingcontract.${func}`, `Cannot find contract '${fn}' on server '${ip}'`);
+      throw helper.makeRuntimeErrorMsg(
+        `codingcontract.${func}`,
+        `Cannot find contract '${filename}' on server '${hostname}'`,
+      );
     }
 
     return contract;
@@ -24,12 +27,12 @@ export function NetscriptCodingContract(
   return {
     attempt: function (
       answer: any,
-      fn: any,
-      ip: any = workerScript.hostname,
+      filename: any,
+      hostname: any = workerScript.hostname,
       { returnReward }: any = {},
     ): boolean | string {
       helper.updateDynamicRam("attempt", getRamCost("codingcontract", "attempt"));
-      const contract = getCodingContract("attempt", ip, fn);
+      const contract = getCodingContract("attempt", hostname, filename);
 
       // Convert answer to string. If the answer is a 2D array, then we have to
       // manually add brackets for the inner arrays
@@ -47,35 +50,41 @@ export function NetscriptCodingContract(
       const creward = contract.reward;
       if (creward === null) throw new Error("Somehow solved a contract that didn't have a reward");
 
-      const serv = helper.getServer(ip, "codingcontract.attempt");
+      const serv = helper.getServer(hostname, "codingcontract.attempt");
       if (contract.isSolution(answer)) {
         const reward = player.gainCodingContractReward(creward, contract.getDifficulty());
-        workerScript.log("attempt", `Successfully completed Coding Contract '${fn}'. Reward: ${reward}`);
-        serv.removeContract(fn);
+        workerScript.log("attempt", () => `Successfully completed Coding Contract '${filename}'. Reward: ${reward}`);
+        serv.removeContract(filename);
         return returnReward ? reward : true;
       } else {
         ++contract.tries;
         if (contract.tries >= contract.getMaxNumTries()) {
-          workerScript.log("attempt", `Coding Contract attempt '${fn}' failed. Contract is now self-destructing`);
-          serv.removeContract(fn);
+          workerScript.log(
+            "attempt",
+            () => `Coding Contract attempt '${filename}' failed. Contract is now self-destructing`,
+          );
+          serv.removeContract(filename);
         } else {
           workerScript.log(
             "attempt",
-            `Coding Contract attempt '${fn}' failed. ${contract.getMaxNumTries() - contract.tries} attempts remaining.`,
+            () =>
+              `Coding Contract attempt '${filename}' failed. ${
+                contract.getMaxNumTries() - contract.tries
+              } attempts remaining.`,
           );
         }
 
         return returnReward ? "" : false;
       }
     },
-    getContractType: function (fn: any, ip: any = workerScript.hostname): string {
+    getContractType: function (filename: any, hostname: any = workerScript.hostname): string {
       helper.updateDynamicRam("getContractType", getRamCost("codingcontract", "getContractType"));
-      const contract = getCodingContract("getContractType", ip, fn);
+      const contract = getCodingContract("getContractType", hostname, filename);
       return contract.getType();
     },
-    getData: function (fn: any, ip: any = workerScript.hostname): any {
+    getData: function (filename: any, hostname: any = workerScript.hostname): any {
       helper.updateDynamicRam("getData", getRamCost("codingcontract", "getData"));
-      const contract = getCodingContract("getData", ip, fn);
+      const contract = getCodingContract("getData", hostname, filename);
       const data = contract.getData();
       if (data.constructor === Array) {
         // For two dimensional arrays, we have to copy the internal arrays using
@@ -93,14 +102,14 @@ export function NetscriptCodingContract(
         return data;
       }
     },
-    getDescription: function (fn: any, ip: any = workerScript.hostname): string {
+    getDescription: function (filename: any, hostname: any = workerScript.hostname): string {
       helper.updateDynamicRam("getDescription", getRamCost("codingcontract", "getDescription"));
-      const contract = getCodingContract("getDescription", ip, fn);
+      const contract = getCodingContract("getDescription", hostname, filename);
       return contract.getDescription();
     },
-    getNumTriesRemaining: function (fn: any, ip: any = workerScript.hostname): number {
+    getNumTriesRemaining: function (filename: any, hostname: any = workerScript.hostname): number {
       helper.updateDynamicRam("getNumTriesRemaining", getRamCost("codingcontract", "getNumTriesRemaining"));
-      const contract = getCodingContract("getNumTriesRemaining", ip, fn);
+      const contract = getCodingContract("getNumTriesRemaining", hostname, filename);
       return contract.getMaxNumTries() - contract.tries;
     },
   };

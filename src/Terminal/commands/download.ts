@@ -11,7 +11,7 @@ export function download(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   try {
     if (args.length !== 1) {
@@ -19,43 +19,34 @@ export function download(
       return;
     }
     const fn = args[0] + "";
-    if (fn === "*" || fn === "*.script" || fn === "*.txt") {
-      // Download all scripts as a zip
+    // If the parameter starts with *, download all files that match the wildcard pattern
+    if (fn.startsWith("*")) {
+      const matchEnding = fn.length == 1 || fn === "*.*" ? null : fn.slice(1); // Treat *.* the same as *
       const zip = new JSZip();
-      if (fn === "*" || fn === "*.script") {
-        for (let i = 0; i < server.scripts.length; ++i) {
-          const file = new Blob([server.scripts[i].code], {
-            type: "text/plain",
-          });
-          let name = server.scripts[i].filename;
-          if (name.startsWith("/")) {
-            name = name.slice(1);
-          }
-          zip.file(name + ".js", file);
+      // Helper function to zip any file contents whose name matches the pattern
+      const zipFiles = (fileNames: string[], fileContents: string[]) => {
+        for (let i = 0; i < fileContents.length; ++i) {
+          let name = fileNames[i];
+          if (name.startsWith("/")) name = name.slice(1);
+          if (!matchEnding || name.endsWith(matchEnding))
+            zip.file(name, new Blob([fileContents[i]], { type: "text/plain" }));
         }
-      }
-      if (fn === "*" || fn === "*.txt") {
-        for (let i = 0; i < server.textFiles.length; ++i) {
-          const file = new Blob([server.textFiles[i].text], {
-            type: "text/plain",
-          });
-          zip.file(server.textFiles[i].fn, file);
-        }
-      }
-
-      let zipFn = "";
-      switch (fn) {
-        case "*.script":
-          zipFn = "bitburnerScripts.zip";
-          break;
-        case "*.txt":
-          zipFn = "bitburnerTexts.zip";
-          break;
-        default:
-          zipFn = "bitburnerFiles.zip";
-          break;
-      }
-
+      };
+      // In the case of script files, we pull from the server.scripts array
+      if (!matchEnding || isScriptFilename(matchEnding))
+        zipFiles(
+          server.scripts.map((s) => s.filename),
+          server.scripts.map((s) => s.code),
+        );
+      // In the case of text files, we pull from the server.scripts array
+      if (!matchEnding || matchEnding.endsWith(".txt"))
+        zipFiles(
+          server.textFiles.map((s) => s.fn),
+          server.textFiles.map((s) => s.text),
+        );
+      // Return an error if no files matched, rather than an empty zip folder
+      if (Object.keys(zip.files).length == 0) return terminal.error(`No files match the pattern ${fn}`);
+      const zipFn = `bitburner${isScriptFilename(fn) ? "Scripts" : fn === "*.txt" ? "Texts" : "Files"}.zip`;
       zip.generateAsync({ type: "blob" }).then((content: any) => FileSaver.saveAs(content, zipFn));
       return;
     } else if (isScriptFilename(fn)) {

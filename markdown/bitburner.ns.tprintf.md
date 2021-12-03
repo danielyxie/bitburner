@@ -9,14 +9,15 @@ Prints a raw value or a variable to the Terminal.
 <b>Signature:</b>
 
 ```typescript
-tprintf(msg: any): void;
+tprintf(format: string, ...values: any[]): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  msg | any | Value to be printed. |
+|  format | string | format of the message |
+|  values | any\[\] |  |
 
 <b>Returns:</b>
 

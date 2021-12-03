@@ -19,6 +19,7 @@ import { Theme } from "@mui/material";
 let layerCounter = 0;
 
 export const LogBoxEvents = new EventEmitter<[RunningScript]>();
+export const LogBoxClearEvents = new EventEmitter<[]>();
 
 interface Log {
   id: string;
@@ -44,6 +45,13 @@ export function LogBoxManager(): React.ReactElement {
         rerender();
       }),
     [],
+  );
+
+  useEffect(() =>
+    LogBoxClearEvents.subscribe(() => {
+      logs = [];
+      rerender();
+    }),
   );
 
   function close(id: string): void {
@@ -102,6 +110,7 @@ function LogWindow(props: IProps): React.ReactElement {
   }
 
   useEffect(() => {
+    updateLayer();
     const id = setInterval(rerender, 1000);
     return () => clearInterval(id);
   }, []);
@@ -134,23 +143,23 @@ function LogWindow(props: IProps): React.ReactElement {
   }
 
   function lineClass(s: string): string {
-    if (s.startsWith("ERROR") || s.startsWith("FAIL")) {
+    if (s.match(/(^\[[^\]]+\] )?ERROR/) || s.match(/(^\[[^\]]+\] )?FAIL/)) {
       return classes.error;
     }
-    if (s.startsWith("SUCCESS")) {
+    if (s.match(/(^\[[^\]]+\] )?SUCCESS/)) {
       return classes.success;
     }
-    if (s.startsWith("WARN")) {
+    if (s.match(/(^\[[^\]]+\] )?WARN/)) {
       return classes.warning;
     }
-    if (s.startsWith("INFO")) {
+    if (s.match(/(^\[[^\]]+\] )?INFO/)) {
       return classes.info;
     }
     return classes.primary;
   }
 
   return (
-    <Draggable handle=".drag">
+    <Draggable bounds="body" handle=".drag">
       <Paper
         style={{
           display: "flex",

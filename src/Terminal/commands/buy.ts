@@ -11,7 +11,7 @@ export function buy(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   if (!GetServer(SpecialServers.DarkWeb)) {
     terminal.error(

@@ -756,7 +756,7 @@ export declare interface CodingContract {
      * @param opts - Optional parameters for configuring function behavior.
      * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
      */
-    attempt(answer: string[] | number, fn: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
+    attempt(answer: string[] | number, filename: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
 
     /**
      * Get the type of a coding contract.
@@ -770,7 +770,7 @@ export declare interface CodingContract {
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns Name describing the type of problem posed by the Coding Contract.
      */
-    getContractType(fn: string, host?: string): string;
+    getContractType(filename: string, host?: string): string;
 
     /**
      * Get the description.
@@ -783,7 +783,7 @@ export declare interface CodingContract {
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns Contract’s text description.
      */
-    getDescription(fn: string, host?: string): string;
+    getDescription(filename: string, host?: string): string;
 
     /**
      * Get the input data.
@@ -794,11 +794,11 @@ export declare interface CodingContract {
      * Note that this is not the same as the contract’s description.
      * This is just the data that the contract wants you to act on in order to solve
      *
-     * @param fn - Filename of the contract.
+     * @param filename - Filename of the contract.
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns The specified contract’s data;
      */
-    getData(fn: string, host?: string): string;
+    getData(filename: string, host?: string): string;
 
     /**
      * Get the number of attempt remaining.
@@ -811,7 +811,7 @@ export declare interface CodingContract {
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
      * @returns How many attempts are remaining for the contract;
      */
-    getNumTriesRemaining(fn: string, host?: string): number;
+    getNumTriesRemaining(filename: string, host?: string): number;
 }
 
 /**
@@ -1032,7 +1032,7 @@ export declare interface Gang {
      * Get the name of all possible equipment/upgrades you can purchase for your Gang Members.
      * This includes Augmentations.
      *
-     * @returns Names of all Equpiment/Augmentations.
+     * @returns Names of all Equipments/Augmentations.
      */
     getEquipmentNames(): string[];
 
@@ -1236,8 +1236,13 @@ export declare interface GangMemberInfo {
  * @public
  */
 export declare interface GangOtherInfo {
-    /** Stock Symbol */
-    [key: string]: GangOtherInfoObject[];
+    "Slum Snakes": GangOtherInfoObject;
+    Tetrads: GangOtherInfoObject;
+    "The Syndicate": GangOtherInfoObject;
+    "The Dark Army": GangOtherInfoObject;
+    "Speakers for the Dead": GangOtherInfoObject;
+    NiteSec: GangOtherInfoObject;
+    "The Black Hand": GangOtherInfoObject;
 }
 
 /**
@@ -1962,7 +1967,7 @@ export declare interface NS extends Singularity {
      * @param growthAmount - Multiplicative factor by which the server is grown. Decimal form..
      * @returns The amount of grow calls needed to grow the specified server by the specified amount
      */
-    growthAnalyze(host: string, growthAmount: number): number;
+    growthAnalyze(host: string, growthAmount: number, cores?: number): number;
 
     /**
      * Calculate the security increase for a number of thread.
@@ -2019,9 +2024,10 @@ export declare interface NS extends Singularity {
      * @remarks
      * RAM cost: 0 GB
      *
+     * @param format - format of the message
      * @param msg - Value to be printed.
      */
-    tprintf(msg: any): void;
+    tprintf(format: string, ...values: any[]): void;
 
     /**
      * Clears the script’s logs.
@@ -2424,12 +2430,7 @@ export declare interface NS extends Singularity {
      * @param destination - Host of the destination server, which is the server to which the file will be copied.
      * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
      */
-    scp(
-    files: string[],
-    source: string,
-    // tslint:disable-next-line:unified-signatures
-    destination: string,
-    ): Promise<boolean>;
+    scp(files: string | string[], source: string, destination: string): Promise<boolean>;
 
     /**
      * List files on a server.
@@ -2625,8 +2626,7 @@ export declare interface NS extends Singularity {
     getServerMinSecurityLevel(host: string): number;
 
     /**
-     * @deprecated
-     * DEPRECATED
+     * @deprecated useless
      * @remarks
      * RAM cost: 0.1 GB
      * Returns the base security level of the target server. This is the security
@@ -2643,8 +2643,7 @@ export declare interface NS extends Singularity {
     getServerBaseSecurityLevel(host: string): number;
 
     /**
-     * @deprecated
-     * DEPRECATED
+     * @deprecated use getServerMaxRam / getServerUsedRam
      * @remarks
      * RAM cost: 0.1 GB
      *
@@ -2775,7 +2774,7 @@ export declare interface NS extends Singularity {
      * RAM cost: 0.3 GB
      * @returns info about a running script
      */
-    getRunningScript(fn: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
+    getRunningScript(filename: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
 
     /**
      * Get cost of purchasing a server.
@@ -3318,6 +3317,17 @@ export declare interface NS extends Singularity {
     getBitNodeMultipliers(): BitNodeMultipliers;
 
     /**
+     * Get a list of acquired Source-Files.
+     * @remarks
+     * RAM cost: 5 GB
+     *
+     * Returns an array of source files
+     *
+     * @returns Array containing an object with number and level of the source file.
+     */
+    getOwnedSourceFiles(): SourceFileLvl[];
+
+    /**
      * Get information about the player.
      * @returns Player info
      */
@@ -3572,12 +3582,11 @@ export declare interface Server {
  */
 export declare interface Singularity {
     /**
-     * Take university class.
+     * SF4.1 - Take university class.
      *
      * @remarks
      * RAM cost: 2 GB
      *
-     * Singularity - Level 1
      *
      * This function will automatically set you to start taking a course at a university.
      * If you are already in the middle of some “working” action (such as working at a
@@ -3594,12 +3603,11 @@ export declare interface Singularity {
     universityCourse(universityName: string, courseName: string): boolean;
 
     /**
-     * Workout at the gym.
+     * SF4.1 - Workout at the gym.
      * 
      * @remarks
      * RAM cost: 2 GB
      * 
-     * Singularity - Level 1
 
      * This function will automatically set you to start working out at a gym to train
      * a particular stat. If you are already in the middle of some “working” action
@@ -3616,11 +3624,10 @@ export declare interface Singularity {
     gymWorkout(gymName: string, stat: string): boolean;
 
     /**
-     * Travel to another city.
+     * SF4.1 - Travel to another city.
      * @remarks
      * RAM cost: 2 GB
      *
-     * Singularity - Level 1
      *
      * This function allows the player to travel to any city. The cost for using this
      * function is the same as the cost for traveling through the Travel Agency.
@@ -3631,11 +3638,10 @@ export declare interface Singularity {
     travelToCity(city: string): boolean;
 
     /**
-     * Purchase the TOR router.
+     * SF4.1 - Purchase the TOR router.
      * @remarks
      * RAM cost: 2 GB
      *
-     * Singularity - Level 1
      *
      * This function allows you to automatically purchase a TOR router. The cost for
      * purchasing a TOR router using this function is the same as if you were to
@@ -3646,11 +3652,10 @@ export declare interface Singularity {
     purchaseTor(): boolean;
 
     /**
-     * Purchase a program from the dark web.
+     * SF4.1 - Purchase a program from the dark web.
      * @remarks
      * RAM cost: 2 GB
      *
-     * Singularity - Level 1
      *
      * This function allows you to automatically purchase programs. You MUST have a
      * TOR router in order to use this function. The cost of purchasing programs
@@ -3667,11 +3672,10 @@ export declare interface Singularity {
     purchaseProgram(programName: string): boolean;
 
     /**
-     * Check if the player is busy.
+     * SF4.1 - Check if the player is busy.
      * @remarks
      * RAM cost: 0.5 GB
      *
-     * Singularity - Level 1
      *
      * Returns a boolean indicating whether or not the player is currently performing an
      * ‘action’. These actions include working for a company/faction, studying at a univeristy,
@@ -3682,11 +3686,10 @@ export declare interface Singularity {
     isBusy(): boolean;
 
     /**
-     * Stop the current action.
+     * SF4.1 - Stop the current action.
      * @remarks
      * RAM cost: 1 GB
      *
-     * Singularity - Level 1
      *
      * This function is used to end whatever ‘action’ the player is currently performing.
      * The player will receive whatever money/experience/etc. he has earned from that action.
@@ -3706,11 +3709,10 @@ export declare interface Singularity {
     stopAction(): boolean;
 
     /**
-     * Upgrade home computer RAM.
+     * SF4.2 - Upgrade home computer RAM.
      * @remarks
      * RAM cost: 3 GB
      *
-     * Singularity - Level 2
      *
      * This function will upgrade amount of RAM on the player’s home computer. The cost is
      * the same as if you were to do it manually.
@@ -3722,11 +3724,10 @@ export declare interface Singularity {
     upgradeHomeRam(): boolean;
 
     /**
-     * Upgrade home computer cores.
+     * SF4.2 - Upgrade home computer cores.
      * @remarks
      * RAM cost: 3 GB
      *
-     * Singularity - Level 2
      *
      * This function will upgrade amount of cores on the player’s home computer. The cost is
      * the same as if you were to do it manually.
@@ -3738,11 +3739,10 @@ export declare interface Singularity {
     upgradeHomeCores(): boolean;
 
     /**
-     * Get the price of upgrading home RAM.
+     * SF4.2 - Get the price of upgrading home RAM.
      * @remarks
      * RAM cost: 1.5 GB
      *
-     * Singularity - Level 2
      *
      * Returns the cost of upgrading the player’s home computer RAM.
      *
@@ -3751,11 +3751,10 @@ export declare interface Singularity {
     getUpgradeHomeRamCost(): number;
 
     /**
-     * Get the price of upgrading home cores.
+     * SF4.2 - Get the price of upgrading home cores.
      * @remarks
      * RAM cost: 1.5 GB
      *
-     * Singularity - Level 2
      *
      * Returns the cost of upgrading the player’s home computer cores.
      *
@@ -3764,11 +3763,10 @@ export declare interface Singularity {
     getUpgradeHomeCoresCost(): number;
 
     /**
-     * Work for a company.
+     * SF4.2 - Work for a company.
      * @remarks
      * RAM cost: 3 GB
      *
-     * Singularity - Level 2
      *
      * This function will automatically set you to start working at the company
      * at which you are employed. If you are already in the middle of some “working”
@@ -3795,11 +3793,10 @@ export declare interface Singularity {
     workForCompany(companyName?: string): boolean;
 
     /**
-     * Apply for a job at a company.
+     * SF4.2 - Apply for a job at a company.
      * @remarks
      * RAM cost: 3 GB
      *
-     * Singularity - Level 2
      *
      * This function will automatically try to apply to the specified company
      * for a position in the specified field. This function can also be used to
@@ -3817,11 +3814,10 @@ export declare interface Singularity {
     applyToCompany(companyName: string, field: string): boolean;
 
     /**
-     * Get company reputation.
+     * SF4.2 - Get company reputation.
      * @remarks
      * RAM cost: 1 GB
      *
-     * Singularity - Level 2
      *
      * This function will return the amount of reputation you have at the specified company.
      * If the company passed in as an argument is invalid, -1 will be returned.
@@ -3832,11 +3828,10 @@ export declare interface Singularity {
     getCompanyRep(companyName: string): number;
 
     /**
-     * Get company favor.
+     * SF4.2 - Get company favor.
      * @remarks
      * RAM cost: 1 GB
      *
-     * Singularity - Level 2
      *
      * This function will return the amount of favor you have at the specified company.
      * If the company passed in as an argument is invalid, -1 will be returned.
@@ -3847,11 +3842,10 @@ export declare interface Singularity {
     getCompanyFavor(companyName: string): number;
 
     /**
-     * Get company favor gain.
+     * SF4.2 - Get company favor gain.
      * @remarks
      * RAM cost: 0.75 GB
      *
-     * Singularity - Level 2
      *
      * This function will return the amount of favor you will gain for the specified
      * company when you reset by installing Augmentations.
@@ -3862,11 +3856,10 @@ export declare interface Singularity {
     getCompanyFavorGain(companyName: string): number;
 
     /**
-     * List all current faction invitations.
+     * SF4.2 - List all current faction invitations.
      * @remarks
      * RAM cost: 3 GB
      *
-     * Singularity - Level 2
      *
      * Returns an array with the name of all Factions you currently have oustanding invitations from.
      *
@@ -3875,11 +3868,10 @@ export declare interface Singularity {
     checkFactionInvitations(): string[];
 
     /**
-     * Join a faction.
+     * SF4.2 - Join a faction.
      * @remarks
      * RAM cost: 3 GB
      *
-     * Singularity - Level 2
      *
      * This function will automatically accept an invitation from a faction and join it.
      *
@@ -3889,11 +3881,10 @@ export declare interface Singularity {
     joinFaction(faction: string): boolean;
 
     /**
-     * Work for a faction.
+     * SF4.2 - Work for a faction.
      * @remarks
      * RAM cost: 3 GB
      *
-     * Singularity - Level 2
      *
      * This function will automatically set you to start working for the specified faction.
      * Obviously, you must be a member of the faction or else this function will fail. If
@@ -3921,11 +3912,10 @@ export declare interface Singularity {
     workForFaction(faction: string, workType: string): boolean;
 
     /**
-     * Get faction reputation.
+     * SF4.2 - Get faction reputation.
      * @remarks
      * RAM cost: 1 GB
      *
-     * Singularity - Level 2
      *
      * This function returns the amount of reputation you have for the specified faction.
      *
@@ -3935,11 +3925,10 @@ export declare interface Singularity {
     getFactionRep(faction: string): number;
 
     /**
-     * Get faction favor.
+     * SF4.2 - Get faction favor.
      * @remarks
      * RAM cost: 1 GB
      *
-     * Singularity - Level 2
      *
      * This function returns the amount of favor you have for the specified faction.
      *
@@ -3949,11 +3938,10 @@ export declare interface Singularity {
     getFactionFavor(faction: string): number;
 
     /**
-     * Get faction favor gain.
+     * SF4.2 - Get faction favor gain.
      * @remarks
      * RAM cost: 0.75 GB
      *
-     * Singularity - Level 2
      *
      * This function returns the amount of favor you will gain for the specified
      * faction when you reset by installing Augmentations.
@@ -3964,11 +3952,10 @@ export declare interface Singularity {
     getFactionFavorGain(faction: string): number;
 
     /**
-     * Donate to a faction.
+     * SF4.3 - Donate to a faction.
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * Attempts to donate money to the specified faction in exchange for reputation.
      * Returns true if you successfully donate the money, and false otherwise.
@@ -3980,11 +3967,10 @@ export declare interface Singularity {
     donateToFaction(faction: string, amount: number): boolean;
 
     /**
-     * Create a program.
+     * SF4.3 - Create a program.
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * This function will automatically set you to start working on creating the
      * specified program. If you are already in the middle of some “working” action
@@ -4015,11 +4001,10 @@ export declare interface Singularity {
     createProgram(program: string): boolean;
 
     /**
-     * Commit a crime.
+     * SF4.3 - Commit a crime.
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * This function is used to automatically attempt to commit crimes.
      * If you are already in the middle of some ‘working’ action (such
@@ -4043,11 +4028,10 @@ export declare interface Singularity {
     commitCrime(crime: string): number;
 
     /**
-     * Get chance to successfully commit a crime.
+     * SF4.3 - Get chance to successfully commit a crime.
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * This function returns your chance of success at commiting the specified crime.
      *
@@ -4057,11 +4041,10 @@ export declare interface Singularity {
     getCrimeChance(crime: string): number;
 
     /**
-     * Get stats related to a crime.
+     * SF4.3 - Get stats related to a crime.
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * Returns the stats of the crime.
      *
@@ -4071,11 +4054,10 @@ export declare interface Singularity {
     getCrimeStats(crime: string): CrimeStats;
 
     /**
-     * Get a list of owned augmentation.
+     * SF4.3 - Get a list of owned augmentation.
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * This function returns an array containing the names (as strings) of all Augmentations you have.
      *
@@ -4085,24 +4067,10 @@ export declare interface Singularity {
     getOwnedAugmentations(purchased?: boolean): string[];
 
     /**
-     * Get a list of acquired Source-Files.
+     * SF4.3 - Get a list of augmentation available from a faction.
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
-     *
-     * Returns an array of source files
-     *
-     * @returns Array containing an object with number and level of the source file.
-     */
-    getOwnedSourceFiles(): SourceFileLvl[];
-
-    /**
-     * Get a list of augmentation available from a faction.
-     * @remarks
-     * RAM cost: 5 GB
-     *
-     * Singularity - Level 3
      *
      * Returns an array containing the names (as strings) of all Augmentations
      * that are available from the specified faction.
@@ -4113,11 +4081,10 @@ export declare interface Singularity {
     getAugmentationsFromFaction(faction: string): string[];
 
     /**
-     * Get the pre-requisite of an augmentation.
+     * SF4.3 - Get the pre-requisite of an augmentation.
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation.
      * If there are no prerequisites, a blank array is returned.
@@ -4128,12 +4095,11 @@ export declare interface Singularity {
     getAugmentationPrereq(augName: string): string[];
 
     /**
-     * @deprecated
-     * Get the price and reputation of an augmentation.
+     * SF4.3 - Get the price and reputation of an augmentation.
+     * @deprecated use getAugmentationPrice getAugmentationRepCost
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * This function returns an array with two elements that gives the cost for
      * the specified Augmentation. The first element in the returned array is the
@@ -4149,11 +4115,10 @@ export declare interface Singularity {
     getAugmentationCost(augName: string): [number, number];
 
     /**
-     * Get price of an augmentation.
+     * SF4.3 - Get price of an augmentation.
      * @remarks
      * RAM cost: 2.5 GB
      *
-     * Singularity - Level 3
      *
      * @param augName - Name of Augmentation.
      * @returns Price of the augmentation.
@@ -4161,11 +4126,10 @@ export declare interface Singularity {
     getAugmentationPrice(augName: string): number;
 
     /**
-     * Get reputation requirement of an augmentation.
+     * SF4.3 - Get reputation requirement of an augmentation.
      * @remarks
      * RAM cost: 2.5 GB
      *
-     * Singularity - Level 3
      *
      * @param augName - Name of Augmentation.
      * @returns Reputation requirement of the augmentation.
@@ -4173,11 +4137,10 @@ export declare interface Singularity {
     getAugmentationRepReq(augName: string): number;
 
     /**
-     * Purchase an augmentation
+     * SF4.3 - Purchase an augmentation
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * This function will try to purchase the specified Augmentation through the given Faction.
      *
@@ -4190,11 +4153,10 @@ export declare interface Singularity {
     purchaseAugmentation(faction: string, augmentation: string): boolean;
 
     /**
-     * Get the stats of an augmentation.
+     * SF4.3 - Get the stats of an augmentation.
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * This function returns augmentation stats.
      *
@@ -4204,11 +4166,10 @@ export declare interface Singularity {
     getAugmentationStats(name: string): AugmentationStats;
 
     /**
-     * Install your purchased augmentations.
+     * SF4.3 - Install your purchased augmentations.
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * This function will automatically install your Augmentations, resetting the game as usual.
      *
@@ -4217,13 +4178,12 @@ export declare interface Singularity {
     installAugmentations(cbScript?: string): void;
 
     /**
-     * @deprecated
-     * Returns an object with the Player’s stats.
+     * SF4.1 - Returns an object with the Player’s stats.
+     * @deprecated use getPlayer
      *
      * @remarks
      * RAM cost: 0.5 GB
      *
-     * Singularity - Level 1
      *
      * @example
      * ```ts
@@ -4235,35 +4195,32 @@ export declare interface Singularity {
     getStats(): PlayerSkills;
 
     /**
-     * @deprecated
-     * Returns an object with various information about your character.
+     * SF4.1 - Returns an object with various information about your character.
+     * @deprecated use getPlayer
      *
      * @remarks
      * RAM cost: 0.5 GB
      *
-     * Singularity - Level 1
      *
      * @returns Object with various information about your character.
      */
     getCharacterInformation(): CharacterInfo;
 
     /**
-     * Hospitalize the player.
+     * SF4.1 - Hospitalize the player.
      * @remarks
      * RAM cost: 0.25 GB
      *
-     * Singularity - Level 1
      *
      * @returns The cost of the hospitalization.
      */
     hospitalize(): number;
 
     /**
-     * Soft reset the game.
+     * SF4.3 - Soft reset the game.
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * This function will perform a reset even if you don’t have any augmentation installed.
      *
@@ -4272,11 +4229,10 @@ export declare interface Singularity {
     softReset(cbScript: string): void;
 
     /**
-     * Go to a location.
+     * SF4.3 - Go to a location.
      * @remarks
      * RAM cost: 5 GB
      *
-     * Singularity - Level 3
      *
      * Move the player to a specific location.
      *
@@ -4286,22 +4242,20 @@ export declare interface Singularity {
     goToLocation(locationName: string): boolean;
 
     /**
-     * Get the current server.
+     * SF4.1 - Get the current server.
      * @remarks
      * RAM cost: 2 GB
      *
-     * Singularity - Level 1
      *
      * @returns Name of the current server.
      */
     getCurrentServer(): string;
 
     /**
-     * Connect to a server.
+     * SF4.1 - Connect to a server.
      * @remarks
      * RAM cost: 2 GB
      *
-     * Singularity - Level 1
      *
      * Run the connect HOSTNAME command in the terminal. Can only connect to neighbors.
      *
@@ -4310,26 +4264,42 @@ export declare interface Singularity {
     connect(hostname: string): boolean;
 
     /**
-     * Run the hack command in the terminal.
+     * SF4.1 - Run the hack command in the terminal.
      * @remarks
      * RAM cost: 2 GB
      *
-     * Singularity - Level 1
      *
      * @returns Amount of money stolen by manual hacking.
      */
     manualHack(): Promise<number>;
 
     /**
-     * Run the backdoor command in the terminal.
+     * SF4.1 - Run the backdoor command in the terminal.
      * @remarks
      * RAM cost: 2 GB
      *
-     * Singularity - Level 1
      *
      * @returns True if the installation was successful.
      */
-    installBackdoor(): Promise<boolean>;
+    installBackdoor(): Promise<void>;
+
+    /**
+     * SF4.2 - Check if the player is focused.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
+     *
+     * @returns True if the player is focused.
+     */
+    isFocused(): void;
+
+    /**
+     * SF4.2 - Set the players focus.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
+     */
+    setFocus(focus: boolean): void;
 }
 
 /**

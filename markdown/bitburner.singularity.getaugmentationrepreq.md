@@ -4,7 +4,7 @@
 
 ## Singularity.getAugmentationRepReq() method
 
-Get reputation requirement of an augmentation.
+SF4.3 - Get reputation requirement of an augmentation.
 
 <b>Signature:</b>
 
@@ -27,6 +27,4 @@ Reputation requirement of the augmentation.
 ## Remarks
 
 RAM cost: 2.5 GB
-
-Singularity - Level 3
 

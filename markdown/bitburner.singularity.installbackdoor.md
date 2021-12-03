@@ -4,22 +4,20 @@
 
 ## Singularity.installBackdoor() method
 
-Run the backdoor command in the terminal.
+SF4.1 - Run the backdoor command in the terminal.
 
 <b>Signature:</b>
 
 ```typescript
-installBackdoor(): Promise<boolean>;
+installBackdoor(): Promise<void>;
 ```
 <b>Returns:</b>
 
-Promise&lt;boolean&gt;
+Promise&lt;void&gt;
 
 True if the installation was successful.
 
 ## Remarks
 
 RAM cost: 2 GB
-
-Singularity - Level 1
 

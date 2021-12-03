@@ -31,7 +31,7 @@ export function ParseCommands(commands: string): string[] {
   return out;
 }
 
-export function ParseCommand(command: string): (string | number)[] {
+export function ParseCommand(command: string): (string | number | boolean)[] {
   // This will be used to keep track of whether we're in a quote. This is for situations
   // like the alias command:
   //      alias run="run NUKE.exe"
@@ -101,6 +101,10 @@ export function ParseCommand(command: string): (string | number)[] {
       // If this is a number, convert it from a string to number
       if (isNumber(arg)) {
         args.push(parseFloat(arg));
+      } else if (arg === "true") {
+        args.push(true);
+      } else if (arg === "false") {
+        args.push(false);
       } else {
         args.push(arg);
       }
@@ -117,6 +121,10 @@ export function ParseCommand(command: string): (string | number)[] {
     // If this is a number, convert it from string to number
     if (isNumber(arg)) {
       args.push(parseFloat(arg));
+    } else if (arg === "true") {
+      args.push(true);
+    } else if (arg === "false") {
+      args.push(false);
     } else {
       args.push(arg);
     }

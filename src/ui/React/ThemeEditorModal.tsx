@@ -112,7 +112,6 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
         <TextField value={"Text field"} />
       </Paper>
       <br />
-      <Typography>Warning: Editing the theme is very slow.</Typography>
       <ColorEditor
         name="primarylight"
         onColorChange={onColorChange}

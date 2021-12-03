@@ -4,7 +4,7 @@
 
 ## Singularity.getCrimeStats() method
 
-Get stats related to a crime.
+SF4.3 - Get stats related to a crime.
 
 <b>Signature:</b>
 
@@ -27,8 +27,6 @@ The stats of the crime.
 ## Remarks
 
 RAM cost: 5 GB
-
-Singularity - Level 3
 
 Returns the stats of the crime.
 

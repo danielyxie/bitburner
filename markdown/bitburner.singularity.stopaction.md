@@ -4,7 +4,7 @@
 
 ## Singularity.stopAction() method
 
-Stop the current action.
+SF4.1 - Stop the current action.
 
 <b>Signature:</b>
 
@@ -20,8 +20,6 @@ True if the player’s action was ended, false if the player was not performing 
 ## Remarks
 
 RAM cost: 1 GB
-
-Singularity - Level 1
 
 This function is used to end whatever ‘action’ the player is currently performing. The player will receive whatever money/experience/etc. he has earned from that action.
 

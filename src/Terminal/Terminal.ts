@@ -192,14 +192,11 @@ export class Terminal implements ITerminal {
     const expGainedOnFailure = expGainedOnSuccess / 4;
     if (rand < hackChance) {
       // Success!
+      server.backdoorInstalled = true;
       if (SpecialServers.WorldDaemon === server.hostname) {
-        if (player.bitNodeN == null) {
-          player.bitNodeN = 1;
-        }
         router.toBitVerse(false, false);
         return;
       }
-      server.backdoorInstalled = true;
       let moneyGained = calculatePercentMoneyHacked(server, player);
       moneyGained = Math.floor(server.moneyAvailable * moneyGained);
 
@@ -510,14 +507,16 @@ export class Terminal implements ITerminal {
       if (s.hasAdminRights) {
         c = "YES";
       }
-      this.print(
-        `${dashes}Root Access: ${c}${!isHacknet ? ", Required hacking skill: " + (s as any).requiredHackingSkill : ""}`,
-      );
+      let out = `${dashes}Root Access: ${c}${
+        !isHacknet ? ", Required hacking skill: " + (s as any).requiredHackingSkill : ""
+      }`;
+
       if (s.hasOwnProperty("numOpenPortsRequired")) {
-        this.print(dashes + "Number of open ports required to NUKE: " + (s as any).numOpenPortsRequired);
+        out += "\n" + dashes + "Number of open ports required to NUKE: " + (s as any).numOpenPortsRequired;
       }
-      this.print(dashes + "RAM: " + numeralWrapper.formatRAM(s.maxRam));
-      this.print(" ");
+      out += "\n" + dashes + "RAM: " + numeralWrapper.formatRAM(s.maxRam);
+      out += "\n" + " ";
+      this.print(out);
     }
   }
 
@@ -719,7 +718,7 @@ export class Terminal implements ITerminal {
     /****************** END INTERACTIVE TUTORIAL ******************/
     /* Command parser */
     const commandName = commandArray[0];
-    if (typeof commandName === "number") {
+    if (typeof commandName === "number" || typeof commandName === "boolean") {
       this.error(`Command ${commandArray[0]} not found`);
       return;
     }
@@ -730,7 +729,7 @@ export class Terminal implements ITerminal {
         router: IRouter,
         player: IPlayer,
         server: BaseServer,
-        args: (string | number)[],
+        args: (string | number | boolean)[],
       ) => void;
     } = {
       "scan-analyze": scananalyze,

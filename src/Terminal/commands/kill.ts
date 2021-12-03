@@ -9,11 +9,14 @@ export function kill(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   try {
     if (args.length < 1) {
       terminal.error("Incorrect usage of kill command. Usage: kill [scriptname] [arg1] [arg2]...");
+      return;
+    }
+    if (typeof args[0] === "boolean") {
       return;
     }
 

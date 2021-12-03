@@ -9,7 +9,7 @@ export function mem(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   try {
     if (args.length !== 1 && args.length !== 3) {

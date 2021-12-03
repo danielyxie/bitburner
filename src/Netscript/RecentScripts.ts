@@ -5,7 +5,7 @@ export const recentScripts: RecentScript[] = [];
 
 export function AddRecentScript(workerScript: WorkerScript): void {
   if (recentScripts.find((r) => r.pid === workerScript.pid)) return;
-  recentScripts.push({
+  recentScripts.unshift({
     filename: workerScript.name,
     args: workerScript.args,
     pid: workerScript.pid,

@@ -4,7 +4,7 @@
 
 ## Singularity.joinFaction() method
 
-Join a faction.
+SF4.2 - Join a faction.
 
 <b>Signature:</b>
 
@@ -27,8 +27,6 @@ True if player joined the faction, and false otherwise.
 ## Remarks
 
 RAM cost: 3 GB
-
-Singularity - Level 2
 
 This function will automatically accept an invitation from a faction and join it.
 

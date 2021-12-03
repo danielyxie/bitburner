@@ -8,7 +8,7 @@ export function expr(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   if (args.length === 0) {
     terminal.error("Incorrect usage of expr command. Usage: expr [math expression]");

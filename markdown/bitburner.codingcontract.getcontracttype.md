@@ -9,14 +9,14 @@ Get the type of a coding contract.
 <b>Signature:</b>
 
 ```typescript
-getContractType(fn: string, host?: string): string;
+getContractType(filename: string, host?: string): string;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  fn | string | Filename of the contract. |
+|  filename | string |  |
 |  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>

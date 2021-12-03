@@ -4,7 +4,7 @@
 
 ## Singularity.getOwnedAugmentations() method
 
-Get a list of owned augmentation.
+SF4.3 - Get a list of owned augmentation.
 
 <b>Signature:</b>
 
@@ -27,8 +27,6 @@ Array containing the names (as strings) of all Augmentations you have.
 ## Remarks
 
 RAM cost: 5 GB
-
-Singularity - Level 3
 
 This function returns an array containing the names (as strings) of all Augmentations you have.
 

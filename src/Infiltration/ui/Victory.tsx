@@ -13,6 +13,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 interface IProps {
   StartingDifficulty: number;
   Difficulty: number;
+  Reward: number;
   MaxLevel: number;
 }
 
@@ -28,14 +29,14 @@ export function Victory(props: IProps): React.ReactElement {
   const levelBonus = props.MaxLevel * Math.pow(1.01, props.MaxLevel);
 
   const repGain =
-    Math.pow(props.Difficulty + 1, 1.1) *
+    Math.pow(props.Reward + 1, 1.1) *
     Math.pow(props.StartingDifficulty, 1.2) *
     30 *
     levelBonus *
     BitNodeMultipliers.InfiltrationRep;
 
   const moneyGain =
-    Math.pow(props.Difficulty + 1, 2) *
+    Math.pow(props.Reward + 1, 2) *
     Math.pow(props.StartingDifficulty, 3) *
     3e3 *
     levelBonus *

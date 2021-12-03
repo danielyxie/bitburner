@@ -10,7 +10,7 @@ export function nano(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   if (args.length !== 1) {
     terminal.error("Incorrect usage of nano command. Usage: nano [scriptname]");
@@ -47,9 +47,7 @@ export async function main(ns) {
         router.toScriptEditor(filepath, txt.text);
       }
     } else {
-      terminal.error(
-        "Invalid file. Only scripts (.script, .ns, .js), text files (.txt), or .fconf can be edited with nano",
-      );
+      terminal.error("Invalid file. Only scripts (.script, .ns, .js), or text files (.txt) can be edited with nano");
       return;
     }
   } catch (e) {

@@ -349,13 +349,13 @@ export const FactionInfos: IMap<FactionInfo> = {
 {"                 ;   d'       o  `b ;    "}<br />
 {"                /   d;            `b|    "}<br />
 {"               /,   $;          @  `:    "}<br />
-{"              /'    $$               ;   "}<br />
-{"            .'      $$b          o   |   "}<br />
-{"          .'       d$$$;             :   "}<br />
-{"         /       .d$$$$;          ,   ;  "}<br />
+{"              /'    $/               ;   "}<br />
+{"            .'      $/b          o   |   "}<br />
+{"          .'       d$/$;             :   "}<br />
+{"         /       .d/$/$;          ,   ;  "}<br />
 {"        d      .dNITESEC          $   |  "}<br />
-{"       :bp.__.gNITESEC$$         :$   ;  "}<br />
-{"       NITESECNITESECNIT         $$b :   "}<br /></>,
+{"       :bp.__.gNITESEC/$         :$   ;  "}<br />
+{"       NITESECNITESECNIT         /$b :   "}<br /></>,
     [],
     true,
     true,

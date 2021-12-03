@@ -30,6 +30,7 @@ import { staneksGift } from "./CotMG/Helper";
 import { ProgramsSeen } from "./Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "./Faction/ui/FactionsRoot";
 import { CONSTANTS } from "./Constants";
+import { LogBoxClearEvents } from "./ui/React/LogBoxManager";
 
 const BitNode8StartingMoney = 250e6;
 
@@ -37,7 +38,7 @@ const BitNode8StartingMoney = 250e6;
 export function prestigeAugmentation(): void {
   initBitNodeMultipliers(Player);
 
-  const maintainMembership = Player.factions.filter(function (faction) {
+  const maintainMembership = Player.factions.concat(Player.factionInvitations).filter(function (faction) {
     return Factions[faction].getInfo().keep;
   });
   Player.prestigeAugmentation();
@@ -87,17 +88,17 @@ export function prestigeAugmentation(): void {
     }
   }
 
-  // Stop a Terminal action if there is onerror
+  // Stop a Terminal action if there is one.
   if (Terminal.action !== null) {
     Terminal.finishAction(Router, Player, true);
   }
   Terminal.clear();
+  LogBoxClearEvents.emit();
 
   // Re-initialize things - This will update any changes
   initFactions(); // Factions must be initialized before augmentations
 
-  Player.factions = Player.factions.concat(maintainMembership);
-  Player.factions.map((f) => (Factions[f].isMember = true));
+  Player.factionInvitations = Player.factionInvitations.concat(maintainMembership);
   initAugmentations(); // Calls reapplyAllAugmentations() and resets Player multipliers
   Player.reapplyAllSourceFiles();
   initCompanies();

@@ -37,7 +37,7 @@ export function placeOrder(
 ): boolean {
   if (!(stock instanceof Stock)) {
     if (workerScript) {
-      workerScript.log("placeOrder", `Invalid stock: '${stock}'`);
+      workerScript.log("stock.placeOrder", () => `Invalid stock: '${stock}'`);
     } else {
       dialogBoxCreate(`ERROR: Invalid stock passed to placeOrder() function`);
     }
@@ -45,7 +45,7 @@ export function placeOrder(
   }
   if (typeof shares !== "number" || typeof price !== "number") {
     if (workerScript) {
-      workerScript.log("placeOrder", `Invalid arguments: shares='${shares}' price='${price}'`);
+      workerScript.log("stock.placeOrder", () => `Invalid arguments: shares='${shares}' price='${price}'`);
     } else {
       dialogBoxCreate("ERROR: Invalid numeric value provided for either 'shares' or 'price' argument");
     }

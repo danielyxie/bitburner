@@ -14,7 +14,7 @@ export function runScript(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  commandArgs: (string | number)[],
+  commandArgs: (string | number | boolean)[],
 ): void {
   if (commandArgs.length < 1) {
     terminal.error(

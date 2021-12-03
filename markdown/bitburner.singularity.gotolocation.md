@@ -4,7 +4,7 @@
 
 ## Singularity.goToLocation() method
 
-Go to a location.
+SF4.3 - Go to a location.
 
 <b>Signature:</b>
 
@@ -27,8 +27,6 @@ True if the player was moved there, false otherwise.
 ## Remarks
 
 RAM cost: 5 GB
-
-Singularity - Level 3
 
 Move the player to a specific location.
 

@@ -11,7 +11,7 @@ export function mv(
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
-  args: (string | number)[],
+  args: (string | number | boolean)[],
 ): void {
   if (args.length !== 2) {
     terminal.error(`Incorrect number of arguments. Usage: mv [src] [dest]`);
