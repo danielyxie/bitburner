@@ -4,7 +4,7 @@
 
 ## Singularity.getCompanyRep() method
 
-Get company reputation.
+SF4.2 - Get company reputation.
 
 <b>Signature:</b>
 
@@ -27,8 +27,6 @@ Amount of reputation you have at the specified company.
 ## Remarks
 
 RAM cost: 1 GB
-
-Singularity - Level 2
 
 This function will return the amount of reputation you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.
 

@@ -6,8 +6,10 @@
 
 > Warning: This API is now obsolete.
 > 
-> Returns an object with various information about your character.
+> use getPlayer
 > 
+
+SF4.1 - Returns an object with various information about your character.
 
 <b>Signature:</b>
 
@@ -23,6 +25,4 @@ Object with various information about your character.
 ## Remarks
 
 RAM cost: 0.5 GB
-
-Singularity - Level 1
 

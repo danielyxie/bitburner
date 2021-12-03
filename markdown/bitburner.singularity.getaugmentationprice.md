@@ -4,7 +4,7 @@
 
 ## Singularity.getAugmentationPrice() method
 
-Get price of an augmentation.
+SF4.3 - Get price of an augmentation.
 
 <b>Signature:</b>
 
@@ -27,6 +27,4 @@ Price of the augmentation.
 ## Remarks
 
 RAM cost: 2.5 GB
-
-Singularity - Level 3
 

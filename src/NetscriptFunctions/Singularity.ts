@@ -114,6 +114,8 @@ export function NetscriptSingularity(
       if (player.hasGangWith(facname)) {
         const res = [];
         for (const augName in Augmentations) {
+          if (augName === AugmentationNames.NeuroFluxGovernor) continue;
+          if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
           const aug = Augmentations[augName];
           if (!aug.isSpecial) {
             res.push(augName);
@@ -953,7 +955,7 @@ export function NetscriptSingularity(
       // if the player is in a gang and the target faction is any of the gang faction, fail
       if (player.inGang() && AllGangs[name] !== undefined) {
         workerScript.log("workForFaction", () => `Faction '${name}' does not offer work at the moment.`);
-        return;
+        return false;
       }
 
       if (!player.factions.includes(name)) {

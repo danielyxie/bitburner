@@ -224,7 +224,9 @@ export class Gang {
           if (AllGangs[otherGang].territory <= 0) return;
           const territoryGain = calculateTerritoryGain(thisGang, otherGang);
           AllGangs[thisGang].territory += territoryGain;
+          if (AllGangs[thisGang].territory > 1) AllGangs[thisGang].territory = 1;
           AllGangs[otherGang].territory -= territoryGain;
+          if (AllGangs[thisGang].territory < 0) AllGangs[thisGang].territory = 0;
           if (thisGang === gangName) {
             this.clash(true); // Player won
             AllGangs[otherGang].power *= 1 / 1.01;
@@ -237,7 +239,9 @@ export class Gang {
           if (AllGangs[thisGang].territory <= 0) return;
           const territoryGain = calculateTerritoryGain(otherGang, thisGang);
           AllGangs[thisGang].territory -= territoryGain;
+          if (AllGangs[otherGang].territory < 0) AllGangs[otherGang].territory = 0;
           AllGangs[otherGang].territory += territoryGain;
+          if (AllGangs[otherGang].territory > 1) AllGangs[otherGang].territory = 1;
           if (thisGang === gangName) {
             this.clash(false); // Player lost
           } else if (otherGang === gangName) {

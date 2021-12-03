@@ -8083,21 +8083,13 @@
           "name": "GangOtherInfo",
           "members": [
             {
-              "kind": "IndexSignature",
-              "canonicalReference": "bitburner!GangOtherInfo:index(1)",
-              "docComment": "/**\n * Stock Symbol\n */\n",
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangOtherInfo#\"Slum Snakes\":member",
+              "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "[key: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": "]: "
+                  "text": "\"Slum Snakes\": "
                 },
                 {
                   "kind": "Reference",
@@ -8106,28 +8098,178 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "[]"
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "\"Slum Snakes\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangOtherInfo#\"Speakers for the Dead\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "\"Speakers for the Dead\": "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangOtherInfoObject",
+                  "canonicalReference": "bitburner!GangOtherInfoObject:interface"
                 },
                 {
                   "kind": "Content",
                   "text": ";"
                 }
               ],
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 5
-              },
+              "isOptional": false,
               "releaseTag": "Public",
-              "overloadIndex": 1,
-              "parameters": [
+              "name": "\"Speakers for the Dead\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangOtherInfo#\"The Black Hand\":member",
+              "docComment": "",
+              "excerptTokens": [
                 {
-                  "parameterName": "key",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  }
+                  "kind": "Content",
+                  "text": "\"The Black Hand\": "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangOtherInfoObject",
+                  "canonicalReference": "bitburner!GangOtherInfoObject:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
                 }
-              ]
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "\"The Black Hand\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangOtherInfo#\"The Dark Army\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "\"The Dark Army\": "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangOtherInfoObject",
+                  "canonicalReference": "bitburner!GangOtherInfoObject:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "\"The Dark Army\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangOtherInfo#\"The Syndicate\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "\"The Syndicate\": "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangOtherInfoObject",
+                  "canonicalReference": "bitburner!GangOtherInfoObject:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "\"The Syndicate\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangOtherInfo#NiteSec:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "NiteSec: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangOtherInfoObject",
+                  "canonicalReference": "bitburner!GangOtherInfoObject:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "NiteSec",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangOtherInfo#Tetrads:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Tetrads: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangOtherInfoObject",
+                  "canonicalReference": "bitburner!GangOtherInfoObject:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "Tetrads",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
             }
           ],
           "extendsTokenRanges": []
@@ -13357,7 +13499,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getServerBaseSecurityLevel:member(1)",
-              "docComment": "/**\n * @remarks\n *\n * RAM cost: 0.1 GB Returns the base security level of the target server. This is the security level that the server starts out with. This is different than getServerSecurityLevel because getServerSecurityLevel returns the current security level of a server, which can constantly change due to hack, grow, and weaken, calls on that server. The base security level will stay the same until you reset by installing an Augmentation(s).\n *\n * @deprecated\n *\n * DEPRECATED\n *\n * @param host - Host of target server.\n *\n * @returns Base security level of the target server.\n */\n",
+              "docComment": "/**\n * @remarks\n *\n * RAM cost: 0.1 GB Returns the base security level of the target server. This is the security level that the server starts out with. This is different than getServerSecurityLevel because getServerSecurityLevel returns the current security level of a server, which can constantly change due to hack, grow, and weaken, calls on that server. The base security level will stay the same until you reset by installing an Augmentation(s).\n *\n * @deprecated\n *\n * useless\n *\n * @param host - Host of target server.\n *\n * @returns Base security level of the target server.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13665,7 +13807,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getServerRam:member(1)",
-              "docComment": "/**\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns an array with two elements that gives information about a server’s memory (RAM). The first element in the array is the amount of RAM that the server has total (in GB). The second element in the array is the amount of RAM that is currently being used on the server (in GB).\n *\n * @deprecated\n *\n * DEPRECATED\n *\n * @param host - Host of target server.\n *\n * @returns Array with total and used memory on the specified server.\n *\n * @example\n * ```ts\n * res = getServerRam(\"helios\");\n * totalRam = res[0];\n * ramUsed = res[1];\n * ```\n *\n */\n",
+              "docComment": "/**\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns an array with two elements that gives information about a server’s memory (RAM). The first element in the array is the amount of RAM that the server has total (in GB). The second element in the array is the amount of RAM that is currently being used on the server (in GB).\n *\n * @deprecated\n *\n * use getServerMaxRam / getServerUsedRam\n *\n * @param host - Host of target server.\n *\n * @returns Array with total and used memory on the specified server.\n *\n * @example\n * ```ts\n * res = getServerRam(\"helios\");\n * totalRam = res[0];\n * ramUsed = res[1];\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19992,7 +20134,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#applyToCompany:member(1)",
-              "docComment": "/**\n * Apply for a job at a company.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * Singularity - Level 2\n *\n * This function will automatically try to apply to the specified company for a position in the specified field. This function can also be used to apply for promotions by specifying the company and field you are already employed at.\n *\n * This function will return true if you successfully get a job/promotion, and false otherwise. Note that if you are trying to use this function to apply for a promotion and you don’t get one, it will return false.\n *\n * @param companyName - Name of company to apply to.\n *\n * @param field - Field to which you want to apply.\n *\n * @returns True if the player successfully get a job/promotion, and false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.2 - Apply for a job at a company.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically try to apply to the specified company for a position in the specified field. This function can also be used to apply for promotions by specifying the company and field you are already employed at.\n *\n * This function will return true if you successfully get a job/promotion, and false otherwise. Note that if you are trying to use this function to apply for a promotion and you don’t get one, it will return false.\n *\n * @param companyName - Name of company to apply to.\n *\n * @param field - Field to which you want to apply.\n *\n * @returns True if the player successfully get a job/promotion, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20051,7 +20193,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#checkFactionInvitations:member(1)",
-              "docComment": "/**\n * List all current faction invitations.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * Singularity - Level 2\n *\n * Returns an array with the name of all Factions you currently have oustanding invitations from.\n *\n * @returns Array with the name of all Factions you currently have oustanding invitations from.\n */\n",
+              "docComment": "/**\n * SF4.2 - List all current faction invitations.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * Returns an array with the name of all Factions you currently have oustanding invitations from.\n *\n * @returns Array with the name of all Factions you currently have oustanding invitations from.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20079,7 +20221,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#commitCrime:member(1)",
-              "docComment": "/**\n * Commit a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * This function is used to automatically attempt to commit crimes. If you are already in the middle of some ‘working’ action (such as working for a company or training at a gym), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function returns the number of seconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, so running `commitCrime('rob store')` will return 60).\n *\n * Warning: I do not recommend using the time returned from this function to try and schedule your crime attempts. Instead, I would use the isBusy Singularity function to check whether you have finished attempting a crime. This is because although the game sets a certain crime to be X amount of seconds, there is no guarantee that your browser will follow that time limit.\n *\n * @param crime - Name of crime to attempt.\n *\n * @returns True if you successfully start working on the specified program, and false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.3 - Commit a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function is used to automatically attempt to commit crimes. If you are already in the middle of some ‘working’ action (such as working for a company or training at a gym), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function returns the number of seconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, so running `commitCrime('rob store')` will return 60).\n *\n * Warning: I do not recommend using the time returned from this function to try and schedule your crime attempts. Instead, I would use the isBusy Singularity function to check whether you have finished attempting a crime. This is because although the game sets a certain crime to be X amount of seconds, there is no guarantee that your browser will follow that time limit.\n *\n * @param crime - Name of crime to attempt.\n *\n * @returns True if you successfully start working on the specified program, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20123,7 +20265,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#connect:member(1)",
-              "docComment": "/**\n * Connect to a server.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Singularity - Level 1\n *\n * Run the connect HOSTNAME command in the terminal. Can only connect to neighbors.\n *\n * @returns True if the connect command was successful, false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.1 - Connect to a server.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Run the connect HOSTNAME command in the terminal. Can only connect to neighbors.\n *\n * @returns True if the connect command was successful, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20167,7 +20309,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#createProgram:member(1)",
-              "docComment": "/**\n * Create a program.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * This function will automatically set you to start working on creating the specified program. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or taking a course), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function returns true if you successfully start working on the specified program, and false otherwise.\n *\n * Note that creating a program using this function has the same hacking level requirements as it normally would. These level requirements are: * BruteSSH.exe: 50 * FTPCrack.exe: 100 * relaySMTP.exe: 250 * HTTPWorm.exe: 500 * SQLInject.exe: 750 * DeepscanV1.exe: 75 * DeepscanV2.exe: 400 * ServerProfiler.exe: 75 * AutoLink.exe: 25\n *\n * @param program - Name of program to create.\n *\n * @returns True if you successfully start working on the specified program, and false otherwise.\n *\n * @example\n * ```ts\n * createProgram(“relaysmtp.exe”);\n * ```\n *\n */\n",
+              "docComment": "/**\n * SF4.3 - Create a program.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function will automatically set you to start working on creating the specified program. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or taking a course), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function returns true if you successfully start working on the specified program, and false otherwise.\n *\n * Note that creating a program using this function has the same hacking level requirements as it normally would. These level requirements are: * BruteSSH.exe: 50 * FTPCrack.exe: 100 * relaySMTP.exe: 250 * HTTPWorm.exe: 500 * SQLInject.exe: 750 * DeepscanV1.exe: 75 * DeepscanV2.exe: 400 * ServerProfiler.exe: 75 * AutoLink.exe: 25\n *\n * @param program - Name of program to create.\n *\n * @returns True if you successfully start working on the specified program, and false otherwise.\n *\n * @example\n * ```ts\n * createProgram(“relaysmtp.exe”);\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20211,7 +20353,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#donateToFaction:member(1)",
-              "docComment": "/**\n * Donate to a faction.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * Attempts to donate money to the specified faction in exchange for reputation. Returns true if you successfully donate the money, and false otherwise.\n *\n * @param faction - Name of faction to donate to.\n *\n * @param amount - Amount of money to donate.\n *\n * @returns True if the money was donated, and false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.3 - Donate to a faction.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Attempts to donate money to the specified faction in exchange for reputation. Returns true if you successfully donate the money, and false otherwise.\n *\n * @param faction - Name of faction to donate to.\n *\n * @param amount - Amount of money to donate.\n *\n * @returns True if the money was donated, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20270,7 +20412,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getAugmentationCost:member(1)",
-              "docComment": "/**\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * This function returns an array with two elements that gives the cost for the specified Augmentation. The first element in the returned array is the reputation requirement of the Augmentation, and the second element is the money cost.\n *\n * If an invalid Augmentation name is passed in for the augName argument, this function will return the array [-1, -1].\n *\n * @deprecated\n *\n * Get the price and reputation of an augmentation.\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Array with first element as a reputation requirement and second element as the money cost.\n */\n",
+              "docComment": "/**\n * SF4.3 - Get the price and reputation of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function returns an array with two elements that gives the cost for the specified Augmentation. The first element in the returned array is the reputation requirement of the Augmentation, and the second element is the money cost.\n *\n * If an invalid Augmentation name is passed in for the augName argument, this function will return the array [-1, -1].\n *\n * @deprecated\n *\n * use getAugmentationPrice getAugmentationRepCost\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Array with first element as a reputation requirement and second element as the money cost.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20314,7 +20456,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getAugmentationPrereq:member(1)",
-              "docComment": "/**\n * Get the pre-requisite of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation. If there are no prerequisites, a blank array is returned.\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Array with the names of the prerequisite Augmentation(s) for the specified Augmentation.\n */\n",
+              "docComment": "/**\n * SF4.3 - Get the pre-requisite of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation. If there are no prerequisites, a blank array is returned.\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Array with the names of the prerequisite Augmentation(s) for the specified Augmentation.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20358,7 +20500,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getAugmentationPrice:member(1)",
-              "docComment": "/**\n * Get price of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * Singularity - Level 3\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Price of the augmentation.\n */\n",
+              "docComment": "/**\n * SF4.3 - Get price of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Price of the augmentation.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20402,7 +20544,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getAugmentationRepReq:member(1)",
-              "docComment": "/**\n * Get reputation requirement of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * Singularity - Level 3\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Reputation requirement of the augmentation.\n */\n",
+              "docComment": "/**\n * SF4.3 - Get reputation requirement of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Reputation requirement of the augmentation.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20446,7 +20588,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getAugmentationsFromFaction:member(1)",
-              "docComment": "/**\n * Get a list of augmentation available from a faction.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * Returns an array containing the names (as strings) of all Augmentations that are available from the specified faction.\n *\n * @param faction - Name of faction.\n *\n * @returns Array containing the names of all Augmentations.\n */\n",
+              "docComment": "/**\n * SF4.3 - Get a list of augmentation available from a faction.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Returns an array containing the names (as strings) of all Augmentations that are available from the specified faction.\n *\n * @param faction - Name of faction.\n *\n * @returns Array containing the names of all Augmentations.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20490,7 +20632,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getAugmentationStats:member(1)",
-              "docComment": "/**\n * Get the stats of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * This function returns augmentation stats.\n *\n * @param name - Name of Augmentation. CASE-SENSITIVE.\n *\n * @returns Augmentation stats.\n */\n",
+              "docComment": "/**\n * SF4.3 - Get the stats of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function returns augmentation stats.\n *\n * @param name - Name of Augmentation. CASE-SENSITIVE.\n *\n * @returns Augmentation stats.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20535,7 +20677,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCharacterInformation:member(1)",
-              "docComment": "/**\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * Singularity - Level 1\n *\n * @deprecated\n *\n * Returns an object with various information about your character.\n *\n * @returns Object with various information about your character.\n */\n",
+              "docComment": "/**\n * SF4.1 - Returns an object with various information about your character.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * @deprecated\n *\n * use getPlayer\n *\n * @returns Object with various information about your character.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20564,7 +20706,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCompanyFavor:member(1)",
-              "docComment": "/**\n * Get company favor.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Singularity - Level 2\n *\n * This function will return the amount of favor you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.\n *\n * @param companyName - Name of the company.\n *\n * @returns Amount of favor you have at the specified company.\n */\n",
+              "docComment": "/**\n * SF4.2 - Get company favor.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function will return the amount of favor you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.\n *\n * @param companyName - Name of the company.\n *\n * @returns Amount of favor you have at the specified company.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20608,7 +20750,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCompanyFavorGain:member(1)",
-              "docComment": "/**\n * Get company favor gain.\n *\n * @remarks\n *\n * RAM cost: 0.75 GB\n *\n * Singularity - Level 2\n *\n * This function will return the amount of favor you will gain for the specified company when you reset by installing Augmentations.\n *\n * @param companyName - Name of the company.\n *\n * @returns Amount of favor you gain at the specified company when you reset by installing Augmentations.\n */\n",
+              "docComment": "/**\n * SF4.2 - Get company favor gain.\n *\n * @remarks\n *\n * RAM cost: 0.75 GB\n *\n * This function will return the amount of favor you will gain for the specified company when you reset by installing Augmentations.\n *\n * @param companyName - Name of the company.\n *\n * @returns Amount of favor you gain at the specified company when you reset by installing Augmentations.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20652,7 +20794,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCompanyRep:member(1)",
-              "docComment": "/**\n * Get company reputation.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Singularity - Level 2\n *\n * This function will return the amount of reputation you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.\n *\n * @param companyName - Name of the company.\n *\n * @returns Amount of reputation you have at the specified company.\n */\n",
+              "docComment": "/**\n * SF4.2 - Get company reputation.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function will return the amount of reputation you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.\n *\n * @param companyName - Name of the company.\n *\n * @returns Amount of reputation you have at the specified company.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20696,7 +20838,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCrimeChance:member(1)",
-              "docComment": "/**\n * Get chance to successfully commit a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * This function returns your chance of success at commiting the specified crime.\n *\n * @param crime - Name of crime.\n *\n * @returns Chance of success at commiting the specified crime.\n */\n",
+              "docComment": "/**\n * SF4.3 - Get chance to successfully commit a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function returns your chance of success at commiting the specified crime.\n *\n * @param crime - Name of crime.\n *\n * @returns Chance of success at commiting the specified crime.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20740,7 +20882,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCrimeStats:member(1)",
-              "docComment": "/**\n * Get stats related to a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * Returns the stats of the crime.\n *\n * @param crime - Name of crime. Not case-sensitive\n *\n * @returns The stats of the crime.\n */\n",
+              "docComment": "/**\n * SF4.3 - Get stats related to a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Returns the stats of the crime.\n *\n * @param crime - Name of crime. Not case-sensitive\n *\n * @returns The stats of the crime.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20785,7 +20927,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCurrentServer:member(1)",
-              "docComment": "/**\n * Get the current server.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Singularity - Level 1\n *\n * @returns Name of the current server.\n */\n",
+              "docComment": "/**\n * SF4.1 - Get the current server.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @returns Name of the current server.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20813,7 +20955,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getFactionFavor:member(1)",
-              "docComment": "/**\n * Get faction favor.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Singularity - Level 2\n *\n * This function returns the amount of favor you have for the specified faction.\n *\n * @param faction - Name of faction.\n *\n * @returns Amount of favor you have for the specified faction.\n */\n",
+              "docComment": "/**\n * SF4.2 - Get faction favor.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function returns the amount of favor you have for the specified faction.\n *\n * @param faction - Name of faction.\n *\n * @returns Amount of favor you have for the specified faction.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20857,7 +20999,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getFactionFavorGain:member(1)",
-              "docComment": "/**\n * Get faction favor gain.\n *\n * @remarks\n *\n * RAM cost: 0.75 GB\n *\n * Singularity - Level 2\n *\n * This function returns the amount of favor you will gain for the specified faction when you reset by installing Augmentations.\n *\n * @param faction - Name of faction.\n *\n * @returns Amount of favor you will gain for the specified faction when you reset by installing Augmentations.\n */\n",
+              "docComment": "/**\n * SF4.2 - Get faction favor gain.\n *\n * @remarks\n *\n * RAM cost: 0.75 GB\n *\n * This function returns the amount of favor you will gain for the specified faction when you reset by installing Augmentations.\n *\n * @param faction - Name of faction.\n *\n * @returns Amount of favor you will gain for the specified faction when you reset by installing Augmentations.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20901,7 +21043,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getFactionRep:member(1)",
-              "docComment": "/**\n * Get faction reputation.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Singularity - Level 2\n *\n * This function returns the amount of reputation you have for the specified faction.\n *\n * @param faction - Name of faction to work for.\n *\n * @returns Amount of reputation you have for the specified faction.\n */\n",
+              "docComment": "/**\n * SF4.2 - Get faction reputation.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function returns the amount of reputation you have for the specified faction.\n *\n * @param faction - Name of faction to work for.\n *\n * @returns Amount of reputation you have for the specified faction.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20945,7 +21087,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getOwnedAugmentations:member(1)",
-              "docComment": "/**\n * Get a list of owned augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * This function returns an array containing the names (as strings) of all Augmentations you have.\n *\n * @param purchased - Specifies whether the returned array should include Augmentations you have purchased but not yet installed. By default, this argument is false which means that the return value will NOT have the purchased Augmentations.\n *\n * @returns Array containing the names (as strings) of all Augmentations you have.\n */\n",
+              "docComment": "/**\n * SF4.3 - Get a list of owned augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function returns an array containing the names (as strings) of all Augmentations you have.\n *\n * @param purchased - Specifies whether the returned array should include Augmentations you have purchased but not yet installed. By default, this argument is false which means that the return value will NOT have the purchased Augmentations.\n *\n * @returns Array containing the names (as strings) of all Augmentations you have.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20989,7 +21131,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getStats:member(1)",
-              "docComment": "/**\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * Singularity - Level 1\n *\n * @deprecated\n *\n * Returns an object with the Player’s stats.\n *\n * @returns Object with the Player’s stats.\n *\n * @example\n * ```ts\n * res = getStats();\n * print('My charisma level is: ' + res.charisma);\n * ```\n *\n */\n",
+              "docComment": "/**\n * SF4.1 - Returns an object with the Player’s stats.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * @deprecated\n *\n * use getPlayer\n *\n * @returns Object with the Player’s stats.\n *\n * @example\n * ```ts\n * res = getStats();\n * print('My charisma level is: ' + res.charisma);\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21018,7 +21160,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getUpgradeHomeCoresCost:member(1)",
-              "docComment": "/**\n * Get the price of upgrading home cores.\n *\n * @remarks\n *\n * RAM cost: 1.5 GB\n *\n * Singularity - Level 2\n *\n * Returns the cost of upgrading the player’s home computer cores.\n *\n * @returns Cost of upgrading the player’s home computer cores.\n */\n",
+              "docComment": "/**\n * SF4.2 - Get the price of upgrading home cores.\n *\n * @remarks\n *\n * RAM cost: 1.5 GB\n *\n * Returns the cost of upgrading the player’s home computer cores.\n *\n * @returns Cost of upgrading the player’s home computer cores.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21046,7 +21188,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getUpgradeHomeRamCost:member(1)",
-              "docComment": "/**\n * Get the price of upgrading home RAM.\n *\n * @remarks\n *\n * RAM cost: 1.5 GB\n *\n * Singularity - Level 2\n *\n * Returns the cost of upgrading the player’s home computer RAM.\n *\n * @returns Cost of upgrading the player’s home computer RAM.\n */\n",
+              "docComment": "/**\n * SF4.2 - Get the price of upgrading home RAM.\n *\n * @remarks\n *\n * RAM cost: 1.5 GB\n *\n * Returns the cost of upgrading the player’s home computer RAM.\n *\n * @returns Cost of upgrading the player’s home computer RAM.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21074,7 +21216,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#goToLocation:member(1)",
-              "docComment": "/**\n * Go to a location.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * Move the player to a specific location.\n *\n * @param locationName - Name of the location.\n *\n * @returns True if the player was moved there, false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.3 - Go to a location.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Move the player to a specific location.\n *\n * @param locationName - Name of the location.\n *\n * @returns True if the player was moved there, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21118,7 +21260,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#gymWorkout:member(1)",
-              "docComment": "/**\n * Workout at the gym.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Singularity - Level 1\n *\n * This function will automatically set you to start working out at a gym to train a particular stat. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * The cost and experience gains for all of these gyms are the same as if you were to manually visit these gyms and train\n *\n * @param gymName - Name of gym. You must be in the correct city for whatever gym you specify.\n *\n * @param stat - The stat you want to train.\n *\n * @returns True if actions is successfully started, false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.1 - Workout at the gym.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * This function will automatically set you to start working out at a gym to train a particular stat. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * The cost and experience gains for all of these gyms are the same as if you were to manually visit these gyms and train\n *\n * @param gymName - Name of gym. You must be in the correct city for whatever gym you specify.\n *\n * @param stat - The stat you want to train.\n *\n * @returns True if actions is successfully started, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21177,7 +21319,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#hospitalize:member(1)",
-              "docComment": "/**\n * Hospitalize the player.\n *\n * @remarks\n *\n * RAM cost: 0.25 GB\n *\n * Singularity - Level 1\n *\n * @returns The cost of the hospitalization.\n */\n",
+              "docComment": "/**\n * SF4.1 - Hospitalize the player.\n *\n * @remarks\n *\n * RAM cost: 0.25 GB\n *\n * @returns The cost of the hospitalization.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21205,7 +21347,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#installAugmentations:member(1)",
-              "docComment": "/**\n * Install your purchased augmentations.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * This function will automatically install your Augmentations, resetting the game as usual.\n *\n * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.\n */\n",
+              "docComment": "/**\n * SF4.3 - Install your purchased augmentations.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function will automatically install your Augmentations, resetting the game as usual.\n *\n * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21249,7 +21391,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#installBackdoor:member(1)",
-              "docComment": "/**\n * Run the backdoor command in the terminal.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Singularity - Level 1\n *\n * @returns True if the installation was successful.\n */\n",
+              "docComment": "/**\n * SF4.1 - Run the backdoor command in the terminal.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @returns True if the installation was successful.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21282,7 +21424,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#isBusy:member(1)",
-              "docComment": "/**\n * Check if the player is busy.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * Singularity - Level 1\n *\n * Returns a boolean indicating whether or not the player is currently performing an ‘action’. These actions include working for a company/faction, studying at a univeristy, working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.\n *\n * @returns True if the player is currently performing an ‘action’, false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.1 - Check if the player is busy.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * Returns a boolean indicating whether or not the player is currently performing an ‘action’. These actions include working for a company/faction, studying at a univeristy, working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.\n *\n * @returns True if the player is currently performing an ‘action’, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21310,7 +21452,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#isFocused:member(1)",
-              "docComment": "/**\n * Check if the player is focused.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Singularity - Level 2\n *\n * @returns True if the player is focused.\n */\n",
+              "docComment": "/**\n * SF4.2 - Check if the player is focused.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * @returns True if the player is focused.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21338,7 +21480,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#joinFaction:member(1)",
-              "docComment": "/**\n * Join a faction.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * Singularity - Level 2\n *\n * This function will automatically accept an invitation from a faction and join it.\n *\n * @param faction - Name of faction to join.\n *\n * @returns True if player joined the faction, and false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.2 - Join a faction.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically accept an invitation from a faction and join it.\n *\n * @param faction - Name of faction to join.\n *\n * @returns True if player joined the faction, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21382,7 +21524,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#manualHack:member(1)",
-              "docComment": "/**\n * Run the hack command in the terminal.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Singularity - Level 1\n *\n * @returns Amount of money stolen by manual hacking.\n */\n",
+              "docComment": "/**\n * SF4.1 - Run the hack command in the terminal.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @returns Amount of money stolen by manual hacking.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21415,7 +21557,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#purchaseAugmentation:member(1)",
-              "docComment": "/**\n * Purchase an augmentation\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * This function will try to purchase the specified Augmentation through the given Faction.\n *\n * This function will return true if the Augmentation is successfully purchased, and false otherwise.\n *\n * @param faction - Name of faction to purchase Augmentation from.\n *\n * @param augmentation - Name of Augmentation to purchase.\n *\n * @returns True if the Augmentation is successfully purchased, and false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.3 - Purchase an augmentation\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function will try to purchase the specified Augmentation through the given Faction.\n *\n * This function will return true if the Augmentation is successfully purchased, and false otherwise.\n *\n * @param faction - Name of faction to purchase Augmentation from.\n *\n * @param augmentation - Name of Augmentation to purchase.\n *\n * @returns True if the Augmentation is successfully purchased, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21474,7 +21616,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#purchaseProgram:member(1)",
-              "docComment": "/**\n * Purchase a program from the dark web.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Singularity - Level 1\n *\n * This function allows you to automatically purchase programs. You MUST have a TOR router in order to use this function. The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web using the Terminal buy command.\n *\n * @param programName - Name of program to purchase.\n *\n * @returns True if the specified program is purchased, and false otherwise.\n *\n * @example\n * ```ts\n * purchaseProgram(\"brutessh.exe\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * SF4.1 - Purchase a program from the dark web.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * This function allows you to automatically purchase programs. You MUST have a TOR router in order to use this function. The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web using the Terminal buy command.\n *\n * @param programName - Name of program to purchase.\n *\n * @returns True if the specified program is purchased, and false otherwise.\n *\n * @example\n * ```ts\n * purchaseProgram(\"brutessh.exe\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21518,7 +21660,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#purchaseTor:member(1)",
-              "docComment": "/**\n * Purchase the TOR router.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Singularity - Level 1\n *\n * This function allows you to automatically purchase a TOR router. The cost for purchasing a TOR router using this function is the same as if you were to manually purchase one.\n *\n * @returns True if actions is successful, false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.1 - Purchase the TOR router.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * This function allows you to automatically purchase a TOR router. The cost for purchasing a TOR router using this function is the same as if you were to manually purchase one.\n *\n * @returns True if actions is successful, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21546,7 +21688,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#setFocus:member(1)",
-              "docComment": "/**\n * Set the players focus.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Singularity - Level 2\n */\n",
+              "docComment": "/**\n * SF4.2 - Set the players focus.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21590,7 +21732,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#softReset:member(1)",
-              "docComment": "/**\n * Soft reset the game.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Singularity - Level 3\n *\n * This function will perform a reset even if you don’t have any augmentation installed.\n *\n * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.\n */\n",
+              "docComment": "/**\n * SF4.3 - Soft reset the game.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function will perform a reset even if you don’t have any augmentation installed.\n *\n * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21634,7 +21776,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#stopAction:member(1)",
-              "docComment": "/**\n * Stop the current action.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Singularity - Level 1\n *\n * This function is used to end whatever ‘action’ the player is currently performing. The player will receive whatever money/experience/etc. he has earned from that action.\n *\n * The actions that can be stopped with this function are:\n *\n * * Studying at a university * Working for a company/faction * Creating a program * Committing a Crime\n *\n * This function will return true if the player’s action was ended. It will return false if the player was not performing an action when this function was called.\n *\n * @returns True if the player’s action was ended, false if the player was not performing an action.\n */\n",
+              "docComment": "/**\n * SF4.1 - Stop the current action.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function is used to end whatever ‘action’ the player is currently performing. The player will receive whatever money/experience/etc. he has earned from that action.\n *\n * The actions that can be stopped with this function are:\n *\n * * Studying at a university * Working for a company/faction * Creating a program * Committing a Crime\n *\n * This function will return true if the player’s action was ended. It will return false if the player was not performing an action when this function was called.\n *\n * @returns True if the player’s action was ended, false if the player was not performing an action.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21662,7 +21804,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#travelToCity:member(1)",
-              "docComment": "/**\n * Travel to another city.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Singularity - Level 1\n *\n * This function allows the player to travel to any city. The cost for using this function is the same as the cost for traveling through the Travel Agency.\n *\n * @param city - City to travel to.\n *\n * @returns True if actions is successful, false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.1 - Travel to another city.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * This function allows the player to travel to any city. The cost for using this function is the same as the cost for traveling through the Travel Agency.\n *\n * @param city - City to travel to.\n *\n * @returns True if actions is successful, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21706,7 +21848,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#universityCourse:member(1)",
-              "docComment": "/**\n * Take university class.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Singularity - Level 1\n *\n * This function will automatically set you to start taking a course at a university. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * The cost and experience gains for all of these universities and classes are the same as if you were to manually visit and take these classes.\n *\n * @param universityName - Name of university. You must be in the correct city for whatever university you specify.\n *\n * @param courseName - Name of course.\n *\n * @returns True if actions is successfully started, false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.1 - Take university class.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * This function will automatically set you to start taking a course at a university. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * The cost and experience gains for all of these universities and classes are the same as if you were to manually visit and take these classes.\n *\n * @param universityName - Name of university. You must be in the correct city for whatever university you specify.\n *\n * @param courseName - Name of course.\n *\n * @returns True if actions is successfully started, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21765,7 +21907,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#upgradeHomeCores:member(1)",
-              "docComment": "/**\n * Upgrade home computer cores.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * Singularity - Level 2\n *\n * This function will upgrade amount of cores on the player’s home computer. The cost is the same as if you were to do it manually.\n *\n * This function will return true if the player’s home computer cores is successfully upgraded, and false otherwise.\n *\n * @returns True if the player’s home computer cores is successfully upgraded, and false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.2 - Upgrade home computer cores.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will upgrade amount of cores on the player’s home computer. The cost is the same as if you were to do it manually.\n *\n * This function will return true if the player’s home computer cores is successfully upgraded, and false otherwise.\n *\n * @returns True if the player’s home computer cores is successfully upgraded, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21793,7 +21935,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#upgradeHomeRam:member(1)",
-              "docComment": "/**\n * Upgrade home computer RAM.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * Singularity - Level 2\n *\n * This function will upgrade amount of RAM on the player’s home computer. The cost is the same as if you were to do it manually.\n *\n * This function will return true if the player’s home computer RAM is successfully upgraded, and false otherwise.\n *\n * @returns True if the player’s home computer RAM is successfully upgraded, and false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.2 - Upgrade home computer RAM.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will upgrade amount of RAM on the player’s home computer. The cost is the same as if you were to do it manually.\n *\n * This function will return true if the player’s home computer RAM is successfully upgraded, and false otherwise.\n *\n * @returns True if the player’s home computer RAM is successfully upgraded, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21821,7 +21963,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#workForCompany:member(1)",
-              "docComment": "/**\n * Work for a company.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * Singularity - Level 2\n *\n * This function will automatically set you to start working at the company at which you are employed. If you are already in the middle of some “working” action (such as working for a faction, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function will return true if the player starts working, and false otherwise.\n *\n * Note that when you are working for a company, you will not actually receive your earnings (reputation, money, experience) until you FINISH the action.\n *\n * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked\n *\n * @returns True if the player starts working, and false otherwise.\n *\n * @example\n * ```ts\n * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (getCompanyRep(COMPANY HERE) < VALUE) {\n *    workForCompany();\n *    sleep(60000);\n * }\n * //This way, your company reputation will be updated every minute.\n * ```\n *\n */\n",
+              "docComment": "/**\n * SF4.2 - Work for a company.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically set you to start working at the company at which you are employed. If you are already in the middle of some “working” action (such as working for a faction, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function will return true if the player starts working, and false otherwise.\n *\n * Note that when you are working for a company, you will not actually receive your earnings (reputation, money, experience) until you FINISH the action.\n *\n * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked\n *\n * @returns True if the player starts working, and false otherwise.\n *\n * @example\n * ```ts\n * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (getCompanyRep(COMPANY HERE) < VALUE) {\n *    workForCompany();\n *    sleep(60000);\n * }\n * //This way, your company reputation will be updated every minute.\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21865,7 +22007,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#workForFaction:member(1)",
-              "docComment": "/**\n * Work for a faction.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * Singularity - Level 2\n *\n * This function will automatically set you to start working for the specified faction. Obviously, you must be a member of the faction or else this function will fail. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function will return true if you successfully start working for the specified faction, and false otherwise.\n *\n * Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience) until you FINISH the action.\n *\n * @param faction - Name of faction to work for.\n *\n * @param workType - Type of work to perform for the faction.\n *\n * @returns True if the player starts working, and false otherwise.\n *\n * @example\n * ```ts\n * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (getFactionRep(FACTION NAME) < VALUE) {\n *    workForFaction(FACNAME, WORKTYPE);\n *    sleep(60000);\n * }\n * //This way, your faction reputation will be updated every minute.\n * ```\n *\n */\n",
+              "docComment": "/**\n * SF4.2 - Work for a faction.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically set you to start working for the specified faction. Obviously, you must be a member of the faction or else this function will fail. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function will return true if you successfully start working for the specified faction, and false otherwise.\n *\n * Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience) until you FINISH the action.\n *\n * @param faction - Name of faction to work for.\n *\n * @param workType - Type of work to perform for the faction.\n *\n * @returns True if the player starts working, and false otherwise.\n *\n * @example\n * ```ts\n * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (getFactionRep(FACTION NAME) < VALUE) {\n *    workForFaction(FACNAME, WORKTYPE);\n *    sleep(60000);\n * }\n * //This way, your faction reputation will be updated every minute.\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",

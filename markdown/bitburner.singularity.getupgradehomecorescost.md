@@ -4,7 +4,7 @@
 
 ## Singularity.getUpgradeHomeCoresCost() method
 
-Get the price of upgrading home cores.
+SF4.2 - Get the price of upgrading home cores.
 
 <b>Signature:</b>
 
@@ -20,8 +20,6 @@ Cost of upgrading the player’s home computer cores.
 ## Remarks
 
 RAM cost: 1.5 GB
-
-Singularity - Level 2
 
 Returns the cost of upgrading the player’s home computer cores.
 

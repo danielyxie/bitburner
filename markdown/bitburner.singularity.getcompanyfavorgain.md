@@ -4,7 +4,7 @@
 
 ## Singularity.getCompanyFavorGain() method
 
-Get company favor gain.
+SF4.2 - Get company favor gain.
 
 <b>Signature:</b>
 
@@ -27,8 +27,6 @@ Amount of favor you gain at the specified company when you reset by installing A
 ## Remarks
 
 RAM cost: 0.75 GB
-
-Singularity - Level 2
 
 This function will return the amount of favor you will gain for the specified company when you reset by installing Augmentations.
 

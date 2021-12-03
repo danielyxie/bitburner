@@ -4,7 +4,7 @@
 
 ## Singularity.purchaseTor() method
 
-Purchase the TOR router.
+SF4.1 - Purchase the TOR router.
 
 <b>Signature:</b>
 
@@ -20,8 +20,6 @@ True if actions is successful, false otherwise.
 ## Remarks
 
 RAM cost: 2 GB
-
-Singularity - Level 1
 
 This function allows you to automatically purchase a TOR router. The cost for purchasing a TOR router using this function is the same as if you were to manually purchase one.
 
