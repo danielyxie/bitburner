@@ -167,9 +167,9 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       if (gang === null) throw new Error("Should not be called without Gang");
       const recruited = gang.recruitMember(name);
       if (recruited) {
-        workerScript.log("recruitMember", () => `Successfully recruited Gang Member '${name}'`);
+        workerScript.log("gang.recruitMember", () => `Successfully recruited Gang Member '${name}'`);
       } else {
-        workerScript.log("recruitMember", () => `Failed to recruit Gang Member '${name}'`);
+        workerScript.log("gang.recruitMember", () => `Failed to recruit Gang Member '${name}'`);
       }
 
       return recruited;
@@ -190,12 +190,12 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       const success = member.assignToTask(taskName);
       if (success) {
         workerScript.log(
-          "setMemberTask",
+          "gang.setMemberTask",
           () => `Successfully assigned Gang Member '${memberName}' to '${taskName}' task`,
         );
       } else {
         workerScript.log(
-          "setMemberTask",
+          "gang.setMemberTask",
           () => `Failed to assign Gang Member '${memberName}' to '${taskName}' task. '${memberName}' is now Unassigned`,
         );
       }
@@ -251,10 +251,10 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       if (!equipment) return false;
       const res = member.buyUpgrade(equipment, player, gang);
       if (res) {
-        workerScript.log("purchaseEquipment", () => `Purchased '${equipName}' for Gang member '${memberName}'`);
+        workerScript.log("gang.purchaseEquipment", () => `Purchased '${equipName}' for Gang member '${memberName}'`);
       } else {
         workerScript.log(
-          "purchaseEquipment",
+          "gang.purchaseEquipment",
           () => `Failed to purchase '${equipName}' for Gang member '${memberName}'`,
         );
       }
@@ -277,10 +277,10 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       if (gang === null) throw new Error("Should not be called without Gang");
       if (engage) {
         gang.territoryWarfareEngaged = true;
-        workerScript.log("setTerritoryWarfare", () => "Engaging in Gang Territory Warfare");
+        workerScript.log("gang.setTerritoryWarfare", () => "Engaging in Gang Territory Warfare");
       } else {
         gang.territoryWarfareEngaged = false;
-        workerScript.log("setTerritoryWarfare", () => "Disengaging in Gang Territory Warfare");
+        workerScript.log("gang.setTerritoryWarfare", () => "Disengaging in Gang Territory Warfare");
       }
     },
     getChanceToWinClash: function (otherGang: any): number {
