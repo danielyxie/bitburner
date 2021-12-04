@@ -16,6 +16,10 @@ v1.1.0 - 2021-12-03 BN13: They're Lunatics (hydroflame & community)
 * 94 achievements added
 * Release is 2021-12-10.
 
+** Corporation API **
+
+* Added corporation API. (Unstable)
+
 ** Netscript **
 
 * tprintf crashes when not giving a format as first arg.

@@ -65,4 +65,6 @@ export const CorporationUnlockUpgrades: IMap<CorporationUnlockUpgrade> = {
     "Help national governments further their agendas in exchange for lowered taxes. " +
       "This reduces the dividend tax rate by 10%",
   ],
+  "7": [7, 50e9, "Warehouse API", "Enables the warehouse API."],
+  "8": [8, 50e9, "Office API", "Enables the office API."],
 };
