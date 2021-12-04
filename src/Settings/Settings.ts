@@ -98,6 +98,11 @@ interface IDefaultSettings {
    */
   SuppressBladeburnerPopup: boolean;
 
+  /**
+   * Whether the user should be displayed a popup message on stock market actions.
+   */
+  SuppressTIXPopup: boolean;
+
   /*
    * Theme colors
    */
@@ -180,6 +185,7 @@ export const defaultSettings: IDefaultSettings = {
   SuppressMessages: false,
   SuppressTravelConfirmation: false,
   SuppressBladeburnerPopup: false,
+  SuppressTIXPopup: false,
 
   theme: {
     primarylight: "#0f0",
@@ -244,6 +250,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressMessages: defaultSettings.SuppressMessages,
   SuppressTravelConfirmation: defaultSettings.SuppressTravelConfirmation,
   SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,
+  SuppressTIXPopup: defaultSettings.SuppressTIXPopup,
   MonacoTheme: "monokai",
   MonacoInsertSpaces: false,
   MonacoFontSize: 20,
