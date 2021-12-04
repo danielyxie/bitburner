@@ -31,7 +31,6 @@ export class Employee {
   cre: number;
   eff: number;
   sal: number;
-  pro = 0;
   cyclesUntilRaise = CorporationConstants.CyclesPerEmployeeRaise;
   loc: string;
   pos: string;
@@ -127,25 +126,6 @@ export class Employee {
     this.hap *= mult;
     this.hap = Math.min(100, this.hap);
     return mult;
-  }
-
-  copy(): Employee {
-    const employee = new Employee();
-    employee.name = this.name;
-    employee.mor = this.mor;
-    employee.hap = this.hap;
-    employee.ene = this.ene;
-    employee.int = this.int;
-    employee.cha = this.cha;
-    employee.exp = this.exp;
-    employee.cre = this.cre;
-    employee.eff = this.eff;
-    employee.sal = this.sal;
-    employee.pro = this.pro;
-    employee.cyclesUntilRaise = this.cyclesUntilRaise;
-    employee.loc = this.loc;
-    employee.pos = this.pos;
-    return employee;
   }
 
   toJSON(): any {

@@ -447,7 +447,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const stanek = NetscriptStanek(Player, workerScript, helper);
   const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
   const codingcontract = NetscriptCodingContract(Player, workerScript, helper);
-  const corporation = NetscriptCorporation(Player);
+  const corporation = NetscriptCorporation(Player, workerScript, helper);
   const formulas = NetscriptFormulas(Player, workerScript, helper);
   const singularity = NetscriptSingularity(Player, workerScript, helper);
   const stockmarket = NetscriptStockMarket(Player, workerScript, helper);
@@ -459,6 +459,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     bladeburner: bladeburner,
     codingcontract: codingcontract,
     sleeve: sleeve,
+    corporation: corporation,
     stanek: stanek,
 
     formulas: formulas,
@@ -2282,7 +2283,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   // add undocumented functions
   const ns = {
     ...base,
-    corporation: corporation,
     ...extra,
   };
   function getFunctionNames(obj: NS, prefix: string): string[] {

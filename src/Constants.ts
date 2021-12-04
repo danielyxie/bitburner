@@ -286,6 +286,10 @@ export const CONSTANTS: {
     * 94 achievements added
     * Release is 2021-12-10.
 
+    ** Corporation API **
+
+    * Added corporation API.
+
     ** Netscript **
   
     * tprintf crashes when not giving a format as first arg.

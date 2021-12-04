@@ -141,6 +141,9 @@ async function parseOnlyRamCalculate(
       if (ref === "window" && !resolvedRefs.has("window")) {
         ram += RamCostConstants.ScriptDomRamCost;
       }
+      if (ref === "corporation" && !resolvedRefs.has("corporation")) {
+        ram += RamCostConstants.ScriptCorporationRamCost;
+      }
 
       resolvedRefs.add(ref);
 

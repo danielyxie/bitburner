@@ -165,7 +165,7 @@ function Upgrades({ rerender }: IUpgradeProps): React.ReactElement {
         <Typography variant="h4">Unlocks</Typography>
         <Grid container>
           {Object.values(CorporationUnlockUpgrades)
-            .filter((upgrade: CorporationUnlockUpgrade) => corp.unlockUpgrades[upgrade[0]] === 0)
+            .filter((upgrade: CorporationUnlockUpgrade) => !corp.unlockUpgrades[upgrade[0]])
             .map((upgrade: CorporationUnlockUpgrade) => (
               <UnlockUpgrade rerender={rerender} upgradeData={upgrade} key={upgrade[0]} />
             ))}
