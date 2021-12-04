@@ -826,6 +826,30 @@ export declare interface CodingContract {
     getNumTriesRemaining(filename: string, host?: string): number;
 }
 
+export declare interface Corporation extends WarehouseAPI, OfficeAPI {
+    getCorporation(): CorporationInfo;
+    getDivision(divisionName: string): Division;
+    expandIndustry(industryName: string, divisionName: string): void;
+    expandCity(divisionName: string, cityName: string): void;
+    unlockUpgrade(upgradeName: string): void;
+    levelUpgrade(upgradeName: string): void;
+    issueDividends(percent: number): void;
+}
+
+export declare interface CorporationInfo {
+    name: string;
+    funds: number;
+    revenue: number;
+    expenses: number;
+    public: boolean;
+    totalShares: number;
+    numShares: number;
+    shareSaleCooldown: number;
+    issuedShares: number;
+    sharePrice: number;
+    state: string;
+}
+
 /**
  * Data representing the internal values of a crime.
  * @public
@@ -871,6 +895,46 @@ export declare interface CrimeStats {
     charisma_exp: number;
     /** intelligence exp gained from crime */
     intelligence_exp: number;
+}
+
+export declare interface Division {
+    name: string;
+    type: string;
+    awareness: number;
+    popularity: number;
+    prodMult: number;
+    research: number;
+    lastCycleRevenue: number;
+    lastCycleExpenses: number;
+    thisCycleRevenue: number;
+    thisCycleExpenses: number;
+    upgrades: number[];
+    cities: string[];
+}
+
+export declare interface Employee {
+    name: string;
+    mor: number;
+    hap: number;
+    ene: number;
+    int: number;
+    cha: number;
+    exp: number;
+    cre: number;
+    eff: number;
+    sal: number;
+    loc: string;
+    pos: string;
+}
+
+export declare interface EmployeeJobs {
+    Operations: number;
+    Engineer: number;
+    Business: number;
+    Management: number;
+    "Research & Development": number;
+    Training: number;
+    Unassigned: number;
 }
 
 /**
@@ -1716,6 +1780,12 @@ export declare interface HacknetServersFormulas {
     constants(): any;
 }
 
+export declare interface Material {
+    name: string;
+    qty: number;
+    qlt: number;
+}
+
 /**
  * Object representing all the values related to a hacknet node.
  * @public
@@ -1784,7 +1854,6 @@ export declare interface NS extends Singularity {
      * RAM cost: 0 GB
      */
     readonly stock: TIX;
-
     /**
      *
      * Namespace for formulas functions.
@@ -1797,6 +1866,11 @@ export declare interface NS extends Singularity {
      * RAM cost: 0 GB
      */
     readonly stanek: Stanek;
+    /**
+     * Namespace for corporation functions.
+     * RAM cost: 0 GB
+     */
+    readonly corporation: Corporation;
 
     /**
      * Arguments passed into the script.
@@ -3406,6 +3480,31 @@ export declare interface NS extends Singularity {
     flags(schema: [string, string | number | boolean | string[]][]): any;
 }
 
+export declare interface Office {
+    loc: string;
+    size: number;
+    minEne: number;
+    maxEne: number;
+    minHap: number;
+    maxHap: number;
+    maxMor: number;
+    employees: string[];
+    employeeProd: EmployeeJobs;
+}
+
+export declare interface OfficeAPI {
+    employees(divisionName: string, cityName: string): string[];
+    assignJob(divisionName: string, cityName: string, employeeName: string, job: string): Promise<void>;
+    hireEmployee(divisionName: string, cityName: string): Employee;
+    upgradeOfficeSize(divisionName: string, cityName: string, size: number): void;
+    throwParty(divisionName: string, cityName: string, costPerEmployee: number): Promise<number>;
+    buyCoffee(divisionName: string, cityName: string): Promise<void>;
+    hireAdVert(divisionName: string): void;
+    research(divisionName: string, researchName: string): void;
+    getOffice(divisionName: string, cityName: string): Office;
+    getEmployee(divisionName: string, cityName: string, employeeName: string): Employee;
+}
+
 /**
  * @public
  */
@@ -3530,6 +3629,14 @@ export declare interface ProcessInfo {
     threads: number;
     /** Script's arguments */
     args: string[];
+}
+
+export declare interface Product {
+    name: string;
+    dmd: number;
+    cmp: number;
+    pCost: number;
+    sCost: string | number;
 }
 
 /**
@@ -5132,6 +5239,60 @@ export declare interface TIX {
      * @returns True if you successfully purchased it or if you already have access, false otherwise.
      */
     purchase4SMarketDataTixApi(): boolean;
+}
+
+export declare interface Warehouse {
+    level: number;
+    loc: string;
+    size: number;
+    sizeUsed: number;
+}
+
+export declare interface WarehouseAPI {
+    sellMaterial(divisionName: string, cityName: string, materialName: string, amt: number, price: number): void;
+    sellProduct(
+    divisionName: string,
+    cityName: string,
+    productName: string,
+    amt: number,
+    price: number,
+    all: boolean,
+    ): void;
+    discontinueProduct(divisionName: string, productName: string): void;
+    setSmartSupply(divisionName: string, cityName: string, enabled: boolean): void;
+    buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
+    getWarehouse(divisionName: string, cityName: string): Warehouse;
+    getProduct(divisionName: string, productName: string): Product;
+    getMaterial(divisionName: string, cityName: string, materialName: string): Material;
+    setMaterialMarketTA1(divisionName: string, cityName: string, materialName: string, on: boolean): void;
+    setMaterialMarketTA2(divisionName: string, cityName: string, materialName: string, on: boolean): void;
+    setProductMarketTA1(divisionName: string, productName: string, on: boolean): void;
+    setProductMarketTA2(divisionName: string, productName: string, on: boolean): void;
+    exportMaterial(
+    sourceDivision: string,
+    sourceCity: string,
+    targetDivision: string,
+    targetCity: string,
+    materialName: string,
+    amt: number,
+    ): void;
+    cancelExportMaterial(
+    sourceDivision: string,
+    sourceCity: string,
+    targetDivision: string,
+    targetCity: string,
+    materialName: string,
+    amt: number,
+    ): void;
+    purchaseWarehouse(divisionName: string, cityName: string): void;
+    upgradeWarehouse(divisionName: string, cityName: string): void;
+    makeProduct(
+    divisionName: string,
+    cityName: string,
+    productName: string,
+    designInvest: number,
+    marketingInvest: number,
+    ): void;
 }
 
 export { }

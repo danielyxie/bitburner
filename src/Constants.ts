@@ -288,7 +288,7 @@ export const CONSTANTS: {
 
     ** Corporation API **
 
-    * Added corporation API.
+    * Added corporation API. (Unstable)
 
     ** Netscript **
   

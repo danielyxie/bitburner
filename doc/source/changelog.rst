@@ -18,7 +18,7 @@ v1.1.0 - 2021-12-03 BN13: They're Lunatics (hydroflame & community)
 
 ** Corporation API **
 
-* Added corporation API.
+* Added corporation API. (Unstable)
 
 ** Netscript **
 

@@ -68,8 +68,8 @@ SourceFiles["SourceFile5"] = new SourceFile(
       persistent (it never gets reset back to 1). However, gaining Intelligence experience is much slower than other
       stats, and it is also hidden (you won't know when you gain experience and how much). Higher Intelligence levels
       will boost your production for many actions in the game. In addition, this Source-File will unlock the
-      getBitNodeMultipliers() and let you start with Formulas.exe, and will raise all of your hacking-related
-      multipliers by:
+      getBitNodeMultipliers() Netscript function and let you start with Formulas.exe, and will raise all of your
+      hacking-related multipliers by:
       <br />
       <br />
       Level 1: 8%

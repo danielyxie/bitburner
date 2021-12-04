@@ -94,7 +94,7 @@ export const BlackOperations: {
       <>
         The CIA has just encountered a new security threat. A new criminal group, lead by a shadowy operative who calls
         himself Juggernaut, has been smuggling drugs and weapons (including suspected bioweapons) into Sector-12. We
-        also have reason to believe the tried to break into one of Universal Energy's facilities in order to cause a
+        also have reason to believe they tried to break into one of Universal Energy's facilities in order to cause a
         city-wide blackout. The CIA suspects that Juggernaut is a heavily-augmented Synthoid, and have thus enlisted our
         help.
         <br />
@@ -126,9 +126,9 @@ export const BlackOperations: {
         be catastrophic.
         <br />
         <br />
-        We do not have the power or jurisdiction to shutdown this down through legal or political means, so we must
-        resort to a covert operation. Your goal is to destroy this technology and eliminate anyone who was involved in
-        its creation.
+        We do not have the power or jurisdiction to shut this down through legal or political means, so we must resort
+        to a covert operation. Your goal is to destroy this technology and eliminate anyone who was involved in its
+        creation.
       </>
     ),
   },
@@ -149,8 +149,8 @@ export const BlackOperations: {
   "Operation Tyrell": {
     desc: (
       <>
-        A week ago Blade Industries reported a small break-in at one of their Aevum Augmentation storage facitilities.
-        We figured out that The Dark Army was behind the heist, and didn't think any more of it. However, we've just
+        A week ago Blade Industries reported a small break-in at one of their Aevum Augmentation storage facilities. We
+        figured out that The Dark Army was behind the heist, and didn't think any more of it. However, we've just
         discovered that several known MK-VI Synthoids were part of that break-in group.
         <br />
         <br />
@@ -209,12 +209,12 @@ export const BlackOperations: {
     desc: (
       <>
         DreamSense Technologies is an advertising company that uses special technology to transmit their ads into the
-        peoples dreams and subconcious. They do this using broadcast transmitter towers. Based on information from our
+        people's dreams and subconcious. They do this using broadcast transmitter towers. Based on information from our
         agents and informants in Chonqging, we have reason to believe that one of the broadcast towers there has been
         compromised by Synthoids and is being used to spread pro-Synthoid propaganda.
         <br />
         <br />
-        The mission is to destroy this broadcast tower. Speed and stealth are of the upmost important for this.
+        The mission is to destroy this broadcast tower. Speed and stealth are of the utmost importance for this.
       </>
     ),
   },
