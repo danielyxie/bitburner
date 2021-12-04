@@ -159,7 +159,7 @@ function LogWindow(props: IProps): React.ReactElement {
   }
 
   return (
-    <Draggable bounds="body" handle=".drag">
+    <Draggable handle=".drag">
       <Paper
         style={{
           display: "flex",
