@@ -445,4 +445,9 @@ export const LocationsMetadata: IConstructorParams[] = [
     name: LocationName.ChongqingChurchOfTheMachineGod,
     types: [LocationType.Special],
   },
+  {
+    city: CityName.Ishima,
+    name: LocationName.IshimaGlitch,
+    types: [LocationType.Special],
+  },
 ];

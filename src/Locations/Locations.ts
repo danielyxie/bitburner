@@ -112,9 +112,9 @@ Cities[CityName.Ishima].asciiArt = `
               o            |            /   \\     o-------x------o             
              /             o           /     \\   /                             
    48 o     /                      55 x       \\ /                              
-       \\   /                         /         x                               
+       \\   /                         /         x        [glitch]               
         \\ /         [nova medical]  /      4/30 \\                             
-      49 x                         A             \\                             
+      49 x                         A             \\        H                    
         / \\                       /               \\                           
        /   \\    [travel agency]  F                 o 31                        
       /     \\           51      /                                              

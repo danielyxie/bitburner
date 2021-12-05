@@ -28,6 +28,7 @@ import { SnackbarEvents } from "../../ui/React/Snackbar";
 import { N00dles } from "../../utils/helpers/N00dles";
 import { Exploit } from "../../Exploits/Exploit";
 import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
+import { CorruptableText } from "../../ui/React/CorruptableText";
 
 type IProps = {
   loc: Location;
@@ -252,6 +253,16 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     );
   }
 
+  function renderGlitch(): React.ReactElement {
+    return (
+      <>
+        <Typography>
+          <CorruptableText content={"An eerie aura surround this area. You feel you should leave."} />
+        </Typography>
+      </>
+    );
+  }
+
   switch (props.loc.name) {
     case LocationName.NewTokyoVitaLife: {
       return renderResleeving();
@@ -267,6 +278,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
     case LocationName.ChongqingChurchOfTheMachineGod: {
       return renderCotMG();
+    }
+    case LocationName.IshimaGlitch: {
+      return renderGlitch();
     }
     default:
       console.error(`Location ${props.loc.name} doesn't have any special properties`);
