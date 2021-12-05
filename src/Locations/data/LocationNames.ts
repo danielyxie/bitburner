@@ -59,6 +59,7 @@ export enum LocationName {
   IshimaNovaMedical = "Nova Medical",
   IshimaOmegaSoftware = "Omega Software",
   IshimaStormTechnologies = "Storm Technologies",
+  IshimaGlitch = "0x6C1",
 
   // Volhaven
   VolhavenCompuTek = "CompuTek",

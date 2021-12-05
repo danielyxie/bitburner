@@ -31,11 +31,11 @@ export function CorruptableText(props: IProps): JSX.Element {
       counter = Math.random() * 5;
       const index = Math.random() * content.length;
       const letter = content.charAt(index);
-      setContent(replace(content, index, randomize(letter)));
+      setContent((content) => replace(content, index, randomize(letter)));
       setTimeout(() => {
-        setContent(content);
-      }, 50);
-    }, 100);
+        setContent((content) => replace(content, index, letter));
+      }, 500);
+    }, 20);
 
     return () => {
       clearInterval(id);
