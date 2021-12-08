@@ -265,6 +265,7 @@ export const RamCosts: IMap<any> = {
     getEquipmentStats: RamCostConstants.ScriptGangApiBaseRamCost / 2,
     purchaseEquipment: RamCostConstants.ScriptGangApiBaseRamCost,
     ascendMember: RamCostConstants.ScriptGangApiBaseRamCost,
+    getAscensionResult: RamCostConstants.ScriptGangApiBaseRamCost / 2,
     setTerritoryWarfare: RamCostConstants.ScriptGangApiBaseRamCost / 2,
     getChanceToWinClash: RamCostConstants.ScriptGangApiBaseRamCost,
     getBonusTime: 0,

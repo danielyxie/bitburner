@@ -2416,7 +2416,7 @@ function initAugmentations(): void {
       moneyCost: 0,
       info:
         "The next evolution is near, A coming together of man and machine. A synthesis greater than the birth of the human " +
-        "organism. Time spent with the gift has allowed for acclimitaztion of the invavise augment and the toll it takes upon " +
+        "organism. Time spent with the gift has allowed for acclimatization of the invasive augment and the toll it takes upon " +
         "your frame granting lesser penalty of 5% to all stats.",
       prereqs: [AugmentationNames.StaneksGift1],
       isSpecial: true,

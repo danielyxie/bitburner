@@ -674,24 +674,26 @@ export interface GangGenInfo {
   faction: string;
   /** Boolean indicating whether or not its a hacking gang */
   isHacking: boolean;
-  /** Money earned per second */
+  /** Money earned per game cycle */
   moneyGainRate: number;
   /** Gang's power for territory warfare */
   power: number;
   /** Gang's respect */
   respect: number;
-  /** Respect earned per second */
+  /** Respect earned per game cycle */
   respectGainRate: number;
-  /** Amount of territory held. Returned in decimal form, not percentage */
+  /** Amount of territory held. */
   territory: number;
-  /** Clash chance. Returned in decimal form, not percentage */
+  /** Clash chance. */
   territoryClashChance: number;
   /** Gang's wanted level */
   wantedLevel: number;
-  /** Wanted level gained/lost per second (negative for losses) */
+  /** Wanted level gained/lost per game cycle (negative for losses) */
   wantedLevelGainRate: number;
   /** Boolean indicating if territory warfare is enabled. */
   territoryWarfareEngaged: boolean;
+  /** Number indicating the current wanted penalty. */
+  wantedPenalty: number;
 }
 
 /**
@@ -829,6 +831,10 @@ export interface GangMemberInfo {
 
   upgrades: string[];
   augmentations: string[];
+
+  respectGain: number;
+  wantedLevelGain: number;
+  moneyGain: number;
 }
 
 /**
@@ -3050,6 +3056,18 @@ export interface Gang {
    * @returns Object with info about the ascension results. undefined if ascension did not occur.
    */
   ascendMember(memberName: string): GangMemberAscension | undefined;
+
+  /**
+   * Get the result of an ascension without ascending.
+   * @remarks
+   * RAM cost: 2 GB
+   *
+   * Get the result of an ascension without ascending.
+   *
+   * @param memberName - Name of member.
+   * @returns Object with info about the ascension results. undefined if ascension is impossible.
+   */
+  getAscensionResult(memberName: string): GangMemberAscension | undefined;
 
   /**
    * Enable/Disable territory warfare.

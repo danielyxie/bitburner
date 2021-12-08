@@ -242,9 +242,9 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <Slider
                 value={logSize}
                 onChange={handleLogSizeChange}
-                step={1}
+                step={20}
                 min={20}
-                max={100}
+                max={500}
                 valueLabelDisplay="auto"
               />
             </ListItem>

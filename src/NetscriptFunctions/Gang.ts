@@ -94,6 +94,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
         territoryWarfareEngaged: gang.territoryWarfareEngaged,
         wantedLevel: gang.wanted,
         wantedLevelGainRate: gang.wantedGainRate,
+        wantedPenalty: gang.getWantedPenalty(),
       };
     },
     getOtherGangInformation: function (): GangOtherInfo {
@@ -109,6 +110,8 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
     getMemberInformation: function (name: any): GangMemberInfo {
       helper.updateDynamicRam("getMemberInformation", getRamCost("gang", "getMemberInformation"));
       checkGangApiAccess("getMemberInformation");
+      const gang = player.gang;
+      if (gang === null) throw new Error("Should not be called without Gang");
       const member = getGangMember("getMemberInformation", name);
       return {
         name: member.name,
@@ -151,6 +154,10 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
 
         upgrades: member.upgrades.slice(),
         augmentations: member.augmentations.slice(),
+
+        respectGain: member.calculateRespectGain(gang),
+        wantedLevelGain: member.calculateWantedLevelGain(gang),
+        moneyGain: member.calculateMoneyGain(gang),
       };
     },
     canRecruitMember: function (): boolean {
@@ -269,6 +276,18 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       const member = getGangMember("ascendMember", name);
       if (!member.canAscend()) return;
       return gang.ascendMember(member, workerScript);
+    },
+    getAscensionResult: function (name: any): GangMemberAscension | undefined {
+      helper.updateDynamicRam("getAscensionResult", getRamCost("gang", "getAscensionResult"));
+      checkGangApiAccess("getAscensionResult");
+      const gang = player.gang;
+      if (gang === null) throw new Error("Should not be called without Gang");
+      const member = getGangMember("getAscensionResult", name);
+      if (!member.canAscend()) return;
+      return {
+        respect: member.earnedRespect,
+        ...member.getAscensionResults(),
+      };
     },
     setTerritoryWarfare: function (engage: any): void {
       helper.updateDynamicRam("setTerritoryWarfare", getRamCost("gang", "setTerritoryWarfare"));
