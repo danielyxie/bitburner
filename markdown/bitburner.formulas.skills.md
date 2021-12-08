@@ -4,6 +4,8 @@
 
 ## Formulas.skills property
 
+Skills formulas
+
 <b>Signature:</b>
 
 ```typescript

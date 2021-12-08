@@ -7409,7 +7409,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Formulas:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Formulas API\n *\n * @remarks\n *\n * You need Formulas.exe on your home computer to use this API.\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -7422,7 +7422,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Formulas#gang:member",
-              "docComment": "",
+              "docComment": "/**\n * Gang formulas\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -7449,7 +7449,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Formulas#hacking:member",
-              "docComment": "",
+              "docComment": "/**\n * Hacking formulas\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -7476,7 +7476,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Formulas#hacknetNodes:member",
-              "docComment": "",
+              "docComment": "/**\n * Hacknet Nodes formulas\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -7503,7 +7503,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Formulas#hacknetServers:member",
-              "docComment": "",
+              "docComment": "/**\n * Hacknet Servers formulas\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -7530,7 +7530,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Formulas#skills:member",
-              "docComment": "",
+              "docComment": "/**\n * Skills formulas\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -8563,7 +8563,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!GangFormulas:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Gang formulas\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -8576,7 +8576,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!GangFormulas#calculateMoneyGain:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate money gain per tick.\n *\n * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}\n *\n * @param member - Member info from {@link Gang.getMemberInformation | getMemberInformation}\n *\n * @param task - Task info from {@link Gang.getTaskStats | getTaskStats}\n *\n * @returns The calculated money gain.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -8653,7 +8653,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!GangFormulas#calculateRespectGain:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate respect gain per tick.\n *\n * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}\n *\n * @param member - Gang info from {@link Gang.getMemberInformation | getMemberInformation}\n *\n * @param task - Gang info from {@link Gang.getTaskStats | getTaskStats}\n *\n * @returns The calculated respect gain.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -8730,7 +8730,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!GangFormulas#calculateWantedLevelGain:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate wanted gain per tick.\n *\n * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}\n *\n * @param member - Member info from {@link Gang.getMemberInformation | getMemberInformation}\n *\n * @param task - Task info from {@link Gang.getTaskStats | getTaskStats}\n *\n * @returns The calculated wanted gain.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -8807,7 +8807,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!GangFormulas#calculateWantedPenalty:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate the wanted penalty.\n *\n * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}\n *\n * @returns The calculated wanted penalty.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -14193,7 +14193,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "(string | number)[]"
+                  "text": "(string | number | boolean)[]"
                 },
                 {
                   "kind": "Content",

@@ -30,6 +30,7 @@ export function CovenantSleeveMemoryUpgrade(props: IProps): React.ReactElement {
     let n: number = parseInt(e.target.value);
 
     if (isNaN(n)) n = 1;
+    if (n < 1) n = 1;
     const maxMemory = 100 - props.sleeve.memory;
     if (n > maxMemory) n = maxMemory;
 

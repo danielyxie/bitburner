@@ -26,10 +26,10 @@
 |  [Employee](./bitburner.employee.md) |  |
 |  [EmployeeJobs](./bitburner.employeejobs.md) |  |
 |  [EquipmentStats](./bitburner.equipmentstats.md) | Object representing data representing a gang member equipment. |
-|  [Formulas](./bitburner.formulas.md) |  |
+|  [Formulas](./bitburner.formulas.md) | Formulas API |
 |  [Fragment](./bitburner.fragment.md) |  |
 |  [Gang](./bitburner.gang.md) | Gang API |
-|  [GangFormulas](./bitburner.gangformulas.md) |  |
+|  [GangFormulas](./bitburner.gangformulas.md) | Gang formulas |
 |  [GangGenInfo](./bitburner.ganggeninfo.md) | Gang general info. |
 |  [GangMemberAscension](./bitburner.gangmemberascension.md) |  |
 |  [GangMemberInfo](./bitburner.gangmemberinfo.md) |  |

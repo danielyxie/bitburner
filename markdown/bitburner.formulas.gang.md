@@ -4,6 +4,8 @@
 
 ## Formulas.gang property
 
+Gang formulas
+
 <b>Signature:</b>
 
 ```typescript

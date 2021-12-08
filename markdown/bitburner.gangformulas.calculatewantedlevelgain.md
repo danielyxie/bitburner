@@ -4,6 +4,8 @@
 
 ## GangFormulas.calculateWantedLevelGain() method
 
+Calculate wanted gain per tick.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,11 +16,13 @@ calculateWantedLevelGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTa
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  gang | [GangGenInfo](./bitburner.ganggeninfo.md) |  |
-|  member | [GangMemberInfo](./bitburner.gangmemberinfo.md) |  |
-|  task | [GangTaskStats](./bitburner.gangtaskstats.md) |  |
+|  gang | [GangGenInfo](./bitburner.ganggeninfo.md) | Gang info from [getGangInformation](./bitburner.gang.getganginformation.md) |
+|  member | [GangMemberInfo](./bitburner.gangmemberinfo.md) | Member info from [getMemberInformation](./bitburner.gang.getmemberinformation.md) |
+|  task | [GangTaskStats](./bitburner.gangtaskstats.md) | Task info from [getTaskStats](./bitburner.gang.gettaskstats.md) |
 
 <b>Returns:</b>
 
 number
+
+The calculated wanted gain.
 

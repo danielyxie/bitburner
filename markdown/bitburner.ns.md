@@ -17,7 +17,7 @@ export interface NS extends Singularity
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [args](./bitburner.ns.args.md) | (string \| number)\[\] | Arguments passed into the script. |
+|  [args](./bitburner.ns.args.md) | (string \| number \| boolean)\[\] | Arguments passed into the script. |
 |  [bladeburner](./bitburner.ns.bladeburner.md) | [Bladeburner](./bitburner.bladeburner.md) | Namespace for bladeburner functions. |
 |  [codingcontract](./bitburner.ns.codingcontract.md) | [CodingContract](./bitburner.codingcontract.md) | Namespace for codingcontract functions. |
 |  [corporation](./bitburner.ns.corporation.md) | [Corporation](./bitburner.corporation.md) | Namespace for corporation functions. RAM cost: 0 GB |

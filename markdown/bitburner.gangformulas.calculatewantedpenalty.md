@@ -4,6 +4,8 @@
 
 ## GangFormulas.calculateWantedPenalty() method
 
+Calculate the wanted penalty.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,9 +16,11 @@ calculateWantedPenalty(gang: GangGenInfo): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  gang | [GangGenInfo](./bitburner.ganggeninfo.md) |  |
+|  gang | [GangGenInfo](./bitburner.ganggeninfo.md) | Gang info from [getGangInformation](./bitburner.gang.getganginformation.md) |
 
 <b>Returns:</b>
 
 number
+
+The calculated wanted penalty.
 

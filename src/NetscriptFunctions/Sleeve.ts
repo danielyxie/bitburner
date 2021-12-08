@@ -201,6 +201,8 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
         mult: {
           agility: sl.agility_mult,
           agilityExp: sl.agility_exp_mult,
+          charisma: sl.charisma_mult,
+          charismaExp: sl.charisma_exp_mult,
           companyRep: sl.company_rep_mult,
           crimeMoney: sl.crime_money_mult,
           crimeSuccess: sl.crime_success_mult,

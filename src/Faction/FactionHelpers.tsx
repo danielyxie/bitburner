@@ -20,7 +20,7 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";
 
 export function inviteToFaction(faction: Faction): void {
-  Player.factionInvitations.push(faction.name);
+  Player.receiveInvite(faction.name);
   faction.alreadyInvited = true;
   if (!Settings.SuppressFactionInvites) {
     InvitationEvent.emit(faction);

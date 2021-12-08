@@ -972,13 +972,21 @@ export declare interface EquipmentStats {
 }
 
 /**
+ * Formulas API
+ * @remarks
+ * You need Formulas.exe on your home computer to use this API.
  * @public
  */
 export declare interface Formulas {
+    /** Skills formulas */
     skills: SkillsFormulas;
+    /** Hacking formulas */
     hacking: HackingFormulas;
+    /** Hacknet Nodes formulas */
     hacknetNodes: HacknetNodesFormulas;
+    /** Hacknet Servers formulas */
     hacknetServers: HacknetServersFormulas;
+    /** Gang formulas */
     gang: GangFormulas;
 }
 
@@ -1253,12 +1261,39 @@ export declare interface Gang {
 }
 
 /**
+ * Gang formulas
  * @public
  */
 export declare interface GangFormulas {
+    /**
+     * Calculate the wanted penalty.
+     * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}
+     * @returns The calculated wanted penalty.
+     */
     calculateWantedPenalty(gang: GangGenInfo): number;
+    /**
+     * Calculate respect gain per tick.
+     * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}
+     * @param member - Gang info from {@link Gang.getMemberInformation | getMemberInformation}
+     * @param task - Gang info from {@link Gang.getTaskStats | getTaskStats}
+     * @returns The calculated respect gain.
+     */
     calculateRespectGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
+    /**
+     * Calculate wanted gain per tick.
+     * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}
+     * @param member - Member info from {@link Gang.getMemberInformation | getMemberInformation}
+     * @param task - Task info from {@link Gang.getTaskStats | getTaskStats}
+     * @returns The calculated wanted gain.
+     */
     calculateWantedLevelGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
+    /**
+     * Calculate money gain per tick.
+     * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}
+     * @param member - Member info from {@link Gang.getMemberInformation | getMemberInformation}
+     * @param task - Task info from {@link Gang.getTaskStats | getTaskStats}
+     * @returns The calculated money gain.
+     */
     calculateMoneyGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
 }
 
@@ -1931,7 +1966,7 @@ export declare interface NS extends Singularity {
      * It is also possible to get the number of arguments that was passed into a script using: 'args.length'
      * WARNING: Do not try to modify the args array. This will break the game.
      */
-    readonly args: (string | number)[];
+    readonly args: (string | number | boolean)[];
 
     /**
      * Steal a servers money.

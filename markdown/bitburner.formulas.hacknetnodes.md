@@ -4,6 +4,8 @@
 
 ## Formulas.hacknetNodes property
 
+Hacknet Nodes formulas
+
 <b>Signature:</b>
 
 ```typescript

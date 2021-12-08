@@ -4,6 +4,8 @@
 
 ## GangFormulas.calculateRespectGain() method
 
+Calculate respect gain per tick.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,11 +16,13 @@ calculateRespectGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskSt
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  gang | [GangGenInfo](./bitburner.ganggeninfo.md) |  |
-|  member | [GangMemberInfo](./bitburner.gangmemberinfo.md) |  |
-|  task | [GangTaskStats](./bitburner.gangtaskstats.md) |  |
+|  gang | [GangGenInfo](./bitburner.ganggeninfo.md) | Gang info from [getGangInformation](./bitburner.gang.getganginformation.md) |
+|  member | [GangMemberInfo](./bitburner.gangmemberinfo.md) | Gang info from [getMemberInformation](./bitburner.gang.getmemberinformation.md) |
+|  task | [GangTaskStats](./bitburner.gangtaskstats.md) | Gang info from [getTaskStats](./bitburner.gang.gettaskstats.md) |
 
 <b>Returns:</b>
 
 number
+
+The calculated respect gain.
 
