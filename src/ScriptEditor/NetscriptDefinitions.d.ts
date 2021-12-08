@@ -3357,11 +3357,22 @@ interface HacknetServersFormulas {
 /**
  * @public
  */
+interface GangFormulas {
+  calculateWantedPenalty(gang: GangGenInfo): number;
+  calculateRespectGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
+  calculateWantedLevelGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
+  calculateMoneyGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
+}
+
+/**
+ * @public
+ */
 export interface Formulas {
   skills: SkillsFormulas;
   hacking: HackingFormulas;
   hacknetNodes: HacknetNodesFormulas;
   hacknetServers: HacknetServersFormulas;
+  gang: GangFormulas;
 }
 
 /**
@@ -5156,6 +5167,9 @@ export interface NS extends Singularity {
   flags(schema: [string, string | number | boolean | string[]][]): any;
 }
 
+/**
+ * @public
+ */
 export interface OfficeAPI {
   employees(divisionName: string, cityName: string): string[];
   assignJob(divisionName: string, cityName: string, employeeName: string, job: string): Promise<void>;
@@ -5169,6 +5183,9 @@ export interface OfficeAPI {
   getEmployee(divisionName: string, cityName: string, employeeName: string): Employee;
 }
 
+/**
+ * @public
+ */
 export interface WarehouseAPI {
   sellMaterial(divisionName: string, cityName: string, materialName: string, amt: number, price: number): void;
   sellProduct(
@@ -5216,6 +5233,9 @@ export interface WarehouseAPI {
   ): void;
 }
 
+/**
+ * @public
+ */
 export interface Corporation extends WarehouseAPI, OfficeAPI {
   getCorporation(): CorporationInfo;
   getDivision(divisionName: string): Division;
@@ -5226,6 +5246,9 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
   issueDividends(percent: number): void;
 }
 
+/**
+ * @public
+ */
 interface CorporationInfo {
   name: string;
   funds: number;
@@ -5240,6 +5263,9 @@ interface CorporationInfo {
   state: string;
 }
 
+/**
+ * @public
+ */
 interface Employee {
   name: string;
   mor: number;
@@ -5255,6 +5281,9 @@ interface Employee {
   pos: string;
 }
 
+/**
+ * @public
+ */
 interface Product {
   name: string;
   dmd: number;
@@ -5263,12 +5292,18 @@ interface Product {
   sCost: string | number;
 }
 
+/**
+ * @public
+ */
 interface Material {
   name: string;
   qty: number;
   qlt: number;
 }
 
+/**
+ * @public
+ */
 interface Warehouse {
   level: number;
   loc: string;
@@ -5276,6 +5311,9 @@ interface Warehouse {
   sizeUsed: number;
 }
 
+/**
+ * @public
+ */
 interface Office {
   loc: string;
   size: number;
@@ -5288,6 +5326,9 @@ interface Office {
   employeeProd: EmployeeJobs;
 }
 
+/**
+ * @public
+ */
 interface EmployeeJobs {
   Operations: number;
   Engineer: number;
@@ -5298,6 +5339,9 @@ interface EmployeeJobs {
   Unassigned: number;
 }
 
+/**
+ * @public
+ */
 interface Division {
   name: string;
   type: string;

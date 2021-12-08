@@ -826,6 +826,9 @@ export declare interface CodingContract {
     getNumTriesRemaining(filename: string, host?: string): number;
 }
 
+/**
+ * @public
+ */
 export declare interface Corporation extends WarehouseAPI, OfficeAPI {
     getCorporation(): CorporationInfo;
     getDivision(divisionName: string): Division;
@@ -836,6 +839,9 @@ export declare interface Corporation extends WarehouseAPI, OfficeAPI {
     issueDividends(percent: number): void;
 }
 
+/**
+ * @public
+ */
 export declare interface CorporationInfo {
     name: string;
     funds: number;
@@ -897,6 +903,9 @@ export declare interface CrimeStats {
     intelligence_exp: number;
 }
 
+/**
+ * @public
+ */
 export declare interface Division {
     name: string;
     type: string;
@@ -912,6 +921,9 @@ export declare interface Division {
     cities: string[];
 }
 
+/**
+ * @public
+ */
 export declare interface Employee {
     name: string;
     mor: number;
@@ -927,6 +939,9 @@ export declare interface Employee {
     pos: string;
 }
 
+/**
+ * @public
+ */
 export declare interface EmployeeJobs {
     Operations: number;
     Engineer: number;
@@ -964,6 +979,7 @@ export declare interface Formulas {
     hacking: HackingFormulas;
     hacknetNodes: HacknetNodesFormulas;
     hacknetServers: HacknetServersFormulas;
+    gang: GangFormulas;
 }
 
 /**
@@ -1186,6 +1202,18 @@ export declare interface Gang {
     ascendMember(memberName: string): GangMemberAscension | undefined;
 
     /**
+     * Get the result of an ascension without ascending.
+     * @remarks
+     * RAM cost: 2 GB
+     *
+     * Get the result of an ascension without ascending.
+     *
+     * @param memberName - Name of member.
+     * @returns Object with info about the ascension results. undefined if ascension is impossible.
+     */
+    getAscensionResult(memberName: string): GangMemberAscension | undefined;
+
+    /**
      * Enable/Disable territory warfare.
      * @remarks
      * RAM cost: 2 GB
@@ -1225,6 +1253,16 @@ export declare interface Gang {
 }
 
 /**
+ * @public
+ */
+export declare interface GangFormulas {
+    calculateWantedPenalty(gang: GangGenInfo): number;
+    calculateRespectGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
+    calculateWantedLevelGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
+    calculateMoneyGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
+}
+
+/**
  * Gang general info.
  * @public
  */
@@ -1233,24 +1271,26 @@ export declare interface GangGenInfo {
     faction: string;
     /** Boolean indicating whether or not its a hacking gang */
     isHacking: boolean;
-    /** Money earned per second */
+    /** Money earned per game cycle */
     moneyGainRate: number;
     /** Gang's power for territory warfare */
     power: number;
     /** Gang's respect */
     respect: number;
-    /** Respect earned per second */
+    /** Respect earned per game cycle */
     respectGainRate: number;
-    /** Amount of territory held. Returned in decimal form, not percentage */
+    /** Amount of territory held. */
     territory: number;
-    /** Clash chance. Returned in decimal form, not percentage */
+    /** Clash chance. */
     territoryClashChance: number;
     /** Gang's wanted level */
     wantedLevel: number;
-    /** Wanted level gained/lost per second (negative for losses) */
+    /** Wanted level gained/lost per game cycle (negative for losses) */
     wantedLevelGainRate: number;
     /** Boolean indicating if territory warfare is enabled. */
     territoryWarfareEngaged: boolean;
+    /** Number indicating the current wanted penalty. */
+    wantedPenalty: number;
 }
 
 /**
@@ -1317,6 +1357,10 @@ export declare interface GangMemberInfo {
 
     upgrades: string[];
     augmentations: string[];
+
+    respectGain: number;
+    wantedLevelGain: number;
+    moneyGain: number;
 }
 
 /**
@@ -1780,6 +1824,9 @@ export declare interface HacknetServersFormulas {
     constants(): any;
 }
 
+/**
+ * @public
+ */
 export declare interface Material {
     name: string;
     qty: number;
@@ -3480,6 +3527,9 @@ export declare interface NS extends Singularity {
     flags(schema: [string, string | number | boolean | string[]][]): any;
 }
 
+/**
+ * @public
+ */
 export declare interface Office {
     loc: string;
     size: number;
@@ -3492,6 +3542,9 @@ export declare interface Office {
     employeeProd: EmployeeJobs;
 }
 
+/**
+ * @public
+ */
 export declare interface OfficeAPI {
     employees(divisionName: string, cityName: string): string[];
     assignJob(divisionName: string, cityName: string, employeeName: string, job: string): Promise<void>;
@@ -3631,6 +3684,9 @@ export declare interface ProcessInfo {
     args: string[];
 }
 
+/**
+ * @public
+ */
 export declare interface Product {
     name: string;
     dmd: number;
@@ -5241,6 +5297,9 @@ export declare interface TIX {
     purchase4SMarketDataTixApi(): boolean;
 }
 
+/**
+ * @public
+ */
 export declare interface Warehouse {
     level: number;
     loc: string;
@@ -5248,6 +5307,9 @@ export declare interface Warehouse {
     sizeUsed: number;
 }
 
+/**
+ * @public
+ */
 export declare interface WarehouseAPI {
     sellMaterial(divisionName: string, cityName: string, materialName: string, amt: number, price: number): void;
     sellProduct(

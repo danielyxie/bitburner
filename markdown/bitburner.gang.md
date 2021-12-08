@@ -23,6 +23,7 @@ If you are not in BitNode-2, then you must have Source-File 2 in order to use th
 |  [ascendMember(memberName)](./bitburner.gang.ascendmember.md) | Ascend a gang member. |
 |  [canRecruitMember()](./bitburner.gang.canrecruitmember.md) | Check if you can recruit a new gang member. |
 |  [createGang(faction)](./bitburner.gang.creategang.md) | Create a gang. |
+|  [getAscensionResult(memberName)](./bitburner.gang.getascensionresult.md) | Get the result of an ascension without ascending. |
 |  [getBonusTime()](./bitburner.gang.getbonustime.md) | Get bonus time. |
 |  [getChanceToWinClash(gangName)](./bitburner.gang.getchancetowinclash.md) | Get chance to win clash with other gang. |
 |  [getEquipmentCost(equipName)](./bitburner.gang.getequipmentcost.md) | Get cost of equipment. |

@@ -15,6 +15,7 @@ export interface Formulas
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [gang](./bitburner.formulas.gang.md) | [GangFormulas](./bitburner.gangformulas.md) |  |
 |  [hacking](./bitburner.formulas.hacking.md) | [HackingFormulas](./bitburner.hackingformulas.md) |  |
 |  [hacknetNodes](./bitburner.formulas.hacknetnodes.md) | [HacknetNodesFormulas](./bitburner.hacknetnodesformulas.md) |  |
 |  [hacknetServers](./bitburner.formulas.hacknetservers.md) | [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) |  |

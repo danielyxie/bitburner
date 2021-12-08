@@ -5178,7 +5178,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Corporation:interface",
-          "docComment": "",
+          "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -5545,7 +5545,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!CorporationInfo:interface",
-          "docComment": "",
+          "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -6383,7 +6383,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Division:interface",
-          "docComment": "",
+          "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -6711,7 +6711,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Employee:interface",
-          "docComment": "",
+          "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -7039,7 +7039,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!EmployeeJobs:interface",
-          "docComment": "",
+          "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -7419,6 +7419,33 @@
           "releaseTag": "Public",
           "name": "Formulas",
           "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Formulas#gang:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "gang: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangFormulas",
+                  "canonicalReference": "bitburner!GangFormulas:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "gang",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Formulas#hacking:member",
@@ -7809,6 +7836,55 @@
                 }
               ],
               "name": "createGang"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Gang#getAscensionResult:member(1)",
+              "docComment": "/**\n * Get the result of an ascension without ascending.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Get the result of an ascension without ascending.\n *\n * @param memberName - Name of member.\n *\n * @returns Object with info about the ascension results. undefined if ascension is impossible.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getAscensionResult(memberName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangMemberAscension",
+                  "canonicalReference": "bitburner!GangMemberAscension:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | undefined"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "memberName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "getAscensionResult"
             },
             {
               "kind": "MethodSignature",
@@ -8486,6 +8562,298 @@
         },
         {
           "kind": "Interface",
+          "canonicalReference": "bitburner!GangFormulas:interface",
+          "docComment": "/**\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "interface GangFormulas "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "GangFormulas",
+          "members": [
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!GangFormulas#calculateMoneyGain:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "calculateMoneyGain(gang: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangGenInfo",
+                  "canonicalReference": "bitburner!GangGenInfo:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", member: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangMemberInfo",
+                  "canonicalReference": "bitburner!GangMemberInfo:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", task: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangTaskStats",
+                  "canonicalReference": "bitburner!GangTaskStats:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "gang",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "member",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "task",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                }
+              ],
+              "name": "calculateMoneyGain"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!GangFormulas#calculateRespectGain:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "calculateRespectGain(gang: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangGenInfo",
+                  "canonicalReference": "bitburner!GangGenInfo:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", member: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangMemberInfo",
+                  "canonicalReference": "bitburner!GangMemberInfo:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", task: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangTaskStats",
+                  "canonicalReference": "bitburner!GangTaskStats:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "gang",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "member",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "task",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                }
+              ],
+              "name": "calculateRespectGain"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!GangFormulas#calculateWantedLevelGain:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "calculateWantedLevelGain(gang: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangGenInfo",
+                  "canonicalReference": "bitburner!GangGenInfo:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", member: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangMemberInfo",
+                  "canonicalReference": "bitburner!GangMemberInfo:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", task: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangTaskStats",
+                  "canonicalReference": "bitburner!GangTaskStats:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "gang",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "member",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "task",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                }
+              ],
+              "name": "calculateWantedLevelGain"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!GangFormulas#calculateWantedPenalty:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "calculateWantedPenalty(gang: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GangGenInfo",
+                  "canonicalReference": "bitburner!GangGenInfo:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "gang",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "calculateWantedPenalty"
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
           "canonicalReference": "bitburner!GangGenInfo:interface",
           "docComment": "/**\n * Gang general info.\n *\n * @public\n */\n",
           "excerptTokens": [
@@ -8552,7 +8920,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangGenInfo#moneyGainRate:member",
-              "docComment": "/**\n * Money earned per second\n */\n",
+              "docComment": "/**\n * Money earned per game cycle\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -8630,7 +8998,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangGenInfo#respectGainRate:member",
-              "docComment": "/**\n * Respect earned per second\n */\n",
+              "docComment": "/**\n * Respect earned per game cycle\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -8656,7 +9024,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangGenInfo#territory:member",
-              "docComment": "/**\n * Amount of territory held. Returned in decimal form, not percentage\n */\n",
+              "docComment": "/**\n * Amount of territory held.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -8682,7 +9050,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangGenInfo#territoryClashChance:member",
-              "docComment": "/**\n * Clash chance. Returned in decimal form, not percentage\n */\n",
+              "docComment": "/**\n * Clash chance.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -8760,7 +9128,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangGenInfo#wantedLevelGainRate:member",
-              "docComment": "/**\n * Wanted level gained/lost per second (negative for losses)\n */\n",
+              "docComment": "/**\n * Wanted level gained/lost per game cycle (negative for losses)\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -8778,6 +9146,32 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "wantedLevelGainRate",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangGenInfo#wantedPenalty:member",
+              "docComment": "/**\n * Number indicating the current wanted penalty.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "wantedPenalty: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "wantedPenalty",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -9701,6 +10095,32 @@
             },
             {
               "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangMemberInfo#moneyGain:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "moneyGain: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "moneyGain",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangMemberInfo#name:member",
               "docComment": "",
               "excerptTokens": [
@@ -9720,6 +10140,32 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "name",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangMemberInfo#respectGain:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "respectGain: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "respectGain",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -9902,6 +10348,32 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "upgrades",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!GangMemberInfo#wantedLevelGain:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "wantedLevelGain: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "wantedLevelGain",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -13277,7 +13749,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Material:interface",
-          "docComment": "",
+          "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -18858,7 +19330,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Office:interface",
-          "docComment": "",
+          "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -19109,7 +19581,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!OfficeAPI:interface",
-          "docComment": "",
+          "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -22337,7 +22809,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Product:interface",
-          "docComment": "",
+          "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -29016,7 +29488,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Warehouse:interface",
-          "docComment": "",
+          "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -29136,7 +29608,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!WarehouseAPI:interface",
-          "docComment": "",
+          "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",

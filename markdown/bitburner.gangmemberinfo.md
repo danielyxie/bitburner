@@ -42,7 +42,9 @@ export interface GangMemberInfo
 |  [hack\_exp](./bitburner.gangmemberinfo.hack_exp.md) | number |  |
 |  [hack\_mult](./bitburner.gangmemberinfo.hack_mult.md) | number |  |
 |  [hack](./bitburner.gangmemberinfo.hack.md) | number |  |
+|  [moneyGain](./bitburner.gangmemberinfo.moneygain.md) | number |  |
 |  [name](./bitburner.gangmemberinfo.name.md) | string |  |
+|  [respectGain](./bitburner.gangmemberinfo.respectgain.md) | number |  |
 |  [str\_asc\_mult](./bitburner.gangmemberinfo.str_asc_mult.md) | number |  |
 |  [str\_asc\_points](./bitburner.gangmemberinfo.str_asc_points.md) | number |  |
 |  [str\_exp](./bitburner.gangmemberinfo.str_exp.md) | number |  |
@@ -50,4 +52,5 @@ export interface GangMemberInfo
 |  [str](./bitburner.gangmemberinfo.str.md) | number |  |
 |  [task](./bitburner.gangmemberinfo.task.md) | string |  |
 |  [upgrades](./bitburner.gangmemberinfo.upgrades.md) | string\[\] |  |
+|  [wantedLevelGain](./bitburner.gangmemberinfo.wantedlevelgain.md) | number |  |
 
