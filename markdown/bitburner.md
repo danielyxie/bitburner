@@ -19,11 +19,17 @@
 |  [CharacterMult](./bitburner.charactermult.md) |  |
 |  [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Options to affect the behavior of [CodingContract](./bitburner.codingcontract.md) attempt. |
 |  [CodingContract](./bitburner.codingcontract.md) | Coding Contact API |
+|  [Corporation](./bitburner.corporation.md) |  |
+|  [CorporationInfo](./bitburner.corporationinfo.md) |  |
 |  [CrimeStats](./bitburner.crimestats.md) | Data representing the internal values of a crime. |
+|  [Division](./bitburner.division.md) |  |
+|  [Employee](./bitburner.employee.md) |  |
+|  [EmployeeJobs](./bitburner.employeejobs.md) |  |
 |  [EquipmentStats](./bitburner.equipmentstats.md) | Object representing data representing a gang member equipment. |
 |  [Formulas](./bitburner.formulas.md) |  |
 |  [Fragment](./bitburner.fragment.md) |  |
 |  [Gang](./bitburner.gang.md) | Gang API |
+|  [GangFormulas](./bitburner.gangformulas.md) |  |
 |  [GangGenInfo](./bitburner.ganggeninfo.md) | Gang general info. |
 |  [GangMemberAscension](./bitburner.gangmemberascension.md) |  |
 |  [GangMemberInfo](./bitburner.gangmemberinfo.md) |  |
@@ -37,11 +43,15 @@
 |  [HacknetMultipliers](./bitburner.hacknetmultipliers.md) | Hacknet related multipliers. |
 |  [HacknetNodesFormulas](./bitburner.hacknetnodesformulas.md) |  |
 |  [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) |  |
+|  [Material](./bitburner.material.md) |  |
 |  [NodeStats](./bitburner.nodestats.md) | Object representing all the values related to a hacknet node. |
 |  [NS](./bitburner.ns.md) | Collection of all functions passed to scripts |
+|  [Office](./bitburner.office.md) |  |
+|  [OfficeAPI](./bitburner.officeapi.md) |  |
 |  [Player](./bitburner.player.md) |  |
 |  [PlayerSkills](./bitburner.playerskills.md) | Short summary of the players skills. |
 |  [ProcessInfo](./bitburner.processinfo.md) | A single process on a server. |
+|  [Product](./bitburner.product.md) |  |
 |  [RunningScript](./bitburner.runningscript.md) |  |
 |  [Server](./bitburner.server.md) | A single server. |
 |  [Singularity](./bitburner.singularity.md) | Singularity API |
@@ -56,4 +66,6 @@
 |  [StockOrder](./bitburner.stockorder.md) | Return value of [getOrders](./bitburner.tix.getorders.md) |
 |  [StockOrderObject](./bitburner.stockorderobject.md) | Value in map of [StockOrder](./bitburner.stockorder.md) |
 |  [TIX](./bitburner.tix.md) | Stock market API |
+|  [Warehouse](./bitburner.warehouse.md) |  |
+|  [WarehouseAPI](./bitburner.warehouseapi.md) |  |
 

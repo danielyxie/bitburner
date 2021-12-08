@@ -4,7 +4,7 @@
 
 ## GangGenInfo.territoryClashChance property
 
-Clash chance. Returned in decimal form, not percentage
+Clash chance.
 
 <b>Signature:</b>
 

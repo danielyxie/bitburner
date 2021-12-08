@@ -4,7 +4,7 @@
 
 ## GangGenInfo.territory property
 
-Amount of territory held. Returned in decimal form, not percentage
+Amount of territory held.
 
 <b>Signature:</b>
 

@@ -4,10 +4,9 @@ import { GangMemberUpgrade } from "./GangMemberUpgrade";
 import { GangMemberUpgrades } from "./GangMemberUpgrades";
 import { IAscensionResult } from "./IAscensionResult";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { AllGangs } from "./AllGangs";
 import { IGang } from "./IGang";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { calculateRespectGain, calculateMoneyGain, calculateWantedLevelGain } from "./formulas/formulas";
 
 interface IMults {
   hack: number;
@@ -64,7 +63,7 @@ export class GangMember {
   }
 
   calculateAscensionMult(points: number): number {
-    return Math.max(Math.pow(points / 2000, 0.7), 1);
+    return Math.max(Math.pow(points / 2000, 0.5), 1);
   }
 
   updateSkillLevels(): void {
@@ -108,71 +107,32 @@ export class GangMember {
 
   calculateRespectGain(gang: IGang): number {
     const task = this.getTask();
-    if (task.baseRespect === 0) return 0;
-    let statWeight =
-      (task.hackWeight / 100) * this.hack +
-      (task.strWeight / 100) * this.str +
-      (task.defWeight / 100) * this.def +
-      (task.dexWeight / 100) * this.dex +
-      (task.agiWeight / 100) * this.agi +
-      (task.chaWeight / 100) * this.cha;
-    statWeight -= 4 * task.difficulty;
-    if (statWeight <= 0) return 0;
-    const territoryMult = Math.max(
-      0.005,
-      Math.pow(AllGangs[gang.facName].territory * 100, task.territory.respect) / 100,
-    );
-    const territoryPenalty = (0.2 * gang.getTerritory() + 0.8) * BitNodeMultipliers.GangSoftcap;
-    if (isNaN(territoryMult) || territoryMult <= 0) return 0;
-    const respectMult = gang.getWantedPenalty();
-    return Math.pow(11 * task.baseRespect * statWeight * territoryMult * respectMult, territoryPenalty);
+    const g = {
+      respect: gang.respect,
+      wantedLevel: gang.wanted,
+      territory: gang.getTerritory(),
+    };
+    return calculateRespectGain(g, this, task);
   }
 
   calculateWantedLevelGain(gang: IGang): number {
     const task = this.getTask();
-    if (task.baseWanted === 0) return 0;
-    let statWeight =
-      (task.hackWeight / 100) * this.hack +
-      (task.strWeight / 100) * this.str +
-      (task.defWeight / 100) * this.def +
-      (task.dexWeight / 100) * this.dex +
-      (task.agiWeight / 100) * this.agi +
-      (task.chaWeight / 100) * this.cha;
-    statWeight -= 3.5 * task.difficulty;
-    if (statWeight <= 0) return 0;
-    const territoryMult = Math.max(
-      0.005,
-      Math.pow(AllGangs[gang.facName].territory * 100, task.territory.wanted) / 100,
-    );
-    if (isNaN(territoryMult) || territoryMult <= 0) return 0;
-    if (task.baseWanted < 0) {
-      return 0.4 * task.baseWanted * statWeight * territoryMult;
-    }
-    const calc = (7 * task.baseWanted) / Math.pow(3 * statWeight * territoryMult, 0.8);
-
-    // Put an arbitrary cap on this to prevent wanted level from rising too fast if the
-    // denominator is very small. Might want to rethink formula later
-    return Math.min(100, calc);
+    const g = {
+      respect: gang.respect,
+      wantedLevel: gang.wanted,
+      territory: gang.getTerritory(),
+    };
+    return calculateWantedLevelGain(g, this, task);
   }
 
   calculateMoneyGain(gang: IGang): number {
     const task = this.getTask();
-    if (task.baseMoney === 0) return 0;
-    let statWeight =
-      (task.hackWeight / 100) * this.hack +
-      (task.strWeight / 100) * this.str +
-      (task.defWeight / 100) * this.def +
-      (task.dexWeight / 100) * this.dex +
-      (task.agiWeight / 100) * this.agi +
-      (task.chaWeight / 100) * this.cha;
-
-    statWeight -= 3.2 * task.difficulty;
-    if (statWeight <= 0) return 0;
-    const territoryMult = Math.max(0.005, Math.pow(AllGangs[gang.facName].territory * 100, task.territory.money) / 100);
-    if (isNaN(territoryMult) || territoryMult <= 0) return 0;
-    const respectMult = gang.getWantedPenalty();
-    const territoryPenalty = (0.2 * gang.getTerritory() + 0.8) * BitNodeMultipliers.GangSoftcap;
-    return Math.pow(5 * task.baseMoney * statWeight * territoryMult * respectMult, territoryPenalty);
+    const g = {
+      respect: gang.respect,
+      wantedLevel: gang.wanted,
+      territory: gang.getTerritory(),
+    };
+    return calculateMoneyGain(g, this, task);
   }
 
   expMult(): IMults {
@@ -193,12 +153,36 @@ export class GangMember {
     const difficultyPerCycles = difficultyMult * numCycles;
     const weightDivisor = 1500;
     const expMult = this.expMult();
-    this.hack_exp += (task.hackWeight / weightDivisor) * difficultyPerCycles * expMult.hack;
-    this.str_exp += (task.strWeight / weightDivisor) * difficultyPerCycles * expMult.str;
-    this.def_exp += (task.defWeight / weightDivisor) * difficultyPerCycles * expMult.def;
-    this.dex_exp += (task.dexWeight / weightDivisor) * difficultyPerCycles * expMult.dex;
-    this.agi_exp += (task.agiWeight / weightDivisor) * difficultyPerCycles * expMult.agi;
-    this.cha_exp += (task.chaWeight / weightDivisor) * difficultyPerCycles * expMult.cha;
+    this.hack_exp +=
+      (task.hackWeight / weightDivisor) *
+      difficultyPerCycles *
+      expMult.hack *
+      this.calculateAscensionMult(this.hack_asc_points);
+    this.str_exp +=
+      (task.strWeight / weightDivisor) *
+      difficultyPerCycles *
+      expMult.str *
+      this.calculateAscensionMult(this.str_asc_points);
+    this.def_exp +=
+      (task.defWeight / weightDivisor) *
+      difficultyPerCycles *
+      expMult.def *
+      this.calculateAscensionMult(this.def_asc_points);
+    this.dex_exp +=
+      (task.dexWeight / weightDivisor) *
+      difficultyPerCycles *
+      expMult.dex *
+      this.calculateAscensionMult(this.dex_asc_points);
+    this.agi_exp +=
+      (task.agiWeight / weightDivisor) *
+      difficultyPerCycles *
+      expMult.agi *
+      this.calculateAscensionMult(this.agi_asc_points);
+    this.cha_exp +=
+      (task.chaWeight / weightDivisor) *
+      difficultyPerCycles *
+      expMult.cha *
+      this.calculateAscensionMult(this.cha_asc_points);
   }
 
   recordEarnedRespect(numCycles = 1, gang: IGang): void {

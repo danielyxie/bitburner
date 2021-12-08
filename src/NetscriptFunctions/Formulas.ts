@@ -29,6 +29,12 @@ import {
 } from "../Hacking";
 import { Programs } from "../Programs/Programs";
 import { Formulas as IFormulas } from "../ScriptEditor/NetscriptDefinitions";
+import {
+  calculateRespectGain,
+  calculateWantedLevelGain,
+  calculateMoneyGain,
+  calculateWantedPenalty,
+} from "../Gang/formulas/formulas";
 
 export interface INetscriptFormulas {
   skills: {
@@ -176,6 +182,20 @@ export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, h
       constants: function (): any {
         checkFormulasAccess("hacknetServers.constants");
         return Object.assign({}, HacknetServerConstants);
+      },
+    },
+    gang: {
+      calculateWantedPenalty(gang: any): number {
+        return calculateWantedPenalty(gang);
+      },
+      calculateRespectGain: function (gang: any, member: any, task: any): number {
+        return calculateRespectGain(gang, member, task);
+      },
+      calculateWantedLevelGain: function (gang: any, member: any, task: any): number {
+        return calculateWantedLevelGain(gang, member, task);
+      },
+      calculateMoneyGain: function (gang: any, member: any, task: any): number {
+        return calculateMoneyGain(gang, member, task);
       },
     },
   };

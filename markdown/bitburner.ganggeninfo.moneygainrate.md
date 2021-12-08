@@ -4,7 +4,7 @@
 
 ## GangGenInfo.moneyGainRate property
 
-Money earned per second
+Money earned per game cycle
 
 <b>Signature:</b>
 

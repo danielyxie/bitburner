@@ -4,7 +4,7 @@
 
 ## GangGenInfo.wantedLevelGainRate property
 
-Wanted level gained/lost per second (negative for losses)
+Wanted level gained/lost per game cycle (negative for losses)
 
 <b>Signature:</b>
 

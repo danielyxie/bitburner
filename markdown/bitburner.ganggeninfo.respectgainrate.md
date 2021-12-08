@@ -4,7 +4,7 @@
 
 ## GangGenInfo.respectGainRate property
 
-Respect earned per second
+Respect earned per game cycle
 
 <b>Signature:</b>
 
