@@ -77,7 +77,7 @@ class BitburnerSaveObject {
     // Save file name is based on current timestamp and BitNode
     const epochTime = Math.round(Date.now() / 1000);
     const bn = Player.bitNodeN;
-    const filename = `bitburnerSave_BN${bn}x${SourceFileFlags[bn]}_${epochTime}.json`;
+    const filename = `bitburnerSave_${epochTime}_BN${bn}x${SourceFileFlags[bn]}.json`;
     download(filename, saveString);
   }
 
