@@ -185,16 +185,16 @@ export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, h
       },
     },
     gang: {
-      calculateWantedPenalty(gang: any): number {
+      wantedPenalty(gang: any): number {
         return calculateWantedPenalty(gang);
       },
-      calculateRespectGain: function (gang: any, member: any, task: any): number {
+      respectGain: function (gang: any, member: any, task: any): number {
         return calculateRespectGain(gang, member, task);
       },
-      calculateWantedLevelGain: function (gang: any, member: any, task: any): number {
+      wantedLevelGain: function (gang: any, member: any, task: any): number {
         return calculateWantedLevelGain(gang, member, task);
       },
-      calculateMoneyGain: function (gang: any, member: any, task: any): number {
+      moneyGain: function (gang: any, member: any, task: any): number {
         return calculateMoneyGain(gang, member, task);
       },
     },

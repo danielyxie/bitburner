@@ -4,6 +4,8 @@
 
 ## Formulas.hacking property
 
+Hacking formulas
+
 <b>Signature:</b>
 
 ```typescript
