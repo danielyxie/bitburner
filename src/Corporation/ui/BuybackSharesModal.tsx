@@ -35,6 +35,7 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
     shares * buybackPrice > player.money;
 
   function buy(): void {
+    if (disabled) return;
     if (shares === null) return;
     corp.numShares += shares;
     if (isNaN(corp.issuedShares)) {
