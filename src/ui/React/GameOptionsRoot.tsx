@@ -68,7 +68,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [suppressBuyAugmentationConfirmation, setSuppressBuyAugmentationConfirmation] = useState(
     Settings.SuppressBuyAugmentationConfirmation,
   );
-
+  const [suppressTIXPopup, setSuppressTIXPopup] = useState(Settings.SuppressTIXPopup);
   const [suppressBladeburnerPopup, setSuppressBladeburnerPopup] = useState(Settings.SuppressBladeburnerPopup);
 
   const [disableHotkeys, setDisableHotkeys] = useState(Settings.DisableHotkeys);
@@ -126,6 +126,11 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handleSuppressBuyAugmentationConfirmationChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setSuppressBuyAugmentationConfirmation(event.target.checked);
     Settings.SuppressBuyAugmentationConfirmation = event.target.checked;
+  }
+
+  function handleSuppressTIXPopupChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setSuppressTIXPopup(event.target.checked);
+    Settings.SuppressTIXPopup = event.target.checked;
   }
 
   function handleSuppressBladeburnerPopupChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -378,6 +383,18 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                     }
                   >
                     <Typography>Suppress buy augmentation confirmation</Typography>
+                  </Tooltip>
+                }
+              />
+            </ListItem>
+            <ListItem>
+              <FormControlLabel
+                control={<Switch checked={suppressTIXPopup} onChange={handleSuppressTIXPopupChange} />}
+                label={
+                  <Tooltip
+                    title={<Typography>If this is set, the stock market will never create any popup.</Typography>}
+                  >
+                    <Typography>Suppress TIX messages</Typography>
                   </Tooltip>
                 }
               />
