@@ -3544,6 +3544,20 @@ interface GangFormulas {
    * @returns The calculated money gain.
    */
   moneyGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
+
+  /**
+   * Calculate ascension point gain.
+   * @param exp - Experience point before ascension.
+   * @returns The calculated ascension point gain.
+   */
+  ascensionPointsGain(exp: number): number;
+
+  /**
+   * Calculate ascension mult.
+   * @param points - Amount of ascension points.
+   * @returns The calculated ascension mult.
+   */
+  ascensionMultiplier(points: number): number;
 }
 
 /**

@@ -71,3 +71,11 @@ export function calculateMoneyGain(gang: Gang, member: GangMember, task: GangMem
   const territoryPenalty = (0.2 * gang.territory + 0.8) * BitNodeMultipliers.GangSoftcap;
   return Math.pow(5 * task.baseMoney * statWeight * territoryMult * respectMult, territoryPenalty);
 }
+
+export function calculateAscensionPointsGain(exp: number): number {
+  return Math.max(exp - 1000, 0);
+}
+
+export function calculateAscensionMult(points: number): number {
+  return Math.max(Math.pow(points / 2000, 0.5), 1);
+}
