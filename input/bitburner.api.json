@@ -8575,6 +8575,94 @@
           "members": [
             {
               "kind": "MethodSignature",
+              "canonicalReference": "bitburner!GangFormulas#ascensionMultiplier:member(1)",
+              "docComment": "/**\n * Calculate ascension mult.\n *\n * @param points - Amount of ascension points.\n *\n * @returns The calculated ascension mult.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ascensionMultiplier(points: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "points",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "ascensionMultiplier"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!GangFormulas#ascensionPointsGain:member(1)",
+              "docComment": "/**\n * Calculate ascension point gain.\n *\n * @param exp - Experience point before ascension.\n *\n * @returns The calculated ascension point gain.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ascensionPointsGain(exp: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "exp",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "ascensionPointsGain"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "bitburner!GangFormulas#moneyGain:member(1)",
               "docComment": "/**\n * Calculate money gain per tick.\n *\n * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}\n *\n * @param member - Member info from {@link Gang.getMemberInformation | getMemberInformation}\n *\n * @param task - Task info from {@link Gang.getTaskStats | getTaskStats}\n *\n * @returns The calculated money gain.\n */\n",
               "excerptTokens": [
