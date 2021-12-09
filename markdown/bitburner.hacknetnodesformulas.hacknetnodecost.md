@@ -4,6 +4,8 @@
 
 ## HacknetNodesFormulas.hacknetNodeCost() method
 
+Calculate the cost of a hacknet node.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,10 +16,12 @@ hacknetNodeCost(n: number, mult: number): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  n | number |  |
-|  mult | number |  |
+|  n | number | number of the hacknet node |
+|  mult | number | player cost reduction (defaults to 1) |
 
 <b>Returns:</b>
 
 number
+
+The calculated cost.
 

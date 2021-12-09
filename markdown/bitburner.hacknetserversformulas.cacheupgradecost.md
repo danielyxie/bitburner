@@ -4,6 +4,8 @@
 
 ## HacknetServersFormulas.cacheUpgradeCost() method
 
+Calculate cost of upgrading hacknet server cache.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,10 +16,12 @@ cacheUpgradeCost(startingCache: number, extraCache?: number): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  startingCache | number |  |
-|  extraCache | number |  |
+|  startingCache | number | starting cache level |
+|  extraCache | number | amount of levels of cache to purchase (defaults to 1) |
 
 <b>Returns:</b>
 
 number
+
+The calculated cost.
 

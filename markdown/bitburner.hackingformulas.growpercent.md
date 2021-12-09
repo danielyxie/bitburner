@@ -4,22 +4,26 @@
 
 ## HackingFormulas.growPercent() method
 
+Calculate the percent a server would grow.
+
 <b>Signature:</b>
 
 ```typescript
-growPercent(server: number, threads: number, player: number, cores?: number): number;
+growPercent(server: Server, threads: number, player: Player, cores?: number): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  server | number |  |
-|  threads | number |  |
-|  player | number |  |
-|  cores | number |  |
+|  server | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
+|  threads | number | Amount of thread. |
+|  player | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
+|  cores | number | Number of cores on the computer that will execute grow. |
 
 <b>Returns:</b>
 
 number
+
+The calculated grow percent.
 

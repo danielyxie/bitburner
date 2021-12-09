@@ -4,6 +4,7 @@
 
 ## SkillsFormulas interface
 
+Skills formulas
 
 <b>Signature:</b>
 
@@ -15,6 +16,6 @@ interface SkillsFormulas
 
 |  Method | Description |
 |  --- | --- |
-|  [calculateExp(skill, mult)](./bitburner.skillsformulas.calculateexp.md) |  |
-|  [calculateSkill(exp, mult)](./bitburner.skillsformulas.calculateskill.md) |  |
+|  [calculateExp(skill, skillMult)](./bitburner.skillsformulas.calculateexp.md) | Calculate exp for skill level. |
+|  [calculateSkill(exp, skillMult)](./bitburner.skillsformulas.calculateskill.md) | Calculate skill level. |
 

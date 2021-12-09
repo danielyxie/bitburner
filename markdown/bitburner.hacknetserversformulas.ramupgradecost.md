@@ -4,6 +4,8 @@
 
 ## HacknetServersFormulas.ramUpgradeCost() method
 
+Calculate cost of upgrading hacknet server ram.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,11 +16,13 @@ ramUpgradeCost(startingRam: number, extraLevels?: number, costMult?: number): nu
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  startingRam | number |  |
-|  extraLevels | number |  |
-|  costMult | number |  |
+|  startingRam | number | starting ram |
+|  extraLevels | number | amount of level of ram to purchase (defaults to 1) |
+|  costMult | number | player cost reduction (default to 1) |
 
 <b>Returns:</b>
 
 number
+
+The calculated cost.
 

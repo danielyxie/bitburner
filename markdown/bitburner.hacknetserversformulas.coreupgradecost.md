@@ -4,6 +4,8 @@
 
 ## HacknetServersFormulas.coreUpgradeCost() method
 
+Calculate cost of upgrading hacknet server cores.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,11 +16,13 @@ coreUpgradeCost(startingCore: number, extraCores?: number, costMult?: number): n
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  startingCore | number |  |
-|  extraCores | number |  |
-|  costMult | number |  |
+|  startingCore | number | starting cores |
+|  extraCores | number | amount of cores to purchase (defaults to 1) |
+|  costMult | number | player cost reduction (default to 1) |
 
 <b>Returns:</b>
 
 number
+
+The calculated cost.
 

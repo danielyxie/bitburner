@@ -8575,12 +8575,12 @@
           "members": [
             {
               "kind": "MethodSignature",
-              "canonicalReference": "bitburner!GangFormulas#calculateMoneyGain:member(1)",
+              "canonicalReference": "bitburner!GangFormulas#moneyGain:member(1)",
               "docComment": "/**\n * Calculate money gain per tick.\n *\n * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}\n *\n * @param member - Member info from {@link Gang.getMemberInformation | getMemberInformation}\n *\n * @param task - Task info from {@link Gang.getTaskStats | getTaskStats}\n *\n * @returns The calculated money gain.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "calculateMoneyGain(gang: "
+                  "text": "moneyGain(gang: "
                 },
                 {
                   "kind": "Reference",
@@ -8648,16 +8648,16 @@
                   }
                 }
               ],
-              "name": "calculateMoneyGain"
+              "name": "moneyGain"
             },
             {
               "kind": "MethodSignature",
-              "canonicalReference": "bitburner!GangFormulas#calculateRespectGain:member(1)",
+              "canonicalReference": "bitburner!GangFormulas#respectGain:member(1)",
               "docComment": "/**\n * Calculate respect gain per tick.\n *\n * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}\n *\n * @param member - Gang info from {@link Gang.getMemberInformation | getMemberInformation}\n *\n * @param task - Gang info from {@link Gang.getTaskStats | getTaskStats}\n *\n * @returns The calculated respect gain.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "calculateRespectGain(gang: "
+                  "text": "respectGain(gang: "
                 },
                 {
                   "kind": "Reference",
@@ -8725,16 +8725,16 @@
                   }
                 }
               ],
-              "name": "calculateRespectGain"
+              "name": "respectGain"
             },
             {
               "kind": "MethodSignature",
-              "canonicalReference": "bitburner!GangFormulas#calculateWantedLevelGain:member(1)",
+              "canonicalReference": "bitburner!GangFormulas#wantedLevelGain:member(1)",
               "docComment": "/**\n * Calculate wanted gain per tick.\n *\n * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}\n *\n * @param member - Member info from {@link Gang.getMemberInformation | getMemberInformation}\n *\n * @param task - Task info from {@link Gang.getTaskStats | getTaskStats}\n *\n * @returns The calculated wanted gain.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "calculateWantedLevelGain(gang: "
+                  "text": "wantedLevelGain(gang: "
                 },
                 {
                   "kind": "Reference",
@@ -8802,16 +8802,16 @@
                   }
                 }
               ],
-              "name": "calculateWantedLevelGain"
+              "name": "wantedLevelGain"
             },
             {
               "kind": "MethodSignature",
-              "canonicalReference": "bitburner!GangFormulas#calculateWantedPenalty:member(1)",
+              "canonicalReference": "bitburner!GangFormulas#wantedPenalty:member(1)",
               "docComment": "/**\n * Calculate the wanted penalty.\n *\n * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}\n *\n * @returns The calculated wanted penalty.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "calculateWantedPenalty(gang: "
+                  "text": "wantedPenalty(gang: "
                 },
                 {
                   "kind": "Reference",
@@ -8847,7 +8847,7 @@
                   }
                 }
               ],
-              "name": "calculateWantedPenalty"
+              "name": "wantedPenalty"
             }
           ],
           "extendsTokenRanges": []
@@ -11159,7 +11159,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!HackingFormulas:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Hacking formulas\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -11172,15 +11172,16 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HackingFormulas#growPercent:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate the percent a server would grow.\n *\n * @param server - Server info from {@link NS.getServer | getServer}\n *\n * @param threads - Amount of thread.\n *\n * @param player - Player info from {@link NS.getPlayer | getPlayer}\n *\n * @param cores - Number of cores on the computer that will execute grow.\n *\n * @returns The calculated grow percent.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "growPercent(server: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Server",
+                  "canonicalReference": "bitburner!Server:interface"
                 },
                 {
                   "kind": "Content",
@@ -11195,8 +11196,9 @@
                   "text": ", player: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Player",
+                  "canonicalReference": "bitburner!Player:interface"
                 },
                 {
                   "kind": "Content",
@@ -11261,23 +11263,25 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HackingFormulas#growTime:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate grow time.\n *\n * @param server - Server info from {@link NS.getServer | getServer}\n *\n * @param player - Player info from {@link NS.getPlayer | getPlayer}\n *\n * @returns The calculated grow time.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "growTime(server: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Server",
+                  "canonicalReference": "bitburner!Server:interface"
                 },
                 {
                   "kind": "Content",
                   "text": ", player: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Player",
+                  "canonicalReference": "bitburner!Player:interface"
                 },
                 {
                   "kind": "Content",
@@ -11320,23 +11324,25 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HackingFormulas#hackChance:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate hack chance.\n *\n * @param server - Server info from {@link NS.getServer | getServer}\n *\n * @param player - Player info from {@link NS.getPlayer | getPlayer}\n *\n * @returns The calculated hack chance.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "hackChance(server: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Server",
+                  "canonicalReference": "bitburner!Server:interface"
                 },
                 {
                   "kind": "Content",
                   "text": ", player: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Player",
+                  "canonicalReference": "bitburner!Player:interface"
                 },
                 {
                   "kind": "Content",
@@ -11379,23 +11385,25 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HackingFormulas#hackExp:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate hack exp for one thread.\n *\n * @remarks\n *\n * Multiply by thread to get total exp\n *\n * @param server - Server info from {@link NS.getServer | getServer}\n *\n * @param player - Player info from {@link NS.getPlayer | getPlayer}\n *\n * @returns The calculated hack exp.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "hackExp(server: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Server",
+                  "canonicalReference": "bitburner!Server:interface"
                 },
                 {
                   "kind": "Content",
                   "text": ", player: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Player",
+                  "canonicalReference": "bitburner!Player:interface"
                 },
                 {
                   "kind": "Content",
@@ -11438,23 +11446,25 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HackingFormulas#hackPercent:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate hack percent for one thread.\n *\n * @remarks\n *\n * Multiply by thread to get total percent hacked.\n *\n * @param server - Server info from {@link NS.getServer | getServer}\n *\n * @param player - Player info from {@link NS.getPlayer | getPlayer}\n *\n * @returns The calculated hack percent.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "hackPercent(server: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Server",
+                  "canonicalReference": "bitburner!Server:interface"
                 },
                 {
                   "kind": "Content",
                   "text": ", player: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Player",
+                  "canonicalReference": "bitburner!Player:interface"
                 },
                 {
                   "kind": "Content",
@@ -11497,23 +11507,25 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HackingFormulas#hackTime:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate hack time.\n *\n * @param server - Server info from {@link NS.getServer | getServer}\n *\n * @param player - Player info from {@link NS.getPlayer | getPlayer}\n *\n * @returns The calculated hack time.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "hackTime(server: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Server",
+                  "canonicalReference": "bitburner!Server:interface"
                 },
                 {
                   "kind": "Content",
                   "text": ", player: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Player",
+                  "canonicalReference": "bitburner!Player:interface"
                 },
                 {
                   "kind": "Content",
@@ -11556,23 +11568,25 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HackingFormulas#weakenTime:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate weaken time.\n *\n * @param server - Server info from {@link NS.getServer | getServer}\n *\n * @param player - Player info from {@link NS.getPlayer | getPlayer}\n *\n * @returns The calculated weaken time.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "weakenTime(server: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Server",
+                  "canonicalReference": "bitburner!Server:interface"
                 },
                 {
                   "kind": "Content",
                   "text": ", player: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "Player",
+                  "canonicalReference": "bitburner!Player:interface"
                 },
                 {
                   "kind": "Content",
@@ -12788,7 +12802,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!HacknetNodesFormulas:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Hacknet Node formulas\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -12801,7 +12815,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetNodesFormulas#constants:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * All constants used by the game.\n *\n * @returns An object with all hacknet node constants used by the game.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -12829,7 +12843,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetNodesFormulas#coreUpgradeCost:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate cost of upgrading hacknet node cores.\n *\n * @param startingCore - starting cores\n *\n * @param extraCores - amount of cores to purchase (defaults to 1)\n *\n * @param costMult - player cost reduction (default to 1)\n *\n * @returns The calculated cost.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -12903,7 +12917,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetNodesFormulas#hacknetNodeCost:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate the cost of a hacknet node.\n *\n * @param n - number of the hacknet node\n *\n * @param mult - player cost reduction (defaults to 1)\n *\n * @returns The calculated cost.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -12962,7 +12976,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetNodesFormulas#levelUpgradeCost:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate cost of upgrading hacknet node level.\n *\n * @param startingLevel - starting level\n *\n * @param extraLevels - amount of level to purchase (defaults to 1)\n *\n * @param costMult - player cost reduction (default to 1)\n *\n * @returns The calculated cost.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13036,7 +13050,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetNodesFormulas#moneyGainRate:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate money gain rate.\n *\n * @param level - level of the node.\n *\n * @param ram - ram of the node.\n *\n * @param cores - cores of the node.\n *\n * @param mult - player production mult (default to 1)\n *\n * @returns The calculated money gain rate.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13125,7 +13139,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetNodesFormulas#ramUpgradeCost:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate cost of upgrading hacknet node ram.\n *\n * @param startingRam - starting ram\n *\n * @param extraLevels - amount of level of ram to purchase (defaults to 1)\n *\n * @param costMult - player cost reduction (default to 1)\n *\n * @returns The calculated cost.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13202,7 +13216,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!HacknetServersFormulas:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Hacknet Server formulas\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -13215,7 +13229,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetServersFormulas#cacheUpgradeCost:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate cost of upgrading hacknet server cache.\n *\n * @param startingCache - starting cache level\n *\n * @param extraCache - amount of levels of cache to purchase (defaults to 1)\n *\n * @returns The calculated cost.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13274,7 +13288,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetServersFormulas#constants:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * All constants used by the game.\n *\n * @returns An object with all hacknet server constants used by the game.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13302,7 +13316,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetServersFormulas#coreUpgradeCost:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate cost of upgrading hacknet server cores.\n *\n * @param startingCore - starting cores\n *\n * @param extraCores - amount of cores to purchase (defaults to 1)\n *\n * @param costMult - player cost reduction (default to 1)\n *\n * @returns The calculated cost.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13376,7 +13390,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetServersFormulas#hacknetServerCost:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate the cost of a hacknet server.\n *\n * @param n - number of the hacknet server\n *\n * @param mult - player cost reduction (defaults to 1)\n *\n * @returns The calculated cost.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13388,7 +13402,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ", mult: "
+                  "text": ", mult?: "
                 },
                 {
                   "kind": "Content",
@@ -13435,7 +13449,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetServersFormulas#hashGainRate:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate hash gain rate.\n *\n * @param level - level of the server.\n *\n * @param ramUsed - ramUsed of the server.\n *\n * @param maxRam - maxRam of the server.\n *\n * @param cores - cores of the server.\n *\n * @param mult - player production mult (default to 1)\n *\n * @returns The calculated hash gain rate.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13539,7 +13553,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetServersFormulas#hashUpgradeCost:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate hash cost of an upgrade.\n *\n * @param upgName - name of the upgrade\n *\n * @param level - level of the upgrade\n *\n * @returns The calculated hash cost.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13598,7 +13612,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetServersFormulas#levelUpgradeCost:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate cost of upgrading hacknet server level.\n *\n * @param startingLevel - starting level\n *\n * @param extraLevels - amount of level to purchase (defaults to 1)\n *\n * @param costMult - player cost reduction (default to 1)\n *\n * @returns The calculated cost.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13672,7 +13686,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!HacknetServersFormulas#ramUpgradeCost:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate cost of upgrading hacknet server ram.\n *\n * @param startingRam - starting ram\n *\n * @param extraLevels - amount of level of ram to purchase (defaults to 1)\n *\n * @param costMult - player cost reduction (default to 1)\n *\n * @returns The calculated cost.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25825,7 +25839,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!SkillsFormulas:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Skills formulas\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -25838,7 +25852,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!SkillsFormulas#calculateExp:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate exp for skill level.\n *\n * @param skill - target skill level\n *\n * @param skillMult - Multiplier for that skill, defaults to 1.\n *\n * @returns The calculated exp required.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25850,7 +25864,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ", mult?: "
+                  "text": ", skillMult?: "
                 },
                 {
                   "kind": "Content",
@@ -25885,7 +25899,7 @@
                   }
                 },
                 {
-                  "parameterName": "mult",
+                  "parameterName": "skillMult",
                   "parameterTypeTokenRange": {
                     "startIndex": 3,
                     "endIndex": 4
@@ -25897,7 +25911,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!SkillsFormulas#calculateSkill:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Calculate skill level.\n *\n * @param exp - experience for that skill\n *\n * @param skillMult - Multiplier for that skill, defaults to 1.\n *\n * @returns The calculated skill level.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25909,7 +25923,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ", mult?: "
+                  "text": ", skillMult?: "
                 },
                 {
                   "kind": "Content",
@@ -25944,7 +25958,7 @@
                   }
                 },
                 {
-                  "parameterName": "mult",
+                  "parameterName": "skillMult",
                   "parameterTypeTokenRange": {
                     "startIndex": 3,
                     "endIndex": 4

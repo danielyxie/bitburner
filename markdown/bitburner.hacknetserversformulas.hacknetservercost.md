@@ -4,20 +4,24 @@
 
 ## HacknetServersFormulas.hacknetServerCost() method
 
+Calculate the cost of a hacknet server.
+
 <b>Signature:</b>
 
 ```typescript
-hacknetServerCost(n: number, mult: number): number;
+hacknetServerCost(n: number, mult?: number): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  n | number |  |
-|  mult | number |  |
+|  n | number | number of the hacknet server |
+|  mult | number | player cost reduction (defaults to 1) |
 
 <b>Returns:</b>
 
 number
+
+The calculated cost.
 

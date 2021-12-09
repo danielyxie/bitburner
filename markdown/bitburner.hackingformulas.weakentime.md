@@ -4,20 +4,24 @@
 
 ## HackingFormulas.weakenTime() method
 
+Calculate weaken time.
+
 <b>Signature:</b>
 
 ```typescript
-weakenTime(server: number, player: number): number;
+weakenTime(server: Server, player: Player): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  server | number |  |
-|  player | number |  |
+|  server | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
+|  player | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
 
 <b>Returns:</b>
 
 number
+
+The calculated weaken time.
 
