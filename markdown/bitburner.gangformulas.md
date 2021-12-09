@@ -16,6 +16,8 @@ interface GangFormulas
 
 |  Method | Description |
 |  --- | --- |
+|  [ascensionMultiplier(points)](./bitburner.gangformulas.ascensionmultiplier.md) | Calculate ascension mult. |
+|  [ascensionPointsGain(exp)](./bitburner.gangformulas.ascensionpointsgain.md) | Calculate ascension point gain. |
 |  [moneyGain(gang, member, task)](./bitburner.gangformulas.moneygain.md) | Calculate money gain per tick. |
 |  [respectGain(gang, member, task)](./bitburner.gangformulas.respectgain.md) | Calculate respect gain per tick. |
 |  [wantedLevelGain(gang, member, task)](./bitburner.gangformulas.wantedlevelgain.md) | Calculate wanted gain per tick. |
