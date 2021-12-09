@@ -17,6 +17,7 @@ import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { Settings } from "../Settings/Settings";
 
 import * as React from "react";
 
@@ -150,12 +151,14 @@ function executeOrder(order: Order, refs: IProcessOrderRefs): void {
     for (let i = 0; i < stockOrders.length; ++i) {
       if (order == stockOrders[i]) {
         stockOrders.splice(i, 1);
-        dialogBoxCreate(
-          <>
-            {order.type} for {stock.symbol} @ <Money money={order.price} /> ({pos}) was filled (
-            {numeralWrapper.formatShares(Math.round(order.shares))} shares)
-          </>,
-        );
+        if (!Settings.SuppressTIXPopup) {
+          dialogBoxCreate(
+            <>
+              {order.type} for {stock.symbol} @ <Money money={order.price} /> ({pos}) was filled (
+              {numeralWrapper.formatShares(Math.round(order.shares))} shares)
+            </>,
+          );
+        }
         return;
       }
     }
