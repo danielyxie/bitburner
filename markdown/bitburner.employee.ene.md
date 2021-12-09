@@ -4,6 +4,8 @@
 
 ## Employee.ene property
 
+Energy
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## WarehouseAPI.getWarehouse() method
 
+Get warehouse data
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,10 +16,12 @@ getWarehouse(divisionName: string, cityName: string): Warehouse;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
 
 <b>Returns:</b>
 
 [Warehouse](./bitburner.warehouse.md)
+
+warehouse data
 

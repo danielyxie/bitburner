@@ -4,6 +4,8 @@
 
 ## Warehouse.level property
 
+Amount of size upgrade bought
+
 <b>Signature:</b>
 
 ```typescript

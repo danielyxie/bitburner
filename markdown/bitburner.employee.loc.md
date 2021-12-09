@@ -4,6 +4,8 @@
 
 ## Employee.loc property
 
+City
+
 <b>Signature:</b>
 
 ```typescript

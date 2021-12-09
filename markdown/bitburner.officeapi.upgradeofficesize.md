@@ -4,6 +4,8 @@
 
 ## OfficeAPI.upgradeOfficeSize() method
 
+Upgrade office size.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,9 +16,9 @@ upgradeOfficeSize(divisionName: string, cityName: string, size: number): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
-|  size | number |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
+|  size | number | Amount of positions to open |
 
 <b>Returns:</b>
 

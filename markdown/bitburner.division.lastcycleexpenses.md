@@ -4,6 +4,8 @@
 
 ## Division.lastCycleExpenses property
 
+Expenses last cycle
+
 <b>Signature:</b>
 
 ```typescript

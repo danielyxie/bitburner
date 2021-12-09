@@ -4,6 +4,8 @@
 
 ## CorporationInfo.issuedShares property
 
+Amount of shares issued
+
 <b>Signature:</b>
 
 ```typescript

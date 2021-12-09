@@ -4,6 +4,8 @@
 
 ## WarehouseAPI.cancelExportMaterial() method
 
+Cancel material export
+
 <b>Signature:</b>
 
 ```typescript
@@ -21,12 +23,12 @@ cancelExportMaterial(
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sourceDivision | string |  |
-|  sourceCity | string |  |
-|  targetDivision | string |  |
-|  targetCity | string |  |
-|  materialName | string |  |
-|  amt | number |  |
+|  sourceDivision | string | Source division |
+|  sourceCity | string | Source city |
+|  targetDivision | string | Target division |
+|  targetCity | string | Target city |
+|  materialName | string | Name of the material |
+|  amt | number | Amount of material to export. |
 
 <b>Returns:</b>
 

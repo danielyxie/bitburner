@@ -4,6 +4,8 @@
 
 ## Material.name property
 
+Name of the material
+
 <b>Signature:</b>
 
 ```typescript

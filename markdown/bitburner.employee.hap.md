@@ -4,6 +4,8 @@
 
 ## Employee.hap property
 
+Happiness
+
 <b>Signature:</b>
 
 ```typescript

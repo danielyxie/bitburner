@@ -4,6 +4,8 @@
 
 ## Division.prodMult property
 
+Production multiplier
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## Office.maxHap property
 
+Maximum happiness of the employees
+
 <b>Signature:</b>
 
 ```typescript

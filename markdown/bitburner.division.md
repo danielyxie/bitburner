@@ -4,6 +4,7 @@
 
 ## Division interface
 
+Corporation division
 
 <b>Signature:</b>
 
@@ -15,16 +16,16 @@ interface Division
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [awareness](./bitburner.division.awareness.md) | number |  |
-|  [cities](./bitburner.division.cities.md) | string\[\] |  |
-|  [lastCycleExpenses](./bitburner.division.lastcycleexpenses.md) | number |  |
-|  [lastCycleRevenue](./bitburner.division.lastcyclerevenue.md) | number |  |
-|  [name](./bitburner.division.name.md) | string |  |
-|  [popularity](./bitburner.division.popularity.md) | number |  |
-|  [prodMult](./bitburner.division.prodmult.md) | number |  |
-|  [research](./bitburner.division.research.md) | number |  |
-|  [thisCycleExpenses](./bitburner.division.thiscycleexpenses.md) | number |  |
-|  [thisCycleRevenue](./bitburner.division.thiscyclerevenue.md) | number |  |
-|  [type](./bitburner.division.type.md) | string |  |
-|  [upgrades](./bitburner.division.upgrades.md) | number\[\] |  |
+|  [awareness](./bitburner.division.awareness.md) | number | Awareness of the division |
+|  [cities](./bitburner.division.cities.md) | string\[\] | Cities in which this division has expanded |
+|  [lastCycleExpenses](./bitburner.division.lastcycleexpenses.md) | number | Expenses last cycle |
+|  [lastCycleRevenue](./bitburner.division.lastcyclerevenue.md) | number | Revenue last cycle |
+|  [name](./bitburner.division.name.md) | string | Name of the division |
+|  [popularity](./bitburner.division.popularity.md) | number | Popularity of the division |
+|  [prodMult](./bitburner.division.prodmult.md) | number | Production multiplier |
+|  [research](./bitburner.division.research.md) | number | Amount of research in that division |
+|  [thisCycleExpenses](./bitburner.division.thiscycleexpenses.md) | number | Expenses this cycle |
+|  [thisCycleRevenue](./bitburner.division.thiscyclerevenue.md) | number | Revenue this cycle |
+|  [type](./bitburner.division.type.md) | string | Type of division, like Aggriculture |
+|  [upgrades](./bitburner.division.upgrades.md) | number\[\] | All research bought |
 

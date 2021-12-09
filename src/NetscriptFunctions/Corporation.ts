@@ -303,13 +303,6 @@ export function NetscriptCorporation(
   };
 
   const officeAPI: OfficeAPI = {
-    employees: function (adivisionName: any, acityName: any): any {
-      checkAccess("employees", 8);
-      const divisionName = helper.string("employees", "divisionName", adivisionName);
-      const cityName = helper.string("employees", "cityName", acityName);
-      const office = getOffice(divisionName, cityName);
-      return office.employees.map((e) => Object.assign({}, e));
-    },
     assignJob: function (adivisionName: any, acityName: any, aemployeeName: any, ajob: any): Promise<void> {
       checkAccess("assignJob", 8);
       const divisionName = helper.string("assignJob", "divisionName", adivisionName);
@@ -326,7 +319,7 @@ export function NetscriptCorporation(
       const divisionName = helper.string("hireEmployee", "divisionName", adivisionName);
       const cityName = helper.string("hireEmployee", "cityName", acityName);
       const office = getOffice(divisionName, cityName);
-      office.hireRandomEmployee();
+      return office.hireRandomEmployee();
     },
     upgradeOfficeSize: function (adivisionName: any, acityName: any, asize: any): void {
       checkAccess("upgradeOfficeSize", 8);

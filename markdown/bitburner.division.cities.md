@@ -4,6 +4,8 @@
 
 ## Division.cities property
 
+Cities in which this division has expanded
+
 <b>Signature:</b>
 
 ```typescript

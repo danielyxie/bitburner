@@ -4,6 +4,8 @@
 
 ## OfficeAPI.getEmployee() method
 
+Get data about an employee
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,11 +16,13 @@ getEmployee(divisionName: string, cityName: string, employeeName: string): Emplo
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
-|  employeeName | string |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
+|  employeeName | string | Name of the employee |
 
 <b>Returns:</b>
 
 [Employee](./bitburner.employee.md)
+
+Employee data
 

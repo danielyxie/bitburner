@@ -4,6 +4,8 @@
 
 ## Office.maxMor property
 
+Maximum morale of the employees
+
 <b>Signature:</b>
 
 ```typescript

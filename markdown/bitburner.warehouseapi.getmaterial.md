@@ -4,6 +4,8 @@
 
 ## WarehouseAPI.getMaterial() method
 
+Get material data
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,11 +16,13 @@ getMaterial(divisionName: string, cityName: string, materialName: string): Mater
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
+|  divisionName | string | Name of the division |
 |  cityName | string |  |
-|  materialName | string |  |
+|  materialName | string | Name of the material |
 
 <b>Returns:</b>
 
 [Material](./bitburner.material.md)
+
+material data
 

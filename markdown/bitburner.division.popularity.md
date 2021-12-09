@@ -4,6 +4,8 @@
 
 ## Division.popularity property
 
+Popularity of the division
+
 <b>Signature:</b>
 
 ```typescript

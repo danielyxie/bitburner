@@ -19,12 +19,12 @@
 |  [CharacterMult](./bitburner.charactermult.md) |  |
 |  [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Options to affect the behavior of [CodingContract](./bitburner.codingcontract.md) attempt. |
 |  [CodingContract](./bitburner.codingcontract.md) | Coding Contact API |
-|  [Corporation](./bitburner.corporation.md) |  |
-|  [CorporationInfo](./bitburner.corporationinfo.md) |  |
+|  [Corporation](./bitburner.corporation.md) | Corporation API |
+|  [CorporationInfo](./bitburner.corporationinfo.md) | General info about a corporation |
 |  [CrimeStats](./bitburner.crimestats.md) | Data representing the internal values of a crime. |
-|  [Division](./bitburner.division.md) |  |
-|  [Employee](./bitburner.employee.md) |  |
-|  [EmployeeJobs](./bitburner.employeejobs.md) |  |
+|  [Division](./bitburner.division.md) | Corporation division |
+|  [Employee](./bitburner.employee.md) | Employee in an office |
+|  [EmployeeJobs](./bitburner.employeejobs.md) | Object representing the number of employee in each job. |
 |  [EquipmentStats](./bitburner.equipmentstats.md) | Object representing data representing a gang member equipment. |
 |  [Formulas](./bitburner.formulas.md) | Formulas API |
 |  [Fragment](./bitburner.fragment.md) |  |
@@ -43,15 +43,15 @@
 |  [HacknetMultipliers](./bitburner.hacknetmultipliers.md) | Hacknet related multipliers. |
 |  [HacknetNodesFormulas](./bitburner.hacknetnodesformulas.md) | Hacknet Node formulas |
 |  [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) | Hacknet Server formulas |
-|  [Material](./bitburner.material.md) |  |
+|  [Material](./bitburner.material.md) | Material in a warehouse |
 |  [NodeStats](./bitburner.nodestats.md) | Object representing all the values related to a hacknet node. |
 |  [NS](./bitburner.ns.md) | Collection of all functions passed to scripts |
-|  [Office](./bitburner.office.md) |  |
-|  [OfficeAPI](./bitburner.officeapi.md) |  |
+|  [Office](./bitburner.office.md) | Office for a division in a city. |
+|  [OfficeAPI](./bitburner.officeapi.md) | Corporation Office API |
 |  [Player](./bitburner.player.md) |  |
 |  [PlayerSkills](./bitburner.playerskills.md) | Short summary of the players skills. |
 |  [ProcessInfo](./bitburner.processinfo.md) | A single process on a server. |
-|  [Product](./bitburner.product.md) |  |
+|  [Product](./bitburner.product.md) | Product in a warehouse |
 |  [RunningScript](./bitburner.runningscript.md) |  |
 |  [Server](./bitburner.server.md) | A single server. |
 |  [Singularity](./bitburner.singularity.md) | Singularity API |
@@ -66,6 +66,6 @@
 |  [StockOrder](./bitburner.stockorder.md) | Return value of [getOrders](./bitburner.tix.getorders.md) |
 |  [StockOrderObject](./bitburner.stockorderobject.md) | Value in map of [StockOrder](./bitburner.stockorder.md) |
 |  [TIX](./bitburner.tix.md) | Stock market API |
-|  [Warehouse](./bitburner.warehouse.md) |  |
-|  [WarehouseAPI](./bitburner.warehouseapi.md) |  |
+|  [Warehouse](./bitburner.warehouse.md) | Warehouse for a division in a city |
+|  [WarehouseAPI](./bitburner.warehouseapi.md) | Corporation Warehouse API |
 

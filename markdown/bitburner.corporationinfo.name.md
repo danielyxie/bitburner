@@ -4,6 +4,8 @@
 
 ## CorporationInfo.name property
 
+Name of the corporation
+
 <b>Signature:</b>
 
 ```typescript

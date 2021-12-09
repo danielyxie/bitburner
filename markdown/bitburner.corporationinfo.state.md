@@ -4,6 +4,8 @@
 
 ## CorporationInfo.state property
 
+State of the corporation, like PRODUCTION or EXPORT
+
 <b>Signature:</b>
 
 ```typescript

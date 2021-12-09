@@ -4,6 +4,8 @@
 
 ## Office.employeeProd property
 
+Positions of the employees
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## WarehouseAPI.purchaseWarehouse() method
 
+Purchase warehouse for a new city
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,8 +16,8 @@ purchaseWarehouse(divisionName: string, cityName: string): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
 
 <b>Returns:</b>
 

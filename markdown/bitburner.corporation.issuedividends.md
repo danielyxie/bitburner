@@ -4,6 +4,8 @@
 
 ## Corporation.issueDividends() method
 
+Issue dividends
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,7 +16,7 @@ issueDividends(percent: number): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  percent | number |  |
+|  percent | number | Percent of profit to issue as dividends. |
 
 <b>Returns:</b>
 

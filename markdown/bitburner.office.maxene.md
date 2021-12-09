@@ -4,6 +4,8 @@
 
 ## Office.maxEne property
 
+Maximum amount of energy of the employees
+
 <b>Signature:</b>
 
 ```typescript

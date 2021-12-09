@@ -4,6 +4,8 @@
 
 ## Product.sCost property
 
+Sell cost, can be "MP+5"
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## CorporationInfo.expenses property
 
+Expenses per second this cycle
+
 <b>Signature:</b>
 
 ```typescript

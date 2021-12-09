@@ -4,6 +4,8 @@
 
 ## OfficeAPI.research() method
 
+Hire AdVert.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,8 +16,8 @@ research(divisionName: string, researchName: string): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  researchName | string |  |
+|  divisionName | string | Name of the division |
+|  researchName | string | Name of the research |
 
 <b>Returns:</b>
 

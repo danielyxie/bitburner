@@ -4,6 +4,7 @@
 
 ## Product interface
 
+Product in a warehouse
 
 <b>Signature:</b>
 
@@ -15,9 +16,9 @@ interface Product
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [cmp](./bitburner.product.cmp.md) | number |  |
-|  [dmd](./bitburner.product.dmd.md) | number |  |
-|  [name](./bitburner.product.name.md) | string |  |
-|  [pCost](./bitburner.product.pcost.md) | number |  |
-|  [sCost](./bitburner.product.scost.md) | string \| number |  |
+|  [cmp](./bitburner.product.cmp.md) | number | Competition for the product |
+|  [dmd](./bitburner.product.dmd.md) | number | Demand for the product |
+|  [name](./bitburner.product.name.md) | string | Name of the product |
+|  [pCost](./bitburner.product.pcost.md) | number | Production cost |
+|  [sCost](./bitburner.product.scost.md) | string \| number | Sell cost, can be "MP+5" |
 

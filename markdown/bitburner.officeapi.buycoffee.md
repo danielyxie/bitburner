@@ -4,6 +4,8 @@
 
 ## OfficeAPI.buyCoffee() method
 
+Buy coffee for your employees
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,10 +16,12 @@ buyCoffee(divisionName: string, cityName: string): Promise<void>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
 
 <b>Returns:</b>
 
 Promise&lt;void&gt;
+
+A promise that is fulfilled when the coffee is served.
 

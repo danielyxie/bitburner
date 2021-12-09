@@ -4,6 +4,8 @@
 
 ## Division.awareness property
 
+Awareness of the division
+
 <b>Signature:</b>
 
 ```typescript

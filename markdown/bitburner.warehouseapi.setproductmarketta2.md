@@ -4,6 +4,8 @@
 
 ## WarehouseAPI.setProductMarketTA2() method
 
+Set market TA 2 for a product.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,9 +16,9 @@ setProductMarketTA2(divisionName: string, productName: string, on: boolean): voi
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  productName | string |  |
-|  on | boolean |  |
+|  divisionName | string | Name of the division |
+|  productName | string | Name of the product |
+|  on | boolean | market ta enabled |
 
 <b>Returns:</b>
 

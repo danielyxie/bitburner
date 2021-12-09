@@ -4,6 +4,8 @@
 
 ## Material.qty property
 
+Amount of material
+
 <b>Signature:</b>
 
 ```typescript

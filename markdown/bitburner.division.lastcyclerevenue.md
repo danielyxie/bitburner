@@ -4,6 +4,8 @@
 
 ## Division.lastCycleRevenue property
 
+Revenue last cycle
+
 <b>Signature:</b>
 
 ```typescript

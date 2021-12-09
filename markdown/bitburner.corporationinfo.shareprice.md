@@ -4,6 +4,8 @@
 
 ## CorporationInfo.sharePrice property
 
+Price of the shares
+
 <b>Signature:</b>
 
 ```typescript

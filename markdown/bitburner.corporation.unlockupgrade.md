@@ -4,6 +4,8 @@
 
 ## Corporation.unlockUpgrade() method
 
+Unlock an upgrade.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,7 +16,7 @@ unlockUpgrade(upgradeName: string): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  upgradeName | string |  |
+|  upgradeName | string | Name of the upgrade |
 
 <b>Returns:</b>
 

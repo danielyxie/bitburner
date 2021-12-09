@@ -4,6 +4,7 @@
 
 ## Office interface
 
+Office for a division in a city.
 
 <b>Signature:</b>
 
@@ -15,13 +16,13 @@ interface Office
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [employeeProd](./bitburner.office.employeeprod.md) | [EmployeeJobs](./bitburner.employeejobs.md) |  |
-|  [employees](./bitburner.office.employees.md) | string\[\] |  |
-|  [loc](./bitburner.office.loc.md) | string |  |
-|  [maxEne](./bitburner.office.maxene.md) | number |  |
-|  [maxHap](./bitburner.office.maxhap.md) | number |  |
-|  [maxMor](./bitburner.office.maxmor.md) | number |  |
-|  [minEne](./bitburner.office.minene.md) | number |  |
-|  [minHap](./bitburner.office.minhap.md) | number |  |
-|  [size](./bitburner.office.size.md) | number |  |
+|  [employeeProd](./bitburner.office.employeeprod.md) | [EmployeeJobs](./bitburner.employeejobs.md) | Positions of the employees |
+|  [employees](./bitburner.office.employees.md) | string\[\] | Name of all the employees |
+|  [loc](./bitburner.office.loc.md) | string | City of the office |
+|  [maxEne](./bitburner.office.maxene.md) | number | Maximum amount of energy of the employees |
+|  [maxHap](./bitburner.office.maxhap.md) | number | Maximum happiness of the employees |
+|  [maxMor](./bitburner.office.maxmor.md) | number | Maximum morale of the employees |
+|  [minEne](./bitburner.office.minene.md) | number | Minimum amount of energy of the employees |
+|  [minHap](./bitburner.office.minhap.md) | number | Minimum happiness of the employees |
+|  [size](./bitburner.office.size.md) | number | Maximum number of employee |
 

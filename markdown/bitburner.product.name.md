@@ -4,6 +4,8 @@
 
 ## Product.name property
 
+Name of the product
+
 <b>Signature:</b>
 
 ```typescript

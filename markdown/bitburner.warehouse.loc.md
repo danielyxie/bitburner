@@ -4,6 +4,8 @@
 
 ## Warehouse.loc property
 
+City in which the warehouse is located
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,20 +4,24 @@
 
 ## OfficeAPI.hireEmployee() method
 
+Assign an employee to a job.
+
 <b>Signature:</b>
 
 ```typescript
-hireEmployee(divisionName: string, cityName: string): Employee;
+hireEmployee(divisionName: string, cityName: string): Employee | undefined;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
 
 <b>Returns:</b>
 
-[Employee](./bitburner.employee.md)
+[Employee](./bitburner.employee.md) \| undefined
+
+The newly hired employee, if any
 

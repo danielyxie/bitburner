@@ -4,6 +4,8 @@
 
 ## WarehouseAPI.buyMaterial() method
 
+Set material buy data
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,10 +16,10 @@ buyMaterial(divisionName: string, cityName: string, materialName: string, amt: n
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
-|  materialName | string |  |
-|  amt | number |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
+|  materialName | string | Name of the material |
+|  amt | number | Amount of material to buy |
 
 <b>Returns:</b>
 

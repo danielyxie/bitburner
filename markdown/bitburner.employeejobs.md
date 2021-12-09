@@ -4,6 +4,7 @@
 
 ## EmployeeJobs interface
 
+Object representing the number of employee in each job.
 
 <b>Signature:</b>
 

@@ -4,6 +4,8 @@
 
 ## Product.cmp property
 
+Competition for the product
+
 <b>Signature:</b>
 
 ```typescript

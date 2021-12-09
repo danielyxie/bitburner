@@ -4,6 +4,8 @@
 
 ## OfficeAPI.getOffice() method
 
+Get data about an office
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,10 +16,12 @@ getOffice(divisionName: string, cityName: string): Office;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
 
 <b>Returns:</b>
 
 [Office](./bitburner.office.md)
+
+Office data
 

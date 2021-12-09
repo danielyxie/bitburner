@@ -4,6 +4,8 @@
 
 ## Division.research property
 
+Amount of research in that division
+
 <b>Signature:</b>
 
 ```typescript
