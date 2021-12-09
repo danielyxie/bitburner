@@ -874,19 +874,18 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       break;
     }
     case 13: {
-      BitNodeMultipliers.PurchasedServerSoftcap = 1.5;
+      BitNodeMultipliers.PurchasedServerSoftcap = 1.6;
 
-      BitNodeMultipliers.HackingLevelMultiplier = 0.3;
-      BitNodeMultipliers.StrengthLevelMultiplier = 0.3;
-      BitNodeMultipliers.DefenseLevelMultiplier = 0.3;
-      BitNodeMultipliers.DexterityLevelMultiplier = 0.3;
-      BitNodeMultipliers.AgilityLevelMultiplier = 0.3;
-      BitNodeMultipliers.CharismaLevelMultiplier = 0.3;
+      BitNodeMultipliers.HackingLevelMultiplier = 0.25;
+      BitNodeMultipliers.StrengthLevelMultiplier = 0.7;
+      BitNodeMultipliers.DefenseLevelMultiplier = 0.7;
+      BitNodeMultipliers.DexterityLevelMultiplier = 0.7;
+      BitNodeMultipliers.AgilityLevelMultiplier = 0.7;
 
       BitNodeMultipliers.ServerMaxMoney = 0.45;
       BitNodeMultipliers.ServerStartingMoney = 0.75;
 
-      BitNodeMultipliers.ServerStartingSecurity = 2;
+      BitNodeMultipliers.ServerStartingSecurity = 3;
 
       BitNodeMultipliers.ScriptHackMoney = 0.4;
       BitNodeMultipliers.CompanyWorkMoney = 0.4;
@@ -913,7 +912,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.StaneksGiftExtraSize = 1;
       BitNodeMultipliers.GangSoftcap = 0.3;
       BitNodeMultipliers.CorporationSoftCap = 0.3;
-      BitNodeMultipliers.WorldDaemonDifficulty = 2.5;
+      BitNodeMultipliers.WorldDaemonDifficulty = 3;
       break;
     }
     default:
