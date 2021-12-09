@@ -887,7 +887,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
 
       BitNodeMultipliers.ServerStartingSecurity = 3;
 
-      BitNodeMultipliers.ScriptHackMoney = 0.4;
+      BitNodeMultipliers.ScriptHackMoney = 0.2;
       BitNodeMultipliers.CompanyWorkMoney = 0.4;
       BitNodeMultipliers.CrimeMoney = 0.4;
       BitNodeMultipliers.HacknetNodeMoney = 0.4;
@@ -896,7 +896,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.CompanyWorkExpGain = 0.5;
       BitNodeMultipliers.ClassGymExpGain = 0.5;
       BitNodeMultipliers.FactionWorkExpGain = 0.5;
-      BitNodeMultipliers.HackExpGain = 0.5;
+      BitNodeMultipliers.HackExpGain = 0.1;
       BitNodeMultipliers.CrimeExpGain = 0.5;
 
       BitNodeMultipliers.FactionWorkRepGain = 0.6;
