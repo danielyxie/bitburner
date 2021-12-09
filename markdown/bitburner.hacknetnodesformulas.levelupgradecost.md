@@ -4,6 +4,8 @@
 
 ## HacknetNodesFormulas.levelUpgradeCost() method
 
+Calculate cost of upgrading hacknet node level.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,11 +16,13 @@ levelUpgradeCost(startingLevel: number, extraLevels?: number, costMult?: number)
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  startingLevel | number |  |
-|  extraLevels | number |  |
-|  costMult | number |  |
+|  startingLevel | number | starting level |
+|  extraLevels | number | amount of level to purchase (defaults to 1) |
+|  costMult | number | player cost reduction (default to 1) |
 
 <b>Returns:</b>
 
 number
+
+The calculated cost.
 

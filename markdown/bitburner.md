@@ -37,12 +37,12 @@
 |  [GangOtherInfoObject](./bitburner.gangotherinfoobject.md) |  |
 |  [GangTaskStats](./bitburner.gangtaskstats.md) | Object representing data representing a gang member task. |
 |  [GangTerritory](./bitburner.gangterritory.md) |  |
-|  [HackingFormulas](./bitburner.hackingformulas.md) |  |
+|  [HackingFormulas](./bitburner.hackingformulas.md) | Hacking formulas |
 |  [HackingMultipliers](./bitburner.hackingmultipliers.md) | Hack related multipliers. |
 |  [Hacknet](./bitburner.hacknet.md) | Hacknet API |
 |  [HacknetMultipliers](./bitburner.hacknetmultipliers.md) | Hacknet related multipliers. |
-|  [HacknetNodesFormulas](./bitburner.hacknetnodesformulas.md) |  |
-|  [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) |  |
+|  [HacknetNodesFormulas](./bitburner.hacknetnodesformulas.md) | Hacknet Node formulas |
+|  [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) | Hacknet Server formulas |
 |  [Material](./bitburner.material.md) |  |
 |  [NodeStats](./bitburner.nodestats.md) | Object representing all the values related to a hacknet node. |
 |  [NS](./bitburner.ns.md) | Collection of all functions passed to scripts |
@@ -55,7 +55,7 @@
 |  [RunningScript](./bitburner.runningscript.md) |  |
 |  [Server](./bitburner.server.md) | A single server. |
 |  [Singularity](./bitburner.singularity.md) | Singularity API |
-|  [SkillsFormulas](./bitburner.skillsformulas.md) |  |
+|  [SkillsFormulas](./bitburner.skillsformulas.md) | Skills formulas |
 |  [Sleeve](./bitburner.sleeve.md) | Sleeve API |
 |  [SleeveInformation](./bitburner.sleeveinformation.md) | Object representing sleeve information. |
 |  [SleeveSkills](./bitburner.sleeveskills.md) | Object representing a sleeve stats. |

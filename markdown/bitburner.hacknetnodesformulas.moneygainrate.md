@@ -4,6 +4,8 @@
 
 ## HacknetNodesFormulas.moneyGainRate() method
 
+Calculate money gain rate.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,12 +16,14 @@ moneyGainRate(level: number, ram: number, cores: number, mult?: number): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  level | number |  |
-|  ram | number |  |
-|  cores | number |  |
-|  mult | number |  |
+|  level | number | level of the node. |
+|  ram | number | ram of the node. |
+|  cores | number | cores of the node. |
+|  mult | number | player production mult (default to 1) |
 
 <b>Returns:</b>
 
 number
+
+The calculated money gain rate.
 

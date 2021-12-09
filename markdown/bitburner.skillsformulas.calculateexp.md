@@ -4,20 +4,24 @@
 
 ## SkillsFormulas.calculateExp() method
 
+Calculate exp for skill level.
+
 <b>Signature:</b>
 
 ```typescript
-calculateExp(skill: number, mult?: number): number;
+calculateExp(skill: number, skillMult?: number): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  skill | number |  |
-|  mult | number |  |
+|  skill | number | target skill level |
+|  skillMult | number | Multiplier for that skill, defaults to 1. |
 
 <b>Returns:</b>
 
 number
+
+The calculated exp required.
 

@@ -4,20 +4,24 @@
 
 ## HackingFormulas.hackChance() method
 
+Calculate hack chance.
+
 <b>Signature:</b>
 
 ```typescript
-hackChance(server: number, player: number): number;
+hackChance(server: Server, player: Player): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  server | number |  |
-|  player | number |  |
+|  server | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
+|  player | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
 
 <b>Returns:</b>
 
 number
+
+The calculated hack chance.
 

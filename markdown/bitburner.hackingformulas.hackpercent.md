@@ -4,20 +4,28 @@
 
 ## HackingFormulas.hackPercent() method
 
+Calculate hack percent for one thread.
+
 <b>Signature:</b>
 
 ```typescript
-hackPercent(server: number, player: number): number;
+hackPercent(server: Server, player: Player): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  server | number |  |
-|  player | number |  |
+|  server | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
+|  player | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
 
 <b>Returns:</b>
 
 number
+
+The calculated hack percent.
+
+## Remarks
+
+Multiply by thread to get total percent hacked.
 

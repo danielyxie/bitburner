@@ -1270,7 +1270,7 @@ export declare interface GangFormulas {
      * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}
      * @returns The calculated wanted penalty.
      */
-    calculateWantedPenalty(gang: GangGenInfo): number;
+    wantedPenalty(gang: GangGenInfo): number;
     /**
      * Calculate respect gain per tick.
      * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}
@@ -1278,7 +1278,7 @@ export declare interface GangFormulas {
      * @param task - Gang info from {@link Gang.getTaskStats | getTaskStats}
      * @returns The calculated respect gain.
      */
-    calculateRespectGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
+    respectGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
     /**
      * Calculate wanted gain per tick.
      * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}
@@ -1286,7 +1286,7 @@ export declare interface GangFormulas {
      * @param task - Task info from {@link Gang.getTaskStats | getTaskStats}
      * @returns The calculated wanted gain.
      */
-    calculateWantedLevelGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
+    wantedLevelGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
     /**
      * Calculate money gain per tick.
      * @param gang - Gang info from {@link Gang.getGangInformation | getGangInformation}
@@ -1294,7 +1294,7 @@ export declare interface GangFormulas {
      * @param task - Task info from {@link Gang.getTaskStats | getTaskStats}
      * @returns The calculated money gain.
      */
-    calculateMoneyGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
+    moneyGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): number;
 }
 
 /**
@@ -1471,16 +1471,65 @@ export declare interface GangTerritory {
 }
 
 /**
+ * Hacking formulas
  * @public
  */
 export declare interface HackingFormulas {
-    hackChance(server: number, player: number): number;
-    hackExp(server: number, player: number): number;
-    hackPercent(server: number, player: number): number;
-    growPercent(server: number, threads: number, player: number, cores?: number): number;
-    hackTime(server: number, player: number): number;
-    growTime(server: number, player: number): number;
-    weakenTime(server: number, player: number): number;
+    /**
+     * Calculate hack chance.
+     * @param server - Server info from {@link NS.getServer | getServer}
+     * @param player - Player info from {@link NS.getPlayer | getPlayer}
+     * @returns The calculated hack chance.
+     */
+    hackChance(server: Server, player: Player): number;
+    /**
+     * Calculate hack exp for one thread.
+     * @remarks
+     * Multiply by thread to get total exp
+     * @param server - Server info from {@link NS.getServer | getServer}
+     * @param player - Player info from {@link NS.getPlayer | getPlayer}
+     * @returns The calculated hack exp.
+     */
+    hackExp(server: Server, player: Player): number;
+    /**
+     * Calculate hack percent for one thread.
+     * @remarks
+     * Multiply by thread to get total percent hacked.
+     * @param server - Server info from {@link NS.getServer | getServer}
+     * @param player - Player info from {@link NS.getPlayer | getPlayer}
+     * @returns The calculated hack percent.
+     */
+    hackPercent(server: Server, player: Player): number;
+    /**
+     * Calculate the percent a server would grow.
+     * @param server - Server info from {@link NS.getServer | getServer}
+     * @param threads - Amount of thread.
+     * @param player - Player info from {@link NS.getPlayer | getPlayer}
+     * @param cores - Number of cores on the computer that will execute grow.
+     * @returns The calculated grow percent.
+     */
+    growPercent(server: Server, threads: number, player: Player, cores?: number): number;
+    /**
+     * Calculate hack time.
+     * @param server - Server info from {@link NS.getServer | getServer}
+     * @param player - Player info from {@link NS.getPlayer | getPlayer}
+     * @returns The calculated hack time.
+     */
+    hackTime(server: Server, player: Player): number;
+    /**
+     * Calculate grow time.
+     * @param server - Server info from {@link NS.getServer | getServer}
+     * @param player - Player info from {@link NS.getPlayer | getPlayer}
+     * @returns The calculated grow time.
+     */
+    growTime(server: Server, player: Player): number;
+    /**
+     * Calculate weaken time.
+     * @param server - Server info from {@link NS.getServer | getServer}
+     * @param player - Player info from {@link NS.getPlayer | getPlayer}
+     * @returns The calculated weaken time.
+     */
+    weakenTime(server: Server, player: Player): number;
 }
 
 /**
@@ -1834,28 +1883,121 @@ export declare interface HacknetMultipliers {
 }
 
 /**
+ * Hacknet Node formulas
  * @public
  */
 export declare interface HacknetNodesFormulas {
+    /**
+     * Calculate money gain rate.
+     * @param level - level of the node.
+     * @param ram - ram of the node.
+     * @param cores - cores of the node.
+     * @param mult - player production mult (default to 1)
+     * @returns The calculated money gain rate.
+     */
     moneyGainRate(level: number, ram: number, cores: number, mult?: number): number;
+    /**
+     * Calculate cost of upgrading hacknet node level.
+     * @param startingLevel - starting level
+     * @param extraLevels - amount of level to purchase (defaults to 1)
+     * @param costMult - player cost reduction (default to 1)
+     * @returns The calculated cost.
+     */
     levelUpgradeCost(startingLevel: number, extraLevels?: number, costMult?: number): number;
+    /**
+     * Calculate cost of upgrading hacknet node ram.
+     * @param startingRam - starting ram
+     * @param extraLevels - amount of level of ram to purchase (defaults to 1)
+     * @param costMult - player cost reduction (default to 1)
+     * @returns The calculated cost.
+     */
     ramUpgradeCost(startingRam: number, extraLevels?: number, costMult?: number): number;
+    /**
+     * Calculate cost of upgrading hacknet node cores.
+     * @param startingCore - starting cores
+     * @param extraCores - amount of cores to purchase (defaults to 1)
+     * @param costMult - player cost reduction (default to 1)
+     * @returns The calculated cost.
+     */
     coreUpgradeCost(startingCore: number, extraCores?: number, costMult?: number): number;
+    /**
+     * Calculate the cost of a hacknet node.
+     * @param n - number of the hacknet node
+     * @param mult - player cost reduction (defaults to 1)
+     * @returns The calculated cost.
+     */
     hacknetNodeCost(n: number, mult: number): number;
+    /**
+     * All constants used by the game.
+     * @returns An object with all hacknet node constants used by the game.
+     */
     constants(): number;
 }
 
 /**
+ * Hacknet Server formulas
  * @public
  */
 export declare interface HacknetServersFormulas {
+    /**
+     * Calculate hash gain rate.
+     * @param level - level of the server.
+     * @param ramUsed - ramUsed of the server.
+     * @param maxRam - maxRam of the server.
+     * @param cores - cores of the server.
+     * @param mult - player production mult (default to 1)
+     * @returns The calculated hash gain rate.
+     */
     hashGainRate(level: number, ramUsed: number, maxRam: number, cores: number, mult?: number): number;
+    /**
+     * Calculate cost of upgrading hacknet server level.
+     * @param startingLevel - starting level
+     * @param extraLevels - amount of level to purchase (defaults to 1)
+     * @param costMult - player cost reduction (default to 1)
+     * @returns The calculated cost.
+     */
     levelUpgradeCost(startingLevel: number, extraLevels?: number, costMult?: number): number;
+    /**
+     * Calculate cost of upgrading hacknet server ram.
+     * @param startingRam - starting ram
+     * @param extraLevels - amount of level of ram to purchase (defaults to 1)
+     * @param costMult - player cost reduction (default to 1)
+     * @returns The calculated cost.
+     */
     ramUpgradeCost(startingRam: number, extraLevels?: number, costMult?: number): number;
+    /**
+     * Calculate cost of upgrading hacknet server cores.
+     * @param startingCore - starting cores
+     * @param extraCores - amount of cores to purchase (defaults to 1)
+     * @param costMult - player cost reduction (default to 1)
+     * @returns The calculated cost.
+     */
     coreUpgradeCost(startingCore: number, extraCores?: number, costMult?: number): number;
+    /**
+     * Calculate cost of upgrading hacknet server cache.
+     * @param startingCache - starting cache level
+     * @param extraCache - amount of levels of cache to purchase (defaults to 1)
+     * @returns The calculated cost.
+     */
     cacheUpgradeCost(startingCache: number, extraCache?: number): number;
+    /**
+     * Calculate hash cost of an upgrade.
+     * @param upgName - name of the upgrade
+     * @param level - level of the upgrade
+     * @returns The calculated hash cost.
+     */
     hashUpgradeCost(upgName: number, level: number): number;
-    hacknetServerCost(n: number, mult: number): number;
+    /**
+     * Calculate the cost of a hacknet server.
+     * @param n - number of the hacknet server
+     * @param mult - player cost reduction (defaults to 1)
+     * @returns The calculated cost.
+     */
+    hacknetServerCost(n: number, mult?: number): number;
+    /**
+     * All constants used by the game.
+     * @returns An object with all hacknet server constants used by the game.
+     */
     constants(): any;
 }
 
@@ -4550,11 +4692,24 @@ export declare interface Singularity {
 }
 
 /**
+ * Skills formulas
  * @public
  */
 export declare interface SkillsFormulas {
-    calculateSkill(exp: number, mult?: number): number;
-    calculateExp(skill: number, mult?: number): number;
+    /**
+     * Calculate skill level.
+     * @param exp - experience for that skill
+     * @param skillMult - Multiplier for that skill, defaults to 1.
+     * @returns The calculated skill level.
+     */
+    calculateSkill(exp: number, skillMult?: number): number;
+    /**
+     * Calculate exp for skill level.
+     * @param skill - target skill level
+     * @param skillMult - Multiplier for that skill, defaults to 1.
+     * @returns The calculated exp required.
+     */
+    calculateExp(skill: number, skillMult?: number): number;
 }
 
 /**

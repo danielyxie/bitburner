@@ -16,8 +16,8 @@ interface GangFormulas
 
 |  Method | Description |
 |  --- | --- |
-|  [calculateMoneyGain(gang, member, task)](./bitburner.gangformulas.calculatemoneygain.md) | Calculate money gain per tick. |
-|  [calculateRespectGain(gang, member, task)](./bitburner.gangformulas.calculaterespectgain.md) | Calculate respect gain per tick. |
-|  [calculateWantedLevelGain(gang, member, task)](./bitburner.gangformulas.calculatewantedlevelgain.md) | Calculate wanted gain per tick. |
-|  [calculateWantedPenalty(gang)](./bitburner.gangformulas.calculatewantedpenalty.md) | Calculate the wanted penalty. |
+|  [moneyGain(gang, member, task)](./bitburner.gangformulas.moneygain.md) | Calculate money gain per tick. |
+|  [respectGain(gang, member, task)](./bitburner.gangformulas.respectgain.md) | Calculate respect gain per tick. |
+|  [wantedLevelGain(gang, member, task)](./bitburner.gangformulas.wantedlevelgain.md) | Calculate wanted gain per tick. |
+|  [wantedPenalty(gang)](./bitburner.gangformulas.wantedpenalty.md) | Calculate the wanted penalty. |
 

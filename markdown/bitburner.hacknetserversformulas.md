@@ -4,6 +4,7 @@
 
 ## HacknetServersFormulas interface
 
+Hacknet Server formulas
 
 <b>Signature:</b>
 
@@ -15,12 +16,12 @@ interface HacknetServersFormulas
 
 |  Method | Description |
 |  --- | --- |
-|  [cacheUpgradeCost(startingCache, extraCache)](./bitburner.hacknetserversformulas.cacheupgradecost.md) |  |
-|  [constants()](./bitburner.hacknetserversformulas.constants.md) |  |
-|  [coreUpgradeCost(startingCore, extraCores, costMult)](./bitburner.hacknetserversformulas.coreupgradecost.md) |  |
-|  [hacknetServerCost(n, mult)](./bitburner.hacknetserversformulas.hacknetservercost.md) |  |
-|  [hashGainRate(level, ramUsed, maxRam, cores, mult)](./bitburner.hacknetserversformulas.hashgainrate.md) |  |
-|  [hashUpgradeCost(upgName, level)](./bitburner.hacknetserversformulas.hashupgradecost.md) |  |
-|  [levelUpgradeCost(startingLevel, extraLevels, costMult)](./bitburner.hacknetserversformulas.levelupgradecost.md) |  |
-|  [ramUpgradeCost(startingRam, extraLevels, costMult)](./bitburner.hacknetserversformulas.ramupgradecost.md) |  |
+|  [cacheUpgradeCost(startingCache, extraCache)](./bitburner.hacknetserversformulas.cacheupgradecost.md) | Calculate cost of upgrading hacknet server cache. |
+|  [constants()](./bitburner.hacknetserversformulas.constants.md) | All constants used by the game. |
+|  [coreUpgradeCost(startingCore, extraCores, costMult)](./bitburner.hacknetserversformulas.coreupgradecost.md) | Calculate cost of upgrading hacknet server cores. |
+|  [hacknetServerCost(n, mult)](./bitburner.hacknetserversformulas.hacknetservercost.md) | Calculate the cost of a hacknet server. |
+|  [hashGainRate(level, ramUsed, maxRam, cores, mult)](./bitburner.hacknetserversformulas.hashgainrate.md) | Calculate hash gain rate. |
+|  [hashUpgradeCost(upgName, level)](./bitburner.hacknetserversformulas.hashupgradecost.md) | Calculate hash cost of an upgrade. |
+|  [levelUpgradeCost(startingLevel, extraLevels, costMult)](./bitburner.hacknetserversformulas.levelupgradecost.md) | Calculate cost of upgrading hacknet server level. |
+|  [ramUpgradeCost(startingRam, extraLevels, costMult)](./bitburner.hacknetserversformulas.ramupgradecost.md) | Calculate cost of upgrading hacknet server ram. |
 

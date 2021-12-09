@@ -4,20 +4,28 @@
 
 ## HackingFormulas.hackExp() method
 
+Calculate hack exp for one thread.
+
 <b>Signature:</b>
 
 ```typescript
-hackExp(server: number, player: number): number;
+hackExp(server: Server, player: Player): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  server | number |  |
-|  player | number |  |
+|  server | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
+|  player | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
 
 <b>Returns:</b>
 
 number
+
+The calculated hack exp.
+
+## Remarks
+
+Multiply by thread to get total exp
 

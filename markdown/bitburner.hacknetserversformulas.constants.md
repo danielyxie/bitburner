@@ -4,6 +4,8 @@
 
 ## HacknetServersFormulas.constants() method
 
+All constants used by the game.
+
 <b>Signature:</b>
 
 ```typescript
@@ -12,4 +14,6 @@ constants(): any;
 <b>Returns:</b>
 
 any
+
+An object with all hacknet server constants used by the game.
 

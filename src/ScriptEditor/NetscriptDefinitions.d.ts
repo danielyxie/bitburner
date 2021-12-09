@@ -3308,11 +3308,24 @@ export interface Sleeve {
 }
 
 /**
+ * Skills formulas
  * @public
  */
 interface SkillsFormulas {
-  calculateSkill(exp: number, mult?: number): number;
-  calculateExp(skill: number, mult?: number): number;
+  /**
+   * Calculate skill level.
+   * @param exp - experience for that skill
+   * @param skillMult - Multiplier for that skill, defaults to 1.
+   * @returns The calculated skill level.
+   */
+  calculateSkill(exp: number, skillMult?: number): number;
+  /**
+   * Calculate exp for skill level.
+   * @param skill - target skill level
+   * @param skillMult - Multiplier for that skill, defaults to 1.
+   * @returns The calculated exp required.
+   */
+  calculateExp(skill: number, skillMult?: number): number;
 }
 
 /**
@@ -3327,15 +3340,58 @@ interface HackingFormulas {
    * @returns The calculated hack chance.
    */
   hackChance(server: Server, player: Player): number;
+  /**
+   * Calculate hack exp for one thread.
+   * @remarks
+   * Multiply by thread to get total exp
+   * @param server - Server info from {@link NS.getServer | getServer}
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @returns The calculated hack exp.
+   */
   hackExp(server: Server, player: Player): number;
+  /**
+   * Calculate hack percent for one thread.
+   * @remarks
+   * Multiply by thread to get total percent hacked.
+   * @param server - Server info from {@link NS.getServer | getServer}
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @returns The calculated hack percent.
+   */
   hackPercent(server: Server, player: Player): number;
+  /**
+   * Calculate the percent a server would grow.
+   * @param server - Server info from {@link NS.getServer | getServer}
+   * @param threads - Amount of thread.
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @param cores - Number of cores on the computer that will execute grow.
+   * @returns The calculated grow percent.
+   */
   growPercent(server: Server, threads: number, player: Player, cores?: number): number;
+  /**
+   * Calculate hack time.
+   * @param server - Server info from {@link NS.getServer | getServer}
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @returns The calculated hack time.
+   */
   hackTime(server: Server, player: Player): number;
+  /**
+   * Calculate grow time.
+   * @param server - Server info from {@link NS.getServer | getServer}
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @returns The calculated grow time.
+   */
   growTime(server: Server, player: Player): number;
+  /**
+   * Calculate weaken time.
+   * @param server - Server info from {@link NS.getServer | getServer}
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @returns The calculated weaken time.
+   */
   weakenTime(server: Server, player: Player): number;
 }
 
 /**
+ * Hacknet Node formulas
  * @public
  */
 interface HacknetNodesFormulas {
