@@ -4,6 +4,8 @@
 
 ## Product.dmd property
 
+Demand for the product
+
 <b>Signature:</b>
 
 ```typescript

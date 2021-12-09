@@ -4,18 +4,20 @@
 
 ## Corporation.expandIndustry() method
 
+Expand to a new industry
+
 <b>Signature:</b>
 
 ```typescript
-expandIndustry(industryName: string, divisionName: string): void;
+expandIndustry(industryType: string, divisionName: string): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  industryName | string |  |
-|  divisionName | string |  |
+|  industryType | string | Name of the industry |
+|  divisionName | string | Name of the division |
 
 <b>Returns:</b>
 

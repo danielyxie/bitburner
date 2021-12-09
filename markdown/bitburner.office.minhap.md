@@ -4,6 +4,8 @@
 
 ## Office.minHap property
 
+Minimum happiness of the employees
+
 <b>Signature:</b>
 
 ```typescript

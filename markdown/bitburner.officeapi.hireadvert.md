@@ -4,6 +4,8 @@
 
 ## OfficeAPI.hireAdVert() method
 
+Hire AdVert.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,7 +16,7 @@ hireAdVert(divisionName: string): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
+|  divisionName | string | Name of the division |
 
 <b>Returns:</b>
 

@@ -4,6 +4,8 @@
 
 ## Warehouse.sizeUsed property
 
+Used space in the warehouse
+
 <b>Signature:</b>
 
 ```typescript

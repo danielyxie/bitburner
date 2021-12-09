@@ -4,6 +4,8 @@
 
 ## Office.size property
 
+Maximum number of employee
+
 <b>Signature:</b>
 
 ```typescript

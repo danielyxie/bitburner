@@ -4,6 +4,7 @@
 
 ## CorporationInfo interface
 
+General info about a corporation
 
 <b>Signature:</b>
 
@@ -15,15 +16,15 @@ interface CorporationInfo
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [expenses](./bitburner.corporationinfo.expenses.md) | number |  |
-|  [funds](./bitburner.corporationinfo.funds.md) | number |  |
-|  [issuedShares](./bitburner.corporationinfo.issuedshares.md) | number |  |
-|  [name](./bitburner.corporationinfo.name.md) | string |  |
-|  [numShares](./bitburner.corporationinfo.numshares.md) | number |  |
-|  [public](./bitburner.corporationinfo.public.md) | boolean |  |
-|  [revenue](./bitburner.corporationinfo.revenue.md) | number |  |
-|  [sharePrice](./bitburner.corporationinfo.shareprice.md) | number |  |
-|  [shareSaleCooldown](./bitburner.corporationinfo.sharesalecooldown.md) | number |  |
-|  [state](./bitburner.corporationinfo.state.md) | string |  |
-|  [totalShares](./bitburner.corporationinfo.totalshares.md) | number |  |
+|  [expenses](./bitburner.corporationinfo.expenses.md) | number | Expenses per second this cycle |
+|  [funds](./bitburner.corporationinfo.funds.md) | number | Funds available |
+|  [issuedShares](./bitburner.corporationinfo.issuedshares.md) | number | Amount of shares issued |
+|  [name](./bitburner.corporationinfo.name.md) | string | Name of the corporation |
+|  [numShares](./bitburner.corporationinfo.numshares.md) | number | Amount of share owned |
+|  [public](./bitburner.corporationinfo.public.md) | boolean | Is the company is public |
+|  [revenue](./bitburner.corporationinfo.revenue.md) | number | Revenue per second this cycle |
+|  [sharePrice](./bitburner.corporationinfo.shareprice.md) | number | Price of the shares |
+|  [shareSaleCooldown](./bitburner.corporationinfo.sharesalecooldown.md) | number | Cooldown until shares can be sold again |
+|  [state](./bitburner.corporationinfo.state.md) | string | State of the corporation, like PRODUCTION or EXPORT |
+|  [totalShares](./bitburner.corporationinfo.totalshares.md) | number | Total number of shares issues by this corporation |
 

@@ -4,6 +4,8 @@
 
 ## CorporationInfo.funds property
 
+Funds available
+
 <b>Signature:</b>
 
 ```typescript

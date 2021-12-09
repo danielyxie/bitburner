@@ -4,6 +4,8 @@
 
 ## Corporation.getCorporation() method
 
+Get corporation data
+
 <b>Signature:</b>
 
 ```typescript
@@ -12,4 +14,6 @@ getCorporation(): CorporationInfo;
 <b>Returns:</b>
 
 [CorporationInfo](./bitburner.corporationinfo.md)
+
+Corporation data
 

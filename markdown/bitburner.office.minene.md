@@ -4,6 +4,8 @@
 
 ## Office.minEne property
 
+Minimum amount of energy of the employees
+
 <b>Signature:</b>
 
 ```typescript

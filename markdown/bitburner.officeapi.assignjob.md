@@ -4,6 +4,8 @@
 
 ## OfficeAPI.assignJob() method
 
+Assign an employee to a job.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,12 +16,14 @@ assignJob(divisionName: string, cityName: string, employeeName: string, job: str
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
-|  employeeName | string |  |
-|  job | string |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
+|  employeeName | string | name of the employee |
+|  job | string | Name of the job. |
 
 <b>Returns:</b>
 
 Promise&lt;void&gt;
+
+A promise that is fulfilled when the assignment is complete.
 

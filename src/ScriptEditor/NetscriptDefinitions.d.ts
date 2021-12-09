@@ -5358,44 +5358,192 @@ export interface NS extends Singularity {
 }
 
 /**
+ * Corporation Office API
+ * @remarks
+ * Requires the Office API upgrade from your corporation.
  * @public
  */
 export interface OfficeAPI {
-  employees(divisionName: string, cityName: string): string[];
+  /**
+   * Assign an employee to a job.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param employeeName - name of the employee
+   * @param job - Name of the job.
+   * @returns A promise that is fulfilled when the assignment is complete.
+   */
   assignJob(divisionName: string, cityName: string, employeeName: string, job: string): Promise<void>;
-  hireEmployee(divisionName: string, cityName: string): Employee;
+  /**
+   * Assign an employee to a job.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @returns The newly hired employee, if any
+   */
+  hireEmployee(divisionName: string, cityName: string): Employee | undefined;
+  /**
+   * Upgrade office size.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param size - Amount of positions to open
+   */
   upgradeOfficeSize(divisionName: string, cityName: string, size: number): void;
+  /**
+   * Assign an employee to a job.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param costPerEmployee - Amount to spend per employee.
+   * @returns Amount of happiness increased.
+   */
   throwParty(divisionName: string, cityName: string, costPerEmployee: number): Promise<number>;
+  /**
+   * Buy coffee for your employees
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @returns A promise that is fulfilled when the coffee is served.
+   */
   buyCoffee(divisionName: string, cityName: string): Promise<void>;
+  /**
+   * Hire AdVert.
+   * @param divisionName - Name of the division
+   */
   hireAdVert(divisionName: string): void;
+  /**
+   * Hire AdVert.
+   * @param divisionName - Name of the division
+   * @param researchName - Name of the research
+   */
   research(divisionName: string, researchName: string): void;
+  /**
+   * Get data about an office
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @returns Office data
+   */
   getOffice(divisionName: string, cityName: string): Office;
+  /**
+   * Get data about an employee
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param employeeName - Name of the employee
+   * @returns Employee data
+   */
   getEmployee(divisionName: string, cityName: string, employeeName: string): Employee;
 }
 
 /**
+ * Corporation Warehouse API
+ * @remarks
+ * Requires the Warehouse API upgrade from your corporation.
  * @public
  */
 export interface WarehouseAPI {
-  sellMaterial(divisionName: string, cityName: string, materialName: string, amt: number, price: number): void;
+  /**
+   * Set material sell data.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param amt - Amount to sell, can be "MAX"
+   * @param price - Price to sell, can be "MP"
+   */
+  sellMaterial(divisionName: string, cityName: string, materialName: string, amt: string, price: string): void;
+  /**
+   * Set product sell data.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param productName - Name of the product
+   * @param amt - Amount to sell, can be "MAX"
+   * @param price - Price to sell, can be "MP"
+   * @param all - Sell in all city
+   */
   sellProduct(
     divisionName: string,
     cityName: string,
     productName: string,
-    amt: number,
-    price: number,
+    amt: string,
+    price: string,
     all: boolean,
   ): void;
+  /**
+   * Discontinue a product.
+   * @param divisionName - Name of the division
+   * @param productName - Name of the product
+   */
   discontinueProduct(divisionName: string, productName: string): void;
+  /**
+   * Set smart supply
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param enabled - smart supply enabled
+   */
   setSmartSupply(divisionName: string, cityName: string, enabled: boolean): void;
+  /**
+   * Set material buy data
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param amt - Amount of material to buy
+   */
   buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
+  /**
+   * Get warehouse data
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @returns warehouse data
+   */
   getWarehouse(divisionName: string, cityName: string): Warehouse;
+  /**
+   * Get product data
+   * @param divisionName - Name of the division
+   * @param productName - Name of the product
+   * @returns product data
+   */
   getProduct(divisionName: string, productName: string): Product;
+  /**
+   * Get material data
+   * @param divisionName - Name of the division
+   * @param materialName - Name of the material
+   * @returns material data
+   */
   getMaterial(divisionName: string, cityName: string, materialName: string): Material;
+  /**
+   * Set market TA 1 for a material.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param on - market ta enabled
+   */
   setMaterialMarketTA1(divisionName: string, cityName: string, materialName: string, on: boolean): void;
+  /**
+   * Set market TA 2 for a material.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param on - market ta enabled
+   */
   setMaterialMarketTA2(divisionName: string, cityName: string, materialName: string, on: boolean): void;
+  /**
+   * Set market TA 1 for a product.
+   * @param divisionName - Name of the division
+   * @param productName - Name of the product
+   * @param on - market ta enabled
+   */
   setProductMarketTA1(divisionName: string, productName: string, on: boolean): void;
+  /**
+   * Set market TA 2 for a product.
+   * @param divisionName - Name of the division
+   * @param productName - Name of the product
+   * @param on - market ta enabled
+   */
   setProductMarketTA2(divisionName: string, productName: string, on: boolean): void;
+  /**
+   * Set material export data
+   * @param sourceDivision - Source division
+   * @param sourceCity - Source city
+   * @param targetDivision - Target division
+   * @param targetCity - Target city
+   * @param materialName - Name of the material
+   * @param amt - Amount of material to export.
+   */
   exportMaterial(
     sourceDivision: string,
     sourceCity: string,
@@ -5404,6 +5552,15 @@ export interface WarehouseAPI {
     materialName: string,
     amt: number,
   ): void;
+  /**
+   * Cancel material export
+   * @param sourceDivision - Source division
+   * @param sourceCity - Source city
+   * @param targetDivision - Target division
+   * @param targetCity - Target city
+   * @param materialName - Name of the material
+   * @param amt - Amount of material to export.
+   */
   cancelExportMaterial(
     sourceDivision: string,
     sourceCity: string,
@@ -5412,8 +5569,26 @@ export interface WarehouseAPI {
     materialName: string,
     amt: number,
   ): void;
+  /**
+   * Purchase warehouse for a new city
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   */
   purchaseWarehouse(divisionName: string, cityName: string): void;
+  /**
+   * Upgrade warehouse
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   */
   upgradeWarehouse(divisionName: string, cityName: string): void;
+  /**
+   * Create a new product
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param productName - Name of the product
+   * @param designInvest - Amount to invest for the design of the product.
+   * @param marketingInvest - Amount to invest for the marketing of the product.
+   */
   makeProduct(
     divisionName: string,
     cityName: string,
@@ -5424,99 +5599,177 @@ export interface WarehouseAPI {
 }
 
 /**
+ * Corporation API
  * @public
  */
 export interface Corporation extends WarehouseAPI, OfficeAPI {
+  /**
+   * Get corporation data
+   * @returns Corporation data
+   */
   getCorporation(): CorporationInfo;
+  /**
+   * Get division data
+   * @param divisionName - Name of the division
+   * @returns Division data
+   */
   getDivision(divisionName: string): Division;
-  expandIndustry(industryName: string, divisionName: string): void;
+  /**
+   * Expand to a new industry
+   * @param industryType - Name of the industry
+   * @param divisionName - Name of the division
+   */
+  expandIndustry(industryType: string, divisionName: string): void;
+  /**
+   * Expand to a new city
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   */
   expandCity(divisionName: string, cityName: string): void;
+  /**
+   * Unlock an upgrade.
+   * @param upgradeName - Name of the upgrade
+   */
   unlockUpgrade(upgradeName: string): void;
+  /**
+   * Level an upgrade.
+   * @param upgradeName - Name of the upgrade
+   */
   levelUpgrade(upgradeName: string): void;
+  /**
+   * Issue dividends
+   * @param percent - Percent of profit to issue as dividends.
+   */
   issueDividends(percent: number): void;
 }
 
 /**
+ * General info about a corporation
  * @public
  */
 interface CorporationInfo {
+  /** Name of the corporation */
   name: string;
+  /** Funds available */
   funds: number;
+  /** Revenue per second this cycle */
   revenue: number;
+  /** Expenses per second this cycle */
   expenses: number;
+  /** Is the company is public */
   public: boolean;
+  /** Total number of shares issues by this corporation */
   totalShares: number;
+  /** Amount of share owned */
   numShares: number;
+  /** Cooldown until shares can be sold again */
   shareSaleCooldown: number;
+  /** Amount of shares issued */
   issuedShares: number;
+  /** Price of the shares */
   sharePrice: number;
+  /** State of the corporation, like PRODUCTION or EXPORT */
   state: string;
 }
 
 /**
+ * Employee in an office
  * @public
  */
 interface Employee {
+  /** Name of the employee */
   name: string;
+  /** Morale */
   mor: number;
+  /** Happiness */
   hap: number;
+  /** Energy */
   ene: number;
   int: number;
   cha: number;
   exp: number;
   cre: number;
   eff: number;
+  /** Salary */
   sal: number;
+  /** City */
   loc: string;
+  /** Current job */
   pos: string;
 }
 
 /**
+ * Product in a warehouse
  * @public
  */
 interface Product {
+  /** Name of the product */
   name: string;
+  /** Demand for the product */
   dmd: number;
+  /** Competition for the product */
   cmp: number;
+  /** Production cost */
   pCost: number;
+  /** Sell cost, can be "MP+5" */
   sCost: string | number;
 }
 
 /**
+ * Material in a warehouse
  * @public
  */
 interface Material {
+  /** Name of the material */
   name: string;
+  /** Amount of material  */
   qty: number;
+  /** Quality of the material */
   qlt: number;
 }
 
 /**
+ * Warehouse for a division in a city
  * @public
  */
 interface Warehouse {
+  /** Amount of size upgrade bought */
   level: number;
+  /** City in which the warehouse is located */
   loc: string;
+  /** Total space in the warehouse */
   size: number;
+  /** Used space in the warehouse */
   sizeUsed: number;
 }
 
 /**
+ * Office for a division in a city.
  * @public
  */
 interface Office {
+  /** City of the office */
   loc: string;
+  /** Maximum number of employee */
   size: number;
+  /** Minimum amount of energy of the employees */
   minEne: number;
+  /** Maximum amount of energy of the employees */
   maxEne: number;
+  /** Minimum happiness of the employees */
   minHap: number;
+  /** Maximum happiness of the employees */
   maxHap: number;
+  /** Maximum morale of the employees */
   maxMor: number;
+  /** Name of all the employees */
   employees: string[];
+  /** Positions of the employees */
   employeeProd: EmployeeJobs;
 }
 
 /**
+ * Object representing the number of employee in each job.
  * @public
  */
 interface EmployeeJobs {
@@ -5530,19 +5783,32 @@ interface EmployeeJobs {
 }
 
 /**
+ * Corporation division
  * @public
  */
 interface Division {
+  /** Name of the division */
   name: string;
+  /** Type of division, like Aggriculture */
   type: string;
+  /** Awareness of the division */
   awareness: number;
+  /** Popularity of the division */
   popularity: number;
+  /** Production multiplier */
   prodMult: number;
+  /** Amount of research in that division */
   research: number;
+  /** Revenue last cycle */
   lastCycleRevenue: number;
+  /** Expenses last cycle */
   lastCycleExpenses: number;
+  /** Revenue this cycle */
   thisCycleRevenue: number;
+  /** Expenses this cycle */
   thisCycleExpenses: number;
+  /** All research bought */
   upgrades: number[];
+  /** Cities in which this division has expanded */
   cities: string[];
 }

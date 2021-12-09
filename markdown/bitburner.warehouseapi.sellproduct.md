@@ -4,6 +4,8 @@
 
 ## WarehouseAPI.sellProduct() method
 
+Set product sell data.
+
 <b>Signature:</b>
 
 ```typescript
@@ -11,8 +13,8 @@ sellProduct(
     divisionName: string,
     cityName: string,
     productName: string,
-    amt: number,
-    price: number,
+    amt: string,
+    price: string,
     all: boolean,
   ): void;
 ```
@@ -21,12 +23,12 @@ sellProduct(
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
-|  productName | string |  |
-|  amt | number |  |
-|  price | number |  |
-|  all | boolean |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
+|  productName | string | Name of the product |
+|  amt | string | Amount to sell, can be "MAX" |
+|  price | string | Price to sell, can be "MP" |
+|  all | boolean | Sell in all city |
 
 <b>Returns:</b>
 

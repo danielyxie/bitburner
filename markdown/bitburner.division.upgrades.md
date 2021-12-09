@@ -4,6 +4,8 @@
 
 ## Division.upgrades property
 
+All research bought
+
 <b>Signature:</b>
 
 ```typescript

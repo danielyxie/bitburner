@@ -5178,7 +5178,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Corporation:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Corporation API\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -5209,7 +5209,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Corporation#expandCity:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Expand to a new city\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5268,11 +5268,11 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Corporation#expandIndustry:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Expand to a new industry\n *\n * @param industryType - Name of the industry\n *\n * @param divisionName - Name of the division\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "expandIndustry(industryName: "
+                  "text": "expandIndustry(industryType: "
                 },
                 {
                   "kind": "Content",
@@ -5308,7 +5308,7 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "industryName",
+                  "parameterName": "industryType",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
@@ -5327,7 +5327,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Corporation#getCorporation:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Get corporation data\n *\n * @returns Corporation data\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5356,7 +5356,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Corporation#getDivision:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Get division data\n *\n * @param divisionName - Name of the division\n *\n * @returns Division data\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5401,7 +5401,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Corporation#issueDividends:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Issue dividends\n *\n * @param percent - Percent of profit to issue as dividends.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5445,7 +5445,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Corporation#levelUpgrade:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Level an upgrade.\n *\n * @param upgradeName - Name of the upgrade\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5489,7 +5489,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Corporation#unlockUpgrade:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Unlock an upgrade.\n *\n * @param upgradeName - Name of the upgrade\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5545,7 +5545,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!CorporationInfo:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * General info about a corporation\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -5558,7 +5558,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#expenses:member",
-              "docComment": "",
+              "docComment": "/**\n * Expenses per second this cycle\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5584,7 +5584,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#funds:member",
-              "docComment": "",
+              "docComment": "/**\n * Funds available\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5610,7 +5610,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#issuedShares:member",
-              "docComment": "",
+              "docComment": "/**\n * Amount of shares issued\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5636,7 +5636,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#name:member",
-              "docComment": "",
+              "docComment": "/**\n * Name of the corporation\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5662,7 +5662,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#numShares:member",
-              "docComment": "",
+              "docComment": "/**\n * Amount of share owned\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5688,7 +5688,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#public:member",
-              "docComment": "",
+              "docComment": "/**\n * Is the company is public\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5714,7 +5714,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#revenue:member",
-              "docComment": "",
+              "docComment": "/**\n * Revenue per second this cycle\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5740,7 +5740,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#sharePrice:member",
-              "docComment": "",
+              "docComment": "/**\n * Price of the shares\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5766,7 +5766,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#shareSaleCooldown:member",
-              "docComment": "",
+              "docComment": "/**\n * Cooldown until shares can be sold again\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5792,7 +5792,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#state:member",
-              "docComment": "",
+              "docComment": "/**\n * State of the corporation, like PRODUCTION or EXPORT\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5818,7 +5818,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#totalShares:member",
-              "docComment": "",
+              "docComment": "/**\n * Total number of shares issues by this corporation\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6383,7 +6383,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Division:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Corporation division\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -6396,7 +6396,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Division#awareness:member",
-              "docComment": "",
+              "docComment": "/**\n * Awareness of the division\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6422,7 +6422,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Division#cities:member",
-              "docComment": "",
+              "docComment": "/**\n * Cities in which this division has expanded\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6448,7 +6448,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Division#lastCycleExpenses:member",
-              "docComment": "",
+              "docComment": "/**\n * Expenses last cycle\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6474,7 +6474,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Division#lastCycleRevenue:member",
-              "docComment": "",
+              "docComment": "/**\n * Revenue last cycle\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6500,7 +6500,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Division#name:member",
-              "docComment": "",
+              "docComment": "/**\n * Name of the division\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6526,7 +6526,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Division#popularity:member",
-              "docComment": "",
+              "docComment": "/**\n * Popularity of the division\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6552,7 +6552,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Division#prodMult:member",
-              "docComment": "",
+              "docComment": "/**\n * Production multiplier\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6578,7 +6578,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Division#research:member",
-              "docComment": "",
+              "docComment": "/**\n * Amount of research in that division\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6604,7 +6604,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Division#thisCycleExpenses:member",
-              "docComment": "",
+              "docComment": "/**\n * Expenses this cycle\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6630,7 +6630,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Division#thisCycleRevenue:member",
-              "docComment": "",
+              "docComment": "/**\n * Revenue this cycle\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6656,7 +6656,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Division#type:member",
-              "docComment": "",
+              "docComment": "/**\n * Type of division, like Aggriculture\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6682,7 +6682,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Division#upgrades:member",
-              "docComment": "",
+              "docComment": "/**\n * All research bought\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6711,7 +6711,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Employee:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Employee in an office\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -6802,7 +6802,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Employee#ene:member",
-              "docComment": "",
+              "docComment": "/**\n * Energy\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6854,7 +6854,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Employee#hap:member",
-              "docComment": "",
+              "docComment": "/**\n * Happiness\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6906,7 +6906,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Employee#loc:member",
-              "docComment": "",
+              "docComment": "/**\n * City\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6932,7 +6932,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Employee#mor:member",
-              "docComment": "",
+              "docComment": "/**\n * Morale\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6958,7 +6958,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Employee#name:member",
-              "docComment": "",
+              "docComment": "/**\n * Name of the employee\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -6984,7 +6984,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Employee#pos:member",
-              "docComment": "",
+              "docComment": "/**\n * Current job\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -7010,7 +7010,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Employee#sal:member",
-              "docComment": "",
+              "docComment": "/**\n * Salary\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -7039,7 +7039,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!EmployeeJobs:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Object representing the number of employee in each job.\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -13763,7 +13763,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Material:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Material in a warehouse\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -13776,7 +13776,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Material#name:member",
-              "docComment": "",
+              "docComment": "/**\n * Name of the material\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13802,7 +13802,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Material#qlt:member",
-              "docComment": "",
+              "docComment": "/**\n * Quality of the material\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -13828,7 +13828,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Material#qty:member",
-              "docComment": "",
+              "docComment": "/**\n * Amount of material\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19344,7 +19344,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Office:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Office for a division in a city.\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -19357,7 +19357,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Office#employeeProd:member",
-              "docComment": "",
+              "docComment": "/**\n * Positions of the employees\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19384,7 +19384,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Office#employees:member",
-              "docComment": "",
+              "docComment": "/**\n * Name of all the employees\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19410,7 +19410,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Office#loc:member",
-              "docComment": "",
+              "docComment": "/**\n * City of the office\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19436,7 +19436,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Office#maxEne:member",
-              "docComment": "",
+              "docComment": "/**\n * Maximum amount of energy of the employees\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19462,7 +19462,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Office#maxHap:member",
-              "docComment": "",
+              "docComment": "/**\n * Maximum happiness of the employees\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19488,7 +19488,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Office#maxMor:member",
-              "docComment": "",
+              "docComment": "/**\n * Maximum morale of the employees\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19514,7 +19514,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Office#minEne:member",
-              "docComment": "",
+              "docComment": "/**\n * Minimum amount of energy of the employees\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19540,7 +19540,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Office#minHap:member",
-              "docComment": "",
+              "docComment": "/**\n * Minimum happiness of the employees\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19566,7 +19566,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Office#size:member",
-              "docComment": "",
+              "docComment": "/**\n * Maximum number of employee\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19595,7 +19595,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!OfficeAPI:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Corporation Office API\n *\n * @remarks\n *\n * Requires the Office API upgrade from your corporation.\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -19608,7 +19608,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#assignJob:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Assign an employee to a job.\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param employeeName - name of the employee\n *\n * @param job - Name of the job.\n *\n * @returns A promise that is fulfilled when the assignment is complete.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19702,7 +19702,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#buyCoffee:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Buy coffee for your employees\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @returns A promise that is fulfilled when the coffee is served.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19765,67 +19765,8 @@
             },
             {
               "kind": "MethodSignature",
-              "canonicalReference": "bitburner!OfficeAPI#employees:member(1)",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "employees(divisionName: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", cityName: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "returnTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
-              },
-              "releaseTag": "Public",
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "divisionName",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  }
-                },
-                {
-                  "parameterName": "cityName",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 3,
-                    "endIndex": 4
-                  }
-                }
-              ],
-              "name": "employees"
-            },
-            {
-              "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#getEmployee:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Get data about an employee\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param employeeName - Name of the employee\n *\n * @returns Employee data\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19900,7 +19841,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#getOffice:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Get data about an office\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @returns Office data\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19960,7 +19901,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#hireAdVert:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Hire AdVert.\n *\n * @param divisionName - Name of the division\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20004,7 +19945,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#hireEmployee:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Assign an employee to a job.\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @returns The newly hired employee, if any\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20033,13 +19974,17 @@
                 },
                 {
                   "kind": "Content",
+                  "text": " | undefined"
+                },
+                {
+                  "kind": "Content",
                   "text": ";"
                 }
               ],
               "isOptional": false,
               "returnTypeTokenRange": {
                 "startIndex": 5,
-                "endIndex": 6
+                "endIndex": 7
               },
               "releaseTag": "Public",
               "overloadIndex": 1,
@@ -20064,7 +20009,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#research:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Hire AdVert.\n *\n * @param divisionName - Name of the division\n *\n * @param researchName - Name of the research\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20123,7 +20068,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#throwParty:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Assign an employee to a job.\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param costPerEmployee - Amount to spend per employee.\n *\n * @returns Amount of happiness increased.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20202,7 +20147,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#upgradeOfficeSize:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Upgrade office size.\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param size - Amount of positions to open\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -22823,7 +22768,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Product:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Product in a warehouse\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -22836,7 +22781,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Product#cmp:member",
-              "docComment": "",
+              "docComment": "/**\n * Competition for the product\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -22862,7 +22807,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Product#dmd:member",
-              "docComment": "",
+              "docComment": "/**\n * Demand for the product\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -22888,7 +22833,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Product#name:member",
-              "docComment": "",
+              "docComment": "/**\n * Name of the product\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -22914,7 +22859,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Product#pCost:member",
-              "docComment": "",
+              "docComment": "/**\n * Production cost\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -22940,7 +22885,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Product#sCost:member",
-              "docComment": "",
+              "docComment": "/**\n * Sell cost, can be \"MP+5\"\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29502,7 +29447,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Warehouse:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Warehouse for a division in a city\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -29515,7 +29460,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Warehouse#level:member",
-              "docComment": "",
+              "docComment": "/**\n * Amount of size upgrade bought\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29541,7 +29486,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Warehouse#loc:member",
-              "docComment": "",
+              "docComment": "/**\n * City in which the warehouse is located\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29567,7 +29512,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Warehouse#size:member",
-              "docComment": "",
+              "docComment": "/**\n * Total space in the warehouse\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29593,7 +29538,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!Warehouse#sizeUsed:member",
-              "docComment": "",
+              "docComment": "/**\n * Used space in the warehouse\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29622,7 +29567,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!WarehouseAPI:interface",
-          "docComment": "/**\n * @public\n */\n",
+          "docComment": "/**\n * Corporation Warehouse API\n *\n * @remarks\n *\n * Requires the Warehouse API upgrade from your corporation.\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -29635,7 +29580,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#buyMaterial:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Set material buy data\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param materialName - Name of the material\n *\n * @param amt - Amount of material to buy\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29724,7 +29669,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#cancelExportMaterial:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Cancel material export\n *\n * @param sourceDivision - Source division\n *\n * @param sourceCity - Source city\n *\n * @param targetDivision - Target division\n *\n * @param targetCity - Target city\n *\n * @param materialName - Name of the material\n *\n * @param amt - Amount of material to export.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29843,7 +29788,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#discontinueProduct:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Discontinue a product.\n *\n * @param divisionName - Name of the division\n *\n * @param productName - Name of the product\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29902,7 +29847,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#exportMaterial:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Set material export data\n *\n * @param sourceDivision - Source division\n *\n * @param sourceCity - Source city\n *\n * @param targetDivision - Target division\n *\n * @param targetCity - Target city\n *\n * @param materialName - Name of the material\n *\n * @param amt - Amount of material to export.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30021,7 +29966,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#getMaterial:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Get material data\n *\n * @param divisionName - Name of the division\n *\n * @param materialName - Name of the material\n *\n * @returns material data\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30096,7 +30041,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#getProduct:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Get product data\n *\n * @param divisionName - Name of the division\n *\n * @param productName - Name of the product\n *\n * @returns product data\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30156,7 +30101,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#getWarehouse:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Get warehouse data\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @returns warehouse data\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30216,7 +30161,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#makeProduct:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Create a new product\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param productName - Name of the product\n *\n * @param designInvest - Amount to invest for the design of the product.\n *\n * @param marketingInvest - Amount to invest for the marketing of the product.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30320,7 +30265,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#purchaseWarehouse:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Purchase warehouse for a new city\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30379,7 +30324,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#sellMaterial:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Set material sell data.\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param materialName - Name of the material\n *\n * @param amt - Amount to sell, can be \"MAX\"\n *\n * @param price - Price to sell, can be \"MP\"\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30411,7 +30356,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "number"
+                  "text": "string"
                 },
                 {
                   "kind": "Content",
@@ -30419,7 +30364,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "number"
+                  "text": "string"
                 },
                 {
                   "kind": "Content",
@@ -30483,7 +30428,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#sellProduct:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Set product sell data.\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param productName - Name of the product\n *\n * @param amt - Amount to sell, can be \"MAX\"\n *\n * @param price - Price to sell, can be \"MP\"\n *\n * @param all - Sell in all city\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30515,7 +30460,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "number"
+                  "text": "string"
                 },
                 {
                   "kind": "Content",
@@ -30523,7 +30468,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "number"
+                  "text": "string"
                 },
                 {
                   "kind": "Content",
@@ -30602,7 +30547,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#setMaterialMarketTA1:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Set market TA 1 for a material.\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param materialName - Name of the material\n *\n * @param on - market ta enabled\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30691,7 +30636,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#setMaterialMarketTA2:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Set market TA 2 for a material.\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param materialName - Name of the material\n *\n * @param on - market ta enabled\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30780,7 +30725,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#setProductMarketTA1:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Set market TA 1 for a product.\n *\n * @param divisionName - Name of the division\n *\n * @param productName - Name of the product\n *\n * @param on - market ta enabled\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30854,7 +30799,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#setProductMarketTA2:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Set market TA 2 for a product.\n *\n * @param divisionName - Name of the division\n *\n * @param productName - Name of the product\n *\n * @param on - market ta enabled\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30928,7 +30873,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#setSmartSupply:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Set smart supply\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param enabled - smart supply enabled\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -31002,7 +30947,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#upgradeWarehouse:member(1)",
-              "docComment": "",
+              "docComment": "/**\n * Upgrade warehouse\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",

@@ -4,6 +4,8 @@
 
 ## CorporationInfo.revenue property
 
+Revenue per second this cycle
+
 <b>Signature:</b>
 
 ```typescript

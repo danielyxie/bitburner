@@ -4,6 +4,8 @@
 
 ## OfficeAPI.throwParty() method
 
+Assign an employee to a job.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,11 +16,13 @@ throwParty(divisionName: string, cityName: string, costPerEmployee: number): Pro
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
-|  costPerEmployee | number |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
+|  costPerEmployee | number | Amount to spend per employee. |
 
 <b>Returns:</b>
 
 Promise&lt;number&gt;
+
+Amount of happiness increased.
 

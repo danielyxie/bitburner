@@ -4,6 +4,8 @@
 
 ## WarehouseAPI.setSmartSupply() method
 
+Set smart supply
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,9 +16,9 @@ setSmartSupply(divisionName: string, cityName: string, enabled: boolean): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
-|  enabled | boolean |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
+|  enabled | boolean | smart supply enabled |
 
 <b>Returns:</b>
 

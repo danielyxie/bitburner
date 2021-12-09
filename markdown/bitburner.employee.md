@@ -4,6 +4,7 @@
 
 ## Employee interface
 
+Employee in an office
 
 <b>Signature:</b>
 
@@ -18,13 +19,13 @@ interface Employee
 |  [cha](./bitburner.employee.cha.md) | number |  |
 |  [cre](./bitburner.employee.cre.md) | number |  |
 |  [eff](./bitburner.employee.eff.md) | number |  |
-|  [ene](./bitburner.employee.ene.md) | number |  |
+|  [ene](./bitburner.employee.ene.md) | number | Energy |
 |  [exp](./bitburner.employee.exp.md) | number |  |
-|  [hap](./bitburner.employee.hap.md) | number |  |
+|  [hap](./bitburner.employee.hap.md) | number | Happiness |
 |  [int](./bitburner.employee.int.md) | number |  |
-|  [loc](./bitburner.employee.loc.md) | string |  |
-|  [mor](./bitburner.employee.mor.md) | number |  |
-|  [name](./bitburner.employee.name.md) | string |  |
-|  [pos](./bitburner.employee.pos.md) | string |  |
-|  [sal](./bitburner.employee.sal.md) | number |  |
+|  [loc](./bitburner.employee.loc.md) | string | City |
+|  [mor](./bitburner.employee.mor.md) | number | Morale |
+|  [name](./bitburner.employee.name.md) | string | Name of the employee |
+|  [pos](./bitburner.employee.pos.md) | string | Current job |
+|  [sal](./bitburner.employee.sal.md) | number | Salary |
 

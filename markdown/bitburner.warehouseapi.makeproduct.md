@@ -4,6 +4,8 @@
 
 ## WarehouseAPI.makeProduct() method
 
+Create a new product
+
 <b>Signature:</b>
 
 ```typescript
@@ -20,11 +22,11 @@ makeProduct(
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
-|  productName | string |  |
-|  designInvest | number |  |
-|  marketingInvest | number |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
+|  productName | string | Name of the product |
+|  designInvest | number | Amount to invest for the design of the product. |
+|  marketingInvest | number | Amount to invest for the marketing of the product. |
 
 <b>Returns:</b>
 

@@ -4,6 +4,8 @@
 
 ## Office.employees property
 
+Name of all the employees
+
 <b>Signature:</b>
 
 ```typescript

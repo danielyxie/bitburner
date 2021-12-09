@@ -4,6 +4,8 @@
 
 ## Employee.sal property
 
+Salary
+
 <b>Signature:</b>
 
 ```typescript

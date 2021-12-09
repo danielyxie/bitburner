@@ -4,6 +4,8 @@
 
 ## Corporation.getDivision() method
 
+Get division data
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,9 +16,11 @@ getDivision(divisionName: string): Division;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
+|  divisionName | string | Name of the division |
 
 <b>Returns:</b>
 
 [Division](./bitburner.division.md)
+
+Division data
 

@@ -4,6 +4,8 @@
 
 ## WarehouseAPI.discontinueProduct() method
 
+Discontinue a product.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,8 +16,8 @@ discontinueProduct(divisionName: string, productName: string): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  productName | string |  |
+|  divisionName | string | Name of the division |
+|  productName | string | Name of the product |
 
 <b>Returns:</b>
 

@@ -4,6 +4,8 @@
 
 ## Employee.mor property
 
+Morale
+
 <b>Signature:</b>
 
 ```typescript

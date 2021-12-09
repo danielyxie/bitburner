@@ -4,6 +4,8 @@
 
 ## Division.type property
 
+Type of division, like Aggriculture
+
 <b>Signature:</b>
 
 ```typescript

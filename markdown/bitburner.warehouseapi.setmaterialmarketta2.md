@@ -4,6 +4,8 @@
 
 ## WarehouseAPI.setMaterialMarketTA2() method
 
+Set market TA 2 for a material.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,10 +16,10 @@ setMaterialMarketTA2(divisionName: string, cityName: string, materialName: strin
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  divisionName | string |  |
-|  cityName | string |  |
-|  materialName | string |  |
-|  on | boolean |  |
+|  divisionName | string | Name of the division |
+|  cityName | string | Name of the city |
+|  materialName | string | Name of the material |
+|  on | boolean | market ta enabled |
 
 <b>Returns:</b>
 

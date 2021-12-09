@@ -4,6 +4,7 @@
 
 ## Material interface
 
+Material in a warehouse
 
 <b>Signature:</b>
 
@@ -15,7 +16,7 @@ interface Material
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [name](./bitburner.material.name.md) | string |  |
-|  [qlt](./bitburner.material.qlt.md) | number |  |
-|  [qty](./bitburner.material.qty.md) | number |  |
+|  [name](./bitburner.material.name.md) | string | Name of the material |
+|  [qlt](./bitburner.material.qlt.md) | number | Quality of the material |
+|  [qty](./bitburner.material.qty.md) | number | Amount of material |
 

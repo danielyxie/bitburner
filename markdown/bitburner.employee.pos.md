@@ -4,6 +4,8 @@
 
 ## Employee.pos property
 
+Current job
+
 <b>Signature:</b>
 
 ```typescript

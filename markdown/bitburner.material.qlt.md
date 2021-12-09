@@ -4,6 +4,8 @@
 
 ## Material.qlt property
 
+Quality of the material
+
 <b>Signature:</b>
 
 ```typescript

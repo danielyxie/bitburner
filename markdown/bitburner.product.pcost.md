@@ -4,6 +4,8 @@
 
 ## Product.pCost property
 
+Production cost
+
 <b>Signature:</b>
 
 ```typescript

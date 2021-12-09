@@ -4,6 +4,8 @@
 
 ## Employee.name property
 
+Name of the employee
+
 <b>Signature:</b>
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## CorporationInfo.numShares property
 
+Amount of share owned
+
 <b>Signature:</b>
 
 ```typescript

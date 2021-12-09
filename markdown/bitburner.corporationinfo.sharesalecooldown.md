@@ -4,6 +4,8 @@
 
 ## CorporationInfo.shareSaleCooldown property
 
+Cooldown until shares can be sold again
+
 <b>Signature:</b>
 
 ```typescript

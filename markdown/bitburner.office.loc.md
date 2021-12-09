@@ -4,6 +4,8 @@
 
 ## Office.loc property
 
+City of the office
+
 <b>Signature:</b>
 
 ```typescript

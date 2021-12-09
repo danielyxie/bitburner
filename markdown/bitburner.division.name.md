@@ -4,6 +4,8 @@
 
 ## Division.name property
 
+Name of the division
+
 <b>Signature:</b>
 
 ```typescript
