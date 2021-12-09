@@ -175,7 +175,7 @@ export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, h
         }
         return upg.getCost(level);
       },
-      hacknetServerCost: function (n: any, mult: any): any {
+      hacknetServerCost: function (n: any, mult: any = 1): any {
         checkFormulasAccess("hacknetServers.hacknetServerCost");
         return HScalculateServerCost(n, mult);
       },
