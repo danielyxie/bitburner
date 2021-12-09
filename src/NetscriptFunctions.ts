@@ -377,7 +377,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.scriptRef.recordHack(server.hostname, moneyGained, threads);
         Player.gainHackingExp(expGainedOnSuccess);
         if (manual)
-          Player.gainIntelligenceExp(expGainedOnSuccess / (threads * CONSTANTS.IntelligenceTerminalHackBaseExpGain));
+          Player.gainIntelligenceExp(Math.pow(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain, 0.1));
         workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
         workerScript.log(
           "hack",
