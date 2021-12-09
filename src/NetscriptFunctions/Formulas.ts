@@ -34,6 +34,8 @@ import {
   calculateWantedLevelGain,
   calculateMoneyGain,
   calculateWantedPenalty,
+  calculateAscensionMult,
+  calculateAscensionPointsGain,
 } from "../Gang/formulas/formulas";
 
 export interface INetscriptFormulas {
@@ -196,6 +198,12 @@ export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, h
       },
       moneyGain: function (gang: any, member: any, task: any): number {
         return calculateMoneyGain(gang, member, task);
+      },
+      ascensionPointsGain: function (exp: any): number {
+        return calculateAscensionPointsGain(exp);
+      },
+      ascensionMultiplier: function (points: any): number {
+        return calculateAscensionMult(points);
       },
     },
   };

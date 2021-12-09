@@ -6,7 +6,13 @@ import { IAscensionResult } from "./IAscensionResult";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IGang } from "./IGang";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
-import { calculateRespectGain, calculateMoneyGain, calculateWantedLevelGain } from "./formulas/formulas";
+import {
+  calculateRespectGain,
+  calculateMoneyGain,
+  calculateWantedLevelGain,
+  calculateAscensionMult,
+  calculateAscensionPointsGain,
+} from "./formulas/formulas";
 
 interface IMults {
   hack: number;
@@ -63,7 +69,7 @@ export class GangMember {
   }
 
   calculateAscensionMult(points: number): number {
-    return Math.max(Math.pow(points / 2000, 0.5), 1);
+    return calculateAscensionMult(points);
   }
 
   updateSkillLevels(): void {
@@ -191,12 +197,12 @@ export class GangMember {
 
   getGainedAscensionPoints(): IMults {
     return {
-      hack: Math.max(this.hack_exp - 1000, 0),
-      str: Math.max(this.str_exp - 1000, 0),
-      def: Math.max(this.def_exp - 1000, 0),
-      dex: Math.max(this.dex_exp - 1000, 0),
-      agi: Math.max(this.agi_exp - 1000, 0),
-      cha: Math.max(this.cha_exp - 1000, 0),
+      hack: calculateAscensionPointsGain(this.hack_exp),
+      str: calculateAscensionPointsGain(this.str_exp),
+      def: calculateAscensionPointsGain(this.def_exp),
+      dex: calculateAscensionPointsGain(this.dex_exp),
+      agi: calculateAscensionPointsGain(this.agi_exp),
+      cha: calculateAscensionPointsGain(this.cha_exp),
     };
   }
 
