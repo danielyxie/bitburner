@@ -82,16 +82,24 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
     setGangOpen(true);
   }
 
+  function startWork() {
+    player.startFocusing();
+    router.toWork();
+  }
+
   function startFieldWork(faction: Faction): void {
-    player.startFactionFieldWork(router, faction);
+    player.startFactionFieldWork(faction);
+    startWork();
   }
 
   function startHackingContracts(faction: Faction): void {
-    player.startFactionHackWork(router, faction);
+    player.startFactionHackWork(faction);
+    startWork();
   }
 
   function startSecurityWork(faction: Faction): void {
-    player.startFactionSecurityWork(router, faction);
+    player.startFactionSecurityWork(faction);
+    startWork();
   }
 
   // We have a special flag for whether the player this faction is the player's

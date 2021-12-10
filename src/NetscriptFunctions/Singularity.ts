@@ -622,6 +622,21 @@ export function NetscriptSingularity(
         return Promise.resolve();
       });
     },
+    isFocused: function(): boolean {
+      helper.updateDynamicRam("isFocused", getRamCost("isFocused"));
+      helper.checkSingularityAccess("isFocused", 1);
+      return player.focus;
+    },
+    setFocus: function(focus: boolean): any {
+      helper.updateDynamicRam("setFocus", getRamCost("setFocus"));
+      helper.checkSingularityAccess("setFocus", 1);
+      if (focus === true) {
+        player.startFocusing();
+        Router.toWork();
+      } else if (focus === false) {
+        player.stopFocusing();
+      }
+    },
     getStats: function (): any {
       helper.updateDynamicRam("getStats", getRamCost("getStats"));
       helper.checkSingularityAccess("getStats", 1);
@@ -820,10 +835,11 @@ export function NetscriptSingularity(
       }
 
       if (companyPosition.isPartTimeJob()) {
-        player.startWorkPartTime(Router, companyName);
+        player.startWorkPartTime(companyName);
       } else {
-        player.startWork(Router, companyName);
+        player.startWork(companyName);
       }
+      player.stopFocusing();
       workerScript.log(
         "workForCompany",
         () => `Began working at '${player.companyName}' as a '${companyPositionName}'`,
@@ -1060,7 +1076,8 @@ export function NetscriptSingularity(
             workerScript.log("workForFaction", () => `Faction '${fac.name}' do not need help with hacking contracts.`);
             return false;
           }
-          player.startFactionHackWork(Router, fac);
+          player.startFactionHackWork(fac);
+          player.stopFocusing();
           workerScript.log("workForFaction", () => `Started carrying out hacking contracts for '${fac.name}'`);
           return true;
         case "field":
@@ -1070,7 +1087,8 @@ export function NetscriptSingularity(
             workerScript.log("workForFaction", () => `Faction '${fac.name}' do not need help with field missions.`);
             return false;
           }
-          player.startFactionFieldWork(Router, fac);
+          player.startFactionFieldWork(fac);
+          player.stopFocusing();
           workerScript.log("workForFaction", () => `Started carrying out field missions for '${fac.name}'`);
           return true;
         case "security":
@@ -1080,7 +1098,8 @@ export function NetscriptSingularity(
             workerScript.log("workForFaction", () => `Faction '${fac.name}' do not need help with security work.`);
             return false;
           }
-          player.startFactionSecurityWork(Router, fac);
+          player.startFactionSecurityWork(fac);
+          player.stopFocusing();
           workerScript.log("workForFaction", () => `Started carrying out security work for '${fac.name}'`);
           return true;
         default:
