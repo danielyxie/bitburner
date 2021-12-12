@@ -130,10 +130,10 @@ function BladeburnerMults(): React.ReactElement {
   return (
     <MultiplierTable
       rows={[
-        ["Bladeburner Success Chance", player.bladeburner_max_stamina_mult],
-        ["Bladeburner Max Stamina", player.bladeburner_stamina_gain_mult],
-        ["Bladeburner Stamina Gain", player.bladeburner_analysis_mult],
-        ["Bladeburner Field Analysis", player.bladeburner_success_chance_mult],
+        ["Bladeburner Success Chance", player.bladeburner_success_chance_mult],
+        ["Bladeburner Max Stamina", player.bladeburner_max_stamina_mult],
+        ["Bladeburner Stamina Gain", player.bladeburner_stamina_gain_mult],
+        ["Bladeburner Field Analysis", player.bladeburner_analysis_mult],
       ]}
     />
   );
