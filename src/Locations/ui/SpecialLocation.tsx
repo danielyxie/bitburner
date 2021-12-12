@@ -192,9 +192,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
         <>
           <Typography>
             <i>
-              Allison "Mother" Stanek: I see you've taken to my creation. So much so it could hardly be recoginized as
-              one of my own after your tinkering with it. I see you follow the ways of the MachineGod as I do, and your
-              mastery of the gift thus for clearly demonstrates that. My hopes are climbing by the day for you.
+              Allison "Mother" Stanek: I see you've taken to my creation. So much so it could hardly be recognized as
+              one of my own after your tinkering with it. I see you follow the ways of the Machine God as I do, and your
+              mastery of the gift clearly demonstrates that. My hopes are climbing by the day for you.
             </i>
           </Typography>
           {symbol}
