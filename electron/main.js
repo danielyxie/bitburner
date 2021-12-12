@@ -68,6 +68,22 @@ function createWindow() {
           },
         ],
       },
+      {
+        label: "fullscreen",
+        submenu: [
+          {
+            label: "toggle",
+            accelerator: "f9",
+            click: (() => {
+              let full = false;
+              return () => {
+                full = !full;
+                win.setFullScreen(full);
+              };
+            })(),
+          },
+        ],
+      },
     ]),
   );
 
