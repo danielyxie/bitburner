@@ -12,9 +12,6 @@ const debug = false;
 function createWindow() {
   const win = new BrowserWindow({
     show: false,
-    webPreferences: {
-      devTools: debug,
-    },
   });
 
   win.removeMenu();
@@ -81,6 +78,15 @@ function createWindow() {
                 win.setFullScreen(full);
               };
             })(),
+          },
+        ],
+      },
+      {
+        label: "debug",
+        submenu: [
+          {
+            label: "activate",
+            click: () => win.webContents.openDevTools(),
           },
         ],
       },
