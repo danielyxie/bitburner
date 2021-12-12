@@ -651,9 +651,12 @@ export function runScriptFromScript(
     return 0;
   }
 
-  args.forEach((arg) => {
+  args.forEach((arg, i) => {
     if (typeof arg !== "string" && typeof arg !== "number" && typeof arg !== "boolean")
-      throw new Error("Only strings, numbers, and booleans can be passed as arguments to otherscripts.");
+      throw new Error(
+        "Only strings, numbers, and booleans can be passed as arguments to other scripts.\n" +
+          `${scriptname} argument index ${i} is of type ${typeof arg} and value ${JSON.stringify(arg)}`,
+      );
   });
 
   // Check if the script is already running
