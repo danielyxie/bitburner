@@ -4842,13 +4842,12 @@ export interface NS extends Singularity {
   deleteServer(host: string): boolean;
 
   /**
-   * Returns an array with either the hostnames or IPs of all of the servers you have purchased.
+   * Returns an array with the hostnames of all of the servers you have purchased.
    *
    * @remarks 2.25 GB
-   * @param hostnameMode - Optional. Defaults to true. Returns hostnames if true, and IPs if false.
-   * @returns Returns an array with either the hostnames or IPs of all of the servers you have purchased.
+   * @returns Returns an array with the hostnames of all of the servers you have purchased.
    */
-  getPurchasedServers(hostnameMode?: boolean): string[];
+  getPurchasedServers(): string[];
 
   /**
    * Returns the maximum number of servers you can purchase.
