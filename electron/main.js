@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, globalShortcut, shell } = require("electron");
+const { app, BrowserWindow, Menu, shell } = require("electron");
 const greenworks = require("./greenworks");
 
 if (greenworks.init()) {
@@ -12,9 +12,6 @@ const debug = false;
 function createWindow() {
   const win = new BrowserWindow({
     show: false,
-    webPreferences: {
-      devTools: debug,
-    },
   });
 
   win.removeMenu();
@@ -22,12 +19,6 @@ function createWindow() {
   win.loadFile("index.html");
   win.show();
   if (debug) win.webContents.openDevTools();
-  globalShortcut.register("f5", function () {
-    win.loadFile("index.html");
-  });
-  globalShortcut.register("f8", function () {
-    win.loadFile("index.html", { query: { noScripts: "true" } });
-  });
 
   win.webContents.on("new-window", function (e, url) {
     // make sure local urls stay in electron perimeter
@@ -53,6 +44,50 @@ function createWindow() {
           { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
           { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
           { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" },
+        ],
+      },
+      {
+        label: "reloads",
+        submenu: [
+          {
+            label: "reload",
+            accelerator: "f5",
+            click: () => {
+              win.loadFile("index.html");
+            },
+          },
+          {
+            label: "reload & kill all scripts",
+            click: () => {
+              win.webContents.forcefullyCrashRenderer();
+              setTimeout(() => win.loadFile("index.html", { query: { noScripts: "true" } }), 5000);
+            },
+          },
+        ],
+      },
+      {
+        label: "fullscreen",
+        submenu: [
+          {
+            label: "toggle",
+            accelerator: "f9",
+            click: (() => {
+              let full = false;
+              return () => {
+                full = !full;
+                win.setFullScreen(full);
+              };
+            })(),
+          },
+        ],
+      },
+      {
+        label: "debug",
+        submenu: [
+          {
+            label: "activate",
+            click: () => win.webContents.openDevTools(),
+          },
         ],
       },
     ]),

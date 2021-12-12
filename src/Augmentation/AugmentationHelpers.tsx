@@ -2415,7 +2415,7 @@ function initAugmentations(): void {
       repCost: 1e6,
       moneyCost: 0,
       info:
-        "The next evolution is near, A coming together of man and machine. A synthesis greater than the birth of the human " +
+        "The next evolution is near, a coming together of man and machine. A synthesis greater than the birth of the human " +
         "organism. Time spent with the gift has allowed for acclimatization of the invasive augment and the toll it takes upon " +
         "your frame granting lesser penalty of 5% to all stats.",
       prereqs: [AugmentationNames.StaneksGift1],
@@ -2457,7 +2457,7 @@ function initAugmentations(): void {
       moneyCost: 0,
       info:
         "The synthesis of human and machine is nothing to fear. It is our destiny. " +
-        "You will become greater than the sum of our parts. As One. Enbrace your gift " +
+        "You will become greater than the sum of our parts. As One. Embrace your gift " +
         "fully and wholly free of it's accursed toll. Serenity brings tranquility the form " +
         "of no longer suffering a stat penalty. ",
       prereqs: [AugmentationNames.StaneksGift2],
