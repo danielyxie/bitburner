@@ -1,6 +1,7 @@
 import { isString } from "./utils/helpers/isString";
 import { GetServer } from "./Server/AllServers";
 import { WorkerScript } from "./Netscript/WorkerScript";
+import { BlobsMap } from "./NetscriptJSEvaluator";
 
 export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
   return new Promise(function (resolve) {
@@ -16,6 +17,11 @@ export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): s
   const server = GetServer(workerScript.hostname);
   if (server == null) {
     throw new Error(`WorkerScript constructed with invalid server ip: ${workerScript.hostname}`);
+  }
+
+  for (const url in BlobsMap) {
+    console.log(url);
+    // msg = msg.replace(new RegExp(url, "g"), BlobsMap[url]);
   }
 
   return "|DELIMITER|" + server.hostname + "|DELIMITER|" + workerScript.name + "|DELIMITER|" + msg;
