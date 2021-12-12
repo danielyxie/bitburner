@@ -1334,15 +1334,24 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServer: function (hostname: any = workerScript.hostname): any {
       updateDynamicRam("getServer", getRamCost("getServer"));
       const server = safeGetServer(hostname, "getServer");
-      const copy = Object.assign({}, server);
+      const copy = Object.assign({}, server) as any;
       // These fields should be hidden.
-      copy.contracts = [];
-      copy.messages = [];
-      copy.runningScripts = [];
-      copy.scripts = [];
-      copy.textFiles = [];
-      copy.programs = [];
-      copy.serversOnNetwork = [];
+      copy.contracts = undefined;
+      copy.messages = undefined;
+      copy.runningScripts = undefined;
+      copy.scripts = undefined;
+      copy.textFiles = undefined;
+      copy.programs = undefined;
+      copy.serversOnNetwork = undefined;
+      if (!copy.baseDifficulty) copy.baseDifficulty = 0;
+      if (!copy.hackDifficulty) copy.hackDifficulty = 0;
+      if (!copy.minDifficulty) copy.minDifficulty = 0;
+      if (!copy.moneyAvailable) copy.moneyAvailable = 0;
+      if (!copy.moneyMax) copy.moneyMax = 0;
+      if (!copy.numOpenPortsRequired) copy.numOpenPortsRequired = 0;
+      if (!copy.openPortCount) copy.openPortCount = 0;
+      if (!copy.requiredHackingSkill) copy.requiredHackingSkill = 0;
+      if (!copy.serverGrowth) copy.serverGrowth = 0;
       return copy;
     },
     getServerMoneyAvailable: function (hostname: any): any {
