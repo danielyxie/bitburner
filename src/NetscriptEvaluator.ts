@@ -20,8 +20,7 @@ export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): s
   }
 
   for (const url in BlobsMap) {
-    console.log(url);
-    // msg = msg.replace(new RegExp(url, "g"), BlobsMap[url]);
+    msg = msg.replace(new RegExp(url, "g"), BlobsMap[url]);
   }
 
   return "|DELIMITER|" + server.hostname + "|DELIMITER|" + workerScript.name + "|DELIMITER|" + msg;
