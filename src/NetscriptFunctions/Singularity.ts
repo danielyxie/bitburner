@@ -624,12 +624,12 @@ export function NetscriptSingularity(
     },
     isFocused: function(): boolean {
       helper.updateDynamicRam("isFocused", getRamCost("isFocused"));
-      helper.checkSingularityAccess("isFocused", 1);
+      helper.checkSingularityAccess("isFocused", 2);
       return player.focus;
     },
     setFocus: function(focus: boolean): any {
       helper.updateDynamicRam("setFocus", getRamCost("setFocus"));
-      helper.checkSingularityAccess("setFocus", 1);
+      helper.checkSingularityAccess("setFocus", 2);
       if (!player.isWorking) {
         throw helper.makeRuntimeErrorMsg("setFocus", "Not currently working");
       }
