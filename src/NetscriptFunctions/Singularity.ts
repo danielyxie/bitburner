@@ -829,6 +829,8 @@ export function NetscriptSingularity(
         return false;
       }
 
+      const wasWorking = player.isWorking;
+      const wasFocused = player.focus;
       if (player.isWorking) {
         const txt = player.singularityStopWork();
         workerScript.log("workForCompany", () => txt);
@@ -839,7 +841,11 @@ export function NetscriptSingularity(
       } else {
         player.startWork(companyName);
       }
-      player.stopFocusing();
+      
+      if (!wasWorking || (wasWorking && !wasFocused))
+        player.stopFocusing();
+      else if (wasWorking && wasFocused)
+        player.startFocusing();
       workerScript.log(
         "workForCompany",
         () => `Began working at '${player.companyName}' as a '${companyPositionName}'`,
@@ -979,6 +985,8 @@ export function NetscriptSingularity(
         return false;
       }
 
+      const wasWorking = player.isWorking;
+      const wasFocused = player.focus;
       if (player.isWorking) {
         const txt = player.singularityStopWork();
         workerScript.log("workForFaction", () => txt);
@@ -1077,7 +1085,10 @@ export function NetscriptSingularity(
             return false;
           }
           player.startFactionHackWork(fac);
-          player.stopFocusing();
+          if (!wasWorking || (wasWorking && !wasFocused))
+            player.stopFocusing();
+          else if (wasWorking && wasFocused)
+            player.startFocusing();
           workerScript.log("workForFaction", () => `Started carrying out hacking contracts for '${fac.name}'`);
           return true;
         case "field":
@@ -1088,7 +1099,10 @@ export function NetscriptSingularity(
             return false;
           }
           player.startFactionFieldWork(fac);
-          player.stopFocusing();
+          if (!wasWorking || (wasWorking && !wasFocused))
+            player.stopFocusing();
+          else if (wasWorking && wasFocused)
+            player.startFocusing();
           workerScript.log("workForFaction", () => `Started carrying out field missions for '${fac.name}'`);
           return true;
         case "security":
@@ -1099,7 +1113,10 @@ export function NetscriptSingularity(
             return false;
           }
           player.startFactionSecurityWork(fac);
-          player.stopFocusing();
+          if (!wasWorking || (wasWorking && !wasFocused))
+            player.stopFocusing();
+          else if (wasWorking && wasFocused)
+            player.startFocusing();
           workerScript.log("workForFaction", () => `Started carrying out security work for '${fac.name}'`);
           return true;
         default:
