@@ -630,11 +630,18 @@ export function NetscriptSingularity(
     setFocus: function(focus: boolean): any {
       helper.updateDynamicRam("setFocus", getRamCost("setFocus"));
       helper.checkSingularityAccess("setFocus", 1);
-      if (focus === true) {
+      if (!player.isWorking) {
+        throw helper.makeRuntimeErrorMsg("setFocus", "Not currently working");
+      }
+      if (!(player.workType == CONSTANTS.WorkTypeFaction || player.workType == CONSTANTS.WorkTypeCompany || player.workType == CONSTANTS.WorkTypeCompanyPartTime)) {
+        throw helper.makeRuntimeErrorMsg("setFocus", "Cannot change focus for current job");
+      }
+      if (!player.focus && focus === true) {
         player.startFocusing();
         Router.toWork();
-      } else if (focus === false) {
+      } else if (player.focus && focus === false) {
         player.stopFocusing();
+        Router.toTerminal();
       }
     },
     getStats: function (): any {
