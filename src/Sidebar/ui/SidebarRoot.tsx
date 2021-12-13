@@ -324,8 +324,8 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       // }
     }
 
-    document.addEventListener("keypress", handleShortcuts);
-    return () => document.removeEventListener("keypress", handleShortcuts);
+    document.addEventListener("keydown", handleShortcuts);
+    return () => document.removeEventListener("keydown", handleShortcuts);
   }, []);
 
   const classes = useStyles();

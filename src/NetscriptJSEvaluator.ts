@@ -3,6 +3,8 @@ import { ScriptUrl } from "./Script/ScriptUrl";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { Script } from "./Script/Script";
 
+export const BlobsMap: { [key: string]: string } = {};
+
 // Makes a blob that contains the code of a given script.
 function makeScriptBlob(code: string): Blob {
   return new Blob([code], { type: "text/javascript" });
@@ -19,7 +21,10 @@ export async function compile(script: Script, scripts: Script[]): Promise<void> 
   // by placing it inside an eval call.
   await script.updateRamUsage(scripts);
   const uurls = _getScriptUrls(script, scripts, []);
-  if (script.url) URL.revokeObjectURL(script.url); // remove the old reference.
+  if (script.url) {
+    URL.revokeObjectURL(script.url); // remove the old reference.
+    delete BlobsMap[script.url];
+  }
   if (script.dependencies.length > 0) script.dependencies.forEach((dep) => URL.revokeObjectURL(dep.url));
   script.url = uurls[uurls.length - 1].url;
   script.module = new Promise((resolve) => resolve(eval("import(uurls[uurls.length - 1].url)")));
@@ -133,7 +138,9 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
 
     // If we successfully transformed the code, create a blob url for it and
     // push that URL onto the top of the stack.
-    urlStack.push(new ScriptUrl(script.filename, URL.createObjectURL(makeScriptBlob(transformedCode))));
+    const su = new ScriptUrl(script.filename, URL.createObjectURL(makeScriptBlob(transformedCode)));
+    urlStack.push(su);
+    BlobsMap[su.url] = su.filename;
     return urlStack;
   } catch (err) {
     // If there is an error, we need to clean up the URLs.
