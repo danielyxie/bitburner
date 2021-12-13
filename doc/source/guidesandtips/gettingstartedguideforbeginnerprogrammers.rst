@@ -28,16 +28,16 @@ entire "quest-line".
 First Steps
 -----------
 I'm going to assume you followed the introductory tutorial when you first began the game.
-In this introductory tutorial you created a script called :code:`foodnstuff.script` and ran it
-on the :code:`foodnstuff` server. Right now, we'll kill this script. There are two ways
+In this introductory tutorial you created a script called :code:`n00dles.script` and ran it
+on the :code:`n00dles` server. Right now, we'll kill this script. There are two ways
 to do this:
 
 1. You can go to the Terminal and enter::
 
-    $ kill foodnstuff.script
+    $ kill n00dles.script
 
 2. You can go to the :code:`Active Scripts` page (|Keyboard shortcut| Alt + s) and
-   press the "Kill Script" button for :code:`foodnstuff.script`.
+   press the "Kill Script" button for :code:`n00dles.script`.
 
 If you skipped the introductory tutorial, then ignore the part above. Instead, go to the
 :code:`Hacknet Nodes` page (|Keyboard shortcut| Alt + h) and purchase a
@@ -82,8 +82,8 @@ Enter the following code in the script editor:
 .. code:: javascript
 
     // Defines the "target server", which is the server
-    // that we're going to hack. In this case, it's "foodnstuff"
-    var target = "foodnstuff";
+    // that we're going to hack. In this case, it's "n00dles"
+    var target = "n00dles";
 
     // Defines how much money a server should have before we hack it
     // In this case, it is set to 75% of the server's max money
@@ -122,10 +122,10 @@ step-by-step anyways.
 
 .. code:: javascript
 
-    var target = "foodnstuff";
+    var target = "n00dles";
 
 This first command defines a string which contains our target server. That's the server
-that we're going to hack. For now, it's set to `foodnstuff` because that's the only
+that we're going to hack. For now, it's set to `n00dles` because that's the only
 server with a required hacking level of 1. If you want to hack a different server,
 simply change this
 variable to be the hostname of another server.
@@ -196,7 +196,7 @@ Here's what mine showed at the time I made this::
     [home ~]> scan-analyze 2
     ~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~
 
-    >foodnstuff
+    >n00dles
     --Root Access: NO, Required hacking skill: 1
     --Number of open ports required to NUKE: 0
     --RAM: 16
@@ -248,7 +248,7 @@ Here's what mine showed at the time I made this::
 
 Take note of the following servers:
 
-* |foodnstuff|
+* |n00dles|
 * |sigma-cosmetics|
 * |joesguns|
 * |nectar-net|
@@ -279,13 +279,13 @@ servers, we have to do the following:
 Here's the sequence of |Terminal| commands I used in order to achieve this::
 
     $ home
-    $ scp early-hack-template.script foodnstuff
+    $ scp early-hack-template.script n00dles
     $ scp early-hack-template.script sigma-cosmetics
     $ scp early-hack-template.script joesguns
     $ scp early-hack-template.script nectar-net
     $ scp early-hack-template.script hong-fang-tea
     $ scp early-hack-template.script harakiri-sushi
-    $ connect foodnstuff
+    $ connect n00dles
     $ run NUKE.exe
     $ run early-hack-template.script -t 6
     $ home
@@ -334,10 +334,10 @@ we start running more scripts.
 
 Increasing Hacking Level
 ------------------------
-There are many servers besides |foodnstuff| that can be hacked, but they have
+There are many servers besides |n00dles| that can be hacked, but they have
 higher required hacking levels. Therefore, we should raise our hacking level. Not only
 will this let us hack more servers, but it will also increase the effectiveness of our hacking
-against |foodnstuff|.
+against |n00dles|.
 
 The easiest way to train your hacking level is to visit Rothman University. You can do this by
 clicking the `City` tab on the left-hand navigation menu, or you can use the
@@ -361,8 +361,8 @@ Since studying at Rothman University earns you 1 experience per second, this wil
 Editing our Hacking Script
 --------------------------
 Now that we have a hacking level of 10, we can hack the :code:`joesguns` server. This server
-will be slightly more profitable than :code:`foodnstuff`. Therefore, we want to change our hacking
-script to target :code:`joesguns` instead of :code:`foodnstuff`.
+will be slightly more profitable than :code:`n00dles`. Therefore, we want to change our hacking
+script to target :code:`joesguns` instead of :code:`n00dles`.
 
 Go to |Terminal| and edit the hacking script by entering::
 
@@ -799,7 +799,7 @@ startup script. Feel free to adjust it to your liking.
 
     // Array of all servers that don't need any ports opened
     // to gain root access. These have 16 GB of RAM
-    var servers0Port = ["foodnstuff",
+    var servers0Port = ["n00dles",
                         "sigma-cosmetics",
                         "joesguns",
                         "nectar-net",
@@ -869,7 +869,7 @@ Random Tips
 .. |Keyboard shortcut|      replace:: :ref:`Keyboard shortcut <shortcuts>`
 .. |NUKE|                   replace:: :code:`NUKE.exe`
 .. |Terminal|               replace:: :code:`Terminal`
-.. |foodnstuff|             replace:: :code:`foodnstuff`
+.. |n00dles|             replace:: :code:`n00dles`
 .. |harakiri-sushi|         replace:: :code:`harakiri-sushi`
 .. |hong-fang-tea|          replace:: :code:`hong-fang-tea`
 .. |joesguns|               replace:: :code:`joesguns`
