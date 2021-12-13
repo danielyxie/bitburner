@@ -24,10 +24,15 @@ interface IProps {
   rerender: () => void;
 }
 
+const serversMap: { [key: string]: string } = {};
+
 export function HacknetUpgradeElem(props: IProps): React.ReactElement {
-  const [selectedServer, setSelectedServer] = useState("ecorp");
+  const [selectedServer, setSelectedServer] = useState(
+    serversMap[props.upg.name] ? serversMap[props.upg.name] : "ecorp",
+  );
   function changeTargetServer(event: SelectChangeEvent<string>): void {
     setSelectedServer(event.target.value);
+    serversMap[props.upg.name] = event.target.value;
   }
 
   function purchase(): void {

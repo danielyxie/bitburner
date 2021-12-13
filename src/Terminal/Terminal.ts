@@ -507,16 +507,15 @@ export class Terminal implements ITerminal {
       if (s.hasAdminRights) {
         c = "YES";
       }
-      let out = `${dashes}Root Access: ${c}${
-        !isHacknet ? ", Required hacking skill: " + (s as any).requiredHackingSkill : ""
-      }`;
+      this.print(
+        `${dashes}Root Access: ${c}${!isHacknet ? ", Required hacking skill: " + (s as any).requiredHackingSkill : ""}`,
+      );
 
       if (s.hasOwnProperty("numOpenPortsRequired")) {
-        out += "\n" + dashes + "Number of open ports required to NUKE: " + (s as any).numOpenPortsRequired;
+        this.print(dashes + "Number of open ports required to NUKE: " + (s as any).numOpenPortsRequired);
       }
-      out += "\n" + dashes + "RAM: " + numeralWrapper.formatRAM(s.maxRam);
-      out += "\n" + " ";
-      this.print(out);
+      this.print(dashes + "RAM: " + numeralWrapper.formatRAM(s.maxRam));
+      this.print(" ");
     }
   }
 
