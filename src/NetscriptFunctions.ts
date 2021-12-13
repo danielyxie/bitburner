@@ -1056,12 +1056,16 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       if (scriptname && scriptname.constructor === Array) {
         // Recursively call scp on all elements of array
-        let res = false;
-        await scriptname.forEach(async function (script) {
-          if (await NetscriptFunctions(workerScript).scp(script, hostname1, hostname2)) {
-            res = true;
+        const scripts: Array<string> = scriptname;
+        if (scripts.length === 0) {
+          throw makeRuntimeErrorMsg("scp", "No scripts to copy");
+        }
+        let res = true;
+        await Promise.all(scripts.map(async function(script) {
+          if (!await NetscriptFunctions(workerScript).scp(script, hostname1, hostname2)) {
+            res = false;
           }
-        });
+        }));
         return Promise.resolve(res);
       }
 
