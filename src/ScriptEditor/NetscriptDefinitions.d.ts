@@ -3904,9 +3904,9 @@ export interface NS extends Singularity {
    *
    * @example
    * ```ts
-   * //For example, assume the following returns 1:
+   * //For example, assume the following returns 0.01:
    * hackAnalyze("foodnstuff");
-   * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N% of its total money.
+   * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01% of its total money.
    * ```
    * @param host - Hostname of the target server.
    * @returns The percentage of money you will steal from the target server with a single hack.
