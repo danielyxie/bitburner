@@ -139,7 +139,10 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
     } else if (isScriptErrorMessage(e)) {
       workerScript.errorMessage = e;
       throw workerScript;
+    } else if (e instanceof WorkerScript) {
+      throw e;
     }
+
     workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e);
     throw workerScript; // Don't know what to do with it, let's rethrow.
   });
