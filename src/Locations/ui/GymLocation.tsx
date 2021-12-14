@@ -15,6 +15,7 @@ import { Server } from "../../Server/Server";
 
 import { Money } from "../../ui/React/Money";
 import { IRouter } from "../../ui/Router";
+import { serverMetadata } from "../../Server/data/servers";
 
 type IProps = {
   loc: Location;
@@ -24,7 +25,8 @@ type IProps = {
 
 export function GymLocation(props: IProps): React.ReactElement {
   function calculateCost(): number {
-    const server = GetServer(props.loc.name);
+    const serverMeta = serverMetadata.find((s) => s.specialName === props.loc.name);
+    const server = GetServer(serverMeta ? serverMeta.hostname : "");
     if (server == null || !server.hasOwnProperty("backdoorInstalled")) return props.loc.costMult;
     const discount = (server as Server).backdoorInstalled ? 0.9 : 1;
     return props.loc.costMult * discount;
