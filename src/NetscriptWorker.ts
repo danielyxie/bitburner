@@ -531,6 +531,8 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
   // Once the code finishes (either resolved or rejected, doesnt matter), set its
   // running status to false
   p.then(function (w: WorkerScript) {
+    w.running = false;
+    w.env.stopFlag = true;
     // On natural death, the earnings are transfered to the parent if it still exists.
     if (parent !== undefined) {
       if (parent.running) {
@@ -571,8 +573,6 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
         w.log("", () => "Script killed");
         return; // Already killed, so stop here
       }
-      w.running = false;
-      w.env.stopFlag = true;
     } else if (isScriptErrorMessage(w)) {
       dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
       console.error(
