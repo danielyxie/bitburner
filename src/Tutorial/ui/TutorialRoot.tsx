@@ -3,11 +3,18 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
-export function TutorialRoot(): React.ReactElement {
+import Button from "@mui/material/Button";
+
+interface IProps {
+  reactivateTutorial: () => void;
+}
+
+export function TutorialRoot(props: IProps): React.ReactElement {
   return (
     <>
       <Typography variant="h4">Tutorial / Documentation</Typography>
       <Box m={2}>
+        <Button onClick={props.reactivateTutorial}>Soft reset and Restart tutorial</Button>
         <Link
           color="primary"
           target="_blank"

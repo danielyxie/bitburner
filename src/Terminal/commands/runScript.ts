@@ -52,6 +52,7 @@ export function runScript(
     }
     // Check for admin rights and that there is enough RAM availble to run
     const script = server.scripts[i];
+    script.server = player.getCurrentServer().hostname;
     const ramUsage = script.ramUsage * numThreads;
     const ramAvailable = server.maxRam - server.ramUsed;
 

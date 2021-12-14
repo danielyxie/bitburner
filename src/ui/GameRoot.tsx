@@ -9,7 +9,7 @@ import { onExport } from "../ExportBonus";
 import { LocationName } from "../Locations/data/LocationNames";
 import { Location } from "../Locations/Location";
 import { Locations } from "../Locations/Locations";
-import { ITutorial } from "../InteractiveTutorial";
+import { ITutorial, iTutorialStart } from "../InteractiveTutorial";
 import { InteractiveTutorialRoot } from "./InteractiveTutorial/InteractiveTutorialRoot";
 import { ITutorialEvents } from "./InteractiveTutorial/ITutorialEvents";
 
@@ -349,7 +349,13 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                 ) : page === Page.Milestones ? (
                   <MilestonesRoot player={player} />
                 ) : page === Page.Tutorial ? (
-                  <TutorialRoot />
+                  <TutorialRoot
+                    reactivateTutorial={() => {
+                      prestigeAugmentation();
+                      Router.toTerminal();
+                      iTutorialStart();
+                    }}
+                  />
                 ) : page === Page.DevMenu ? (
                   <DevMenuRoot player={player} engine={engine} router={Router} />
                 ) : page === Page.Gang ? (

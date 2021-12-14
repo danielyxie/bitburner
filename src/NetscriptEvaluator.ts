@@ -14,6 +14,9 @@ export function netscriptDelay(time: number, workerScript: WorkerScript): Promis
 }
 
 export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): string {
+  if ((msg as any) instanceof WorkerScript) {
+    console.error("HERE");
+  }
   const server = GetServer(workerScript.hostname);
   if (server == null) {
     throw new Error(`WorkerScript constructed with invalid server ip: ${workerScript.hostname}`);

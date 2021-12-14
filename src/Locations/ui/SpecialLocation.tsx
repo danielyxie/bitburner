@@ -29,6 +29,9 @@ import { N00dles } from "../../utils/helpers/N00dles";
 import { Exploit } from "../../Exploits/Exploit";
 import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
 import { CorruptableText } from "../../ui/React/CorruptableText";
+import { HacknetNode } from "../../Hacknet/HacknetNode";
+import { HacknetServer } from "../../Hacknet/HacknetServer";
+import { GetServer } from "../../Server/AllServers";
 
 type IProps = {
   loc: Location;
@@ -84,10 +87,33 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   function renderNoodleBar(): React.ReactElement {
     function EatNoodles(): void {
       SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", "success");
-      N00dles();
+      N00dles(); // This is the true power of the noodles.
       if (player.sourceFiles.length > 0) player.giveExploit(Exploit.N00dles);
       if (player.sourceFileLvl(5) > 0 || player.bitNodeN === 5) {
         player.intelligence_exp *= 1.0000000000000002;
+      }
+      player.hacking_exp *= 1.0000000000000002;
+      player.strength_exp *= 1.0000000000000002;
+      player.defense_exp *= 1.0000000000000002;
+      player.agility_exp *= 1.0000000000000002;
+      player.dexterity_exp *= 1.0000000000000002;
+      player.charisma_exp *= 1.0000000000000002;
+      for (const node of player.hacknetNodes) {
+        if (node instanceof HacknetNode) {
+          player.gainMoney(node.moneyGainRatePerSecond * 0.001, "other");
+        } else {
+          const server = GetServer(node);
+          if (!(server instanceof HacknetServer)) throw new Error(`Server ${node} is not a hacknet server.`);
+          player.hashManager.storeHashes(server.hashRate * 0.001);
+        }
+      }
+
+      if (player.bladeburner) {
+        player.bladeburner.rank += 0.00001;
+      }
+
+      if (player.corporation) {
+        player.corporation.funds += player.corporation.revenue * 0.01;
       }
     }
 

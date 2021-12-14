@@ -114,6 +114,7 @@ const ITutorial: {
 
 function iTutorialStart(): void {
   ITutorial.isRunning = true;
+  ITutorial.currStep = iTutorialSteps.Start;
 }
 
 // Go to the next step and evaluate it

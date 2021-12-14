@@ -28,6 +28,7 @@ import { GetServer } from "../../Server/AllServers";
 
 import { CorruptableText } from "../../ui/React/CorruptableText";
 import { use } from "../../ui/Context";
+import { serverMetadata } from "../../Server/data/servers";
 
 type IProps = {
   loc: Location;
@@ -83,7 +84,9 @@ export function GenericLocation({ loc }: IProps): React.ReactElement {
   }
 
   const locContent: React.ReactNode[] = getLocationSpecificContent();
-  const server = GetServer(loc.name);
+  const serverMeta = serverMetadata.find((s) => s.specialName === loc.name);
+  const server = GetServer(serverMeta ? serverMeta.hostname : "");
+
   const backdoorInstalled = server !== null && isBackdoorInstalled(server);
 
   return (

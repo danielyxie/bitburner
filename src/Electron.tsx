@@ -341,6 +341,13 @@ const achievements: Achievement[] = [
       ),
   },
   { ID: "CHALLENGE_BN12", Condition: () => Player.sourceFileLvl(12) >= 50 },
+  {
+    ID: "CHALLENGE_BN13",
+    Condition: () =>
+      Player.bitNodeN === 13 &&
+      bitNodeFinishedState() &&
+      !Player.augmentations.some((a) => a.name === AugmentationNames.StaneksGift1),
+  },
   { ID: "BYPASS", Condition: () => Player.exploits.includes(Exploit.Bypass) },
   { ID: "PROTOTYPETAMPERING", Condition: () => Player.exploits.includes(Exploit.PrototypeTampering) },
   { ID: "UNCLICKABLE", Condition: () => Player.exploits.includes(Exploit.Unclickable) },

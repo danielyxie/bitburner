@@ -1853,7 +1853,7 @@ export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.MiscCompanyPositions[1];
     if (!sing) {
-      dialogBoxCreate("Congratulations, you are now employed at " + this.companyName);
+      dialogBoxCreate("Congratulations, you are now employed at " + this.location);
     }
 
     return true;
@@ -1871,7 +1871,7 @@ export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolea
   if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
     this.jobs[company.name] = posNames.PartTimeCompanyPositions[1];
     if (!sing) {
-      dialogBoxCreate("Congratulations, you are now employed part-time at " + this.companyName);
+      dialogBoxCreate("Congratulations, you are now employed part-time at " + this.location);
     }
 
     return true;
@@ -1890,7 +1890,7 @@ export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
     this.companyName = company.name;
     this.jobs[company.name] = posNames.MiscCompanyPositions[0];
     if (!sing) {
-      dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.companyName);
+      dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.location);
     }
     return true;
   } else {
@@ -1907,7 +1907,7 @@ export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean 
     this.companyName = company.name;
     this.jobs[company.name] = posNames.PartTimeCompanyPositions[0];
     if (!sing) {
-      dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.companyName);
+      dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.location);
     }
     return true;
   } else {

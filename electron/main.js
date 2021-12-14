@@ -30,6 +30,19 @@ function createWindow() {
     e.preventDefault();
     shell.openExternal(url);
   });
+  win.webContents.backgroundThrottling = false;
+
+  // This is backward but the game fills in an array called `document.achievements` and we retrieve it from
+  // here. Hey if it works it works.
+  const achievements = greenworks.getAchievementNames();
+  const intervalID = setInterval(async () => {
+    const achs = await win.webContents.executeJavaScript("document.achievements");
+    console.log(achs);
+    for (const ach of achs) {
+      if (!achievements.includes(ach)) continue;
+      greenworks.activateAchievement(ach, () => undefined);
+    }
+  }, 1000);
 
   // Create the Application's main menu
   Menu.setApplicationMenu(
@@ -59,8 +72,10 @@ function createWindow() {
           {
             label: "reload & kill all scripts",
             click: () => {
+              if (intervalID) clearInterval(intervalID);
               win.webContents.forcefullyCrashRenderer();
-              setTimeout(() => win.loadFile("index.html", { query: { noScripts: "true" } }), 5000);
+              win.close();
+              createWindow();
             },
           },
         ],
@@ -92,20 +107,6 @@ function createWindow() {
       },
     ]),
   );
-
-  // This is backward but the game fills in an array called `document.achievements` and we retrieve it from
-  // here. Hey if it works it works.
-  const achievements = greenworks.getAchievementNames();
-  // for (const ach of achievements) {
-  //   greenworks.clearAchievement(ach, () => undefined);
-  // }
-  setInterval(async () => {
-    const achs = await win.webContents.executeJavaScript("document.achievements");
-    for (const ach of achs) {
-      if (!achievements.includes(ach)) continue;
-      greenworks.activateAchievement(ach, () => undefined);
-    }
-  }, 1000);
 }
 
 app.whenReady().then(() => {
