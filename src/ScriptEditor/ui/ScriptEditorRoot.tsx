@@ -23,6 +23,7 @@ import { iTutorialNextStep, ITutorial, iTutorialSteps } from "../../InteractiveT
 import { debounce } from "lodash";
 import { saveObject } from "../../SaveObject";
 import { loadThemes } from "./themes";
+import { GetServer } from "../../Server/AllServers";
 
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -146,7 +147,7 @@ export function Root(props: IProps): React.ReactElement {
       }
 
       //Save the script
-      const server = props.player.getCurrentServer();
+      const server = GetServer(hostname);
       if (server === null) throw new Error("Server should not be null but it is.");
       let found = false;
       for (let i = 0; i < server.scripts.length; i++) {
@@ -180,7 +181,7 @@ export function Root(props: IProps): React.ReactElement {
       return;
     }
 
-    const server = props.player.getCurrentServer();
+    const server = GetServer(hostname);
     if (server === null) throw new Error("Server should not be null but it is.");
     if (isScriptFilename(filename)) {
       //If the current script already exists on the server, overwrite it
