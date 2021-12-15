@@ -9,14 +9,15 @@ if (greenworks.init()) {
 
 const debug = false;
 
-function createWindow() {
+function createWindow(killall) {
   const win = new BrowserWindow({
     show: false,
   });
 
   win.removeMenu();
   win.maximize();
-  win.loadFile("index.html");
+  noScripts = killall ? { query: { noScripts: killall } } : {};
+  win.loadFile("index.html", noScripts);
   win.show();
   if (debug) win.webContents.openDevTools();
 
@@ -75,7 +76,7 @@ function createWindow() {
               if (intervalID) clearInterval(intervalID);
               win.webContents.forcefullyCrashRenderer();
               win.close();
-              createWindow();
+              createWindow(true);
             },
           },
         ],
@@ -110,5 +111,5 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  createWindow();
+  createWindow(false);
 });
