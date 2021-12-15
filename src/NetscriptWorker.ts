@@ -709,6 +709,7 @@ export function runScriptFromScript(
       );
       const runningScriptObj = new RunningScript(script, args);
       runningScriptObj.threads = threads;
+      runningScriptObj.server = server.hostname;
 
       return startWorkerScript(runningScriptObj, server, workerScript);
     }

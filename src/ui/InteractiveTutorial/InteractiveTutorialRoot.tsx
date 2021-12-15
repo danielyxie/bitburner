@@ -443,8 +443,11 @@ export function InteractiveTutorialRoot(): React.ReactElement {
             <Typography color={"primary"}>Tutorial</Typography>
           </ListItem>
           <Typography>
-            in the main navigation menu to look at the documentation. If you are an experienced JavaScript developer, I
-            would highly suggest you check out the section on NetscriptJS/Netscript 2.0, it's faster and more powerful.
+            in the main navigation menu to look at the documentation.
+            <br />
+            <br />
+            If you know even a little bit of programming it is highly recommended you use NS2 instead. You will enjoy
+            the game much more.
             <br />
             <br />
             For now, let's move on to something else!
