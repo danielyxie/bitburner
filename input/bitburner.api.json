@@ -14221,7 +14221,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!NS:interface",
-          "docComment": "/**\n * Collection of all functions passed to scripts\n *\n * @remarks\n *\n * <b>Basic ns1 usage example:</b>\n * ```\n * property.methodName;\n * ```\n *\n * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscript1.html | ns1 in-game docs} <hr> <b>Basic ns2 usage example:</b>\n * ```\n * ns.property.methodName;\n * ```\n *\n * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html | ns2 in-game docs}\n *\n * @public\n */\n",
+          "docComment": "/**\n * Collection of all functions passed to scripts\n *\n * @remarks\n *\n * <b>Basic ns1 usage example:</b>\n * ```ts\n * property.methodName;\n * ```\n *\n * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscript1.html | ns1 in-game docs} <hr> <b>Basic ns2 usage example:</b>\n * ```ts\n * export async function main(ns) {\n *   ns.property.methodName;\n * }\n * ```\n *\n * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html | ns2 in-game docs}\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",

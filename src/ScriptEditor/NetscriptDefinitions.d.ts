@@ -3709,14 +3709,16 @@ interface Stanek {
  * @public
  * @remarks
  * <b>Basic ns1 usage example:</b>
- * ```
+ * ```ts
  * property.methodName;
  * ```
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscript1.html| ns1 in-game docs}
  * <hr>
  * <b>Basic ns2 usage example:</b>
- * ```
- * ns.property.methodName;
+ * ```ts
+ * export async function main(ns) {
+ *   ns.property.methodName;
+ * }
  * ```
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html| ns2 in-game docs}
  */

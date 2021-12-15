@@ -17,13 +17,15 @@ export interface NS extends Singularity
 
 <b>Basic ns1 usage example:</b>
 
-```
+```ts
 property.methodName;
 ```
 [ns1 in-game docs](https://bitburner.readthedocs.io/en/latest/netscript/netscript1.html) <hr> <b>Basic ns2 usage example:</b>
 
-```
-ns.property.methodName;
+```ts
+export async function main(ns) {
+  ns.property.methodName;
+}
 ```
 [ns2 in-game docs](https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html)
 
