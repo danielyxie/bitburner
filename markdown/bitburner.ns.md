@@ -11,23 +11,6 @@ Collection of all functions passed to scripts
 ```typescript
 export interface NS extends Singularity 
 ```
-
-<b>Usage:</b>
-
-ns1:
-```
-property.methodName
-```
-paragraph [ns1 gameDocs](https://bitburner.readthedocs.io/en/latest/netscript/netscript1.html)
-
-<!-- Didn't know if you wanted separation here like horizontal rules will leave this up to you -->
-
-ns2: 
-```
-ns.property.methodName
-```
-paragraph [ns2 gameDocs](https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html)
-
 <b>Extends:</b> [Singularity](./bitburner.singularity.md)
 
 ## Properties
