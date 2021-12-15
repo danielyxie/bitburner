@@ -13,6 +13,20 @@ export interface NS extends Singularity
 ```
 <b>Extends:</b> [Singularity](./bitburner.singularity.md)
 
+## Remarks
+
+<b>Basic ns1 usage example:</b>
+
+```
+property.methodName;
+```
+[ns1 in-game docs](https://bitburner.readthedocs.io/en/latest/netscript/netscript1.html) <hr> <b>Basic ns2 usage example:</b>
+
+```
+ns.property.methodName;
+```
+[ns2 in-game docs](https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html)
+
 ## Properties
 
 |  Property | Type | Description |
@@ -61,7 +75,7 @@ export interface NS extends Singularity
 |  [getPurchasedServerCost(ram)](./bitburner.ns.getpurchasedservercost.md) | Get cost of purchasing a server. |
 |  [getPurchasedServerLimit()](./bitburner.ns.getpurchasedserverlimit.md) | Returns the maximum number of servers you can purchase. |
 |  [getPurchasedServerMaxRam()](./bitburner.ns.getpurchasedservermaxram.md) | Returns the maximum RAM that a purchased server can have. |
-|  [getPurchasedServers(hostnameMode)](./bitburner.ns.getpurchasedservers.md) | Returns an array with either the hostnames or IPs of all of the servers you have purchased. |
+|  [getPurchasedServers()](./bitburner.ns.getpurchasedservers.md) | Returns an array with the hostnames of all of the servers you have purchased. |
 |  [getRunningScript(filename, hostname, args)](./bitburner.ns.getrunningscript.md) | Get general info about a running script. |
 |  [getScriptExpGain(script, host, args)](./bitburner.ns.getscriptexpgain.md) | Get the exp gain of a script. |
 |  [getScriptIncome(script, host, args)](./bitburner.ns.getscriptincome.md) | Get the income of a script. |

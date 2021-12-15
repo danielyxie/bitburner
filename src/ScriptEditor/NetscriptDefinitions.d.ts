@@ -3707,6 +3707,18 @@ interface Stanek {
 /**
  * Collection of all functions passed to scripts
  * @public
+ * @remarks
+ * <b>Basic ns1 usage example:</b>
+ * ```
+ * property.methodName;
+ * ```
+ * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscript1.html| ns1 in-game docs}
+ * <hr>
+ * <b>Basic ns2 usage example:</b>
+ * ```
+ * ns.property.methodName;
+ * ```
+ * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html| ns2 in-game docs}
  */
 export interface NS extends Singularity {
   /**

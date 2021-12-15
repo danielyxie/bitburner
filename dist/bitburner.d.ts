@@ -2124,6 +2124,18 @@ export declare interface NodeStats {
 /**
  * Collection of all functions passed to scripts
  * @public
+ * @remarks
+ * <b>Basic ns1 usage example:</b>
+ * ```
+ * property.methodName;
+ * ```
+ * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscript1.html| ns1 in-game docs}
+ * <hr>
+ * <b>Basic ns2 usage example:</b>
+ * ```
+ * ns.property.methodName;
+ * ```
+ * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html| ns2 in-game docs}
  */
 export declare interface NS extends Singularity {
     /**
@@ -2321,9 +2333,9 @@ export declare interface NS extends Singularity {
      *
      * @example
      * ```ts
-     * //For example, assume the following returns 1:
+     * //For example, assume the following returns 0.01:
      * hackAnalyze("foodnstuff");
-     * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N% of its total money.
+     * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01% of its total money.
      * ```
      * @param host - Hostname of the target server.
      * @returns The percentage of money you will steal from the target server with a single hack.
@@ -3259,13 +3271,12 @@ export declare interface NS extends Singularity {
     deleteServer(host: string): boolean;
 
     /**
-     * Returns an array with either the hostnames or IPs of all of the servers you have purchased.
+     * Returns an array with the hostnames of all of the servers you have purchased.
      *
      * @remarks 2.25 GB
-     * @param hostnameMode - Optional. Defaults to true. Returns hostnames if true, and IPs if false.
-     * @returns Returns an array with either the hostnames or IPs of all of the servers you have purchased.
+     * @returns Returns an array with the hostnames of all of the servers you have purchased.
      */
-    getPurchasedServers(hostnameMode?: boolean): string[];
+    getPurchasedServers(): string[];
 
     /**
      * Returns the maximum number of servers you can purchase.
