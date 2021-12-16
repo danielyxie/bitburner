@@ -4,25 +4,18 @@
 
 ## NS.getPurchasedServers() method
 
-Returns an array with either the hostnames or IPs of all of the servers you have purchased.
+Returns an array with the hostnames of all of the servers you have purchased.
 
 <b>Signature:</b>
 
 ```typescript
-getPurchasedServers(hostnameMode?: boolean): string[];
+getPurchasedServers(): string[];
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  hostnameMode | boolean | Optional. Defaults to true. Returns hostnames if true, and IPs if false. |
-
 <b>Returns:</b>
 
 string\[\]
 
-Returns an array with either the hostnames or IPs of all of the servers you have purchased.
+Returns an array with the hostnames of all of the servers you have purchased.
 
 ## Remarks
 
