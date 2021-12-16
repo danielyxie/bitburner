@@ -20,7 +20,7 @@ export function runProgram(
   const programName = args[0] + "";
 
   if (!player.hasProgram(programName)) {
-    terminal.error("No such executable on home computer (Only programs that exist on your home computer can be run)");
+    terminal.error("No such (exe, script, js, or ns) file on home computer (Only programs that exist on your home computer can be run)");
     return;
   }
 
