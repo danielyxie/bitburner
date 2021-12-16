@@ -52,6 +52,8 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   const [possibilities, setPossibilities] = useState<string[]>([]);
   const classes = useStyles();
 
+  // Need to run after state updates, for example if we need to move cursor
+  // *after* we modify input
   useEffect(() => {
     if (postUpdateValue?.postUpdate) {
       postUpdateValue.postUpdate();
