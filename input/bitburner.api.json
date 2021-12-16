@@ -18037,23 +18037,15 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#scan:member(1)",
-              "docComment": "/**\n * Get the list servers connected to a server.\n *\n * @remarks\n *\n * RAM cost: 0.2 GB\n *\n * Returns an array containing the hostnames or IPs of all servers that are one node way from the specified target server. The hostnames/IPs in the returned array are strings.\n *\n * @param host - Hostname of the server to scan.\n *\n * @param hostnames - Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false).\n *\n * @returns Returns an string of hostnames or IP.\n */\n",
+              "docComment": "/**\n * Get the list servers connected to a server.\n *\n * @remarks\n *\n * RAM cost: 0.2 GB\n *\n * Returns an array containing the hostnames of all servers that are one node way from the specified target server. The hostnames in the returned array are strings.\n *\n * @param host - Hostname of the server to scan.\n *\n * @returns Returns an string of hostnames.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "scan(host: "
+                  "text": "scan(host?: "
                 },
                 {
                   "kind": "Content",
                   "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", hostnames?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "boolean"
                 },
                 {
                   "kind": "Content",
@@ -18070,8 +18062,8 @@
               ],
               "isOptional": false,
               "returnTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
+                "startIndex": 3,
+                "endIndex": 4
               },
               "releaseTag": "Public",
               "overloadIndex": 1,
@@ -18081,13 +18073,6 @@
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
-                  }
-                },
-                {
-                  "parameterName": "hostnames",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 3,
-                    "endIndex": 4
                   }
                 }
               ],
