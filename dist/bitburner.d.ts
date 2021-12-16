@@ -2138,9 +2138,11 @@ export declare interface NodeStats {
  * ```ts
  * export async function main(ns) {
  *  // Basic ns functions can be accessed on the ns object
- *  await ns.getHostname();
+ *  ns.getHostname();
  *  // Some related functions are gathered under a sub-property of the ns object
- *  await ns.stock.getPrice();
+ *  ns.stock.getPrice();
+ *  // Some functions need to be await ed
+ *  await ns.hack('n00dles');
  * }
  * ```
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html| ns2 in-game docs}
@@ -2580,15 +2582,14 @@ export declare interface NS extends Singularity {
      * @remarks
      * RAM cost: 0.2 GB
      *
-     * Returns an array containing the hostnames or IPs of all servers that are one
-     * node way from the specified target server. The hostnames/IPs in the returned
+     * Returns an array containing the hostnames of all servers that are one
+     * node way from the specified target server. The hostnames in the returned
      * array are strings.
      *
      * @param host - Hostname of the server to scan.
-     * @param hostnames - Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false).
-     * @returns Returns an string of hostnames or IP.
+     * @returns Returns an string of hostnames.
      */
-    scan(host: string, hostnames?: boolean): string[];
+    scan(host?: string): string[];
 
     /**
      * Runs NUKE.exe on a server.

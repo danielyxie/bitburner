@@ -28,9 +28,11 @@ export interface NS extends Singularity
 ```ts
 export async function main(ns) {
  // Basic ns functions can be accessed on the ns object
- await ns.getHostname();
+ ns.getHostname();
  // Some related functions are gathered under a sub-property of the ns object
- await ns.stock.getPrice();
+ ns.stock.getPrice();
+ // Some functions need to be await ed
+ await ns.hack('n00dles');
 }
 ```
 [ns2 in-game docs](https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html) <hr>
@@ -131,7 +133,7 @@ export async function main(ns) {
 |  [relaysmtp(host)](./bitburner.ns.relaysmtp.md) | Runs relaySMTP.exe on a server. |
 |  [rm(name, host)](./bitburner.ns.rm.md) | Delete a file. |
 |  [run(script, numThreads, args)](./bitburner.ns.run.md) | Start another script on the current server. |
-|  [scan(host, hostnames)](./bitburner.ns.scan.md) | Get the list servers connected to a server. |
+|  [scan(host)](./bitburner.ns.scan.md) | Get the list servers connected to a server. |
 |  [scp(files, source, destination)](./bitburner.ns.scp.md) | Copy file between servers. |
 |  [scriptKill(script, host)](./bitburner.ns.scriptkill.md) | Kill all scripts with a filename. |
 |  [scriptRunning(script, host)](./bitburner.ns.scriptrunning.md) | Check if any script with a filename is running. |
