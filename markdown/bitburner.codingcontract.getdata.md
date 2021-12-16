@@ -9,7 +9,7 @@ Get the input data.
 <b>Signature:</b>
 
 ```typescript
-getData(filename: string, host?: string): string;
+getData(filename: string, host?: string): any;
 ```
 
 ## Parameters
@@ -21,9 +21,9 @@ getData(filename: string, host?: string): string;
 
 <b>Returns:</b>
 
-string
+any
 
-The specified contract’s data;
+The specified contract’s data, data type depends on contract type.;
 
 ## Remarks
 

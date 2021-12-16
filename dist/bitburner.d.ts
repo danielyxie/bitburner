@@ -808,9 +808,9 @@ export declare interface CodingContract {
      *
      * @param filename - Filename of the contract.
      * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
-     * @returns The specified contract’s data;
+     * @returns The specified contract’s data, data type depends on contract type.;
      */
-    getData(filename: string, host?: string): string;
+    getData(filename: string, host?: string): any;
 
     /**
      * Get the number of attempt remaining.
@@ -2128,9 +2128,9 @@ export declare interface NodeStats {
  * <b>Basic ns1 usage example:</b>
  * ```ts
  *  // Basic ns functions can be used directly
- *  methodName();
+ *  getHostname();
  *  // Some related functions are gathered within a common namespace
- *  property.methodName();
+ *  stock.getPrice();
  * ```
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscript1.html| ns1 in-game docs}
  * <hr>
@@ -2138,9 +2138,9 @@ export declare interface NodeStats {
  * ```ts
  * export async function main(ns) {
  *  // Basic ns functions can be accessed on the ns object
- *  await ns.methodName;
+ *  await ns.getHostname();
  *  // Some related functions are gathered under a sub-property of the ns object
- *  await ns.property.methodName;
+ *  await ns.stock.getPrice();
  * }
  * ```
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html| ns2 in-game docs}
@@ -2344,7 +2344,7 @@ export declare interface NS extends Singularity {
      * ```ts
      * //For example, assume the following returns 0.01:
      * hackAnalyze("foodnstuff");
-     * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01% of its total money.
+     * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.
      * ```
      * @param host - Hostname of the target server.
      * @returns The percentage of money you will steal from the target server with a single hack.
@@ -3022,7 +3022,7 @@ export declare interface NS extends Singularity {
      * RAM cost: 0.1 GB
      *
      * Returns the server’s instrinsic “growth parameter”. This growth
-     * parameter is a number between 1 and 100 that represents how
+     * parameter is a number between 0 and 100 that represents how
      * quickly the server’s money grows. This parameter affects the
      * percentage by which the server’s money is increased when using the
      * grow function. A higher growth parameter will result in a
@@ -4866,6 +4866,25 @@ export declare interface Singularity {
      * @returns True if the installation was successful.
      */
     installBackdoor(): Promise<void>;
+
+    /**
+     * SF4.2 - Check if the player is focused.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
+     *
+     * @returns True if the player is focused.
+     */
+    isFocused(): boolean;
+
+    /**
+     * SF4.2 - Set the players focus.
+     * @remarks
+     * RAM cost: 0.1 GB
+     *
+     * @returns True if the focus was changed.
+     */
+    setFocus(focus: boolean): boolean;
 }
 
 /**
