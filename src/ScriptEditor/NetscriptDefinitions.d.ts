@@ -1985,6 +1985,25 @@ export interface Singularity {
    * @returns True if the installation was successful.
    */
   installBackdoor(): Promise<void>;
+
+  /**
+   * SF4.2 - Check if the player is focused.
+   * @remarks
+   * RAM cost: 0.1 GB
+   *
+   *
+   * @returns True if the player is focused.
+   */
+   isFocused(): boolean;
+
+   /**
+    * SF4.2 - Set the players focus.
+    * @remarks
+    * RAM cost: 0.1 GB
+    *
+    * @returns True if the focus was changed.
+    */
+   setFocus(focus: boolean): boolean; 
 }
 
 /**

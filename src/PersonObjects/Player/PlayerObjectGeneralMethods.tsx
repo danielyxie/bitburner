@@ -554,10 +554,9 @@ export function processWorkEarnings(this: IPlayer, numCycles = 1): void {
 }
 
 /* Working for Company */
-export function startWork(this: IPlayer, router: IRouter, companyName: string): void {
+export function startWork(this: IPlayer, companyName: string): void {
   this.resetWorkStatus(CONSTANTS.WorkTypeCompany, companyName);
   this.isWorking = true;
-  this.focus = true;
   this.companyName = companyName;
   this.workType = CONSTANTS.WorkTypeCompany;
 
@@ -571,7 +570,6 @@ export function startWork(this: IPlayer, router: IRouter, companyName: string): 
   this.workMoneyGainRate = this.getWorkMoneyGain();
 
   this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
-  router.toWork();
 }
 
 export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
@@ -723,10 +721,9 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
   return "";
 }
 
-export function startWorkPartTime(this: IPlayer, router: IRouter, companyName: string): void {
+export function startWorkPartTime(this: IPlayer, companyName: string): void {
   this.resetWorkStatus(CONSTANTS.WorkTypeCompanyPartTime, companyName);
   this.isWorking = true;
-  this.focus = true;
   this.companyName = companyName;
   this.workType = CONSTANTS.WorkTypeCompanyPartTime;
 
@@ -740,7 +737,6 @@ export function startWorkPartTime(this: IPlayer, router: IRouter, companyName: s
   this.workMoneyGainRate = this.getWorkMoneyGain();
 
   this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer8Hours;
-  router.toWork();
 }
 
 export function workPartTime(this: IPlayer, numCycles: number): boolean {
@@ -832,7 +828,7 @@ export function stopFocusing(this: IPlayer): void {
 }
 
 /* Working for Faction */
-export function startFactionWork(this: IPlayer, router: IRouter, faction: Faction): void {
+export function startFactionWork(this: IPlayer, faction: Faction): void {
   //Update reputation gain rate to account for faction favor
   let favorMult = 1 + faction.favor / 100;
   if (isNaN(favorMult)) {
@@ -842,15 +838,13 @@ export function startFactionWork(this: IPlayer, router: IRouter, faction: Factio
   this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
 
   this.isWorking = true;
-  this.focus = true;
   this.workType = CONSTANTS.WorkTypeFaction;
   this.currentWorkFactionName = faction.name;
 
   this.timeNeededToCompleteWork = CONSTANTS.MillisecondsPer20Hours;
-  router.toWork();
 }
 
-export function startFactionHackWork(this: IPlayer, router: IRouter, faction: Faction): void {
+export function startFactionHackWork(this: IPlayer, faction: Faction): void {
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkHacking);
 
   this.workHackExpGainRate = 0.15 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -859,10 +853,10 @@ export function startFactionHackWork(this: IPlayer, router: IRouter, faction: Fa
   this.factionWorkType = CONSTANTS.FactionWorkHacking;
   this.currentWorkFactionDescription = "carrying out hacking contracts";
 
-  this.startFactionWork(router, faction);
+  this.startFactionWork(faction);
 }
 
-export function startFactionFieldWork(this: IPlayer, router: IRouter, faction: Faction): void {
+export function startFactionFieldWork(this: IPlayer, faction: Faction): void {
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkField);
 
   this.workHackExpGainRate = 0.1 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -876,10 +870,10 @@ export function startFactionFieldWork(this: IPlayer, router: IRouter, faction: F
   this.factionWorkType = CONSTANTS.FactionWorkField;
   this.currentWorkFactionDescription = "carrying out field missions";
 
-  this.startFactionWork(router, faction);
+  this.startFactionWork(faction);
 }
 
-export function startFactionSecurityWork(this: IPlayer, router: IRouter, faction: Faction): void {
+export function startFactionSecurityWork(this: IPlayer, faction: Faction): void {
   this.resetWorkStatus(CONSTANTS.WorkTypeFaction, faction.name, CONSTANTS.FactionWorkSecurity);
 
   this.workHackExpGainRate = 0.05 * this.hacking_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
@@ -893,7 +887,7 @@ export function startFactionSecurityWork(this: IPlayer, router: IRouter, faction
   this.factionWorkType = CONSTANTS.FactionWorkSecurity;
   this.currentWorkFactionDescription = "performing security detail";
 
-  this.startFactionWork(router, faction);
+  this.startFactionWork(faction);
 }
 
 export function workForFaction(this: IPlayer, numCycles: number): boolean {
