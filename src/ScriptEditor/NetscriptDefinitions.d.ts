@@ -2850,9 +2850,9 @@ export interface CodingContract {
    *
    * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
-   * @returns The specified contract’s data;
+   * @returns The specified contract’s data, data type depends on contract type.;
    */
-  getData(filename: string, host?: string): string;
+  getData(filename: string, host?: string): any;
 
   /**
    * Get the number of attempt remaining.
