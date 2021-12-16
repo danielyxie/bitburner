@@ -12,6 +12,7 @@ const debug = false;
 function createWindow(killall) {
   const win = new BrowserWindow({
     show: false,
+    backgroundThrottling: false,
   });
 
   win.removeMenu();
