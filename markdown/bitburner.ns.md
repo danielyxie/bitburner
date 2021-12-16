@@ -28,9 +28,9 @@ export interface NS extends Singularity
 ```ts
 export async function main(ns) {
  // Basic ns functions can be accessed on the ns object
- ns.methodName;
+ await ns.methodName;
  // Some related functions are gathered under a sub-property of the ns object
- ns.property.methodName
+ await ns.property.methodName
 }
 ```
 [ns2 in-game docs](https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html) <hr>
