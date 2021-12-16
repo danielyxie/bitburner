@@ -254,9 +254,9 @@ export class Terminal implements ITerminal {
     const expGain = calculateHackingExpGain(server, player);
     server.weaken(CONSTANTS.ServerWeakenAmount);
     this.print(
-      `'${server.hostname}' security level weakened to ${server.hackDifficulty}. Gained ${numeralWrapper.formatExp(
-        expGain,
-      )} hacking exp.`,
+      `'${server.hostname}' security level weakened to ${server.hackDifficulty.toFixed(
+        3,
+      )} and Gained ${numeralWrapper.formatExp(expGain)} hacking exp.`,
     );
   }
 
