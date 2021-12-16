@@ -3740,9 +3740,11 @@ interface Stanek {
  * ```ts
  * export async function main(ns) {
  *  // Basic ns functions can be accessed on the ns object
- *  await ns.getHostname();
+ *  ns.getHostname();
  *  // Some related functions are gathered under a sub-property of the ns object
- *  await ns.stock.getPrice();
+ *  ns.stock.getPrice();
+ *  // Some functions need to be await ed
+ *  await ns.hack('n00dles');
  * }
  * ```
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html| ns2 in-game docs}
