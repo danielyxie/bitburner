@@ -77,7 +77,7 @@ export class Terminal implements ITerminal {
   commandHistory: string[] = [];
   commandHistoryIndex = 0;
 
-  outputHistory: (Output | Link | RawOutput)[] = [new Output(`Bitburner v${CONSTANTS.VersionString}`, "primary")];
+  outputHistory: (Output | Link | RawOutput)[] = [new Output(`Bitburner v${CONSTANTS.VersionString} (${__COMMIT_HASH__})`, "primary")];
 
   // True if a Coding Contract prompt is opened
   contractOpen = false;
@@ -555,7 +555,7 @@ export class Terminal implements ITerminal {
   }
 
   clear(): void {
-    this.outputHistory = [new Output(`Bitburner v${CONSTANTS.VersionString}`, "primary")];
+    this.outputHistory = [new Output(`Bitburner v${CONSTANTS.VersionString} (${__COMMIT_HASH__})`, "primary")];
     TerminalEvents.emit();
     TerminalClearEvents.emit();
   }
