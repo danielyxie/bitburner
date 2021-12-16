@@ -2128,7 +2128,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     toast: function (message: any, variant: any = "success"): void {
       if (!["success", "info", "warning", "error"].includes(variant))
         throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
-      SnackbarEvents.emit(message, variant);
+      SnackbarEvents.emit(message.toString(), variant);
     },
     prompt: function (txt: any): any {
       if (!isString(txt)) {

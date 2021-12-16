@@ -1915,6 +1915,9 @@ Interpreter.Object.prototype.toString = function () {
     }
     return message ? name + ": " + message : String(name);
   }
+  if (this.class === "Object") {
+      return JSON.stringify(this.properties)
+  }
 
   // RegExp, Date, and boxed primitives.
   if (this.data !== null) {
