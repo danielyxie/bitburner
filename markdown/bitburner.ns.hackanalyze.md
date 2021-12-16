@@ -36,6 +36,6 @@ Returns the percentage of the specified server’s money you will steal with a s
 ```ts
 //For example, assume the following returns 0.01:
 hackAnalyze("foodnstuff");
-//This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01% of its total money.
+//This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.
 ```
 
