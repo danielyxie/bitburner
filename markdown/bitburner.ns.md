@@ -21,7 +21,7 @@ export interface NS extends Singularity
  // Basic ns functions can be used directly
  methodName();
  // Some related functions are gathered within a common namespace
- property.methodName()
+ property.methodName();
 ```
 [ns1 in-game docs](https://bitburner.readthedocs.io/en/latest/netscript/netscript1.html) <hr> <b>Basic ns2 usage example:</b>
 
@@ -30,7 +30,7 @@ export async function main(ns) {
  // Basic ns functions can be accessed on the ns object
  await ns.methodName;
  // Some related functions are gathered under a sub-property of the ns object
- await ns.property.methodName
+ await ns.property.methodName;
 }
 ```
 [ns2 in-game docs](https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html) <hr>
