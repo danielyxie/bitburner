@@ -168,6 +168,13 @@ export function prestigeSourceFile(flume: boolean): void {
 
   const homeComp = Player.getHomeComputer();
 
+  // Stop a Terminal action if there is one.
+  if (Terminal.action !== null) {
+    Terminal.finishAction(Router, Player, true);
+  }
+  Terminal.clear();
+  LogBoxClearEvents.emit();
+
   // Delete all servers except home computer
   prestigeAllServers(); // Must be done before initForeignServers()
 

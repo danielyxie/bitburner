@@ -941,6 +941,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return runScriptFromScript("run", scriptServer, scriptname, args, workerScript, threads);
     },
     exec: function (scriptname: any, hostname: any, threads: any = 1, ...args: any[]): any {
+      console.log(`${scriptname} ${hostname} ${threads} ${JSON.stringify(args)}`);
       updateDynamicRam("exec", getRamCost("exec"));
       if (scriptname === undefined || hostname === undefined) {
         throw makeRuntimeErrorMsg("exec", "Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
@@ -1061,11 +1062,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           throw makeRuntimeErrorMsg("scp", "No scripts to copy");
         }
         let res = true;
-        await Promise.all(scripts.map(async function(script) {
-          if (!await NetscriptFunctions(workerScript).scp(script, hostname1, hostname2)) {
-            res = false;
-          }
-        }));
+        await Promise.all(
+          scripts.map(async function (script) {
+            if (!(await NetscriptFunctions(workerScript).scp(script, hostname1, hostname2))) {
+              res = false;
+            }
+          }),
+        );
         return Promise.resolve(res);
       }
 
@@ -2120,12 +2123,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return Player.playtimeSinceLastAug;
     },
     alert: function (message: any): void {
-      dialogBoxCreate(message);
+      message = toNative(message);
+      dialogBoxCreate(JSON.stringify(message));
     },
     toast: function (message: any, variant: any = "success"): void {
       if (!["success", "info", "warning", "error"].includes(variant))
         throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
-      SnackbarEvents.emit(message, variant);
+
+      message = toNative(message);
+      SnackbarEvents.emit(JSON.stringify(message), variant);
     },
     prompt: function (txt: any): any {
       if (!isString(txt)) {

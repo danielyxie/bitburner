@@ -14,7 +14,7 @@ export function scp(
 ): void {
   try {
     if (args.length !== 2) {
-      terminal.error("Incorrect usage of scp command. Usage: scp [file] [destination hostname/ip]");
+      terminal.error("Incorrect usage of scp command. Usage: scp [file] [destination hostname]");
       return;
     }
     const scriptname = terminal.getFilepath(args[0] + "");

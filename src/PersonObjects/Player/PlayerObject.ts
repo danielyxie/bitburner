@@ -216,7 +216,7 @@ export class PlayerObject implements IPlayer {
   setMoney: (amt: number) => void;
   singularityStopWork: () => string;
   startBladeburner: (p: any) => void;
-  startFactionWork: (router: IRouter, faction: Faction) => void;
+  startFactionWork: (faction: Faction) => void;
   startClass: (router: IRouter, costMult: number, expMult: number, className: string) => void;
   startCorporation: (corpName: string, additionalShares?: number) => void;
   startCrime: (
@@ -232,13 +232,13 @@ export class PlayerObject implements IPlayer {
     time: number,
     singParams: any,
   ) => void;
-  startFactionFieldWork: (router: IRouter, faction: Faction) => void;
-  startFactionHackWork: (router: IRouter, faction: Faction) => void;
-  startFactionSecurityWork: (router: IRouter, faction: Faction) => void;
+  startFactionFieldWork: (faction: Faction) => void;
+  startFactionHackWork: (faction: Faction) => void;
+  startFactionSecurityWork: (faction: Faction) => void;
   startFocusing: () => void;
   startGang: (facName: string, isHacking: boolean) => void;
-  startWork: (router: IRouter, companyName: string) => void;
-  startWorkPartTime: (router: IRouter, companyName: string) => void;
+  startWork: (companyName: string) => void;
+  startWorkPartTime: (companyName: string) => void;
   takeDamage: (amt: number) => boolean;
   travel: (to: CityName) => boolean;
   giveExploit: (exploit: Exploit) => void;

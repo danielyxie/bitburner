@@ -5,6 +5,7 @@ import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 import { TextFile } from "../../TextFile";
 import { Script } from "../../Script/Script";
+import { getDestinationFilepath, areFilesEqual } from "../DirectoryHelpers";
 
 export function mv(
   terminal: ITerminal,
@@ -20,7 +21,7 @@ export function mv(
 
   try {
     const source = args[0] + "";
-    const dest = args[1] + "";
+    const t_dest = args[1] + "";
 
     if (!isScriptFilename(source) && !source.endsWith(".txt")) {
       terminal.error(`'mv' can only be used on scripts and text files (.txt)`);
@@ -34,9 +35,19 @@ export function mv(
     }
 
     const sourcePath = terminal.getFilepath(source);
-    const destPath = terminal.getFilepath(dest);
+    // Get the destination based on the source file and the current directory
+    const dest = getDestinationFilepath(t_dest, source, terminal.cwd());
+    if (dest === null) {
+      terminal.error("error parsing dst file");
+      return;
+    }
 
     const destFile = terminal.getFile(player, dest);
+    const destPath = terminal.getFilepath(dest);
+    if (areFilesEqual(sourcePath, destPath)) {
+      terminal.error(`Source and destination files are the same file`);
+      return;
+    }
 
     // 'mv' command only works on scripts and txt files.
     // Also, you can't convert between different file types
@@ -55,7 +66,7 @@ export function mv(
 
       if (destFile != null) {
         // Already exists, will be overwritten, so we'll delete it
-        const status = server.removeFile(destPath);
+        const status = server.removeFile(dest);
         if (!status.res) {
           terminal.error(`Something went wrong...please contact game dev (probably a bug)`);
           return;
