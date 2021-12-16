@@ -9,25 +9,24 @@ Get the list servers connected to a server.
 <b>Signature:</b>
 
 ```typescript
-scan(host: string, hostnames?: boolean): string[];
+scan(host?: string): string[];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Hostname of the server to scan. |
-|  hostnames | boolean | Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false). |
+|  host | string | Optional. Hostname of the server to scan. If omitted, the default is the server the script is running on. |
 
 <b>Returns:</b>
 
 string\[\]
 
-Returns an string of hostnames or IP.
+Returns an string of hostnames.
 
 ## Remarks
 
 RAM cost: 0.2 GB
 
-Returns an array containing the hostnames or IPs of all servers that are one node way from the specified target server. The hostnames/IPs in the returned array are strings.
+Returns an array containing the hostnames of all servers that are one node way from the specified target server. The hostnames in the returned array are strings.
 

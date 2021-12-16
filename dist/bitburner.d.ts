@@ -2321,9 +2321,9 @@ export declare interface NS extends Singularity {
      *
      * @example
      * ```ts
-     * //For example, assume the following returns 1:
+     * //For example, assume the following returns 0.01:
      * hackAnalyze("foodnstuff");
-     * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N% of its total money.
+     * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01% of its total money.
      * ```
      * @param host - Hostname of the target server.
      * @returns The percentage of money you will steal from the target server with a single hack.
@@ -2559,15 +2559,14 @@ export declare interface NS extends Singularity {
      * @remarks
      * RAM cost: 0.2 GB
      *
-     * Returns an array containing the hostnames or IPs of all servers that are one
-     * node way from the specified target server. The hostnames/IPs in the returned
+     * Returns an array containing the hostnames of all servers that are one
+     * node way from the specified target server. The hostnames in the returned
      * array are strings.
      *
-     * @param host - Hostname of the server to scan.
-     * @param hostnames - Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false).
-     * @returns Returns an string of hostnames or IP.
+     * @param host - Optional. Hostname of the server to scan. If omitted, the default is the server the script is running on.
+     * @returns Returns an string of hostnames.
      */
-    scan(host: string, hostnames?: boolean): string[];
+    scan(host?: string): string[];
 
     /**
      * Runs NUKE.exe on a server.
@@ -3259,13 +3258,12 @@ export declare interface NS extends Singularity {
     deleteServer(host: string): boolean;
 
     /**
-     * Returns an array with either the hostnames or IPs of all of the servers you have purchased.
+     * Returns an array with the hostnames of all of the servers you have purchased.
      *
      * @remarks 2.25 GB
-     * @param hostnameMode - Optional. Defaults to true. Returns hostnames if true, and IPs if false.
-     * @returns Returns an array with either the hostnames or IPs of all of the servers you have purchased.
+     * @returns Returns an array with the hostnames of all of the servers you have purchased.
      */
-    getPurchasedServers(hostnameMode?: boolean): string[];
+    getPurchasedServers(): string[];
 
     /**
      * Returns the maximum number of servers you can purchase.

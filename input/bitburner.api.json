@@ -15562,19 +15562,11 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getPurchasedServers:member(1)",
-              "docComment": "/**\n * Returns an array with either the hostnames or IPs of all of the servers you have purchased.\n *\n * @remarks\n *\n * 2.25 GB\n *\n * @param hostnameMode - Optional. Defaults to true. Returns hostnames if true, and IPs if false.\n *\n * @returns Returns an array with either the hostnames or IPs of all of the servers you have purchased.\n */\n",
+              "docComment": "/**\n * Returns an array with the hostnames of all of the servers you have purchased.\n *\n * @remarks\n *\n * 2.25 GB\n *\n * @returns Returns an array with the hostnames of all of the servers you have purchased.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "getPurchasedServers(hostnameMode?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "boolean"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
+                  "text": "getPurchasedServers(): "
                 },
                 {
                   "kind": "Content",
@@ -15587,20 +15579,12 @@
               ],
               "isOptional": false,
               "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
+                "startIndex": 1,
+                "endIndex": 2
               },
               "releaseTag": "Public",
               "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "hostnameMode",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  }
-                }
-              ],
+              "parameters": [],
               "name": "getPurchasedServers"
             },
             {
@@ -16839,7 +16823,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#hackAnalyze:member(1)",
-              "docComment": "/**\n * Get the percent of money stolen with a single thread.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Returns the percentage of the specified server’s money you will steal with a single hack. This value is returned in percentage form, not decimal (Netscript functions typically return in decimal form, but not this one).\n *\n * @param host - Hostname of the target server.\n *\n * @returns The percentage of money you will steal from the target server with a single hack.\n *\n * @example\n * ```ts\n * //For example, assume the following returns 1:\n * hackAnalyze(\"foodnstuff\");\n * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N% of its total money.\n * ```\n *\n */\n",
+              "docComment": "/**\n * Get the percent of money stolen with a single thread.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Returns the percentage of the specified server’s money you will steal with a single hack. This value is returned in percentage form, not decimal (Netscript functions typically return in decimal form, but not this one).\n *\n * @param host - Hostname of the target server.\n *\n * @returns The percentage of money you will steal from the target server with a single hack.\n *\n * @example\n * ```ts\n * //For example, assume the following returns 0.01:\n * hackAnalyze(\"foodnstuff\");\n * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01% of its total money.\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -18053,23 +18037,15 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#scan:member(1)",
-              "docComment": "/**\n * Get the list servers connected to a server.\n *\n * @remarks\n *\n * RAM cost: 0.2 GB\n *\n * Returns an array containing the hostnames or IPs of all servers that are one node way from the specified target server. The hostnames/IPs in the returned array are strings.\n *\n * @param host - Hostname of the server to scan.\n *\n * @param hostnames - Optional boolean specifying whether the function should output hostnames (if true) or IP addresses (if false).\n *\n * @returns Returns an string of hostnames or IP.\n */\n",
+              "docComment": "/**\n * Get the list servers connected to a server.\n *\n * @remarks\n *\n * RAM cost: 0.2 GB\n *\n * Returns an array containing the hostnames of all servers that are one node way from the specified target server. The hostnames in the returned array are strings.\n *\n * @param host - Optional. Hostname of the server to scan. If omitted, the default is the server the script is running on.\n *\n * @returns Returns an string of hostnames.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "scan(host: "
+                  "text": "scan(host?: "
                 },
                 {
                   "kind": "Content",
                   "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", hostnames?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "boolean"
                 },
                 {
                   "kind": "Content",
@@ -18086,8 +18062,8 @@
               ],
               "isOptional": false,
               "returnTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
+                "startIndex": 3,
+                "endIndex": 4
               },
               "releaseTag": "Public",
               "overloadIndex": 1,
@@ -18097,13 +18073,6 @@
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
-                  }
-                },
-                {
-                  "parameterName": "hostnames",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 3,
-                    "endIndex": 4
                   }
                 }
               ],

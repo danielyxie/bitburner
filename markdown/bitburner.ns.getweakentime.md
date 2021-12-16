@@ -22,7 +22,7 @@ getWeakenTime(host: string): number;
 
 number
 
-Returns the amount of time in milliseconds it takes to execute the weaken Netscript function. Returns Infinity if called on a Hacknet Server.
+Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
 
 ## Remarks
 

@@ -61,7 +61,7 @@ export interface NS extends Singularity
 |  [getPurchasedServerCost(ram)](./bitburner.ns.getpurchasedservercost.md) | Get cost of purchasing a server. |
 |  [getPurchasedServerLimit()](./bitburner.ns.getpurchasedserverlimit.md) | Returns the maximum number of servers you can purchase. |
 |  [getPurchasedServerMaxRam()](./bitburner.ns.getpurchasedservermaxram.md) | Returns the maximum RAM that a purchased server can have. |
-|  [getPurchasedServers(hostnameMode)](./bitburner.ns.getpurchasedservers.md) | Returns an array with either the hostnames or IPs of all of the servers you have purchased. |
+|  [getPurchasedServers()](./bitburner.ns.getpurchasedservers.md) | Returns an array with the hostnames of all of the servers you have purchased. |
 |  [getRunningScript(filename, hostname, args)](./bitburner.ns.getrunningscript.md) | Get general info about a running script. |
 |  [getScriptExpGain(script, host, args)](./bitburner.ns.getscriptexpgain.md) | Get the exp gain of a script. |
 |  [getScriptIncome(script, host, args)](./bitburner.ns.getscriptincome.md) | Get the income of a script. |
@@ -109,7 +109,7 @@ export interface NS extends Singularity
 |  [relaysmtp(host)](./bitburner.ns.relaysmtp.md) | Runs relaySMTP.exe on a server. |
 |  [rm(name, host)](./bitburner.ns.rm.md) | Delete a file. |
 |  [run(script, numThreads, args)](./bitburner.ns.run.md) | Start another script on the current server. |
-|  [scan(host, hostnames)](./bitburner.ns.scan.md) | Get the list servers connected to a server. |
+|  [scan(host)](./bitburner.ns.scan.md) | Get the list servers connected to a server. |
 |  [scp(files, source, destination)](./bitburner.ns.scp.md) | Copy file between servers. |
 |  [scriptKill(script, host)](./bitburner.ns.scriptkill.md) | Kill all scripts with a filename. |
 |  [scriptRunning(script, host)](./bitburner.ns.scriptrunning.md) | Check if any script with a filename is running. |
