@@ -178,7 +178,7 @@ export const defaultSettings: IDefaultSettings = {
   Locale: "en",
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
-  MaxTerminalCapacity: 200,
+  MaxTerminalCapacity: 500,
   SaveGameOnFileSave: true,
   SuppressBuyAugmentationConfirmation: false,
   SuppressFactionInvites: false,

@@ -41,7 +41,7 @@ export function ScriptProduction(): React.ReactElement {
       <TableBody>
         <TableRow>
           <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-            <Typography variant="body2">Total production:</Typography>
+            <Typography variant="body2">Total production since last Augment Installation:</Typography>
           </TableCell>
           <TableCell align="left" classes={{ root: classes.cell }}>
             <Typography variant="body2">
