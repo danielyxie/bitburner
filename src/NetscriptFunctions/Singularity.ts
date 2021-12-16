@@ -622,18 +622,25 @@ export function NetscriptSingularity(
         return Promise.resolve();
       });
     },
-    isFocused: function(): boolean {
+    isFocused: function (): boolean {
       helper.updateDynamicRam("isFocused", getRamCost("isFocused"));
       helper.checkSingularityAccess("isFocused", 2);
       return player.focus;
     },
-    setFocus: function(focus: boolean): boolean {
+    setFocus: function (afocus: any): boolean {
+      const focus = helper.boolean(afocus);
       helper.updateDynamicRam("setFocus", getRamCost("setFocus"));
       helper.checkSingularityAccess("setFocus", 2);
       if (!player.isWorking) {
         throw helper.makeRuntimeErrorMsg("setFocus", "Not currently working");
       }
-      if (!(player.workType == CONSTANTS.WorkTypeFaction || player.workType == CONSTANTS.WorkTypeCompany || player.workType == CONSTANTS.WorkTypeCompanyPartTime)) {
+      if (
+        !(
+          player.workType == CONSTANTS.WorkTypeFaction ||
+          player.workType == CONSTANTS.WorkTypeCompany ||
+          player.workType == CONSTANTS.WorkTypeCompanyPartTime
+        )
+      ) {
         throw helper.makeRuntimeErrorMsg("setFocus", "Cannot change focus for current job");
       }
       if (!player.focus && focus) {
@@ -853,11 +860,9 @@ export function NetscriptSingularity(
       } else {
         player.startWork(companyName);
       }
-      
-      if (!wasWorking || (wasWorking && !wasFocused))
-        player.stopFocusing();
-      else if (wasWorking && wasFocused)
-        player.startFocusing();
+
+      if (!wasWorking || (wasWorking && !wasFocused)) player.stopFocusing();
+      else if (wasWorking && wasFocused) player.startFocusing();
       workerScript.log(
         "workForCompany",
         () => `Began working at '${player.companyName}' as a '${companyPositionName}'`,
@@ -1097,10 +1102,8 @@ export function NetscriptSingularity(
             return false;
           }
           player.startFactionHackWork(fac);
-          if (!wasWorking || (wasWorking && !wasFocused))
-            player.stopFocusing();
-          else if (wasWorking && wasFocused)
-            player.startFocusing();
+          if (!wasWorking || (wasWorking && !wasFocused)) player.stopFocusing();
+          else if (wasWorking && wasFocused) player.startFocusing();
           workerScript.log("workForFaction", () => `Started carrying out hacking contracts for '${fac.name}'`);
           return true;
         case "field":
@@ -1111,10 +1114,8 @@ export function NetscriptSingularity(
             return false;
           }
           player.startFactionFieldWork(fac);
-          if (!wasWorking || (wasWorking && !wasFocused))
-            player.stopFocusing();
-          else if (wasWorking && wasFocused)
-            player.startFocusing();
+          if (!wasWorking || (wasWorking && !wasFocused)) player.stopFocusing();
+          else if (wasWorking && wasFocused) player.startFocusing();
           workerScript.log("workForFaction", () => `Started carrying out field missions for '${fac.name}'`);
           return true;
         case "security":
@@ -1125,10 +1126,8 @@ export function NetscriptSingularity(
             return false;
           }
           player.startFactionSecurityWork(fac);
-          if (!wasWorking || (wasWorking && !wasFocused))
-            player.stopFocusing();
-          else if (wasWorking && wasFocused)
-            player.startFocusing();
+          if (!wasWorking || (wasWorking && !wasFocused)) player.stopFocusing();
+          else if (wasWorking && wasFocused) player.startFocusing();
           workerScript.log("workForFaction", () => `Started carrying out security work for '${fac.name}'`);
           return true;
         default:
