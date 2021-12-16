@@ -89,7 +89,6 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         break;
       case "deletewordbefore": // Delete rest of word before the cursor
         for (let delStart = start - 1; delStart > -2; --delStart) {
-          console.log(delStart, inputText.charAt(delStart), start - 1)
           if ((inputText.charAt(delStart) === " " || delStart === -1) && delStart !== start - 1) {
             saveValue(inputText.substr(0, delStart + 1) + inputText.substr(start), () => {
               // Move cursor to correct location
