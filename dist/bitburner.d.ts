@@ -2127,17 +2127,24 @@ export declare interface NodeStats {
  * @remarks
  * <b>Basic ns1 usage example:</b>
  * ```ts
- * property.methodName;
+ *  // Basic ns functions can be used directly
+ *  methodName();
+ *  // Some related functions are gathered within a common namespace
+ *  property.methodName()
  * ```
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscript1.html| ns1 in-game docs}
  * <hr>
  * <b>Basic ns2 usage example:</b>
  * ```ts
  * export async function main(ns) {
- *   ns.property.methodName;
+ *  // Basic ns functions can be accessed on the ns object
+ *  ns.methodName;
+ *  // Some related functions are gathered under a sub-property of the ns object
+ *  ns.property.methodName
  * }
  * ```
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html| ns2 in-game docs}
+ * <hr>
  */
 export declare interface NS extends Singularity {
     /**
