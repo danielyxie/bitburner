@@ -2001,8 +2001,9 @@ export interface Singularity {
     * @remarks
     * RAM cost: 0.1 GB
     *
+    * @returns True if the focus was changed.
     */
-   setFocus(focus: boolean): void; 
+   setFocus(focus: boolean): boolean; 
 }
 
 /**

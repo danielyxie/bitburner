@@ -82,7 +82,7 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
     setGangOpen(true);
   }
 
-  function startWork() {
+  function startWork(): void {
     player.startFocusing();
     router.toWork();
   }

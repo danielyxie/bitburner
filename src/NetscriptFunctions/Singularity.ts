@@ -627,7 +627,7 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("isFocused", 2);
       return player.focus;
     },
-    setFocus: function(focus: boolean): any {
+    setFocus: function(focus: boolean): boolean {
       helper.updateDynamicRam("setFocus", getRamCost("setFocus"));
       helper.checkSingularityAccess("setFocus", 2);
       if (!player.isWorking) {
@@ -636,13 +636,16 @@ export function NetscriptSingularity(
       if (!(player.workType == CONSTANTS.WorkTypeFaction || player.workType == CONSTANTS.WorkTypeCompany || player.workType == CONSTANTS.WorkTypeCompanyPartTime)) {
         throw helper.makeRuntimeErrorMsg("setFocus", "Cannot change focus for current job");
       }
-      if (!player.focus && focus === true) {
+      if (!player.focus && focus) {
         player.startFocusing();
         Router.toWork();
-      } else if (player.focus && focus === false) {
+        return true;
+      } else if (player.focus && !focus) {
         player.stopFocusing();
         Router.toTerminal();
+        return true;
       }
+      return false;
     },
     getStats: function (): any {
       helper.updateDynamicRam("getStats", getRamCost("getStats"));
