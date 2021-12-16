@@ -148,7 +148,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
   {
     desc: (n: number[][]): string => {
       let d: string = [
-        "Given the following array of array of numbers representing a 2D matrix,",
+        "Given the following array of arrays of numbers representing a 2D matrix,",
         "return the elements of the matrix as an array in spiral order:\n\n",
       ].join(" ");
       // for (const line of n) {
