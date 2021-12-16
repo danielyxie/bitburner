@@ -3730,9 +3730,9 @@ interface Stanek {
  * <b>Basic ns1 usage example:</b>
  * ```ts
  *  // Basic ns functions can be used directly
- *  methodName();
+ *  getHostname();
  *  // Some related functions are gathered within a common namespace
- *  property.methodName();
+ *  stock.getPrice();
  * ```
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscript1.html| ns1 in-game docs}
  * <hr>
@@ -3740,9 +3740,9 @@ interface Stanek {
  * ```ts
  * export async function main(ns) {
  *  // Basic ns functions can be accessed on the ns object
- *  await ns.methodName;
+ *  await ns.getHostname();
  *  // Some related functions are gathered under a sub-property of the ns object
- *  await ns.property.methodName;
+ *  await ns.stock.getPrice();
  * }
  * ```
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html| ns2 in-game docs}
