@@ -725,7 +725,9 @@ export function NetscriptSingularity(
       helper.updateDynamicRam("stopAction", getRamCost("stopAction"));
       helper.checkSingularityAccess("stopAction", 1);
       if (player.isWorking) {
-        Router.toTerminal();
+        if (player.focus) {
+          Router.toTerminal();
+        }
         const txt = player.singularityStopWork();
         workerScript.log("stopAction", () => txt);
         return true;
