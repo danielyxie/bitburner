@@ -1994,16 +1994,16 @@ export interface Singularity {
    *
    * @returns True if the player is focused.
    */
-   isFocused(): boolean;
+  isFocused(): boolean;
 
-   /**
-    * SF4.2 - Set the players focus.
-    * @remarks
-    * RAM cost: 0.1 GB
-    *
-    * @returns True if the focus was changed.
-    */
-   setFocus(focus: boolean): boolean; 
+  /**
+   * SF4.2 - Set the players focus.
+   * @remarks
+   * RAM cost: 0.1 GB
+   *
+   * @returns True if the focus was changed.
+   */
+  setFocus(focus: boolean): boolean;
 }
 
 /**
