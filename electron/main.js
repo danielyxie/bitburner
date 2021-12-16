@@ -9,10 +9,20 @@ if (greenworks.init()) {
 
 const debug = false;
 
+let win;
+let intervalID;
+
 function createWindow(killall) {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     show: false,
     backgroundThrottling: false,
+  });
+
+  win.on('closed', function() {
+    clearInterval(intervalID);
+    win = null;
+    app.quit();
+    process.exit(0);
   });
 
   win.removeMenu();
@@ -37,7 +47,7 @@ function createWindow(killall) {
   // This is backward but the game fills in an array called `document.achievements` and we retrieve it from
   // here. Hey if it works it works.
   const achievements = greenworks.getAchievementNames();
-  const intervalID = setInterval(async () => {
+  intervalID = setInterval(async () => {
     const achs = await win.webContents.executeJavaScript("document.achievements");
     console.log(achs);
     for (const ach of achs) {
@@ -110,6 +120,17 @@ function createWindow(killall) {
     ]),
   );
 }
+
+app.on('window-all-closed', function () {
+  // On OS X it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    clearInterval(intervalID);
+    win = null;
+    app.quit()
+    process.exit(0);
+  }
+});
 
 app.whenReady().then(() => {
   createWindow(false);
