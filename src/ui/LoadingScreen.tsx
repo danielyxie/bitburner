@@ -69,7 +69,7 @@ export function LoadingScreen(): React.ReactElement {
             <CircularProgress size={150} color="primary" />
           </Grid>
           <Grid item>
-            <Typography variant="h3">Loading Bitburner v{CONSTANTS.VersionString}</Typography>
+            <Typography variant="h3">Loading Bitburner v{CONSTANTS.VersionString} ({__COMMIT_HASH__})</Typography>
           </Grid>
           {show && (
             <Grid item>

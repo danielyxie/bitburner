@@ -6,6 +6,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
+import Tooltip from "@mui/material/Tooltip";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
@@ -337,7 +338,11 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         <ListItemIcon>
           {!open ? <ChevronRightIcon color="primary" /> : <ChevronLeftIcon color="primary" />}
         </ListItemIcon>
-        <ListItemText primary={<Typography>Bitburner v{CONSTANTS.VersionString}</Typography>} />
+        <ListItemText primary={
+            <Tooltip title={__COMMIT_HASH__}>
+                <Typography>Bitburner v{CONSTANTS.VersionString}</Typography>
+            </Tooltip>
+        } />
       </ListItem>
       <Divider />
       <List>
