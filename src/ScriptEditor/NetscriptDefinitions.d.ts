@@ -1994,7 +1994,7 @@ export interface Singularity {
    *
    * @returns True if the player is focused.
    */
-   isFocused(): void;
+   isFocused(): boolean;
 
    /**
     * SF4.2 - Set the players focus.
