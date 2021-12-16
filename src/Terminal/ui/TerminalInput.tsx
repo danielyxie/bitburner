@@ -48,12 +48,24 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   const terminalInput = useRef<HTMLInputElement>(null);
 
   const [value, setValue] = useState(command);
+  const [postUpdateValue, setPostUpdateValue] = useState<{postUpdate: () => void} | null>()
   const [possibilities, setPossibilities] = useState<string[]>([]);
   const classes = useStyles();
 
-  function saveValue(value: string): void {
-    command = value;
-    setValue(value);
+  useEffect(() => {
+    if (postUpdateValue?.postUpdate) {
+      postUpdateValue.postUpdate();
+      setPostUpdateValue(null);
+    }
+  }, [postUpdateValue])
+
+  function saveValue(newValue: string, postUpdate?: () => void): void {
+    command = newValue;
+    setValue(newValue);
+
+    if (postUpdate) {
+      setPostUpdateValue({postUpdate});
+    }
   }
 
   function handleValueChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -76,24 +88,37 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         }
         break;
       case "deletewordbefore": // Delete rest of word before the cursor
-        for (let delStart = start - 1; delStart > 0; --delStart) {
-          if (inputText.charAt(delStart) === " ") {
-            saveValue(inputText.substr(0, delStart) + inputText.substr(start));
+        for (let delStart = start - 1; delStart > -2; --delStart) {
+          console.log(delStart, inputText.charAt(delStart), start - 1)
+          if ((inputText.charAt(delStart) === " " || delStart === -1) && delStart !== start - 1) {
+            saveValue(inputText.substr(0, delStart + 1) + inputText.substr(start), () => {
+              // Move cursor to correct location
+              // foo bar |baz bum --> foo |baz bum
+              const ref = terminalInput.current;
+              ref?.setSelectionRange(delStart+1, delStart+1);
+            });
             return;
           }
         }
         break;
-      case "deletewordafter": // Delete rest of word after the cursor
+      case "deletewordafter": // Delete rest of word after the cursor, including trailing space
         for (let delStart = start + 1; delStart <= value.length + 1; ++delStart) {
-          if (inputText.charAt(delStart) === " ") {
-            saveValue(inputText.substr(0, start) + inputText.substr(delStart));
+          if (inputText.charAt(delStart) === " " || delStart === value.length + 1) {
+            saveValue(inputText.substr(0, start) + inputText.substr(delStart + 1), () => {
+              // Move cursor to correct location
+              // foo bar |baz bum --> foo bar |bum
+              const ref = terminalInput.current;
+              ref?.setSelectionRange(start, start)
+            });
             return;
           }
         }
         break;
       case "clearafter": // Deletes everything after cursor
+        saveValue(inputText.substr(0, start));
         break;
-      case "clearbefore:": // Deleetes everything before cursor
+      case "clearbefore": // Deletes everything before cursor
+        saveValue(inputText.substr(start), () => moveTextCursor("home"));
         break;
     }
   }
@@ -320,11 +345,23 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         event.preventDefault();
       }
 
+      if (event.keyCode === KEY.W && event.ctrlKey) {
+        event.preventDefault();
+        modifyInput("deletewordbefore");
+      }
+
+      if (event.keyCode === KEY.U && event.ctrlKey) {
+        event.preventDefault();
+        modifyInput("clearbefore");
+      }
+
+      if (event.keyCode === KEY.K && event.ctrlKey) {
+        event.preventDefault();
+        modifyInput("clearafter");
+      }
+
       // TODO AFTER THIS:
       // alt + d deletes word after cursor
-      // ^w deletes word before cursor
-      // ^k clears line after cursor
-      // ^u clears line before cursor
     }
   }
 
