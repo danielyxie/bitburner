@@ -26,7 +26,7 @@ import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { Sleeve } from "../../PersonObjects/Sleeve/Sleeve";
-import { calculateSkill as calculateSkillF } from "../formulas/skill";
+import { calculateSkill as calculateSkillF, calculateSkillProgress as calculateSkillProgressF, getEmptySkillProgress, ISkillProgress } from "../formulas/skill";
 import { calculateIntelligenceBonus } from "../formulas/intelligence";
 import {
   getHackingWorkRepGain,
@@ -224,6 +224,11 @@ export function receiveInvite(this: IPlayer, factionName: string): void {
 //Calculates skill level based on experience. The same formula will be used for every skill
 export function calculateSkill(this: IPlayer, exp: number, mult = 1): number {
   return calculateSkillF(exp, mult);
+}
+
+//Calculates skill level progress based on experience. The same formula will be used for every skill
+export function calculateSkillProgress(this: IPlayer, exp: number, mult = 1): ISkillProgress {
+  return calculateSkillProgressF(exp, mult);
 }
 
 export function updateSkillLevels(this: IPlayer): void {
