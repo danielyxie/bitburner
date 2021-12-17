@@ -116,7 +116,5 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", function () {
-  console.log("Died");
   app.quit();
-  process.exit(0);
 });
