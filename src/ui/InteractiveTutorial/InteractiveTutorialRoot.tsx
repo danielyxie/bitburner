@@ -12,6 +12,7 @@ import { CopyableText } from "../React/CopyableText";
 import ListItem from "@mui/material/ListItem";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import HelpIcon from "@mui/icons-material/Help";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import StorageIcon from "@mui/icons-material/Storage";
@@ -58,6 +59,9 @@ export function InteractiveTutorialRoot(): React.ReactElement {
             <br />
             <br />
             This tutorial will show you the basics of the game. You may skip the tutorial at any time.
+            <br />
+            <br />
+            You can also click the eye symbol <VisibilityOffIcon /> to temporarily hide this tutorial.
           </Typography>
         </>
       ),
@@ -287,7 +291,9 @@ export function InteractiveTutorialRoot(): React.ReactElement {
           The amount of money on a server is not limitless. So, if you constantly hack a server and deplete its money,
           then you will encounter diminishing returns in your hacking. You will need to use{" "}
           <Typography classes={{ root: classes.textfield }}>{"[n00dles ~/]> grow"}</Typography>
-          and <Typography classes={{ root: classes.textfield }}>{"[n00dles ~/]> weaken"}</Typography>
+          which tricks the company into adding money to their server and{" "}
+          <Typography classes={{ root: classes.textfield }}>{"[n00dles ~/]> weaken"}</Typography>
+          which increases the speed of hack and grow.
         </Typography>
       ),
       canNext: true,
@@ -343,10 +349,6 @@ export function InteractiveTutorialRoot(): React.ReactElement {
           <Typography>
             For anyone with basic programming experience, this code should be straightforward. This script will
             continuously hack the n00dles server.
-            <br />
-            <br />
-            If you're an intermediate programmer you should use ns2 instead. It is much faster and offers more
-            possibilities.
             <br />
             <br />
             To save and close the script editor, press the button in the bottom left, or press ctrl + b.
@@ -447,7 +449,11 @@ export function InteractiveTutorialRoot(): React.ReactElement {
             <br />
             <br />
             If you know even a little bit of programming it is highly recommended you use NS2 instead. You will enjoy
-            the game much more.
+            the game much more. NS1 files end with .script and are a subset of javascript. NS2 files end with .js and
+            are full speed native javascript.
+            <br />
+            <br />
+            You can learn more about the difference between them later in the documentation.
             <br />
             <br />
             For now, let's move on to something else!
