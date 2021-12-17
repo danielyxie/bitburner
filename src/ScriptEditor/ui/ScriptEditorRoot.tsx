@@ -92,7 +92,7 @@ export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
   const vimStatusRef = useRef<HTMLElement>(null);
   const [vimEditor, setVimEditor] = useState<any>(null);
-  const [editor, setEditor] = useState<IStandaloneCodeEditor|null>(null);
+  const [editor, setEditor] = useState<IStandaloneCodeEditor | null>(null);
   const [filename, setFilename] = useState(props.filename ? props.filename : lastFilename);
   const [code, setCode] = useState<string>(props.filename ? props.code : lastCode);
   const [decorations, setDecorations] = useState<string[]>([]);
@@ -327,11 +327,11 @@ export function Root(props: IProps): React.ReactElement {
         // @ts-expect-error
         window.require(["monaco-vim"], function (MonacoVim: any) {
           setVimEditor(MonacoVim.initVimMode(editor, vimStatusRef.current));
-          MonacoVim.VimMode.Vim.defineEx('write', 'w', function() {
+          MonacoVim.VimMode.Vim.defineEx("write", "w", function () {
             // your own implementation on what you want to do when :w is pressed
             save();
           });
-          MonacoVim.VimMode.Vim.defineEx('quit', 'q', function() {
+          MonacoVim.VimMode.Vim.defineEx("quit", "q", function () {
             save();
           });
           editor.focus();
@@ -345,8 +345,8 @@ export function Root(props: IProps): React.ReactElement {
 
     return () => {
       vimEditor?.dispose();
-    }
-  }, [ options, editorRef, editor, vimEditor])
+    };
+  }, [options, editorRef, editor, vimEditor]);
 
   function onMount(editor: IStandaloneCodeEditor): void {
     // Required when switching between site navigation (e.g. from Script Editor -> Terminal and back)
@@ -365,7 +365,7 @@ export function Root(props: IProps): React.ReactElement {
         lineNumber: lastPosition.lineNumber,
         column: lastPosition.column + 1,
       });
-    
+
     editorRef.current.focus();
   }
 
@@ -411,7 +411,7 @@ export function Root(props: IProps): React.ReactElement {
   // Toolbars are roughly 108px + vim bar 34px
   // Get percentage of space that toolbars represent and the rest should be the
   // editor
-  const editorHeight = 100 - (((108 + (options.vim ? 34 : 0)) / window.innerHeight) * 100);
+  const editorHeight = 100 - ((108 + (options.vim ? 34 : 0)) / window.innerHeight) * 100;
 
   return (
     <>
@@ -443,7 +443,14 @@ export function Root(props: IProps): React.ReactElement {
         options={{ ...options, glyphMargin: true }}
       />
 
-      <Box ref={vimStatusRef} className="monaco-editor" display="flex" flexDirection="row" sx={{ p: 1 }} alignItems="center"></Box>
+      <Box
+        ref={vimStatusRef}
+        className="monaco-editor"
+        display="flex"
+        flexDirection="row"
+        sx={{ p: 1 }}
+        alignItems="center"
+      ></Box>
 
       <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
         <Button onClick={beautify}>Beautify</Button>
