@@ -33,7 +33,7 @@ import createStyles from "@mui/styles/createStyles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { Page, IRouter } from "./Router";
+import { Page, IRouter, ScriptEditorRouteOptions } from "./Router";
 import { Overview } from "./React/Overview";
 import { SidebarRoot } from "../Sidebar/ui/SidebarRoot";
 import { AugmentationsRoot } from "../Augmentation/ui/AugmentationsRoot";
@@ -97,6 +97,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 let filename = "";
 let code = "";
+let vim = false;
 
 export let Router: IRouter = {
   page: () => {
@@ -246,9 +247,10 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toHacknetNodes: () => setPage(Page.Hacknet),
     toMilestones: () => setPage(Page.Milestones),
     toResleeves: () => setPage(Page.Resleeves),
-    toScriptEditor: (fn: string, c: string) => {
+    toScriptEditor: (fn: string, c: string, options?: ScriptEditorRouteOptions) => {
       filename = fn;
       code = c;
+      vim = !!options?.vim;
       setPage(Page.ScriptEditor);
     },
     toSleeves: () => setPage(Page.Sleeves),
@@ -335,6 +337,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                     hostname={player.getCurrentServer().hostname}
                     player={player}
                     router={Router}
+                    vim={vim}
                   />
                 ) : page === Page.ActiveScripts ? (
                   <ActiveScriptsRoot workerScripts={workerScripts} />

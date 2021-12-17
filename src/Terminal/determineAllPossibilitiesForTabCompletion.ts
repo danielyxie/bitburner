@@ -49,6 +49,7 @@ const commands = [
   "tail",
   "theme",
   "top",
+  "vim",
   "weaken",
 ];
 
@@ -265,7 +266,7 @@ export async function determineAllPossibilitiesForTabCompletion(
     return allPos;
   }
 
-  if (isCommand("nano")) {
+  if (isCommand("nano") || isCommand("vim")) {
     addAllScripts();
     addAllTextFiles();
     addAllDirectories();

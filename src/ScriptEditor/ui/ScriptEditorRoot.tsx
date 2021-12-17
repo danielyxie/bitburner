@@ -44,7 +44,7 @@ interface IProps {
   hostname: string;
   player: IPlayer;
   router: IRouter;
-  vim?: boolean;
+  vim: boolean;
 }
 
 // TODO: try to removve global symbols
