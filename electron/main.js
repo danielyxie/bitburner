@@ -7,8 +7,6 @@ if (greenworks.init()) {
   console.log("Steam API has failed to initialize.");
 }
 
-console.log(greenworks.shutdown);
-
 const debug = false;
 
 function createWindow(killall) {
