@@ -754,7 +754,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
     },
     enableLog: function (fn: any): any {
-      if (possibleLogs[fn] === undefined) {
+      if (fn === "ALL") {
+        for (fn in possibleLogs) {
+          delete workerScript.disableLogs[fn];
+        }
+        workerScript.log("enableLog", () => `Enabled logging for all functions`);
+      } else if (possibleLogs[fn] === undefined) {
         throw makeRuntimeErrorMsg("enableLog", `Invalid argument: ${fn}.`);
       }
       delete workerScript.disableLogs[fn];
