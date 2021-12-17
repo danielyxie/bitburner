@@ -87,7 +87,6 @@ let lastFilename = "";
 let lastCode = "";
 let hostname = "";
 let lastPosition: monaco.Position | null = null;
-// let vimEditor: any | null = null;
 
 export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
