@@ -46,6 +46,7 @@ function createWindow(killall) {
       greenworks.activateAchievement(ach, () => undefined);
     }
   }, 1000);
+  win.achievementsIntervalID = intervalID;
 
   // Create the Application's main menu
   Menu.setApplicationMenu(
@@ -75,6 +76,7 @@ function createWindow(killall) {
           {
             label: "reload & kill all scripts",
             click: () => {
+              setStopProcessHandler(app, win, false);
               if (intervalID) clearInterval(intervalID);
               createWindow(true);
               win.webContents.forcefullyCrashRenderer();
@@ -110,13 +112,35 @@ function createWindow(killall) {
       },
     ]),
   );
+
+  return win;
+}
+
+function setStopProcessHandler(app, window, enabled) {
+  const clearWindowHandler = () => {
+    if (window.achievementsIntervalID) {
+      clearInterval(window.achievementsIntervalID);
+    }
+    window = null;
+  }
+
+  const stopProcessHandler = () => {
+    if (process.platform !== 'darwin') {
+      app.quit()
+      process.exit(0);
+    }
+  }
+
+  if (enabled) {
+    window.on('closed', clearWindowHandler);
+    app.on('window-all-closed', stopProcessHandler);
+  } else {
+    window.removeListener('closed', clearWindowHandler);
+    app.removeListener('window-all-closed', stopProcessHandler);
+  }
 }
 
 app.whenReady().then(() => {
-  createWindow(process.argv.includes("--no-scripts"));
-});
-
-app.once("window-all-closed", app.quit);
-app.once("before-quit", () => {
-  win.removeAllListeners("close");
+  const win = createWindow(false);
+  setStopProcessHandler(app, win, true);
 });
