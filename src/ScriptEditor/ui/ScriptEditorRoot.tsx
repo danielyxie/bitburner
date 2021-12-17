@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Editor from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
+
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 import { OptionsModal } from "./OptionsModal";
 import { Options } from "./Options";
@@ -86,9 +87,13 @@ let lastFilename = "";
 let lastCode = "";
 let hostname = "";
 let lastPosition: monaco.Position | null = null;
+// let vimEditor: any | null = null;
 
 export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
+  const vimStatusRef = useRef<HTMLElement>(null);
+  const [vimEditor, setVimEditor] = useState<any>(null);
+  const [editor, setEditor] = useState<IStandaloneCodeEditor|null>(null);
   const [filename, setFilename] = useState(props.filename ? props.filename : lastFilename);
   const [code, setCode] = useState<string>(props.filename ? props.code : lastCode);
   const [decorations, setDecorations] = useState<string[]>([]);
@@ -103,6 +108,7 @@ export function Root(props: IProps): React.ReactElement {
     theme: Settings.MonacoTheme,
     insertSpaces: Settings.MonacoInsertSpaces,
     fontSize: Settings.MonacoFontSize,
+    vim: Settings.MonacoVim,
   });
 
   const debouncedSetRAM = useMemo(
@@ -314,7 +320,39 @@ export function Root(props: IProps): React.ReactElement {
     return () => document.removeEventListener("keydown", maybeSave);
   });
 
+  useEffect(() => {
+    // setup monaco-vim
+    if (options.vim && editor && !vimEditor) {
+      try {
+        // This library is not typed
+        // @ts-expect-error
+        window.require(["monaco-vim"], function (MonacoVim: any) {
+          setVimEditor(MonacoVim.initVimMode(editor, vimStatusRef.current));
+          MonacoVim.VimMode.Vim.defineEx('write', 'w', function() {
+            // your own implementation on what you want to do when :w is pressed
+            save();
+          });
+          MonacoVim.VimMode.Vim.defineEx('quit', 'q', function() {
+            save();
+          });
+          editor.focus();
+        });
+      } catch {}
+    } else if (!options.vim) {
+      // Whem vim mode is disabled
+      vimEditor?.dispose();
+      setVimEditor(null);
+    }
+
+    return () => {
+      vimEditor?.dispose();
+    }
+  }, [ options, editorRef, editor, vimEditor])
+
   function onMount(editor: IStandaloneCodeEditor): void {
+    // Required when switching between site navigation (e.g. from Script Editor -> Terminal and back)
+    // the `useEffect()` for vim mode is called before editor is mounted.
+    setEditor(editor);
     editorRef.current = editor;
     if (editorRef.current === null) return;
     const position = CursorPositions.getCursor(filename);
@@ -328,6 +366,7 @@ export function Root(props: IProps): React.ReactElement {
         lineNumber: lastPosition.lineNumber,
         column: lastPosition.column + 1,
       });
+    
     editorRef.current.focus();
   }
 
@@ -368,9 +407,13 @@ export function Root(props: IProps): React.ReactElement {
     monaco.languages.typescript.typescriptDefaults.addExtraLib(source, "netscript.d.ts");
     loadThemes(monaco);
   }
-  // 370px  71%, 725px  85.1%, 1085px 90%, 1300px 91.7%
-  // fuck around in desmos until you find a function
-  const p = 11000 / -window.innerHeight + 100;
+
+  // TODO: Make this responsive to window resizes
+  // Toolbars are roughly 108px + vim bar 34px
+  // Get percentage of space that toolbars represent and the rest should be the
+  // editor
+  const editorHeight = 100 - (((108 + (options.vim ? 34 : 0)) / window.innerHeight) * 100);
+
   return (
     <>
       <Box display="flex" flexDirection="row" alignItems="center">
@@ -393,13 +436,16 @@ export function Root(props: IProps): React.ReactElement {
         beforeMount={beforeMount}
         onMount={onMount}
         loading={<Typography>Loading script editor!</Typography>}
-        height={p + "%"}
+        height={`${editorHeight}%`}
         defaultLanguage="javascript"
         defaultValue={code}
         onChange={updateCode}
         theme={options.theme}
         options={{ ...options, glyphMargin: true }}
       />
+
+      <Box ref={vimStatusRef} className="monaco-editor" display="flex" flexDirection="row" sx={{ p: 1 }} alignItems="center"></Box>
+
       <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
         <Button onClick={beautify}>Beautify</Button>
         <Typography color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
@@ -425,12 +471,14 @@ export function Root(props: IProps): React.ReactElement {
           theme: Settings.MonacoTheme,
           insertSpaces: Settings.MonacoInsertSpaces,
           fontSize: Settings.MonacoFontSize,
+          vim: Settings.MonacoVim,
         }}
         save={(options: Options) => {
           setOptions(options);
           Settings.MonacoTheme = options.theme;
           Settings.MonacoInsertSpaces = options.insertSpaces;
           Settings.MonacoFontSize = options.fontSize;
+          Settings.MonacoVim = options.vim;
         }}
       />
     </>
