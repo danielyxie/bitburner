@@ -2291,6 +2291,22 @@ export interface Hacknet {
   spendHashes(upgName: string, upgTarget?: string): boolean;
 
   /**
+   * Get the list of hash upgrades
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
+   *
+   * Returns the list of all available hash upgrades that can be used in the spendHashes function.
+   * @example
+   * ```ts
+   * const upgrades = hacknet.getHashUpgrades(); // ["Sell for Money","Sell for Corporation Funds",...]
+   * ```
+   * @returns An array containing the available upgrades
+   */
+  getHashUpgrades(): string[];
+
+  /**
    * Get the level of a hash upgrade.
    * @remarks
    * RAM cost: 0 GB
