@@ -558,7 +558,7 @@ export class Terminal implements ITerminal {
   }
 
   clear(): void {
-    this.outputHistory = [new Output(`Bitburner v${CONSTANTS.VersionString} (${__COMMIT_HASH__ || "DEV"})`, "primary")];
+    this.outputHistory = [new Output(`Bitburner v${CONSTANTS.VersionString} (${hash()})`, "primary")];
     TerminalEvents.emit();
     TerminalClearEvents.emit();
   }
@@ -667,6 +667,12 @@ export class Terminal implements ITerminal {
           if (commandArray.length == 1 && commandArray[0] == "hack") {
             iTutorialNextStep();
           } else {
+            this.error("Bad command. Please follow the tutorial");
+            return;
+          }
+          break;
+        case iTutorialSteps.TerminalHackingMechanics:
+          if (commandArray.length !== 1 || !["grow", "weaken", "hack"].includes(commandArray[0] + "")) {
             this.error("Bad command. Please follow the tutorial");
             return;
           }
