@@ -9,20 +9,10 @@ if (greenworks.init()) {
 
 const debug = false;
 
-let win;
-let intervalID;
-
 function createWindow(killall) {
-  win = new BrowserWindow({
+  const win = new BrowserWindow({
     show: false,
     backgroundThrottling: false,
-  });
-
-  win.on('closed', function() {
-    clearInterval(intervalID);
-    win = null;
-    app.quit();
-    process.exit(0);
   });
 
   win.removeMenu();
@@ -47,7 +37,7 @@ function createWindow(killall) {
   // This is backward but the game fills in an array called `document.achievements` and we retrieve it from
   // here. Hey if it works it works.
   const achievements = greenworks.getAchievementNames();
-  intervalID = setInterval(async () => {
+  const intervalID = setInterval(async () => {
     const achs = await win.webContents.executeJavaScript("document.achievements");
     console.log(achs);
     for (const ach of achs) {
@@ -55,6 +45,7 @@ function createWindow(killall) {
       greenworks.activateAchievement(ach, () => undefined);
     }
   }, 1000);
+  win.achievementsIntervalID = intervalID;
 
   // Create the Application's main menu
   Menu.setApplicationMenu(
@@ -84,6 +75,7 @@ function createWindow(killall) {
           {
             label: "reload & kill all scripts",
             click: () => {
+              setStopProcessHandler(app, win, false);
               if (intervalID) clearInterval(intervalID);
               win.webContents.forcefullyCrashRenderer();
               win.close();
@@ -119,19 +111,35 @@ function createWindow(killall) {
       },
     ]),
   );
+
+  return win;
 }
 
-app.on('window-all-closed', function () {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    clearInterval(intervalID);
-    win = null;
-    app.quit()
-    process.exit(0);
+function setStopProcessHandler(app, window, enabled) {
+  const clearWindowHandler = () => {
+    if (window.achievementsIntervalID) {
+      clearInterval(window.achievementsIntervalID);
+    }
+    window = null;
   }
-});
+
+  const stopProcessHandler = () => {
+    if (process.platform !== 'darwin') {
+      app.quit()
+      process.exit(0);
+    }
+  }
+
+  if (enabled) {
+    window.on('closed', clearWindowHandler);
+    app.on('window-all-closed', stopProcessHandler);
+  } else {
+    window.removeListener('closed', clearWindowHandler);
+    app.removeListener('window-all-closed', stopProcessHandler);
+  }
+}
 
 app.whenReady().then(() => {
-  createWindow(false);
+  const win = createWindow(false);
+  setStopProcessHandler(app, win, true);
 });
