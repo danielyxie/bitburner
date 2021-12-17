@@ -16,6 +16,8 @@ import {
 } from "../Hacknet/HacknetHelpers";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { HacknetNode } from "../Hacknet/HacknetNode";
+import { HashUpgrades } from "../Hacknet/HashUpgrades";
+import { HashUpgrade } from "../Hacknet/HashUpgrade";
 import { GetServer } from "../Server/AllServers";
 
 import { Hacknet as IHacknet, NodeStats } from "../ScriptEditor/NetscriptDefinitions";
@@ -165,6 +167,12 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript, he
         return false;
       }
       return purchaseHashUpgrade(player, upgName, upgTarget);
+    },
+    getHashUpgrades: function(): string[] {
+      if (!hasHacknetServers(player)) {
+        return [];
+      }
+      return Object.values(HashUpgrades).map((upgrade: HashUpgrade) => upgrade.name);
     },
     getHashUpgradeLevel: function (upgName: any): number {
       const level = player.hashManager.upgrades[upgName];
