@@ -4,7 +4,7 @@
 
 Source-Files
 ============
-Source-Files are a type of persistent upgrade that are more powerful than Augmentations.
+Source-Files are a type of persistent upgrade that is more powerful than Augmentations.
 Source-Files are received by destroying a BitNode. There are many different BitNodes
 in the game and each BitNode will grant a different Source-File when it is destroyed.
 
@@ -15,19 +15,19 @@ of level 3.
 List of all Source-Files
 ^^^^^^^^^^^^^^^^^^^^^^^^
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|| BitNode-1: Source Genesis          || * Lets the player start with 32 GB of RAM on home computer.                                                                                                             |
+|| BitNode-1: Source Genesis          || * Let the player start with 32 GB of RAM on the home computer.                                                                                                          |
 ||                                    || * Increases all of the player's multipliers by 16%/24%/28%.                                                                                                             |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|| BitNode-2: Rise of the Underworld  || * Lets the player create Gangs in other BitNodes (although some                                                                                                         |
+|| BitNode-2: Rise of the Underworld  || * Let the player create Gangs in other BitNodes (although some                                                                                                          |
 ||                                    || BitNodes will disable this mechanic).                                                                                                                                   |
 ||                                    || * Increases the player's crime success rate, crime money, and                                                                                                           |
 ||                                    || charisma multipliers by 24%/36%/42%.                                                                                                                                    |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|| BitNode-3: Corporatocracy          || * Lets the player create Corporations in other BitNodes (although some                                                                                                  |
+|| BitNode-3: Corporatocracy          || * Let the player create Corporations in other BitNodes (although some                                                                                                   |
 ||                                    || BitNodes will disable this mechanic).                                                                                                                                   |
 ||                                    || * Increases the player's charisma and company salary multipliers by 8%/12%/14%.                                                                                         |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|| BitNode-4: The Singularity         || * Lets the player access and use Netscript Singularity Functions in other BitNodes.                                                                                     |
+|| BitNode-4: The Singularity         || * Let the player access and use Netscript Singularity Functions in other BitNodes.                                                                                      |
 ||                                    || * Each level of this Source-File opens up more of the Singularity Functions to use.                                                                                     |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 || BitNode-5: Artificial Intelligence || * Unlocks :ref:`gameplay_intelligence`.                                                                                                                                 |
@@ -47,7 +47,7 @@ List of all Source-Files
 ||                                    || * Level 3 grants permanent access to use limit/stop orders.                                                                                                             |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 || BitNode-9: Hacktocracy             || * Level 1 permanently unlocks the Hacknet Server in other BitNodes.                                                                                                     |
-||                                    || * Level 2 lets the player start with 128 GB of RAM on home computer.                                                                                                    |
+||                                    || * Level 2 lets the player start with 128 GB of RAM on the home computer.                                                                                                |
 ||                                    || * Level 3 grants a highly-upgraded Hacknet Server when entering a new BitNode (it                                                                                       |
 ||                                    || will be lost after installing augments).                                                                                                                                |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -60,6 +60,6 @@ List of all Source-Files
 ||                                    || 32%/48%/56%.                                                                                                                                                            |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 || BitNode-12: The Recursion          || * There is no maximum level for this Source-File.                                                                                                                       |
-||                                    || * Lets the player start with Neuroflux Governor equal to the level of this                                                                                              |
+||                                    || * Let the player start with Neuroflux Governor equal to the level of this                                                                                               |
 ||                                    || Source-File.                                                                                                                                                            |
 +-------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
