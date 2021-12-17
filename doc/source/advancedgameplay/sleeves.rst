@@ -18,7 +18,7 @@ Sleeve technology is unlocked in :ref:`BitNode-10 <gameplay_bitnodes>`.
 
 Duplicate Sleeves
 ^^^^^^^^^^^^^^^^^
-Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your consciuosness
+Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your consciousness
 has been copied. In other words, these Synthoids contain a perfect duplicate of your mind.
 
 Duplicate Sleeves are essentially clones which you can use to perform work-type actions,
