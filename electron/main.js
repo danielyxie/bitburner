@@ -9,8 +9,9 @@ if (greenworks.init()) {
 
 const debug = false;
 
+let win = null;
 function createWindow(killall) {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     show: false,
     backgroundThrottling: false,
   });
@@ -77,9 +78,9 @@ function createWindow(killall) {
             click: () => {
               setStopProcessHandler(app, win, false);
               if (intervalID) clearInterval(intervalID);
+              createWindow(true);
               win.webContents.forcefullyCrashRenderer();
               win.close();
-              createWindow(true);
             },
           },
         ],

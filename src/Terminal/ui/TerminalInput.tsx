@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(0),
     },
     input: {
-      backgroundColor: "#000",
+      backgroundColor: theme.colors.backgroundprimary,
     },
     nopadding: {
       padding: theme.spacing(0),

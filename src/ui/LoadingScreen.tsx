@@ -15,6 +15,7 @@ import { GameRoot } from "./GameRoot";
 
 import { CONSTANTS } from "../Constants";
 import { ActivateRecoveryMode } from "./React/RecoveryRoot";
+import { hash } from "../hash/hash";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,7 +70,9 @@ export function LoadingScreen(): React.ReactElement {
             <CircularProgress size={150} color="primary" />
           </Grid>
           <Grid item>
-            <Typography variant="h3">Loading Bitburner v{CONSTANTS.VersionString} ({__COMMIT_HASH__})</Typography>
+            <Typography variant="h3">
+              Loading Bitburner v{CONSTANTS.VersionString} ({hash()})
+            </Typography>
           </Grid>
           {show && (
             <Grid item>

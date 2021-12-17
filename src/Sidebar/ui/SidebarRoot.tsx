@@ -55,6 +55,7 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { KEY } from "../../utils/helpers/keyCodes";
 import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "../../Faction/ui/FactionsRoot";
+import { hash } from "../../hash/hash";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),
@@ -338,11 +339,13 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         <ListItemIcon>
           {!open ? <ChevronRightIcon color="primary" /> : <ChevronLeftIcon color="primary" />}
         </ListItemIcon>
-        <ListItemText primary={
-            <Tooltip title={__COMMIT_HASH__}>
-                <Typography>Bitburner v{CONSTANTS.VersionString}</Typography>
+        <ListItemText
+          primary={
+            <Tooltip title={hash()}>
+              <Typography>Bitburner v{CONSTANTS.VersionString}</Typography>
             </Tooltip>
-        } />
+          }
+        />
       </ListItem>
       <Divider />
       <List>
