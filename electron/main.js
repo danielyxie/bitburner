@@ -116,11 +116,7 @@ app.whenReady().then(() => {
   createWindow(process.argv.includes("--no-scripts"));
 });
 
-app.on("window-all-closed", function () {
-  app.quit();
-});
-
-app.on("before-quit", () => {
+app.once("window-all-closed", app.quit);
+app.once("before-quit", () => {
   win.removeAllListeners("close");
-  win.close();
 });
