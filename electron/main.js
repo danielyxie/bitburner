@@ -14,6 +14,7 @@ function createWindow(killall) {
   win = new BrowserWindow({
     show: false,
     backgroundThrottling: false,
+    backgroundColor: '#000000',
   });
 
   win.removeMenu();
