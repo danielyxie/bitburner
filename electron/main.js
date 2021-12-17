@@ -9,8 +9,9 @@ if (greenworks.init()) {
 
 const debug = false;
 
+let win = null;
 function createWindow(killall) {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     show: false,
     backgroundThrottling: false,
   });
@@ -112,9 +113,14 @@ function createWindow(killall) {
 }
 
 app.whenReady().then(() => {
-  createWindow(false);
+  createWindow(process.argv.includes("--no-scripts"));
 });
 
 app.on("window-all-closed", function () {
   app.quit();
+});
+
+app.on("before-quit", () => {
+  win.removeAllListeners("close");
+  win.close();
 });
