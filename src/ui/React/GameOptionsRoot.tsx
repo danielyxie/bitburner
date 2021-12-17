@@ -13,6 +13,7 @@ import Switch from "@mui/material/Switch";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -28,7 +29,7 @@ import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { dialogBoxCreate } from "./DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { ThemeEditorModal } from "./ThemeEditorModal";
-
+import { Modal } from "../../ui/React/Modal";
 import { Settings } from "../../Settings/Settings";
 import { save, deleteGame } from "../../db";
 import { formatTime } from "../../utils/helpers/formatTime";
@@ -82,6 +83,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [deleteGameOpen, setDeleteOpen] = useState(false);
   const [themeEditorOpen, setThemeEditorOpen] = useState(false);
+  const [softResetOpen, setSoftResetOpen] = useState(false);
 
   function handleExecTimeChange(event: any, newValue: number | number[]): void {
     setExecTime(newValue as number);
@@ -626,7 +628,28 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 </Typography>
               }
             >
-              <Button onClick={() => props.softReset()}>Soft Reset</Button>
+              <>
+                <Button onClick={() => setSoftResetOpen(true)}>Soft Reset</Button>
+                <Modal open={softResetOpen} onClose={() => setSoftResetOpen(false)}>
+                  <Typography>
+                    WARNING: THIS WILL RESET YOUR PROGRESS
+                    <br />
+                    <br />
+                    This feature should only be useful if you know what you are doing.
+                    <br />
+                    If you are unsure, you should EXPORT your save game as a backup before!
+                  </Typography>
+                  <br />
+                  <ButtonGroup>
+                    <Button onClick={() => setSoftResetOpen(false)}>
+                      No, Cancel Operation
+                    </Button>
+                    <Button color="error" onClick={() => props.softReset()}>
+                      Yes, Execute Soft Reset
+                    </Button>
+                  </ButtonGroup>
+                </Modal>
+              </>
             </Tooltip>
           </Box>
           <Box>

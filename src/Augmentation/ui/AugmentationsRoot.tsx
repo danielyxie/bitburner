@@ -11,9 +11,11 @@ import { SourceFiles } from "./SourceFiles";
 
 import { canGetBonus } from "../../ExportBonus";
 import { use } from "../../ui/Context";
+import { Modal } from "../../ui/React/Modal";
 
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 
@@ -25,6 +27,7 @@ interface IProps {
 export function AugmentationsRoot(props: IProps): React.ReactElement {
   const player = use.Player();
   const setRerender = useState(false)[1];
+  const [isInstallationOpen, setInstallationOpen] = useState(false);
   function rerender(): void {
     setRerender((o) => !o);
   }
@@ -72,11 +75,34 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
       </Typography>
       <Box mx={2}>
         <Tooltip title={<Typography>'I never asked for this'</Typography>}>
-          <span>
-            <Button disabled={player.queuedAugmentations.length === 0} onClick={props.installAugmentationsFn}>
+          <>
+            <Button disabled={player.queuedAugmentations.length === 0} onClick={() => setInstallationOpen(true)}>
               Install Augmentations
             </Button>
-          </span>
+            <Modal open={isInstallationOpen} onClose={() => setInstallationOpen(false)}>
+              <Typography>
+                WARNING: THIS WILL PARTIALLY RESET YOUR PROGRESS
+                <br />
+                <br />
+                For your first installation, it is recommended to purchase most of the CSEC augmentations.
+                <br />
+                If you are unsure, you should EXPORT your save game as a backup before!
+                <br />
+                <br />
+                <Typography variant="subtitle2"><em>This is the first prestige mechanism.</em></Typography>
+              </Typography>
+              <br />
+
+              <ButtonGroup>
+                <Button onClick={() => setInstallationOpen(false)}>
+                  No, Cancel Installation
+                </Button>
+                <Button color="error" disabled={player.queuedAugmentations.length === 0} onClick={props.installAugmentationsFn}>
+                  Yes, Install Augmentations
+                </Button>
+              </ButtonGroup>
+            </Modal>
+          </>
         </Tooltip>
         <Tooltip title={<Typography>It's always a good idea to backup/export your save!</Typography>}>
           <Button sx={{ mx: 2 }} onClick={doExport} color="error">
