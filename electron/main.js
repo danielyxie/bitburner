@@ -75,9 +75,9 @@ function createWindow(killall) {
             label: "reload & kill all scripts",
             click: () => {
               if (intervalID) clearInterval(intervalID);
+              createWindow(true);
               win.webContents.forcefullyCrashRenderer();
               win.close();
-              createWindow(true);
             },
           },
         ],
@@ -113,4 +113,10 @@ function createWindow(killall) {
 
 app.whenReady().then(() => {
   createWindow(false);
+});
+
+app.on("window-all-closed", function () {
+  console.log("Died");
+  app.quit();
+  process.exit(0);
 });
