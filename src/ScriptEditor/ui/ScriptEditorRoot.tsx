@@ -541,7 +541,7 @@ export function Root(props: IProps): React.ReactElement {
   const p = 11000 / -window.innerHeight + 100;
   return (
     <>
-      <Box display="flex" flexDirection="row" alignItems="center">
+      <Box display="flex" flexDirection="row" alignItems="center"  paddingBottom='5px'>
         {scriptButtons}
       </Box>
       <Editor
@@ -561,7 +561,7 @@ export function Root(props: IProps): React.ReactElement {
           {ram}
         </Typography>
         <Button onClick={save}>Save (Ctrl/Cmd + b)</Button>
-        <Typography style={{ marginLeft: '50%' }} sx={{ mx: 1 }}>
+        <Typography sx={{ mx: 1 }}>
           {" "}
           Documentation:{" "}
           <Link target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
