@@ -2291,6 +2291,22 @@ export interface Hacknet {
   spendHashes(upgName: string, upgTarget?: string): boolean;
 
   /**
+   * Get the list of hash upgrades
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
+   *
+   * Returns the list of all available hash upgrades that can be used in the spendHashes function.
+   * @example
+   * ```ts
+   * const upgrades = hacknet.getHashUpgrades(); // ["Sell for Money","Sell for Corporation Funds",...]
+   * ```
+   * @returns An array containing the available upgrades
+   */
+  getHashUpgrades(): string[];
+
+  /**
    * Get the level of a hash upgrade.
    * @remarks
    * RAM cost: 0 GB
@@ -4362,7 +4378,7 @@ export interface NS extends Singularity {
    * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value.
    * @returns Returns the PID of a successfully started script, and 0 otherwise.
    */
-  exec(script: string, host: string, numThreads?: number, ...args: string[]): number;
+  exec(script: string, host: string, numThreads?: number, ...args: Array<string | number | boolean>): number;
 
   /**
    * Terminate current script and start another in 10s.
@@ -5242,7 +5258,7 @@ export interface NS extends Singularity {
    * @param format - Formatter.
    * @returns Formated number.
    */
-  nFormat(n: number, format: string): number;
+  nFormat(n: number, format: string): string;
 
   /**
    * Format time to readable string

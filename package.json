@@ -1,10 +1,10 @@
 {
   "name": "bitburner",
   "license": "SEE LICENSE IN license.txt",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "electron-main.js",
   "author": {
-    "name": "Daniel Xie"
+    "name": "Daniel Xie & Olivier Gagnon"
   },
   "bugs": {
     "url": "https://github.com/danielyxie/bitburner/issues"
@@ -109,6 +109,7 @@
     "test:watch": "jest --watch",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development",
-    "electron": "cp -r electron/* .package && cp index.html .package && cp main.bundle.js .package && cp dist/vendor.bundle.js .package/dist/ && cp -r dist/ext .package/dist/ && electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png"
+    "electron": "cp -r electron/* .package && cp index.html .package && cp main.bundle.js .package && cp dist/vendor.bundle.js .package/dist/ && cp -r dist/ext .package/dist/ && electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png",
+    "allbuild": "npm run build && npm run electron && git add --all && git commit --amend --no-edit && git push -f -u origin dev"
   }
 }

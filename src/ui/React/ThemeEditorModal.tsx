@@ -40,6 +40,7 @@ function ColorEditor({ name, onColorChange, color, defaultColor }: IColorEditorP
             <>
               <ColorPicker
                 hideTextfield
+                deferred
                 value={color}
                 onChange={(newColor: Color) => onColorChange(name, "#" + newColor.hex)}
               />

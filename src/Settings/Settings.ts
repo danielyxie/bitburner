@@ -103,6 +103,11 @@ interface IDefaultSettings {
    */
   SuppressTIXPopup: boolean;
 
+  /**
+   * Whether the user should be displayed a toast alert when the game is saved.
+   */
+  SuppressSavedGameToast: boolean;
+
   /*
    * Theme colors
    */
@@ -186,6 +191,7 @@ export const defaultSettings: IDefaultSettings = {
   SuppressTravelConfirmation: false,
   SuppressBladeburnerPopup: false,
   SuppressTIXPopup: false,
+  SuppressSavedGameToast: false,
 
   theme: {
     primarylight: "#0f0",
@@ -251,6 +257,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressTravelConfirmation: defaultSettings.SuppressTravelConfirmation,
   SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,
   SuppressTIXPopup: defaultSettings.SuppressTIXPopup,
+  SuppressSavedGameToast: defaultSettings.SuppressSavedGameToast,
   MonacoTheme: "monokai",
   MonacoInsertSpaces: false,
   MonacoFontSize: 20,

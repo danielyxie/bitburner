@@ -189,7 +189,7 @@ const achievements: Achievement[] = [
   },
   {
     ID: "GANG_TERRITORY",
-    Condition: () => Player.gang !== null && AllGangs[Player.gang.facName].territory === 1,
+    Condition: () => Player.gang !== null && AllGangs[Player.gang.facName].territory >= 0.999,
   },
   {
     ID: "GANG_MEMBER_POWER",

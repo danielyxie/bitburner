@@ -42,6 +42,10 @@ module.exports = (env, argv) => {
     };
   }
 
+  // Get the current commit hash to inject into the app
+  // https://stackoverflow.com/a/38401256
+  const commitHash = require("child_process").execSync("git rev-parse --short HEAD").toString().trim();
+
   return {
     plugins: [
       new webpack.DefinePlugin({
@@ -104,6 +108,9 @@ module.exports = (env, argv) => {
             syntactic: true,
           },
         },
+      }),
+      new webpack.DefinePlugin({
+        __COMMIT_HASH__: JSON.stringify(commitHash || "DEV"),
       }),
       // In dev mode, use a faster method of create sourcemaps
       // while keeping lines/columns accurate

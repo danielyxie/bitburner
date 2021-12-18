@@ -69,6 +69,7 @@ import { top } from "./commands/top";
 import { unalias } from "./commands/unalias";
 import { weaken } from "./commands/weaken";
 import { wget } from "./commands/wget";
+import { hash } from "../hash/hash";
 
 export class Terminal implements ITerminal {
   // Flags to determine whether the player is currently running a hack or an analyze
@@ -77,7 +78,9 @@ export class Terminal implements ITerminal {
   commandHistory: string[] = [];
   commandHistoryIndex = 0;
 
-  outputHistory: (Output | Link | RawOutput)[] = [new Output(`Bitburner v${CONSTANTS.VersionString}`, "primary")];
+  outputHistory: (Output | Link | RawOutput)[] = [
+    new Output(`Bitburner v${CONSTANTS.VersionString} (${hash()})`, "primary"),
+  ];
 
   // True if a Coding Contract prompt is opened
   contractOpen = false;
@@ -555,7 +558,7 @@ export class Terminal implements ITerminal {
   }
 
   clear(): void {
-    this.outputHistory = [new Output(`Bitburner v${CONSTANTS.VersionString}`, "primary")];
+    this.outputHistory = [new Output(`Bitburner v${CONSTANTS.VersionString} (${hash()})`, "primary")];
     TerminalEvents.emit();
     TerminalClearEvents.emit();
   }
@@ -664,6 +667,12 @@ export class Terminal implements ITerminal {
           if (commandArray.length == 1 && commandArray[0] == "hack") {
             iTutorialNextStep();
           } else {
+            this.error("Bad command. Please follow the tutorial");
+            return;
+          }
+          break;
+        case iTutorialSteps.TerminalHackingMechanics:
+          if (commandArray.length !== 1 || !["grow", "weaken", "hack"].includes(commandArray[0] + "")) {
             this.error("Bad command. Please follow the tutorial");
             return;
           }

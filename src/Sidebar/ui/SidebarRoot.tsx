@@ -6,6 +6,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
+import Tooltip from "@mui/material/Tooltip";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
@@ -54,6 +55,7 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { KEY } from "../../utils/helpers/keyCodes";
 import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "../../Faction/ui/FactionsRoot";
+import { hash } from "../../hash/hash";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),
@@ -290,7 +292,8 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       } else if (event.keyCode === KEY.W && event.altKey) {
         event.preventDefault();
         clickCity();
-      } else if (event.keyCode === KEY.J && event.altKey) {
+      } else if (event.keyCode === KEY.J && event.altKey && !event.ctrlKey && !event.metaKey) {
+        // ctrl/cmd + alt + j is shortcut to open Chrome dev tools
         event.preventDefault();
         clickJob();
       } else if (event.keyCode === KEY.R && event.altKey) {
@@ -337,7 +340,13 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         <ListItemIcon>
           {!open ? <ChevronRightIcon color="primary" /> : <ChevronLeftIcon color="primary" />}
         </ListItemIcon>
-        <ListItemText primary={<Typography>Bitburner v{CONSTANTS.VersionString}</Typography>} />
+        <ListItemText
+          primary={
+            <Tooltip title={hash()}>
+              <Typography>Bitburner v{CONSTANTS.VersionString}</Typography>
+            </Tooltip>
+          }
+        />
       </ListItem>
       <Divider />
       <List>
