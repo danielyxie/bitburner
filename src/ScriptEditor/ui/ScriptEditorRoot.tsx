@@ -27,18 +27,14 @@ import { loadThemes } from "./themes";
 import { GetServer } from "../../Server/AllServers";
 
 import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
-import { cssNumber } from "cypress/types/jquery";
-import { buttonBaseClasses } from "@mui/material";
-import { fromPairs } from "cypress/types/lodash";
-import { StringMatcher } from "cypress/types/net-stubbing";
 
 let symbolsLoaded = false;
 let symbols: string[] = [];
@@ -102,8 +98,8 @@ class openScript {
   }
 }
 
-const openScripts = new Array<openScript>();  // Holds all open scripts
-let currentScript = {} as openScript;       // Script currently being viewed
+const openScripts = new Array<openScript>(); // Holds all open scripts
+let currentScript = {} as openScript; // Script currently being viewed
 
 export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
@@ -119,8 +115,6 @@ export function Root(props: IProps): React.ReactElement {
     insertSpaces: Settings.MonacoInsertSpaces,
     fontSize: Settings.MonacoFontSize,
   });
-
-
 
   const debouncedSetRAM = useMemo(
     () =>
@@ -171,7 +165,12 @@ export function Root(props: IProps): React.ReactElement {
       //If the current script already exists on the server, overwrite it
       for (let i = 0; i < server.scripts.length; i++) {
         if (currentScript.fileName == server.scripts[i].filename) {
-          server.scripts[i].saveScript(currentScript.fileName, currentScript.code, props.player.currentServer, server.scripts);
+          server.scripts[i].saveScript(
+            currentScript.fileName,
+            currentScript.code,
+            props.player.currentServer,
+            server.scripts,
+          );
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
           return;
         }
@@ -241,7 +240,7 @@ export function Root(props: IProps): React.ReactElement {
       if (editorRef.current !== null) {
         infLoop(newCode);
       }
-    } catch (err) { }
+    } catch (err) {}
   }
 
   // calculate it once the first time the file is loaded.
@@ -289,18 +288,18 @@ export function Root(props: IProps): React.ReactElement {
   });
 
   // Generates a new model for the script
-  function regenerateModel(script: openScript) {
+  function regenerateModel(script: openScript): void {
     if (monacoRef.current !== null) {
-      script.model = monacoRef.current.editor.createModel(script.code, 'javascript');
+      script.model = monacoRef.current.editor.createModel(script.code, "javascript");
     }
   }
 
   // Sets the currently viewed script
-  function setCurrentScript(script: openScript) {
+  function setCurrentScript(script: openScript): void {
     // Update last position
     if (editorRef.current !== null) {
       if (currentScript !== null) {
-        var currentPosition = editorRef.current.getPosition();
+        const currentPosition = editorRef.current.getPosition();
         if (currentPosition !== null) {
           currentScript.lastPosition = currentPosition;
         }
@@ -315,7 +314,7 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   // Gets a currently opened script
-  function getOpenedScript(fileName: string, hostname: string) {
+  function getOpenedScript(fileName: string, hostname: string): openScript | null {
     for (const script of openScripts) {
       if (script.fileName === fileName && script.hostname === hostname) {
         return script;
@@ -325,7 +324,7 @@ export function Root(props: IProps): React.ReactElement {
     return null;
   }
 
-  function saveScript(script: openScript) {
+  function saveScript(script: openScript): void {
     const server = GetServer(script.hostname);
     if (server === null) throw new Error("Server should not be null but it is.");
     let found = false;
@@ -368,7 +367,13 @@ export function Root(props: IProps): React.ReactElement {
       if (filename !== undefined) {
         // Create new model
         if (monacoRef.current !== null) {
-          var newScript = new openScript(filename, code, props.player.getCurrentServer().hostname, new monaco.Position(0, 0), monacoRef.current.editor.createModel(code, 'javascript'));
+          const newScript = new openScript(
+            filename,
+            code,
+            props.player.getCurrentServer().hostname,
+            new monaco.Position(0, 0),
+            monacoRef.current.editor.createModel(code, "javascript"),
+          );
           setCurrentScript(newScript);
           openScripts.push(newScript);
         }
@@ -384,7 +389,13 @@ export function Root(props: IProps): React.ReactElement {
         } else {
           // Create a new temporary file
           if (monacoRef.current !== null) {
-            var newScript = new openScript('NewFile.ns', '', props.player.getCurrentServer().hostname, new monaco.Position(0, 0), monacoRef.current.editor.createModel('', 'javascript'));
+            const newScript = new openScript(
+              "newfile.script",
+              "",
+              props.player.getCurrentServer().hostname,
+              new monaco.Position(0, 0),
+              monacoRef.current.editor.createModel("", "javascript"),
+            );
             setCurrentScript(newScript);
             openScripts.push(newScript);
           }
@@ -432,37 +443,41 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   // Change tab highlight from old tab to new tab
-  function changeTabButtonColor(oldButtonFileName: string, oldButtonHostname: string, newButtonFileName: string, newButtonHostname: string) {
-    const oldTabButton = document.getElementById('tabButton' + oldButtonFileName + oldButtonHostname);
+  function changeTabButtonColor(
+    oldButtonFileName: string,
+    oldButtonHostname: string,
+    newButtonFileName: string,
+    newButtonHostname: string,
+  ): void {
+    const oldTabButton = document.getElementById("tabButton" + oldButtonFileName + oldButtonHostname);
     if (oldTabButton !== null) {
-      oldTabButton.style.backgroundColor = '';
+      oldTabButton.style.backgroundColor = "";
     }
 
-    const oldTabCloseButton = document.getElementById('tabCloseButton' + oldButtonFileName + oldButtonHostname);
+    const oldTabCloseButton = document.getElementById("tabCloseButton" + oldButtonFileName + oldButtonHostname);
     if (oldTabCloseButton !== null) {
-      oldTabCloseButton.style.backgroundColor = '';
+      oldTabCloseButton.style.backgroundColor = "";
     }
 
-    const newTabButton = document.getElementById('tabButton' + newButtonFileName + newButtonHostname);
+    const newTabButton = document.getElementById("tabButton" + newButtonFileName + newButtonHostname);
     if (newTabButton !== null) {
-      newTabButton.style.backgroundColor = '#173b2d';
+      newTabButton.style.backgroundColor = "#666";
     }
 
-    const newTabCloseButton = document.getElementById('tabCloseButton' + newButtonFileName + newButtonHostname);
+    const newTabCloseButton = document.getElementById("tabCloseButton" + newButtonFileName + newButtonHostname);
     if (newTabCloseButton !== null) {
-      newTabCloseButton.style.backgroundColor = '#173b2d';
+      newTabCloseButton.style.backgroundColor = "#666";
     }
   }
 
   // Called when a script tab was clicked
-  function onTabButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
-    const valSplit = e.currentTarget.value.split(':');
+  function onTabButtonClick(e: React.MouseEvent<HTMLButtonElement>): void {
+    const valSplit = e.currentTarget.value.split(":");
     const fileName = valSplit[0];
     const hostname = valSplit[1];
 
     // Change tab highlight from old tab to new tab
-    changeTabButtonColor(currentScript.fileName, currentScript.hostname, fileName, hostname)
-
+    changeTabButtonColor(currentScript.fileName, currentScript.hostname, fileName, hostname);
 
     // Update current script
     const clickedScript = getOpenedScript(fileName, hostname);
@@ -477,8 +492,8 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   // Called when a script tab close button was clicked
-  function onCloseButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
-    const valSplit = e.currentTarget.value.split(':');
+  function onCloseButtonClick(e: React.MouseEvent<HTMLButtonElement>): void {
+    const valSplit = e.currentTarget.value.split(":");
     const fileName = valSplit[0];
     const hostname = valSplit[1];
 
@@ -494,20 +509,23 @@ export function Root(props: IProps): React.ReactElement {
     if (openScripts.length === 0) {
       // No other scripts are open, create a new temporary file
       if (monacoRef.current !== null) {
-        const newScript = new openScript("NewFile.ns", '', props.player.getCurrentServer().hostname, new monacoRef.current.Position(0, 0), monacoRef.current.editor.createModel('', 'javascript'));
+        const newScript = new openScript(
+          "newfile.script",
+          "",
+          props.player.getCurrentServer().hostname,
+          new monacoRef.current.Position(0, 0),
+          monacoRef.current.editor.createModel("", "javascript"),
+        );
 
-        setCurrentScript(newScript)
+        setCurrentScript(newScript);
         openScripts.push(newScript);
 
-        // Create new tab button for temporary file
-        const element = (<div style={{ paddingRight: '5px' }}><Button style={{ backgroundColor: '#173b2d' }} value={newScript.fileName + ':' + newScript.hostname} onClick={onTabButtonClick}>{newScript.fileName}</Button><Button value={newScript.fileName + ':' + newScript.hostname} onClick={onCloseButtonClick} style={{ maxWidth: '20px', minWidth: '20px', backgroundColor: '#173b2d' }}>x</Button></div>)
-
         // Modify button for temp file
-        var parent = e.currentTarget.parentElement;
+        const parent = e.currentTarget.parentElement;
         if (parent !== null) {
-          (parent.children[0] as HTMLButtonElement).value = 'NewFile.ns:home';
-          (parent.children[0] as HTMLButtonElement).textContent = 'NewFile.ns';
-          e.currentTarget.value = 'NewFile.ns:home';
+          (parent.children[0] as HTMLButtonElement).value = "newfile.script:home";
+          (parent.children[0] as HTMLButtonElement).textContent = "newfile.script";
+          e.currentTarget.value = "newfile.script:home";
         }
       }
     } else {
@@ -515,7 +533,12 @@ export function Root(props: IProps): React.ReactElement {
         regenerateModel(openScripts[0]);
       }
 
-      changeTabButtonColor(currentScript.fileName, currentScript.hostname, openScripts[0].fileName, openScripts[0].hostname);
+      changeTabButtonColor(
+        currentScript.fileName,
+        currentScript.hostname,
+        openScripts[0].fileName,
+        openScripts[0].hostname,
+      );
 
       setCurrentScript(openScripts[0]);
     }
@@ -524,14 +547,53 @@ export function Root(props: IProps): React.ReactElement {
   // Generate a button for each open script
   const scriptButtons = [];
   for (let i = 0; i < openScripts.length; i++) {
-    if (openScripts[i].fileName !== '') {
+    if (openScripts[i].fileName !== "") {
       const fileName2 = openScripts[i].fileName;
       const hostname = openScripts[i].hostname;
       if (openScripts[i].fileName === currentScript.fileName && openScripts[i].hostname === currentScript.hostname) {
         // Set special background color for current script tab button
-        scriptButtons.push(<div id={'scriptEditorTab' + fileName2 + hostname} key={'tabButton' + i} style={{ paddingRight: '5px' }}><Button id={'tabButton' + openScripts[i].fileName + openScripts[i].hostname} style={{ backgroundColor: '#173b2d' }} value={fileName2 + ':' + hostname} onClick={onTabButtonClick}>{openScripts[i].fileName}</Button><Button id={'tabCloseButton' + openScripts[i].fileName + openScripts[i].hostname} value={fileName2 + ':' + hostname} onClick={onCloseButtonClick} style={{ maxWidth: '20px', minWidth: '20px', backgroundColor: '#173b2d' }}>x</Button></div>)
+        scriptButtons.push(
+          <Tooltip
+            title={
+              <Typography>
+                {hostname}:~/{fileName2}
+              </Typography>
+            }
+          >
+            <div key={fileName2 + hostname} style={{ paddingRight: "5px" }}>
+              <Button style={{ backgroundColor: "#666" }} value={fileName2 + ":" + hostname} onClick={onTabButtonClick}>
+                {openScripts[i].fileName}
+              </Button>
+              <Button
+                value={fileName2 + ":" + hostname}
+                onClick={onCloseButtonClick}
+                style={{ maxWidth: "20px", minWidth: "20px", backgroundColor: "#666" }}
+              >
+                x
+              </Button>
+            </div>
+          </Tooltip>,
+        );
       } else {
-        scriptButtons.push(<div id={'scriptEditorTab' + fileName2 + hostname} key={'tabButton' + i} style={{ paddingRight: '5px' }}><Button id={'tabButton' + openScripts[i].fileName + openScripts[i].hostname} value={fileName2 + ':' + hostname} onClick={onTabButtonClick}>{openScripts[i].fileName}</Button><Button id={'tabCloseButton' + openScripts[i].fileName + openScripts[i].hostname} value={fileName2 + ':' + hostname} onClick={onCloseButtonClick} style={{ maxWidth: '20px', minWidth: '20px' }}>x</Button></div>)
+        scriptButtons.push(
+          <div id={"scriptEditorTab" + fileName2 + hostname} key={"tabButton" + i} style={{ paddingRight: "5px" }}>
+            <Button
+              id={"tabButton" + openScripts[i].fileName + openScripts[i].hostname}
+              value={fileName2 + ":" + hostname}
+              onClick={onTabButtonClick}
+            >
+              {openScripts[i].fileName}
+            </Button>
+            <Button
+              id={"tabCloseButton" + openScripts[i].fileName + openScripts[i].hostname}
+              value={fileName2 + ":" + hostname}
+              onClick={onCloseButtonClick}
+              style={{ maxWidth: "20px", minWidth: "20px" }}
+            >
+              x
+            </Button>
+          </div>,
+        );
       }
     }
   }
@@ -541,7 +603,7 @@ export function Root(props: IProps): React.ReactElement {
   const p = 11000 / -window.innerHeight + 100;
   return (
     <>
-      <Box display="flex" flexDirection="row" alignItems="center"  paddingBottom='5px'>
+      <Box display="flex" flexDirection="row" alignItems="center" paddingBottom="5px">
         {scriptButtons}
       </Box>
       <Editor
@@ -557,7 +619,7 @@ export function Root(props: IProps): React.ReactElement {
       />
       <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
         <Button onClick={beautify}>Beautify</Button>
-        <Typography  color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
+        <Typography color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
           {ram}
         </Typography>
         <Button onClick={save}>Save (Ctrl/Cmd + b)</Button>
@@ -572,7 +634,7 @@ export function Root(props: IProps): React.ReactElement {
             Full
           </Link>
         </Typography>
-        <IconButton style={{ marginLeft: 'auto' }} onClick={() => setOptionsOpen(true)}>
+        <IconButton style={{ marginLeft: "auto" }} onClick={() => setOptionsOpen(true)}>
           <>
             <SettingsIcon />
             options

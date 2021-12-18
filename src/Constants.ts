@@ -111,8 +111,8 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  VersionString: "1.1.0",
-  VersionNumber: 6,
+  VersionString: "1.2.0",
+  VersionNumber: 7,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -273,72 +273,103 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v1.1.0 - 2021-12-03 BN13: They're Lunatics (hydroflame & community)
-    -------------------------------------------------------
+    v1.1.0 - 2021-12-18 You guys are awesome (community because they're god damn awesome)
+    -------------------------------------------------------------------------------------
 
-    ** BN13: They're Lunatics **
+    ** Script Editor **
     
-    * BN13 added.
+    * The text editor can open several files at once. (@Rez855 / @Shadow72)
+      It's not perfect so keep the feedback coming.
 
     ** Steam **
 
-    * Tested on all 3 major OS.
-    * 94 achievements added
-    * Release is 2021-12-10.
+    * Windows has a new launch option that lets player start with killing all their scripts
+      This is a safety net in case all the other safety nets fail.
+    * Linux has several launch options that use different flags for different OS.
+    * Debug and Fullscreen are available in the window utility bar.
+    * Tried (and maybe failed) to make the game completely kill itself after closing.
+      This one I still don't know wtf is going.
+    * No longer has background throttling.
+    * Default color should be pitch black when loading
+    * Add BN13: Challenge achievement.
 
-    ** Corporation API **
+    ** Tutorial **
 
-    * Added corporation API. (Unstable)
+    * I watched someone play bitburner on youtube and reworked part of
+      the tutorial to try to make some parts of the game clearer.
+      https://www.youtube.com/watch?v=-_JETXff4Zo
+    * Add option to restart tutorial.
 
     ** Netscript **
-  
-    * tprintf crashes when not giving a format as first arg.
-    * tprintf no longer prints filename (@BartKoppelmans)
-    * TIX buy/sell/sellShort all return askprice/bidprice (@Insight)
-    * getRunningScript now works.
-    * Fix disableLog for gang and TIX API
-    * getOwnedSourceFiles is not singularity anymore (makes it easier to share scripts.)  (@theit8514)
-    * true/false is a valid value to send to other scripts.
-    * workForFaction no longer returns null when trying to work for gang.
-    * Scripts logging no longer generates the string if logging is disabled.
-      This should give performance boost for some scripts.
 
-    ** Gang **
-  
-    * Gang with 0 territory can no longer fight
-    * Territory now caps at exactly 0 or 1.
+    * getGangInformation returns more information.
+    * getAscensionResult added
+    * getMemberInformation returns more info
+    * Formulas API has new functions for gang.
+    * Added documentation for corp API.
+    * exec has clearer error message when you send invalid data.
+    * getServer returns all defined field for hacknet servers.
+    * Fix a bug with scp multiple files (@theit8514)
+    * Stack traces should be smarter at replacing blobs with filenames
+    * Fix a weird error message that would occur when throwing raw strings.
+    * Fix shortcuts not working.
+    * Re-added setFocus and isFocused (@theit8514)
+    * new function getHashUpgrades (@MartinFournier)
+    * enableLog accepts "ALL" like disableLog (@wynro)
+    * toast() doesn't crash on invalid data (@ivanjermakov)
+    * alert() doesn't crash on invalid data (@Siern)
+    * Fixed an issue where scripts don't run where they should.
+    * Sleeve getInformation now returns cha
+    * getServer does work with no argument now
+    * workForFaction returns false when it mistakenly returned null
+
+    ** Character Overview **
+
+    * The character overview now shows the amount of exp needed to next level (@MartinFournier)
 
     ** Misc. **
 
-    * Clicking "previous" on the browser will not pretend you had unsaved information
-      allowing you to cancel if needs be.
-    * Fixed some tail box coloring issue.
-    * Fixed BladeBurner getCityCommunities ram cost
-    * The download terminal command no longer duplicate extensions (@Insight)
-    * Fix #000 on #000 text in blackjack. (@Insight)
-    * Remove reference to .fconf
-    * Tail boxes all die on soft reset.
-    * Fix codign contract focus bug.
-    * Megacorp factions simply re-invite you instead of auto added on reset. (@theit8514)
-    * Tail window is bound to html body.
-    * Infiltration reward is tied to your potential stats, not your actual stats
-      So you won't lose reward for doing the same thing over and over.
-    * intelligence lowers program creation requirements.
-    * Terminal parses true as the boolean, not the string.
-    * Tail and kill autocomplete using the ns2 autocomplete feature.
-    * scan-analyze doesn't take up as many terminal entries.
-    * GangOtherInfo documentation now renders correctly.
-    * ActiveScripts search box also searches for script names.
-    * Infinite money no longer allows for infinite hacknet server.
-    * Blackjack doesn't make you lose money twice.
-    * Recent Scripts is now from most to least recent.
-    * Fix mathjax ascii art bug in NiteSec.
-    * Remove warning that the theme editor is slow, it's only slow in dev mode.
-    * In BN8 is it possible to reduce the money on a server without gaining any.
-    * In the options, the timestamp feature has a placeholder explaining the expected format.
-    * Bunch of doc typo fix. (hydroflame & @BartKoppelmans & @cvr-119)
-    * World Daemon difficulty is increased depending on BitNode.
-    * hacking skill nerf was loosened in some BNs.
-    * nerf noodle bar
+    * Add option to supress Game Saved! toasts (@MartinFournier)
+    * Fix bug where ctrl+alt+j was eaten by the wrong process. (@billyvg)
+    * Theme Editor lets you paste colors (@MartinFournier)
+    * ctrl + u/k/w should work on terminal (@billyvg)
+    * Game now shows commit number, this is mostly for me. (@MartinFourier)
+    * running a bad script will give a clearer error message (@TheCoderJT)
+    * Default terminal capacity is maximum (@SayntGarmo)
+    * Fix problems with cp and mv (@theit8514)
+    * Make monaco load fully offline for players behind firewalls.
+    * change beginer guide to use n00dles instead of foodnstuff
+    * BN13 is harder
+    * nerf int gain from manualHack
+    * Fix UI displaying wrong stats (@DJMatch3000)
+    * Fix button not disabling as it should.
+    * New location in Ishima.
+    * Add setting to suppress stock market popups.
+    * Typo fixes (@Hedrauta, @cvr-119, @Ationi, @millennIumAMbiguity
+      @TealKoi, @TheCoderJT, @cblte, @2PacIsAlive, @MageKing17,
+      @Xynrati, @Adraxas, @pobiega)
+    * Fix 100% territory achievement.
+    * Reword message on active scripts page.
+    * Fix terminal not clearing after BN
+    * Remove references to .fconf
+    * Augmentation pages shows BN difficulty with SF5
+    * Fix scripts saving on wrong server while 'connect'ing
+    * Fix gym discount not working.
+    * Fix scan-analyze not working with timestamps
+    * Hash upgrades remember last choice.
+    * Save files now sort by date
+    * The covenant no longer supports negative memory purchases
+    * Fix corp shares buyback triggering by pressing enter
+    * Staneks gift display avg / num charges
+    * Infiltration rewards no longer decay with better stats
+    * terminal 'true' is parsed as boolean not string
+    * tail and kill use autocomplete()
+    * Fix focus for coding contract
+    * massive boost to noodle bar.
+
+    ** Special Thanks **
+
+    * Special thank you to everyone on Discord who can answer
+      new player questions so I can focus on more important things.
 `,
 };

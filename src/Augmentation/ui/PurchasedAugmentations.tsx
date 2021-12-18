@@ -29,7 +29,6 @@ export function PurchasedAugmentations(): React.ReactElement {
     if (ownedAug.name === AugmentationNames.NeuroFluxGovernor) {
       level = ownedAug.level;
     }
-
     augs.push(<AugmentationAccordion key={aug.name} aug={aug} level={level} />);
   }
 

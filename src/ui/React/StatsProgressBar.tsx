@@ -1,8 +1,9 @@
-import * as React from 'react';
-import LinearProgress from '@mui/material/LinearProgress';
-import { TableCell, Tooltip } from '@mui/material';
-import { characterOverviewStyles } from './CharacterOverview';
-import { ISkillProgress } from 'src/PersonObjects/formulas/skill';
+import * as React from "react";
+import LinearProgress from "@mui/material/LinearProgress";
+import { TableCell, Tooltip } from "@mui/material";
+import { characterOverviewStyles } from "./CharacterOverview";
+import { ISkillProgress } from "src/PersonObjects/formulas/skill";
+import { numeralWrapper } from "../numeralFormat";
 
 interface IProgressProps {
   min: number;
@@ -18,11 +19,13 @@ interface IStatsOverviewCellProps {
 
 export function StatsProgressBar({ min, max, current, color }: IProgressProps): React.ReactElement {
   const normalise = (value: number): number => ((value - min) * 100) / (max - min);
-  const tooltipText = <>
-    Experience: {current.toFixed(2)}/{max.toFixed(2)}
-    <br />
-    {normalise(current).toFixed(2)}%
-  </>;
+  const tooltipText = (
+    <>
+      Experience: {numeralWrapper.formatExp(current)}/{numeralWrapper.formatExp(max)}
+      <br />
+      {normalise(current).toFixed(2)}%
+    </>
+  );
 
   return (
     <Tooltip title={tooltipText}>
@@ -30,8 +33,8 @@ export function StatsProgressBar({ min, max, current, color }: IProgressProps): 
         variant="determinate"
         value={normalise(current)}
         sx={{
-          backgroundColor: '#111111',
-          '& .MuiLinearProgress-bar1Determinate': {
+          backgroundColor: "#111111",
+          "& .MuiLinearProgress-bar1Determinate": {
             backgroundColor: color,
           },
         }}
@@ -40,12 +43,16 @@ export function StatsProgressBar({ min, max, current, color }: IProgressProps): 
   );
 }
 
-export function StatsProgressOverviewCell({progress, color}: IStatsOverviewCellProps): React.ReactElement {
+export function StatsProgressOverviewCell({ progress, color }: IStatsOverviewCellProps): React.ReactElement {
   const classes = characterOverviewStyles();
   return (
-    <TableCell component="th" scope="row" colSpan={2}
+    <TableCell
+      component="th"
+      scope="row"
+      colSpan={2}
       classes={{ root: classes.cellNone }}
-      style={{ paddingBottom: '2px', position: 'relative', top: '-3px' }}>
+      style={{ paddingBottom: "2px", position: "relative", top: "-3px" }}
+    >
       <StatsProgressBar
         min={progress.baseExperience}
         max={progress.nextExperience}
@@ -53,5 +60,5 @@ export function StatsProgressOverviewCell({progress, color}: IStatsOverviewCellP
         color={color}
       />
     </TableCell>
-  )
+  );
 }
