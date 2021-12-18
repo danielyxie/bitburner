@@ -141,6 +141,6 @@ function setStopProcessHandler(app, window, enabled) {
 }
 
 app.whenReady().then(() => {
-  const win = createWindow(false);
+  const win = createWindow(process.argv.includes("--no-scripts"));
   setStopProcessHandler(app, win, true);
 });
