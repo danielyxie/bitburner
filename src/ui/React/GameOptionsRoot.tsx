@@ -70,6 +70,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   );
   const [suppressTIXPopup, setSuppressTIXPopup] = useState(Settings.SuppressTIXPopup);
   const [suppressBladeburnerPopup, setSuppressBladeburnerPopup] = useState(Settings.SuppressBladeburnerPopup);
+  const [suppressSavedGameToast, setSuppresSavedGameToast] = useState(Settings.SuppressSavedGameToast);
 
   const [disableHotkeys, setDisableHotkeys] = useState(Settings.DisableHotkeys);
   const [disableASCIIArt, setDisableASCIIArt] = useState(Settings.DisableASCIIArt);
@@ -136,6 +137,11 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handleSuppressBladeburnerPopupChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setSuppressBladeburnerPopup(event.target.checked);
     Settings.SuppressBladeburnerPopup = event.target.checked;
+  }
+
+  function handleSuppressSavedGameToastChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setSuppresSavedGameToast(event.target.checked);
+    Settings.SuppressSavedGameToast = event.target.checked;
   }
 
   function handleDisableHotkeysChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -420,6 +426,24 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 />
               </ListItem>
             )}
+            <ListItem>
+              <FormControlLabel
+                control={
+                  <Switch checked={suppressSavedGameToast} onChange={handleSuppressSavedGameToastChange} />
+                }
+                label={
+                  <Tooltip
+                    title={
+                      <Typography>
+                        If this is set, there will be no "Saved Game" toast appearing after save.
+                      </Typography>
+                    }
+                  >
+                    <Typography>Suppress Saved Game Toast</Typography>
+                  </Tooltip>
+                }
+              />
+            </ListItem>
             <ListItem>
               <FormControlLabel
                 control={<Switch checked={disableHotkeys} onChange={handleDisableHotkeysChange} />}
