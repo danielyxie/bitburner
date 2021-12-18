@@ -4378,7 +4378,7 @@ export interface NS extends Singularity {
    * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value.
    * @returns Returns the PID of a successfully started script, and 0 otherwise.
    */
-  exec(script: string, host: string, numThreads?: number, ...args: string[]): number;
+  exec(script: string, host: string, numThreads?: number, ...args: Array<string | number | boolean>): number;
 
   /**
    * Terminate current script and start another in 10s.
