@@ -39,7 +39,7 @@ export function cat(
       }
     }
   } else if (filename.endsWith(".txt")) {
-    const txt = terminal.getTextFile(player, filename);
+    const txt = terminal.getTextFile(player, "/" + filename);
     if (txt != null) {
       txt.show();
       return;
