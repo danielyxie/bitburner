@@ -1,5 +1,6 @@
 import { ISelfInitializer, ISelfLoading } from "../types";
 import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
+import { defaultTheme, ITheme } from "./Themes";
 
 /**
  * Represents the default settings the player could customize.
@@ -111,42 +112,7 @@ interface IDefaultSettings {
   /*
    * Theme colors
    */
-  theme: {
-    [key: string]: string | undefined;
-    primarylight: string;
-    primary: string;
-    primarydark: string;
-    successlight: string;
-    success: string;
-    successdark: string;
-    errorlight: string;
-    error: string;
-    errordark: string;
-    secondarylight: string;
-    secondary: string;
-    secondarydark: string;
-    warninglight: string;
-    warning: string;
-    warningdark: string;
-    infolight: string;
-    info: string;
-    infodark: string;
-    welllight: string;
-    well: string;
-    white: string;
-    black: string;
-    hp: string;
-    money: string;
-    hack: string;
-    combat: string;
-    cha: string;
-    int: string;
-    rep: string;
-    disabled: string;
-    backgroundprimary: string;
-    backgroundsecondary: string;
-    button: string;
-  };
+  theme: ITheme;
 }
 
 /**
@@ -193,41 +159,7 @@ export const defaultSettings: IDefaultSettings = {
   SuppressTIXPopup: false,
   SuppressSavedGameToast: false,
 
-  theme: {
-    primarylight: "#0f0",
-    primary: "#0c0",
-    primarydark: "#090",
-    successlight: "#0f0",
-    success: "#0c0",
-    successdark: "#090",
-    errorlight: "#f00",
-    error: "#c00",
-    errordark: "#900",
-    secondarylight: "#AAA",
-    secondary: "#888",
-    secondarydark: "#666",
-    warninglight: "#ff0",
-    warning: "#cc0",
-    warningdark: "#990",
-    infolight: "#69f",
-    info: "#36c",
-    infodark: "#039",
-    welllight: "#444",
-    well: "#222",
-    white: "#fff",
-    black: "#000",
-    hp: "#dd3434",
-    money: "#ffd700",
-    hack: "#adff2f",
-    combat: "#faffdf",
-    cha: "#a671d1",
-    int: "#6495ed",
-    rep: "#faffdf",
-    disabled: "#66cfbc",
-    backgroundprimary: "#000",
-    backgroundsecondary: "#000",
-    button: "#333",
-  },
+  theme: defaultTheme,
 };
 
 /**
@@ -262,41 +194,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   MonacoInsertSpaces: false,
   MonacoFontSize: 20,
 
-  theme: {
-    primarylight: defaultSettings.theme.primarylight,
-    primary: defaultSettings.theme.primary,
-    primarydark: defaultSettings.theme.primarydark,
-    successlight: defaultSettings.theme.successlight,
-    success: defaultSettings.theme.success,
-    successdark: defaultSettings.theme.successdark,
-    errorlight: defaultSettings.theme.errorlight,
-    error: defaultSettings.theme.error,
-    errordark: defaultSettings.theme.errordark,
-    secondarylight: defaultSettings.theme.secondarylight,
-    secondary: defaultSettings.theme.secondary,
-    secondarydark: defaultSettings.theme.secondarydark,
-    warninglight: defaultSettings.theme.warninglight,
-    warning: defaultSettings.theme.warning,
-    warningdark: defaultSettings.theme.warningdark,
-    infolight: defaultSettings.theme.infolight,
-    info: defaultSettings.theme.info,
-    infodark: defaultSettings.theme.infodark,
-    welllight: defaultSettings.theme.welllight,
-    well: defaultSettings.theme.well,
-    white: defaultSettings.theme.white,
-    black: defaultSettings.theme.black,
-    hp: defaultSettings.theme.hp,
-    money: defaultSettings.theme.money,
-    hack: defaultSettings.theme.hack,
-    combat: defaultSettings.theme.combat,
-    cha: defaultSettings.theme.cha,
-    int: defaultSettings.theme.int,
-    rep: defaultSettings.theme.rep,
-    disabled: defaultSettings.theme.disabled,
-    backgroundprimary: defaultSettings.theme.backgroundprimary,
-    backgroundsecondary: defaultSettings.theme.backgroundsecondary,
-    button: defaultSettings.theme.button,
-  },
+  theme: { ...defaultTheme },
   init() {
     Object.assign(Settings, defaultSettings);
   },
