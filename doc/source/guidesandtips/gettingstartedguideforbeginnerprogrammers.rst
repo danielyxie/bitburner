@@ -196,59 +196,63 @@ Here's what mine showed at the time I made this::
     [home ~]> scan-analyze 2
     ~~~~~~~~~~ Beginning scan-analyze ~~~~~~~~~~
 
-    >n00dles
-    --Root Access: NO, Required hacking skill: 1
+    n00dles
+    --Root Access: YES, Required hacking skill: 1
     --Number of open ports required to NUKE: 0
-    --RAM: 16
-
-    >sigma-cosmetics
-    --Root Access: NO, Required hacking skill: 5
-    --Number of open ports required to NUKE: 0
-    --RAM: 16
-
-    >joesguns
-    --Root Access: NO, Required hacking skill: 10
-    --Number of open ports required to NUKE: 0
-    --RAM: 16
-
-    ---->max-hardware
-    ------Root Access: NO, Required hacking skill: 80
-    ------Number of open ports required to NUKE: 1
-    ------RAM: 32
-
-    >hong-fang-tea
-    --Root Access: NO, Required hacking skill: 30
-    --Number of open ports required to NUKE: 0
-    --RAM: 16
-
-    ---->nectar-net
-    ------Root Access: NO, Required hacking skill: 20
-    ------Number of open ports required to NUKE: 0
-    ------RAM: 16
-
-    >harakiri-sushi
-    --Root Access: NO, Required hacking skill: 40
-    --Number of open ports required to NUKE: 0
-    --RAM: 16
-
-    >iron-gym
-    --Root Access: NO, Required hacking skill: 100
-    --Number of open ports required to NUKE: 1
-    --RAM: 32
-
-    ---->zer0
+    --RAM: 4.00GB
+    
+    ----zer0
     ------Root Access: NO, Required hacking skill: 75
     ------Number of open ports required to NUKE: 1
-    ------RAM: 32
-
-    ---->CSEC
+    ------RAM: 32.00GB
+    
+    foodnstuff
+    --Root Access: NO, Required hacking skill: 1
+    --Number of open ports required to NUKE: 0
+    --RAM: 16.00GB
+    
+    sigma-cosmetics
+    --Root Access: NO, Required hacking skill: 5
+    --Number of open ports required to NUKE: 0
+    --RAM: 16.00GB
+    
+    joesguns
+    --Root Access: NO, Required hacking skill: 10
+    --Number of open ports required to NUKE: 0
+    --RAM: 16.00GB
+    
+    ----max-hardware
+    ------Root Access: NO, Required hacking skill: 80
+    ------Number of open ports required to NUKE: 1
+    ------RAM: 32.00GB
+    
+    ----CSEC
     ------Root Access: NO, Required hacking skill: 54
     ------Number of open ports required to NUKE: 1
-    ------RAM: 8
+    ------RAM: 8.00GB
+    
+    hong-fang-tea
+    --Root Access: NO, Required hacking skill: 30
+    --Number of open ports required to NUKE: 0
+    --RAM: 16.00GB
+    
+    ----nectar-net
+    ------Root Access: NO, Required hacking skill: 20
+    ------Number of open ports required to NUKE: 0
+    ------RAM: 16.00GB
+    
+    harakiri-sushi
+    --Root Access: NO, Required hacking skill: 40
+    --Number of open ports required to NUKE: 0
+    --RAM: 16.00GB
+    
+    iron-gym
+    --Root Access: NO, Required hacking skill: 100
+    --Number of open ports required to NUKE: 1
+    --RAM: 32.00GB
 
 Take note of the following servers:
 
-* |n00dles|
 * |sigma-cosmetics|
 * |joesguns|
 * |nectar-net|
@@ -279,16 +283,11 @@ servers, we have to do the following:
 Here's the sequence of |Terminal| commands I used in order to achieve this::
 
     $ home
-    $ scp early-hack-template.script n00dles
     $ scp early-hack-template.script sigma-cosmetics
     $ scp early-hack-template.script joesguns
     $ scp early-hack-template.script nectar-net
     $ scp early-hack-template.script hong-fang-tea
     $ scp early-hack-template.script harakiri-sushi
-    $ connect n00dles
-    $ run NUKE.exe
-    $ run early-hack-template.script -t 6
-    $ home
     $ connect sigma-cosmetics
     $ run NUKE.exe
     $ run early-hack-template.script -t 6
