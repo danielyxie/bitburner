@@ -1,7 +1,7 @@
 // Root React Component for the Corporation UI
 import React, { useState, useEffect } from "react";
 
-import { Theme } from "@mui/material/styles";
+import { Theme, useTheme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -20,6 +20,8 @@ import ClearAllIcon from "@mui/icons-material/ClearAll";
 
 import { Settings } from "../../Settings/Settings";
 import { use } from "../Context";
+import { StatsProgressOverviewCell } from "./StatsProgressBar";
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 interface IProps {
   save: () => void;
@@ -139,6 +141,8 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+export { useStyles as characterOverviewStyles };
+
 export function CharacterOverview({ save, killScripts }: IProps): React.ReactElement {
   const [killOpen, setKillOpen] = useState(false);
   const player = use.Player();
@@ -151,6 +155,21 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
   }, []);
 
   const classes = useStyles();
+  const theme = useTheme();
+
+  const hackingProgress = player.calculateSkillProgress(
+    player.hacking_exp, player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier);
+  const strengthProgress = player.calculateSkillProgress(
+    player.strength_exp, player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier);
+  const defenseProgress = player.calculateSkillProgress(
+    player.defense_exp, player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier);
+  const dexterityProgress = player.calculateSkillProgress(
+    player.dexterity_exp, player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier);
+  const agilityProgress = player.calculateSkillProgress(
+    player.agility_exp, player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier);
+  const charismaProgress = player.calculateSkillProgress(
+    player.charisma_exp, player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier);
+
   return (
     <>
       <Table sx={{ display: "block", m: 1 }}>
@@ -186,11 +205,19 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
               <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
             </TableCell>
-            <TableCell align="right" classes={{ root: classes.cell }}>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography classes={{ root: classes.hack }}>{numeralWrapper.formatSkill(player.hacking)}</Typography>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <StatsProgressOverviewCell progress={hackingProgress} color={theme.colors.hack} />
+          </TableRow>
+          <TableRow>
+          <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+              <Typography classes={{ root: classes.hack }}></Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cell }}>
               <Typography id="overview-hack-hook" classes={{ root: classes.hack }}>
@@ -212,6 +239,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               </Typography>
             </TableCell>
           </TableRow>
+          <TableRow>
+            <StatsProgressOverviewCell progress={strengthProgress} color={theme.colors.combat} />
+          </TableRow>
 
           <TableRow>
             <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
@@ -225,6 +255,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
+          </TableRow>
+          <TableRow>
+            <StatsProgressOverviewCell progress={defenseProgress} color={theme.colors.combat} />
           </TableRow>
 
           <TableRow>
@@ -241,6 +274,10 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
           </TableRow>
           <TableRow>
+            <StatsProgressOverviewCell progress={dexterityProgress} color={theme.colors.combat} />
+          </TableRow>
+
+          <TableRow>
             <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
               <Typography classes={{ root: classes.combat }}>Agi&nbsp;</Typography>
             </TableCell>
@@ -252,6 +289,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
+          </TableRow>
+          <TableRow>
+            <StatsProgressOverviewCell progress={agilityProgress} color={theme.colors.combat} />
           </TableRow>
 
           <TableRow>
@@ -267,6 +307,10 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
               </Typography>
             </TableCell>
           </TableRow>
+          <TableRow>
+            <StatsProgressOverviewCell progress={charismaProgress} color={theme.colors.cha} />
+          </TableRow>
+
           <Intelligence />
 
           <TableRow>

@@ -29,6 +29,7 @@ import { ICodingContractReward } from "../CodingContracts";
 import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServer } from "../Hacknet/HacknetServer";
+import { ISkillProgress } from "./formulas/skill";
 
 export interface IPlayer {
   // Class members
@@ -259,6 +260,7 @@ export interface IPlayer {
   prestigeAugmentation(): void;
   prestigeSourceFile(): void;
   calculateSkill(exp: number, mult?: number): number;
+  calculateSkillProgress(exp: number, mult?: number): ISkillProgress;
   resetWorkStatus(generalType?: string, group?: string, workType?: string): void;
   getWorkHackExpGain(): number;
   getWorkStrExpGain(): number;
