@@ -83,6 +83,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [deleteGameOpen, setDeleteOpen] = useState(false);
   const [themeEditorOpen, setThemeEditorOpen] = useState(false);
+  const [softResetOpen, setSoftResetOpen] = useState(false);
 
   function handleExecTimeChange(event: any, newValue: number | number[]): void {
     setExecTime(newValue as number);
@@ -208,6 +209,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
       save(contents).then(() => setTimeout(() => location.reload(), 1000));
     };
     reader.readAsText(file);
+  }
+
+  function doSoftReset(): void {
+    if (!Settings.SuppressBuyAugmentationConfirmation) {
+      setSoftResetOpen(true);
+    } else {
+      props.softReset();
+    }
   }
 
   return (
@@ -388,7 +397,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Suppress buy augmentation confirmation</Typography>
+                    <Typography>Suppress augmentations confirmation</Typography>
                   </Tooltip>
                 }
               />
@@ -428,15 +437,11 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             )}
             <ListItem>
               <FormControlLabel
-                control={
-                  <Switch checked={suppressSavedGameToast} onChange={handleSuppressSavedGameToastChange} />
-                }
+                control={<Switch checked={suppressSavedGameToast} onChange={handleSuppressSavedGameToastChange} />}
                 label={
                   <Tooltip
                     title={
-                      <Typography>
-                        If this is set, there will be no "Saved Game" toast appearing after save.
-                      </Typography>
+                      <Typography>If this is set, there will be no "Saved Game" toast appearing after save.</Typography>
                     }
                   >
                     <Typography>Suppress Saved Game Toast</Typography>
@@ -650,8 +655,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 </Typography>
               }
             >
-              <Button onClick={() => props.softReset()}>Soft Reset</Button>
+              <Button onClick={doSoftReset}>Soft Reset</Button>
             </Tooltip>
+            <ConfirmationModal
+              open={softResetOpen}
+              onClose={() => setSoftResetOpen(false)}
+              onConfirm={props.softReset}
+              confirmationText={"This will perform the same action as installing Augmentations, are you sure?"}
+            />
           </Box>
           <Box>
             <Tooltip

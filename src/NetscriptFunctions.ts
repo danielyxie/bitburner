@@ -304,7 +304,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const checkSingularityAccess = function (func: any, n: any): void {
     if (Player.bitNodeN !== 4) {
       if (SourceFileFlags[4] < n) {
-        throw makeRuntimeErrorMsg(func, `This singularity function requires Source-File 4-${n} to run.`);
+        throw makeRuntimeErrorMsg(
+          func,
+          `This singularity function requires Source-File 4-${n} to run. A power up you obtain later in the game. It will be very obvious when and how you can obtain it.`,
+        );
       }
     }
   };
@@ -1611,7 +1614,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       const cost = getPurchaseServerCost(ram);
       if (cost === Infinity) {
-        workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}'`);
+        workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be power of 2`);
         return "";
       }
 
