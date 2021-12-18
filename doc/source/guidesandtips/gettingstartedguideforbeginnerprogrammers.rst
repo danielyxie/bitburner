@@ -253,6 +253,7 @@ Here's what mine showed at the time I made this::
 
 Take note of the following servers:
 
+* |n00dles|
 * |sigma-cosmetics|
 * |joesguns|
 * |nectar-net|
@@ -283,11 +284,16 @@ servers, we have to do the following:
 Here's the sequence of |Terminal| commands I used in order to achieve this::
 
     $ home
+    $ scp early-hack-template.script n00dles
     $ scp early-hack-template.script sigma-cosmetics
     $ scp early-hack-template.script joesguns
     $ scp early-hack-template.script nectar-net
     $ scp early-hack-template.script hong-fang-tea
     $ scp early-hack-template.script harakiri-sushi
+    $ connect n00dles
+    $ run NUKE.exe
+    $ run early-hack-template.script -t 1
+    $ home
     $ connect sigma-cosmetics
     $ run NUKE.exe
     $ run early-hack-template.script -t 6
