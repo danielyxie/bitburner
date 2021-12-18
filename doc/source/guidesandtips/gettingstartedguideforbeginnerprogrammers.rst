@@ -287,7 +287,7 @@ Here's the sequence of |Terminal| commands I used in order to achieve this::
     $ scp early-hack-template.script harakiri-sushi
     $ connect n00dles
     $ run NUKE.exe
-    $ run early-hack-template.script -t 6
+    $ run early-hack-template.script -t 2
     $ home
     $ connect sigma-cosmetics
     $ run NUKE.exe
