@@ -185,7 +185,7 @@ export function getDestinationFilepath(destination: string, source: string, cwd:
     return destination;
   } else {
     // Append the filename to the directory provided.
-    let t_path = removeTrailingSlash(dstDir);
+    const t_path = removeTrailingSlash(dstDir);
     const fileName = getFileName(source);
     return t_path + "/" + fileName;
   }
