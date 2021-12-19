@@ -15,7 +15,6 @@ import { TextFile } from "../../TextFile";
 import { calculateRamUsage, checkInfiniteLoop } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { CursorPositions } from "../CursorPositions";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { NetscriptFunctions } from "../../NetscriptFunctions";
@@ -28,7 +27,6 @@ import { loadThemes } from "./themes";
 import { GetServer } from "../../Server/AllServers";
 
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
