@@ -90,7 +90,7 @@ export function scp(
       }
     }
     if (sourceScript == null) {
-      terminal.error("scp() failed. No such script exists");
+      terminal.error("scp failed. No such script exists");
       return;
     }
 
