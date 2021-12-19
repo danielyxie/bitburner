@@ -4,6 +4,7 @@ const defaultInterpreter = new Interpreter("", () => undefined);
 
 // the acorn interpreter has a bug where it doesn't convert arrays correctly.
 // so we have to more or less copy it here.
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function toNative(pseudoObj: any): any {
   if (pseudoObj == null) return null;
   if (

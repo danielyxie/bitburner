@@ -178,14 +178,14 @@ export function getAllParentDirectories(path: string): string {
  * @param cwd The current working directory
  * @returns A file path which may be absolute or relative
  */
-export function getDestinationFilepath(destination: string, source: string, cwd: string) {
+export function getDestinationFilepath(destination: string, source: string, cwd: string): string {
   const dstDir = evaluateDirectoryPath(destination, cwd);
   // If evaluating the directory for this destination fails, we have a filename or full path.
   if (dstDir === null) {
     return destination;
   } else {
     // Append the filename to the directory provided.
-    let t_path = removeTrailingSlash(dstDir);
+    const t_path = removeTrailingSlash(dstDir);
     const fileName = getFileName(source);
     return t_path + "/" + fileName;
   }

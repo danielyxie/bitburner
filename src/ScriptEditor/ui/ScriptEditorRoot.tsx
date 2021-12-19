@@ -104,8 +104,8 @@ let currentScript = {} as openScript; // Script currently being viewed
 export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
-  const [filename, setFilename] = useState(props.filename);
-  const [code, setCode] = useState<string>(props.code);
+  const [filename] = useState(props.filename);
+  const [code] = useState<string>(props.code);
   const [decorations, setDecorations] = useState<string[]>([]);
   const [ram, setRAM] = useState("RAM: ???");
   const [updatingRam, setUpdatingRam] = useState(false);

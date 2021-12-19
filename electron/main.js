@@ -1,4 +1,5 @@
-const { app, BrowserWindow, Menu, shell } = require("electron");
+/* eslint-disable @typescript-eslint/no-var-requires */
+ const { app, BrowserWindow, Menu, shell } = require("electron");
 const greenworks = require("./greenworks");
 
 if (greenworks.init()) {
@@ -127,6 +128,7 @@ function setStopProcessHandler(app, window, enabled) {
   const stopProcessHandler = () => {
     if (process.platform !== "darwin") {
       app.quit();
+      // eslint-disable-next-line no-process-exit
       process.exit(0);
     }
   };
