@@ -1,3 +1,5 @@
+export const validScriptExtensions: Array<string> = [`.js`, `.script`, `.ns`];
+
 export function isScriptFilename(f: string): boolean {
-  return f.endsWith(".js") || f.endsWith(".script") || f.endsWith(".ns");
+  return validScriptExtensions.some((ext) => f.endsWith(ext));
 }
