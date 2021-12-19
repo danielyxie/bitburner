@@ -356,8 +356,8 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           onChange={onThemeChange}
         />
           <>
-            <Typography sx={{ my: 1 }}>Copy the string above if you want to backup or share your theme with others.</Typography>
-            <Typography sx={{ my: 1 }}>Use the buttons below to replace the current theme with a pre-built template</Typography>
+            <Typography sx={{ my: 1 }}>Backup your theme or share it with others by copying the string above.</Typography>
+            <Typography sx={{ my: 1 }}>Replace the current theme with a pre-built template using the buttons below.</Typography>
             {themes}
           </>
       </Paper>
