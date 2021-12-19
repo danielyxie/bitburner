@@ -104,11 +104,13 @@
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "lint": "eslint --fix . --ext js,jsx,ts,tsx",
+    "lint:report": "eslint --ext js,jsx,ts,tsx .",
     "preinstall": "node ./scripts/engines-check.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development",
+    "package-electron": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png",
     "electron": "cp -r electron/* .package && cp index.html .package && cp main.bundle.js .package && cp dist/vendor.bundle.js .package/dist/ && cp -r dist/ext .package/dist/ && electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png",
     "allbuild": "npm run build && npm run electron && git add --all && git commit --amend --no-edit && git push -f -u origin dev"
   }
