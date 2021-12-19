@@ -17,7 +17,7 @@ export function ls(
     terminal.error("Incorrect usage of ls command. Usage: ls [dir] [| grep pattern]");
   }
 
-  if (numArgs > 5 || numArgs === 3) {
+  if (numArgs > 4 || numArgs === 2) {
     return incorrectUsage();
   }
 
@@ -30,12 +30,12 @@ export function ls(
     prefix += "/";
   }
 
-  // If there are 4+ arguments, then the last 3 must be for grep
-  if (numArgs >= 4) {
-    if (args[numArgs - 1] !== "grep" || args[numArgs - 2] !== "|") {
+  // If there are 3+ arguments, then the last 3 must be for grep
+  if (numArgs >= 3) {
+    if (args[numArgs - 2] !== "grep" || args[numArgs - 3] !== "|") {
       return incorrectUsage();
     }
-    filter = args[numArgs] + "";
+    filter = args[numArgs - 1] + "";
   }
 
   // If the second argument is not a pipe, then it must be for listing a directory
