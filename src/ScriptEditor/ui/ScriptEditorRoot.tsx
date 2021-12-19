@@ -461,7 +461,6 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   function onDragEnd(result: any) {
-    console.log(openScripts);
     // Dropped outside of the list
     if (!result.destination) {
       result
@@ -503,8 +502,6 @@ export function Root(props: IProps): React.ReactElement {
     if (savedScriptIndex !== -1) {
       savedScriptCode = savedOpenScripts[savedScriptIndex].code;
     }
-
-    console.log(savedScriptCode)
 
     let serverScriptIndex = GetServer(closingScript.hostname)?.scripts.findIndex(script => script.filename === closingScript.fileName);
     if (serverScriptIndex === -1 || savedScriptCode !== GetServer(closingScript.hostname)?.scripts[serverScriptIndex as number].code) {
