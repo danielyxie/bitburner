@@ -1782,6 +1782,15 @@ export function quitJob(this: IPlayer, company: string): void {
   delete this.jobs[company];
 }
 
+/**
+ * Method to see if the player has at least one job assigned to them
+ * @param this The player instance
+ * @returns Whether the user has at least one job
+ */
+export function hasJob(this: IPlayer): boolean {
+  return Boolean(Object.keys(this.jobs).length);
+}
+
 export function applyForSoftwareJob(this: IPlayer, sing = false): boolean {
   return this.applyForJob(CompanyPositions[posNames.SoftwareCompanyPositions[0]], sing);
 }
