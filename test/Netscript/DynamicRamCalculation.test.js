@@ -5,6 +5,10 @@ import { RunningScript } from "../../src/Script/RunningScript";
 import { Script } from "../../src/Script/Script";
 import { SourceFileFlags } from "../../src/SourceFile/SourceFileFlags";
 
+jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => '', {
+  virtual: true,
+});
+
 const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
 
 describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
