@@ -27,7 +27,7 @@ export function check(
     // Check that the script is running on this machine
     const runningScript = findRunningScript(scriptName, args.slice(1), server);
     if (runningScript == null) {
-      terminal.error(`No script named ${scriptName} is not running on the server`);
+      terminal.error(`No script named ${scriptName} is running on the server`);
       return;
     }
     runningScript.displayLog();

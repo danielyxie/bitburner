@@ -20,7 +20,7 @@ export function tail(
     } else if (typeof commandArray[0] === "string") {
       const scriptName = terminal.getFilepath(commandArray[0]);
       if (!isScriptFilename(scriptName)) {
-        terminal.error(`tail can only be called on ${validScriptExtensions.join(", ")} files, or by pid`);
+        terminal.error(`tail can only be called on ${validScriptExtensions.join(", ")} files, or by PID`);
         return;
       }
 
@@ -66,11 +66,11 @@ export function tail(
       }
 
       // if there's no candidate then we just don't know.
-      terminal.error(`No script named ${scriptName} is not running on the server`);
+      terminal.error(`No script named ${scriptName} is running on the server`);
     } else if (typeof commandArray[0] === "number") {
       const runningScript = findRunningScriptByPid(commandArray[0], server);
       if (runningScript == null) {
-        terminal.error(`No script with pid ${commandArray[0]} is not running on the server`);
+        terminal.error(`No script with PID ${commandArray[0]} is running on the server`);
         return;
       }
       LogBoxEvents.emit(runningScript);
