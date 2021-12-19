@@ -33,7 +33,7 @@ export function runProgram(
   }
 
   for (const program of Object.values(Programs)) {
-    if (program.name === programName) {
+    if (program.name.toLocaleLowerCase() === programName.toLocaleLowerCase()) {
       program.run(
         router,
         terminal,
