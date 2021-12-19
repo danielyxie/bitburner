@@ -1,6 +1,6 @@
 import * as React from "react";
 import LinearProgress from "@mui/material/LinearProgress";
-import { TableCell, Tooltip } from "@mui/material";
+import { TableCell, Tooltip, Typography } from "@mui/material";
 import { characterOverviewStyles } from "./CharacterOverview";
 import { ISkillProgress } from "src/PersonObjects/formulas/skill";
 import { numeralWrapper } from "../numeralFormat";
@@ -9,6 +9,7 @@ interface IProgressProps {
   min: number;
   max: number;
   current: number;
+  progress: number;
   color?: React.CSSProperties["color"];
 }
 
@@ -17,21 +18,22 @@ interface IStatsOverviewCellProps {
   color?: React.CSSProperties["color"];
 }
 
-export function StatsProgressBar({ min, max, current, color }: IProgressProps): React.ReactElement {
-  const normalise = (value: number): number => ((value - min) * 100) / (max - min);
-  const tooltipText = (
-    <>
-      Experience: {numeralWrapper.formatExp(current)}/{numeralWrapper.formatExp(max)}
+export function StatsProgressBar({ min, max, current, progress, color }: IProgressProps): React.ReactElement {
+  const tooltip = (
+    <Typography sx={{ textAlign: 'right' }}>
+      <strong>Progress:</strong>&nbsp;
+      {numeralWrapper.formatExp(current - min)} / {numeralWrapper.formatExp(max - min)}
       <br />
-      {normalise(current).toFixed(2)}%
-    </>
+      <strong>Remaining:</strong>&nbsp;
+      {numeralWrapper.formatExp(max - current)} ({progress.toFixed(2)}%)
+    </Typography>
   );
 
   return (
-    <Tooltip title={tooltipText}>
+    <Tooltip title={tooltip}>
       <LinearProgress
         variant="determinate"
-        value={normalise(current)}
+        value={progress}
         sx={{
           backgroundColor: "#111111",
           "& .MuiLinearProgress-bar1Determinate": {
@@ -43,7 +45,7 @@ export function StatsProgressBar({ min, max, current, color }: IProgressProps): 
   );
 }
 
-export function StatsProgressOverviewCell({ progress, color }: IStatsOverviewCellProps): React.ReactElement {
+export function StatsProgressOverviewCell({ progress: skill, color }: IStatsOverviewCellProps): React.ReactElement {
   const classes = characterOverviewStyles();
   return (
     <TableCell
@@ -54,9 +56,10 @@ export function StatsProgressOverviewCell({ progress, color }: IStatsOverviewCel
       style={{ paddingBottom: "2px", position: "relative", top: "-3px" }}
     >
       <StatsProgressBar
-        min={progress.baseExperience}
-        max={progress.nextExperience}
-        current={progress.experience}
+        min={skill.baseExperience}
+        max={skill.nextExperience}
+        current={skill.experience}
+        progress={skill.progress}
         color={color}
       />
     </TableCell>

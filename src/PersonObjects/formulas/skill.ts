@@ -9,9 +9,14 @@ export function calculateExp(skill: number, mult = 1): number {
 export function calculateSkillProgress(exp: number, mult = 1): ISkillProgress {
   const currentSkill = calculateSkill(exp, mult);
   const nextSkill = currentSkill + 1;
+
   let baseExperience = calculateExp(currentSkill, mult);
   if (baseExperience < 0) baseExperience = 0;
-  const nextExperience = calculateExp(nextSkill, mult)
+
+  let nextExperience = calculateExp(nextSkill, mult)
+  if (nextExperience < 0) nextExperience = 0;
+
+  const normalize = (value: number): number => ((value - baseExperience) * 100) / (nextExperience - baseExperience);
 
   return {
     currentSkill,
@@ -19,7 +24,7 @@ export function calculateSkillProgress(exp: number, mult = 1): ISkillProgress {
     baseExperience,
     experience: exp,
     nextExperience,
-    progress: exp / nextExperience,
+    progress: (nextExperience - baseExperience !== 0) ? normalize(exp) : 99.99
   }
 }
 
@@ -32,7 +37,7 @@ export interface ISkillProgress {
   progress: number;
 }
 
-export function getEmptySkillProgress() {
+export function getEmptySkillProgress(): ISkillProgress {
   return {
     currentSkill: 0, nextSkill: 0,
     baseExperience: 0, experience: 0, nextExperience: 0,
