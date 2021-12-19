@@ -19,7 +19,7 @@ export function check(
     // Can only tail script files
     if (!isScriptFilename(scriptName)) {
       terminal.error(
-        `'check' can only be called on .script files (filename must end with ${validScriptExtensions.join(", ")})`,
+        `'check' can only be called on scripts files (filename must end with ${validScriptExtensions.join(", ")})`,
       );
       return;
     }
