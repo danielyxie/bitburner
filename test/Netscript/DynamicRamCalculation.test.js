@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { jest, describe, expect, test } from '@jest/globals'
+
 import { NetscriptFunctions } from "../../src/NetscriptFunctions";
 import { getRamCost, RamCostConstants } from "../../src/Netscript/RamCostGenerator";
 import { Environment } from "../../src/Netscript/Environment";
@@ -8,11 +11,6 @@ import { SourceFileFlags } from "../../src/SourceFile/SourceFileFlags";
 jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => '', {
   virtual: true,
 });
-
-jest.mock("../../src/Netscript/killWorkerScript", () => ({
-  __esModule: true,
-  killWorkerScript: jest.fn(),
-}));
 
 const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
 
@@ -115,12 +113,13 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
    * @param {string[]} fnDesc - describes the name of the function being tested,
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    */
-  async function testZeroDynamicRamCost(fnDesc) {
+  async function testZeroDynamicRamCost(fnDesc, skipRun = false) {
     if (!Array.isArray(fnDesc)) {
       throw new Error("Non-array passed to testZeroDynamicRamCost()");
     }
     const expected = getRamCost(...fnDesc);
     expect(expected).toEqual(0);
+    if (skipRun) return;
 
     const code = `${fnDesc.join(".")}();`;
 
@@ -315,7 +314,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     it("exit()", async function () {
       const f = ["exit"];
-      await testZeroDynamicRamCost(f);
+      await testZeroDynamicRamCost(f, true);
     });
 
     it("scp()", async function () {

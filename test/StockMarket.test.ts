@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { jest, describe, expect, test } from '@jest/globals'
+
 import { CONSTANTS } from "../src/Constants";
 import { Player } from "../src/Player";
 import { IMap } from "../src/types";
@@ -132,14 +135,14 @@ describe("Stock Market Tests", function () {
 
         const stock = new Stock(params);
         expect(stock).not.toEqual(null);
-        expect(stock.price).toBeGreaterThan(params.initPrice.min);
-        expect(stock.price).toBeLessThan(params.initPrice.max);
-        expect(stock.mv).toBeGreaterThan(params.mv.min / params.mv.divisor);
-        expect(stock.mv).toBeLessThan(params.mv.max / params.mv.divisor);
-        expect(stock.spreadPerc).toBeGreaterThan(params.spreadPerc.min / params.spreadPerc.divisor);
-        expect(stock.spreadPerc).toBeLessThan(params.spreadPerc.max / params.spreadPerc.divisor);
-        expect(stock.shareTxForMovement).toBeGreaterThan(params.shareTxForMovement.min);
-        expect(stock.shareTxForMovement).toBeLessThan(params.shareTxForMovement.max);
+        expect(stock.price).toBeGreaterThanOrEqual(params.initPrice.min);
+        expect(stock.price).toBeLessThanOrEqual(params.initPrice.max);
+        expect(stock.mv).toBeGreaterThanOrEqual(params.mv.min / params.mv.divisor);
+        expect(stock.mv).toBeLessThanOrEqual(params.mv.max / params.mv.divisor);
+        expect(stock.spreadPerc).toBeGreaterThanOrEqual(params.spreadPerc.min / params.spreadPerc.divisor);
+        expect(stock.spreadPerc).toBeLessThanOrEqual(params.spreadPerc.max / params.spreadPerc.divisor);
+        expect(stock.shareTxForMovement).toBeGreaterThanOrEqual(params.shareTxForMovement.min);
+        expect(stock.shareTxForMovement).toBeLessThanOrEqual(params.shareTxForMovement.max);
       });
 
       it("should round the 'totalShare' prop to the nearest 100k", function () {
@@ -855,7 +858,7 @@ describe("Stock Market Tests", function () {
       it("should return true and properly update stock properties for successful transactions", function () {
         const shares = 1e3;
         const cost = getBuyTransactionCost(stock, shares, PositionTypes.Long);
-        expect(cost).not.null;
+        expect(cost).not.toBeNull();
 
         // Checked above
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -949,7 +952,7 @@ describe("Stock Market Tests", function () {
       it("should return true and properly update stock properties for successful transactions", function () {
         const shares = 1e3;
         const cost = getBuyTransactionCost(stock, shares, PositionTypes.Short);
-        expect(cost).not.null;
+        expect(cost).not.toBeNull();
 
         // Checked above
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

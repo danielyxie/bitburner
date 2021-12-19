@@ -2,6 +2,10 @@ node_modules/
 dist/
 input/
 
+.dist
+.tmp
+.package
+
 assets/
 css/
 .cypress/

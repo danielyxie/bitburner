@@ -1,13 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { jest, describe, expect, test } from '@jest/globals'
+
 import { getRamCost, RamCostConstants } from "../../src/Netscript/RamCostGenerator";
 import { calculateRamUsage } from "../../src/Script/RamCalculations";
 
 const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
 const HacknetNamespaceCost = RamCostConstants.ScriptHacknetNodesRamCost;
-
-jest.mock("../../src/Netscript/killWorkerScript", () => ({
-  __esModule: true,
-  killWorkerScript: jest.fn(),
-}));
 
 describe("Netscript Static RAM Calculation/Generation Tests", function () {
   // Tests numeric equality, allowing for floating point imprecision
