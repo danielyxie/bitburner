@@ -2134,12 +2134,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       message = argsToString([message]);
       dialogBoxCreate(message);
     },
-    toast: function (message: any, variant: any = "success"): void {
+    toast: function (message: any, variant: any = "success", duration: any = 2000): void {
       if (!["success", "info", "warning", "error"].includes(variant))
         throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
 
       message = argsToString([message]);
-      SnackbarEvents.emit(message, variant);
+      SnackbarEvents.emit(message, variant, duration);
     },
     prompt: function (txt: any): any {
       if (!isString(txt)) {

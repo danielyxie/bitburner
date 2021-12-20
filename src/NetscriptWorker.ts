@@ -126,6 +126,7 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
       })
       .catch((e) => reject(e));
   }).catch((e) => {
+    console.log(e);
     if (e instanceof Error) {
       if (e instanceof SyntaxError) {
         workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e.message + " (sorry we can't be more helpful)");

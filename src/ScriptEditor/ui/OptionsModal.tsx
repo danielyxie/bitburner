@@ -21,12 +21,14 @@ export function OptionsModal(props: IProps): React.ReactElement {
   const [theme, setTheme] = useState(props.options.theme);
   const [insertSpaces, setInsertSpaces] = useState(props.options.insertSpaces);
   const [fontSize, setFontSize] = useState(props.options.fontSize);
+  const [vim, setVim] = useState(props.options.vim);
 
   function save(): void {
     props.save({
-      theme: theme,
-      insertSpaces: insertSpaces,
-      fontSize: fontSize,
+      theme,
+      insertSpaces,
+      fontSize,
+      vim,
     });
     props.onClose();
   }
@@ -54,6 +56,12 @@ export function OptionsModal(props: IProps): React.ReactElement {
         <Typography>Use whitespace over tabs: </Typography>
         <Switch onChange={(event) => setInsertSpaces(event.target.checked)} checked={insertSpaces} />
       </Box>
+
+      <Box display="flex" flexDirection="row" alignItems="center">
+        <Typography>Enable vim mode: </Typography>
+        <Switch onChange={(event) => setVim(event.target.checked)} checked={vim} />
+      </Box>
+
       <Box display="flex" flexDirection="row" alignItems="center">
         <TextField type="number" label="Font size" value={fontSize} onChange={onFontChange} />
       </Box>

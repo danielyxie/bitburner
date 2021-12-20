@@ -46,6 +46,7 @@ import { exceptionAlert } from "./utils/helpers/exceptionAlert";
 import { startExploits } from "./Exploits/loops";
 
 import React from "react";
+import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
 
 const Engine: {
   _lastUpdate: number;
@@ -237,6 +238,7 @@ const Engine: {
 
   load: function (saveString) {
     startExploits();
+    setupUncaughtPromiseHandler();
     // Load game from save or create new game
     if (loadGame(saveString)) {
       ThemeEvents.emit();
