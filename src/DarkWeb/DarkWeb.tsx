@@ -6,6 +6,7 @@ import { Terminal } from "../Terminal";
 import { SpecialServers } from "../Server/data/SpecialServers";
 import { Money } from "../ui/React/Money";
 import { DarkWebItem } from "./DarkWebItem";
+import Typography from "@mui/material/Typography";
 
 //Posts a "help" message if connected to DarkWeb
 export function checkIfConnectedToDarkweb(): void {
@@ -22,10 +23,17 @@ export function checkIfConnectedToDarkweb(): void {
 export function listAllDarkwebItems(): void {
   for (const key in DarkWebItems) {
     const item = DarkWebItems[key];
+
+    const cost = Player.getHomeComputer().programs.includes(item.program) ? (
+      <span style={{ color: `green` }}>[OWNED]</span>
+    ) : (
+      <Money money={item.price} />
+    );
+
     Terminal.printRaw(
-      <>
-        {item.program} - <Money money={item.price} /> - {item.description}
-      </>,
+      <Typography>
+        <span>{item.program}</span> - <span>{cost}</span> - <span>{item.description}</span>
+      </Typography>,
     );
   }
 }
