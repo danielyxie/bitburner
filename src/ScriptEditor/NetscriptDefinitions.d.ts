@@ -3740,6 +3740,21 @@ interface Stanek {
 }
 
 /**
+ * User Interface API.
+ * @public
+ */
+interface UserInterface {
+/**
+   * Get the current theme
+   * @remarks
+   * RAM cost: cost: 0 GB
+   *
+   * @returns An object containing the theme's colors
+   */
+  getTheme(): UserInterfaceTheme;
+}
+
+/**
  * Collection of all functions passed to scripts
  * @public
  * @remarks
@@ -3820,6 +3835,12 @@ export interface NS extends Singularity {
    * RAM cost: 0 GB
    */
   readonly corporation: Corporation;
+
+  /**
+   * Namespace for user interface functions.
+   * RAM cost: 0 GB
+   */
+  readonly ui: UserInterface;
 
   /**
    * Arguments passed into the script.
@@ -5881,4 +5902,46 @@ interface Division {
   upgrades: number[];
   /** Cities in which this division has expanded */
   cities: string[];
+}
+
+
+/**
+ * Interface Theme
+ * @internal
+ */
+interface UserInterfaceTheme {
+  [key: string]: string | undefined;
+  primarylight: string;
+  primary: string;
+  primarydark: string;
+  successlight: string;
+  success: string;
+  successdark: string;
+  errorlight: string;
+  error: string;
+  errordark: string;
+  secondarylight: string;
+  secondary: string;
+  secondarydark: string;
+  warninglight: string;
+  warning: string;
+  warningdark: string;
+  infolight: string;
+  info: string;
+  infodark: string;
+  welllight: string;
+  well: string;
+  white: string;
+  black: string;
+  hp: string;
+  money: string;
+  hack: string;
+  combat: string;
+  cha: string;
+  int: string;
+  rep: string;
+  disabled: string;
+  backgroundprimary: string;
+  backgroundsecondary: string;
+  button: string;
 }
