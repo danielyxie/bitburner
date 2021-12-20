@@ -217,6 +217,10 @@ export function Root(props: IProps): React.ReactElement {
   );
 
   async function updateRAM(newCode: string): Promise<void> {
+    if (currentScript != null && currentScript.fileName.endsWith(".txt")) {
+      debouncedSetRAM("");
+      return;
+    }
     setUpdatingRam(true);
     const codeCopy = newCode + "";
     const ramUsage = await calculateRamUsage(codeCopy, props.player.getCurrentServer().scripts);
