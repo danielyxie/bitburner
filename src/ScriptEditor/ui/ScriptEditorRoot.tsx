@@ -654,7 +654,6 @@ export function Root(props: IProps): React.ReactElement {
     }
   }
 
-  // TODO: Make this responsive to window resizes
   // Toolbars are roughly 112px:
   //  8px body margin top
   //  38.5px filename tabs
