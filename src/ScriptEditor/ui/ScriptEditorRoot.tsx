@@ -17,7 +17,7 @@ import { TextFile } from "../../TextFile";
 import { calculateRamUsage, checkInfiniteLoop } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
@@ -37,7 +37,6 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { PromptEvent } from "../../ui/React/PromptManager";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
-
 
 interface IProps {
   filename: string;
@@ -77,7 +76,6 @@ export function SetupTextEditor(): void {
   symbols = symbols.filter((symbol: string) => !exclude.includes(symbol)).sort();
 }
 
-
 // Holds all the data for a open script
 class OpenScript {
   fileName: string;
@@ -104,11 +102,15 @@ export function Root(props: IProps): React.ReactElement {
   const [editor, setEditor] = useState<IStandaloneCodeEditor | null>(null);
 
   const [openScripts, setOpenScripts] = useState<OpenScript[]>(
-    window.localStorage.getItem('scriptEditorOpenScripts') !== null ? JSON.parse(window.localStorage.getItem('scriptEditorOpenScripts')!) : []
+    window.localStorage.getItem("scriptEditorOpenScripts") !== null
+      ? JSON.parse(window.localStorage.getItem("scriptEditorOpenScripts")!)
+      : [],
   );
 
   const [currentScript, setCurrentScript] = useState<OpenScript | null>(
-    window.localStorage.getItem('scriptEditorCurrentScript') !== null ? JSON.parse(window.localStorage.getItem('scriptEditorCurrentScript')!) : null
+    window.localStorage.getItem("scriptEditorCurrentScript") !== null
+      ? JSON.parse(window.localStorage.getItem("scriptEditorCurrentScript")!)
+      : null,
   );
 
   const [ram, setRAM] = useState("RAM: ???");
@@ -125,17 +127,23 @@ export function Root(props: IProps): React.ReactElement {
 
   useEffect(() => {
     // Save currentScript
-    window.localStorage.setItem('scriptEditorCurrentScript', JSON.stringify(currentScript, (key, value) => {
-      if (key == 'model') return undefined;
-      return value;
-    }));
+    window.localStorage.setItem(
+      "scriptEditorCurrentScript",
+      JSON.stringify(currentScript, (key, value) => {
+        if (key == "model") return undefined;
+        return value;
+      }),
+    );
 
     // Save openScripts
-    window.localStorage.setItem('scriptEditorOpenScripts', JSON.stringify(openScripts, (key, value) => {
-      if (key == 'model') return undefined;
-      return value;
-    }))
-  }, [currentScript, openScripts])
+    window.localStorage.setItem(
+      "scriptEditorOpenScripts",
+      JSON.stringify(openScripts, (key, value) => {
+        if (key == "model") return undefined;
+        return value;
+      }),
+    );
+  }, [currentScript, openScripts]);
 
   useEffect(() => {
     if (currentScript !== null) {
@@ -152,8 +160,8 @@ export function Root(props: IProps): React.ReactElement {
         save();
       }
 
-       // CTRL/CMD + S
-       if (event.code == `KeyS` && (event.ctrlKey || event.metaKey)) {
+      // CTRL/CMD + S
+      if (event.code == `KeyS` && (event.ctrlKey || event.metaKey)) {
         event.preventDefault();
         event.stopPropagation();
         save();
@@ -288,7 +296,6 @@ export function Root(props: IProps): React.ReactElement {
     loadThemes(monaco);
   }
 
-
   // When the editor is mounted
   function onMount(editor: IStandaloneCodeEditor, monaco: Monaco): void {
     // Required when switching between site navigation (e.g. from Script Editor -> Terminal and back)
@@ -302,10 +309,16 @@ export function Root(props: IProps): React.ReactElement {
 
     if (props.filename) {
       // Check if file is already opened
-      const openScriptIndex = openScripts.findIndex(script => script.fileName === props.filename && script.hostname === props.hostname);
+      const openScriptIndex = openScripts.findIndex(
+        (script) => script.fileName === props.filename && script.hostname === props.hostname,
+      );
       if (openScriptIndex !== -1) {
         // Script is already opened
-        if (openScripts[openScriptIndex].model === undefined || openScripts[openScriptIndex].model === null || openScripts[openScriptIndex].model.isDisposed()) {
+        if (
+          openScripts[openScriptIndex].model === undefined ||
+          openScripts[openScriptIndex].model === null ||
+          openScripts[openScriptIndex].model.isDisposed()
+        ) {
           regenerateModel(openScripts[openScriptIndex]);
         }
 
@@ -316,8 +329,14 @@ export function Root(props: IProps): React.ReactElement {
         updateRAM(openScripts[openScriptIndex].code);
       } else {
         // Open script
-        const newScript = new OpenScript(props.filename, props.code, props.hostname, new monacoRef.current.Position(0, 0), monacoRef.current.editor.createModel(props.code, 'javascript'));
-        setOpenScripts(oldArray => [...oldArray, newScript]);
+        const newScript = new OpenScript(
+          props.filename,
+          props.code,
+          props.hostname,
+          new monacoRef.current.Position(0, 0),
+          monacoRef.current.editor.createModel(props.code, "javascript"),
+        );
+        setOpenScripts((oldArray) => [...oldArray, newScript]);
         setCurrentScript({ ...newScript });
         editorRef.current.setModel(newScript.model);
         updateRAM(newScript.code);
@@ -370,9 +389,11 @@ export function Root(props: IProps): React.ReactElement {
     if (editorRef.current !== null) {
       const newPos = editorRef.current.getPosition();
       if (newPos === null) return;
-      setCurrentScript(oldScript => ({ ...oldScript!, code: newCode, lastPosition: newPos! }))
+      setCurrentScript((oldScript) => ({ ...oldScript!, code: newCode, lastPosition: newPos! }));
       if (currentScript !== null) {
-        const curIndex = openScripts.findIndex(script => script.fileName === currentScript.fileName && script.hostname === currentScript.hostname);
+        const curIndex = openScripts.findIndex(
+          (script) => script.fileName === currentScript.fileName && script.hostname === currentScript.hostname,
+        );
         const newArr = [...openScripts];
         const tempScript = currentScript;
         tempScript.code = newCode;
@@ -381,7 +402,7 @@ export function Root(props: IProps): React.ReactElement {
       }
       try {
         infLoop(newCode);
-      } catch (err) { }
+      } catch (err) {}
     }
   }
 
@@ -516,10 +537,10 @@ export function Root(props: IProps): React.ReactElement {
     return result;
   }
 
-  function onDragEnd(result: any): void{
+  function onDragEnd(result: any): void {
     // Dropped outside of the list
     if (!result.destination) {
-      result
+      result;
       return;
     }
 
@@ -531,7 +552,9 @@ export function Root(props: IProps): React.ReactElement {
   function onTabClick(index: number): void {
     if (currentScript !== null) {
       // Save currentScript to openScripts
-      const curIndex = openScripts.findIndex(script => script.fileName === currentScript.fileName && script.hostname === currentScript.hostname);
+      const curIndex = openScripts.findIndex(
+        (script) => script.fileName === currentScript.fileName && script.hostname === currentScript.hostname,
+      );
       openScripts[curIndex] = currentScript;
     }
 
@@ -553,29 +576,36 @@ export function Root(props: IProps): React.ReactElement {
   async function onTabClose(index: number): Promise<void> {
     // See if the script on the server is up to date
     const closingScript = openScripts[index];
-    const savedOpenScripts: Array<OpenScript> = JSON.parse(window.localStorage.getItem('scriptEditorOpenScripts')!);
-    const savedScriptIndex = savedOpenScripts.findIndex(script => script.fileName === closingScript.fileName && script.hostname === closingScript.hostname);
-    let savedScriptCode = '';
+    const savedOpenScripts: Array<OpenScript> = JSON.parse(window.localStorage.getItem("scriptEditorOpenScripts")!);
+    const savedScriptIndex = savedOpenScripts.findIndex(
+      (script) => script.fileName === closingScript.fileName && script.hostname === closingScript.hostname,
+    );
+    let savedScriptCode = "";
     if (savedScriptIndex !== -1) {
       savedScriptCode = savedOpenScripts[savedScriptIndex].code;
     }
 
-    const serverScriptIndex = GetServer(closingScript.hostname)?.scripts.findIndex(script => script.filename === closingScript.fileName);
-    if (serverScriptIndex === -1 || savedScriptCode !== GetServer(closingScript.hostname)?.scripts[serverScriptIndex as number].code) {
+    const serverScriptIndex = GetServer(closingScript.hostname)?.scripts.findIndex(
+      (script) => script.filename === closingScript.fileName,
+    );
+    if (
+      serverScriptIndex === -1 ||
+      savedScriptCode !== GetServer(closingScript.hostname)?.scripts[serverScriptIndex as number].code
+    ) {
       PromptEvent.emit({
-        txt: 'Do you want to save changes to ' + closingScript.fileName + '?',
+        txt: "Do you want to save changes to " + closingScript.fileName + "?",
         resolve: (result: boolean) => {
           if (result) {
             // Save changes
             closingScript.code = savedScriptCode;
             saveScript(closingScript);
           }
-        }
-      })
+        },
+      });
     }
 
     if (openScripts.length > 1) {
-      setOpenScripts(oldScripts => oldScripts.filter((value, i) => i !== index));
+      setOpenScripts((oldScripts) => oldScripts.filter((value, i) => i !== index));
 
       let indexOffset = -1;
       if (openScripts[index + indexOffset] === undefined) {
@@ -585,13 +615,17 @@ export function Root(props: IProps): React.ReactElement {
       // Change current script if we closed it
       setCurrentScript(openScripts[index + indexOffset]);
       if (editorRef.current !== null) {
-        if (openScripts[index + indexOffset].model === undefined || openScripts[index + indexOffset].model === null || openScripts[index + indexOffset].model.isDisposed()) {
+        if (
+          openScripts[index + indexOffset].model === undefined ||
+          openScripts[index + indexOffset].model === null ||
+          openScripts[index + indexOffset].model.isDisposed()
+        ) {
           regenerateModel(openScripts[index + indexOffset]);
         }
 
         editorRef.current.setModel(openScripts[index + indexOffset].model);
         editorRef.current.setPosition(openScripts[index + indexOffset].lastPosition);
-        editorRef.current.revealLineInCenter(openScripts[index + indexOffset].lastPosition.lineNumber)
+        editorRef.current.revealLineInCenter(openScripts[index + indexOffset].lastPosition.lineNumber);
         editorRef.current.focus();
       }
     } else {
@@ -609,9 +643,9 @@ export function Root(props: IProps): React.ReactElement {
 
   return (
     <>
-      <div style={{ display: currentScript !== null ? 'block' : 'none', height: '100%', width: '100%' }}>
+      <div style={{ display: currentScript !== null ? "block" : "none", height: "100%", width: "100%" }}>
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId='tabs' direction='horizontal'>
+          <Droppable droppableId="tabs" direction="horizontal">
             {(provided, snapshot) => (
               <Box
                 maxWidth="1640px"
@@ -621,10 +655,18 @@ export function Root(props: IProps): React.ReactElement {
                 whiteSpace="nowrap"
                 ref={provided.innerRef}
                 {...provided.droppableProps}
-                style={{ backgroundColor: snapshot.isDraggingOver ? '#1F2022' : Settings.theme.backgroundprimary, overflowX: 'scroll' }}
+                style={{
+                  backgroundColor: snapshot.isDraggingOver ? "#1F2022" : Settings.theme.backgroundprimary,
+                  overflowX: "scroll",
+                }}
               >
                 {openScripts.map(({ fileName, hostname }, index) => (
-                  <Draggable key={fileName + hostname} draggableId={fileName + hostname} index={index} disableInteractiveElementBlocking={true}>
+                  <Draggable
+                    key={fileName + hostname}
+                    draggableId={fileName + hostname}
+                    index={index}
+                    disableInteractiveElementBlocking={true}
+                  >
                     {(provided) => (
                       <div
                         ref={provided.innerRef}
@@ -632,22 +674,33 @@ export function Root(props: IProps): React.ReactElement {
                         {...provided.dragHandleProps}
                         style={{
                           ...provided.draggableProps.style,
-                          marginRight: '5px',
-                          flexShrink: 0
-
+                          marginRight: "5px",
+                          flexShrink: 0,
                         }}
                       >
                         <Button
                           id={"tabButton" + fileName + hostname}
                           onClick={() => onTabClick(index)}
-                          style={{ background: currentScript?.fileName === openScripts[index].fileName ? Settings.theme.secondarydark : '' }}
+                          style={{
+                            background:
+                              currentScript?.fileName === openScripts[index].fileName
+                                ? Settings.theme.secondarydark
+                                : "",
+                          }}
                         >
                           {hostname}:~/{fileName}
                         </Button>
                         <Button
                           id={"tabCloseButton" + fileName + hostname}
                           onClick={() => onTabClose(index)}
-                          style={{ maxWidth: "20px", minWidth: "20px", background: currentScript?.fileName === openScripts[index].fileName ? Settings.theme.secondarydark : '' }}
+                          style={{
+                            maxWidth: "20px",
+                            minWidth: "20px",
+                            background:
+                              currentScript?.fileName === openScripts[index].fileName
+                                ? Settings.theme.secondarydark
+                                : "",
+                          }}
                         >
                           x
                         </Button>
@@ -660,18 +713,28 @@ export function Root(props: IProps): React.ReactElement {
             )}
           </Droppable>
         </DragDropContext>
-        <div style={{ paddingBottom: '5px' }} />
+        <div style={{ paddingBottom: "5px" }} />
         <Editor
           beforeMount={beforeMount}
           onMount={onMount}
           loading={<Typography>Loading script editor!</Typography>}
           height={`${editorHeight}%`}
           defaultLanguage="javascript"
-          defaultValue={''}
+          defaultValue={""}
           onChange={updateCode}
           theme={options.theme}
           options={{ ...options, glyphMargin: true }}
         />
+
+        <Box
+          ref={vimStatusRef}
+          className="monaco-editor"
+          display="flex"
+          flexDirection="row"
+          sx={{ p: 1 }}
+          alignItems="center"
+        ></Box>
+
         <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
           <Button onClick={beautify}>Beautify</Button>
           <Typography color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
@@ -714,9 +777,20 @@ export function Root(props: IProps): React.ReactElement {
           }}
         />
       </div>
-      <div style={{ display: currentScript !== null ? 'none' : 'flex', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-        <p style={{ color: Settings.theme.primary, fontSize: '20px', textAlign: 'center' }}><h1>No open files</h1><h5>Use "nano [File Name]" in the terminal to open files</h5></p>
+      <div
+        style={{
+          display: currentScript !== null ? "none" : "flex",
+          height: "100%",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <p style={{ color: Settings.theme.primary, fontSize: "20px", textAlign: "center" }}>
+          <h1>No open files</h1>
+          <h5>Use "nano [File Name]" in the terminal to open files</h5>
+        </p>
       </div>
     </>
-  )
+  );
 }
