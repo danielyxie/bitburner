@@ -16,7 +16,8 @@ export function cat(
     terminal.error("Incorrect usage of cat command. Usage: cat [file]");
     return;
   }
-  const filename = terminal.getFilepath(args[0] + "");
+  const relative_filename = args[0] + "";
+  const filename = terminal.getFilepath(relative_filename);
   if (!filename.endsWith(".msg") && !filename.endsWith(".lit") && !filename.endsWith(".txt")) {
     terminal.error(
       "Only .msg, .txt, and .lit files are viewable with cat (filename must end with .msg, .txt, or .lit)",
@@ -39,7 +40,7 @@ export function cat(
       }
     }
   } else if (filename.endsWith(".txt")) {
-    const txt = terminal.getTextFile(player, filename);
+    const txt = terminal.getTextFile(player, relative_filename);
     if (txt != null) {
       txt.show();
       return;
