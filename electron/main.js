@@ -1,11 +1,21 @@
+/* eslint-disable no-process-exit */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { app, BrowserWindow, Menu, shell, dialog } = require("electron");
+const log = require('electron-log');
 const greenworks = require("./greenworks");
 
+log.catchErrors();
+log.info(`Started app: ${JSON.stringify(process.argv)}`);
+
+process.on('uncaughtException', function () {
+  // The exception will already have been logged by electron-log
+  process.exit(1);
+});
+
 if (greenworks.init()) {
-  console.log("Steam API has been initialized.");
+  log.info("Steam API has been initialized.");
 } else {
-  console.log("Steam API has failed to initialize.");
+  log.warn("Steam API has failed to initialize.");
 }
 
 const debug = false;
@@ -67,6 +77,7 @@ function createWindow(killall) {
   win.achievementsIntervalID = intervalID;
 
   const reloadAndKill = (killScripts = true) => {
+    log.info('Reloading & Killing all scripts...');
     setStopProcessHandler(app, win, false);
     if (intervalID) clearInterval(intervalID);
     win.webContents.forcefullyCrashRenderer();
@@ -168,8 +179,8 @@ function setStopProcessHandler(app, window, enabled) {
 
   const stopProcessHandler = () => {
     if (process.platform !== "darwin") {
+      log.info('Quitting the app...');
       app.quit();
-      // eslint-disable-next-line no-process-exit
       process.exit(0);
     }
   };
@@ -184,6 +195,7 @@ function setStopProcessHandler(app, window, enabled) {
 }
 
 app.whenReady().then(() => {
+  log.info('Application is ready!');
   const win = createWindow(process.argv.includes("--no-scripts"));
   setStopProcessHandler(app, win, true);
 });
