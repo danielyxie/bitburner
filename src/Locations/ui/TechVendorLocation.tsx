@@ -73,7 +73,7 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
       {purchaseServerButtons}
       <br />
       <Typography>
-        <i>"You can order bigger servers via scripts. We don't take custom order in person."</i>
+        <i>"You can order bigger servers via scripts. We don't take custom orders in person."</i>
       </Typography>
       <br />
       <TorButton p={player} rerender={rerender} />
