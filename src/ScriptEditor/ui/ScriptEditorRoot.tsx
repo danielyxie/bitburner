@@ -45,6 +45,7 @@ interface IProps {
   hostname: string;
   player: IPlayer;
   router: IRouter;
+  vim: boolean;
 }
 
 // TODO: try to removve global symbols
@@ -98,6 +99,9 @@ class OpenScript {
 export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
+  const vimStatusRef = useRef<HTMLElement>(null);
+  const [vimEditor, setVimEditor] = useState<any>(null);
+  const [editor, setEditor] = useState<IStandaloneCodeEditor | null>(null);
 
   const [openScripts, setOpenScripts] = useState<OpenScript[]>(
     window.localStorage.getItem('scriptEditorOpenScripts') !== null ? JSON.parse(window.localStorage.getItem('scriptEditorOpenScripts')!) : []
@@ -107,21 +111,6 @@ export function Root(props: IProps): React.ReactElement {
     window.localStorage.getItem('scriptEditorCurrentScript') !== null ? JSON.parse(window.localStorage.getItem('scriptEditorCurrentScript')!) : null
   );
 
-<<<<<<< HEAD
-export function Root(props: IProps): React.ReactElement {
-  const editorRef = useRef<IStandaloneCodeEditor | null>(null);
-  const vimStatusRef = useRef<HTMLElement>(null);
-  const [vimEditor, setVimEditor] = useState<any>(null);
-  const [editor, setEditor] = useState<IStandaloneCodeEditor | null>(null);
-  const [filename, setFilename] = useState(props.filename ? props.filename : lastFilename);
-  const [code, setCode] = useState<string>(props.filename ? props.code : lastCode);
-  const [decorations, setDecorations] = useState<string[]>([]);
-  hostname = props.filename ? props.hostname : hostname;
-  if (hostname === "") {
-    hostname = props.player.getCurrentServer().hostname;
-  }
-=======
->>>>>>> dev
   const [ram, setRAM] = useState("RAM: ???");
   const [updatingRam, setUpdatingRam] = useState(false);
   const [decorations, setDecorations] = useState<string[]>([]);
@@ -131,7 +120,7 @@ export function Root(props: IProps): React.ReactElement {
     theme: Settings.MonacoTheme,
     insertSpaces: Settings.MonacoInsertSpaces,
     fontSize: Settings.MonacoFontSize,
-    vim: Settings.MonacoVim,
+    vim: props.vim || Settings.MonacoVim,
   });
 
   useEffect(() => {
