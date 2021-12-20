@@ -15,7 +15,7 @@ import { TextFile } from "../../TextFile";
 import { calculateRamUsage, checkInfiniteLoop } from "../../Script/RamCalculations";
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { CursorPositions } from "../CursorPositions";
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
@@ -27,20 +27,31 @@ import { loadThemes } from "./themes";
 import { GetServer } from "../../Server/AllServers";
 
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { PromptEvent } from "../../ui/React/PromptManager";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
 
+
+interface IProps {
+  filename: string;
+  code: string;
+  hostname: string;
+  player: IPlayer;
+  router: IRouter;
+}
+
+// TODO: try to removve global symbols
 let symbolsLoaded = false;
 let symbols: string[] = [];
 export function SetupTextEditor(): void {
   const ns = NetscriptFunctions({} as WorkerScript);
 
+  // Populates symbols for text editor
   function populate(ns: any): string[] {
     let symbols: string[] = [];
     const keys = Object.keys(ns);
@@ -53,36 +64,19 @@ export function SetupTextEditor(): void {
         symbols.push(key);
       }
     }
+
     return symbols;
   }
+
   symbols = populate(ns);
 
   const exclude = ["heart", "break", "exploit", "bypass", "corporation", "alterReality"];
   symbols = symbols.filter((symbol: string) => !exclude.includes(symbol)).sort();
 }
 
-interface IProps {
-  filename: string;
-  code: string;
-  hostname: string;
-  player: IPlayer;
-  router: IRouter;
-}
-
-/*
-
-*/
-
-// How to load function definition in monaco
-// https://github.com/Microsoft/monaco-editor/issues/1415
-// https://microsoft.github.io/monaco-editor/api/modules/monaco.languages.html
-// https://www.npmjs.com/package/@monaco-editor/react#development-playground
-// https://microsoft.github.io/monaco-editor/playground.html#extending-language-services-custom-languages
-// https://github.com/threehams/typescript-error-guide/blob/master/stories/components/Editor.tsx#L11-L39
-// https://blog.checklyhq.com/customizing-monaco/
 
 // Holds all the data for a open script
-class openScript {
+class OpenScript {
   fileName: string;
   code: string;
   hostname: string;
@@ -98,23 +92,76 @@ class openScript {
   }
 }
 
-const openScripts = new Array<openScript>(); // Holds all open scripts
-let currentScript = {} as openScript; // Script currently being viewed
-
+// Called every time script editor is opened
 export function Root(props: IProps): React.ReactElement {
   const editorRef = useRef<IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
-  const [filename] = useState(props.filename);
-  const [code] = useState<string>(props.code);
-  const [decorations, setDecorations] = useState<string[]>([]);
+
+  const [openScripts, setOpenScripts] = useState<OpenScript[]>(
+    window.localStorage.getItem('scriptEditorOpenScripts') !== null ? JSON.parse(window.localStorage.getItem('scriptEditorOpenScripts')!) : []
+  );
+
+  const [currentScript, setCurrentScript] = useState<OpenScript | null>(
+    window.localStorage.getItem('scriptEditorCurrentScript') !== null ? JSON.parse(window.localStorage.getItem('scriptEditorCurrentScript')!) : null
+  );
+
   const [ram, setRAM] = useState("RAM: ???");
   const [updatingRam, setUpdatingRam] = useState(false);
+  const [decorations, setDecorations] = useState<string[]>([]);
+
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [options, setOptions] = useState<Options>({
     theme: Settings.MonacoTheme,
     insertSpaces: Settings.MonacoInsertSpaces,
     fontSize: Settings.MonacoFontSize,
   });
+
+  useEffect(() => {
+    // Save currentScript
+    window.localStorage.setItem('scriptEditorCurrentScript', JSON.stringify(currentScript, (key, value) => {
+      if (key == 'model') return undefined;
+      return value;
+    }));
+
+    // Save openScripts
+    window.localStorage.setItem('scriptEditorOpenScripts', JSON.stringify(openScripts, (key, value) => {
+      if (key == 'model') return undefined;
+      return value;
+    }))
+  }, [currentScript, openScripts])
+
+  useEffect(() => {
+    if (currentScript !== null) {
+      updateRAM(currentScript.code);
+    }
+  }, []);
+
+  useEffect(() => {
+    function maybeSave(event: KeyboardEvent): void {
+      if (Settings.DisableHotkeys) return;
+      //Ctrl + b
+      if (event.keyCode == 66 && (event.ctrlKey || event.metaKey)) {
+        event.preventDefault();
+        save();
+      }
+
+       // CTRL/CMD + S
+       if (event.code == `KeyS` && (event.ctrlKey || event.metaKey)) {
+        event.preventDefault();
+        event.stopPropagation();
+        save();
+      }
+    }
+    document.addEventListener("keydown", maybeSave);
+    return () => document.removeEventListener("keydown", maybeSave);
+  });
+
+  // Generates a new model for the script
+  function regenerateModel(script: OpenScript): void {
+    if (monacoRef.current !== null) {
+      script.model = monacoRef.current.editor.createModel(script.code, "javascript");
+    }
+  }
 
   const debouncedSetRAM = useMemo(
     () =>
@@ -125,7 +172,225 @@ export function Root(props: IProps): React.ReactElement {
     [],
   );
 
+  async function updateRAM(newCode: string): Promise<void> {
+    setUpdatingRam(true);
+    const codeCopy = newCode + "";
+    const ramUsage = await calculateRamUsage(codeCopy, props.player.getCurrentServer().scripts);
+    if (ramUsage > 0) {
+      debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage));
+      return;
+    }
+    switch (ramUsage) {
+      case RamCalculationErrorCode.ImportError: {
+        debouncedSetRAM("RAM: Import Error");
+        break;
+      }
+      case RamCalculationErrorCode.URLImportError: {
+        debouncedSetRAM("RAM: HTTP Import Error");
+        break;
+      }
+      case RamCalculationErrorCode.SyntaxError:
+      default: {
+        debouncedSetRAM("RAM: Syntax Error");
+        break;
+      }
+    }
+    return new Promise<void>(() => undefined);
+  }
+
+  // Formats the code
+  function beautify(): void {
+    if (editorRef.current === null) return;
+    editorRef.current.getAction("editor.action.formatDocument").run();
+  }
+
+  // How to load function definition in monaco
+  // https://github.com/Microsoft/monaco-editor/issues/1415
+  // https://microsoft.github.io/monaco-editor/api/modules/monaco.languages.html
+  // https://www.npmjs.com/package/@monaco-editor/react#development-playground
+  // https://microsoft.github.io/monaco-editor/playground.html#extending-language-services-custom-languages
+  // https://github.com/threehams/typescript-error-guide/blob/master/stories/components/Editor.tsx#L11-L39
+  // https://blog.checklyhq.com/customizing-monaco/
+  // Before the editor is mounted
+  function beforeMount(monaco: any): void {
+    if (symbolsLoaded) return;
+    // Setup monaco auto completion
+    symbolsLoaded = true;
+    monaco.languages.registerCompletionItemProvider("javascript", {
+      provideCompletionItems: () => {
+        const suggestions = [];
+        for (const symbol of symbols) {
+          suggestions.push({
+            label: symbol,
+            kind: monaco.languages.CompletionItemKind.Function,
+            insertText: symbol,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          });
+        }
+        return { suggestions: suggestions };
+      },
+    });
+
+    (async function () {
+      // We have to improve the default js language otherwise theme sucks
+      const l = await monaco.languages
+        .getLanguages()
+        .find((l: any) => l.id === "javascript")
+        .loader();
+      l.language.tokenizer.root.unshift(["ns", { token: "ns" }]);
+      for (const symbol of symbols) l.language.tokenizer.root.unshift([symbol, { token: "netscriptfunction" }]);
+      const otherKeywords = ["let", "const", "var", "function"];
+      const otherKeyvars = ["true", "false", "null", "undefined"];
+      otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeywords" }]));
+      otherKeyvars.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeyvars" }]));
+      l.language.tokenizer.root.unshift(["this", { token: "this" }]);
+    })();
+
+    const source = (libSource + "").replace(/export /g, "");
+    monaco.languages.typescript.javascriptDefaults.addExtraLib(source, "netscript.d.ts");
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(source, "netscript.d.ts");
+    loadThemes(monaco);
+  }
+
+
+  // When the editor is mounted
+  function onMount(editor: IStandaloneCodeEditor, monaco: Monaco) {
+    editorRef.current = editor;
+    monacoRef.current = monaco;
+
+    if (editorRef.current === null || monacoRef.current === null) return;
+
+    if (props.filename) {
+      // Check if file is already opened
+      let openScriptIndex = openScripts.findIndex(script => script.fileName === props.filename && script.hostname === props.hostname);
+      if (openScriptIndex !== -1) {
+        // Script is already opened
+        if (openScripts[openScriptIndex].model === undefined || openScripts[openScriptIndex].model === null || openScripts[openScriptIndex].model.isDisposed()) {
+          regenerateModel(openScripts[openScriptIndex]);
+        }
+
+        setCurrentScript(openScripts[openScriptIndex]);
+        editorRef.current.setModel(openScripts[openScriptIndex].model);
+        editorRef.current.setPosition(openScripts[openScriptIndex].lastPosition);
+        editorRef.current.revealLineInCenter(openScripts[openScriptIndex].lastPosition.lineNumber);
+        updateRAM(openScripts[openScriptIndex].code);
+      } else {
+        // Open script
+        var newScript = new OpenScript(props.filename, props.code, props.hostname, new monacoRef.current.Position(0, 0), monacoRef.current.editor.createModel(props.code, 'javascript'));
+        setOpenScripts(oldArray => [...oldArray, newScript]);
+        setCurrentScript({ ...newScript });
+        editorRef.current.setModel(newScript.model);
+        updateRAM(newScript.code);
+      }
+    } else if (currentScript !== null) {
+      // Open currentscript
+      regenerateModel(currentScript);
+      editorRef.current.setModel(currentScript.model);
+      editorRef.current.setPosition(currentScript.lastPosition);
+      editorRef.current.revealLineInCenter(currentScript.lastPosition.lineNumber);
+      updateRAM(currentScript.code);
+    }
+  }
+
+  function infLoop(newCode: string): void {
+    if (editorRef.current === null || currentScript === null) return;
+    if (!currentScript.fileName.endsWith(".ns") && !currentScript.fileName.endsWith(".js")) return;
+    const awaitWarning = checkInfiniteLoop(newCode);
+    if (awaitWarning !== -1) {
+      const newDecorations = editorRef.current.deltaDecorations(decorations, [
+        {
+          range: {
+            startLineNumber: awaitWarning,
+            startColumn: 1,
+            endLineNumber: awaitWarning,
+            endColumn: 10,
+          },
+          options: {
+            isWholeLine: true,
+            glyphMarginClassName: "myGlyphMarginClass",
+            glyphMarginHoverMessage: {
+              value: "Possible infinite loop, await something.",
+            },
+          },
+        },
+      ]);
+      setDecorations(newDecorations);
+    } else {
+      const newDecorations = editorRef.current.deltaDecorations(decorations, []);
+      setDecorations(newDecorations);
+    }
+  }
+
+  // When the code is updated within the editor
+  function updateCode(newCode?: string) {
+    if (newCode === undefined) return;
+    updateRAM(newCode);
+    if (editorRef.current !== null) {
+      var newPos = editorRef.current.getPosition();
+      if (newPos === null) return;
+      setCurrentScript(oldScript => ({ ...oldScript!, code: newCode, lastPosition: newPos! }))
+      if (currentScript !== null) {
+        let curIndex = openScripts.findIndex(script => script.fileName === currentScript.fileName && script.hostname === currentScript.hostname);
+        let newArr = [...openScripts];
+        let tempScript = currentScript;
+        tempScript.code = newCode;
+        newArr[curIndex] = tempScript;
+        setOpenScripts([...newArr]);
+      }
+      try {
+        infLoop(newCode);
+      } catch (err) { }
+    }
+  }
+
+  function saveScript(scriptToSave: OpenScript): void {
+    const server = GetServer(scriptToSave.hostname);
+    if (server === null) throw new Error("Server should not be null but it is.");
+    if (isScriptFilename(scriptToSave.fileName)) {
+      //If the current script already exists on the server, overwrite it
+      for (let i = 0; i < server.scripts.length; i++) {
+        if (scriptToSave.fileName == server.scripts[i].filename) {
+          server.scripts[i].saveScript(
+            scriptToSave.fileName,
+            scriptToSave.code,
+            props.player.currentServer,
+            server.scripts,
+          );
+          if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+          props.router.toTerminal();
+          return;
+        }
+      }
+
+      //If the current script does NOT exist, create a new one
+      const script = new Script();
+      script.saveScript(scriptToSave.fileName, scriptToSave.code, props.player.currentServer, server.scripts);
+      server.scripts.push(script);
+    } else if (scriptToSave.fileName.endsWith(".txt")) {
+      for (let i = 0; i < server.textFiles.length; ++i) {
+        if (server.textFiles[i].fn === scriptToSave.fileName) {
+          server.textFiles[i].write(scriptToSave.code);
+          if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+          props.router.toTerminal();
+          return;
+        }
+      }
+      const textFile = new TextFile(scriptToSave.fileName, scriptToSave.code);
+      server.textFiles.push(textFile);
+    } else {
+      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " + " or text file (.txt)");
+      return;
+    }
+
+    if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+    props.router.toTerminal();
+  }
+
   function save(): void {
+    if (currentScript === null) {
+      console.log("currentScript is null when it shouldn't be. Unabel to save script");
+      return;
+    }
     // this is duplicate code with saving later.
     if (ITutorial.isRunning && ITutorial.currStep === iTutorialSteps.TerminalTypeScript) {
       //Make sure filename + code properly follow tutorial
@@ -172,6 +437,7 @@ export function Root(props: IProps): React.ReactElement {
             server.scripts,
           );
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+          props.router.toTerminal();
           return;
         }
       }
@@ -185,6 +451,7 @@ export function Root(props: IProps): React.ReactElement {
         if (server.textFiles[i].fn === currentScript.fileName) {
           server.textFiles[i].write(currentScript.code);
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+          props.router.toTerminal();
           return;
         }
       }
@@ -196,407 +463,97 @@ export function Root(props: IProps): React.ReactElement {
     }
 
     if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+    props.router.toTerminal();
   }
 
-  function beautify(): void {
-    if (editorRef.current === null) return;
-    editorRef.current.getAction("editor.action.formatDocument").run();
+  function reorder(list: Array<OpenScript>, startIndex: number, endIndex: number) {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
   }
 
-  function infLoop(newCode: string): void {
-    if (editorRef.current === null) return;
-    if (!currentScript.fileName.endsWith(".ns") && !currentScript.fileName.endsWith(".js")) return;
-    const awaitWarning = checkInfiniteLoop(newCode);
-    if (awaitWarning !== -1) {
-      const newDecorations = editorRef.current.deltaDecorations(decorations, [
-        {
-          range: {
-            startLineNumber: awaitWarning,
-            startColumn: 1,
-            endLineNumber: awaitWarning,
-            endColumn: 10,
-          },
-          options: {
-            isWholeLine: true,
-            glyphMarginClassName: "myGlyphMarginClass",
-            glyphMarginHoverMessage: {
-              value: "Possible infinite loop, await something.",
-            },
-          },
-        },
-      ]);
-      setDecorations(newDecorations);
-    } else {
-      const newDecorations = editorRef.current.deltaDecorations(decorations, []);
-      setDecorations(newDecorations);
-    }
-  }
-
-  function updateCode(newCode?: string): void {
-    if (newCode === undefined) return;
-    updateRAM(newCode);
-    currentScript.code = newCode;
-    try {
-      if (editorRef.current !== null) {
-        infLoop(newCode);
-      }
-    } catch (err) {}
-  }
-
-  // calculate it once the first time the file is loaded.
-  useEffect(() => {
-    updateRAM(currentScript.code);
-  }, []);
-
-  async function updateRAM(newCode: string): Promise<void> {
-    setUpdatingRam(true);
-    const codeCopy = newCode + "";
-    const ramUsage = await calculateRamUsage(codeCopy, props.player.getCurrentServer().scripts);
-    if (ramUsage > 0) {
-      debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage));
+  function onDragEnd(result: any) {
+    // Dropped outside of the list
+    if (!result.destination) {
+      result
       return;
     }
-    switch (ramUsage) {
-      case RamCalculationErrorCode.ImportError: {
-        debouncedSetRAM("RAM: Import Error");
-        break;
-      }
-      case RamCalculationErrorCode.URLImportError: {
-        debouncedSetRAM("RAM: HTTP Import Error");
-        break;
-      }
-      case RamCalculationErrorCode.SyntaxError:
-      default: {
-        debouncedSetRAM("RAM: Syntax Error");
-        break;
-      }
-    }
-    return new Promise<void>(() => undefined);
+
+    const items = reorder(openScripts, result.source.index, result.destination.index);
+
+    setOpenScripts(items);
   }
 
-  useEffect(() => {
-    function maybeSave(event: KeyboardEvent): void {
-      if (Settings.DisableHotkeys) return;
-
-      // CTRL/CMD + S
-      if (event.code == `KeyS` && (event.ctrlKey || event.metaKey)) {
-        event.preventDefault();
-        event.stopPropagation();
-        save();
-      }
+  function onTabClick(index: number) {
+    if (currentScript !== null) {
+      // Save currentScript to openScripts
+      let curIndex = openScripts.findIndex(script => script.fileName === currentScript.fileName && script.hostname === currentScript.hostname);
+      openScripts[curIndex] = currentScript;
     }
-    document.addEventListener("keydown", maybeSave);
-    return () => document.removeEventListener("keydown", maybeSave);
-  });
 
-  // Generates a new model for the script
-  function regenerateModel(script: openScript): void {
-    if (monacoRef.current !== null) {
-      script.model = monacoRef.current.editor.createModel(script.code, "javascript");
+    setCurrentScript({ ...openScripts[index] });
+
+    if (editorRef.current !== null && openScripts[index] !== null) {
+      if (openScripts[index].model === undefined || openScripts[index].model.isDisposed()) {
+        regenerateModel(openScripts[index]);
+      }
+      editorRef.current.setModel(openScripts[index].model);
+
+      editorRef.current.setPosition(openScripts[index].lastPosition);
+      editorRef.current.revealLineInCenter(openScripts[index].lastPosition.lineNumber);
+      updateRAM(openScripts[index].code);
     }
   }
 
-  // Sets the currently viewed script
-  function setCurrentScript(script: openScript): void {
-    // Update last position
-    if (editorRef.current !== null) {
-      if (currentScript !== null) {
-        const currentPosition = editorRef.current.getPosition();
-        if (currentPosition !== null) {
-          currentScript.lastPosition = currentPosition;
-        }
-      }
-
-      editorRef.current.setModel(script.model);
-      currentScript = script;
-      editorRef.current.setPosition(currentScript.lastPosition);
-      editorRef.current.revealLine(currentScript.lastPosition.lineNumber);
-      updateRAM(currentScript.code);
-    }
-  }
-
-  // Gets a currently opened script
-  function getOpenedScript(fileName: string, hostname: string): openScript | null {
-    for (const script of openScripts) {
-      if (script.fileName === fileName && script.hostname === hostname) {
-        return script;
-      }
+  async function onTabClose(index: number) {
+    // See if the script on the server is up to date
+    let closingScript = openScripts[index];
+    let savedOpenScripts: Array<OpenScript> = JSON.parse(window.localStorage.getItem('scriptEditorOpenScripts')!);
+    let savedScriptIndex = savedOpenScripts.findIndex(script => script.fileName === closingScript.fileName && script.hostname === closingScript.hostname);
+    let savedScriptCode = '';
+    if (savedScriptIndex !== -1) {
+      savedScriptCode = savedOpenScripts[savedScriptIndex].code;
     }
 
-    return null;
-  }
-
-  function saveScript(script: openScript): void {
-    const server = GetServer(script.hostname);
-    if (server === null) throw new Error("Server should not be null but it is.");
-    let found = false;
-    for (let i = 0; i < server.scripts.length; i++) {
-      if (script.fileName == server.scripts[i].filename) {
-        server.scripts[i].saveScript(script.fileName, script.code, script.hostname, server.scripts);
-        found = true;
-      }
-    }
-
-    if (!found) {
-      const newScript = new Script();
-      newScript.saveScript(script.fileName, script.code, script.hostname, server.scripts);
-      server.scripts.push(newScript);
-    }
-  }
-
-  function onMount(editor: IStandaloneCodeEditor, monaco: Monaco): void {
-    editorRef.current = editor;
-    monacoRef.current = monaco;
-    if (editorRef.current === null) return;
-    const position = CursorPositions.getCursor(filename);
-    if (position.row !== -1)
-      editorRef.current.setPosition({
-        lineNumber: position.row,
-        column: position.column,
-      });
-    editorRef.current.focus();
-
-    const script = getOpenedScript(filename, props.player.getCurrentServer().hostname);
-
-    // Check if script is already opened, if so switch to that model
-    if (script !== null) {
-      if (script.model.isDisposed()) {
-        regenerateModel(script);
-      }
-
-      setCurrentScript(script);
-    } else {
-      if (filename !== undefined) {
-        // Create new model
-        if (monacoRef.current !== null) {
-          const newScript = new openScript(
-            filename,
-            code,
-            props.player.getCurrentServer().hostname,
-            new monaco.Position(0, 0),
-            monacoRef.current.editor.createModel(code, "javascript"),
-          );
-          setCurrentScript(newScript);
-          openScripts.push(newScript);
-        }
-      } else {
-        // Script Editor was opened by the sidebar button
-        if (currentScript.model !== undefined) {
-          if (currentScript.model.isDisposed()) {
-            // Create new model, old one was disposed of
-            regenerateModel(currentScript);
-          }
-
-          setCurrentScript(currentScript);
-        } else {
-          // Create a new temporary file
-          if (monacoRef.current !== null) {
-            const newScript = new openScript(
-              "newfile.script",
-              "",
-              props.player.getCurrentServer().hostname,
-              new monaco.Position(0, 0),
-              monacoRef.current.editor.createModel("", "javascript"),
-            );
-            setCurrentScript(newScript);
-            openScripts.push(newScript);
+    let serverScriptIndex = GetServer(closingScript.hostname)?.scripts.findIndex(script => script.filename === closingScript.fileName);
+    if (serverScriptIndex === -1 || savedScriptCode !== GetServer(closingScript.hostname)?.scripts[serverScriptIndex as number].code) {
+      PromptEvent.emit({
+        txt: 'Do you want to save changes to ' + closingScript.fileName + '?',
+        resolve: (result: boolean) => {
+          if (result) {
+            // Save changes
+            closingScript.code = savedScriptCode;
+            saveScript(closingScript);
           }
         }
-      }
-    }
-  }
-
-  function beforeMount(monaco: any): void {
-    if (symbolsLoaded) return;
-    symbolsLoaded = true;
-    monaco.languages.registerCompletionItemProvider("javascript", {
-      provideCompletionItems: () => {
-        const suggestions = [];
-        for (const symbol of symbols) {
-          suggestions.push({
-            label: symbol,
-            kind: monaco.languages.CompletionItemKind.Function,
-            insertText: symbol,
-            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-          });
-        }
-        return { suggestions: suggestions };
-      },
-    });
-    (async function () {
-      // We have to improve the default js language otherwise theme sucks
-      const l = await monaco.languages
-        .getLanguages()
-        .find((l: any) => l.id === "javascript")
-        .loader();
-      l.language.tokenizer.root.unshift(["ns", { token: "ns" }]);
-      for (const symbol of symbols) l.language.tokenizer.root.unshift([symbol, { token: "netscriptfunction" }]);
-      const otherKeywords = ["let", "const", "var", "function"];
-      const otherKeyvars = ["true", "false", "null", "undefined"];
-      otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeywords" }]));
-      otherKeyvars.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeyvars" }]));
-      l.language.tokenizer.root.unshift(["this", { token: "this" }]);
-    })();
-
-    const source = (libSource + "").replace(/export /g, "");
-    monaco.languages.typescript.javascriptDefaults.addExtraLib(source, "netscript.d.ts");
-    monaco.languages.typescript.typescriptDefaults.addExtraLib(source, "netscript.d.ts");
-    loadThemes(monaco);
-  }
-
-  // Change tab highlight from old tab to new tab
-  function changeTabButtonColor(
-    oldButtonFileName: string,
-    oldButtonHostname: string,
-    newButtonFileName: string,
-    newButtonHostname: string,
-  ): void {
-    const oldTabButton = document.getElementById("tabButton" + oldButtonFileName + oldButtonHostname);
-    if (oldTabButton !== null) {
-      oldTabButton.style.backgroundColor = "";
+      })
     }
 
-    const oldTabCloseButton = document.getElementById("tabCloseButton" + oldButtonFileName + oldButtonHostname);
-    if (oldTabCloseButton !== null) {
-      oldTabCloseButton.style.backgroundColor = "";
-    }
+    if (openScripts.length > 1) {
+      setOpenScripts(oldScripts => oldScripts.filter((value, i) => i !== index));
 
-    const newTabButton = document.getElementById("tabButton" + newButtonFileName + newButtonHostname);
-    if (newTabButton !== null) {
-      newTabButton.style.backgroundColor = "#666";
-    }
-
-    const newTabCloseButton = document.getElementById("tabCloseButton" + newButtonFileName + newButtonHostname);
-    if (newTabCloseButton !== null) {
-      newTabCloseButton.style.backgroundColor = "#666";
-    }
-  }
-
-  // Called when a script tab was clicked
-  function onTabButtonClick(e: React.MouseEvent<HTMLButtonElement>): void {
-    const valSplit = e.currentTarget.value.split(":");
-    const fileName = valSplit[0];
-    const hostname = valSplit[1];
-
-    // Change tab highlight from old tab to new tab
-    changeTabButtonColor(currentScript.fileName, currentScript.hostname, fileName, hostname);
-
-    // Update current script
-    const clickedScript = getOpenedScript(fileName, hostname);
-
-    if (clickedScript !== null) {
-      if (clickedScript.model.isDisposed()) {
-        regenerateModel(clickedScript);
+      let indexOffset = -1;
+      if (openScripts[index + indexOffset] === undefined) {
+        indexOffset = 1;
       }
 
-      setCurrentScript(clickedScript);
-    }
-  }
-
-  // Called when a script tab close button was clicked
-  function onCloseButtonClick(e: React.MouseEvent<HTMLButtonElement>): void {
-    const valSplit = e.currentTarget.value.split(":");
-    const fileName = valSplit[0];
-    const hostname = valSplit[1];
-
-    const scriptToClose = getOpenedScript(fileName, hostname);
-
-    // Save and remove script from openScripts
-    if (scriptToClose !== null) {
-      saveScript(scriptToClose);
-
-      openScripts.splice(openScripts.indexOf(scriptToClose), 1);
-    }
-
-    if (openScripts.length === 0) {
-      // No other scripts are open, create a new temporary file
-      if (monacoRef.current !== null) {
-        const newScript = new openScript(
-          "newfile.script",
-          "",
-          props.player.getCurrentServer().hostname,
-          new monacoRef.current.Position(0, 0),
-          monacoRef.current.editor.createModel("", "javascript"),
-        );
-
-        setCurrentScript(newScript);
-        openScripts.push(newScript);
-
-        // Modify button for temp file
-        const parent = e.currentTarget.parentElement;
-        if (parent !== null) {
-          (parent.children[0] as HTMLButtonElement).value = "newfile.script:home";
-          (parent.children[0] as HTMLButtonElement).textContent = "newfile.script";
-          e.currentTarget.value = "newfile.script:home";
+      // Change current script if we closed it
+      setCurrentScript(openScripts[index + indexOffset]);
+      if (editorRef.current !== null) {
+        if (openScripts[index + indexOffset].model === undefined || openScripts[index + indexOffset].model === null || openScripts[index + indexOffset].model.isDisposed()) {
+          regenerateModel(openScripts[index + indexOffset]);
         }
+
+        editorRef.current.setModel(openScripts[index + indexOffset].model);
+        editorRef.current.setPosition(openScripts[index + indexOffset].lastPosition);
+        editorRef.current.revealLineInCenter(openScripts[index + indexOffset].lastPosition.lineNumber)
       }
     } else {
-      if (openScripts[0].model.isDisposed()) {
-        regenerateModel(openScripts[0]);
-      }
-
-      changeTabButtonColor(
-        currentScript.fileName,
-        currentScript.hostname,
-        openScripts[0].fileName,
-        openScripts[0].hostname,
-      );
-
-      setCurrentScript(openScripts[0]);
-    }
-  }
-
-  // Generate a button for each open script
-  const scriptButtons = [];
-  for (let i = 0; i < openScripts.length; i++) {
-    if (openScripts[i].fileName !== "") {
-      const fileName2 = openScripts[i].fileName;
-      const hostname = openScripts[i].hostname;
-      if (openScripts[i].fileName === currentScript.fileName && openScripts[i].hostname === currentScript.hostname) {
-        // Set special background color for current script tab button
-        scriptButtons.push(
-          <Tooltip
-            title={
-              <Typography>
-                {hostname}:~/{fileName2}
-              </Typography>
-            }
-          >
-            <div key={fileName2 + hostname} style={{ paddingRight: "5px" }}>
-              <Button style={{ backgroundColor: "#666" }} value={fileName2 + ":" + hostname} onClick={onTabButtonClick}>
-                {openScripts[i].fileName}
-              </Button>
-              <Button
-                value={fileName2 + ":" + hostname}
-                onClick={onCloseButtonClick}
-                style={{ maxWidth: "20px", minWidth: "20px", backgroundColor: "#666" }}
-              >
-                x
-              </Button>
-            </div>
-          </Tooltip>,
-        );
-      } else {
-        scriptButtons.push(
-          <div id={"scriptEditorTab" + fileName2 + hostname} key={"tabButton" + i} style={{ paddingRight: "5px" }}>
-            <Button
-              id={"tabButton" + openScripts[i].fileName + openScripts[i].hostname}
-              value={fileName2 + ":" + hostname}
-              onClick={onTabButtonClick}
-            >
-              {openScripts[i].fileName}
-            </Button>
-            <Button
-              id={"tabCloseButton" + openScripts[i].fileName + openScripts[i].hostname}
-              value={fileName2 + ":" + hostname}
-              onClick={onCloseButtonClick}
-              style={{ maxWidth: "20px", minWidth: "20px" }}
-            >
-              x
-            </Button>
-          </div>,
-        );
-      }
+      // No more scripts are open
+      setOpenScripts([]);
+      setCurrentScript(null);
     }
   }
 
@@ -605,59 +562,112 @@ export function Root(props: IProps): React.ReactElement {
   const p = 11000 / -window.innerHeight + 100;
   return (
     <>
-      <Box display="flex" flexDirection="row" alignItems="center" paddingBottom="5px">
-        {scriptButtons}
-      </Box>
-      <Editor
-        beforeMount={beforeMount}
-        onMount={onMount}
-        loading={<Typography>Loading script editor!</Typography>}
-        height={p + "%"}
-        defaultLanguage="javascript"
-        defaultValue={code}
-        onChange={updateCode}
-        theme={options.theme}
-        options={{ ...options, glyphMargin: true }}
-      />
-      <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
-        <Button onClick={beautify}>Beautify</Button>
-        <Typography color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
-          {ram}
-        </Typography>
-        <Button onClick={save}>Save (CTRL/CMD + S)</Button>
-        <Typography sx={{ mx: 1 }}>
-          {" "}
-          Documentation:{" "}
-          <Link target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
-            Basic
-          </Link>{" "}
-          |
-          <Link target="_blank" href="https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md">
-            Full
-          </Link>
-        </Typography>
-        <IconButton style={{ marginLeft: "auto" }} onClick={() => setOptionsOpen(true)}>
-          <>
-            <SettingsIcon />
-            options
-          </>
-        </IconButton>
-      </Box>
-      <OptionsModal
-        open={optionsOpen}
-        onClose={() => setOptionsOpen(false)}
-        options={{
-          theme: Settings.MonacoTheme,
-          insertSpaces: Settings.MonacoInsertSpaces,
-          fontSize: Settings.MonacoFontSize,
-        }}
-        save={(options: Options) => {
-          setOptions(options);
-          Settings.MonacoTheme = options.theme;
-          Settings.MonacoInsertSpaces = options.insertSpaces;
-          Settings.MonacoFontSize = options.fontSize;
-        }}
-      />
+      <div style={{ display: currentScript !== null ? 'block' : 'none', height: '100%', width: '100%' }}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId='tabs' direction='horizontal'>
+            {(provided, snapshot) => (
+              <Box
+                maxWidth="1640px"
+                display="flex"
+                flexDirection="row"
+                alignItems="center"
+                whiteSpace="nowrap"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                style={{ backgroundColor: snapshot.isDraggingOver ? '#1F2022' : Settings.theme.backgroundprimary, overflowX: 'scroll' }}
+              >
+                {openScripts.map(({ fileName, hostname }, index) => (
+                  <Draggable key={fileName + hostname} draggableId={fileName + hostname} index={index} disableInteractiveElementBlocking={true}>
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={{
+                          ...provided.draggableProps.style,
+                          marginRight: '5px',
+                          flexShrink: 0
+
+                        }}
+                      >
+                        <Button
+                          id={"tabButton" + fileName + hostname}
+                          onClick={() => onTabClick(index)}
+                          style={{ background: currentScript?.fileName === openScripts[index].fileName ? Settings.theme.secondarydark : '' }}
+                        >
+                          {hostname}:~/{fileName}
+                        </Button>
+                        <Button
+                          id={"tabCloseButton" + fileName + hostname}
+                          onClick={() => onTabClose(index)}
+                          style={{ maxWidth: "20px", minWidth: "20px", background: currentScript?.fileName === openScripts[index].fileName ? Settings.theme.secondarydark : '' }}
+                        >
+                          x
+                        </Button>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </Box>
+            )}
+          </Droppable>
+        </DragDropContext>
+        <div style={{ paddingBottom: '5px' }} />
+        <Editor
+          beforeMount={beforeMount}
+          onMount={onMount}
+          loading={<Typography>Loading script editor!</Typography>}
+          height={p + "%"}
+          defaultLanguage="javascript"
+          defaultValue={''}
+          onChange={updateCode}
+          theme={options.theme}
+          options={{ ...options, glyphMargin: true }}
+        />
+        <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
+          <Button onClick={beautify}>Beautify</Button>
+          <Typography color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
+            {ram}
+          </Typography>
+          <Button onClick={save}>Save & Close (Ctrl/Cmd + s)</Button>
+          <Typography sx={{ mx: 1 }}>
+            {" "}
+            Documentation:{" "}
+            <Link target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
+              Basic
+            </Link>{" "}
+            |
+            <Link target="_blank" href="https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md">
+              Full
+            </Link>
+          </Typography>
+          <IconButton style={{ marginLeft: "auto" }} onClick={() => setOptionsOpen(true)}>
+            <>
+              <SettingsIcon />
+              options
+            </>
+          </IconButton>
+        </Box>
+        <OptionsModal
+          open={optionsOpen}
+          onClose={() => setOptionsOpen(false)}
+          options={{
+            theme: Settings.MonacoTheme,
+            insertSpaces: Settings.MonacoInsertSpaces,
+            fontSize: Settings.MonacoFontSize,
+          }}
+          save={(options: Options) => {
+            setOptions(options);
+            Settings.MonacoTheme = options.theme;
+            Settings.MonacoInsertSpaces = options.insertSpaces;
+            Settings.MonacoFontSize = options.fontSize;
+          }}
+        />
+      </div>
+      <div style={{ display: currentScript !== null ? 'none' : 'flex', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+        <p style={{ color: Settings.theme.primary, fontSize: '20px', textAlign: 'center' }}><h1>No open files</h1><h5>Use "nano [File Name]" in the terminal to open files</h5></p>
+      </div>
     </>
-  );
+  )
 }
