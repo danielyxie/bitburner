@@ -297,7 +297,7 @@ const achievements: Achievement[] = [
     Condition: () =>
       Player.bitNodeN === 1 &&
       bitNodeFinishedState() &&
-      Player.getHomeComputer().maxRam <= 32 &&
+      Player.getHomeComputer().maxRam <= 128 &&
       Player.getHomeComputer().cpuCores === 1,
   },
   {

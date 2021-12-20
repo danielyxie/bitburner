@@ -4821,6 +4821,9 @@ export interface NS extends Singularity {
    * Get general info about a running script.
    * @remarks
    * RAM cost: 0.3 GB
+   *
+   * Running with no args returns curent script.
+   *
    * @returns info about a running script
    */
   getRunningScript(filename: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
