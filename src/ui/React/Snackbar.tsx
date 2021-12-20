@@ -16,16 +16,17 @@ export function SnackbarProvider(props: IProps): React.ReactElement {
   );
 }
 
-export const SnackbarEvents = new EventEmitter<[string, "success" | "warning" | "error" | "info"]>();
+export const SnackbarEvents = new EventEmitter<[string, "success" | "warning" | "error" | "info", number]>();
 
 export function Snackbar(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() =>
-    SnackbarEvents.subscribe((s, variant) =>
+    SnackbarEvents.subscribe((s, variant, duration) =>
       enqueueSnackbar(<Alert severity={variant}>{s}</Alert>, {
         content: (k, m) => <Paper key={k}>{m}</Paper>,
         variant: variant,
+        autoHideDuration: duration,
       }),
     ),
   );
