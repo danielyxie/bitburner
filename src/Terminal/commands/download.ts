@@ -24,7 +24,7 @@ export function download(
       const matchEnding = fn.length == 1 || fn === "*.*" ? null : fn.slice(1); // Treat *.* the same as *
       const zip = new JSZip();
       // Helper function to zip any file contents whose name matches the pattern
-      const zipFiles = (fileNames: string[], fileContents: string[]) => {
+      const zipFiles = (fileNames: string[], fileContents: string[]): void => {
         for (let i = 0; i < fileContents.length; ++i) {
           let name = fileNames[i];
           if (name.startsWith("/")) name = name.slice(1);

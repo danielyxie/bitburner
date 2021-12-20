@@ -1,0 +1,51 @@
+# This is a basic workflow to help you get started with Actions
+name: CI
+
+on:
+  # Triggers the workflow on push or pull request events but only for the dev branch
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.13.1]
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+        - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+        - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+        - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+        - uses: actions/checkout@v2
+        - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+        - run: echo "The workflow is now ready to test your code on the runner."
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v2
+          with:
+            node-version: ${{ matrix.node-version }}
+        - name: Install npm dependencies
+          run: npm ci
+        - name: Run unit tests
+          run: npm run test
+        - name: Run linter
+          run: npm run lint:report
+        - name: Build the web app
+          run: npm run build
+
+        # Cannot build the electron app by default using ubuntu
+        # Wrapper command 'wine64' not found on the system. Consult your Linux distribution's package manager to determine how to install Wine.
+        # - name: Build the electron app
+        #   run: ./package.sh
+
+        # Unable to properly run the cypress tests for now, they are throwing errors.
+        # - name: Run the integration tests
+        #   run: npm run cy:test
