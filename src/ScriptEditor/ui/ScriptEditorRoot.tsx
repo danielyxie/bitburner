@@ -277,9 +277,11 @@ export function Root(props: IProps): React.ReactElement {
   useEffect(() => {
     function maybeSave(event: KeyboardEvent): void {
       if (Settings.DisableHotkeys) return;
-      //Ctrl + b
-      if (event.keyCode == 66 && (event.ctrlKey || event.metaKey)) {
+
+      // CTRL/CMD + S
+      if (event.code == `KeyS` && (event.ctrlKey || event.metaKey)) {
         event.preventDefault();
+        event.stopPropagation();
         save();
       }
     }
@@ -622,7 +624,7 @@ export function Root(props: IProps): React.ReactElement {
         <Typography color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
           {ram}
         </Typography>
-        <Button onClick={save}>Save (Ctrl/Cmd + b)</Button>
+        <Button onClick={save}>Save (CTRL/CMD + S)</Button>
         <Typography sx={{ mx: 1 }}>
           {" "}
           Documentation:{" "}
