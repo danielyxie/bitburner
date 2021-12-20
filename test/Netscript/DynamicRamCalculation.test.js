@@ -33,8 +33,8 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
   }
 
   // Runs a Netscript function and properly catches it if it returns promise
-  function runPotentiallyAsyncFunction(fn) {
-    const res = fn();
+  function runPotentiallyAsyncFunction(fn, ...args) {
+    const res = fn(...args);
     if (res instanceof Promise) {
       res.catch(() => undefined);
     }
@@ -48,7 +48,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
    * @param {string[]} fnDesc - describes the name of the function being tested,
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    */
-  async function testNonzeroDynamicRamCost(fnDesc) {
+  async function testNonzeroDynamicRamCost(fnDesc, ...args) {
     if (!Array.isArray(fnDesc)) {
       throw new Error("Non-array passed to testNonzeroDynamicRamCost()");
     }
@@ -61,7 +61,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     // We don't need a real WorkerScript
     const workerScript = {
-      args: [],
+      args: args,
       code: code,
       dynamicLoadedFns: {},
       dynamicRamUsage: RamCostConstants.ScriptBaseRamCost,
@@ -91,9 +91,9 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
       // actually initialized. Call the fn multiple times to test that repeated calls
       // do not incur extra RAM costs.
       try {
-        runPotentiallyAsyncFunction(curr);
-        runPotentiallyAsyncFunction(curr);
-        runPotentiallyAsyncFunction(curr);
+        runPotentiallyAsyncFunction(curr, ...args);
+        runPotentiallyAsyncFunction(curr, ...args);
+        runPotentiallyAsyncFunction(curr, ...args);
       } catch (e) {}
     } else {
       throw new Error(`Invalid function specified: [${fnDesc}]`);
@@ -434,7 +434,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     it("purchaseServer()", async function () {
       const f = ["purchaseServer"];
-      await testNonzeroDynamicRamCost(f);
+      await testNonzeroDynamicRamCost(f, "abc", '64');
     });
 
     it("deleteServer()", async function () {
