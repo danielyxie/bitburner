@@ -291,6 +291,8 @@ export function Root(props: IProps): React.ReactElement {
       editorRef.current.revealLineInCenter(currentScript.lastPosition.lineNumber);
       updateRAM(currentScript.code);
     }
+
+    editorRef.current.focus();
   }
 
   function infLoop(newCode: string): void {
@@ -505,6 +507,7 @@ export function Root(props: IProps): React.ReactElement {
       editorRef.current.setPosition(openScripts[index].lastPosition);
       editorRef.current.revealLineInCenter(openScripts[index].lastPosition.lineNumber);
       updateRAM(openScripts[index].code);
+      editorRef.current.focus();
     }
   }
 
@@ -550,6 +553,7 @@ export function Root(props: IProps): React.ReactElement {
         editorRef.current.setModel(openScripts[index + indexOffset].model);
         editorRef.current.setPosition(openScripts[index + indexOffset].lastPosition);
         editorRef.current.revealLineInCenter(openScripts[index + indexOffset].lastPosition.lineNumber)
+        editorRef.current.focus();
       }
     } else {
       // No more scripts are open
