@@ -11,7 +11,7 @@ export function rm(
   server: BaseServer,
   args: (string | number | boolean)[],
 ): void {
-  if (args.length < 1) {
+  if (args.length !== 1) {
     terminal.error("Incorrect number of arguments. Usage: rm [program/script]");
     return;
   }
@@ -25,14 +25,6 @@ export function rm(
   try {
     delTarget = terminal.getFilepath(args[0] + "");
     status = server.removeFile(delTarget);
-
-    // Check if we should remove it from both the text and script arrays
-    if(args[1] === '-tas') {
-      let fileIndex = server.scripts.findIndex(script => script.filename === (args[0] + ""));
-      if(fileIndex !== -1) {
-        server.scripts.splice(fileIndex, 1);
-      }
-    }
   } catch (err) {
     status = {
       res: false,

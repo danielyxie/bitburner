@@ -197,6 +197,13 @@ export function Root(props: IProps): React.ReactElement {
     editorRef.current.getAction("editor.action.formatDocument").run();
   }
 
+  // How to load function definition in monaco
+  // https://github.com/Microsoft/monaco-editor/issues/1415
+  // https://microsoft.github.io/monaco-editor/api/modules/monaco.languages.html
+  // https://www.npmjs.com/package/@monaco-editor/react#development-playground
+  // https://microsoft.github.io/monaco-editor/playground.html#extending-language-services-custom-languages
+  // https://github.com/threehams/typescript-error-guide/blob/master/stories/components/Editor.tsx#L11-L39
+  // https://blog.checklyhq.com/customizing-monaco/
   // Before the editor is mounted
   function beforeMount(monaco: any): void {
     if (symbolsLoaded) return;
@@ -508,10 +515,10 @@ export function Root(props: IProps): React.ReactElement {
       PromptEvent.emit({
         txt: 'Do you want to save changes to ' + closingScript.fileName + '?',
         resolve: (result: boolean) => {
-          if(result) {
-           // Save changes
-           closingScript.code = savedScriptCode;
-           saveScript(closingScript); 
+          if (result) {
+            // Save changes
+            closingScript.code = savedScriptCode;
+            saveScript(closingScript);
           }
         }
       })
@@ -556,7 +563,6 @@ export function Root(props: IProps): React.ReactElement {
                 maxWidth="1640px"
                 display="flex"
                 flexDirection="row"
-                //overflow="auto"
                 alignItems="center"
                 whiteSpace="nowrap"
                 ref={provided.innerRef}
@@ -582,7 +588,7 @@ export function Root(props: IProps): React.ReactElement {
                           onClick={() => onTabClick(index)}
                           style={{ background: currentScript?.fileName === openScripts[index].fileName ? Settings.theme.secondarydark : '' }}
                         >
-                          {fileName}
+                          {hostname}:~/{fileName}
                         </Button>
                         <Button
                           id={"tabCloseButton" + fileName + hostname}
@@ -653,7 +659,7 @@ export function Root(props: IProps): React.ReactElement {
         />
       </div>
       <div style={{ display: currentScript !== null ? 'none' : 'flex', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-          <p style={{ color: Settings.theme.primary, fontSize: '20px', textAlign: 'center' }}><h1>No open files</h1><h5>Use "nano [File Name]" in the terminal to open files</h5></p>
+        <p style={{ color: Settings.theme.primary, fontSize: '20px', textAlign: 'center' }}><h1>No open files</h1><h5>Use "nano [File Name]" in the terminal to open files</h5></p>
       </div>
     </>
   )
