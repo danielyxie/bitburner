@@ -203,7 +203,7 @@ export function Root(props: IProps): React.ReactElement {
   // Generates a new model for the script
   function regenerateModel(script: OpenScript): void {
     if (monacoRef.current !== null) {
-      script.model = monacoRef.current.editor.createModel(script.code, "javascript");
+      script.model = monacoRef.current.editor.createModel(script.code, script.fileName.endsWith(".txt") ? "plaintext" : "javascript");
     }
   }
 
@@ -338,7 +338,7 @@ export function Root(props: IProps): React.ReactElement {
           props.code,
           props.hostname,
           new monacoRef.current.Position(0, 0),
-          monacoRef.current.editor.createModel(props.code, "javascript"),
+          monacoRef.current.editor.createModel(props.code, props.filename.endsWith(".txt") ? "plaintext" : "javascript"),
         );
         setOpenScripts((oldArray) => [...oldArray, newScript]);
         setCurrentScript({ ...newScript });
