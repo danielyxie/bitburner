@@ -134,6 +134,8 @@ interface ISettings extends IDefaultSettings {
   MonacoInsertSpaces: boolean;
 
   MonacoFontSize: number;
+
+  MonacoVim: boolean;
 }
 
 export const defaultSettings: IDefaultSettings = {
@@ -193,6 +195,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   MonacoTheme: "monokai",
   MonacoInsertSpaces: false,
   MonacoFontSize: 20,
+  MonacoVim: false,
 
   theme: { ...defaultTheme },
   init() {
