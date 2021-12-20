@@ -45,7 +45,7 @@ interface IProps {
   hostname: string;
   player: IPlayer;
   router: IRouter;
-  vim: boolean;
+  vim?: boolean;
 }
 
 // TODO: try to removve global symbols
@@ -703,12 +703,14 @@ export function Root(props: IProps): React.ReactElement {
             theme: Settings.MonacoTheme,
             insertSpaces: Settings.MonacoInsertSpaces,
             fontSize: Settings.MonacoFontSize,
+            vim: Settings.MonacoVim,
           }}
           save={(options: Options) => {
             setOptions(options);
             Settings.MonacoTheme = options.theme;
             Settings.MonacoInsertSpaces = options.insertSpaces;
             Settings.MonacoFontSize = options.fontSize;
+            Settings.MonacoVim = options.vim;
           }}
         />
       </div>
