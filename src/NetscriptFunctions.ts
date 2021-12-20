@@ -2131,15 +2131,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return Player.playtimeSinceLastAug;
     },
     alert: function (message: any): void {
-      message = toNative(message);
-      dialogBoxCreate(JSON.stringify(message));
+      message = argsToString([message]);
+      dialogBoxCreate(message);
     },
     toast: function (message: any, variant: any = "success"): void {
       if (!["success", "info", "warning", "error"].includes(variant))
         throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
 
-      message = toNative(message);
-      SnackbarEvents.emit(JSON.stringify(message), variant);
+      message = argsToString([message]);
+      SnackbarEvents.emit(message, variant);
     },
     prompt: function (txt: any): any {
       if (!isString(txt)) {
