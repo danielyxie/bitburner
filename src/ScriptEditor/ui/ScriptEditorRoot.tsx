@@ -126,23 +126,23 @@ export function Root(props: IProps): React.ReactElement {
   });
 
   const [dimensions, setDimensions] = useState({
-  height: window.innerHeight,
-  width: window.innerWidth
+    height: window.innerHeight,
+    width: window.innerWidth,
   });
   useEffect(() => {
-  const debouncedHandleResize = debounce(function handleResize() {
-  setDimensions({
-  height: window.innerHeight,
-  width: window.innerWidth
-  })
-  }, 250)
+    const debouncedHandleResize = debounce(function handleResize() {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    }, 250);
 
-  window.addEventListener('resize', debouncedHandleResize)
+    window.addEventListener("resize", debouncedHandleResize);
 
-  return () => {
-  window.removeEventListener('resize', debouncedHandleResize)
-
-  }}, [])
+    return () => {
+      window.removeEventListener("resize", debouncedHandleResize);
+    };
+  }, []);
 
   useEffect(() => {
     // Save currentScript
@@ -662,7 +662,6 @@ export function Root(props: IProps): React.ReactElement {
   //  44px bottom tool bar + 16px margin
   //  + vim bar 34px
   const editorHeight = dimensions.height - (112 + (options.vim ? 34 : 0));
-  console.log({editorHeight})
 
   return (
     <>
