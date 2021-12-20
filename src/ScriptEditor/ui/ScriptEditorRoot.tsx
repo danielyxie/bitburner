@@ -144,6 +144,13 @@ export function Root(props: IProps): React.ReactElement {
         event.preventDefault();
         save();
       }
+
+       // CTRL/CMD + S
+       if (event.code == `KeyS` && (event.ctrlKey || event.metaKey)) {
+        event.preventDefault();
+        event.stopPropagation();
+        save();
+      }
     }
     document.addEventListener("keydown", maybeSave);
     return () => document.removeEventListener("keydown", maybeSave);
@@ -623,7 +630,7 @@ export function Root(props: IProps): React.ReactElement {
           <Typography color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
             {ram}
           </Typography>
-          <Button onClick={save}>Save & Close (Ctrl/Cmd + b)</Button>
+          <Button onClick={save}>Save & Close (Ctrl/Cmd + s)</Button>
           <Typography sx={{ mx: 1 }}>
             {" "}
             Documentation:{" "}
