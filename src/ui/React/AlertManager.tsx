@@ -32,6 +32,16 @@ export function AlertManager(): React.ReactElement {
     [],
   );
 
+  useEffect(() => {
+    function handle(this: Document, event: KeyboardEvent): void {
+      if (event.code === "Escape") {
+        setAlerts([]);
+      }
+    }
+    document.addEventListener("keydown", handle);
+    return () => document.removeEventListener("keydown", handle);
+  }, []);
+
   function close(): void {
     setAlerts((old) => {
       return old.slice(1, 1e99);

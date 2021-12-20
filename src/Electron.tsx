@@ -233,7 +233,8 @@ const achievements: Achievement[] = [
   {
     ID: "BLADEBURNER_OVERCLOCK",
     Condition: () =>
-      Player.bladeburner !== null && Player.bladeburner.skills[SkillNames.Overclock] === Skills[SkillNames.Overclock],
+      Player.bladeburner !== null &&
+      Player.bladeburner.skills[SkillNames.Overclock] === Skills[SkillNames.Overclock].maxLvl,
   },
   {
     ID: "BLADEBURNER_UNSPENT_100000",
@@ -250,12 +251,14 @@ const achievements: Achievement[] = [
     Condition: () => {
       if (!hasHacknetServers(Player)) return false;
       for (const h of Player.hacknetNodes) {
-        if (!(h instanceof HacknetServer)) return false;
+        if (typeof h !== "string") return false;
+        const hs = GetServer(h);
+        if (!(hs instanceof HacknetServer)) return false;
         if (
-          h.maxRam === HacknetServerConstants.MaxRam &&
-          h.cores === HacknetServerConstants.MaxCores &&
-          h.level === HacknetServerConstants.MaxLevel &&
-          h.cache === HacknetServerConstants.MaxCache
+          hs.maxRam === HacknetServerConstants.MaxRam &&
+          hs.cores === HacknetServerConstants.MaxCores &&
+          hs.level === HacknetServerConstants.MaxLevel &&
+          hs.cache === HacknetServerConstants.MaxCache
         )
           return true;
       }

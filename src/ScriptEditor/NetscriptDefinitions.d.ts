@@ -289,6 +289,8 @@ export interface ProcessInfo {
   threads: number;
   /** Script's arguments */
   args: string[];
+  /** Process ID */
+  pid: number;
 }
 
 /**
@@ -4097,9 +4099,6 @@ export interface NS extends Singularity {
    * Note that this does not completely remove all logging functionality.
    * This only stops a function from logging when the function is successful.
    * If the function fails, it will still log the reason for failure.
-   *
-   * Notable functions that cannot have their logs disabled: run,
-   * exec, exit.
    *
    * @param fn - Name of function for which to disable logging.
    */

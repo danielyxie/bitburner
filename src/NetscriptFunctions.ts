@@ -1594,7 +1594,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return cost;
     },
-    purchaseServer: function (name: any, ram: any): any {
+    purchaseServer: function (aname: any, aram: any): any {
+      const name = helper.string("purchaseServer", "name", aname);
+      const ram = helper.number("purchaseServer", "ram", aram);
       updateDynamicRam("purchaseServer", getRamCost("purchaseServer"));
       let hostnameStr = String(name);
       hostnameStr = hostnameStr.replace(/\s+/g, "");

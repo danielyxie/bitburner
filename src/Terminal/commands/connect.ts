@@ -3,6 +3,7 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { getServerOnNetwork } from "../../Server/ServerHelpers";
+import { GetServer } from "../../Server/AllServers";
 
 export function connect(
   terminal: ITerminal,
@@ -13,7 +14,7 @@ export function connect(
 ): void {
   // Disconnect from current server in terminal and connect to new one
   if (args.length !== 1) {
-    terminal.error("Incorrect usage of connect command. Usage: connect [ip/hostname]");
+    terminal.error("Incorrect usage of connect command. Usage: connect [hostname]");
     return;
   }
 
@@ -28,5 +29,9 @@ export function connect(
     }
   }
 
-  terminal.error("Host not found");
+  if (GetServer(hostname) !== null) {
+    terminal.error(`Cannot directly connect to ${hostname}`);
+  } else {
+    terminal.error("Host not found");
+  }
 }
