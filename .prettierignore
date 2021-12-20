@@ -2,3 +2,8 @@ node_modules
 package.json
 dist
 doc/build/
+electron/greenworks.js
+main.bundle.js
+editor.main.js
+scripts/engines-check.js
+scripts/semver.js
