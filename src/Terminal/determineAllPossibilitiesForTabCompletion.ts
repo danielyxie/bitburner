@@ -353,6 +353,7 @@ export async function determineAllPossibilitiesForTabCompletion(
     addAllLitFiles();
     addAllTextFiles();
     addAllDirectories();
+    addAllScripts();
 
     return allPos;
   }
