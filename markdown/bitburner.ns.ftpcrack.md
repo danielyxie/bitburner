@@ -14,9 +14,9 @@ ftpcrack(host: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Hostname of the target server. |
+| Parameter | Type   | Description                    |
+| --------- | ------ | ------------------------------ |
+| host      | string | Hostname of the target server. |
 
 <b>Returns:</b>
 
@@ -30,8 +30,6 @@ Runs the FTPCrack.exe program on the target server. FTPCrack.exe must exist on y
 
 ## Example
 
-
 ```ts
 ftpcrack("foodnstuff");
 ```
-

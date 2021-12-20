@@ -9,17 +9,16 @@ Gang formulas
 <b>Signature:</b>
 
 ```typescript
-interface GangFormulas 
+interface GangFormulas
 ```
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [ascensionMultiplier(points)](./bitburner.gangformulas.ascensionmultiplier.md) | Calculate ascension mult. |
-|  [ascensionPointsGain(exp)](./bitburner.gangformulas.ascensionpointsgain.md) | Calculate ascension point gain. |
-|  [moneyGain(gang, member, task)](./bitburner.gangformulas.moneygain.md) | Calculate money gain per tick. |
-|  [respectGain(gang, member, task)](./bitburner.gangformulas.respectgain.md) | Calculate respect gain per tick. |
-|  [wantedLevelGain(gang, member, task)](./bitburner.gangformulas.wantedlevelgain.md) | Calculate wanted gain per tick. |
-|  [wantedPenalty(gang)](./bitburner.gangformulas.wantedpenalty.md) | Calculate the wanted penalty. |
-
+| Method                                                                             | Description                      |
+| ---------------------------------------------------------------------------------- | -------------------------------- |
+| [ascensionMultiplier(points)](./bitburner.gangformulas.ascensionmultiplier.md)     | Calculate ascension mult.        |
+| [ascensionPointsGain(exp)](./bitburner.gangformulas.ascensionpointsgain.md)        | Calculate ascension point gain.  |
+| [moneyGain(gang, member, task)](./bitburner.gangformulas.moneygain.md)             | Calculate money gain per tick.   |
+| [respectGain(gang, member, task)](./bitburner.gangformulas.respectgain.md)         | Calculate respect gain per tick. |
+| [wantedLevelGain(gang, member, task)](./bitburner.gangformulas.wantedlevelgain.md) | Calculate wanted gain per tick.  |
+| [wantedPenalty(gang)](./bitburner.gangformulas.wantedpenalty.md)                   | Calculate the wanted penalty.    |

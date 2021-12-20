@@ -14,15 +14,14 @@ getMaterial(divisionName: string, cityName: string, materialName: string): Mater
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  cityName | string |  |
-|  materialName | string | Name of the material |
+| Parameter    | Type   | Description          |
+| ------------ | ------ | -------------------- |
+| divisionName | string | Name of the division |
+| cityName     | string |                      |
+| materialName | string | Name of the material |
 
 <b>Returns:</b>
 
 [Material](./bitburner.material.md)
 
 material data
-

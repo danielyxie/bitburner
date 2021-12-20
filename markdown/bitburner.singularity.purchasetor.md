@@ -11,6 +11,7 @@ SF4.1 - Purchase the TOR router.
 ```typescript
 purchaseTor(): boolean;
 ```
+
 <b>Returns:</b>
 
 boolean
@@ -22,4 +23,3 @@ True if actions is successful, false otherwise.
 RAM cost: 2 GB
 
 This function allows you to automatically purchase a TOR router. The cost for purchasing a TOR router using this function is the same as if you were to manually purchase one.
-

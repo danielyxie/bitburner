@@ -14,9 +14,9 @@ goToLocation(locationName: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  locationName | string | Name of the location. |
+| Parameter    | Type   | Description           |
+| ------------ | ------ | --------------------- |
+| locationName | string | Name of the location. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ True if the player was moved there, false otherwise.
 RAM cost: 5 GB
 
 Move the player to a specific location.
-

@@ -11,6 +11,7 @@ Returns the maximum RAM that a purchased server can have.
 ```typescript
 getPurchasedServerMaxRam(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -20,4 +21,3 @@ Returns the maximum RAM that a purchased server can have.
 ## Remarks
 
 RAM cost: 0.05 GB
-

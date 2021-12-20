@@ -14,10 +14,10 @@ getActionAutolevel(type: string, name: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | string | Type of action. |
-|  name | string | Name of action. Must be an exact match. |
+| Parameter | Type   | Description                             |
+| --------- | ------ | --------------------------------------- |
+| type      | string | Type of action.                         |
+| name      | string | Name of action. Must be an exact match. |
 
 <b>Returns:</b>
 
@@ -32,4 +32,3 @@ RAM cost: 4 GB
 Return a boolean indicating whether or not this action is currently set to autolevel.
 
 Returns false if an invalid action is specified.
-

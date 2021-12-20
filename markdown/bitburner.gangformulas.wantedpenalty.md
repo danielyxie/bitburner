@@ -14,13 +14,12 @@ wantedPenalty(gang: GangGenInfo): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  gang | [GangGenInfo](./bitburner.ganggeninfo.md) | Gang info from [getGangInformation](./bitburner.gang.getganginformation.md) |
+| Parameter | Type                                      | Description                                                                 |
+| --------- | ----------------------------------------- | --------------------------------------------------------------------------- |
+| gang      | [GangGenInfo](./bitburner.ganggeninfo.md) | Gang info from [getGangInformation](./bitburner.gang.getganginformation.md) |
 
 <b>Returns:</b>
 
 number
 
 The calculated wanted penalty.
-

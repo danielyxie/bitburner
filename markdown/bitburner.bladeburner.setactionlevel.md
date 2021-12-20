@@ -14,11 +14,11 @@ setActionLevel(type: string, name: string, level: number): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | string | Type of action. |
-|  name | string | Name of action. Must be an exact match. |
-|  level | number | Level to set this action to. |
+| Parameter | Type   | Description                             |
+| --------- | ------ | --------------------------------------- |
+| type      | string | Type of action.                         |
+| name      | string | Name of action. Must be an exact match. |
+| level     | number | Level to set this action to.            |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ void
 RAM cost: 4 GB
 
 Set the level for the specified action.
-

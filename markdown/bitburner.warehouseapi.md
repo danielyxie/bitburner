@@ -9,7 +9,7 @@ Corporation Warehouse API
 <b>Signature:</b>
 
 ```typescript
-export interface WarehouseAPI 
+export interface WarehouseAPI
 ```
 
 ## Remarks
@@ -18,23 +18,22 @@ Requires the Warehouse API upgrade from your corporation.
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [buyMaterial(divisionName, cityName, materialName, amt)](./bitburner.warehouseapi.buymaterial.md) | Set material buy data |
-|  [cancelExportMaterial(sourceDivision, sourceCity, targetDivision, targetCity, materialName, amt)](./bitburner.warehouseapi.cancelexportmaterial.md) | Cancel material export |
-|  [discontinueProduct(divisionName, productName)](./bitburner.warehouseapi.discontinueproduct.md) | Discontinue a product. |
-|  [exportMaterial(sourceDivision, sourceCity, targetDivision, targetCity, materialName, amt)](./bitburner.warehouseapi.exportmaterial.md) | Set material export data |
-|  [getMaterial(divisionName, cityName, materialName)](./bitburner.warehouseapi.getmaterial.md) | Get material data |
-|  [getProduct(divisionName, productName)](./bitburner.warehouseapi.getproduct.md) | Get product data |
-|  [getWarehouse(divisionName, cityName)](./bitburner.warehouseapi.getwarehouse.md) | Get warehouse data |
-|  [makeProduct(divisionName, cityName, productName, designInvest, marketingInvest)](./bitburner.warehouseapi.makeproduct.md) | Create a new product |
-|  [purchaseWarehouse(divisionName, cityName)](./bitburner.warehouseapi.purchasewarehouse.md) | Purchase warehouse for a new city |
-|  [sellMaterial(divisionName, cityName, materialName, amt, price)](./bitburner.warehouseapi.sellmaterial.md) | Set material sell data. |
-|  [sellProduct(divisionName, cityName, productName, amt, price, all)](./bitburner.warehouseapi.sellproduct.md) | Set product sell data. |
-|  [setMaterialMarketTA1(divisionName, cityName, materialName, on)](./bitburner.warehouseapi.setmaterialmarketta1.md) | Set market TA 1 for a material. |
-|  [setMaterialMarketTA2(divisionName, cityName, materialName, on)](./bitburner.warehouseapi.setmaterialmarketta2.md) | Set market TA 2 for a material. |
-|  [setProductMarketTA1(divisionName, productName, on)](./bitburner.warehouseapi.setproductmarketta1.md) | Set market TA 1 for a product. |
-|  [setProductMarketTA2(divisionName, productName, on)](./bitburner.warehouseapi.setproductmarketta2.md) | Set market TA 2 for a product. |
-|  [setSmartSupply(divisionName, cityName, enabled)](./bitburner.warehouseapi.setsmartsupply.md) | Set smart supply |
-|  [upgradeWarehouse(divisionName, cityName)](./bitburner.warehouseapi.upgradewarehouse.md) | Upgrade warehouse |
-
+| Method                                                                                                                                              | Description                       |
+| --------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| [buyMaterial(divisionName, cityName, materialName, amt)](./bitburner.warehouseapi.buymaterial.md)                                                   | Set material buy data             |
+| [cancelExportMaterial(sourceDivision, sourceCity, targetDivision, targetCity, materialName, amt)](./bitburner.warehouseapi.cancelexportmaterial.md) | Cancel material export            |
+| [discontinueProduct(divisionName, productName)](./bitburner.warehouseapi.discontinueproduct.md)                                                     | Discontinue a product.            |
+| [exportMaterial(sourceDivision, sourceCity, targetDivision, targetCity, materialName, amt)](./bitburner.warehouseapi.exportmaterial.md)             | Set material export data          |
+| [getMaterial(divisionName, cityName, materialName)](./bitburner.warehouseapi.getmaterial.md)                                                        | Get material data                 |
+| [getProduct(divisionName, productName)](./bitburner.warehouseapi.getproduct.md)                                                                     | Get product data                  |
+| [getWarehouse(divisionName, cityName)](./bitburner.warehouseapi.getwarehouse.md)                                                                    | Get warehouse data                |
+| [makeProduct(divisionName, cityName, productName, designInvest, marketingInvest)](./bitburner.warehouseapi.makeproduct.md)                          | Create a new product              |
+| [purchaseWarehouse(divisionName, cityName)](./bitburner.warehouseapi.purchasewarehouse.md)                                                          | Purchase warehouse for a new city |
+| [sellMaterial(divisionName, cityName, materialName, amt, price)](./bitburner.warehouseapi.sellmaterial.md)                                          | Set material sell data.           |
+| [sellProduct(divisionName, cityName, productName, amt, price, all)](./bitburner.warehouseapi.sellproduct.md)                                        | Set product sell data.            |
+| [setMaterialMarketTA1(divisionName, cityName, materialName, on)](./bitburner.warehouseapi.setmaterialmarketta1.md)                                  | Set market TA 1 for a material.   |
+| [setMaterialMarketTA2(divisionName, cityName, materialName, on)](./bitburner.warehouseapi.setmaterialmarketta2.md)                                  | Set market TA 2 for a material.   |
+| [setProductMarketTA1(divisionName, productName, on)](./bitburner.warehouseapi.setproductmarketta1.md)                                               | Set market TA 1 for a product.    |
+| [setProductMarketTA2(divisionName, productName, on)](./bitburner.warehouseapi.setproductmarketta2.md)                                               | Set market TA 2 for a product.    |
+| [setSmartSupply(divisionName, cityName, enabled)](./bitburner.warehouseapi.setsmartsupply.md)                                                       | Set smart supply                  |
+| [upgradeWarehouse(divisionName, cityName)](./bitburner.warehouseapi.upgradewarehouse.md)                                                            | Upgrade warehouse                 |

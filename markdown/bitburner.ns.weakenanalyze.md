@@ -14,10 +14,10 @@ weakenAnalyze(threads: number, cores?: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  threads | number | Amount of threads that will be used. |
-|  cores | number | Optional. The number of cores of the server that would run weaken. |
+| Parameter | Type   | Description                                                        |
+| --------- | ------ | ------------------------------------------------------------------ |
+| threads   | number | Amount of threads that will be used.                               |
+| cores     | number | Optional. The number of cores of the server that would run weaken. |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ The security decrease.
 RAM cost: 1 GB
 
 Returns the security decrease that would occur if a weaken with this many threads happened.
-

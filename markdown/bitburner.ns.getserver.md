@@ -14,9 +14,9 @@ getServer(host?: string): Server;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Optional. Hostname for the requested server object. |
+| Parameter | Type   | Description                                         |
+| --------- | ------ | --------------------------------------------------- |
+| host      | string | Optional. Hostname for the requested server object. |
 
 <b>Returns:</b>
 
@@ -27,4 +27,3 @@ The requested server object.
 ## Remarks
 
 RAM cost: 2 GB
-

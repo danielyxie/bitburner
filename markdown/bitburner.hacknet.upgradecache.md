@@ -14,10 +14,10 @@ upgradeCache(index: number, n: number): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  index | number | Index/Identifier of Hacknet Node. |
-|  n | number | Number of cache levels to purchase. Must be positive. Rounded to nearest integer. |
+| Parameter | Type   | Description                                                                       |
+| --------- | ------ | --------------------------------------------------------------------------------- |
+| index     | number | Index/Identifier of Hacknet Node.                                                 |
+| n         | number | Number of cache levels to purchase. Must be positive. Rounded to nearest integer. |
 
 <b>Returns:</b>
 
@@ -36,4 +36,3 @@ Tries to upgrade the specified Hacknet Server’s cache n times.
 Returns true if it successfully upgrades the Server’s cache n times, or if it purchases some positive amount and the Server reaches its max cache level.
 
 Returns false otherwise.
-

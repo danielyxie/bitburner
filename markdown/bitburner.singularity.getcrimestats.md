@@ -14,9 +14,9 @@ getCrimeStats(crime: string): CrimeStats;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  crime | string | Name of crime. Not case-sensitive |
+| Parameter | Type   | Description                       |
+| --------- | ------ | --------------------------------- |
+| crime     | string | Name of crime. Not case-sensitive |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ The stats of the crime.
 RAM cost: 5 GB
 
 Returns the stats of the crime.
-

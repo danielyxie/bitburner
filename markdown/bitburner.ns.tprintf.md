@@ -14,10 +14,10 @@ tprintf(format: string, ...values: any[]): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  format | string | format of the message |
-|  values | any\[\] |  |
+| Parameter | Type    | Description           |
+| --------- | ------- | --------------------- |
+| format    | string  | format of the message |
+| values    | any\[\] |                       |
 
 <b>Returns:</b>
 
@@ -26,4 +26,3 @@ void
 ## Remarks
 
 RAM cost: 0 GB
-

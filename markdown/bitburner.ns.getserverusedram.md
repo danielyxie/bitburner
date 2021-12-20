@@ -14,9 +14,9 @@ getServerUsedRam(host: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Hostname of the target server. |
+| Parameter | Type   | Description                    |
+| --------- | ------ | ------------------------------ |
+| host      | string | Hostname of the target server. |
 
 <b>Returns:</b>
 
@@ -27,4 +27,3 @@ used ram
 ## Remarks
 
 RAM cost: 0.05 GB
-

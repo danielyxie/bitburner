@@ -15,4 +15,3 @@ readonly formulas: Formulas;
 ## Remarks
 
 RAM cost: 0 GB
-

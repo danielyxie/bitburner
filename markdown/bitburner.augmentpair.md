@@ -9,13 +9,12 @@ Return value of [getSleevePurchasableAugs](./bitburner.sleeve.getsleevepurchasab
 <b>Signature:</b>
 
 ```typescript
-export interface AugmentPair 
+export interface AugmentPair
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [cost](./bitburner.augmentpair.cost.md) | number | augmentation cost |
-|  [name](./bitburner.augmentpair.name.md) | string | augmentation name |
-
+| Property                                | Type   | Description       |
+| --------------------------------------- | ------ | ----------------- |
+| [cost](./bitburner.augmentpair.cost.md) | number | augmentation cost |
+| [name](./bitburner.augmentpair.name.md) | string | augmentation name |

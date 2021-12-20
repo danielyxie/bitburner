@@ -14,10 +14,10 @@ hack(host: string, opts?: BasicHGWOptions): Promise<number>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Hostname of the target server to hack. |
-|  opts | [BasicHGWOptions](./bitburner.basichgwoptions.md) | Optional parameters for configuring function behavior. |
+| Parameter | Type                                              | Description                                            |
+| --------- | ------------------------------------------------- | ------------------------------------------------------ |
+| host      | string                                            | Hostname of the target server to hack.                 |
+| opts      | [BasicHGWOptions](./bitburner.basichgwoptions.md) | Optional parameters for configuring function behavior. |
 
 <b>Returns:</b>
 
@@ -37,9 +37,7 @@ A successful `hack()` on a server will raise that server’s security level by 0
 
 ## Example
 
-
 ```ts
 hack("foodnstuff");
 hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
 ```
-

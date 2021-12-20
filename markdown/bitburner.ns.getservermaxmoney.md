@@ -14,9 +14,9 @@ getServerMaxMoney(host: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host of target server. |
+| Parameter | Type   | Description            |
+| --------- | ------ | ---------------------- |
+| host      | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Maximum amount of money available on the server.
 RAM cost: 0.1 GB
 
 Returns the maximum amount of money that can be available on a server.
-

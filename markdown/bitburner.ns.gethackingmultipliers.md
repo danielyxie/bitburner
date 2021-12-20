@@ -11,6 +11,7 @@ Get hacking related multipliers.
 ```typescript
 getHackingMultipliers(): HackingMultipliers;
 ```
+
 <b>Returns:</b>
 
 [HackingMultipliers](./bitburner.hackingmultipliers.md)
@@ -25,11 +26,9 @@ Returns an object containing the Player’s hacking related multipliers. These m
 
 ## Example
 
-
 ```ts
 //Example of how this can be used:
 mults = getHackingMultipliers();
 print(mults.chance);
 print(mults.growth);
 ```
-

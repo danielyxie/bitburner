@@ -11,6 +11,7 @@ List equipment names.
 ```typescript
 getEquipmentNames(): string[];
 ```
+
 <b>Returns:</b>
 
 string\[\]
@@ -22,4 +23,3 @@ Names of all Equipments/Augmentations.
 RAM cost: 1 GB
 
 Get the name of all possible equipment/upgrades you can purchase for your Gang Members. This includes Augmentations.
-

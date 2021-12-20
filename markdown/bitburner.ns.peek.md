@@ -14,9 +14,9 @@ peek(port: number): any;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  port | number | Port to peek. Must be an integer between 1 and 20. |
+| Parameter | Type   | Description                                        |
+| --------- | ------ | -------------------------------------------------- |
+| port      | number | Port to peek. Must be an integer between 1 and 20. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Data in the specified port.
 RAM cost: 0 GB
 
 This function is used to peek at the data from a port. It returns the first element in the specified port without removing that element. If the port is empty, the string “NULL PORT DATA” will be returned.
-

@@ -14,13 +14,12 @@ getDivision(divisionName: string): Division;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
+| Parameter    | Type   | Description          |
+| ------------ | ------ | -------------------- |
+| divisionName | string | Name of the division |
 
 <b>Returns:</b>
 
 [Division](./bitburner.division.md)
 
 Division data
-

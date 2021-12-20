@@ -14,14 +14,13 @@ hacknetServerCost(n: number, mult?: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  n | number | number of the hacknet server |
-|  mult | number | player cost reduction (defaults to 1) |
+| Parameter | Type   | Description                           |
+| --------- | ------ | ------------------------------------- |
+| n         | number | number of the hacknet server          |
+| mult      | number | player cost reduction (defaults to 1) |
 
 <b>Returns:</b>
 
 number
 
 The calculated cost.
-

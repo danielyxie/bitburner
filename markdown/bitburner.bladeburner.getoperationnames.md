@@ -11,6 +11,7 @@ List all operations.
 ```typescript
 getOperationNames(): string[];
 ```
+
 <b>Returns:</b>
 
 string\[\]
@@ -22,4 +23,3 @@ Array of strings containing the names of all Bladeburner operations.
 RAM cost: 0.4 GB
 
 Returns an array of strings containing the names of all Bladeburner operations.
-

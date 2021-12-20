@@ -9,12 +9,11 @@ Options to affect the behavior of [CodingContract](./bitburner.codingcontract.md
 <b>Signature:</b>
 
 ```typescript
-export interface CodingAttemptOptions 
+export interface CodingAttemptOptions
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [returnReward](./bitburner.codingattemptoptions.returnreward.md) | boolean | If truthy, then the function will return a string that states the contract’s reward when it is successfully solved. |
-
+| Property                                                         | Type    | Description                                                                                                         |
+| ---------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------- |
+| [returnReward](./bitburner.codingattemptoptions.returnreward.md) | boolean | If truthy, then the function will return a string that states the contract’s reward when it is successfully solved. |

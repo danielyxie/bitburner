@@ -11,6 +11,7 @@ Join the bladeburner division.
 ```typescript
 joinBladeburnerDivision(): boolean;
 ```
+
 <b>Returns:</b>
 
 boolean
@@ -26,4 +27,3 @@ Attempts to join the Bladeburner division.
 Returns true if you successfully join the Bladeburner division, or if you are already a member.
 
 Returns false otherwise.
-

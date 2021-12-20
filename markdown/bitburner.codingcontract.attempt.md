@@ -14,12 +14,12 @@ attempt(answer: string[] | number, filename: string, host?: string, opts?: Codin
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  answer | string\[\] \| number | Solution for the contract. |
-|  filename | string |  |
-|  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
-|  opts | [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Optional parameters for configuring function behavior. |
+| Parameter | Type                                                        | Description                                                                                       |
+| --------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| answer    | string\[\] \| number                                        | Solution for the contract.                                                                        |
+| filename  | string                                                      |                                                                                                   |
+| host      | string                                                      | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
+| opts      | [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Optional parameters for configuring function behavior.                                            |
 
 <b>Returns:</b>
 
@@ -32,4 +32,3 @@ True if the solution was correct, false otherwise. If the returnReward option is
 RAM cost: 10 GB
 
 Attempts to solve the Coding Contract with the provided solution.
-

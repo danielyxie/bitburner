@@ -11,6 +11,7 @@ Get the maximum number of hashes you can store.
 ```typescript
 hashCapacity(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -24,4 +25,3 @@ RAM cost: 0 GB
 This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
 
 Returns the number of hashes you can store.
-

@@ -14,16 +14,14 @@ sleep(millis: number): Promise<void>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  millis | number | Number of milliseconds to sleep. |
+| Parameter | Type   | Description                      |
+| --------- | ------ | -------------------------------- |
+| millis    | number | Number of milliseconds to sleep. |
 
 <b>Returns:</b>
 
 Promise&lt;void&gt;
 
-
 ## Remarks
 
 RAM cost: 0 GB
-

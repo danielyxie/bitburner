@@ -11,6 +11,7 @@ Returns the player’s current hacking level.
 ```typescript
 getHackingLevel(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -20,4 +21,3 @@ Player’s current hacking level
 ## Remarks
 
 RAM cost: 0.05 GB
-

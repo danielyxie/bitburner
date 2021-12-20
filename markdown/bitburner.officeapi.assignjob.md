@@ -14,16 +14,15 @@ assignJob(divisionName: string, cityName: string, employeeName: string, job: str
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
-|  employeeName | string | name of the employee |
-|  job | string | Name of the job. |
+| Parameter    | Type   | Description          |
+| ------------ | ------ | -------------------- |
+| divisionName | string | Name of the division |
+| cityName     | string | Name of the city     |
+| employeeName | string | name of the employee |
+| job          | string | Name of the job.     |
 
 <b>Returns:</b>
 
 Promise&lt;void&gt;
 
 A promise that is fulfilled when the assignment is complete.
-

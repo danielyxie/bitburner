@@ -14,14 +14,13 @@ buyMaterial(divisionName: string, cityName: string, materialName: string, amt: n
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
-|  materialName | string | Name of the material |
-|  amt | number | Amount of material to buy |
+| Parameter    | Type   | Description               |
+| ------------ | ------ | ------------------------- |
+| divisionName | string | Name of the division      |
+| cityName     | string | Name of the city          |
+| materialName | string | Name of the material      |
+| amt          | number | Amount of material to buy |
 
 <b>Returns:</b>
 
 void
-

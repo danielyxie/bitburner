@@ -14,9 +14,9 @@ hashCost(upgName: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  upgName | string | Name of the upgrade of Hacknet Node. |
+| Parameter | Type   | Description                          |
+| --------- | ------ | ------------------------------------ |
+| upgName   | string | Name of the upgrade of Hacknet Node. |
 
 <b>Returns:</b>
 
@@ -34,11 +34,9 @@ Returns the number of hashes required for the specified upgrade. The name of the
 
 ## Example
 
-
 ```ts
 var upgradeName = "Sell for Corporation Funds";
 if (hacknet.numHashes() > hacknet.hashCost(upgradeName)) {
-   hacknet.spendHashes(upgName);
+  hacknet.spendHashes(upgName);
 }
 ```
-

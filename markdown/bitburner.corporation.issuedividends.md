@@ -14,11 +14,10 @@ issueDividends(percent: number): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  percent | number | Percent of profit to issue as dividends. |
+| Parameter | Type   | Description                              |
+| --------- | ------ | ---------------------------------------- |
+| percent   | number | Percent of profit to issue as dividends. |
 
 <b>Returns:</b>
 
 void
-

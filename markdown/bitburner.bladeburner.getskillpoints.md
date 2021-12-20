@@ -11,6 +11,7 @@ Get bladeburner skill points.
 ```typescript
 getSkillPoints(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -22,4 +23,3 @@ Number of Bladeburner skill points you have.
 RAM cost: 4 GB
 
 Returns the number of Bladeburner skill points you have.
-

@@ -14,9 +14,9 @@ getCompanyFavorGain(companyName: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  companyName | string | Name of the company. |
+| Parameter   | Type   | Description          |
+| ----------- | ------ | -------------------- |
+| companyName | string | Name of the company. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Amount of favor you gain at the specified company when you reset by installing A
 RAM cost: 0.75 GB
 
 This function will return the amount of favor you will gain for the specified company when you reset by installing Augmentations.
-

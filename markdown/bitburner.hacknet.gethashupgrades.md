@@ -11,6 +11,7 @@ Get the list of hash upgrades
 ```typescript
 getHashUpgrades(): string[];
 ```
+
 <b>Returns:</b>
 
 string\[\]
@@ -27,8 +28,6 @@ Returns the list of all available hash upgrades that can be used in the spendHas
 
 ## Example
 
-
 ```ts
 const upgrades = hacknet.getHashUpgrades(); // ["Sell for Money","Sell for Corporation Funds",...]
 ```
-

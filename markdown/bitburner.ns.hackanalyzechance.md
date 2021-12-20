@@ -14,9 +14,9 @@ hackAnalyzeChance(host: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Hostname of the target server. |
+| Parameter | Type   | Description                    |
+| --------- | ------ | ------------------------------ |
+| host      | string | Hostname of the target server. |
 
 <b>Returns:</b>
 
@@ -31,4 +31,3 @@ RAM cost: 1 GB
 Returns the chance you have of successfully hacking the specified server.
 
 This returned value is in decimal form, not percentage.
-

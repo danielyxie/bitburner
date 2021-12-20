@@ -14,10 +14,10 @@ purchaseSleeveAug(sleeveNumber: number, augName: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to buy an aug for. |
-|  augName | string | Name of the aug to buy. Must be an exact match. |
+| Parameter    | Type   | Description                                     |
+| ------------ | ------ | ----------------------------------------------- |
+| sleeveNumber | number | Index of the sleeve to buy an aug for.          |
+| augName      | string | Name of the aug to buy. Must be an exact match. |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ True if the aug was purchased and installed on the sleeve, false otherwise.
 RAM cost: 4 GB
 
 Return true if the aug was purchased and installed on the sleeve.
-

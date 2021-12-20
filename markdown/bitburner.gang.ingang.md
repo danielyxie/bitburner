@@ -11,6 +11,7 @@ Check if you're in a gang.
 ```typescript
 inGang(): boolean;
 ```
+
 <b>Returns:</b>
 
 boolean
@@ -20,4 +21,3 @@ True if you're in a gang, false otherwise.
 ## Remarks
 
 RAM cost: 1GB
-

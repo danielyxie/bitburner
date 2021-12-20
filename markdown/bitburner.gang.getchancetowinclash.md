@@ -14,9 +14,9 @@ getChanceToWinClash(gangName: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  gangName | string | Target gang |
+| Parameter | Type   | Description |
+| --------- | ------ | ----------- |
+| gangName  | string | Target gang |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Chance you have to win a clash with the specified gang.
 RAM cost: 4 GB
 
 Returns the chance you have to win a clash with the specified gang. The chance is returned in decimal form, not percentage
-

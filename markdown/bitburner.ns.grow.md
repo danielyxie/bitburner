@@ -14,10 +14,10 @@ grow(host: string, opts?: BasicHGWOptions): Promise<number>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Hostname of the target server to grow. |
-|  opts | [BasicHGWOptions](./bitburner.basichgwoptions.md) | Optional parameters for configuring function behavior. |
+| Parameter | Type                                              | Description                                            |
+| --------- | ------------------------------------------------- | ------------------------------------------------------ |
+| host      | string                                            | Hostname of the target server to grow.                 |
+| opts      | [BasicHGWOptions](./bitburner.basichgwoptions.md) | Optional parameters for configuring function behavior. |
 
 <b>Returns:</b>
 
@@ -35,9 +35,7 @@ Like hack, `grow` can be called on any server, regardless of where the script is
 
 ## Example
 
-
 ```ts
 grow("foodnstuff");
 grow("foodnstuff", { threads: 5 }); // Only use 5 threads to grow
 ```
-

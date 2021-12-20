@@ -14,9 +14,9 @@ hasRootAccess(host: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host of the target server |
+| Parameter | Type   | Description               |
+| --------- | ------ | ------------------------- |
+| host      | string | Host of the target server |
 
 <b>Returns:</b>
 
@@ -32,10 +32,8 @@ Returns a boolean indicating whether or not the player has root access to the sp
 
 ## Example
 
-
 ```ts
 if (hasRootAccess("foodnstuff") == false) {
-   nuke("foodnstuff");
+  nuke("foodnstuff");
 }
 ```
-

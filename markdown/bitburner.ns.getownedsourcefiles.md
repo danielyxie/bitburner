@@ -11,6 +11,7 @@ Get a list of acquired Source-Files.
 ```typescript
 getOwnedSourceFiles(): SourceFileLvl[];
 ```
+
 <b>Returns:</b>
 
 [SourceFileLvl](./bitburner.sourcefilelvl.md)<!-- -->\[\]
@@ -22,4 +23,3 @@ Array containing an object with number and level of the source file.
 RAM cost: 5 GB
 
 Returns an array of source files
-

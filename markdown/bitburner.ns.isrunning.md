@@ -14,11 +14,11 @@ isRunning(script: string, host: string, ...args: string[]): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  script | string | Filename of script to check. This is case-sensitive. |
-|  host | string | Host of target server. |
-|  args | string\[\] | Arguments to specify/identify which scripts to search for. |
+| Parameter | Type       | Description                                                |
+| --------- | ---------- | ---------------------------------------------------------- |
+| script    | string     | Filename of script to check. This is case-sensitive.       |
+| host      | string     | Host of target server.                                     |
+| args      | string\[\] | Arguments to specify/identify which scripts to search for. |
 
 <b>Returns:</b>
 
@@ -34,14 +34,12 @@ Returns a boolean indicating whether the specified script is running on the targ
 
 ## Example 1
 
-
 ```ts
 //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:
 isRunning("foo.script", "foodnstuff");
 ```
 
 ## Example 2
-
 
 ```ts
 //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:
@@ -50,9 +48,7 @@ isRunning("foo.script", getHostname());
 
 ## Example 3
 
-
 ```ts
 //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:
 isRunning("foo.script", "joesguns", 1, 5, "test");
 ```
-

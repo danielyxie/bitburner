@@ -14,10 +14,10 @@ getActionEstimatedSuccessChance(type: string, name: string): [number, number];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | string | Type of action. |
-|  name | string | Name of action. Must be an exact match. |
+| Parameter | Type   | Description                             |
+| --------- | ------ | --------------------------------------- |
+| type      | string | Type of action.                         |
+| name      | string | Name of action. Must be an exact match. |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ Estimated success chance for the specified action.
 RAM cost: 4 GB
 
 Returns the estimated success chance for the specified action. This chance is returned as a decimal value, NOT a percentage (e.g. if you have an estimated success chance of 80%, then this function will return 0.80, NOT 80).
-

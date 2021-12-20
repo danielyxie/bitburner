@@ -14,10 +14,10 @@ universityCourse(universityName: string, courseName: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  universityName | string | Name of university. You must be in the correct city for whatever university you specify. |
-|  courseName | string | Name of course. |
+| Parameter      | Type   | Description                                                                              |
+| -------------- | ------ | ---------------------------------------------------------------------------------------- |
+| universityName | string | Name of university. You must be in the correct city for whatever university you specify. |
+| courseName     | string | Name of course.                                                                          |
 
 <b>Returns:</b>
 
@@ -32,4 +32,3 @@ RAM cost: 2 GB
 This function will automatically set you to start taking a course at a university. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.
 
 The cost and experience gains for all of these universities and classes are the same as if you were to manually visit and take these classes.
-

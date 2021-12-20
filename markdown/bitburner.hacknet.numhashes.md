@@ -11,6 +11,7 @@ Get the total number of hashes stored.
 ```typescript
 numHashes(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -24,4 +25,3 @@ RAM cost: 0 GB
 This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
 
 Returns the number of hashes you have.
-

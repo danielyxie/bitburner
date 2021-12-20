@@ -14,10 +14,10 @@ upgradeCore(index: number, n: number): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  index | number | Index/Identifier of Hacknet Node. |
-|  n | number | Number of cores to purchase. Must be positive. Rounded to nearest integer. |
+| Parameter | Type   | Description                                                                |
+| --------- | ------ | -------------------------------------------------------------------------- |
+| index     | number | Index/Identifier of Hacknet Node.                                          |
+| n         | number | Number of cores to purchase. Must be positive. Rounded to nearest integer. |
 
 <b>Returns:</b>
 
@@ -34,4 +34,3 @@ Tries to purchase n cores for the specified Hacknet Node.
 Returns true if it successfully purchases n cores for the Hacknet Node or if it purchases some positive amount and the Node reaches its max number of cores.
 
 Returns false otherwise.
-

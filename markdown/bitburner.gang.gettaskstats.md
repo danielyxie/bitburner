@@ -14,9 +14,9 @@ getTaskStats(name: string): GangTaskStats;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | string | Name of the task. |
+| Parameter | Type   | Description       |
+| --------- | ------ | ----------------- |
+| name      | string | Name of the task. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Detailed stats of a task.
 RAM cost: 1 GB
 
 Get the stats of a gang task stats. This is typically used to evaluate which action should be executed next.
-

@@ -14,10 +14,10 @@ travel(sleeveNumber: number, cityName: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to travel. |
-|  cityName | string | Name of the destination city. |
+| Parameter    | Type   | Description                    |
+| ------------ | ------ | ------------------------------ |
+| sleeveNumber | number | Index of the sleeve to travel. |
+| cityName     | string | Name of the destination city.  |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ True if the sleeve reached destination, false otherwise.
 RAM cost: 4 GB
 
 Return a boolean indicating whether or not the sleeve reached destination.
-

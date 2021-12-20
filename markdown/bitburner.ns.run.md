@@ -14,11 +14,11 @@ run(script: string, numThreads?: number, ...args: string[]): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  script | string | Filename of script to run. |
-|  numThreads | number | Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer. |
-|  args | string\[\] | Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the second argument numThreads must be filled in with a value. |
+| Parameter  | Type       | Description                                                                                                                                                                                              |
+| ---------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| script     | string     | Filename of script to run.                                                                                                                                                                               |
+| numThreads | number     | Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer.                                                                                                           |
+| args       | string\[\] | Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the second argument numThreads must be filled in with a value. |
 
 <b>Returns:</b>
 
@@ -40,14 +40,12 @@ Running this function with a numThreads argument of 0 will return 0 without runn
 
 ## Example 1
 
-
 ```ts
 //The simplest way to use the run command is to call it with just the script name. The following example will run ‘foo.script’ single-threaded with no arguments:
 run("foo.script");
 ```
 
 ## Example 2
-
 
 ```ts
 //The following example will run ‘foo.script’ but with 5 threads instead of single-threaded:
@@ -56,9 +54,7 @@ run("foo.script", 5);
 
 ## Example 3
 
-
 ```ts
 //This next example will run ‘foo.script’ single-threaded, and will pass the string ‘foodnstuff’ into the script as an argument:
-run("foo.script", 1, 'foodnstuff');
+run("foo.script", 1, "foodnstuff");
 ```
-

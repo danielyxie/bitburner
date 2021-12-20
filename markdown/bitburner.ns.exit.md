@@ -11,6 +11,7 @@ Terminates the current script immediately.
 ```typescript
 exit(): void;
 ```
+
 <b>Returns:</b>
 
 void
@@ -18,4 +19,3 @@ void
 ## Remarks
 
 RAM cost: 0 GB
-

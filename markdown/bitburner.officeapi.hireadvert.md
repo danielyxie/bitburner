@@ -14,11 +14,10 @@ hireAdVert(divisionName: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
+| Parameter    | Type   | Description          |
+| ------------ | ------ | -------------------- |
+| divisionName | string | Name of the division |
 
 <b>Returns:</b>
 
 void
-

@@ -14,9 +14,9 @@ getOwnedAugmentations(purchased?: boolean): string[];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  purchased | boolean | Specifies whether the returned array should include Augmentations you have purchased but not yet installed. By default, this argument is false which means that the return value will NOT have the purchased Augmentations. |
+| Parameter | Type    | Description                                                                                                                                                                                                                 |
+| --------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| purchased | boolean | Specifies whether the returned array should include Augmentations you have purchased but not yet installed. By default, this argument is false which means that the return value will NOT have the purchased Augmentations. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Array containing the names (as strings) of all Augmentations you have.
 RAM cost: 5 GB
 
 This function returns an array containing the names (as strings) of all Augmentations you have.
-

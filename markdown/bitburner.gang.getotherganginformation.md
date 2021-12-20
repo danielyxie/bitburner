@@ -11,6 +11,7 @@ Get information about the other gangs.
 ```typescript
 getOtherGangInformation(): GangOtherInfo;
 ```
+
 <b>Returns:</b>
 
 [GangOtherInfo](./bitburner.gangotherinfo.md)
@@ -22,4 +23,3 @@ Object containing territory and power information about all gangs.
 RAM cost: 2 GB
 
 Get territory and power information about all gangs.
-

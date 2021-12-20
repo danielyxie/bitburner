@@ -14,11 +14,11 @@ setActionAutolevel(type: string, name: string, autoLevel: boolean): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | string | Type of action. |
-|  name | string | Name of action. Must be an exact match. |
-|  autoLevel | boolean | Whether or not to autolevel this action |
+| Parameter | Type    | Description                             |
+| --------- | ------- | --------------------------------------- |
+| type      | string  | Type of action.                         |
+| name      | string  | Name of action. Must be an exact match. |
+| autoLevel | boolean | Whether or not to autolevel this action |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ void
 RAM cost: 4 GB
 
 Enable/disable autoleveling for the specified action.
-

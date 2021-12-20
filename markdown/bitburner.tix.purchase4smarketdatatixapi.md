@@ -11,6 +11,7 @@ Purchase 4S Market Data TIX API Access.
 ```typescript
 purchase4SMarketDataTixApi(): boolean;
 ```
+
 <b>Returns:</b>
 
 boolean
@@ -20,4 +21,3 @@ True if you successfully purchased it or if you already have access, false other
 ## Remarks
 
 RAM cost: 2.5 GB
-

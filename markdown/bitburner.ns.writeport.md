@@ -14,10 +14,10 @@ writePort(port: number, data: string | number): Promise<any>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  port | number |  |
-|  data | string \| number |  |
+| Parameter | Type             | Description |
+| --------- | ---------------- | ----------- |
+| port      | number           |             |
+| data      | string \| number |             |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ The data popped off the queue if it was full.
 RAM cost: 0 GB
 
 Write data to that netscript port.
-

@@ -5,9 +5,8 @@
 ## Singularity.getCharacterInformation() method
 
 > Warning: This API is now obsolete.
-> 
+>
 > use getPlayer
-> 
 
 SF4.1 - Returns an object with various information about your character.
 
@@ -16,6 +15,7 @@ SF4.1 - Returns an object with various information about your character.
 ```typescript
 getCharacterInformation(): CharacterInfo;
 ```
+
 <b>Returns:</b>
 
 [CharacterInfo](./bitburner.characterinfo.md)
@@ -25,4 +25,3 @@ Object with various information about your character.
 ## Remarks
 
 RAM cost: 0.5 GB
-

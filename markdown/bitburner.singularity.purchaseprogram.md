@@ -14,9 +14,9 @@ purchaseProgram(programName: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  programName | string | Name of program to purchase. |
+| Parameter   | Type   | Description                  |
+| ----------- | ------ | ---------------------------- |
+| programName | string | Name of program to purchase. |
 
 <b>Returns:</b>
 
@@ -32,8 +32,6 @@ This function allows you to automatically purchase programs. You MUST have a TOR
 
 ## Example
 
-
 ```ts
 purchaseProgram("brutessh.exe");
 ```
-

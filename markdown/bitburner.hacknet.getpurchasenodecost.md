@@ -11,6 +11,7 @@ Get the price of the next hacknet node.
 ```typescript
 getPurchaseNodeCost(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -22,4 +23,3 @@ Cost of purchasing a new Hacknet Node.
 RAM cost: 0 GB
 
 Returns the cost of purchasing a new Hacknet Node.
-

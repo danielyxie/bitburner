@@ -14,16 +14,15 @@ moneyGainRate(level: number, ram: number, cores: number, mult?: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  level | number | level of the node. |
-|  ram | number | ram of the node. |
-|  cores | number | cores of the node. |
-|  mult | number | player production mult (default to 1) |
+| Parameter | Type   | Description                           |
+| --------- | ------ | ------------------------------------- |
+| level     | number | level of the node.                    |
+| ram       | number | ram of the node.                      |
+| cores     | number | cores of the node.                    |
+| mult      | number | player production mult (default to 1) |
 
 <b>Returns:</b>
 
 number
 
 The calculated money gain rate.
-

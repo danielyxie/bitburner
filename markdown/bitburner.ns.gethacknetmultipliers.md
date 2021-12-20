@@ -11,6 +11,7 @@ Get hacknet related multipliers.
 ```typescript
 getHacknetMultipliers(): HacknetMultipliers;
 ```
+
 <b>Returns:</b>
 
 [HacknetMultipliers](./bitburner.hacknetmultipliers.md)
@@ -25,11 +26,9 @@ Returns an object containing the Player’s hacknet related multipliers. These m
 
 ## Example
 
-
 ```ts
 //Example of how this can be used:
 mults = getHacknetMultipliers();
 print(mults.production);
 print(mults.purchaseCost);
 ```
-

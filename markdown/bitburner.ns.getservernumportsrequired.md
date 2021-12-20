@@ -14,9 +14,9 @@ getServerNumPortsRequired(host: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host of target server. |
+| Parameter | Type   | Description            |
+| --------- | ------ | ---------------------- |
+| host      | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -27,4 +27,3 @@ The number of open ports required to successfully run NUKE.exe on the specified 
 ## Remarks
 
 RAM cost: 0.1 GB
-

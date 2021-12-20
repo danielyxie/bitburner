@@ -11,6 +11,7 @@ Get current action.
 ```typescript
 getCurrentAction(): BladeburnerCurAction;
 ```
+
 <b>Returns:</b>
 
 [BladeburnerCurAction](./bitburner.bladeburnercuraction.md)
@@ -22,4 +23,3 @@ Object that represents the player’s current Bladeburner action.
 RAM cost: 1 GB
 
 Returns an object that represents the player’s current Bladeburner action. If the player is not performing an action, the function will return an object with the ‘type’ property set to “Idle”.
-

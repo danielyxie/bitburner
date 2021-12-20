@@ -14,10 +14,10 @@ ls(host: string, grep?: string): string[];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host of the target server. |
-|  grep | string | A substring to search for in the filename. |
+| Parameter | Type   | Description                                |
+| --------- | ------ | ------------------------------------------ |
+| host      | string | Host of the target server.                 |
+| grep      | string | A substring to search for in the filename. |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ Array with the filenames of all files on the specified server.
 RAM cost: 0.2 GB
 
 Returns an array with the filenames of all files on the specified server (as strings). The returned array is sorted in alphabetic order.
-

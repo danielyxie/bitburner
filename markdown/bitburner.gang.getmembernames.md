@@ -11,6 +11,7 @@ List all gang members.
 ```typescript
 getMemberNames(): string[];
 ```
+
 <b>Returns:</b>
 
 string\[\]
@@ -22,4 +23,3 @@ Names of all Gang members.
 RAM cost: 1 GB
 
 Get the names of all Gang members
-

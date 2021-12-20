@@ -14,9 +14,9 @@ commitCrime(crime: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  crime | string | Name of crime to attempt. |
+| Parameter | Type   | Description               |
+| --------- | ------ | ------------------------- |
+| crime     | string | Name of crime to attempt. |
 
 <b>Returns:</b>
 
@@ -33,4 +33,3 @@ This function is used to automatically attempt to commit crimes. If you are alre
 This function returns the number of seconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, so running `commitCrime('rob store')` will return 60).
 
 Warning: I do not recommend using the time returned from this function to try and schedule your crime attempts. Instead, I would use the isBusy Singularity function to check whether you have finished attempting a crime. This is because although the game sets a certain crime to be X amount of seconds, there is no guarantee that your browser will follow that time limit.
-

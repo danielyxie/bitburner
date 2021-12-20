@@ -14,10 +14,10 @@ getCacheUpgradeCost(index: number, n: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  index | number | Index/Identifier of Hacknet Node. |
-|  n | number | Number of times to upgrade cache. Must be positive. Rounded to nearest integer. |
+| Parameter | Type   | Description                                                                     |
+| --------- | ------ | ------------------------------------------------------------------------------- |
+| index     | number | Index/Identifier of Hacknet Node.                                               |
+| n         | number | Number of times to upgrade cache. Must be positive. Rounded to nearest integer. |
 
 <b>Returns:</b>
 
@@ -34,4 +34,3 @@ This function is only applicable for Hacknet Servers (the upgraded version of a 
 Returns the cost of upgrading the cache level of the specified Hacknet Server by n.
 
 If an invalid value for n is provided, then this function returns 0. If the specified Hacknet Node is already at max level, then Infinity is returned.
-

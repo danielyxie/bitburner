@@ -14,10 +14,10 @@ startAction(type: string, name: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | string | Type of action. |
-|  name | string | Name of action. Must be an exact match |
+| Parameter | Type   | Description                            |
+| --------- | ------ | -------------------------------------- |
+| type      | string | Type of action.                        |
+| name      | string | Name of action. Must be an exact match |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ True if the action was started successfully, and false otherwise.
 RAM cost: 4 GB
 
 Attempts to start the specified Bladeburner action. Returns true if the action was started successfully, and false otherwise.
-

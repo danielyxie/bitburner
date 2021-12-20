@@ -15,4 +15,3 @@ readonly sleeve: Sleeve;
 ## Remarks
 
 RAM cost: 0 GB
-

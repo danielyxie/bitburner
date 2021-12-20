@@ -11,6 +11,7 @@ SF4.2 - Check if the player is focused.
 ```typescript
 isFocused(): boolean;
 ```
+
 <b>Returns:</b>
 
 boolean
@@ -20,4 +21,3 @@ True if the player is focused.
 ## Remarks
 
 RAM cost: 0.1 GB
-

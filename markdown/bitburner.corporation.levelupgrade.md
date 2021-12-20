@@ -14,11 +14,10 @@ levelUpgrade(upgradeName: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  upgradeName | string | Name of the upgrade |
+| Parameter   | Type   | Description         |
+| ----------- | ------ | ------------------- |
+| upgradeName | string | Name of the upgrade |
 
 <b>Returns:</b>
 
 void
-

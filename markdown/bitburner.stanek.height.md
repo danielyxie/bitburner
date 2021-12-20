@@ -11,6 +11,7 @@ Stanek's Gift height.
 ```typescript
 height(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -20,4 +21,3 @@ The height of the gift.
 ## Remarks
 
 RAM cost: 0.4 GB
-

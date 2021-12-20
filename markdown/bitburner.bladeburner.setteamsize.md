@@ -14,11 +14,11 @@ setTeamSize(type: string, name: string, size: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | string | Type of action. |
-|  name | string | Name of action. Must be an exact match. |
-|  size | number | Number of team members to set. Will be converted using Math.round(). |
+| Parameter | Type   | Description                                                          |
+| --------- | ------ | -------------------------------------------------------------------- |
+| type      | string | Type of action.                                                      |
+| name      | string | Name of action. Must be an exact match.                              |
+| size      | number | Number of team members to set. Will be converted using Math.round(). |
 
 <b>Returns:</b>
 
@@ -33,4 +33,3 @@ RAM cost: 4 GB
 Set the team size for the specified Bladeburner action.
 
 Returns the team size that was set, or -1 if the function failed.
-

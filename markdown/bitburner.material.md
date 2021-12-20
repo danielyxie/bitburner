@@ -9,14 +9,13 @@ Material in a warehouse
 <b>Signature:</b>
 
 ```typescript
-interface Material 
+interface Material
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [name](./bitburner.material.name.md) | string | Name of the material |
-|  [qlt](./bitburner.material.qlt.md) | number | Quality of the material |
-|  [qty](./bitburner.material.qty.md) | number | Amount of material |
-
+| Property                             | Type   | Description             |
+| ------------------------------------ | ------ | ----------------------- |
+| [name](./bitburner.material.name.md) | string | Name of the material    |
+| [qlt](./bitburner.material.qlt.md)   | number | Quality of the material |
+| [qty](./bitburner.material.qty.md)   | number | Amount of material      |

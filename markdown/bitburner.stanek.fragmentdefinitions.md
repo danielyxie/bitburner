@@ -11,6 +11,7 @@ List possible fragments.
 ```typescript
 fragmentDefinitions(): Fragment[];
 ```
+
 <b>Returns:</b>
 
 [Fragment](./bitburner.fragment.md)<!-- -->\[\]
@@ -20,4 +21,3 @@ List of possible fragments.
 ## Remarks
 
 RAM cost: cost: 0 GB
-

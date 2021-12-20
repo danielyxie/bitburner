@@ -14,9 +14,9 @@ createGang(faction: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  faction | string |  |
+| Parameter | Type   | Description |
+| --------- | ------ | ----------- |
+| faction   | string |             |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ True if the gang was created, false otherwise.
 RAM cost: 1GB
 
 Create a gang with the specified faction.
-

@@ -11,6 +11,7 @@ SF4.2 - Upgrade home computer RAM.
 ```typescript
 upgradeHomeRam(): boolean;
 ```
+
 <b>Returns:</b>
 
 boolean
@@ -24,4 +25,3 @@ RAM cost: 3 GB
 This function will upgrade amount of RAM on the player’s home computer. The cost is the same as if you were to do it manually.
 
 This function will return true if the player’s home computer RAM is successfully upgraded, and false otherwise.
-

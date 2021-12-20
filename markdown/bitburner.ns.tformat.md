@@ -14,10 +14,10 @@ tFormat(milliseconds: number, milliPrecision?: boolean): string;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  milliseconds | number | Number of millisecond to format. |
-|  milliPrecision | boolean | Format time with subsecond precision, defaults to false. |
+| Parameter      | Type    | Description                                              |
+| -------------- | ------- | -------------------------------------------------------- |
+| milliseconds   | number  | Number of millisecond to format.                         |
+| milliPrecision | boolean | Format time with subsecond precision, defaults to false. |
 
 <b>Returns:</b>
 
@@ -28,4 +28,3 @@ The formatted time.
 ## Remarks
 
 RAM cost: 0 GB
-

@@ -14,13 +14,12 @@ ascensionPointsGain(exp: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  exp | number | Experience point before ascension. |
+| Parameter | Type   | Description                        |
+| --------- | ------ | ---------------------------------- |
+| exp       | number | Experience point before ascension. |
 
 <b>Returns:</b>
 
 number
 
 The calculated ascension point gain.
-

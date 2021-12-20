@@ -14,10 +14,10 @@ setMemberTask(memberName: string, taskName: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  memberName | string | Name of Gang member to assign. |
-|  taskName | string | Task to assign. |
+| Parameter  | Type   | Description                    |
+| ---------- | ------ | ------------------------------ |
+| memberName | string | Name of Gang member to assign. |
+| taskName   | string | Task to assign.                |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ True if the Gang Member was successfully assigned to the task, false otherwise.
 RAM cost: 2 GB
 
 Attempts to assign the specified Gang Member to the specified task. If an invalid task is specified, the Gang member will be set to idle (“Unassigned”).
-

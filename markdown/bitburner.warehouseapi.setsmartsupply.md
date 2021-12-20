@@ -14,13 +14,12 @@ setSmartSupply(divisionName: string, cityName: string, enabled: boolean): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
-|  enabled | boolean | smart supply enabled |
+| Parameter    | Type    | Description          |
+| ------------ | ------- | -------------------- |
+| divisionName | string  | Name of the division |
+| cityName     | string  | Name of the city     |
+| enabled      | boolean | smart supply enabled |
 
 <b>Returns:</b>
 
 void
-

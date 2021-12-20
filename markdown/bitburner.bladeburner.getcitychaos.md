@@ -14,9 +14,9 @@ getCityChaos(name: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | string |  |
+| Parameter | Type   | Description |
+| --------- | ------ | ----------- |
+| name      | string |             |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Chaos in the specified city.
 RAM cost: 4 GB
 
 Returns the chaos in the specified city, or -1 if an invalid city was specified.
-

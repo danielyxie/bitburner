@@ -9,15 +9,14 @@ Warehouse for a division in a city
 <b>Signature:</b>
 
 ```typescript
-interface Warehouse 
+interface Warehouse
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [level](./bitburner.warehouse.level.md) | number | Amount of size upgrade bought |
-|  [loc](./bitburner.warehouse.loc.md) | string | City in which the warehouse is located |
-|  [size](./bitburner.warehouse.size.md) | number | Total space in the warehouse |
-|  [sizeUsed](./bitburner.warehouse.sizeused.md) | number | Used space in the warehouse |
-
+| Property                                      | Type   | Description                            |
+| --------------------------------------------- | ------ | -------------------------------------- |
+| [level](./bitburner.warehouse.level.md)       | number | Amount of size upgrade bought          |
+| [loc](./bitburner.warehouse.loc.md)           | string | City in which the warehouse is located |
+| [size](./bitburner.warehouse.size.md)         | number | Total space in the warehouse           |
+| [sizeUsed](./bitburner.warehouse.sizeused.md) | number | Used space in the warehouse            |

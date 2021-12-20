@@ -14,16 +14,15 @@ growPercent(server: Server, threads: number, player: Player, cores?: number): nu
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  server | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
-|  threads | number | Amount of thread. |
-|  player | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
-|  cores | number | Number of cores on the computer that will execute grow. |
+| Parameter | Type                            | Description                                               |
+| --------- | ------------------------------- | --------------------------------------------------------- |
+| server    | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
+| threads   | number                          | Amount of thread.                                         |
+| player    | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
+| cores     | number                          | Number of cores on the computer that will execute grow.   |
 
 <b>Returns:</b>
 
 number
 
 The calculated grow percent.
-

@@ -14,9 +14,9 @@ getForecast(sym: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sym | string | Stock symbol. |
+| Parameter | Type   | Description   |
+| --------- | ------ | ------------- |
+| sym       | string | Stock symbol. |
 
 <b>Returns:</b>
 
@@ -31,4 +31,3 @@ RAM cost: 2.5 GB The probability is returned as a decimal value, NOT a percentag
 In other words, if this function returned 0.30 for a stock, then this means that the stock’s price has a 30% chance of increasing and a 70% chance of decreasing during the next tick.
 
 In order to use this function, you must first purchase access to the Four Sigma (4S) Market Data TIX API.
-

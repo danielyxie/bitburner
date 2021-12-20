@@ -15,4 +15,3 @@ readonly bladeburner: Bladeburner;
 ## Remarks
 
 RAM cost: 0 GB
-

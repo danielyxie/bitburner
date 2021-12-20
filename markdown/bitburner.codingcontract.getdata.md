@@ -14,10 +14,10 @@ getData(filename: string, host?: string): any;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  filename | string | Filename of the contract. |
-|  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
+| Parameter | Type   | Description                                                                                       |
+| --------- | ------ | ------------------------------------------------------------------------------------------------- |
+| filename  | string | Filename of the contract.                                                                         |
+| host      | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ The specified contract’s data, data type depends on contract type.;
 RAM cost: 5 GB
 
 Get the data associated with the specific Coding Contract. Note that this is not the same as the contract’s description. This is just the data that the contract wants you to act on in order to solve
-

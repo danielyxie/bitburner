@@ -14,9 +14,9 @@ getEquipmentType(equipName: string): string;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  equipName | string | Name of equipment. |
+| Parameter | Type   | Description        |
+| --------- | ------ | ------------------ |
+| equipName | string | Name of equipment. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Type of the equipment.
 RAM cost: 2 GB
 
 Get the specified equipment type.
-

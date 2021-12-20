@@ -14,10 +14,10 @@ weaken(host: string, opts?: BasicHGWOptions): Promise<number>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Hostname of the target server to weaken. |
-|  opts | [BasicHGWOptions](./bitburner.basichgwoptions.md) | Optional parameters for configuring function behavior. |
+| Parameter | Type                                              | Description                                            |
+| --------- | ------------------------------------------------- | ------------------------------------------------------ |
+| host      | string                                            | Hostname of the target server to weaken.               |
+| opts      | [BasicHGWOptions](./bitburner.basichgwoptions.md) | Optional parameters for configuring function behavior. |
 
 <b>Returns:</b>
 
@@ -35,9 +35,7 @@ Like hack and grow, `weaken` can be called on any server, regardless of where th
 
 ## Example
 
-
 ```ts
 weaken("foodnstuff");
 weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
 ```
-

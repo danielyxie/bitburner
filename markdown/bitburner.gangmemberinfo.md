@@ -4,53 +4,51 @@
 
 ## GangMemberInfo interface
 
-
 <b>Signature:</b>
 
 ```typescript
-export interface GangMemberInfo 
+export interface GangMemberInfo
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [agi\_asc\_mult](./bitburner.gangmemberinfo.agi_asc_mult.md) | number |  |
-|  [agi\_asc\_points](./bitburner.gangmemberinfo.agi_asc_points.md) | number |  |
-|  [agi\_exp](./bitburner.gangmemberinfo.agi_exp.md) | number |  |
-|  [agi\_mult](./bitburner.gangmemberinfo.agi_mult.md) | number |  |
-|  [agi](./bitburner.gangmemberinfo.agi.md) | number |  |
-|  [augmentations](./bitburner.gangmemberinfo.augmentations.md) | string\[\] |  |
-|  [cha\_asc\_mult](./bitburner.gangmemberinfo.cha_asc_mult.md) | number |  |
-|  [cha\_asc\_points](./bitburner.gangmemberinfo.cha_asc_points.md) | number |  |
-|  [cha\_exp](./bitburner.gangmemberinfo.cha_exp.md) | number |  |
-|  [cha\_mult](./bitburner.gangmemberinfo.cha_mult.md) | number |  |
-|  [cha](./bitburner.gangmemberinfo.cha.md) | number |  |
-|  [def\_asc\_mult](./bitburner.gangmemberinfo.def_asc_mult.md) | number |  |
-|  [def\_asc\_points](./bitburner.gangmemberinfo.def_asc_points.md) | number |  |
-|  [def\_exp](./bitburner.gangmemberinfo.def_exp.md) | number |  |
-|  [def\_mult](./bitburner.gangmemberinfo.def_mult.md) | number |  |
-|  [def](./bitburner.gangmemberinfo.def.md) | number |  |
-|  [dex\_asc\_mult](./bitburner.gangmemberinfo.dex_asc_mult.md) | number |  |
-|  [dex\_asc\_points](./bitburner.gangmemberinfo.dex_asc_points.md) | number |  |
-|  [dex\_exp](./bitburner.gangmemberinfo.dex_exp.md) | number |  |
-|  [dex\_mult](./bitburner.gangmemberinfo.dex_mult.md) | number |  |
-|  [dex](./bitburner.gangmemberinfo.dex.md) | number |  |
-|  [earnedRespect](./bitburner.gangmemberinfo.earnedrespect.md) | number |  |
-|  [hack\_asc\_mult](./bitburner.gangmemberinfo.hack_asc_mult.md) | number |  |
-|  [hack\_asc\_points](./bitburner.gangmemberinfo.hack_asc_points.md) | number |  |
-|  [hack\_exp](./bitburner.gangmemberinfo.hack_exp.md) | number |  |
-|  [hack\_mult](./bitburner.gangmemberinfo.hack_mult.md) | number |  |
-|  [hack](./bitburner.gangmemberinfo.hack.md) | number |  |
-|  [moneyGain](./bitburner.gangmemberinfo.moneygain.md) | number |  |
-|  [name](./bitburner.gangmemberinfo.name.md) | string |  |
-|  [respectGain](./bitburner.gangmemberinfo.respectgain.md) | number |  |
-|  [str\_asc\_mult](./bitburner.gangmemberinfo.str_asc_mult.md) | number |  |
-|  [str\_asc\_points](./bitburner.gangmemberinfo.str_asc_points.md) | number |  |
-|  [str\_exp](./bitburner.gangmemberinfo.str_exp.md) | number |  |
-|  [str\_mult](./bitburner.gangmemberinfo.str_mult.md) | number |  |
-|  [str](./bitburner.gangmemberinfo.str.md) | number |  |
-|  [task](./bitburner.gangmemberinfo.task.md) | string |  |
-|  [upgrades](./bitburner.gangmemberinfo.upgrades.md) | string\[\] |  |
-|  [wantedLevelGain](./bitburner.gangmemberinfo.wantedlevelgain.md) | number |  |
-
+| Property                                                         | Type       | Description |
+| ---------------------------------------------------------------- | ---------- | ----------- |
+| [agi_asc_mult](./bitburner.gangmemberinfo.agi_asc_mult.md)       | number     |             |
+| [agi_asc_points](./bitburner.gangmemberinfo.agi_asc_points.md)   | number     |             |
+| [agi_exp](./bitburner.gangmemberinfo.agi_exp.md)                 | number     |             |
+| [agi_mult](./bitburner.gangmemberinfo.agi_mult.md)               | number     |             |
+| [agi](./bitburner.gangmemberinfo.agi.md)                         | number     |             |
+| [augmentations](./bitburner.gangmemberinfo.augmentations.md)     | string\[\] |             |
+| [cha_asc_mult](./bitburner.gangmemberinfo.cha_asc_mult.md)       | number     |             |
+| [cha_asc_points](./bitburner.gangmemberinfo.cha_asc_points.md)   | number     |             |
+| [cha_exp](./bitburner.gangmemberinfo.cha_exp.md)                 | number     |             |
+| [cha_mult](./bitburner.gangmemberinfo.cha_mult.md)               | number     |             |
+| [cha](./bitburner.gangmemberinfo.cha.md)                         | number     |             |
+| [def_asc_mult](./bitburner.gangmemberinfo.def_asc_mult.md)       | number     |             |
+| [def_asc_points](./bitburner.gangmemberinfo.def_asc_points.md)   | number     |             |
+| [def_exp](./bitburner.gangmemberinfo.def_exp.md)                 | number     |             |
+| [def_mult](./bitburner.gangmemberinfo.def_mult.md)               | number     |             |
+| [def](./bitburner.gangmemberinfo.def.md)                         | number     |             |
+| [dex_asc_mult](./bitburner.gangmemberinfo.dex_asc_mult.md)       | number     |             |
+| [dex_asc_points](./bitburner.gangmemberinfo.dex_asc_points.md)   | number     |             |
+| [dex_exp](./bitburner.gangmemberinfo.dex_exp.md)                 | number     |             |
+| [dex_mult](./bitburner.gangmemberinfo.dex_mult.md)               | number     |             |
+| [dex](./bitburner.gangmemberinfo.dex.md)                         | number     |             |
+| [earnedRespect](./bitburner.gangmemberinfo.earnedrespect.md)     | number     |             |
+| [hack_asc_mult](./bitburner.gangmemberinfo.hack_asc_mult.md)     | number     |             |
+| [hack_asc_points](./bitburner.gangmemberinfo.hack_asc_points.md) | number     |             |
+| [hack_exp](./bitburner.gangmemberinfo.hack_exp.md)               | number     |             |
+| [hack_mult](./bitburner.gangmemberinfo.hack_mult.md)             | number     |             |
+| [hack](./bitburner.gangmemberinfo.hack.md)                       | number     |             |
+| [moneyGain](./bitburner.gangmemberinfo.moneygain.md)             | number     |             |
+| [name](./bitburner.gangmemberinfo.name.md)                       | string     |             |
+| [respectGain](./bitburner.gangmemberinfo.respectgain.md)         | number     |             |
+| [str_asc_mult](./bitburner.gangmemberinfo.str_asc_mult.md)       | number     |             |
+| [str_asc_points](./bitburner.gangmemberinfo.str_asc_points.md)   | number     |             |
+| [str_exp](./bitburner.gangmemberinfo.str_exp.md)                 | number     |             |
+| [str_mult](./bitburner.gangmemberinfo.str_mult.md)               | number     |             |
+| [str](./bitburner.gangmemberinfo.str.md)                         | number     |             |
+| [task](./bitburner.gangmemberinfo.task.md)                       | string     |             |
+| [upgrades](./bitburner.gangmemberinfo.upgrades.md)               | string\[\] |             |
+| [wantedLevelGain](./bitburner.gangmemberinfo.wantedlevelgain.md) | number     |             |

@@ -9,19 +9,19 @@ Corporation API
 <b>Signature:</b>
 
 ```typescript
-export interface Corporation extends WarehouseAPI, OfficeAPI 
+export interface Corporation extends WarehouseAPI, OfficeAPI
 ```
+
 <b>Extends:</b> [WarehouseAPI](./bitburner.warehouseapi.md)<!-- -->, [OfficeAPI](./bitburner.officeapi.md)
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [expandCity(divisionName, cityName)](./bitburner.corporation.expandcity.md) | Expand to a new city |
-|  [expandIndustry(industryType, divisionName)](./bitburner.corporation.expandindustry.md) | Expand to a new industry |
-|  [getCorporation()](./bitburner.corporation.getcorporation.md) | Get corporation data |
-|  [getDivision(divisionName)](./bitburner.corporation.getdivision.md) | Get division data |
-|  [issueDividends(percent)](./bitburner.corporation.issuedividends.md) | Issue dividends |
-|  [levelUpgrade(upgradeName)](./bitburner.corporation.levelupgrade.md) | Level an upgrade. |
-|  [unlockUpgrade(upgradeName)](./bitburner.corporation.unlockupgrade.md) | Unlock an upgrade. |
-
+| Method                                                                                  | Description              |
+| --------------------------------------------------------------------------------------- | ------------------------ |
+| [expandCity(divisionName, cityName)](./bitburner.corporation.expandcity.md)             | Expand to a new city     |
+| [expandIndustry(industryType, divisionName)](./bitburner.corporation.expandindustry.md) | Expand to a new industry |
+| [getCorporation()](./bitburner.corporation.getcorporation.md)                           | Get corporation data     |
+| [getDivision(divisionName)](./bitburner.corporation.getdivision.md)                     | Get division data        |
+| [issueDividends(percent)](./bitburner.corporation.issuedividends.md)                    | Issue dividends          |
+| [levelUpgrade(upgradeName)](./bitburner.corporation.levelupgrade.md)                    | Level an upgrade.        |
+| [unlockUpgrade(upgradeName)](./bitburner.corporation.unlockupgrade.md)                  | Unlock an upgrade.       |

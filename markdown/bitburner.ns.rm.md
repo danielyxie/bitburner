@@ -14,10 +14,10 @@ rm(name: string, host?: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | string | Filename of file to remove. Must include the extension. |
-|  host | string | Host Address of the server on which to delete the file. Optional. Defaults to current server. |
+| Parameter | Type   | Description                                                                                   |
+| --------- | ------ | --------------------------------------------------------------------------------------------- |
+| name      | string | Filename of file to remove. Must include the extension.                                       |
+| host      | string | Host Address of the server on which to delete the file. Optional. Defaults to current server. |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ True if it successfully deletes the file, and false otherwise.
 RAM cost: 1 GB
 
 Removes the specified file from the current server. This function works for every file type except message (.msg) files.
-

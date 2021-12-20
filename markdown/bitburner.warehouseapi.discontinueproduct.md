@@ -14,12 +14,11 @@ discontinueProduct(divisionName: string, productName: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  productName | string | Name of the product |
+| Parameter    | Type   | Description          |
+| ------------ | ------ | -------------------- |
+| divisionName | string | Name of the division |
+| productName  | string | Name of the product  |
 
 <b>Returns:</b>
 
 void
-

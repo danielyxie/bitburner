@@ -14,9 +14,9 @@ getSkillLevel(name: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | string |  |
+| Parameter | Type   | Description |
+| --------- | ------ | ----------- |
+| name      | string |             |
 
 <b>Returns:</b>
 
@@ -31,4 +31,3 @@ RAM cost: 4 GB
 This function returns your level in the specified skill.
 
 The function returns -1 if an invalid skill name is passed in.
-

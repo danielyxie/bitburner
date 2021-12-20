@@ -14,13 +14,12 @@ ascensionMultiplier(points: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  points | number | Amount of ascension points. |
+| Parameter | Type   | Description                 |
+| --------- | ------ | --------------------------- |
+| points    | number | Amount of ascension points. |
 
 <b>Returns:</b>
 
 number
 
 The calculated ascension mult.
-

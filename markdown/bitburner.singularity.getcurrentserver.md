@@ -11,6 +11,7 @@ SF4.1 - Get the current server.
 ```typescript
 getCurrentServer(): string;
 ```
+
 <b>Returns:</b>
 
 string
@@ -20,4 +21,3 @@ Name of the current server.
 ## Remarks
 
 RAM cost: 2 GB
-

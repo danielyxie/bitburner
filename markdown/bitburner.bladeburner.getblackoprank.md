@@ -14,9 +14,9 @@ getBlackOpRank(name: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | string | Name of BlackOp. Must be an exact match. |
+| Parameter | Type   | Description                              |
+| --------- | ------ | ---------------------------------------- |
+| name      | string | Name of BlackOp. Must be an exact match. |
 
 <b>Returns:</b>
 
@@ -31,4 +31,3 @@ RAM cost: 2 GB
 Returns the rank required to complete this BlackOp.
 
 Returns -1 if an invalid action is specified.
-

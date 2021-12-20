@@ -14,11 +14,11 @@ scp(files: string | string[], source: string, destination: string): Promise<bool
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  files | string \| string\[\] | Filename or an array of filenames of script/literature files to copy. |
-|  source | string | Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server. |
-|  destination | string | Host of the destination server, which is the server to which the file will be copied. |
+| Parameter   | Type                 | Description                                                                                                                                                             |
+| ----------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| files       | string \| string\[\] | Filename or an array of filenames of script/literature files to copy.                                                                                                   |
+| source      | string               | Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server. |
+| destination | string               | Host of the destination server, which is the server to which the file will be copied.                                                                                   |
 
 <b>Returns:</b>
 
@@ -34,7 +34,6 @@ Copies a script or literature (.lit) file(s) to another server. The files argume
 
 ## Example 1
 
-
 ```ts
 //Copies foo.lit from the helios server to the home computer:
 scp("foo.lit", "helios", "home");
@@ -42,10 +41,8 @@ scp("foo.lit", "helios", "home");
 
 ## Example 2
 
-
 ```ts
 //Tries to copy three files from rothman-uni to home computer:
 files = ["foo1.lit", "foo2.script", "foo3.script"];
 scp(files, "rothman-uni", "home");
 ```
-

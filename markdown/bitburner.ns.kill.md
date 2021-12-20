@@ -14,11 +14,11 @@ kill(script: string | number, host: string, ...args: string[]): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  script | string \| number | Filename or pid of the script to kill |
-|  host | string | Hostname of the server on which to kill the script. |
-|  args | string\[\] | Arguments to identify which script to kill. |
+| Parameter | Type             | Description                                         |
+| --------- | ---------------- | --------------------------------------------------- |
+| script    | string \| number | Filename or pid of the script to kill               |
+| host      | string           | Hostname of the server on which to kill the script. |
+| args      | string\[\]       | Arguments to identify which script to kill.         |
 
 <b>Returns:</b>
 
@@ -34,14 +34,12 @@ Kills the script on the target server specified by the script’s name and argum
 
 ## Example 1
 
-
 ```ts
 //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
 kill("foo.script", "foodnstuff");
 ```
 
 ## Example 2
-
 
 ```ts
 //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
@@ -50,9 +48,7 @@ kill("foo.script", getHostname());
 
 ## Example 3
 
-
 ```ts
 //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
 kill("foo.script", getHostname(), 1, "foodnstuff");
 ```
-

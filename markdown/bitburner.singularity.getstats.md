@@ -5,9 +5,8 @@
 ## Singularity.getStats() method
 
 > Warning: This API is now obsolete.
-> 
+>
 > use getPlayer
-> 
 
 SF4.1 - Returns an object with the Player’s stats.
 
@@ -16,6 +15,7 @@ SF4.1 - Returns an object with the Player’s stats.
 ```typescript
 getStats(): PlayerSkills;
 ```
+
 <b>Returns:</b>
 
 [PlayerSkills](./bitburner.playerskills.md)
@@ -28,9 +28,7 @@ RAM cost: 0.5 GB
 
 ## Example
 
-
 ```ts
 res = getStats();
-print('My charisma level is: ' + res.charisma);
+print("My charisma level is: " + res.charisma);
 ```
-

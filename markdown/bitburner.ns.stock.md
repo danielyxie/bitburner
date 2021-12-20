@@ -15,4 +15,3 @@ readonly stock: TIX;
 ## Remarks
 
 RAM cost: 0 GB
-

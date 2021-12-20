@@ -14,11 +14,11 @@ tail(fn?: string, host?: string, ...args: any[]): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  fn | string | Optional. Filename of the script being tailed. If omitted, the current script is tailed. |
-|  host | string | Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional. |
-|  args | any\[\] | Arguments for the script being tailed. |
+| Parameter | Type    | Description                                                                                                                                   |
+| --------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| fn        | string  | Optional. Filename of the script being tailed. If omitted, the current script is tailed.                                                      |
+| host      | string  | Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional. |
+| args      | any\[\] | Arguments for the script being tailed.                                                                                                        |
 
 <b>Returns:</b>
 
@@ -36,14 +36,12 @@ Otherwise, the fn, hostname/ip, and args… arguments can be used to get the log
 
 ## Example 1
 
-
 ```ts
 //Open logs from foo.script on the current server that was run with no args
 tail("foo.script");
 ```
 
 ## Example 2
-
 
 ```ts
 //Get logs from foo.script on the foodnstuff server that was run with no args
@@ -52,9 +50,7 @@ tail("foo.script", "foodnstuff");
 
 ## Example 3
 
-
 ```ts
 //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
 tail("foo.script", "foodnstuff", 1, "test");
 ```
-

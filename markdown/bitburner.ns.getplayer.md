@@ -11,9 +11,9 @@ Get information about the player.
 ```typescript
 getPlayer(): Player;
 ```
+
 <b>Returns:</b>
 
 [Player](./bitburner.player.md)
 
 Player info
-

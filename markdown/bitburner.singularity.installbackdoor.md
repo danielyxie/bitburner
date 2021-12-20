@@ -11,6 +11,7 @@ SF4.1 - Run the backdoor command in the terminal.
 ```typescript
 installBackdoor(): Promise<void>;
 ```
+
 <b>Returns:</b>
 
 Promise&lt;void&gt;
@@ -20,4 +21,3 @@ True if the installation was successful.
 ## Remarks
 
 RAM cost: 2 GB
-

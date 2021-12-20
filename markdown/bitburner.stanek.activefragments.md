@@ -11,6 +11,7 @@ List of fragments in Stanek's Gift.
 ```typescript
 activeFragments(): ActiveFragment[];
 ```
+
 <b>Returns:</b>
 
 [ActiveFragment](./bitburner.activefragment.md)<!-- -->\[\]
@@ -20,4 +21,3 @@ List of active fragments placed on Stanek's Gift.
 ## Remarks
 
 RAM cost: cost: 5 GB
-

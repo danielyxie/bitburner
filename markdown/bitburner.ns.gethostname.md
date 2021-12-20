@@ -11,6 +11,7 @@ Returns a string with the hostname of the server that the script is running on.
 ```typescript
 getHostname(): string;
 ```
+
 <b>Returns:</b>
 
 string
@@ -20,4 +21,3 @@ Hostname of the server that the script is on.
 ## Remarks
 
 RAM cost: 0.05 GB
-

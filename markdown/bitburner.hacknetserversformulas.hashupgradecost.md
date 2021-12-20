@@ -14,14 +14,13 @@ hashUpgradeCost(upgName: number, level: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  upgName | number | name of the upgrade |
-|  level | number | level of the upgrade |
+| Parameter | Type   | Description          |
+| --------- | ------ | -------------------- |
+| upgName   | number | name of the upgrade  |
+| level     | number | level of the upgrade |
 
 <b>Returns:</b>
 
 number
 
 The calculated hash cost.
-

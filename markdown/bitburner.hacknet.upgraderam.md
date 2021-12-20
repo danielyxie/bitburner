@@ -14,10 +14,10 @@ upgradeRam(index: number, n: number): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  index | number | Index/Identifier of Hacknet Node. |
-|  n | number | Number of times to upgrade RAM. Must be positive. Rounded to nearest integer. |
+| Parameter | Type   | Description                                                                   |
+| --------- | ------ | ----------------------------------------------------------------------------- |
+| index     | number | Index/Identifier of Hacknet Node.                                             |
+| n         | number | Number of times to upgrade RAM. Must be positive. Rounded to nearest integer. |
 
 <b>Returns:</b>
 
@@ -34,4 +34,3 @@ Tries to upgrade the specified Hacknet Node’s RAM n times. Note that each upgr
 Returns true if the Hacknet Node’s RAM is successfully upgraded n times or if it is upgraded some positive number of times and the Node reaches it max RAM.
 
 Returns false otherwise.
-

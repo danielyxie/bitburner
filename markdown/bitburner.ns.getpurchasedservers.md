@@ -11,6 +11,7 @@ Returns an array with the hostnames of all of the servers you have purchased.
 ```typescript
 getPurchasedServers(): string[];
 ```
+
 <b>Returns:</b>
 
 string\[\]
@@ -20,4 +21,3 @@ Returns an array with the hostnames of all of the servers you have purchased.
 ## Remarks
 
 2.25 GB
-

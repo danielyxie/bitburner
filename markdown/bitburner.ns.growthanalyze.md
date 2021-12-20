@@ -14,11 +14,11 @@ growthAnalyze(host: string, growthAmount: number, cores?: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Hostname of the target server. |
-|  growthAmount | number | Multiplicative factor by which the server is grown. Decimal form.. |
-|  cores | number |  |
+| Parameter    | Type   | Description                                                        |
+| ------------ | ------ | ------------------------------------------------------------------ |
+| host         | string | Hostname of the target server.                                     |
+| growthAmount | number | Multiplicative factor by which the server is grown. Decimal form.. |
+| cores        | number |                                                                    |
 
 <b>Returns:</b>
 
@@ -36,10 +36,8 @@ Warning: The value returned by this function isn’t necessarily a whole number.
 
 ## Example
 
-
 ```ts
 //For example, if you want to determine how many grow calls you need to double the amount of money on foodnstuff, you would use:
 growthAnalyze("foodnstuff", 2);
 //If this returns 100, then this means you need to call grow 100 times in order to double the money (or once with 100 threads).
 ```
-

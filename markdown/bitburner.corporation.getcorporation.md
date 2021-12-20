@@ -11,9 +11,9 @@ Get corporation data
 ```typescript
 getCorporation(): CorporationInfo;
 ```
+
 <b>Returns:</b>
 
 [CorporationInfo](./bitburner.corporationinfo.md)
 
 Corporation data
-

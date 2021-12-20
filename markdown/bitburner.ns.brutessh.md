@@ -14,9 +14,9 @@ brutessh(host: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Hostname of the target server. |
+| Parameter | Type   | Description                    |
+| --------- | ------ | ------------------------------ |
+| host      | string | Hostname of the target server. |
 
 <b>Returns:</b>
 
@@ -30,8 +30,6 @@ Runs the BruteSSH.exe program on the target server. BruteSSH.exe must exist on y
 
 ## Example
 
-
 ```ts
 brutessh("foodnstuff");
 ```
-

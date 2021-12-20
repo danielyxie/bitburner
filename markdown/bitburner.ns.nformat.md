@@ -14,10 +14,10 @@ nFormat(n: number, format: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  n | number | Number to format. |
-|  format | string | Formatter. |
+| Parameter | Type   | Description       |
+| --------- | ------ | ----------------- |
+| n         | number | Number to format. |
+| format    | string | Formatter.        |
 
 <b>Returns:</b>
 
@@ -32,4 +32,3 @@ RAM cost: 0 GB
 Converts a number into a string with the specified formatter. This uses the numeraljs library, so the formatters must be compatible with that. This is the same function that the game itself uses to display numbers.
 
 see: http://numeraljs.com/
-

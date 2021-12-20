@@ -14,10 +14,10 @@ charge(rootX: number, rootY: number): Promise<void>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  rootX | number | rootX Root X against which to align the top left of the fragment. |
-|  rootY | number | rootY Root Y against which to align the top left of the fragment. |
+| Parameter | Type   | Description                                                       |
+| --------- | ------ | ----------------------------------------------------------------- |
+| rootX     | number | rootX Root X against which to align the top left of the fragment. |
+| rootY     | number | rootY Root Y against which to align the top left of the fragment. |
 
 <b>Returns:</b>
 
@@ -28,4 +28,3 @@ Promise that lasts until the charge action is over.
 ## Remarks
 
 RAM cost: 0.4 GB
-

@@ -14,9 +14,9 @@ getServerMoneyAvailable(host: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host of target server |
+| Parameter | Type   | Description           |
+| --------- | ------ | --------------------- |
+| host      | string | Host of target server |
 
 <b>Returns:</b>
 
@@ -32,9 +32,7 @@ Returns the amount of money available on a server. Running this function on the 
 
 ## Example
 
-
 ```ts
 getServerMoneyAvailable("foodnstuff");
 getServerMoneyAvailable("home"); //Returns player's money
 ```
-

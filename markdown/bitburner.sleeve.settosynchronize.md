@@ -14,9 +14,9 @@ setToSynchronize(sleeveNumber: number): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to start synchronizing. |
+| Parameter    | Type   | Description                                 |
+| ------------ | ------ | ------------------------------------------- |
+| sleeveNumber | number | Index of the sleeve to start synchronizing. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ True if this action was set successfully, false otherwise.
 RAM cost: 4 GB
 
 Return a boolean indicating whether or not this action was set successfully.
-

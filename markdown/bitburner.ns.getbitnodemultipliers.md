@@ -11,6 +11,7 @@ Get the current Bitnode multipliers.
 ```typescript
 getBitNodeMultipliers(): BitNodeMultipliers;
 ```
+
 <b>Returns:</b>
 
 [BitNodeMultipliers](./bitburner.bitnodemultipliers.md)
@@ -27,10 +28,8 @@ For example, if the CrimeMoney multiplier has a value of 0.1, then that means th
 
 ## Example
 
-
 ```ts
 mults = getBitNodeMultipliers();
 print(mults.ServerMaxMoney);
 print(mults.HackExpGain);
 ```
-

@@ -14,9 +14,9 @@ serverExists(host: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host of target server. |
+| Parameter | Type   | Description            |
+| --------- | ------ | ---------------------- |
+| host      | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -27,4 +27,3 @@ True if specified server exists, and false otherwise.
 ## Remarks
 
 RAM cost: 0.1 GB
-

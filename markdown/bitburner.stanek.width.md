@@ -11,6 +11,7 @@ Stanek's Gift width.
 ```typescript
 width(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -20,4 +21,3 @@ The width of the gift.
 ## Remarks
 
 RAM cost: 0.4 GB
-

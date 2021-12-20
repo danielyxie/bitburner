@@ -14,15 +14,14 @@ getEmployee(divisionName: string, cityName: string, employeeName: string): Emplo
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
-|  employeeName | string | Name of the employee |
+| Parameter    | Type   | Description          |
+| ------------ | ------ | -------------------- |
+| divisionName | string | Name of the division |
+| cityName     | string | Name of the city     |
+| employeeName | string | Name of the employee |
 
 <b>Returns:</b>
 
 [Employee](./bitburner.employee.md)
 
 Employee data
-

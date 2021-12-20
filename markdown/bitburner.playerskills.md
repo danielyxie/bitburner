@@ -9,18 +9,17 @@ Short summary of the players skills.
 <b>Signature:</b>
 
 ```typescript
-export interface PlayerSkills 
+export interface PlayerSkills
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [agility](./bitburner.playerskills.agility.md) | number | Agility level |
-|  [charisma](./bitburner.playerskills.charisma.md) | number | Chraisma level |
-|  [defense](./bitburner.playerskills.defense.md) | number | Defense level |
-|  [dexterity](./bitburner.playerskills.dexterity.md) | number | Dexterity level |
-|  [hacking](./bitburner.playerskills.hacking.md) | number | Hacking level |
-|  [intelligence](./bitburner.playerskills.intelligence.md) | number | Intelligence level |
-|  [strength](./bitburner.playerskills.strength.md) | number | Strength level |
-
+| Property                                                 | Type   | Description        |
+| -------------------------------------------------------- | ------ | ------------------ |
+| [agility](./bitburner.playerskills.agility.md)           | number | Agility level      |
+| [charisma](./bitburner.playerskills.charisma.md)         | number | Chraisma level     |
+| [defense](./bitburner.playerskills.defense.md)           | number | Defense level      |
+| [dexterity](./bitburner.playerskills.dexterity.md)       | number | Dexterity level    |
+| [hacking](./bitburner.playerskills.hacking.md)           | number | Hacking level      |
+| [intelligence](./bitburner.playerskills.intelligence.md) | number | Intelligence level |
+| [strength](./bitburner.playerskills.strength.md)         | number | Strength level     |

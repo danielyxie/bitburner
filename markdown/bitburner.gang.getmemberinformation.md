@@ -14,9 +14,9 @@ getMemberInformation(name: string): GangMemberInfo;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | string | Name of member. |
+| Parameter | Type   | Description     |
+| --------- | ------ | --------------- |
+| name      | string | Name of member. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Object containing stat and equipment-related information about a Gang Member.
 RAM cost: 2 GB
 
 Get stat and equipment-related information about a Gang Member
-

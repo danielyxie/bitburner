@@ -14,9 +14,9 @@ switchCity(name: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | string |  |
+| Parameter | Type   | Description |
+| --------- | ------ | ----------- |
+| name      | string |             |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ true if successful, and false otherwise
 RAM cost: 4 GB Attempts to switch to the specified city (for Bladeburner only).
 
 Returns true if successful, and false otherwise
-

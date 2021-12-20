@@ -14,9 +14,9 @@ getServerSecurityLevel(host: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host of target server. |
+| Parameter | Type   | Description            |
+| --------- | ------ | ---------------------- |
+| host      | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Security level of the target server.
 RAM cost: 0.1 GB
 
 Returns the security level of the target server. A server’s security level is denoted by a number, typically between 1 and 100 (but it can go above 100).
-

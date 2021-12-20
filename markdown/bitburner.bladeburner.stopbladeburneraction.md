@@ -11,6 +11,7 @@ Stop current action.
 ```typescript
 stopBladeburnerAction(): void;
 ```
+
 <b>Returns:</b>
 
 void
@@ -20,4 +21,3 @@ void
 RAM cost: 2 GB
 
 Stops the current Bladeburner action.
-

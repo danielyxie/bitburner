@@ -14,10 +14,10 @@ getRamUpgradeCost(index: number, n: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  index | number | Index/Identifier of Hacknet Node. |
-|  n | number | Number of times to upgrade RAM. Must be positive. Rounded to nearest integer. |
+| Parameter | Type   | Description                                                                   |
+| --------- | ------ | ----------------------------------------------------------------------------- |
+| index     | number | Index/Identifier of Hacknet Node.                                             |
+| n         | number | Number of times to upgrade RAM. Must be positive. Rounded to nearest integer. |
 
 <b>Returns:</b>
 
@@ -32,4 +32,3 @@ RAM cost: 0 GB
 Returns the cost of upgrading the RAM of the specified Hacknet Node n times.
 
 If an invalid value for n is provided, then this function returns 0. If the specified Hacknet Node is already at max level, then Infinity is returned.
-

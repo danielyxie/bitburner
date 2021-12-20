@@ -14,10 +14,10 @@ scriptRunning(script: string, host: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  script | string | Filename of script to check. This is case-sensitive. |
-|  host | string | Host of target server. |
+| Parameter | Type   | Description                                          |
+| --------- | ------ | ---------------------------------------------------- |
+| script    | string | Filename of script to check. This is case-sensitive. |
+| host      | string | Host of target server.                               |
 
 <b>Returns:</b>
 
@@ -35,7 +35,6 @@ This is different than the isRunning function because it does not try to identif
 
 ## Example 1
 
-
 ```ts
 //The function call will return true if there is any script named foo.script running on the foodnstuff server, and false otherwise:
 scriptRunning("foo.script", "foodnstuff");
@@ -43,9 +42,7 @@ scriptRunning("foo.script", "foodnstuff");
 
 ## Example 2
 
-
 ```ts
 //The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:
 scriptRunning("foo.script", getHostname());
 ```
-

@@ -14,10 +14,10 @@ donateToFaction(faction: string, amount: number): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  faction | string | Name of faction to donate to. |
-|  amount | number | Amount of money to donate. |
+| Parameter | Type   | Description                   |
+| --------- | ------ | ----------------------------- |
+| faction   | string | Name of faction to donate to. |
+| amount    | number | Amount of money to donate.    |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ True if the money was donated, and false otherwise.
 RAM cost: 5 GB
 
 Attempts to donate money to the specified faction in exchange for reputation. Returns true if you successfully donate the money, and false otherwise.
-

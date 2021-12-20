@@ -14,10 +14,10 @@ remove(rootX: number, rootY: number): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  rootX | number | X against which to align the top left of the fragment. |
-|  rootY | number | Y against which to align the top left of the fragment. |
+| Parameter | Type   | Description                                            |
+| --------- | ------ | ------------------------------------------------------ |
+| rootX     | number | X against which to align the top left of the fragment. |
+| rootY     | number | Y against which to align the top left of the fragment. |
 
 <b>Returns:</b>
 
@@ -28,4 +28,3 @@ The fragment at \[rootX, rootY\], if any.
 ## Remarks
 
 RAM cost: cost: 0.15 GB
-

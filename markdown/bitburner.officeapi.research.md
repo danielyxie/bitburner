@@ -14,12 +14,11 @@ research(divisionName: string, researchName: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  researchName | string | Name of the research |
+| Parameter    | Type   | Description          |
+| ------------ | ------ | -------------------- |
+| divisionName | string | Name of the division |
+| researchName | string | Name of the research |
 
 <b>Returns:</b>
 
 void
-

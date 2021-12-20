@@ -14,15 +14,14 @@ throwParty(divisionName: string, cityName: string, costPerEmployee: number): Pro
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
-|  costPerEmployee | number | Amount to spend per employee. |
+| Parameter       | Type   | Description                   |
+| --------------- | ------ | ----------------------------- |
+| divisionName    | string | Name of the division          |
+| cityName        | string | Name of the city              |
+| costPerEmployee | number | Amount to spend per employee. |
 
 <b>Returns:</b>
 
 Promise&lt;number&gt;
 
 Amount of happiness increased.
-

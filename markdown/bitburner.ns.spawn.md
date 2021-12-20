@@ -14,11 +14,11 @@ spawn(script: string, numThreads?: number, ...args: string[]): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  script | string | Filename of script to execute. |
-|  numThreads | number | Number of threads to spawn new script with. Will be rounded to nearest integer. |
-|  args | string\[\] | Additional arguments to pass into the new script that is being run. |
+| Parameter  | Type       | Description                                                                     |
+| ---------- | ---------- | ------------------------------------------------------------------------------- |
+| script     | string     | Filename of script to execute.                                                  |
+| numThreads | number     | Number of threads to spawn new script with. Will be rounded to nearest integer. |
+| args       | string\[\] | Additional arguments to pass into the new script that is being run.             |
 
 <b>Returns:</b>
 
@@ -34,9 +34,7 @@ Because this function immediately terminates the script, it does not have a retu
 
 ## Example
 
-
 ```ts
 //The following example will execute the script ‘foo.script’ with 10 threads and the arguments ‘foodnstuff’ and 90:
-spawn('foo.script', 10, 'foodnstuff', 90);
+spawn("foo.script", 10, "foodnstuff", 90);
 ```
-

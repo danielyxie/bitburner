@@ -14,10 +14,10 @@ getTeamSize(type: string, name: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | string | Type of action. |
-|  name | string | Name of action. Must be an exact match. |
+| Parameter | Type   | Description                             |
+| --------- | ------ | --------------------------------------- |
+| type      | string | Type of action.                         |
+| name      | string | Name of action. Must be an exact match. |
 
 <b>Returns:</b>
 
@@ -32,4 +32,3 @@ RAM cost: 4 GB
 Returns the number of Bladeburner team members you have assigned to the specified action.
 
 Setting a team is only applicable for Operations and BlackOps. This function will return 0 for other action types.
-

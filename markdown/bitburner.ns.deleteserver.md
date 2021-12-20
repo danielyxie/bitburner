@@ -14,9 +14,9 @@ deleteServer(host: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host of the server to delete. |
+| Parameter | Type   | Description                   |
+| --------- | ------ | ----------------------------- |
+| host      | string | Host of the server to delete. |
 
 <b>Returns:</b>
 
@@ -31,4 +31,3 @@ True if successful, and false otherwise.
 Deletes one of your purchased servers, which is specified by its hostname.
 
 The hostname argument can be any data type, but it will be converted to a string. Whitespace is automatically removed from the string. This function will not delete a server that still has scripts running on it.
-

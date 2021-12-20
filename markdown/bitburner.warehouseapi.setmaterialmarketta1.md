@@ -14,14 +14,13 @@ setMaterialMarketTA1(divisionName: string, cityName: string, materialName: strin
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
-|  materialName | string | Name of the material |
-|  on | boolean | market ta enabled |
+| Parameter    | Type    | Description          |
+| ------------ | ------- | -------------------- |
+| divisionName | string  | Name of the division |
+| cityName     | string  | Name of the city     |
+| materialName | string  | Name of the material |
+| on           | boolean | market ta enabled    |
 
 <b>Returns:</b>
 
 void
-

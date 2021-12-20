@@ -15,4 +15,3 @@ readonly codingcontract: CodingContract;
 ## Remarks
 
 RAM cost: 0 GB
-

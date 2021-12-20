@@ -14,14 +14,13 @@ buyCoffee(divisionName: string, cityName: string): Promise<void>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
+| Parameter    | Type   | Description          |
+| ------------ | ------ | -------------------- |
+| divisionName | string | Name of the division |
+| cityName     | string | Name of the city     |
 
 <b>Returns:</b>
 
 Promise&lt;void&gt;
 
 A promise that is fulfilled when the coffee is served.
-

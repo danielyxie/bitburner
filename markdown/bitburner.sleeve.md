@@ -9,7 +9,7 @@ Sleeve API
 <b>Signature:</b>
 
 ```typescript
-export interface Sleeve 
+export interface Sleeve
 ```
 
 ## Remarks
@@ -18,21 +18,20 @@ If you are not in BitNode-10, then you must have Source-File 10 in order to use 
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [getInformation(sleeveNumber)](./bitburner.sleeve.getinformation.md) | Get information about a sleeve. |
-|  [getNumSleeves()](./bitburner.sleeve.getnumsleeves.md) | Get the number of sleeves you own. |
-|  [getSleeveAugmentations(sleeveNumber)](./bitburner.sleeve.getsleeveaugmentations.md) | Get augmentations installed on a sleeve. |
-|  [getSleevePurchasableAugs(sleeveNumber)](./bitburner.sleeve.getsleevepurchasableaugs.md) | List purchasable augs for a sleeve. |
-|  [getSleeveStats(sleeveNumber)](./bitburner.sleeve.getsleevestats.md) | Get the stats of a sleeve. |
-|  [getTask(sleeveNumber)](./bitburner.sleeve.gettask.md) | Get task of a sleeve. |
-|  [purchaseSleeveAug(sleeveNumber, augName)](./bitburner.sleeve.purchasesleeveaug.md) | Purchase an aug for a sleeve. |
-|  [setToCommitCrime(sleeveNumber, name)](./bitburner.sleeve.settocommitcrime.md) | Set a sleeve to commit crime. |
-|  [setToCompanyWork(sleeveNumber, companyName)](./bitburner.sleeve.settocompanywork.md) | Set a sleeve to work for a company. |
-|  [setToFactionWork(sleeveNumber, factionName, factionWorkType)](./bitburner.sleeve.settofactionwork.md) | Set a sleeve to work for a faction. |
-|  [setToGymWorkout(sleeveNumber, gymName, stat)](./bitburner.sleeve.settogymworkout.md) | Set a sleeve to workout at the gym. |
-|  [setToShockRecovery(sleeveNumber)](./bitburner.sleeve.settoshockrecovery.md) | Set a sleeve to shock recovery. |
-|  [setToSynchronize(sleeveNumber)](./bitburner.sleeve.settosynchronize.md) | Set a sleeve to synchronize. |
-|  [setToUniversityCourse(sleeveNumber, university, className)](./bitburner.sleeve.settouniversitycourse.md) | Set a sleeve to take a class at a university. |
-|  [travel(sleeveNumber, cityName)](./bitburner.sleeve.travel.md) | Make a sleeve travel to another city. |
-
+| Method                                                                                                    | Description                                   |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| [getInformation(sleeveNumber)](./bitburner.sleeve.getinformation.md)                                      | Get information about a sleeve.               |
+| [getNumSleeves()](./bitburner.sleeve.getnumsleeves.md)                                                    | Get the number of sleeves you own.            |
+| [getSleeveAugmentations(sleeveNumber)](./bitburner.sleeve.getsleeveaugmentations.md)                      | Get augmentations installed on a sleeve.      |
+| [getSleevePurchasableAugs(sleeveNumber)](./bitburner.sleeve.getsleevepurchasableaugs.md)                  | List purchasable augs for a sleeve.           |
+| [getSleeveStats(sleeveNumber)](./bitburner.sleeve.getsleevestats.md)                                      | Get the stats of a sleeve.                    |
+| [getTask(sleeveNumber)](./bitburner.sleeve.gettask.md)                                                    | Get task of a sleeve.                         |
+| [purchaseSleeveAug(sleeveNumber, augName)](./bitburner.sleeve.purchasesleeveaug.md)                       | Purchase an aug for a sleeve.                 |
+| [setToCommitCrime(sleeveNumber, name)](./bitburner.sleeve.settocommitcrime.md)                            | Set a sleeve to commit crime.                 |
+| [setToCompanyWork(sleeveNumber, companyName)](./bitburner.sleeve.settocompanywork.md)                     | Set a sleeve to work for a company.           |
+| [setToFactionWork(sleeveNumber, factionName, factionWorkType)](./bitburner.sleeve.settofactionwork.md)    | Set a sleeve to work for a faction.           |
+| [setToGymWorkout(sleeveNumber, gymName, stat)](./bitburner.sleeve.settogymworkout.md)                     | Set a sleeve to workout at the gym.           |
+| [setToShockRecovery(sleeveNumber)](./bitburner.sleeve.settoshockrecovery.md)                              | Set a sleeve to shock recovery.               |
+| [setToSynchronize(sleeveNumber)](./bitburner.sleeve.settosynchronize.md)                                  | Set a sleeve to synchronize.                  |
+| [setToUniversityCourse(sleeveNumber, university, className)](./bitburner.sleeve.settouniversitycourse.md) | Set a sleeve to take a class at a university. |
+| [travel(sleeveNumber, cityName)](./bitburner.sleeve.travel.md)                                            | Make a sleeve travel to another city.         |

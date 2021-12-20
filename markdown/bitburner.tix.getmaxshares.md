@@ -14,9 +14,9 @@ getMaxShares(sym: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sym | string | Stock symbol. |
+| Parameter | Type   | Description   |
+| --------- | ------ | ------------- |
+| sym       | string | Stock symbol. |
 
 <b>Returns:</b>
 
@@ -27,4 +27,3 @@ Maximum number of shares that the stock has.
 ## Remarks
 
 RAM cost: 2 GB This is the maximum amount of the stock that can be purchased in both the Long and Short positions combined.
-

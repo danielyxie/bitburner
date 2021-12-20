@@ -11,6 +11,7 @@ SF4.1 - Run the hack command in the terminal.
 ```typescript
 manualHack(): Promise<number>;
 ```
+
 <b>Returns:</b>
 
 Promise&lt;number&gt;
@@ -20,4 +21,3 @@ Amount of money stolen by manual hacking.
 ## Remarks
 
 RAM cost: 2 GB
-

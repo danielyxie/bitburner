@@ -14,11 +14,11 @@ setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: str
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to work for the faction. |
-|  factionName | string | Name of the faction to work for. |
-|  factionWorkType | string | Name of the action to perform for this faction. |
+| Parameter       | Type   | Description                                     |
+| --------------- | ------ | ----------------------------------------------- |
+| sleeveNumber    | number | Index of the sleeve to work for the faction.    |
+| factionName     | string | Name of the faction to work for.                |
+| factionWorkType | string | Name of the action to perform for this faction. |
 
 <b>Returns:</b>
 
@@ -31,4 +31,3 @@ True if the sleeve started working on this faction, false otherwise.
 RAM cost: 4 GB
 
 Return a boolean indicating whether or not the sleeve started working or this faction.
-

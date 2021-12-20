@@ -11,6 +11,7 @@ Clears the script’s logs.
 ```typescript
 clearLog(): void;
 ```
+
 <b>Returns:</b>
 
 void
@@ -18,4 +19,3 @@ void
 ## Remarks
 
 RAM cost: 0 GB
-

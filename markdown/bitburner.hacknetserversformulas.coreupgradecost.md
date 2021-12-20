@@ -14,15 +14,14 @@ coreUpgradeCost(startingCore: number, extraCores?: number, costMult?: number): n
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  startingCore | number | starting cores |
-|  extraCores | number | amount of cores to purchase (defaults to 1) |
-|  costMult | number | player cost reduction (default to 1) |
+| Parameter    | Type   | Description                                 |
+| ------------ | ------ | ------------------------------------------- |
+| startingCore | number | starting cores                              |
+| extraCores   | number | amount of cores to purchase (defaults to 1) |
+| costMult     | number | player cost reduction (default to 1)        |
 
 <b>Returns:</b>
 
 number
 
 The calculated cost.
-

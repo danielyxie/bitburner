@@ -14,9 +14,9 @@ getEquipmentCost(equipName: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  equipName | string | Name of equipment. |
+| Parameter | Type   | Description        |
+| --------- | ------ | ------------------ |
+| equipName | string | Name of equipment. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Cost to purchase the specified Equipment/Augmentation (number). Infinity for inv
 RAM cost: 2 GB
 
 Get the amount of money it takes to purchase a piece of Equipment or an Augmentation. If an invalid Equipment/Augmentation is specified, this function will return Infinity.
-

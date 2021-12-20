@@ -9,14 +9,13 @@ A single process on a server.
 <b>Signature:</b>
 
 ```typescript
-export interface ProcessInfo 
+export interface ProcessInfo
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [args](./bitburner.processinfo.args.md) | string\[\] | Script's arguments |
-|  [filename](./bitburner.processinfo.filename.md) | string | Script name. |
-|  [threads](./bitburner.processinfo.threads.md) | number | Number of threads script is running with |
-
+| Property                                        | Type       | Description                              |
+| ----------------------------------------------- | ---------- | ---------------------------------------- |
+| [args](./bitburner.processinfo.args.md)         | string\[\] | Script's arguments                       |
+| [filename](./bitburner.processinfo.filename.md) | string     | Script name.                             |
+| [threads](./bitburner.processinfo.threads.md)   | number     | Number of threads script is running with |

@@ -14,14 +14,13 @@ getProduct(divisionName: string, productName: string): Product;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  productName | string | Name of the product |
+| Parameter    | Type   | Description          |
+| ------------ | ------ | -------------------- |
+| divisionName | string | Name of the division |
+| productName  | string | Name of the product  |
 
 <b>Returns:</b>
 
 [Product](./bitburner.product.md)
 
 product data
-

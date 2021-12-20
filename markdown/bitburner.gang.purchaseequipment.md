@@ -14,10 +14,10 @@ purchaseEquipment(memberName: string, equipName: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  memberName | string | Name of Gang member to purchase the equipment for. |
-|  equipName | string | Name of Equipment/Augmentation to purchase. |
+| Parameter  | Type   | Description                                        |
+| ---------- | ------ | -------------------------------------------------- |
+| memberName | string | Name of Gang member to purchase the equipment for. |
+| equipName  | string | Name of Equipment/Augmentation to purchase.        |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ True if the equipment was successfully purchased. False otherwise
 RAM cost: 4 GB
 
 Attempt to purchase the specified Equipment/Augmentation for the specified Gang member.
-

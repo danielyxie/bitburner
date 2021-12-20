@@ -11,6 +11,7 @@ Clear the board of all fragments.
 ```typescript
 clear(): void;
 ```
+
 <b>Returns:</b>
 
 void
@@ -18,4 +19,3 @@ void
 ## Remarks
 
 RAM cost: cost: 0 GB
-

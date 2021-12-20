@@ -14,9 +14,9 @@ getAugmentationStats(name: string): AugmentationStats;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | string | Name of Augmentation. CASE-SENSITIVE. |
+| Parameter | Type   | Description                           |
+| --------- | ------ | ------------------------------------- |
+| name      | string | Name of Augmentation. CASE-SENSITIVE. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Augmentation stats.
 RAM cost: 5 GB
 
 This function returns augmentation stats.
-

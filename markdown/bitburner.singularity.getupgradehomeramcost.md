@@ -11,6 +11,7 @@ SF4.2 - Get the price of upgrading home RAM.
 ```typescript
 getUpgradeHomeRamCost(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -22,4 +23,3 @@ Cost of upgrading the player’s home computer RAM.
 RAM cost: 1.5 GB
 
 Returns the cost of upgrading the player’s home computer RAM.
-

@@ -14,10 +14,10 @@ getActionMaxLevel(type: string, name: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | string | Type of action. |
-|  name | string | Name of action. Must be an exact match. |
+| Parameter | Type   | Description                             |
+| --------- | ------ | --------------------------------------- |
+| type      | string | Type of action.                         |
+| name      | string | Name of action. Must be an exact match. |
 
 <b>Returns:</b>
 
@@ -32,4 +32,3 @@ RAM cost: 4 GB
 Returns the maximum level for this action.
 
 Returns -1 if an invalid action is specified.
-

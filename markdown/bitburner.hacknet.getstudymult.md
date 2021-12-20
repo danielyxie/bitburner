@@ -11,6 +11,7 @@ Get the multipler to study.
 ```typescript
 getStudyMult(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -22,4 +23,3 @@ Multiplier.
 RAM cost: 0 GB
 
 This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
-

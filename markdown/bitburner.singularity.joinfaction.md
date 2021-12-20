@@ -14,9 +14,9 @@ joinFaction(faction: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  faction | string | Name of faction to join. |
+| Parameter | Type   | Description              |
+| --------- | ------ | ------------------------ |
+| faction   | string | Name of faction to join. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ True if player joined the faction, and false otherwise.
 RAM cost: 3 GB
 
 This function will automatically accept an invitation from a faction and join it.
-

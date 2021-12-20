@@ -11,6 +11,7 @@ Purchase 4S Market Data Access.
 ```typescript
 purchase4SMarketData(): boolean;
 ```
+
 <b>Returns:</b>
 
 boolean
@@ -20,4 +21,3 @@ True if you successfully purchased it or if you already have access, false other
 ## Remarks
 
 RAM cost: 2.5 GB
-

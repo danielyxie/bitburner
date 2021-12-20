@@ -14,9 +14,9 @@ getNodeStats(index: number): NodeStats;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  index | number | Index/Identifier of Hacknet Node |
+| Parameter | Type   | Description                      |
+| --------- | ------ | -------------------------------- |
+| index     | number | Index/Identifier of Hacknet Node |
 
 <b>Returns:</b>
 
@@ -31,4 +31,3 @@ RAM cost: 0 GB
 Returns an object containing a variety of stats about the specified Hacknet Node.
 
 Note that for Hacknet Nodes, production refers to the amount of money the node generates. For Hacknet Servers (the upgraded version of Hacknet Nodes), production refers to the amount of hashes the node generates.
-

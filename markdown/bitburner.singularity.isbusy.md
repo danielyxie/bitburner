@@ -11,6 +11,7 @@ SF4.1 - Check if the player is busy.
 ```typescript
 isBusy(): boolean;
 ```
+
 <b>Returns:</b>
 
 boolean
@@ -22,4 +23,3 @@ True if the player is currently performing an ‘action’, false otherwise.
 RAM cost: 0.5 GB
 
 Returns a boolean indicating whether or not the player is currently performing an ‘action’. These actions include working for a company/faction, studying at a univeristy, working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.
-

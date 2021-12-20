@@ -14,10 +14,10 @@ getContractType(filename: string, host?: string): string;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  filename | string |  |
-|  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
+| Parameter | Type   | Description                                                                                       |
+| --------- | ------ | ------------------------------------------------------------------------------------------------- |
+| filename  | string |                                                                                                   |
+| host      | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ Name describing the type of problem posed by the Coding Contract.
 RAM cost: 5 GB
 
 Returns a name describing the type of problem posed by the Coding Contract. (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
-

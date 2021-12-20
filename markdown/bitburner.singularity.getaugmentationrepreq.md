@@ -14,9 +14,9 @@ getAugmentationRepReq(augName: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  augName | string | Name of Augmentation. |
+| Parameter | Type   | Description           |
+| --------- | ------ | --------------------- |
+| augName   | string | Name of Augmentation. |
 
 <b>Returns:</b>
 
@@ -27,4 +27,3 @@ Reputation requirement of the augmentation.
 ## Remarks
 
 RAM cost: 2.5 GB
-

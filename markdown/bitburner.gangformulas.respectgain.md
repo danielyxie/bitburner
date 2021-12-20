@@ -14,15 +14,14 @@ respectGain(gang: GangGenInfo, member: GangMemberInfo, task: GangTaskStats): num
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  gang | [GangGenInfo](./bitburner.ganggeninfo.md) | Gang info from [getGangInformation](./bitburner.gang.getganginformation.md) |
-|  member | [GangMemberInfo](./bitburner.gangmemberinfo.md) | Gang info from [getMemberInformation](./bitburner.gang.getmemberinformation.md) |
-|  task | [GangTaskStats](./bitburner.gangtaskstats.md) | Gang info from [getTaskStats](./bitburner.gang.gettaskstats.md) |
+| Parameter | Type                                            | Description                                                                     |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------- |
+| gang      | [GangGenInfo](./bitburner.ganggeninfo.md)       | Gang info from [getGangInformation](./bitburner.gang.getganginformation.md)     |
+| member    | [GangMemberInfo](./bitburner.gangmemberinfo.md) | Gang info from [getMemberInformation](./bitburner.gang.getmemberinformation.md) |
+| task      | [GangTaskStats](./bitburner.gangtaskstats.md)   | Gang info from [getTaskStats](./bitburner.gang.gettaskstats.md)                 |
 
 <b>Returns:</b>
 
 number
 
 The calculated respect gain.
-

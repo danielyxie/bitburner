@@ -14,9 +14,9 @@ getServerMinSecurityLevel(host: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host of target server. |
+| Parameter | Type   | Description            |
+| --------- | ------ | ---------------------- |
+| host      | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -27,4 +27,3 @@ Minimum security level of the target server.
 ## Remarks
 
 RAM cost: 0.1 GB
-

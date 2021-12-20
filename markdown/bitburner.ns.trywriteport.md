@@ -14,10 +14,10 @@ tryWritePort(port: number, data: string[] | number): Promise<boolean>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  port | number | Port or text file that will be written to. |
-|  data | string\[\] \| number | Data to write. |
+| Parameter | Type                 | Description                                |
+| --------- | -------------------- | ------------------------------------------ |
+| port      | number               | Port or text file that will be written to. |
+| data      | string\[\] \| number | Data to write.                             |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ True if the data is successfully written to the port, and false otherwise.
 RAM cost: 0 GB
 
 Attempts to write data to the specified Netscript Port. If the port is full, the data will not be written. Otherwise, the data will be written normally.
-

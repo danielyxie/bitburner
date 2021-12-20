@@ -14,9 +14,9 @@ readPort(port: number): any;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  port | number |  |
+| Parameter | Type   | Description |
+| --------- | ------ | ----------- |
+| port      | number |             |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ the data read.
 RAM cost: 0 GB
 
 Read data from that port. A port is a serialized queue. This function will remove the first element from that queue and return it. If the queue is empty, then the string “NULL PORT DATA” will be returned.
-

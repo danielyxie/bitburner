@@ -11,9 +11,9 @@ All constants used by the game.
 ```typescript
 constants(): any;
 ```
+
 <b>Returns:</b>
 
 any
 
 An object with all hacknet server constants used by the game.
-

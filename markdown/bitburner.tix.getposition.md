@@ -14,9 +14,9 @@ getPosition(sym: string): [number, number, number, number];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sym | string | Stock symbol. |
+| Parameter | Type   | Description   |
+| --------- | ------ | ------------- |
+| sym       | string | Stock symbol. |
 
 <b>Returns:</b>
 
@@ -36,12 +36,10 @@ All elements in the returned array are numeric.
 
 ## Example
 
-
 ```ts
 pos = getPosition("ECP");
-shares      = pos[0];
-avgPx       = pos[1];
+shares = pos[0];
+avgPx = pos[1];
 sharesShort = pos[2];
-avgPxShort  = pos[3];
+avgPxShort = pos[3];
 ```
-

@@ -11,6 +11,7 @@ Get the number of hacknet nodes you own.
 ```typescript
 numNodes(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -22,4 +23,3 @@ number of hacknet nodes.
 RAM cost: 0 GB
 
 Returns the number of Hacknet Nodes you own.
-

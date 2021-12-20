@@ -11,6 +11,7 @@ SF4.1 - Stop the current action.
 ```typescript
 stopAction(): boolean;
 ```
+
 <b>Returns:</b>
 
 boolean
@@ -28,4 +29,3 @@ The actions that can be stopped with this function are:
 \* Studying at a university \* Working for a company/faction \* Creating a program \* Committing a Crime
 
 This function will return true if the player’s action was ended. It will return false if the player was not performing an action when this function was called.
-

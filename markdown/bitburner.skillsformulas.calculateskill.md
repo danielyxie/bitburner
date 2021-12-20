@@ -14,14 +14,13 @@ calculateSkill(exp: number, skillMult?: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  exp | number | experience for that skill |
-|  skillMult | number | Multiplier for that skill, defaults to 1. |
+| Parameter | Type   | Description                               |
+| --------- | ------ | ----------------------------------------- |
+| exp       | number | experience for that skill                 |
+| skillMult | number | Multiplier for that skill, defaults to 1. |
 
 <b>Returns:</b>
 
 number
 
 The calculated skill level.
-

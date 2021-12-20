@@ -11,6 +11,7 @@ SF4.2 - List all current faction invitations.
 ```typescript
 checkFactionInvitations(): string[];
 ```
+
 <b>Returns:</b>
 
 string\[\]
@@ -22,4 +23,3 @@ Array with the name of all Factions you currently have oustanding invitations fr
 RAM cost: 3 GB
 
 Returns an array with the name of all Factions you currently have oustanding invitations from.
-

@@ -14,13 +14,12 @@ setProductMarketTA1(divisionName: string, productName: string, on: boolean): voi
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  productName | string | Name of the product |
-|  on | boolean | market ta enabled |
+| Parameter    | Type    | Description          |
+| ------------ | ------- | -------------------- |
+| divisionName | string  | Name of the division |
+| productName  | string  | Name of the product  |
+| on           | boolean | market ta enabled    |
 
 <b>Returns:</b>
 
 void
-

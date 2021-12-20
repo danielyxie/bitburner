@@ -15,4 +15,3 @@ readonly gang: Gang;
 ## Remarks
 
 RAM cost: 0 GB
-

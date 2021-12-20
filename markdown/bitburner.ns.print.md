@@ -14,9 +14,9 @@ print(msg: any): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  msg | any | Value to be printed. |
+| Parameter | Type | Description          |
+| --------- | ---- | -------------------- |
+| msg       | any  | Value to be printed. |
 
 <b>Returns:</b>
 
@@ -25,4 +25,3 @@ void
 ## Remarks
 
 RAM cost: 0 GB
-

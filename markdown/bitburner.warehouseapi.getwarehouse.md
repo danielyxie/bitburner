@@ -14,14 +14,13 @@ getWarehouse(divisionName: string, cityName: string): Warehouse;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
+| Parameter    | Type   | Description          |
+| ------------ | ------ | -------------------- |
+| divisionName | string | Name of the division |
+| cityName     | string | Name of the city     |
 
 <b>Returns:</b>
 
 [Warehouse](./bitburner.warehouse.md)
 
 warehouse data
-

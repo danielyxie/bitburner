@@ -9,13 +9,12 @@ Skills formulas
 <b>Signature:</b>
 
 ```typescript
-interface SkillsFormulas 
+interface SkillsFormulas
 ```
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [calculateExp(skill, skillMult)](./bitburner.skillsformulas.calculateexp.md) | Calculate exp for skill level. |
-|  [calculateSkill(exp, skillMult)](./bitburner.skillsformulas.calculateskill.md) | Calculate skill level. |
-
+| Method                                                                         | Description                    |
+| ------------------------------------------------------------------------------ | ------------------------------ |
+| [calculateExp(skill, skillMult)](./bitburner.skillsformulas.calculateexp.md)   | Calculate exp for skill level. |
+| [calculateSkill(exp, skillMult)](./bitburner.skillsformulas.calculateskill.md) | Calculate skill level.         |

@@ -5,9 +5,8 @@
 ## Singularity.getAugmentationCost() method
 
 > Warning: This API is now obsolete.
-> 
+>
 > use getAugmentationPrice getAugmentationRepCost
-> 
 
 SF4.3 - Get the price and reputation of an augmentation.
 
@@ -19,9 +18,9 @@ getAugmentationCost(augName: string): [number, number];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  augName | string | Name of Augmentation. |
+| Parameter | Type   | Description           |
+| --------- | ------ | --------------------- |
+| augName   | string | Name of Augmentation. |
 
 <b>Returns:</b>
 
@@ -36,4 +35,3 @@ RAM cost: 5 GB
 This function returns an array with two elements that gives the cost for the specified Augmentation. The first element in the returned array is the reputation requirement of the Augmentation, and the second element is the money cost.
 
 If an invalid Augmentation name is passed in for the augName argument, this function will return the array \[-1, -1\].
-

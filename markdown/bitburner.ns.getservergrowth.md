@@ -14,9 +14,9 @@ getServerGrowth(host: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host of target server. |
+| Parameter | Type   | Description            |
+| --------- | ------ | ---------------------- |
+| host      | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Parameter that affects the percentage by which the server’s money is increased
 RAM cost: 0.1 GB
 
 Returns the server’s instrinsic “growth parameter”. This growth parameter is a number between 0 and 100 that represents how quickly the server’s money grows. This parameter affects the percentage by which the server’s money is increased when using the grow function. A higher growth parameter will result in a higher percentage increase from grow.
-

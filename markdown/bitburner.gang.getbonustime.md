@@ -11,6 +11,7 @@ Get bonus time.
 ```typescript
 getBonusTime(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -26,4 +27,3 @@ Returns the amount of accumulated “bonus time” (seconds) for the Gang mechan
 “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
 
 “Bonus time” makes the game progress faster, up to 10x the normal speed.
-

@@ -9,7 +9,7 @@ Corporation Office API
 <b>Signature:</b>
 
 ```typescript
-export interface OfficeAPI 
+export interface OfficeAPI
 ```
 
 ## Remarks
@@ -18,15 +18,14 @@ Requires the Office API upgrade from your corporation.
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [assignJob(divisionName, cityName, employeeName, job)](./bitburner.officeapi.assignjob.md) | Assign an employee to a job. |
-|  [buyCoffee(divisionName, cityName)](./bitburner.officeapi.buycoffee.md) | Buy coffee for your employees |
-|  [getEmployee(divisionName, cityName, employeeName)](./bitburner.officeapi.getemployee.md) | Get data about an employee |
-|  [getOffice(divisionName, cityName)](./bitburner.officeapi.getoffice.md) | Get data about an office |
-|  [hireAdVert(divisionName)](./bitburner.officeapi.hireadvert.md) | Hire AdVert. |
-|  [hireEmployee(divisionName, cityName)](./bitburner.officeapi.hireemployee.md) | Assign an employee to a job. |
-|  [research(divisionName, researchName)](./bitburner.officeapi.research.md) | Hire AdVert. |
-|  [throwParty(divisionName, cityName, costPerEmployee)](./bitburner.officeapi.throwparty.md) | Assign an employee to a job. |
-|  [upgradeOfficeSize(divisionName, cityName, size)](./bitburner.officeapi.upgradeofficesize.md) | Upgrade office size. |
-
+| Method                                                                                        | Description                   |
+| --------------------------------------------------------------------------------------------- | ----------------------------- |
+| [assignJob(divisionName, cityName, employeeName, job)](./bitburner.officeapi.assignjob.md)    | Assign an employee to a job.  |
+| [buyCoffee(divisionName, cityName)](./bitburner.officeapi.buycoffee.md)                       | Buy coffee for your employees |
+| [getEmployee(divisionName, cityName, employeeName)](./bitburner.officeapi.getemployee.md)     | Get data about an employee    |
+| [getOffice(divisionName, cityName)](./bitburner.officeapi.getoffice.md)                       | Get data about an office      |
+| [hireAdVert(divisionName)](./bitburner.officeapi.hireadvert.md)                               | Hire AdVert.                  |
+| [hireEmployee(divisionName, cityName)](./bitburner.officeapi.hireemployee.md)                 | Assign an employee to a job.  |
+| [research(divisionName, researchName)](./bitburner.officeapi.research.md)                     | Hire AdVert.                  |
+| [throwParty(divisionName, cityName, costPerEmployee)](./bitburner.officeapi.throwparty.md)    | Assign an employee to a job.  |
+| [upgradeOfficeSize(divisionName, cityName, size)](./bitburner.officeapi.upgradeofficesize.md) | Upgrade office size.          |

@@ -14,12 +14,11 @@ toast(msg: any, variant?: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  msg | any | Message in the toast. |
-|  variant | string | Type of toast, must be one of success, info, warning, error. Defaults to success. |
+| Parameter | Type   | Description                                                                       |
+| --------- | ------ | --------------------------------------------------------------------------------- |
+| msg       | any    | Message in the toast.                                                             |
+| variant   | string | Type of toast, must be one of success, info, warning, error. Defaults to success. |
 
 <b>Returns:</b>
 
 void
-

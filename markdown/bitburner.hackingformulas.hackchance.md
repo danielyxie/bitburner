@@ -14,14 +14,13 @@ hackChance(server: Server, player: Player): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  server | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
-|  player | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
+| Parameter | Type                            | Description                                               |
+| --------- | ------------------------------- | --------------------------------------------------------- |
+| server    | [Server](./bitburner.server.md) | Server info from [getServer](./bitburner.ns.getserver.md) |
+| player    | [Player](./bitburner.player.md) | Player info from [getPlayer](./bitburner.ns.getplayer.md) |
 
 <b>Returns:</b>
 
 number
 
 The calculated hack chance.
-

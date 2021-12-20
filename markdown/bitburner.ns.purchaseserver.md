@@ -14,10 +14,10 @@ purchaseServer(hostname: string, ram: number): string;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  hostname | string | Host of the purchased server. |
-|  ram | number | Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20). |
+| Parameter | Type   | Description                                                                                                       |
+| --------- | ------ | ----------------------------------------------------------------------------------------------------------------- |
+| hostname  | string | Host of the purchased server.                                                                                     |
+| ram       | number | Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20). |
 
 <b>Returns:</b>
 
@@ -39,12 +39,10 @@ Returns the hostname of the newly purchased server as a string. If the function 
 
 ## Example
 
-
 ```ts
 ram = 64;
 hn = "pserv-";
 for (i = 0; i < 5; ++i) {
-   purchaseServer(hn + i, ram);
+  purchaseServer(hn + i, ram);
 }
 ```
-

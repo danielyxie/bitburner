@@ -9,15 +9,14 @@ Value in map of [StockOrder](./bitburner.stockorder.md)
 <b>Signature:</b>
 
 ```typescript
-export interface StockOrderObject 
+export interface StockOrderObject
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [position](./bitburner.stockorderobject.position.md) | string | Order position |
-|  [price](./bitburner.stockorderobject.price.md) | number | Price per share |
-|  [shares](./bitburner.stockorderobject.shares.md) | number | Number of shares |
-|  [type](./bitburner.stockorderobject.type.md) | string | Order type |
-
+| Property                                             | Type   | Description      |
+| ---------------------------------------------------- | ------ | ---------------- |
+| [position](./bitburner.stockorderobject.position.md) | string | Order position   |
+| [price](./bitburner.stockorderobject.price.md)       | number | Price per share  |
+| [shares](./bitburner.stockorderobject.shares.md)     | number | Number of shares |
+| [type](./bitburner.stockorderobject.type.md)         | string | Order type       |

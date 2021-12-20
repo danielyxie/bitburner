@@ -14,10 +14,10 @@ getNumTriesRemaining(filename: string, host?: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  filename | string |  |
-|  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
+| Parameter | Type   | Description                                                                                       |
+| --------- | ------ | ------------------------------------------------------------------------------------------------- |
+| filename  | string |                                                                                                   |
+| host      | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ How many attempts are remaining for the contract;
 RAM cost: 2 GB
 
 Get the number of tries remaining on the contract before it self-destructs.
-

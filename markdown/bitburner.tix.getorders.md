@@ -11,6 +11,7 @@ Returns your order book for the stock market.
 ```typescript
 getOrders(): StockOrder;
 ```
+
 <b>Returns:</b>
 
 [StockOrder](./bitburner.stockorder.md)
@@ -41,10 +42,10 @@ RAM cost: 2.5 GB This is an object containing information for all the Limit and 
  ...
 }
 ```
+
 The “Order type” property can have one of the following four values: "Limit Buy Order", "Limit Sell Order", "Stop Buy Order", "Stop Sell Order". Note that the order book will only contain information for stocks that you actually have orders in.
 
 ## Example
-
 
 ```ts
 "If you do not have orders in Nova Medical (NVMD), then the returned object will not have a “NVMD” property."
@@ -73,4 +74,3 @@ The “Order type” property can have one of the following four values: "Limit 
  ],
 }
 ```
-

@@ -14,9 +14,9 @@ workForCompany(companyName?: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  companyName | string | Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked |
+| Parameter   | Type   | Description                                                                                                                             |
+| ----------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| companyName | string | Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked |
 
 <b>Returns:</b>
 
@@ -36,7 +36,6 @@ Note that when you are working for a company, you will not actually receive your
 
 ## Example
 
-
 ```ts
 //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
 while (getCompanyRep(COMPANY HERE) < VALUE) {
@@ -45,4 +44,3 @@ while (getCompanyRep(COMPANY HERE) < VALUE) {
 }
 //This way, your company reputation will be updated every minute.
 ```
-

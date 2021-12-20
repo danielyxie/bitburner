@@ -14,17 +14,16 @@ hashGainRate(level: number, ramUsed: number, maxRam: number, cores: number, mult
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  level | number | level of the server. |
-|  ramUsed | number | ramUsed of the server. |
-|  maxRam | number | maxRam of the server. |
-|  cores | number | cores of the server. |
-|  mult | number | player production mult (default to 1) |
+| Parameter | Type   | Description                           |
+| --------- | ------ | ------------------------------------- |
+| level     | number | level of the server.                  |
+| ramUsed   | number | ramUsed of the server.                |
+| maxRam    | number | maxRam of the server.                 |
+| cores     | number | cores of the server.                  |
+| mult      | number | player production mult (default to 1) |
 
 <b>Returns:</b>
 
 number
 
 The calculated hash gain rate.
-

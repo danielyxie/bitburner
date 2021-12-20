@@ -11,6 +11,7 @@ Get current city.
 ```typescript
 getCity(): string;
 ```
+
 <b>Returns:</b>
 
 string
@@ -22,4 +23,3 @@ City that the player is currently in (for Bladeburner).
 RAM cost: 4 GB
 
 Returns the city that the player is currently in (for Bladeburner).
-

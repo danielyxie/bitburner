@@ -14,9 +14,9 @@ getGrowTime(host: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host of target server. |
+| Parameter | Type   | Description            |
+| --------- | ------ | ---------------------- |
+| host      | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Returns the amount of time in milliseconds it takes to execute the grow Netscrip
 RAM cost: 0.05 GB
 
 Returns the amount of time in milliseconds it takes to execute the grow Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels.
-

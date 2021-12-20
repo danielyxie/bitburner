@@ -14,15 +14,14 @@ levelUpgradeCost(startingLevel: number, extraLevels?: number, costMult?: number)
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  startingLevel | number | starting level |
-|  extraLevels | number | amount of level to purchase (defaults to 1) |
-|  costMult | number | player cost reduction (default to 1) |
+| Parameter     | Type   | Description                                 |
+| ------------- | ------ | ------------------------------------------- |
+| startingLevel | number | starting level                              |
+| extraLevels   | number | amount of level to purchase (defaults to 1) |
+| costMult      | number | player cost reduction (default to 1)        |
 
 <b>Returns:</b>
 
 number
 
 The calculated cost.
-

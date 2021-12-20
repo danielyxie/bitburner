@@ -14,9 +14,9 @@ flags(schema: [string, string | number | boolean | string[]][]): any;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  schema | \[string, string \| number \| boolean \| string\[\]\]\[\] |  |
+| Parameter | Type                                                      | Description |
+| --------- | --------------------------------------------------------- | ----------- |
+| schema    | \[string, string \| number \| boolean \| string\[\]\]\[\] |             |
 
 <b>Returns:</b>
 
@@ -30,14 +30,13 @@ Allows unix like flag parsing.
 
 ## Example
 
-
 ```ts
 // example.script
 var data = flags([
-    ['delay', 0], // a default number means this flag is a number
-    ['server', 'foodnstuff'], //  a default string means this flag is a string
-    ['exclude', []], // a default array means this flag is a default array of string
-    ['help', false], // a default boolean means this flag is a boolean
+  ["delay", 0], // a default number means this flag is a number
+  ["server", "foodnstuff"], //  a default string means this flag is a string
+  ["exclude", []], // a default array means this flag is a default array of string
+  ["help", false], // a default boolean means this flag is a boolean
 ]);
 tprint(data);
 
@@ -54,4 +53,3 @@ tprint(data);
 // [home ~/]> run example.script --help
 // {"_":[],"delay":0,"server":"foodnstuff","exclude":[],"help":true}
 ```
-

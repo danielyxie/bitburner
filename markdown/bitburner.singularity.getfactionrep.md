@@ -14,9 +14,9 @@ getFactionRep(faction: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  faction | string | Name of faction to work for. |
+| Parameter | Type   | Description                  |
+| --------- | ------ | ---------------------------- |
+| faction   | string | Name of faction to work for. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Amount of reputation you have for the specified faction.
 RAM cost: 1 GB
 
 This function returns the amount of reputation you have for the specified faction.
-

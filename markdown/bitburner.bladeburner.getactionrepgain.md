@@ -14,11 +14,11 @@ getActionRepGain(type: string, name: string, level: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  type | string | Type of action. |
-|  name | string | Name of action. Must be an exact match. |
-|  level | number | Optional action level at which to calculate the gain |
+| Parameter | Type   | Description                                          |
+| --------- | ------ | ---------------------------------------------------- |
+| type      | string | Type of action.                                      |
+| name      | string | Name of action. Must be an exact match.              |
+| level     | number | Optional action level at which to calculate the gain |
 
 <b>Returns:</b>
 
@@ -31,4 +31,3 @@ Average Bladeburner reputation gain for successfully completing the specified ac
 RAM cost: 4 GB
 
 Returns the average Bladeburner reputation gain for successfully completing the specified action. Note that this value is an ‘average’ and the real reputation gain may vary slightly from this value.
-

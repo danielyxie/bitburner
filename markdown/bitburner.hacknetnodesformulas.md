@@ -9,17 +9,16 @@ Hacknet Node formulas
 <b>Signature:</b>
 
 ```typescript
-interface HacknetNodesFormulas 
+interface HacknetNodesFormulas
 ```
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [constants()](./bitburner.hacknetnodesformulas.constants.md) | All constants used by the game. |
-|  [coreUpgradeCost(startingCore, extraCores, costMult)](./bitburner.hacknetnodesformulas.coreupgradecost.md) | Calculate cost of upgrading hacknet node cores. |
-|  [hacknetNodeCost(n, mult)](./bitburner.hacknetnodesformulas.hacknetnodecost.md) | Calculate the cost of a hacknet node. |
-|  [levelUpgradeCost(startingLevel, extraLevels, costMult)](./bitburner.hacknetnodesformulas.levelupgradecost.md) | Calculate cost of upgrading hacknet node level. |
-|  [moneyGainRate(level, ram, cores, mult)](./bitburner.hacknetnodesformulas.moneygainrate.md) | Calculate money gain rate. |
-|  [ramUpgradeCost(startingRam, extraLevels, costMult)](./bitburner.hacknetnodesformulas.ramupgradecost.md) | Calculate cost of upgrading hacknet node ram. |
-
+| Method                                                                                                         | Description                                     |
+| -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| [constants()](./bitburner.hacknetnodesformulas.constants.md)                                                   | All constants used by the game.                 |
+| [coreUpgradeCost(startingCore, extraCores, costMult)](./bitburner.hacknetnodesformulas.coreupgradecost.md)     | Calculate cost of upgrading hacknet node cores. |
+| [hacknetNodeCost(n, mult)](./bitburner.hacknetnodesformulas.hacknetnodecost.md)                                | Calculate the cost of a hacknet node.           |
+| [levelUpgradeCost(startingLevel, extraLevels, costMult)](./bitburner.hacknetnodesformulas.levelupgradecost.md) | Calculate cost of upgrading hacknet node level. |
+| [moneyGainRate(level, ram, cores, mult)](./bitburner.hacknetnodesformulas.moneygainrate.md)                    | Calculate money gain rate.                      |
+| [ramUpgradeCost(startingRam, extraLevels, costMult)](./bitburner.hacknetnodesformulas.ramupgradecost.md)       | Calculate cost of upgrading hacknet node ram.   |

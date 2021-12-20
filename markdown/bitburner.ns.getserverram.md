@@ -5,9 +5,8 @@
 ## NS.getServerRam() method
 
 > Warning: This API is now obsolete.
-> 
+>
 > use getServerMaxRam / getServerUsedRam
-> 
 
 <b>Signature:</b>
 
@@ -17,9 +16,9 @@ getServerRam(host: string): [number, number];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host of target server. |
+| Parameter | Type   | Description            |
+| --------- | ------ | ---------------------- |
+| host      | string | Host of target server. |
 
 <b>Returns:</b>
 
@@ -35,10 +34,8 @@ Returns an array with two elements that gives information about a server’s mem
 
 ## Example
 
-
 ```ts
 res = getServerRam("helios");
 totalRam = res[0];
 ramUsed = res[1];
 ```
-

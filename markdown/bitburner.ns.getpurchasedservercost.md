@@ -14,9 +14,9 @@ getPurchasedServerCost(ram: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  ram | number | Amount of RAM of a potential purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20). |
+| Parameter | Type   | Description                                                                                                               |
+| --------- | ------ | ------------------------------------------------------------------------------------------------------------------------- |
+| ram       | number | Amount of RAM of a potential purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20). |
 
 <b>Returns:</b>
 
@@ -32,10 +32,8 @@ Returns the cost to purchase a server with the specified amount of ram.
 
 ## Example
 
-
 ```ts
 for (i = 1; i <= 20; i++) {
-    tprint(i + " -- " + getPurchasedServerCost(Math.pow(2, i)));
+  tprint(i + " -- " + getPurchasedServerCost(Math.pow(2, i)));
 }
 ```
-

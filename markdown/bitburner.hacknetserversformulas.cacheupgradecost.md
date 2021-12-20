@@ -14,14 +14,13 @@ cacheUpgradeCost(startingCache: number, extraCache?: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  startingCache | number | starting cache level |
-|  extraCache | number | amount of levels of cache to purchase (defaults to 1) |
+| Parameter     | Type   | Description                                           |
+| ------------- | ------ | ----------------------------------------------------- |
+| startingCache | number | starting cache level                                  |
+| extraCache    | number | amount of levels of cache to purchase (defaults to 1) |
 
 <b>Returns:</b>
 
 number
 
 The calculated cost.
-

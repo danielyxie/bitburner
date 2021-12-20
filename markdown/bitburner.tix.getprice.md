@@ -14,9 +14,9 @@ getPrice(sym: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sym | string | Stock symbol. |
+| Parameter | Type   | Description   |
+| --------- | ------ | ------------- |
+| sym       | string | Stock symbol. |
 
 <b>Returns:</b>
 
@@ -30,8 +30,6 @@ RAM cost: 2 GB The stock’s price is the average of its bid and ask price.
 
 ## Example
 
-
 ```ts
 getPrice("FISG");
 ```
-

@@ -14,12 +14,12 @@ exec(script: string, host: string, numThreads?: number, ...args: string[]): numb
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  script | string | Filename of script to execute. |
-|  host | string | Hostname of the <code>target server</code> on which to execute the script. |
-|  numThreads | number | Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer. |
-|  args | string\[\] | Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value. |
+| Parameter  | Type       | Description                                                                                                                                                                                             |
+| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| script     | string     | Filename of script to execute.                                                                                                                                                                          |
+| host       | string     | Hostname of the <code>target server</code> on which to execute the script.                                                                                                                              |
+| numThreads | number     | Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer.                                                                                                          |
+| args       | string\[\] | Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value. |
 
 <b>Returns:</b>
 
@@ -41,14 +41,12 @@ Running this function with a numThreads argument of 0 will return 0 without runn
 
 ## Example 1
 
-
 ```ts
 //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
 exec("generic-hack.script", "foodnstuff");
 ```
 
 ## Example 2
-
 
 ```ts
 //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
@@ -57,9 +55,7 @@ exec("generic-hack.script", "joesguns", 10);
 
 ## Example 3
 
-
 ```ts
 //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
 exec("foo.script", "foodnstuff", 5, 1, "test");
 ```
-

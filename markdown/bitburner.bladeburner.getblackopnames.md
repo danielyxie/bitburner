@@ -11,6 +11,7 @@ List all black ops.
 ```typescript
 getBlackOpNames(): string[];
 ```
+
 <b>Returns:</b>
 
 string\[\]
@@ -22,4 +23,3 @@ Array of strings containing the names of all Bladeburner Black Ops.
 RAM cost: 0.4 GB
 
 Returns an array of strings containing the names of all Bladeburner Black Ops.
-

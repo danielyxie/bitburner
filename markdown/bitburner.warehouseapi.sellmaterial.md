@@ -14,15 +14,14 @@ sellMaterial(divisionName: string, cityName: string, materialName: string, amt: 
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
-|  materialName | string | Name of the material |
-|  amt | string | Amount to sell, can be "MAX" |
-|  price | string | Price to sell, can be "MP" |
+| Parameter    | Type   | Description                  |
+| ------------ | ------ | ---------------------------- |
+| divisionName | string | Name of the division         |
+| cityName     | string | Name of the city             |
+| materialName | string | Name of the material         |
+| amt          | string | Amount to sell, can be "MAX" |
+| price        | string | Price to sell, can be "MP"   |
 
 <b>Returns:</b>
 
 void
-

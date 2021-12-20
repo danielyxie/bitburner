@@ -14,9 +14,9 @@ atExit(f: () => void): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  f | () =&gt; void |  |
+| Parameter | Type          | Description |
+| --------- | ------------- | ----------- |
+| f         | () =&gt; void |             |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ RAM cost: 0 GB
 NS2 exclusive
 
 Add callback to be executed when the script dies.
-

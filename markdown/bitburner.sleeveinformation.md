@@ -9,23 +9,22 @@ Object representing sleeve information.
 <b>Signature:</b>
 
 ```typescript
-export interface SleeveInformation 
+export interface SleeveInformation
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [city](./bitburner.sleeveinformation.city.md) | string | location of the sleeve |
-|  [earningsForPlayer](./bitburner.sleeveinformation.earningsforplayer.md) | [SleeveWorkGains](./bitburner.sleeveworkgains.md) | earnings synchronized to the player |
-|  [earningsForSleeves](./bitburner.sleeveinformation.earningsforsleeves.md) | [SleeveWorkGains](./bitburner.sleeveworkgains.md) | earnings synchronized to other sleeves |
-|  [earningsForTask](./bitburner.sleeveinformation.earningsfortask.md) | [SleeveWorkGains](./bitburner.sleeveworkgains.md) | earnings for this sleeve |
-|  [hp](./bitburner.sleeveinformation.hp.md) | number | current hp of the sleeve |
-|  [jobs](./bitburner.sleeveinformation.jobs.md) | string\[\] | jobs available to the sleeve |
-|  [jobTitle](./bitburner.sleeveinformation.jobtitle.md) | string\[\] | job titles available to the sleeve |
-|  [maxHp](./bitburner.sleeveinformation.maxhp.md) | number | max hp of the sleeve |
-|  [mult](./bitburner.sleeveinformation.mult.md) | [CharacterMult](./bitburner.charactermult.md) | sleeve multipliers |
-|  [timeWorked](./bitburner.sleeveinformation.timeworked.md) | number | time spent on the current task in milliseconds |
-|  [tor](./bitburner.sleeveinformation.tor.md) | boolean | does this sleeve have access to the tor router |
-|  [workRepGain](./bitburner.sleeveinformation.workrepgain.md) | number | faction or company reputation gained for the current task |
-
+| Property                                                                  | Type                                              | Description                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------------- |
+| [city](./bitburner.sleeveinformation.city.md)                             | string                                            | location of the sleeve                                    |
+| [earningsForPlayer](./bitburner.sleeveinformation.earningsforplayer.md)   | [SleeveWorkGains](./bitburner.sleeveworkgains.md) | earnings synchronized to the player                       |
+| [earningsForSleeves](./bitburner.sleeveinformation.earningsforsleeves.md) | [SleeveWorkGains](./bitburner.sleeveworkgains.md) | earnings synchronized to other sleeves                    |
+| [earningsForTask](./bitburner.sleeveinformation.earningsfortask.md)       | [SleeveWorkGains](./bitburner.sleeveworkgains.md) | earnings for this sleeve                                  |
+| [hp](./bitburner.sleeveinformation.hp.md)                                 | number                                            | current hp of the sleeve                                  |
+| [jobs](./bitburner.sleeveinformation.jobs.md)                             | string\[\]                                        | jobs available to the sleeve                              |
+| [jobTitle](./bitburner.sleeveinformation.jobtitle.md)                     | string\[\]                                        | job titles available to the sleeve                        |
+| [maxHp](./bitburner.sleeveinformation.maxhp.md)                           | number                                            | max hp of the sleeve                                      |
+| [mult](./bitburner.sleeveinformation.mult.md)                             | [CharacterMult](./bitburner.charactermult.md)     | sleeve multipliers                                        |
+| [timeWorked](./bitburner.sleeveinformation.timeworked.md)                 | number                                            | time spent on the current task in milliseconds            |
+| [tor](./bitburner.sleeveinformation.tor.md)                               | boolean                                           | does this sleeve have access to the tor router            |
+| [workRepGain](./bitburner.sleeveinformation.workrepgain.md)               | number                                            | faction or company reputation gained for the current task |

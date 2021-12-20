@@ -14,9 +14,9 @@ nuke(host: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Hostname of the target server. |
+| Parameter | Type   | Description                    |
+| --------- | ------ | ------------------------------ |
+| host      | string | Hostname of the target server. |
 
 <b>Returns:</b>
 
@@ -30,8 +30,6 @@ Runs the NUKE.exe program on the target server. NUKE.exe must exist on your home
 
 ## Example
 
-
 ```ts
 nuke("foodnstuff");
 ```
-

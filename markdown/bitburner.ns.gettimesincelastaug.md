@@ -11,6 +11,7 @@ Returns the amount of time in milliseconds that have passed since you last insta
 ```typescript
 getTimeSinceLastAug(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -20,4 +21,3 @@ Time in milliseconds that have passed since you last installed Augmentations.
 ## Remarks
 
 RAM cost: 0.05 GB
-

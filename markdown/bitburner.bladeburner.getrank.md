@@ -11,6 +11,7 @@ Get player bladeburner rank.
 ```typescript
 getRank(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -22,4 +23,3 @@ Player’s Bladeburner Rank.
 RAM cost: 4 GB
 
 Returns the player’s Bladeburner Rank.
-

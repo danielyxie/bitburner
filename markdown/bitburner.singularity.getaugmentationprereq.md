@@ -14,9 +14,9 @@ getAugmentationPrereq(augName: string): string[];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  augName | string | Name of Augmentation. |
+| Parameter | Type   | Description           |
+| --------- | ------ | --------------------- |
+| augName   | string | Name of Augmentation. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Array with the names of the prerequisite Augmentation(s) for the specified Augme
 RAM cost: 5 GB
 
 This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation. If there are no prerequisites, a blank array is returned.
-

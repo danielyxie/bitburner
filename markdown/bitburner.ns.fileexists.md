@@ -14,10 +14,10 @@ fileExists(filename: string, host?: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  filename | string | Filename of file to check. |
-|  host | string | Host of target server. This is optional. If it is not specified then the function will use the current server as the target server. |
+| Parameter | Type   | Description                                                                                                                         |
+| --------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| filename  | string | Filename of file to check.                                                                                                          |
+| host      | string | Host of target server. This is optional. If it is not specified then the function will use the current server as the target server. |
 
 <b>Returns:</b>
 
@@ -35,7 +35,6 @@ If the hostname/ip argument is omitted, then the function will search through th
 
 ## Example 1
 
-
 ```ts
 //The function call will return true if the script named foo.script exists on the foodnstuff server, and false otherwise.
 fileExists("foo.script", "foodnstuff");
@@ -43,9 +42,7 @@ fileExists("foo.script", "foodnstuff");
 
 ## Example 2
 
-
 ```ts
 //The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.
 fileExists("ftpcrack.exe");
 ```
-

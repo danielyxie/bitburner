@@ -14,11 +14,11 @@ wget(url: string, target: string, host?: string): Promise<boolean>;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  url | string | URL to pull data from. |
-|  target | string | Filename to write data to. Must be script or text file. |
-|  host | string | Optional hostname/ip of server for target file. |
+| Parameter | Type   | Description                                             |
+| --------- | ------ | ------------------------------------------------------- |
+| url       | string | URL to pull data from.                                  |
+| target    | string | Filename to write data to. Must be script or text file. |
+| host      | string | Optional hostname/ip of server for target file.         |
 
 <b>Returns:</b>
 
@@ -38,8 +38,6 @@ In NetscriptJS, you must preface any call to wget with the await keyword (like y
 
 ## Example
 
-
 ```ts
 wget("https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md", "game_readme.txt");
 ```
-

@@ -4,21 +4,19 @@
 
 ## ActiveFragment interface
 
-
 <b>Signature:</b>
 
 ```typescript
-export interface ActiveFragment 
+export interface ActiveFragment
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [avgCharge](./bitburner.activefragment.avgcharge.md) | number |  |
-|  [id](./bitburner.activefragment.id.md) | number |  |
-|  [numCharge](./bitburner.activefragment.numcharge.md) | number |  |
-|  [rotation](./bitburner.activefragment.rotation.md) | number |  |
-|  [x](./bitburner.activefragment.x.md) | number |  |
-|  [y](./bitburner.activefragment.y.md) | number |  |
-
+| Property                                             | Type   | Description |
+| ---------------------------------------------------- | ------ | ----------- |
+| [avgCharge](./bitburner.activefragment.avgcharge.md) | number |             |
+| [id](./bitburner.activefragment.id.md)               | number |             |
+| [numCharge](./bitburner.activefragment.numcharge.md) | number |             |
+| [rotation](./bitburner.activefragment.rotation.md)   | number |             |
+| [x](./bitburner.activefragment.x.md)                 | number |             |
+| [y](./bitburner.activefragment.y.md)                 | number |             |

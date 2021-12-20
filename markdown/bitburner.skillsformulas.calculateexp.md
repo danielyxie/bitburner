@@ -14,14 +14,13 @@ calculateExp(skill: number, skillMult?: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  skill | number | target skill level |
-|  skillMult | number | Multiplier for that skill, defaults to 1. |
+| Parameter | Type   | Description                               |
+| --------- | ------ | ----------------------------------------- |
+| skill     | number | target skill level                        |
+| skillMult | number | Multiplier for that skill, defaults to 1. |
 
 <b>Returns:</b>
 
 number
 
 The calculated exp required.
-

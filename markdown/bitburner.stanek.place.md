@@ -14,12 +14,12 @@ place(rootX: number, rootY: number, rotation: number, fragmentId: number): boole
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  rootX | number | X against which to align the top left of the fragment. |
-|  rootY | number | Y against which to align the top left of the fragment. |
-|  rotation | number | A number from 0 to 3, the mount of 90 degree turn to take. |
-|  fragmentId | number | ID of the fragment to place. |
+| Parameter  | Type   | Description                                                |
+| ---------- | ------ | ---------------------------------------------------------- |
+| rootX      | number | X against which to align the top left of the fragment.     |
+| rootY      | number | Y against which to align the top left of the fragment.     |
+| rotation   | number | A number from 0 to 3, the mount of 90 degree turn to take. |
+| fragmentId | number | ID of the fragment to place.                               |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ true if the fragment can be placed at that position. false otherwise.
 ## Remarks
 
 RAM cost: cost: 5 GB
-

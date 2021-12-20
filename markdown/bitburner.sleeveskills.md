@@ -9,19 +9,18 @@ Object representing a sleeve stats.
 <b>Signature:</b>
 
 ```typescript
-export interface SleeveSkills 
+export interface SleeveSkills
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [agility](./bitburner.sleeveskills.agility.md) | number | current agility of the sleeve |
-|  [charisma](./bitburner.sleeveskills.charisma.md) | number | current charisma of the sleeve |
-|  [defense](./bitburner.sleeveskills.defense.md) | number | current defense of the sleeve |
-|  [dexterity](./bitburner.sleeveskills.dexterity.md) | number | current dexterity of the sleeve |
-|  [hacking](./bitburner.sleeveskills.hacking.md) | number | current hacking skill of the sleeve |
-|  [shock](./bitburner.sleeveskills.shock.md) | number | current shock of the sleeve \[0-100\] |
-|  [strength](./bitburner.sleeveskills.strength.md) | number | current strength of the sleeve |
-|  [sync](./bitburner.sleeveskills.sync.md) | number | current sync of the sleeve \[0-100\] |
-
+| Property                                           | Type   | Description                           |
+| -------------------------------------------------- | ------ | ------------------------------------- |
+| [agility](./bitburner.sleeveskills.agility.md)     | number | current agility of the sleeve         |
+| [charisma](./bitburner.sleeveskills.charisma.md)   | number | current charisma of the sleeve        |
+| [defense](./bitburner.sleeveskills.defense.md)     | number | current defense of the sleeve         |
+| [dexterity](./bitburner.sleeveskills.dexterity.md) | number | current dexterity of the sleeve       |
+| [hacking](./bitburner.sleeveskills.hacking.md)     | number | current hacking skill of the sleeve   |
+| [shock](./bitburner.sleeveskills.shock.md)         | number | current shock of the sleeve \[0-100\] |
+| [strength](./bitburner.sleeveskills.strength.md)   | number | current strength of the sleeve        |
+| [sync](./bitburner.sleeveskills.sync.md)           | number | current sync of the sleeve \[0-100\]  |

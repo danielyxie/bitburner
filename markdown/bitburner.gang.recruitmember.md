@@ -14,9 +14,9 @@ recruitMember(name: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | string | Name of member to recruit. |
+| Parameter | Type   | Description                |
+| --------- | ------ | -------------------------- |
+| name      | string | Name of member to recruit. |
 
 <b>Returns:</b>
 
@@ -31,4 +31,3 @@ RAM cost: 2 GB
 Attempt to recruit a new gang member.
 
 Possible reasons for failure: \* Cannot currently recruit a new member \* There already exists a member with the specified name
-

@@ -14,9 +14,9 @@ getAskPrice(sym: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sym | string | Stock symbol. |
+| Parameter | Type   | Description   |
+| --------- | ------ | ------------- |
+| sym       | string | Stock symbol. |
 
 <b>Returns:</b>
 
@@ -27,4 +27,3 @@ The ask price of a stock.
 ## Remarks
 
 RAM cost: 2 GB
-

@@ -14,9 +14,9 @@ getTask(sleeveNumber: number): SleeveTask;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to retrieve task from. |
+| Parameter    | Type   | Description                                |
+| ------------ | ------ | ------------------------------------------ |
+| sleeveNumber | number | Index of the sleeve to retrieve task from. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Object containing information the current task that the sleeve is performing.
 RAM cost: 4 GB
 
 Return the current task that the sleeve is performing. type is set to “Idle” if the sleeve isn’t doing anything.
-

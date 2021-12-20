@@ -11,6 +11,7 @@ Returns the maximum number of servers you can purchase.
 ```typescript
 getPurchasedServerLimit(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -20,4 +21,3 @@ Returns the maximum number of servers you can purchase.
 ## Remarks
 
 RAM cost: 0.05 GB
-

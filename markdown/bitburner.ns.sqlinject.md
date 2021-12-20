@@ -14,9 +14,9 @@ sqlinject(host: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Hostname of the target server. |
+| Parameter | Type   | Description                    |
+| --------- | ------ | ------------------------------ |
+| host      | string | Hostname of the target server. |
 
 <b>Returns:</b>
 
@@ -28,8 +28,6 @@ RAM cost: 0.05 GB
 
 ## Example
 
-
 ```ts
 sqlinject("foodnstuff");
 ```
-

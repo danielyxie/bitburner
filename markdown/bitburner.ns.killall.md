@@ -14,9 +14,9 @@ killall(host: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | IP or hostname of the server on which to kill all scripts. |
+| Parameter | Type   | Description                                                |
+| --------- | ------ | ---------------------------------------------------------- |
+| host      | string | IP or hostname of the server on which to kill all scripts. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ True if any scripts were killed, and false otherwise.
 RAM cost: 0.5 GB
 
 Kills all running scripts on the specified server. This function returns true if any scripts were killed, and false otherwise. In other words, it will return true if there are any scripts running on the target server.
-

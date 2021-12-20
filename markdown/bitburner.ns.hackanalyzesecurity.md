@@ -14,9 +14,9 @@ hackAnalyzeSecurity(threads: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  threads | number | Amount of threads that will be used. |
+| Parameter | Type   | Description                          |
+| --------- | ------ | ------------------------------------ |
+| threads   | number | Amount of threads that will be used. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ The security increase.
 RAM cost: 1 GB
 
 Returns the security increase that would occur if a hack with this many threads happened.
-

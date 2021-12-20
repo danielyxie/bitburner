@@ -11,6 +11,7 @@ Returns the amount of Faction favor required to be able to donate to a faction.
 ```typescript
 getFavorToDonate(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -20,4 +21,3 @@ Amount of Faction favor required to be able to donate to a faction.
 ## Remarks
 
 RAM cost: 0.1 GB
-

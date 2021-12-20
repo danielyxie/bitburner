@@ -14,9 +14,9 @@ getSleeveAugmentations(sleeveNumber: number): string[];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to retrieve augmentations from. |
+| Parameter    | Type   | Description                                         |
+| ------------ | ------ | --------------------------------------------------- |
+| sleeveNumber | number | Index of the sleeve to retrieve augmentations from. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ List of augmentation names that this sleeve has installed.
 RAM cost: 4 GB
 
 Return a list of augmentation names that this sleeve has installed.
-

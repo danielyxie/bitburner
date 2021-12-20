@@ -14,11 +14,11 @@ getRunningScript(filename: string | number, hostname: string, ...args: (string |
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  filename | string \| number |  |
-|  hostname | string |  |
-|  args | (string \| number)\[\] |  |
+| Parameter | Type                   | Description |
+| --------- | ---------------------- | ----------- |
+| filename  | string \| number       |             |
+| hostname  | string                 |             |
+| args      | (string \| number)\[\] |             |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ info about a running script
 ## Remarks
 
 RAM cost: 0.3 GB
-

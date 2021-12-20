@@ -11,6 +11,7 @@ Get information about your gang.
 ```typescript
 getGangInformation(): GangGenInfo;
 ```
+
 <b>Returns:</b>
 
 [GangGenInfo](./bitburner.ganggeninfo.md)
@@ -22,4 +23,3 @@ Object containing general information about the gang.
 RAM cost: 2 GB
 
 Get general information about the gang.
-

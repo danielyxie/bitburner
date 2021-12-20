@@ -14,9 +14,9 @@ getCompanyRep(companyName: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  companyName | string | Name of the company. |
+| Parameter   | Type   | Description          |
+| ----------- | ------ | -------------------- |
+| companyName | string | Name of the company. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Amount of reputation you have at the specified company.
 RAM cost: 1 GB
 
 This function will return the amount of reputation you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.
-

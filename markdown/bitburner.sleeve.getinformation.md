@@ -14,9 +14,9 @@ getInformation(sleeveNumber: number): SleeveInformation;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to retrieve information. |
+| Parameter    | Type   | Description                                  |
+| ------------ | ------ | -------------------------------------------- |
+| sleeveNumber | number | Index of the sleeve to retrieve information. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Object containing tons of information about this sleeve.
 RAM cost: 4 GB
 
 Return a struct containing tons of information about this sleeve
-

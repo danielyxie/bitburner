@@ -14,9 +14,9 @@ getCityCommunities(name: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | string |  |
+| Parameter | Type   | Description |
+| --------- | ------ | ----------- |
+| name      | string |             |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Number of Synthoids communities in the specified city.
 RAM cost: 4 GB
 
 Returns the estimated number of Synthoid communities in the specified city, or -1 if an invalid city was specified.
-

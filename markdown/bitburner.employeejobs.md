@@ -9,18 +9,17 @@ Object representing the number of employee in each job.
 <b>Signature:</b>
 
 ```typescript
-interface EmployeeJobs 
+interface EmployeeJobs
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  ["Research &amp; Development"](./bitburner.employeejobs._research___development_.md) | number |  |
-|  [Business](./bitburner.employeejobs.business.md) | number |  |
-|  [Engineer](./bitburner.employeejobs.engineer.md) | number |  |
-|  [Management](./bitburner.employeejobs.management.md) | number |  |
-|  [Operations](./bitburner.employeejobs.operations.md) | number |  |
-|  [Training](./bitburner.employeejobs.training.md) | number |  |
-|  [Unassigned](./bitburner.employeejobs.unassigned.md) | number |  |
-
+| Property                                                                             | Type   | Description |
+| ------------------------------------------------------------------------------------ | ------ | ----------- |
+| ["Research &amp; Development"](./bitburner.employeejobs._research___development_.md) | number |             |
+| [Business](./bitburner.employeejobs.business.md)                                     | number |             |
+| [Engineer](./bitburner.employeejobs.engineer.md)                                     | number |             |
+| [Management](./bitburner.employeejobs.management.md)                                 | number |             |
+| [Operations](./bitburner.employeejobs.operations.md)                                 | number |             |
+| [Training](./bitburner.employeejobs.training.md)                                     | number |             |
+| [Unassigned](./bitburner.employeejobs.unassigned.md)                                 | number |             |

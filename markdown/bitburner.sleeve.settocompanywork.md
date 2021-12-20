@@ -14,10 +14,10 @@ setToCompanyWork(sleeveNumber: number, companyName: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to work for the company. |
-|  companyName | string | Name of the company to work for. |
+| Parameter    | Type   | Description                                  |
+| ------------ | ------ | -------------------------------------------- |
+| sleeveNumber | number | Index of the sleeve to work for the company. |
+| companyName  | string | Name of the company to work for.             |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ True if the sleeve started working on this company, false otherwise.
 RAM cost: 4 GB
 
 Return a boolean indicating whether or not the sleeve started working or this company.
-

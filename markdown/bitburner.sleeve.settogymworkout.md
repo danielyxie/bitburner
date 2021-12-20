@@ -14,11 +14,11 @@ setToGymWorkout(sleeveNumber: number, gymName: string, stat: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to workout at the gym. |
-|  gymName | string | Name of the gym. |
-|  stat | string | Name of the stat to train. |
+| Parameter    | Type   | Description                                |
+| ------------ | ------ | ------------------------------------------ |
+| sleeveNumber | number | Index of the sleeve to workout at the gym. |
+| gymName      | string | Name of the gym.                           |
+| stat         | string | Name of the stat to train.                 |
 
 <b>Returns:</b>
 
@@ -31,4 +31,3 @@ True if the sleeve started working out, false otherwise.
 RAM cost: 4 GB
 
 Return a boolean indicating whether or not the sleeve started working out.
-

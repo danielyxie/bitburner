@@ -14,12 +14,11 @@ expandIndustry(industryType: string, divisionName: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  industryType | string | Name of the industry |
-|  divisionName | string | Name of the division |
+| Parameter    | Type   | Description          |
+| ------------ | ------ | -------------------- |
+| industryType | string | Name of the industry |
+| divisionName | string | Name of the division |
 
 <b>Returns:</b>
 
 void
-

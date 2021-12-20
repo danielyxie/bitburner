@@ -14,11 +14,11 @@ getSaleGain(sym: string, shares: number, posType: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sym | string | Stock symbol. |
-|  shares | number | Number of shares to sell. |
-|  posType | string | Specifies whether the order is a “Long” or “Short” position. |
+| Parameter | Type   | Description                                                  |
+| --------- | ------ | ------------------------------------------------------------ |
+| sym       | string | Stock symbol.                                                |
+| shares    | number | Number of shares to sell.                                    |
+| posType   | string | Specifies whether the order is a “Long” or “Short” position. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Gain from selling a given number of shares of a stock.
 ## Remarks
 
 RAM cost: 2 GB Calculates and returns how much you would gain from selling a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.
-

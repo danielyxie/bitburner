@@ -11,6 +11,7 @@ Get the number of sleeves you own.
 ```typescript
 getNumSleeves(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -22,4 +23,3 @@ number of duplicate sleeves the player has.
 RAM cost: 4 GB
 
 Return the number of duplicate sleeves the player has.
-

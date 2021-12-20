@@ -9,23 +9,22 @@ Employee in an office
 <b>Signature:</b>
 
 ```typescript
-interface Employee 
+interface Employee
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [cha](./bitburner.employee.cha.md) | number |  |
-|  [cre](./bitburner.employee.cre.md) | number |  |
-|  [eff](./bitburner.employee.eff.md) | number |  |
-|  [ene](./bitburner.employee.ene.md) | number | Energy |
-|  [exp](./bitburner.employee.exp.md) | number |  |
-|  [hap](./bitburner.employee.hap.md) | number | Happiness |
-|  [int](./bitburner.employee.int.md) | number |  |
-|  [loc](./bitburner.employee.loc.md) | string | City |
-|  [mor](./bitburner.employee.mor.md) | number | Morale |
-|  [name](./bitburner.employee.name.md) | string | Name of the employee |
-|  [pos](./bitburner.employee.pos.md) | string | Current job |
-|  [sal](./bitburner.employee.sal.md) | number | Salary |
-
+| Property                             | Type   | Description          |
+| ------------------------------------ | ------ | -------------------- |
+| [cha](./bitburner.employee.cha.md)   | number |                      |
+| [cre](./bitburner.employee.cre.md)   | number |                      |
+| [eff](./bitburner.employee.eff.md)   | number |                      |
+| [ene](./bitburner.employee.ene.md)   | number | Energy               |
+| [exp](./bitburner.employee.exp.md)   | number |                      |
+| [hap](./bitburner.employee.hap.md)   | number | Happiness            |
+| [int](./bitburner.employee.int.md)   | number |                      |
+| [loc](./bitburner.employee.loc.md)   | string | City                 |
+| [mor](./bitburner.employee.mor.md)   | number | Morale               |
+| [name](./bitburner.employee.name.md) | string | Name of the employee |
+| [pos](./bitburner.employee.pos.md)   | string | Current job          |
+| [sal](./bitburner.employee.sal.md)   | number | Salary               |

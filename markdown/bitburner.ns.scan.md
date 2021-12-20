@@ -14,9 +14,9 @@ scan(host?: string): string[];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Hostname of the server to scan. |
+| Parameter | Type   | Description                     |
+| --------- | ------ | ------------------------------- |
+| host      | string | Hostname of the server to scan. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Returns an string of hostnames.
 RAM cost: 0.2 GB
 
 Returns an array containing the hostnames of all servers that are one node way from the specified target server. The hostnames in the returned array are strings.
-

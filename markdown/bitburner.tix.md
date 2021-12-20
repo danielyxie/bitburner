@@ -9,30 +9,29 @@ Stock market API
 <b>Signature:</b>
 
 ```typescript
-export interface TIX 
+export interface TIX
 ```
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [buy(sym, shares)](./bitburner.tix.buy.md) | Buy stocks. |
-|  [cancelOrder(sym, shares, price, type, pos)](./bitburner.tix.cancelorder.md) | Cancel order for stocks. |
-|  [getAskPrice(sym)](./bitburner.tix.getaskprice.md) | Returns the ask price of that stock. |
-|  [getBidPrice(sym)](./bitburner.tix.getbidprice.md) | Returns the bid price of that stock. |
-|  [getForecast(sym)](./bitburner.tix.getforecast.md) | Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick. |
-|  [getMaxShares(sym)](./bitburner.tix.getmaxshares.md) | Returns the maximum number of shares of a stock. |
-|  [getOrders()](./bitburner.tix.getorders.md) | Returns your order book for the stock market. |
-|  [getPosition(sym)](./bitburner.tix.getposition.md) | Returns the player’s position in a stock. |
-|  [getPrice(sym)](./bitburner.tix.getprice.md) | Returns the price of a stock |
-|  [getPurchaseCost(sym, shares, posType)](./bitburner.tix.getpurchasecost.md) | Calculates cost of buying stocks. |
-|  [getSaleGain(sym, shares, posType)](./bitburner.tix.getsalegain.md) | Calculate profit of setting stocks. |
-|  [getSymbols()](./bitburner.tix.getsymbols.md) | Returns an array of the symbols of the tradable stocks |
-|  [getVolatility(sym)](./bitburner.tix.getvolatility.md) | Returns the volatility of the specified stock. |
-|  [placeOrder(sym, shares, price, type, pos)](./bitburner.tix.placeorder.md) | Place order for stocks. |
-|  [purchase4SMarketData()](./bitburner.tix.purchase4smarketdata.md) | Purchase 4S Market Data Access. |
-|  [purchase4SMarketDataTixApi()](./bitburner.tix.purchase4smarketdatatixapi.md) | Purchase 4S Market Data TIX API Access. |
-|  [sell(sym, shares)](./bitburner.tix.sell.md) | Sell stocks. |
-|  [sellShort(sym, shares)](./bitburner.tix.sellshort.md) | Sell short stock. |
-|  [short(sym, shares)](./bitburner.tix.short.md) | Short stocks. |
-
+| Method                                                                        | Description                                                                                                           |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| [buy(sym, shares)](./bitburner.tix.buy.md)                                    | Buy stocks.                                                                                                           |
+| [cancelOrder(sym, shares, price, type, pos)](./bitburner.tix.cancelorder.md)  | Cancel order for stocks.                                                                                              |
+| [getAskPrice(sym)](./bitburner.tix.getaskprice.md)                            | Returns the ask price of that stock.                                                                                  |
+| [getBidPrice(sym)](./bitburner.tix.getbidprice.md)                            | Returns the bid price of that stock.                                                                                  |
+| [getForecast(sym)](./bitburner.tix.getforecast.md)                            | Returns the probability that the specified stock’s price will increase (as opposed to decrease) during the next tick. |
+| [getMaxShares(sym)](./bitburner.tix.getmaxshares.md)                          | Returns the maximum number of shares of a stock.                                                                      |
+| [getOrders()](./bitburner.tix.getorders.md)                                   | Returns your order book for the stock market.                                                                         |
+| [getPosition(sym)](./bitburner.tix.getposition.md)                            | Returns the player’s position in a stock.                                                                             |
+| [getPrice(sym)](./bitburner.tix.getprice.md)                                  | Returns the price of a stock                                                                                          |
+| [getPurchaseCost(sym, shares, posType)](./bitburner.tix.getpurchasecost.md)   | Calculates cost of buying stocks.                                                                                     |
+| [getSaleGain(sym, shares, posType)](./bitburner.tix.getsalegain.md)           | Calculate profit of setting stocks.                                                                                   |
+| [getSymbols()](./bitburner.tix.getsymbols.md)                                 | Returns an array of the symbols of the tradable stocks                                                                |
+| [getVolatility(sym)](./bitburner.tix.getvolatility.md)                        | Returns the volatility of the specified stock.                                                                        |
+| [placeOrder(sym, shares, price, type, pos)](./bitburner.tix.placeorder.md)    | Place order for stocks.                                                                                               |
+| [purchase4SMarketData()](./bitburner.tix.purchase4smarketdata.md)             | Purchase 4S Market Data Access.                                                                                       |
+| [purchase4SMarketDataTixApi()](./bitburner.tix.purchase4smarketdatatixapi.md) | Purchase 4S Market Data TIX API Access.                                                                               |
+| [sell(sym, shares)](./bitburner.tix.sell.md)                                  | Sell stocks.                                                                                                          |
+| [sellShort(sym, shares)](./bitburner.tix.sellshort.md)                        | Sell short stock.                                                                                                     |
+| [short(sym, shares)](./bitburner.tix.short.md)                                | Short stocks.                                                                                                         |

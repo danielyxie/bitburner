@@ -14,13 +14,13 @@ placeOrder(sym: string, shares: number, price: number, type: string, pos: string
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sym | string | Stock symbol. |
-|  shares | number | Number of shares for order. Must be positive. Will be rounded to nearest integer. |
-|  price | number | Execution price for the order. |
-|  type | string | Type of order. |
-|  pos | string | Specifies whether the order is a “Long” or “Short” position. |
+| Parameter | Type   | Description                                                                       |
+| --------- | ------ | --------------------------------------------------------------------------------- |
+| sym       | string | Stock symbol.                                                                     |
+| shares    | number | Number of shares for order. Must be positive. Will be rounded to nearest integer. |
+| price     | number | Execution price for the order.                                                    |
+| type      | string | Type of order.                                                                    |
+| pos       | string | Specifies whether the order is a “Long” or “Short” position.                      |
 
 <b>Returns:</b>
 
@@ -35,4 +35,3 @@ RAM cost: 2.5 GB Places an order on the stock market. This function only works f
 The ability to place limit and stop orders is \*\*not\*\* immediately available to the player and must be unlocked later on in the game.
 
 Returns true if the order is successfully placed, and false otherwise.
-

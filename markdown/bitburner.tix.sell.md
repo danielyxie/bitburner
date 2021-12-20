@@ -14,10 +14,10 @@ sell(sym: string, shares: number): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sym | string | Stock symbol. |
-|  shares | number | Number of shares to sell. Must be positive. Will be rounded to nearest integer. |
+| Parameter | Type   | Description                                                                     |
+| --------- | ------ | ------------------------------------------------------------------------------- |
+| sym       | string | Stock symbol.                                                                   |
+| shares    | number | Number of shares to sell. Must be positive. Will be rounded to nearest integer. |
 
 <b>Returns:</b>
 
@@ -33,7 +33,6 @@ If the specified number of shares in the function exceeds the amount that the pl
 
 The net profit made from selling stocks with this function is reflected in the script’s statistics. This net profit is calculated as:
 
-shares \* (sell\_price - average\_price\_of\_purchased\_shares)
+shares \* (sell_price - average_price_of_purchased_shares)
 
 If the sale is successful, this function will return the stock price at which each share was sold. Otherwise, it will return 0.
-

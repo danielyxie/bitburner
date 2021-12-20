@@ -14,9 +14,9 @@ getEquipmentStats(equipName: string): EquipmentStats;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  equipName | string | Name of equipment. |
+| Parameter | Type   | Description        |
+| --------- | ------ | ------------------ |
+| equipName | string | Name of equipment. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ A dictionary containing the stats of the equipment.
 RAM cost: 2 GB
 
 Get the specified equipment stats.
-

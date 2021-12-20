@@ -14,10 +14,10 @@ getDescription(filename: string, host?: string): string;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  filename | string |  |
-|  host | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
+| Parameter | Type   | Description                                                                                       |
+| --------- | ------ | ------------------------------------------------------------------------------------------------- |
+| filename  | string |                                                                                                   |
+| host      | string | Host of the server containing the contract. Optional. Defaults to current server if not provided. |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ Contract’s text description.
 RAM cost: 5 GB
 
 Get the full text description for the problem posed by the Coding Contract.
-

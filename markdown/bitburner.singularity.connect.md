@@ -14,9 +14,9 @@ connect(hostname: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  hostname | string |  |
+| Parameter | Type   | Description |
+| --------- | ------ | ----------- |
+| hostname  | string |             |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ True if the connect command was successful, false otherwise.
 RAM cost: 2 GB
 
 Run the connect HOSTNAME command in the terminal. Can only connect to neighbors.
-

@@ -4,17 +4,15 @@
 
 ## GangOtherInfoObject interface
 
-
 <b>Signature:</b>
 
 ```typescript
-export interface GangOtherInfoObject 
+export interface GangOtherInfoObject
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [power](./bitburner.gangotherinfoobject.power.md) | number | Gang power |
-|  [territory](./bitburner.gangotherinfoobject.territory.md) | number | Gang territory, in decimal form |
-
+| Property                                                  | Type   | Description                     |
+| --------------------------------------------------------- | ------ | ------------------------------- |
+| [power](./bitburner.gangotherinfoobject.power.md)         | number | Gang power                      |
+| [territory](./bitburner.gangotherinfoobject.territory.md) | number | Gang territory, in decimal form |

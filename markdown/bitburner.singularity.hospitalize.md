@@ -11,6 +11,7 @@ SF4.1 - Hospitalize the player.
 ```typescript
 hospitalize(): number;
 ```
+
 <b>Returns:</b>
 
 number
@@ -20,4 +21,3 @@ The cost of the hospitalization.
 ## Remarks
 
 RAM cost: 0.25 GB
-

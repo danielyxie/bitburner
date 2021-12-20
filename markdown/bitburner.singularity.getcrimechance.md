@@ -14,9 +14,9 @@ getCrimeChance(crime: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  crime | string | Name of crime. |
+| Parameter | Type   | Description    |
+| --------- | ------ | -------------- |
+| crime     | string | Name of crime. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Chance of success at commiting the specified crime.
 RAM cost: 5 GB
 
 This function returns your chance of success at commiting the specified crime.
-

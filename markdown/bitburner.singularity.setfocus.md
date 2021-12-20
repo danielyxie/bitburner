@@ -14,9 +14,9 @@ setFocus(focus: boolean): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  focus | boolean |  |
+| Parameter | Type    | Description |
+| --------- | ------- | ----------- |
+| focus     | boolean |             |
 
 <b>Returns:</b>
 
@@ -27,4 +27,3 @@ True if the focus was changed.
 ## Remarks
 
 RAM cost: 0.1 GB
-

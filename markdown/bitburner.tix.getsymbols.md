@@ -11,6 +11,7 @@ Returns an array of the symbols of the tradable stocks
 ```typescript
 getSymbols(): string[];
 ```
+
 <b>Returns:</b>
 
 string\[\]
@@ -20,4 +21,3 @@ Array of the symbols of the tradable stocks.
 ## Remarks
 
 RAM cost: 2 GB
-

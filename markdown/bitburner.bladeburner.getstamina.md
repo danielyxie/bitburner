@@ -11,6 +11,7 @@ Get bladeburner stamina.
 ```typescript
 getStamina(): [number, number];
 ```
+
 <b>Returns:</b>
 
 \[number, number\]
@@ -23,11 +24,9 @@ RAM cost: 4 GB Returns an array with two elements: \* \[Current stamina, Max sta
 
 ## Example
 
-
 ```ts
 function getStaminaPercentage() {
-   let res = bladeburner.getStamina();
-   return res[0] / res[1];
+  let res = bladeburner.getStamina();
+  return res[0] / res[1];
 }
 ```
-

@@ -14,9 +14,9 @@ getAugmentationsFromFaction(faction: string): string[];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  faction | string | Name of faction. |
+| Parameter | Type   | Description      |
+| --------- | ------ | ---------------- |
+| faction   | string | Name of faction. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Array containing the names of all Augmentations.
 RAM cost: 5 GB
 
 Returns an array containing the names (as strings) of all Augmentations that are available from the specified faction.
-

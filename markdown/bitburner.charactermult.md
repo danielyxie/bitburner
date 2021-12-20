@@ -4,30 +4,28 @@
 
 ## CharacterMult interface
 
-
 <b>Signature:</b>
 
 ```typescript
-export interface CharacterMult 
+export interface CharacterMult
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [agility](./bitburner.charactermult.agility.md) | number | Agility stat |
-|  [agilityExp](./bitburner.charactermult.agilityexp.md) | number | Agility exp |
-|  [companyRep](./bitburner.charactermult.companyrep.md) | number | Company reputation |
-|  [crimeMoney](./bitburner.charactermult.crimemoney.md) | number | Money earned from crimes |
-|  [crimeSuccess](./bitburner.charactermult.crimesuccess.md) | number | Crime success chance |
-|  [defense](./bitburner.charactermult.defense.md) | number | Defense stat |
-|  [defenseExp](./bitburner.charactermult.defenseexp.md) | number | Defense exp |
-|  [dexterity](./bitburner.charactermult.dexterity.md) | number | Dexterity stat |
-|  [dexterityExp](./bitburner.charactermult.dexterityexp.md) | number | Dexterity exp |
-|  [factionRep](./bitburner.charactermult.factionrep.md) | number | Faction reputation |
-|  [hacking](./bitburner.charactermult.hacking.md) | number | Hacking stat |
-|  [hackingExp](./bitburner.charactermult.hackingexp.md) | number | Hacking exp |
-|  [strength](./bitburner.charactermult.strength.md) | number | Strength stat |
-|  [strengthExp](./bitburner.charactermult.strengthexp.md) | number | Strength exp |
-|  [workMoney](./bitburner.charactermult.workmoney.md) | number | Money earned from jobs |
-
+| Property                                                  | Type   | Description              |
+| --------------------------------------------------------- | ------ | ------------------------ |
+| [agility](./bitburner.charactermult.agility.md)           | number | Agility stat             |
+| [agilityExp](./bitburner.charactermult.agilityexp.md)     | number | Agility exp              |
+| [companyRep](./bitburner.charactermult.companyrep.md)     | number | Company reputation       |
+| [crimeMoney](./bitburner.charactermult.crimemoney.md)     | number | Money earned from crimes |
+| [crimeSuccess](./bitburner.charactermult.crimesuccess.md) | number | Crime success chance     |
+| [defense](./bitburner.charactermult.defense.md)           | number | Defense stat             |
+| [defenseExp](./bitburner.charactermult.defenseexp.md)     | number | Defense exp              |
+| [dexterity](./bitburner.charactermult.dexterity.md)       | number | Dexterity stat           |
+| [dexterityExp](./bitburner.charactermult.dexterityexp.md) | number | Dexterity exp            |
+| [factionRep](./bitburner.charactermult.factionrep.md)     | number | Faction reputation       |
+| [hacking](./bitburner.charactermult.hacking.md)           | number | Hacking stat             |
+| [hackingExp](./bitburner.charactermult.hackingexp.md)     | number | Hacking exp              |
+| [strength](./bitburner.charactermult.strength.md)         | number | Strength stat            |
+| [strengthExp](./bitburner.charactermult.strengthexp.md)   | number | Strength exp             |
+| [workMoney](./bitburner.charactermult.workmoney.md)       | number | Money earned from jobs   |

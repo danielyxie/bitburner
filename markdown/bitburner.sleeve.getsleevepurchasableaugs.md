@@ -14,9 +14,9 @@ getSleevePurchasableAugs(sleeveNumber: number): AugmentPair[];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to retrieve purchasable augmentations from. |
+| Parameter    | Type   | Description                                                     |
+| ------------ | ------ | --------------------------------------------------------------- |
+| sleeveNumber | number | Index of the sleeve to retrieve purchasable augmentations from. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ List of augmentations that the player can buy for this sleeve.
 RAM cost: 4 GB
 
 Return a list of augmentations that the player can buy for this sleeve.
-

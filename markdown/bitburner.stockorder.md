@@ -9,5 +9,5 @@ Return value of [getOrders](./bitburner.tix.getorders.md)
 <b>Signature:</b>
 
 ```typescript
-export interface StockOrder 
+export interface StockOrder
 ```

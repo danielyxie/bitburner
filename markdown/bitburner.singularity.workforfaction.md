@@ -14,10 +14,10 @@ workForFaction(faction: string, workType: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  faction | string | Name of faction to work for. |
-|  workType | string | Type of work to perform for the faction. |
+| Parameter | Type   | Description                              |
+| --------- | ------ | ---------------------------------------- |
+| faction   | string | Name of faction to work for.             |
+| workType  | string | Type of work to perform for the faction. |
 
 <b>Returns:</b>
 
@@ -37,7 +37,6 @@ Note that when you are working for a faction, you will not actually receive your
 
 ## Example
 
-
 ```ts
 //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
 while (getFactionRep(FACTION NAME) < VALUE) {
@@ -46,4 +45,3 @@ while (getFactionRep(FACTION NAME) < VALUE) {
 }
 //This way, your faction reputation will be updated every minute.
 ```
-

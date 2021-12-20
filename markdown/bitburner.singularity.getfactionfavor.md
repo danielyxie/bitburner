@@ -14,9 +14,9 @@ getFactionFavor(faction: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  faction | string | Name of faction. |
+| Parameter | Type   | Description      |
+| --------- | ------ | ---------------- |
+| faction   | string | Name of faction. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Amount of favor you have for the specified faction.
 RAM cost: 1 GB
 
 This function returns the amount of favor you have for the specified faction.
-

@@ -9,7 +9,7 @@ Formulas API
 <b>Signature:</b>
 
 ```typescript
-export interface Formulas 
+export interface Formulas
 ```
 
 ## Remarks
@@ -18,11 +18,10 @@ You need Formulas.exe on your home computer to use this API.
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [gang](./bitburner.formulas.gang.md) | [GangFormulas](./bitburner.gangformulas.md) | Gang formulas |
-|  [hacking](./bitburner.formulas.hacking.md) | [HackingFormulas](./bitburner.hackingformulas.md) | Hacking formulas |
-|  [hacknetNodes](./bitburner.formulas.hacknetnodes.md) | [HacknetNodesFormulas](./bitburner.hacknetnodesformulas.md) | Hacknet Nodes formulas |
-|  [hacknetServers](./bitburner.formulas.hacknetservers.md) | [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) | Hacknet Servers formulas |
-|  [skills](./bitburner.formulas.skills.md) | [SkillsFormulas](./bitburner.skillsformulas.md) | Skills formulas |
-
+| Property                                                 | Type                                                            | Description              |
+| -------------------------------------------------------- | --------------------------------------------------------------- | ------------------------ |
+| [gang](./bitburner.formulas.gang.md)                     | [GangFormulas](./bitburner.gangformulas.md)                     | Gang formulas            |
+| [hacking](./bitburner.formulas.hacking.md)               | [HackingFormulas](./bitburner.hackingformulas.md)               | Hacking formulas         |
+| [hacknetNodes](./bitburner.formulas.hacknetnodes.md)     | [HacknetNodesFormulas](./bitburner.hacknetnodesformulas.md)     | Hacknet Nodes formulas   |
+| [hacknetServers](./bitburner.formulas.hacknetservers.md) | [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) | Hacknet Servers formulas |
+| [skills](./bitburner.formulas.skills.md)                 | [SkillsFormulas](./bitburner.skillsformulas.md)                 | Skills formulas          |

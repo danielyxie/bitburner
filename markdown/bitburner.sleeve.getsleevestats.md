@@ -14,9 +14,9 @@ getSleeveStats(sleeveNumber: number): SleeveSkills;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  sleeveNumber | number | Index of the sleeve to get stats of. |
+| Parameter    | Type   | Description                          |
+| ------------ | ------ | ------------------------------------ |
+| sleeveNumber | number | Index of the sleeve to get stats of. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Object containing the stats of the sleeve.
 RAM cost: 4 GB
 
 Return a structure containing the stats of the sleeve.
-

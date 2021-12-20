@@ -14,9 +14,9 @@ isLogEnabled(fn: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  fn | string | Name of function to check. |
+| Parameter | Type   | Description                |
+| --------- | ------ | -------------------------- |
+| fn        | string | Name of function to check. |
 
 <b>Returns:</b>
 
@@ -27,4 +27,3 @@ Returns a boolean indicating whether or not logging is enabled for that function
 ## Remarks
 
 RAM cost: 0 GB
-

@@ -14,13 +14,12 @@ upgradeOfficeSize(divisionName: string, cityName: string, size: number): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  divisionName | string | Name of the division |
-|  cityName | string | Name of the city |
-|  size | number | Amount of positions to open |
+| Parameter    | Type   | Description                 |
+| ------------ | ------ | --------------------------- |
+| divisionName | string | Name of the division        |
+| cityName     | string | Name of the city            |
+| size         | number | Amount of positions to open |
 
 <b>Returns:</b>
 
 void
-

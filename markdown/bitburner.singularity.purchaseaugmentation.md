@@ -14,10 +14,10 @@ purchaseAugmentation(faction: string, augmentation: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  faction | string | Name of faction to purchase Augmentation from. |
-|  augmentation | string | Name of Augmentation to purchase. |
+| Parameter    | Type   | Description                                    |
+| ------------ | ------ | ---------------------------------------------- |
+| faction      | string | Name of faction to purchase Augmentation from. |
+| augmentation | string | Name of Augmentation to purchase.              |
 
 <b>Returns:</b>
 
@@ -32,4 +32,3 @@ RAM cost: 5 GB
 This function will try to purchase the specified Augmentation through the given Faction.
 
 This function will return true if the Augmentation is successfully purchased, and false otherwise.
-

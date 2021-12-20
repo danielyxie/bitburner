@@ -14,10 +14,10 @@ spendHashes(upgName: string, upgTarget?: string): boolean;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  upgName | string | Name of the upgrade of Hacknet Node. |
-|  upgTarget | string | Object to which upgrade applies. Required for certain upgrades. |
+| Parameter | Type   | Description                                                     |
+| --------- | ------ | --------------------------------------------------------------- |
+| upgName   | string | Name of the upgrade of Hacknet Node.                            |
+| upgTarget | string | Object to which upgrade applies. Required for certain upgrades. |
 
 <b>Returns:</b>
 
@@ -37,9 +37,7 @@ The name of the upgrade must be an exact match. The `upgTarget` argument is used
 
 ## Example
 
-
 ```ts
 hacknet.spendHashes("Sell for Corporation Funds");
 hacknet.spendHashes("Increase Maximum Money", "foodnstuff");
 ```
-

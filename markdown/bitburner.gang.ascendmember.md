@@ -14,9 +14,9 @@ ascendMember(memberName: string): GangMemberAscension | undefined;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  memberName | string | Name of member to ascend. |
+| Parameter  | Type   | Description               |
+| ---------- | ------ | ------------------------- |
+| memberName | string | Name of member to ascend. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Object with info about the ascension results. undefined if ascension did not occ
 RAM cost: 4 GB
 
 Ascend the specified Gang Member.
-

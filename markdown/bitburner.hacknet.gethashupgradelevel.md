@@ -14,9 +14,9 @@ getHashUpgradeLevel(upgName: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  upgName | string |  |
+| Parameter | Type   | Description |
+| --------- | ------ | ----------- |
+| upgName   | string |             |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Level of the upgrade.
 RAM cost: 0 GB
 
 This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).
-

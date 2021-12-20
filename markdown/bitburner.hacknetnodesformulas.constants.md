@@ -11,9 +11,9 @@ All constants used by the game.
 ```typescript
 constants(): number;
 ```
+
 <b>Returns:</b>
 
 number
 
 An object with all hacknet node constants used by the game.
-

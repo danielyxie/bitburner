@@ -6,7 +6,6 @@
 
 ## Packages
 
-|  Package | Description |
-|  --- | --- |
-|  [bitburner](./bitburner.md) |  |
-
+| Package                     | Description |
+| --------------------------- | ----------- |
+| [bitburner](./bitburner.md) |             |

@@ -14,9 +14,9 @@ clear(handle: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  handle | string | Text file to clear. |
+| Parameter | Type   | Description         |
+| --------- | ------ | ------------------- |
+| handle    | string | Text file to clear. |
 
 <b>Returns:</b>
 
@@ -27,4 +27,3 @@ void
 RAM cost: 0 GB
 
 Delete all data from that text file.
-

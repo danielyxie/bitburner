@@ -14,9 +14,9 @@ getAscensionResult(memberName: string): GangMemberAscension | undefined;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  memberName | string | Name of member. |
+| Parameter  | Type   | Description     |
+| ---------- | ------ | --------------- |
+| memberName | string | Name of member. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Object with info about the ascension results. undefined if ascension is impossib
 RAM cost: 2 GB
 
 Get the result of an ascension without ascending.
-

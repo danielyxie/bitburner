@@ -14,9 +14,9 @@ relaysmtp(host: string): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Hostname of the target server. |
+| Parameter | Type   | Description                    |
+| --------- | ------ | ------------------------------ |
+| host      | string | Hostname of the target server. |
 
 <b>Returns:</b>
 
@@ -30,8 +30,6 @@ Runs the relaySMTP.exe program on the target server. relaySMTP.exe must exist on
 
 ## Example
 
-
 ```ts
 relaysmtp("foodnstuff");
 ```
-

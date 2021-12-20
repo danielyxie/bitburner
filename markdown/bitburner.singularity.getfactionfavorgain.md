@@ -14,9 +14,9 @@ getFactionFavorGain(faction: string): number;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  faction | string | Name of faction. |
+| Parameter | Type   | Description      |
+| --------- | ------ | ---------------- |
+| faction   | string | Name of faction. |
 
 <b>Returns:</b>
 
@@ -29,4 +29,3 @@ Amount of favor you will gain for the specified faction when you reset by instal
 RAM cost: 0.75 GB
 
 This function returns the amount of favor you will gain for the specified faction when you reset by installing Augmentations.
-

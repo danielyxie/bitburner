@@ -14,9 +14,9 @@ clearPort(handle: number): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  handle | number | Port to clear. |
+| Parameter | Type   | Description    |
+| --------- | ------ | -------------- |
+| handle    | number | Port to clear. |
 
 <b>Returns:</b>
 
@@ -27,4 +27,3 @@ void
 RAM cost: 0 GB
 
 Deleta all data from the underlying queue.
-

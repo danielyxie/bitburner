@@ -9,13 +9,12 @@ Bladeburner current action.
 <b>Signature:</b>
 
 ```typescript
-export interface BladeburnerCurAction 
+export interface BladeburnerCurAction
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [name](./bitburner.bladeburnercuraction.name.md) | string | Name of Action |
-|  [type](./bitburner.bladeburnercuraction.type.md) | string | Type of Action |
-
+| Property                                         | Type   | Description    |
+| ------------------------------------------------ | ------ | -------------- |
+| [name](./bitburner.bladeburnercuraction.name.md) | string | Name of Action |
+| [type](./bitburner.bladeburnercuraction.type.md) | string | Type of Action |

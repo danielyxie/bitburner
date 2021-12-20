@@ -11,6 +11,7 @@ Returns the current script name.
 ```typescript
 getScriptName(): string;
 ```
+
 <b>Returns:</b>
 
 string
@@ -20,4 +21,3 @@ Current script name.
 ## Remarks
 
 RAM cost: 0 GB
-

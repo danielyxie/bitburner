@@ -11,6 +11,7 @@ Check if you can recruit a new gang member.
 ```typescript
 canRecruitMember(): boolean;
 ```
+
 <b>Returns:</b>
 
 boolean
@@ -22,4 +23,3 @@ True if a member can currently be recruited, false otherwise.
 RAM cost: 1 GB
 
 Returns boolean indicating whether a member can currently be recruited
-

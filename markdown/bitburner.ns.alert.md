@@ -14,11 +14,10 @@ alert(msg: any): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  msg | any | Message to alert. |
+| Parameter | Type | Description       |
+| --------- | ---- | ----------------- |
+| msg       | any  | Message to alert. |
 
 <b>Returns:</b>
 
 void
-

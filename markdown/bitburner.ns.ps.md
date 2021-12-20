@@ -14,9 +14,9 @@ ps(host?: string): ProcessInfo[];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  host | string | Host address of the target server. If not specified, it will be the current server’s IP by default. |
+| Parameter | Type   | Description                                                                                         |
+| --------- | ------ | --------------------------------------------------------------------------------------------------- |
+| host      | string | Host address of the target server. If not specified, it will be the current server’s IP by default. |
 
 <b>Returns:</b>
 
@@ -32,15 +32,13 @@ Returns an array with general information about all scripts running on the speci
 
 ## Example
 
-
 ```ts
 //(using NetscriptJS (Netscript 2.0))
 export async function main(ns) {
-   const ps = ns.ps("home");
-   for (let i = 0; i < ps.length; ++i) {
-       ns.tprint(ps[i].filename + ' ' + ps[i].threads);
-       ns.tprint(ps[i].args);
-   }
+  const ps = ns.ps("home");
+  for (let i = 0; i < ps.length; ++i) {
+    ns.tprint(ps[i].filename + " " + ps[i].threads);
+    ns.tprint(ps[i].args);
+  }
 }
 ```
-
