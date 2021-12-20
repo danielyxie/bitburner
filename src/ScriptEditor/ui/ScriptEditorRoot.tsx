@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
@@ -254,7 +255,7 @@ export function Root(props: IProps): React.ReactElement {
 
 
   // When the editor is mounted
-  function onMount(editor: IStandaloneCodeEditor, monaco: Monaco) {
+  function onMount(editor: IStandaloneCodeEditor, monaco: Monaco): void {
     editorRef.current = editor;
     monacoRef.current = monaco;
 
@@ -262,7 +263,7 @@ export function Root(props: IProps): React.ReactElement {
 
     if (props.filename) {
       // Check if file is already opened
-      let openScriptIndex = openScripts.findIndex(script => script.fileName === props.filename && script.hostname === props.hostname);
+      const openScriptIndex = openScripts.findIndex(script => script.fileName === props.filename && script.hostname === props.hostname);
       if (openScriptIndex !== -1) {
         // Script is already opened
         if (openScripts[openScriptIndex].model === undefined || openScripts[openScriptIndex].model === null || openScripts[openScriptIndex].model.isDisposed()) {
@@ -276,7 +277,7 @@ export function Root(props: IProps): React.ReactElement {
         updateRAM(openScripts[openScriptIndex].code);
       } else {
         // Open script
-        var newScript = new OpenScript(props.filename, props.code, props.hostname, new monacoRef.current.Position(0, 0), monacoRef.current.editor.createModel(props.code, 'javascript'));
+        const newScript = new OpenScript(props.filename, props.code, props.hostname, new monacoRef.current.Position(0, 0), monacoRef.current.editor.createModel(props.code, 'javascript'));
         setOpenScripts(oldArray => [...oldArray, newScript]);
         setCurrentScript({ ...newScript });
         editorRef.current.setModel(newScript.model);
@@ -322,17 +323,17 @@ export function Root(props: IProps): React.ReactElement {
   }
 
   // When the code is updated within the editor
-  function updateCode(newCode?: string) {
+  function updateCode(newCode?: string): void {
     if (newCode === undefined) return;
     updateRAM(newCode);
     if (editorRef.current !== null) {
-      var newPos = editorRef.current.getPosition();
+      const newPos = editorRef.current.getPosition();
       if (newPos === null) return;
       setCurrentScript(oldScript => ({ ...oldScript!, code: newCode, lastPosition: newPos! }))
       if (currentScript !== null) {
-        let curIndex = openScripts.findIndex(script => script.fileName === currentScript.fileName && script.hostname === currentScript.hostname);
-        let newArr = [...openScripts];
-        let tempScript = currentScript;
+        const curIndex = openScripts.findIndex(script => script.fileName === currentScript.fileName && script.hostname === currentScript.hostname);
+        const newArr = [...openScripts];
+        const tempScript = currentScript;
         tempScript.code = newCode;
         newArr[curIndex] = tempScript;
         setOpenScripts([...newArr]);
@@ -466,7 +467,7 @@ export function Root(props: IProps): React.ReactElement {
     props.router.toTerminal();
   }
 
-  function reorder(list: Array<OpenScript>, startIndex: number, endIndex: number) {
+  function reorder(list: Array<OpenScript>, startIndex: number, endIndex: number): OpenScript[] {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -474,7 +475,7 @@ export function Root(props: IProps): React.ReactElement {
     return result;
   }
 
-  function onDragEnd(result: any) {
+  function onDragEnd(result: any): void{
     // Dropped outside of the list
     if (!result.destination) {
       result
@@ -486,10 +487,10 @@ export function Root(props: IProps): React.ReactElement {
     setOpenScripts(items);
   }
 
-  function onTabClick(index: number) {
+  function onTabClick(index: number): void {
     if (currentScript !== null) {
       // Save currentScript to openScripts
-      let curIndex = openScripts.findIndex(script => script.fileName === currentScript.fileName && script.hostname === currentScript.hostname);
+      const curIndex = openScripts.findIndex(script => script.fileName === currentScript.fileName && script.hostname === currentScript.hostname);
       openScripts[curIndex] = currentScript;
     }
 
@@ -507,17 +508,17 @@ export function Root(props: IProps): React.ReactElement {
     }
   }
 
-  async function onTabClose(index: number) {
+  async function onTabClose(index: number): Promise<void> {
     // See if the script on the server is up to date
-    let closingScript = openScripts[index];
-    let savedOpenScripts: Array<OpenScript> = JSON.parse(window.localStorage.getItem('scriptEditorOpenScripts')!);
-    let savedScriptIndex = savedOpenScripts.findIndex(script => script.fileName === closingScript.fileName && script.hostname === closingScript.hostname);
+    const closingScript = openScripts[index];
+    const savedOpenScripts: Array<OpenScript> = JSON.parse(window.localStorage.getItem('scriptEditorOpenScripts')!);
+    const savedScriptIndex = savedOpenScripts.findIndex(script => script.fileName === closingScript.fileName && script.hostname === closingScript.hostname);
     let savedScriptCode = '';
     if (savedScriptIndex !== -1) {
       savedScriptCode = savedOpenScripts[savedScriptIndex].code;
     }
 
-    let serverScriptIndex = GetServer(closingScript.hostname)?.scripts.findIndex(script => script.filename === closingScript.fileName);
+    const serverScriptIndex = GetServer(closingScript.hostname)?.scripts.findIndex(script => script.filename === closingScript.fileName);
     if (serverScriptIndex === -1 || savedScriptCode !== GetServer(closingScript.hostname)?.scripts[serverScriptIndex as number].code) {
       PromptEvent.emit({
         txt: 'Do you want to save changes to ' + closingScript.fileName + '?',
@@ -578,7 +579,7 @@ export function Root(props: IProps): React.ReactElement {
               >
                 {openScripts.map(({ fileName, hostname }, index) => (
                   <Draggable key={fileName + hostname} draggableId={fileName + hostname} index={index} disableInteractiveElementBlocking={true}>
-                    {(provided, snapshot) => (
+                    {(provided) => (
                       <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
