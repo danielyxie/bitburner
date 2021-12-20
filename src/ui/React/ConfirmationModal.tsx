@@ -8,7 +8,7 @@ interface IProps {
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  confirmationText: string;
+  confirmationText: string | React.ReactNode;
 }
 
 export function ConfirmationModal(props: IProps): React.ReactElement {

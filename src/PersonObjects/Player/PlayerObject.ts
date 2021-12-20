@@ -34,6 +34,7 @@ import { CityName } from "../../Locations/data/CityNames";
 
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
+import { ISkillProgress } from "../formulas/skill";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -246,6 +247,7 @@ export class PlayerObject implements IPlayer {
   getIntelligenceBonus: (weight: number) => number;
   getCasinoWinnings: () => number;
   quitJob: (company: string) => void;
+  hasJob: () => boolean;
   process: (router: IRouter, numCycles?: number) => void;
   createHacknetServer: () => HacknetServer;
   startCreateProgramWork: (router: IRouter, programName: string, time: number, reqLevel: number) => void;
@@ -265,6 +267,7 @@ export class PlayerObject implements IPlayer {
   prestigeAugmentation: () => void;
   prestigeSourceFile: () => void;
   calculateSkill: (exp: number, mult?: number) => number;
+  calculateSkillProgress: (exp: number, mult?: number) => ISkillProgress;
   resetWorkStatus: (generalType?: string, group?: string, workType?: string) => void;
   getWorkHackExpGain: () => number;
   getWorkStrExpGain: () => number;
@@ -470,6 +473,7 @@ export class PlayerObject implements IPlayer {
     this.prestigeSourceFile = generalMethods.prestigeSourceFile;
     this.receiveInvite = generalMethods.receiveInvite;
     this.calculateSkill = generalMethods.calculateSkill;
+    this.calculateSkillProgress = generalMethods.calculateSkillProgress;
     this.updateSkillLevels = generalMethods.updateSkillLevels;
     this.resetMultipliers = generalMethods.resetMultipliers;
     this.hasProgram = generalMethods.hasProgram;
@@ -528,6 +532,7 @@ export class PlayerObject implements IPlayer {
     this.applyForJob = generalMethods.applyForJob;
     this.getNextCompanyPosition = generalMethods.getNextCompanyPosition;
     this.quitJob = generalMethods.quitJob;
+    this.hasJob = generalMethods.hasJob;
     this.applyForSoftwareJob = generalMethods.applyForSoftwareJob;
     this.applyForSoftwareConsultantJob = generalMethods.applyForSoftwareConsultantJob;
     this.applyForItJob = generalMethods.applyForItJob;

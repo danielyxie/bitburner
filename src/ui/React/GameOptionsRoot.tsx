@@ -70,6 +70,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   );
   const [suppressTIXPopup, setSuppressTIXPopup] = useState(Settings.SuppressTIXPopup);
   const [suppressBladeburnerPopup, setSuppressBladeburnerPopup] = useState(Settings.SuppressBladeburnerPopup);
+  const [suppressSavedGameToast, setSuppresSavedGameToast] = useState(Settings.SuppressSavedGameToast);
 
   const [disableHotkeys, setDisableHotkeys] = useState(Settings.DisableHotkeys);
   const [disableASCIIArt, setDisableASCIIArt] = useState(Settings.DisableASCIIArt);
@@ -82,6 +83,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [deleteGameOpen, setDeleteOpen] = useState(false);
   const [themeEditorOpen, setThemeEditorOpen] = useState(false);
+  const [softResetOpen, setSoftResetOpen] = useState(false);
 
   function handleExecTimeChange(event: any, newValue: number | number[]): void {
     setExecTime(newValue as number);
@@ -136,6 +138,11 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handleSuppressBladeburnerPopupChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setSuppressBladeburnerPopup(event.target.checked);
     Settings.SuppressBladeburnerPopup = event.target.checked;
+  }
+
+  function handleSuppressSavedGameToastChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setSuppresSavedGameToast(event.target.checked);
+    Settings.SuppressSavedGameToast = event.target.checked;
   }
 
   function handleDisableHotkeysChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -202,6 +209,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
       save(contents).then(() => setTimeout(() => location.reload(), 1000));
     };
     reader.readAsText(file);
+  }
+
+  function doSoftReset(): void {
+    if (!Settings.SuppressBuyAugmentationConfirmation) {
+      setSoftResetOpen(true);
+    } else {
+      props.softReset();
+    }
   }
 
   return (
@@ -382,7 +397,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       </Typography>
                     }
                   >
-                    <Typography>Suppress buy augmentation confirmation</Typography>
+                    <Typography>Suppress augmentations confirmation</Typography>
                   </Tooltip>
                 }
               />
@@ -420,6 +435,20 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 />
               </ListItem>
             )}
+            <ListItem>
+              <FormControlLabel
+                control={<Switch checked={suppressSavedGameToast} onChange={handleSuppressSavedGameToastChange} />}
+                label={
+                  <Tooltip
+                    title={
+                      <Typography>If this is set, there will be no "Saved Game" toast appearing after save.</Typography>
+                    }
+                  >
+                    <Typography>Suppress Saved Game Toast</Typography>
+                  </Tooltip>
+                }
+              />
+            </ListItem>
             <ListItem>
               <FormControlLabel
                 control={<Switch checked={disableHotkeys} onChange={handleDisableHotkeysChange} />}
@@ -626,8 +655,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 </Typography>
               }
             >
-              <Button onClick={() => props.softReset()}>Soft Reset</Button>
+              <Button onClick={doSoftReset}>Soft Reset</Button>
             </Tooltip>
+            <ConfirmationModal
+              open={softResetOpen}
+              onClose={() => setSoftResetOpen(false)}
+              onConfirm={props.softReset}
+              confirmationText={"This will perform the same action as installing Augmentations, are you sure?"}
+            />
           </Box>
           <Box>
             <Tooltip

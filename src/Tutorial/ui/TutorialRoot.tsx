@@ -108,7 +108,7 @@ export function TutorialRoot(props: IProps): React.ReactElement {
           target="_blank"
           href="https://bitburner.readthedocs.io/en/latest/netscript/netscriptlearntoprogram.html#netscript-1-0-vs-netscript-2-0"
         >
-          <Typography>NS1 vs NS1 (or .script vs .js)</Typography>
+          <Typography>NS1 vs NS2 (or .script vs .js)</Typography>
         </Link>
       </Box>
     </>

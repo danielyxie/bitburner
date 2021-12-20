@@ -29,7 +29,7 @@ export function mem(
 
     const script = terminal.getScript(player, scriptName);
     if (script == null) {
-      terminal.error("No such script exists!");
+      terminal.error("mem failed. No such script exists!");
       return;
     }
 

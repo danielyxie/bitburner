@@ -12014,6 +12014,34 @@
             },
             {
               "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Hacknet#getHashUpgrades:member(1)",
+              "docComment": "/**\n * Get the list of hash upgrades\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).\n *\n * Returns the list of all available hash upgrades that can be used in the spendHashes function.\n *\n * @returns An array containing the available upgrades\n *\n * @example\n * ```ts\n * const upgrades = hacknet.getHashUpgrades(); // [\"Sell for Money\",\"Sell for Corporation Funds\",...]\n * ```\n *\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getHashUpgrades(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "getHashUpgrades"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "bitburner!Hacknet#getLevelUpgradeCost:member(1)",
               "docComment": "/**\n * Calculate the cost of upgrading hacknet node levels.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Returns the cost of upgrading the specified Hacknet Node by n levels.\n *\n * If an invalid value for n is provided, then this function returns 0. If the specified Hacknet Node is already at max level, then Infinity is returned.\n *\n * @param index - Index/Identifier of Hacknet Node.\n *\n * @param n - Number of levels to upgrade. Must be positive. Rounded to nearest integer.\n *\n * @returns Cost of upgrading the specified Hacknet Node.\n */\n",
               "excerptTokens": [

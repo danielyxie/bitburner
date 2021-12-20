@@ -32,6 +32,7 @@ function bitNodeFinishedState(): boolean {
   return Player.bladeburner !== null && Player.bladeburner.blackops.hasOwnProperty("Operation Daedalus");
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function sfAchievement(): Achievement[] {
   const achs: Achievement[] = [];
   for (let i = 0; i <= 11; i++) {
@@ -189,7 +190,7 @@ const achievements: Achievement[] = [
   },
   {
     ID: "GANG_TERRITORY",
-    Condition: () => Player.gang !== null && AllGangs[Player.gang.facName].territory === 1,
+    Condition: () => Player.gang !== null && AllGangs[Player.gang.facName].territory >= 0.999,
   },
   {
     ID: "GANG_MEMBER_POWER",

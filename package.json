@@ -1,10 +1,10 @@
 {
   "name": "bitburner",
   "license": "SEE LICENSE IN license.txt",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "electron-main.js",
   "author": {
-    "name": "Daniel Xie"
+    "name": "Daniel Xie & Olivier Gagnon"
   },
   "bugs": {
     "url": "https://github.com/danielyxie/bitburner/issues"
@@ -22,6 +22,7 @@
     "@types/escodegen": "^0.0.7",
     "@types/numeral": "0.0.25",
     "@types/react": "^17.0.21",
+    "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^17.0.9",
     "@types/react-resizable": "^1.7.3",
     "acorn": "^8.4.1",
@@ -41,6 +42,7 @@
     "numeral": "2.0.6",
     "raw-loader": "^4.0.2",
     "react": "^17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
     "react-draggable": "^4.4.4",
     "react-resizable": "^3.0.4",
@@ -104,11 +106,13 @@
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "lint": "eslint --fix . --ext js,jsx,ts,tsx",
+    "lint:report": "eslint --ext js,jsx,ts,tsx .",
     "preinstall": "node ./scripts/engines-check.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development",
+    "package-electron": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png",
     "electron": "cp -r electron/* .package && cp index.html .package && cp main.bundle.js .package && cp dist/vendor.bundle.js .package/dist/ && cp -r dist/ext .package/dist/ && electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png",
     "allbuild": "npm run build && npm run electron && git add --all && git commit --amend --no-edit && git push -f -u origin dev"
   }

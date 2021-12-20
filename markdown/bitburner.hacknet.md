@@ -23,6 +23,7 @@ Not all these functions are immediately available.
 |  [getCacheUpgradeCost(index, n)](./bitburner.hacknet.getcacheupgradecost.md) | Calculate the cost of upgrading hacknet node cache. |
 |  [getCoreUpgradeCost(index, n)](./bitburner.hacknet.getcoreupgradecost.md) | Calculate the cost of upgrading hacknet node cores. |
 |  [getHashUpgradeLevel(upgName)](./bitburner.hacknet.gethashupgradelevel.md) | Get the level of a hash upgrade. |
+|  [getHashUpgrades()](./bitburner.hacknet.gethashupgrades.md) | Get the list of hash upgrades |
 |  [getLevelUpgradeCost(index, n)](./bitburner.hacknet.getlevelupgradecost.md) | Calculate the cost of upgrading hacknet node levels. |
 |  [getNodeStats(index)](./bitburner.hacknet.getnodestats.md) | Get the stats of a hacknet node. |
 |  [getPurchaseNodeCost()](./bitburner.hacknet.getpurchasenodecost.md) | Get the price of the next hacknet node. |

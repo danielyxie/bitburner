@@ -1,4 +1,5 @@
-const { app, BrowserWindow, Menu, shell } = require("electron");
+/* eslint-disable @typescript-eslint/no-var-requires */
+ const { app, BrowserWindow, Menu, shell } = require("electron");
 const greenworks = require("./greenworks");
 
 if (greenworks.init()) {
@@ -7,14 +8,13 @@ if (greenworks.init()) {
   console.log("Steam API has failed to initialize.");
 }
 
-console.log(greenworks.shutdown);
-
 const debug = false;
 
 function createWindow(killall) {
   const win = new BrowserWindow({
     show: false,
     backgroundThrottling: false,
+    backgroundColor: "#000000",
   });
 
   win.removeMenu();
@@ -128,6 +128,7 @@ function setStopProcessHandler(app, window, enabled) {
   const stopProcessHandler = () => {
     if (process.platform !== "darwin") {
       app.quit();
+      // eslint-disable-next-line no-process-exit
       process.exit(0);
     }
   };
@@ -142,6 +143,6 @@ function setStopProcessHandler(app, window, enabled) {
 }
 
 app.whenReady().then(() => {
-  const win = createWindow(false);
+  const win = createWindow(process.argv.includes("--no-scripts"));
   setStopProcessHandler(app, win, true);
 });

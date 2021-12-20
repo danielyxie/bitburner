@@ -67,7 +67,11 @@ class BitburnerSaveObject {
     const saveString = this.getSaveString();
 
     save(saveString)
-      .then(() => SnackbarEvents.emit("Game Saved!", "info"))
+      .then(() => {
+        if (!Settings.SuppressSavedGameToast) {
+          SnackbarEvents.emit("Game Saved!", "info")
+        }
+      })
       .catch((err) => console.error(err));
   }
 

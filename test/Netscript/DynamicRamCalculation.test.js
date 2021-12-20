@@ -1,9 +1,16 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { jest, describe, expect, test } from '@jest/globals'
+
 import { NetscriptFunctions } from "../../src/NetscriptFunctions";
 import { getRamCost, RamCostConstants } from "../../src/Netscript/RamCostGenerator";
 import { Environment } from "../../src/Netscript/Environment";
 import { RunningScript } from "../../src/Script/RunningScript";
 import { Script } from "../../src/Script/Script";
 import { SourceFileFlags } from "../../src/SourceFile/SourceFileFlags";
+
+jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => '', {
+  virtual: true,
+});
 
 const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
 
@@ -106,12 +113,13 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
    * @param {string[]} fnDesc - describes the name of the function being tested,
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    */
-  async function testZeroDynamicRamCost(fnDesc) {
+  async function testZeroDynamicRamCost(fnDesc, skipRun = false) {
     if (!Array.isArray(fnDesc)) {
       throw new Error("Non-array passed to testZeroDynamicRamCost()");
     }
     const expected = getRamCost(...fnDesc);
     expect(expected).toEqual(0);
+    if (skipRun) return;
 
     const code = `${fnDesc.join(".")}();`;
 
@@ -154,7 +162,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
         runPotentiallyAsyncFunction(curr);
       } catch (e) {}
     } else {
-      throw new Error(`Invalid function specified: [${fndesc}]`);
+      throw new Error(`Invalid function specified: [${fnDesc}]`);
     }
 
     testEquality(workerScript.dynamicRamUsage, ScriptBaseCost);
@@ -188,13 +196,13 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("hackAnalyzePercent()", async function () {
-      const f = ["hackAnalyzePercent"];
+    it("hackAnalyze()", async function () {
+      const f = ["hackAnalyze"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("hackChance()", async function () {
-      const f = ["hackChance"];
+    it("hackAnalyzeChance()", async function () {
+      const f = ["hackAnalyzeChance"];
       await testNonzeroDynamicRamCost(f);
     });
 
@@ -285,6 +293,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     it("exec()", async function () {
       const f = ["exec"];
+      jest.spyOn(console, 'log').mockImplementation(() => {}); // eslint-disable-line
       await testNonzeroDynamicRamCost(f);
     });
 
@@ -305,7 +314,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     it("exit()", async function () {
       const f = ["exit"];
-      await testZeroDynamicRamCost(f);
+      await testZeroDynamicRamCost(f, true);
     });
 
     it("scp()", async function () {
@@ -450,32 +459,32 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     it("write()", async function () {
       const f = ["write"];
-      await testNonzeroDynamicRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
-    it("tryWrite()", async function () {
-      const f = ["tryWrite"];
-      await testNonzeroDynamicRamCost(f);
+    it("tryWritePort()", async function () {
+      const f = ["tryWritePort"];
+      await testZeroDynamicRamCost(f);
     });
 
     it("read()", async function () {
       const f = ["read"];
-      await testNonzeroDynamicRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("peek()", async function () {
       const f = ["peek"];
-      await testNonzeroDynamicRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("clear()", async function () {
       const f = ["clear"];
-      await testNonzeroDynamicRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("getPortHandle()", async function () {
       const f = ["getPortHandle"];
-      await testNonzeroDynamicRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("rm()", async function () {
@@ -577,88 +586,88 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
   });
 
   describe("TIX API", function () {
-    it("getStockSymbols()", async function () {
-      const f = ["getStockSymbols"];
+    it("stock.getSymbols()", async function () {
+      const f = ["stock", "getSymbols"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("getStockPrice()", async function () {
-      const f = ["getStockPrice"];
+    it("stock.getPrice()", async function () {
+      const f = ["stock", "getPrice"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("getStockAskPrice()", async function () {
-      const f = ["getStockAskPrice"];
+    it("stock.getBidPrice()", async function () {
+      const f = ["stock", "getBidPrice"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("getStockBidPrice()", async function () {
-      const f = ["getStockBidPrice"];
+    it("stock.getBidPrice()", async function () {
+      const f = ["stock", "getBidPrice"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("getStockPosition()", async function () {
-      const f = ["getStockPosition"];
+    it("stock.getPosition()", async function () {
+      const f = ["stock", "getPosition"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("getStockMaxShares()", async function () {
-      const f = ["getStockMaxShares"];
+    it("stock.getMaxShares()", async function () {
+      const f = ["stock", "getMaxShares"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("buyStock()", async function () {
-      const f = ["buyStock"];
+    it("stock.buy()", async function () {
+      const f = ["stock", "buy"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("sellStock()", async function () {
-      const f = ["sellStock"];
+    it("stock.sell()", async function () {
+      const f = ["stock", "sell"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("shortStock()", async function () {
-      const f = ["shortStock"];
+    it("stock.short()", async function () {
+      const f = ["stock", "short"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("sellShort()", async function () {
-      const f = ["sellShort"];
+    it("stock.sellShort()", async function () {
+      const f = ["stock", "sellShort"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("placeOrder()", async function () {
-      const f = ["placeOrder"];
+    it("stock.placeOrder()", async function () {
+      const f = ["stock", "placeOrder"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("cancelOrder()", async function () {
-      const f = ["cancelOrder"];
+    it("stock.cancelOrder()", async function () {
+      const f = ["stock", "cancelOrder"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("getOrders()", async function () {
-      const f = ["getOrders"];
+    it("stock.getOrders()", async function () {
+      const f = ["stock", "getOrders"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("getStockVolatility()", async function () {
-      const f = ["getStockVolatility"];
+    it("stock.getVolatility()", async function () {
+      const f = ["stock", "getVolatility"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("getStockForecast()", async function () {
-      const f = ["getStockForecast"];
+    it("stock.getForecast()", async function () {
+      const f = ["stock", "getForecast"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("purchase4SMarketData()", async function () {
-      const f = ["purchase4SMarketData"];
+    it("stock.purchase4SMarketData()", async function () {
+      const f = ["stock", "purchase4SMarketData"];
       await testNonzeroDynamicRamCost(f);
     });
 
-    it("purchase4SMarketDataTixApi()", async function () {
-      const f = ["purchase4SMarketDataTixApi"];
+    it("stock.purchase4SMarketDataTixApi()", async function () {
+      const f = ["stock", "purchase4SMarketDataTixApi"];
       await testNonzeroDynamicRamCost(f);
     });
   });
@@ -968,11 +977,6 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     it("getCityEstimatedPopulation()", async function () {
       const f = ["bladeburner", "getCityEstimatedPopulation"];
-      await testNonzeroDynamicRamCost(f);
-    });
-
-    it("getCityEstimatedCommunities()", async function () {
-      const f = ["bladeburner", "getCityEstimatedCommunities"];
       await testNonzeroDynamicRamCost(f);
     });
 
