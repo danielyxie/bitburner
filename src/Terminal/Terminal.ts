@@ -212,12 +212,17 @@ export class Terminal implements ITerminal {
       player.gainHackingExp(expGainedOnSuccess);
       player.gainIntelligenceExp(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain);
 
+      const oldSec = server.hackDifficulty;
       server.fortify(CONSTANTS.ServerFortifyAmount);
+      const newSec = server.hackDifficulty;
 
       this.print(
         `Hack successful! Gained ${numeralWrapper.formatMoney(moneyGained)} and ${numeralWrapper.formatExp(
           expGainedOnSuccess,
         )} hacking exp`,
+      );
+      this.print(
+        `Security increased from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(newSec)}`,
       );
     } else {
       // Failure
@@ -237,12 +242,17 @@ export class Terminal implements ITerminal {
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
     const expGain = calculateHackingExpGain(server, player);
+    const oldSec = server.hackDifficulty;
     const growth = processSingleServerGrowth(server, 25, player, server.cpuCores) - 1;
+    const newSec = server.hackDifficulty;
     this.print(
       `Available money on '${server.hostname}' grown by ${numeralWrapper.formatPercentage(
         growth,
         6,
       )}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp.`,
+    );
+    this.print(
+      `Security increased from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(newSec)}`,
     );
   }
 
@@ -255,10 +265,14 @@ export class Terminal implements ITerminal {
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
     const expGain = calculateHackingExpGain(server, player);
+    const oldSec = server.hackDifficulty;
     server.weaken(CONSTANTS.ServerWeakenAmount);
+    const newSec = server.hackDifficulty;
     this.print(
-      `'${server.hostname}' security level weakened to ${server.hackDifficulty.toFixed(3)} ` +
-        `and Gained ${numeralWrapper.formatExp(expGain)} hacking exp.`,
+      `Security decreased from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(
+        newSec,
+      )} (min: ${numeralWrapper.formatSecurity(server.minDifficulty)})` +
+        ` and Gained ${numeralWrapper.formatExp(expGain)} hacking exp.`,
     );
   }
 
