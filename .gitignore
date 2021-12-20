@@ -10,6 +10,8 @@ Netburner.txt
 /test/*.css
 .cypress
 
+.eslintcache
+
 # tmp folder for electron
 .package
 .build
