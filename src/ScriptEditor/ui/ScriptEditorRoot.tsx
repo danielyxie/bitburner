@@ -333,19 +333,18 @@ export function Root(props: IProps): React.ReactElement {
 
     if (editorRef.current === null || monacoRef.current === null) return;
 
+    if (!props.files && currentScript !== null) {
+      // Open currentscript
+      regenerateModel(currentScript);
+      editorRef.current.setModel(currentScript.model);
+      editorRef.current.setPosition(currentScript.lastPosition);
+      editorRef.current.revealLineInCenter(currentScript.lastPosition.lineNumber);
+      updateRAM(currentScript.code);
+      editorRef.current.focus();
+      return;
+    }
     if (props.files) {
       const files = Object.entries(props.files);
-
-      if (!files.length && currentScript !== null) {
-        // Open currentscript
-        regenerateModel(currentScript);
-        editorRef.current.setModel(currentScript.model);
-        editorRef.current.setPosition(currentScript.lastPosition);
-        editorRef.current.revealLineInCenter(currentScript.lastPosition.lineNumber);
-        updateRAM(currentScript.code);
-        editorRef.current.focus();
-        return;
-      }
 
       if (!files.length) {
         editorRef.current.focus();
@@ -383,6 +382,8 @@ export function Root(props: IProps): React.ReactElement {
           updateRAM(newScript.code);
         }
       }
+    } else {
+      console.log("here we need to load something if we can");
     }
 
     editorRef.current.focus();

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
- const { app, BrowserWindow, Menu, shell } = require("electron");
+const { app, BrowserWindow, Menu, shell } = require("electron");
 const greenworks = require("./greenworks");
 
 if (greenworks.init()) {
@@ -10,8 +10,26 @@ if (greenworks.init()) {
 
 const debug = false;
 
+let win = null;
+
+require("http")
+  .createServer(async function (req, res) {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString(); // convert Buffer to string
+    });
+    req.on("end", () => {
+      const data = JSON.parse(body);
+      win.webContents.executeJavaScript(`document.saveFile("${data.filename}", "${data.code}")`).then((result) => {
+        res.write(result);
+        res.end();
+      });
+    });
+  })
+  .listen(9990);
+
 function createWindow(killall) {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     show: false,
     backgroundThrottling: false,
     backgroundColor: "#000000",
@@ -41,7 +59,6 @@ function createWindow(killall) {
   const achievements = greenworks.getAchievementNames();
   const intervalID = setInterval(async () => {
     const achs = await win.webContents.executeJavaScript("document.achievements");
-    console.log(achs);
     for (const ach of achs) {
       if (!achievements.includes(ach)) continue;
       greenworks.activateAchievement(ach, () => undefined);

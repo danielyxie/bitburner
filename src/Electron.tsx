@@ -14,6 +14,8 @@ import { HacknetServer } from "./Hacknet/HacknetServer";
 import { CityName } from "./Locations/data/CityNames";
 import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
+import { isScriptFilename } from "./Script/isScriptFilename";
+import { Script } from "./Script/Script";
 import { GetAllServers, GetServer } from "./Server/AllServers";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { Server } from "./Server/Server";
@@ -412,5 +414,30 @@ function calculateAchievements(): void {
 
 export function initElectron(): void {
   setAchievements([]);
+  initWebserver();
   setInterval(calculateAchievements, 5000);
+}
+
+function initWebserver(): void {
+  (document as any).saveFile = function (filename: string, code: string): string {
+    const home = GetServer("home");
+    if (home === null) return "'home' server not found.";
+    if (home === null) return "Server should not be null but it is.";
+    if (isScriptFilename(filename)) {
+      //If the current script already exists on the server, overwrite it
+      for (let i = 0; i < home.scripts.length; i++) {
+        if (filename == home.scripts[i].filename) {
+          home.scripts[i].saveScript(filename, code, "home", home.scripts);
+        }
+      }
+
+      //If the current script does NOT exist, create a new one
+      const script = new Script();
+      script.saveScript(filename, code, "home", home.scripts);
+      home.scripts.push(script);
+      return "written";
+    }
+
+    return "not a script file";
+  };
 }
