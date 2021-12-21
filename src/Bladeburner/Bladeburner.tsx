@@ -34,6 +34,12 @@ import { getTimestamp } from "../utils/helpers/getTimestamp";
 import { joinFaction } from "../Faction/FactionHelpers";
 import { WorkerScript } from "../Netscript/WorkerScript";
 
+interface BlackOpsAttempt {
+  error?: string;
+  isAvailable?: boolean;
+  action?: BlackOperation;
+}
+
 export class Bladeburner implements IBladeburner {
   numHosp = 0;
   moneyLost = 0;
@@ -113,6 +119,44 @@ export class Bladeburner implements IBladeburner {
     return Math.min(1, this.stamina / (0.5 * this.maxStamina));
   }
 
+
+  canAttemptBlackOp(actionId: IActionIdentifier): BlackOpsAttempt {
+    // Safety measure - don't repeat BlackOps that are already done
+    if (this.blackops[actionId.name] != null) {
+      return { error: "Tried to start a Black Operation that had already been completed" }
+    }
+
+    const action = this.getActionObject(actionId);
+    if (!(action instanceof BlackOperation)) throw new Error(`Action should be BlackOperation but isn't`);
+    if (action == null) throw new Error("Failed to get BlackOperation object for: " + actionId.name);
+
+    if (action.reqdRank > this.rank) {
+      return { error: "Tried to start a Black Operation without the rank requirement" };
+    }
+
+    // Can't start a BlackOp if you haven't done the one before it
+    const blackops = [];
+    for (const nm in BlackOperations) {
+      if (BlackOperations.hasOwnProperty(nm)) {
+        blackops.push(nm);
+      }
+    }
+    blackops.sort(function (a, b) {
+      return BlackOperations[a].reqdRank - BlackOperations[b].reqdRank; // Sort black ops in intended order
+    });
+
+    const i = blackops.indexOf(actionId.name);
+    if (i === -1) {
+      return { error: `Invalid Black Op: '${name}'` };
+    }
+
+    if (i > 0 && this.blackops[blackops[i - 1]] == null) {
+      return { error: `Preceding Black Op must be completed before starting '${actionId.name}'.` }
+    }
+
+    return { isAvailable: true, action }
+  }
+
   startAction(player: IPlayer, actionId: IActionIdentifier): void {
     if (actionId == null) return;
     this.action = actionId;
@@ -156,18 +200,13 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["BlackOp"]:
       case ActionTypes["BlackOperation"]: {
         try {
-          // Safety measure - don't repeat BlackOps that are already done
-          if (this.blackops[actionId.name] != null) {
+          const testBlackOp = this.canAttemptBlackOp(actionId);
+          if (!testBlackOp.isAvailable) {
             this.resetAction();
-            this.log("Error: Tried to start a Black Operation that had already been completed");
+            this.log(`Error: ${testBlackOp.error}`);
             break;
           }
-
-          const action = this.getActionObject(actionId);
-          if (action == null) {
-            throw new Error("Failed to get BlackOperation object for: " + actionId.name);
-          }
-          this.actionTimeToComplete = action.getActionTime(this);
+          this.actionTimeToComplete = testBlackOp.action.getActionTime(this);
         } catch (e: any) {
           exceptionAlert(e);
         }
@@ -502,6 +541,7 @@ export class Bladeburner implements IBladeburner {
         const skill = Skills[skillName];
         if (skill == null || !(skill instanceof Skill)) {
           this.postToConsole("Invalid skill name (Note that it is case-sensitive): " + skillName);
+          break;
         }
         if (args[1].toLowerCase() === "list") {
           let level = 0;
@@ -515,7 +555,11 @@ export class Bladeburner implements IBladeburner {
             currentLevel = this.skills[skillName];
           }
           const pointCost = skill.calculateCost(currentLevel);
-          if (this.skillPoints >= pointCost) {
+          if (skill.maxLvl !== 0 && currentLevel >= skill.maxLvl) {
+            this.postToConsole(
+              `This skill ${skill.name} is already at max level (${currentLevel}/${skill.maxLvl}).`,
+            );
+          } else if (this.skillPoints >= pointCost) {
             this.skillPoints -= pointCost;
             this.upgradeSkill(skill);
             this.log(skill.name + " upgraded to Level " + this.skills[skillName]);
@@ -2032,44 +2076,9 @@ export class Bladeburner implements IBladeburner {
 
     // Special logic for Black Ops
     if (actionId.type === ActionTypes["BlackOp"]) {
-      // Can't start a BlackOp if you don't have the required rank
-      const action = this.getActionObject(actionId);
-      if (action == null) throw new Error(`Action not found ${actionId.type}, ${actionId.name}`);
-      if (!(action instanceof BlackOperation)) throw new Error(`Action should be BlackOperation but isn't`);
-      //const blackOp = (action as BlackOperation);
-      if (action.reqdRank > this.rank) {
-        workerScript.log("bladeburner.startAction", () => `Insufficient rank to start Black Op '${actionId.name}'.`);
-        return false;
-      }
-
-      // Can't start a BlackOp if its already been done
-      if (this.blackops[actionId.name] != null) {
-        workerScript.log("bladeburner.startAction", () => `Black Op ${actionId.name} has already been completed.`);
-        return false;
-      }
-
-      // Can't start a BlackOp if you haven't done the one before it
-      const blackops = [];
-      for (const nm in BlackOperations) {
-        if (BlackOperations.hasOwnProperty(nm)) {
-          blackops.push(nm);
-        }
-      }
-      blackops.sort(function (a, b) {
-        return BlackOperations[a].reqdRank - BlackOperations[b].reqdRank; // Sort black ops in intended order
-      });
-
-      const i = blackops.indexOf(actionId.name);
-      if (i === -1) {
-        workerScript.log("bladeburner.startAction", () => `Invalid Black Op: '${name}'`);
-        return false;
-      }
-
-      if (i > 0 && this.blackops[blackops[i - 1]] == null) {
-        workerScript.log(
-          "bladeburner.startAction",
-          () => `Preceding Black Op must be completed before starting '${actionId.name}'.`,
-        );
+      const canRunOp = this.canAttemptBlackOp(actionId);
+      if (!canRunOp.isAvailable) {
+        workerScript.log("bladeburner.startAction", () => canRunOp.error);
         return false;
       }
     }

@@ -64,7 +64,7 @@ import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
 import { NetscriptStanek } from "./NetscriptFunctions/Stanek";
-
+import { NetscriptUserInterface } from './NetscriptFunctions/UserInterface';
 import { NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
 import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
 import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
@@ -455,6 +455,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const formulas = NetscriptFormulas(Player, workerScript, helper);
   const singularity = NetscriptSingularity(Player, workerScript, helper);
   const stockmarket = NetscriptStockMarket(Player, workerScript, helper);
+  const ui = NetscriptUserInterface(Player, workerScript, helper);
 
   const base: INS = {
     ...singularity,
@@ -465,7 +466,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     sleeve: sleeve,
     corporation: corporation,
     stanek: stanek,
-
+    ui: ui,
     formulas: formulas,
     stock: stockmarket,
     args: workerScript.args,
