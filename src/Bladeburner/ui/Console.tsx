@@ -54,7 +54,6 @@ interface IProps {
 
 export function Console(props: IProps): React.ReactElement {
   const classes = useStyles();
-  const scrollHook = useRef<HTMLDivElement>(null);
   const [command, setCommand] = useState("");
   const setRerender = useState(false)[1];
 
@@ -64,22 +63,14 @@ export function Console(props: IProps): React.ReactElement {
 
   const [consoleHistoryIndex, setConsoleHistoryIndex] = useState(props.bladeburner.consoleHistory.length);
 
-  // TODO: Figure out how to actually make the scrolling work correctly.
-  function scrollToBottom(): void {
-    if (!scrollHook.current) return;
-    scrollHook.current.scrollTop = scrollHook.current.scrollHeight;
-  }
-
   function rerender(): void {
     setRerender((old) => !old);
   }
 
   useEffect(() => {
     const id = setInterval(rerender, 1000);
-    const id2 = setInterval(scrollToBottom, 100);
     return () => {
       clearInterval(id);
-      clearInterval(id2);
     };
   }, []);
 
@@ -139,34 +130,62 @@ export function Console(props: IProps): React.ReactElement {
   }
 
   return (
-    <Box height={"60vh"} display={"flex"} alignItems={"stretch"} component={Paper}>
-      <Box>
-        <List sx={{ height: "100%", overflow: "auto" }}>
-          {props.bladeburner.consoleLogs.map((log: any, i: number) => (
-            <Line key={i} content={log} />
-          ))}
-          <TextField
-            classes={{ root: classes.textfield }}
-            autoFocus
-            tabIndex={1}
-            type="text"
-            value={command}
-            onChange={handleCommandChange}
-            onKeyDown={handleKeyDown}
-            InputProps={{
-              // for players to hook in
-              className: classes.input,
-              startAdornment: (
-                <>
-                  <Typography>&gt;&nbsp;</Typography>
-                </>
-              ),
-              spellCheck: false,
-            }}
-          />
-        </List>
-        <div ref={scrollHook}></div>
+    <Paper>
+      <Box sx={{
+        height: '60vh',
+        paddingBottom: '8px',
+        display: 'flex',
+        alignItems: 'stretch',
+      }}>
+        <Box>
+          <Logs entries={[...props.bladeburner.consoleLogs]} />
+        </Box>
       </Box>
-    </Box>
+      <TextField
+        classes={{ root: classes.textfield }}
+        autoFocus
+        tabIndex={1}
+        type="text"
+        value={command}
+        onChange={handleCommandChange}
+        onKeyDown={handleKeyDown}
+        InputProps={{
+          // for players to hook in
+          className: classes.input,
+          startAdornment: (
+            <>
+              <Typography>&gt;&nbsp;</Typography>
+            </>
+          ),
+          spellCheck: false,
+        }}
+      />
+    </Paper>
+  );
+}
+
+interface ILogProps {
+  entries: string[];
+}
+
+function Logs({entries}: ILogProps): React.ReactElement {
+  const scrollHook = useRef<HTMLUListElement>(null);
+
+  // TODO: Text gets shifted up as new entries appear, if the user scrolled up it should attempt to keep the text focused
+  function scrollToBottom(): void {
+    if (!scrollHook.current) return;
+    scrollHook.current.scrollTop = scrollHook.current.scrollHeight;
+  }
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [entries]);
+
+  return (
+    <List sx={{ height: "100%", overflow: "auto", p: 1 }} ref={scrollHook}>
+      {entries && entries.map((log: any, i: number) => (
+        <Line key={i} content={log} />
+      ))}
+    </List>
   );
 }
