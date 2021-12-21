@@ -5381,6 +5381,11 @@ export interface NS extends Singularity {
 
   /**
    * Get information about the player.
+   * @remarks
+   * RAM cost: 0.5 GB
+   * 
+   * Returns an object with information on the current player.
+   * 
    * @returns Player info
    */
   getPlayer(): Player;
