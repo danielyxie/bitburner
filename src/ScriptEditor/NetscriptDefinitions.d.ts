@@ -1493,9 +1493,10 @@ export interface Singularity {
    * //This way, your company reputation will be updated every minute.
    * ```
    * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked
+   * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.
    * @returns True if the player starts working, and false otherwise.
    */
-  workForCompany(companyName?: string): boolean;
+  workForCompany(companyName?: string, focus?: boolean): boolean;
 
   /**
    * SF4.2 - Apply for a job at a company.
@@ -1612,9 +1613,10 @@ export interface Singularity {
    * ```
    * @param faction - Name of faction to work for.
    * @param workType - Type of work to perform for the faction.
+   * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.
    * @returns True if the player starts working, and false otherwise.
    */
-  workForFaction(faction: string, workType: string): boolean;
+  workForFaction(faction: string, workType: string, focus?: boolean): boolean;
 
   /**
    * SF4.2 - Get faction reputation.
