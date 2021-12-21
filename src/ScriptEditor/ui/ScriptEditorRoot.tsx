@@ -125,6 +125,25 @@ export function Root(props: IProps): React.ReactElement {
     vim: props.vim || Settings.MonacoVim,
   });
 
+  const [dimensions, setDimensions] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
+  useEffect(() => {
+    const debouncedHandleResize = debounce(function handleResize() {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    }, 250);
+
+    window.addEventListener("resize", debouncedHandleResize);
+
+    return () => {
+      window.removeEventListener("resize", debouncedHandleResize);
+    };
+  }, []);
+
   useEffect(() => {
     // Save currentScript
     window.localStorage.setItem(
@@ -639,11 +658,13 @@ export function Root(props: IProps): React.ReactElement {
     }
   }
 
-  // TODO: Make this responsive to window resizes
-  // Toolbars are roughly 108px + vim bar 34px
-  // Get percentage of space that toolbars represent and the rest should be the
-  // editor
-  const editorHeight = 100 - ((108 + (options.vim ? 34 : 0)) / window.innerHeight) * 100;
+  // Toolbars are roughly 112px:
+  //  8px body margin top
+  //  38.5px filename tabs
+  //  5px padding for top of editor
+  //  44px bottom tool bar + 16px margin
+  //  + vim bar 34px
+  const editorHeight = dimensions.height - (112 + (options.vim ? 34 : 0));
 
   return (
     <>
@@ -722,7 +743,7 @@ export function Root(props: IProps): React.ReactElement {
           beforeMount={beforeMount}
           onMount={onMount}
           loading={<Typography>Loading script editor!</Typography>}
-          height={`${editorHeight}%`}
+          height={`${editorHeight}px`}
           defaultLanguage="javascript"
           defaultValue={""}
           onChange={updateCode}
