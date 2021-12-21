@@ -104,6 +104,7 @@ export function Console(props: IProps): React.ReactElement {
       setConsoleHistoryIndex(i);
       const prevCommand = consoleHistory[i];
       event.currentTarget.value = prevCommand;
+      setCommand(prevCommand);
     }
 
     if (event.keyCode === 40) {
@@ -125,6 +126,7 @@ export function Console(props: IProps): React.ReactElement {
         setConsoleHistoryIndex(consoleHistoryIndex + 1);
         const prevCommand = consoleHistory[consoleHistoryIndex + 1];
         event.currentTarget.value = prevCommand;
+        setCommand(prevCommand);
       }
     }
   }
