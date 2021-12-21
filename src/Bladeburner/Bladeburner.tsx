@@ -502,6 +502,7 @@ export class Bladeburner implements IBladeburner {
         const skill = Skills[skillName];
         if (skill == null || !(skill instanceof Skill)) {
           this.postToConsole("Invalid skill name (Note that it is case-sensitive): " + skillName);
+          break;
         }
         if (args[1].toLowerCase() === "list") {
           let level = 0;
@@ -515,7 +516,11 @@ export class Bladeburner implements IBladeburner {
             currentLevel = this.skills[skillName];
           }
           const pointCost = skill.calculateCost(currentLevel);
-          if (this.skillPoints >= pointCost) {
+          if (skill.maxLvl !== 0 && currentLevel >= skill.maxLvl) {
+            this.postToConsole(
+              `This skill ${skill.name} is already at max level (${currentLevel}/${skill.maxLvl}).`,
+            );
+          } else if (this.skillPoints >= pointCost) {
             this.skillPoints -= pointCost;
             this.upgradeSkill(skill);
             this.log(skill.name + " upgraded to Level " + this.skills[skillName]);
