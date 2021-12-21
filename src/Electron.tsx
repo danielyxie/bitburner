@@ -426,8 +426,10 @@ function initWebserver(): void {
     if (isScriptFilename(filename)) {
       //If the current script already exists on the server, overwrite it
       for (let i = 0; i < home.scripts.length; i++) {
+        console.log(`${filename} ${home.scripts[i].filename}`);
         if (filename == home.scripts[i].filename) {
           home.scripts[i].saveScript(filename, code, "home", home.scripts);
+          return "written";
         }
       }
 
