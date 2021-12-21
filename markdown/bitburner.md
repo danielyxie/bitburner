@@ -66,6 +66,7 @@
 |  [StockOrder](./bitburner.stockorder.md) | Return value of [getOrders](./bitburner.tix.getorders.md) |
 |  [StockOrderObject](./bitburner.stockorderobject.md) | Value in map of [StockOrder](./bitburner.stockorder.md) |
 |  [TIX](./bitburner.tix.md) | Stock market API |
+|  [UserInterface](./bitburner.userinterface.md) | User Interface API. |
 |  [Warehouse](./bitburner.warehouse.md) | Warehouse for a division in a city |
 |  [WarehouseAPI](./bitburner.warehouseapi.md) | Corporation Warehouse API |
 

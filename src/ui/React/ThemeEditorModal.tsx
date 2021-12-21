@@ -11,7 +11,8 @@ import PaletteSharpIcon from "@mui/icons-material/PaletteSharp";
 import { Color, ColorPicker } from "material-ui-color";
 import { ThemeEvents } from "./Theme";
 import { Settings, defaultSettings } from "../../Settings/Settings";
-import { ITheme, getPredefinedThemes } from "../../Settings/Themes";
+import { getPredefinedThemes } from "../../Settings/Themes";
+import { UserInterfaceTheme } from "../../ScriptEditor/NetscriptDefinitions";
 
 interface IProps {
   open: boolean;
@@ -75,7 +76,7 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
       </Button>
     )) || <></>;
 
-  function setTheme(theme: ITheme): void {
+  function setTheme(theme: UserInterfaceTheme): void {
     setCustomTheme(theme);
     Object.assign(Settings.theme, theme);
     ThemeEvents.emit();
@@ -105,7 +106,7 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
     ThemeEvents.emit();
   }
 
-  function setTemplateTheme(theme: ITheme): void {
+  function setTemplateTheme(theme: UserInterfaceTheme): void {
     setTheme(theme);
   }
 
