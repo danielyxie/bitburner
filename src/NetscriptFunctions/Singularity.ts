@@ -819,7 +819,7 @@ export function NetscriptSingularity(
 
       return player.getUpgradeHomeRamCost();
     },
-    workForCompany: function (companyName: any): any {
+    workForCompany: function (companyName: any, focus: boolean = true): any {
       helper.updateDynamicRam("workForCompany", getRamCost("workForCompany"));
       helper.checkSingularityAccess("workForCompany", 2);
 
@@ -848,7 +848,6 @@ export function NetscriptSingularity(
         return false;
       }
 
-      const wasWorking = player.isWorking;
       const wasFocused = player.focus;
       if (player.isWorking) {
         const txt = player.singularityStopWork();
@@ -861,8 +860,14 @@ export function NetscriptSingularity(
         player.startWork(companyName);
       }
 
-      if (!wasWorking || (wasWorking && !wasFocused)) player.stopFocusing();
-      else if (wasWorking && wasFocused) player.startFocusing();
+      if (focus) {
+        player.startFocusing();
+        Router.toWork();
+      }
+      else if (wasFocused) {
+        player.stopFocusing();
+        Router.toTerminal();
+      }
       workerScript.log(
         "workForCompany",
         () => `Began working at '${player.companyName}' as a '${companyPositionName}'`,
@@ -986,7 +991,7 @@ export function NetscriptSingularity(
       workerScript.log("joinFaction", () => `Joined the '${name}' faction.`);
       return true;
     },
-    workForFaction: function (name: any, type: any): any {
+    workForFaction: function (name: any, type: any, focus: boolean = true): any {
       helper.updateDynamicRam("workForFaction", getRamCost("workForFaction"));
       helper.checkSingularityAccess("workForFaction", 2);
       getFaction("workForFaction", name);
@@ -1002,8 +1007,7 @@ export function NetscriptSingularity(
         return false;
       }
 
-      const wasWorking = player.isWorking;
-      const wasFocused = player.focus;
+      const wasFocusing = player.focus;
       if (player.isWorking) {
         const txt = player.singularityStopWork();
         workerScript.log("workForFaction", () => txt);
@@ -1102,8 +1106,14 @@ export function NetscriptSingularity(
             return false;
           }
           player.startFactionHackWork(fac);
-          if (!wasWorking || (wasWorking && !wasFocused)) player.stopFocusing();
-          else if (wasWorking && wasFocused) player.startFocusing();
+          if (focus)
+          {
+            player.startFocusing();
+            Router.toWork();
+          } else if (wasFocusing) {
+            player.stopFocusing();
+            Router.toTerminal();
+          }
           workerScript.log("workForFaction", () => `Started carrying out hacking contracts for '${fac.name}'`);
           return true;
         case "field":
@@ -1114,8 +1124,14 @@ export function NetscriptSingularity(
             return false;
           }
           player.startFactionFieldWork(fac);
-          if (!wasWorking || (wasWorking && !wasFocused)) player.stopFocusing();
-          else if (wasWorking && wasFocused) player.startFocusing();
+          if (focus)
+          {
+            player.startFocusing();
+            Router.toWork();
+          } else if (wasFocusing) {
+            player.stopFocusing();
+            Router.toTerminal();
+          }
           workerScript.log("workForFaction", () => `Started carrying out field missions for '${fac.name}'`);
           return true;
         case "security":
@@ -1126,8 +1142,14 @@ export function NetscriptSingularity(
             return false;
           }
           player.startFactionSecurityWork(fac);
-          if (!wasWorking || (wasWorking && !wasFocused)) player.stopFocusing();
-          else if (wasWorking && wasFocused) player.startFocusing();
+          if (focus)
+          {
+            player.startFocusing();
+            Router.toWork();
+          } else if (wasFocusing) {
+            player.stopFocusing();
+            Router.toTerminal();
+          }
           workerScript.log("workForFaction", () => `Started carrying out security work for '${fac.name}'`);
           return true;
         default:
