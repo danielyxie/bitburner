@@ -119,11 +119,10 @@ export class Bladeburner implements IBladeburner {
     return Math.min(1, this.stamina / (0.5 * this.maxStamina));
   }
 
-
   canAttemptBlackOp(actionId: IActionIdentifier): BlackOpsAttempt {
     // Safety measure - don't repeat BlackOps that are already done
     if (this.blackops[actionId.name] != null) {
-      return { error: "Tried to start a Black Operation that had already been completed" }
+      return { error: "Tried to start a Black Operation that had already been completed" };
     }
 
     const action = this.getActionObject(actionId);
@@ -151,10 +150,10 @@ export class Bladeburner implements IBladeburner {
     }
 
     if (i > 0 && this.blackops[blackops[i - 1]] == null) {
-      return { error: `Preceding Black Op must be completed before starting '${actionId.name}'.` }
+      return { error: `Preceding Black Op must be completed before starting '${actionId.name}'.` };
     }
 
-    return { isAvailable: true, action }
+    return { isAvailable: true, action };
   }
 
   startAction(player: IPlayer, actionId: IActionIdentifier): void {
@@ -205,6 +204,9 @@ export class Bladeburner implements IBladeburner {
             this.resetAction();
             this.log(`Error: ${testBlackOp.error}`);
             break;
+          }
+          if (testBlackOp.action === undefined) {
+            throw new Error("action should not be null");
           }
           this.actionTimeToComplete = testBlackOp.action.getActionTime(this);
         } catch (e: any) {
@@ -556,9 +558,7 @@ export class Bladeburner implements IBladeburner {
           }
           const pointCost = skill.calculateCost(currentLevel);
           if (skill.maxLvl !== 0 && currentLevel >= skill.maxLvl) {
-            this.postToConsole(
-              `This skill ${skill.name} is already at max level (${currentLevel}/${skill.maxLvl}).`,
-            );
+            this.postToConsole(`This skill ${skill.name} is already at max level (${currentLevel}/${skill.maxLvl}).`);
           } else if (this.skillPoints >= pointCost) {
             this.skillPoints -= pointCost;
             this.upgradeSkill(skill);
@@ -2078,7 +2078,7 @@ export class Bladeburner implements IBladeburner {
     if (actionId.type === ActionTypes["BlackOp"]) {
       const canRunOp = this.canAttemptBlackOp(actionId);
       if (!canRunOp.isAvailable) {
-        workerScript.log("bladeburner.startAction", () => canRunOp.error);
+        workerScript.log("bladeburner.startAction", () => canRunOp.error + "");
         return false;
       }
     }

@@ -222,7 +222,10 @@ export function Root(props: IProps): React.ReactElement {
   // Generates a new model for the script
   function regenerateModel(script: OpenScript): void {
     if (monacoRef.current !== null) {
-      script.model = monacoRef.current.editor.createModel(script.code, script.fileName.endsWith(".txt") ? "plaintext" : "javascript");
+      script.model = monacoRef.current.editor.createModel(
+        script.code,
+        script.fileName.endsWith(".txt") ? "plaintext" : "javascript",
+      );
     }
   }
 
@@ -330,53 +333,55 @@ export function Root(props: IProps): React.ReactElement {
 
     if (editorRef.current === null || monacoRef.current === null) return;
 
-    const files = Object.entries(props.files);
+    if (props.files) {
+      const files = Object.entries(props.files);
 
-    if (!files.length && currentScript !== null) {
-      // Open currentscript
-      regenerateModel(currentScript);
-      editorRef.current.setModel(currentScript.model);
-      editorRef.current.setPosition(currentScript.lastPosition);
-      editorRef.current.revealLineInCenter(currentScript.lastPosition.lineNumber);
-      updateRAM(currentScript.code);
-      editorRef.current.focus();
-      return;
-    }
+      if (!files.length && currentScript !== null) {
+        // Open currentscript
+        regenerateModel(currentScript);
+        editorRef.current.setModel(currentScript.model);
+        editorRef.current.setPosition(currentScript.lastPosition);
+        editorRef.current.revealLineInCenter(currentScript.lastPosition.lineNumber);
+        updateRAM(currentScript.code);
+        editorRef.current.focus();
+        return;
+      }
 
-    if (!files.length) {
-      editorRef.current.focus();
-      return;
-    }
+      if (!files.length) {
+        editorRef.current.focus();
+        return;
+      }
 
-    for (const [filename, code] of files) {
-      // Check if file is already opened
-      const openScript = openScripts.find(
-        (script) => script.fileName === filename && script.hostname === props.hostname,
-      );
-      if (openScript) {
-        // Script is already opened
-        if (openScript.model === undefined || openScript.model === null || openScript.model.isDisposed()) {
-          regenerateModel(openScript);
-        }
-
-        setCurrentScript(openScript);
-        editorRef.current.setModel(openScript.model);
-        editorRef.current.setPosition(openScript.lastPosition);
-        editorRef.current.revealLineInCenter(openScript.lastPosition.lineNumber);
-        updateRAM(openScript.code);
-      } else {
-        // Open script
-        const newScript = new OpenScript(
-          filename,
-          code,
-          props.hostname,
-          new monacoRef.current.Position(0, 0),
-          monacoRef.current.editor.createModel(code, filename.endsWith(".txt") ? "plaintext" : "javascript"),
+      for (const [filename, code] of files) {
+        // Check if file is already opened
+        const openScript = openScripts.find(
+          (script) => script.fileName === filename && script.hostname === props.hostname,
         );
-        setOpenScripts((oldArray) => [...oldArray, newScript]);
-        setCurrentScript({ ...newScript });
-        editorRef.current.setModel(newScript.model);
-        updateRAM(newScript.code);
+        if (openScript) {
+          // Script is already opened
+          if (openScript.model === undefined || openScript.model === null || openScript.model.isDisposed()) {
+            regenerateModel(openScript);
+          }
+
+          setCurrentScript(openScript);
+          editorRef.current.setModel(openScript.model);
+          editorRef.current.setPosition(openScript.lastPosition);
+          editorRef.current.revealLineInCenter(openScript.lastPosition.lineNumber);
+          updateRAM(openScript.code);
+        } else {
+          // Open script
+          const newScript = new OpenScript(
+            filename,
+            code,
+            props.hostname,
+            new monacoRef.current.Position(0, 0),
+            monacoRef.current.editor.createModel(code, filename.endsWith(".txt") ? "plaintext" : "javascript"),
+          );
+          setOpenScripts((oldArray) => [...oldArray, newScript]);
+          setCurrentScript({ ...newScript });
+          editorRef.current.setModel(newScript.model);
+          updateRAM(newScript.code);
+        }
       }
     }
 
@@ -671,7 +676,7 @@ export function Root(props: IProps): React.ReactElement {
   //  5px padding for top of editor
   //  44px bottom tool bar + 16px margin
   //  + vim bar 34px
-  const editorHeight = dimensions.height - (112 + (options.vim ? 34 : 0));
+  const editorHeight = dimensions.height - (130 + (options.vim ? 34 : 0));
 
   return (
     <>
