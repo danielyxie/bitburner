@@ -5,12 +5,12 @@ import { BaseServer } from "../../Server/BaseServer";
 
 import {commonEditor} from './common/editor';
 
-export function nano(
+export function vim(
   terminal: ITerminal,
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
   args: (string | number | boolean)[],
 ): void {
-  return commonEditor('nano', {terminal, router, player, server, args});
+  return commonEditor('vim', {terminal, router, player, server, args}, {vim: true});
 }

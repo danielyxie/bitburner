@@ -40,6 +40,7 @@ export const TerminalHelpText: string[] = [
   "tail [script] [args...]              Displays dynamic logs for the specified script",
   "top                                  Displays all running scripts and their RAM usage",
   "unalias [alias name]                 Deletes the specified alias",
+  "vim [file]                           Text editor - Open up and edit a script or text file in vim mode",
   "weaken [server]                      Reduce the security of a server",
   "wget [url] [target file]             Retrieves code/text from a web server",
 ];
@@ -401,6 +402,13 @@ export const HelpTexts: IMap<string[]> = {
     "unalias r",
     " ",
     "It is not necessary to differentiate between global and non-global aliases when using 'unalias'",
+  ],
+  vim: [
+    "vim [file name]",
+    " ",
+    "Opens up the specified file in the Text Editor in vim mode. Only scripts (.script) or text files (.txt) can be ",
+    "edited using the Text Editor. If the file does not already exist, then a new, empty one ",
+    "will be created",
   ],
   weaken: [
     "weaken",

@@ -38,6 +38,10 @@ export enum Page {
   Recovery,
 }
 
+export interface ScriptEditorRouteOptions {
+  vim: boolean;
+}
+
 /**
  * This class keeps track of player navigation/routing within the game.
  */
@@ -66,7 +70,7 @@ export interface IRouter {
   toJob(): void;
   toMilestones(): void;
   toResleeves(): void;
-  toScriptEditor(filename?: string, code?: string): void;
+  toScriptEditor(filename?: string, code?: string, options?: ScriptEditorRouteOptions): void;
   toSleeves(): void;
   toStockMarket(): void;
   toTerminal(): void;

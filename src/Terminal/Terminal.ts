@@ -67,6 +67,7 @@ import { sudov } from "./commands/sudov";
 import { tail } from "./commands/tail";
 import { top } from "./commands/top";
 import { unalias } from "./commands/unalias";
+import { vim } from "./commands/vim";
 import { weaken } from "./commands/weaken";
 import { wget } from "./commands/wget";
 import { hash } from "../hash/hash";
@@ -789,6 +790,7 @@ export class Terminal implements ITerminal {
       tail: tail,
       top: top,
       unalias: unalias,
+      vim: vim,
       weaken: weaken,
       wget: wget,
     };
