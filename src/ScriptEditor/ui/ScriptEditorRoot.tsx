@@ -39,8 +39,8 @@ import { PromptEvent } from "../../ui/React/PromptManager";
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
 
 interface IProps {
-  filename: string;
-  code: string;
+  // Map of filename -> code
+  files: Record<string, string>;
   hostname: string;
   player: IPlayer;
   router: IRouter;
@@ -330,47 +330,54 @@ export function Root(props: IProps): React.ReactElement {
 
     if (editorRef.current === null || monacoRef.current === null) return;
 
-    if (props.filename) {
-      // Check if file is already opened
-      const openScriptIndex = openScripts.findIndex(
-        (script) => script.fileName === props.filename && script.hostname === props.hostname,
-      );
-      if (openScriptIndex !== -1) {
-        // Script is already opened
-        if (
-          openScripts[openScriptIndex].model === undefined ||
-          openScripts[openScriptIndex].model === null ||
-          openScripts[openScriptIndex].model.isDisposed()
-        ) {
-          regenerateModel(openScripts[openScriptIndex]);
-        }
+    const files = Object.entries(props.files);
 
-        setCurrentScript(openScripts[openScriptIndex]);
-        editorRef.current.setModel(openScripts[openScriptIndex].model);
-        editorRef.current.setPosition(openScripts[openScriptIndex].lastPosition);
-        editorRef.current.revealLineInCenter(openScripts[openScriptIndex].lastPosition.lineNumber);
-        updateRAM(openScripts[openScriptIndex].code);
-      } else {
-        // Open script
-        const newScript = new OpenScript(
-          props.filename,
-          props.code,
-          props.hostname,
-          new monacoRef.current.Position(0, 0),
-          monacoRef.current.editor.createModel(props.code, props.filename.endsWith(".txt") ? "plaintext" : "javascript"),
-        );
-        setOpenScripts((oldArray) => [...oldArray, newScript]);
-        setCurrentScript({ ...newScript });
-        editorRef.current.setModel(newScript.model);
-        updateRAM(newScript.code);
-      }
-    } else if (currentScript !== null) {
+    if (!files.length && currentScript !== null) {
       // Open currentscript
       regenerateModel(currentScript);
       editorRef.current.setModel(currentScript.model);
       editorRef.current.setPosition(currentScript.lastPosition);
       editorRef.current.revealLineInCenter(currentScript.lastPosition.lineNumber);
       updateRAM(currentScript.code);
+      editorRef.current.focus();
+      return;
+    }
+
+    if (!files.length) {
+      editorRef.current.focus();
+      return;
+    }
+
+    for (const [filename, code] of files) {
+      // Check if file is already opened
+      const openScript = openScripts.find(
+        (script) => script.fileName === filename && script.hostname === props.hostname,
+      );
+      if (openScript) {
+        // Script is already opened
+        if (openScript.model === undefined || openScript.model === null || openScript.model.isDisposed()) {
+          regenerateModel(openScript);
+        }
+
+        setCurrentScript(openScript);
+        editorRef.current.setModel(openScript.model);
+        editorRef.current.setPosition(openScript.lastPosition);
+        editorRef.current.revealLineInCenter(openScript.lastPosition.lineNumber);
+        updateRAM(openScript.code);
+      } else {
+        // Open script
+        const newScript = new OpenScript(
+          filename,
+          code,
+          props.hostname,
+          new monacoRef.current.Position(0, 0),
+          monacoRef.current.editor.createModel(code, filename.endsWith(".txt") ? "plaintext" : "javascript"),
+        );
+        setOpenScripts((oldArray) => [...oldArray, newScript]);
+        setCurrentScript({ ...newScript });
+        editorRef.current.setModel(newScript.model);
+        updateRAM(newScript.code);
+      }
     }
 
     editorRef.current.focus();

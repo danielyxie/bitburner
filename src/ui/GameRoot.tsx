@@ -95,10 +95,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-let filename = "";
-let code = "";
-let vim = false;
-
 export let Router: IRouter = {
   page: () => {
     throw new Error("Router called before initialization");
@@ -197,6 +193,7 @@ function determineStartPage(player: IPlayer): Page {
 
 export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
   const classes = useStyles();
+  const [{files, vim}, setEditorOptions] = useState({files: {}, vim: false})
   const [page, setPage] = useState(determineStartPage(player));
   const setRerender = useState(0)[1];
   const [faction, setFaction] = useState<Faction>(
@@ -247,10 +244,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toHacknetNodes: () => setPage(Page.Hacknet),
     toMilestones: () => setPage(Page.Milestones),
     toResleeves: () => setPage(Page.Resleeves),
-    toScriptEditor: (fn: string, c: string, options?: ScriptEditorRouteOptions) => {
-      filename = fn;
-      code = c;
-      vim = !!options?.vim;
+    toScriptEditor: (files: Record<string, string>, options?: ScriptEditorRouteOptions) => {
+      setEditorOptions({
+        files,
+        vim: !!options?.vim,
+      });
       setPage(Page.ScriptEditor);
     },
     toSleeves: () => setPage(Page.Sleeves),
@@ -292,8 +290,6 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   };
 
   useEffect(() => {
-    filename = "";
-    code = "";
     if (page !== Page.Terminal) window.scrollTo(0, 0);
   });
 
@@ -332,8 +328,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                   <CharacterStats />
                 ) : page === Page.ScriptEditor ? (
                   <ScriptEditorRoot
-                    filename={filename}
-                    code={code}
+                    files={files}
                     hostname={player.getCurrentServer().hostname}
                     player={player}
                     router={Router}
