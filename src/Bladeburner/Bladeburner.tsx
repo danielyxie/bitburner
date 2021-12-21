@@ -164,6 +164,12 @@ export class Bladeburner implements IBladeburner {
           }
 
           const action = this.getActionObject(actionId);
+          if (!(action instanceof BlackOperation)) throw new Error(`Action should be BlackOperation but isn't`);
+          if (action.reqdRank > (player.bladeburner?.rank ?? 0)) {
+            this.resetAction();
+            this.log("Error: Tried to start a Black Operation without the rank requirement");
+            break;
+          }
           if (action == null) {
             throw new Error("Failed to get BlackOperation object for: " + actionId.name);
           }
