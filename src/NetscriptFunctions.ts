@@ -509,6 +509,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       if (hackAmount < 0 || hackAmount > server.moneyAvailable) {
         return -1;
+      } else if (hackAmount === 0) {
+        return 0;
       }
 
       const percentHacked = calculatePercentMoneyHacked(server, Player);
