@@ -19,12 +19,12 @@ function isNs2(filename: string): boolean {
 
 const newNs2Template = `/** @param {NS} ns **/
 export async function main(ns) {
-    
+
 }`;
 
 export function commonEditor(
   command: string,
-  { terminal, router, player, server, args }: EditorParameters,
+  { terminal, router, player, args }: EditorParameters,
   scriptEditorRouteOptions?: ScriptEditorRouteOptions,
 ): void {
   if (args.length < 1) {
