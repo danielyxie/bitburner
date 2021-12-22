@@ -4497,6 +4497,13 @@ export interface NS extends Singularity {
    * files = ["foo1.lit", "foo2.script", "foo3.script"];
    * scp(files, "rothman-uni", "home");
    * ```
+   * @example
+   * ```ts
+   * //ns2, copies files from home to a target server
+   * const server = ns.args[0];
+   * const files = ["hack.js","weaken.js","grow.js"];
+   * await ns.scp(files, "home", server);
+   * ```
    * @param files - Filename or an array of filenames of script/literature files to copy.
    * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.
    * @param destination - Host of the destination server, which is the server to which the file will be copied.
