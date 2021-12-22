@@ -26,7 +26,7 @@ require("http")
       });
     });
   })
-  .listen(9990);
+  .listen(9990, "127.0.0.1");
 
 function createWindow(killall) {
   win = new BrowserWindow({
@@ -143,11 +143,10 @@ function setStopProcessHandler(app, window, enabled) {
   };
 
   const stopProcessHandler = () => {
-    if (process.platform !== "darwin") {
-      app.quit();
-      // eslint-disable-next-line no-process-exit
-      process.exit(0);
-    }
+    app.isQuiting = true;
+    app.quit();
+    // eslint-disable-next-line no-process-exit
+    process.exit(0);
   };
 
   if (enabled) {
