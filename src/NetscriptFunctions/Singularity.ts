@@ -819,7 +819,7 @@ export function NetscriptSingularity(
 
       return player.getUpgradeHomeRamCost();
     },
-    workForCompany: function (companyName: any, focus: boolean = true): any {
+    workForCompany: function (companyName: any, focus = true): any {
       helper.updateDynamicRam("workForCompany", getRamCost("workForCompany"));
       helper.checkSingularityAccess("workForCompany", 2);
 
@@ -991,7 +991,7 @@ export function NetscriptSingularity(
       workerScript.log("joinFaction", () => `Joined the '${name}' faction.`);
       return true;
     },
-    workForFaction: function (name: any, type: any, focus: boolean = true): any {
+    workForFaction: function (name: any, type: any, focus = true): any {
       helper.updateDynamicRam("workForFaction", getRamCost("workForFaction"));
       helper.checkSingularityAccess("workForFaction", 2);
       getFaction("workForFaction", name);

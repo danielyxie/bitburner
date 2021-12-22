@@ -69,12 +69,25 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
 
   const predefinedThemes = getPredefinedThemes();
   const themes = predefinedThemes && Object.entries(predefinedThemes)
-    .map(([name, templateTheme]) => (
-      <Button onClick={() => setTemplateTheme(templateTheme)}
-        startIcon={<PaletteSharpIcon />} key={name} sx={{ mr: 1 }}>
-        <Typography>{name}</Typography>
-      </Button>
-    )) || <></>;
+    .map(([key, templateTheme]) => {
+      const name = templateTheme.name || key;
+      let inner = <Typography>{name}</Typography>;
+      let toolTipTitle;
+      if (templateTheme.credit) {
+        toolTipTitle = <Typography>{templateTheme.description || name} <em>by {templateTheme.credit}</em></Typography>;
+      } else if (templateTheme.description) {
+        toolTipTitle = <Typography>{templateTheme.description}</Typography>;
+      }
+      if (toolTipTitle) {
+        inner = <Tooltip title={toolTipTitle}>{inner}</Tooltip>
+      }
+      return (
+        <Button onClick={() => setTemplateTheme(templateTheme.colors)}
+          startIcon={<PaletteSharpIcon />} key={key} sx={{ mr: 1, mb: 1 }}>
+            {inner}
+        </Button>
+      );
+    }) || <></>;
 
   function setTheme(theme: UserInterfaceTheme): void {
     setCustomTheme(theme);

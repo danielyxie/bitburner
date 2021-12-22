@@ -71,6 +71,20 @@ export function Servers(): React.ReactElement {
     }
   }
 
+  function minMoney(): void {
+    const s = GetServer(server);
+    if (s === null) return;
+    if (!(s instanceof Server)) return;
+    s.moneyAvailable = 0;
+  }
+
+  function minAllMoney(): void {
+    for (const s of GetAllServers()) {
+      if (!(s instanceof Server)) return;
+      s.moneyAvailable = 0;
+    }
+  }
+
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -118,6 +132,12 @@ export function Servers(): React.ReactElement {
             <tr>
               <td>
                 <Typography>Money:</Typography>
+              </td>
+              <td>
+                <Button onClick={minMoney}>Min one</Button>
+              </td>
+              <td>
+                <Button onClick={minAllMoney}>Min all</Button>
               </td>
               <td>
                 <Button onClick={maxMoney}>Max one</Button>
