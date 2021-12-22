@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { app, BrowserWindow, Menu, shell } = require("electron");
+const { app, BrowserWindow, Menu, shell, dialog } = require("electron");
 const greenworks = require("./greenworks");
 
 if (greenworks.init()) {
@@ -66,6 +66,36 @@ function createWindow(killall) {
   }, 1000);
   win.achievementsIntervalID = intervalID;
 
+  const reloadAndKill = (killScripts = true) => {
+    setStopProcessHandler(app, win, false);
+    if (intervalID) clearInterval(intervalID);
+    win.webContents.forcefullyCrashRenderer();
+    win.close();
+    createWindow(killScripts);
+  };
+  const promptForReload = () => {
+    win.off('unresponsive', promptForReload);
+    dialog.showMessageBox({
+      type: 'error',
+      title: 'Bitburner > Application Unresponsive',
+      message: 'The application is unresponsive, possibly due to an infinite loop in your scripts.',
+      detail:' Did you forget a ns.sleep(x)?\n\n' +
+        'The application will be restarted for you, do you want to kill all running scripts?',
+      buttons: ['Restart', 'Cancel'],
+      defaultId: 0,
+      checkboxLabel: 'Kill all running scripts',
+      checkboxChecked: true,
+      noLink: true,
+    }).then(({response, checkboxChecked}) => {
+      if (response === 0) {
+        reloadAndKill(checkboxChecked);
+      } else {
+        win.on('unresponsive', promptForReload)
+      }
+    });
+  }
+  win.on('unresponsive', promptForReload);
+
   // Create the Application's main menu
   Menu.setApplicationMenu(
     Menu.buildFromTemplate([
@@ -93,13 +123,7 @@ function createWindow(killall) {
           },
           {
             label: "reload & kill all scripts",
-            click: () => {
-              setStopProcessHandler(app, win, false);
-              if (intervalID) clearInterval(intervalID);
-              win.webContents.forcefullyCrashRenderer();
-              win.close();
-              createWindow(true);
-            },
+            click: reloadAndKill
           },
         ],
       },
