@@ -668,6 +668,7 @@ export function Root(props: IProps): React.ReactElement {
       // No more scripts are open
       setOpenScripts([]);
       setCurrentScript(null);
+      props.router.toTerminal();
     }
   }
 
