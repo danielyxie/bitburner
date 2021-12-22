@@ -542,7 +542,7 @@ BitNodes["BitNode13"] = new BitNode(
       <br />
       <br />
       Their leader, Allison "Mother" Stanek is said to have created her own Augmentation whose power goes beyond any
-      other. Find her in Chongquing and gain her trust.
+      other. Find her in Chongqing and gain her trust.
       <br />
       <br />
       In this BitNode:

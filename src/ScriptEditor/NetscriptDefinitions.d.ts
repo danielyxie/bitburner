@@ -3825,7 +3825,7 @@ interface Stanek {
  * @public
  */
 interface UserInterface {
-/**
+  /**
    * Get the current theme
    * @remarks
    * RAM cost: cost: 0 GB
@@ -4373,7 +4373,7 @@ export interface NS extends Singularity {
   tail(fn?: string, host?: string, ...args: any[]): void;
 
   /**
-   * Get the list servers connected to a server.
+   * Get the list of servers connected to a server.
    * @remarks
    * RAM cost: 0.2 GB
    *
@@ -4381,7 +4381,7 @@ export interface NS extends Singularity {
    * node way from the specified target server. The hostnames in the returned
    * array are strings.
    *
-   * @param host - Hostname of the server to scan.
+   * @param host - Optional, Hostname of the server to scan, default to current server.
    * @returns Returns an string of hostnames.
    */
   scan(host?: string): string[];
@@ -5753,9 +5753,9 @@ export interface NS extends Singularity {
    * Get information about the player.
    * @remarks
    * RAM cost: 0.5 GB
-   * 
+   *
    * Returns an object with information on the current player.
-   * 
+   *
    * @returns Player info
    */
   getPlayer(): Player;
@@ -6271,7 +6271,6 @@ interface Division {
   /** Cities in which this division has expanded */
   cities: string[];
 }
-
 
 /**
  * Interface Theme
