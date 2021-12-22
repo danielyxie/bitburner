@@ -6,7 +6,6 @@ import { Terminal } from "../Terminal";
 import { SpecialServers } from "../Server/data/SpecialServers";
 import { Money } from "../ui/React/Money";
 import { DarkWebItem } from "./DarkWebItem";
-import Typography from "@mui/material/Typography";
 
 //Posts a "help" message if connected to DarkWeb
 export function checkIfConnectedToDarkweb(): void {
@@ -31,9 +30,9 @@ export function listAllDarkwebItems(): void {
     );
 
     Terminal.printRaw(
-      <Typography>
+      <>
         <span>{item.program}</span> - <span>{cost}</span> - <span>{item.description}</span>
-      </Typography>,
+      </>,
     );
   }
 }
