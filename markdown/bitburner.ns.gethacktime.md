@@ -30,3 +30,4 @@ RAM cost: 0.05 GB
 
 Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels.
 
+The required time is increased by the security level of the target server and decreased by the player's hacking level.
