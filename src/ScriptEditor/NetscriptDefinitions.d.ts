@@ -3867,7 +3867,7 @@ export interface NS extends Singularity {
    *
    * Function that is used to try and hack servers to steal money and gain hacking experience.
    * The runtime for this command depends on your hacking level and the target server’s
-   * security level. In order to hack a server you must first gain root access to that server
+   * security level when this function is called. In order to hack a server you must first gain root access to that server
    * and also have the required hacking level.
    *
    * A script can hack a server from anywhere. It does not need to be running on the same
@@ -3922,7 +3922,7 @@ export interface NS extends Singularity {
    *
    * Use your hacking skills to attack a server’s security, lowering the server’s security level.
    * The runtime for this command depends on your hacking level and the target server’s security
-   * level. This function lowers the security level of the target server by 0.05.
+   * level when this function is called. This function lowers the security level of the target server by 0.05.
    *
    * Like hack and grow, `weaken` can be called on any server, regardless of
    * where the script is running. This command requires root access to the target server, but
@@ -3984,6 +3984,7 @@ export interface NS extends Singularity {
    * Returns the percentage of the specified server’s money you will steal with a single hack.
    * This value is returned in percentage form, not decimal
    * (Netscript functions typically return in decimal form, but not this one).
+   * This percentage is influenced by the player's hacking skill.
    *
    * @example
    * ```ts
@@ -5157,9 +5158,10 @@ export interface NS extends Singularity {
    * Get the execution time of a hack() call.
    * @remarks
    * RAM cost: 0.05 GB
-   *
+   *When `hack` completes an amount of money is stolen depending on the player's skills.
    * Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server.
    * The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels.
+   * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
    * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
@@ -5175,6 +5177,7 @@ export interface NS extends Singularity {
    *
    * Returns the amount of time in milliseconds it takes to execute the grow Netscript function on the target server.
    * The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels.
+   * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
    * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
@@ -5190,6 +5193,7 @@ export interface NS extends Singularity {
    *
    * Returns the amount of time in milliseconds it takes to execute the weaken() Netscript function on the target server.
    * The function takes in an optional hackLvl parameter that can be specified to see what the weaken time would be at different hacking levels.
+   * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
    * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
