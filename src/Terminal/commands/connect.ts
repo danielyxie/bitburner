@@ -2,7 +2,7 @@ import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { getServerOnNetwork } from "../../Server/ServerHelpers";
+import { getServerOnNetwork, isBackdoorInstalled  } from "../../Server/ServerHelpers";
 import { GetServer } from "../../Server/AllServers";
 
 export function connect(
@@ -29,8 +29,13 @@ export function connect(
     }
   }
 
-  if (GetServer(hostname) !== null) {
-    terminal.error(`Cannot directly connect to ${hostname}`);
+  const target = GetServer(hostname);
+  if (target) {
+    if (isBackdoorInstalled(target)) {
+      terminal.connectToServer(player, hostname);
+    } else {
+      terminal.error(`Cannot directly connect to ${hostname}`); 
+    }
   } else {
     terminal.error("Host not found");
   }
