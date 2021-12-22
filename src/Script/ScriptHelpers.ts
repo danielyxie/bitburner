@@ -39,7 +39,7 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
       const timesGrown = Math.round(
         ((0.5 * runningScript.dataMap[hostname][2]) / runningScript.onlineRunningTime) * timePassed,
       );
-      runningScript.log(`Called on ${serv.hostname} ${timesGrown} times while offline`);
+      runningScript.log(`Called grow() on ${serv.hostname} ${timesGrown} times while offline`);
       const host = GetServer(runningScript.server);
       if (host === null) throw new Error("getServer of null key?");
       if (!(serv instanceof Server)) throw new Error("trying to grow a non-normal server");
