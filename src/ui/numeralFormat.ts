@@ -105,6 +105,10 @@ class NumeralFormatter {
     return this.format(n, "0,0");
   }
 
+  formatSecurity(n: number): string {
+    return n.toFixed(3);
+  }
+
   formatRAM(n: number): string {
     if (n < 1e3) return this.format(n, "0.00") + "GB";
     if (n < 1e6) return this.format(n / 1e3, "0.00") + "TB";

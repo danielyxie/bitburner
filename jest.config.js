@@ -4,6 +4,8 @@ module.exports = {
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
   },
-  // testMatch: ["**/?(*.)+(test).[jt]s?(x)"],
+  testPathIgnorePatterns: [
+    '.cypress', 'node_modules', 'dist',
+  ],
   testEnvironment: "jsdom",
 };

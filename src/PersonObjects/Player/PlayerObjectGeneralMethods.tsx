@@ -26,7 +26,11 @@ import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
 import { Sleeve } from "../../PersonObjects/Sleeve/Sleeve";
-import { calculateSkill as calculateSkillF, calculateSkillProgress as calculateSkillProgressF, getEmptySkillProgress, ISkillProgress } from "../formulas/skill";
+import {
+  calculateSkill as calculateSkillF,
+  calculateSkillProgress as calculateSkillProgressF,
+  ISkillProgress,
+} from "../formulas/skill";
 import { calculateIntelligenceBonus } from "../formulas/intelligence";
 import {
   getHackingWorkRepGain,
@@ -1648,7 +1652,7 @@ export function regenerateHp(this: IPlayer, amt: number): void {
 
 export function hospitalize(this: IPlayer): number {
   const cost = getHospitalizationCost(this);
-  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, "warning");
+  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, "warning", 2000);
 
   this.loseMoney(cost, "hospitalization");
   this.hp = this.max_hp;
@@ -1780,6 +1784,15 @@ export function quitJob(this: IPlayer, company: string): void {
   this.isWorking = false;
   this.companyName = "";
   delete this.jobs[company];
+}
+
+/**
+ * Method to see if the player has at least one job assigned to them
+ * @param this The player instance
+ * @returns Whether the user has at least one job
+ */
+export function hasJob(this: IPlayer): boolean {
+  return Boolean(Object.keys(this.jobs).length);
 }
 
 export function applyForSoftwareJob(this: IPlayer, sing = false): boolean {
@@ -2582,7 +2595,7 @@ export function canAccessResleeving(this: IPlayer): boolean {
 export function giveExploit(this: IPlayer, exploit: Exploit): void {
   if (!this.exploits.includes(exploit)) {
     this.exploits.push(exploit);
-    SnackbarEvents.emit("SF -1 acquired!", "success");
+    SnackbarEvents.emit("SF -1 acquired!", "success", 2000);
   }
 }
 

@@ -15,6 +15,7 @@ import { workerScripts } from "../../Netscript/WorkerScripts";
 import { startWorkerScript } from "../../NetscriptWorker";
 import { GetServer } from "../../Server/AllServers";
 import { Theme } from "@mui/material";
+import { findRunningScript } from "../../Script/ScriptHelpers";
 
 let layerCounter = 0;
 
@@ -102,6 +103,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function LogWindow(props: IProps): React.ReactElement {
+  const [script, setScript] = useState(props.script);
   const classes = useStyles();
   const container = useRef<HTMLDivElement>(null);
   const setRerender = useState(false)[1];
@@ -116,13 +118,18 @@ function LogWindow(props: IProps): React.ReactElement {
   }, []);
 
   function kill(): void {
-    killWorkerScript(props.script, props.script.server, true);
+    killWorkerScript(script, script.server, true);
   }
 
   function run(): void {
-    const server = GetServer(props.script.server);
+    const server = GetServer(script.server);
     if (server === null) return;
-    startWorkerScript(props.script, server);
+    const s = findRunningScript(script.filename, script.args, server);
+    if (s === null) {
+      startWorkerScript(script, server);
+    } else {
+      setScript(s);
+    }
   }
 
   function updateLayer(): void {
@@ -135,7 +142,7 @@ function LogWindow(props: IProps): React.ReactElement {
 
   function title(): string {
     const maxLength = 30;
-    const t = `${props.script.filename} ${props.script.args.map((x: any): string => `${x}`).join(" ")}`;
+    const t = `${script.filename} ${script.args.map((x: any): string => `${x}`).join(" ")}`;
     if (t.length <= maxLength) {
       return t;
     }
@@ -183,8 +190,8 @@ function LogWindow(props: IProps): React.ReactElement {
               </Typography>
 
               <Box position="absolute" right={0}>
-                {!workerScripts.has(props.script.pid) && <Button onClick={run}>Run</Button>}
-                {workerScripts.has(props.script.pid) && <Button onClick={kill}>Kill</Button>}
+                {!workerScripts.has(script.pid) && <Button onClick={run}>Run</Button>}
+                {workerScripts.has(script.pid) && <Button onClick={kill}>Kill</Button>}
                 <Button onClick={props.onClose}>Close</Button>
               </Box>
             </Box>
@@ -201,7 +208,7 @@ function LogWindow(props: IProps): React.ReactElement {
               }
             >
               <Box>
-                {props.script.logs.map(
+                {script.logs.map(
                   (line: string, i: number): JSX.Element => (
                     <Typography key={i} className={lineClass(line)}>
                       {line}

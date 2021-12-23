@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 
 import { CONSTANTS } from "../../Constants";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -37,6 +38,11 @@ export function RamButton(props: IProps): React.ReactElement {
       }
     >
       <span>
+        <br />
+        <Typography>
+          <i>"More RAM means more scripts on 'home'"</i>
+        </Typography>
+        <br />
         <Button disabled={!props.p.canAfford(cost)} onClick={buy}>
           Upgrade 'home' RAM ({numeralWrapper.formatRAM(homeComputer.maxRam)} -&gt;&nbsp;
           {numeralWrapper.formatRAM(homeComputer.maxRam * 2)}) -&nbsp;

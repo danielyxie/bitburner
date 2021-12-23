@@ -1,6 +1,7 @@
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { BaseServer } from "./Server/BaseServer";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
+import { removeLeadingSlash, isInRootDirectory } from "./Terminal/DirectoryHelpers"
 
 /**
  * Represents a plain text file that is typically stored on a server.
@@ -101,7 +102,11 @@ Reviver.constructors.TextFile = TextFile;
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getTextFile(fn: string, server: BaseServer): TextFile | null {
-  const filename: string = !fn.endsWith(".txt") ? `${fn}.txt` : fn;
+  let filename: string = !fn.endsWith(".txt") ? `${fn}.txt` : fn;
+
+  if (isInRootDirectory(filename)) {
+    filename = removeLeadingSlash(filename);
+  }
 
   for (const file of server.textFiles as TextFile[]) {
     if (file.fn === filename) {

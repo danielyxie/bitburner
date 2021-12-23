@@ -16,22 +16,25 @@ import { isValidNumber } from "../utils/helpers/isValidNumber";
  * does not have a duplicate hostname/ip.
  */
 export function safetlyCreateUniqueServer(params: IConstructorParams): Server {
+  let hostname: string = params.hostname.replace(/ /g, `-`);
+
   if (params.ip != null && ipExists(params.ip)) {
     params.ip = createUniqueRandomIp();
   }
 
-  if (GetServer(params.hostname) != null) {
+  if (GetServer(hostname) != null) {
+    hostname = `${hostname}-0`;
+
     // Use a for loop to ensure that we don't get suck in an infinite loop somehow
-    let hostname: string = params.hostname;
     for (let i = 0; i < 200; ++i) {
-      hostname = `${params.hostname}-${i}`;
+      hostname = hostname.replace(/-[0-9]+$/, `-${i}`);
       if (GetServer(hostname) == null) {
         break;
       }
     }
-    params.hostname = hostname;
   }
 
+  params.hostname = hostname;
   return new Server(params);
 }
 

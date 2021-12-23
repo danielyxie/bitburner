@@ -246,6 +246,7 @@ export class BaseServer {
     this.maxRam = ram;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateRamUsed(ram: number, player: IPlayer): void {
     this.ramUsed = ram;
   }

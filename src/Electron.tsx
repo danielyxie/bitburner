@@ -14,11 +14,14 @@ import { HacknetServer } from "./Hacknet/HacknetServer";
 import { CityName } from "./Locations/data/CityNames";
 import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
+import { isScriptFilename } from "./Script/isScriptFilename";
+import { Script } from "./Script/Script";
 import { GetAllServers, GetServer } from "./Server/AllServers";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { Server } from "./Server/Server";
 import { Router } from "./ui/GameRoot";
 import { Page } from "./ui/Router";
+import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 
 interface Achievement {
   ID: string;
@@ -32,6 +35,7 @@ function bitNodeFinishedState(): boolean {
   return Player.bladeburner !== null && Player.bladeburner.blackops.hasOwnProperty("Operation Daedalus");
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function sfAchievement(): Achievement[] {
   const achs: Achievement[] = [];
   for (let i = 0; i <= 11; i++) {
@@ -232,7 +236,8 @@ const achievements: Achievement[] = [
   {
     ID: "BLADEBURNER_OVERCLOCK",
     Condition: () =>
-      Player.bladeburner !== null && Player.bladeburner.skills[SkillNames.Overclock] === Skills[SkillNames.Overclock],
+      Player.bladeburner !== null &&
+      Player.bladeburner.skills[SkillNames.Overclock] === Skills[SkillNames.Overclock].maxLvl,
   },
   {
     ID: "BLADEBURNER_UNSPENT_100000",
@@ -249,12 +254,14 @@ const achievements: Achievement[] = [
     Condition: () => {
       if (!hasHacknetServers(Player)) return false;
       for (const h of Player.hacknetNodes) {
-        if (!(h instanceof HacknetServer)) return false;
+        if (typeof h !== "string") return false;
+        const hs = GetServer(h);
+        if (!(hs instanceof HacknetServer)) return false;
         if (
-          h.maxRam === HacknetServerConstants.MaxRam &&
-          h.cores === HacknetServerConstants.MaxCores &&
-          h.level === HacknetServerConstants.MaxLevel &&
-          h.cache === HacknetServerConstants.MaxCache
+          hs.maxRam === HacknetServerConstants.MaxRam &&
+          hs.cores === HacknetServerConstants.MaxCores &&
+          hs.level === HacknetServerConstants.MaxLevel &&
+          hs.cache === HacknetServerConstants.MaxCache
         )
           return true;
       }
@@ -293,7 +300,7 @@ const achievements: Achievement[] = [
     Condition: () =>
       Player.bitNodeN === 1 &&
       bitNodeFinishedState() &&
-      Player.getHomeComputer().maxRam <= 32 &&
+      Player.getHomeComputer().maxRam <= 128 &&
       Player.getHomeComputer().cpuCores === 1,
   },
   {
@@ -408,5 +415,36 @@ function calculateAchievements(): void {
 
 export function initElectron(): void {
   setAchievements([]);
+  initWebserver();
   setInterval(calculateAchievements, 5000);
+}
+
+function initWebserver(): void {
+  (document as any).saveFile = function (filename: string, code: string): string {
+    filename = removeLeadingSlash(filename);
+    console.log(code);
+    code = Buffer.from(code, "base64").toString();
+    console.log(code);
+    const home = GetServer("home");
+    if (home === null) return "'home' server not found.";
+    if (home === null) return "Server should not be null but it is.";
+    if (isScriptFilename(filename)) {
+      //If the current script already exists on the server, overwrite it
+      for (let i = 0; i < home.scripts.length; i++) {
+        console.log(`${filename} ${home.scripts[i].filename}`);
+        if (filename == home.scripts[i].filename) {
+          home.scripts[i].saveScript(filename, code, "home", home.scripts);
+          return "written";
+        }
+      }
+
+      //If the current script does NOT exist, create a new one
+      const script = new Script();
+      script.saveScript(filename, code, "home", home.scripts);
+      home.scripts.push(script);
+      return "written";
+    }
+
+    return "not a script file";
+  };
 }

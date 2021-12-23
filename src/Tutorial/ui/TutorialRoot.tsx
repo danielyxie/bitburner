@@ -110,6 +110,23 @@ export function TutorialRoot(props: IProps): React.ReactElement {
         >
           <Typography>NS1 vs NS2 (or .script vs .js)</Typography>
         </Link>
+        <br />
+        <Link
+          color="primary"
+          target="_blank"
+          href="https://bitburner.readthedocs.io/en/latest/netscript/netscriptfunctions.html"
+        >
+          <Typography>Simplified list of functions</Typography>
+        </Link>
+
+        <br />
+        <Link
+          color="primary"
+          target="_blank"
+          href="https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md"
+        >
+          <Typography>Complete list of functions</Typography>
+        </Link>
       </Box>
     </>
   );

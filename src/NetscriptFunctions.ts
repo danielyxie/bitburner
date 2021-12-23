@@ -64,7 +64,7 @@ import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
 import { NetscriptStanek } from "./NetscriptFunctions/Stanek";
-
+import { NetscriptUserInterface } from './NetscriptFunctions/UserInterface';
 import { NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
 import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
 import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
@@ -455,6 +455,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const formulas = NetscriptFormulas(Player, workerScript, helper);
   const singularity = NetscriptSingularity(Player, workerScript, helper);
   const stockmarket = NetscriptStockMarket(Player, workerScript, helper);
+  const ui = NetscriptUserInterface(Player, workerScript, helper);
 
   const base: INS = {
     ...singularity,
@@ -465,7 +466,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     sleeve: sleeve,
     corporation: corporation,
     stanek: stanek,
-
+    ui: ui,
     formulas: formulas,
     stock: stockmarket,
     args: workerScript.args,
@@ -508,6 +509,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       if (hackAmount < 0 || hackAmount > server.moneyAvailable) {
         return -1;
+      } else if (hackAmount === 0) {
+        return 0;
       }
 
       const percentHacked = calculatePercentMoneyHacked(server, Player);
@@ -1594,7 +1597,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return cost;
     },
-    purchaseServer: function (name: any, ram: any): any {
+    purchaseServer: function (aname: any, aram: any): any {
+      const name = helper.string("purchaseServer", "name", aname);
+      const ram = helper.number("purchaseServer", "ram", aram);
       updateDynamicRam("purchaseServer", getRamCost("purchaseServer"));
       let hostnameStr = String(name);
       hostnameStr = hostnameStr.replace(/\s+/g, "");
@@ -2131,15 +2136,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return Player.playtimeSinceLastAug;
     },
     alert: function (message: any): void {
-      message = toNative(message);
-      dialogBoxCreate(JSON.stringify(message));
+      message = argsToString([message]);
+      dialogBoxCreate(message);
     },
-    toast: function (message: any, variant: any = "success"): void {
+    toast: function (message: any, variant: any = "success", duration: any = 2000): void {
       if (!["success", "info", "warning", "error"].includes(variant))
         throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
 
-      message = toNative(message);
-      SnackbarEvents.emit(JSON.stringify(message), variant);
+      message = argsToString([message]);
+      SnackbarEvents.emit(message, variant, duration);
     },
     prompt: function (txt: any): any {
       if (!isString(txt)) {

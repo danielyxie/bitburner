@@ -5,6 +5,7 @@ import { Player } from "../Player";
 import { Terminal } from "../Terminal";
 import { SpecialServers } from "../Server/data/SpecialServers";
 import { Money } from "../ui/React/Money";
+import { DarkWebItem } from "./DarkWebItem";
 
 //Posts a "help" message if connected to DarkWeb
 export function checkIfConnectedToDarkweb(): void {
@@ -21,9 +22,16 @@ export function checkIfConnectedToDarkweb(): void {
 export function listAllDarkwebItems(): void {
   for (const key in DarkWebItems) {
     const item = DarkWebItems[key];
+
+    const cost = Player.getHomeComputer().programs.includes(item.program) ? (
+      <span style={{ color: `green` }}>[OWNED]</span>
+    ) : (
+      <Money money={item.price} />
+    );
+
     Terminal.printRaw(
       <>
-        {item.program} - <Money money={item.price} /> - {item.description}
+        <span>{item.program}</span> - <span>{cost}</span> - <span>{item.description}</span>
       </>,
     );
   }
@@ -33,7 +41,8 @@ export function buyDarkwebItem(itemName: string): void {
   itemName = itemName.toLowerCase();
 
   // find the program that matches, if any
-  let item = null;
+  let item: DarkWebItem | null = null;
+
   for (const key in DarkWebItems) {
     const i = DarkWebItems[key];
     if (i.program.toLowerCase() == itemName) {
@@ -61,7 +70,19 @@ export function buyDarkwebItem(itemName: string): void {
 
   // buy and push
   Player.loseMoney(item.price, "other");
+
+  const programsRef = Player.getHomeComputer().programs;
+  // Remove partially created program if there is one
+  const existingPartialExeIndex = programsRef.findIndex(
+    (program) => item?.program && program.startsWith(item?.program),
+  );
+  // findIndex returns -1 if there is no match, we only want to splice on a match
+  if (existingPartialExeIndex > -1) {
+    programsRef.splice(existingPartialExeIndex, 1);
+  }
+  // Add the newly bought, full .exe
   Player.getHomeComputer().programs.push(item.program);
+
   Terminal.print(
     "You have purchased the " + item.program + " program. The new program can be found on your home computer.",
   );

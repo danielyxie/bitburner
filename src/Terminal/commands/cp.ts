@@ -43,17 +43,16 @@ export function cp(
       terminal.error("src and dst must have the same extension.");
       return;
     }
-    const filename = terminal.getFilepath(src);
-    if (!isScriptFilename(filename) && !filename.endsWith(".txt")) {
+    if (!isScriptFilename(src) && !src.endsWith(".txt")) {
       terminal.error("cp only works for scripts and .txt files");
       return;
     }
 
     // Scp for txt files
-    if (filename.endsWith(".txt")) {
+    if (src.endsWith(".txt")) {
       let txtFile = null;
       for (let i = 0; i < server.textFiles.length; ++i) {
-        if (server.textFiles[i].fn === filename) {
+        if (areFilesEqual(server.textFiles[i].fn, src)) {
           txtFile = server.textFiles[i];
           break;
         }
@@ -80,7 +79,7 @@ export function cp(
     // Get the current script
     let sourceScript = null;
     for (let i = 0; i < server.scripts.length; ++i) {
-      if (filename == server.scripts[i].filename) {
+      if (areFilesEqual(server.scripts[i].filename, src)) {
         sourceScript = server.scripts[i];
         break;
       }

@@ -86,7 +86,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   function renderNoodleBar(): React.ReactElement {
     function EatNoodles(): void {
-      SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", "success");
+      SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", "success", 2000);
       N00dles(); // This is the true power of the noodles.
       if (player.sourceFiles.length > 0) player.giveExploit(Exploit.N00dles);
       if (player.sourceFileLvl(5) > 0 || player.bitNodeN === 5) {

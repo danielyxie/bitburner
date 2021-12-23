@@ -96,7 +96,7 @@ export function purchaseServer(hostname: string, ram: number, cost: number, p: I
 
   p.loseMoney(cost, "servers");
 
-  dialogBoxCreate("Server successfully purchased with hostname " + hostname);
+  dialogBoxCreate("Server successfully purchased with hostname " + newServ.hostname);
 }
 
 // Manually upgrade RAM on home computer (NOT through Netscript)

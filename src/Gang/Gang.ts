@@ -353,7 +353,7 @@ export class Gang {
       const res = member.ascend();
       this.respect = Math.max(1, this.respect - res.respect);
       if (workerScript) {
-        workerScript.log("ascend", () => `Ascended Gang member ${member.name}`);
+        workerScript.log("gang.ascend", () => `Ascended Gang member ${member.name}`);
       }
       return res;
     } catch (e: any) {

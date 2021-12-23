@@ -34,6 +34,7 @@ import { parse } from "acorn";
 import { simple as walksimple } from "acorn-walk";
 import { areFilesEqual } from "./Terminal/DirectoryHelpers";
 import { Player } from "./Player";
+import { Terminal } from "./Terminal";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
@@ -126,6 +127,7 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
       })
       .catch((e) => reject(e));
   }).catch((e) => {
+    console.log(e);
     if (e instanceof Error) {
       if (e instanceof SyntaxError) {
         workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e.message + " (sorry we can't be more helpful)");
@@ -608,6 +610,7 @@ export function updateOnlineScriptTimes(numCycles = 1): void {
 export function loadAllRunningScripts(): void {
   const skipScriptLoad = window.location.href.toLowerCase().indexOf("?noscripts") !== -1;
   if (skipScriptLoad) {
+    Terminal.warn('Skipped loading player scripts during startup');
     console.info("Skipping the load of any scripts during startup");
   }
   for (const server of GetAllServers()) {

@@ -1,16 +1,45 @@
-const { app, BrowserWindow, Menu, shell } = require("electron");
+/* eslint-disable no-process-exit */
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { app, BrowserWindow, Menu, shell, dialog } = require("electron");
+const log = require('electron-log');
 const greenworks = require("./greenworks");
 
+log.catchErrors();
+log.info(`Started app: ${JSON.stringify(process.argv)}`);
+
+process.on('uncaughtException', function () {
+  // The exception will already have been logged by electron-log
+  process.exit(1);
+});
+
 if (greenworks.init()) {
-  console.log("Steam API has been initialized.");
+  log.info("Steam API has been initialized.");
 } else {
-  console.log("Steam API has failed to initialize.");
+  log.warn("Steam API has failed to initialize.");
 }
 
 const debug = false;
 
+let win = null;
+
+require("http")
+  .createServer(async function (req, res) {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString(); // convert Buffer to string
+    });
+    req.on("end", () => {
+      const data = JSON.parse(body);
+      win.webContents.executeJavaScript(`document.saveFile("${data.filename}", "${data.code}")`).then((result) => {
+        res.write(result);
+        res.end();
+      });
+    });
+  })
+  .listen(9990, "127.0.0.1");
+
 function createWindow(killall) {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     show: false,
     backgroundThrottling: false,
     backgroundColor: "#000000",
@@ -40,13 +69,43 @@ function createWindow(killall) {
   const achievements = greenworks.getAchievementNames();
   const intervalID = setInterval(async () => {
     const achs = await win.webContents.executeJavaScript("document.achievements");
-    console.log(achs);
     for (const ach of achs) {
       if (!achievements.includes(ach)) continue;
       greenworks.activateAchievement(ach, () => undefined);
     }
   }, 1000);
   win.achievementsIntervalID = intervalID;
+
+  const reloadAndKill = (killScripts = true) => {
+    log.info('Reloading & Killing all scripts...');
+    setStopProcessHandler(app, win, false);
+    if (intervalID) clearInterval(intervalID);
+    win.webContents.forcefullyCrashRenderer();
+    win.close();
+    createWindow(killScripts);
+  };
+  const promptForReload = () => {
+    win.off('unresponsive', promptForReload);
+    dialog.showMessageBox({
+      type: 'error',
+      title: 'Bitburner > Application Unresponsive',
+      message: 'The application is unresponsive, possibly due to an infinite loop in your scripts.',
+      detail:' Did you forget a ns.sleep(x)?\n\n' +
+        'The application will be restarted for you, do you want to kill all running scripts?',
+      buttons: ['Restart', 'Cancel'],
+      defaultId: 0,
+      checkboxLabel: 'Kill all running scripts',
+      checkboxChecked: true,
+      noLink: true,
+    }).then(({response, checkboxChecked}) => {
+      if (response === 0) {
+        reloadAndKill(checkboxChecked);
+      } else {
+        win.on('unresponsive', promptForReload)
+      }
+    });
+  }
+  win.on('unresponsive', promptForReload);
 
   // Create the Application's main menu
   Menu.setApplicationMenu(
@@ -75,13 +134,7 @@ function createWindow(killall) {
           },
           {
             label: "reload & kill all scripts",
-            click: () => {
-              setStopProcessHandler(app, win, false);
-              if (intervalID) clearInterval(intervalID);
-              win.webContents.forcefullyCrashRenderer();
-              win.close();
-              createWindow(true);
-            },
+            click: reloadAndKill
           },
         ],
       },
@@ -125,10 +178,11 @@ function setStopProcessHandler(app, window, enabled) {
   };
 
   const stopProcessHandler = () => {
-    if (process.platform !== "darwin") {
-      app.quit();
-      process.exit(0);
-    }
+    log.info('Quitting the app...');
+    app.isQuiting = true;
+    app.quit();
+    // eslint-disable-next-line no-process-exit
+    process.exit(0);
   };
 
   if (enabled) {
@@ -141,6 +195,7 @@ function setStopProcessHandler(app, window, enabled) {
 }
 
 app.whenReady().then(() => {
+  log.info('Application is ready!');
   const win = createWindow(process.argv.includes("--no-scripts"));
   setStopProcessHandler(app, win, true);
 });

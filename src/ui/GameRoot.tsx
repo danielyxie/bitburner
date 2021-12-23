@@ -33,7 +33,7 @@ import createStyles from "@mui/styles/createStyles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { Page, IRouter } from "./Router";
+import { Page, IRouter, ScriptEditorRouteOptions } from "./Router";
 import { Overview } from "./React/Overview";
 import { SidebarRoot } from "../Sidebar/ui/SidebarRoot";
 import { AugmentationsRoot } from "../Augmentation/ui/AugmentationsRoot";
@@ -94,9 +94,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-
-let filename = "";
-let code = "";
 
 export let Router: IRouter = {
   page: () => {
@@ -196,6 +193,7 @@ function determineStartPage(player: IPlayer): Page {
 
 export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
   const classes = useStyles();
+  const [{files, vim}, setEditorOptions] = useState({files: {}, vim: false})
   const [page, setPage] = useState(determineStartPage(player));
   const setRerender = useState(0)[1];
   const [faction, setFaction] = useState<Faction>(
@@ -246,9 +244,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toHacknetNodes: () => setPage(Page.Hacknet),
     toMilestones: () => setPage(Page.Milestones),
     toResleeves: () => setPage(Page.Resleeves),
-    toScriptEditor: (fn: string, c: string) => {
-      filename = fn;
-      code = c;
+    toScriptEditor: (files: Record<string, string>, options?: ScriptEditorRouteOptions) => {
+      setEditorOptions({
+        files,
+        vim: !!options?.vim,
+      });
       setPage(Page.ScriptEditor);
     },
     toSleeves: () => setPage(Page.Sleeves),
@@ -290,8 +290,6 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   };
 
   useEffect(() => {
-    filename = "";
-    code = "";
     if (page !== Page.Terminal) window.scrollTo(0, 0);
   });
 
@@ -319,7 +317,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
           ) : (
             <Box display="flex" flexDirection="row" width="100%">
               <SidebarRoot player={player} router={Router} page={page} />
-              <Box className={classes.root} flexGrow={1} display="block" px={1} height="100vh">
+              <Box className={classes.root} flexGrow={1} display="block" px={1} min-height="100vh">
                 {page === Page.Terminal ? (
                   <TerminalRoot terminal={terminal} router={Router} player={player} />
                 ) : page === Page.Sleeves ? (
@@ -330,11 +328,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                   <CharacterStats />
                 ) : page === Page.ScriptEditor ? (
                   <ScriptEditorRoot
-                    filename={filename}
-                    code={code}
+                    files={files}
                     hostname={player.getCurrentServer().hostname}
                     player={player}
                     router={Router}
+                    vim={vim}
                   />
                 ) : page === Page.ActiveScripts ? (
                   <ActiveScriptsRoot workerScripts={workerScripts} />

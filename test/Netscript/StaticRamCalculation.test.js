@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { jest, describe, expect, test } from '@jest/globals'
+
 import { getRamCost, RamCostConstants } from "../../src/Netscript/RamCostGenerator";
 import { calculateRamUsage } from "../../src/Script/RamCalculations";
 
@@ -81,13 +84,13 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
       await expectNonZeroRamCost(f);
     });
 
-    it("hackAnalyzePercent()", async function () {
-      const f = ["hackAnalyzePercent"];
+    it("hackAnalyze()", async function () {
+      const f = ["hackAnalyze"];
       await expectNonZeroRamCost(f);
     });
 
-    it("hackChance()", async function () {
-      const f = ["hackChance"];
+    it("hackAnalyzeChance()", async function () {
+      const f = ["hackAnalyzeChance"];
       await expectNonZeroRamCost(f);
     });
 
@@ -343,32 +346,32 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
 
     it("write()", async function () {
       const f = ["write"];
-      await expectNonZeroRamCost(f);
+      await expectZeroRamCost(f);
     });
 
-    it("tryWrite()", async function () {
-      const f = ["tryWrite"];
-      await expectNonZeroRamCost(f);
+    it("tryWritePort()", async function () {
+      const f = ["tryWritePort"];
+      await expectZeroRamCost(f);
     });
 
     it("read()", async function () {
       const f = ["read"];
-      await expectNonZeroRamCost(f);
+      await expectZeroRamCost(f);
     });
 
     it("peek()", async function () {
       const f = ["peek"];
-      await expectNonZeroRamCost(f);
+      await expectZeroRamCost(f);
     });
 
     it("clear()", async function () {
       const f = ["clear"];
-      await expectNonZeroRamCost(f);
+      await expectZeroRamCost(f);
     });
 
     it("getPortHandle()", async function () {
       const f = ["getPortHandle"];
-      await expectNonZeroRamCost(f);
+      await expectZeroRamCost(f);
     });
 
     it("rm()", async function () {
@@ -508,98 +511,98 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
   });
 
   describe("TIX API", function () {
-    it("getStockSymbols()", async function () {
-      const f = ["getStockSymbols"];
+    it("stock.getSymbols()", async function () {
+      const f = ["stock", "getSymbols"];
       await expectNonZeroRamCost(f);
     });
 
-    it("getStockPrice()", async function () {
-      const f = ["getStockPrice"];
+    it("stock.getPrice()", async function () {
+      const f = ["stock", "getPrice"];
       await expectNonZeroRamCost(f);
     });
 
-    it("getStockAskPrice()", async function () {
-      const f = ["getStockAskPrice"];
+    it("stock.getAskPrice()", async function () {
+      const f = ["stock", "getAskPrice"];
       await expectNonZeroRamCost(f);
     });
 
-    it("getStockBidPrice()", async function () {
-      const f = ["getStockBidPrice"];
+    it("stock.getBidPrice()", async function () {
+      const f = ["stock", "getBidPrice"];
       await expectNonZeroRamCost(f);
     });
 
-    it("getStockPosition()", async function () {
-      const f = ["getStockPosition"];
+    it("stock.getPosition()", async function () {
+      const f = ["stock", "getPosition"];
       await expectNonZeroRamCost(f);
     });
 
-    it("getStockMaxShares()", async function () {
-      const f = ["getStockMaxShares"];
+    it("stock.getMaxShares()", async function () {
+      const f = ["stock", "getMaxShares"];
       await expectNonZeroRamCost(f);
     });
 
-    it("getStockPurchaseCost()", async function () {
-      const f = ["getStockPurchaseCost"];
+    it("stock.getPurchaseCost()", async function () {
+      const f = ["stock", "getPurchaseCost"];
       await expectNonZeroRamCost(f);
     });
 
-    it("getStockSaleGain()", async function () {
-      const f = ["getStockSaleGain"];
+    it("stock.getSaleGain()", async function () {
+      const f = ["stock", "getSaleGain"];
       await expectNonZeroRamCost(f);
     });
 
-    it("buyStock()", async function () {
-      const f = ["buyStock"];
+    it("stock.buy()", async function () {
+      const f = ["stock", "buy"];
       await expectNonZeroRamCost(f);
     });
 
-    it("sellStock()", async function () {
-      const f = ["sellStock"];
+    it("stock.sell()", async function () {
+      const f = ["stock", "sell"];
       await expectNonZeroRamCost(f);
     });
 
-    it("shortStock()", async function () {
-      const f = ["shortStock"];
+    it("stock.short()", async function () {
+      const f = ["stock", "short"];
       await expectNonZeroRamCost(f);
     });
 
-    it("sellShort()", async function () {
-      const f = ["sellShort"];
+    it("stock.sellShort()", async function () {
+      const f = ["stock", "sell"];
       await expectNonZeroRamCost(f);
     });
 
-    it("placeOrder()", async function () {
-      const f = ["placeOrder"];
+    it("stock.placeOrder()", async function () {
+      const f = ["stock", "placeOrder"];
       await expectNonZeroRamCost(f);
     });
 
-    it("cancelOrder()", async function () {
-      const f = ["cancelOrder"];
+    it("stock.cancelOrder()", async function () {
+      const f = ["stock", "cancelOrder"];
       await expectNonZeroRamCost(f);
     });
 
-    it("getOrders()", async function () {
-      const f = ["getOrders"];
+    it("stock.getOrders()", async function () {
+      const f = ["stock", "getOrders"];
       await expectNonZeroRamCost(f);
     });
 
-    it("getStockVolatility()", async function () {
-      const f = ["getStockVolatility"];
+    it("stock.getVolatility()", async function () {
+      const f = ["stock", "getVolatility"];
       await expectNonZeroRamCost(f);
     });
 
-    it("getStockForecast()", async function () {
-      const f = ["getStockForecast"];
+    it("stock.getForecast()", async function () {
+      const f = ["stock", "getForecast"];
       await expectNonZeroRamCost(f);
     });
 
-    it("purchase4SMarketData()", async function () {
-      const f = ["purchase4SMarketData"];
+    it("stock.purchase4SMarketData()", async function () {
+      const f = ["stock", "purchase4SMarketData"];
       await expectNonZeroRamCost(f);
     });
 
-    it("purchase4SMarketDataTixApi()", async function () {
-      const f = ["purchase4SMarketDataTixApi"];
+    it("stock.purchase4SMarketDataTixApi()", async function () {
+      const f = ["stock", "purchase4SMarketDataTixApi"];
       await expectNonZeroRamCost(f);
     });
   });
@@ -909,11 +912,6 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
 
     it("getCityEstimatedPopulation()", async function () {
       const f = ["bladeburner", "getCityEstimatedPopulation"];
-      await expectNonZeroRamCost(f);
-    });
-
-    it("getCityEstimatedCommunities()", async function () {
-      const f = ["bladeburner", "getCityEstimatedCommunities"];
       await expectNonZeroRamCost(f);
     });
 

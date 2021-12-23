@@ -14,7 +14,7 @@ export const TerminalHelpText: string[] = [
   "clear                                Clear all text on the terminal ",
   "cls                                  See 'clear' command ",
   "connect [hostname]                   Connects to a remote server",
-  "cp [src] [dst]:                      Copy a file",
+  "cp [src] [dst]                       Copy a file",
   "download [script/text file]          Downloads scripts or text files to your computer",
   "expr [math expression]               Evaluate a mathematical expression",
   "free                                 Check the machine's memory (RAM) usage",
@@ -29,7 +29,7 @@ export const TerminalHelpText: string[] = [
   "lscpu                                Displays the number of CPU cores on the machine",
   "mem [script] [-t] [n]                Displays the amount of RAM required to run the script",
   "mv [src] [dest]                      Move/rename a text or script file",
-  "nano [file]                          Text editor - Open up and edit a script or text file",
+  "nano [file ...]                      Text editor - Open up and edit one or more scripts or text files",
   "ps                                   Display all scripts that are currently running",
   "rm [file]                            Delete a file from the server",
   "run [name] [-t n] [--tail] [args...] Execute a program or script",
@@ -40,7 +40,8 @@ export const TerminalHelpText: string[] = [
   "tail [script] [args...]              Displays dynamic logs for the specified script",
   "top                                  Displays all running scripts and their RAM usage",
   "unalias [alias name]                 Deletes the specified alias",
-  "weaken [server]                      Reduce the security of a server",
+  "vim [file ...]                       Text editor - Open up and edit one or more scripts or text files in vim mode",
+  "weaken                               Reduce the security of the current machine",
   "wget [url] [target file]             Retrieves code/text from a web server",
 ];
 
@@ -304,9 +305,9 @@ export const HelpTexts: IMap<string[]> = {
     "mv myScript.js myOldScript.js",
   ],
   nano: [
-    "nano [file name]",
+    "nano [file ...]",
     " ",
-    "Opens up the specified file in the Text Editor. Only scripts (.script) or text files (.txt) can be ",
+    "Opens up the specified file(s) in the Text Editor. Only scripts (.script) or text files (.txt) can be ",
     "edited using the Text Editor. If the file does not already exist, then a new, empty one ",
     "will be created",
   ],
@@ -322,7 +323,7 @@ export const HelpTexts: IMap<string[]> = {
   run: [
     "run [file name] [-t] [num threads] [args...]",
     " ",
-    "Execute a program or a script.",
+    "Execute a program, script or coding contract.",
     " ",
     "The '[-t]', '[num threads]', and '[args...]' arguments are only valid when running a script. The '-t' flag is used ",
     "to indicate that the script should be run with the specified number of threads. If the flag is omitted, ",
@@ -401,6 +402,13 @@ export const HelpTexts: IMap<string[]> = {
     "unalias r",
     " ",
     "It is not necessary to differentiate between global and non-global aliases when using 'unalias'",
+  ],
+  vim: [
+    "vim [file ...]",
+    " ",
+    "Opens up the specified file(s) in the Text Editor in vim mode. Only scripts (.script) or text files (.txt) can be ",
+    "edited using the Text Editor. If the file does not already exist, then a new, empty one ",
+    "will be created",
   ],
   weaken: [
     "weaken",

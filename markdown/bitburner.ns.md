@@ -51,6 +51,7 @@ export async function main(ns) {
 |  [sleeve](./bitburner.ns.sleeve.md) | [Sleeve](./bitburner.sleeve.md) | Namespace for sleeve functions. |
 |  [stanek](./bitburner.ns.stanek.md) | [Stanek](./bitburner.stanek.md) | Namespace for stanek functions. RAM cost: 0 GB |
 |  [stock](./bitburner.ns.stock.md) | [TIX](./bitburner.tix.md) | Namespace for stock functions. |
+|  [ui](./bitburner.ns.ui.md) | [UserInterface](./bitburner.userinterface.md) | Namespace for user interface functions. RAM cost: 0 GB |
 
 ## Methods
 

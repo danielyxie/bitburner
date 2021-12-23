@@ -36,7 +36,7 @@ export function printAliases(): void {
 
 // Returns true if successful, false otherwise
 export function parseAliasDeclaration(dec: string, global = false): boolean {
-  const re = /^([_|\w|!|%|,|@]+)="(.+)"$/;
+  const re = /^([\w|!|%|,|@|-]+)="(.+)"$/;
   const matches = dec.match(re);
   if (matches == null || matches.length != 3) {
     return false;

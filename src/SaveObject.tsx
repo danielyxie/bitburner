@@ -69,7 +69,7 @@ class BitburnerSaveObject {
     save(saveString)
       .then(() => {
         if (!Settings.SuppressSavedGameToast) {
-          SnackbarEvents.emit("Game Saved!", "info")
+          SnackbarEvents.emit("Game Saved!", "info", 2000);
         }
       })
       .catch((err) => console.error(err));

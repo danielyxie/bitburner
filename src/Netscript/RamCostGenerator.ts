@@ -348,6 +348,10 @@ export const RamCosts: IMap<any> = {
     remove: RamCostConstants.ScriptStanekDeleteAt,
   },
 
+  ui: {
+    getTheme: 0,
+  },
+
   heart: {
     // Easter egg function
     break: 0,

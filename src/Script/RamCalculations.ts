@@ -194,6 +194,8 @@ async function parseOnlyRamCalculate(
           func = workerScript.env.vars.sleeve[ref];
         } else if (ref in workerScript.env.vars.stock) {
           func = workerScript.env.vars.stock[ref];
+        } else if (ref in workerScript.env.vars.ui) {
+          func = workerScript.env.vars.ui[ref];
         } else {
           func = workerScript.env.vars[ref];
         }

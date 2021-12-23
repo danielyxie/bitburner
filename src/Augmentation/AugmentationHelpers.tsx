@@ -1844,7 +1844,7 @@ function initAugmentations(): void {
     moneyCost: 3.75e8,
     info:
       "A drug that genetically modifies the neurons in the brain " +
-      "resulting in neurons never die, continuously " +
+      "resulting in neurons that never die, continuously " +
       "regenerate, and strengthen themselves.",
     hacking_exp_mult: 1.4,
   });

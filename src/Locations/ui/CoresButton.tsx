@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
 
@@ -38,6 +39,11 @@ export function CoresButton(props: IProps): React.ReactElement {
       }
     >
       <span>
+        <br />
+        <Typography>
+          <i>"Cores increase the effectiveness of grow() and weaken() on 'home'"</i>
+        </Typography>
+        <br />
         <Button disabled={!props.p.canAfford(cost)} onClick={buy}>
           Upgrade 'home' cores ({homeComputer.cpuCores} -&gt; {homeComputer.cpuCores + 1}) -&nbsp;
           <Money money={cost} player={props.p} />

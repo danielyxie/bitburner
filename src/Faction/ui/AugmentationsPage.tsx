@@ -174,7 +174,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       <>
         <br />
         <Typography variant="h4">Purchased Augmentations</Typography>
-        <Typography>This factions also offers these augmentations but you already own them.</Typography>
+        <Typography>This faction also offers these augmentations but you already own them.</Typography>
         {owned.map((aug) => purchaseableAugmentation(aug, true))}
       </>
     );
