@@ -2,6 +2,7 @@ import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { ScriptUrl } from "./Script/ScriptUrl";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { Script } from "./Script/Script";
+import { areImportsEquals } from "./Terminal/DirectoryHelpers";
 
 export const BlobsMap: { [key: string]: string } = {};
 
@@ -117,11 +118,11 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
     let transformedCode = script.code.replace(
       /((?:from|import)\s+(?:'|"))(?:\.\/)?([^'"]+)('|")/g,
       (unmodified, prefix, filename, suffix) => {
-        const isAllowedImport = scripts.some((s) => s.filename == filename);
+        const isAllowedImport = scripts.some((s) => areImportsEquals(s.filename, filename));
         if (!isAllowedImport) return unmodified;
 
         // Find the corresponding script.
-        const [importedScript] = scripts.filter((s) => s.filename == filename);
+        const [importedScript] = scripts.filter((s) => areImportsEquals(s.filename, filename));
 
         // Try to get a URL for the requested script and its dependencies.
         const urls = _getScriptUrls(importedScript, scripts, seen);

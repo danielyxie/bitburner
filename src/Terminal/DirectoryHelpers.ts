@@ -48,7 +48,7 @@ export function isValidFilename(filename: string): boolean {
  * Checks whether a string is a valid directory name. Only used for the directory itself,
  * not an entire path
  */
- export function isValidDirectoryName(name: string): boolean {
+export function isValidDirectoryName(name: string): boolean {
   // Allows alphanumerics, hyphens, underscores, and percentage signs.
   // Name can begin with a single period, but otherwise cannot have any
   const regex = /^.?[a-zA-Z0-9_-]+$/;
@@ -309,4 +309,10 @@ export function areFilesEqual(f0: string, f1: string): boolean {
   if (!f0.startsWith("/")) f0 = "/" + f0;
   if (!f1.startsWith("/")) f1 = "/" + f1;
   return f0 === f1;
+}
+
+export function areImportsEquals(f0: string, f1: string): boolean {
+  if (!f0.endsWith(".ns") && !f0.endsWith(".js")) f0 = f0 + ".js";
+  if (!f1.endsWith(".ns") && !f1.endsWith(".js")) f1 = f1 + ".js";
+  return areFilesEqual(f0, f1);
 }
