@@ -49,6 +49,7 @@ export function OptionsModal(props: IProps): React.ReactElement {
           <MenuItem value="solarized-light">solarized-light</MenuItem>
           <MenuItem value="vs-dark">dark</MenuItem>
           <MenuItem value="light">light</MenuItem>
+          <MenuItem value="dracula">dracula</MenuItem>
         </Select>
       </Box>
 
