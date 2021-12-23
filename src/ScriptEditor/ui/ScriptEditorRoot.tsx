@@ -223,7 +223,7 @@ export function Root(props: IProps): React.ReactElement {
     function changeActiveTab(event: KeyboardEvent): void {
       if (Settings.DisableHotkeys) return;
 
-      if ((event.ctrlKey || event.metaKey || event.altKey) && ['ArrowLeft', 'ArrowRight'].includes(event.key)) {
+      if (((event.ctrlKey || event.metaKey) && event.altKey) && ['ArrowLeft', 'ArrowRight'].includes(event.key)) {
         event.preventDefault();
         event.stopPropagation();
 
