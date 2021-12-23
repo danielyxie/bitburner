@@ -323,7 +323,7 @@ export const HelpTexts: IMap<string[]> = {
   run: [
     "run [file name] [-t] [num threads] [args...]",
     " ",
-    "Execute a program or a script.",
+    "Execute a program, script or coding contract.",
     " ",
     "The '[-t]', '[num threads]', and '[args...]' arguments are only valid when running a script. The '-t' flag is used ",
     "to indicate that the script should be run with the specified number of threads. If the flag is omitted, ",
