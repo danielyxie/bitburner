@@ -654,6 +654,8 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
     this.workRepGained *= this.cancelationPenalty();
   }
 
+  const penaltyString = this.cancelationPenalty() === 0.5 ? "half" : "three-quarters";
+
   const company = Companies[this.companyName];
   company.playerReputation += this.workRepGained;
 
@@ -680,7 +682,7 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
       <>
         You worked a short shift of {convertTimeMsToTimeElapsedString(this.timeWorked)} <br />
         <br />
-        Since you cancelled your work early, you only gained half of the reputation you earned. <br />
+        Since you cancelled your work early, you only gained {penaltyString} of the reputation you earned. <br />
         <br />
         {content}
       </>
