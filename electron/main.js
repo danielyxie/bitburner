@@ -68,10 +68,17 @@ function createWindow(killall) {
   // here. Hey if it works it works.
   const achievements = greenworks.getAchievementNames();
   const intervalID = setInterval(async () => {
-    const achs = await win.webContents.executeJavaScript("document.achievements");
-    for (const ach of achs) {
-      if (!achievements.includes(ach)) continue;
-      greenworks.activateAchievement(ach, () => undefined);
+    try {
+      const achs = await win.webContents.executeJavaScript("document.achievements");
+      for (const ach of achs) {
+        if (!achievements.includes(ach)) continue;
+        greenworks.activateAchievement(ach, () => undefined);
+      }
+    } catch (error) {
+      // The interval properly did not properly get cleared after a window kill
+      log.warn('Clearing achievements timer');
+      clearInterval(intervalID);
+      return;
     }
   }, 1000);
   win.achievementsIntervalID = intervalID;
@@ -81,8 +88,13 @@ function createWindow(killall) {
     setStopProcessHandler(app, win, false);
     if (intervalID) clearInterval(intervalID);
     win.webContents.forcefullyCrashRenderer();
+    win.on('closed', () => {
+      // Wait for window to be closed before opening the new one to prevent race conditions
+      log.debug('Opening new window');
+      const newWindow = createWindow(killScripts);
+      setStopProcessHandler(app, newWindow, true);
+    })
     win.close();
-    createWindow(killScripts);
   };
   const promptForReload = () => {
     win.off('unresponsive', promptForReload);
@@ -170,10 +182,39 @@ function createWindow(killall) {
 }
 
 function setStopProcessHandler(app, window, enabled) {
-  const clearWindowHandler = () => {
+  const closingWindowHandler = async (e) => {
+    // We need to prevent the default closing event to add custom logic
+    e.preventDefault();
+
+    // First we clear the achievement timer
     if (window.achievementsIntervalID) {
       clearInterval(window.achievementsIntervalID);
     }
+
+    // We'll try to execute javascript on the page to see if we're stuck
+    let canRunJS = false;
+    win.webContents.executeJavaScript('window.stop(); document.close()', true)
+      .then(() => canRunJS = true);
+    setTimeout(() => {
+      // Wait a few milliseconds to prevent a race condition before loading the exit screen
+      win.webContents.stop();
+      win.loadFile("exit.html")
+    }, 20);
+
+    // Wait 200ms, if the promise has not yet resolved, let's crash the process since we're possibly in a stuck scenario
+    setTimeout(() => {
+      if (!canRunJS) {
+        // We're stuck, let's crash the process
+        log.warn('Forcefully crashing the renderer process');
+        win.webContents.forcefullyCrashRenderer();
+      }
+
+      log.debug('Destroying the window');
+      win.destroy();
+    }, 200);
+  }
+
+  const clearWindowHandler = () => {
     window = null;
   };
 
@@ -181,15 +222,18 @@ function setStopProcessHandler(app, window, enabled) {
     log.info('Quitting the app...');
     app.isQuiting = true;
     app.quit();
-    // eslint-disable-next-line no-process-exit
     process.exit(0);
   };
 
   if (enabled) {
+    log.debug('Adding closing handlers');
     window.on("closed", clearWindowHandler);
+    window.on("close", closingWindowHandler)
     app.on("window-all-closed", stopProcessHandler);
   } else {
+    log.debug('Removing closing handlers');
     window.removeListener("closed", clearWindowHandler);
+    window.removeListener("close", closingWindowHandler);
     app.removeListener("window-all-closed", stopProcessHandler);
   }
 }
