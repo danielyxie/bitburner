@@ -219,6 +219,31 @@ export function Root(props: IProps): React.ReactElement {
     };
   }, [options, editorRef, editor, vimEditor]);
 
+  useEffect(() => {
+    function changeActiveTab(event: KeyboardEvent): void {
+      if (Settings.DisableHotkeys) return;
+
+      if ((event.ctrlKey || event.metaKey) && ['ArrowLeft', 'ArrowRight'].includes(event.key)) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const currentTabIndex = getCurrentTabIndex()
+        let nextTab
+
+        if (event.key == 'ArrowLeft') {
+          nextTab = currentTabIndex < 1 ? openScripts.length - 1 : currentTabIndex - 1
+        } else {
+          nextTab = currentTabIndex >= openScripts.length - 1? 0 : currentTabIndex + 1
+        }
+
+        onTabClick(nextTab)
+      }
+    }
+
+    document.addEventListener("keyup", changeActiveTab);
+    return () => document.removeEventListener("keyup", changeActiveTab);
+  });
+
   // Generates a new model for the script
   function regenerateModel(script: OpenScript): void {
     if (monacoRef.current !== null) {
@@ -573,6 +598,12 @@ export function Root(props: IProps): React.ReactElement {
     return result;
   }
 
+  function getCurrentTabIndex(): number {
+    return openScripts.findIndex(
+      (script) => script.fileName === currentScript?.fileName && script.hostname === currentScript?.hostname
+    );
+  }
+
   function onDragEnd(result: any): void {
     // Dropped outside of the list
     if (!result.destination) {
@@ -588,10 +619,7 @@ export function Root(props: IProps): React.ReactElement {
   function onTabClick(index: number): void {
     if (currentScript !== null) {
       // Save currentScript to openScripts
-      const curIndex = openScripts.findIndex(
-        (script) => script.fileName === currentScript.fileName && script.hostname === currentScript.hostname,
-      );
-      openScripts[curIndex] = currentScript;
+      openScripts[getCurrentTabIndex()] = currentScript;
     }
 
     setCurrentScript({ ...openScripts[index] });
