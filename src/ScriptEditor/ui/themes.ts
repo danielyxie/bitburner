@@ -218,4 +218,99 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
       "editor.selectionHighlightBorder": "#073642",
     },
   });
+  monaco.editor.defineTheme("dracula", {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+      {
+        background: "282A36",
+        foreground: "F8F8F2",
+        token: "",
+      },
+      {
+        foreground: "6272A4",
+        token: "comment",
+      },
+      {
+        foreground: "F1FA8C",
+        token: "string",
+      },
+      {
+        token: "number",
+        foreground: "BD93F9",
+      },
+      {
+        token: "otherkeyvars",
+        foreground: "BD93F9",
+      },
+      {
+        foreground: "FF79C6",
+        token: "function",
+      },
+      {
+        foreground: "FF79C6",
+        token: "keyword",
+      },
+      {
+        token: "storage.type.function.js",
+        foreground: "FF79C6",
+      },
+      {
+        token: "ns",
+        foreground: "FFB86C",
+        fontStyle: "italic",
+        
+      },
+      {
+        token: "netscriptfunction",
+        foreground: "FF79C6",
+      },
+      {
+        token: "otherkeywords",
+        foreground: "FF68A7",
+      },
+      {
+        token: "type.identifier.js",
+        foreground: "7EE9FD",
+        fontStyle: "italic"
+      },
+      {
+        token: "delimiter.square.js",
+        foreground: "FFD709",
+      },
+      {
+        token: "delimiter.parenthesis.js",
+        foreground: "FFD709"
+      },
+      {
+        token: "delimiter.bracket.js",
+        foreground: "FFD709",
+      },
+      {
+        token: "this",
+        foreground: "BD93F9",
+        fontStyle: "italic",
+      },
+    ],
+    "colors": {
+      "editor.foreground": "#F8F8F2",
+      "editor.background": "#282A36",
+      "editorLineNumber.foreground": "#6272A4",
+      "editor.selectionBackground": "#44475A",
+      "editor.selectionHighlightBackground": "#424450",
+      "editor.foldBackground": "#21222C",
+      "editor.wordHighlightBackground": "#8BE9FD50",
+      "editor.wordHighlightStrongBackground": "#50FA7B50",
+      "editor.findMatchBackground": "#FFB86C80",
+      "editor.findMatchHighlightBackground": "#FFFFFF40",
+      "editor.findRangeHighlightBackground": "#44475A75",
+      "editor.hoverHighlightBackground": "#8BE9FD50",
+      "editor.lineHighlightBorder": "#44475A",
+      "editor.rangeHighlightBackground": "#BD93F915",
+      "editor.snippetTabstopHighlightBackground": "#282A36",
+      "editor.snippetTabstopHighlightBorder": "#6272A4",
+      "editor.snippetFinalTabstopHighlightBackground": "#282A36",
+      "editor.snippetFinalTabstopHighlightBorder": "#50FA7B",
+    },
+  });
 }
