@@ -421,7 +421,7 @@ export function initElectron(): void {
 
 function initWebserver(): void {
   (document as any).saveFile = function (filename: string, code: string): string {
-    filename = removeLeadingSlash(filename);
+    // filename = removeLeadingSlash(filename);
     console.log(code);
     code = Buffer.from(code, "base64").toString();
     console.log(code);
