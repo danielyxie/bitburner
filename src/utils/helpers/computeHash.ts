@@ -6,7 +6,7 @@ import { sha256 } from "js-sha256";
  * @returns The SHA-256 hash in hex
  */
 export function computeHash(message: string): string {
-  var hash = sha256.create();
+  const hash = sha256.create();
   hash.update(message);
   return hash.hex();
 }

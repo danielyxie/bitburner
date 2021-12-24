@@ -2,7 +2,7 @@
 const blobCache: { [hash: string]: string } = {};
 
 export class BlobCache {
-  static get(hash: string) {
+  static get(hash: string): string {
     return blobCache[hash];
   }
 
@@ -11,7 +11,7 @@ export class BlobCache {
     blobCache[hash] = value;
   }
 
-  static removeByValue(value: string) {
+  static removeByValue(value: string): void {
     const keys = Object.keys(blobCache).filter((key) => blobCache[key] === value);
     keys.forEach((key) => delete blobCache[key]);
   }
