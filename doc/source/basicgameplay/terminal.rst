@@ -432,10 +432,10 @@ empty file will be created.
 ps
 ^^
 
-    $ ps [-g pattern]
+    $ ps [-g, --grep pattern]
 
 Prints all scripts that are currently running on the current server.
-The :code:`-g pattern` option will only output running scripts where the name matches the provided pattern.
+The :code:`-g, --grep pattern` option will only output running scripts where the name matches the provided pattern.
 
 rm
 ^^
