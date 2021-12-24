@@ -23,7 +23,9 @@ export function safetlyCreateUniqueServer(params: IConstructorParams): Server {
   }
 
   if (GetServer(hostname) != null) {
-    hostname = `${hostname}-0`;
+    if (hostname.slice(-2) != `-0`) {
+      hostname = `${hostname}-0`;
+    }
 
     // Use a for loop to ensure that we don't get suck in an infinite loop somehow
     for (let i = 0; i < 200; ++i) {
