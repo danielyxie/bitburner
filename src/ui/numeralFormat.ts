@@ -110,11 +110,11 @@ class NumeralFormatter {
   }
 
   formatRAM(n: number): string {
-    if (n < 1e3) return this.format(n, "0.00") + "GB";
-    if (n < 1e6) return this.format(n / 1e3, "0.00") + "TB";
-    if (n < 1e9) return this.format(n / 1e6, "0.00") + "PB";
-    if (n < 1e12) return this.format(n / 1e9, "0.00") + "EB";
-    return this.format(n, "0.00") + "GB";
+    if (n < Math.pow(2,10)) return this.format(n, "0.00") + " GiB";
+    if (n < Math.pow(2,20)) return this.format(n / Math.pow(2,10), "0.00") + " TiB";
+    if (n < Math.pow(2,30)) return this.format(n / Math.pow(2,20), "0.00") + " PiB";
+    if (n < Math.pow(2,40)) return this.format(n / Math.pow(2,30), "0.00") + " EiB";
+    return this.format(n, "0.00") + "GiB";
   }
 
   formatPercentage(n: number, decimalPlaces = 2): string {
