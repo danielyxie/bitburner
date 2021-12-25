@@ -350,7 +350,12 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         event.preventDefault();
         modifyInput("deletewordbefore");
       }
-
+      
+      if (event.keyCode === KEY.D && event.altKey) {
+        event.preventDefault();
+        modifyInput("deletewordafter");
+      }
+      
       if (event.keyCode === KEY.U && event.ctrlKey) {
         event.preventDefault();
         modifyInput("clearbefore");
@@ -360,9 +365,6 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         event.preventDefault();
         modifyInput("clearafter");
       }
-
-      // TODO AFTER THIS:
-      // alt + d deletes word after cursor
     }
   }
 
