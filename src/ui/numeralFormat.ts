@@ -110,10 +110,10 @@ class NumeralFormatter {
   }
 
   formatRAM(n: number): string {
-    if (n < Math.pow(2,10)) return this.format(n, "0.00") + " GiB";
-    if (n < Math.pow(2,20)) return this.format(n / Math.pow(2,10), "0.00") + " TiB";
-    if (n < Math.pow(2,30)) return this.format(n / Math.pow(2,20), "0.00") + " PiB";
-    if (n < Math.pow(2,40)) return this.format(n / Math.pow(2,30), "0.00") + " EiB";
+    if (n < Math.pow(2,10)) return this.format(n, "0.00") + "GB";
+    if (n < Math.pow(2,20)) return this.format(n / Math.pow(2,10), "0.00") + "TiB";
+    if (n < Math.pow(2,30)) return this.format(n / Math.pow(2,20), "0.00") + "PiB";
+    if (n < Math.pow(2,40)) return this.format(n / Math.pow(2,30), "0.00") + "EiB";
     return this.format(n, "0.00") + "GiB";
   }
 
