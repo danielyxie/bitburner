@@ -114,7 +114,7 @@ class NumeralFormatter {
     if (n < Math.pow(2,20)) return this.format(n / Math.pow(2,10), "0.00") + "TiB";
     if (n < Math.pow(2,30)) return this.format(n / Math.pow(2,20), "0.00") + "PiB";
     if (n < Math.pow(2,40)) return this.format(n / Math.pow(2,30), "0.00") + "EiB";
-    return this.format(n, "0.00") + "GiB";
+    return this.format(n, "0.00") + "GB";
   }
 
   formatPercentage(n: number, decimalPlaces = 2): string {
