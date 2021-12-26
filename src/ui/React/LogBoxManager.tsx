@@ -140,10 +140,10 @@ function LogWindow(props: IProps): React.ReactElement {
     rerender();
   }
 
-  function title(): string {
+  function title(full = false): string {
     const maxLength = 30;
     const t = `${script.filename} ${script.args.map((x: any): string => `${x}`).join(" ")}`;
-    if (t.length <= maxLength) {
+    if (full || t.length <= maxLength) {
       return t;
     }
     return t.slice(0, maxLength - 3) + "...";
@@ -185,7 +185,7 @@ function LogWindow(props: IProps): React.ReactElement {
             }}
           >
             <Box className="drag" display="flex" alignItems="center">
-              <Typography color="primary" variant="h6">
+              <Typography color="primary" variant="h6" title={title(true)}>
                 {title()}
               </Typography>
 
