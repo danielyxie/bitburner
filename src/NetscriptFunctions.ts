@@ -70,6 +70,7 @@ import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
 import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
 import { NetscriptFormulas } from "./NetscriptFunctions/Formulas";
 import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
+import { IPort } from "./NetscriptPort";
 
 import {
   NS as INS,
@@ -442,6 +443,26 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServer: safeGetServer,
     checkSingularityAccess: checkSingularityAccess,
     hack: hack,
+    getValidPort: (funcName:string, port: any): IPort => {
+      if (isNaN(port)) {
+        throw makeRuntimeErrorMsg(
+          funcName,
+          `Invalid argument. Must be a port number between 1 and ${CONSTANTS.NumNetscriptPorts}, is ${port}`,
+        );
+      }
+      port = Math.round(port);
+      if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
+        throw makeRuntimeErrorMsg(
+          funcName,
+          `Trying to write to invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
+        );
+      }
+      const iport = NetscriptPorts[port - 1];
+      if (iport == null || !(iport instanceof Object)) {
+        throw makeRuntimeErrorMsg(funcName, `Could not find port: ${port}. This is a bug. Report to dev.`);
+      }
+      return iport;
+    }
   };
 
   const gang = NetscriptGang(Player, workerScript, helper);
@@ -1737,25 +1758,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return res;
     },
     writePort: function (port: any, data: any = ""): any {
-      // Write to port
-      // Port 1-10
-      if (typeof data !== "string" && typeof data !== "number") {
-        throw makeRuntimeErrorMsg(
-          "writePort",
-          `Trying to write invalid data to a port: only strings and numbers are valid.`,
-        );
-      }
-      port = Math.round(port);
-      if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-        throw makeRuntimeErrorMsg(
-          "writePort",
-          `Trying to write to invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
-        );
-      }
-      const iport = NetscriptPorts[port - 1];
-      if (iport == null || !(iport instanceof Object)) {
-        throw makeRuntimeErrorMsg("writePort", `Could not find port: ${port}. This is a bug. Report to dev.`);
-      }
+      const iport = helper.getValidPort("writePort", port);
       return Promise.resolve(iport.write(data));
     },
     write: function (port: any, data: any = "", mode: any = "a"): any {
@@ -1832,18 +1835,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     readPort: function (port: any): any {
       // Read from port
-      // Port 1-10
-      port = Math.round(port);
-      if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-        throw makeRuntimeErrorMsg(
-          "readPort",
-          `Invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
-        );
-      }
-      const iport = NetscriptPorts[port - 1];
-      if (iport == null || !(iport instanceof Object)) {
-        throw makeRuntimeErrorMsg("readPort", `Could not find port: ${port}. This is a bug. Report to dev.`);
-      }
+      const iport = helper.getValidPort("readPort", port);
       const x = iport.read();
       return x;
     },
@@ -1878,23 +1870,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     peek: function (port: any): any {
       updateDynamicRam("peek", getRamCost("peek"));
-      if (isNaN(port)) {
-        throw makeRuntimeErrorMsg(
-          "peek",
-          `Invalid argument. Must be a port number between 1 and ${CONSTANTS.NumNetscriptPorts}, is ${port}`,
-        );
-      }
-      port = Math.round(port);
-      if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-        throw makeRuntimeErrorMsg(
-          "peek",
-          `Invalid argument. Must be a port number between 1 and ${CONSTANTS.NumNetscriptPorts}, is ${port}`,
-        );
-      }
-      const iport = NetscriptPorts[port - 1];
-      if (iport == null || !(iport instanceof Object)) {
-        throw makeRuntimeErrorMsg("peek", `Could not find port: ${port}. This is a bug. Report to dev.`);
-      }
+      const iport = helper.getValidPort("peek", port);
       const x = iport.peek();
       return x;
     },
@@ -1918,38 +1894,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     clearPort: function (port: any): any {
       // Clear port
-      port = Math.round(port);
-      if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-        throw makeRuntimeErrorMsg(
-          "clear",
-          `Trying to clear invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid`,
-        );
-      }
-      const iport = NetscriptPorts[port - 1];
-      if (iport == null || !(iport instanceof Object)) {
-        throw makeRuntimeErrorMsg("clear", `Could not find port: ${port}. This is a bug. Report to dev.`);
-      }
+      const iport = helper.getValidPort("clearPort", port);
       return iport.clear();
     },
     getPortHandle: function (port: any): any {
       updateDynamicRam("getPortHandle", getRamCost("getPortHandle"));
-      if (isNaN(port)) {
-        throw makeRuntimeErrorMsg(
-          "getPortHandle",
-          `Invalid port: ${port} Must be an integer between 1 and ${CONSTANTS.NumNetscriptPorts}.`,
-        );
-      }
-      port = Math.round(port);
-      if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-        throw makeRuntimeErrorMsg(
-          "getPortHandle",
-          `Invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
-        );
-      }
-      const iport = NetscriptPorts[port - 1];
-      if (iport == null || !(iport instanceof Object)) {
-        throw makeRuntimeErrorMsg("getPortHandle", `Could not find port: ${port}. This is a bug. Report to dev.`);
-      }
+      const iport = helper.getValidPort("getPortHandle", port);
       return iport;
     },
     rm: function (fn: any, hostname: any): any {
