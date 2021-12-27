@@ -1758,6 +1758,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return res;
     },
     writePort: function (port: any, data: any = ""): any {
+      if (typeof data !== "string" && typeof data !== "number") {
+        throw makeRuntimeErrorMsg(
+          "writePort",
+          `Trying to write invalid data to a port: only strings and numbers are valid.`,
+        );
+      }
       const iport = helper.getValidPort("writePort", port);
       return Promise.resolve(iport.write(data));
     },
