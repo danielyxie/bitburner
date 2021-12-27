@@ -292,7 +292,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <Tooltip
                 title={
                   <Typography>
-                    The maximum number of entries that can be written to a the terminal. Setting this too high can cause
+                    The maximum number of entries that can be written to the terminal. Setting this too high can cause
                     the game to use a lot of memory.
                   </Typography>
                 }
