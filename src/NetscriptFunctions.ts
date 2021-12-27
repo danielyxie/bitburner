@@ -454,7 +454,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
         throw makeRuntimeErrorMsg(
           funcName,
-          `Trying to write to invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
+          `Trying to use an invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
         );
       }
       const iport = NetscriptPorts[port - 1];
