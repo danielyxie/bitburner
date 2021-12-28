@@ -5,7 +5,7 @@ export interface IPort {
     * @param value - The data to be written
     * @returns The element that was displaced if the port was full, otherwise null
     */
-    write(value: string | number) : string | number;
+    write(value: string | number) : string | number | null;
     /** Write data to the port, failing if the port is full.
     * @param value - The data to be written
     * @returns True if the data was written, false otherwise
@@ -32,36 +32,37 @@ export class NetscriptPort implements IPort
     {
         this.#data = [];
     }
-    write(value: string | number): string | number 
+    write(value: string | number): string | number | null
     {
-      this.#data.push(value);
-      if (this.#data.length > Settings.MaxPortCapacity) {
-        return this.#data.shift();
-      }
-      return null;
+		let result = null;
+		let runawayProtection = 0;
+		while(!this.tryWrite(value) && runawayProtection++ < 100)
+		{
+			result = this.read();
+		}
+		return result;
     }
     tryWrite(value: string | number): boolean {
-      if (this.#data.length >= Settings.MaxPortCapacity) {
+      if (this.full()) {
         return false;
       }
       this.#data.push(value);
       return true;
     }
     read(): string | number {
-      if (this.#data.length === 0) {
-        return "NULL PORT DATA";
-      }
-      return this.#data.shift();
+      let result = this.peek();//ensures consistency
+      this.#data.shift();
+	  return result;
     }
     peek(): string | number {
-      if (this.#data.length === 0) {
+      if (this.empty()) {
         return "NULL PORT DATA";
       } else {
         return this.#data[0];
       }
     }
     full(): boolean {
-      return this.#data.length == Settings.MaxPortCapacity;
+      return this.#data.length >= Settings.MaxPortCapacity;
     }
 
     empty(): boolean {
