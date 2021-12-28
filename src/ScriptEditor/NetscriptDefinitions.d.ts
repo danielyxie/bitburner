@@ -414,6 +414,33 @@ export interface Server {
    */
   serverGrowth: number;
 }
+/** @public 
+*/
+export interface Port {
+	/** Write data to the port, making room if the port is full.
+	* @param value - The data to be written
+	* @returns The element that was displaced if the port was full, otherwise null
+	*/
+	write(value: string | number) : string | number;
+	/** Write data to the port, failing if the port is full.
+	* @param value - The data to be written
+	* @returns True if the data was written, false otherwise
+	*/
+	tryWrite(value: string | number) : boolean;
+	/** Read the data at the front of the port, removing it from the port
+	*/
+	read(): string | number;
+	/** Peek at the data at the front of the port, leaving it on the port
+	*/
+	peek(): string | number;
+	/** True if the port is at capacity
+	*/
+	full(): boolean;
+	/** True if the port has no data */
+	empty(): boolean;
+	/** Remove all data from the port */
+	clear(): void;
+}
 
 /**
  * All multipliers affecting the difficulty of the current challenge.
@@ -5332,7 +5359,7 @@ export interface NS extends Singularity {
    * @param port - Port to peek. Must be an integer between 1 and 20.
    * @returns Data in the specified port.
    */
-  peek(port: number): any;
+  peek(port: number): string | number;
 
   /**
    * Clear data from a file.
@@ -5364,7 +5391,7 @@ export interface NS extends Singularity {
    * Write data to that netscript port.
    * @returns The data popped off the queue if it was full.
    */
-  writePort(port: number, data: string | number): Promise<any>;
+  writePort(port: number, data: string | number): Promise<string | number>;
   /**
    * Read data from a port.
    * @remarks
@@ -5375,7 +5402,7 @@ export interface NS extends Singularity {
    * If the queue is empty, then the string “NULL PORT DATA” will be returned.
    * @returns the data read.
    */
-  readPort(port: number): any;
+  readPort(port: number): string | number;
 
   /**
    * Get all data on a port.
@@ -5390,7 +5417,7 @@ export interface NS extends Singularity {
    * @param port - Port number. Must be an integer between 1 and 20.
    * @returns Data in the specified port.
    */
-  getPortHandle(port: number): any[];
+  getPortHandle(port: number): Port;
 
   /**
    * Delete a file.

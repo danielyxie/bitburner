@@ -1,63 +1,76 @@
 import { Settings } from "./Settings/Settings";
 
 export interface IPort {
-  write: (value: any) => any;
-  tryWrite: (value: any) => boolean;
-  read: () => any;
-  peek: () => any;
-  full: () => boolean;
-  empty: () => boolean;
-  clear: () => void;
+	/** Write data to the port, making room if the port is full.
+	* @param value - The data to be written
+	* @returns The element that was displaced if the port was full, otherwise null
+	*/
+	write(value: string | number) : string | number;
+	/** Write data to the port, failing if the port is full.
+	* @param value - The data to be written
+	* @returns True if the data was written, false otherwise
+	*/
+	tryWrite(value: string | number) : boolean;
+	/** Read the data at the front of the port, removing it from the port
+	*/
+	read(): string | number;
+	/** Peek at the data at the front of the port, leaving it on the port
+	*/
+	peek(): string | number;
+	/** True if the port is at capacity
+	*/
+	full(): boolean;
+	/** True if the port has no data */
+	empty(): boolean;
+	/** Remove all data from the port */
+	clear(): void;
 }
-
-export function NetscriptPort(): IPort {
-  const data: any[] = [];
-
-  return {
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    write: (value: any): any => {
-      data.push(value);
-      if (data.length > Settings.MaxPortCapacity) {
-        return data.shift();
+export class NetscriptPort implements IPort
+{
+	#data:any[];
+	constructor()
+	{
+		this.#data = [];
+	}
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	write(value: string | number): string | number 
+	{
+      this.#data.push(value);
+      if (this.#data.length > Settings.MaxPortCapacity) {
+        return this.#data.shift();
       }
       return null;
-    },
-
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    tryWrite: (value: any): boolean => {
-      if (data.length >= Settings.MaxPortCapacity) {
+    }
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	tryWrite(value: string | number): boolean {
+      if (this.#data.length >= Settings.MaxPortCapacity) {
         return false;
       }
-      data.push(value);
+      this.#data.push(value);
       return true;
-    },
-
-    read: (): any => {
-      if (data.length === 0) {
+    }
+    read(): string | number {
+      if (this.#data.length === 0) {
         return "NULL PORT DATA";
       }
-      return data.shift();
-    },
-
-    peek: (): any => {
-      if (data.length === 0) {
+      return this.#data.shift();
+    }
+    peek(): string | number {
+      if (this.#data.length === 0) {
         return "NULL PORT DATA";
       } else {
-        const foo = data.slice();
-        return foo[0];
+        return this.#data[0];
       }
-    },
+    }
+    full(): boolean {
+      return this.#data.length == Settings.MaxPortCapacity;
+    }
 
-    full: (): boolean => {
-      return data.length == Settings.MaxPortCapacity;
-    },
+    empty(): boolean {
+      return this.#data.length === 0;
+    }
 
-    empty: (): boolean => {
-      return data.length === 0;
-    },
-
-    clear: (): void => {
-      data.length = 0;
-    },
-  };
+    clear(): void {
+      this.#data.length = 0;
+    }
 }

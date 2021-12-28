@@ -39,7 +39,7 @@ import { Terminal } from "./Terminal";
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
 for (let i = 0; i < CONSTANTS.NumNetscriptPorts; ++i) {
-  NetscriptPorts.push(NetscriptPort());
+  NetscriptPorts.push(new NetscriptPort());
 }
 
 export function prestigeWorkerScripts(): void {
