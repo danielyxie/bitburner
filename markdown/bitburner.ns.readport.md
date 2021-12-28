@@ -9,7 +9,7 @@ Read data from a port.
 <b>Signature:</b>
 
 ```typescript
-readPort(port: number): any;
+readPort(port: number): string | number;
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ readPort(port: number): any;
 
 <b>Returns:</b>
 
-any
+string \| number
 
 the data read.
 

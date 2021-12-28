@@ -9,7 +9,7 @@ Get all data on a port.
 <b>Signature:</b>
 
 ```typescript
-getPortHandle(port: number): any[];
+getPortHandle(port: number): Port;
 ```
 
 ## Parameters
@@ -20,7 +20,7 @@ getPortHandle(port: number): any[];
 
 <b>Returns:</b>
 
-any\[\]
+[Port](./bitburner.port.md)
 
 Data in the specified port.
 

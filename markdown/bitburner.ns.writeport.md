@@ -9,7 +9,7 @@ Write data to a port.
 <b>Signature:</b>
 
 ```typescript
-writePort(port: number, data: string | number): Promise<any>;
+writePort(port: number, data: string | number): Promise<string | number>;
 ```
 
 ## Parameters
@@ -21,7 +21,7 @@ writePort(port: number, data: string | number): Promise<any>;
 
 <b>Returns:</b>
 
-Promise&lt;any&gt;
+Promise&lt;string \| number&gt;
 
 The data popped off the queue if it was full.
 
