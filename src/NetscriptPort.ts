@@ -32,7 +32,6 @@ export class NetscriptPort implements IPort
 	{
 		this.#data = [];
 	}
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	write(value: string | number): string | number 
 	{
       this.#data.push(value);
@@ -41,7 +40,6 @@ export class NetscriptPort implements IPort
       }
       return null;
     }
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	tryWrite(value: string | number): boolean {
       if (this.#data.length >= Settings.MaxPortCapacity) {
         return false;
