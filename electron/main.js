@@ -1,8 +1,9 @@
 /* eslint-disable no-process-exit */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { app, BrowserWindow, Menu, shell, dialog } = require("electron");
+const { app, BrowserWindow, Menu, shell, dialog, clipboard } = require("electron");
 const log = require('electron-log');
 const greenworks = require("./greenworks");
+const api = require("./api-server");
 
 log.catchErrors();
 log.info(`Started app: ${JSON.stringify(process.argv)}`);
@@ -19,24 +20,106 @@ if (greenworks.init()) {
 }
 
 const debug = false;
-
 let win = null;
 
-require("http")
-  .createServer(async function (req, res) {
-    let body = "";
-    req.on("data", (chunk) => {
-      body += chunk.toString(); // convert Buffer to string
-    });
-    req.on("end", () => {
-      const data = JSON.parse(body);
-      win.webContents.executeJavaScript(`document.saveFile("${data.filename}", "${data.code}")`).then((result) => {
-        res.write(result);
-        res.end();
-      });
-    });
+const getMenu = (win) => Menu.buildFromTemplate([
+  {
+    label: "Edit",
+    submenu: [
+      { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+      { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+      { type: "separator" },
+      { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+      { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+      { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+      { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" },
+    ],
+  },
+  {
+    label: "Reloads",
+    submenu: [
+      {
+        label: "Reload",
+        accelerator: "f5",
+        click: () => {
+          win.loadFile("index.html");
+        },
+      },
+      {
+        label: "Reload & Kill All Scripts",
+        click: () => reloadAndKill(win)
+      },
+    ],
+  },
+  {
+    label: "Fullscreen",
+    submenu: [
+      {
+        label: "Toggle",
+        accelerator: "f9",
+        click: (() => {
+          let full = false;
+          return () => {
+            full = !full;
+            win.setFullScreen(full);
+          };
+        })(),
+      },
+    ],
+  },
+  {
+    label: "API Server",
+    submenu: [
+      {
+        label: api.isListening() ? 'Disable Server' : 'Enable Server',
+        click: (async () => {
+          await api.toggleServer();
+          Menu.setApplicationMenu(getMenu());
+        })
+      },
+      {
+        label: api.isAutostart() ? 'Disable Autostart' : 'Enable Autostart',
+        click: (async () => {
+          api.toggleAutostart();
+          Menu.setApplicationMenu(getMenu());
+        })
+      },
+      {
+        label: 'Copy Auth Token',
+        click: (async () => {
+          const token = api.getAuthenticationToken();
+          log.log('Wrote authentication token to clipboard');
+          clipboard.writeText(token);
+        })
+      },
+    ]
+  },
+  {
+    label: "Debug",
+    submenu: [
+      {
+        label: "Activate",
+        click: () => win.webContents.openDevTools(),
+      },
+    ],
+  },
+]);
+
+const reloadAndKill = (win, killScripts = true) => {
+  log.info('Reloading & Killing all scripts...');
+  setStopProcessHandler(app, win, false);
+  if (win.achievementsIntervalID) clearInterval(win.achievementsIntervalID);
+  win.webContents.forcefullyCrashRenderer();
+  win.on('closed', () => {
+    // Wait for window to be closed before opening the new one to prevent race conditions
+    log.debug('Opening new window');
+    const newWindow = createWindow(killScripts);
+    api.initialize(newWindow, () => Menu.setApplicationMenu(getMenu(win)));
+    setStopProcessHandler(app, newWindow, true);
   })
-  .listen(9990, "127.0.0.1");
+  win.close();
+};
+
 
 function createWindow(killall) {
   win = new BrowserWindow({
@@ -83,19 +166,7 @@ function createWindow(killall) {
   }, 1000);
   win.achievementsIntervalID = intervalID;
 
-  const reloadAndKill = (killScripts = true) => {
-    log.info('Reloading & Killing all scripts...');
-    setStopProcessHandler(app, win, false);
-    if (intervalID) clearInterval(intervalID);
-    win.webContents.forcefullyCrashRenderer();
-    win.on('closed', () => {
-      // Wait for window to be closed before opening the new one to prevent race conditions
-      log.debug('Opening new window');
-      const newWindow = createWindow(killScripts);
-      setStopProcessHandler(app, newWindow, true);
-    })
-    win.close();
-  };
+
   const promptForReload = () => {
     win.off('unresponsive', promptForReload);
     dialog.showMessageBox({
@@ -111,7 +182,7 @@ function createWindow(killall) {
       noLink: true,
     }).then(({response, checkboxChecked}) => {
       if (response === 0) {
-        reloadAndKill(checkboxChecked);
+        reloadAndKill(win, checkboxChecked);
       } else {
         win.on('unresponsive', promptForReload)
       }
@@ -119,64 +190,8 @@ function createWindow(killall) {
   }
   win.on('unresponsive', promptForReload);
 
-  // Create the Application's main menu
-  Menu.setApplicationMenu(
-    Menu.buildFromTemplate([
-      {
-        label: "Edit",
-        submenu: [
-          { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-          { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
-          { type: "separator" },
-          { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-          { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-          { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-          { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" },
-        ],
-      },
-      {
-        label: "reloads",
-        submenu: [
-          {
-            label: "reload",
-            accelerator: "f5",
-            click: () => {
-              win.loadFile("index.html");
-            },
-          },
-          {
-            label: "reload & kill all scripts",
-            click: reloadAndKill
-          },
-        ],
-      },
-      {
-        label: "fullscreen",
-        submenu: [
-          {
-            label: "toggle",
-            accelerator: "f9",
-            click: (() => {
-              let full = false;
-              return () => {
-                full = !full;
-                win.setFullScreen(full);
-              };
-            })(),
-          },
-        ],
-      },
-      {
-        label: "debug",
-        submenu: [
-          {
-            label: "activate",
-            click: () => win.webContents.openDevTools(),
-          },
-        ],
-      },
-    ]),
-  );
+  // // Create the Application's main menu
+  // Menu.setApplicationMenu(getMenu());
 
   return win;
 }
@@ -190,6 +205,8 @@ function setStopProcessHandler(app, window, enabled) {
     if (window.achievementsIntervalID) {
       clearInterval(window.achievementsIntervalID);
     }
+
+    api.disable();
 
     // We'll try to execute javascript on the page to see if we're stuck
     let canRunJS = false;
@@ -238,8 +255,9 @@ function setStopProcessHandler(app, window, enabled) {
   }
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   log.info('Application is ready!');
   const win = createWindow(process.argv.includes("--no-scripts"));
+  await api.initialize(win, () => Menu.setApplicationMenu(getMenu(win)));
   setStopProcessHandler(app, win, true);
 });
