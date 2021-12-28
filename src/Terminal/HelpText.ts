@@ -80,7 +80,7 @@ export const HelpTexts: IMap<string[]> = {
     " ",
   ],
   analyze: [
-    "analze",
+    "analyze",
     " ",
     "Prints details and statistics about the current server. The information that is printed includes basic ",
     "server details such as the hostname, whether the player has root access, what ports are opened/closed, and also ",
@@ -193,7 +193,7 @@ export const HelpTexts: IMap<string[]> = {
   free: [
     "free",
     " ",
-    "Display's the memory usage on the current machine. Print the amount of RAM that is available on the current server as well as ",
+    "Displays the memory usage on the current machine. Print the amount of RAM that is available on the current server as well as ",
     "how much of it is being used.",
   ],
   grow: [
