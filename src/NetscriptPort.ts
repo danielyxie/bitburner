@@ -34,13 +34,13 @@ export class NetscriptPort implements IPort
     }
     write(value: string | number): string | number | null
     {
-		let result = null;
-		let runawayProtection = 0;
-		while(!this.tryWrite(value) && runawayProtection++ < 100)
-		{
-			result = this.read();
-		}
-		return result;
+        let result = null;
+        let runawayProtection = 0;
+        while(!this.tryWrite(value) && runawayProtection++ < 100)
+        {
+            result = this.read();
+        }
+        return result;
     }
     tryWrite(value: string | number): boolean {
       if (this.full()) {
@@ -50,9 +50,9 @@ export class NetscriptPort implements IPort
       return true;
     }
     read(): string | number {
-      let result = this.peek();//ensures consistency
+      const result = this.peek();//ensures consistency
       this.#data.shift();
-	  return result;
+      return result;
     }
     peek(): string | number {
       if (this.empty()) {

@@ -5391,7 +5391,7 @@ export interface NS extends Singularity {
    * Write data to that netscript port.
    * @returns The data popped off the queue if it was full.
    */
-  writePort(port: number, data: string | number): Promise<string | number>;
+  writePort(port: number, data: string | number): Promise<string | number | null>;
   /**
    * Read data from a port.
    * @remarks
