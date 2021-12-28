@@ -6128,7 +6128,7 @@ interface CorporationInfo {
   issuedShares: number;
   /** Price of the shares */
   sharePrice: number;
-  /** State of the corporation, like PRODUCTION or EXPORT */
+  /** State of the corporation. Possible states are START, PURCHASE, PRODUCTION, SALE, EXPORT. */
   state: string;
 }
 
