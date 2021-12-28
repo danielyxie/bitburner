@@ -4,6 +4,7 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { getFirstParentDirectory, isValidDirectoryPath, evaluateDirectoryPath } from "../../Terminal/DirectoryHelpers";
+import * as libarg from "arg";
 
 export function ls(
   terminal: ITerminal,
@@ -12,17 +13,17 @@ export function ls(
   server: BaseServer,
   args: (string | number | boolean)[],
 ): void {
-  const numArgs = args.length;
   function incorrectUsage(): void {
-    terminal.error("Incorrect usage of ls command. Usage: ls [dir] [| grep pattern]");
+    terminal.error("Incorrect usage of ls command. Usage: ls [dir] [-l] [--grep pattern]");
   }
 
-  if (numArgs > 4 || numArgs === 2) {
-    return incorrectUsage();
-  }
+  const runArgs = { "-l": Boolean, "--grep": String };
+  const flags = libarg(runArgs, {
+    permissive: true,
+  });
 
   // Grep
-  let filter = ""; // Grep
+  const filter = flags["--grep"];
 
   // Directory path
   let prefix = terminal.cwd();
@@ -30,16 +31,8 @@ export function ls(
     prefix += "/";
   }
 
-  // If there are 3+ arguments, then the last 3 must be for grep
-  if (numArgs >= 3) {
-    if (args[numArgs - 2] !== "grep" || args[numArgs - 3] !== "|") {
-      return incorrectUsage();
-    }
-    filter = args[numArgs - 1] + "";
-  }
-
-  // If the second argument is not a pipe, then it must be for listing a directory
-  if (numArgs >= 1 && args[0] !== "|") {
+  if (args[0] && String(args[0]).charAt(0) != '-') {
+    // If the first argument is not optional, then it must be for listing a directory
     const newPath = evaluateDirectoryPath(args[0] + "", terminal.cwd());
     prefix = newPath ? newPath : "";
     if (prefix != null) {
@@ -113,9 +106,9 @@ export function ls(
   allMessages.sort();
   folders.sort();
 
-  function postSegments(segments: string[], style?: any): void {
+  function postSegments(flags: any, segments: string[], style?: any): void {
     const maxLength = Math.max(...segments.map((s) => s.length)) + 1;
-    const filesPerRow = Math.floor(80 / maxLength);
+    const filesPerRow = flags["-l"] === true ? 1 : Math.floor(80 / maxLength);
     for (let i = 0; i < segments.length; i++) {
       let row = "";
       for (let col = 0; col < filesPerRow; col++) {
@@ -142,6 +135,6 @@ export function ls(
     { segments: allScripts, style: { color: "yellow", fontStyle: "bold" } },
   ].filter((g) => g.segments.length > 0);
   for (let i = 0; i < groups.length; i++) {
-    postSegments(groups[i].segments, groups[i].style);
+    postSegments(flags, groups[i].segments, groups[i].style);
   }
 }

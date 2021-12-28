@@ -39,6 +39,9 @@ export function runScript(
   const numThreads = !isNaN(threadFlag) && threadFlag > 0 ? threadFlag : 1;
   const args = flags["_"];
 
+  console.log(runArgs)
+  console.log(flags)
+
   // Check if this script is already running
   if (findRunningScript(scriptName, args, server) != null) {
     terminal.error("This script is already running. Cannot run multiple instances");
