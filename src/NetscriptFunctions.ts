@@ -952,7 +952,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return runScriptFromScript("run", scriptServer, scriptname, args, workerScript, threads);
     },
     exec: function (scriptname: any, hostname: any, threads: any = 1, ...args: any[]): any {
-      console.log(`${scriptname} ${hostname} ${threads} ${JSON.stringify(args)}`);
       updateDynamicRam("exec", getRamCost("exec"));
       if (scriptname === undefined || hostname === undefined) {
         throw makeRuntimeErrorMsg("exec", "Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
