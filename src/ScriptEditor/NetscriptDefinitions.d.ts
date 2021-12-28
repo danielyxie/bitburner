@@ -2890,7 +2890,7 @@ export interface Bladeburner {
 }
 
 /**
- * Coding Contact API
+ * Coding Contract API
  * @public
  */
 export interface CodingContract {
