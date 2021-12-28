@@ -25,29 +25,28 @@ export interface IPort {
     /** Remove all data from the port */
     clear(): void;
 }
-export class NetscriptPort implements IPort
-{
+export class NetscriptPort implements IPort {
     #data:any[];
-    constructor()
-    {
+    constructor() {
         this.#data = [];
     }
-    write(value: string | number): string | number | null
-    {
+    write(value: string | number): string | number | null {
         let result = null;
         let runawayProtection = 0;
-        while(!this.tryWrite(value) && runawayProtection++ < 100)
-        {
+        while(!this.tryWrite(value) && runawayProtection++ < 100) {
             result = this.read();
         }
         return result;
     }
     tryWrite(value: string | number): boolean {
-      if (this.full()) {
-        return false;
-      }
-      this.#data.push(value);
-      return true;
+        if (typeof data !== "string" && typeof data !== "number") {
+            throw `Invalid data type ${typeof data}, expected string or number`;
+        }
+        if (this.full()) {
+            return false;
+        }
+        this.#data.push(value);
+        return true;
     }
     read(): string | number {
       const result = this.peek();//ensures consistency
