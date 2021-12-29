@@ -30,5 +30,3 @@ RAM cost: 0 GB
 
 Get a handle to a Netscript Port.
 
-WARNING: Port Handles only work in NetscriptJS (Netscript 2.0). They will not work in Netscript 1.0.
-

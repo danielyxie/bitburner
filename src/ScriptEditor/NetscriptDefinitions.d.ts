@@ -5411,8 +5411,6 @@ export interface NS extends Singularity {
    *
    * Get a handle to a Netscript Port.
    *
-   * WARNING: Port Handles only work in NetscriptJS (Netscript 2.0). They will not work in Netscript 1.0.
-   *
    * @see https://bitburner.readthedocs.io/en/latest/netscript/netscriptmisc.html#netscript-ports
    * @param port - Port number. Must be an integer between 1 and 20.
    * @returns Data in the specified port.
