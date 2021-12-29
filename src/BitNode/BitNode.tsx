@@ -745,7 +745,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.5;
       BitNodeMultipliers.StaneksGiftExtraSize = 2;
       BitNodeMultipliers.GangSoftcap = 0.8;
-      BitNodeMultipliers.CorporationSoftCap = 0.9;
+      BitNodeMultipliers.CorporationSoftCap = 0.7;
       BitNodeMultipliers.WorldDaemonDifficulty = 2;
       break;
     case 10: // Digital Carbon
