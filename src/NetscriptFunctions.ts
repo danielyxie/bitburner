@@ -1821,22 +1821,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     tryWritePort: function (port: any, data: any = ""): any {
       updateDynamicRam("tryWritePort", getRamCost("tryWritePort"));
-      if (!isNaN(port)) {
-        port = Math.round(port);
-        if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
-          throw makeRuntimeErrorMsg(
-            "tryWritePort",
-            `Invalid port: ${port}. Only ports 1-${CONSTANTS.NumNetscriptPorts} are valid.`,
-          );
-        }
-        const iport = NetscriptPorts[port - 1];
-        if (iport == null || !(iport instanceof Object)) {
-          throw makeRuntimeErrorMsg("tryWritePort", `Could not find port: ${port}. This is a bug. Report to dev.`);
-        }
-        return Promise.resolve(iport.tryWrite(data));
-      } else {
-        throw makeRuntimeErrorMsg("tryWritePort", `Invalid argument: ${port}`);
-      }
+	  const iport = helper.getValidPort("tryWritePort", port);
+	  try {
+		iport.tryWrite(data);
+	  } catch(e:any) {
+		throw makeRuntimeErrorMsg("tryWritePort", e.message || e);
+	  }
     },
     readPort: function (port: any): any {
       // Read from port
