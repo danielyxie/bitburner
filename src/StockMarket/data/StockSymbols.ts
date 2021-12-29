@@ -35,7 +35,7 @@ StockSymbols[LocationName.Sector12FoodNStuff] = "FNS";
 
 // Stocks for other companies
 StockSymbols["Sigma Cosmetics"] = "SGC";
-StockSymbols["Joes Guns"] = "JGN";
+StockSymbols[LocationName.Sector12JoesGuns] = "JGN";
 StockSymbols["Catalyst Ventures"] = "CTYS";
 StockSymbols["Microdyne Technologies"] = "MDYN";
 StockSymbols["Titan Laboratories"] = "TITN";
