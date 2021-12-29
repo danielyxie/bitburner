@@ -654,6 +654,8 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
     this.workRepGained *= this.cancelationPenalty();
   }
 
+  const penaltyString = this.cancelationPenalty() === 0.5 ? "half" : "three-quarters";
+
   const company = Companies[this.companyName];
   company.playerReputation += this.workRepGained;
 
@@ -665,12 +667,12 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
       <Money money={this.workMoneyGained} />
       <br />
       <Reputation reputation={this.workRepGained} /> reputation for the company <br />
-      {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
-      {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
-      {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
-      {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
-      {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
-      {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp
+      {this.workHackExpGained > 0  && <>{numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br /></>}
+      {this.workStrExpGained > 0  && <>{numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br /></>}
+      {this.workDefExpGained > 0  && <>{numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br /></>}
+      {this.workDexExpGained > 0  && <>{numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br /></>}
+      {this.workAgiExpGained > 0  && <>{numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br /></>}
+      {this.workChaExpGained > 0  && <>{numeralWrapper.formatExp(this.workChaExpGained)} charisma exp <br /></>}
       <br />
     </>
   );
@@ -680,7 +682,7 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
       <>
         You worked a short shift of {convertTimeMsToTimeElapsedString(this.timeWorked)} <br />
         <br />
-        Since you cancelled your work early, you only gained half of the reputation you earned. <br />
+        Since you cancelled your work early, you only gained {penaltyString} of the reputation you earned. <br />
         <br />
         {content}
       </>

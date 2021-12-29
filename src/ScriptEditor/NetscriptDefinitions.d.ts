@@ -1045,7 +1045,7 @@ export interface TIX {
   getPurchaseCost(sym: string, shares: number, posType: string): number;
 
   /**
-   * Calculate profit of setting stocks.
+   * Calculate profit of selling stocks.
    * @remarks
    * RAM cost: 2 GB
    * Calculates and returns how much you would gain from selling a given number of shares of a stock.
@@ -2890,7 +2890,7 @@ export interface Bladeburner {
 }
 
 /**
- * Coding Contact API
+ * Coding Contract API
  * @public
  */
 export interface CodingContract {
@@ -4690,11 +4690,12 @@ export interface NS extends Singularity {
    * Kills all running scripts on the specified server. This function returns true
    * if any scripts were killed, and false otherwise. In other words, it will return
    * true if there are any scripts running on the target server.
+   * If no host is defined, it will kill all scripts, where the script is running.
    *
    * @param host - IP or hostname of the server on which to kill all scripts.
    * @returns True if any scripts were killed, and false otherwise.
    */
-  killall(host: string): boolean;
+  killall(host?: string): boolean;
 
   /**
    * Terminates the current script immediately.
@@ -5486,8 +5487,6 @@ export interface NS extends Singularity {
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
-   * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in milliseconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getHackTime(host: string): number;
@@ -5502,8 +5501,6 @@ export interface NS extends Singularity {
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
-   * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getGrowTime(host: string): number;
@@ -5518,8 +5515,6 @@ export interface NS extends Singularity {
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
-   * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getWeakenTime(host: string): number;
@@ -6127,7 +6122,7 @@ interface CorporationInfo {
   issuedShares: number;
   /** Price of the shares */
   sharePrice: number;
-  /** State of the corporation, like PRODUCTION or EXPORT */
+  /** State of the corporation. Possible states are START, PURCHASE, PRODUCTION, SALE, EXPORT. */
   state: string;
 }
 

@@ -4,6 +4,7 @@ import { DarkWebItems } from "./DarkWebItems";
 import { Player } from "../Player";
 import { Terminal } from "../Terminal";
 import { SpecialServers } from "../Server/data/SpecialServers";
+import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
 import { DarkWebItem } from "./DarkWebItem";
 
@@ -13,8 +14,8 @@ export function checkIfConnectedToDarkweb(): void {
   if (server !== null && SpecialServers.DarkWeb == server.hostname) {
     Terminal.print(
       "You are now connected to the dark web. From the dark web you can purchase illegal items. " +
-        "Use the 'buy -l' command to display a list of all the items you can buy. Use 'buy [item-name] " +
-        "to purchase an item.",
+        "Use the 'buy -l' command to display a list of all the items you can buy. Use 'buy [item-name]' " +
+        "to purchase an item. Use the 'buy -a' command to purchase unowned all items.",
     );
   }
 }
@@ -86,4 +87,31 @@ export function buyDarkwebItem(itemName: string): void {
   Terminal.print(
     "You have purchased the " + item.program + " program. The new program can be found on your home computer.",
   );
+}
+
+export function buyAllDarkwebItems(): void {
+  const itemsToBuy: DarkWebItem[] = [];
+  let cost = 0;
+
+  for (const key in DarkWebItems) {
+    const item = DarkWebItems[key];
+    if (!Player.hasProgram(item.program)) {
+      itemsToBuy.push(item);
+      cost += item.price;
+    }
+  }
+
+  if (itemsToBuy.length === 0) {
+    Terminal.print("All available programs have been purchased already.");
+    return;
+  }
+
+  if (cost > Player.money) {
+    Terminal.error("Not enough money to purchase remaining programs, " + numeralWrapper.formatMoney(cost) + " required");
+    return;
+  }
+
+  for (const item of itemsToBuy) {
+    buyDarkwebItem(item.program);
+  }
 }

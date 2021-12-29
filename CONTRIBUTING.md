@@ -118,7 +118,7 @@ Inside the root of the repo run
 `npm install` to install all the dependencies
 `npm run start:dev` to launch the game in dev mode.
 
-After that you can open any browser and naviguate to `localhost:8000` and play the game.
+After that you can open any browser and navigate to `localhost:8000` and play the game.
 Saving a file will reload the game automatically.
 
 #### Submitting a Pull Request
