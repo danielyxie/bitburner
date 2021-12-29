@@ -331,7 +331,7 @@ export function refreshTheme(): void {
             border: "1px solid " + Settings.theme.well,
           },
           standardSuccess: {
-            color: Settings.theme.primarylight,
+            color: Settings.theme.successlight,
           },
           standardError: {
             color: Settings.theme.errorlight,
