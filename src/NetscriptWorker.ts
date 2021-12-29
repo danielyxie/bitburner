@@ -228,10 +228,10 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
           };
           int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
         } else {
-		  //If there's a netscript 1 specific version, don't process the netscript 2 specific version
-		  if(ns[Netscript1_MethodPrefix + name] !== undefined) {
-		    continue;
-		  }
+          //If there's a netscript 1 specific version, don't process the netscript 2 specific version
+          if(ns[Netscript1_MethodPrefix + name] !== undefined) {
+            continue;
+          }
           const tempWrapper = function (...args: any[]): any {
             const res = entry(...args);
 
@@ -244,10 +244,10 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
               return res;
             }
           };
-		  if(name.startsWith(Netscript1_MethodPrefix)) 
-		  {
-			  name = name.slice(Netscript1_MethodPrefix.length);
-		  }
+          if(name.startsWith(Netscript1_MethodPrefix)) 
+          {
+            name = name.slice(Netscript1_MethodPrefix.length);
+          }
           int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
         }
       } else {
