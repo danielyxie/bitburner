@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const http = require("http");
-const crypto = require('crypto');
-const log = require('electron-log');
-const Config = require('electron-config');
+const crypto = require("crypto");
+const log = require("electron-log");
+const Config = require("electron-config");
 const config = new Config();
 
 let server;
 let window;
 
-function initialize(win, callback) {
+async function initialize(win) {
   window = win;
   server = http.createServer(async function (req, res) {
     let body = "";
@@ -20,7 +20,7 @@ function initialize(win, callback) {
       const providedToken = req.headers?.authorization?.replace('Bearer ', '') ?? '';
       const isValid = providedToken === getAuthenticationToken();
       if (isValid) {
-        log.log('Valid authentication token');
+        log.debug('Valid authentication token');
       } else {
         log.log('Invalid authentication token');
         res.writeHead(401);
@@ -51,29 +51,52 @@ function initialize(win, callback) {
 
   const autostart = config.get('autostart', false);
   if (autostart) {
-    return enable(callback);
+    try {
+      await enable()
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 
-  if (callback) return callback();
   return Promise.resolve();
 }
 
 
-function enable(callback) {
+function enable() {
   if (isListening()) {
     log.warn('API server already listening');
-    return;
+    return Promise.resolve();
   }
 
   const port = config.get('port', 9990);
   log.log(`Starting http server on port ${port}`);
-  return server.listen(port, "127.0.0.1", callback);
+
+  // https://stackoverflow.com/a/62289870
+  let startFinished = false;
+  return new Promise((resolve, reject) => {
+    server.listen(port, "127.0.0.1", () => {
+      if (!startFinished) {
+        startFinished = true;
+        resolve();
+      }
+    });
+    server.once('error', (err) => {
+      if (!startFinished) {
+        startFinished = true;
+        console.log(
+          'There was an error starting the server in the error listener:',
+          err
+        );
+        reject(err);
+      }
+    });
+  });
 }
 
 function disable() {
   if (!isListening()) {
     log.warn('API server not listening');
-    return;
+    return Promise.resolve();
   }
 
   log.log('Stopping http server');
