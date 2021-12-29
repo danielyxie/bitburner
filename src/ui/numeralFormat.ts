@@ -14,10 +14,13 @@ import "numeral/locales/no";
 import "numeral/locales/pl";
 import "numeral/locales/ru";
 
+import { Settings } from "../Settings/Settings";
+
 /* eslint-disable class-methods-use-this */
 
 const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
 const extraNotations = ["q", "Q", "s", "S", "o", "n"];
+const gigaMultiplier = { standard: 1e9, iec60027_2: 2 ** 30 };
 
 class NumeralFormatter {
   // Default Locale
@@ -110,11 +113,11 @@ class NumeralFormatter {
   }
 
   formatRAM(n: number): string {
-    if (n < 1e3) return this.format(n, "0.00") + "GB";
-    if (n < 1e6) return this.format(n / 1e3, "0.00") + "TB";
-    if (n < 1e9) return this.format(n / 1e6, "0.00") + "PB";
-    if (n < 1e12) return this.format(n / 1e9, "0.00") + "EB";
-    return this.format(n, "0.00") + "GB";
+    if(Settings.UseIEC60027_2)
+    {
+      return this.format(n * gigaMultiplier.iec60027_2, "0.00ib");
+    }
+    return this.format(n * gigaMultiplier.standard, "0.00b");
   }
 
   formatPercentage(n: number, decimalPlaces = 2): string {
