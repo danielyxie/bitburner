@@ -40,7 +40,7 @@ export class NetscriptPort implements IPort {
     }
     tryWrite(value: string | number): boolean {
         if (typeof value !== "string" && typeof value !== "number") {
-            throw `Invalid data type ${typeof value}, expected string or number`;
+            throw new Error(`Invalid data type ${typeof value}, expected string or number`);
         }
         if (this.full()) {
             return false;
