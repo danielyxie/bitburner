@@ -9,6 +9,7 @@ import { ScriptUrl } from "./ScriptUrl";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
+import { computeHash } from "../utils/helpers/computeHash";
 
 let globalModuleSequenceNumber = 0;
 
@@ -40,6 +41,9 @@ export class Script {
   // hostname of server that this script is on.
   server = "";
 
+  // sha256 hash of the code in the Script. Do not access directly.
+  _hash = "";
+
   constructor(fn = "", code = "", server = "", otherScripts: Script[] = []) {
     this.filename = fn;
     this.code = code;
@@ -47,8 +51,10 @@ export class Script {
     this.server = server; // hostname of server this script is on
     this.module = "";
     this.moduleSequenceNumber = ++globalModuleSequenceNumber;
+    this._hash = "";
     if (this.code !== "") {
       this.updateRamUsage(otherScripts);
+      this.rehash();
     }
   }
 
@@ -84,6 +90,24 @@ export class Script {
   markUpdated(): void {
     this.module = "";
     this.moduleSequenceNumber = ++globalModuleSequenceNumber;
+    this.rehash();
+  }
+
+  /**
+   * Force update of the computed hash based on the source code.
+   */
+  rehash(): void {
+    this._hash = computeHash(this.code);
+  }
+
+  /**
+   * If the hash is not computed, computes the hash. Otherwise return the computed hash.
+   * @returns the computed hash of the script
+   */
+  hash(): string {
+    if (!this._hash)
+      this.rehash();
+    return this._hash;
   }
 
   /**
@@ -125,7 +149,12 @@ export class Script {
   // Initializes a Script Object from a JSON save state
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   static fromJSON(value: any): Script {
-    return Generic_fromJSON(Script, value.data);
+    const s = Generic_fromJSON(Script, value.data);
+    // Force the url to blank from the save data. Urls are not valid outside the current browser page load.
+    s.url = "";
+    // Rehash the code to ensure that hash is set properly.
+    s.rehash();
+    return s;
   }
 }
 
