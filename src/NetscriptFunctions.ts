@@ -64,7 +64,7 @@ import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
 import { NetscriptStanek } from "./NetscriptFunctions/Stanek";
-import { NetscriptUserInterface } from './NetscriptFunctions/UserInterface';
+import { NetscriptUserInterface } from "./NetscriptFunctions/UserInterface";
 import { NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
 import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
 import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
@@ -2317,10 +2317,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     ...base,
     ...extra,
   };
-  function getFunctionNames(obj: NS, prefix: string): string[] {
+  function getFunctionNames(obj: any, prefix: string): string[] {
     const functionNames: string[] = [];
     for (const [key, value] of Object.entries(obj)) {
-      if (typeof value == "function") {
+      if (key === "args") {
+        continue;
+      } else if (typeof value == "function") {
         functionNames.push(prefix + key);
       } else if (typeof value == "object") {
         functionNames.push(...getFunctionNames(value, key + "."));

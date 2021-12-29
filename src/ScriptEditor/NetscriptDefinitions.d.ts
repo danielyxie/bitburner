@@ -2890,7 +2890,7 @@ export interface Bladeburner {
 }
 
 /**
- * Coding Contact API
+ * Coding Contract API
  * @public
  */
 export interface CodingContract {
@@ -5487,8 +5487,6 @@ export interface NS extends Singularity {
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
-   * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in milliseconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getHackTime(host: string): number;
@@ -5503,8 +5501,6 @@ export interface NS extends Singularity {
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
-   * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getGrowTime(host: string): number;
@@ -5519,8 +5515,6 @@ export interface NS extends Singularity {
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
-   * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getWeakenTime(host: string): number;

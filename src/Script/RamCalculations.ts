@@ -109,7 +109,6 @@ async function parseOnlyRamCalculate(
         for (const s of otherScripts) {
           if (areImportsEquals(s.filename, fn)) {
             script = s;
-            console.log(`${s.filename} ${fn}`);
             break;
           }
         }

@@ -9,6 +9,7 @@ interface IProgressProps {
   min: number;
   max: number;
   current: number;
+  remaining: number;
   progress: number;
   color?: React.CSSProperties["color"];
 }
@@ -18,14 +19,14 @@ interface IStatsOverviewCellProps {
   color?: React.CSSProperties["color"];
 }
 
-export function StatsProgressBar({ min, max, current, progress, color }: IProgressProps): React.ReactElement {
+export function StatsProgressBar({ min, max, current, remaining, progress, color }: IProgressProps): React.ReactElement {
   const tooltip = (
     <Typography sx={{ textAlign: 'right' }}>
       <strong>Progress:</strong>&nbsp;
-      {numeralWrapper.formatExp(current - min)} / {numeralWrapper.formatExp(max - min)}
+      {numeralWrapper.formatExp(current)} / {numeralWrapper.formatExp(max - min)}
       <br />
       <strong>Remaining:</strong>&nbsp;
-      {numeralWrapper.formatExp(max - current)} ({progress.toFixed(2)}%)
+      {numeralWrapper.formatExp(remaining)} ({progress.toFixed(2)}%)
     </Typography>
   );
 
@@ -58,7 +59,8 @@ export function StatsProgressOverviewCell({ progress: skill, color }: IStatsOver
       <StatsProgressBar
         min={skill.baseExperience}
         max={skill.nextExperience}
-        current={skill.experience}
+        current={skill.currentExperience}
+        remaining={skill.remainingExperience}
         progress={skill.progress}
         color={color}
       />
