@@ -431,7 +431,6 @@ export function Root(props: IProps): React.ReactElement {
             server.scripts,
           );
           if (Settings.SaveGameOnFileSave) saveObject.saveGame();
-          props.router.toTerminal();
           return;
         }
       }
