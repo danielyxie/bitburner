@@ -41,10 +41,11 @@ export function parseAliasDeclaration(dec: string, global = false): boolean {
   if (matches == null || matches.length != 7) {
     return false;
   }
+
   if (global) {
-    addGlobalAlias(matches[1], matches[2]);
+    addGlobalAlias(matches[1], matches[4] || matches[6]);
   } else {
-    addAlias(matches[1], matches[2]);
+    addAlias(matches[1], matches[4] || matches[6]);
   }
   return true;
 }
