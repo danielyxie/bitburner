@@ -2271,7 +2271,11 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   interface Wrapper  {
       [key:string]: any;
   }
-  function addWrapper(obj: NS, func: string): void{
+  /** Adds a wrapper to the NS object to allow methods that return Netscript 2 objects to be used by Netscript 1.
+  Use this if your method returns a proper class with methods, as NS1 doesn't understand these. 
+  This will handle the translation of those classes into the object format NS1 understands, and adds the translator as a Netscript 1 compatibility method.
+  */
+  function addNetscript1Wrapper(obj: NS, func: string): void{
       const funcToWrap = obj[func];
       obj[Netscript1_MethodPrefix + func] = (...params:any[]) : Wrapper =>
       {
@@ -2288,7 +2292,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           return wrapper;
       }
   }
-  addWrapper(base, "getPortHandle");
+  addNetscript1Wrapper(base, "getPortHandle");
 
   // add undocumented functions
   const ns = {

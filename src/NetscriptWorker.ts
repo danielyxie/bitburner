@@ -228,7 +228,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
           };
           int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
         } else {
-          //If there's a netscript 1 specific version, don't process the netscript 2 specific version
+          //If there's a netscript 1 compatibility method, don't process the netscript 2 method
           if(ns[Netscript1_MethodPrefix + name] !== undefined) {
             continue;
           }
@@ -244,6 +244,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
               return res;
             }
           };
+          //This is a netscript compatibility method, so we need to fix the name
           if(name.startsWith(Netscript1_MethodPrefix)) 
           {
             name = name.slice(Netscript1_MethodPrefix.length);
