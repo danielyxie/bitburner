@@ -5,20 +5,24 @@
   "main": "main.js",
   "author": "Daniel Xie & Olivier Gagnon",
   "mac": {
-    "icon": "./public/icons/mac/icon.icns",    
+    "icon": "./public/icons/mac/icon.icns",
     "category": "public.app-category.games"
   },
   "win": {
-    "icon": "./public/icons/png/256x256.png" 
+    "icon": "./public/icons/png/256x256.png"
   },
   "files": [
     "./build/**/*",
     "./dist/**/*",
     "./node_modules/**/*",
-    "./public/**/*",      
+    "./public/**/*",
     "*.js"
   ],
   "directories": {
     "buildResources": "public"
+  },
+  "dependencies": {
+    "electron-config": "^2.0.0",
+    "electron-log": "^4.4.4"
   }
 }

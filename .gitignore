@@ -4,6 +4,7 @@ Changelog.txt
 Netburner.txt
 /doc/build
 /node_modules
+/electron/node_modules
 /dist/*.map
 /test/*.map
 /test/*.bundle.*
