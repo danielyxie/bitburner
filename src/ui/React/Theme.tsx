@@ -21,6 +21,7 @@ declare module "@mui/material/styles" {
       successlight: React.CSSProperties["color"];
       success: React.CSSProperties["color"];
       successdark: React.CSSProperties["color"];
+      white: React.CSSProperties["color"];
     };
   }
   interface ThemeOptions {
@@ -38,6 +39,7 @@ declare module "@mui/material/styles" {
       successlight: React.CSSProperties["color"];
       success: React.CSSProperties["color"];
       successdark: React.CSSProperties["color"];
+      white: React.CSSProperties["color"];
     };
   }
 }
@@ -60,6 +62,7 @@ export function refreshTheme(): void {
       successlight: Settings.theme.successlight,
       success: Settings.theme.success,
       successdark: Settings.theme.successdark,
+      white: Settings.theme.white,
     },
     palette: {
       primary: {
