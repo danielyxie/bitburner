@@ -1821,12 +1821,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     tryWritePort: function (port: any, data: any = ""): any {
       updateDynamicRam("tryWritePort", getRamCost("tryWritePort"));
-	  const iport = helper.getValidPort("tryWritePort", port);
-	  try {
-		iport.tryWrite(data);
-	  } catch(e:any) {
-		throw makeRuntimeErrorMsg("tryWritePort", e.message || e);
-	  }
+	    const iport = helper.getValidPort("tryWritePort", port);
+	    try {
+		    return Promise.resolve(iport.tryWrite(data));
+	    } catch(e:any) {
+		    throw makeRuntimeErrorMsg("tryWritePort", e.message || e);
+	    }
     },
     readPort: function (port: any): any {
       // Read from port
