@@ -52,6 +52,8 @@ export function prestigeWorkerScripts(): void {
   workerScripts.clear();
 }
 
+export const Netscript1_MethodPrefix = "ns1_";
+
 // JS script promises need a little massaging to have the same guarantees as netscript
 // promises. This does said massaging and kicks the script off. It returns a promise
 // that resolves or rejects when the corresponding worker script is done.
@@ -171,7 +173,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
   const interpreterInitialization = function (int: any, scope: any): void {
     //Add the Netscript environment
     const ns = NetscriptFunctions(workerScript);
-    for (const name in ns) {
+    for (let name in ns) {
       const entry = ns[name];
       if (typeof entry === "function") {
         //Async functions need to be wrapped. See JS-Interpreter documentation
@@ -226,6 +228,10 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
           };
           int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
         } else {
+		  //If there's a netscript 1 specific version, don't process the netscript 2 specific version
+		  if(ns[Netscript1_MethodPrefix + name] !== undefined) {
+		    continue;
+		  }
           const tempWrapper = function (...args: any[]): any {
             const res = entry(...args);
 
@@ -238,6 +244,10 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
               return res;
             }
           };
+		  if(name.startsWith(Netscript1_MethodPrefix)) 
+		  {
+			  name = name.slice(Netscript1_MethodPrefix.length);
+		  }
           int.setProperty(scope, name, int.createNativeFunction(tempWrapper));
         }
       } else {

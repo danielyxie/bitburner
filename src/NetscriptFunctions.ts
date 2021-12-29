@@ -45,7 +45,7 @@ import { influenceStockThroughServerHack, influenceStockThroughServerGrow } from
 import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { TextFile, getTextFile, createTextFile } from "./TextFile";
 
-import { NetscriptPorts, runScriptFromScript } from "./NetscriptWorker";
+import { NetscriptPorts, runScriptFromScript, Netscript1_MethodPrefix } from "./NetscriptWorker";
 import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScript } from "./Netscript/WorkerScript";
@@ -2311,6 +2311,38 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     flags: Flags(workerScript.args),
   };
+  function getMethods(obj:any): string[] {
+    const methods = new Set<string>()
+    while (obj !== Object.prototype) {
+        for (const key of Object.getOwnPropertyNames(obj)) {
+            methods.add(key);
+        }
+        obj = Object.getPrototypeOf(obj);
+    }
+    methods.delete("constructor");
+    return [...methods]
+  }
+  interface Wrapper  {
+      [key:string]: any;
+  }
+  function addWrapper(obj: NS, func: string): void{
+      const funcToWrap = obj[func];
+      obj[Netscript1_MethodPrefix + func] = (...params:any[]) : Wrapper =>
+      {
+          const retval = funcToWrap(...params);
+          const wrapper:Wrapper = {};
+          for(const method of getMethods(retval)) {
+              if(typeof retval[method] === "function") { 
+                  wrapper[method] = retval[method].bind(retval);
+              }
+              else {
+                  wrapper[method] = retval[method];
+              }
+          }
+          return wrapper;
+      }
+  }
+  addWrapper(base, "getPortHandle");
 
   // add undocumented functions
   const ns = {
