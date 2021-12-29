@@ -15,6 +15,7 @@ import { Server } from "../../Server/Server";
 
 import { Money } from "../../ui/React/Money";
 import { use } from "../../ui/Context";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 
 type IProps = {
   loc: Location;
@@ -33,7 +34,11 @@ export function UniversityLocation(props: IProps): React.ReactElement {
 
   function take(stat: string): void {
     const loc = props.loc;
-    player.startClass(router, calculateCost(), loc.expMult, stat);
+    if (player.money <= 0) {
+      dialogBoxCreate("You don't have enough money to take a course!");
+    } else {
+      player.startClass(router, calculateCost(), loc.expMult, stat);
+    }
   }
 
   function study(): void {

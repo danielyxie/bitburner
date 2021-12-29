@@ -25,6 +25,10 @@ export function WorkInProgressRoot(): React.ReactElement {
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
+    if (player.money <= 0) {
+      player.finishClass(true);
+      router.toCity();
+    }
   }
 
   useEffect(() => {
