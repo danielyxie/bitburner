@@ -93,6 +93,11 @@ export function refreshTheme(): void {
         main: Settings.theme.warning,
         dark: Settings.theme.warningdark,
       },
+      success: {
+        light: Settings.theme.successlight,
+        main: Settings.theme.success,
+        dark: Settings.theme.successdark,
+      },
       background: {
         default: Settings.theme.backgroundprimary,
         paper: Settings.theme.well,
