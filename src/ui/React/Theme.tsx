@@ -341,6 +341,8 @@ export function refreshTheme(): void {
       },
     },
   });
+
+  document.body.style.backgroundColor = theme.colors.black?.toString() ?? "black";
 }
 refreshTheme();
 
