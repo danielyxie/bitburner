@@ -779,7 +779,7 @@ export const InitStockMetadata: IConstructorParams[] = [
       max: 350,
       min: 200,
     },
-    name: "Joes Guns",
+    name: LocationName.Sector12JoesGuns,
     otlkMag: 1,
     spreadPerc: {
       divisor: 10,
@@ -790,7 +790,7 @@ export const InitStockMetadata: IConstructorParams[] = [
       max: 52e3,
       min: 15e3,
     },
-    symbol: StockSymbols["Joes Guns"],
+    symbol: StockSymbols[LocationName.Sector12JoesGuns],
   },
 
   {
