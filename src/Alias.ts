@@ -38,7 +38,7 @@ export function printAliases(): void {
 export function parseAliasDeclaration(dec: string, global = false): boolean {
   const re = /^([\w|!|%|,|@|-]+)=(("(.+)")|('(.+)'))$/;
   const matches = dec.match(re);
-  if (matches == null || matches.length != 3) {
+  if (matches == null || matches.length != 7) {
     return false;
   }
   if (global) {
