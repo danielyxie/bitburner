@@ -113,6 +113,10 @@ export class Terminal implements ITerminal {
     this.append(new RawOutput(node));
   }
 
+  printLink(link: Link): void {
+    this.append(link);
+  }
+
   error(s: string): void {
     this.append(new Output(s, "error"));
   }

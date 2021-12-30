@@ -31,8 +31,8 @@ export class RawOutput {
 
 export class Link {
   hostname: string;
-  dashes: string;
-  constructor(dashes: string, hostname: string) {
+  dashes: null|string;
+  constructor(dashes: null|string, hostname: string) {
     if (Settings.TimestampsFormat) dashes = "[" + formatTime(Settings.TimestampsFormat) + "] " + dashes;
     this.hostname = hostname;
     this.dashes = dashes;

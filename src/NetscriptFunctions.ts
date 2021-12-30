@@ -766,6 +766,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       Terminal.print(`${str}`);
     },
+    tprintLink: function(hostname: string, dashes = null): void {
+      if (!Player.hasProgram(Programs.AutoLink.name)) {
+        throw makeRuntimeErrorMsg("link", "You do not have the Autolink.exe program!");
+      }
+
+      Terminal.printLink(new Link(dashes, hostname))
+    },
     clearLog: function (): any {
       workerScript.scriptRef.clearLog();
     },
@@ -1074,17 +1081,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       );
 
       return scriptsRunning;
-    },
-    link: function(hostname: string): void {
-      if (!Player.hasProgram(Programs.AutoLink.name)) {
-        throw makeRuntimeErrorMsg("link", "You do not have the Autolink.exe program!");
-      }
-
-      console.log('hi')
-      console.log(JSON.stringify(Terminal.outputHistory, null, 2));
-      // Terminal.append(new Link('', hostname));
-      // console.log(JSON.stringify(Terminal.outputHistory, null, 2));
-      // TerminalEvents.emit();
     },
     exit: function (): any {
       workerScript.running = false; // Prevent workerScript from "finishing execution naturally"

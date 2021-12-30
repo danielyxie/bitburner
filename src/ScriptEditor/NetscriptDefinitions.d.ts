@@ -4243,6 +4243,16 @@ export interface NS extends Singularity {
   tprintf(format: string, ...values: any[]): void;
 
   /**
+   * Prints a link to a server to the Terminal (if Autolink.exe is available)
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @param host - IP or hostname of server to link to.
+   * @param dashes - prefix string before the server link
+   */
+  tprintLink(host: string, dashes?: null|string): void;
+
+  /**
    * Clears the script’s logs.
    * @remarks
    * RAM cost: 0 GB
@@ -4696,18 +4706,6 @@ export interface NS extends Singularity {
    * @returns True if any scripts were killed, and false otherwise.
    */
   killall(host?: string): boolean;
-
-  /**
-   * Create a link to server if Autolink.exe is available
-   * @remarks
-   * RAM cost: 0
-   *
-   * If the user has `Autolink.exe`, then allow a link to the host to be created.
-   *
-   * @param host - IP or hostname of server to link to.
-   * @returns A Link that can be printed to the terminal.
-   */
-  link(host: string): any;
 
   /**
    * Terminates the current script immediately.
