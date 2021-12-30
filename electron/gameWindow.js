@@ -9,6 +9,7 @@ const api = require("./api-server");
 const debug = process.argv.includes("--debug");
 
 async function createWindow(killall) {
+  const setStopProcessHandler = global.app_handlers.stopProcess
   const window = new BrowserWindow({
     show: false,
     backgroundThrottling: false,
@@ -45,7 +46,7 @@ async function createWindow(killall) {
   }
 
   menu.refreshMenu(window);
-  utils.setStopProcessHandler(app, window, true);
+  setStopProcessHandler(app, window, true);
 
   return window;
 }

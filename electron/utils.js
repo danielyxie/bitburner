@@ -5,19 +5,10 @@ const log = require("electron-log");
 const achievements = require("./achievements");
 const api = require("./api-server");
 
-let setStopProcessHandler = () => {
-  // Will be overwritten by the initialize function called in main
-}
-let createWindowHandler = () => {
-  // Will be overwritten by the initialize function called in main
-}
-
-function initialize(stopHandler, createHandler) {
-  setStopProcessHandler = stopHandler;
-  createWindowHandler = createHandler
-}
-
 function reloadAndKill(window, killScripts) {
+  const setStopProcessHandler = global.app_handlers.stopProcess
+  const createWindowHandler = global.app_handlers.createWindow;
+
   log.info('Reloading & Killing all scripts...');
   setStopProcessHandler(app, window, false);
 
@@ -72,7 +63,6 @@ function showErrorBox(title, error) {
 }
 
 module.exports = {
-  initialize, setStopProcessHandler, reloadAndKill, showErrorBox,
+  reloadAndKill, showErrorBox,
   attachUnresponsiveAppHandler, detachUnresponsiveAppHandler,
 }
-
