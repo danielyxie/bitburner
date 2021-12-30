@@ -196,6 +196,7 @@ export class WorkerScript {
   }
 
   log(func: string, txt: () => string): void {
+    debugger;
     if (this.shouldLog(func)) {
       if (func && txt) {
         this.scriptRef.log(`${func}: ${txt()}`);

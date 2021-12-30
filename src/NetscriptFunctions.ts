@@ -21,6 +21,7 @@ import { netscriptCanGrow, netscriptCanHack, netscriptCanWeaken } from "./Hackin
 import { HacknetServer } from "./Hacknet/HacknetServer";
 
 import { Terminal } from "./Terminal";
+import { Output, Link } from "./Terminal/ITerminal";
 
 import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
@@ -88,6 +89,7 @@ import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { SnackbarEvents } from "./ui/React/Snackbar";
 
 import { Flags } from "./NetscriptFunctions/Flags";
+import { TerminalEvents } from "./Terminal/TerminalEvents";
 
 interface NS extends INS {
   [key: string]: any;
@@ -1072,6 +1074,17 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       );
 
       return scriptsRunning;
+    },
+    link: function(hostname: string): void {
+      if (!Player.hasProgram(Programs.AutoLink.name)) {
+        throw makeRuntimeErrorMsg("link", "You do not have the Autolink.exe program!");
+      }
+
+      console.log('hi')
+      console.log(JSON.stringify(Terminal.outputHistory, null, 2));
+      // Terminal.append(new Link('', hostname));
+      // console.log(JSON.stringify(Terminal.outputHistory, null, 2));
+      // TerminalEvents.emit();
     },
     exit: function (): any {
       workerScript.running = false; // Prevent workerScript from "finishing execution naturally"

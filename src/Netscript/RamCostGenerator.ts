@@ -106,6 +106,7 @@ export const RamCosts: IMap<any> = {
   enableLog: 0,
   isLogEnabled: 0,
   getScriptLogs: 0,
+  link: 0,
   nuke: RamCostConstants.ScriptPortProgramRamCost,
   brutessh: RamCostConstants.ScriptPortProgramRamCost,
   ftpcrack: RamCostConstants.ScriptPortProgramRamCost,

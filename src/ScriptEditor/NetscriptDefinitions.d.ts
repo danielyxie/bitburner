@@ -4698,6 +4698,18 @@ export interface NS extends Singularity {
   killall(host?: string): boolean;
 
   /**
+   * Create a link to server if Autolink.exe is available
+   * @remarks
+   * RAM cost: 0
+   *
+   * If the user has `Autolink.exe`, then allow a link to the host to be created.
+   *
+   * @param host - IP or hostname of server to link to.
+   * @returns A Link that can be printed to the terminal.
+   */
+  link(host: string): any;
+
+  /**
    * Terminates the current script immediately.
    * @remarks
    * RAM cost: 0 GB
