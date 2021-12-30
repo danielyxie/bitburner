@@ -28,7 +28,7 @@ The percentage of money you will steal from the target server with a single hack
 
 RAM cost: 1 GB
 
-Returns the percentage of the specified server’s money you will steal with a single hack. This value is returned in percentage form, not decimal (Netscript functions typically return in decimal form, but not this one).
+Returns the percentage of the specified server’s money you will steal with a single hack. This value is returned in percentage form, not decimal (Netscript functions typically return in decimal form, but not this one). If the host has a security of 100 or higher the hack is impossible and this function returns Infinity.
 
 ## Example
 
