@@ -4680,8 +4680,10 @@ export interface NS extends Singularity {
    * @param args - Arguments to identify which script to kill.
    * @returns True if the script is successfully killed, and false otherwise.
    */
-  kill(script: string | number, host: string, ...args: string[]): boolean;
-
+   kill(script: number): boolean;
+   kill(script: string, host: string, ...args: string[]): boolean;
+   kill(script: string | number, host: string, ...args: string[]): boolean;
+ 
   /**
    * Terminate all scripts on a server.
    * @remarks
