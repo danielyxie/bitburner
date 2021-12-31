@@ -1009,7 +1009,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("spawn", () => "Exiting...");
       }
     },
-    kill: function (filename: any, hostname: any, ...scriptArgs: any): any {
+    kill: function (filename: any, hostname?: any, ...scriptArgs: any): any {
       updateDynamicRam("kill", getRamCost("kill"));
 
       let res;
