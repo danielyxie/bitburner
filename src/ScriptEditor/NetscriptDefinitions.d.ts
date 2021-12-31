@@ -4682,7 +4682,6 @@ export interface NS extends Singularity {
    */
    kill(script: number): boolean;
    kill(script: string, host: string, ...args: string[]): boolean;
-   kill(script: string | number, host: string, ...args: string[]): boolean;
  
   /**
    * Terminate all scripts on a server.
