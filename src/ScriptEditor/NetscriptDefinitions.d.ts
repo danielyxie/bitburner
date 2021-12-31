@@ -5545,7 +5545,8 @@ export interface NS extends Singularity {
    * @param args - Arguments that the script is running with.
    * @returns Amount of income the specified script generates while online.
    */
-  getScriptIncome(script: string, host: string, ...args: string[]): number | [number, number];
+  getScriptIncome(): [number, number];
+  getScriptIncome(script: string, host: string, ...args: string[]): number;
 
   /**
    * Get the exp gain of a script.
@@ -5564,6 +5565,7 @@ export interface NS extends Singularity {
    * @param args - Arguments that the script is running with.
    * @returns Amount of hacking experience the specified script generates while online.
    */
+  getScriptExpGain(): number;
   getScriptExpGain(script: string, host: string, ...args: string[]): number;
 
   /**
