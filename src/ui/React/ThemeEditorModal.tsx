@@ -46,6 +46,7 @@ function ColorEditor({ name, onColorChange, color, defaultColor }: IColorEditorP
                 deferred
                 value={color}
                 onChange={(newColor: Color) => onColorChange(name, "#" + newColor.hex)}
+                disableAlpha
               />
             </>
           ),
