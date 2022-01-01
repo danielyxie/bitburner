@@ -120,6 +120,15 @@ export function Root(props: IProps): React.ReactElement {
     vim: props.vim || Settings.MonacoVim,
   });
 
+  // Prevent Crash if script is open on deleted server
+  openScripts = openScripts.filter((script) => {
+    return GetServer(script.hostname) !== null;
+  })
+  if (currentScript && (GetServer(currentScript.hostname) === null)) {
+    currentScript = openScripts[0];
+  }
+
+
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
