@@ -126,6 +126,7 @@ export function Root(props: IProps): React.ReactElement {
   })
   if (currentScript && (GetServer(currentScript.hostname) === null)) {
     currentScript = openScripts[0];
+    if (currentScript === undefined) currentScript = null;
   }
 
 
