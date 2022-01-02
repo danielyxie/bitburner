@@ -44,7 +44,7 @@ export function resolveNetscriptRequestedThreads(
       `Invalid thread count passed to ${functionName}: ${requestedThreads}. Threads must be a positive number.`,
     );
   }
-  if (requestedThreads > threads) {
+  if (requestedThreadsAsInt > threads) {
     throw makeRuntimeRejectMsg(
       workerScript,
       `Too many threads requested by ${functionName}. Requested: ${requestedThreads}. Has: ${threads}.`,
