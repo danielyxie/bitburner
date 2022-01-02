@@ -178,7 +178,12 @@ export function Root(props: IProps): React.ReactElement {
             save();
           });
           MonacoVim.VimMode.Vim.defineEx("quit", "q", function () {
+            props.router.toTerminal();
+          });
+          // "wqriteandquit" is not a typo, prefix must be found in full string
+          MonacoVim.VimMode.Vim.defineEx("wqriteandquit", "wq", function () {
             save();
+            props.router.toTerminal();
           });
           editor.focus();
         });
