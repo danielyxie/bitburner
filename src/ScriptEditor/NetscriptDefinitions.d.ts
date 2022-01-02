@@ -5155,6 +5155,7 @@ export interface NS extends Singularity {
    *
    * @returns info about a running script
    */
+  getRunningScript(): RunningScript;
   getRunningScript(filename: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
 
   /**
