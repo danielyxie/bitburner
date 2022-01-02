@@ -1,6 +1,6 @@
 /* eslint-disable no-process-exit */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { app, BrowserWindow } = require("electron");
+const { app, dialog, BrowserWindow } = require("electron");
 const log = require("electron-log");
 const greenworks = require("./greenworks");
 const api = require("./api-server");
@@ -33,6 +33,18 @@ function setStopProcessHandler(app, window, enabled) {
     // Shutdown the http server
     api.disable();
 
+    // Because of a steam limitation, if the player has launched an external browser,
+    // steam will keep displaying the game as "Running" in their UI as long as the browser is up.
+    // So we'll alert the player to close their browser.
+    if (global.app_playerOpenedExternalLink) {
+      await dialog.showMessageBox({
+        title: 'Bitburner',
+        message: 'You may have to close your browser to properly exit the game.',
+        detail: 'Steam will keep tracking Bitburner as "Running" if any process started within the game is still running.' +
+          ' This includes launching an external link, which opens up your browser.',
+        type: 'warning', buttons: ['OK']
+      });
+    }
     // We'll try to execute javascript on the page to see if we're stuck
     let canRunJS = false;
     window.webContents.executeJavaScript('window.stop(); document.close()', true)

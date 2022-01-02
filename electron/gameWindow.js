@@ -32,6 +32,8 @@ async function createWindow(killall) {
     // and open every other protocols on the browser
     e.preventDefault();
     shell.openExternal(url);
+
+    global.app_playerOpenedExternalLink = true;
   });
   window.webContents.backgroundThrottling = false;
 
