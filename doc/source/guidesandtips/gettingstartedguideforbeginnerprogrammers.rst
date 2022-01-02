@@ -310,7 +310,7 @@ Here's the sequence of |Terminal| commands I used in order to achieve this::
     $ run NUKE.exe
     $ run early-hack-template.script -t 6
     $ home
-    $ connect hong-fang-tea
+    $ connect harakiri-sushi
     $ connect nectar-net
     $ run NUKE.exe
     $ run early-hack-template.script -t 6
