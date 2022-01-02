@@ -767,7 +767,7 @@ export function Root(props: IProps): React.ReactElement {
           <Typography color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
             {ram}
           </Typography>
-          <Button onClick={save}>Save All (Ctrl/Cmd + s)</Button>
+          <Button onClick={save}>Save (Ctrl/Cmd + s)</Button>
           <Button onClick={props.router.toTerminal}>Close (Ctrl/Cmd + b)</Button>
           <Typography sx={{ mx: 1 }}>
             {" "}
