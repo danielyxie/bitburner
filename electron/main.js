@@ -6,7 +6,6 @@ const greenworks = require("./greenworks");
 const api = require("./api-server");
 const gameWindow = require("./gameWindow");
 const achievements = require("./achievements");
-const utils = require("./utils");
 
 log.catchErrors();
 log.info(`Started app: ${JSON.stringify(process.argv)}`);
@@ -48,7 +47,7 @@ function setStopProcessHandler(app, window, enabled) {
       if (!canRunJS) {
         // We're stuck, let's crash the process
         log.warn('Forcefully crashing the renderer process');
-        gameWindow.webContents.forcefullyCrashRenderer();
+        window.webContents.forcefullyCrashRenderer();
       }
 
       log.debug('Destroying the window');
@@ -84,10 +83,12 @@ function startWindow(noScript) {
   gameWindow.createWindow(noScript);
 }
 
-utils.initialize(setStopProcessHandler, startWindow);
+global.app_handlers = {
+  stopProcess: setStopProcessHandler,
+  createWindow: startWindow,
+}
 
-app.whenReady().then(async () => {
+app.whenReady().then(() => {
   log.info('Application is ready!');
-  utils.initialize(setStopProcessHandler, startWindow);
-  startWindow(process.argv.includes("--no-scripts"))
+  startWindow(process.argv.includes("--no-scripts"));
 });
