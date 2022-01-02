@@ -1767,7 +1767,7 @@ export interface Singularity {
    *
    * This function returns the number of milliseconds it takes to attempt the 
    * specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, 
-   * so running `commitCrime('rob store')` will return 60000).
+   * so running `commitCrime('rob store')` will return 60,000).
    *
    * Warning: I do not recommend using the time returned from this function to try
    * and schedule your crime attempts. Instead, I would use the isBusy Singularity
