@@ -5290,7 +5290,7 @@ export interface NS extends Singularity {
    * @param data - Data to write.
    * @param mode - Defines the write mode. Only valid when writing to text files.
    */
-  write(handle: string, data?: string[] | number, mode?: "w" | "a"): Promise<void>;
+  write(handle: string, data?: string[] | number | string, mode?: "w" | "a"): Promise<void>;
 
   /**
    * Attempt to write to a port.
