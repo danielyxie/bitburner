@@ -1925,7 +1925,7 @@ function initAugmentations(): void {
     repCost: 7.5e3,
     moneyCost: 3e7,
     info:
-      "A tiny chip that sits behind the retinae. This implant lets the" + "user visually detect infrared radiation.",
+      "A tiny chip that sits behind the retinae. This implant lets the user visually detect infrared radiation.",
     crime_success_mult: 1.25,
     crime_money_mult: 1.1,
     dexterity_mult: 1.1,
