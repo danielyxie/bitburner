@@ -176,7 +176,7 @@ export function InfoAndPurchases(props: IProps): React.ReactElement {
     <>
       <Typography>Welcome to the World Stock Exchange (WSE)!</Typography>
       <Link href={documentationLink} target={"_blank"}>
-        Investopedia
+        <Typography>Investopedia</Typography>
       </Link>
       <br />
       <PurchaseWseAccountButton {...props} />
