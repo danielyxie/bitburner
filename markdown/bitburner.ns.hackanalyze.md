@@ -4,7 +4,7 @@
 
 ## NS.hackAnalyze() method
 
-Get the percent of money stolen with a single thread.
+Get the part of money stolen with a single thread.
 
 <b>Signature:</b>
 
@@ -22,13 +22,13 @@ hackAnalyze(host: string): number;
 
 number
 
-The percentage of money you will steal from the target server with a single hack.
+The part of money you will steal from the target server with a single thread hack.
 
 ## Remarks
 
 RAM cost: 1 GB
 
-Returns the percentage of the specified server’s money you will steal with a single hack. This value is returned in percentage form, not decimal (Netscript functions typically return in decimal form, but not this one).
+Returns the part of the specified server’s money you will steal with a single thread hack.
 
 ## Example
 
@@ -36,6 +36,6 @@ Returns the percentage of the specified server’s money you will steal with a s
 ```ts
 //For example, assume the following returns 0.01:
 hackAnalyze("foodnstuff");
-//This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.
+//This means that if hack the foodnstuff server using a single thread, then you will steal 1%, or 0.01 of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.
 ```
 
