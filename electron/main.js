@@ -1,11 +1,12 @@
 /* eslint-disable no-process-exit */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { app, dialog } = require("electron");
+const { app, dialog, BrowserWindow } = require("electron");
 const log = require("electron-log");
 const greenworks = require("./greenworks");
 const api = require("./api-server");
 const gameWindow = require("./gameWindow");
 const achievements = require("./achievements");
+const utils = require("./utils");
 
 log.catchErrors();
 log.info(`Started app: ${JSON.stringify(process.argv)}`);
@@ -100,7 +101,16 @@ global.app_handlers = {
   createWindow: startWindow,
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   log.info('Application is ready!');
-  startWindow(process.argv.includes("--no-scripts"));
+
+  if (process.argv.includes("--export-save")) {
+    const window = new BrowserWindow({ show: false });
+    await window.loadFile("export.html", false);
+    window.show();
+    setStopProcessHandler(app, window, true);
+    await utils.exportSave(window);
+  } else {
+    startWindow(process.argv.includes("--no-scripts"));
+  }
 });

@@ -113,6 +113,11 @@ interface IDefaultSettings {
    * Theme colors
    */
   theme: ITheme;
+  
+  /*
+   * Use GiB instead of GB
+   */
+  UseIEC60027_2: boolean;
 }
 
 /**
@@ -160,6 +165,7 @@ export const defaultSettings: IDefaultSettings = {
   SuppressBladeburnerPopup: false,
   SuppressTIXPopup: false,
   SuppressSavedGameToast: false,
+  UseIEC60027_2: false,
 
   theme: defaultTheme,
 };
@@ -192,6 +198,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,
   SuppressTIXPopup: defaultSettings.SuppressTIXPopup,
   SuppressSavedGameToast: defaultSettings.SuppressSavedGameToast,
+  UseIEC60027_2: defaultSettings.UseIEC60027_2,
   MonacoTheme: "monokai",
   MonacoInsertSpaces: false,
   MonacoFontSize: 20,

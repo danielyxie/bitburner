@@ -108,30 +108,21 @@ function WarehouseRoot(props: IProps): React.ReactElement {
     }
   }
 
-  let breakdown = <></>;
+  const breakdownItems: string[] = [];
   for (const matName in props.warehouse.materials) {
     const mat = props.warehouse.materials[matName];
     if (!MaterialSizes.hasOwnProperty(matName)) continue;
     if (mat.qty === 0) continue;
-    breakdown = (
-      <>
-        {breakdown}
-        {matName}: {numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0")}
-        <br />
-      </>
-    );
+    breakdownItems.push(`${matName}: ${numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0")}`);
   }
 
   for (const prodName in division.products) {
     const prod = division.products[prodName];
     if (prod === undefined) continue;
-    breakdown = (
-      <>
-        {breakdown}
-        {prodName}: {numeralWrapper.format(prod.data[props.warehouse.loc][0] * prod.siz, "0,0.0")}
-      </>
-    );
+    breakdownItems.push(`${prodName}: ${numeralWrapper.format(prod.data[props.warehouse.loc][0] * prod.siz, "0,0.0")}`);
   }
+
+  const breakdown = <>{breakdownItems.join('<br />')}</>
 
   return (
     <Paper>
