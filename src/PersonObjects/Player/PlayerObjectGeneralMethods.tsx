@@ -1690,6 +1690,11 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
     return false;
   }
 
+  // Check if this company has the position
+  if (!company.hasPosition(pos)) {
+    return false;
+  }
+
   while (true) {
     const newPos = getNextCompanyPositionHelper(pos);
     if (newPos == null) {
@@ -1863,9 +1868,14 @@ export function applyForAgentJob(this: IPlayer, sing = false): boolean {
 
 export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[1]])) {
+  const position = posNames.MiscCompanyPositions[1];
+  // Check if this company has the position
+  if (!company.hasPosition(position)) {
+    return false;
+  }
+  if (this.isQualified(company, CompanyPositions[position])) {
     this.companyName = company.name;
-    this.jobs[company.name] = posNames.MiscCompanyPositions[1];
+    this.jobs[company.name] = position;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed at " + this.location);
     }
@@ -1882,8 +1892,13 @@ export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
 
 export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
-    this.jobs[company.name] = posNames.PartTimeCompanyPositions[1];
+  const position = posNames.PartTimeCompanyPositions[1];
+  // Check if this company has the position
+  if (!company.hasPosition(position)) {
+    return false;
+  }
+  if (this.isQualified(company, CompanyPositions[position])) {
+    this.jobs[company.name] = position;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed part-time at " + this.location);
     }
@@ -1900,9 +1915,14 @@ export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolea
 
 export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[0]])) {
+  const position = posNames.MiscCompanyPositions[0];
+  // Check if this company has the position
+  if (!company.hasPosition(position)) {
+    return false;
+  }
+  if (this.isQualified(company, CompanyPositions[position])) {
     this.companyName = company.name;
-    this.jobs[company.name] = posNames.MiscCompanyPositions[0];
+    this.jobs[company.name] = position;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.location);
     }
@@ -1917,9 +1937,14 @@ export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
 
 export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[0]])) {
+  const position = posNames.PartTimeCompanyPositions[0];
+  // Check if this company has the position
+  if (!company.hasPosition(position)) {
+    return false;
+  }
+  if (this.isQualified(company, CompanyPositions[position])) {
     this.companyName = company.name;
-    this.jobs[company.name] = posNames.PartTimeCompanyPositions[0];
+    this.jobs[company.name] = position;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.location);
     }
