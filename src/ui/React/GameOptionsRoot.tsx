@@ -85,6 +85,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [enableBashHotkeys, setEnableBashHotkeys] = useState(Settings.EnableBashHotkeys);
   const [timestampFormat, setTimestampFormat] = useState(Settings.TimestampsFormat);
   const [saveGameOnFileSave, setSaveGameOnFileSave] = useState(Settings.SaveGameOnFileSave);
+  const [useIEC60027_2, setUseIEC60027_2] = useState(Settings.UseIEC60027_2);
 
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
@@ -162,6 +163,10 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handleDisableASCIIArtChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setDisableASCIIArt(event.target.checked);
     Settings.DisableASCIIArt = event.target.checked;
+  }
+  function handleUseIEC60027_2Change(event: React.ChangeEvent<HTMLInputElement>): void {
+    setUseIEC60027_2(event.target.checked);
+    Settings.UseIEC60027_2 = event.target.checked;
   }
 
   function handleDisableTextEffectsChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -574,6 +579,16 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                     }
                   >
                     <Typography>Enable bash hotkeys</Typography>
+                  </Tooltip>
+                }
+              />
+            </ListItem>
+            <ListItem>
+              <FormControlLabel
+                control={<Switch checked={useIEC60027_2} onChange={handleUseIEC60027_2Change} />}
+                label={
+                  <Tooltip title={<Typography>If this is set all references to memory will use GiB instead of GB, in accordance with IEC 60027-2.</Typography>}>
+                    <Typography>Use GiB instead of GB</Typography>
                   </Tooltip>
                 }
               />
