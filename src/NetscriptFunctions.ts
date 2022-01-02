@@ -1009,7 +1009,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("spawn", () => "Exiting...");
       }
     },
-    kill: function (filename: any, hostname: any, ...scriptArgs: any): any {
+    kill: function (filename: any, hostname?: any, ...scriptArgs: any): any {
       updateDynamicRam("kill", getRamCost("kill"));
 
       let res;
@@ -2025,7 +2025,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculateWeakenTime(server, Player) * 1000;
     },
-    getScriptIncome: function (scriptname: any, hostname: any, ...args: any[]): any {
+    getScriptIncome: function (scriptname?: any, hostname?: any, ...args: any[]): any {
       updateDynamicRam("getScriptIncome", getRamCost("getScriptIncome"));
       if (arguments.length === 0) {
         const res = [];
@@ -2054,7 +2054,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
       }
     },
-    getScriptExpGain: function (scriptname: any, hostname: any, ...args: any[]): any {
+    getScriptExpGain: function (scriptname?: any, hostname?: any, ...args: any[]): any {
       updateDynamicRam("getScriptExpGain", getRamCost("getScriptExpGain"));
       if (arguments.length === 0) {
         let total = 0;
