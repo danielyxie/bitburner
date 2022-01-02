@@ -32,10 +32,10 @@ StockSymbols[LocationName.VolhavenCompuTek] = "CTK";
 StockSymbols[LocationName.AevumNetLinkTechnologies] = "NTLK";
 StockSymbols[LocationName.IshimaOmegaSoftware] = "OMGA";
 StockSymbols[LocationName.Sector12FoodNStuff] = "FNS";
+StockSymbols[LocationName.Sector12JoesGuns] = "JGN";
 
 // Stocks for other companies
 StockSymbols["Sigma Cosmetics"] = "SGC";
-StockSymbols["Joes Guns"] = "JGN";
 StockSymbols["Catalyst Ventures"] = "CTYS";
 StockSymbols["Microdyne Technologies"] = "MDYN";
 StockSymbols["Titan Laboratories"] = "TITN";
