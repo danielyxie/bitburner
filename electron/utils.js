@@ -62,7 +62,38 @@ function showErrorBox(title, error) {
   );
 }
 
+function exportSaveFromIndexedDb() {
+  return new Promise((resolve) => {
+    const dbRequest = indexedDB.open("bitburnerSave");
+    dbRequest.onsuccess = () => {
+      const db = dbRequest.result;
+      const transaction = db.transaction(['savestring'], "readonly");
+      const store = transaction.objectStore('savestring');
+      const request = store.get('save');
+      request.onsuccess = () => {
+        const file = new Blob([request.result], {type: 'text/plain'});
+        const a = document.createElement("a");
+        const url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = 'save.json';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () {
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+          resolve();
+        }, 0);
+      }
+    }
+  });
+}
+
+async function exportSave(window) {
+  await window.webContents
+    .executeJavaScript(`${exportSaveFromIndexedDb.toString()}; exportSaveFromIndexedDb();`, true);
+}
+
 module.exports = {
-  reloadAndKill, showErrorBox,
+  reloadAndKill, showErrorBox, exportSave,
   attachUnresponsiveAppHandler, detachUnresponsiveAppHandler,
 }
