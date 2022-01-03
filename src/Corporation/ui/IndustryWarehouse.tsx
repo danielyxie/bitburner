@@ -108,26 +108,32 @@ function WarehouseRoot(props: IProps): React.ReactElement {
     }
   }
 
-  const breakdownItems: string[] = [];
+  const breakdownItems: JSX.Element[] = [];
   for (const matName in props.warehouse.materials) {
     const mat = props.warehouse.materials[matName];
     if (!MaterialSizes.hasOwnProperty(matName)) continue;
     if (mat.qty === 0) continue;
-    breakdownItems.push(`${matName}: ${numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0")}`);
+    breakdownItems.push(<>{matName}: {numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0")}</>);
   }
 
   for (const prodName in division.products) {
     const prod = division.products[prodName];
     if (prod === undefined) continue;
-    breakdownItems.push(`${prodName}: ${numeralWrapper.format(prod.data[props.warehouse.loc][0] * prod.siz, "0,0.0")}`);
+    breakdownItems.push(<>{prodName}: {numeralWrapper.format(prod.data[props.warehouse.loc][0] * prod.siz, "0,0.0")}</>);
   }
 
-  const breakdown = <>{breakdownItems.join('<br />')}</>
+  let breakdown;
+  if (breakdownItems && breakdownItems.length > 0) {
+    breakdown = breakdownItems.reduce(
+      (previous: JSX.Element, current: JSX.Element): JSX.Element => previous && <>{previous}<br />{current}</> || <>{current}</>);
+  } else {
+    breakdown = <>No items in storage.</>
+  }
 
   return (
     <Paper>
       <Box display="flex" alignItems="center">
-        <Tooltip title={props.warehouse.sizeUsed !== 0 ? <Typography>{breakdown}</Typography> : ""}>
+        <Tooltip title={props.warehouse.sizeUsed !== 0 ? <Typography><>{breakdown}</></Typography> : ""}>
           <Typography color={props.warehouse.sizeUsed >= props.warehouse.size ? "error" : "primary"}>
             Storage: {numeralWrapper.formatBigNumber(props.warehouse.sizeUsed)} /{" "}
             {numeralWrapper.formatBigNumber(props.warehouse.size)}
