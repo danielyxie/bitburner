@@ -1,3 +1,10 @@
+/**
+ * Uses the acorn.js library to parse a script's code into an AST and
+ * recursively walk through that AST to replace import urls with blobs
+ */
+import * as walk from "acorn-walk";
+import { parse } from "acorn";
+
 import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { ScriptUrl } from "./Script/ScriptUrl";
 import { WorkerScript } from "./Netscript/WorkerScript";
@@ -125,32 +132,51 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
     // import {foo} from "blob://<uuid>"
     //
     // Where the blob URL contains the script content.
-    let transformedCode = script.code.replace(
-      /((?:from|import)\s+(?:'|"))(?:\.\/)?([^'"]+)('|")/g,
-      (unmodified, prefix, filename, suffix) => {
-        const isAllowedImport = scripts.some((s) => areImportsEquals(s.filename, filename));
-        if (!isAllowedImport) return unmodified;
 
-        // Find the corresponding script.
-        const [importedScript] = scripts.filter((s) => areImportsEquals(s.filename, filename));
+    // Parse the code into an ast tree
+    const ast: any = parse(script.code, { sourceType: "module", ecmaVersion: "latest", ranges: true });
 
-        // Check to see if the urls for this script are stored in the cache by the hash value.
-        let urls = ImportCache.get(importedScript.hash());
-        // If we don't have it in the cache, then we need to generate the urls for it.
-        if (!urls) {
-          // Try to get a URL for the requested script and its dependencies.
-          urls = _getScriptUrls(importedScript, scripts, seen);
-        }
+    const importNodes: Array<any> = [];
+    // Walk the nodes of this tree and find any import declaration statements.
+    walk.simple(ast, {
+      ImportDeclaration(node: any) {
+        // Push this import onto the stack to replace
+        importNodes.push({
+          filename: node.source.value,
+          start: node.source.range[0] + 1,
+          end: node.source.range[1] - 1
+        });
+      }
+    });
+    // Sort the nodes from last start index to first. This replaces the last import with a blob first,
+    // preventing the ranges for other imports from being shifted.
+    importNodes.sort((a, b) => b.start - a.start);
+    let transformedCode = script.code;
+    // Loop through each node and replace the script name with a blob url.
+    for (const node of importNodes) {
+      const filename = node.filename.startsWith("./") ? node.filename.substring(2) : node.filename;
 
-        // The top url in the stack is the replacement import file for this script.
-        urlStack.push(...urls);
-        const blob = urls[urls.length - 1].url;
-        ImportCache.store(importedScript.hash(), urls);
+      // Find the corresponding script.
+      const matchingScripts = scripts.filter((s) => areImportsEquals(s.filename, filename));
+      if (matchingScripts.length === 0) continue;
 
-        // Replace the blob inside the import statement.
-        return [prefix, blob, suffix].join("");
-      },
-    );
+      const [importedScript] = matchingScripts;
+      // Check to see if the urls for this script are stored in the cache by the hash value.
+      let urls = ImportCache.get(importedScript.hash());
+      // If we don't have it in the cache, then we need to generate the urls for it.
+      if (!urls) {
+        // Try to get a URL for the requested script and its dependencies.
+        urls = _getScriptUrls(importedScript, scripts, seen);
+      }
+
+      // The top url in the stack is the replacement import file for this script.
+      urlStack.push(...urls);
+      const blob = urls[urls.length - 1].url;
+      ImportCache.store(importedScript.hash(), urls);
+
+      // Replace the blob inside the import statement.
+      transformedCode = transformedCode.substring(0, node.start) + blob + transformedCode.substring(node.end);
+    }
 
     // We automatically define a print function() in the NetscriptJS module so that
     // accidental calls to window.print() do not bring up the "print screen" dialog
