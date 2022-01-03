@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { Menu, clipboard } = require("electron");
+const { Menu, clipboard, dialog } = require("electron");
 const log = require("electron-log");
 const api = require("./api-server");
 const utils = require("./utils");
@@ -54,11 +54,20 @@ function getMenu(window) {
         {
           label: api.isListening() ? 'Disable Server' : 'Enable Server',
           click: (async () => {
+            let success = false;
             try {
               await api.toggleServer();
+              success = true;
             } catch (error) {
               log.error(error);
               utils.showErrorBox('Error Toggling Server', error);
+            }
+            if (success && api.isListening()) {
+              utils.writeToast(window, "Started API Server", "success");
+            } else if (success && !api.isListening()) {
+              utils.writeToast(window, "Stopped API Server", "success");
+            } else {
+              utils.writeToast(window, 'Error Toggling Server', "error");
             }
             refreshMenu(window);
           })
@@ -67,6 +76,11 @@ function getMenu(window) {
           label: api.isAutostart() ? 'Disable Autostart' : 'Enable Autostart',
           click: (async () => {
             api.toggleAutostart();
+            if (api.isAutostart()) {
+              utils.writeToast(window, "Enabled API Server Autostart", "success");
+            } else {
+              utils.writeToast(window, "Disabled API Server Autostart", "success");
+            }
             refreshMenu(window);
           })
         },
@@ -76,8 +90,33 @@ function getMenu(window) {
             const token = api.getAuthenticationToken();
             log.log('Wrote authentication token to clipboard');
             clipboard.writeText(token);
+            utils.writeToast(window, "Copied Authentication Token to Clipboard", "info");
           })
         },
+        {
+          type: 'separator',
+        },
+        {
+          label: 'Information',
+          click: () => {
+            dialog.showMessageBox({
+              type: 'info',
+              title: 'Bitburner > API Server Information',
+              message: 'The API Server is used to write script files to your in-game home.',
+              detail: 'There is an official Visual Studio Code extension that makes use of that feature.\n\n' +
+                'It allows you to write your script file in an external IDE and have them pushed over to the game automatically.\n' +
+                'If you want more information, head over to: https://github.com/bitburner-official/bitburner-vscode.',
+                buttons: ['Dismiss', 'Open Extension Link (GitHub)'],
+                defaultId: 0,
+                cancelId: 0,
+                noLink: true,
+            }).then(({response}) => {
+              if (response === 1) {
+                utils.openExternal('https://github.com/bitburner-official/bitburner-vscode');
+              }
+            });
+          }
+        }
       ]
     },
     {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { app, BrowserWindow, shell } = require("electron");
+const { app, BrowserWindow } = require("electron");
 const log = require("electron-log");
 const utils = require("./utils");
 const achievements = require("./achievements");
@@ -31,9 +31,7 @@ async function createWindow(killall) {
 
     // and open every other protocols on the browser
     e.preventDefault();
-    shell.openExternal(url);
-
-    global.app_playerOpenedExternalLink = true;
+    utils.openExternal(url);
   });
   window.webContents.backgroundThrottling = false;
 
