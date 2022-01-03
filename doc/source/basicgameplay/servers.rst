@@ -13,7 +13,8 @@ Server RAM
 Perhaps the most important property of a server to make note of is its RAM,
 which refers to how much memory is available on that machine. RAM is
 important because it is required to run Scripts. More RAM allows
-the user to run more powerful and complicated scripts.
+the user to run more powerful and complicated scripts as well as executing
+a script with :ref:`more threads <gameplay_scripts_multithreadingscripts>`.
 
 The `free`, `scan-analyze`, and `analyze` Terminal commands
 can be used to check how much RAM a server has.
