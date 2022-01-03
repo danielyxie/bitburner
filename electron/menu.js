@@ -54,11 +54,20 @@ function getMenu(window) {
         {
           label: api.isListening() ? 'Disable Server' : 'Enable Server',
           click: (async () => {
+            let success = false;
             try {
               await api.toggleServer();
+              success = true;
             } catch (error) {
               log.error(error);
               utils.showErrorBox('Error Toggling Server', error);
+            }
+            if (success && api.isListening()) {
+              utils.writeToast(window, "Started API Server", "success");
+            } else if (success && !api.isListening()) {
+              utils.writeToast(window, "Stopped API Server", "success");
+            } else {
+              utils.writeToast(window, 'Error Toggling Server', "error");
             }
             refreshMenu(window);
           })
@@ -67,6 +76,11 @@ function getMenu(window) {
           label: api.isAutostart() ? 'Disable Autostart' : 'Enable Autostart',
           click: (async () => {
             api.toggleAutostart();
+            if (api.isAutostart()) {
+              utils.writeToast(window, "Enabled API Server Autostart", "success");
+            } else {
+              utils.writeToast(window, "Disabled API Server Autostart", "success");
+            }
             refreshMenu(window);
           })
         },
@@ -76,6 +90,7 @@ function getMenu(window) {
             const token = api.getAuthenticationToken();
             log.log('Wrote authentication token to clipboard');
             clipboard.writeText(token);
+            utils.writeToast(window, "Copied Authentication Token to Clipboard", "info");
           })
         },
         {
