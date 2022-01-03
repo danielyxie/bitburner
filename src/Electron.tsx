@@ -417,10 +417,14 @@ function calculateAchievements(): void {
 }
 
 export function initElectron(): void {
-  setAchievements([]);
-  initWebserver();
-  setInterval(calculateAchievements, 5000);
-  initAppNotifier();
+  const userAgent = navigator.userAgent.toLowerCase();
+  if (userAgent.indexOf(' electron/') > -1) {
+    // Electron-specific code
+    setAchievements([]);
+    initWebserver();
+    setInterval(calculateAchievements, 5000);
+    initAppNotifier();
+  }
 }
 
 function initWebserver(): void {
