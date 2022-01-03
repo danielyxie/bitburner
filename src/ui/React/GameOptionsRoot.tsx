@@ -221,13 +221,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
       }
       const contents = result;
 
-      // https://stackoverflow.com/a/35002237
-      const base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
-      if (!base64regex.test(contents)) {
-        SnackbarEvents.emit("Save game was not a base64 string", "error", 5000);
-        return;
-      }
-
       let newSave;
       try {
         newSave = window.atob(contents);
@@ -237,7 +230,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
       }
 
       if (!newSave || newSave === '') {
-        SnackbarEvents.emit("Save game had not content", "error", 5000);
+        SnackbarEvents.emit("Save game had not content or was not base64 encoded", "error", 5000);
         return;
       }
 
