@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { app, dialog } = require("electron");
+const { app, dialog, shell } = require("electron");
 const log = require("electron-log");
 
 const achievements = require("./achievements");
@@ -93,7 +93,13 @@ async function exportSave(window) {
     .executeJavaScript(`${exportSaveFromIndexedDb.toString()}; exportSaveFromIndexedDb();`, true);
 }
 
+function openExternal(url) {
+  shell.openExternal(url);
+  global.app_playerOpenedExternalLink = true;
+}
+
 module.exports = {
   reloadAndKill, showErrorBox, exportSave,
   attachUnresponsiveAppHandler, detachUnresponsiveAppHandler,
+  openExternal,
 }

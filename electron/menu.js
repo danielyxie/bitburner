@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { Menu, clipboard } = require("electron");
+const { Menu, clipboard, dialog } = require("electron");
 const log = require("electron-log");
 const api = require("./api-server");
 const utils = require("./utils");
@@ -78,6 +78,30 @@ function getMenu(window) {
             clipboard.writeText(token);
           })
         },
+        {
+          type: 'separator',
+        },
+        {
+          label: 'Information',
+          click: () => {
+            dialog.showMessageBox({
+              type: 'info',
+              title: 'Bitburner > API Server Information',
+              message: 'The API Server is used to write script files to your in-game home.',
+              detail: 'There is an official Visual Studio Code extension that makes use of that feature.\n\n' +
+                'It allows you to write your script file in an external IDE and have them pushed over to the game automatically.\n' +
+                'If you want more information, head over to: https://github.com/bitburner-official/bitburner-vscode.',
+                buttons: ['Dismiss', 'Open Extension Link (GitHub)'],
+                defaultId: 0,
+                cancelId: 0,
+                noLink: true,
+            }).then(({response}) => {
+              if (response === 1) {
+                utils.openExternal('https://github.com/bitburner-official/bitburner-vscode');
+              }
+            });
+          }
+        }
       ]
     },
     {
