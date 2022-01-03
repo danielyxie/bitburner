@@ -421,17 +421,12 @@ export function initElectron(): void {
 
 function initWebserver(): void {
   (document as any).saveFile = function (filename: string, code: string): string {
-    delete localStorage["scriptEditorOpenScripts"];
-    delete localStorage["scriptEditorCurrentScript"];
     if (removeLeadingSlash(filename).includes("/")) {
       filename = "/" + removeLeadingSlash(filename);
     }
-    console.log(code);
     code = Buffer.from(code, "base64").toString();
-    console.log(code);
     const home = GetServer("home");
     if (home === null) return "'home' server not found.";
-    if (home === null) return "Server should not be null but it is.";
     if (isScriptFilename(filename)) {
       //If the current script already exists on the server, overwrite it
       for (let i = 0; i < home.scripts.length; i++) {
