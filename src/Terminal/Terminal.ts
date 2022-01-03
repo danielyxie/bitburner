@@ -285,6 +285,7 @@ export class Terminal implements ITerminal {
         return;
       }
       if (!(server instanceof Server)) throw new Error("server should be normal server");
+      server.backdoorInstalled = true;
       if (SpecialServers.WorldDaemon === server.hostname) {
         if (player.bitNodeN == null) {
           player.bitNodeN = 1;
@@ -292,7 +293,6 @@ export class Terminal implements ITerminal {
         router.toBitVerse(false, false);
         return;
       }
-      server.backdoorInstalled = true;
       this.print("Backdoor successful!");
     }
   }
