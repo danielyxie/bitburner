@@ -16,6 +16,10 @@ cp main.css .package/main.css
 cp dist/vendor.bundle.js .package/dist/vendor.bundle.js
 cp main.bundle.js .package/main.bundle.js
 
+# Source maps
+cp dist/vendor.bundle.js.map .package/dist/vendor.bundle.js.map
+cp main.bundle.js.map .package/main.bundle.js.map
+
 # Install electron sub-dependencies
 cd electron
 npm install
