@@ -20,6 +20,16 @@ Yes, just export the save file from the options menu & import it in the other pl
 
 ---
 
+## Game is stuck after running scripts!
+
+You may have created an infinite loop with no sleep. You'll have to restart the game by killing all scripts.
+* On Browser: Stick `?noScript` at the end of the URL
+* On Steam:
+  * In the menu, "Reloads" -> "Reload & Kill All Scripts".
+  * If this does not work, when launching the game, use the kill all script options.
+
+---
+
 ## Steam: Where is the save game located?
 
 To maintain compatibility with the web browser version, the save game is not stored as a file on your filesystem. It lives inside the localStorage of the WebKit instance. You may export the save (and should backup it!) in the option menu.
