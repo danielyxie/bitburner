@@ -138,6 +138,7 @@ export function Console(props: IProps): React.ReactElement {
         paddingBottom: '8px',
         display: 'flex',
         alignItems: 'stretch',
+        whiteSpace: 'pre-wrap',
       }}>
         <Box>
           <Logs entries={[...props.bladeburner.consoleLogs]} />

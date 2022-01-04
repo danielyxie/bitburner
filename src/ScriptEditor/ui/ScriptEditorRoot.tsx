@@ -117,6 +117,7 @@ export function Root(props: IProps): React.ReactElement {
     theme: Settings.MonacoTheme,
     insertSpaces: Settings.MonacoInsertSpaces,
     fontSize: Settings.MonacoFontSize,
+    wordWrap: Settings.MonacoWordWrap,
     vim: props.vim || Settings.MonacoVim,
   });
 
@@ -794,6 +795,7 @@ export function Root(props: IProps): React.ReactElement {
             theme: Settings.MonacoTheme,
             insertSpaces: Settings.MonacoInsertSpaces,
             fontSize: Settings.MonacoFontSize,
+            wordWrap: Settings.MonacoWordWrap,
             vim: Settings.MonacoVim,
           }}
           save={(options: Options) => {
@@ -801,6 +803,7 @@ export function Root(props: IProps): React.ReactElement {
             Settings.MonacoTheme = options.theme;
             Settings.MonacoInsertSpaces = options.insertSpaces;
             Settings.MonacoFontSize = options.fontSize;
+            Settings.MonacoWordWrap = options.wordWrap;
             Settings.MonacoVim = options.vim;
           }}
         />
