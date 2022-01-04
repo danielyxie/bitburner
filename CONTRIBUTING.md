@@ -118,10 +118,32 @@ Inside the root of the repo run
 `npm install` to install all the dependencies
 `npm run start:dev` to launch the game in dev mode.
 
-After that you can open any browser and naviguate to `localhost:8000` and play the game.
+After that you can open any browser and navigate to `localhost:8000` and play the game.
 Saving a file will reload the game automatically.
 
-#### Submitting a Pull Request
+
+### How to build the electron app
+
+Tested on Node v16.13.1 (LTS) on Windows
+These steps only work in a bash-like environment, like MinGW for Windows.
+
+```sh
+# Install the main game dependencies & build the app in debug mode
+npm install
+npm run build:dev
+
+# Use electron-packager to build the app to the .build/ folder
+npm run electron
+
+# When launching the .exe directly, you'll need the steam_appid.txt file in the root
+# If not using windows, change this line accordingly
+cp .build/bitburner-win32-x64/resources/app/steam_appid.txt .build/bitburner-win32-x64/steam_appid.txt
+
+# And run the game...
+.build/bitburner-win32-x64/bitburner.exe
+```
+
+### Submitting a Pull Request
 
 When submitting a pull request with your code contributions, please abide by
 the following rules:

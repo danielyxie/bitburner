@@ -21,6 +21,7 @@ import { save } from "./db";
 import { v1APIBreak } from "./utils/v1APIBreak";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "./Augmentation/PlayerOwnedAugmentation";
+import { LocationName } from "./Locations/data/LocationNames";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -231,6 +232,13 @@ function evaluateVersionCompatibility(ver: string | number): void {
           ind.thisCycleRevenue = parseFloat(ind.thisCycleRevenue);
           ind.thisCycleExpenses = parseFloat(ind.thisCycleExpenses);
         }
+      }
+    }
+    if (ver < 9) {
+      if (StockMarket.hasOwnProperty("Joes Guns")) {
+        const s = StockMarket["Joes Guns"];
+        delete StockMarket["Joes Guns"];
+        StockMarket[LocationName.Sector12JoesGuns] = s;
       }
     }
   }

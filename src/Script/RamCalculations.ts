@@ -13,6 +13,7 @@ import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
 import { Script } from "../Script/Script";
 import { WorkerScript } from "../Netscript/WorkerScript";
+import { areImportsEquals } from "../Terminal/DirectoryHelpers";
 
 // These special strings are used to reference the presence of a given logical
 // construct within a user script.
@@ -106,7 +107,7 @@ async function parseOnlyRamCalculate(
         let script = null;
         const fn = nextModule.startsWith("./") ? nextModule.slice(2) : nextModule;
         for (const s of otherScripts) {
-          if (s.filename === fn) {
+          if (areImportsEquals(s.filename, fn)) {
             script = s;
             break;
           }

@@ -654,6 +654,8 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
     this.workRepGained *= this.cancelationPenalty();
   }
 
+  const penaltyString = this.cancelationPenalty() === 0.5 ? "half" : "three-quarters";
+
   const company = Companies[this.companyName];
   company.playerReputation += this.workRepGained;
 
@@ -665,12 +667,12 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
       <Money money={this.workMoneyGained} />
       <br />
       <Reputation reputation={this.workRepGained} /> reputation for the company <br />
-      {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
-      {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
-      {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
-      {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
-      {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
-      {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp
+      {this.workHackExpGained > 0  && <>{numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br /></>}
+      {this.workStrExpGained > 0  && <>{numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br /></>}
+      {this.workDefExpGained > 0  && <>{numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br /></>}
+      {this.workDexExpGained > 0  && <>{numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br /></>}
+      {this.workAgiExpGained > 0  && <>{numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br /></>}
+      {this.workChaExpGained > 0  && <>{numeralWrapper.formatExp(this.workChaExpGained)} charisma exp <br /></>}
       <br />
     </>
   );
@@ -680,7 +682,7 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
       <>
         You worked a short shift of {convertTimeMsToTimeElapsedString(this.timeWorked)} <br />
         <br />
-        Since you cancelled your work early, you only gained half of the reputation you earned. <br />
+        Since you cancelled your work early, you only gained {penaltyString} of the reputation you earned. <br />
         <br />
         {content}
       </>
@@ -1688,6 +1690,11 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
     return false;
   }
 
+  // Check if this company has the position
+  if (!company.hasPosition(pos)) {
+    return false;
+  }
+
   while (true) {
     const newPos = getNextCompanyPositionHelper(pos);
     if (newPos == null) {
@@ -1861,9 +1868,14 @@ export function applyForAgentJob(this: IPlayer, sing = false): boolean {
 
 export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[1]])) {
+  const position = posNames.MiscCompanyPositions[1];
+  // Check if this company has the position
+  if (!company.hasPosition(position)) {
+    return false;
+  }
+  if (this.isQualified(company, CompanyPositions[position])) {
     this.companyName = company.name;
-    this.jobs[company.name] = posNames.MiscCompanyPositions[1];
+    this.jobs[company.name] = position;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed at " + this.location);
     }
@@ -1880,8 +1892,13 @@ export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
 
 export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
-    this.jobs[company.name] = posNames.PartTimeCompanyPositions[1];
+  const position = posNames.PartTimeCompanyPositions[1];
+  // Check if this company has the position
+  if (!company.hasPosition(position)) {
+    return false;
+  }
+  if (this.isQualified(company, CompanyPositions[position])) {
+    this.jobs[company.name] = position;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed part-time at " + this.location);
     }
@@ -1898,9 +1915,14 @@ export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolea
 
 export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[0]])) {
+  const position = posNames.MiscCompanyPositions[0];
+  // Check if this company has the position
+  if (!company.hasPosition(position)) {
+    return false;
+  }
+  if (this.isQualified(company, CompanyPositions[position])) {
     this.companyName = company.name;
-    this.jobs[company.name] = posNames.MiscCompanyPositions[0];
+    this.jobs[company.name] = position;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.location);
     }
@@ -1915,9 +1937,14 @@ export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
 
 export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[0]])) {
+  const position = posNames.PartTimeCompanyPositions[0];
+  // Check if this company has the position
+  if (!company.hasPosition(position)) {
+    return false;
+  }
+  if (this.isQualified(company, CompanyPositions[position])) {
     this.companyName = company.name;
-    this.jobs[company.name] = posNames.PartTimeCompanyPositions[0];
+    this.jobs[company.name] = position;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.location);
     }

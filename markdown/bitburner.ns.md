@@ -111,7 +111,7 @@ export async function main(ns) {
 |  [growthAnalyze(host, growthAmount, cores)](./bitburner.ns.growthanalyze.md) | Calculate the number of grow thread needed to grow a server by a certain multiplier. |
 |  [growthAnalyzeSecurity(threads)](./bitburner.ns.growthanalyzesecurity.md) | Calculate the security increase for a number of thread. |
 |  [hack(host, opts)](./bitburner.ns.hack.md) | Steal a servers money. |
-|  [hackAnalyze(host)](./bitburner.ns.hackanalyze.md) | Get the percent of money stolen with a single thread. |
+|  [hackAnalyze(host)](./bitburner.ns.hackanalyze.md) | Get the part of money stolen with a single thread. |
 |  [hackAnalyzeChance(host)](./bitburner.ns.hackanalyzechance.md) | Get the chance of successfully hacking a server. |
 |  [hackAnalyzeSecurity(threads)](./bitburner.ns.hackanalyzesecurity.md) | Get the security increase for a number of thread. |
 |  [hackAnalyzeThreads(host, hackAmount)](./bitburner.ns.hackanalyzethreads.md) | Predict the effect of hack. |

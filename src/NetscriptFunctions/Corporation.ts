@@ -496,7 +496,7 @@ export function NetscriptCorporation(
         shareSaleCooldown: corporation.shareSaleCooldown,
         issuedShares: corporation.issuedShares,
         sharePrice: corporation.sharePrice,
-        state: corporation.state + "",
+        state: corporation.state.getState(),
       };
     },
   };

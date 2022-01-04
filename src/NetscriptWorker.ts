@@ -81,7 +81,7 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
       if (propName === "asleep") return f(...args); // OK for multiple simultaneous calls to sleep.
 
       const msg =
-        "Concurrent calls to Netscript functions not allowed! " +
+        "Concurrent calls to Netscript functions are not allowed! " +
         "Did you forget to await hack(), grow(), or some other " +
         "promise-returning function? (Currently running: %s tried to run: %s)";
       if (runningFn) {
@@ -610,7 +610,7 @@ export function updateOnlineScriptTimes(numCycles = 1): void {
 export function loadAllRunningScripts(): void {
   const skipScriptLoad = window.location.href.toLowerCase().indexOf("?noscripts") !== -1;
   if (skipScriptLoad) {
-    Terminal.warn('Skipped loading player scripts during startup');
+    Terminal.warn("Skipped loading player scripts during startup");
     console.info("Skipping the load of any scripts during startup");
   }
   for (const server of GetAllServers()) {
@@ -687,7 +687,7 @@ export function runScriptFromScript(
     // Check for admin rights and that there is enough RAM availble to run
     const script = server.scripts[i];
     let ramUsage = script.ramUsage;
-    threads = Math.round(Number(threads));
+    threads = Math.floor(Number(threads));
     if (threads === 0) {
       return 0;
     }

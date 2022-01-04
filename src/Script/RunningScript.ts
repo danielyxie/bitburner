@@ -3,6 +3,7 @@
  * A Script can have multiple active instances
  */
 import { Script } from "./Script";
+import { ScriptUrl } from "./ScriptUrl";
 import { Settings } from "../Settings/Settings";
 import { IMap } from "../types";
 import { Terminal } from "../Terminal";
@@ -58,6 +59,9 @@ export class RunningScript {
   // Number of threads that this script is running with
   threads = 1;
 
+  // Script urls for the current running script for translating urls back to file names in errors
+  dependencies: ScriptUrl[] = [];
+
   constructor(script: Script | null = null, args: any[] = []) {
     if (script == null) {
       return;
@@ -66,6 +70,7 @@ export class RunningScript {
     this.args = args;
     this.server = script.server;
     this.ramUsage = script.ramUsage;
+    this.dependencies = script.dependencies;
   }
 
   log(txt: string): void {

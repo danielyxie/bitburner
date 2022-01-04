@@ -16,7 +16,10 @@ cp main.css .package/main.css
 cp dist/vendor.bundle.js .package/dist/vendor.bundle.js
 cp main.bundle.js .package/main.bundle.js
 
-# Adding electron-log dependency
-cp -r node_modules/electron-log .package/node_modules/electron-log
+# Install electron sub-dependencies
+cd electron
+npm install
+cd ..
 
+# And finally build the app.
 npm run electron:packager

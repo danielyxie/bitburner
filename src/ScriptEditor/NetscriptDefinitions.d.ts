@@ -1045,7 +1045,7 @@ export interface TIX {
   getPurchaseCost(sym: string, shares: number, posType: string): number;
 
   /**
-   * Calculate profit of setting stocks.
+   * Calculate profit of selling stocks.
    * @remarks
    * RAM cost: 2 GB
    * Calculates and returns how much you would gain from selling a given number of shares of a stock.
@@ -1765,9 +1765,9 @@ export interface Singularity {
    * function will automatically cancel that action and give you your
    * earnings.
    *
-   * This function returns the number of milliseconds it takes to attempt the 
-   * specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, 
-   * so running `commitCrime('rob store')` will return 60000).
+   * This function returns the number of milliseconds it takes to attempt the
+   * specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime,
+   * so running `commitCrime('rob store')` will return 60,000).
    *
    * Warning: I do not recommend using the time returned from this function to try
    * and schedule your crime attempts. Instead, I would use the isBusy Singularity
@@ -2305,7 +2305,7 @@ export interface Hacknet {
    *
    * @example
    * ```ts
-   * // NS1: 
+   * // NS1:
    * var upgradeName = "Sell for Corporation Funds";
    * if (hacknet.numHashes() > hacknet.hashCost(upgradeName)) {
    *    hacknet.spendHashes(upgName);
@@ -2313,7 +2313,7 @@ export interface Hacknet {
    * ```
    * @example
    * ```ts
-   * // NS2: 
+   * // NS2:
    * const upgradeName = "Sell for Corporation Funds";
    * if (ns.hacknet.numHashes() > ns.hacknet.hashCost(upgradeName)) {
    *    ns.hacknet.spendHashes(upgName);
@@ -2371,7 +2371,7 @@ export interface Hacknet {
    * ```
    * @example
    * ```ts
-   * // NS2: 
+   * // NS2:
    * const upgrades = ns.hacknet.getHashUpgrades(); // ["Sell for Money","Sell for Corporation Funds",...]
    * ```
    * @returns An array containing the available upgrades
@@ -2890,7 +2890,7 @@ export interface Bladeburner {
 }
 
 /**
- * Coding Contact API
+ * Coding Contract API
  * @public
  */
 export interface CodingContract {
@@ -4079,31 +4079,28 @@ export interface NS extends Singularity {
   hackAnalyzeThreads(host: string, hackAmount: number): number;
 
   /**
-   * Get the percent of money stolen with a single thread.
+   * Get the part of money stolen with a single thread.
    * @remarks
    * RAM cost: 1 GB
    *
-   * Returns the percentage of the specified server’s money you will steal with a single hack.
-   * This value is returned in percentage form, not decimal
-   * (Netscript functions typically return in decimal form, but not this one).
-   * This percentage is influenced by the player's hacking skill.
+   * Returns the part of the specified server’s money you will steal with a single thread hack.
    *
    * @example
    * ```ts
    * // NS1:
    * //For example, assume the following returns 0.01:
    * var hackAmount = hackAnalyze("foodnstuff");
-   * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.
+   * //This means that if hack the foodnstuff server using a single thread, then you will steal 1%, or 0.01 of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.
    * ```
    * @example
    * ```ts
    * // NS2:
    * //For example, assume the following returns 0.01:
    * const hackAmount = ns.hackAnalyze("foodnstuff");
-   * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.
+   * //This means that if hack the foodnstuff server using a single thread, then you will steal 1%, or 0.01 of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.
    * ```
    * @param host - Hostname of the target server.
-   * @returns The percentage of money you will steal from the target server with a single hack.
+   * @returns The part of money you will steal from the target server with a single thread hack.
    */
   hackAnalyze(host: string): number;
 
@@ -4304,10 +4301,10 @@ export interface NS extends Singularity {
    * // NS1:
    * //Get logs from foo.script on the current server that was run with no args
    * getScriptLogs("foo.script");
-   * 
+   *
    * //Open logs from foo.script on the foodnstuff server that was run with no args
    * getScriptLogs("foo.script", "foodnstuff");
-   * 
+   *
    * //Open logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
    * getScriptLogs("foo.script", "foodnstuff", 1, "test");
    * ```
@@ -4316,10 +4313,10 @@ export interface NS extends Singularity {
    * // NS2:
    * //Get logs from foo.script on the current server that was run with no args
    * ns.getScriptLogs("foo.script");
-   * 
+   *
    * //Open logs from foo.script on the foodnstuff server that was run with no args
    * ns.getScriptLogs("foo.script", "foodnstuff");
-   * 
+   *
    * //Open logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
    * ns.getScriptLogs("foo.script", "foodnstuff", 1, "test");
    * ```
@@ -4347,10 +4344,10 @@ export interface NS extends Singularity {
    * // NS1:
    * //Open logs from foo.script on the current server that was run with no args
    * tail("foo.script");
-   * 
+   *
    * //Get logs from foo.script on the foodnstuff server that was run with no args
    * tail("foo.script", "foodnstuff");
-   * 
+   *
    * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
    * tail("foo.script", "foodnstuff", 1, "test");
    * ```
@@ -4359,10 +4356,10 @@ export interface NS extends Singularity {
    * // NS2:
    * //Open logs from foo.script on the current server that was run with no args
    * ns.tail("foo.script");
-   * 
+   *
    * //Get logs from foo.script on the foodnstuff server that was run with no args
    * ns.tail("foo.script", "foodnstuff");
-   * 
+   *
    * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
    * ns.tail("foo.script", "foodnstuff", 1, "test");
    * ```
@@ -4536,10 +4533,10 @@ export interface NS extends Singularity {
    * // NS1:
    * //The simplest way to use the run command is to call it with just the script name. The following example will run ‘foo.script’ single-threaded with no arguments:
    * run("foo.script");
-   * 
+   *
    * //The following example will run ‘foo.script’ but with 5 threads instead of single-threaded:
    * run("foo.script", 5);
-   * 
+   *
    * //This next example will run ‘foo.script’ single-threaded, and will pass the string ‘foodnstuff’ into the script as an argument:
    * run("foo.script", 1, 'foodnstuff');
    * ```
@@ -4548,10 +4545,10 @@ export interface NS extends Singularity {
    * // NS2:
    * //The simplest way to use the run command is to call it with just the script name. The following example will run ‘foo.script’ single-threaded with no arguments:
    * ns.run("foo.script");
-   * 
+   *
    * //The following example will run ‘foo.script’ but with 5 threads instead of single-threaded:
    * ns.run("foo.script", 5);
-   * 
+   *
    * //This next example will run ‘foo.script’ single-threaded, and will pass the string ‘foodnstuff’ into the script as an argument:
    * ns.run("foo.script", 1, 'foodnstuff');
    * ```
@@ -4560,7 +4557,7 @@ export interface NS extends Singularity {
    * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the second argument numThreads must be filled in with a value.
    * @returns Returns the PID of a successfully started script, and 0 otherwise.
    */
-  run(script: string, numThreads?: number, ...args: string[]): number;
+  run(script: string, numThreads?: number, ...args: Array<string | number | boolean>): number;
 
   /**
    * Start another script on any server.
@@ -4584,10 +4581,10 @@ export interface NS extends Singularity {
    * // NS1:
    * //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
    * exec("generic-hack.script", "foodnstuff");
-   * 
+   *
    * //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
    * exec("generic-hack.script", "joesguns", 10);
-   * 
+   *
    * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
    * exec("foo.script", "foodnstuff", 5, 1, "test");
    * ```
@@ -4596,10 +4593,10 @@ export interface NS extends Singularity {
    * // NS2:
    * //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:
    * ns.exec("generic-hack.script", "foodnstuff");
-   * 
+   *
    * //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:
    * ns.exec("generic-hack.script", "joesguns", 10);
-   * 
+   *
    * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:
    * ns.exec("foo.script", "foodnstuff", 5, 1, "test");
    * ```
@@ -4656,10 +4653,10 @@ export interface NS extends Singularity {
    * // NS1:
    * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
    * kill("foo.script", "foodnstuff");
-   * 
+   *
    * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
    * kill("foo.script", getHostname());
-   * 
+   *
    * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
    * kill("foo.script", getHostname(), 1, "foodnstuff");
    * ```
@@ -4668,10 +4665,10 @@ export interface NS extends Singularity {
    * // NS2:
    * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
    * ns.kill("foo.script", "foodnstuff");
-   * 
+   *
    * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
    * ns.kill("foo.script", getHostname());
-   * 
+   *
    * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
    * ns.kill("foo.script", getHostname(), 1, "foodnstuff");
    * ```
@@ -4680,7 +4677,8 @@ export interface NS extends Singularity {
    * @param args - Arguments to identify which script to kill.
    * @returns True if the script is successfully killed, and false otherwise.
    */
-  kill(script: string | number, host: string, ...args: string[]): boolean;
+  kill(script: number): boolean;
+  kill(script: string, host: string, ...args: string[]): boolean;
 
   /**
    * Terminate all scripts on a server.
@@ -4690,11 +4688,12 @@ export interface NS extends Singularity {
    * Kills all running scripts on the specified server. This function returns true
    * if any scripts were killed, and false otherwise. In other words, it will return
    * true if there are any scripts running on the target server.
+   * If no host is defined, it will kill all scripts, where the script is running.
    *
    * @param host - IP or hostname of the server on which to kill all scripts.
    * @returns True if any scripts were killed, and false otherwise.
    */
-  killall(host: string): boolean;
+  killall(host?: string): boolean;
 
   /**
    * Terminates the current script immediately.
@@ -4716,7 +4715,7 @@ export interface NS extends Singularity {
    * // NS1:
    * //Copies foo.lit from the helios server to the home computer:
    * scp("foo.lit", "helios", "home");
-   * 
+   *
    * //Tries to copy three files from rothman-uni to home computer:
    * files = ["foo1.lit", "foo2.script", "foo3.script"];
    * scp(files, "rothman-uni", "home");
@@ -4726,7 +4725,7 @@ export interface NS extends Singularity {
    * // NS2:
    * //Copies foo.lit from the helios server to the home computer:
    * await ns.scp("foo.lit", "helios", "home");
-   * 
+   *
    * //Tries to copy three files from rothman-uni to home computer:
    * files = ["foo1.lit", "foo2.script", "foo3.script"];
    * await ns.scp(files, "rothman-uni", "home");
@@ -5086,7 +5085,7 @@ export interface NS extends Singularity {
    * // NS1:
    * //The function call will return true if the script named foo.script exists on the foodnstuff server, and false otherwise.
    * fileExists("foo.script", "foodnstuff");
-   * 
+   *
    * //The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.
    * fileExists("ftpcrack.exe");
    * ```
@@ -5095,7 +5094,7 @@ export interface NS extends Singularity {
    * // NS2:
    * // The function call will return true if the script named foo.script exists on the foodnstuff server, and false otherwise.
    * ns.fileExists("foo.script", "foodnstuff");
-   * 
+   *
    * // The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.
    * ns.fileExists("ftpcrack.exe");
    * ```
@@ -5118,10 +5117,10 @@ export interface NS extends Singularity {
    * // NS1:
    * //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:
    * isRunning("foo.script", "foodnstuff");
-   * 
+   *
    * //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:
    * isRunning("foo.script", getHostname());
-   * 
+   *
    * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:
    * isRunning("foo.script", "joesguns", 1, 5, "test");
    * ```
@@ -5130,10 +5129,10 @@ export interface NS extends Singularity {
    * // NS2:
    * //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:
    * ns.isRunning("foo.script", "foodnstuff");
-   * 
+   *
    * //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:
    * ns.isRunning("foo.script", ns.getHostname());
-   * 
+   *
    * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:
    * ns.isRunning("foo.script", "joesguns", 1, 5, "test");
    * ```
@@ -5153,7 +5152,7 @@ export interface NS extends Singularity {
    *
    * @returns info about a running script
    */
-  getRunningScript(filename: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
+  getRunningScript(filename?: string | number, hostname?: string, ...args: (string | number)[]): RunningScript;
 
   /**
    * Get cost of purchasing a server.
@@ -5287,7 +5286,7 @@ export interface NS extends Singularity {
    * @param data - Data to write.
    * @param mode - Defines the write mode. Only valid when writing to text files.
    */
-  write(handle: string, data?: string[] | number, mode?: "w" | "a"): Promise<void>;
+  write(handle: string, data?: string[] | number | string, mode?: "w" | "a"): Promise<void>;
 
   /**
    * Attempt to write to a port.
@@ -5421,7 +5420,7 @@ export interface NS extends Singularity {
    * // NS1:
    * //The function call will return true if there is any script named foo.script running on the foodnstuff server, and false otherwise:
    * scriptRunning("foo.script", "foodnstuff");
-   * 
+   *
    * //The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:
    * scriptRunning("foo.script", getHostname());
    * ```
@@ -5430,7 +5429,7 @@ export interface NS extends Singularity {
    * // NS2:
    * //The function call will return true if there is any script named foo.script running on the foodnstuff server, and false otherwise:
    * ns.scriptRunning("foo.script", "foodnstuff");
-   * 
+   *
    * //The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:
    * ns.scriptRunning("foo.script", ns.getHostname());
    * ```
@@ -5486,8 +5485,6 @@ export interface NS extends Singularity {
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
-   * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in milliseconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getHackTime(host: string): number;
@@ -5502,8 +5499,6 @@ export interface NS extends Singularity {
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
-   * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getGrowTime(host: string): number;
@@ -5518,8 +5513,6 @@ export interface NS extends Singularity {
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.
-   * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).
    * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getWeakenTime(host: string): number;
@@ -5548,7 +5541,8 @@ export interface NS extends Singularity {
    * @param args - Arguments that the script is running with.
    * @returns Amount of income the specified script generates while online.
    */
-  getScriptIncome(script: string, host: string, ...args: string[]): number | [number, number];
+  getScriptIncome(): [number, number];
+  getScriptIncome(script: string, host: string, ...args: string[]): number;
 
   /**
    * Get the exp gain of a script.
@@ -5567,6 +5561,7 @@ export interface NS extends Singularity {
    * @param args - Arguments that the script is running with.
    * @returns Amount of hacking experience the specified script generates while online.
    */
+  getScriptExpGain(): number;
   getScriptExpGain(script: string, host: string, ...args: string[]): number;
 
   /**
@@ -5787,7 +5782,7 @@ export interface NS extends Singularity {
    *     ['help', false], // a default boolean means this flag is a boolean
    * ]);
    * tprint(data);
-   * 
+   *
    * // example.ns
    * export async function main(ns) {
    *   const data = ns.flags([
@@ -6127,7 +6122,7 @@ interface CorporationInfo {
   issuedShares: number;
   /** Price of the shares */
   sharePrice: number;
-  /** State of the corporation, like PRODUCTION or EXPORT */
+  /** State of the corporation. Possible states are START, PURCHASE, PRODUCTION, SALE, EXPORT. */
   state: string;
 }
 

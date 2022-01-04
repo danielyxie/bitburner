@@ -1,7 +1,6 @@
 import { isString } from "./utils/helpers/isString";
 import { GetServer } from "./Server/AllServers";
 import { WorkerScript } from "./Netscript/WorkerScript";
-import { BlobsMap } from "./NetscriptJSEvaluator";
 
 export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
   return new Promise(function (resolve) {
@@ -22,8 +21,8 @@ export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): s
     throw new Error(`WorkerScript constructed with invalid server ip: ${workerScript.hostname}`);
   }
 
-  for (const url in BlobsMap) {
-    msg = msg.replace(new RegExp(url, "g"), BlobsMap[url]);
+  for (const scriptUrl of workerScript.scriptRef.dependencies) {
+    msg = msg.replace(new RegExp(scriptUrl.url, "g"), scriptUrl.filename);
   }
 
   return "|DELIMITER|" + server.hostname + "|DELIMITER|" + workerScript.name + "|DELIMITER|" + msg;
@@ -45,7 +44,7 @@ export function resolveNetscriptRequestedThreads(
       `Invalid thread count passed to ${functionName}: ${requestedThreads}. Threads must be a positive number.`,
     );
   }
-  if (requestedThreads > threads) {
+  if (requestedThreadsAsInt > threads) {
     throw makeRuntimeRejectMsg(
       workerScript,
       `Too many threads requested by ${functionName}. Requested: ${requestedThreads}. Has: ${threads}.`,

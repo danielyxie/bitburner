@@ -18,7 +18,7 @@
 |  [CharacterInfo](./bitburner.characterinfo.md) |  |
 |  [CharacterMult](./bitburner.charactermult.md) |  |
 |  [CodingAttemptOptions](./bitburner.codingattemptoptions.md) | Options to affect the behavior of [CodingContract](./bitburner.codingcontract.md) attempt. |
-|  [CodingContract](./bitburner.codingcontract.md) | Coding Contact API |
+|  [CodingContract](./bitburner.codingcontract.md) | Coding Contract API |
 |  [Corporation](./bitburner.corporation.md) | Corporation API |
 |  [CorporationInfo](./bitburner.corporationinfo.md) | General info about a corporation |
 |  [CrimeStats](./bitburner.crimestats.md) | Data representing the internal values of a crime. |
