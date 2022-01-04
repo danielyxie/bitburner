@@ -1,6 +1,7 @@
 import { ISelfInitializer, ISelfLoading } from "../types";
 import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
 import { defaultTheme, ITheme } from "./Themes";
+import { WordWrapOptions } from '../ScriptEditor/ui/Options';
 
 /**
  * Represents the default settings the player could customize.
@@ -141,6 +142,8 @@ interface ISettings extends IDefaultSettings {
   MonacoFontSize: number;
 
   MonacoVim: boolean;
+
+  MonacoWordWrap: WordWrapOptions;
 }
 
 export const defaultSettings: IDefaultSettings = {
@@ -203,6 +206,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   MonacoInsertSpaces: false,
   MonacoFontSize: 20,
   MonacoVim: false,
+  MonacoWordWrap: 'off',
 
   theme: { ...defaultTheme },
   init() {
