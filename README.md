@@ -1,16 +1,19 @@
 # Bitburner
 
+[![Build Status](https://github.com/danielyxie/bitburner/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/danielyxie/bitburner/actions/workflows/ci.yml)
+
 Bitburner is a programming-based [incremental game](https://en.wikipedia.org/wiki/Incremental_game)
 that revolves around hacking and cyberpunk themes.
-The game can be played at https://danielyxie.github.io/bitburner.
+The game can be played at https://danielyxie.github.io/bitburner or installed through [Steam](https://store.steampowered.com/app/1812820/Bitburner/).
+
+See the [frequently asked questions](./FAQ.md) for more information . To discuss the game or get help, join the [official discord server](https://discord.gg/TFc3hKD)
 
 # Documentation
 
 The game's official documentation can be found on [Read The
-Docs](http://bitburner.readthedocs.io/). Please note that this is still a
-work-in-progress.
+Docs](http://bitburner.readthedocs.io/). Please note that this is still a work-in-progress.
 
-The documentation is created using [Sphinx](http://www.sphinx-doc.org).
+The [in-game documentation](./markdown/bitburner.md) is generated from the [TypeScript definitions](./src/ScriptEditor/NetscriptDefinitions.d.ts).
 
 Anyone is welcome to contribute to the documentation by editing the [source
 files](/doc/source) and then making a pull request with your contributions.

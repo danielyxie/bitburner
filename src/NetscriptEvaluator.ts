@@ -22,7 +22,8 @@ export function makeRuntimeRejectMsg(workerScript: WorkerScript, msg: string): s
   }
 
   for (const scriptUrl of workerScript.scriptRef.dependencies) {
-    msg = msg.replace(new RegExp(scriptUrl.url, "g"), scriptUrl.filename);
+    // Return just the original msg if it's nullish so that we don't get a workerscript error
+    msg = msg?.replace(new RegExp(scriptUrl.url, "g"), scriptUrl.filename) ?? msg;
   }
 
   return "|DELIMITER|" + server.hostname + "|DELIMITER|" + workerScript.name + "|DELIMITER|" + msg;

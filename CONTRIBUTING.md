@@ -84,7 +84,9 @@ changes are okay to contribute:
 - Changes that directly affect the game's balance
 - New gameplay mechanics
 
-### How to setup fork properly
+---
+
+## How to setup fork properly
 
 Fork and clone the repo
 
@@ -106,7 +108,15 @@ Fork and clone the repo
   # Makes sure you always start from `danielyxie/dev` to avoid merge conflicts.
 ```
 
-### Running locally.
+## Development Workflow Best Practices
+
+- Work in a new branch forked from the `dev` branch to isolate your new code
+  - Keep code-changes on a branch as small as possible. This makes it easier for code review. Each branch should be its own independent feature.
+  - Regularly rebase your branch against `dev` to make sure you have the latest updates pulled.
+  - When merging, always merge your branch into `dev`. When releasing a new update, then merge `dev` into `master`
+
+
+## Running locally.
 
 Install
 
@@ -168,8 +178,13 @@ the following rules:
 
 ## As a Documentor
 
-To contribute to and view your changes to the BitBurner documentation, you will
+To contribute to and view your changes to the BitBurner documentation on [Read The
+Docs](http://bitburner.readthedocs.io/), you will
 need to have Python installed, along with [Sphinx](http://www.sphinx-doc.org).
+
+To make change to the [in-game documentation](./markdown/bitburner.md), you will need to modify the [TypeScript definitions](./src/ScriptEditor/NetscriptDefinitions.d.ts), not the markdown files.
+
+We are using [API Extractor](https://api-extractor.com/pages/tsdoc/doc_comment_syntax/) (tsdoc hints) to generate the markdown doc. Make your changes to the TypeScript definitions and then run `npm run doc`.
 
 Before submitting your code for a pull request, please try to follow these
 rules:
@@ -182,3 +197,14 @@ rules:
   _danielyxie/bitburner_ and the base is _dev_.
 - Do not check in any generated files under `doc\`. The documentation is built
   automatically by ReadTheDocs.
+
+## Deploying a new version
+
+Update the following
+
+- `src/Constants.ts` `Version` and `LatestUpdate`
+- `package.json` `version`
+- `doc/source/conf.py` `version` and `release`
+- `doc/source/changelog.rst`
+- post to discord
+- post to reddit.com/r/Bitburner

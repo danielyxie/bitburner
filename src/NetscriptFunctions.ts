@@ -1639,7 +1639,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       const cost = getPurchaseServerCost(ram);
       if (cost === Infinity) {
-        workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be power of 2`);
+        workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be a positive power of 2`);
         return "";
       }
 
