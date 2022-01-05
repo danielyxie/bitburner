@@ -188,12 +188,13 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
       multiplier = Math.min(levelsToMax, purchaseMult as number);
     }
 
+    const increase = 32 * Math.pow(2, node.cache + multiplier) - node.hashCapacity;
     const upgradeCacheCost = node.calculateCacheUpgradeCost(multiplier);
     upgradeCacheButton = (
       <Tooltip
         title={
           <Typography>
-            +<Hashes hashes={32 * Math.pow(2, node.cache)} /> hashes
+            +<Hashes hashes={increase} /> hashes
           </Typography>
         }
       >
