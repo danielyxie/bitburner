@@ -312,7 +312,7 @@ const achievements: Achievement[] = [
   },
   {
     ID: "CHALLENGE_BN3",
-    Condition: () => Player.bitNodeN === 2 && bitNodeFinishedState() && Player.corporation === null,
+    Condition: () => Player.bitNodeN === 3 && bitNodeFinishedState() && Player.corporation === null,
   },
   {
     ID: "CHALLENGE_BN6",
