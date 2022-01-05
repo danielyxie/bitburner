@@ -1175,7 +1175,20 @@ export function NetscriptSingularity(
       helper.updateDynamicRam("donateToFaction", getRamCost(player, "donateToFaction"));
       helper.checkSingularityAccess("donateToFaction");
       const faction = getFaction("donateToFaction", name);
-
+      if (!player.factions.includes(faction.name)) {
+        workerScript.log(
+          "donateToFaction",
+          () => `You can't donate to '${name}' because you aren't a member`,
+        );
+        return false;
+      }
+      if (faction.name === player.getGangFaction().name) {
+        workerScript.log(
+          "donateToFaction",
+          () => `You can't donate to '${name}' because youre managing a gang for it`,
+        );
+        return false;
+      }
       if (typeof amt !== "number" || amt <= 0) {
         workerScript.log("donateToFaction", () => `Invalid donation amount: '${amt}'.`);
         return false;
