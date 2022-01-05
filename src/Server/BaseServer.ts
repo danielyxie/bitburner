@@ -255,7 +255,7 @@ export class BaseServer {
    * Write to a script file
    * Overwrites existing files. Creates new files if the script does not eixst
    */
-  writeToScriptFile(fn: string, code: string): writeResult {
+  writeToScriptFile(player: IPlayer, fn: string, code: string): writeResult {
     const ret = { success: false, overwritten: false };
     if (!isValidFilePath(fn) || !isScriptFilename(fn)) {
       return ret;
@@ -266,7 +266,7 @@ export class BaseServer {
       if (fn === this.scripts[i].filename) {
         const script = this.scripts[i];
         script.code = code;
-        script.updateRamUsage(this.scripts);
+        script.updateRamUsage(player, this.scripts);
         script.markUpdated();
         ret.overwritten = true;
         ret.success = true;
@@ -275,7 +275,7 @@ export class BaseServer {
     }
 
     // Otherwise, create a new script
-    const newScript = new Script(fn, code, this.hostname, this.scripts);
+    const newScript = new Script(player, fn, code, this.hostname, this.scripts);
     this.scripts.push(newScript);
     ret.success = true;
     return ret;

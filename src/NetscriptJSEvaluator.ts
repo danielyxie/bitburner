@@ -6,13 +6,14 @@ import { computeHash } from "./utils/helpers/computeHash";
 import { BlobCache } from "./utils/BlobCache";
 import { ImportCache } from "./utils/ImportCache";
 import { areImportsEquals } from "./Terminal/DirectoryHelpers";
+import { IPlayer } from "./PersonObjects/IPlayer";
 
 // Makes a blob that contains the code of a given script.
 function makeScriptBlob(code: string): Blob {
   return new Blob([code], { type: "text/javascript" });
 }
 
-export async function compile(script: Script, scripts: Script[]): Promise<void> {
+export async function compile(player: IPlayer, script: Script, scripts: Script[]): Promise<void> {
   if (!shouldCompile(script, scripts)) return;
   // The URL at the top is the one we want to import. It will
   // recursively import all the other modules in the urlStack.
@@ -21,7 +22,7 @@ export async function compile(script: Script, scripts: Script[]): Promise<void> 
   // but not really behaves like import. Particularly, it cannot
   // load fully dynamic content. So we hide the import from webpack
   // by placing it inside an eval call.
-  await script.updateRamUsage(scripts);
+  await script.updateRamUsage(player, scripts);
   const uurls = _getScriptUrls(script, scripts, []);
   const url = uurls[uurls.length - 1].url;
   if (script.url && script.url !== url) {
@@ -50,10 +51,14 @@ export async function compile(script: Script, scripts: Script[]): Promise<void> 
 // (i.e. hack, grow, etc.).
 // When the promise returned by this resolves, we'll have finished
 // running the main function of the script.
-export async function executeJSScript(scripts: Script[] = [], workerScript: WorkerScript): Promise<void> {
+export async function executeJSScript(
+  player: IPlayer,
+  scripts: Script[] = [],
+  workerScript: WorkerScript,
+): Promise<void> {
   const script = workerScript.getScript();
   if (script === null) throw new Error("script is null");
-  await compile(script, scripts);
+  await compile(player, script, scripts);
   workerScript.ramUsage = script.ramUsage;
   const loadedModule = await script.module;
 

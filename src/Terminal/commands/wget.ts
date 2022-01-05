@@ -26,7 +26,7 @@ export function wget(
     function (data: any) {
       let res;
       if (isScriptFilename(target)) {
-        res = server.writeToScriptFile(target, data);
+        res = server.writeToScriptFile(player, target, data);
       } else {
         res = server.writeToTextFile(target, data);
       }

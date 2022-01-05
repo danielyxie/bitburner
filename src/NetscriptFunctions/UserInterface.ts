@@ -12,9 +12,8 @@ export function NetscriptUserInterface(
 ): IUserInterface {
   return {
     getTheme: function (): UserInterfaceTheme {
-      helper.updateDynamicRam("getTheme", getRamCost("ui", "getTheme"));
-      return {...Settings.theme};
+      helper.updateDynamicRam("getTheme", getRamCost(player, "ui", "getTheme"));
+      return { ...Settings.theme };
     },
-  }
+  };
 }
-

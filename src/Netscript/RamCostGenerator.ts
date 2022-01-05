@@ -1,3 +1,4 @@
+import { IPlayer } from "src/PersonObjects/IPlayer";
 import { IMap } from "../types";
 
 // TODO remember to update RamCalculations.js and WorkerScript.js
@@ -66,6 +67,16 @@ export const RamCostConstants: IMap<number> = {
   ScriptStanekFragmentAt: 2,
   ScriptStanekDeleteAt: 0.15,
 };
+
+function SF4Cost(cost: number): (player: IPlayer) => number {
+  return (player: IPlayer): number => {
+    if (player.bitNodeN === 4) return cost;
+    const sf4 = player.sourceFileLvl(4);
+    if (sf4 <= 1) return cost * 64;
+    if (sf4 === 2) return cost * 8;
+    return cost;
+  };
+}
 
 export const RamCosts: IMap<any> = {
   hacknet: {
@@ -196,55 +207,55 @@ export const RamCosts: IMap<any> = {
   getFavorToDonate: RamCostConstants.ScriptGetFavorToDonate,
 
   // Singularity Functions
-  universityCourse: RamCostConstants.ScriptSingularityFn1RamCost,
-  gymWorkout: RamCostConstants.ScriptSingularityFn1RamCost,
-  travelToCity: RamCostConstants.ScriptSingularityFn1RamCost,
-  goToLocation: RamCostConstants.ScriptSingularityFn1RamCost,
-  purchaseTor: RamCostConstants.ScriptSingularityFn1RamCost,
-  purchaseProgram: RamCostConstants.ScriptSingularityFn1RamCost,
-  getCurrentServer: RamCostConstants.ScriptSingularityFn1RamCost,
-  connect: RamCostConstants.ScriptSingularityFn1RamCost,
-  manualHack: RamCostConstants.ScriptSingularityFn1RamCost,
-  installBackdoor: RamCostConstants.ScriptSingularityFn1RamCost,
-  getStats: RamCostConstants.ScriptSingularityFn1RamCost / 4,
-  getCharacterInformation: RamCostConstants.ScriptSingularityFn1RamCost / 4,
-  getPlayer: RamCostConstants.ScriptSingularityFn1RamCost / 4,
-  hospitalize: RamCostConstants.ScriptSingularityFn1RamCost / 4,
-  isBusy: RamCostConstants.ScriptSingularityFn1RamCost / 4,
-  stopAction: RamCostConstants.ScriptSingularityFn1RamCost / 2,
-  upgradeHomeRam: RamCostConstants.ScriptSingularityFn2RamCost,
-  upgradeHomeCores: RamCostConstants.ScriptSingularityFn2RamCost,
-  getUpgradeHomeRamCost: RamCostConstants.ScriptSingularityFn2RamCost / 2,
-  getUpgradeHomeCoresCost: RamCostConstants.ScriptSingularityFn2RamCost / 2,
-  workForCompany: RamCostConstants.ScriptSingularityFn2RamCost,
-  applyToCompany: RamCostConstants.ScriptSingularityFn2RamCost,
-  getCompanyRep: RamCostConstants.ScriptSingularityFn2RamCost / 3,
-  getCompanyFavor: RamCostConstants.ScriptSingularityFn2RamCost / 3,
-  getCompanyFavorGain: RamCostConstants.ScriptSingularityFn2RamCost / 4,
-  checkFactionInvitations: RamCostConstants.ScriptSingularityFn2RamCost,
-  joinFaction: RamCostConstants.ScriptSingularityFn2RamCost,
-  workForFaction: RamCostConstants.ScriptSingularityFn2RamCost,
-  getFactionRep: RamCostConstants.ScriptSingularityFn2RamCost / 3,
-  getFactionFavor: RamCostConstants.ScriptSingularityFn2RamCost / 3,
-  getFactionFavorGain: RamCostConstants.ScriptSingularityFn2RamCost / 4,
-  donateToFaction: RamCostConstants.ScriptSingularityFn3RamCost,
-  createProgram: RamCostConstants.ScriptSingularityFn3RamCost,
-  commitCrime: RamCostConstants.ScriptSingularityFn3RamCost,
-  getCrimeChance: RamCostConstants.ScriptSingularityFn3RamCost,
-  getCrimeStats: RamCostConstants.ScriptSingularityFn3RamCost,
-  getOwnedAugmentations: RamCostConstants.ScriptSingularityFn3RamCost,
-  getOwnedSourceFiles: RamCostConstants.ScriptSingularityFn3RamCost,
-  getAugmentationsFromFaction: RamCostConstants.ScriptSingularityFn3RamCost,
-  getAugmentationCost: RamCostConstants.ScriptSingularityFn3RamCost,
-  getAugmentationPrereq: RamCostConstants.ScriptSingularityFn3RamCost,
-  getAugmentationPrice: RamCostConstants.ScriptSingularityFn3RamCost / 2,
-  getAugmentationRepReq: RamCostConstants.ScriptSingularityFn3RamCost / 2,
-  getAugmentationStats: RamCostConstants.ScriptSingularityFn3RamCost,
-  purchaseAugmentation: RamCostConstants.ScriptSingularityFn3RamCost,
-  softReset: RamCostConstants.ScriptSingularityFn3RamCost,
-  installAugmentations: RamCostConstants.ScriptSingularityFn3RamCost,
-  isFocused: 0.1,
-  setFocus: 0.1,
+  universityCourse: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  gymWorkout: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  travelToCity: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  goToLocation: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  purchaseTor: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  purchaseProgram: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  getCurrentServer: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  connect: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  manualHack: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  installBackdoor: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  getStats: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
+  getCharacterInformation: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
+  getPlayer: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
+  hospitalize: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
+  isBusy: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
+  stopAction: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 2),
+  upgradeHomeRam: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
+  upgradeHomeCores: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
+  getUpgradeHomeRamCost: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 2),
+  getUpgradeHomeCoresCost: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 2),
+  workForCompany: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
+  applyToCompany: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
+  getCompanyRep: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 3),
+  getCompanyFavor: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 3),
+  getCompanyFavorGain: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 4),
+  checkFactionInvitations: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
+  joinFaction: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
+  workForFaction: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
+  getFactionRep: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 3),
+  getFactionFavor: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 3),
+  getFactionFavorGain: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost / 4),
+  donateToFaction: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  createProgram: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  commitCrime: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  getCrimeChance: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  getCrimeStats: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  getOwnedAugmentations: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  getOwnedSourceFiles: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  getAugmentationsFromFaction: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  getAugmentationCost: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  getAugmentationPrereq: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  getAugmentationPrice: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost / 2),
+  getAugmentationRepReq: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost / 2),
+  getAugmentationStats: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  purchaseAugmentation: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  softReset: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  installAugmentations: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  isFocused: SF4Cost(0.1),
+  setFocus: SF4Cost(0.1),
 
   // Gang API
   gang: {
@@ -358,7 +369,7 @@ export const RamCosts: IMap<any> = {
   },
 };
 
-export function getRamCost(...args: string[]): number {
+export function getRamCost(player: IPlayer, ...args: string[]): number {
   if (args.length === 0) {
     console.warn(`No arguments passed to getRamCost()`);
     return 0;
@@ -381,6 +392,10 @@ export function getRamCost(...args: string[]): number {
 
   if (typeof curr === "number") {
     return curr;
+  }
+
+  if (typeof curr === "function") {
+    return curr(player);
   }
 
   console.warn(`Unexpected type (${curr}) for value [${args}]`);

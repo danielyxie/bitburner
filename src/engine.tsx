@@ -277,7 +277,7 @@ const Engine: {
       const offlineHackingIncome = (Player.moneySourceA.hacking / Player.playtimeSinceLastAug) * timeOffline * 0.75;
       Player.gainMoney(offlineHackingIncome, "hacking");
       // Process offline progress
-      loadAllRunningScripts(); // This also takes care of offline production for those scripts
+      loadAllRunningScripts(Player); // This also takes care of offline production for those scripts
       if (Player.isWorking) {
         Player.focus = true;
         if (Player.workType == CONSTANTS.WorkTypeFaction) {

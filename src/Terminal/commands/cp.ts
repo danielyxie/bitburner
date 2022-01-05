@@ -89,7 +89,7 @@ export function cp(
       return;
     }
 
-    const sRes = server.writeToScriptFile(dst, sourceScript.code);
+    const sRes = server.writeToScriptFile(player, dst, sourceScript.code);
     if (!sRes.success) {
       terminal.error(`cp failed`);
       return;
