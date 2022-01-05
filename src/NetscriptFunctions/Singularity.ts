@@ -93,6 +93,7 @@ export function NetscriptSingularity(
   return {
     getOwnedAugmentations: function (purchased: any = false): any {
       helper.updateDynamicRam("getOwnedAugmentations", getRamCost(player, "getOwnedAugmentations"));
+      helper.checkSingularityAccess("getOwnedAugmentations");
       const res = [];
       for (let i = 0; i < player.augmentations.length; ++i) {
         res.push(player.augmentations[i].name);
@@ -106,6 +107,7 @@ export function NetscriptSingularity(
     },
     getAugmentationsFromFaction: function (facname: any): any {
       helper.updateDynamicRam("getAugmentationsFromFaction", getRamCost(player, "getAugmentationsFromFaction"));
+      helper.checkSingularityAccess("getAugmentationsFromFaction");
       const faction = getFaction("getAugmentationsFromFaction", facname);
 
       // If player has a gang with this faction, return all augmentations.
@@ -127,31 +129,37 @@ export function NetscriptSingularity(
     },
     getAugmentationCost: function (name: any): any {
       helper.updateDynamicRam("getAugmentationCost", getRamCost(player, "getAugmentationCost"));
+      helper.checkSingularityAccess("getAugmentationCost");
       const aug = getAugmentation("getAugmentationCost", name);
       return [aug.baseRepRequirement, aug.baseCost];
     },
     getAugmentationPrereq: function (name: any): any {
       helper.updateDynamicRam("getAugmentationPrereq", getRamCost(player, "getAugmentationPrereq"));
+      helper.checkSingularityAccess("getAugmentationPrereq");
       const aug = getAugmentation("getAugmentationPrereq", name);
       return aug.prereqs.slice();
     },
     getAugmentationPrice: function (name: any): any {
       helper.updateDynamicRam("getAugmentationPrice", getRamCost(player, "getAugmentationPrice"));
+      helper.checkSingularityAccess("getAugmentationPrice");
       const aug = getAugmentation("getAugmentationPrice", name);
       return aug.baseCost;
     },
     getAugmentationRepReq: function (name: any): any {
       helper.updateDynamicRam("getAugmentationRepReq", getRamCost(player, "getAugmentationRepReq"));
+      helper.checkSingularityAccess("getAugmentationRepReq");
       const aug = getAugmentation("getAugmentationRepReq", name);
       return aug.baseRepRequirement;
     },
     getAugmentationStats: function (name: any): any {
       helper.updateDynamicRam("getAugmentationStats", getRamCost(player, "getAugmentationStats"));
+      helper.checkSingularityAccess("getAugmentationStats");
       const aug = getAugmentation("getAugmentationStats", name);
       return Object.assign({}, aug.mults);
     },
     purchaseAugmentation: function (faction: any, name: any): any {
       helper.updateDynamicRam("purchaseAugmentation", getRamCost(player, "purchaseAugmentation"));
+      helper.checkSingularityAccess("purchaseAugmentation");
       const fac = getFaction("purchaseAugmentation", faction);
       const aug = getAugmentation("purchaseAugmentation", name);
 
@@ -207,6 +215,7 @@ export function NetscriptSingularity(
     },
     softReset: function (cbScript: any): any {
       helper.updateDynamicRam("softReset", getRamCost(player, "softReset"));
+      helper.checkSingularityAccess("softReset");
 
       workerScript.log("softReset", () => "Soft resetting. This will cause this script to be killed");
       setTimeout(() => {
@@ -220,6 +229,7 @@ export function NetscriptSingularity(
     },
     installAugmentations: function (cbScript: any): any {
       helper.updateDynamicRam("installAugmentations", getRamCost(player, "installAugmentations"));
+      helper.checkSingularityAccess("installAugmentations");
 
       if (player.queuedAugmentations.length === 0) {
         workerScript.log("installAugmentations", () => "You do not have any Augmentations to be installed.");
@@ -241,6 +251,7 @@ export function NetscriptSingularity(
 
     goToLocation: function (locationName: any): boolean {
       helper.updateDynamicRam("goToLocation", getRamCost(player, "goToLocation"));
+      helper.checkSingularityAccess("goToLocation");
       const location = Object.values(Locations).find((l) => l.name === locationName);
       if (!location) {
         workerScript.log("goToLocation", () => `No location named ${locationName}`);
@@ -256,6 +267,7 @@ export function NetscriptSingularity(
     },
     universityCourse: function (universityName: any, className: any): any {
       helper.updateDynamicRam("universityCourse", getRamCost(player, "universityCourse"));
+      helper.checkSingularityAccess("universityCourse");
       if (player.isWorking) {
         const txt = player.singularityStopWork();
         workerScript.log("universityCourse", () => txt);
@@ -335,6 +347,7 @@ export function NetscriptSingularity(
 
     gymWorkout: function (gymName: any, stat: any): any {
       helper.updateDynamicRam("gymWorkout", getRamCost(player, "gymWorkout"));
+      helper.checkSingularityAccess("gymWorkout");
       if (player.isWorking) {
         const txt = player.singularityStopWork();
         workerScript.log("gymWorkout", () => txt);
@@ -433,6 +446,7 @@ export function NetscriptSingularity(
 
     travelToCity: function (cityname: any): any {
       helper.updateDynamicRam("travelToCity", getRamCost(player, "travelToCity"));
+      helper.checkSingularityAccess("travelToCity");
 
       switch (cityname) {
         case CityName.Aevum:
@@ -457,6 +471,7 @@ export function NetscriptSingularity(
 
     purchaseTor: function (): any {
       helper.updateDynamicRam("purchaseTor", getRamCost(player, "purchaseTor"));
+      helper.checkSingularityAccess("purchaseTor");
 
       if (player.hasTorRouter()) {
         workerScript.log("purchaseTor", () => "You already have a TOR router!");
@@ -488,6 +503,7 @@ export function NetscriptSingularity(
     },
     purchaseProgram: function (programName: any): any {
       helper.updateDynamicRam("purchaseProgram", getRamCost(player, "purchaseProgram"));
+      helper.checkSingularityAccess("purchaseProgram");
 
       if (!player.hasTorRouter()) {
         workerScript.log("purchaseProgram", () => "You do not have the TOR router.");
@@ -526,10 +542,12 @@ export function NetscriptSingularity(
     },
     getCurrentServer: function (): any {
       helper.updateDynamicRam("getCurrentServer", getRamCost(player, "getCurrentServer"));
+      helper.checkSingularityAccess("getCurrentServer");
       return player.getCurrentServer().hostname;
     },
     connect: function (hostname: any): any {
       helper.updateDynamicRam("connect", getRamCost(player, "connect"));
+      helper.checkSingularityAccess("connect");
       if (!hostname) {
         throw helper.makeRuntimeErrorMsg("connect", `Invalid hostname: '${hostname}'`);
       }
@@ -564,11 +582,13 @@ export function NetscriptSingularity(
     },
     manualHack: function (): any {
       helper.updateDynamicRam("manualHack", getRamCost(player, "manualHack"));
+      helper.checkSingularityAccess("manualHack");
       const server = player.getCurrentServer();
       return helper.hack(server.hostname, true);
     },
     installBackdoor: function (): any {
       helper.updateDynamicRam("installBackdoor", getRamCost(player, "installBackdoor"));
+      helper.checkSingularityAccess("installBackdoor");
       const baseserver = player.getCurrentServer();
       if (!(baseserver instanceof Server)) {
         workerScript.log("installBackdoor", () => "cannot backdoor this kind of server");
@@ -604,11 +624,13 @@ export function NetscriptSingularity(
     },
     isFocused: function (): boolean {
       helper.updateDynamicRam("isFocused", getRamCost(player, "isFocused"));
+      helper.checkSingularityAccess("isFocused");
       return player.focus;
     },
     setFocus: function (afocus: any): boolean {
       const focus = helper.boolean(afocus);
       helper.updateDynamicRam("setFocus", getRamCost(player, "setFocus"));
+      helper.checkSingularityAccess("setFocus");
       if (!player.isWorking) {
         throw helper.makeRuntimeErrorMsg("setFocus", "Not currently working");
       }
@@ -634,6 +656,7 @@ export function NetscriptSingularity(
     },
     getStats: function (): any {
       helper.updateDynamicRam("getStats", getRamCost(player, "getStats"));
+      helper.checkSingularityAccess("getStats");
       workerScript.log("getStats", () => `getStats is deprecated, please use getplayer`);
 
       return {
@@ -648,6 +671,7 @@ export function NetscriptSingularity(
     },
     getCharacterInformation: function (): any {
       helper.updateDynamicRam("getCharacterInformation", getRamCost(player, "getCharacterInformation"));
+      helper.checkSingularityAccess("getCharacterInformation");
       workerScript.log("getCharacterInformation", () => `getCharacterInformation is deprecated, please use getplayer`);
 
       return {
@@ -695,6 +719,7 @@ export function NetscriptSingularity(
     },
     hospitalize: function (): any {
       helper.updateDynamicRam("hospitalize", getRamCost(player, "hospitalize"));
+      helper.checkSingularityAccess("hospitalize");
       if (player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse) {
         workerScript.log("hospitalize", () => "Cannot go to the hospital because the player is busy.");
         return;
@@ -703,10 +728,12 @@ export function NetscriptSingularity(
     },
     isBusy: function (): any {
       helper.updateDynamicRam("isBusy", getRamCost(player, "isBusy"));
+      helper.checkSingularityAccess("isBusy");
       return player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse;
     },
     stopAction: function (): any {
       helper.updateDynamicRam("stopAction", getRamCost(player, "stopAction"));
+      helper.checkSingularityAccess("stopAction");
       if (player.isWorking) {
         if (player.focus) {
           Router.toTerminal();
@@ -719,6 +746,7 @@ export function NetscriptSingularity(
     },
     upgradeHomeCores: function (): any {
       helper.updateDynamicRam("upgradeHomeCores", getRamCost(player, "upgradeHomeCores"));
+      helper.checkSingularityAccess("upgradeHomeCores");
 
       // Check if we're at max cores
       const homeComputer = player.getHomeComputer();
@@ -748,11 +776,13 @@ export function NetscriptSingularity(
     },
     getUpgradeHomeCoresCost: function (): any {
       helper.updateDynamicRam("getUpgradeHomeCoresCost", getRamCost(player, "getUpgradeHomeCoresCost"));
+      helper.checkSingularityAccess("getUpgradeHomeCoresCost");
 
       return player.getUpgradeHomeCoresCost();
     },
     upgradeHomeRam: function (): any {
       helper.updateDynamicRam("upgradeHomeRam", getRamCost(player, "upgradeHomeRam"));
+      helper.checkSingularityAccess("upgradeHomeRam");
 
       // Check if we're at max RAM
       const homeComputer = player.getHomeComputer();
@@ -785,11 +815,13 @@ export function NetscriptSingularity(
     },
     getUpgradeHomeRamCost: function (): any {
       helper.updateDynamicRam("getUpgradeHomeRamCost", getRamCost(player, "getUpgradeHomeRamCost"));
+      helper.checkSingularityAccess("getUpgradeHomeRamCost");
 
       return player.getUpgradeHomeRamCost();
     },
     workForCompany: function (companyName: any, focus = true): any {
       helper.updateDynamicRam("workForCompany", getRamCost(player, "workForCompany"));
+      helper.checkSingularityAccess("workForCompany");
 
       // Sanitize input
       if (companyName == null) {
@@ -843,6 +875,7 @@ export function NetscriptSingularity(
     },
     applyToCompany: function (companyName: any, field: any): any {
       helper.updateDynamicRam("applyToCompany", getRamCost(player, "applyToCompany"));
+      helper.checkSingularityAccess("applyToCompany");
       getCompany("applyToCompany", companyName);
 
       player.location = companyName;
@@ -912,26 +945,31 @@ export function NetscriptSingularity(
     },
     getCompanyRep: function (companyName: any): any {
       helper.updateDynamicRam("getCompanyRep", getRamCost(player, "getCompanyRep"));
+      helper.checkSingularityAccess("getCompanyRep");
       const company = getCompany("getCompanyRep", companyName);
       return company.playerReputation;
     },
     getCompanyFavor: function (companyName: any): any {
       helper.updateDynamicRam("getCompanyFavor", getRamCost(player, "getCompanyFavor"));
+      helper.checkSingularityAccess("getCompanyFavor");
       const company = getCompany("getCompanyFavor", companyName);
       return company.favor;
     },
     getCompanyFavorGain: function (companyName: any): any {
       helper.updateDynamicRam("getCompanyFavorGain", getRamCost(player, "getCompanyFavorGain"));
+      helper.checkSingularityAccess("getCompanyFavorGain");
       const company = getCompany("getCompanyFavorGain", companyName);
       return company.getFavorGain();
     },
     checkFactionInvitations: function (): any {
       helper.updateDynamicRam("checkFactionInvitations", getRamCost(player, "checkFactionInvitations"));
+      helper.checkSingularityAccess("checkFactionInvitations");
       // Make a copy of player.factionInvitations
       return player.factionInvitations.slice();
     },
     joinFaction: function (name: any): any {
       helper.updateDynamicRam("joinFaction", getRamCost(player, "joinFaction"));
+      helper.checkSingularityAccess("joinFaction");
       getFaction("joinFaction", name);
 
       if (!player.factionInvitations.includes(name)) {
@@ -954,6 +992,7 @@ export function NetscriptSingularity(
     },
     workForFaction: function (name: any, type: any, focus = true): any {
       helper.updateDynamicRam("workForFaction", getRamCost(player, "workForFaction"));
+      helper.checkSingularityAccess("workForFaction");
       getFaction("workForFaction", name);
 
       // if the player is in a gang and the target faction is any of the gang faction, fail
@@ -1116,21 +1155,25 @@ export function NetscriptSingularity(
     },
     getFactionRep: function (name: any): any {
       helper.updateDynamicRam("getFactionRep", getRamCost(player, "getFactionRep"));
+      helper.checkSingularityAccess("getFactionRep");
       const faction = getFaction("getFactionRep", name);
       return faction.playerReputation;
     },
     getFactionFavor: function (name: any): any {
       helper.updateDynamicRam("getFactionFavor", getRamCost(player, "getFactionFavor"));
+      helper.checkSingularityAccess("getFactionFavor");
       const faction = getFaction("getFactionFavor", name);
       return faction.favor;
     },
     getFactionFavorGain: function (name: any): any {
       helper.updateDynamicRam("getFactionFavorGain", getRamCost(player, "getFactionFavorGain"));
+      helper.checkSingularityAccess("getFactionFavorGain");
       const faction = getFaction("getFactionFavorGain", name);
       return faction.getFavorGain();
     },
     donateToFaction: function (name: any, amt: any): any {
       helper.updateDynamicRam("donateToFaction", getRamCost(player, "donateToFaction"));
+      helper.checkSingularityAccess("donateToFaction");
       const faction = getFaction("donateToFaction", name);
 
       if (typeof amt !== "number" || amt <= 0) {
@@ -1167,6 +1210,7 @@ export function NetscriptSingularity(
     },
     createProgram: function (name: any): any {
       helper.updateDynamicRam("createProgram", getRamCost(player, "createProgram"));
+      helper.checkSingularityAccess("createProgram");
 
       if (player.isWorking) {
         const txt = player.singularityStopWork();
@@ -1207,6 +1251,7 @@ export function NetscriptSingularity(
     },
     commitCrime: function (crimeRoughName: any): any {
       helper.updateDynamicRam("commitCrime", getRamCost(player, "commitCrime"));
+      helper.checkSingularityAccess("commitCrime");
 
       if (player.isWorking) {
         const txt = player.singularityStopWork();
@@ -1226,6 +1271,7 @@ export function NetscriptSingularity(
     },
     getCrimeChance: function (crimeRoughName: any): any {
       helper.updateDynamicRam("getCrimeChance", getRamCost(player, "getCrimeChance"));
+      helper.checkSingularityAccess("getCrimeChance");
 
       const crime = findCrime(crimeRoughName.toLowerCase());
       if (crime == null) {
@@ -1236,6 +1282,7 @@ export function NetscriptSingularity(
     },
     getCrimeStats: function (crimeRoughName: any): any {
       helper.updateDynamicRam("getCrimeStats", getRamCost(player, "getCrimeStats"));
+      helper.checkSingularityAccess("getCrimeStats");
 
       const crime = findCrime(crimeRoughName.toLowerCase());
       if (crime == null) {

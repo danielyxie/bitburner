@@ -302,12 +302,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     return makeRuntimeRejectMsg(workerScript, rejectMsg);
   };
 
-  const checkSingularityAccess = function (func: any, n: any): void {
+  const checkSingularityAccess = function (func: string): void {
     if (Player.bitNodeN !== 4) {
-      if (SourceFileFlags[4] < n) {
+      if (Player.sourceFileLvl(4) === 0) {
         throw makeRuntimeErrorMsg(
           func,
-          `This singularity function requires Source-File 4-${n} to run. A power up you obtain later in the game. It will be very obvious when and how you can obtain it.`,
+          `This singularity function requires Source-File 4 to run. A power up you obtain later in the game. It will be very obvious when and how you can obtain it.`,
         );
       }
     }
@@ -1224,7 +1224,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
 
       // Create new script if it does not already exist
-      const newScript = new Script(scriptname);
+      const newScript = new Script(Player, scriptname);
       newScript.code = sourceScript.code;
       newScript.ramUsage = sourceScript.ramUsage;
       newScript.server = destServer.hostname;

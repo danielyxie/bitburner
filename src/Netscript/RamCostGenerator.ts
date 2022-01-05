@@ -205,6 +205,7 @@ export const RamCosts: IMap<any> = {
   prompt: 0,
   wget: 0,
   getFavorToDonate: RamCostConstants.ScriptGetFavorToDonate,
+  getPlayer: RamCostConstants.ScriptSingularityFn1RamCost / 4,
 
   // Singularity Functions
   universityCourse: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
@@ -219,7 +220,6 @@ export const RamCosts: IMap<any> = {
   installBackdoor: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   getStats: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   getCharacterInformation: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
-  getPlayer: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   hospitalize: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   isBusy: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   stopAction: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 2),
