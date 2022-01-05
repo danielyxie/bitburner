@@ -48,11 +48,12 @@ function promptForReload(window) {
 }
 
 function attachUnresponsiveAppHandler(window) {
-  window.on('unresponsive', () => promptForReload(window));
+  window.unresponsiveHandler = () => promptForReload(window);
+  window.on('unresponsive', window.unresponsiveHandler);
 }
 
 function detachUnresponsiveAppHandler(window) {
-  window.off('unresponsive', () => promptForReload(window));
+  window.off('unresponsive', window.unresponsiveHandler);
 }
 
 function showErrorBox(title, error) {
