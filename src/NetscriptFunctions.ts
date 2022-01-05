@@ -302,12 +302,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     return makeRuntimeRejectMsg(workerScript, rejectMsg);
   };
 
-  const checkSingularityAccess = function (func: any, n: any): void {
+  const checkSingularityAccess = function (func: string): void {
     if (Player.bitNodeN !== 4) {
-      if (SourceFileFlags[4] < n) {
+      if (Player.sourceFileLvl(4) === 0) {
         throw makeRuntimeErrorMsg(
           func,
-          `This singularity function requires Source-File 4-${n} to run. A power up you obtain later in the game. It will be very obvious when and how you can obtain it.`,
+          `This singularity function requires Source-File 4 to run. A power up you obtain later in the game. It will be very obvious when and how you can obtain it.`,
         );
       }
     }
@@ -443,7 +443,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getServer: safeGetServer,
     checkSingularityAccess: checkSingularityAccess,
     hack: hack,
-    getValidPort: (funcName:string, port: any): IPort => {
+    getValidPort: (funcName: string, port: any): IPort => {
       if (isNaN(port)) {
         throw makeRuntimeErrorMsg(
           funcName,
@@ -462,7 +462,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg(funcName, `Could not find port: ${port}. This is a bug. Report to dev.`);
       }
       return iport;
-    }
+    },
   };
 
   const gang = NetscriptGang(Player, workerScript, helper);
@@ -495,7 +495,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     sprintf: sprintf,
     vsprintf: vsprintf,
     scan: function (hostname: any = workerScript.hostname): any {
-      updateDynamicRam("scan", getRamCost("scan"));
+      updateDynamicRam("scan", getRamCost(Player, "scan"));
       const server = safeGetServer(hostname, "scan");
       const out = [];
       for (let i = 0; i < server.serversOnNetwork.length; i++) {
@@ -509,11 +509,11 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return out;
     },
     hack: function (hostname: any, { threads: requestedThreads, stock }: any = {}): any {
-      updateDynamicRam("hack", getRamCost("hack"));
+      updateDynamicRam("hack", getRamCost(Player, "hack"));
       return hack(hostname, false, { threads: requestedThreads, stock: stock });
     },
     hackAnalyzeThreads: function (hostname: any, hackAmount: any): any {
-      updateDynamicRam("hackAnalyzeThreads", getRamCost("hackAnalyzeThreads"));
+      updateDynamicRam("hackAnalyzeThreads", getRamCost(Player, "hackAnalyzeThreads"));
 
       // Check argument validity
       const server = safeGetServer(hostname, "hackAnalyzeThreads");
@@ -539,7 +539,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return hackAmount / Math.floor(server.moneyAvailable * percentHacked);
     },
     hackAnalyze: function (hostname: any): any {
-      updateDynamicRam("hackAnalyze", getRamCost("hackAnalyze"));
+      updateDynamicRam("hackAnalyze", getRamCost(Player, "hackAnalyze"));
 
       const server = safeGetServer(hostname, "hackAnalyze");
       if (!(server instanceof Server)) {
@@ -553,7 +553,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return CONSTANTS.ServerFortifyAmount * threads;
     },
     hackAnalyzeChance: function (hostname: any): any {
-      updateDynamicRam("hackAnalyzeChance", getRamCost("hackAnalyzeChance"));
+      updateDynamicRam("hackAnalyzeChance", getRamCost(Player, "hackAnalyzeChance"));
 
       const server = safeGetServer(hostname, "hackAnalyzeChance");
       if (!(server instanceof Server)) {
@@ -582,7 +582,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       });
     },
     grow: function (hostname: any, { threads: requestedThreads, stock }: any = {}): any {
-      updateDynamicRam("grow", getRamCost("grow"));
+      updateDynamicRam("grow", getRamCost(Player, "grow"));
       const threads = resolveNetscriptRequestedThreads(workerScript, "grow", requestedThreads);
       if (hostname === undefined) {
         throw makeRuntimeErrorMsg("grow", "Takes 1 argument.");
@@ -640,7 +640,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       });
     },
     growthAnalyze: function (hostname: any, growth: any, cores: any = 1): any {
-      updateDynamicRam("growthAnalyze", getRamCost("growthAnalyze"));
+      updateDynamicRam("growthAnalyze", getRamCost(Player, "growthAnalyze"));
 
       // Check argument validity
       const server = safeGetServer(hostname, "growthAnalyze");
@@ -658,7 +658,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return 2 * CONSTANTS.ServerFortifyAmount * threads;
     },
     weaken: function (hostname: any, { threads: requestedThreads }: any = {}): any {
-      updateDynamicRam("weaken", getRamCost("weaken"));
+      updateDynamicRam("weaken", getRamCost(Player, "weaken"));
       const threads = resolveNetscriptRequestedThreads(workerScript, "weaken", requestedThreads);
       if (hostname === undefined) {
         throw makeRuntimeErrorMsg("weaken", "Takes 1 argument.");
@@ -824,7 +824,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       LogBoxEvents.emit(runningScriptObj);
     },
     nuke: function (hostname: any): boolean {
-      updateDynamicRam("nuke", getRamCost("nuke"));
+      updateDynamicRam("nuke", getRamCost(Player, "nuke"));
       if (hostname === undefined) {
         throw makeRuntimeErrorMsg("nuke", "Takes 1 argument.");
       }
@@ -833,22 +833,22 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("nuke", () => "Cannot be executed on this server.");
         return false;
       }
+      if (server.hasAdminRights) {
+        workerScript.log("nuke", () => `Already have root access to '${server.hostname}'.`);
+        return true;
+      }
       if (!Player.hasProgram(Programs.NukeProgram.name)) {
         throw makeRuntimeErrorMsg("nuke", "You do not have the NUKE.exe virus!");
       }
       if (server.openPortCount < server.numOpenPortsRequired) {
         throw makeRuntimeErrorMsg("nuke", "Not enough ports opened to use NUKE.exe virus.");
       }
-      if (server.hasAdminRights) {
-        workerScript.log("nuke", () => `Already have root access to '${server.hostname}'.`);
-      } else {
-        server.hasAdminRights = true;
-        workerScript.log("nuke", () => `Executed NUKE.exe virus on '${server.hostname}' to gain root access.`);
-      }
+      server.hasAdminRights = true;
+      workerScript.log("nuke", () => `Executed NUKE.exe virus on '${server.hostname}' to gain root access.`);
       return true;
     },
     brutessh: function (hostname: any): boolean {
-      updateDynamicRam("brutessh", getRamCost("brutessh"));
+      updateDynamicRam("brutessh", getRamCost(Player, "brutessh"));
       if (hostname === undefined) {
         throw makeRuntimeErrorMsg("brutessh", "Takes 1 argument.");
       }
@@ -870,7 +870,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return true;
     },
     ftpcrack: function (hostname: any): boolean {
-      updateDynamicRam("ftpcrack", getRamCost("ftpcrack"));
+      updateDynamicRam("ftpcrack", getRamCost(Player, "ftpcrack"));
       if (hostname === undefined) {
         throw makeRuntimeErrorMsg("ftpcrack", "Takes 1 argument.");
       }
@@ -892,7 +892,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return true;
     },
     relaysmtp: function (hostname: any): boolean {
-      updateDynamicRam("relaysmtp", getRamCost("relaysmtp"));
+      updateDynamicRam("relaysmtp", getRamCost(Player, "relaysmtp"));
       if (hostname === undefined) {
         throw makeRuntimeErrorMsg("relaysmtp", "Takes 1 argument.");
       }
@@ -914,7 +914,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return true;
     },
     httpworm: function (hostname: any): boolean {
-      updateDynamicRam("httpworm", getRamCost("httpworm"));
+      updateDynamicRam("httpworm", getRamCost(Player, "httpworm"));
       if (hostname === undefined) {
         throw makeRuntimeErrorMsg("httpworm", "Takes 1 argument");
       }
@@ -936,7 +936,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return true;
     },
     sqlinject: function (hostname: any): boolean {
-      updateDynamicRam("sqlinject", getRamCost("sqlinject"));
+      updateDynamicRam("sqlinject", getRamCost(Player, "sqlinject"));
       if (hostname === undefined) {
         throw makeRuntimeErrorMsg("sqlinject", "Takes 1 argument.");
       }
@@ -958,7 +958,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return true;
     },
     run: function (scriptname: any, threads: any = 1, ...args: any[]): any {
-      updateDynamicRam("run", getRamCost("run"));
+      updateDynamicRam("run", getRamCost(Player, "run"));
       if (scriptname === undefined) {
         throw makeRuntimeErrorMsg("run", "Usage: run(scriptname, [numThreads], [arg1], [arg2]...)");
       }
@@ -970,10 +970,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("run", "Could not find server. This is a bug. Report to dev.");
       }
 
-      return runScriptFromScript("run", scriptServer, scriptname, args, workerScript, threads);
+      return runScriptFromScript(Player, "run", scriptServer, scriptname, args, workerScript, threads);
     },
     exec: function (scriptname: any, hostname: any, threads: any = 1, ...args: any[]): any {
-      updateDynamicRam("exec", getRamCost("exec"));
+      updateDynamicRam("exec", getRamCost(Player, "exec"));
       if (scriptname === undefined || hostname === undefined) {
         throw makeRuntimeErrorMsg("exec", "Usage: exec(scriptname, server, [numThreads], [arg1], [arg2]...)");
       }
@@ -981,10 +981,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("exec", `Invalid thread count. Must be numeric and > 0, is ${threads}`);
       }
       const server = safeGetServer(hostname, "exec");
-      return runScriptFromScript("exec", server, scriptname, args, workerScript, threads);
+      return runScriptFromScript(Player, "exec", server, scriptname, args, workerScript, threads);
     },
     spawn: function (scriptname: any, threads: any = 1, ...args: any[]): any {
-      updateDynamicRam("spawn", getRamCost("spawn"));
+      updateDynamicRam("spawn", getRamCost(Player, "spawn"));
       if (!scriptname || !threads) {
         throw makeRuntimeErrorMsg("spawn", "Usage: spawn(scriptname, threads)");
       }
@@ -999,7 +999,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           throw makeRuntimeErrorMsg("spawn", "Could not find server. This is a bug. Report to dev");
         }
 
-        return runScriptFromScript("spawn", scriptServer, scriptname, args, workerScript, threads);
+        return runScriptFromScript(Player, "spawn", scriptServer, scriptname, args, workerScript, threads);
       }, spawnDelay * 1e3);
 
       workerScript.log("spawn", () => `Will execute '${scriptname}' in ${spawnDelay} seconds`);
@@ -1010,7 +1010,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
     },
     kill: function (filename: any, hostname?: any, ...scriptArgs: any): any {
-      updateDynamicRam("kill", getRamCost("kill"));
+      updateDynamicRam("kill", getRamCost(Player, "kill"));
 
       let res;
       const killByPid = typeof filename === "number";
@@ -1056,7 +1056,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
     },
     killall: function (hostname: any = workerScript.hostname): any {
-      updateDynamicRam("killall", getRamCost("killall"));
+      updateDynamicRam("killall", getRamCost(Player, "killall"));
       if (hostname === undefined) {
         throw makeRuntimeErrorMsg("killall", "Takes 1 argument");
       }
@@ -1082,7 +1082,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
     },
     scp: async function (scriptname: any, hostname1: any, hostname2: any): Promise<boolean> {
-      updateDynamicRam("scp", getRamCost("scp"));
+      updateDynamicRam("scp", getRamCost(Player, "scp"));
       if (arguments.length !== 2 && arguments.length !== 3) {
         throw makeRuntimeErrorMsg("scp", "Takes 2 or 3 arguments");
       }
@@ -1224,7 +1224,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
 
       // Create new script if it does not already exist
-      const newScript = new Script(scriptname);
+      const newScript = new Script(Player, scriptname);
       newScript.code = sourceScript.code;
       newScript.ramUsage = sourceScript.ramUsage;
       newScript.server = destServer.hostname;
@@ -1235,11 +1235,11 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           resolve(false);
           return;
         }
-        newScript.updateRamUsage(destServer.scripts).then(() => resolve(true));
+        newScript.updateRamUsage(Player, destServer.scripts).then(() => resolve(true));
       });
     },
     ls: function (hostname: any, grep: any): any {
-      updateDynamicRam("ls", getRamCost("ls"));
+      updateDynamicRam("ls", getRamCost(Player, "ls"));
       if (hostname === undefined) {
         throw makeRuntimeErrorMsg("ls", "Usage: ls(hostname/ip, [grep filter])");
       }
@@ -1306,7 +1306,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return allFiles;
     },
     ps: function (hostname: any = workerScript.hostname): any {
-      updateDynamicRam("ps", getRamCost("ps"));
+      updateDynamicRam("ps", getRamCost(Player, "ps"));
       const server = safeGetServer(hostname, "ps");
       const processes = [];
       for (const i in server.runningScripts) {
@@ -1321,7 +1321,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return processes;
     },
     hasRootAccess: function (hostname: any): any {
-      updateDynamicRam("hasRootAccess", getRamCost("hasRootAccess"));
+      updateDynamicRam("hasRootAccess", getRamCost(Player, "hasRootAccess"));
       if (hostname === undefined) {
         throw makeRuntimeErrorMsg("hasRootAccess", "Takes 1 argument");
       }
@@ -1329,7 +1329,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return server.hasAdminRights;
     },
     getHostname: function (): any {
-      updateDynamicRam("getHostname", getRamCost("getHostname"));
+      updateDynamicRam("getHostname", getRamCost(Player, "getHostname"));
       const scriptServer = GetServer(workerScript.hostname);
       if (scriptServer == null) {
         throw makeRuntimeErrorMsg("getHostname", "Could not find server. This is a bug. Report to dev.");
@@ -1337,13 +1337,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return scriptServer.hostname;
     },
     getHackingLevel: function (): any {
-      updateDynamicRam("getHackingLevel", getRamCost("getHackingLevel"));
+      updateDynamicRam("getHackingLevel", getRamCost(Player, "getHackingLevel"));
       Player.updateSkillLevels();
       workerScript.log("getHackingLevel", () => `returned ${Player.hacking}`);
       return Player.hacking;
     },
     getHackingMultipliers: function (): any {
-      updateDynamicRam("getHackingMultipliers", getRamCost("getHackingMultipliers"));
+      updateDynamicRam("getHackingMultipliers", getRamCost(Player, "getHackingMultipliers"));
       return {
         chance: Player.hacking_chance_mult,
         speed: Player.hacking_speed_mult,
@@ -1352,7 +1352,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       };
     },
     getHacknetMultipliers: function (): any {
-      updateDynamicRam("getHacknetMultipliers", getRamCost("getHacknetMultipliers"));
+      updateDynamicRam("getHacknetMultipliers", getRamCost(Player, "getHacknetMultipliers"));
       return {
         production: Player.hacknet_node_money_mult,
         purchaseCost: Player.hacknet_node_purchase_cost_mult,
@@ -1362,7 +1362,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       };
     },
     getBitNodeMultipliers: function (): any {
-      updateDynamicRam("getBitNodeMultipliers", getRamCost("getBitNodeMultipliers"));
+      updateDynamicRam("getBitNodeMultipliers", getRamCost(Player, "getBitNodeMultipliers"));
       if (SourceFileFlags[5] <= 0 && Player.bitNodeN !== 5) {
         throw makeRuntimeErrorMsg("getBitNodeMultipliers", "Requires Source-File 5 to run.");
       }
@@ -1370,7 +1370,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return copy;
     },
     getServer: function (hostname: any = workerScript.hostname): any {
-      updateDynamicRam("getServer", getRamCost("getServer"));
+      updateDynamicRam("getServer", getRamCost(Player, "getServer"));
       const server = safeGetServer(hostname, "getServer");
       const copy = Object.assign({}, server) as any;
       // These fields should be hidden.
@@ -1393,7 +1393,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return copy;
     },
     getServerMoneyAvailable: function (hostname: any): any {
-      updateDynamicRam("getServerMoneyAvailable", getRamCost("getServerMoneyAvailable"));
+      updateDynamicRam("getServerMoneyAvailable", getRamCost(Player, "getServerMoneyAvailable"));
       const server = safeGetServer(hostname, "getServerMoneyAvailable");
       if (!(server instanceof Server)) {
         workerScript.log("getServerMoneyAvailable", () => "Cannot be executed on this server.");
@@ -1417,7 +1417,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return server.moneyAvailable;
     },
     getServerSecurityLevel: function (hostname: any): any {
-      updateDynamicRam("getServerSecurityLevel", getRamCost("getServerSecurityLevel"));
+      updateDynamicRam("getServerSecurityLevel", getRamCost(Player, "getServerSecurityLevel"));
       const server = safeGetServer(hostname, "getServerSecurityLevel");
       if (!(server instanceof Server)) {
         workerScript.log("getServerSecurityLevel", () => "Cannot be executed on this server.");
@@ -1433,7 +1433,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return server.hackDifficulty;
     },
     getServerBaseSecurityLevel: function (hostname: any): any {
-      updateDynamicRam("getServerBaseSecurityLevel", getRamCost("getServerBaseSecurityLevel"));
+      updateDynamicRam("getServerBaseSecurityLevel", getRamCost(Player, "getServerBaseSecurityLevel"));
       workerScript.log(
         "getServerBaseSecurityLevel",
         () => `getServerBaseSecurityLevel is deprecated because it's not useful.`,
@@ -1453,7 +1453,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return server.baseDifficulty;
     },
     getServerMinSecurityLevel: function (hostname: any): any {
-      updateDynamicRam("getServerMinSecurityLevel", getRamCost("getServerMinSecurityLevel"));
+      updateDynamicRam("getServerMinSecurityLevel", getRamCost(Player, "getServerMinSecurityLevel"));
       const server = safeGetServer(hostname, "getServerMinSecurityLevel");
       if (!(server instanceof Server)) {
         workerScript.log("getServerMinSecurityLevel", () => "Cannot be executed on this server.");
@@ -1469,7 +1469,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return server.minDifficulty;
     },
     getServerRequiredHackingLevel: function (hostname: any): any {
-      updateDynamicRam("getServerRequiredHackingLevel", getRamCost("getServerRequiredHackingLevel"));
+      updateDynamicRam("getServerRequiredHackingLevel", getRamCost(Player, "getServerRequiredHackingLevel"));
       const server = safeGetServer(hostname, "getServerRequiredHackingLevel");
       if (!(server instanceof Server)) {
         workerScript.log("getServerRequiredHackingLevel", () => "Cannot be executed on this server.");
@@ -1485,7 +1485,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return server.requiredHackingSkill;
     },
     getServerMaxMoney: function (hostname: any): any {
-      updateDynamicRam("getServerMaxMoney", getRamCost("getServerMaxMoney"));
+      updateDynamicRam("getServerMaxMoney", getRamCost(Player, "getServerMaxMoney"));
       const server = safeGetServer(hostname, "getServerMaxMoney");
       if (!(server instanceof Server)) {
         workerScript.log("getServerMaxMoney", () => "Cannot be executed on this server.");
@@ -1501,7 +1501,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return server.moneyMax;
     },
     getServerGrowth: function (hostname: any): any {
-      updateDynamicRam("getServerGrowth", getRamCost("getServerGrowth"));
+      updateDynamicRam("getServerGrowth", getRamCost(Player, "getServerGrowth"));
       const server = safeGetServer(hostname, "getServerGrowth");
       if (!(server instanceof Server)) {
         workerScript.log("getServerGrowth", () => "Cannot be executed on this server.");
@@ -1514,7 +1514,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return server.serverGrowth;
     },
     getServerNumPortsRequired: function (hostname: any): any {
-      updateDynamicRam("getServerNumPortsRequired", getRamCost("getServerNumPortsRequired"));
+      updateDynamicRam("getServerNumPortsRequired", getRamCost(Player, "getServerNumPortsRequired"));
       const server = safeGetServer(hostname, "getServerNumPortsRequired");
       if (!(server instanceof Server)) {
         workerScript.log("getServerNumPortsRequired", () => "Cannot be executed on this server.");
@@ -1530,7 +1530,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return server.numOpenPortsRequired;
     },
     getServerRam: function (hostname: any): any {
-      updateDynamicRam("getServerRam", getRamCost("getServerRam"));
+      updateDynamicRam("getServerRam", getRamCost(Player, "getServerRam"));
       workerScript.log(
         "getServerRam",
         () => `getServerRam is deprecated in favor of getServerMaxRam / getServerUsedRam`,
@@ -1543,23 +1543,23 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return [server.maxRam, server.ramUsed];
     },
     getServerMaxRam: function (hostname: any): any {
-      updateDynamicRam("getServerMaxRam", getRamCost("getServerMaxRam"));
+      updateDynamicRam("getServerMaxRam", getRamCost(Player, "getServerMaxRam"));
       const server = safeGetServer(hostname, "getServerMaxRam");
       workerScript.log("getServerMaxRam", () => `returned ${numeralWrapper.formatRAM(server.maxRam)}`);
       return server.maxRam;
     },
     getServerUsedRam: function (hostname: any): any {
-      updateDynamicRam("getServerUsedRam", getRamCost("getServerUsedRam"));
+      updateDynamicRam("getServerUsedRam", getRamCost(Player, "getServerUsedRam"));
       const server = safeGetServer(hostname, "getServerUsedRam");
       workerScript.log("getServerUsedRam", () => `returned ${numeralWrapper.formatRAM(server.ramUsed)}`);
       return server.ramUsed;
     },
     serverExists: function (hostname: any): any {
-      updateDynamicRam("serverExists", getRamCost("serverExists"));
+      updateDynamicRam("serverExists", getRamCost(Player, "serverExists"));
       return GetServer(hostname) !== null;
     },
     fileExists: function (filename: any, hostname: any = workerScript.hostname): any {
-      updateDynamicRam("fileExists", getRamCost("fileExists"));
+      updateDynamicRam("fileExists", getRamCost(Player, "fileExists"));
       if (filename === undefined) {
         throw makeRuntimeErrorMsg("fileExists", "Usage: fileExists(scriptname, [server])");
       }
@@ -1586,7 +1586,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return false;
     },
     isRunning: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any): any {
-      updateDynamicRam("isRunning", getRamCost("isRunning"));
+      updateDynamicRam("isRunning", getRamCost(Player, "isRunning"));
       if (fn === undefined || hostname === undefined) {
         throw makeRuntimeErrorMsg("isRunning", "Usage: isRunning(scriptname, server, [arg1], [arg2]...)");
       }
@@ -1597,17 +1597,17 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
     },
     getPurchasedServerLimit: function (): any {
-      updateDynamicRam("getPurchasedServerLimit", getRamCost("getPurchasedServerLimit"));
+      updateDynamicRam("getPurchasedServerLimit", getRamCost(Player, "getPurchasedServerLimit"));
 
       return getPurchaseServerLimit();
     },
     getPurchasedServerMaxRam: function (): any {
-      updateDynamicRam("getPurchasedServerMaxRam", getRamCost("getPurchasedServerMaxRam"));
+      updateDynamicRam("getPurchasedServerMaxRam", getRamCost(Player, "getPurchasedServerMaxRam"));
 
       return getPurchaseServerMaxRam();
     },
     getPurchasedServerCost: function (ram: any): any {
-      updateDynamicRam("getPurchasedServerCost", getRamCost("getPurchasedServerCost"));
+      updateDynamicRam("getPurchasedServerCost", getRamCost(Player, "getPurchasedServerCost"));
 
       const cost = getPurchaseServerCost(ram);
       if (cost === Infinity) {
@@ -1620,7 +1620,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     purchaseServer: function (aname: any, aram: any): any {
       const name = helper.string("purchaseServer", "name", aname);
       const ram = helper.number("purchaseServer", "ram", aram);
-      updateDynamicRam("purchaseServer", getRamCost("purchaseServer"));
+      updateDynamicRam("purchaseServer", getRamCost(Player, "purchaseServer"));
       let hostnameStr = String(name);
       hostnameStr = hostnameStr.replace(/\s+/g, "");
       if (hostnameStr == "") {
@@ -1673,7 +1673,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return newServ.hostname;
     },
     deleteServer: function (name: any): any {
-      updateDynamicRam("deleteServer", getRamCost("deleteServer"));
+      updateDynamicRam("deleteServer", getRamCost(Player, "deleteServer"));
       let hostnameStr = String(name);
       hostnameStr = hostnameStr.replace(/\s\s+/g, "");
       const server = GetServer(hostnameStr);
@@ -1749,7 +1749,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return false;
     },
     getPurchasedServers: function (): any {
-      updateDynamicRam("getPurchasedServers", getRamCost("getPurchasedServers"));
+      updateDynamicRam("getPurchasedServers", getRamCost(Player, "getPurchasedServers"));
       const res: string[] = [];
       Player.purchasedServers.forEach(function (hostname) {
         res.push(hostname);
@@ -1767,7 +1767,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return Promise.resolve(iport.write(data));
     },
     write: function (port: any, data: any = "", mode: any = "a"): any {
-      updateDynamicRam("write", getRamCost("write"));
+      updateDynamicRam("write", getRamCost(Player, "write"));
       if (isString(port)) {
         // Write to script or text file
         let fn = port;
@@ -1795,12 +1795,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           let script = workerScript.getScriptOnServer(fn, server);
           if (script == null) {
             // Create a new script
-            script = new Script(fn, data, server.hostname, server.scripts);
+            script = new Script(Player, fn, data, server.hostname, server.scripts);
             server.scripts.push(script);
-            return script.updateRamUsage(server.scripts);
+            return script.updateRamUsage(Player, server.scripts);
           }
           mode === "w" ? (script.code = data) : (script.code += data);
-          return script.updateRamUsage(server.scripts);
+          return script.updateRamUsage(Player, server.scripts);
         } else {
           // Write to text file
           const txtFile = getTextFile(fn, server);
@@ -1820,7 +1820,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
     },
     tryWritePort: function (port: any, data: any = ""): any {
-      updateDynamicRam("tryWritePort", getRamCost("tryWritePort"));
+      updateDynamicRam("tryWritePort", getRamCost(Player, "tryWritePort"));
       if (!isNaN(port)) {
         port = Math.round(port);
         if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
@@ -1845,7 +1845,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return x;
     },
     read: function (port: any): any {
-      updateDynamicRam("read", getRamCost("read"));
+      updateDynamicRam("read", getRamCost(Player, "read"));
       if (isString(port)) {
         // Read from script or text file
         const fn = port;
@@ -1874,13 +1874,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
     },
     peek: function (port: any): any {
-      updateDynamicRam("peek", getRamCost("peek"));
+      updateDynamicRam("peek", getRamCost(Player, "peek"));
       const iport = helper.getValidPort("peek", port);
       const x = iport.peek();
       return x;
     },
     clear: function (file: any): any {
-      updateDynamicRam("clear", getRamCost("clear"));
+      updateDynamicRam("clear", getRamCost(Player, "clear"));
       if (isString(file)) {
         // Clear text file
         const fn = file;
@@ -1903,12 +1903,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return iport.clear();
     },
     getPortHandle: function (port: any): any {
-      updateDynamicRam("getPortHandle", getRamCost("getPortHandle"));
+      updateDynamicRam("getPortHandle", getRamCost(Player, "getPortHandle"));
       const iport = helper.getValidPort("getPortHandle", port);
       return iport;
     },
     rm: function (fn: any, hostname: any): any {
-      updateDynamicRam("rm", getRamCost("rm"));
+      updateDynamicRam("rm", getRamCost(Player, "rm"));
 
       if (hostname == null || hostname === "") {
         hostname = workerScript.hostname;
@@ -1923,7 +1923,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return status.res;
     },
     scriptRunning: function (scriptname: any, hostname: any): any {
-      updateDynamicRam("scriptRunning", getRamCost("scriptRunning"));
+      updateDynamicRam("scriptRunning", getRamCost(Player, "scriptRunning"));
       const server = safeGetServer(hostname, "scriptRunning");
       for (let i = 0; i < server.runningScripts.length; ++i) {
         if (server.runningScripts[i].filename == scriptname) {
@@ -1933,7 +1933,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return false;
     },
     scriptKill: function (scriptname: any, hostname: any): any {
-      updateDynamicRam("scriptKill", getRamCost("scriptKill"));
+      updateDynamicRam("scriptKill", getRamCost(Player, "scriptKill"));
       const server = safeGetServer(hostname, "scriptKill");
       let suc = false;
       for (let i = 0; i < server.runningScripts.length; i++) {
@@ -1949,7 +1949,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return workerScript.name;
     },
     getScriptRam: function (scriptname: any, hostname: any = workerScript.hostname): any {
-      updateDynamicRam("getScriptRam", getRamCost("getScriptRam"));
+      updateDynamicRam("getScriptRam", getRamCost(Player, "getScriptRam"));
       const server = safeGetServer(hostname, "getScriptRam");
       for (let i = 0; i < server.scripts.length; ++i) {
         if (server.scripts[i].filename == scriptname) {
@@ -1959,7 +1959,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return 0;
     },
     getRunningScript: function (fn: any, hostname: any, ...args: any[]): any {
-      updateDynamicRam("getRunningScript", getRamCost("getRunningScript"));
+      updateDynamicRam("getRunningScript", getRamCost(Player, "getRunningScript"));
 
       let runningScript;
       if (fn === undefined && hostname === undefined && args.length === 0) {
@@ -1987,7 +1987,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       };
     },
     getHackTime: function (hostname: any): any {
-      updateDynamicRam("getHackTime", getRamCost("getHackTime"));
+      updateDynamicRam("getHackTime", getRamCost(Player, "getHackTime"));
       const server = safeGetServer(hostname, "getHackTime");
       if (!(server instanceof Server)) {
         workerScript.log("getHackTime", () => "invalid for this kind of server");
@@ -2000,7 +2000,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return calculateHackingTime(server, Player) * 1000;
     },
     getGrowTime: function (hostname: any): any {
-      updateDynamicRam("getGrowTime", getRamCost("getGrowTime"));
+      updateDynamicRam("getGrowTime", getRamCost(Player, "getGrowTime"));
       const server = safeGetServer(hostname, "getGrowTime");
       if (!(server instanceof Server)) {
         workerScript.log("getGrowTime", () => "invalid for this kind of server");
@@ -2013,7 +2013,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return calculateGrowTime(server, Player) * 1000;
     },
     getWeakenTime: function (hostname: any): any {
-      updateDynamicRam("getWeakenTime", getRamCost("getWeakenTime"));
+      updateDynamicRam("getWeakenTime", getRamCost(Player, "getWeakenTime"));
       const server = safeGetServer(hostname, "getWeakenTime");
       if (!(server instanceof Server)) {
         workerScript.log("getWeakenTime", () => "invalid for this kind of server");
@@ -2026,7 +2026,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return calculateWeakenTime(server, Player) * 1000;
     },
     getScriptIncome: function (scriptname?: any, hostname?: any, ...args: any[]): any {
-      updateDynamicRam("getScriptIncome", getRamCost("getScriptIncome"));
+      updateDynamicRam("getScriptIncome", getRamCost(Player, "getScriptIncome"));
       if (arguments.length === 0) {
         const res = [];
 
@@ -2055,7 +2055,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
     },
     getScriptExpGain: function (scriptname?: any, hostname?: any, ...args: any[]): any {
-      updateDynamicRam("getScriptExpGain", getRamCost("getScriptExpGain"));
+      updateDynamicRam("getScriptExpGain", getRamCost(Player, "getScriptExpGain"));
       if (arguments.length === 0) {
         let total = 0;
         for (const ws of workerScripts.values()) {
@@ -2087,7 +2087,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return convertTimeMsToTimeElapsedString(milliseconds, milliPrecision);
     },
     getTimeSinceLastAug: function (): any {
-      updateDynamicRam("getTimeSinceLastAug", getRamCost("getTimeSinceLastAug"));
+      updateDynamicRam("getTimeSinceLastAug", getRamCost(Player, "getTimeSinceLastAug"));
       return Player.playtimeSinceLastAug;
     },
     alert: function (message: any): void {
@@ -2125,7 +2125,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           function (data) {
             let res;
             if (isScriptFilename(target)) {
-              res = s.writeToScriptFile(target, data);
+              res = s.writeToScriptFile(Player, target, data);
             } else {
               res = s.writeToTextFile(target, data);
             }
@@ -2151,11 +2151,11 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       });
     },
     getFavorToDonate: function (): any {
-      updateDynamicRam("getFavorToDonate", getRamCost("getFavorToDonate"));
+      updateDynamicRam("getFavorToDonate", getRamCost(Player, "getFavorToDonate"));
       return Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
     },
     getOwnedSourceFiles: function (): SourceFileLvl[] {
-      helper.updateDynamicRam("getOwnedSourceFiles", getRamCost("getOwnedSourceFiles"));
+      helper.updateDynamicRam("getOwnedSourceFiles", getRamCost(Player, "getOwnedSourceFiles"));
       const res: SourceFileLvl[] = [];
       for (let i = 0; i < Player.sourceFiles.length; ++i) {
         res.push({
@@ -2166,7 +2166,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return res;
     },
     getPlayer: function (): INetscriptPlayer {
-      helper.updateDynamicRam("getPlayer", getRamCost("getPlayer"));
+      helper.updateDynamicRam("getPlayer", getRamCost(Player, "getPlayer"));
 
       const data = {
         hacking: Player.hacking,

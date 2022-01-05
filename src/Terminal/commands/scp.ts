@@ -94,7 +94,7 @@ export function scp(
       return;
     }
 
-    const sRes = destServer.writeToScriptFile(scriptname, sourceScript.code);
+    const sRes = destServer.writeToScriptFile(player, scriptname, sourceScript.code);
     if (!sRes.success) {
       terminal.error(`scp failed`);
       return;

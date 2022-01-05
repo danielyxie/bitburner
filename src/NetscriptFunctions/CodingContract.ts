@@ -31,7 +31,7 @@ export function NetscriptCodingContract(
       hostname: any = workerScript.hostname,
       { returnReward }: any = {},
     ): boolean | string {
-      helper.updateDynamicRam("attempt", getRamCost("codingcontract", "attempt"));
+      helper.updateDynamicRam("attempt", getRamCost(player, "codingcontract", "attempt"));
       const contract = getCodingContract("attempt", hostname, filename);
 
       // Convert answer to string. If the answer is a 2D array, then we have to
@@ -78,12 +78,12 @@ export function NetscriptCodingContract(
       }
     },
     getContractType: function (filename: any, hostname: any = workerScript.hostname): string {
-      helper.updateDynamicRam("getContractType", getRamCost("codingcontract", "getContractType"));
+      helper.updateDynamicRam("getContractType", getRamCost(player, "codingcontract", "getContractType"));
       const contract = getCodingContract("getContractType", hostname, filename);
       return contract.getType();
     },
     getData: function (filename: any, hostname: any = workerScript.hostname): any {
-      helper.updateDynamicRam("getData", getRamCost("codingcontract", "getData"));
+      helper.updateDynamicRam("getData", getRamCost(player, "codingcontract", "getData"));
       const contract = getCodingContract("getData", hostname, filename);
       const data = contract.getData();
       if (data.constructor === Array) {
@@ -103,12 +103,12 @@ export function NetscriptCodingContract(
       }
     },
     getDescription: function (filename: any, hostname: any = workerScript.hostname): string {
-      helper.updateDynamicRam("getDescription", getRamCost("codingcontract", "getDescription"));
+      helper.updateDynamicRam("getDescription", getRamCost(player, "codingcontract", "getDescription"));
       const contract = getCodingContract("getDescription", hostname, filename);
       return contract.getDescription();
     },
     getNumTriesRemaining: function (filename: any, hostname: any = workerScript.hostname): number {
-      helper.updateDynamicRam("getNumTriesRemaining", getRamCost("codingcontract", "getNumTriesRemaining"));
+      helper.updateDynamicRam("getNumTriesRemaining", getRamCost(player, "codingcontract", "getNumTriesRemaining"));
       const contract = getCodingContract("getNumTriesRemaining", hostname, filename);
       return contract.getMaxNumTries() - contract.tries;
     },

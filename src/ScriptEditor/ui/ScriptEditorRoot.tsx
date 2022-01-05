@@ -226,7 +226,7 @@ export function Root(props: IProps): React.ReactElement {
     }
     setUpdatingRam(true);
     const codeCopy = newCode + "";
-    const ramUsage = await calculateRamUsage(codeCopy, props.player.getCurrentServer().scripts);
+    const ramUsage = await calculateRamUsage(props.player, codeCopy, props.player.getCurrentServer().scripts);
     if (ramUsage > 0) {
       debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage));
       return;
@@ -431,6 +431,7 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.scripts.length; i++) {
         if (scriptToSave.fileName == server.scripts[i].filename) {
           server.scripts[i].saveScript(
+            props.player,
             scriptToSave.fileName,
             scriptToSave.code,
             props.player.currentServer,
@@ -444,7 +445,13 @@ export function Root(props: IProps): React.ReactElement {
 
       //If the current script does NOT exist, create a new one
       const script = new Script();
-      script.saveScript(scriptToSave.fileName, scriptToSave.code, props.player.currentServer, server.scripts);
+      script.saveScript(
+        props.player,
+        scriptToSave.fileName,
+        scriptToSave.code,
+        props.player.currentServer,
+        server.scripts,
+      );
       server.scripts.push(script);
     } else if (scriptToSave.fileName.endsWith(".txt")) {
       for (let i = 0; i < server.textFiles.length; ++i) {
@@ -510,6 +517,7 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.scripts.length; i++) {
         if (currentScript.fileName == server.scripts[i].filename) {
           server.scripts[i].saveScript(
+            props.player,
             currentScript.fileName,
             currentScript.code,
             props.player.currentServer,
@@ -522,7 +530,13 @@ export function Root(props: IProps): React.ReactElement {
 
       //If the current script does NOT exist, create a new one
       const script = new Script();
-      script.saveScript(currentScript.fileName, currentScript.code, props.player.currentServer, server.scripts);
+      script.saveScript(
+        props.player,
+        currentScript.fileName,
+        currentScript.code,
+        props.player.currentServer,
+        server.scripts,
+      );
       server.scripts.push(script);
     } else if (currentScript.fileName.endsWith(".txt")) {
       for (let i = 0; i < server.textFiles.length; ++i) {

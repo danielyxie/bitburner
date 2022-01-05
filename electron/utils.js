@@ -5,6 +5,9 @@ const log = require("electron-log");
 const achievements = require("./achievements");
 const api = require("./api-server");
 
+const Config = require("electron-config");
+const config = new Config();
+
 function reloadAndKill(window, killScripts) {
   const setStopProcessHandler = global.app_handlers.stopProcess
   const createWindowHandler = global.app_handlers.createWindow;
@@ -48,11 +51,12 @@ function promptForReload(window) {
 }
 
 function attachUnresponsiveAppHandler(window) {
-  window.on('unresponsive', () => promptForReload(window));
+  window.unresponsiveHandler = () => promptForReload(window);
+  window.on('unresponsive', window.unresponsiveHandler);
 }
 
 function detachUnresponsiveAppHandler(window) {
-  window.off('unresponsive', () => promptForReload(window));
+  window.off('unresponsive', window.unresponsiveHandler);
 }
 
 function showErrorBox(title, error) {
@@ -108,8 +112,23 @@ function openExternal(url) {
   global.app_playerOpenedExternalLink = true;
 }
 
+function getZoomFactor() {
+  const configZoom = config.get('zoom', 1);
+  return configZoom;
+}
+
+function setZoomFactor(window, zoom = null) {
+  if (zoom === null) {
+    zoom = 1;
+  } else {
+    config.set('zoom', zoom);
+  }
+  window.webContents.setZoomFactor(zoom);
+}
+
 module.exports = {
   reloadAndKill, showErrorBox, exportSave,
   attachUnresponsiveAppHandler, detachUnresponsiveAppHandler,
   openExternal, writeTerminal, writeToast,
+  getZoomFactor, setZoomFactor,
 }

@@ -22,7 +22,7 @@ import { Server } from "./Server/Server";
 import { Router } from "./ui/GameRoot";
 import { Page } from "./ui/Router";
 import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
-import { Terminal } from './Terminal';
+import { Terminal } from "./Terminal";
 import { SnackbarEvents } from "./ui/React/Snackbar";
 import { IMap } from "./types";
 
@@ -418,7 +418,7 @@ function calculateAchievements(): void {
 
 export function initElectron(): void {
   const userAgent = navigator.userAgent.toLowerCase();
-  if (userAgent.indexOf(' electron/') > -1) {
+  if (userAgent.indexOf(" electron/") > -1) {
     // Electron-specific code
     setAchievements([]);
     initWebserver();
@@ -439,14 +439,14 @@ function initWebserver(): void {
       //If the current script already exists on the server, overwrite it
       for (let i = 0; i < home.scripts.length; i++) {
         if (filename == home.scripts[i].filename) {
-          home.scripts[i].saveScript(filename, code, "home", home.scripts);
+          home.scripts[i].saveScript(Player, filename, code, "home", home.scripts);
           return "written";
         }
       }
 
       //If the current script does NOT exist, create a new one
       const script = new Script();
-      script.saveScript(filename, code, "home", home.scripts);
+      script.saveScript(Player, filename, code, "home", home.scripts);
       home.scripts.push(script);
       return "written";
     }
@@ -463,16 +463,16 @@ function initAppNotifier(): void {
         info: Terminal.info,
         warn: Terminal.warn,
         error: Terminal.error,
-        success: Terminal.success
+        success: Terminal.success,
       };
       let fn;
       if (type) fn = typesFn[type];
       if (!fn) fn = Terminal.print;
       fn.bind(Terminal)(message);
     },
-    toast: (message: string, type: "info" | "success" | "warning" | "error" , duration = 2000) =>
+    toast: (message: string, type: "info" | "success" | "warning" | "error", duration = 2000) =>
       SnackbarEvents.emit(message, type, duration),
-  }
+  };
 
   // Will be consumud by the electron wrapper.
   // @ts-ignore

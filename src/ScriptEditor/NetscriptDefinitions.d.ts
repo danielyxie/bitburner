@@ -1321,10 +1321,10 @@ export interface Singularity {
 
   /**
    * SF4.1 - Workout at the gym.
-   * 
+   *
    * @remarks
    * RAM cost: 2 GB
-   * 
+   *
 
    * This function will automatically set you to start working out at a gym to train
    * a particular stat. If you are already in the middle of some “working” action
@@ -3833,6 +3833,27 @@ interface UserInterface {
    * @returns An object containing the theme's colors
    */
   getTheme(): UserInterfaceTheme;
+
+  /**
+   * Sets the current theme
+   * @remarks
+   * RAM cost: cost: 0 GB
+   * @example
+   * Usage example (NS2)
+   * ```ts
+   * const theme = ns.ui.getTheme();
+   * theme.primary = '#ff5500';
+   * ns.ui.setTheme(theme);
+   * ```
+   */
+  setTheme(newTheme: UserInterfaceTheme): void;
+
+  /**
+   * Resets the player's theme to the default values
+   * @remarks
+   * RAM cost: cost: 0 GB
+  */
+  resetTheme(): void;
 }
 
 /**
@@ -5508,12 +5529,12 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0.05 GB
    *
-   * Returns the amount of time in milliseconds it takes to execute the weaken() Netscript function on the target server.
+   * Returns the amount of time in milliseconds it takes to execute the weaken Netscript function on the target server.
    * The function takes in an optional hackLvl parameter that can be specified to see what the weaken time would be at different hacking levels.
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
-   * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
+   * @returns Returns the amount of time in milliseconds it takes to execute the weaken Netscript function. Returns Infinity if called on a Hacknet Server.
    */
   getWeakenTime(host: string): number;
 

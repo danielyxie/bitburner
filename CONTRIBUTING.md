@@ -6,7 +6,7 @@ The game is made better because the community as a whole speaks up about
 ways to improve the game. Here's some of the ways you can make your voice
 heard:
 
-- [Discord](https://discordapp.com)
+- [Discord](https://discord.gg/XKEGvHqVr3)
   There is a dedicated Discord instance set up for more free-form chats
   between all members of the community. Regular players, heavy scripters,
   Bitburner contributors, and everyone in between can be found on the

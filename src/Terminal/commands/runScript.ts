@@ -76,7 +76,7 @@ export function runScript(
     const runningScript = new RunningScript(script, args);
     runningScript.threads = numThreads;
 
-    const success = startWorkerScript(runningScript, server);
+    const success = startWorkerScript(player, runningScript, server);
     if (!success) {
       terminal.error(`Failed to start script`);
       return;
