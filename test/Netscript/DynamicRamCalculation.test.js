@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { jest, describe, expect, test } from '@jest/globals'
+import { jest, describe, expect, test } from "@jest/globals";
 
+import { Player } from "../../src/Player";
 import { NetscriptFunctions } from "../../src/NetscriptFunctions";
 import { getRamCost, RamCostConstants } from "../../src/Netscript/RamCostGenerator";
 import { Environment } from "../../src/Netscript/Environment";
@@ -8,7 +9,7 @@ import { RunningScript } from "../../src/Script/RunningScript";
 import { Script } from "../../src/Script/Script";
 import { SourceFileFlags } from "../../src/SourceFile/SourceFileFlags";
 
-jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => '', {
+jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
   virtual: true,
 });
 
@@ -19,7 +20,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
   async function createRunningScript(code) {
     const script = new Script();
     script.code = code;
-    await script.updateRamUsage([]);
+    await script.updateRamUsage(Player, []);
 
     const runningScript = new RunningScript(script);
 
@@ -52,7 +53,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
     if (!Array.isArray(fnDesc)) {
       throw new Error("Non-array passed to testNonzeroDynamicRamCost()");
     }
-    const expected = getRamCost(...fnDesc);
+    const expected = getRamCost(Player, ...fnDesc);
     expect(expected).toBeGreaterThan(0);
 
     const code = `${fnDesc.join(".")}();`;
@@ -117,7 +118,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
     if (!Array.isArray(fnDesc)) {
       throw new Error("Non-array passed to testZeroDynamicRamCost()");
     }
-    const expected = getRamCost(...fnDesc);
+    const expected = getRamCost(Player, ...fnDesc);
     expect(expected).toEqual(0);
     if (skipRun) return;
 
@@ -293,7 +294,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     it("exec()", async function () {
       const f = ["exec"];
-      jest.spyOn(console, 'log').mockImplementation(() => {}); // eslint-disable-line
+      jest.spyOn(console, "log").mockImplementation(() => {}); // eslint-disable-line
       await testNonzeroDynamicRamCost(f);
     });
 
@@ -434,7 +435,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     it("purchaseServer()", async function () {
       const f = ["purchaseServer"];
-      await testNonzeroDynamicRamCost(f, "abc", '64');
+      await testNonzeroDynamicRamCost(f, "abc", "64");
     });
 
     it("deleteServer()", async function () {
