@@ -833,18 +833,18 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("nuke", () => "Cannot be executed on this server.");
         return false;
       }
+      if (server.hasAdminRights) {
+        workerScript.log("nuke", () => `Already have root access to '${server.hostname}'.`);
+        return true;
+      }
       if (!Player.hasProgram(Programs.NukeProgram.name)) {
         throw makeRuntimeErrorMsg("nuke", "You do not have the NUKE.exe virus!");
       }
       if (server.openPortCount < server.numOpenPortsRequired) {
         throw makeRuntimeErrorMsg("nuke", "Not enough ports opened to use NUKE.exe virus.");
       }
-      if (server.hasAdminRights) {
-        workerScript.log("nuke", () => `Already have root access to '${server.hostname}'.`);
-      } else {
-        server.hasAdminRights = true;
-        workerScript.log("nuke", () => `Executed NUKE.exe virus on '${server.hostname}' to gain root access.`);
-      }
+      server.hasAdminRights = true;
+      workerScript.log("nuke", () => `Executed NUKE.exe virus on '${server.hostname}' to gain root access.`);
       return true;
     },
     brutessh: function (hostname: any): boolean {
