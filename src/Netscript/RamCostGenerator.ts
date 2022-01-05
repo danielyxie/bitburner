@@ -362,6 +362,8 @@ export const RamCosts: IMap<any> = {
 
   ui: {
     getTheme: 0,
+    setTheme: 0,
+    resetTheme: 0,
   },
 
   heart: {

@@ -17,4 +17,6 @@ interface UserInterface
 |  Method | Description |
 |  --- | --- |
 |  [getTheme()](./bitburner.userinterface.gettheme.md) | Get the current theme |
+|  [resetTheme()](./bitburner.userinterface.resettheme.md) | Resets the player's theme to the default values |
+|  [setTheme(newTheme)](./bitburner.userinterface.settheme.md) | Sets the current theme |
 
