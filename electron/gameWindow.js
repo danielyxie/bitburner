@@ -37,6 +37,7 @@ async function createWindow(killall) {
 
   achievements.enableAchievementsInterval(window);
   utils.attachUnresponsiveAppHandler(window);
+  utils.setZoomFactor(window);
 
   try {
     await api.initialize(window);
