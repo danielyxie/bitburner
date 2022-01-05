@@ -1182,7 +1182,7 @@ export function NetscriptSingularity(
         );
         return false;
       }
-      if (faction.name === player.getGangFaction().name) {
+      if (player.inGang() && faction.name === player.getGangFaction().name) {
         workerScript.log(
           "donateToFaction",
           () => `You can't donate to '${name}' because youre managing a gang for it`,
