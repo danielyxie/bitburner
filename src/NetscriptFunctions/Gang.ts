@@ -194,6 +194,15 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       helper.updateDynamicRam("setMemberTask", getRamCost(player, "gang", "setMemberTask"));
       checkGangApiAccess("setMemberTask");
       const member = getGangMember("setMemberTask", memberName);
+      const gang = player.gang;
+      if (gang === null) throw new Error("Should not be called without Gang");
+      if (!gang.getAllTaskNames().includes(taskName)) {
+        workerScript.log(
+          "gang.setMemberTask",
+          () => `Failed to assign Gang Member '${memberName}' to Invalid task '${taskName}'. '${memberName}' is now Unassigned`,
+        );
+        return member.assignToTask('Unassigned');
+      }
       const success = member.assignToTask(taskName);
       if (success) {
         workerScript.log(
