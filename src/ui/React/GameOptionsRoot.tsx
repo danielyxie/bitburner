@@ -504,10 +504,10 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 label={
                   <Tooltip
                     title={
-                      <Typography>If this is set, there will be no "Saved Game" toast appearing after save.</Typography>
+                      <Typography>If this is set, there will be no "Game Saved!" toast appearing after an auto-save.</Typography>
                     }
                   >
-                    <Typography>Suppress Saved Game Toast</Typography>
+                    <Typography>Suppress Auto-Save Game Toast</Typography>
                   </Tooltip>
                 }
               />
