@@ -120,6 +120,43 @@ function getMenu(window) {
       ]
     },
     {
+      label: "Zoom",
+      submenu: [
+        {
+          label: "Zoom In",
+          enabled: utils.getZoomFactor() <= 2,
+          accelerator: "CommandOrControl+numadd",
+          click: () => {
+            const currentZoom = utils.getZoomFactor();
+            const newZoom = currentZoom + 0.1;
+            if (newZoom <= 2.0) {
+              utils.setZoomFactor(window, newZoom);
+              refreshMenu(window);
+            } else {
+              log.log('Max zoom out')
+              utils.writeToast(window, "Cannot zoom in anymore", "warning");
+            }
+          },
+        },
+        {
+          label: "Zoom Out",
+          enabled: utils.getZoomFactor() >= 0.5,
+          accelerator: "CommandOrControl+numsub",
+          click: () => {
+            const currentZoom = utils.getZoomFactor();
+            const newZoom = currentZoom - 0.1;
+            if (newZoom >= 0.5) {
+              utils.setZoomFactor(window, newZoom);
+              refreshMenu(window);
+            } else {
+              log.log('Max zoom in')
+              utils.writeToast(window, "Cannot zoom out anymore", "warning");
+            }
+          },
+        },
+      ],
+    },
+    {
       label: "Debug",
       submenu: [
         {
