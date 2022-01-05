@@ -1179,8 +1179,7 @@ export function NetscriptSingularity(
       helper.updateDynamicRam("donateToFaction", getRamCost("donateToFaction"));
       helper.checkSingularityAccess("donateToFaction", 3);
       const faction = getFaction("donateToFaction", name);
-
-      if (typeof amt !== "number" || amt <= 0) {
+      if (typeof amt !== "number" || amt <= 0 || isNaN(amt)) {
         workerScript.log("donateToFaction", () => `Invalid donation amount: '${amt}'.`);
         return false;
       }
