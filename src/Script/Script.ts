@@ -4,7 +4,7 @@
  * This does NOT represent a script that is actively running and
  * being evaluated. See RunningScript for that
  */
-import { calculateRamUsage } from "./RamCalculations";
+import { calculateRamUsage, RamUsageEntry } from "./RamCalculations";
 import { ScriptUrl } from "./ScriptUrl";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
@@ -38,6 +38,7 @@ export class Script {
 
   // Amount of RAM this Script requres to run
   ramUsage = 0;
+  ramUsageEntries?: RamUsageEntry[];
 
   // hostname of server that this script is on.
   server = "";
@@ -131,8 +132,9 @@ export class Script {
    */
   async updateRamUsage(player: IPlayer, otherScripts: Script[]): Promise<void> {
     const res = await calculateRamUsage(player, this.code, otherScripts);
-    if (res > 0) {
-      this.ramUsage = roundToTwo(res);
+    if (res.cost > 0) {
+      this.ramUsage = roundToTwo(res.cost);
+      this.ramUsageEntries = res.entries;
     }
     this.markUpdated();
   }

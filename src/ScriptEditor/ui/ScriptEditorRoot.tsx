@@ -227,11 +227,11 @@ export function Root(props: IProps): React.ReactElement {
     setUpdatingRam(true);
     const codeCopy = newCode + "";
     const ramUsage = await calculateRamUsage(props.player, codeCopy, props.player.getCurrentServer().scripts);
-    if (ramUsage > 0) {
-      debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage));
+    if (ramUsage.cost > 0) {
+      debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage.cost));
       return;
     }
-    switch (ramUsage) {
+    switch (ramUsage.cost) {
       case RamCalculationErrorCode.ImportError: {
         debouncedSetRAM("RAM: Import Error");
         break;
