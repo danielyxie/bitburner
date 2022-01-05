@@ -73,8 +73,8 @@ function SF4Cost(cost: number): (player: IPlayer) => number {
   return (player: IPlayer): number => {
     if (player.bitNodeN === 4) return cost;
     const sf4 = player.sourceFileLvl(4);
-    if (sf4 <= 1) return cost * 64;
-    if (sf4 === 2) return cost * 8;
+    if (sf4 <= 1) return cost * 16;
+    if (sf4 === 2) return cost * 4;
     return cost;
   };
 }
