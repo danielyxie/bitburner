@@ -10,6 +10,7 @@ import { ScriptUrl } from "./ScriptUrl";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
 import { computeHash } from "../utils/helpers/computeHash";
+import { IPlayer } from "../PersonObjects/IPlayer";
 
 let globalModuleSequenceNumber = 0;
 
@@ -44,7 +45,7 @@ export class Script {
   // sha256 hash of the code in the Script. Do not access directly.
   _hash = "";
 
-  constructor(fn = "", code = "", server = "", otherScripts: Script[] = []) {
+  constructor(player: IPlayer | null = null, fn = "", code = "", server = "", otherScripts: Script[] = []) {
     this.filename = fn;
     this.code = code;
     this.ramUsage = 0;
@@ -52,8 +53,8 @@ export class Script {
     this.module = "";
     this.moduleSequenceNumber = ++globalModuleSequenceNumber;
     this._hash = "";
-    if (this.code !== "") {
-      this.updateRamUsage(otherScripts);
+    if (this.code !== "" && player !== null) {
+      this.updateRamUsage(player, otherScripts);
       this.rehash();
     }
   }
@@ -105,8 +106,7 @@ export class Script {
    * @returns the computed hash of the script
    */
   hash(): string {
-    if (!this._hash)
-      this.rehash();
+    if (!this._hash) this.rehash();
     return this._hash;
   }
 
@@ -115,13 +115,13 @@ export class Script {
    * @param {string} code - The new contents of the script
    * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
    */
-  saveScript(filename: string, code: string, hostname: string, otherScripts: Script[]): void {
+  saveScript(player: IPlayer, filename: string, code: string, hostname: string, otherScripts: Script[]): void {
     // Update code and filename
     this.code = code.replace(/^\s+|\s+$/g, "");
 
     this.filename = filename;
     this.server = hostname;
-    this.updateRamUsage(otherScripts);
+    this.updateRamUsage(player, otherScripts);
     this.markUpdated();
   }
 
@@ -129,8 +129,8 @@ export class Script {
    * Calculates and updates the script's RAM usage based on its code
    * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
    */
-  async updateRamUsage(otherScripts: Script[]): Promise<void> {
-    const res = await calculateRamUsage(this.code, otherScripts);
+  async updateRamUsage(player: IPlayer, otherScripts: Script[]): Promise<void> {
+    const res = await calculateRamUsage(player, this.code, otherScripts);
     if (res > 0) {
       this.ramUsage = roundToTwo(res);
     }

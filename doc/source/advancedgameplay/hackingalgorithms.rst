@@ -79,7 +79,7 @@ Growth can be made more efficient by dividing it into many processes, instead of
 Utilizing `sleep()` or `asleep()` to ensure that your scripts do not all start at the same time can decrease the chance of issues associated with overhacking occurring. Both functions have a ram cost of zero.
 
 Batch algorithms (HGW, HWGW, or Cycles)
--------------------------------------
+---------------------------------------
 **Difficulty**: Hard
 
 Pros:

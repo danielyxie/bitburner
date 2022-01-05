@@ -98,7 +98,7 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
   return server.moneyAvailable / oldMoneyAvailable;
 }
 
-export function prestigeHomeComputer(homeComp: Server): void {
+export function prestigeHomeComputer(player: IPlayer, homeComp: Server): void {
   const hasBitflume = homeComp.programs.includes(Programs.BitFlume.name);
 
   homeComp.programs.length = 0; //Remove programs
@@ -113,7 +113,7 @@ export function prestigeHomeComputer(homeComp: Server): void {
 
   //Update RAM usage on all scripts
   homeComp.scripts.forEach(function (script) {
-    script.updateRamUsage(homeComp.scripts);
+    script.updateRamUsage(player, homeComp.scripts);
   });
 
   homeComp.messages.length = 0; //Remove .lit and .msg files

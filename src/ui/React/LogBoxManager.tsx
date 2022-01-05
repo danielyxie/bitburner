@@ -16,6 +16,7 @@ import { startWorkerScript } from "../../NetscriptWorker";
 import { GetServer } from "../../Server/AllServers";
 import { Theme } from "@mui/material";
 import { findRunningScript } from "../../Script/ScriptHelpers";
+import { Player } from "../../Player";
 
 let layerCounter = 0;
 
@@ -79,12 +80,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     title: {
       "&.is-minimized + *": {
-				border: "none",
-				margin: 0,
-				"max-height": 0,
-				padding: 0,
-				"pointer-events": "none",
-				visibility: "hidden"
+        border: "none",
+        margin: 0,
+        "max-height": 0,
+        padding: 0,
+        "pointer-events": "none",
+        visibility: "hidden",
       },
     },
     logs: {
@@ -137,7 +138,7 @@ function LogWindow(props: IProps): React.ReactElement {
     if (server === null) return;
     const s = findRunningScript(script.filename, script.args, server);
     if (s === null) {
-      startWorkerScript(script, server);
+      startWorkerScript(Player, script, server);
     } else {
       setScript(s);
     }
@@ -195,7 +196,7 @@ function LogWindow(props: IProps): React.ReactElement {
       >
         <div onMouseDown={updateLayer}>
           <Paper
-            className={classes.title + " " + (minimized ? 'is-minimized' : '')}
+            className={classes.title + " " + (minimized ? "is-minimized" : "")}
             style={{
               cursor: "grab",
             }}
