@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const greenworks = require("./greenworks");
+const log = require("electron-log");
 
 function enableAchievementsInterval(window) {
    // This is backward but the game fills in an array called `document.achievements` and we retrieve it from
