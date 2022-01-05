@@ -1189,7 +1189,7 @@ export function NetscriptSingularity(
         );
         return false;
       }
-      if (typeof amt !== "number" || amt <= 0) {
+      if (typeof amt !== "number" || amt <= 0 || isNaN(amt)) {
         workerScript.log("donateToFaction", () => `Invalid donation amount: '${amt}'.`);
         return false;
       }
