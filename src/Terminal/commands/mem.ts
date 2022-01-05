@@ -41,7 +41,7 @@ export function mem(
 
     const verboseEntries = script.ramUsageEntries?.sort((a, b) => b.cost - a.cost) ?? [];
     for (const entry of verboseEntries) {
-      terminal.print(`${entry.type.padEnd(5, ' ')} | ${entry.name} (${numeralWrapper.formatRAM(entry.cost)})`);
+      terminal.print(`${numeralWrapper.formatRAM(entry.cost).padStart(8)} | ${entry.name} (${entry.type})`);
     }
   } catch (e) {
     terminal.error(e + "");
