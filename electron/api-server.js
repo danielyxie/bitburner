@@ -69,12 +69,13 @@ function enable() {
   }
 
   const port = config.get('port', 9990);
-  log.log(`Starting http server on port ${port}`);
+  const host = config.get('host', '127.0.0.1');
+  log.log(`Starting http server on port ${port} - listening on ${host}`);
 
   // https://stackoverflow.com/a/62289870
   let startFinished = false;
   return new Promise((resolve, reject) => {
-    server.listen(port, "127.0.0.1", () => {
+    server.listen(port, host, () => {
       if (!startFinished) {
         startFinished = true;
         resolve();
