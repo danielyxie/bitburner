@@ -16,9 +16,9 @@ write(handle: string, data?: string[] | number, mode?: "w" | "a"): Promise<void>
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  handle | string | Port or text file that will be written to. |
+|  handle | string | Text file that will be written to. |
 |  data | string\[\] \| number | Data to write. |
-|  mode | "w" \| "a" | Defines the write mode. Only valid when writing to text files. |
+|  mode | "w" \| "a" | Defines the write mode. |
 
 <b>Returns:</b>
 
