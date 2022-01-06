@@ -1305,7 +1305,7 @@ function initAugmentations(): void {
       "body's nervous system.",
     stats: (
       <>
-        This special augmentation can be leveled up infinitely. Each level of this augmentation increases ALL
+        This special augmentation can be leveled up infinitely. Each level of this augmentation increases MOST
         multipliers by 1%, stacking multiplicatively.
       </>
     ),
@@ -1924,8 +1924,7 @@ function initAugmentations(): void {
     name: AugmentationNames.INFRARet,
     repCost: 7.5e3,
     moneyCost: 3e7,
-    info:
-      "A tiny chip that sits behind the retinae. This implant lets the user visually detect infrared radiation.",
+    info: "A tiny chip that sits behind the retinae. This implant lets the user visually detect infrared radiation.",
     crime_success_mult: 1.25,
     crime_money_mult: 1.1,
     dexterity_mult: 1.1,
