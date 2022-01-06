@@ -35,6 +35,7 @@ import { CityName } from "../../Locations/data/CityNames";
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
 import { ISkillProgress } from "../formulas/skill";
+import { PlayerAchievement } from '../../Achievements/Achievements';
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -75,6 +76,7 @@ export class PlayerObject implements IPlayer {
   sleevesFromCovenant: number;
   sourceFiles: IPlayerOwnedSourceFile[];
   exploits: Exploit[];
+  achievements: PlayerAchievement[];
   lastUpdate: number;
   totalPlaytime: number;
 
@@ -243,6 +245,7 @@ export class PlayerObject implements IPlayer {
   takeDamage: (amt: number) => boolean;
   travel: (to: CityName) => boolean;
   giveExploit: (exploit: Exploit) => void;
+  giveAchievement: (achievementId: string) => void;
   queryStatFromString: (str: string) => number;
   getIntelligenceBonus: (weight: number) => number;
   getCasinoWinnings: () => number;
@@ -467,6 +470,7 @@ export class PlayerObject implements IPlayer {
     this.scriptProdSinceLastAug = 0;
 
     this.exploits = [];
+    this.achievements = [];
 
     this.init = generalMethods.init;
     this.prestigeAugmentation = generalMethods.prestigeAugmentation;
@@ -557,6 +561,7 @@ export class PlayerObject implements IPlayer {
     this.gotoLocation = generalMethods.gotoLocation;
     this.canAccessResleeving = generalMethods.canAccessResleeving;
     this.giveExploit = generalMethods.giveExploit;
+    this.giveAchievement = generalMethods.giveAchievement;
     this.getIntelligenceBonus = generalMethods.getIntelligenceBonus;
     this.getCasinoWinnings = generalMethods.getCasinoWinnings;
     this.hasAugmentation = augmentationMethods.hasAugmentation;

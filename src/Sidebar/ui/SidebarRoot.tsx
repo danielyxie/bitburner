@@ -37,6 +37,7 @@ import CheckIcon from "@mui/icons-material/Check"; // Milestones
 import HelpIcon from "@mui/icons-material/Help"; // Tutorial
 import SettingsIcon from "@mui/icons-material/Settings"; // options
 import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard"; // Dev
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents"; // Achievements
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import PublicIcon from "@mui/icons-material/Public";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
@@ -254,6 +255,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   function clickDev(): void {
     props.router.toDevMenu();
+  }
+
+  function clickAchievements(): void {
+    props.router.toAchievements();
   }
 
   useEffect(() => {
@@ -745,6 +750,21 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               <Typography color={flashTutorial ? "error" : props.page !== Page.Tutorial ? "secondary" : "primary"}>
                 Tutorial
               </Typography>
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            button
+            key={"Achievements"}
+            className={clsx({
+              [classes.active]: props.page === Page.Achievements,
+            })}
+            onClick={clickAchievements}
+          >
+            <ListItemIcon>
+              <EmojiEventsIcon color={props.page !== Page.Achievements ? "secondary" : "primary"} />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography color={props.page !== Page.Achievements ? "secondary" : "primary"}>Achievements</Typography>
             </ListItemText>
           </ListItem>
           <ListItem
