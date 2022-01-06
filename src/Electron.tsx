@@ -366,6 +366,7 @@ const achievements: Achievement[] = [
   { ID: "REALITYALTERATION", Condition: () => Player.exploits.includes(Exploit.RealityAlteration) },
   { ID: "N00DLES", Condition: () => Player.exploits.includes(Exploit.N00dles) },
   { ID: "EDITSAVEFILE", Condition: () => Player.exploits.includes(Exploit.EditSaveFile) },
+  { ID: "DEVMENU", Condition: () => Player.exploits.includes(Exploit.YoureNotMeantToAccessThis) },
   {
     ID: "UNACHIEVABLE",
     // Hey Players! Yes, you're supposed to modify this to get the achievement!
