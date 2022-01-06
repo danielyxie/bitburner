@@ -4233,22 +4233,22 @@ export interface NS extends Singularity {
   asleep(millis: number): Promise<void>;
 
   /**
-   * Prints a value or a variable to the script’s logs.
+   * Prints one or move values or variables to the script’s logs.
    * @remarks
    * RAM cost: 0 GB
    *
-   * @param msg - Value to be printed.
+   * @param args - Value(s) to be printed.
    */
-  print(msg: any): void;
+  print(...args: any[]): void;
 
   /**
-   * Prints a value or a variable to the Terminal.
+   * Prints one or more values or variables to the Terminal.
    * @remarks
    * RAM cost: 0 GB
    *
-   * @param msg - Value to be printed.
+   * @param args - Value(s) to be printed.
    */
-  tprint(msg: any): void;
+  tprint(...args: any[]): void;
 
   /**
    * Prints a raw value or a variable to the Terminal.
