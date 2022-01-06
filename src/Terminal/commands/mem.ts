@@ -38,6 +38,11 @@ export function mem(
     terminal.print(
       `This script requires ${numeralWrapper.formatRAM(ramUsage)} of RAM to run for ${numThreads} thread(s)`,
     );
+
+    const verboseEntries = script.ramUsageEntries?.sort((a, b) => b.cost - a.cost) ?? [];
+    for (const entry of verboseEntries) {
+      terminal.print(`${numeralWrapper.formatRAM(entry.cost * numThreads).padStart(8)} | ${entry.name} (${entry.type})`);
+    }
   } catch (e) {
     terminal.error(e + "");
   }
