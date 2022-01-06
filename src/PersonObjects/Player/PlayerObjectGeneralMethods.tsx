@@ -1874,8 +1874,10 @@ export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
     return false;
   }
   if (this.isQualified(company, CompanyPositions[position])) {
-    this.companyName = company.name;
     this.jobs[company.name] = position;
+    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
+    this.companyName = company.name;
+
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed at " + this.location);
     }
@@ -1899,6 +1901,8 @@ export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolea
   }
   if (this.isQualified(company, CompanyPositions[position])) {
     this.jobs[company.name] = position;
+    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
+    this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed part-time at " + this.location);
     }
@@ -1921,8 +1925,9 @@ export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
     return false;
   }
   if (this.isQualified(company, CompanyPositions[position])) {
-    this.companyName = company.name;
     this.jobs[company.name] = position;
+    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
+    this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.location);
     }
@@ -1943,8 +1948,9 @@ export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean 
     return false;
   }
   if (this.isQualified(company, CompanyPositions[position])) {
-    this.companyName = company.name;
     this.jobs[company.name] = position;
+    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
+    this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.location);
     }
