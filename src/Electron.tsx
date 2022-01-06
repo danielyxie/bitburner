@@ -430,7 +430,9 @@ export function initElectron(): void {
 
 function initWebserver(): void {
   (document as any).saveFile = function (filename: string, code: string): string {
-    if (removeLeadingSlash(filename).includes("/")) {
+    filename = filename.replace(/\/\/+/g, "/");
+    filename = removeLeadingSlash(filename);
+    if (filename.includes("/")) {
       filename = "/" + removeLeadingSlash(filename);
     }
     code = Buffer.from(code, "base64").toString();
