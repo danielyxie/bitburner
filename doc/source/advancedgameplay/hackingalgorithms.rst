@@ -74,8 +74,6 @@ Meaning if we have space for 100 threads across the entire network 7 threads wil
 
 When utilizing this strategy, monitor the amount of money and security on the target server, if the money is not hovering around maximum and the security around the minimum, the ratios should be tweaked until that is the case.
 
-Growth can be made more efficient by dividing it into many processes, instead of one script with a high thread count. Four grow scripts with 20 threads will outperform one grow script with 80 threads.
-
 Utilizing `sleep()` or `asleep()` to ensure that your scripts do not all start at the same time can decrease the chance of issues associated with overhacking occurring. Both functions have a ram cost of zero.
 
 Batch algorithms (HGW, HWGW, or Cycles)
