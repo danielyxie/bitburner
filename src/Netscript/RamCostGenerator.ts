@@ -69,7 +69,7 @@ export const RamCostConstants: IMap<number> = {
   ScriptStanekDeleteAt: 0.15,
 };
 
-function SF4Cost(cost: number): (player: IPlayer) => number {
+export function SF4Cost(cost: number): (player: IPlayer) => number {
   return (player: IPlayer): number => {
     if (player.bitNodeN === 4) return cost;
     const sf4 = player.sourceFileLvl(4);

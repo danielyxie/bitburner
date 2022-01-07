@@ -35,6 +35,7 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { PromptEvent } from "../../ui/React/PromptManager";
+import { SF4Cost } from "../../Netscript/RamCostGenerator";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
 
@@ -297,7 +298,9 @@ export function Root(props: IProps): React.ReactElement {
       l.language.tokenizer.root.unshift(["this", { token: "this" }]);
     })();
 
-    const source = (libSource + "").replace(/export /g, "");
+    const sf4Multiplier = SF4Cost(1)(props.player);
+    const source = (libSource + "").replace(/export /g, "").
+      replace(/%SINGULARY_MULTIPLIER%/, `${sf4Multiplier} (Singularity Multiplier)`);
     monaco.languages.typescript.javascriptDefaults.addExtraLib(source, "netscript.d.ts");
     monaco.languages.typescript.typescriptDefaults.addExtraLib(source, "netscript.d.ts");
     loadThemes(monaco);
