@@ -246,16 +246,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         return;
       }
 
-
       const data: ImportData = {
         base64: contents,
         parsed: parsedSave,
       }
 
-      // We don't always seem to have this value in the save file. Exporting from the option menu does not set the bonus I think.
-      const exportTimestamp = parsedSave.data.LastExportBonus;
-      if (exportTimestamp && exportTimestamp !== '0') {
-        data.exportDate = new Date(parseInt(exportTimestamp, 10))
+      const timestamp = parsedSave.data.SaveTimestamp;
+      if (timestamp && timestamp !== '0') {
+        data.exportDate = new Date(parseInt(timestamp, 10))
       }
 
       setImportData(data)
