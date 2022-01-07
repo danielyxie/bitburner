@@ -43,6 +43,11 @@ export function mem(
     for (const entry of verboseEntries) {
       terminal.print(`${numeralWrapper.formatRAM(entry.cost * numThreads).padStart(8)} | ${entry.name} (${entry.type})`);
     }
+
+    if (ramUsage > 0 && verboseEntries.length === 0) {
+      // Let's warn the user that he might need to save his script again to generate the detailed entries
+      terminal.warn('You might have to open & save this script to see the detailed RAM usage information.');
+    }
   } catch (e) {
     terminal.error(e + "");
   }
