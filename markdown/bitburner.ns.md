@@ -77,7 +77,6 @@ export async function main(ns) {
 |  [getGrowTime(host)](./bitburner.ns.getgrowtime.md) | Get the execution time of a grow() call. |
 |  [getHackingLevel()](./bitburner.ns.gethackinglevel.md) | Returns the player’s current hacking level. |
 |  [getHackingMultipliers()](./bitburner.ns.gethackingmultipliers.md) | Get hacking related multipliers. |
-|  [getHacknetMultipliers()](./bitburner.ns.gethacknetmultipliers.md) | Get hacknet related multipliers. |
 |  [getHackTime(host)](./bitburner.ns.gethacktime.md) | Get the execution time of a hack() call. |
 |  [getHostname()](./bitburner.ns.gethostname.md) | Returns a string with the hostname of the server that the script is running on. |
 |  [getOwnedSourceFiles()](./bitburner.ns.getownedsourcefiles.md) | Get a list of acquired Source-Files. |
