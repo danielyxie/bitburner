@@ -21,11 +21,11 @@ As of the time of writing this, a few browsers do not support `dynamic import <h
 How to use ns2
 ----------------------
 Working with ns2 scripts is the same as ns1 scripts. The only difference
-is that ns2 scripts use the ".ns" or ".js" extension rather than ".script". E.g.::
+is that ns2 scripts use the ".js" extension rather than ".script". E.g.::
 
-    $ nano foo.ns
-    $ run foo.ns -t 100 arg1 arg2 arg3
-    exec("foo.ns", "purchasedServer1", "100", "randomArg");
+    $ nano foo.js
+    $ run foo.js -t 100 arg1 arg2 arg3
+    exec("foo.js", "purchasedServer1", "100", "randomArg");
 
 The caveat when using ns2 to write scripts is that your code must be
 asynchronous. Furthermore, instead of using the global scope and executing your code
@@ -66,9 +66,9 @@ Here is a summary of all rules you need to follow when writing Netscript JS code
 * **Do not write any infinite loops without using a** :code:`sleep` **or one of the timed Netscript functions like** :code:`hack`. Doing so will freeze your game.
 
 * Any global variable declared in a ns2 script is shared between all instances of that
-  script. For example, assume you write a script *foo.ns* and declared a global variable like so::
+  script. For example, assume you write a script *foo.js* and declared a global variable like so::
 
-      //foo.ns
+      //foo.js
       let globalVariable;
 
       export async function main(ns) {
@@ -79,15 +79,15 @@ Here is a summary of all rules you need to follow when writing Netscript JS code
           }
       }
 
-  Then, you ran multiple instances of *foo.ns*::
+  Then, you ran multiple instances of *foo.js*::
 
-      $ run foo.ns 1
-      $ run foo.ns 1 2 3
-      $ run foo.ns 1 2 3 4 5
+      $ run foo.js 1
+      $ run foo.js 1 2 3
+      $ run foo.js 1 2 3 4 5
 
-  Then all three instances of foo.ns will share the same instance of :code:`globalVariable`.
+  Then all three instances of foo.js will share the same instance of :code:`globalVariable`.
   (In this example, the value of :code:`globalVariable` will be set to 5 because the
-  last instance of *foo.ns* to run has 5 arguments. This means that all three instances of
+  last instance of *foo.js* to run has 5 arguments. This means that all three instances of
   the script will repeatedly print the value 5).
 
   These global variables can be thought of as `C++ static class members <https://www.tutorialspoint.com/cplusplus/cpp_static_members.htm>`_,
@@ -117,7 +117,7 @@ early-hack-template.script
         }
     }
 
-early-hack-template.ns
+early-hack-template.js
 
 .. code-block:: javascript
 
@@ -151,7 +151,7 @@ You may have noticed that every new ns2 file will contains the following comment
     * @param {NS} ns
     **/
 
-This comment is used to help the text editor autocomplete functions in the Netscript API. You can enabling it by pressing ctrl+space after `ns.`
+This comment is used to help the text editor autocomplete functions in the Netscript API. You can enable it by pressing ctrl+space after `ns.`
 
 .. image:: autocomplete.png
 
