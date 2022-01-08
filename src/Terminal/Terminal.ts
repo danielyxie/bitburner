@@ -137,7 +137,7 @@ export class Terminal implements ITerminal {
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
-    this.startAction(calculateHackingTime(server, player) / 4, "h");
+    this.startAction(calculateHackingTime(server, player) / 4, "h", server);
   }
 
   startGrow(player: IPlayer): void {
@@ -147,7 +147,7 @@ export class Terminal implements ITerminal {
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
-    this.startAction(calculateGrowTime(server, player) / 16, "g");
+    this.startAction(calculateGrowTime(server, player) / 16, "g", server);
   }
   startWeaken(player: IPlayer): void {
     const server = player.getCurrentServer();
@@ -156,7 +156,7 @@ export class Terminal implements ITerminal {
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
-    this.startAction(calculateWeakenTime(server, player) / 16, "w");
+    this.startAction(calculateWeakenTime(server, player) / 16, "w", server);
   }
 
   startBackdoor(player: IPlayer): void {
@@ -167,22 +167,23 @@ export class Terminal implements ITerminal {
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
-    this.startAction(calculateHackingTime(server, player) / 4, "b");
+    this.startAction(calculateHackingTime(server, player) / 4, "b", server);
   }
 
-  startAnalyze(): void {
+  startAnalyze(player: IPlayer): void {
     this.print("Analyzing system...");
-    this.startAction(1, "a");
+    const server = player.getCurrentServer();
+    this.startAction(1, "a", server);
   }
 
-  startAction(n: number, action: "h" | "b" | "a" | "g" | "w"): void {
-    this.action = new TTimer(n, action);
+  startAction(n: number, action: "h" | "b" | "a" | "g" | "w", server?: BaseServer): void {
+    this.action = new TTimer(n, action, server);
   }
 
   // Complete the hack/analyze command
-  finishHack(router: IRouter, player: IPlayer, cancelled = false): void {
+  finishHack(router: IRouter, player: IPlayer, server: BaseServer, cancelled = false): void {
     if (cancelled) return;
-    const server = player.getCurrentServer();
+
     if (server instanceof HacknetServer) {
       this.error("Cannot hack this kind of server");
       return;
@@ -218,25 +219,25 @@ export class Terminal implements ITerminal {
       const newSec = server.hackDifficulty;
 
       this.print(
-        `Hack successful! Gained ${numeralWrapper.formatMoney(moneyGained)} and ${numeralWrapper.formatExp(
+        `Hack successful on '${server.hostname}'! Gained ${numeralWrapper.formatMoney(moneyGained)} and ${numeralWrapper.formatExp(
           expGainedOnSuccess,
         )} hacking exp`,
       );
       this.print(
-        `Security increased from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(newSec)}`,
+        `Security increased on '${server.hostname}' from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(newSec)}`,
       );
     } else {
       // Failure
       player.gainHackingExp(expGainedOnFailure);
       this.print(
-        `Failed to hack ${server.hostname}. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} hacking exp`,
+        `Failed to hack '${server.hostname}'. Gained ${numeralWrapper.formatExp(expGainedOnFailure)} hacking exp`,
       );
     }
   }
 
-  finishGrow(player: IPlayer, cancelled = false): void {
+  finishGrow(player: IPlayer, server: BaseServer, cancelled = false): void {
     if (cancelled) return;
-    const server = player.getCurrentServer();
+
     if (server instanceof HacknetServer) {
       this.error("Cannot hack this kind of server");
       return;
@@ -253,13 +254,13 @@ export class Terminal implements ITerminal {
       )}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp.`,
     );
     this.print(
-      `Security increased from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(newSec)}`,
+      `Security increased on '${server.hostname}' from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(newSec)}`,
     );
   }
 
-  finishWeaken(player: IPlayer, cancelled = false): void {
+  finishWeaken(player: IPlayer, server: BaseServer, cancelled = false): void {
     if (cancelled) return;
-    const server = player.getCurrentServer();
+
     if (server instanceof HacknetServer) {
       this.error("Cannot hack this kind of server");
       return;
@@ -270,16 +271,15 @@ export class Terminal implements ITerminal {
     server.weaken(CONSTANTS.ServerWeakenAmount);
     const newSec = server.hackDifficulty;
     this.print(
-      `Security decreased from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(
+      `Security decreased on '${server.hostname}' from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(
         newSec,
       )} (min: ${numeralWrapper.formatSecurity(server.minDifficulty)})` +
         ` and Gained ${numeralWrapper.formatExp(expGain)} hacking exp.`,
     );
   }
 
-  finishBackdoor(router: IRouter, player: IPlayer, cancelled = false): void {
+  finishBackdoor(router: IRouter, player: IPlayer, server: BaseServer, cancelled = false): void {
     if (!cancelled) {
-      const server = player.getCurrentServer();
       if (server instanceof HacknetServer) {
         this.error("Cannot hack this kind of server");
         return;
@@ -293,13 +293,12 @@ export class Terminal implements ITerminal {
         router.toBitVerse(false, false);
         return;
       }
-      this.print("Backdoor successful!");
+      this.print(`Backdoor on '${server.hostname}' successful!`);
     }
   }
 
-  finishAnalyze(player: IPlayer, cancelled = false): void {
+  finishAnalyze(player: IPlayer, currServ: BaseServer, cancelled = false): void {
     if (!cancelled) {
-      const currServ = player.getCurrentServer();
       const isHacknet = currServ instanceof HacknetServer;
       this.print(currServ.hostname + ": ");
       const org = currServ.organizationName;
@@ -338,18 +337,22 @@ export class Terminal implements ITerminal {
       if (!cancelled) throw new Error("Finish action called when there was no action");
       return;
     }
+
+    if (!this.action.server) throw new Error("Missing action target server");
+
     this.print(this.getProgressText());
     if (this.action.action === "h") {
-      this.finishHack(router, player, cancelled);
+      this.finishHack(router, player, this.action.server, cancelled);
     } else if (this.action.action === "g") {
-      this.finishGrow(player, cancelled);
+      this.finishGrow(player, this.action.server, cancelled);
     } else if (this.action.action === "w") {
-      this.finishWeaken(player, cancelled);
+      this.finishWeaken(player, this.action.server, cancelled);
     } else if (this.action.action === "b") {
-      this.finishBackdoor(router, player, cancelled);
+      this.finishBackdoor(router, player, this.action.server, cancelled);
     } else if (this.action.action === "a") {
-      this.finishAnalyze(player, cancelled);
+      this.finishAnalyze(player, this.action.server, cancelled);
     }
+
     if (cancelled) {
       this.print("Cancelled");
     }
