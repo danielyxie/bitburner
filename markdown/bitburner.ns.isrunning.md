@@ -36,23 +36,29 @@ Returns a boolean indicating whether the specified script is running on the targ
 
 
 ```ts
+// NS1:
 //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:
 isRunning("foo.script", "foodnstuff");
+
+//The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:
+isRunning("foo.script", getHostname());
+
+//The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:
+isRunning("foo.script", "joesguns", 1, 5, "test");
 ```
 
 ## Example 2
 
 
 ```ts
+// NS2:
+//The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:
+ns.isRunning("foo.script", "foodnstuff");
+
 //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:
-isRunning("foo.script", getHostname());
-```
+ns.isRunning("foo.script", ns.getHostname());
 
-## Example 3
-
-
-```ts
 //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:
-isRunning("foo.script", "joesguns", 1, 5, "test");
+ns.isRunning("foo.script", "joesguns", 1, 5, "test");
 ```
 

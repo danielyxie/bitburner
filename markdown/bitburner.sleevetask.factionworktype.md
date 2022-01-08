@@ -4,7 +4,7 @@
 
 ## SleeveTask.factionWorkType property
 
-faction work type being performed, if any
+Faction work type being performed, if any
 
 <b>Signature:</b>
 

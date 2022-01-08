@@ -4,7 +4,7 @@
 
 ## CorporationInfo.public property
 
-Is the company is public
+Indicating if the company is public
 
 <b>Signature:</b>
 

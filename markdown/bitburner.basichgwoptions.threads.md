@@ -9,5 +9,5 @@ Number of threads to use for this function. Must be less than or equal to the nu
 <b>Signature:</b>
 
 ```typescript
-threads: number;
+threads?: number;
 ```

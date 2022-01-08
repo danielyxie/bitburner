@@ -4,7 +4,7 @@
 
 ## NS.scan() method
 
-Get the list servers connected to a server.
+Get the list of servers connected to a server.
 
 <b>Signature:</b>
 
@@ -16,7 +16,7 @@ scan(host?: string): string[];
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  host | string | Hostname of the server to scan. |
+|  host | string | Optional, Hostname of the server to scan, default to current server. |
 
 <b>Returns:</b>
 

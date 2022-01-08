@@ -4,7 +4,7 @@
 
 ## SleeveSkills.sync property
 
-current sync of the sleeve \[0-100\]
+Current sync of the sleeve \[0-100\]
 
 <b>Signature:</b>
 

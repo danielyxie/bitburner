@@ -4,7 +4,7 @@
 
 ## Stanek.charge() method
 
-Charge a fragment, increasing it's power.
+Charge a fragment, increasing its power.
 
 <b>Signature:</b>
 

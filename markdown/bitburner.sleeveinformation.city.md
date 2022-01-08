@@ -4,7 +4,7 @@
 
 ## SleeveInformation.city property
 
-location of the sleeve
+Location of the sleeve
 
 <b>Signature:</b>
 

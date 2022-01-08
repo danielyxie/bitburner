@@ -4,7 +4,7 @@
 
 ## GangGenInfo.isHacking property
 
-Boolean indicating whether or not its a hacking gang
+Indicating whether or not it's a hacking gang
 
 <b>Signature:</b>
 

@@ -21,10 +21,10 @@ interface CorporationInfo
 |  [issuedShares](./bitburner.corporationinfo.issuedshares.md) | number | Amount of shares issued |
 |  [name](./bitburner.corporationinfo.name.md) | string | Name of the corporation |
 |  [numShares](./bitburner.corporationinfo.numshares.md) | number | Amount of share owned |
-|  [public](./bitburner.corporationinfo.public.md) | boolean | Is the company is public |
+|  [public](./bitburner.corporationinfo.public.md) | boolean | Indicating if the company is public |
 |  [revenue](./bitburner.corporationinfo.revenue.md) | number | Revenue per second this cycle |
 |  [sharePrice](./bitburner.corporationinfo.shareprice.md) | number | Price of the shares |
 |  [shareSaleCooldown](./bitburner.corporationinfo.sharesalecooldown.md) | number | Cooldown until shares can be sold again |
-|  [state](./bitburner.corporationinfo.state.md) | string | State of the corporation, like PRODUCTION or EXPORT |
+|  [state](./bitburner.corporationinfo.state.md) | string | State of the corporation. Possible states are START, PURCHASE, PRODUCTION, SALE, EXPORT. |
 |  [totalShares](./bitburner.corporationinfo.totalshares.md) | number | Total number of shares issues by this corporation |
 

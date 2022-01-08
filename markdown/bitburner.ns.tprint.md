@@ -4,19 +4,19 @@
 
 ## NS.tprint() method
 
-Prints a value or a variable to the Terminal.
+Prints one or more values or variables to the Terminal.
 
 <b>Signature:</b>
 
 ```typescript
-tprint(msg: any): void;
+tprint(...args: any[]): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  msg | any | Value to be printed. |
+|  args | any\[\] | Value(s) to be printed. |
 
 <b>Returns:</b>
 

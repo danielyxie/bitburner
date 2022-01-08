@@ -4,7 +4,7 @@
 
 ## SleeveInformation.timeWorked property
 
-time spent on the current task in milliseconds
+Time spent on the current task in milliseconds
 
 <b>Signature:</b>
 

@@ -4,7 +4,7 @@
 
 ## GangGenInfo.territory property
 
-Amount of territory held.
+Amount of territory held
 
 <b>Signature:</b>
 

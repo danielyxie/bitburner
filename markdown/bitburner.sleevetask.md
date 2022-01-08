@@ -16,9 +16,9 @@ export interface SleeveTask
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [crime](./bitburner.sleevetask.crime.md) | string | crime currently attempting, if any |
-|  [factionWorkType](./bitburner.sleevetask.factionworktype.md) | string | faction work type being performed, if any |
-|  [gymStatType](./bitburner.sleevetask.gymstattype.md) | string | stat being trained at the gym, if any |
-|  [location](./bitburner.sleevetask.location.md) | string | location of the task, if any |
-|  [task](./bitburner.sleevetask.task.md) | string | task type |
+|  [crime](./bitburner.sleevetask.crime.md) | string | Crime currently attempting, if any |
+|  [factionWorkType](./bitburner.sleevetask.factionworktype.md) | string | Faction work type being performed, if any |
+|  [gymStatType](./bitburner.sleevetask.gymstattype.md) | string | Stat being trained at the gym, if any |
+|  [location](./bitburner.sleevetask.location.md) | string | Location of the task, if any |
+|  [task](./bitburner.sleevetask.task.md) | string | Task type |
 

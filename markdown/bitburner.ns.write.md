@@ -9,7 +9,7 @@ Write data to a file.
 <b>Signature:</b>
 
 ```typescript
-write(handle: string, data?: string[] | number, mode?: "w" | "a"): Promise<void>;
+write(handle: string, data?: string[] | number | string, mode?: "w" | "a"): Promise<void>;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ write(handle: string, data?: string[] | number, mode?: "w" | "a"): Promise<void>
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  handle | string | Port or text file that will be written to. |
-|  data | string\[\] \| number | Data to write. |
+|  data | string\[\] \| number \| string | Data to write. |
 |  mode | "w" \| "a" | Defines the write mode. Only valid when writing to text files. |
 
 <b>Returns:</b>

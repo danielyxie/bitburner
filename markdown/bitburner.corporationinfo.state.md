@@ -4,7 +4,7 @@
 
 ## CorporationInfo.state property
 
-State of the corporation, like PRODUCTION or EXPORT
+State of the corporation. Possible states are START, PURCHASE, PRODUCTION, SALE, EXPORT.
 
 <b>Signature:</b>
 

@@ -4,7 +4,7 @@
 
 ## SleeveTask.task property
 
-task type
+Task type
 
 <b>Signature:</b>
 
