@@ -302,25 +302,30 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
 
   let mainPage = <Typography>Cannot load</Typography>;
   let withSidebar = true;
+  let withPopups = true;
   switch (page) {
     case Page.Recovery: {
       mainPage = <RecoveryRoot router={Router} />;
       withSidebar = false;
+      withPopups = false;
       break;
     }
     case Page.BitVerse: {
       mainPage = <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />;
       withSidebar = false;
+      withPopups = false;
       break
     }
     case Page.Infiltration: {
       mainPage = <InfiltrationRoot location={location} />;
       withSidebar = false;
+      withPopups = false;
       break;
     }
     case Page.BladeburnerCinematic: {
       mainPage = <BladeburnerCinematic />;
       withSidebar = false;
+      withPopups = false;
       break;
     }
     case Page.Work: {
@@ -474,7 +479,6 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     }
   }
   
-  const renderPopups = [Page.Recovery, Page.BitVerse, Page.Infiltration, Page.BladeburnerCinematic].includes(page);
   return (
     <Context.Player.Provider value={player}>
       <Context.Router.Provider value={Router}>
@@ -495,7 +499,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
             </Box>
           ) : mainPage }
           <Unclickable />
-          {renderPopups && (
+          {withPopups && (
             <>
             <LogBoxManager />
             <AlertManager />
