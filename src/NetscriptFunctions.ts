@@ -342,9 +342,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     );
 
     return netscriptDelay(hackingTime * 1000, workerScript).then(function () {
-      if (workerScript.env.stopFlag) {
-        return Promise.reject(workerScript);
-      }
       const hackChance = calculateHackingChance(server, Player);
       const rand = Math.random();
       let expGainedOnSuccess = calculateHackingExpGain(server, Player) * threads;
@@ -614,9 +611,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           )} (t=${numeralWrapper.formatThreads(threads)}).`,
       );
       return netscriptDelay(growTime * 1000, workerScript).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
         processSingleServerGrowth(server, threads, Player, host.cpuCores);
         const moneyAfter = server.moneyAvailable;
@@ -685,7 +679,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           )} (t=${numeralWrapper.formatThreads(threads)})`,
       );
       return netscriptDelay(weakenTime * 1000, workerScript).then(function () {
-        if (workerScript.env.stopFlag) return Promise.reject(workerScript);
         const host = GetServer(workerScript.hostname);
         if (host === null) {
           workerScript.log("weaken", () => "Server is null, did it die?");
