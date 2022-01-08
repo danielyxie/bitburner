@@ -288,13 +288,15 @@ export function Root(props: IProps): React.ReactElement {
         .getLanguages()
         .find((l: any) => l.id === "javascript")
         .loader();
-      l.language.tokenizer.root.unshift(["ns", { token: "ns" }]);
-      for (const symbol of symbols) l.language.tokenizer.root.unshift([symbol, { token: "netscriptfunction" }]);
+      // replaced the bare tokens with regexes surrounded by \b, e.g. \b{token}\b which matches a word-break on either side
+      // this prevents the highlighter from highlighting pieces of variables that start with a reserved token name
+      l.language.tokenizer.root.unshift([new RegExp('\\bns\\b'), { token: "ns" }]);
+      for (const symbol of symbols) l.language.tokenizer.root.unshift([new RegExp(`\\b${symbol}\\b`), { token: "netscriptfunction" }]);
       const otherKeywords = ["let", "const", "var", "function"];
       const otherKeyvars = ["true", "false", "null", "undefined"];
-      otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeywords" }]));
-      otherKeyvars.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeyvars" }]));
-      l.language.tokenizer.root.unshift(["this", { token: "this" }]);
+      otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeywords" }]));
+      otherKeyvars.forEach((k) => l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeyvars" }]));
+      l.language.tokenizer.root.unshift([new RegExp('\\bthis\\b'), { token: "this" }]);
     })();
 
     const source = (libSource + "").replace(/export /g, "");
