@@ -247,6 +247,8 @@ export class Terminal implements ITerminal {
     const oldSec = server.hackDifficulty;
     const growth = processSingleServerGrowth(server, 25, player, server.cpuCores) - 1;
     const newSec = server.hackDifficulty;
+
+    player.gainHackingExp(expGain);
     this.print(
       `Available money on '${server.hostname}' grown by ${numeralWrapper.formatPercentage(
         growth,
@@ -270,6 +272,8 @@ export class Terminal implements ITerminal {
     const oldSec = server.hackDifficulty;
     server.weaken(CONSTANTS.ServerWeakenAmount);
     const newSec = server.hackDifficulty;
+
+    player.gainHackingExp(expGain);
     this.print(
       `Security decreased on '${server.hostname}' from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(
         newSec,
