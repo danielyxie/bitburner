@@ -76,6 +76,7 @@ import { InvitationModal } from "../Faction/ui/InvitationModal";
 import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
 import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
+import { AchievementsRoot } from "../Achievements/AchievementsRoot";
 
 const htmlLocation = location;
 
@@ -183,6 +184,9 @@ export let Router: IRouter = {
   toStaneksGift: () => {
     throw new Error("Router called before initialization");
   },
+  toAchievements: () => {
+    throw new Error("Router called before initialization");
+  }
 };
 
 function determineStartPage(player: IPlayer): Page {
@@ -286,6 +290,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     },
     toStaneksGift: () => {
       setPage(Page.StaneksGift);
+    },
+    toAchievements: () => {
+      setPage(Page.Achievements);
     },
   };
 
@@ -413,7 +420,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                       Router.toTerminal();
                     }}
                   />
-                ) : (
+                ) : page === Page.Achievements ? (
+                  <AchievementsRoot />
+                )  : (
                   <>
                     <Typography>Cannot load</Typography>
                   </>
