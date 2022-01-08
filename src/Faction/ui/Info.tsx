@@ -9,7 +9,7 @@ import { FactionInfo } from "../../Faction/FactionInfo";
 
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";
-import { MathJax, MathJaxContext } from "better-react-mathjax";
+import { MathJaxWrapper } from "../../MathJaxWrapper";
 
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
@@ -57,16 +57,12 @@ export function Info(props: IProps): React.ReactElement {
                 You will have <Favor favor={Math.floor(props.faction.favor + favorGain)} /> faction favor after
                 installing an Augmentation.
               </Typography>
-              <MathJaxContext>
-                <MathJax>{"\\(\\huge{r = \\text{total faction reputation}}\\)"}</MathJax>
-              </MathJaxContext>
-              <MathJaxContext>
-                <MathJax>
-                  {
-                    "\\(\\huge{favor=1+\\left\\lfloor\\log_{1.02}\\left(\\frac{r+25000}{25500}\\right)\\right\\rfloor}\\)"
-                  }
-                </MathJax>
-              </MathJaxContext>
+              <MathJaxWrapper>{"\\(\\huge{r = \\text{total faction reputation}}\\)"}</MathJaxWrapper>
+              <MathJaxWrapper>
+                {
+                  "\\(\\huge{favor=1+\\left\\lfloor\\log_{1.02}\\left(\\frac{r+25000}{25500}\\right)\\right\\rfloor}\\)"
+                }
+              </MathJaxWrapper>
             </>
           }
         >
@@ -88,12 +84,9 @@ export function Info(props: IProps): React.ReactElement {
                 amount of reputation you earned with this faction. Across all resets.
               </Typography>
 
-              <MathJaxContext>
-                <MathJax>{"\\(\\huge{r = reputation}\\)"}</MathJax>
-              </MathJaxContext>
-              <MathJaxContext>
-                <MathJax>{"\\(\\huge{\\Delta r = \\Delta r \\times \\frac{100+favor}{100}}\\)"}</MathJax>
-              </MathJaxContext>
+              <MathJaxWrapper>{"\\(\\huge{r = reputation}\\)"}</MathJaxWrapper>
+              <MathJaxWrapper>{"\\(\\huge{\\Delta r = \\Delta r \\times \\frac{100+favor}{100}}\\)"}</MathJaxWrapper>
+
             </>
           }
         >

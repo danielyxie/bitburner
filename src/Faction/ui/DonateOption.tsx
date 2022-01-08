@@ -15,7 +15,7 @@ import { Reputation } from "../../ui/React/Reputation";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { MathJax, MathJaxContext } from "better-react-mathjax";
+import { MathJaxWrapper } from "../../MathJaxWrapper";
 
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
@@ -98,9 +98,7 @@ export function DonateOption(props: IProps): React.ReactElement {
             }}
           />
           <Typography>
-            <MathJaxContext>
-              <MathJax>{`\\(reputation = \\frac{\\text{donation amount} \\cdot \\text{reputation multiplier}}{10^{${digits}}}\\)`}</MathJax>
-            </MathJaxContext>
+            <MathJaxWrapper>{`\\(reputation = \\frac{\\text{donation amount} \\cdot \\text{reputation multiplier}}{10^{${digits}}}\\)`}</MathJaxWrapper>
           </Typography>
         </>
       )}
