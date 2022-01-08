@@ -89,6 +89,13 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
             <Typography>Owned Augmentations:</Typography>
             {ownedAugNames.map((augName) => {
               const aug = Augmentations[augName];
+              if (!aug) {
+                return (
+                  <Paper key={augName}>
+                    <Typography color="error">INVALID: {augName}</Typography>
+                  </Paper>
+                )
+              }
               let tooltip = <></>;
               if (typeof aug.info === "string") {
                 tooltip = (
