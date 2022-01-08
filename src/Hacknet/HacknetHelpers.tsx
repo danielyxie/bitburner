@@ -423,15 +423,11 @@ function processAllHacknetServerEarnings(player: IPlayer, numCycles: number): nu
 
   const wastedHashes = player.hashManager.storeHashes(hashes);
   if (wastedHashes > 0) {
-    // Currently set to cap in at 1% of the capacity so it's probably still more efficient to run a script to use the hashes
-    const maxHashesToConvert = player.hashManager.capacity * 0.01;
-    const hashesToConvertToCash = Math.min(wastedHashes, maxHashesToConvert);
-
     const upgrade = HashUpgrades["Sell for Money"];
     if (upgrade === null) throw new Error("Could not get the hash upgrade");
     if (!upgrade.cost) throw new Error("Upgrade is not properly configured");
 
-    const multiplier = Math.floor(hashesToConvertToCash / upgrade.cost);
+    const multiplier = Math.floor(wastedHashes / upgrade.cost);
     if (multiplier > 0) {
       player.gainMoney(upgrade.value * multiplier, "hacknet");
     }

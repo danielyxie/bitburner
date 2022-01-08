@@ -165,7 +165,7 @@ const Engine: {
     messages: 150,
     mechanicProcess: 5, // Processes certain mechanics (Corporation, Bladeburner)
     contractGeneration: 3000, // Generate Coding Contracts
-    achievementsCounter: 300, // Check if we have new achievements
+    achievementsCounter: 60, // Check if we have new achievements
   },
 
   decrementAllCounters: function (numCycles = 1) {
