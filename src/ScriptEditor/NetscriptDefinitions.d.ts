@@ -3852,7 +3852,7 @@ interface UserInterface {
    * Resets the player's theme to the default values
    * @remarks
    * RAM cost: cost: 0 GB
-  */
+   */
   resetTheme(): void;
 }
 
@@ -5727,7 +5727,7 @@ export interface NS extends Singularity {
    * RAM cost: 4 GB
    *
    * Returns an object containing the current BitNode multipliers.
-   * This function requires Source-File 5 in order to run.
+   * This function requires you to be in Bitnode 5 or have Source-File 5 in order to run.
    * The multipliers are returned in decimal forms (e.g. 1.5 instead of 150%).
    * The multipliers represent the difference between the current BitNode and
    * the original BitNode (BitNode-1).
