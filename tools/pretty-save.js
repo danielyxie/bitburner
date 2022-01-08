@@ -19,6 +19,7 @@ async function getSave(file) {
     VersionSave: JSON.parse(saveData.VersionSave),
     LastExportBonus: JSON.parse(saveData.LastExportBonus),
     StaneksGiftSave: JSON.parse(saveData.StaneksGiftSave),
+    SaveTimestamp: new Date(parseInt(saveData.SaveTimestamp ?? '0', 10)).toLocaleString(),
   }
 
   const serverStrings = JSON.parse(saveData.AllServersSave);

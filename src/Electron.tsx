@@ -223,7 +223,7 @@ const achievements: Achievement[] = [
       for (const d of Player.corporation.divisions) {
         for (const o of Object.values(d.offices)) {
           if (o === 0) continue;
-          if (o.employees.length > 3000) return true;
+          if (o.employees.length >= 3000) return true;
         }
       }
       return false;
@@ -274,7 +274,9 @@ const achievements: Achievement[] = [
   { ID: "HACKNET_SERVER_1B", Condition: () => hasHacknetServers(Player) && Player.moneySourceB.hacknet >= 1e9 },
   {
     ID: "MAX_CACHE",
-    Condition: () => hasHacknetServers(Player) && Player.hashManager.hashes === Player.hashManager.capacity,
+    Condition: () => hasHacknetServers(Player) &&
+      Player.hashManager.hashes === Player.hashManager.capacity &&
+      Player.hashManager.capacity > 0,
   },
   {
     ID: "SLEEVE_8",

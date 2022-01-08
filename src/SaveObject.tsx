@@ -41,6 +41,7 @@ class BitburnerSaveObject {
   AllGangsSave = "";
   LastExportBonus = "";
   StaneksGiftSave = "";
+  SaveTimestamp = "";
 
   getSaveString(): string {
     this.PlayerSave = JSON.stringify(Player);
@@ -56,6 +57,8 @@ class BitburnerSaveObject {
     this.VersionSave = JSON.stringify(CONSTANTS.VersionNumber);
     this.LastExportBonus = JSON.stringify(ExportBonus.LastExportBonus);
     this.StaneksGiftSave = JSON.stringify(staneksGift);
+    this.SaveTimestamp = new Date().getTime().toString();
+
     if (Player.inGang()) {
       this.AllGangsSave = JSON.stringify(AllGangs);
     }

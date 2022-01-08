@@ -389,7 +389,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                   <GameOptionsRoot
                     player={player}
                     save={() => saveObject.saveGame()}
-                    export={() => saveObject.exportGame()}
+                    export={() => {
+                      // Apply the export bonus before saving the game
+                      onExport(player);
+                      saveObject.exportGame()
+                    }}
                     forceKill={killAllScripts}
                     softReset={() => {
                       dialogBoxCreate("Soft Reset!");
@@ -400,8 +404,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                 ) : page === Page.Augmentations ? (
                   <AugmentationsRoot
                     exportGameFn={() => {
-                      saveObject.exportGame();
+                      // Apply the export bonus before saving the game
                       onExport(player);
+                      saveObject.exportGame();
                     }}
                     installAugmentationsFn={() => {
                       installAugmentations();
