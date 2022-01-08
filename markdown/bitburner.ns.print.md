@@ -4,19 +4,19 @@
 
 ## NS.print() method
 
-Prints a value or a variable to the script’s logs.
+Prints one or move values or variables to the script’s logs.
 
 <b>Signature:</b>
 
 ```typescript
-print(msg: any): void;
+print(...args: any[]): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  msg | any | Value to be printed. |
+|  args | any\[\] | Value(s) to be printed. |
 
 <b>Returns:</b>
 

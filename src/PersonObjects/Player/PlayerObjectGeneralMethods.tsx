@@ -1789,8 +1789,10 @@ export function getNextCompanyPosition(
 }
 
 export function quitJob(this: IPlayer, company: string): void {
-  this.isWorking = false;
-  this.companyName = "";
+  if (this.isWorking == true && this.workType == "Working for Company" && this.companyName == company) {
+    this.isWorking = false;
+    this.companyName = "";
+  }
   delete this.jobs[company];
 }
 

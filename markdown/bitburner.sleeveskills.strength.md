@@ -4,7 +4,7 @@
 
 ## SleeveSkills.strength property
 
-current strength of the sleeve
+Current strength of the sleeve
 
 <b>Signature:</b>
 

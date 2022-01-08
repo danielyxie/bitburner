@@ -30,11 +30,21 @@ RAM cost: 0.1 GB
 
 Returns the amount of money available on a server. Running this function on the home computer will return the player’s money.
 
-## Example
+## Example 1
 
 
 ```ts
+// NS1:
 getServerMoneyAvailable("foodnstuff");
 getServerMoneyAvailable("home"); //Returns player's money
+```
+
+## Example 2
+
+
+```ts
+// NS2:
+ns.getServerMoneyAvailable("foodnstuff");
+ns.getServerMoneyAvailable("home"); // Returns player's money
 ```
 

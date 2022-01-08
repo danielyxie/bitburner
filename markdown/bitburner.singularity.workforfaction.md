@@ -9,7 +9,7 @@ SF4.2 - Work for a faction.
 <b>Signature:</b>
 
 ```typescript
-workForFaction(faction: string, workType: string): boolean;
+workForFaction(faction: string, workType: string, focus?: boolean): boolean;
 ```
 
 ## Parameters
@@ -18,6 +18,7 @@ workForFaction(faction: string, workType: string): boolean;
 |  --- | --- | --- |
 |  faction | string | Name of faction to work for. |
 |  workType | string | Type of work to perform for the faction. |
+|  focus | boolean | Acquire player focus on this work operation. Optional. Defaults to true. |
 
 <b>Returns:</b>
 
@@ -35,14 +36,28 @@ This function will return true if you successfully start working for the specifi
 
 Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience) until you FINISH the action.
 
-## Example
+## Example 1
 
 
 ```ts
+// NS1:
 //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
 while (getFactionRep(FACTION NAME) < VALUE) {
    workForFaction(FACNAME, WORKTYPE);
    sleep(60000);
+}
+//This way, your faction reputation will be updated every minute.
+```
+
+## Example 2
+
+
+```ts
+// NS2:
+//If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:
+while (ns.getFactionRep(FACTION NAME) < VALUE) {
+   ns.workForFaction(FACNAME, WORKTYPE);
+   await ns.sleep(60000);
 }
 //This way, your faction reputation will be updated every minute.
 ```

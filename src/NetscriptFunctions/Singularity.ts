@@ -166,6 +166,8 @@ export function NetscriptSingularity(
       let augs = [];
       if (player.hasGangWith(faction)) {
         for (const augName in Augmentations) {
+          if (augName === AugmentationNames.NeuroFluxGovernor) continue;
+          if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
           const tempAug = Augmentations[augName];
           if (!tempAug.isSpecial) {
             augs.push(augName);

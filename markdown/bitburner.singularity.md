@@ -65,6 +65,6 @@ This API requires Source-File 4 level 1 / 2 / 3 to use.
 |  [universityCourse(universityName, courseName)](./bitburner.singularity.universitycourse.md) | SF4.1 - Take university class. |
 |  [upgradeHomeCores()](./bitburner.singularity.upgradehomecores.md) | SF4.2 - Upgrade home computer cores. |
 |  [upgradeHomeRam()](./bitburner.singularity.upgradehomeram.md) | SF4.2 - Upgrade home computer RAM. |
-|  [workForCompany(companyName)](./bitburner.singularity.workforcompany.md) | SF4.2 - Work for a company. |
-|  [workForFaction(faction, workType)](./bitburner.singularity.workforfaction.md) | SF4.2 - Work for a faction. |
+|  [workForCompany(companyName, focus)](./bitburner.singularity.workforcompany.md) | SF4.2 - Work for a company. |
+|  [workForFaction(faction, workType, focus)](./bitburner.singularity.workforfaction.md) | SF4.2 - Work for a faction. |
 

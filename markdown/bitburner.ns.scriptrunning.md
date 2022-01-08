@@ -37,15 +37,24 @@ This is different than the isRunning function because it does not try to identif
 
 
 ```ts
+// NS1:
 //The function call will return true if there is any script named foo.script running on the foodnstuff server, and false otherwise:
 scriptRunning("foo.script", "foodnstuff");
+
+//The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:
+scriptRunning("foo.script", getHostname());
 ```
+\*
 
 ## Example 2
 
 
 ```ts
+// NS2:
+//The function call will return true if there is any script named foo.script running on the foodnstuff server, and false otherwise:
+ns.scriptRunning("foo.script", "foodnstuff");
+
 //The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:
-scriptRunning("foo.script", getHostname());
+ns.scriptRunning("foo.script", ns.getHostname());
 ```
 

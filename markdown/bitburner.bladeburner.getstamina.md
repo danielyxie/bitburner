@@ -21,13 +21,25 @@ Array containing current stamina and max stamina.
 
 RAM cost: 4 GB Returns an array with two elements: \* \[Current stamina, Max stamina\]
 
-## Example
+## Example 1
 
 
 ```ts
+// NS1:
 function getStaminaPercentage() {
-   let res = bladeburner.getStamina();
+   var res = bladeburner.getStamina();
    return res[0] / res[1];
+}
+```
+
+## Example 2
+
+
+```ts
+// NS2:
+function getStaminaPercentage() {
+   const [current, max] = ns.bladeburner.getStamina();
+   return current / max;
 }
 ```
 

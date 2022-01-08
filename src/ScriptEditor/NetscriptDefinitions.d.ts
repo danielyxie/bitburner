@@ -630,19 +630,19 @@ export interface CharacterInfo {
  * @public
  */
 export interface SleeveWorkGains {
-  /** hacking exp gained from work */
+  /** Hacking exp gained from work */
   workHackExpGain: number;
-  /** strength exp gained from work */
+  /** Strength exp gained from work */
   workStrExpGain: number;
-  /** defense exp gained from work, */
+  /** Defense exp gained from work, */
   workDefExpGain: number;
-  /** dexterity exp gained from work */
+  /** Dexterity exp gained from work */
   workDexExpGain: number;
-  /** agility exp gained from work */
+  /** Agility exp gained from work */
   workAgiExpGain: number;
-  /** charisma exp gained from work */
+  /** Charisma exp gained from work */
   workChaExpGain: number;
-  /** money gained from work */
+  /** Money gained from work */
   workMoneyGain: number;
 }
 
@@ -674,7 +674,7 @@ export interface BladeburnerCurAction {
 export interface GangGenInfo {
   /** Name of faction that the gang belongs to ("Slum Snakes", etc.) */
   faction: string;
-  /** Boolean indicating whether or not its a hacking gang */
+  /** Indicating whether or not it's a hacking gang */
   isHacking: boolean;
   /** Money earned per game cycle */
   moneyGainRate: number;
@@ -684,17 +684,17 @@ export interface GangGenInfo {
   respect: number;
   /** Respect earned per game cycle */
   respectGainRate: number;
-  /** Amount of territory held. */
+  /** Amount of territory held */
   territory: number;
-  /** Clash chance. */
+  /** Clash chance */
   territoryClashChance: number;
   /** Gang's wanted level */
   wantedLevel: number;
   /** Wanted level gained/lost per game cycle (negative for losses) */
   wantedLevelGainRate: number;
-  /** Boolean indicating if territory warfare is enabled. */
+  /** Indicating if territory warfare is enabled */
   territoryWarfareEngaged: boolean;
-  /** Number indicating the current wanted penalty. */
+  /** Number indicating the current wanted penalty */
   wantedPenalty: number;
 }
 
@@ -845,17 +845,17 @@ export interface GangMemberInfo {
 export interface GangMemberAscension {
   /** Amount of respect lost from ascending */
   respect: number;
-  /** Hacking multiplier gained from ascending.*/
+  /** Hacking multiplier gained from ascending */
   hack: number;
-  /** Strength multiplier gained from ascending.*/
+  /** Strength multiplier gained from ascending */
   str: number;
-  /** Defense multiplier gained from ascending.*/
+  /** Defense multiplier gained from ascending */
   def: number;
-  /** Dexterity multiplier gained from ascending.*/
+  /** Dexterity multiplier gained from ascending */
   dex: number;
-  /** Agility multiplier gained from ascending.*/
+  /** Agility multiplier gained from ascending */
   agi: number;
-  /** Charisma multiplier gained from ascending.*/
+  /** Charisma multiplier gained from ascending */
   cha: number;
 }
 
@@ -864,21 +864,21 @@ export interface GangMemberAscension {
  * @public
  */
 export interface SleeveSkills {
-  /** current shock of the sleeve [0-100] */
+  /** Current shock of the sleeve [0-100] */
   shock: number;
-  /** current sync of the sleeve [0-100] */
+  /** Current sync of the sleeve [0-100] */
   sync: number;
-  /** current hacking skill of the sleeve */
+  /** Current hacking skill of the sleeve */
   hacking: number;
-  /** current strength of the sleeve */
+  /** Current strength of the sleeve */
   strength: number;
-  /** current defense of the sleeve */
+  /** Current defense of the sleeve */
   defense: number;
-  /** current dexterity of the sleeve */
+  /** Current dexterity of the sleeve */
   dexterity: number;
-  /** current agility of the sleeve */
+  /** Current agility of the sleeve */
   agility: number;
-  /** current charisma of the sleeve */
+  /** Current charisma of the sleeve */
   charisma: number;
 }
 
@@ -887,29 +887,29 @@ export interface SleeveSkills {
  * @public
  */
 export interface SleeveInformation {
-  /** location of the sleeve */
+  /** Location of the sleeve */
   city: string;
-  /** current hp of the sleeve */
+  /** Current hp of the sleeve */
   hp: number;
-  /** max hp of the sleeve */
+  /** Max hp of the sleeve */
   maxHp: number;
-  /** jobs available to the sleeve */
+  /** Jobs available to the sleeve */
   jobs: string[];
-  /** job titles available to the sleeve */
+  /** Job titles available to the sleeve */
   jobTitle: string[];
-  /** does this sleeve have access to the tor router */
+  /** Does this sleeve have access to the tor router */
   tor: boolean;
-  /** sleeve multipliers */
+  /** Sleeve multipliers */
   mult: CharacterMult;
-  /** time spent on the current task in milliseconds */
+  /** Time spent on the current task in milliseconds */
   timeWorked: number;
-  /** earnings synchronized to other sleeves */
+  /** Earnings synchronized to other sleeves */
   earningsForSleeves: SleeveWorkGains;
-  /** earnings synchronized to the player */
+  /** Earnings synchronized to the player */
   earningsForPlayer: SleeveWorkGains;
-  /** earnings for this sleeve */
+  /** Earnings for this sleeve */
   earningsForTask: SleeveWorkGains;
-  /** faction or company reputation gained for the current task */
+  /** Faction or company reputation gained for the current task */
   workRepGain: number;
 }
 
@@ -918,15 +918,15 @@ export interface SleeveInformation {
  * @public
  */
 export interface SleeveTask {
-  /** task type */
+  /** Task type */
   task: string;
-  /** crime currently attempting, if any */
+  /** Crime currently attempting, if any */
   crime: string;
-  /** location of the task, if any */
+  /** Location of the task, if any */
   location: string;
-  /** stat being trained at the gym, if any */
+  /** Stat being trained at the gym, if any */
   gymStatType: string;
-  /** faction work type being performed, if any */
+  /** Faction work type being performed, if any */
   factionWorkType: string;
 }
 
@@ -3739,7 +3739,7 @@ interface Stanek {
   height(): number;
 
   /**
-   * Charge a fragment, increasing it's power.
+   * Charge a fragment, increasing its power.
    * @remarks
    * RAM cost: 0.4 GB
    * @param rootX - rootX Root X against which to align the top left of the fragment.
@@ -3852,7 +3852,7 @@ interface UserInterface {
    * Resets the player's theme to the default values
    * @remarks
    * RAM cost: cost: 0 GB
-  */
+   */
   resetTheme(): void;
 }
 
@@ -5727,7 +5727,7 @@ export interface NS extends Singularity {
    * RAM cost: 4 GB
    *
    * Returns an object containing the current BitNode multipliers.
-   * This function requires Source-File 5 in order to run.
+   * This function requires you to be in Bitnode 5 or have Source-File 5 in order to run.
    * The multipliers are returned in decimal forms (e.g. 1.5 instead of 150%).
    * The multipliers represent the difference between the current BitNode and
    * the original BitNode (BitNode-1).
@@ -6131,7 +6131,7 @@ interface CorporationInfo {
   revenue: number;
   /** Expenses per second this cycle */
   expenses: number;
-  /** Is the company is public */
+  /** Indicating if the company is public */
   public: boolean;
   /** Total number of shares issues by this corporation */
   totalShares: number;

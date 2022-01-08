@@ -1251,7 +1251,7 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "threads: "
+                  "text": "threads?: "
                 },
                 {
                   "kind": "Content",
@@ -1262,7 +1262,7 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
+              "isOptional": true,
               "releaseTag": "Public",
               "name": "threads",
               "propertyTypeTokenRange": {
@@ -3292,7 +3292,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Bladeburner#getStamina:member(1)",
-              "docComment": "/**\n * Get bladeburner stamina.\n *\n * @remarks\n *\n * RAM cost: 4 GB Returns an array with two elements: * [Current stamina, Max stamina]\n *\n * @returns Array containing current stamina and max stamina.\n *\n * @example\n * ```ts\n * function getStaminaPercentage() {\n *    let res = bladeburner.getStamina();\n *    return res[0] / res[1];\n * }\n * ```\n *\n */\n",
+              "docComment": "/**\n * Get bladeburner stamina.\n *\n * @remarks\n *\n * RAM cost: 4 GB Returns an array with two elements: * [Current stamina, Max stamina]\n *\n * @returns Array containing current stamina and max stamina.\n *\n * @example\n * ```ts\n * // NS1:\n * function getStaminaPercentage() {\n *    var res = bladeburner.getStamina();\n *    return res[0] / res[1];\n * }\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * function getStaminaPercentage() {\n *    const [current, max] = ns.bladeburner.getStamina();\n *    return current / max;\n * }\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -4836,7 +4836,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!CodingContract:interface",
-          "docComment": "/**\n * Coding Contact API\n *\n * @public\n */\n",
+          "docComment": "/**\n * Coding Contract API\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -5688,7 +5688,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#public:member",
-              "docComment": "/**\n * Is the company is public\n */\n",
+              "docComment": "/**\n * Indicating if the company is public\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5792,7 +5792,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#state:member",
-              "docComment": "/**\n * State of the corporation, like PRODUCTION or EXPORT\n */\n",
+              "docComment": "/**\n * State of the corporation. Possible states are START, PURCHASE, PRODUCTION, SALE, EXPORT.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -8982,7 +8982,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangGenInfo#isHacking:member",
-              "docComment": "/**\n * Boolean indicating whether or not its a hacking gang\n */\n",
+              "docComment": "/**\n * Indicating whether or not it's a hacking gang\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -9112,7 +9112,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangGenInfo#territory:member",
-              "docComment": "/**\n * Amount of territory held.\n */\n",
+              "docComment": "/**\n * Amount of territory held\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -9138,7 +9138,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangGenInfo#territoryClashChance:member",
-              "docComment": "/**\n * Clash chance.\n */\n",
+              "docComment": "/**\n * Clash chance\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -9164,7 +9164,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangGenInfo#territoryWarfareEngaged:member",
-              "docComment": "/**\n * Boolean indicating if territory warfare is enabled.\n */\n",
+              "docComment": "/**\n * Indicating if territory warfare is enabled\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -9242,7 +9242,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangGenInfo#wantedPenalty:member",
-              "docComment": "/**\n * Number indicating the current wanted penalty.\n */\n",
+              "docComment": "/**\n * Number indicating the current wanted penalty\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -9284,7 +9284,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangMemberAscension#agi:member",
-              "docComment": "/**\n * Agility multiplier gained from ascending.\n */\n",
+              "docComment": "/**\n * Agility multiplier gained from ascending\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -9310,7 +9310,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangMemberAscension#cha:member",
-              "docComment": "/**\n * Charisma multiplier gained from ascending.\n */\n",
+              "docComment": "/**\n * Charisma multiplier gained from ascending\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -9336,7 +9336,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangMemberAscension#def:member",
-              "docComment": "/**\n * Defense multiplier gained from ascending.\n */\n",
+              "docComment": "/**\n * Defense multiplier gained from ascending\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -9362,7 +9362,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangMemberAscension#dex:member",
-              "docComment": "/**\n * Dexterity multiplier gained from ascending.\n */\n",
+              "docComment": "/**\n * Dexterity multiplier gained from ascending\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -9388,7 +9388,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangMemberAscension#hack:member",
-              "docComment": "/**\n * Hacking multiplier gained from ascending.\n */\n",
+              "docComment": "/**\n * Hacking multiplier gained from ascending\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -9440,7 +9440,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!GangMemberAscension#str:member",
-              "docComment": "/**\n * Strength multiplier gained from ascending.\n */\n",
+              "docComment": "/**\n * Strength multiplier gained from ascending\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -12015,7 +12015,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Hacknet#getHashUpgrades:member(1)",
-              "docComment": "/**\n * Get the list of hash upgrades\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).\n *\n * Returns the list of all available hash upgrades that can be used in the spendHashes function.\n *\n * @returns An array containing the available upgrades\n *\n * @example\n * ```ts\n * const upgrades = hacknet.getHashUpgrades(); // [\"Sell for Money\",\"Sell for Corporation Funds\",...]\n * ```\n *\n */\n",
+              "docComment": "/**\n * Get the list of hash upgrades\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).\n *\n * Returns the list of all available hash upgrades that can be used in the spendHashes function.\n *\n * @returns An array containing the available upgrades\n *\n * @example\n * ```ts\n * // NS1:\n * var upgrades = hacknet.getHashUpgrades(); // [\"Sell for Money\",\"Sell for Corporation Funds\",...]\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * const upgrades = ns.hacknet.getHashUpgrades(); // [\"Sell for Money\",\"Sell for Corporation Funds\",...]\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -12318,7 +12318,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Hacknet#hashCost:member(1)",
-              "docComment": "/**\n * Get the cost of a hash upgrade.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).\n *\n * Returns the number of hashes required for the specified upgrade. The name of the upgrade must be an exact match.\n *\n * @param upgName - Name of the upgrade of Hacknet Node.\n *\n * @returns Number of hashes required for the specified upgrade.\n *\n * @example\n * ```ts\n * var upgradeName = \"Sell for Corporation Funds\";\n * if (hacknet.numHashes() > hacknet.hashCost(upgradeName)) {\n *    hacknet.spendHashes(upgName);\n * }\n * ```\n *\n */\n",
+              "docComment": "/**\n * Get the cost of a hash upgrade.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).\n *\n * Returns the number of hashes required for the specified upgrade. The name of the upgrade must be an exact match.\n *\n * @param upgName - Name of the upgrade of Hacknet Node.\n *\n * @returns Number of hashes required for the specified upgrade.\n *\n * @example\n * ```ts\n * // NS1:\n * var upgradeName = \"Sell for Corporation Funds\";\n * if (hacknet.numHashes() > hacknet.hashCost(upgradeName)) {\n *    hacknet.spendHashes(upgName);\n * }\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * const upgradeName = \"Sell for Corporation Funds\";\n * if (ns.hacknet.numHashes() > ns.hacknet.hashCost(upgradeName)) {\n *    ns.hacknet.spendHashes(upgName);\n * }\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -12474,7 +12474,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Hacknet#spendHashes:member(1)",
-              "docComment": "/**\n * Purchase a hash upgrade.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).\n *\n * Spend the hashes generated by your Hacknet Servers on an upgrade. Returns a boolean value - true if the upgrade is successfully purchased, and false otherwise.\n *\n * The name of the upgrade must be an exact match. The `upgTarget` argument is used for upgrades such as `Reduce Minimum Security`, which applies to a specific server. In this case, the `upgTarget` argument must be the hostname of the server.\n *\n * @param upgName - Name of the upgrade of Hacknet Node.\n *\n * @param upgTarget - Object to which upgrade applies. Required for certain upgrades.\n *\n * @returns True if the upgrade is successfully purchased, and false otherwise..\n *\n * @example\n * ```ts\n * hacknet.spendHashes(\"Sell for Corporation Funds\");\n * hacknet.spendHashes(\"Increase Maximum Money\", \"foodnstuff\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Purchase a hash upgrade.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function is only applicable for Hacknet Servers (the upgraded version of a Hacknet Node).\n *\n * Spend the hashes generated by your Hacknet Servers on an upgrade. Returns a boolean value - true if the upgrade is successfully purchased, and false otherwise.\n *\n * The name of the upgrade must be an exact match. The `upgTarget` argument is used for upgrades such as `Reduce Minimum Security`, which applies to a specific server. In this case, the `upgTarget` argument must be the hostname of the server.\n *\n * @param upgName - Name of the upgrade of Hacknet Node.\n *\n * @param upgTarget - Object to which upgrade applies. Required for certain upgrades.\n *\n * @returns True if the upgrade is successfully purchased, and false otherwise..\n *\n * @example\n * ```ts\n * // NS1:\n * hacknet.spendHashes(\"Sell for Corporation Funds\");\n * hacknet.spendHashes(\"Increase Maximum Money\", \"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * NS2:\n * ns.hacknet.spendHashes(\"Sell for Corporation Funds\");\n * ns.hacknet.spendHashes(\"Increase Maximum Money\", \"foodnstuff\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -14461,7 +14461,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#brutessh:member(1)",
-              "docComment": "/**\n * Runs BruteSSH.exe on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Runs the BruteSSH.exe program on the target server. BruteSSH.exe must exist on your home computer.\n *\n * @param host - Hostname of the target server.\n *\n * @example\n * ```ts\n * brutessh(\"foodnstuff\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Runs BruteSSH.exe on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Runs the BruteSSH.exe program on the target server. BruteSSH.exe must exist on your home computer.\n *\n * @param host - Hostname of the target server.\n *\n * @example\n * ```ts\n * // NS1:\n * brutessh(\"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * ns.brutessh(\"foodnstuff\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -14719,7 +14719,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#disableLog:member(1)",
-              "docComment": "/**\n * Disables logging for the given function.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Logging can be disabled for all functions by passing `ALL` as the argument.\n *\n * Note that this does not completely remove all logging functionality. This only stops a function from logging when the function is successful. If the function fails, it will still log the reason for failure.\n *\n * Notable functions that cannot have their logs disabled: run, exec, exit.\n *\n * @param fn - Name of function for which to disable logging.\n */\n",
+              "docComment": "/**\n * Disables logging for the given function.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Logging can be disabled for all functions by passing `ALL` as the argument.\n *\n * Note that this does not completely remove all logging functionality. This only stops a function from logging when the function is successful. If the function fails, it will still log the reason for failure.\n *\n * @param fn - Name of function for which to disable logging.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -14807,7 +14807,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#exec:member(1)",
-              "docComment": "/**\n * Start another script on any server.\n *\n * @remarks\n *\n * RAM cost: 1.3 GB\n *\n * Run a script as a separate process on a specified server. This is similar to the run function except that it can be used to run a script on any server, instead of just the current server.\n *\n * If the script was successfully started, then this functions returns the PID of that script. Otherwise, it returns 0.\n *\n * PID stands for Process ID. The PID is a unique identifier for each script. The PID will always be a positive integer.\n *\n * Running this function with a numThreads argument of 0 will return 0 without running the script. However, running this function with a negative numThreads argument will cause a runtime error.\n *\n * @param script - Filename of script to execute.\n *\n * @param host - Hostname of the `target server` on which to execute the script.\n *\n * @param numThreads - Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer.\n *\n * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value.\n *\n * @returns Returns the PID of a successfully started script, and 0 otherwise.\n *\n * @example\n * ```ts\n * //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:\n * exec(\"generic-hack.script\", \"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:\n * exec(\"generic-hack.script\", \"joesguns\", 10);\n * ```\n *\n * @example\n * ```ts\n * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:\n * exec(\"foo.script\", \"foodnstuff\", 5, 1, \"test\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Start another script on any server.\n *\n * @remarks\n *\n * RAM cost: 1.3 GB\n *\n * Run a script as a separate process on a specified server. This is similar to the run function except that it can be used to run a script on any server, instead of just the current server.\n *\n * If the script was successfully started, then this functions returns the PID of that script. Otherwise, it returns 0.\n *\n * PID stands for Process ID. The PID is a unique identifier for each script. The PID will always be a positive integer.\n *\n * Running this function with a numThreads argument of 0 will return 0 without running the script. However, running this function with a negative numThreads argument will cause a runtime error.\n *\n * @param script - Filename of script to execute.\n *\n * @param host - Hostname of the `target server` on which to execute the script.\n *\n * @param numThreads - Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer.\n *\n * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the third argument numThreads must be filled in with a value.\n *\n * @returns Returns the PID of a successfully started script, and 0 otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:\n * exec(\"generic-hack.script\", \"foodnstuff\");\n *\n * //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:\n * exec(\"generic-hack.script\", \"joesguns\", 10);\n *\n * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:\n * exec(\"foo.script\", \"foodnstuff\", 5, 1, \"test\");\n * ```\n *\n * *\n *\n * @example\n * ```ts\n * // NS2:\n * //The simplest way to use the exec command is to call it with just the script name and the target server. The following example will try to run generic-hack.script on the foodnstuff server:\n * ns.exec(\"generic-hack.script\", \"foodnstuff\");\n *\n * //The following example will try to run the script generic-hack.script on the joesguns server with 10 threads:\n * ns.exec(\"generic-hack.script\", \"joesguns\", 10);\n *\n * //This last example will try to run the script foo.script on the foodnstuff server with 5 threads. It will also pass the number 1 and the string “test” in as arguments to the script:\n * ns.exec(\"foo.script\", \"foodnstuff\", 5, 1, \"test\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -14838,8 +14838,13 @@
                   "text": ", ...args: "
                 },
                 {
+                  "kind": "Reference",
+                  "text": "Array",
+                  "canonicalReference": "!Array:interface"
+                },
+                {
                   "kind": "Content",
-                  "text": "string[]"
+                  "text": "<string | number | boolean>"
                 },
                 {
                   "kind": "Content",
@@ -14856,8 +14861,8 @@
               ],
               "isOptional": false,
               "returnTypeTokenRange": {
-                "startIndex": 9,
-                "endIndex": 10
+                "startIndex": 10,
+                "endIndex": 11
               },
               "releaseTag": "Public",
               "overloadIndex": 1,
@@ -14887,7 +14892,7 @@
                   "parameterName": "args",
                   "parameterTypeTokenRange": {
                     "startIndex": 7,
-                    "endIndex": 8
+                    "endIndex": 9
                   }
                 }
               ],
@@ -14924,7 +14929,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#fileExists:member(1)",
-              "docComment": "/**\n * Check if a file exists.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns a boolean indicating whether the specified file exists on the target server. The filename for scripts is case-sensitive, but for other types of files it is not. For example, fileExists(“brutessh.exe”) will work fine, even though the actual program is named 'BruteSSH.exe'.\n *\n * If the hostname/ip argument is omitted, then the function will search through the current server (the server running the script that calls this function) for the file.\n *\n * @param filename - Filename of file to check.\n *\n * @param host - Host of target server. This is optional. If it is not specified then the function will use the current server as the target server.\n *\n * @returns True if specified file exists, and false otherwise.\n *\n * @example\n * ```ts\n * //The function call will return true if the script named foo.script exists on the foodnstuff server, and false otherwise.\n * fileExists(\"foo.script\", \"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * //The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.\n * fileExists(\"ftpcrack.exe\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Check if a file exists.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns a boolean indicating whether the specified file exists on the target server. The filename for scripts is case-sensitive, but for other types of files it is not. For example, fileExists(“brutessh.exe”) will work fine, even though the actual program is named 'BruteSSH.exe'.\n *\n * If the hostname/ip argument is omitted, then the function will search through the current server (the server running the script that calls this function) for the file.\n *\n * @param filename - Filename of file to check.\n *\n * @param host - Host of target server. This is optional. If it is not specified then the function will use the current server as the target server.\n *\n * @returns True if specified file exists, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //The function call will return true if the script named foo.script exists on the foodnstuff server, and false otherwise.\n * fileExists(\"foo.script\", \"foodnstuff\");\n *\n * //The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.\n * fileExists(\"ftpcrack.exe\");\n * ```\n *\n * *\n *\n * @example\n * ```ts\n * // NS2:\n * // The function call will return true if the script named foo.script exists on the foodnstuff server, and false otherwise.\n * ns.fileExists(\"foo.script\", \"foodnstuff\");\n *\n * // The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.\n * ns.fileExists(\"ftpcrack.exe\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -14983,7 +14988,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#flags:member(1)",
-              "docComment": "/**\n * Parse command line flags.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Allows unix like flag parsing.\n *\n * @example\n * ```ts\n * // example.script\n * var data = flags([\n *     ['delay', 0], // a default number means this flag is a number\n *     ['server', 'foodnstuff'], //  a default string means this flag is a string\n *     ['exclude', []], // a default array means this flag is a default array of string\n *     ['help', false], // a default boolean means this flag is a boolean\n * ]);\n * tprint(data);\n *\n * // [home ~/]> run example.script\n * // {\"_\":[],\"delay\":0,\"server\":\"foodnstuff\",\"exclude\":[],\"help\":false}\n * // [home ~/]> run example.script --delay 3000\n * // {\"_\":[],\"server\":\"foodnstuff\",\"exclude\":[],\"help\":false,\"delay\":3000}\n * // [home ~/]> run example.script --delay 3000 --server harakiri-sushi\n * // {\"_\":[],\"exclude\":[],\"help\":false,\"delay\":3000,\"server\":\"harakiri-sushi\"}\n * // [home ~/]> run example.script --delay 3000 --server harakiri-sushi hello world\n * // {\"_\":[\"hello\",\"world\"],\"exclude\":[],\"help\":false,\"delay\":3000,\"server\":\"harakiri-sushi\"}\n * // [home ~/]> run example.script --delay 3000 --server harakiri-sushi hello world --exclude a --exclude b\n * // {\"_\":[\"hello\",\"world\"],\"help\":false,\"delay\":3000,\"server\":\"harakiri-sushi\",\"exclude\":[\"a\",\"b\"]}\n * // [home ~/]> run example.script --help\n * // {\"_\":[],\"delay\":0,\"server\":\"foodnstuff\",\"exclude\":[],\"help\":true}\n * ```\n *\n */\n",
+              "docComment": "/**\n * Parse command line flags.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Allows unix like flag parsing.\n *\n * @example\n * ```ts\n * // example.script\n * var data = flags([\n *     ['delay', 0], // a default number means this flag is a number\n *     ['server', 'foodnstuff'], //  a default string means this flag is a string\n *     ['exclude', []], // a default array means this flag is a default array of string\n *     ['help', false], // a default boolean means this flag is a boolean\n * ]);\n * tprint(data);\n *\n * // example.ns\n * export async function main(ns) {\n *   const data = ns.flags([\n *     ['delay', 0], // a default number means this flag is a number\n *     ['server', 'foodnstuff'], //  a default string means this flag is a string\n *     ['exclude', []], // a default array means this flag is a default array of string\n *     ['help', false], // a default boolean means this flag is a boolean\n *   ]);\n *   ns.tprint(data);\n * }\n *\n * // [home ~/]> run example.script\n * // {\"_\":[],\"delay\":0,\"server\":\"foodnstuff\",\"exclude\":[],\"help\":false}\n * // [home ~/]> run example.script --delay 3000\n * // {\"_\":[],\"server\":\"foodnstuff\",\"exclude\":[],\"help\":false,\"delay\":3000}\n * // [home ~/]> run example.script --delay 3000 --server harakiri-sushi\n * // {\"_\":[],\"exclude\":[],\"help\":false,\"delay\":3000,\"server\":\"harakiri-sushi\"}\n * // [home ~/]> run example.script --delay 3000 --server harakiri-sushi hello world\n * // {\"_\":[\"hello\",\"world\"],\"exclude\":[],\"help\":false,\"delay\":3000,\"server\":\"harakiri-sushi\"}\n * // [home ~/]> run example.script --delay 3000 --server harakiri-sushi hello world --exclude a --exclude b\n * // {\"_\":[\"hello\",\"world\"],\"help\":false,\"delay\":3000,\"server\":\"harakiri-sushi\",\"exclude\":[\"a\",\"b\"]}\n * // [home ~/]> run example.script --help\n * // {\"_\":[],\"delay\":0,\"server\":\"foodnstuff\",\"exclude\":[],\"help\":true}\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15054,7 +15059,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#ftpcrack:member(1)",
-              "docComment": "/**\n * Runs FTPCrack.exe on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Runs the FTPCrack.exe program on the target server. FTPCrack.exe must exist on your home computer.\n *\n * @param host - Hostname of the target server.\n *\n * @example\n * ```ts\n * ftpcrack(\"foodnstuff\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Runs FTPCrack.exe on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Runs the FTPCrack.exe program on the target server. FTPCrack.exe must exist on your home computer.\n *\n * @param host - Hostname of the target server.\n *\n * @example\n * ```ts\n * // NS1:\n * ftpcrack(\"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * ns.ftpcrack(\"foodnstuff\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15125,7 +15130,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getBitNodeMultipliers:member(1)",
-              "docComment": "/**\n * Get the current Bitnode multipliers.\n *\n * @remarks\n *\n * RAM cost: 4 GB\n *\n * Returns an object containing the current BitNode multipliers. This function requires Source-File 5 in order to run. The multipliers are returned in decimal forms (e.g. 1.5 instead of 150%). The multipliers represent the difference between the current BitNode and the original BitNode (BitNode-1).\n *\n * For example, if the CrimeMoney multiplier has a value of 0.1, then that means that committing crimes in the current BitNode will only give 10% of the money you would have received in BitNode-1.\n *\n * @returns Object containing the current BitNode multipliers.\n *\n * @example\n * ```ts\n * mults = getBitNodeMultipliers();\n * print(mults.ServerMaxMoney);\n * print(mults.HackExpGain);\n * ```\n *\n */\n",
+              "docComment": "/**\n * Get the current Bitnode multipliers.\n *\n * @remarks\n *\n * RAM cost: 4 GB\n *\n * Returns an object containing the current BitNode multipliers. This function requires you to be in Bitnode 5 or have Source-File 5 in order to run. The multipliers are returned in decimal forms (e.g. 1.5 instead of 150%). The multipliers represent the difference between the current BitNode and the original BitNode (BitNode-1).\n *\n * For example, if the CrimeMoney multiplier has a value of 0.1, then that means that committing crimes in the current BitNode will only give 10% of the money you would have received in BitNode-1.\n *\n * @returns Object containing the current BitNode multipliers.\n *\n * @example\n * ```ts\n * // NS1:\n * var mults = getBitNodeMultipliers();\n * print(mults.ServerMaxMoney);\n * print(mults.HackExpGain);\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * const {ServerMaxMoney, HackExpGain} = ns.getBitNodeMultipliers();\n * print(ServerMaxMoney);\n * print(HackExpGain);\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15182,7 +15187,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getGrowTime:member(1)",
-              "docComment": "/**\n * Get the execution time of a grow() call.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Returns the amount of time in milliseconds it takes to execute the grow Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels.\n *\n * @param host - Host of target server.\n *\n * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.\n *\n * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).\n *\n * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.\n */\n",
+              "docComment": "/**\n * Get the execution time of a grow() call.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Returns the amount of time in milliseconds it takes to execute the grow Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels. The required time is increased by the security level of the target server and decreased by the player's hacking level.\n *\n * @param host - Host of target server.\n *\n * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15254,7 +15259,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getHackingMultipliers:member(1)",
-              "docComment": "/**\n * Get hacking related multipliers.\n *\n * @remarks\n *\n * RAM cost: 4 GB\n *\n * Returns an object containing the Player’s hacking related multipliers. These multipliers are returned in fractional forms, not percentages (e.g. 1.5 instead of 150%).\n *\n * @returns Object containing the Player’s hacking related multipliers.\n *\n * @example\n * ```ts\n * //Example of how this can be used:\n * mults = getHackingMultipliers();\n * print(mults.chance);\n * print(mults.growth);\n * ```\n *\n */\n",
+              "docComment": "/**\n * Get hacking related multipliers.\n *\n * @remarks\n *\n * RAM cost: 4 GB\n *\n * Returns an object containing the Player’s hacking related multipliers. These multipliers are returned in fractional forms, not percentages (e.g. 1.5 instead of 150%).\n *\n * @returns Object containing the Player’s hacking related multipliers.\n *\n * @example\n * ```ts\n * // NS1:\n * // Example of how this can be used:\n * var mults = getHackingMultipliers();\n * print(mults.chance);\n * print(mults.growth);\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * // Example of how this can be used:\n * const {chance, growth} = ns.getHackingMultipliers();\n * print(chance);\n * print(growth);\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15283,7 +15288,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getHacknetMultipliers:member(1)",
-              "docComment": "/**\n * Get hacknet related multipliers.\n *\n * @remarks\n *\n * RAM cost: 4 GB\n *\n * Returns an object containing the Player’s hacknet related multipliers. These multipliers are returned in fractional forms, not percentages (e.g. 1.5 instead of 150%).\n *\n * @returns Object containing the Player’s hacknet related multipliers.\n *\n * @example\n * ```ts\n * //Example of how this can be used:\n * mults = getHacknetMultipliers();\n * print(mults.production);\n * print(mults.purchaseCost);\n * ```\n *\n */\n",
+              "docComment": "/**\n * Get hacknet related multipliers.\n *\n * @remarks\n *\n * RAM cost: 4 GB\n *\n * Returns an object containing the Player’s hacknet related multipliers. These multipliers are returned in fractional forms, not percentages (e.g. 1.5 instead of 150%).\n *\n * @returns Object containing the Player’s hacknet related multipliers.\n *\n * @example\n * ```ts\n * // NS1:\n * // Example of how this can be used:\n * var mults = getHacknetMultipliers();\n * print(mults.production);\n * print(mults.purchaseCost);\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * // Example of how this can be used:\n * const {production, purchaseCost} = ns.getHacknetMultipliers();\n * print(production);\n * print(purchaseCost);\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15312,7 +15317,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getHackTime:member(1)",
-              "docComment": "/**\n * Get the execution time of a hack() call.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels.\n *\n * @param host - Host of target server.\n *\n * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.\n *\n * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).\n *\n * @returns Returns the amount of time in milliseconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.\n */\n",
+              "docComment": "/**\n * Get the execution time of a hack() call.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB When `hack` completes an amount of money is stolen depending on the player's skills. Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels. The required time is increased by the security level of the target server and decreased by the player's hacking level.\n *\n * @param host - Host of target server.\n *\n * @returns Returns the amount of time in milliseconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15417,7 +15422,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getPlayer:member(1)",
-              "docComment": "/**\n * Get information about the player.\n *\n * @returns Player info\n */\n",
+              "docComment": "/**\n * Get information about the player.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * Returns an object with information on the current player.\n *\n * @returns Player info\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15490,7 +15495,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getPurchasedServerCost:member(1)",
-              "docComment": "/**\n * Get cost of purchasing a server.\n *\n * @remarks\n *\n * RAM cost: 0.25 GB\n *\n * Returns the cost to purchase a server with the specified amount of ram.\n *\n * @param ram - Amount of RAM of a potential purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).\n *\n * @returns The cost to purchase a server with the specified amount of ram.\n *\n * @example\n * ```ts\n * for (i = 1; i <= 20; i++) {\n *     tprint(i + \" -- \" + getPurchasedServerCost(Math.pow(2, i)));\n * }\n * ```\n *\n */\n",
+              "docComment": "/**\n * Get cost of purchasing a server.\n *\n * @remarks\n *\n * RAM cost: 0.25 GB\n *\n * Returns the cost to purchase a server with the specified amount of ram.\n *\n * @param ram - Amount of RAM of a potential purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).\n *\n * @returns The cost to purchase a server with the specified amount of ram.\n *\n * @example\n * ```ts\n * // NS1:\n * for (i = 1; i <= 20; i++) {\n *     tprint(i + \" -- \" + getPurchasedServerCost(Math.pow(2, i)));\n * }\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * for (i = 1; i <= 20; i++) {\n *     ns.tprint(i + \" -- \" + ns.getPurchasedServerCost(Math.pow(2, i)));\n * }\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15618,11 +15623,11 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getRunningScript:member(1)",
-              "docComment": "/**\n * Get general info about a running script.\n *\n * @remarks\n *\n * RAM cost: 0.3 GB\n *\n * @returns info about a running script\n */\n",
+              "docComment": "/**\n * Get general info about a running script.\n *\n * @remarks\n *\n * RAM cost: 0.3 GB\n *\n * Running with no args returns curent script.\n *\n * @returns info about a running script\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "getRunningScript(filename: "
+                  "text": "getRunningScript(filename?: "
                 },
                 {
                   "kind": "Content",
@@ -15630,7 +15635,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ", hostname: "
+                  "text": ", hostname?: "
                 },
                 {
                   "kind": "Content",
@@ -15697,6 +15702,34 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
+                  "text": "getScriptExpGain(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "getScriptExpGain"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NS#getScriptExpGain:member(2)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
                   "text": "getScriptExpGain(script: "
                 },
                 {
@@ -15738,7 +15771,7 @@
                 "endIndex": 8
               },
               "releaseTag": "Public",
-              "overloadIndex": 1,
+              "overloadIndex": 2,
               "parameters": [
                 {
                   "parameterName": "script",
@@ -15771,6 +15804,34 @@
               "excerptTokens": [
                 {
                   "kind": "Content",
+                  "text": "getScriptIncome(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "[number, number]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "getScriptIncome"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NS#getScriptIncome:member(2)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
                   "text": "getScriptIncome(script: "
                 },
                 {
@@ -15799,7 +15860,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "number | [number, number]"
+                  "text": "number"
                 },
                 {
                   "kind": "Content",
@@ -15812,7 +15873,7 @@
                 "endIndex": 8
               },
               "releaseTag": "Public",
-              "overloadIndex": 1,
+              "overloadIndex": 2,
               "parameters": [
                 {
                   "parameterName": "script",
@@ -15841,7 +15902,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getScriptLogs:member(1)",
-              "docComment": "/**\n * Get all the logs of a script.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Returns a script’s logs. The logs are returned as an array, where each line is an element in the array. The most recently logged line is at the end of the array. Note that there is a maximum number of lines that a script stores in its logs. This is configurable in the game’s options. If the function is called with no arguments, it will return the current script’s logs.\n *\n * Otherwise, the fn, hostname/ip, and args… arguments can be used to get the logs from another script. Remember that scripts are uniquely identified by both their names and arguments.\n *\n * @param fn - Optional. Filename of script to get logs from.\n *\n * @param host - Optional. Hostname of the server that the script is on.\n *\n * @param args - Arguments to identify which scripts to get logs for.\n *\n * @returns Returns an string array, where each line is an element in the array. The most recently logged line is at the end of the array.\n *\n * @example\n * ```ts\n * //Get logs from foo.script on the current server that was run with no args\n * getScriptLogs(\"foo.script\");\n * ```\n *\n * @example\n * ```ts\n * //Open logs from foo.script on the foodnstuff server that was run with no args\n * getScriptLogs(\"foo.script\", \"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * //Open logs from foo.script on the foodnstuff server that was run with the arguments [1, \"test\"]\n * getScriptLogs(\"foo.script\", \"foodnstuff\", 1, \"test\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Get all the logs of a script.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Returns a script’s logs. The logs are returned as an array, where each line is an element in the array. The most recently logged line is at the end of the array. Note that there is a maximum number of lines that a script stores in its logs. This is configurable in the game’s options. If the function is called with no arguments, it will return the current script’s logs.\n *\n * Otherwise, the fn, hostname/ip, and args… arguments can be used to get the logs from another script. Remember that scripts are uniquely identified by both their names and arguments.\n *\n * @param fn - Optional. Filename of script to get logs from.\n *\n * @param host - Optional. Hostname of the server that the script is on.\n *\n * @param args - Arguments to identify which scripts to get logs for.\n *\n * @returns Returns an string array, where each line is an element in the array. The most recently logged line is at the end of the array.\n *\n * @example\n * ```ts\n * // NS1:\n * //Get logs from foo.script on the current server that was run with no args\n * getScriptLogs(\"foo.script\");\n *\n * //Open logs from foo.script on the foodnstuff server that was run with no args\n * getScriptLogs(\"foo.script\", \"foodnstuff\");\n *\n * //Open logs from foo.script on the foodnstuff server that was run with the arguments [1, \"test\"]\n * getScriptLogs(\"foo.script\", \"foodnstuff\", 1, \"test\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //Get logs from foo.script on the current server that was run with no args\n * ns.getScriptLogs(\"foo.script\");\n *\n * //Open logs from foo.script on the foodnstuff server that was run with no args\n * ns.getScriptLogs(\"foo.script\", \"foodnstuff\");\n *\n * //Open logs from foo.script on the foodnstuff server that was run with the arguments [1, \"test\"]\n * ns.getScriptLogs(\"foo.script\", \"foodnstuff\", 1, \"test\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -16267,7 +16328,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getServerMoneyAvailable:member(1)",
-              "docComment": "/**\n * Get money available on a server.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns the amount of money available on a server. Running this function on the home computer will return the player’s money.\n *\n * @param host - Host of target server\n *\n * @returns Amount of money available on the server.\n *\n * @example\n * ```ts\n * getServerMoneyAvailable(\"foodnstuff\");\n * getServerMoneyAvailable(\"home\"); //Returns player's money\n * ```\n *\n */\n",
+              "docComment": "/**\n * Get money available on a server.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns the amount of money available on a server. Running this function on the home computer will return the player’s money.\n *\n * @param host - Host of target server\n *\n * @returns Amount of money available on the server.\n *\n * @example\n * ```ts\n * // NS1:\n * getServerMoneyAvailable(\"foodnstuff\");\n * getServerMoneyAvailable(\"home\"); //Returns player's money\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * ns.getServerMoneyAvailable(\"foodnstuff\");\n * ns.getServerMoneyAvailable(\"home\"); // Returns player's money\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -16355,7 +16416,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getServerRam:member(1)",
-              "docComment": "/**\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns an array with two elements that gives information about a server’s memory (RAM). The first element in the array is the amount of RAM that the server has total (in GB). The second element in the array is the amount of RAM that is currently being used on the server (in GB).\n *\n * @deprecated\n *\n * use getServerMaxRam / getServerUsedRam\n *\n * @param host - Host of target server.\n *\n * @returns Array with total and used memory on the specified server.\n *\n * @example\n * ```ts\n * res = getServerRam(\"helios\");\n * totalRam = res[0];\n * ramUsed = res[1];\n * ```\n *\n */\n",
+              "docComment": "/**\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns an array with two elements that gives information about a server’s memory (RAM). The first element in the array is the amount of RAM that the server has total (in GB). The second element in the array is the amount of RAM that is currently being used on the server (in GB).\n *\n * @deprecated\n *\n * use getServerMaxRam / getServerUsedRam\n *\n * @param host - Host of target server.\n *\n * @returns Array with total and used memory on the specified server.\n *\n * @example\n * ```ts\n * // NS1:\n * var serverRam = getServerRam(\"helios\");\n * var totalRam = serverRam[0];\n * var ramUsed = serverRam[1];\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * const [totalRam, ramUsed] = ns.getServerRam(\"helios\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -16559,7 +16620,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getWeakenTime:member(1)",
-              "docComment": "/**\n * Get the execution time of a weaken() call.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Returns the amount of time in milliseconds it takes to execute the weaken() Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the weaken time would be at different hacking levels.\n *\n * @param host - Host of target server.\n *\n * @param hackLvl - Optional hacking level for the calculation. Defaults to player’s current hacking level.\n *\n * @param intLvl - Optional intelligence level for the calculation. Defaults to player’s current intelligence level. (Intelligence is unlocked after obtaining Source-File 5).\n *\n * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.\n */\n",
+              "docComment": "/**\n * Get the execution time of a weaken() call.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Returns the amount of time in milliseconds it takes to execute the weaken Netscript function on the target server. The function takes in an optional hackLvl parameter that can be specified to see what the weaken time would be at different hacking levels. The required time is increased by the security level of the target server and decreased by the player's hacking level.\n *\n * @param host - Host of target server.\n *\n * @returns Returns the amount of time in milliseconds it takes to execute the weaken Netscript function. Returns Infinity if called on a Hacknet Server.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -16603,7 +16664,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#grow:member(1)",
-              "docComment": "/**\n * Spoof money in a servers bank account, increasing the amount available.\n *\n * @remarks\n *\n * RAM cost: 0.15 GB\n *\n * Use your hacking skills to increase the amount of money available on a server. The runtime for this command depends on your hacking level and the target server’s security level. When `grow` completes, the money available on a target server will be increased by a certain, fixed percentage. This percentage is determined by the target server’s growth rate (which varies between servers) and security level. Generally, higher-level servers have higher growth rates. The getServerGrowth() function can be used to obtain a server’s growth rate.\n *\n * Like hack, `grow` can be called on any server, regardless of where the script is running. The grow() command requires root access to the target server, but there is no required hacking level to run the command. It also raises the security level of the target server by 0.004.\n *\n * @param host - Hostname of the target server to grow.\n *\n * @param opts - Optional parameters for configuring function behavior.\n *\n * @returns The number by which the money on the server was multiplied for the growth.\n *\n * @example\n * ```ts\n * grow(\"foodnstuff\");\n * grow(\"foodnstuff\", { threads: 5 }); // Only use 5 threads to grow\n * ```\n *\n */\n",
+              "docComment": "/**\n * Spoof money in a servers bank account, increasing the amount available.\n *\n * @remarks\n *\n * RAM cost: 0.15 GB\n *\n * Use your hacking skills to increase the amount of money available on a server. The runtime for this command depends on your hacking level and the target server’s security level. When `grow` completes, the money available on a target server will be increased by a certain, fixed percentage. This percentage is determined by the target server’s growth rate (which varies between servers) and security level. Generally, higher-level servers have higher growth rates. The getServerGrowth() function can be used to obtain a server’s growth rate.\n *\n * Like hack, `grow` can be called on any server, regardless of where the script is running. The grow() command requires root access to the target server, but there is no required hacking level to run the command. It also raises the security level of the target server by 0.004.\n *\n * @param host - Hostname of the target server to grow.\n *\n * @param opts - Optional parameters for configuring function behavior.\n *\n * @returns The number by which the money on the server was multiplied for the growth.\n *\n * @example\n * ```ts\n * // NS1:\n * var availableMoney = getServerMoneyAvailable(\"foodnstuff\");\n * currentMoney = currentMoney * (1 + grow(\"foodnstuff\"));\n * currentMoney = currentMoney * (1 + grow(\"foodnstuff\", { threads: 5 })); // Only use 5 threads to grow\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * let availableMoney = ns.getServerMoneyAvailable(\"foodnstuff\");\n * currentMoney *= (1 + await ns.grow(\"foodnstuff\"));\n * currentMoney *= (1 + await ns.grow(\"foodnstuff\", { threads: 5 })); // Only use 5 threads to grow\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -16668,7 +16729,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#growthAnalyze:member(1)",
-              "docComment": "/**\n * Calculate the number of grow thread needed to grow a server by a certain multiplier.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function returns the number of “growths” needed in order to increase the amount of money available on the specified server by the specified amount. The specified amount is multiplicative and is in decimal form, not percentage.\n *\n * Warning: The value returned by this function isn’t necessarily a whole number.\n *\n * @param host - Hostname of the target server.\n *\n * @param growthAmount - Multiplicative factor by which the server is grown. Decimal form..\n *\n * @returns The amount of grow calls needed to grow the specified server by the specified amount\n *\n * @example\n * ```ts\n * //For example, if you want to determine how many grow calls you need to double the amount of money on foodnstuff, you would use:\n * growthAnalyze(\"foodnstuff\", 2);\n * //If this returns 100, then this means you need to call grow 100 times in order to double the money (or once with 100 threads).\n * ```\n *\n */\n",
+              "docComment": "/**\n * Calculate the number of grow thread needed to grow a server by a certain multiplier.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function returns the number of “growths” needed in order to increase the amount of money available on the specified server by the specified amount. The specified amount is multiplicative and is in decimal form, not percentage.\n *\n * Warning: The value returned by this function isn’t necessarily a whole number.\n *\n * @param host - Hostname of the target server.\n *\n * @param growthAmount - Multiplicative factor by which the server is grown. Decimal form..\n *\n * @returns The amount of grow calls needed to grow the specified server by the specified amount\n *\n * @example\n * ```ts\n * // NS1:\n * //For example, if you want to determine how many grow calls you need to double the amount of money on foodnstuff, you would use:\n * var growTimes = growthAnalyze(\"foodnstuff\", 2);\n * //If this returns 100, then this means you need to call grow 100 times in order to double the money (or once with 100 threads).\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //For example, if you want to determine how many grow calls you need to double the amount of money on foodnstuff, you would use:\n * const growTimes = ns.growthAnalyze(\"foodnstuff\", 2);\n * //If this returns 100, then this means you need to call grow 100 times in order to double the money (or once with 100 threads).\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -16786,7 +16847,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#hack:member(1)",
-              "docComment": "/**\n * Steal a servers money.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Function that is used to try and hack servers to steal money and gain hacking experience. The runtime for this command depends on your hacking level and the target server’s security level. In order to hack a server you must first gain root access to that server and also have the required hacking level.\n *\n * A script can hack a server from anywhere. It does not need to be running on the same server to hack that server. For example, you can create a script that hacks the `foodnstuff` server and run that script on any server in the game.\n *\n * A successful `hack()` on a server will raise that server’s security level by 0.002.\n *\n * @param host - Hostname of the target server to hack.\n *\n * @param opts - Optional parameters for configuring function behavior.\n *\n * @returns The amount of money stolen if the hack is successful, and zero otherwise.\n *\n * @example\n * ```ts\n * hack(\"foodnstuff\");\n * hack(\"foodnstuff\", { threads: 5 }); // Only use 5 threads to hack\n * ```\n *\n */\n",
+              "docComment": "/**\n * Steal a servers money.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Function that is used to try and hack servers to steal money and gain hacking experience. The runtime for this command depends on your hacking level and the target server’s security level when this function is called. In order to hack a server you must first gain root access to that server and also have the required hacking level.\n *\n * A script can hack a server from anywhere. It does not need to be running on the same server to hack that server. For example, you can create a script that hacks the `foodnstuff` server and run that script on any server in the game.\n *\n * A successful `hack()` on a server will raise that server’s security level by 0.002.\n *\n * @param host - Hostname of the target server to hack.\n *\n * @param opts - Optional parameters for configuring function behavior.\n *\n * @returns The amount of money stolen if the hack is successful, and zero otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * var earnedMoney = hack(\"foodnstuff\");\n * earnedMoney = earnedMoney + hack(\"foodnstuff\", { threads: 5 }); // Only use 5 threads to hack\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * let earnedMoney = await ns.hack(\"foodnstuff\");\n * earnedMoney += await ns.hack(\"foodnstuff\", { threads: 5 }); // Only use 5 threads to hack\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -16851,7 +16912,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#hackAnalyze:member(1)",
-              "docComment": "/**\n * Get the percent of money stolen with a single thread.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Returns the percentage of the specified server’s money you will steal with a single hack. This value is returned in percentage form, not decimal (Netscript functions typically return in decimal form, but not this one).\n *\n * @param host - Hostname of the target server.\n *\n * @returns The percentage of money you will steal from the target server with a single hack.\n *\n * @example\n * ```ts\n * //For example, assume the following returns 0.01:\n * hackAnalyze(\"foodnstuff\");\n * //This means that if hack the foodnstuff server, then you will steal 1% of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.\n * ```\n *\n */\n",
+              "docComment": "/**\n * Get the part of money stolen with a single thread.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Returns the part of the specified server’s money you will steal with a single thread hack.\n *\n * @param host - Hostname of the target server.\n *\n * @returns The part of money you will steal from the target server with a single thread hack.\n *\n * @example\n * ```ts\n * // NS1:\n * //For example, assume the following returns 0.01:\n * var hackAmount = hackAnalyze(\"foodnstuff\");\n * //This means that if hack the foodnstuff server using a single thread, then you will steal 1%, or 0.01 of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //For example, assume the following returns 0.01:\n * const hackAmount = ns.hackAnalyze(\"foodnstuff\");\n * //This means that if hack the foodnstuff server using a single thread, then you will steal 1%, or 0.01 of its total money. If you hack using N threads, then you will steal N*0.01 times its total money.\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -17069,7 +17130,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#hasRootAccess:member(1)",
-              "docComment": "/**\n * Check if your have root access on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Returns a boolean indicating whether or not the player has root access to the specified target server.\n *\n * @param host - Host of the target server\n *\n * @returns True if player has root access to the specified target server, and false otherwise.\n *\n * @example\n * ```ts\n * if (hasRootAccess(\"foodnstuff\") == false) {\n *    nuke(\"foodnstuff\");\n * }\n * ```\n *\n */\n",
+              "docComment": "/**\n * Check if your have root access on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Returns a boolean indicating whether or not the player has root access to the specified target server.\n *\n * @param host - Host of the target server\n *\n * @returns True if player has root access to the specified target server, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * if (hasRootAccess(\"foodnstuff\") == false) {\n *    nuke(\"foodnstuff\");\n * }\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * if (ns.hasRootAccess(\"foodnstuff\") == false) {\n *    ns.nuke(\"foodnstuff\");\n * }\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -17113,7 +17174,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#httpworm:member(1)",
-              "docComment": "/**\n * Runs HTTPWorm.exe on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Runs the HTTPWorm.exe program on the target server. HTTPWorm.exe must exist on your home computer.\n *\n * @param host - Hostname of the target server.\n *\n * @example\n * ```ts\n * httpworm(\"foodnstuff\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Runs HTTPWorm.exe on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Runs the HTTPWorm.exe program on the target server. HTTPWorm.exe must exist on your home computer.\n *\n * @param host - Hostname of the target server.\n *\n * @example\n * ```ts\n * // NS1:\n * httpworm(\"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * ns.httpworm(\"foodnstuff\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -17201,7 +17262,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#isRunning:member(1)",
-              "docComment": "/**\n * Check if a script is running.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns a boolean indicating whether the specified script is running on the target server. Remember that a script is uniquely identified by both its name and its arguments.\n *\n * @param script - Filename of script to check. This is case-sensitive.\n *\n * @param host - Host of target server.\n *\n * @param args - Arguments to specify/identify which scripts to search for.\n *\n * @returns True if specified script is running on the target server, and false otherwise.\n *\n * @example\n * ```ts\n * //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:\n * isRunning(\"foo.script\", \"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:\n * isRunning(\"foo.script\", getHostname());\n * ```\n *\n * @example\n * ```ts\n * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:\n * isRunning(\"foo.script\", \"joesguns\", 1, 5, \"test\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Check if a script is running.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns a boolean indicating whether the specified script is running on the target server. Remember that a script is uniquely identified by both its name and its arguments.\n *\n * @param script - Filename of script to check. This is case-sensitive.\n *\n * @param host - Host of target server.\n *\n * @param args - Arguments to specify/identify which scripts to search for.\n *\n * @returns True if specified script is running on the target server, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:\n * isRunning(\"foo.script\", \"foodnstuff\");\n *\n * //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:\n * isRunning(\"foo.script\", getHostname());\n *\n * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:\n * isRunning(\"foo.script\", \"joesguns\", 1, 5, \"test\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:\n * ns.isRunning(\"foo.script\", \"foodnstuff\");\n *\n * //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:\n * ns.isRunning(\"foo.script\", ns.getHostname());\n *\n * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:\n * ns.isRunning(\"foo.script\", \"joesguns\", 1, 5, \"test\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -17275,7 +17336,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#kill:member(1)",
-              "docComment": "/**\n * Terminate another script.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * Kills the script on the target server specified by the script’s name and arguments. Remember that scripts are uniquely identified by both their name and arguments. For example, if `foo.script` is run with the argument 1, then this is not the same as `foo.script` run with the argument 2, even though they have the same code.\n *\n * @param script - Filename or pid of the script to kill\n *\n * @param host - Hostname of the server on which to kill the script.\n *\n * @param args - Arguments to identify which script to kill.\n *\n * @returns True if the script is successfully killed, and false otherwise.\n *\n * @example\n * ```ts\n * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:\n * kill(\"foo.script\", \"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:\n * kill(\"foo.script\", getHostname());\n * ```\n *\n * @example\n * ```ts\n * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:\n * kill(\"foo.script\", getHostname(), 1, \"foodnstuff\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Terminate another script.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * Kills the script on the target server specified by the script’s name and arguments. Remember that scripts are uniquely identified by both their name and arguments. For example, if `foo.script` is run with the argument 1, then this is not the same as `foo.script` run with the argument 2, even though they have the same code.\n *\n * @param script - Filename or pid of the script to kill\n *\n * @param host - Hostname of the server on which to kill the script.\n *\n * @param args - Arguments to identify which script to kill.\n *\n * @returns True if the script is successfully killed, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:\n * kill(\"foo.script\", \"foodnstuff\");\n *\n * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:\n * kill(\"foo.script\", getHostname());\n *\n * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:\n * kill(\"foo.script\", getHostname(), 1, \"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:\n * ns.kill(\"foo.script\", \"foodnstuff\");\n *\n * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:\n * ns.kill(\"foo.script\", getHostname());\n *\n * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:\n * ns.kill(\"foo.script\", getHostname(), 1, \"foodnstuff\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -17283,7 +17344,51 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "string | number"
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "script",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "kill"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NS#kill:member(2)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "kill(script: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
                 },
                 {
                   "kind": "Content",
@@ -17320,7 +17425,7 @@
                 "endIndex": 8
               },
               "releaseTag": "Public",
-              "overloadIndex": 1,
+              "overloadIndex": 2,
               "parameters": [
                 {
                   "parameterName": "script",
@@ -17349,11 +17454,11 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#killall:member(1)",
-              "docComment": "/**\n * Terminate all scripts on a server.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * Kills all running scripts on the specified server. This function returns true if any scripts were killed, and false otherwise. In other words, it will return true if there are any scripts running on the target server.\n *\n * @param host - IP or hostname of the server on which to kill all scripts.\n *\n * @returns True if any scripts were killed, and false otherwise.\n */\n",
+              "docComment": "/**\n * Terminate all scripts on a server.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * Kills all running scripts on the specified server. This function returns true if any scripts were killed, and false otherwise. In other words, it will return true if there are any scripts running on the target server. If no host is defined, it will kill all scripts, where the script is running.\n *\n * @param host - IP or hostname of the server on which to kill all scripts.\n *\n * @returns True if any scripts were killed, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "killall(host: "
+                  "text": "killall(host?: "
                 },
                 {
                   "kind": "Content",
@@ -17476,7 +17581,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "number"
+                  "text": "string"
                 },
                 {
                   "kind": "Content",
@@ -17511,7 +17616,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#nuke:member(1)",
-              "docComment": "/**\n * Runs NUKE.exe on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Runs the NUKE.exe program on the target server. NUKE.exe must exist on your home computer.\n *\n * @param host - Hostname of the target server.\n *\n * @example\n * ```ts\n * nuke(\"foodnstuff\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Runs NUKE.exe on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Running NUKE.exe on a target server gives you root access which means you can executes scripts on said server. NUKE.exe must exist on your home computer.\n *\n * @param host - Hostname of the target server.\n *\n * @example\n * ```ts\n * // NS1:\n * nuke(\"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * ns.nuke(\"foodnstuff\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -17599,15 +17704,15 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#print:member(1)",
-              "docComment": "/**\n * Prints a value or a variable to the script’s logs.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @param msg - Value to be printed.\n */\n",
+              "docComment": "/**\n * Prints one or move values or variables to the script’s logs.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @param args - Value(s) to be printed.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "print(msg: "
+                  "text": "print(...args: "
                 },
                 {
                   "kind": "Content",
-                  "text": "any"
+                  "text": "any[]"
                 },
                 {
                   "kind": "Content",
@@ -17631,7 +17736,7 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "msg",
+                  "parameterName": "args",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
@@ -17692,7 +17797,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#ps:member(1)",
-              "docComment": "/**\n * List running scripts on a server.\n *\n * @remarks\n *\n * RAM cost: 0.2 GB\n *\n * Returns an array with general information about all scripts running on the specified target server.\n *\n * @param host - Host address of the target server. If not specified, it will be the current server’s IP by default.\n *\n * @returns Array with general information about all scripts running on the specified target server.\n *\n * @example\n * ```ts\n * //(using NetscriptJS (Netscript 2.0))\n * export async function main(ns) {\n *    const ps = ns.ps(\"home\");\n *    for (let i = 0; i < ps.length; ++i) {\n *        ns.tprint(ps[i].filename + ' ' + ps[i].threads);\n *        ns.tprint(ps[i].args);\n *    }\n * }\n * ```\n *\n */\n",
+              "docComment": "/**\n * List running scripts on a server.\n *\n * @remarks\n *\n * RAM cost: 0.2 GB\n *\n * Returns an array with general information about all scripts running on the specified target server.\n *\n * @param host - Host address of the target server. If not specified, it will be the current server’s IP by default.\n *\n * @returns Array with general information about all scripts running on the specified target server.\n *\n * @example\n * ```ts\n * // NS1:\n * const scripts = ps(\"home\");\n * for (let i = 0; i < scripts.length; ++i) {\n *     tprint(scripts[i].filename + ' ' + scripts[i].threads);\n *     tprint(scripts[i].args);\n * }\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * const ps = ns.ps(\"home\");\n * for (script of ps) {\n *     ns.tprint(`${script.filename} ${ps[i].threads}`);\n *     ns.tprint(script.args);\n * }\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -17741,7 +17846,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#purchaseServer:member(1)",
-              "docComment": "/**\n * Purchase a server.\n *\n * @remarks\n *\n * 2.25 GB\n *\n * Purchased a server with the specified hostname and amount of RAM.\n *\n * The hostname argument can be any data type, but it will be converted to a string and have whitespace removed. Anything that resolves to an empty string will cause the function to fail. If there is already a server with the specified hostname, then the function will automatically append a number at the end of the hostname argument value until it finds a unique hostname. For example, if the script calls `purchaseServer(“foo”, 4)` but a server named “foo” already exists, the it will automatically change the hostname to `foo-0`. If there is already a server with the hostname `foo-0`, then it will change the hostname to `foo-1`, and so on.\n *\n * Note that there is a maximum limit to the amount of servers you can purchase.\n *\n * Returns the hostname of the newly purchased server as a string. If the function fails to purchase a server, then it will return an empty string. The function will fail if the arguments passed in are invalid, if the player does not have enough money to purchase the specified server, or if the player has exceeded the maximum amount of servers.\n *\n * @param hostname - Host of the purchased server.\n *\n * @param ram - Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).\n *\n * @returns The hostname of the newly purchased server.\n *\n * @example\n * ```ts\n * ram = 64;\n * hn = \"pserv-\";\n * for (i = 0; i < 5; ++i) {\n *    purchaseServer(hn + i, ram);\n * }\n * ```\n *\n */\n",
+              "docComment": "/**\n * Purchase a server.\n *\n * @remarks\n *\n * 2.25 GB\n *\n * Purchased a server with the specified hostname and amount of RAM.\n *\n * The hostname argument can be any data type, but it will be converted to a string and have whitespace removed. Anything that resolves to an empty string will cause the function to fail. If there is already a server with the specified hostname, then the function will automatically append a number at the end of the hostname argument value until it finds a unique hostname. For example, if the script calls `purchaseServer(“foo”, 4)` but a server named “foo” already exists, the it will automatically change the hostname to `foo-0`. If there is already a server with the hostname `foo-0`, then it will change the hostname to `foo-1`, and so on.\n *\n * Note that there is a maximum limit to the amount of servers you can purchase.\n *\n * Returns the hostname of the newly purchased server as a string. If the function fails to purchase a server, then it will return an empty string. The function will fail if the arguments passed in are invalid, if the player does not have enough money to purchase the specified server, or if the player has exceeded the maximum amount of servers.\n *\n * @param hostname - Host of the purchased server.\n *\n * @param ram - Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).\n *\n * @returns The hostname of the newly purchased server.\n *\n * @example\n * ```ts\n * // NS1:\n * var ram = 64;\n * var prefix = \"pserv-\";\n * for (i = 0; i < 5; ++i) {\n *    purchaseServer(prefix + i, ram);\n * }\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * const ram = 64;\n * const prefix = \"pserv-\";\n * for (i = 0; i < 5; ++i) {\n *    ns.purchaseServer(prefix + i, ram);\n * }\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -17888,7 +17993,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#relaysmtp:member(1)",
-              "docComment": "/**\n * Runs relaySMTP.exe on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Runs the relaySMTP.exe program on the target server. relaySMTP.exe must exist on your home computer.\n *\n * @param host - Hostname of the target server.\n *\n * @example\n * ```ts\n * relaysmtp(\"foodnstuff\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Runs relaySMTP.exe on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * Runs the relaySMTP.exe program on the target server. relaySMTP.exe must exist on your home computer.\n *\n * @param host - Hostname of the target server.\n *\n * @example\n * ```ts\n * // NS1:\n * relaysmtp(\"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * ns.relaysmtp(\"foodnstuff\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -17991,7 +18096,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#run:member(1)",
-              "docComment": "/**\n * Start another script on the current server.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Run a script as a separate process. This function can only be used to run scripts located on the current server (the server running the script that calls this function). Requires a significant amount of RAM to run this command.\n *\n * If the script was successfully started, then this functions returns the PID of that script. Otherwise, it returns 0.\n *\n * PID stands for Process ID. The PID is a unique identifier for each script. The PID will always be a positive integer.\n *\n * Running this function with a numThreads argument of 0 will return 0 without running the script. However, running this function with a negative numThreads argument will cause a runtime error.\n *\n * @param script - Filename of script to run.\n *\n * @param numThreads - Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer.\n *\n * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the second argument numThreads must be filled in with a value.\n *\n * @returns Returns the PID of a successfully started script, and 0 otherwise.\n *\n * @example\n * ```ts\n * //The simplest way to use the run command is to call it with just the script name. The following example will run ‘foo.script’ single-threaded with no arguments:\n * run(\"foo.script\");\n * ```\n *\n * @example\n * ```ts\n * //The following example will run ‘foo.script’ but with 5 threads instead of single-threaded:\n * run(\"foo.script\", 5);\n * ```\n *\n * @example\n * ```ts\n * //This next example will run ‘foo.script’ single-threaded, and will pass the string ‘foodnstuff’ into the script as an argument:\n * run(\"foo.script\", 1, 'foodnstuff');\n * ```\n *\n */\n",
+              "docComment": "/**\n * Start another script on the current server.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Run a script as a separate process. This function can only be used to run scripts located on the current server (the server running the script that calls this function). Requires a significant amount of RAM to run this command.\n *\n * If the script was successfully started, then this functions returns the PID of that script. Otherwise, it returns 0.\n *\n * PID stands for Process ID. The PID is a unique identifier for each script. The PID will always be a positive integer.\n *\n * Running this function with a numThreads argument of 0 will return 0 without running the script. However, running this function with a negative numThreads argument will cause a runtime error.\n *\n * @param script - Filename of script to run.\n *\n * @param numThreads - Optional thread count for new script. Set to 1 by default. Will be rounded to nearest integer.\n *\n * @param args - Additional arguments to pass into the new script that is being run. Note that if any arguments are being passed into the new script, then the second argument numThreads must be filled in with a value.\n *\n * @returns Returns the PID of a successfully started script, and 0 otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //The simplest way to use the run command is to call it with just the script name. The following example will run ‘foo.script’ single-threaded with no arguments:\n * run(\"foo.script\");\n *\n * //The following example will run ‘foo.script’ but with 5 threads instead of single-threaded:\n * run(\"foo.script\", 5);\n *\n * //This next example will run ‘foo.script’ single-threaded, and will pass the string ‘foodnstuff’ into the script as an argument:\n * run(\"foo.script\", 1, 'foodnstuff');\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //The simplest way to use the run command is to call it with just the script name. The following example will run ‘foo.script’ single-threaded with no arguments:\n * ns.run(\"foo.script\");\n *\n * //The following example will run ‘foo.script’ but with 5 threads instead of single-threaded:\n * ns.run(\"foo.script\", 5);\n *\n * //This next example will run ‘foo.script’ single-threaded, and will pass the string ‘foodnstuff’ into the script as an argument:\n * ns.run(\"foo.script\", 1, 'foodnstuff');\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -18014,8 +18119,13 @@
                   "text": ", ...args: "
                 },
                 {
+                  "kind": "Reference",
+                  "text": "Array",
+                  "canonicalReference": "!Array:interface"
+                },
+                {
                   "kind": "Content",
-                  "text": "string[]"
+                  "text": "<string | number | boolean>"
                 },
                 {
                   "kind": "Content",
@@ -18032,8 +18142,8 @@
               ],
               "isOptional": false,
               "returnTypeTokenRange": {
-                "startIndex": 7,
-                "endIndex": 8
+                "startIndex": 8,
+                "endIndex": 9
               },
               "releaseTag": "Public",
               "overloadIndex": 1,
@@ -18056,7 +18166,7 @@
                   "parameterName": "args",
                   "parameterTypeTokenRange": {
                     "startIndex": 5,
-                    "endIndex": 6
+                    "endIndex": 7
                   }
                 }
               ],
@@ -18065,7 +18175,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#scan:member(1)",
-              "docComment": "/**\n * Get the list servers connected to a server.\n *\n * @remarks\n *\n * RAM cost: 0.2 GB\n *\n * Returns an array containing the hostnames of all servers that are one node way from the specified target server. The hostnames in the returned array are strings.\n *\n * @param host - Hostname of the server to scan.\n *\n * @returns Returns an string of hostnames.\n */\n",
+              "docComment": "/**\n * Get the list of servers connected to a server.\n *\n * @remarks\n *\n * RAM cost: 0.2 GB\n *\n * Returns an array containing the hostnames of all servers that are one node way from the specified target server. The hostnames in the returned array are strings.\n *\n * @param host - Optional, Hostname of the server to scan, default to current server.\n *\n * @returns Returns an string of hostnames.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -18109,7 +18219,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#scp:member(1)",
-              "docComment": "/**\n * Copy file between servers.\n *\n * @remarks\n *\n * RAM cost: 0.6 GB\n *\n * Copies a script or literature (.lit) file(s) to another server. The files argument can be either a string specifying a single file to copy, or an array of strings specifying multiple files to copy.\n *\n * @param files - Filename or an array of filenames of script/literature files to copy.\n *\n * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.\n *\n * @param destination - Host of the destination server, which is the server to which the file will be copied.\n *\n * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.\n *\n * @example\n * ```ts\n * //Copies foo.lit from the helios server to the home computer:\n * scp(\"foo.lit\", \"helios\", \"home\");\n * ```\n *\n * @example\n * ```ts\n * //Tries to copy three files from rothman-uni to home computer:\n * files = [\"foo1.lit\", \"foo2.script\", \"foo3.script\"];\n * scp(files, \"rothman-uni\", \"home\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Copy file between servers.\n *\n * @remarks\n *\n * RAM cost: 0.6 GB\n *\n * Copies a script or literature (.lit) file(s) to another server. The files argument can be either a string specifying a single file to copy, or an array of strings specifying multiple files to copy.\n *\n * @param files - Filename or an array of filenames of script/literature files to copy.\n *\n * @param source - Host of the source server, which is the server from which the file will be copied. This argument is optional and if it’s omitted the source will be the current server.\n *\n * @param destination - Host of the destination server, which is the server to which the file will be copied.\n *\n * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.\n *\n * @example\n * ```ts\n * // NS1:\n * //Copies foo.lit from the helios server to the home computer:\n * scp(\"foo.lit\", \"helios\", \"home\");\n *\n * //Tries to copy three files from rothman-uni to home computer:\n * files = [\"foo1.lit\", \"foo2.script\", \"foo3.script\"];\n * scp(files, \"rothman-uni\", \"home\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //Copies foo.lit from the helios server to the home computer:\n * await ns.scp(\"foo.lit\", \"helios\", \"home\");\n *\n * //Tries to copy three files from rothman-uni to home computer:\n * files = [\"foo1.lit\", \"foo2.script\", \"foo3.script\"];\n * await ns.scp(files, \"rothman-uni\", \"home\");\n * ```\n *\n * @example\n * ```ts\n * //ns2, copies files from home to a target server\n * const server = ns.args[0];\n * const files = [\"hack.js\",\"weaken.js\",\"grow.js\"];\n * await ns.scp(files, \"home\", server);\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -18247,7 +18357,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#scriptRunning:member(1)",
-              "docComment": "/**\n * Check if any script with a filename is running.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Returns a boolean indicating whether any instance of the specified script is running on the target server, regardless of its arguments.\n *\n * This is different than the isRunning function because it does not try to identify a specific instance of a running script by its arguments.\n *\n * @param script - Filename of script to check. This is case-sensitive.\n *\n * @param host - Host of target server.\n *\n * @returns True if the specified script is running, and false otherwise.\n *\n * @example\n * ```ts\n * //The function call will return true if there is any script named foo.script running on the foodnstuff server, and false otherwise:\n * scriptRunning(\"foo.script\", \"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * //The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:\n * scriptRunning(\"foo.script\", getHostname());\n * ```\n *\n */\n",
+              "docComment": "/**\n * Check if any script with a filename is running.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * Returns a boolean indicating whether any instance of the specified script is running on the target server, regardless of its arguments.\n *\n * This is different than the isRunning function because it does not try to identify a specific instance of a running script by its arguments.\n *\n * @param script - Filename of script to check. This is case-sensitive.\n *\n * @param host - Host of target server.\n *\n * @returns True if the specified script is running, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //The function call will return true if there is any script named foo.script running on the foodnstuff server, and false otherwise:\n * scriptRunning(\"foo.script\", \"foodnstuff\");\n *\n * //The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:\n * scriptRunning(\"foo.script\", getHostname());\n * ```\n *\n * *\n *\n * @example\n * ```ts\n * // NS2:\n * //The function call will return true if there is any script named foo.script running on the foodnstuff server, and false otherwise:\n * ns.scriptRunning(\"foo.script\", \"foodnstuff\");\n *\n * //The function call will return true if there is any script named “foo.script” running on the current server, and false otherwise:\n * ns.scriptRunning(\"foo.script\", ns.getHostname());\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -18350,7 +18460,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#sleep:member(1)",
-              "docComment": "/**\n * Suspends the script for n milliseconds.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @param millis - Number of milliseconds to sleep.\n *\n * @returns \n */\n",
+              "docComment": "/**\n * Suspends the script for n milliseconds.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @param millis - Number of milliseconds to sleep.\n *\n * @returns \n *\n * @example\n * ```ts\n * // NS1:\n * // This will count from 1 to 10 in your terminal, with one number every 5 seconds\n * for (var i=0; i<10; i++) {\n *   tprint(i + 1);\n *   sleep(5000);\n * }\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * // This will count from 1 to 10 in your terminal, with one number every 5 seconds\n * for (var i=0; i<10; i++) {\n *   ns.tprint(i + 1);\n *   await ns.sleep(5000);\n * }\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -18426,7 +18536,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#spawn:member(1)",
-              "docComment": "/**\n * Terminate current script and start another in 10s.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Terminates the current script, and then after a delay of about 10 seconds it will execute the newly-specified script. The purpose of this function is to execute a new script without being constrained by the RAM usage of the current one. This function can only be used to run scripts on the local server.\n *\n * Because this function immediately terminates the script, it does not have a return value.\n *\n * @param script - Filename of script to execute.\n *\n * @param numThreads - Number of threads to spawn new script with. Will be rounded to nearest integer.\n *\n * @param args - Additional arguments to pass into the new script that is being run.\n *\n * @example\n * ```ts\n * //The following example will execute the script ‘foo.script’ with 10 threads and the arguments ‘foodnstuff’ and 90:\n * spawn('foo.script', 10, 'foodnstuff', 90);\n * ```\n *\n */\n",
+              "docComment": "/**\n * Terminate current script and start another in 10s.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Terminates the current script, and then after a delay of about 10 seconds it will execute the newly-specified script. The purpose of this function is to execute a new script without being constrained by the RAM usage of the current one. This function can only be used to run scripts on the local server.\n *\n * Because this function immediately terminates the script, it does not have a return value.\n *\n * @param script - Filename of script to execute.\n *\n * @param numThreads - Number of threads to spawn new script with. Will be rounded to nearest integer.\n *\n * @param args - Additional arguments to pass into the new script that is being run.\n *\n * @example\n * ```ts\n * // NS1:\n * //The following example will execute the script ‘foo.script’ with 10 threads and the arguments ‘foodnstuff’ and 90:\n * spawn('foo.script', 10, 'foodnstuff', 90);\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //The following example will execute the script ‘foo.script’ with 10 threads and the arguments ‘foodnstuff’ and 90:\n * ns.spawn('foo.script', 10, 'foodnstuff', 90);\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -18559,7 +18669,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#sqlinject:member(1)",
-              "docComment": "/**\n * Runs SQLInject.exe on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * @param host - Hostname of the target server.\n *\n * @example\n * ```ts\n * sqlinject(\"foodnstuff\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Runs SQLInject.exe on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * @param host - Hostname of the target server.\n *\n * @example\n * ```ts\n * // NS1:\n * sqlinject(\"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * ns.sqlinject(\"foodnstuff\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -18657,7 +18767,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#tail:member(1)",
-              "docComment": "/**\n * Open the tail window of a script.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Opens a script’s logs. This is functionally the same as the tail Terminal command.\n *\n * If the function is called with no arguments, it will open the current script’s logs.\n *\n * Otherwise, the fn, hostname/ip, and args… arguments can be used to get the logs from another script. Remember that scripts are uniquely identified by both their names and arguments.\n *\n * @param fn - Optional. Filename of the script being tailed. If omitted, the current script is tailed.\n *\n * @param host - Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional.\n *\n * @param args - Arguments for the script being tailed.\n *\n * @example\n * ```ts\n * //Open logs from foo.script on the current server that was run with no args\n * tail(\"foo.script\");\n * ```\n *\n * @example\n * ```ts\n * //Get logs from foo.script on the foodnstuff server that was run with no args\n * tail(\"foo.script\", \"foodnstuff\");\n * ```\n *\n * @example\n * ```ts\n * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, \"test\"]\n * tail(\"foo.script\", \"foodnstuff\", 1, \"test\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Open the tail window of a script.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Opens a script’s logs. This is functionally the same as the tail Terminal command.\n *\n * If the function is called with no arguments, it will open the current script’s logs.\n *\n * Otherwise, the fn, hostname/ip, and args… arguments can be used to get the logs from another script. Remember that scripts are uniquely identified by both their names and arguments.\n *\n * @param fn - Optional. Filename of the script being tailed. If omitted, the current script is tailed.\n *\n * @param host - Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional.\n *\n * @param args - Arguments for the script being tailed.\n *\n * @example\n * ```ts\n * // NS1:\n * //Open logs from foo.script on the current server that was run with no args\n * tail(\"foo.script\");\n *\n * //Get logs from foo.script on the foodnstuff server that was run with no args\n * tail(\"foo.script\", \"foodnstuff\");\n *\n * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, \"test\"]\n * tail(\"foo.script\", \"foodnstuff\", 1, \"test\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //Open logs from foo.script on the current server that was run with no args\n * ns.tail(\"foo.script\");\n *\n * //Get logs from foo.script on the foodnstuff server that was run with no args\n * ns.tail(\"foo.script\", \"foodnstuff\");\n *\n * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, \"test\"]\n * ns.tail(\"foo.script\", \"foodnstuff\", 1, \"test\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -18790,7 +18900,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#toast:member(1)",
-              "docComment": "/**\n * Queue a toast (bottom-right notification).\n *\n * @param msg - Message in the toast.\n *\n * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.\n */\n",
+              "docComment": "/**\n * Queue a toast (bottom-right notification).\n *\n * @param msg - Message in the toast.\n *\n * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.\n *\n * @param duration - Duration of toast in ms, defaults to 2000\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -18810,6 +18920,14 @@
                 },
                 {
                   "kind": "Content",
+                  "text": ", duration?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
                   "text": "): "
                 },
                 {
@@ -18823,8 +18941,8 @@
               ],
               "isOptional": false,
               "returnTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
+                "startIndex": 7,
+                "endIndex": 8
               },
               "releaseTag": "Public",
               "overloadIndex": 1,
@@ -18842,6 +18960,13 @@
                     "startIndex": 3,
                     "endIndex": 4
                   }
+                },
+                {
+                  "parameterName": "duration",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
                 }
               ],
               "name": "toast"
@@ -18849,15 +18974,15 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#tprint:member(1)",
-              "docComment": "/**\n * Prints a value or a variable to the Terminal.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @param msg - Value to be printed.\n */\n",
+              "docComment": "/**\n * Prints one or more values or variables to the Terminal.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @param args - Value(s) to be printed.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "tprint(msg: "
+                  "text": "tprint(...args: "
                 },
                 {
                   "kind": "Content",
-                  "text": "any"
+                  "text": "any[]"
                 },
                 {
                   "kind": "Content",
@@ -18881,7 +19006,7 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "msg",
+                  "parameterName": "args",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
@@ -19014,6 +19139,33 @@
               "name": "tryWritePort"
             },
             {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!NS#ui:member",
+              "docComment": "/**\n * Namespace for user interface functions. RAM cost: 0 GB\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly ui: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "UserInterface",
+                  "canonicalReference": "bitburner!UserInterface:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "ui",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#vsprintf:member(1)",
               "docComment": "/**\n * Format a string with an array of arguments.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * see: https://github.com/alexei/sprintf.js\n *\n * @param format - String to format.\n *\n * @param args - Formating arguments.\n *\n * @returns Formated text.\n */\n",
@@ -19075,7 +19227,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#weaken:member(1)",
-              "docComment": "/**\n * Reduce a server security level.\n *\n * @remarks\n *\n * RAM cost: 0.15 GB\n *\n * Use your hacking skills to attack a server’s security, lowering the server’s security level. The runtime for this command depends on your hacking level and the target server’s security level. This function lowers the security level of the target server by 0.05.\n *\n * Like hack and grow, `weaken` can be called on any server, regardless of where the script is running. This command requires root access to the target server, but there is no required hacking level to run the command.\n *\n * @param host - Hostname of the target server to weaken.\n *\n * @param opts - Optional parameters for configuring function behavior.\n *\n * @returns The amount by which the target server’s security level was decreased. This is equivalent to 0.05 multiplied by the number of script threads.\n *\n * @example\n * ```ts\n * weaken(\"foodnstuff\");\n * weaken(\"foodnstuff\", { threads: 5 }); // Only use 5 threads to weaken\n * ```\n *\n */\n",
+              "docComment": "/**\n * Reduce a server security level.\n *\n * @remarks\n *\n * RAM cost: 0.15 GB\n *\n * Use your hacking skills to attack a server’s security, lowering the server’s security level. The runtime for this command depends on your hacking level and the target server’s security level when this function is called. This function lowers the security level of the target server by 0.05.\n *\n * Like hack and grow, `weaken` can be called on any server, regardless of where the script is running. This command requires root access to the target server, but there is no required hacking level to run the command.\n *\n * @param host - Hostname of the target server to weaken.\n *\n * @param opts - Optional parameters for configuring function behavior.\n *\n * @returns The amount by which the target server’s security level was decreased. This is equivalent to 0.05 multiplied by the number of script threads.\n *\n * @example\n * ```ts\n * // NS1:\n * var currentSecurity = getServerSecurityLevel(\"foodnstuff\");\n * currentSecurity = currentSecurity - weaken(\"foodnstuff\");\n * currentSecurity = currentSecurity - weaken(\"foodnstuff\", { threads: 5 }); // Only use 5 threads to weaken\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * let currentSecurity = ns.getServerSecurityLevel(\"foodnstuff\");\n * currentSecurity -= await ns.weaken(\"foodnstuff\");\n * currentSecurity -= await ns.weaken(\"foodnstuff\", { threads: 5 }); // Only use 5 threads to weaken\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19199,7 +19351,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#wget:member(1)",
-              "docComment": "/**\n * Download a file from the internet.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Retrieves data from a URL and downloads it to a file on the specified server. The data can only be downloaded to a script (.script, .ns, .js) or a text file (.txt). If the file already exists, it will be overwritten by this command. Note that it will not be possible to download data from many websites because they do not allow cross-origin resource sharing (CORS).\n *\n * IMPORTANT: This is an asynchronous function that returns a Promise. The Promise’s resolved value will be a boolean indicating whether or not the data was successfully retrieved from the URL. Because the function is async and returns a Promise, it is recommended you use wget in NetscriptJS (Netscript 2.0).\n *\n * In NetscriptJS, you must preface any call to wget with the await keyword (like you would hack or sleep). wget will still work in Netscript 1.0, but the functions execution will not be synchronous (i.e. it may not execute when you expect/want it to). Furthermore, since Promises are not supported in ES5, you will not be able to process the returned value of wget in Netscript 1.0.\n *\n * @param url - URL to pull data from.\n *\n * @param target - Filename to write data to. Must be script or text file.\n *\n * @param host - Optional hostname/ip of server for target file.\n *\n * @returns True if the data was successfully retrieved from the URL, false otherwise.\n *\n * @example\n * ```ts\n * wget(\"https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md\", \"game_readme.txt\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Download a file from the internet.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Retrieves data from a URL and downloads it to a file on the specified server. The data can only be downloaded to a script (.script, .ns, .js) or a text file (.txt). If the file already exists, it will be overwritten by this command. Note that it will not be possible to download data from many websites because they do not allow cross-origin resource sharing (CORS).\n *\n * IMPORTANT: This is an asynchronous function that returns a Promise. The Promise’s resolved value will be a boolean indicating whether or not the data was successfully retrieved from the URL. Because the function is async and returns a Promise, it is recommended you use wget in NetscriptJS (Netscript 2.0).\n *\n * In NetscriptJS, you must preface any call to wget with the await keyword (like you would hack or sleep). wget will still work in Netscript 1.0, but the functions execution will not be synchronous (i.e. it may not execute when you expect/want it to). Furthermore, since Promises are not supported in ES5, you will not be able to process the returned value of wget in Netscript 1.0.\n *\n * @param url - URL to pull data from.\n *\n * @param target - Filename to write data to. Must be script or text file.\n *\n * @param host - Optional hostname/ip of server for target file.\n *\n * @returns True if the data was successfully retrieved from the URL, false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * wget(\"https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md\", \"game_readme.txt\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * await ns.wget(\"https://raw.githubusercontent.com/danielyxie/bitburner/master/README.md\", \"game_readme.txt\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -19294,7 +19446,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "string[] | number"
+                  "text": "string[] | number | string"
                 },
                 {
                   "kind": "Content",
@@ -22823,6 +22975,32 @@
             },
             {
               "kind": "PropertySignature",
+              "canonicalReference": "bitburner!ProcessInfo#pid:member",
+              "docComment": "/**\n * Process ID\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "pid: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "pid",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "bitburner!ProcessInfo#threads:member",
               "docComment": "/**\n * Number of threads script is running with\n */\n",
               "excerptTokens": [
@@ -24093,7 +24271,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#commitCrime:member(1)",
-              "docComment": "/**\n * SF4.3 - Commit a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function is used to automatically attempt to commit crimes. If you are already in the middle of some ‘working’ action (such as working for a company or training at a gym), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function returns the number of seconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, so running `commitCrime('rob store')` will return 60).\n *\n * Warning: I do not recommend using the time returned from this function to try and schedule your crime attempts. Instead, I would use the isBusy Singularity function to check whether you have finished attempting a crime. This is because although the game sets a certain crime to be X amount of seconds, there is no guarantee that your browser will follow that time limit.\n *\n * @param crime - Name of crime to attempt.\n *\n * @returns True if you successfully start working on the specified program, and false otherwise.\n */\n",
+              "docComment": "/**\n * SF4.3 - Commit a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function is used to automatically attempt to commit crimes. If you are already in the middle of some ‘working’ action (such as working for a company or training at a gym), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function returns the number of milliseconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, so running `commitCrime('rob store')` will return 60,000).\n *\n * Warning: I do not recommend using the time returned from this function to try and schedule your crime attempts. Instead, I would use the isBusy Singularity function to check whether you have finished attempting a crime. This is because although the game sets a certain crime to be X amount of seconds, there is no guarantee that your browser will follow that time limit.\n *\n * @param crime - Name of crime to attempt.\n *\n * @returns True if you successfully start working on the specified program, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24181,7 +24359,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#createProgram:member(1)",
-              "docComment": "/**\n * SF4.3 - Create a program.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function will automatically set you to start working on creating the specified program. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or taking a course), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function returns true if you successfully start working on the specified program, and false otherwise.\n *\n * Note that creating a program using this function has the same hacking level requirements as it normally would. These level requirements are: * BruteSSH.exe: 50 * FTPCrack.exe: 100 * relaySMTP.exe: 250 * HTTPWorm.exe: 500 * SQLInject.exe: 750 * DeepscanV1.exe: 75 * DeepscanV2.exe: 400 * ServerProfiler.exe: 75 * AutoLink.exe: 25\n *\n * @param program - Name of program to create.\n *\n * @returns True if you successfully start working on the specified program, and false otherwise.\n *\n * @example\n * ```ts\n * createProgram(“relaysmtp.exe”);\n * ```\n *\n */\n",
+              "docComment": "/**\n * SF4.3 - Create a program.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function will automatically set you to start working on creating the specified program. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or taking a course), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function returns true if you successfully start working on the specified program, and false otherwise.\n *\n * Note that creating a program using this function has the same hacking level requirements as it normally would. These level requirements are: * BruteSSH.exe: 50 * FTPCrack.exe: 100 * relaySMTP.exe: 250 * HTTPWorm.exe: 500 * SQLInject.exe: 750 * DeepscanV1.exe: 75 * DeepscanV2.exe: 400 * ServerProfiler.exe: 75 * AutoLink.exe: 25\n *\n * @param program - Name of program to create.\n *\n * @returns True if you successfully start working on the specified program, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * createProgram(“relaysmtp.exe”);\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * ns.createProgram(“relaysmtp.exe”);\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25488,7 +25666,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#purchaseProgram:member(1)",
-              "docComment": "/**\n * SF4.1 - Purchase a program from the dark web.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * This function allows you to automatically purchase programs. You MUST have a TOR router in order to use this function. The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web using the Terminal buy command.\n *\n * @param programName - Name of program to purchase.\n *\n * @returns True if the specified program is purchased, and false otherwise.\n *\n * @example\n * ```ts\n * purchaseProgram(\"brutessh.exe\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * SF4.1 - Purchase a program from the dark web.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * This function allows you to automatically purchase programs. You MUST have a TOR router in order to use this function. The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web using the Terminal buy command.\n *\n * @param programName - Name of program to purchase.\n *\n * @returns True if the specified program is purchased, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1\n * purchaseProgram(\"brutessh.exe\");\n * ```\n *\n * @example\n * ```ts\n * // NS2\n * ns.purchaseProgram(\"brutessh.exe\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25835,7 +26013,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#workForCompany:member(1)",
-              "docComment": "/**\n * SF4.2 - Work for a company.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically set you to start working at the company at which you are employed. If you are already in the middle of some “working” action (such as working for a faction, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function will return true if the player starts working, and false otherwise.\n *\n * Note that when you are working for a company, you will not actually receive your earnings (reputation, money, experience) until you FINISH the action.\n *\n * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked\n *\n * @returns True if the player starts working, and false otherwise.\n *\n * @example\n * ```ts\n * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (getCompanyRep(COMPANY HERE) < VALUE) {\n *    workForCompany();\n *    sleep(60000);\n * }\n * //This way, your company reputation will be updated every minute.\n * ```\n *\n */\n",
+              "docComment": "/**\n * SF4.2 - Work for a company.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically set you to start working at the company at which you are employed. If you are already in the middle of some “working” action (such as working for a faction, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function will return true if the player starts working, and false otherwise.\n *\n * Note that when you are working for a company, you will not actually receive your earnings (reputation, money, experience) until you FINISH the action.\n *\n * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked\n *\n * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.\n *\n * @returns True if the player starts working, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (getCompanyRep(COMPANY HERE) < VALUE) {\n *    workForCompany();\n *    sleep(60000);\n * }\n * //This way, your company reputation will be updated every minute.\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (ns.getCompanyRep(COMPANY HERE) < VALUE) {\n *    ns.workForCompany();\n *    await ns.sleep(60000);\n * }\n * //This way, your company reputation will be updated every minute.\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25847,55 +26025,11 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "): "
+                  "text": ", focus?: "
                 },
                 {
                   "kind": "Content",
                   "text": "boolean"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              },
-              "releaseTag": "Public",
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "companyName",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  }
-                }
-              ],
-              "name": "workForCompany"
-            },
-            {
-              "kind": "MethodSignature",
-              "canonicalReference": "bitburner!Singularity#workForFaction:member(1)",
-              "docComment": "/**\n * SF4.2 - Work for a faction.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically set you to start working for the specified faction. Obviously, you must be a member of the faction or else this function will fail. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function will return true if you successfully start working for the specified faction, and false otherwise.\n *\n * Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience) until you FINISH the action.\n *\n * @param faction - Name of faction to work for.\n *\n * @param workType - Type of work to perform for the faction.\n *\n * @returns True if the player starts working, and false otherwise.\n *\n * @example\n * ```ts\n * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (getFactionRep(FACTION NAME) < VALUE) {\n *    workForFaction(FACNAME, WORKTYPE);\n *    sleep(60000);\n * }\n * //This way, your faction reputation will be updated every minute.\n * ```\n *\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "workForFaction(faction: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ", workType: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
                 },
                 {
                   "kind": "Content",
@@ -25919,6 +26053,73 @@
               "overloadIndex": 1,
               "parameters": [
                 {
+                  "parameterName": "companyName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "focus",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "workForCompany"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Singularity#workForFaction:member(1)",
+              "docComment": "/**\n * SF4.2 - Work for a faction.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically set you to start working for the specified faction. Obviously, you must be a member of the faction or else this function will fail. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function will return true if you successfully start working for the specified faction, and false otherwise.\n *\n * Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience) until you FINISH the action.\n *\n * @param faction - Name of faction to work for.\n *\n * @param workType - Type of work to perform for the faction.\n *\n * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.\n *\n * @returns True if the player starts working, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (getFactionRep(FACTION NAME) < VALUE) {\n *    workForFaction(FACNAME, WORKTYPE);\n *    sleep(60000);\n * }\n * //This way, your faction reputation will be updated every minute.\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (ns.getFactionRep(FACTION NAME) < VALUE) {\n *    ns.workForFaction(FACNAME, WORKTYPE);\n *    await ns.sleep(60000);\n * }\n * //This way, your faction reputation will be updated every minute.\n * ```\n *\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "workForFaction(faction: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", workType: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", focus?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
                   "parameterName": "faction",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
@@ -25930,6 +26131,13 @@
                   "parameterTypeTokenRange": {
                     "startIndex": 3,
                     "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "focus",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
                   }
                 }
               ],
@@ -26906,7 +27114,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveInformation#city:member",
-              "docComment": "/**\n * location of the sleeve\n */\n",
+              "docComment": "/**\n * Location of the sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -26932,7 +27140,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveInformation#earningsForPlayer:member",
-              "docComment": "/**\n * earnings synchronized to the player\n */\n",
+              "docComment": "/**\n * Earnings synchronized to the player\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -26959,7 +27167,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveInformation#earningsForSleeves:member",
-              "docComment": "/**\n * earnings synchronized to other sleeves\n */\n",
+              "docComment": "/**\n * Earnings synchronized to other sleeves\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -26986,7 +27194,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveInformation#earningsForTask:member",
-              "docComment": "/**\n * earnings for this sleeve\n */\n",
+              "docComment": "/**\n * Earnings for this sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27013,7 +27221,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveInformation#hp:member",
-              "docComment": "/**\n * current hp of the sleeve\n */\n",
+              "docComment": "/**\n * Current hp of the sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27039,7 +27247,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveInformation#jobs:member",
-              "docComment": "/**\n * jobs available to the sleeve\n */\n",
+              "docComment": "/**\n * Jobs available to the sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27065,7 +27273,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveInformation#jobTitle:member",
-              "docComment": "/**\n * job titles available to the sleeve\n */\n",
+              "docComment": "/**\n * Job titles available to the sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27091,7 +27299,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveInformation#maxHp:member",
-              "docComment": "/**\n * max hp of the sleeve\n */\n",
+              "docComment": "/**\n * Max hp of the sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27117,7 +27325,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveInformation#mult:member",
-              "docComment": "/**\n * sleeve multipliers\n */\n",
+              "docComment": "/**\n * Sleeve multipliers\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27144,7 +27352,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveInformation#timeWorked:member",
-              "docComment": "/**\n * time spent on the current task in milliseconds\n */\n",
+              "docComment": "/**\n * Time spent on the current task in milliseconds\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27170,7 +27378,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveInformation#tor:member",
-              "docComment": "/**\n * does this sleeve have access to the tor router\n */\n",
+              "docComment": "/**\n * Does this sleeve have access to the tor router\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27196,7 +27404,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveInformation#workRepGain:member",
-              "docComment": "/**\n * faction or company reputation gained for the current task\n */\n",
+              "docComment": "/**\n * Faction or company reputation gained for the current task\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27238,7 +27446,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveSkills#agility:member",
-              "docComment": "/**\n * current agility of the sleeve\n */\n",
+              "docComment": "/**\n * Current agility of the sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27264,7 +27472,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveSkills#charisma:member",
-              "docComment": "/**\n * current charisma of the sleeve\n */\n",
+              "docComment": "/**\n * Current charisma of the sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27290,7 +27498,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveSkills#defense:member",
-              "docComment": "/**\n * current defense of the sleeve\n */\n",
+              "docComment": "/**\n * Current defense of the sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27316,7 +27524,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveSkills#dexterity:member",
-              "docComment": "/**\n * current dexterity of the sleeve\n */\n",
+              "docComment": "/**\n * Current dexterity of the sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27342,7 +27550,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveSkills#hacking:member",
-              "docComment": "/**\n * current hacking skill of the sleeve\n */\n",
+              "docComment": "/**\n * Current hacking skill of the sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27368,7 +27576,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveSkills#shock:member",
-              "docComment": "/**\n * current shock of the sleeve [0-100]\n */\n",
+              "docComment": "/**\n * Current shock of the sleeve [0-100]\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27394,7 +27602,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveSkills#strength:member",
-              "docComment": "/**\n * current strength of the sleeve\n */\n",
+              "docComment": "/**\n * Current strength of the sleeve\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27420,7 +27628,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveSkills#sync:member",
-              "docComment": "/**\n * current sync of the sleeve [0-100]\n */\n",
+              "docComment": "/**\n * Current sync of the sleeve [0-100]\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27462,7 +27670,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveTask#crime:member",
-              "docComment": "/**\n * crime currently attempting, if any\n */\n",
+              "docComment": "/**\n * Crime currently attempting, if any\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27488,7 +27696,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveTask#factionWorkType:member",
-              "docComment": "/**\n * faction work type being performed, if any\n */\n",
+              "docComment": "/**\n * Faction work type being performed, if any\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27514,7 +27722,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveTask#gymStatType:member",
-              "docComment": "/**\n * stat being trained at the gym, if any\n */\n",
+              "docComment": "/**\n * Stat being trained at the gym, if any\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27540,7 +27748,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveTask#location:member",
-              "docComment": "/**\n * location of the task, if any\n */\n",
+              "docComment": "/**\n * Location of the task, if any\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27566,7 +27774,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveTask#task:member",
-              "docComment": "/**\n * task type\n */\n",
+              "docComment": "/**\n * Task type\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27608,7 +27816,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveWorkGains#workAgiExpGain:member",
-              "docComment": "/**\n * agility exp gained from work\n */\n",
+              "docComment": "/**\n * Agility exp gained from work\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27634,7 +27842,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveWorkGains#workChaExpGain:member",
-              "docComment": "/**\n * charisma exp gained from work\n */\n",
+              "docComment": "/**\n * Charisma exp gained from work\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27660,7 +27868,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveWorkGains#workDefExpGain:member",
-              "docComment": "/**\n * defense exp gained from work,\n */\n",
+              "docComment": "/**\n * Defense exp gained from work,\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27686,7 +27894,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveWorkGains#workDexExpGain:member",
-              "docComment": "/**\n * dexterity exp gained from work\n */\n",
+              "docComment": "/**\n * Dexterity exp gained from work\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27712,7 +27920,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveWorkGains#workHackExpGain:member",
-              "docComment": "/**\n * hacking exp gained from work\n */\n",
+              "docComment": "/**\n * Hacking exp gained from work\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27738,7 +27946,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveWorkGains#workMoneyGain:member",
-              "docComment": "/**\n * money gained from work\n */\n",
+              "docComment": "/**\n * Money gained from work\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27764,7 +27972,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!SleeveWorkGains#workStrExpGain:member",
-              "docComment": "/**\n * strength exp gained from work\n */\n",
+              "docComment": "/**\n * Strength exp gained from work\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -27996,7 +28204,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Stanek#charge:member(1)",
-              "docComment": "/**\n * Charge a fragment, increasing it's power.\n *\n * @remarks\n *\n * RAM cost: 0.4 GB\n *\n * @param rootX - rootX Root X against which to align the top left of the fragment.\n *\n * @param rootY - rootY Root Y against which to align the top left of the fragment.\n *\n * @returns Promise that lasts until the charge action is over.\n */\n",
+              "docComment": "/**\n * Charge a fragment, increasing its power.\n *\n * @remarks\n *\n * RAM cost: 0.4 GB\n *\n * @param rootX - rootX Root X against which to align the top left of the fragment.\n *\n * @param rootY - rootY Root Y against which to align the top left of the fragment.\n *\n * @returns Promise that lasts until the charge action is over.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -28956,7 +29164,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getPosition:member(1)",
-              "docComment": "/**\n * Returns the player’s position in a stock.\n *\n * @remarks\n *\n * RAM cost: 2 GB Returns an array of four elements that represents the player’s position in a stock.\n *\n * The first element is the returned array is the number of shares the player owns of the stock in the Long position. The second element in the array is the average price of the player’s shares in the Long position.\n *\n * The third element in the array is the number of shares the player owns of the stock in the Short position. The fourth element in the array is the average price of the player’s Short position.\n *\n * All elements in the returned array are numeric.\n *\n * @param sym - Stock symbol.\n *\n * @returns Array of four elements that represents the player’s position in a stock.\n *\n * @example\n * ```ts\n * pos = getPosition(\"ECP\");\n * shares      = pos[0];\n * avgPx       = pos[1];\n * sharesShort = pos[2];\n * avgPxShort  = pos[3];\n * ```\n *\n */\n",
+              "docComment": "/**\n * Returns the player’s position in a stock.\n *\n * @remarks\n *\n * RAM cost: 2 GB Returns an array of four elements that represents the player’s position in a stock.\n *\n * The first element is the returned array is the number of shares the player owns of the stock in the Long position. The second element in the array is the average price of the player’s shares in the Long position.\n *\n * The third element in the array is the number of shares the player owns of the stock in the Short position. The fourth element in the array is the average price of the player’s Short position.\n *\n * All elements in the returned array are numeric.\n *\n * @param sym - Stock symbol.\n *\n * @returns Array of four elements that represents the player’s position in a stock.\n *\n * @example\n * ```ts\n * // NS1\n * var pos = stock.getPosition(\"ECP\");\n * var shares      = pos[0];\n * var avgPx       = pos[1];\n * var sharesShort = pos[2];\n * var avgPxShort  = pos[3];\n * ```\n *\n * @example\n * ```ts\n * // NS2\n * const [shares, avgPx, sharesShort, avgPxShort] = ns.stock.getPosition(\"ECP\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29000,7 +29208,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getPrice:member(1)",
-              "docComment": "/**\n * Returns the price of a stock\n *\n * @remarks\n *\n * RAM cost: 2 GB The stock’s price is the average of its bid and ask price.\n *\n * @param sym - Stock symbol.\n *\n * @returns The price of a stock.\n *\n * @example\n * ```ts\n * getPrice(\"FISG\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Returns the price of a stock\n *\n * @remarks\n *\n * RAM cost: 2 GB The stock’s price is the average of its bid and ask price.\n *\n * @param sym - Stock symbol.\n *\n * @returns The price of a stock.\n *\n * @example\n * ```ts\n * // NS1\n * stock.getPrice(\"FISG\");\n * ```\n *\n * @example\n * ```ts\n * // NS2\n * ns.stock.getPrice(\"FISG\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29118,7 +29326,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getSaleGain:member(1)",
-              "docComment": "/**\n * Calculate profit of setting stocks.\n *\n * @remarks\n *\n * RAM cost: 2 GB Calculates and returns how much you would gain from selling a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to sell.\n *\n * @param posType - Specifies whether the order is a “Long” or “Short” position.\n *\n * @returns Gain from selling a given number of shares of a stock.\n */\n",
+              "docComment": "/**\n * Calculate profit of selling stocks.\n *\n * @remarks\n *\n * RAM cost: 2 GB Calculates and returns how much you would gain from selling a given number of shares of a stock. This takes into account spread, large transactions influencing the price of the stock and commission fees.\n *\n * @param sym - Stock symbol.\n *\n * @param shares - Number of shares to sell.\n *\n * @param posType - Specifies whether the order is a “Long” or “Short” position.\n *\n * @returns Gain from selling a given number of shares of a stock.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29597,6 +29805,124 @@
                 }
               ],
               "name": "short"
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "bitburner!UserInterface:interface",
+          "docComment": "/**\n * User Interface API.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "interface UserInterface "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "UserInterface",
+          "members": [
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!UserInterface#getTheme:member(1)",
+              "docComment": "/**\n * Get the current theme\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n *\n * @returns An object containing the theme's colors\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getTheme(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "UserInterfaceTheme",
+                  "canonicalReference": "bitburner!UserInterfaceTheme:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "getTheme"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!UserInterface#resetTheme:member(1)",
+              "docComment": "/**\n * Resets the player's theme to the default values\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "resetTheme(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "resetTheme"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!UserInterface#setTheme:member(1)",
+              "docComment": "/**\n * Sets the current theme\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n *\n * @example\n *\n * Usage example (NS2)\n * ```ts\n * const theme = ns.ui.getTheme();\n * theme.primary = '#ff5500';\n * ns.ui.setTheme(theme);\n * ```\n *\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setTheme(newTheme: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "UserInterfaceTheme",
+                  "canonicalReference": "bitburner!UserInterfaceTheme:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "newTheme",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "setTheme"
             }
           ],
           "extendsTokenRanges": []

@@ -4,7 +4,7 @@
 
 ## SleeveTask.crime property
 
-crime currently attempting, if any
+Crime currently attempting, if any
 
 <b>Signature:</b>
 

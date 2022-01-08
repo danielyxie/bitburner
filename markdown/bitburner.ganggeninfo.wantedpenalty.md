@@ -4,7 +4,7 @@
 
 ## GangGenInfo.wantedPenalty property
 
-Number indicating the current wanted penalty.
+Number indicating the current wanted penalty
 
 <b>Signature:</b>
 

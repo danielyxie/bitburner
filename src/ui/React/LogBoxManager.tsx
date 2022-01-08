@@ -113,6 +113,8 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+export const logBoxBaseZIndex = 1500;
+
 function LogWindow(props: IProps): React.ReactElement {
   const [script, setScript] = useState(props.script);
   const classes = useStyles();
@@ -147,7 +149,7 @@ function LogWindow(props: IProps): React.ReactElement {
   function updateLayer(): void {
     const c = container.current;
     if (c === null) return;
-    c.style.zIndex = 1500 + layerCounter + "";
+    c.style.zIndex = logBoxBaseZIndex + layerCounter + "";
     layerCounter++;
     rerender();
   }

@@ -37,15 +37,24 @@ If the hostname/ip argument is omitted, then the function will search through th
 
 
 ```ts
+// NS1:
 //The function call will return true if the script named foo.script exists on the foodnstuff server, and false otherwise.
 fileExists("foo.script", "foodnstuff");
+
+//The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.
+fileExists("ftpcrack.exe");
 ```
+\*
 
 ## Example 2
 
 
 ```ts
-//The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.
-fileExists("ftpcrack.exe");
+// NS2:
+// The function call will return true if the script named foo.script exists on the foodnstuff server, and false otherwise.
+ns.fileExists("foo.script", "foodnstuff");
+
+// The function call will return true if the current server contains the FTPCrack.exe program, and false otherwise.
+ns.fileExists("ftpcrack.exe");
 ```
 

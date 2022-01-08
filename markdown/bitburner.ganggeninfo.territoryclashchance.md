@@ -4,7 +4,7 @@
 
 ## GangGenInfo.territoryClashChance property
 
-Clash chance.
+Clash chance
 
 <b>Signature:</b>
 

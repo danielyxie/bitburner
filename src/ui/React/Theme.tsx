@@ -21,6 +21,8 @@ declare module "@mui/material/styles" {
       successlight: React.CSSProperties["color"];
       success: React.CSSProperties["color"];
       successdark: React.CSSProperties["color"];
+      white: React.CSSProperties["color"];
+      black: React.CSSProperties["color"];
     };
   }
   interface ThemeOptions {
@@ -38,6 +40,8 @@ declare module "@mui/material/styles" {
       successlight: React.CSSProperties["color"];
       success: React.CSSProperties["color"];
       successdark: React.CSSProperties["color"];
+      white: React.CSSProperties["color"];
+      black: React.CSSProperties["color"];
     };
   }
 }
@@ -60,6 +64,8 @@ export function refreshTheme(): void {
       successlight: Settings.theme.successlight,
       success: Settings.theme.success,
       successdark: Settings.theme.successdark,
+      white: Settings.theme.white,
+      black: Settings.theme.black,
     },
     palette: {
       primary: {
@@ -86,6 +92,11 @@ export function refreshTheme(): void {
         light: Settings.theme.warninglight,
         main: Settings.theme.warning,
         dark: Settings.theme.warningdark,
+      },
+      success: {
+        light: Settings.theme.successlight,
+        main: Settings.theme.success,
+        dark: Settings.theme.successdark,
       },
       background: {
         default: Settings.theme.backgroundprimary,
@@ -320,7 +331,7 @@ export function refreshTheme(): void {
             border: "1px solid " + Settings.theme.well,
           },
           standardSuccess: {
-            color: Settings.theme.primarylight,
+            color: Settings.theme.successlight,
           },
           standardError: {
             color: Settings.theme.errorlight,
@@ -335,6 +346,8 @@ export function refreshTheme(): void {
       },
     },
   });
+
+  document.body.style.backgroundColor = theme.colors.black?.toString() ?? "black";
 }
 refreshTheme();
 

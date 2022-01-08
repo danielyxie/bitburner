@@ -4,7 +4,7 @@
 
 ## SleeveWorkGains.workHackExpGain property
 
-hacking exp gained from work
+Hacking exp gained from work
 
 <b>Signature:</b>
 

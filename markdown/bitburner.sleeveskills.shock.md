@@ -4,7 +4,7 @@
 
 ## SleeveSkills.shock property
 
-current shock of the sleeve \[0-100\]
+Current shock of the sleeve \[0-100\]
 
 <b>Signature:</b>
 
