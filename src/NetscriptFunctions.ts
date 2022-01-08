@@ -1575,7 +1575,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         }
       }
       for (let i = 0; i < server.messages.length; ++i) {
-        if (filename.toLowerCase() === server.messages[i]) {
+        if (filename.toLowerCase() === server.messages[i].toLowerCase()) {
           return true;
         }
       }
