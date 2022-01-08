@@ -3982,7 +3982,7 @@ export declare interface NS extends Singularity {
      * Queue a toast (bottom-right notification).
      * @param msg - Message in the toast.
      * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.
-     * @param duration - Duration of toast in ms. Can also be null to create a persistent toast. Defaults to 2000
+     * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000
      */
     toast(msg: any, variant?: string, duration?: number | null): void;
 
