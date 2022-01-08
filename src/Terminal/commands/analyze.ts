@@ -14,5 +14,5 @@ export function analyze(
     terminal.error("Incorrect usage of analyze command. Usage: analyze");
     return;
   }
-  terminal.startAnalyze();
+  terminal.startAnalyze(player);
 }
