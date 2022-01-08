@@ -7,6 +7,7 @@ mkdir -p .package/node_modules || true
 cp index.html .package
 cp -r electron/* .package
 cp -r dist/ext .package/dist
+cp -r dist/icons .package/dist
 
 # The css files
 cp dist/vendor.css .package/dist

@@ -64,6 +64,7 @@ import React from "react";
 import { serverMetadata } from "../../Server/data/servers";
 import { SnackbarEvents } from "../../ui/React/Snackbar";
 import { calculateClassEarnings } from "../formulas/work";
+import { achievements } from "../../Achievements/Achievements";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -1788,8 +1789,10 @@ export function getNextCompanyPosition(
 }
 
 export function quitJob(this: IPlayer, company: string): void {
-  this.isWorking = false;
-  this.companyName = "";
+  if (this.isWorking == true && this.workType == "Working for Company" && this.companyName == company) {
+    this.isWorking = false;
+    this.companyName = "";
+  }
   delete this.jobs[company];
 }
 
@@ -2629,6 +2632,15 @@ export function giveExploit(this: IPlayer, exploit: Exploit): void {
   if (!this.exploits.includes(exploit)) {
     this.exploits.push(exploit);
     SnackbarEvents.emit("SF -1 acquired!", "success", 2000);
+  }
+}
+
+export function giveAchievement(this: IPlayer, achievementId: string): void {
+  const achievement = achievements[achievementId];
+  if (!achievement) return;
+  if (!this.achievements.map(a => a.ID).includes(achievementId)) {
+    this.achievements.push({ ID: achievementId, unlockedOn: new Date().getTime() });
+    SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, 'success', 2000);
   }
 }
 

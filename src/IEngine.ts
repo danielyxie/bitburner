@@ -19,6 +19,7 @@ export interface IEngine {
     messages: number;
     mechanicProcess: number;
     contractGeneration: number;
+    achievementsCounter: number;
   };
   decrementAllCounters: (numCycles?: number) => void;
   checkCounters: () => void;

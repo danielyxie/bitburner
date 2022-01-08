@@ -30,6 +30,7 @@ import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
+import { PlayerAchievement } from "../Achievements/Achievements";
 
 export interface IPlayer {
   // Class members
@@ -70,6 +71,7 @@ export interface IPlayer {
   sleevesFromCovenant: number;
   sourceFiles: IPlayerOwnedSourceFile[];
   exploits: Exploit[];
+  achievements: PlayerAchievement[];
   lastUpdate: number;
   totalPlaytime: number;
 
@@ -238,6 +240,7 @@ export interface IPlayer {
   takeDamage(amt: number): boolean;
   travel(to: CityName): boolean;
   giveExploit(exploit: Exploit): void;
+  giveAchievement(achievementId: string): void;
   queryStatFromString(str: string): number;
   getIntelligenceBonus(weight: number): number;
   getCasinoWinnings(): number;
