@@ -274,7 +274,9 @@ const achievements: Achievement[] = [
   { ID: "HACKNET_SERVER_1B", Condition: () => hasHacknetServers(Player) && Player.moneySourceB.hacknet >= 1e9 },
   {
     ID: "MAX_CACHE",
-    Condition: () => hasHacknetServers(Player) && Player.hashManager.hashes === Player.hashManager.capacity,
+    Condition: () => hasHacknetServers(Player) &&
+      Player.hashManager.hashes === Player.hashManager.capacity &&
+      Player.hashManager.capacity > 0,
   },
   {
     ID: "SLEEVE_8",
