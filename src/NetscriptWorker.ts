@@ -638,7 +638,14 @@ export function loadAllRunningScripts(player: IPlayer): void {
       server.runningScripts.length = 0;
     } else {
       for (let j = 0; j < server.runningScripts.length; ++j) {
+        const fileName = server.runningScripts[j].filename;
         createAndAddWorkerScript(player, server.runningScripts[j], server);
+
+        if (!server.runningScripts[j]) {
+          // createAndAddWorkerScript can modify the server.runningScripts array if a script is invalid
+          console.error(`createAndAddWorkerScript removed ${fileName} from ${server}`);
+          continue;
+        }
 
         // Offline production
         scriptCalculateOfflineProduction(server.runningScripts[j]);
