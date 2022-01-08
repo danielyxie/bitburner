@@ -22,6 +22,7 @@ import { StockMarket } from "./DevMenu/ui/StockMarket";
 import { Sleeves } from "./DevMenu/ui/Sleeves";
 import { Stanek } from "./DevMenu/ui/Stanek";
 import { TimeSkip } from "./DevMenu/ui/TimeSkip";
+import { Achievements } from "./DevMenu/ui/Achievements";
 import Typography from "@mui/material/Typography";
 import { Exploit } from "./Exploits/Exploit";
 
@@ -61,6 +62,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
       {props.player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1) && <Stanek />}
 
       <TimeSkip player={props.player} engine={props.engine} />
+      <Achievements player={props.player} engine={props.engine} />
     </>
   );
 }
