@@ -415,6 +415,9 @@ export function gainDefenseExp(this: IPlayer, exp: number): void {
   }
 
   this.defense = calculateSkillF(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier);
+  const ratio = this.hp / this.max_hp;
+  this.max_hp = Math.floor(10 + this.defense / 10);
+  this.hp = Math.round(this.max_hp * ratio);
 }
 
 export function gainDexterityExp(this: IPlayer, exp: number): void {
