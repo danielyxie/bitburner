@@ -64,9 +64,11 @@ export function CreateCorporationModal(props: IProps): React.ReactElement {
         If you would like to start one, please enter a name for your corporation below:
       </Typography>
       <TextField autoFocus={true} placeholder="Corporation Name" onChange={onChange} value={name} />
-      <Button onClick={seed} disabled={name == ""}>
-        Use seed money
-      </Button>
+      {player.bitNodeN === 3 && (
+        <Button onClick={seed} disabled={name == ""}>
+          Use seed money
+        </Button>
+      )}
       <Button onClick={selfFund} disabled={name == "" || !canSelfFund}>
         Self-Fund (<Money money={150e9} player={player} />)
       </Button>

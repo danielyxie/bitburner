@@ -1294,15 +1294,15 @@ export interface TIX {
 /**
  * Singularity API
  * @remarks
- * This API requires Source-File 4 level 1 / 2 / 3 to use.
+ * This API requires Source-File 4 level 1 to use. The RAM cost of all these functions is multiplied by 16/4/1 based on Source-File 4 levels.
  * @public
  */
 export interface Singularity {
   /**
-   * SF4.1 - Take university class.
+   * Take university class.
    *
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * This function will automatically set you to start taking a course at a university.
@@ -1320,10 +1320,10 @@ export interface Singularity {
   universityCourse(universityName: string, courseName: string): boolean;
 
   /**
-   * SF4.1 - Workout at the gym.
+   * Workout at the gym.
    *
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
 
    * This function will automatically set you to start working out at a gym to train
@@ -1341,9 +1341,9 @@ export interface Singularity {
   gymWorkout(gymName: string, stat: string): boolean;
 
   /**
-   * SF4.1 - Travel to another city.
+   * Travel to another city.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * This function allows the player to travel to any city. The cost for using this
@@ -1355,9 +1355,9 @@ export interface Singularity {
   travelToCity(city: string): boolean;
 
   /**
-   * SF4.1 - Purchase the TOR router.
+   * Purchase the TOR router.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * This function allows you to automatically purchase a TOR router. The cost for
@@ -1369,9 +1369,9 @@ export interface Singularity {
   purchaseTor(): boolean;
 
   /**
-   * SF4.1 - Purchase a program from the dark web.
+   * Purchase a program from the dark web.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * This function allows you to automatically purchase programs. You MUST have a
@@ -1395,9 +1395,9 @@ export interface Singularity {
   purchaseProgram(programName: string): boolean;
 
   /**
-   * SF4.1 - Check if the player is busy.
+   * Check if the player is busy.
    * @remarks
-   * RAM cost: 0.5 GB
+   * RAM cost: 0.5 GB * 16/4/1
    *
    *
    * Returns a boolean indicating whether or not the player is currently performing an
@@ -1409,9 +1409,9 @@ export interface Singularity {
   isBusy(): boolean;
 
   /**
-   * SF4.1 - Stop the current action.
+   * Stop the current action.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 1 GB * 16/4/1
    *
    *
    * This function is used to end whatever ‘action’ the player is currently performing.
@@ -1432,9 +1432,9 @@ export interface Singularity {
   stopAction(): boolean;
 
   /**
-   * SF4.2 - Upgrade home computer RAM.
+   * Upgrade home computer RAM.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * This function will upgrade amount of RAM on the player’s home computer. The cost is
@@ -1447,9 +1447,9 @@ export interface Singularity {
   upgradeHomeRam(): boolean;
 
   /**
-   * SF4.2 - Upgrade home computer cores.
+   * Upgrade home computer cores.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * This function will upgrade amount of cores on the player’s home computer. The cost is
@@ -1462,9 +1462,9 @@ export interface Singularity {
   upgradeHomeCores(): boolean;
 
   /**
-   * SF4.2 - Get the price of upgrading home RAM.
+   * Get the price of upgrading home RAM.
    * @remarks
-   * RAM cost: 1.5 GB
+   * RAM cost: 1.5 GB * 16/4/1
    *
    *
    * Returns the cost of upgrading the player’s home computer RAM.
@@ -1474,9 +1474,9 @@ export interface Singularity {
   getUpgradeHomeRamCost(): number;
 
   /**
-   * SF4.2 - Get the price of upgrading home cores.
+   * Get the price of upgrading home cores.
    * @remarks
-   * RAM cost: 1.5 GB
+   * RAM cost: 1.5 GB * 16/4/1
    *
    *
    * Returns the cost of upgrading the player’s home computer cores.
@@ -1486,9 +1486,9 @@ export interface Singularity {
   getUpgradeHomeCoresCost(): number;
 
   /**
-   * SF4.2 - Work for a company.
+   * Work for a company.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * This function will automatically set you to start working at the company
@@ -1528,9 +1528,9 @@ export interface Singularity {
   workForCompany(companyName?: string, focus?: boolean): boolean;
 
   /**
-   * SF4.2 - Apply for a job at a company.
+   * Apply for a job at a company.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * This function will automatically try to apply to the specified company
@@ -1549,9 +1549,9 @@ export interface Singularity {
   applyToCompany(companyName: string, field: string): boolean;
 
   /**
-   * SF4.2 - Get company reputation.
+   * Get company reputation.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 1 GB * 16/4/1
    *
    *
    * This function will return the amount of reputation you have at the specified company.
@@ -1563,9 +1563,9 @@ export interface Singularity {
   getCompanyRep(companyName: string): number;
 
   /**
-   * SF4.2 - Get company favor.
+   * Get company favor.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 1 GB * 16/4/1
    *
    *
    * This function will return the amount of favor you have at the specified company.
@@ -1577,9 +1577,9 @@ export interface Singularity {
   getCompanyFavor(companyName: string): number;
 
   /**
-   * SF4.2 - Get company favor gain.
+   * Get company favor gain.
    * @remarks
-   * RAM cost: 0.75 GB
+   * RAM cost: 0.75 GB * 16/4/1
    *
    *
    * This function will return the amount of favor you will gain for the specified
@@ -1591,9 +1591,9 @@ export interface Singularity {
   getCompanyFavorGain(companyName: string): number;
 
   /**
-   * SF4.2 - List all current faction invitations.
+   * List all current faction invitations.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * Returns an array with the name of all Factions you currently have oustanding invitations from.
@@ -1603,9 +1603,9 @@ export interface Singularity {
   checkFactionInvitations(): string[];
 
   /**
-   * SF4.2 - Join a faction.
+   * Join a faction.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * This function will automatically accept an invitation from a faction and join it.
@@ -1616,9 +1616,9 @@ export interface Singularity {
   joinFaction(faction: string): boolean;
 
   /**
-   * SF4.2 - Work for a faction.
+   * Work for a faction.
    * @remarks
-   * RAM cost: 3 GB
+   * RAM cost: 3 GB * 16/4/1
    *
    *
    * This function will automatically set you to start working for the specified faction.
@@ -1659,9 +1659,9 @@ export interface Singularity {
   workForFaction(faction: string, workType: string, focus?: boolean): boolean;
 
   /**
-   * SF4.2 - Get faction reputation.
+   * Get faction reputation.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 1 GB * 16/4/1
    *
    *
    * This function returns the amount of reputation you have for the specified faction.
@@ -1672,9 +1672,9 @@ export interface Singularity {
   getFactionRep(faction: string): number;
 
   /**
-   * SF4.2 - Get faction favor.
+   * Get faction favor.
    * @remarks
-   * RAM cost: 1 GB
+   * RAM cost: 1 GB * 16/4/1
    *
    *
    * This function returns the amount of favor you have for the specified faction.
@@ -1685,9 +1685,9 @@ export interface Singularity {
   getFactionFavor(faction: string): number;
 
   /**
-   * SF4.2 - Get faction favor gain.
+   * Get faction favor gain.
    * @remarks
-   * RAM cost: 0.75 GB
+   * RAM cost: 0.75 GB * 16/4/1
    *
    *
    * This function returns the amount of favor you will gain for the specified
@@ -1699,9 +1699,9 @@ export interface Singularity {
   getFactionFavorGain(faction: string): number;
 
   /**
-   * SF4.3 - Donate to a faction.
+   * Donate to a faction.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * Attempts to donate money to the specified faction in exchange for reputation.
@@ -1714,9 +1714,9 @@ export interface Singularity {
   donateToFaction(faction: string, amount: number): boolean;
 
   /**
-   * SF4.3 - Create a program.
+   * Create a program.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function will automatically set you to start working on creating the
@@ -1754,9 +1754,9 @@ export interface Singularity {
   createProgram(program: string): boolean;
 
   /**
-   * SF4.3 - Commit a crime.
+   * Commit a crime.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function is used to automatically attempt to commit crimes.
@@ -1781,9 +1781,9 @@ export interface Singularity {
   commitCrime(crime: string): number;
 
   /**
-   * SF4.3 - Get chance to successfully commit a crime.
+   * Get chance to successfully commit a crime.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function returns your chance of success at commiting the specified crime.
@@ -1794,9 +1794,9 @@ export interface Singularity {
   getCrimeChance(crime: string): number;
 
   /**
-   * SF4.3 - Get stats related to a crime.
+   * Get stats related to a crime.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * Returns the stats of the crime.
@@ -1807,9 +1807,9 @@ export interface Singularity {
   getCrimeStats(crime: string): CrimeStats;
 
   /**
-   * SF4.3 - Get a list of owned augmentation.
+   * Get a list of owned augmentation.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function returns an array containing the names (as strings) of all Augmentations you have.
@@ -1820,9 +1820,9 @@ export interface Singularity {
   getOwnedAugmentations(purchased?: boolean): string[];
 
   /**
-   * SF4.3 - Get a list of augmentation available from a faction.
+   * Get a list of augmentation available from a faction.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * Returns an array containing the names (as strings) of all Augmentations
@@ -1834,9 +1834,9 @@ export interface Singularity {
   getAugmentationsFromFaction(faction: string): string[];
 
   /**
-   * SF4.3 - Get the pre-requisite of an augmentation.
+   * Get the pre-requisite of an augmentation.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation.
@@ -1848,10 +1848,10 @@ export interface Singularity {
   getAugmentationPrereq(augName: string): string[];
 
   /**
-   * SF4.3 - Get the price and reputation of an augmentation.
+   * Get the price and reputation of an augmentation.
    * @deprecated use getAugmentationPrice getAugmentationRepCost
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function returns an array with two elements that gives the cost for
@@ -1868,9 +1868,9 @@ export interface Singularity {
   getAugmentationCost(augName: string): [number, number];
 
   /**
-   * SF4.3 - Get price of an augmentation.
+   * Get price of an augmentation.
    * @remarks
-   * RAM cost: 2.5 GB
+   * RAM cost: 2.5 GB * 16/4/1
    *
    *
    * @param augName - Name of Augmentation.
@@ -1879,9 +1879,9 @@ export interface Singularity {
   getAugmentationPrice(augName: string): number;
 
   /**
-   * SF4.3 - Get reputation requirement of an augmentation.
+   * Get reputation requirement of an augmentation.
    * @remarks
-   * RAM cost: 2.5 GB
+   * RAM cost: 2.5 GB * 16/4/1
    *
    *
    * @param augName - Name of Augmentation.
@@ -1890,9 +1890,9 @@ export interface Singularity {
   getAugmentationRepReq(augName: string): number;
 
   /**
-   * SF4.3 - Purchase an augmentation
+   * Purchase an augmentation
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function will try to purchase the specified Augmentation through the given Faction.
@@ -1906,9 +1906,9 @@ export interface Singularity {
   purchaseAugmentation(faction: string, augmentation: string): boolean;
 
   /**
-   * SF4.3 - Get the stats of an augmentation.
+   * Get the stats of an augmentation.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function returns augmentation stats.
@@ -1919,9 +1919,9 @@ export interface Singularity {
   getAugmentationStats(name: string): AugmentationStats;
 
   /**
-   * SF4.3 - Install your purchased augmentations.
+   * Install your purchased augmentations.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function will automatically install your Augmentations, resetting the game as usual.
@@ -1931,11 +1931,11 @@ export interface Singularity {
   installAugmentations(cbScript?: string): void;
 
   /**
-   * SF4.1 - Returns an object with the Player’s stats.
+   * Returns an object with the Player’s stats.
    * @deprecated use getPlayer
    *
    * @remarks
-   * RAM cost: 0.5 GB
+   * RAM cost: 0.5 GB * 16/4/1
    *
    *
    * @example
@@ -1948,11 +1948,11 @@ export interface Singularity {
   getStats(): PlayerSkills;
 
   /**
-   * SF4.1 - Returns an object with various information about your character.
+   * Returns an object with various information about your character.
    * @deprecated use getPlayer
    *
    * @remarks
-   * RAM cost: 0.5 GB
+   * RAM cost: 0.5 GB * 16/4/1
    *
    *
    * @returns Object with various information about your character.
@@ -1960,9 +1960,9 @@ export interface Singularity {
   getCharacterInformation(): CharacterInfo;
 
   /**
-   * SF4.1 - Hospitalize the player.
+   * Hospitalize the player.
    * @remarks
-   * RAM cost: 0.25 GB
+   * RAM cost: 0.25 GB * 16/4/1
    *
    *
    * @returns The cost of the hospitalization.
@@ -1970,9 +1970,9 @@ export interface Singularity {
   hospitalize(): number;
 
   /**
-   * SF4.3 - Soft reset the game.
+   * Soft reset the game.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * This function will perform a reset even if you don’t have any augmentation installed.
@@ -1982,9 +1982,9 @@ export interface Singularity {
   softReset(cbScript: string): void;
 
   /**
-   * SF4.3 - Go to a location.
+   * Go to a location.
    * @remarks
-   * RAM cost: 5 GB
+   * RAM cost: 5 GB * 16/4/1
    *
    *
    * Move the player to a specific location.
@@ -1995,9 +1995,9 @@ export interface Singularity {
   goToLocation(locationName: string): boolean;
 
   /**
-   * SF4.1 - Get the current server.
+   * Get the current server.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * @returns Name of the current server.
@@ -2005,9 +2005,9 @@ export interface Singularity {
   getCurrentServer(): string;
 
   /**
-   * SF4.1 - Connect to a server.
+   * Connect to a server.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * Run the connect HOSTNAME command in the terminal. Can only connect to neighbors.
@@ -2017,9 +2017,9 @@ export interface Singularity {
   connect(hostname: string): boolean;
 
   /**
-   * SF4.1 - Run the hack command in the terminal.
+   * Run the hack command in the terminal.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
    * @returns Amount of money stolen by manual hacking.
@@ -2027,19 +2027,19 @@ export interface Singularity {
   manualHack(): Promise<number>;
 
   /**
-   * SF4.1 - Run the backdoor command in the terminal.
+   * Run the backdoor command in the terminal.
    * @remarks
-   * RAM cost: 2 GB
+   * RAM cost: 2 GB * 16/4/1
    *
    *
-   * @returns True if the installation was successful.
+   * @returns Promise waiting for the installation to finish.
    */
   installBackdoor(): Promise<void>;
 
   /**
-   * SF4.2 - Check if the player is focused.
+   * Check if the player is focused.
    * @remarks
-   * RAM cost: 0.1 GB
+   * RAM cost: 0.1 GB * 16/4/1
    *
    *
    * @returns True if the player is focused.
@@ -2047,9 +2047,9 @@ export interface Singularity {
   isFocused(): boolean;
 
   /**
-   * SF4.2 - Set the players focus.
+   * Set the players focus.
    * @remarks
-   * RAM cost: 0.1 GB
+   * RAM cost: 0.1 GB * 16/4/1
    *
    * @returns True if the focus was changed.
    */

@@ -201,7 +201,7 @@ export function FragmentById(id: number): Fragment | null {
       21, // id
       Shapes.O,
       FragmentType.HacknetCost, // type
-      -1, // power
+      2, // power
       1, // limit
     ),
   );

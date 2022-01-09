@@ -1028,11 +1028,7 @@ export class Bladeburner implements IBladeburner {
     player.gainDexterityExp(unweightedGain * action.weights.dex * player.dexterity_exp_mult * skillMult);
     player.gainAgilityExp(unweightedGain * action.weights.agi * player.agility_exp_mult * skillMult);
     player.gainCharismaExp(unweightedGain * action.weights.cha * player.charisma_exp_mult * skillMult);
-    let intExp = unweightedIntGain * action.weights.int * skillMult;
-    if (intExp > 1) {
-      intExp = Math.pow(intExp, 0.8);
-    }
-    player.gainIntelligenceExp(intExp);
+    player.gainIntelligenceExp(unweightedIntGain * action.weights.int * skillMult);
   }
 
   getDiplomacyEffectiveness(player: IPlayer): number {

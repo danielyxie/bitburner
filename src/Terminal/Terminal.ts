@@ -219,12 +219,14 @@ export class Terminal implements ITerminal {
       const newSec = server.hackDifficulty;
 
       this.print(
-        `Hack successful on '${server.hostname}'! Gained ${numeralWrapper.formatMoney(moneyGained)} and ${numeralWrapper.formatExp(
-          expGainedOnSuccess,
-        )} hacking exp`,
+        `Hack successful on '${server.hostname}'! Gained ${numeralWrapper.formatMoney(
+          moneyGained,
+        )} and ${numeralWrapper.formatExp(expGainedOnSuccess)} hacking exp`,
       );
       this.print(
-        `Security increased on '${server.hostname}' from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(newSec)}`,
+        `Security increased on '${server.hostname}' from ${numeralWrapper.formatSecurity(
+          oldSec,
+        )} to ${numeralWrapper.formatSecurity(newSec)}`,
       );
     } else {
       // Failure
@@ -256,7 +258,9 @@ export class Terminal implements ITerminal {
       )}. Gained ${numeralWrapper.formatExp(expGain)} hacking exp.`,
     );
     this.print(
-      `Security increased on '${server.hostname}' from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(newSec)}`,
+      `Security increased on '${server.hostname}' from ${numeralWrapper.formatSecurity(
+        oldSec,
+      )} to ${numeralWrapper.formatSecurity(newSec)}`,
     );
   }
 
@@ -275,9 +279,9 @@ export class Terminal implements ITerminal {
 
     player.gainHackingExp(expGain);
     this.print(
-      `Security decreased on '${server.hostname}' from ${numeralWrapper.formatSecurity(oldSec)} to ${numeralWrapper.formatSecurity(
-        newSec,
-      )} (min: ${numeralWrapper.formatSecurity(server.minDifficulty)})` +
+      `Security decreased on '${server.hostname}' from ${numeralWrapper.formatSecurity(
+        oldSec,
+      )} to ${numeralWrapper.formatSecurity(newSec)} (min: ${numeralWrapper.formatSecurity(server.minDifficulty)})` +
         ` and Gained ${numeralWrapper.formatExp(expGain)} hacking exp.`,
     );
   }
@@ -309,9 +313,10 @@ export class Terminal implements ITerminal {
       this.print("Organization name: " + (!isHacknet ? org : "player"));
       const hasAdminRights = (!isHacknet && currServ.hasAdminRights) || isHacknet;
       this.print("Root Access: " + (hasAdminRights ? "YES" : "NO"));
+      this.print("Can run scripts on this host: " + (hasAdminRights ? "YES" : "NO"));
       if (currServ instanceof Server) {
         const hackingSkill = currServ.requiredHackingSkill;
-        this.print("Required hacking skill: " + (!isHacknet ? hackingSkill : "N/A"));
+        this.print("Required hacking skill for hack() and backdoor: " + (!isHacknet ? hackingSkill : "N/A"));
         const security = currServ.hackDifficulty;
         this.print("Server security level: " + (!isHacknet ? numeralWrapper.formatServerSecurity(security) : "N/A"));
         const hackingChance = calculateHackingChance(currServ, player);

@@ -87,7 +87,6 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.currentServer = SpecialServers.Home;
 
   this.numPeopleKilled = 0;
-  this.karma = 0;
 
   //Reset stats
   this.hacking = 1;
@@ -183,6 +182,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
 
 export function prestigeSourceFile(this: IPlayer): void {
   this.prestigeAugmentation();
+  this.karma = 0;
   // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
   for (let i = 0; i < this.sleeves.length; ++i) {
     if (this.sleeves[i] instanceof Sleeve) {
@@ -671,12 +671,36 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
       <Money money={this.workMoneyGained} />
       <br />
       <Reputation reputation={this.workRepGained} /> reputation for the company <br />
-      {this.workHackExpGained > 0  && <>{numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br /></>}
-      {this.workStrExpGained > 0  && <>{numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br /></>}
-      {this.workDefExpGained > 0  && <>{numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br /></>}
-      {this.workDexExpGained > 0  && <>{numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br /></>}
-      {this.workAgiExpGained > 0  && <>{numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br /></>}
-      {this.workChaExpGained > 0  && <>{numeralWrapper.formatExp(this.workChaExpGained)} charisma exp <br /></>}
+      {this.workHackExpGained > 0 && (
+        <>
+          {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
+        </>
+      )}
+      {this.workStrExpGained > 0 && (
+        <>
+          {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
+        </>
+      )}
+      {this.workDefExpGained > 0 && (
+        <>
+          {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
+        </>
+      )}
+      {this.workDexExpGained > 0 && (
+        <>
+          {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
+        </>
+      )}
+      {this.workAgiExpGained > 0 && (
+        <>
+          {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
+        </>
+      )}
+      {this.workChaExpGained > 0 && (
+        <>
+          {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp <br />
+        </>
+      )}
       <br />
     </>
   );
@@ -1273,11 +1297,15 @@ export function startCreateProgramWork(
 }
 
 export function createProgramWork(this: IPlayer, numCycles: number): boolean {
+  let focusBonus = 1;
+  if (!this.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
+    focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
+  }
   //Higher hacking skill will allow you to create programs faster
   const reqLvl = this.createProgramReqLvl;
   let skillMult = (this.hacking / reqLvl) * this.getIntelligenceBonus(3); //This should always be greater than 1;
   skillMult = 1 + (skillMult - 1) / 5; //The divider constant can be adjusted as necessary
-
+  skillMult *= focusBonus;
   //Skill multiplier directly applied to "time worked"
   this.timeWorked += CONSTANTS._idleSpeed * numCycles;
   this.timeWorkedCreateProgram += CONSTANTS._idleSpeed * numCycles * skillMult;
@@ -2645,9 +2673,9 @@ export function giveExploit(this: IPlayer, exploit: Exploit): void {
 export function giveAchievement(this: IPlayer, achievementId: string): void {
   const achievement = achievements[achievementId];
   if (!achievement) return;
-  if (!this.achievements.map(a => a.ID).includes(achievementId)) {
+  if (!this.achievements.map((a) => a.ID).includes(achievementId)) {
     this.achievements.push({ ID: achievementId, unlockedOn: new Date().getTime() });
-    SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, 'success', 2000);
+    SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, "success", 2000);
   }
 }
 

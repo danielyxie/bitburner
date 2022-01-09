@@ -12,7 +12,7 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
 // Update as additional BitNodes get implemented
-const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const validSFN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
 interface IProps {
   player: IPlayer;

@@ -62,14 +62,44 @@ export function WorkInProgressRoot(): React.ReactElement {
             <Reputation reputation={player.workRepGained} /> (
             <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />) reputation for this faction <br />
             <br />
-            {player.workHackExpGained > 0 && <>{numeralWrapper.formatExp(player.workHackExpGained)} ({numeralWrapper.formatExp(player.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br /></>}
+            {player.workHackExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workHackExpGained)} (
+                {numeralWrapper.formatExp(player.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br />
+              </>
+            )}
             <br />
-            {player.workStrExpGained > 0 && <>{numeralWrapper.formatExp(player.workStrExpGained)} ({numeralWrapper.formatExp(player.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br /></>}
-            {player.workDefExpGained > 0 && <>{numeralWrapper.formatExp(player.workDefExpGained)} ({numeralWrapper.formatExp(player.workDefExpGainRate * CYCLES_PER_SEC)} / sec) defense exp <br /></>}
-            {player.workDexExpGained > 0 && <>{numeralWrapper.formatExp(player.workDexExpGained)} ({numeralWrapper.formatExp(player.workDexExpGainRate * CYCLES_PER_SEC)} / sec) dexterity exp <br /></>}
-            {player.workAgiExpGained > 0 && <>{numeralWrapper.formatExp(player.workAgiExpGained)} ({numeralWrapper.formatExp(player.workAgiExpGainRate * CYCLES_PER_SEC)} / sec) agility exp <br /></>}
+            {player.workStrExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workStrExpGained)} (
+                {numeralWrapper.formatExp(player.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br />
+              </>
+            )}
+            {player.workDefExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workDefExpGained)} (
+                {numeralWrapper.formatExp(player.workDefExpGainRate * CYCLES_PER_SEC)} / sec) defense exp <br />
+              </>
+            )}
+            {player.workDexExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workDexExpGained)} (
+                {numeralWrapper.formatExp(player.workDexExpGainRate * CYCLES_PER_SEC)} / sec) dexterity exp <br />
+              </>
+            )}
+            {player.workAgiExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workAgiExpGained)} (
+                {numeralWrapper.formatExp(player.workAgiExpGainRate * CYCLES_PER_SEC)} / sec) agility exp <br />
+              </>
+            )}
             <br />
-            {player.workChaExpGained > 0 && <>{numeralWrapper.formatExp(player.workChaExpGained)} ({numeralWrapper.formatExp(player.workChaExpGainRate * CYCLES_PER_SEC)} / sec) charisma exp <br /></>}
+            {player.workChaExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workChaExpGained)} (
+                {numeralWrapper.formatExp(player.workChaExpGainRate * CYCLES_PER_SEC)} / sec) charisma exp <br />
+              </>
+            )}
             <br />
             You will automatically finish after working for 20 hours. You can cancel earlier if you wish.
             <br />
@@ -91,6 +121,12 @@ export function WorkInProgressRoot(): React.ReactElement {
     function cancel(): void {
       player.finishClass(true);
       router.toCity();
+    }
+
+    function unfocus(): void {
+      router.toFaction(faction);
+      router.toCity();
+      player.stopFocusing();
     }
 
     let stopText = "";
@@ -117,17 +153,50 @@ export function WorkInProgressRoot(): React.ReactElement {
             <br />
             <br />
             You have gained: <br />
-            {player.workHackExpGained > 0 && <>{numeralWrapper.formatExp(player.workHackExpGained)} ({numeralWrapper.formatExp(player.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br /></>}
-            {player.workStrExpGained > 0 && <>{numeralWrapper.formatExp(player.workStrExpGained)} ({numeralWrapper.formatExp(player.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br /></>}
-            {player.workDefExpGained > 0 && <>{numeralWrapper.formatExp(player.workDefExpGained)} ({numeralWrapper.formatExp(player.workDefExpGainRate * CYCLES_PER_SEC)} / sec) defense exp <br /></>}
-            {player.workDexExpGained > 0 && <>{numeralWrapper.formatExp(player.workDexExpGained)} ({numeralWrapper.formatExp(player.workDexExpGainRate * CYCLES_PER_SEC)} / sec) dexterity exp <br /></>}
-            {player.workAgiExpGained > 0 && <>{numeralWrapper.formatExp(player.workAgiExpGained)} ({numeralWrapper.formatExp(player.workAgiExpGainRate * CYCLES_PER_SEC)} / sec) agility exp <br /></>}
-            {player.workChaExpGained > 0 && <>{numeralWrapper.formatExp(player.workChaExpGained)} ({numeralWrapper.formatExp(player.workChaExpGainRate * CYCLES_PER_SEC)} / sec) charisma exp <br /></>}
+            {player.workHackExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workHackExpGained)} (
+                {numeralWrapper.formatExp(player.workHackExpGainRate * CYCLES_PER_SEC)} / sec) hacking exp <br />
+              </>
+            )}
+            {player.workStrExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workStrExpGained)} (
+                {numeralWrapper.formatExp(player.workStrExpGainRate * CYCLES_PER_SEC)} / sec) strength exp <br />
+              </>
+            )}
+            {player.workDefExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workDefExpGained)} (
+                {numeralWrapper.formatExp(player.workDefExpGainRate * CYCLES_PER_SEC)} / sec) defense exp <br />
+              </>
+            )}
+            {player.workDexExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workDexExpGained)} (
+                {numeralWrapper.formatExp(player.workDexExpGainRate * CYCLES_PER_SEC)} / sec) dexterity exp <br />
+              </>
+            )}
+            {player.workAgiExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workAgiExpGained)} (
+                {numeralWrapper.formatExp(player.workAgiExpGainRate * CYCLES_PER_SEC)} / sec) agility exp <br />
+              </>
+            )}
+            {player.workChaExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workChaExpGained)} (
+                {numeralWrapper.formatExp(player.workChaExpGainRate * CYCLES_PER_SEC)} / sec) charisma exp <br />
+              </>
+            )}
             You may cancel at any time
           </Typography>
         </Grid>
         <Grid item>
-          <Button onClick={cancel}>{stopText}</Button>
+          <Button sx={{ mx: 2 }} onClick={cancel}>
+            {stopText}
+          </Button>
+          <Button onClick={unfocus}>Do something else simultaneously</Button>
         </Grid>
       </Grid>
     );
@@ -173,26 +242,50 @@ export function WorkInProgressRoot(): React.ReactElement {
             <Reputation reputation={player.workRepGained} /> (
             <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />) reputation for this company <br />
             <br />
-            {player.workHackExpGained > 0 && <>{numeralWrapper.formatExp(player.workHackExpGained)} (
-            {`${numeralWrapper.formatExp(player.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}
-            ) hacking exp <br /></>}
+            {player.workHackExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workHackExpGained)} (
+                {`${numeralWrapper.formatExp(player.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}
+                ) hacking exp <br />
+              </>
+            )}
             <br />
-            {player.workStrExpGained > 0 && <>{numeralWrapper.formatExp(player.workStrExpGained)} (
-            {`${numeralWrapper.formatExp(player.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}
-            ) strength exp <br /></>}
-            {player.workDefExpGained > 0 && <>{numeralWrapper.formatExp(player.workDefExpGained)} (
-            {`${numeralWrapper.formatExp(player.workDefExpGainRate * CYCLES_PER_SEC)} / sec`}
-            ) defense exp <br /></>}
-            {player.workDexExpGained > 0 && <>{numeralWrapper.formatExp(player.workDexExpGained)} (
-            {`${numeralWrapper.formatExp(player.workDexExpGainRate * CYCLES_PER_SEC)} / sec`}
-            ) dexterity exp <br /></>}
-            {player.workAgiExpGained > 0 && <>{numeralWrapper.formatExp(player.workAgiExpGained)} (
-            {`${numeralWrapper.formatExp(player.workAgiExpGainRate * CYCLES_PER_SEC)} / sec`}
-            ) agility exp <br /></>}
+            {player.workStrExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workStrExpGained)} (
+                {`${numeralWrapper.formatExp(player.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}
+                ) strength exp <br />
+              </>
+            )}
+            {player.workDefExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workDefExpGained)} (
+                {`${numeralWrapper.formatExp(player.workDefExpGainRate * CYCLES_PER_SEC)} / sec`}
+                ) defense exp <br />
+              </>
+            )}
+            {player.workDexExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workDexExpGained)} (
+                {`${numeralWrapper.formatExp(player.workDexExpGainRate * CYCLES_PER_SEC)} / sec`}
+                ) dexterity exp <br />
+              </>
+            )}
+            {player.workAgiExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workAgiExpGained)} (
+                {`${numeralWrapper.formatExp(player.workAgiExpGainRate * CYCLES_PER_SEC)} / sec`}
+                ) agility exp <br />
+              </>
+            )}
             <br />
-            {player.workChaExpGained > 0 && <>{numeralWrapper.formatExp(player.workChaExpGained)} (
-            {`${numeralWrapper.formatExp(player.workChaExpGainRate * CYCLES_PER_SEC)} / sec`}
-            ) charisma exp <br /></>}
+            {player.workChaExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workChaExpGained)} (
+                {`${numeralWrapper.formatExp(player.workChaExpGainRate * CYCLES_PER_SEC)} / sec`}
+                ) charisma exp <br />
+              </>
+            )}
             <br />
             You will automatically finish after working for 8 hours. You can cancel earlier if you wish, but you will
             only gain {penaltyString} of the reputation you've earned so far.
@@ -244,26 +337,50 @@ export function WorkInProgressRoot(): React.ReactElement {
             <ReputationRate reputation={player.workRepGainRate * CYCLES_PER_SEC} />
             ) reputation for this company <br />
             <br />
-            {player.workHackExpGained > 0 && <>{numeralWrapper.formatExp(player.workHackExpGained)} (
-            {`${numeralWrapper.formatExp(player.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}
-            ) hacking exp <br /></>}
+            {player.workHackExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workHackExpGained)} (
+                {`${numeralWrapper.formatExp(player.workHackExpGainRate * CYCLES_PER_SEC)} / sec`}
+                ) hacking exp <br />
+              </>
+            )}
             <br />
-            {player.workStrExpGained > 0 && <>{numeralWrapper.formatExp(player.workStrExpGained)} (
-            {`${numeralWrapper.formatExp(player.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}
-            ) strength exp <br /></>}
-            {player.workDefExpGained > 0 && <>{numeralWrapper.formatExp(player.workDefExpGained)} (
-            {`${numeralWrapper.formatExp(player.workDefExpGainRate * CYCLES_PER_SEC)} / sec`}
-            ) defense exp <br /></>}
-            {player.workDexExpGained > 0 && <>{numeralWrapper.formatExp(player.workDexExpGained)} (
-            {`${numeralWrapper.formatExp(player.workDexExpGainRate * CYCLES_PER_SEC)} / sec`}
-            ) dexterity exp <br /></>}
-            {player.workAgiExpGained > 0 && <>{numeralWrapper.formatExp(player.workAgiExpGained)} (
-            {`${numeralWrapper.formatExp(player.workAgiExpGainRate * CYCLES_PER_SEC)} / sec`}
-            ) agility exp <br /></>}
+            {player.workStrExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workStrExpGained)} (
+                {`${numeralWrapper.formatExp(player.workStrExpGainRate * CYCLES_PER_SEC)} / sec`}
+                ) strength exp <br />
+              </>
+            )}
+            {player.workDefExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workDefExpGained)} (
+                {`${numeralWrapper.formatExp(player.workDefExpGainRate * CYCLES_PER_SEC)} / sec`}
+                ) defense exp <br />
+              </>
+            )}
+            {player.workDexExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workDexExpGained)} (
+                {`${numeralWrapper.formatExp(player.workDexExpGainRate * CYCLES_PER_SEC)} / sec`}
+                ) dexterity exp <br />
+              </>
+            )}
+            {player.workAgiExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workAgiExpGained)} (
+                {`${numeralWrapper.formatExp(player.workAgiExpGainRate * CYCLES_PER_SEC)} / sec`}
+                ) agility exp <br />
+              </>
+            )}
             <br />
-            {player.workChaExpGained > 0 && <>{numeralWrapper.formatExp(player.workChaExpGained)} (
-            {`${numeralWrapper.formatExp(player.workChaExpGainRate * CYCLES_PER_SEC)} / sec`}
-            ) charisma exp <br /></>}
+            {player.workChaExpGained > 0 && (
+              <>
+                {numeralWrapper.formatExp(player.workChaExpGained)} (
+                {`${numeralWrapper.formatExp(player.workChaExpGainRate * CYCLES_PER_SEC)} / sec`}
+                ) charisma exp <br />
+              </>
+            )}
             <br />
             You will automatically finish after working for 8 hours. You can cancel earlier if you wish, and there will
             be no penalty because this is a part-time job.
@@ -321,6 +438,14 @@ export function WorkInProgressRoot(): React.ReactElement {
   }
 
   if (player.createProgramName !== "") {
+    function cancel(): void {
+      player.finishCreateProgramWork(true);
+      router.toTerminal();
+    }
+    function unfocus(): void {
+      router.toTerminal();
+      player.stopFocusing();
+    }
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
         <Grid item>
@@ -336,14 +461,10 @@ export function WorkInProgressRoot(): React.ReactElement {
           </Typography>
         </Grid>
         <Grid item>
-          <Button
-            onClick={() => {
-              player.finishCreateProgramWork(true);
-              router.toTerminal();
-            }}
-          >
+          <Button sx={{ mx: 2 }} onClick={cancel}>
             Cancel work on creating program
           </Button>
+          <Button onClick={unfocus}>Do something else simultaneously</Button>
         </Grid>
       </Grid>
     );
