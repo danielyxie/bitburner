@@ -29,7 +29,7 @@ export function AchievementList({ achievements, playerAchievements }: IProps): J
   const secret = data.filter(entry => !entry.unlockedOn && entry.achievement.Secret)
 
   // Locked behind locked content (bitnode x)
-  const unavailable = data.filter(entry => !entry.unlockedOn && !entry.achievement.Secret && entry.achievement.Visible && entry.achievement.Visible());
+  const unavailable = data.filter(entry => !entry.unlockedOn && !entry.achievement.Secret && entry.achievement.Visible && !entry.achievement.Visible());
 
   // Remaining achievements
   const locked = data
