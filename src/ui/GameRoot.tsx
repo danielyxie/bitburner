@@ -77,6 +77,7 @@ import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
 import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
 import { AchievementsRoot } from "../Achievements/AchievementsRoot";
+import { Settings } from "../Settings/Settings";
 
 const htmlLocation = location;
 

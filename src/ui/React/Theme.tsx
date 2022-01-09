@@ -107,8 +107,7 @@ export function refreshTheme(): void {
       },
     },
     typography: {
-      fontFamily:
-        "Lucida Console, Lucida Sans Unicode, Fira Mono, Consolas, Courier New, Courier, monospace, Times New Roman",
+      fontFamily: Settings.styles.fontFamily,
       button: {
         textTransform: "none",
       },
@@ -160,6 +159,17 @@ export function refreshTheme(): void {
           },
         },
       },
+
+      MuiButtonGroup: {
+        styleOverrides: {
+          root: {
+            '& .MuiButton-root:not(:last-of-type)': {
+              marginRight: '1px',
+            }
+          }
+        }
+      },
+
       MuiButton: {
         styleOverrides: {
           root: {
@@ -193,6 +203,11 @@ export function refreshTheme(): void {
         defaultProps: {
           color: "primary",
         },
+        styleOverrides: {
+          root: {
+            lineHeight: Settings.styles.lineHeight,
+          }
+        }
       },
       MuiMenu: {
         styleOverrides: {

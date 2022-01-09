@@ -1,6 +1,7 @@
 import { ISelfInitializer, ISelfLoading } from "../types";
 import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
 import { defaultTheme, ITheme } from "./Themes";
+import { defaultStyles, IStyleSettings } from "./Styles";
 import { WordWrapOptions } from '../ScriptEditor/ui/Options';
 
 /**
@@ -114,7 +115,12 @@ interface IDefaultSettings {
    * Theme colors
    */
   theme: ITheme;
-  
+
+  /*
+   * Interface styles
+   */
+  styles: IStyleSettings;
+
   /*
    * Use GiB instead of GB
    */
@@ -171,6 +177,7 @@ export const defaultSettings: IDefaultSettings = {
   UseIEC60027_2: false,
 
   theme: defaultTheme,
+  styles: defaultStyles,
 };
 
 /**
@@ -209,6 +216,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   MonacoWordWrap: 'off',
 
   theme: { ...defaultTheme },
+  styles: { ...defaultStyles },
   init() {
     Object.assign(Settings, defaultSettings);
   },
@@ -216,6 +224,8 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     const save = JSON.parse(saveString);
     Object.assign(Settings.theme, save.theme);
     delete save.theme;
+    Object.assign(Settings.styles, save.styles);
+    delete save.styles;
     Object.assign(Settings, save);
   },
 };
