@@ -1797,6 +1797,9 @@ export function quitJob(this: IPlayer, company: string): void {
     this.isWorking = false;
     this.companyName = "";
   }
+  if (this.companyName === company) {
+    this.companyName = "";
+  }
   delete this.jobs[company];
 }
 
