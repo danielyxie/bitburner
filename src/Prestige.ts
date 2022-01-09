@@ -115,6 +115,11 @@ export function prestigeAugmentation(): void {
     }
   }
 
+  // BitNode 3: Corporatocracy
+  if (Player.bitNodeN === 3) {
+    homeComp.messages.push(LiteratureNames.CorporationManagementHandbook);
+  }
+
   // Cancel Bladeburner action
   if (Player.bladeburner instanceof Bladeburner) {
     Player.bladeburner.prestige();
