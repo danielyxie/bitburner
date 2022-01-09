@@ -253,7 +253,6 @@ Here's what mine showed at the time I made this::
 
 Take note of the following servers:
 
-* |n00dles|
 * |sigma-cosmetics|
 * |joesguns|
 * |nectar-net|
