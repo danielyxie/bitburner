@@ -287,7 +287,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
           </TableRow>
           <TableRow>
-            <StatsProgressOverviewCell progress={hackingProgress} color={theme.colors.hack} />
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={hackingProgress} color={theme.colors.hack} />
+            )}
           </TableRow>
           <TableRow>
             <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
@@ -314,7 +316,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
           </TableRow>
           <TableRow>
-            <StatsProgressOverviewCell progress={strengthProgress} color={theme.colors.combat} />
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={strengthProgress} color={theme.colors.combat} />
+            )}
           </TableRow>
 
           <TableRow>
@@ -331,7 +335,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
           </TableRow>
           <TableRow>
-            <StatsProgressOverviewCell progress={defenseProgress} color={theme.colors.combat} />
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={defenseProgress} color={theme.colors.combat} />
+            )}
           </TableRow>
 
           <TableRow>
@@ -348,7 +354,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
           </TableRow>
           <TableRow>
-            <StatsProgressOverviewCell progress={dexterityProgress} color={theme.colors.combat} />
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={dexterityProgress} color={theme.colors.combat} />
+            )}
           </TableRow>
 
           <TableRow>
@@ -365,7 +373,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
           </TableRow>
           <TableRow>
-            <StatsProgressOverviewCell progress={agilityProgress} color={theme.colors.combat} />
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={agilityProgress} color={theme.colors.combat} />
+            )}
           </TableRow>
 
           <TableRow>
@@ -382,7 +392,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
           </TableRow>
           <TableRow>
-            <StatsProgressOverviewCell progress={charismaProgress} color={theme.colors.cha} />
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={charismaProgress} color={theme.colors.cha} />
+            )}
           </TableRow>
 
           <Intelligence />
