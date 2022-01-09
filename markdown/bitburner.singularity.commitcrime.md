@@ -22,7 +22,7 @@ commitCrime(crime: string): number;
 
 number
 
-True if you successfully start working on the specified program, and false otherwise.
+The number of milliseconds it takes to attempt the specified crime.
 
 ## Remarks
 
