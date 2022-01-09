@@ -48,6 +48,9 @@ export function prestigeWorkerScripts(): void {
     ws.env.stopFlag = true;
     killWorkerScript(ws);
   }
+  for (const port of NetscriptPorts) {
+    port.clear();
+  }
 
   WorkerScriptStartStopEventEmitter.emit();
   workerScripts.clear();
