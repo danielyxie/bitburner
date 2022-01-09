@@ -244,6 +244,18 @@ function evaluateVersionCompatibility(ver: string | number): void {
         StockMarket[LocationName.Sector12JoesGuns] = s;
       }
     }
+    if (ver < 10) {
+      // Augmentation name was changed in 0.56.0 but sleeves aug list was missed.
+      if (anyPlayer.sleeves && anyPlayer.sleeves.length > 0) {
+        for (const sleeve of anyPlayer.sleeves) {
+          if (!sleeve.augmentations || sleeve.augmentations.length === 0) continue;
+          for (const augmentation of sleeve.augmentations) {
+            if (augmentation.name !== "Graphene BranchiBlades Upgrade") continue;
+            augmentation.name = "Graphene BrachiBlades Upgrade";
+          }
+        }
+      }
+    }
   }
 }
 
