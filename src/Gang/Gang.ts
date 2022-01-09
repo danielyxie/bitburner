@@ -25,8 +25,9 @@ import { GangMember } from "./GangMember";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { PowerMultiplier } from "./data/power";
+import { IGang } from "./IGang";
 
-export class Gang {
+export class Gang implements IGang {
   facName: string;
   members: GangMember[];
   wanted: number;
