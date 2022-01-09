@@ -1769,6 +1769,7 @@ export function getNextCompanyPosition(
   //return the player's "nextCompanyPosition". Otherwise return the entryposType
   //Employed at this company, so just return the next position if it exists.
   const currentPositionName = this.jobs[this.companyName];
+  if (!currentPositionName) return entryPosType;
   const currentPosition = CompanyPositions[currentPositionName];
   if (
     (currentPosition.isSoftwareJob() && entryPosType.isSoftwareJob()) ||
