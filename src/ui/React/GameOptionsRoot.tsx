@@ -28,6 +28,8 @@ import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { dialogBoxCreate } from "./DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { ThemeEditorModal } from "./ThemeEditorModal";
+import { StyleEditorModal } from "./StyleEditorModal";
+
 import { SnackbarEvents } from "./Snackbar";
 
 import { Settings } from "../../Settings/Settings";
@@ -91,6 +93,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [deleteGameOpen, setDeleteOpen] = useState(false);
   const [themeEditorOpen, setThemeEditorOpen] = useState(false);
+  const [styleEditorOpen, setStyleEditorOpen] = useState(false);
   const [softResetOpen, setSoftResetOpen] = useState(false);
   const [importSaveOpen, setImportSaveOpen] = useState(false);
   const [importData, setImportData] = useState<ImportData | null>(null);
@@ -756,8 +759,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               onConfirm={props.softReset}
               confirmationText={"This will perform the same action as installing Augmentations, are you sure?"}
             />
-          </Box>
-          <Box>
             <Tooltip
               title={
                 <Typography>
@@ -768,7 +769,10 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             >
               <Button onClick={() => setDiagnosticOpen(true)}>Diagnose files</Button>
             </Tooltip>
+          </Box>
+          <Box>
             <Button onClick={() => setThemeEditorOpen(true)}>Theme editor</Button>
+            <Button onClick={() => setStyleEditorOpen(true)}>Style editor</Button>
           </Box>
           <Box>
             <Link href="https://github.com/danielyxie/bitburner/issues/new" target="_blank">
@@ -805,6 +809,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         confirmationText={"Really delete your game? (It's permanent!)"}
       />
       <ThemeEditorModal open={themeEditorOpen} onClose={() => setThemeEditorOpen(false)} />
+      <StyleEditorModal open={styleEditorOpen} onClose={() => setStyleEditorOpen(false)} />
     </div>
   );
 }
