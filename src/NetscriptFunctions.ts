@@ -1901,7 +1901,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const iport = helper.getValidPort("clearPort", port);
       return iport.clear();
     },
-    getPortHandle: function (port: any): any {
+    getPortHandle: function (port: any): IPort {
       updateDynamicRam("getPortHandle", getRamCost(Player, "getPortHandle"));
       const iport = helper.getValidPort("getPortHandle", port);
       return iport;
