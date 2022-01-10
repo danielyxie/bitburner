@@ -1,7 +1,7 @@
 /**
  * @public
  */
- interface Player {
+interface Player {
   hacking: number;
   hp: number;
   max_hp: number;
@@ -113,7 +113,7 @@ interface RunningScript {
  * Interface of a netscript port
  * @public
  */
- export interface IPort {
+export interface IPort {
   /** write data to the port and removes and returns first element if full */
   write: (value: any) => any;
   /** add data to port if not full.
@@ -5430,7 +5430,7 @@ export interface NS extends Singularity {
    * Get a handle to a Netscript Port.
    *
    * WARNING: Port Handles only work in NetscriptJS (Netscript 2.0). They will not work in Netscript 1.0.
-   * 
+   *
    * @see https://bitburner.readthedocs.io/en/latest/netscript/netscriptmisc.html#netscript-ports
    * @param port - Port number. Must be an integer between 1 and 20.
    * @returns Data in the specified port.
