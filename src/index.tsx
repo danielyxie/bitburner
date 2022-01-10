@@ -5,6 +5,8 @@ import { TTheme as Theme, ThemeEvents, refreshTheme } from "./ui/React/Theme";
 import { LoadingScreen } from "./ui/LoadingScreen";
 import { initElectron } from "./Electron";
 initElectron();
+globalThis["React"] = React;
+globalThis["ReactDOM"] = ReactDOM;
 ReactDOM.render(
   <Theme>
     <LoadingScreen />
