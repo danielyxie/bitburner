@@ -962,6 +962,78 @@ export interface SleeveTask {
 }
 
 /**
+ * Object representing a port. A port is a serialized queue.
+ * @public
+ */
+export interface NetscriptPort {
+  /**
+   * Write data to a port.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @returns The data popped off the queue if it was full.
+   */
+  write(value: string|number): null|string|number;
+
+  /**
+   * Attempt to write data to the port.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @returns True if the data was added to the port, false if the port was full
+   */
+  tryWrite(value: string|number): boolean;
+
+  /**
+   * Shift an element out of the port.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * This function will remove the first element from the port and return it.
+   * If the port is empty, then the string “NULL PORT DATA” will be returned.
+   * @returns the data read.
+   */
+  read(): string|number;
+
+  /**
+   * Retrieve the first element from the port without removing it.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * This function is used to peek at the data from a port. It returns the
+   * first element in the specified port without removing that element. If
+   * the port is empty, the string “NULL PORT DATA” will be returned.
+   * @returns the data read
+   */
+  peek(): string|number;
+
+  /**
+   * Check if the port is full.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @returns true if the port is full, otherwise false
+   */
+  full(): boolean;
+
+  /**
+   * Check if the port is empty.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @returns true if the port is empty, otherwise false
+   */
+  empty(): boolean;
+
+  /**
+   * Empties all data from the port.
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  clear(): void;
+}
+
+/**
  * Stock market API
  * @public
  */
@@ -5327,7 +5399,7 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0 GB
    *
-   * This function can be used to either write data to a text file (.txt).
+   * This function can be used to write data to a text file (.txt).
    *
    * This function will write data to that text file. If the specified text file does not exist,
    * then it will be created. The third argument mode, defines how the data will be written to
@@ -5336,7 +5408,7 @@ export interface NS extends Singularity {
    * then the data will be written in “append” mode which means that the data will be added at the
    * end of the text file.
    *
-   * @param handle - Port or text file that will be written to.
+   * @param handle - Filename of the text file that will be written to.
    * @param data - Data to write.
    * @param mode - Defines the write mode. Only valid when writing to text files.
    */
@@ -5362,13 +5434,13 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0 GB
    *
-   * This function is used to read data from a port or from a text file (.txt).
+   * This function is used to read data from a text file (.txt).
    *
    * This function will return the data in the specified text
    * file. If the text file does not exist, an empty string will be returned.
    *
-   * @param handle - Port or text file to read from.
-   * @returns Data in the specified text file or port.
+   * @param handle - Filename to read from.
+   * @returns Data in the specified text file.
    */
   read(handle: string): any;
 
@@ -5440,9 +5512,8 @@ export interface NS extends Singularity {
    *
    * @see https://bitburner.readthedocs.io/en/latest/netscript/netscriptmisc.html#netscript-ports
    * @param port - Port number. Must be an integer between 1 and 20.
-   * @returns Data in the specified port.
    */
-  getPortHandle(port: number): any[];
+  getPortHandle(port: number): NetscriptPort;
 
   /**
    * Delete a file.
