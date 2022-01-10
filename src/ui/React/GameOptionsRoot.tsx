@@ -21,6 +21,7 @@ import TextField from "@mui/material/TextField";
 
 import DownloadIcon from "@mui/icons-material/Download";
 import UploadIcon from "@mui/icons-material/Upload";
+import SaveIcon from '@mui/icons-material/Save';
 
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { dialogBoxCreate } from "./DialogBox";
@@ -31,9 +32,10 @@ import { StyleEditorModal } from "./StyleEditorModal";
 import { SnackbarEvents } from "./Snackbar";
 
 import { Settings } from "../../Settings/Settings";
-import { save, deleteGame } from "../../db";
+import { save } from "../../db";
 import { formatTime } from "../../utils/helpers/formatTime";
 import { OptionSwitch } from "./OptionSwitch";
+import { DeleteGameButton } from "./DeleteGameButton";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,7 +73,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [timestampFormat, setTimestampFormat] = useState(Settings.TimestampsFormat);
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
-  const [deleteGameOpen, setDeleteOpen] = useState(false);
   const [themeEditorOpen, setThemeEditorOpen] = useState(false);
   const [styleEditorOpen, setStyleEditorOpen] = useState(false);
   const [softResetOpen, setSoftResetOpen] = useState(false);
@@ -523,8 +524,8 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Box>
-            <Button onClick={() => props.save()}>Save Game</Button>
-            <Button onClick={() => setDeleteOpen(true)}>Delete Game</Button>
+            <Button startIcon={<SaveIcon />} onClick={() => props.save()}>Save Game</Button>
+            <DeleteGameButton />
           </Box>
           <Box>
             <Tooltip title={<Typography>Export your game to a text file.</Typography>}>
@@ -632,17 +633,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         </Grid>
       </Grid>
       <FileDiagnosticModal open={diagnosticOpen} onClose={() => setDiagnosticOpen(false)} />
-      <ConfirmationModal
-        onConfirm={() => {
-          setDeleteOpen(false);
-          deleteGame()
-            .then(() => setTimeout(() => location.reload(), 1000))
-            .catch((r) => console.error(`Could not delete game: ${r}`));
-        }}
-        open={deleteGameOpen}
-        onClose={() => setDeleteOpen(false)}
-        confirmationText={"Really delete your game? (It's permanent!)"}
-      />
       <ThemeEditorModal open={themeEditorOpen} onClose={() => setThemeEditorOpen(false)} />
       <StyleEditorModal open={styleEditorOpen} onClose={() => setStyleEditorOpen(false)} />
     </div>

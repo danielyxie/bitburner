@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -17,6 +17,8 @@ interface IProps {
 }
 
 export function General(props: IProps): React.ReactElement {
+  const [error, setError] = useState(false);
+
   function addMoney(n: number) {
     return function () {
       props.player.gainMoney(n, "other");
@@ -42,6 +44,10 @@ export function General(props: IProps): React.ReactElement {
   function hackW0r1dD43m0n(): void {
     props.router.toBitVerse(false, false);
   }
+
+  useEffect(() => {
+    if (error) throw new Error('Oh no! This is an error.');
+  }, [error]);
 
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
@@ -81,6 +87,7 @@ export function General(props: IProps): React.ReactElement {
         <Button onClick={b1tflum3}>Run b1t_flum3.exe</Button>
         <Button onClick={quickHackW0r1dD43m0n}>Quick w0rld_d34m0n</Button>
         <Button onClick={hackW0r1dD43m0n}>Hack w0rld_d34m0n</Button>
+        <Button onClick={() => setError(true)}>Throw Error</Button>
       </AccordionDetails>
     </Accordion>
   );

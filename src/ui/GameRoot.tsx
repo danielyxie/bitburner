@@ -77,6 +77,7 @@ import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
 import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
 import { AchievementsRoot } from "../Achievements/AchievementsRoot";
+import { ErrorBoundary } from "./React/ErrorBoundary";
 
 const htmlLocation = location;
 
@@ -571,40 +572,43 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   }
 
   return (
-    <Context.Player.Provider value={player}>
-      <Context.Router.Provider value={Router}>
-        <SnackbarProvider>
-          <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
-            {!ITutorial.isRunning ? (
-              <CharacterOverview
-                save={() => saveObject.saveGame()}
-                killScripts={killAllScripts}
-                router={Router}
-                allowBackButton={withSidebar} />
+    <ErrorBoundary
+      router={Router}>
+      <Context.Player.Provider value={player}>
+        <Context.Router.Provider value={Router}>
+          <SnackbarProvider>
+            <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
+              {!ITutorial.isRunning ? (
+                <CharacterOverview
+                  save={() => saveObject.saveGame()}
+                  killScripts={killAllScripts}
+                  router={Router}
+                  allowBackButton={withSidebar} />
+              ) : (
+                <InteractiveTutorialRoot />
+              )}
+            </Overview>
+            {withSidebar ? (
+              <Box display="flex" flexDirection="row" width="100%">
+                <SidebarRoot player={player} router={Router} page={page} />
+                <Box className={classes.root}>{mainPage}</Box>
+              </Box>
             ) : (
-              <InteractiveTutorialRoot />
-            )}
-          </Overview>
-          {withSidebar ? (
-            <Box display="flex" flexDirection="row" width="100%">
-              <SidebarRoot player={player} router={Router} page={page} />
               <Box className={classes.root}>{mainPage}</Box>
-            </Box>
-          ) : (
-            <Box className={classes.root}>{mainPage}</Box>
-          )}
-          <Unclickable />
-          {withPopups && (
-            <>
-              <LogBoxManager />
-              <AlertManager />
-              <PromptManager />
-              <InvitationModal />
-              <Snackbar />
-            </>
-          )}
-        </SnackbarProvider>
-      </Context.Router.Provider>
-    </Context.Player.Provider>
+            )}
+            <Unclickable />
+            {withPopups && (
+              <>
+                <LogBoxManager />
+                <AlertManager />
+                <PromptManager />
+                <InvitationModal />
+                <Snackbar />
+              </>
+            )}
+          </SnackbarProvider>
+        </Context.Router.Provider>
+      </Context.Player.Provider>
+    </ErrorBoundary>
   );
 }
