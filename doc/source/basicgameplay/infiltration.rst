@@ -20,6 +20,13 @@ None of the challenges use the mouse.
 The difficulty at the top lowers with better combat stats. It is not recommended
 to attempt infiltrations above mid-normal.
 
+The "maximum level" is the number of challenges you will need to pass to receive
+the infiltration reward.
+
+Every time you fail an infiltration challenge, you will take damage based on the
+difficulty of the infiltration. If you are reduced to 0 hp or below, the
+infiltration will immediately end.
+
 * Most use spacebar as "action"
 * Some use WASD or arrows interchangeably.
 * A few others use the rest of the keyboard.
