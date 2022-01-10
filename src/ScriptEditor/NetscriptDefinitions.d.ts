@@ -110,6 +110,12 @@ interface RunningScript {
 }
 
 /**
+ * Filename or PID of a script.
+ * @public
+ */
+type FilenameOrPID = string | number;
+
+/**
  * Data representing the internal values of a crime.
  * @public
  */
@@ -4489,11 +4495,11 @@ export interface NS extends Singularity {
    * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
    * ns.tail("foo.script", "foodnstuff", 1, "test");
    * ```
-   * @param fn - Optional. Filename of the script being tailed. If omitted, the current script is tailed.
+   * @param fn - Optional. Filename or PID of the script being tailed. If omitted, the current script is tailed.
    * @param host - Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional.
    * @param args - Arguments for the script being tailed.
    */
-  tail(fn?: string, host?: string, ...args: any[]): void;
+  tail(fn?: FilenameOrPID, host?: string, ...args: any[]): void;
 
   /**
    * Get the list of servers connected to a server.
@@ -5236,6 +5242,7 @@ export interface NS extends Singularity {
    * RAM cost: 0.1 GB
    *
    * Returns a boolean indicating whether the specified script is running on the target server.
+   * If you use a PID instead of a filename, the hostname and args parameters are unnecessary.
    * Remember that a script is uniquely identified by both its name and its arguments.
    *
    * @example
@@ -5262,12 +5269,12 @@ export interface NS extends Singularity {
    * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:
    * ns.isRunning("foo.script", "joesguns", 1, 5, "test");
    * ```
-   * @param script - Filename of script to check. This is case-sensitive.
+   * @param script - Filename or PID of script to check. This is case-sensitive.
    * @param host - Host of target server.
    * @param args - Arguments to specify/identify which scripts to search for.
    * @returns True if specified script is running on the target server, and false otherwise.
    */
-  isRunning(script: string, host: string, ...args: string[]): boolean;
+  isRunning(script: FilenameOrPID, host: string, ...args: string[]): boolean;
 
   /**
    * Get general info about a running script.
@@ -5275,10 +5282,14 @@ export interface NS extends Singularity {
    * RAM cost: 0.3 GB
    *
    * Running with no args returns curent script.
+   * If you use a PID as the first parameter, the hostname and args parameters are unnecessary.
    *
+   * @param filename - Optional. Filename or PID of the script.
+   * @param hostname - Optional. Name of host server the script is running on.
+   * @param args  - Arguments to identify the script
    * @returns info about a running script
    */
-  getRunningScript(filename?: string | number, hostname?: string, ...args: (string | number)[]): RunningScript;
+  getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript;
 
   /**
    * Get cost of purchasing a server.
