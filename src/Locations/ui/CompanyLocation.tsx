@@ -3,7 +3,7 @@
  *
  * This subcomponent renders all of the buttons for applying to jobs at a company
  */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
@@ -36,6 +36,11 @@ export function CompanyLocation(props: IProps): React.ReactElement {
   function rerender(): void {
     setRerender((old) => !old);
   }
+
+  useEffect(() => {
+    const id = setInterval(rerender, 200);
+    return () => clearInterval(id);
+  }, []);
   /**
    * We'll keep a reference to the Company that this component is being rendered for,
    * so we don't have to look it up every time
