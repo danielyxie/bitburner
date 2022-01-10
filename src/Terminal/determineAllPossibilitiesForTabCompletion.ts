@@ -193,6 +193,11 @@ export async function determineAllPossibilitiesForTabCompletion(
     for (let i = 0; i < homeComputer.programs.length; ++i) {
       allPos.push("./" + homeComputer.programs[i]);
     }
+
+    //Contracts on current server
+    for (let i = 0; i < currServ.contracts.length; ++i) {
+      allPos.push("./" + currServ.contracts[i].fn)
+    }
     return allPos;
   }
 
