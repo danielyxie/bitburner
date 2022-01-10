@@ -425,7 +425,7 @@ nano
 
     $ nano [filename]
 
-Opens up the specified file in the Text Editor. Only scripts (.script, .ns, .js) and
+Opens up the specified file in the Text Editor. Only scripts (.script, .js) and
 text files (.txt) can be edited. If the file does not already exist, then a new
 empty file will be created.
 
@@ -595,7 +595,7 @@ wget
     $ wget [url] [target file]
 
 Retrieves data from a url and downloads it to a file on the current server.
-The data can only be downloaded to a script (.script, .ns, .js) or a text file
+The data can only be downloaded to a script (.script, .js) or a text file
 (.txt). If the target file already exists, it will be overwritten by this command.
 
 Note that will not be possible to download data from many websites because they

@@ -7,7 +7,7 @@ autocomplete() Netscript Function
 
     :RAM cost: 0 GB
     :param Object data: general data about the game you might want to autocomplete.
-    :param string[] args: current arguments. Minus `run script.ns`
+    :param string[] args: current arguments. Minus `run script.js`
 
     data is an object with the following properties::
 
@@ -34,6 +34,6 @@ autocomplete() Netscript Function
 
     .. code-block:: bash
 
-        $ run demo.ns mega\t
+        $ run demo.js mega\t
         // results in
-        $ run demo.ns megacorp
+        $ run demo.js megacorp
