@@ -462,6 +462,8 @@ export interface BitNodeMultipliers {
   FourSigmaMarketDataApiCost: number;
   /** Influences how much it costs to unlock the stock market's 4S Market Data (NOT API) */
   FourSigmaMarketDataCost: number;
+  /** Influences the respect gain and money gain of your gang. */
+  GangSoftcap: number;
   /** Influences the experienced gained when hacking a server. */
   HackExpGain: number;
   /** Influences how quickly the player's hacking level (not experience) scales */
@@ -482,10 +484,14 @@ export interface BitNodeMultipliers {
   PurchasedServerLimit: number;
   /** Influences the maximum allowed RAM for a purchased server */
   PurchasedServerMaxRam: number;
+  /** Influences cost of any purchased server at or above 128GB */
+  PurchasedServerSoftCap: number;
   /** Influences the minimum favor the player must have with a faction before they can donate to gain rep. */
   RepToDonateToFaction: number;
-  /** Influences how much money can be stolen from a server when a script performs a hack against it. */
+  /** Influences how much the money on a server can be reduced when a script performs a hack against it. */
   ScriptHackMoney: number;
+  /** Influences how much of the money stolen by a scripted hack will be added to the player's money. */
+  ScriptHackMoneyGain: number;
   /** Influences the growth percentage per cycle against a server. */
   ServerGrowthRate: number;
   /** Influences the maxmimum money that a server can grow to. */
@@ -498,6 +504,12 @@ export interface BitNodeMultipliers {
   ServerWeakenRate: number;
   /** Influences how quickly the player's strength level (not exp) scales */
   StrengthLevelMultiplier: number;
+  /** Influences the power of the gift */
+  StaneksGiftPowerMultiplier: number;
+  /** Influences the size of the gift */
+  StaneksGiftExtraSize: number;
+  /** Influences the hacking skill required to backdoor the world daemon. */
+  WorldDaemonDifficulty: number;
 }
 
 /**
