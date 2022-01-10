@@ -337,6 +337,7 @@ export const achievements: IMap<Achievement> = {
   },
   FIRST_HACKNET_NODE: {
     ...achievementData["FIRST_HACKNET_NODE"],
+    Icon: "node",
     Condition: () => !hasHacknetServers(Player) && Player.hacknetNodes.length > 0,
   },
   "30_HACKNET_NODE": {
