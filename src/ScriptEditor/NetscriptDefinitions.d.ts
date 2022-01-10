@@ -1,7 +1,7 @@
 /**
  * @public
  */
-interface Player {
+ interface Player {
   hacking: number;
   hp: number;
   max_hp: number;
@@ -107,6 +107,32 @@ interface RunningScript {
   ramUsage: number;
   server: string;
   threads: number;
+}
+
+/**
+ * Interface of a netscript port
+ * @public
+ */
+ export interface IPort {
+  /** write data to the port and removes and returns first element if full */
+  write: (value: any) => any;
+  /** add data to port if not full.
+   * @returns true if added and false if full and not added */
+  tryWrite: (value: any) => boolean;
+  /** reads and removes first element from port 
+   * if no data in port returns "NULL PORT DATA"
+   */
+  read: () => any;
+  /** reads first element without removing it from port
+   * if no data in port returns "NULL PORT DATA"
+   */
+  peek: () => any;
+  /** check if port is full */
+  full: () => boolean;
+  /** check if port is empty */
+  empty: () => boolean;
+  /** removes all data from port */
+  clear: () => void;
 }
 
 /**
@@ -5404,12 +5430,12 @@ export interface NS extends Singularity {
    * Get a handle to a Netscript Port.
    *
    * WARNING: Port Handles only work in NetscriptJS (Netscript 2.0). They will not work in Netscript 1.0.
-   *
+   * 
    * @see https://bitburner.readthedocs.io/en/latest/netscript/netscriptmisc.html#netscript-ports
    * @param port - Port number. Must be an integer between 1 and 20.
    * @returns Data in the specified port.
    */
-  getPortHandle(port: number): any[];
+  getPortHandle(port: number): IPort;
 
   /**
    * Delete a file.
