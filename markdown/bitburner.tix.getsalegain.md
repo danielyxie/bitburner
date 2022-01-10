@@ -4,7 +4,7 @@
 
 ## TIX.getSaleGain() method
 
-Calculate profit of setting stocks.
+Calculate profit of selling stocks.
 
 <b>Signature:</b>
 

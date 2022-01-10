@@ -4,7 +4,7 @@
 
 ## SleeveWorkGains.workStrExpGain property
 
-strength exp gained from work
+Strength exp gained from work
 
 <b>Signature:</b>
 

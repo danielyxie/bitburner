@@ -85,6 +85,9 @@ export function runScript(
     terminal.print(
       `Running script with ${numThreads} thread(s), pid ${runningScript.pid} and args: ${JSON.stringify(args)}.`,
     );
+    if (runningScript.filename.endsWith(".ns")) {
+      terminal.warn(".ns files are deprecated, please rename everything to .js");
+    }
     if (tailFlag) {
       LogBoxEvents.emit(runningScript);
     }

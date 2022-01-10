@@ -25,8 +25,9 @@ import { GangMember } from "./GangMember";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { PowerMultiplier } from "./data/power";
+import { IGang } from "./IGang";
 
-export class Gang {
+export class Gang implements IGang {
   facName: string;
   members: GangMember[];
   wanted: number;
@@ -353,7 +354,7 @@ export class Gang {
       const res = member.ascend();
       this.respect = Math.max(1, this.respect - res.respect);
       if (workerScript) {
-        workerScript.log("gang.ascend", () => `Ascended Gang member ${member.name}`);
+        workerScript.log("gang.ascendMember", () => `Ascended Gang member ${member.name}`);
       }
       return res;
     } catch (e: any) {

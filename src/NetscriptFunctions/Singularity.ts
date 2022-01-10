@@ -166,6 +166,8 @@ export function NetscriptSingularity(
       let augs = [];
       if (player.hasGangWith(faction)) {
         for (const augName in Augmentations) {
+          if (augName === AugmentationNames.NeuroFluxGovernor) continue;
+          if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
           const tempAug = Augmentations[augName];
           if (!tempAug.isSpecial) {
             augs.push(augName);
@@ -207,7 +209,7 @@ export function NetscriptSingularity(
       const res = purchaseAugmentation(aug, fac, true);
       workerScript.log("purchaseAugmentation", () => res);
       if (isString(res) && res.startsWith("You purchased")) {
-        player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
+        player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain * 10);
         return true;
       } else {
         return false;
@@ -235,7 +237,7 @@ export function NetscriptSingularity(
         workerScript.log("installAugmentations", () => "You do not have any Augmentations to be installed.");
         return false;
       }
-      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain * 10);
       workerScript.log(
         "installAugmentations",
         () => "Installing Augmentations. This will cause this script to be killed",
@@ -262,7 +264,7 @@ export function NetscriptSingularity(
         return false;
       }
       Router.toLocation(location);
-      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 100);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 500);
       return true;
     },
     universityCourse: function (universityName: any, className: any): any {
@@ -497,7 +499,7 @@ export function NetscriptSingularity(
 
       player.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
       darkweb.serversOnNetwork.push(player.getHomeComputer().hostname);
-      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
       workerScript.log("purchaseTor", () => "You have purchased a Tor router!");
       return true;
     },
@@ -767,7 +769,7 @@ export function NetscriptSingularity(
       homeComputer.cpuCores += 1;
       player.loseMoney(cost, "servers");
 
-      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain * 2);
       workerScript.log(
         "upgradeHomeCores",
         () => `Purchased an additional core for home computer! It now has ${homeComputer.cpuCores} cores.`,
@@ -803,7 +805,7 @@ export function NetscriptSingularity(
       homeComputer.maxRam *= 2;
       player.loseMoney(cost, "servers");
 
-      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain * 2);
       workerScript.log(
         "upgradeHomeRam",
         () =>
@@ -986,7 +988,7 @@ export function NetscriptSingularity(
           i--;
         }
       }
-      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain * 5);
       workerScript.log("joinFaction", () => `Joined the '${name}' faction.`);
       return true;
     },
@@ -1176,17 +1178,11 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("donateToFaction");
       const faction = getFaction("donateToFaction", name);
       if (!player.factions.includes(faction.name)) {
-        workerScript.log(
-          "donateToFaction",
-          () => `You can't donate to '${name}' because you aren't a member`,
-        );
+        workerScript.log("donateToFaction", () => `You can't donate to '${name}' because you aren't a member`);
         return false;
       }
       if (player.inGang() && faction.name === player.getGangFaction().name) {
-        workerScript.log(
-          "donateToFaction",
-          () => `You can't donate to '${name}' because youre managing a gang for it`,
-        );
+        workerScript.log("donateToFaction", () => `You can't donate to '${name}' because youre managing a gang for it`);
         return false;
       }
       if (typeof amt !== "number" || amt <= 0 || isNaN(amt)) {

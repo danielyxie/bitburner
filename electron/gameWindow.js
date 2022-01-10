@@ -5,11 +5,12 @@ const utils = require("./utils");
 const achievements = require("./achievements");
 const menu = require("./menu");
 const api = require("./api-server");
+const cp = require("child_process");
 
 const debug = process.argv.includes("--debug");
 
 async function createWindow(killall) {
-  const setStopProcessHandler = global.app_handlers.stopProcess
+  const setStopProcessHandler = global.app_handlers.stopProcess;
   const window = new BrowserWindow({
     show: false,
     backgroundThrottling: false,
@@ -24,14 +25,18 @@ async function createWindow(killall) {
   if (debug) window.webContents.openDevTools();
 
   window.webContents.on("new-window", function (e, url) {
-    // make sure local urls stay in electron perimeter
-    if (url.substr(0, "file://".length) === "file://") {
-      return;
-    }
+    if (process.platform === "win32") {
+      cp.spawn("explorer", [url], { detached: true, stdio: "ignore" });
+    } else {
+      // make sure local urls stay in electron perimeter
+      if (url.substr(0, "file://".length) === "file://") {
+        return;
+      }
 
-    // and open every other protocols on the browser
+      // and open every other protocols on the browser
+      utils.openExternal(url);
+    }
     e.preventDefault();
-    utils.openExternal(url);
   });
   window.webContents.backgroundThrottling = false;
 
@@ -43,7 +48,7 @@ async function createWindow(killall) {
     await api.initialize(window);
   } catch (error) {
     log.error(error);
-    utils.showErrorBox('Error starting http server', error);
+    utils.showErrorBox("Error starting http server", error);
   }
 
   menu.refreshMenu(window);
@@ -54,4 +59,4 @@ async function createWindow(killall) {
 
 module.exports = {
   createWindow,
-}
+};

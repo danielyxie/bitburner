@@ -32,11 +32,21 @@ Terminates the current script, and then after a delay of about 10 seconds it wil
 
 Because this function immediately terminates the script, it does not have a return value.
 
-## Example
+## Example 1
 
 
 ```ts
+// NS1:
 //The following example will execute the script ‘foo.script’ with 10 threads and the arguments ‘foodnstuff’ and 90:
 spawn('foo.script', 10, 'foodnstuff', 90);
+```
+
+## Example 2
+
+
+```ts
+// NS2:
+//The following example will execute the script ‘foo.script’ with 10 threads and the arguments ‘foodnstuff’ and 90:
+ns.spawn('foo.script', 10, 'foodnstuff', 90);
 ```
 

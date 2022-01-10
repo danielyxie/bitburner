@@ -4,7 +4,7 @@
 
 ## SleeveWorkGains.workChaExpGain property
 
-charisma exp gained from work
+Charisma exp gained from work
 
 <b>Signature:</b>
 

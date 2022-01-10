@@ -28,6 +28,8 @@ import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { dialogBoxCreate } from "./DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { ThemeEditorModal } from "./ThemeEditorModal";
+import { StyleEditorModal } from "./StyleEditorModal";
+
 import { SnackbarEvents } from "./Snackbar";
 
 import { Settings } from "../../Settings/Settings";
@@ -91,6 +93,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [deleteGameOpen, setDeleteOpen] = useState(false);
   const [themeEditorOpen, setThemeEditorOpen] = useState(false);
+  const [styleEditorOpen, setStyleEditorOpen] = useState(false);
   const [softResetOpen, setSoftResetOpen] = useState(false);
   const [importSaveOpen, setImportSaveOpen] = useState(false);
   const [importData, setImportData] = useState<ImportData | null>(null);
@@ -246,16 +249,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         return;
       }
 
-
       const data: ImportData = {
         base64: contents,
         parsed: parsedSave,
       }
 
-      // We don't always seem to have this value in the save file. Exporting from the option menu does not set the bonus I think.
-      const exportTimestamp = parsedSave.data.LastExportBonus;
-      if (exportTimestamp && exportTimestamp !== '0') {
-        data.exportDate = new Date(parseInt(exportTimestamp, 10))
+      const timestamp = parsedSave.data.SaveTimestamp;
+      if (timestamp && timestamp !== '0') {
+        data.exportDate = new Date(parseInt(timestamp, 10))
       }
 
       setImportData(data)
@@ -504,10 +505,10 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 label={
                   <Tooltip
                     title={
-                      <Typography>If this is set, there will be no "Saved Game" toast appearing after save.</Typography>
+                      <Typography>If this is set, there will be no "Game Saved!" toast appearing after an auto-save.</Typography>
                     }
                   >
-                    <Typography>Suppress Saved Game Toast</Typography>
+                    <Typography>Suppress Auto-Save Game Toast</Typography>
                   </Tooltip>
                 }
               />
@@ -758,8 +759,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               onConfirm={props.softReset}
               confirmationText={"This will perform the same action as installing Augmentations, are you sure?"}
             />
-          </Box>
-          <Box>
             <Tooltip
               title={
                 <Typography>
@@ -770,7 +769,10 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             >
               <Button onClick={() => setDiagnosticOpen(true)}>Diagnose files</Button>
             </Tooltip>
+          </Box>
+          <Box>
             <Button onClick={() => setThemeEditorOpen(true)}>Theme editor</Button>
+            <Button onClick={() => setStyleEditorOpen(true)}>Style editor</Button>
           </Box>
           <Box>
             <Link href="https://github.com/danielyxie/bitburner/issues/new" target="_blank">
@@ -807,6 +809,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         confirmationText={"Really delete your game? (It's permanent!)"}
       />
       <ThemeEditorModal open={themeEditorOpen} onClose={() => setThemeEditorOpen(false)} />
+      <StyleEditorModal open={styleEditorOpen} onClose={() => setStyleEditorOpen(false)} />
     </div>
   );
 }

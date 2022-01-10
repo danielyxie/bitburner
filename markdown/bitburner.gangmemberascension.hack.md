@@ -4,7 +4,7 @@
 
 ## GangMemberAscension.hack property
 
-Hacking multiplier gained from ascending.
+Hacking multiplier gained from ascending
 
 <b>Signature:</b>
 

@@ -36,6 +36,7 @@ export enum Page {
   Loading,
   StaneksGift,
   Recovery,
+  Achievements,
 }
 
 export interface ScriptEditorRouteOptions {
@@ -80,4 +81,5 @@ export interface IRouter {
   toBladeburnerCinematic(): void;
   toLocation(location: Location): void;
   toStaneksGift(): void;
+  toAchievements(): void;
 }

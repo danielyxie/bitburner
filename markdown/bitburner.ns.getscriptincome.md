@@ -9,20 +9,11 @@ Get the income of a script.
 <b>Signature:</b>
 
 ```typescript
-getScriptIncome(script: string, host: string, ...args: string[]): number | [number, number];
+getScriptIncome(): [number, number];
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  script | string | Filename of script. |
-|  host | string | Server on which script is running. |
-|  args | string\[\] | Arguments that the script is running with. |
-
 <b>Returns:</b>
 
-number \| \[number, number\]
+\[number, number\]
 
 Amount of income the specified script generates while online.
 

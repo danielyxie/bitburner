@@ -26,7 +26,7 @@ export interface TIX
 |  [getPosition(sym)](./bitburner.tix.getposition.md) | Returns the player’s position in a stock. |
 |  [getPrice(sym)](./bitburner.tix.getprice.md) | Returns the price of a stock |
 |  [getPurchaseCost(sym, shares, posType)](./bitburner.tix.getpurchasecost.md) | Calculates cost of buying stocks. |
-|  [getSaleGain(sym, shares, posType)](./bitburner.tix.getsalegain.md) | Calculate profit of setting stocks. |
+|  [getSaleGain(sym, shares, posType)](./bitburner.tix.getsalegain.md) | Calculate profit of selling stocks. |
 |  [getSymbols()](./bitburner.tix.getsymbols.md) | Returns an array of the symbols of the tradable stocks |
 |  [getVolatility(sym)](./bitburner.tix.getvolatility.md) | Returns the volatility of the specified stock. |
 |  [placeOrder(sym, shares, price, type, pos)](./bitburner.tix.placeorder.md) | Place order for stocks. |

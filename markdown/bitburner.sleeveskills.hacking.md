@@ -4,7 +4,7 @@
 
 ## SleeveSkills.hacking property
 
-current hacking skill of the sleeve
+Current hacking skill of the sleeve
 
 <b>Signature:</b>
 

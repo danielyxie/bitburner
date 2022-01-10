@@ -4,7 +4,7 @@
 
 ## SleeveInformation.hp property
 
-current hp of the sleeve
+Current hp of the sleeve
 
 <b>Signature:</b>
 

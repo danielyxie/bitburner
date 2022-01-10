@@ -4,7 +4,7 @@
 
 ## SleeveInformation.jobTitle property
 
-job titles available to the sleeve
+Job titles available to the sleeve
 
 <b>Signature:</b>
 

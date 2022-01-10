@@ -380,8 +380,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         Player.scriptProdSinceLastAug += moneyGained;
         workerScript.scriptRef.recordHack(server.hostname, moneyGained, threads);
         Player.gainHackingExp(expGainedOnSuccess);
-        if (manual)
-          Player.gainIntelligenceExp(Math.pow(expGainedOnSuccess / CONSTANTS.IntelligenceTerminalHackBaseExpGain, 0.1));
+        if (manual) Player.gainIntelligenceExp(0.005);
         workerScript.scriptRef.onlineExpGained += expGainedOnSuccess;
         workerScript.log(
           "hack",
@@ -1575,7 +1574,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         }
       }
       for (let i = 0; i < server.messages.length; ++i) {
-        if (filename.toLowerCase() === server.messages[i]) {
+        if (filename.toLowerCase() === server.messages[i].toLowerCase()) {
           return true;
         }
       }

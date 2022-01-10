@@ -44,6 +44,7 @@ import { AlertEvents } from "./ui/React/AlertManager";
 import { exceptionAlert } from "./utils/helpers/exceptionAlert";
 
 import { startExploits } from "./Exploits/loops";
+import { calculateAchievements } from "./Achievements/Achievements";
 
 import React from "react";
 import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
@@ -65,6 +66,7 @@ const Engine: {
     messages: number;
     mechanicProcess: number;
     contractGeneration: number;
+    achievementsCounter: number;
   };
   decrementAllCounters: (numCycles?: number) => void;
   checkCounters: () => void;
@@ -163,6 +165,7 @@ const Engine: {
     messages: 150,
     mechanicProcess: 5, // Processes certain mechanics (Corporation, Bladeburner)
     contractGeneration: 3000, // Generate Coding Contracts
+    achievementsCounter: 60, // Check if we have new achievements
   },
 
   decrementAllCounters: function (numCycles = 1) {
@@ -186,7 +189,7 @@ const Engine: {
         Engine.Counters.autoSaveCounter = Infinity;
       } else {
         Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
-        saveObject.saveGame();
+        saveObject.saveGame(!Settings.SuppressSavedGameToast);
       }
     }
 
@@ -233,6 +236,11 @@ const Engine: {
         generateRandomContract();
       }
       Engine.Counters.contractGeneration = 3000;
+    }
+
+    if (Engine.Counters.achievementsCounter <= 0) {
+      calculateAchievements();
+      Engine.Counters.achievementsCounter = 300;
     }
   },
 

@@ -4,7 +4,7 @@
 
 ## SleeveInformation.workRepGain property
 
-faction or company reputation gained for the current task
+Faction or company reputation gained for the current task
 
 <b>Signature:</b>
 

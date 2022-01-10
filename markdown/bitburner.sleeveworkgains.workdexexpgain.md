@@ -4,7 +4,7 @@
 
 ## SleeveWorkGains.workDexExpGain property
 
-dexterity exp gained from work
+Dexterity exp gained from work
 
 <b>Signature:</b>
 

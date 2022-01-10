@@ -4,7 +4,7 @@
 
 ## SleeveTask.gymStatType property
 
-stat being trained at the gym, if any
+Stat being trained at the gym, if any
 
 <b>Signature:</b>
 

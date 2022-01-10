@@ -4,7 +4,7 @@
 
 ## SleeveInformation.tor property
 
-does this sleeve have access to the tor router
+Does this sleeve have access to the tor router
 
 <b>Signature:</b>
 

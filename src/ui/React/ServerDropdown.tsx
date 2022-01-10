@@ -53,7 +53,7 @@ export function ServerDropdown(props: IProps): React.ReactElement {
   }
 
   const servers = [];
-  for (const server of GetAllServers()) {
+  for (const server of GetAllServers().sort((a, b) => a.hostname.localeCompare(b.hostname))) {
     if (isValidServer(server)) {
       servers.push(
         <MenuItem key={server.hostname} value={server.hostname}>

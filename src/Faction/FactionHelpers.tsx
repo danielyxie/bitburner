@@ -134,7 +134,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
         dialogBoxCreate(
           "You purchased " +
             aug.name +
-            ". It's enhancements will not take " +
+            ". Its enhancements will not take " +
             "effect until they are installed. To install your augmentations, go to the " +
             "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
             "augmentations will now be more expensive.",

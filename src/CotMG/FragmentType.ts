@@ -72,7 +72,7 @@ export function Effect(tpe: FragmentType): string {
       break;
     }
     case FragmentType.HacknetCost: {
-      return "-x% all hacknet cost";
+      return "x% cheaper hacknet cost";
       break;
     }
     case FragmentType.Rep: {

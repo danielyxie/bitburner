@@ -4,7 +4,7 @@
 
 ## SleeveTask.location property
 
-location of the task, if any
+Location of the task, if any
 
 <b>Signature:</b>
 

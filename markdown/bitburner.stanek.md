@@ -18,7 +18,7 @@ interface Stanek
 |  --- | --- |
 |  [activeFragments()](./bitburner.stanek.activefragments.md) | List of fragments in Stanek's Gift. |
 |  [canPlace(rootX, rootY, rotation, fragmentId)](./bitburner.stanek.canplace.md) | Check if fragment can be placed at specified location. |
-|  [charge(rootX, rootY)](./bitburner.stanek.charge.md) | Charge a fragment, increasing it's power. |
+|  [charge(rootX, rootY)](./bitburner.stanek.charge.md) | Charge a fragment, increasing its power. |
 |  [clear()](./bitburner.stanek.clear.md) | Clear the board of all fragments. |
 |  [fragmentDefinitions()](./bitburner.stanek.fragmentdefinitions.md) | List possible fragments. |
 |  [get(rootX, rootY)](./bitburner.stanek.get.md) | Get placed fragment at location. |

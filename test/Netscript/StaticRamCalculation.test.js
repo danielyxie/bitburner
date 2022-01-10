@@ -36,11 +36,11 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
 
     const code = fnDesc.join(".") + "(); ";
 
-    const calculated = await calculateRamUsage(Player, code, []);
+    const calculated = (await calculateRamUsage(Player, code, [])).cost;
     testEquality(calculated, expected + ScriptBaseCost);
 
     const multipleCallsCode = code.repeat(3);
-    const multipleCallsCalculated = await calculateRamUsage(Player, multipleCallsCode, []);
+    const multipleCallsCalculated = (await calculateRamUsage(Player, multipleCallsCode, [])).cost;
     expect(multipleCallsCalculated).toEqual(calculated);
   }
 
@@ -60,11 +60,10 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
     expect(expected).toEqual(0);
 
     const code = fnDesc.join(".") + "(); ";
-
-    const calculated = await calculateRamUsage(Player, code, []);
+    const calculated = (await calculateRamUsage(Player, code, [])).cost;
     testEquality(calculated, ScriptBaseCost);
 
-    const multipleCallsCalculated = await calculateRamUsage(Player, code, []);
+    const multipleCallsCalculated = (await calculateRamUsage(Player, code, [])).cost;
     expect(multipleCallsCalculated).toEqual(ScriptBaseCost);
   }
 
@@ -511,7 +510,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
       }
 
       const calculated = await calculateRamUsage(Player, code, []);
-      testEquality(calculated, ScriptBaseCost + HacknetNamespaceCost);
+      testEquality(calculated.cost, ScriptBaseCost + HacknetNamespaceCost);
     });
   });
 

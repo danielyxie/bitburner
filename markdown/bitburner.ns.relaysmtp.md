@@ -28,10 +28,19 @@ RAM cost: 0.05 GB
 
 Runs the relaySMTP.exe program on the target server. relaySMTP.exe must exist on your home computer.
 
-## Example
+## Example 1
 
 
 ```ts
+// NS1:
 relaysmtp("foodnstuff");
+```
+
+## Example 2
+
+
+```ts
+// NS2:
+ns.relaysmtp("foodnstuff");
 ```
 
