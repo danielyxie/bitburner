@@ -71,7 +71,6 @@ export class Company {
   isPlayerEmployed: boolean;
   playerReputation: number;
   favor: number;
-  rolloverRep: number;
 
   constructor(p: IConstructorParams = DefaultConstructorParams) {
     this.name = p.name;
@@ -84,7 +83,6 @@ export class Company {
     this.isPlayerEmployed = false;
     this.playerReputation = 1;
     this.favor = 0;
-    this.rolloverRep = 0;
     this.isMegacorp = false;
     if (p.isMegacorp) this.isMegacorp = true;
   }
