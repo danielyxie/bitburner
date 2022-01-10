@@ -1776,7 +1776,7 @@ export interface Singularity {
    * guarantee that your browser will follow that time limit.
    *
    * @param crime - Name of crime to attempt.
-   * @returns True if you successfully start working on the specified program, and false otherwise.
+   * @returns The number of milliseconds it takes to attempt the specified crime.
    */
   commitCrime(crime: string): number;
 
