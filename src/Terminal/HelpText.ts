@@ -29,7 +29,7 @@ export const TerminalHelpText: string[] = [
   "lscpu                                Displays the number of CPU cores on the machine",
   "mem [script] [-t n]                  Displays the amount of RAM required to run the script",
   "mv [src] [dest]                      Move/rename a text or script file",
-  "nano [file ...]                      Text editor - Open up and edit one or more scripts or text files",
+  "nano [file ...] | [glob]             Text editor - Open up and edit one or more scripts or text files",
   "ps                                   Display all scripts that are currently running",
   "rm [file]                            Delete a file from the server",
   "run [name] [-t n] [--tail] [args...] Execute a program or script",
@@ -40,10 +40,32 @@ export const TerminalHelpText: string[] = [
   "tail [script] [args...]              Displays dynamic logs for the specified script",
   "top                                  Displays all running scripts and their RAM usage",
   "unalias [alias name]                 Deletes the specified alias",
-  "vim [file ...]                       Text editor - Open up and edit one or more scripts or text files in vim mode",
+  "vim [file ...] | [glob]              Text editor - Open up and edit one or more scripts or text files in vim mode",
   "weaken                               Reduce the security of the current machine",
   "wget [url] [target file]             Retrieves code/text from a web server",
 ];
+
+const TemplatedHelpTexts: IMap<(command: string) => string[]> = {
+  textEditor: (command) => {
+    return [
+      `${command} [file ...] | [glob]`,
+      ` `,
+      `Opens up the specified file(s) in the Text Editor. Only scripts (.js, .ns) or text files (.txt) can be `,
+      `edited using the Text Editor. If the file does not already exist, then a new, empty one will be created`,
+      ` `,
+      `If provided a glob as the only argument, ${command} can spider directories and open all matching `,
+      `files at once. ${command} cannot create files using globs, so your scripts must already exist.`,
+      ` `,
+      `Examples:`,
+      ` `,
+      `${command} test.js`,
+      `${command} test.js test2.js`,
+      ` `,
+      `${command} test.*`,
+      `${command} /my-dir/*.js`,
+    ]
+  }
+}
 
 export const HelpTexts: IMap<string[]> = {
   alias: [
@@ -306,13 +328,7 @@ export const HelpTexts: IMap<string[]> = {
     " ",
     "mv myScript.js myOldScript.js",
   ],
-  nano: [
-    "nano [file ...]",
-    " ",
-    "Opens up the specified file(s) in the Text Editor. Only scripts (.script) or text files (.txt) can be ",
-    "edited using the Text Editor. If the file does not already exist, then a new, empty one ",
-    "will be created",
-  ],
+  nano: TemplatedHelpTexts.textEditor('nano'),
   ps: ["ps", " ", "Prints all scripts that are running on the current server"],
 
   rm: [
@@ -410,13 +426,7 @@ export const HelpTexts: IMap<string[]> = {
     " ",
     "It is not necessary to differentiate between global and non-global aliases when using 'unalias'",
   ],
-  vim: [
-    "vim [file ...]",
-    " ",
-    "Opens up the specified file(s) in the Text Editor in vim mode. Only scripts (.script) or text files (.txt) can be ",
-    "edited using the Text Editor. If the file does not already exist, then a new, empty one ",
-    "will be created",
-  ],
+  vim: TemplatedHelpTexts.textEditor('vim'),
   weaken: [
     "weaken",
     "",
