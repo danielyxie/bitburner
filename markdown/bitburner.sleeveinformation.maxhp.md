@@ -4,7 +4,7 @@
 
 ## SleeveInformation.maxHp property
 
-max hp of the sleeve
+Max hp of the sleeve
 
 <b>Signature:</b>
 

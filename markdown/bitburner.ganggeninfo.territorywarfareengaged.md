@@ -4,7 +4,7 @@
 
 ## GangGenInfo.territoryWarfareEngaged property
 
-Boolean indicating if territory warfare is enabled.
+Indicating if territory warfare is enabled
 
 <b>Signature:</b>
 

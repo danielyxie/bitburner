@@ -28,6 +28,9 @@ import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { dialogBoxCreate } from "./DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { ThemeEditorModal } from "./ThemeEditorModal";
+import { StyleEditorModal } from "./StyleEditorModal";
+
+import { SnackbarEvents } from "./Snackbar";
 
 import { Settings } from "../../Settings/Settings";
 import { save, deleteGame } from "../../db";
@@ -49,6 +52,12 @@ interface IProps {
   export: () => void;
   forceKill: () => void;
   softReset: () => void;
+}
+
+interface ImportData {
+  base64: string;
+  parsed: any;
+  exportDate?: Date;
 }
 
 export function GameOptionsRoot(props: IProps): React.ReactElement {
@@ -78,12 +87,16 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [enableBashHotkeys, setEnableBashHotkeys] = useState(Settings.EnableBashHotkeys);
   const [timestampFormat, setTimestampFormat] = useState(Settings.TimestampsFormat);
   const [saveGameOnFileSave, setSaveGameOnFileSave] = useState(Settings.SaveGameOnFileSave);
+  const [useIEC60027_2, setUseIEC60027_2] = useState(Settings.UseIEC60027_2);
 
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [deleteGameOpen, setDeleteOpen] = useState(false);
   const [themeEditorOpen, setThemeEditorOpen] = useState(false);
+  const [styleEditorOpen, setStyleEditorOpen] = useState(false);
   const [softResetOpen, setSoftResetOpen] = useState(false);
+  const [importSaveOpen, setImportSaveOpen] = useState(false);
+  const [importData, setImportData] = useState<ImportData | null>(null);
 
   function handleExecTimeChange(event: any, newValue: number | number[]): void {
     setExecTime(newValue as number);
@@ -154,6 +167,10 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
     setDisableASCIIArt(event.target.checked);
     Settings.DisableASCIIArt = event.target.checked;
   }
+  function handleUseIEC60027_2Change(event: React.ChangeEvent<HTMLInputElement>): void {
+    setUseIEC60027_2(event.target.checked);
+    Settings.UseIEC60027_2 = event.target.checked;
+  }
 
   function handleDisableTextEffectsChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setDisableTextEffects(event.target.checked);
@@ -206,9 +223,56 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         return;
       }
       const contents = result;
-      save(contents).then(() => setTimeout(() => location.reload(), 1000));
+
+      let newSave;
+      try {
+        newSave = window.atob(contents);
+        newSave = newSave.trim();
+      } catch (error) {
+        console.log(error); // We'll handle below
+      }
+
+      if (!newSave || newSave === '') {
+        SnackbarEvents.emit("Save game had not content or was not base64 encoded", "error", 5000);
+        return;
+      }
+
+      let parsedSave;
+      try {
+        parsedSave = JSON.parse(newSave);
+      } catch (error) {
+        console.log(error); // We'll handle below
+      }
+
+      if (!parsedSave || parsedSave.ctor !== 'BitburnerSaveObject' || !parsedSave.data) {
+        SnackbarEvents.emit("Save game did not seem valid", "error", 5000);
+        return;
+      }
+
+      const data: ImportData = {
+        base64: contents,
+        parsed: parsedSave,
+      }
+
+      const timestamp = parsedSave.data.SaveTimestamp;
+      if (timestamp && timestamp !== '0') {
+        data.exportDate = new Date(parseInt(timestamp, 10))
+      }
+
+      setImportData(data)
+      setImportSaveOpen(true);
     };
     reader.readAsText(file);
+  }
+
+  function confirmedImportGame(): void {
+    if (!importData) return;
+
+    setImportSaveOpen(false);
+    save(importData.base64).then(() => {
+      setImportData(null);
+      setTimeout(() => location.reload(), 1000)
+    });
   }
 
   function doSoftReset(): void {
@@ -441,10 +505,10 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 label={
                   <Tooltip
                     title={
-                      <Typography>If this is set, there will be no "Saved Game" toast appearing after save.</Typography>
+                      <Typography>If this is set, there will be no "Game Saved!" toast appearing after an auto-save.</Typography>
                     }
                   >
-                    <Typography>Suppress Saved Game Toast</Typography>
+                    <Typography>Suppress Auto-Save Game Toast</Typography>
                   </Tooltip>
                 }
               />
@@ -509,6 +573,16 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                     }
                   >
                     <Typography>Enable bash hotkeys</Typography>
+                  </Tooltip>
+                }
+              />
+            </ListItem>
+            <ListItem>
+              <FormControlLabel
+                control={<Switch checked={useIEC60027_2} onChange={handleUseIEC60027_2Change} />}
+                label={
+                  <Tooltip title={<Typography>If this is set all references to memory will use GiB instead of GB, in accordance with IEC 60027-2.</Typography>}>
+                    <Typography>Use GiB instead of GB</Typography>
                   </Tooltip>
                 }
               />
@@ -618,19 +692,41 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <Button onClick={() => setDeleteOpen(true)}>Delete Game</Button>
           </Box>
           <Box>
-            <Tooltip title={<Typography>export</Typography>}>
+            <Tooltip title={<Typography>Export your game to a text file.</Typography>}>
               <Button onClick={() => props.export()}>
                 <DownloadIcon color="primary" />
-                Export
+                Export Game
               </Button>
             </Tooltip>
-            <Tooltip title={<Typography>import</Typography>}>
+            <Tooltip title={<Typography>Import your game from a text file.<br/>This will <strong>overwrite</strong> your current game. Back it up first!</Typography>}>
               <Button onClick={startImport}>
                 <UploadIcon color="primary" />
-                Import
+                Import Game
                 <input ref={importInput} id="import-game-file-selector" type="file" hidden onChange={onImport} />
               </Button>
             </Tooltip>
+            <ConfirmationModal
+              open={importSaveOpen}
+              onClose={() => setImportSaveOpen(false)}
+              onConfirm={() => confirmedImportGame()}
+              confirmationText={
+                <>
+                  Importing a new game will <strong>completely wipe</strong> the current data!
+                  <br />
+                  <br />
+                  Make sure to have a backup of your current save file before importing.
+                  <br />
+                  The file you are attempting to import seems valid.
+                  <br />
+                  <br />
+                  {importData?.exportDate && (<>
+                    The export date of the save file is <strong>{importData?.exportDate.toString()}</strong>
+                    <br />
+                    <br />
+                  </>)}
+                </>
+              }
+            />
           </Box>
           <Box>
             <Tooltip
@@ -663,8 +759,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               onConfirm={props.softReset}
               confirmationText={"This will perform the same action as installing Augmentations, are you sure?"}
             />
-          </Box>
-          <Box>
             <Tooltip
               title={
                 <Typography>
@@ -675,7 +769,10 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             >
               <Button onClick={() => setDiagnosticOpen(true)}>Diagnose files</Button>
             </Tooltip>
+          </Box>
+          <Box>
             <Button onClick={() => setThemeEditorOpen(true)}>Theme editor</Button>
+            <Button onClick={() => setStyleEditorOpen(true)}>Style editor</Button>
           </Box>
           <Box>
             <Link href="https://github.com/danielyxie/bitburner/issues/new" target="_blank">
@@ -712,6 +809,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         confirmationText={"Really delete your game? (It's permanent!)"}
       />
       <ThemeEditorModal open={themeEditorOpen} onClose={() => setThemeEditorOpen(false)} />
+      <StyleEditorModal open={styleEditorOpen} onClose={() => setStyleEditorOpen(false)} />
     </div>
   );
 }

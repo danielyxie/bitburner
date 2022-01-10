@@ -64,6 +64,7 @@ import React from "react";
 import { serverMetadata } from "../../Server/data/servers";
 import { SnackbarEvents } from "../../ui/React/Snackbar";
 import { calculateClassEarnings } from "../formulas/work";
+import { achievements } from "../../Achievements/Achievements";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -86,7 +87,6 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.currentServer = SpecialServers.Home;
 
   this.numPeopleKilled = 0;
-  this.karma = 0;
 
   //Reset stats
   this.hacking = 1;
@@ -182,6 +182,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
 
 export function prestigeSourceFile(this: IPlayer): void {
   this.prestigeAugmentation();
+  this.karma = 0;
   // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
   for (let i = 0; i < this.sleeves.length; ++i) {
     if (this.sleeves[i] instanceof Sleeve) {
@@ -414,6 +415,9 @@ export function gainDefenseExp(this: IPlayer, exp: number): void {
   }
 
   this.defense = calculateSkillF(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier);
+  const ratio = this.hp / this.max_hp;
+  this.max_hp = Math.floor(10 + this.defense / 10);
+  this.hp = Math.round(this.max_hp * ratio);
 }
 
 export function gainDexterityExp(this: IPlayer, exp: number): void {
@@ -667,12 +671,36 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
       <Money money={this.workMoneyGained} />
       <br />
       <Reputation reputation={this.workRepGained} /> reputation for the company <br />
-      {this.workHackExpGained > 0  && <>{numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br /></>}
-      {this.workStrExpGained > 0  && <>{numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br /></>}
-      {this.workDefExpGained > 0  && <>{numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br /></>}
-      {this.workDexExpGained > 0  && <>{numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br /></>}
-      {this.workAgiExpGained > 0  && <>{numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br /></>}
-      {this.workChaExpGained > 0  && <>{numeralWrapper.formatExp(this.workChaExpGained)} charisma exp <br /></>}
+      {this.workHackExpGained > 0 && (
+        <>
+          {numeralWrapper.formatExp(this.workHackExpGained)} hacking exp <br />
+        </>
+      )}
+      {this.workStrExpGained > 0 && (
+        <>
+          {numeralWrapper.formatExp(this.workStrExpGained)} strength exp <br />
+        </>
+      )}
+      {this.workDefExpGained > 0 && (
+        <>
+          {numeralWrapper.formatExp(this.workDefExpGained)} defense exp <br />
+        </>
+      )}
+      {this.workDexExpGained > 0 && (
+        <>
+          {numeralWrapper.formatExp(this.workDexExpGained)} dexterity exp <br />
+        </>
+      )}
+      {this.workAgiExpGained > 0 && (
+        <>
+          {numeralWrapper.formatExp(this.workAgiExpGained)} agility exp <br />
+        </>
+      )}
+      {this.workChaExpGained > 0 && (
+        <>
+          {numeralWrapper.formatExp(this.workChaExpGained)} charisma exp <br />
+        </>
+      )}
       <br />
     </>
   );
@@ -1269,11 +1297,15 @@ export function startCreateProgramWork(
 }
 
 export function createProgramWork(this: IPlayer, numCycles: number): boolean {
+  let focusBonus = 1;
+  if (!this.hasAugmentation(AugmentationNames["NeuroreceptorManager"])) {
+    focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
+  }
   //Higher hacking skill will allow you to create programs faster
   const reqLvl = this.createProgramReqLvl;
   let skillMult = (this.hacking / reqLvl) * this.getIntelligenceBonus(3); //This should always be greater than 1;
   skillMult = 1 + (skillMult - 1) / 5; //The divider constant can be adjusted as necessary
-
+  skillMult *= focusBonus;
   //Skill multiplier directly applied to "time worked"
   this.timeWorked += CONSTANTS._idleSpeed * numCycles;
   this.timeWorkedCreateProgram += CONSTANTS._idleSpeed * numCycles * skillMult;
@@ -1690,6 +1722,11 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
     return false;
   }
 
+  // Check if this company has the position
+  if (!company.hasPosition(pos)) {
+    return false;
+  }
+
   while (true) {
     const newPos = getNextCompanyPositionHelper(pos);
     if (newPos == null) {
@@ -1763,6 +1800,7 @@ export function getNextCompanyPosition(
   //return the player's "nextCompanyPosition". Otherwise return the entryposType
   //Employed at this company, so just return the next position if it exists.
   const currentPositionName = this.jobs[this.companyName];
+  if (!currentPositionName) return entryPosType;
   const currentPosition = CompanyPositions[currentPositionName];
   if (
     (currentPosition.isSoftwareJob() && entryPosType.isSoftwareJob()) ||
@@ -1783,8 +1821,13 @@ export function getNextCompanyPosition(
 }
 
 export function quitJob(this: IPlayer, company: string): void {
-  this.isWorking = false;
-  this.companyName = "";
+  if (this.isWorking == true && this.workType == "Working for Company" && this.companyName == company) {
+    this.isWorking = false;
+    this.companyName = "";
+  }
+  if (this.companyName === company) {
+    this.companyName = "";
+  }
   delete this.jobs[company];
 }
 
@@ -1863,9 +1906,16 @@ export function applyForAgentJob(this: IPlayer, sing = false): boolean {
 
 export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[1]])) {
+  const position = posNames.MiscCompanyPositions[1];
+  // Check if this company has the position
+  if (!company.hasPosition(position)) {
+    return false;
+  }
+  if (this.isQualified(company, CompanyPositions[position])) {
+    this.jobs[company.name] = position;
+    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
     this.companyName = company.name;
-    this.jobs[company.name] = posNames.MiscCompanyPositions[1];
+
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed at " + this.location);
     }
@@ -1882,8 +1932,15 @@ export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
 
 export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[1]])) {
-    this.jobs[company.name] = posNames.PartTimeCompanyPositions[1];
+  const position = posNames.PartTimeCompanyPositions[1];
+  // Check if this company has the position
+  if (!company.hasPosition(position)) {
+    return false;
+  }
+  if (this.isQualified(company, CompanyPositions[position])) {
+    this.jobs[company.name] = position;
+    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
+    this.companyName = company.name;
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed part-time at " + this.location);
     }
@@ -1900,9 +1957,15 @@ export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolea
 
 export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (this.isQualified(company, CompanyPositions[posNames.MiscCompanyPositions[0]])) {
+  const position = posNames.MiscCompanyPositions[0];
+  // Check if this company has the position
+  if (!company.hasPosition(position)) {
+    return false;
+  }
+  if (this.isQualified(company, CompanyPositions[position])) {
+    this.jobs[company.name] = position;
+    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
     this.companyName = company.name;
-    this.jobs[company.name] = posNames.MiscCompanyPositions[0];
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a waiter at " + this.location);
     }
@@ -1917,9 +1980,15 @@ export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
 
 export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean {
   const company = Companies[this.location]; //Company being applied to
-  if (this.isQualified(company, CompanyPositions[posNames.PartTimeCompanyPositions[0]])) {
+  const position = posNames.PartTimeCompanyPositions[0];
+  // Check if this company has the position
+  if (!company.hasPosition(position)) {
+    return false;
+  }
+  if (this.isQualified(company, CompanyPositions[position])) {
+    this.jobs[company.name] = position;
+    if (!this.focus && this.isWorking && this.companyName !== company.name) this.resetWorkStatus();
     this.companyName = company.name;
-    this.jobs[company.name] = posNames.PartTimeCompanyPositions[0];
     if (!sing) {
       dialogBoxCreate("Congratulations, you are now employed as a part-time waiter at " + this.location);
     }
@@ -2598,6 +2667,15 @@ export function giveExploit(this: IPlayer, exploit: Exploit): void {
   if (!this.exploits.includes(exploit)) {
     this.exploits.push(exploit);
     SnackbarEvents.emit("SF -1 acquired!", "success", 2000);
+  }
+}
+
+export function giveAchievement(this: IPlayer, achievementId: string): void {
+  const achievement = achievements[achievementId];
+  if (!achievement) return;
+  if (!this.achievements.map((a) => a.ID).includes(achievementId)) {
+    this.achievements.push({ ID: achievementId, unlockedOn: new Date().getTime() });
+    SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, "success", 2000);
   }
 }
 

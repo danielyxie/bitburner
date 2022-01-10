@@ -36,16 +36,35 @@ Copies a script or literature (.lit) file(s) to another server. The files argume
 
 
 ```ts
+// NS1:
 //Copies foo.lit from the helios server to the home computer:
 scp("foo.lit", "helios", "home");
+
+//Tries to copy three files from rothman-uni to home computer:
+files = ["foo1.lit", "foo2.script", "foo3.script"];
+scp(files, "rothman-uni", "home");
 ```
 
 ## Example 2
 
 
 ```ts
+// NS2:
+//Copies foo.lit from the helios server to the home computer:
+await ns.scp("foo.lit", "helios", "home");
+
 //Tries to copy three files from rothman-uni to home computer:
 files = ["foo1.lit", "foo2.script", "foo3.script"];
-scp(files, "rothman-uni", "home");
+await ns.scp(files, "rothman-uni", "home");
+```
+
+## Example 3
+
+
+```ts
+//ns2, copies files from home to a target server
+const server = ns.args[0];
+const files = ["hack.js","weaken.js","grow.js"];
+await ns.scp(files, "home", server);
 ```
 

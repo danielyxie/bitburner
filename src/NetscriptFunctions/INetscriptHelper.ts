@@ -7,6 +7,6 @@ export interface INetscriptHelper {
   number(funcName: string, argName: string, v: any): number;
   boolean(v: any): boolean;
   getServer(ip: any, fn: any): BaseServer;
-  checkSingularityAccess(func: string, n: number): void;
+  checkSingularityAccess(func: string): void;
   hack(hostname: string, manual: boolean): Promise<number>;
 }

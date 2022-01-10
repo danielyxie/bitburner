@@ -180,7 +180,7 @@ export function BitverseRoot(props: IProps): React.ReactElement {
       <br />
       <br />
       <CinematicText lines={[
-        "> Many decades ago, a humanoid extraterrestial species which we call the Enders descended on the Earth...violently",
+        "> Many decades ago, a humanoid extraterrestrial species which we call the Enders descended on the Earth...violently",
         "> Our species fought back, but it was futile. The Enders had technology far beyond our own...",
         "> Instead of killing every last one of us, the human race was enslaved...",
         "> We were shackled in a digital world, chained into a prison for our minds...",

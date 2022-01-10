@@ -20,7 +20,7 @@ import { isPowerOfTwo } from "../utils/helpers/isPowerOfTwo";
  */
 export function getPurchaseServerCost(ram: number): number {
   const sanitizedRam = Math.round(ram);
-  if (isNaN(sanitizedRam) || !isPowerOfTwo(sanitizedRam)) {
+  if (isNaN(sanitizedRam) || !isPowerOfTwo(sanitizedRam) || !(Math.sign(sanitizedRam) === 1)) {
     return Infinity;
   }
 

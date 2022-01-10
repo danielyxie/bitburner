@@ -30,17 +30,27 @@ RAM cost: 0.2 GB
 
 Returns an array with general information about all scripts running on the specified target server.
 
-## Example
+## Example 1
 
 
 ```ts
-//(using NetscriptJS (Netscript 2.0))
-export async function main(ns) {
-   const ps = ns.ps("home");
-   for (let i = 0; i < ps.length; ++i) {
-       ns.tprint(ps[i].filename + ' ' + ps[i].threads);
-       ns.tprint(ps[i].args);
-   }
+// NS1:
+const scripts = ps("home");
+for (let i = 0; i < scripts.length; ++i) {
+    tprint(scripts[i].filename + ' ' + scripts[i].threads);
+    tprint(scripts[i].args);
+}
+```
+
+## Example 2
+
+
+```ts
+// NS2:
+const ps = ns.ps("home");
+for (script of ps) {
+    ns.tprint(`${script.filename} ${ps[i].threads}`);
+    ns.tprint(script.args);
 }
 ```
 

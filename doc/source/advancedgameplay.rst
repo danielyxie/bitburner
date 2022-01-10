@@ -12,3 +12,4 @@ must be unlocked.
     Source-Files <advancedgameplay/sourcefiles>
     Intelligence <advancedgameplay/intelligence>
     Sleeves <advancedgameplay/sleeves>
+    Hacking algorithms <advancedgameplay/hackingalgorithms>

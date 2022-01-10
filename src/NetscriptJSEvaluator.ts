@@ -1,17 +1,26 @@
+/**
+ * Uses the acorn.js library to parse a script's code into an AST and
+ * recursively walk through that AST to replace import urls with blobs
+ */
+import * as walk from "acorn-walk";
+import { parse } from "acorn";
+
 import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { ScriptUrl } from "./Script/ScriptUrl";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { Script } from "./Script/Script";
+import { computeHash } from "./utils/helpers/computeHash";
+import { BlobCache } from "./utils/BlobCache";
+import { ImportCache } from "./utils/ImportCache";
 import { areImportsEquals } from "./Terminal/DirectoryHelpers";
-
-export const BlobsMap: { [key: string]: string } = {};
+import { IPlayer } from "./PersonObjects/IPlayer";
 
 // Makes a blob that contains the code of a given script.
 function makeScriptBlob(code: string): Blob {
   return new Blob([code], { type: "text/javascript" });
 }
 
-export async function compile(script: Script, scripts: Script[]): Promise<void> {
+export async function compile(player: IPlayer, script: Script, scripts: Script[]): Promise<void> {
   if (!shouldCompile(script, scripts)) return;
   // The URL at the top is the one we want to import. It will
   // recursively import all the other modules in the urlStack.
@@ -20,15 +29,24 @@ export async function compile(script: Script, scripts: Script[]): Promise<void> 
   // but not really behaves like import. Particularly, it cannot
   // load fully dynamic content. So we hide the import from webpack
   // by placing it inside an eval call.
-  await script.updateRamUsage(scripts);
+  await script.updateRamUsage(player, scripts);
   const uurls = _getScriptUrls(script, scripts, []);
-  if (script.url) {
-    URL.revokeObjectURL(script.url); // remove the old reference.
-    delete BlobsMap[script.url];
+  const url = uurls[uurls.length - 1].url;
+  if (script.url && script.url !== url) {
+    // Thoughts: Should we be revoking any URLs here?
+    // If a script is modified repeatedly between two states,
+    // we could reuse the blob at a later time.
+    // BlobCache.removeByValue(script.url);
+    // URL.revokeObjectURL(script.url);
+    // if (script.dependencies.length > 0) {
+    //   script.dependencies.forEach((dep) => {
+    //     removeBlobFromCache(dep.url);
+    //     URL.revokeObjectURL(dep.url);
+    //   });
+    // }
   }
-  if (script.dependencies.length > 0) script.dependencies.forEach((dep) => URL.revokeObjectURL(dep.url));
-  script.url = uurls[uurls.length - 1].url;
-  script.module = new Promise((resolve) => resolve(eval("import(uurls[uurls.length - 1].url)")));
+  script.url = url;
+  script.module = new Promise((resolve) => resolve(eval("import(url)")));
   script.dependencies = uurls;
 }
 
@@ -40,10 +58,14 @@ export async function compile(script: Script, scripts: Script[]): Promise<void> 
 // (i.e. hack, grow, etc.).
 // When the promise returned by this resolves, we'll have finished
 // running the main function of the script.
-export async function executeJSScript(scripts: Script[] = [], workerScript: WorkerScript): Promise<void> {
+export async function executeJSScript(
+  player: IPlayer,
+  scripts: Script[] = [],
+  workerScript: WorkerScript,
+): Promise<void> {
   const script = workerScript.getScript();
   if (script === null) throw new Error("script is null");
-  await compile(script, scripts);
+  await compile(player, script, scripts);
   workerScript.ramUsage = script.ramUsage;
   const loadedModule = await script.module;
 
@@ -115,33 +137,69 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
     // import {foo} from "blob://<uuid>"
     //
     // Where the blob URL contains the script content.
-    let transformedCode = script.code.replace(
-      /((?:from|import)\s+(?:'|"))(?:\.\/)?([^'"]+)('|")/g,
-      (unmodified, prefix, filename, suffix) => {
-        const isAllowedImport = scripts.some((s) => areImportsEquals(s.filename, filename));
-        if (!isAllowedImport) return unmodified;
 
-        // Find the corresponding script.
-        const [importedScript] = scripts.filter((s) => areImportsEquals(s.filename, filename));
+    // Parse the code into an ast tree
+    const ast: any = parse(script.code, { sourceType: "module", ecmaVersion: "latest", ranges: true });
 
+    const importNodes: Array<any> = [];
+    // Walk the nodes of this tree and find any import declaration statements.
+    walk.simple(ast, {
+      ImportDeclaration(node: any) {
+        // Push this import onto the stack to replace
+        importNodes.push({
+          filename: node.source.value,
+          start: node.source.range[0] + 1,
+          end: node.source.range[1] - 1
+        });
+      }
+    });
+    // Sort the nodes from last start index to first. This replaces the last import with a blob first,
+    // preventing the ranges for other imports from being shifted.
+    importNodes.sort((a, b) => b.start - a.start);
+    let transformedCode = script.code;
+    // Loop through each node and replace the script name with a blob url.
+    for (const node of importNodes) {
+      const filename = node.filename.startsWith("./") ? node.filename.substring(2) : node.filename;
+
+      // Find the corresponding script.
+      const matchingScripts = scripts.filter((s) => areImportsEquals(s.filename, filename));
+      if (matchingScripts.length === 0) continue;
+
+      const [importedScript] = matchingScripts;
+      // Check to see if the urls for this script are stored in the cache by the hash value.
+      let urls = ImportCache.get(importedScript.hash());
+      // If we don't have it in the cache, then we need to generate the urls for it.
+      if (!urls) {
         // Try to get a URL for the requested script and its dependencies.
-        const urls = _getScriptUrls(importedScript, scripts, seen);
+        urls = _getScriptUrls(importedScript, scripts, seen);
+      }
 
-        // The top url in the stack is the replacement import file for this script.
-        urlStack.push(...urls);
-        return [prefix, urls[urls.length - 1].url, suffix].join("");
-      },
-    );
+      // The top url in the stack is the replacement import file for this script.
+      urlStack.push(...urls);
+      const blob = urls[urls.length - 1].url;
+      ImportCache.store(importedScript.hash(), urls);
+
+      // Replace the blob inside the import statement.
+      transformedCode = transformedCode.substring(0, node.start) + blob + transformedCode.substring(node.end);
+    }
 
     // We automatically define a print function() in the NetscriptJS module so that
     // accidental calls to window.print() do not bring up the "print screen" dialog
     transformedCode += `\n\nfunction print() {throw new Error("Invalid call to window.print(). Did you mean to use Netscript's print()?");}`;
 
-    // If we successfully transformed the code, create a blob url for it and
-    // push that URL onto the top of the stack.
-    const su = new ScriptUrl(script.filename, URL.createObjectURL(makeScriptBlob(transformedCode)));
-    urlStack.push(su);
-    BlobsMap[su.url] = su.filename;
+    // If we successfully transformed the code, create a blob url for it
+    // Compute the hash for the transformed code
+    const transformedHash = computeHash(transformedCode);
+    // Check to see if this transformed hash is in our cache
+    let blob = BlobCache.get(transformedHash);
+    if (!blob) {
+      blob = URL.createObjectURL(makeScriptBlob(transformedCode));
+    }
+    // Store this blob in the cache. Any script that transforms the same
+    // (e.g. same scripts on server, same hash value, etc) can use this blob url.
+    BlobCache.store(transformedHash, blob);
+    // Push the blob URL onto the top of the stack.
+    urlStack.push(new ScriptUrl(script.filename, blob));
     return urlStack;
   } catch (err) {
     // If there is an error, we need to clean up the URLs.

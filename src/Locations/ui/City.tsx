@@ -17,10 +17,26 @@ import { IRouter } from "../../ui/Router";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { LocationType } from "../LocationTypeEnum";
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 
 type IProps = {
   city: City;
 };
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    location: {
+      color: theme.colors.white,
+      whiteSpace: "nowrap",
+      margin: "0px",
+      padding: "0px",
+      cursor: "pointer",
+    },
+  })
+);
+
 
 function toLocation(router: IRouter, location: Location): void {
   if (location.name === LocationName.TravelAgency) {
@@ -35,6 +51,7 @@ function toLocation(router: IRouter, location: Location): void {
 function LocationLetter(location: Location): React.ReactElement {
   location.types;
   const router = use.Router();
+  const classes = useStyles();
   let L = "X";
   if (location.types.includes(LocationType.Company)) L = "C";
   if (location.types.includes(LocationType.Gym)) L = "G";
@@ -51,13 +68,7 @@ function LocationLetter(location: Location): React.ReactElement {
     <span
       aria-label={location.name}
       key={location.name}
-      style={{
-        color: "white",
-        whiteSpace: "nowrap",
-        margin: "0px",
-        padding: "0px",
-        cursor: "pointer",
-      }}
+      className={classes.location}
       onClick={() => toLocation(router, location)}
     >
       <b>{L}</b>

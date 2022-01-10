@@ -1,6 +1,8 @@
 import { ISelfInitializer, ISelfLoading } from "../types";
 import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
 import { defaultTheme, ITheme } from "./Themes";
+import { defaultStyles, IStyleSettings } from "./Styles";
+import { WordWrapOptions } from '../ScriptEditor/ui/Options';
 
 /**
  * Represents the default settings the player could customize.
@@ -113,6 +115,16 @@ interface IDefaultSettings {
    * Theme colors
    */
   theme: ITheme;
+
+  /*
+   * Interface styles
+   */
+  styles: IStyleSettings;
+
+  /*
+   * Use GiB instead of GB
+   */
+  UseIEC60027_2: boolean;
 }
 
 /**
@@ -136,6 +148,8 @@ interface ISettings extends IDefaultSettings {
   MonacoFontSize: number;
 
   MonacoVim: boolean;
+
+  MonacoWordWrap: WordWrapOptions;
 }
 
 export const defaultSettings: IDefaultSettings = {
@@ -160,8 +174,10 @@ export const defaultSettings: IDefaultSettings = {
   SuppressBladeburnerPopup: false,
   SuppressTIXPopup: false,
   SuppressSavedGameToast: false,
+  UseIEC60027_2: false,
 
   theme: defaultTheme,
+  styles: defaultStyles,
 };
 
 /**
@@ -192,12 +208,15 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,
   SuppressTIXPopup: defaultSettings.SuppressTIXPopup,
   SuppressSavedGameToast: defaultSettings.SuppressSavedGameToast,
+  UseIEC60027_2: defaultSettings.UseIEC60027_2,
   MonacoTheme: "monokai",
   MonacoInsertSpaces: false,
   MonacoFontSize: 20,
   MonacoVim: false,
+  MonacoWordWrap: 'off',
 
   theme: { ...defaultTheme },
+  styles: { ...defaultStyles },
   init() {
     Object.assign(Settings, defaultSettings);
   },
@@ -205,6 +224,8 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     const save = JSON.parse(saveString);
     Object.assign(Settings.theme, save.theme);
     delete save.theme;
+    Object.assign(Settings.styles, save.styles);
+    delete save.styles;
     Object.assign(Settings, save);
   },
 };

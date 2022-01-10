@@ -4,11 +4,13 @@
  * This does NOT represent a script that is actively running and
  * being evaluated. See RunningScript for that
  */
-import { calculateRamUsage } from "./RamCalculations";
+import { calculateRamUsage, RamUsageEntry } from "./RamCalculations";
 import { ScriptUrl } from "./ScriptUrl";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
+import { computeHash } from "../utils/helpers/computeHash";
+import { IPlayer } from "../PersonObjects/IPlayer";
 
 let globalModuleSequenceNumber = 0;
 
@@ -36,19 +38,25 @@ export class Script {
 
   // Amount of RAM this Script requres to run
   ramUsage = 0;
+  ramUsageEntries?: RamUsageEntry[];
 
   // hostname of server that this script is on.
   server = "";
 
-  constructor(fn = "", code = "", server = "", otherScripts: Script[] = []) {
+  // sha256 hash of the code in the Script. Do not access directly.
+  _hash = "";
+
+  constructor(player: IPlayer | null = null, fn = "", code = "", server = "", otherScripts: Script[] = []) {
     this.filename = fn;
     this.code = code;
     this.ramUsage = 0;
     this.server = server; // hostname of server this script is on
     this.module = "";
     this.moduleSequenceNumber = ++globalModuleSequenceNumber;
-    if (this.code !== "") {
-      this.updateRamUsage(otherScripts);
+    this._hash = "";
+    if (this.code !== "" && player !== null) {
+      this.updateRamUsage(player, otherScripts);
+      this.rehash();
     }
   }
 
@@ -84,6 +92,23 @@ export class Script {
   markUpdated(): void {
     this.module = "";
     this.moduleSequenceNumber = ++globalModuleSequenceNumber;
+    this.rehash();
+  }
+
+  /**
+   * Force update of the computed hash based on the source code.
+   */
+  rehash(): void {
+    this._hash = computeHash(this.code);
+  }
+
+  /**
+   * If the hash is not computed, computes the hash. Otherwise return the computed hash.
+   * @returns the computed hash of the script
+   */
+  hash(): string {
+    if (!this._hash) this.rehash();
+    return this._hash;
   }
 
   /**
@@ -91,13 +116,13 @@ export class Script {
    * @param {string} code - The new contents of the script
    * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
    */
-  saveScript(filename: string, code: string, hostname: string, otherScripts: Script[]): void {
+  saveScript(player: IPlayer, filename: string, code: string, hostname: string, otherScripts: Script[]): void {
     // Update code and filename
     this.code = code.replace(/^\s+|\s+$/g, "");
 
     this.filename = filename;
     this.server = hostname;
-    this.updateRamUsage(otherScripts);
+    this.updateRamUsage(player, otherScripts);
     this.markUpdated();
   }
 
@@ -105,10 +130,11 @@ export class Script {
    * Calculates and updates the script's RAM usage based on its code
    * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
    */
-  async updateRamUsage(otherScripts: Script[]): Promise<void> {
-    const res = await calculateRamUsage(this.code, otherScripts);
-    if (res > 0) {
-      this.ramUsage = roundToTwo(res);
+  async updateRamUsage(player: IPlayer, otherScripts: Script[]): Promise<void> {
+    const res = await calculateRamUsage(player, this.code, otherScripts);
+    if (res.cost > 0) {
+      this.ramUsage = roundToTwo(res.cost);
+      this.ramUsageEntries = res.entries;
     }
     this.markUpdated();
   }
@@ -125,7 +151,12 @@ export class Script {
   // Initializes a Script Object from a JSON save state
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   static fromJSON(value: any): Script {
-    return Generic_fromJSON(Script, value.data);
+    const s = Generic_fromJSON(Script, value.data);
+    // Force the url to blank from the save data. Urls are not valid outside the current browser page load.
+    s.url = "";
+    // Rehash the code to ensure that hash is set properly.
+    s.rehash();
+    return s;
   }
 }
 

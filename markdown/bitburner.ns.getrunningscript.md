@@ -9,7 +9,7 @@ Get general info about a running script.
 <b>Signature:</b>
 
 ```typescript
-getRunningScript(filename: string | number, hostname: string, ...args: (string | number)[]): RunningScript;
+getRunningScript(filename?: string | number, hostname?: string, ...args: (string | number)[]): RunningScript;
 ```
 
 ## Parameters
@@ -29,4 +29,6 @@ info about a running script
 ## Remarks
 
 RAM cost: 0.3 GB
+
+Running with no args returns curent script.
 

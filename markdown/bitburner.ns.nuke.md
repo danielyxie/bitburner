@@ -26,12 +26,21 @@ void
 
 RAM cost: 0.05 GB
 
-Runs the NUKE.exe program on the target server. NUKE.exe must exist on your home computer.
+Running NUKE.exe on a target server gives you root access which means you can executes scripts on said server. NUKE.exe must exist on your home computer.
 
-## Example
+## Example 1
 
 
 ```ts
+// NS1:
 nuke("foodnstuff");
+```
+
+## Example 2
+
+
+```ts
+// NS2:
+ns.nuke("foodnstuff");
 ```
 

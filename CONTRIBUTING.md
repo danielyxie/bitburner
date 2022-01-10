@@ -6,7 +6,7 @@ The game is made better because the community as a whole speaks up about
 ways to improve the game. Here's some of the ways you can make your voice
 heard:
 
-- [Discord](https://discordapp.com)
+- [Discord](https://discord.gg/XKEGvHqVr3)
   There is a dedicated Discord instance set up for more free-form chats
   between all members of the community. Regular players, heavy scripters,
   Bitburner contributors, and everyone in between can be found on the
@@ -84,7 +84,9 @@ changes are okay to contribute:
 - Changes that directly affect the game's balance
 - New gameplay mechanics
 
-### How to setup fork properly
+---
+
+## How to setup fork properly
 
 Fork and clone the repo
 
@@ -106,7 +108,15 @@ Fork and clone the repo
   # Makes sure you always start from `danielyxie/dev` to avoid merge conflicts.
 ```
 
-### Running locally.
+## Development Workflow Best Practices
+
+- Work in a new branch forked from the `dev` branch to isolate your new code
+  - Keep code-changes on a branch as small as possible. This makes it easier for code review. Each branch should be its own independent feature.
+  - Regularly rebase your branch against `dev` to make sure you have the latest updates pulled.
+  - When merging, always merge your branch into `dev`. When releasing a new update, then merge `dev` into `master`
+
+
+## Running locally.
 
 Install
 
@@ -121,7 +131,29 @@ Inside the root of the repo run
 After that you can open any browser and navigate to `localhost:8000` and play the game.
 Saving a file will reload the game automatically.
 
-#### Submitting a Pull Request
+
+### How to build the electron app
+
+Tested on Node v16.13.1 (LTS) on Windows
+These steps only work in a bash-like environment, like MinGW for Windows.
+
+```sh
+# Install the main game dependencies & build the app in debug mode
+npm install
+npm run build:dev
+
+# Use electron-packager to build the app to the .build/ folder
+npm run electron
+
+# When launching the .exe directly, you'll need the steam_appid.txt file in the root
+# If not using windows, change this line accordingly
+cp .build/bitburner-win32-x64/resources/app/steam_appid.txt .build/bitburner-win32-x64/steam_appid.txt
+
+# And run the game...
+.build/bitburner-win32-x64/bitburner.exe
+```
+
+### Submitting a Pull Request
 
 When submitting a pull request with your code contributions, please abide by
 the following rules:
@@ -146,8 +178,13 @@ the following rules:
 
 ## As a Documentor
 
-To contribute to and view your changes to the BitBurner documentation, you will
+To contribute to and view your changes to the BitBurner documentation on [Read The
+Docs](http://bitburner.readthedocs.io/), you will
 need to have Python installed, along with [Sphinx](http://www.sphinx-doc.org).
+
+To make change to the [in-game documentation](./markdown/bitburner.md), you will need to modify the [TypeScript definitions](./src/ScriptEditor/NetscriptDefinitions.d.ts), not the markdown files.
+
+We are using [API Extractor](https://api-extractor.com/pages/tsdoc/doc_comment_syntax/) (tsdoc hints) to generate the markdown doc. Make your changes to the TypeScript definitions and then run `npm run doc`.
 
 Before submitting your code for a pull request, please try to follow these
 rules:
@@ -160,3 +197,14 @@ rules:
   _danielyxie/bitburner_ and the base is _dev_.
 - Do not check in any generated files under `doc\`. The documentation is built
   automatically by ReadTheDocs.
+
+## Deploying a new version
+
+Update the following
+
+- `src/Constants.ts` `Version` and `LatestUpdate`
+- `package.json` `version`
+- `doc/source/conf.py` `version` and `release`
+- `doc/source/changelog.rst`
+- post to discord
+- post to reddit.com/r/Bitburner

@@ -88,8 +88,10 @@ export async function main(ns) {
 |  [getPurchasedServerMaxRam()](./bitburner.ns.getpurchasedservermaxram.md) | Returns the maximum RAM that a purchased server can have. |
 |  [getPurchasedServers()](./bitburner.ns.getpurchasedservers.md) | Returns an array with the hostnames of all of the servers you have purchased. |
 |  [getRunningScript(filename, hostname, args)](./bitburner.ns.getrunningscript.md) | Get general info about a running script. |
-|  [getScriptExpGain(script, host, args)](./bitburner.ns.getscriptexpgain.md) | Get the exp gain of a script. |
-|  [getScriptIncome(script, host, args)](./bitburner.ns.getscriptincome.md) | Get the income of a script. |
+|  [getScriptExpGain()](./bitburner.ns.getscriptexpgain.md) | Get the exp gain of a script. |
+|  [getScriptExpGain(script, host, args)](./bitburner.ns.getscriptexpgain_1.md) |  |
+|  [getScriptIncome()](./bitburner.ns.getscriptincome.md) | Get the income of a script. |
+|  [getScriptIncome(script, host, args)](./bitburner.ns.getscriptincome_1.md) |  |
 |  [getScriptLogs(fn, host, args)](./bitburner.ns.getscriptlogs.md) | Get all the logs of a script. |
 |  [getScriptName()](./bitburner.ns.getscriptname.md) | Returns the current script name. |
 |  [getScriptRam(script, host)](./bitburner.ns.getscriptram.md) | Get the ram cost of a script. |
@@ -111,7 +113,7 @@ export async function main(ns) {
 |  [growthAnalyze(host, growthAmount, cores)](./bitburner.ns.growthanalyze.md) | Calculate the number of grow thread needed to grow a server by a certain multiplier. |
 |  [growthAnalyzeSecurity(threads)](./bitburner.ns.growthanalyzesecurity.md) | Calculate the security increase for a number of thread. |
 |  [hack(host, opts)](./bitburner.ns.hack.md) | Steal a servers money. |
-|  [hackAnalyze(host)](./bitburner.ns.hackanalyze.md) | Get the percent of money stolen with a single thread. |
+|  [hackAnalyze(host)](./bitburner.ns.hackanalyze.md) | Get the part of money stolen with a single thread. |
 |  [hackAnalyzeChance(host)](./bitburner.ns.hackanalyzechance.md) | Get the chance of successfully hacking a server. |
 |  [hackAnalyzeSecurity(threads)](./bitburner.ns.hackanalyzesecurity.md) | Get the security increase for a number of thread. |
 |  [hackAnalyzeThreads(host, hackAmount)](./bitburner.ns.hackanalyzethreads.md) | Predict the effect of hack. |
@@ -119,13 +121,14 @@ export async function main(ns) {
 |  [httpworm(host)](./bitburner.ns.httpworm.md) | Runs HTTPWorm.exe on a server. |
 |  [isLogEnabled(fn)](./bitburner.ns.islogenabled.md) | Checks the status of the logging for the given function. |
 |  [isRunning(script, host, args)](./bitburner.ns.isrunning.md) | Check if a script is running. |
-|  [kill(script, host, args)](./bitburner.ns.kill.md) | Terminate another script. |
+|  [kill(script)](./bitburner.ns.kill.md) | Terminate another script. |
+|  [kill(script, host, args)](./bitburner.ns.kill_1.md) |  |
 |  [killall(host)](./bitburner.ns.killall.md) | Terminate all scripts on a server. |
 |  [ls(host, grep)](./bitburner.ns.ls.md) | List files on a server. |
 |  [nFormat(n, format)](./bitburner.ns.nformat.md) | Format a number |
 |  [nuke(host)](./bitburner.ns.nuke.md) | Runs NUKE.exe on a server. |
 |  [peek(port)](./bitburner.ns.peek.md) | Get a copy of the data from a port without popping it. |
-|  [print(msg)](./bitburner.ns.print.md) | Prints a value or a variable to the script’s logs. |
+|  [print(args)](./bitburner.ns.print.md) | Prints one or move values or variables to the script’s logs. |
 |  [prompt(txt)](./bitburner.ns.prompt.md) | Prompt the player with a Yes/No modal. |
 |  [ps(host)](./bitburner.ns.ps.md) | List running scripts on a server. |
 |  [purchaseServer(hostname, ram)](./bitburner.ns.purchaseserver.md) | Purchase a server. |
@@ -134,7 +137,7 @@ export async function main(ns) {
 |  [relaysmtp(host)](./bitburner.ns.relaysmtp.md) | Runs relaySMTP.exe on a server. |
 |  [rm(name, host)](./bitburner.ns.rm.md) | Delete a file. |
 |  [run(script, numThreads, args)](./bitburner.ns.run.md) | Start another script on the current server. |
-|  [scan(host)](./bitburner.ns.scan.md) | Get the list servers connected to a server. |
+|  [scan(host)](./bitburner.ns.scan.md) | Get the list of servers connected to a server. |
 |  [scp(files, source, destination)](./bitburner.ns.scp.md) | Copy file between servers. |
 |  [scriptKill(script, host)](./bitburner.ns.scriptkill.md) | Kill all scripts with a filename. |
 |  [scriptRunning(script, host)](./bitburner.ns.scriptrunning.md) | Check if any script with a filename is running. |
@@ -145,8 +148,8 @@ export async function main(ns) {
 |  [sqlinject(host)](./bitburner.ns.sqlinject.md) | Runs SQLInject.exe on a server. |
 |  [tail(fn, host, args)](./bitburner.ns.tail.md) | Open the tail window of a script. |
 |  [tFormat(milliseconds, milliPrecision)](./bitburner.ns.tformat.md) | Format time to readable string |
-|  [toast(msg, variant)](./bitburner.ns.toast.md) | Queue a toast (bottom-right notification). |
-|  [tprint(msg)](./bitburner.ns.tprint.md) | Prints a value or a variable to the Terminal. |
+|  [toast(msg, variant, duration)](./bitburner.ns.toast.md) | Queue a toast (bottom-right notification). |
+|  [tprint(args)](./bitburner.ns.tprint.md) | Prints one or more values or variables to the Terminal. |
 |  [tprintf(format, values)](./bitburner.ns.tprintf.md) | Prints a raw value or a variable to the Terminal. |
 |  [tryWritePort(port, data)](./bitburner.ns.trywriteport.md) | Attempt to write to a port. |
 |  [vsprintf(format, args)](./bitburner.ns.vsprintf.md) | Format a string with an array of arguments. |

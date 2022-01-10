@@ -79,6 +79,68 @@ function Work(): React.ReactElement {
   const router = use.Router();
   const classes = useStyles();
   if (!player.isWorking || player.focus) return <></>;
+
+  if (player.className !== "") {
+    return (
+      <>
+        <TableRow>
+          <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
+            <Typography>Work&nbsp;in&nbsp;progress:</Typography>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
+            <Typography>{player.className}</Typography>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell component="th" scope="row" align="center" colSpan={2} classes={{ root: classes.cellNone }}>
+            <Button
+              onClick={() => {
+                player.startFocusing();
+                router.toWork();
+              }}
+            >
+              Focus
+            </Button>
+          </TableCell>
+        </TableRow>
+      </>
+    );
+  }
+
+  if (player.createProgramName !== "") {
+    return (
+      <>
+        <TableRow>
+          <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
+            <Typography>Work&nbsp;in&nbsp;progress:</Typography>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
+            <Typography>
+              {player.createProgramName}{" "}
+              {((player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100).toFixed(2)}%
+            </Typography>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell component="th" scope="row" align="center" colSpan={2} classes={{ root: classes.cellNone }}>
+            <Button
+              onClick={() => {
+                player.startFocusing();
+                router.toWork();
+              }}
+            >
+              Focus
+            </Button>
+          </TableCell>
+        </TableRow>
+      </>
+    );
+  }
+
   return (
     <>
       <TableRow>
@@ -158,17 +220,29 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
   const theme = useTheme();
 
   const hackingProgress = player.calculateSkillProgress(
-    player.hacking_exp, player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier);
+    player.hacking_exp,
+    player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
+  );
   const strengthProgress = player.calculateSkillProgress(
-    player.strength_exp, player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier);
+    player.strength_exp,
+    player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
+  );
   const defenseProgress = player.calculateSkillProgress(
-    player.defense_exp, player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier);
+    player.defense_exp,
+    player.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier,
+  );
   const dexterityProgress = player.calculateSkillProgress(
-    player.dexterity_exp, player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier);
+    player.dexterity_exp,
+    player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+  );
   const agilityProgress = player.calculateSkillProgress(
-    player.agility_exp, player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier);
+    player.agility_exp,
+    player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
+  );
   const charismaProgress = player.calculateSkillProgress(
-    player.charisma_exp, player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier);
+    player.charisma_exp,
+    player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
+  );
 
   return (
     <>
@@ -216,7 +290,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             <StatsProgressOverviewCell progress={hackingProgress} color={theme.colors.hack} />
           </TableRow>
           <TableRow>
-          <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
               <Typography classes={{ root: classes.hack }}></Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cell }}>

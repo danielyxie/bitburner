@@ -4,7 +4,7 @@ import { IEngine } from "./IEngine";
 import { IRouter } from "./ui/Router";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import { General } from "./DevMenu/ui/General";
 import { Stats } from "./DevMenu/ui/Stats";
@@ -22,7 +22,9 @@ import { StockMarket } from "./DevMenu/ui/StockMarket";
 import { Sleeves } from "./DevMenu/ui/Sleeves";
 import { Stanek } from "./DevMenu/ui/Stanek";
 import { TimeSkip } from "./DevMenu/ui/TimeSkip";
+import { Achievements } from "./DevMenu/ui/Achievements";
 import Typography from "@mui/material/Typography";
+import { Exploit } from "./Exploits/Exploit";
 
 interface IProps {
   player: IPlayer;
@@ -31,6 +33,9 @@ interface IProps {
 }
 
 export function DevMenuRoot(props: IProps): React.ReactElement {
+  useEffect(() => {
+    props.player.giveExploit(Exploit.YoureNotMeantToAccessThis);
+  }, []);
   return (
     <>
       <Typography>Development Menu - Only meant to be used for testing/debugging</Typography>
@@ -57,6 +62,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
       {props.player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1) && <Stanek />}
 
       <TimeSkip player={props.player} engine={props.engine} />
+      <Achievements player={props.player} engine={props.engine} />
     </>
   );
 }

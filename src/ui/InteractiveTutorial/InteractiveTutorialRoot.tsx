@@ -351,7 +351,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
             continuously hack the n00dles server.
             <br />
             <br />
-            To save and close the script editor, press the button in the bottom left, or press ctrl + b.
+            To save and close the script editor, press the button in the bottom left, or press ctrl + s then ctrl + b.
           </Typography>
         </>
       ),

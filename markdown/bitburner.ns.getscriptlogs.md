@@ -38,23 +38,29 @@ Otherwise, the fn, hostname/ip, and args… arguments can be used to get the log
 
 
 ```ts
+// NS1:
 //Get logs from foo.script on the current server that was run with no args
 getScriptLogs("foo.script");
+
+//Open logs from foo.script on the foodnstuff server that was run with no args
+getScriptLogs("foo.script", "foodnstuff");
+
+//Open logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
+getScriptLogs("foo.script", "foodnstuff", 1, "test");
 ```
 
 ## Example 2
 
 
 ```ts
+// NS2:
+//Get logs from foo.script on the current server that was run with no args
+ns.getScriptLogs("foo.script");
+
 //Open logs from foo.script on the foodnstuff server that was run with no args
-getScriptLogs("foo.script", "foodnstuff");
-```
+ns.getScriptLogs("foo.script", "foodnstuff");
 
-## Example 3
-
-
-```ts
 //Open logs from foo.script on the foodnstuff server that was run with the arguments [1, "test"]
-getScriptLogs("foo.script", "foodnstuff", 1, "test");
+ns.getScriptLogs("foo.script", "foodnstuff", 1, "test");
 ```
 

@@ -4,7 +4,7 @@
 
 ## SleeveWorkGains.workAgiExpGain property
 
-agility exp gained from work
+Agility exp gained from work
 
 <b>Signature:</b>
 

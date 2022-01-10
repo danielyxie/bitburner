@@ -52,7 +52,7 @@ export function prestigeAugmentation(): void {
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);
-  prestigeHomeComputer(homeComp);
+  prestigeHomeComputer(Player, homeComp);
 
   if (augmentationExists(AugmentationNames.Neurolink) && Augmentations[AugmentationNames.Neurolink].owned) {
     homeComp.programs.push(Programs.FTPCrackProgram.name);
@@ -113,6 +113,11 @@ export function prestigeAugmentation(): void {
     if (faction instanceof Faction) {
       joinFaction(faction);
     }
+  }
+
+  // BitNode 3: Corporatocracy
+  if (Player.bitNodeN === 3) {
+    homeComp.messages.push(LiteratureNames.CorporationManagementHandbook);
   }
 
   // Cancel Bladeburner action
@@ -180,7 +185,7 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Reset home computer (only the programs) and add to AllServers
   AddToAllServers(homeComp);
-  prestigeHomeComputer(homeComp);
+  prestigeHomeComputer(Player, homeComp);
 
   // Re-create foreign servers
   initForeignServers(Player.getHomeComputer());

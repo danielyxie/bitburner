@@ -4,7 +4,7 @@
 
 ## SleeveSkills.dexterity property
 
-current dexterity of the sleeve
+Current dexterity of the sleeve
 
 <b>Signature:</b>
 

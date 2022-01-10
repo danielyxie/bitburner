@@ -4,7 +4,7 @@
 
 ## CodingContract interface
 
-Coding Contact API
+Coding Contract API
 
 <b>Signature:</b>
 

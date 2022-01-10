@@ -165,7 +165,7 @@ BitNodes["BitNode4"] = new BitNode(
       <br />
       Destroying this BitNode will give you Source-File 4, or if you already have this Source-File it will upgrade its
       level up to a maximum of 3. This Source-File lets you access and use the Singularity Functions in other BitNodes.
-      Each level of this Source-File will open up more Singularity Functions that you can use.
+      Each level of this Source-File reduces the RAM cost of singularity functions.
     </>
   ),
 );

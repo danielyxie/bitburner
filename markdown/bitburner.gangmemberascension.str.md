@@ -4,7 +4,7 @@
 
 ## GangMemberAscension.str property
 
-Strength multiplier gained from ascending.
+Strength multiplier gained from ascending
 
 <b>Signature:</b>
 

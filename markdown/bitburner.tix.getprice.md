@@ -28,10 +28,19 @@ The price of a stock.
 
 RAM cost: 2 GB The stock’s price is the average of its bid and ask price.
 
-## Example
+## Example 1
 
 
 ```ts
-getPrice("FISG");
+// NS1
+stock.getPrice("FISG");
+```
+
+## Example 2
+
+
+```ts
+// NS2
+ns.stock.getPrice("FISG");
 ```
 

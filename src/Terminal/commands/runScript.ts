@@ -76,7 +76,7 @@ export function runScript(
     const runningScript = new RunningScript(script, args);
     runningScript.threads = numThreads;
 
-    const success = startWorkerScript(runningScript, server);
+    const success = startWorkerScript(player, runningScript, server);
     if (!success) {
       terminal.error(`Failed to start script`);
       return;
@@ -85,6 +85,9 @@ export function runScript(
     terminal.print(
       `Running script with ${numThreads} thread(s), pid ${runningScript.pid} and args: ${JSON.stringify(args)}.`,
     );
+    if (runningScript.filename.endsWith(".ns")) {
+      terminal.warn(".ns files are deprecated, please rename everything to .js");
+    }
     if (tailFlag) {
       LogBoxEvents.emit(runningScript);
     }

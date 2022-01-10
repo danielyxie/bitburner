@@ -117,8 +117,19 @@ export function Root(props: IProps): React.ReactElement {
     theme: Settings.MonacoTheme,
     insertSpaces: Settings.MonacoInsertSpaces,
     fontSize: Settings.MonacoFontSize,
+    wordWrap: Settings.MonacoWordWrap,
     vim: props.vim || Settings.MonacoVim,
   });
+
+  // Prevent Crash if script is open on deleted server
+  openScripts = openScripts.filter((script) => {
+    return GetServer(script.hostname) !== null;
+  })
+  if (currentScript && (GetServer(currentScript.hostname) === null)) {
+    currentScript = openScripts[0];
+    if (currentScript === undefined) currentScript = null;
+  }
+
 
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
@@ -178,7 +189,12 @@ export function Root(props: IProps): React.ReactElement {
             save();
           });
           MonacoVim.VimMode.Vim.defineEx("quit", "q", function () {
+            props.router.toTerminal();
+          });
+          // "wqriteandquit" is not a typo, prefix must be found in full string
+          MonacoVim.VimMode.Vim.defineEx("wqriteandquit", "wq", function () {
             save();
+            props.router.toTerminal();
           });
           editor.focus();
         });
@@ -220,12 +236,12 @@ export function Root(props: IProps): React.ReactElement {
     }
     setUpdatingRam(true);
     const codeCopy = newCode + "";
-    const ramUsage = await calculateRamUsage(codeCopy, props.player.getCurrentServer().scripts);
-    if (ramUsage > 0) {
-      debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage));
+    const ramUsage = await calculateRamUsage(props.player, codeCopy, props.player.getCurrentServer().scripts);
+    if (ramUsage.cost > 0) {
+      debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage.cost));
       return;
     }
-    switch (ramUsage) {
+    switch (ramUsage.cost) {
       case RamCalculationErrorCode.ImportError: {
         debouncedSetRAM("RAM: Import Error");
         break;
@@ -282,13 +298,15 @@ export function Root(props: IProps): React.ReactElement {
         .getLanguages()
         .find((l: any) => l.id === "javascript")
         .loader();
-      l.language.tokenizer.root.unshift(["ns", { token: "ns" }]);
-      for (const symbol of symbols) l.language.tokenizer.root.unshift([symbol, { token: "netscriptfunction" }]);
+      // replaced the bare tokens with regexes surrounded by \b, e.g. \b{token}\b which matches a word-break on either side
+      // this prevents the highlighter from highlighting pieces of variables that start with a reserved token name
+      l.language.tokenizer.root.unshift([new RegExp('\\bns\\b'), { token: "ns" }]);
+      for (const symbol of symbols) l.language.tokenizer.root.unshift([new RegExp(`\\b${symbol}\\b`), { token: "netscriptfunction" }]);
       const otherKeywords = ["let", "const", "var", "function"];
       const otherKeyvars = ["true", "false", "null", "undefined"];
-      otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeywords" }]));
-      otherKeyvars.forEach((k) => l.language.tokenizer.root.unshift([k, { token: "otherkeyvars" }]));
-      l.language.tokenizer.root.unshift(["this", { token: "this" }]);
+      otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeywords" }]));
+      otherKeyvars.forEach((k) => l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeyvars" }]));
+      l.language.tokenizer.root.unshift([new RegExp('\\bthis\\b'), { token: "this" }]);
     })();
 
     const source = (libSource + "").replace(/export /g, "");
@@ -425,6 +443,7 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.scripts.length; i++) {
         if (scriptToSave.fileName == server.scripts[i].filename) {
           server.scripts[i].saveScript(
+            props.player,
             scriptToSave.fileName,
             scriptToSave.code,
             props.player.currentServer,
@@ -438,7 +457,13 @@ export function Root(props: IProps): React.ReactElement {
 
       //If the current script does NOT exist, create a new one
       const script = new Script();
-      script.saveScript(scriptToSave.fileName, scriptToSave.code, props.player.currentServer, server.scripts);
+      script.saveScript(
+        props.player,
+        scriptToSave.fileName,
+        scriptToSave.code,
+        props.player.currentServer,
+        server.scripts,
+      );
       server.scripts.push(script);
     } else if (scriptToSave.fileName.endsWith(".txt")) {
       for (let i = 0; i < server.textFiles.length; ++i) {
@@ -504,6 +529,7 @@ export function Root(props: IProps): React.ReactElement {
       for (let i = 0; i < server.scripts.length; i++) {
         if (currentScript.fileName == server.scripts[i].filename) {
           server.scripts[i].saveScript(
+            props.player,
             currentScript.fileName,
             currentScript.code,
             props.player.currentServer,
@@ -516,7 +542,13 @@ export function Root(props: IProps): React.ReactElement {
 
       //If the current script does NOT exist, create a new one
       const script = new Script();
-      script.saveScript(currentScript.fileName, currentScript.code, props.player.currentServer, server.scripts);
+      script.saveScript(
+        props.player,
+        currentScript.fileName,
+        currentScript.code,
+        props.player.currentServer,
+        server.scripts,
+      );
       server.scripts.push(script);
     } else if (currentScript.fileName.endsWith(".txt")) {
       for (let i = 0; i < server.textFiles.length; ++i) {
@@ -762,7 +794,7 @@ export function Root(props: IProps): React.ReactElement {
           <Typography color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
             {ram}
           </Typography>
-          <Button onClick={save}>Save All (Ctrl/Cmd + s)</Button>
+          <Button onClick={save}>Save (Ctrl/Cmd + s)</Button>
           <Button onClick={props.router.toTerminal}>Close (Ctrl/Cmd + b)</Button>
           <Typography sx={{ mx: 1 }}>
             {" "}
@@ -789,6 +821,7 @@ export function Root(props: IProps): React.ReactElement {
             theme: Settings.MonacoTheme,
             insertSpaces: Settings.MonacoInsertSpaces,
             fontSize: Settings.MonacoFontSize,
+            wordWrap: Settings.MonacoWordWrap,
             vim: Settings.MonacoVim,
           }}
           save={(options: Options) => {
@@ -796,6 +829,7 @@ export function Root(props: IProps): React.ReactElement {
             Settings.MonacoTheme = options.theme;
             Settings.MonacoInsertSpaces = options.insertSpaces;
             Settings.MonacoFontSize = options.fontSize;
+            Settings.MonacoWordWrap = options.wordWrap;
             Settings.MonacoVim = options.vim;
           }}
         />

@@ -35,6 +35,7 @@ import { simple as walksimple } from "acorn-walk";
 import { areFilesEqual } from "./Terminal/DirectoryHelpers";
 import { Player } from "./Player";
 import { Terminal } from "./Terminal";
+import { IPlayer } from "./PersonObjects/IPlayer";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
@@ -47,6 +48,9 @@ export function prestigeWorkerScripts(): void {
     ws.env.stopFlag = true;
     killWorkerScript(ws);
   }
+  for (const port of NetscriptPorts) {
+    port.clear();
+  }
 
   WorkerScriptStartStopEventEmitter.emit();
   workerScripts.clear();
@@ -55,7 +59,7 @@ export function prestigeWorkerScripts(): void {
 // JS script promises need a little massaging to have the same guarantees as netscript
 // promises. This does said massaging and kicks the script off. It returns a promise
 // that resolves or rejects when the corresponding worker script is done.
-function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript> {
+function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Promise<WorkerScript> {
   workerScript.running = true;
 
   // The name of the currently running netscript function, to prevent concurrent
@@ -121,7 +125,7 @@ function startNetscript2Script(workerScript: WorkerScript): Promise<WorkerScript
   // Note: the environment that we pass to the JS script only needs to contain the functions visible
   // to that script, which env.vars does at this point.
   return new Promise<WorkerScript>((resolve, reject) => {
-    executeJSScript(workerScript.getServer().scripts, workerScript)
+    executeJSScript(player, workerScript.getServer().scripts, workerScript)
       .then(() => {
         resolve(workerScript);
       })
@@ -457,8 +461,13 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
  * @param {Server} server - Server on which the script is to be run
  * @returns {number} pid of started script
  */
-export function startWorkerScript(runningScript: RunningScript, server: BaseServer, parent?: WorkerScript): number {
-  if (createAndAddWorkerScript(runningScript, server, parent)) {
+export function startWorkerScript(
+  player: IPlayer,
+  runningScript: RunningScript,
+  server: BaseServer,
+  parent?: WorkerScript,
+): number {
+  if (createAndAddWorkerScript(player, runningScript, server, parent)) {
     // Push onto runningScripts.
     // This has to come after createAndAddWorkerScript() because that fn updates RAM usage
     server.runScript(runningScript);
@@ -478,7 +487,12 @@ export function startWorkerScript(runningScript: RunningScript, server: BaseServ
  * @param {Server} server - Server on which the script is to be run
  * returns {boolean} indicating whether or not the workerScript was successfully added
  */
-function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseServer, parent?: WorkerScript): boolean {
+function createAndAddWorkerScript(
+  player: IPlayer,
+  runningScriptObj: RunningScript,
+  server: BaseServer,
+  parent?: WorkerScript,
+): boolean {
   // Update server's ram usage
   let threads = 1;
   if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
@@ -522,7 +536,7 @@ function createAndAddWorkerScript(runningScriptObj: RunningScript, server: BaseS
   // Start the script's execution
   let p: Promise<WorkerScript> | null = null; // Script's resulting promise
   if (s.name.endsWith(".js") || s.name.endsWith(".ns")) {
-    p = startNetscript2Script(s);
+    p = startNetscript2Script(player, s);
   } else {
     p = startNetscript1Script(s);
     if (!(p instanceof Promise)) {
@@ -607,10 +621,10 @@ export function updateOnlineScriptTimes(numCycles = 1): void {
  * Called when the game is loaded. Loads all running scripts (from all servers)
  * into worker scripts so that they will start running
  */
-export function loadAllRunningScripts(): void {
+export function loadAllRunningScripts(player: IPlayer): void {
   const skipScriptLoad = window.location.href.toLowerCase().indexOf("?noscripts") !== -1;
   if (skipScriptLoad) {
-    Terminal.warn('Skipped loading player scripts during startup');
+    Terminal.warn("Skipped loading player scripts during startup");
     console.info("Skipping the load of any scripts during startup");
   }
   for (const server of GetAllServers()) {
@@ -627,7 +641,14 @@ export function loadAllRunningScripts(): void {
       server.runningScripts.length = 0;
     } else {
       for (let j = 0; j < server.runningScripts.length; ++j) {
-        createAndAddWorkerScript(server.runningScripts[j], server);
+        const fileName = server.runningScripts[j].filename;
+        createAndAddWorkerScript(player, server.runningScripts[j], server);
+
+        if (!server.runningScripts[j]) {
+          // createAndAddWorkerScript can modify the server.runningScripts array if a script is invalid
+          console.error(`createAndAddWorkerScript removed ${fileName} from ${server}`);
+          continue;
+        }
 
         // Offline production
         scriptCalculateOfflineProduction(server.runningScripts[j]);
@@ -640,6 +661,7 @@ export function loadAllRunningScripts(): void {
  * Run a script from inside another script (run(), exec(), spawn(), etc.)
  */
 export function runScriptFromScript(
+  player: IPlayer,
   caller: string,
   server: BaseServer,
   scriptname: string,
@@ -687,7 +709,7 @@ export function runScriptFromScript(
     // Check for admin rights and that there is enough RAM availble to run
     const script = server.scripts[i];
     let ramUsage = script.ramUsage;
-    threads = Math.round(Number(threads));
+    threads = Math.floor(Number(threads));
     if (threads === 0) {
       return 0;
     }
@@ -714,7 +736,7 @@ export function runScriptFromScript(
       runningScriptObj.threads = threads;
       runningScriptObj.server = server.hostname;
 
-      return startWorkerScript(runningScriptObj, server, workerScript);
+      return startWorkerScript(player, runningScriptObj, server, workerScript);
     }
     break;
   }

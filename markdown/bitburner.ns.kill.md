@@ -9,16 +9,14 @@ Terminate another script.
 <b>Signature:</b>
 
 ```typescript
-kill(script: string | number, host: string, ...args: string[]): boolean;
+kill(script: number): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | string \| number | Filename or pid of the script to kill |
-|  host | string | Hostname of the server on which to kill the script. |
-|  args | string\[\] | Arguments to identify which script to kill. |
+|  script | number | Filename or pid of the script to kill |
 
 <b>Returns:</b>
 
@@ -36,23 +34,29 @@ Kills the script on the target server specified by the script’s name and argum
 
 
 ```ts
+// NS1:
 //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
 kill("foo.script", "foodnstuff");
+
+//The following will try to kill a script named foo.script on the current server that was ran with no arguments:
+kill("foo.script", getHostname());
+
+//The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
+kill("foo.script", getHostname(), 1, "foodnstuff");
 ```
 
 ## Example 2
 
 
 ```ts
+// NS2:
+//The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
+ns.kill("foo.script", "foodnstuff");
+
 //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
-kill("foo.script", getHostname());
-```
+ns.kill("foo.script", getHostname());
 
-## Example 3
-
-
-```ts
 //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
-kill("foo.script", getHostname(), 1, "foodnstuff");
+ns.kill("foo.script", getHostname(), 1, "foodnstuff");
 ```
 

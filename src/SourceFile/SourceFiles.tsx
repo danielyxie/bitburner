@@ -56,7 +56,7 @@ SourceFiles["SourceFile4"] = new SourceFile(
   (
     <>
       This Source-File lets you access and use the Singularity Functions in every BitNode. Every level of this
-      Source-File opens up more of the Singularity Functions you can use.
+      Source-File reduces the RAM cost of Singularity functions.
     </>
   ),
 );

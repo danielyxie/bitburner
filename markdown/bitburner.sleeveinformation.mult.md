@@ -4,7 +4,7 @@
 
 ## SleeveInformation.mult property
 
-sleeve multipliers
+Sleeve multipliers
 
 <b>Signature:</b>
 

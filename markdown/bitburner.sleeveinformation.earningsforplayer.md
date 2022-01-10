@@ -4,7 +4,7 @@
 
 ## SleeveInformation.earningsForPlayer property
 
-earnings synchronized to the player
+Earnings synchronized to the player
 
 <b>Signature:</b>
 

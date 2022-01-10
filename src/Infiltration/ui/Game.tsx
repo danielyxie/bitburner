@@ -1,6 +1,7 @@
 import { use } from "../../ui/Context";
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import { Countdown } from "./Countdown";
 import { BracketGame } from "./BracketGame";
 import { SlashGame } from "./SlashGame";
@@ -98,6 +99,11 @@ export function Game(props: IProps): React.ReactElement {
     setupNextGame();
   }
 
+  function cancel(): void {
+    router.toCity();
+    return;
+  }
+
   let stageComponent: React.ReactNode;
   switch (stage) {
     case Stage.Countdown:
@@ -132,6 +138,9 @@ export function Game(props: IProps): React.ReactElement {
   return (
     <>
       <Grid container spacing={3}>
+        <Grid item xs={3}>
+          <Button onClick={cancel}>Cancel</Button>
+        </Grid>
         <Grid item xs={3}>
           <Typography>
             Level: {level}&nbsp;/&nbsp;{props.MaxLevel}
