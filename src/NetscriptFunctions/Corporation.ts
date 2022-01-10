@@ -65,10 +65,10 @@ export function NetscriptCorporation(
     return corporation;
   }
 
-  function getDivision(divisionName: any): IIndustry {
+  function getDivision(divisionType: any): IIndustry {
     const corporation = getCorporation();
-    const division = corporation.divisions.find((div) => div.name === divisionName);
-    if (division === undefined) throw new Error(`No division named '${divisionName}'`);
+    const division = corporation.divisions.find((div) => div.type === divisionType);
+    if (division === undefined) throw new Error(`No division named '${divisionType}'`);
     return division;
   }
 
