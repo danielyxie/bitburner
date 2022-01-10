@@ -255,6 +255,24 @@ export interface AugmentPair {
 }
 
 /**
+ * @public
+ */
+export enum PositionTypes {
+  Long = "L",
+  Short = "S",
+}
+
+/**
+ * @public
+ */
+export enum OrderTypes {
+  LimitBuy = "Limit Buy Order",
+  LimitSell = "Limit Sell Order",
+  StopBuy = "Stop Buy Order",
+  StopSell = "Stop Sell Order",
+}
+
+/**
  * Value in map of {@link StockOrder}
  * @public
  */
@@ -264,17 +282,18 @@ export interface StockOrderObject {
   /** Price per share */
   price: number;
   /** Order type */
-  type: string;
+  type: OrderTypes;
   /** Order position */
-  position: string;
+  position: PositionTypes;
 }
 
 /**
  * Return value of {@link TIX.getOrders | getOrders}
+ *
+ * Keys are stock symbols, properties are arrays of {@link StockOrderObject}
  * @public
  */
 export interface StockOrder {
-  /** Stock Symbol */
   [key: string]: StockOrderObject[];
 }
 
@@ -1199,6 +1218,8 @@ export interface TIX {
    * @remarks
    * RAM cost: 2.5 GB
    * This is an object containing information for all the Limit and Stop Orders you have in the stock market.
+   * For each symbol you have a position in, the returned object will have a key with that symbol's name.
+   * The object's properties are each an array of {@link StockOrderObject}
    * The object has the following structure:
    *
    * ```ts
