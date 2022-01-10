@@ -1,7 +1,7 @@
 import { CompanyPosition } from "./CompanyPosition";
 import * as posNames from "./data/companypositionnames";
+import { favorToRep, repToFavor } from "./formulas/favor";
 
-import { CONSTANTS } from "../Constants";
 import { IMap } from "../types";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
@@ -137,39 +137,17 @@ export class Company {
     if (this.favor == null) {
       this.favor = 0;
     }
-    if (this.rolloverRep == null) {
-      this.rolloverRep = 0;
-    }
-    const res = this.getFavorGain();
-    if (res.length != 2) {
-      console.error("Invalid result from getFavorGain() function");
-      return;
-    }
-
-    this.favor += res[0];
-    this.rolloverRep = res[1];
+    this.favor += this.getFavorGain();
   }
 
-  getFavorGain(): number[] {
+  getFavorGain(): number {
     if (this.favor == null) {
       this.favor = 0;
     }
-    if (this.rolloverRep == null) {
-      this.rolloverRep = 0;
-    }
-    let favorGain = 0,
-      rep = this.playerReputation + this.rolloverRep;
-    let reqdRep = CONSTANTS.CompanyReputationToFavorBase * Math.pow(CONSTANTS.CompanyReputationToFavorMult, this.favor);
-    while (rep > 0) {
-      if (rep >= reqdRep) {
-        ++favorGain;
-        rep -= reqdRep;
-      } else {
-        break;
-      }
-      reqdRep *= CONSTANTS.FactionReputationToFavorMult;
-    }
-    return [favorGain, rep];
+    const storedRep = Math.max(0, favorToRep(this.favor));
+    const totalRep = storedRep + this.playerReputation;
+    const newFavor = repToFavor(totalRep);
+    return newFavor - this.favor;
   }
 
   /**

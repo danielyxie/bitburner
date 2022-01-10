@@ -198,7 +198,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
             <Tooltip
               title={
                 <>
-                  You will have <Favor favor={company.favor + favorGain[0]} /> company favor upon resetting after
+                  You will have <Favor favor={company.favor + favorGain} /> company favor upon resetting after
                   installing Augmentations
                 </>
               }
