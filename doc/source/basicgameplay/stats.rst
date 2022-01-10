@@ -3,8 +3,7 @@
 Stats
 =====
 The player has several stats that can be increased in order to progress
-in the game. All of these stats other than Hacking will decrease the
-difficulty of infiltrations.
+in the game.
 
 Hacking
 ^^^^^^^

@@ -17,7 +17,7 @@ says 'Infiltrate Company'.
 When infiltrating a company you will be presented with short active challenges.
 None of the challenges use the mouse.
 
-The difficulty at the top lowers with better combat stats. It is not recommended
+The difficulty at the top lowers with better combat stats and charisma. It is not recommended
 to attempt infiltrations above mid-normal.
 
 The "maximum level" is the number of challenges you will need to pass to receive
