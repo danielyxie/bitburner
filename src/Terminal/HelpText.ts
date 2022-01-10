@@ -46,12 +46,12 @@ export const TerminalHelpText: string[] = [
 ];
 
 const TemplatedHelpTexts: IMap<(command: string) => string[]> = {
-  textEditor: (command) => {
+  scriptEditor: (command) => {
     return [
       `${command} [file ...] | [glob]`,
       ` `,
-      `Opens up the specified file(s) in the Text Editor. Only scripts (.js, .ns) or text files (.txt) can be `,
-      `edited using the Text Editor. If the file does not already exist, then a new, empty one will be created`,
+      `Opens up the specified file(s) in the Script Editor. Only scripts (.js, .ns, .script) or text files (.txt) `,
+      `can be edited using the Script Editor. If a file does not exist a new one will be created`,
       ` `,
       `If provided a glob as the only argument, ${command} can spider directories and open all matching `,
       `files at once. ${command} cannot create files using globs, so your scripts must already exist.`,
@@ -328,7 +328,7 @@ export const HelpTexts: IMap<string[]> = {
     " ",
     "mv myScript.js myOldScript.js",
   ],
-  nano: TemplatedHelpTexts.textEditor('nano'),
+  nano: TemplatedHelpTexts.scriptEditor('nano'),
   ps: ["ps", " ", "Prints all scripts that are running on the current server"],
 
   rm: [
@@ -426,7 +426,7 @@ export const HelpTexts: IMap<string[]> = {
     " ",
     "It is not necessary to differentiate between global and non-global aliases when using 'unalias'",
   ],
-  vim: TemplatedHelpTexts.textEditor('vim'),
+  vim: TemplatedHelpTexts.scriptEditor('vim'),
   weaken: [
     "weaken",
     "",
