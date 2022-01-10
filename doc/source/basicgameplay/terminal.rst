@@ -8,15 +8,6 @@ on the navigation menu on the left-hand side of the game (you may need to expand
 the 'Hacking' header in order to see the 'Terminal' tab). Alternatively, the :ref:`keyboard
 shortcut <shortcuts>` Alt + t can be used to open the Terminal.
 
-Configuration
--------------
-
-The terminal has a configuration file called .fconf. To edit this file, go to
-the terminal and enter::
-
-    nano .fconf
-
-
 .. _terminal_filesystem:
 
 Filesystem (Directories)
