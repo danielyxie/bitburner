@@ -521,9 +521,9 @@ export interface NodeStats {
   name: string;
   /** Node's level */
   level: number;
-  /** Node's RAM */
+  /** Node's RAM (GB) */
   ram: number;
-  /** Node's used RAM */
+  /** Node's used RAM (GB) */
   ramUsed: number;
   /** Node's number of cores */
   cores: number;
@@ -5050,7 +5050,7 @@ export interface NS extends Singularity {
    * const [totalRam, ramUsed] = ns.getServerRam("helios");
    * ```
    * @param host - Host of target server.
-   * @returns Array with total and used memory on the specified server.
+   * @returns Array with total and used memory on the specified server, in GB.
    */
   getServerRam(host: string): [number, number];
 
@@ -5060,7 +5060,7 @@ export interface NS extends Singularity {
    * RAM cost: 0.05 GB
    *
    * @param host - Hostname of the target server.
-   * @returns max ram
+   * @returns max ram (GB)
    */
   getServerMaxRam(host: string): number;
   /**
@@ -5069,7 +5069,7 @@ export interface NS extends Singularity {
    * RAM cost: 0.05 GB
    *
    * @param host - Hostname of the target server.
-   * @returns used ram
+   * @returns used ram (GB)
    */
   getServerUsedRam(host: string): number;
 
@@ -5208,7 +5208,7 @@ export interface NS extends Singularity {
    *     ns.tprint(i + " -- " + ns.getPurchasedServerCost(Math.pow(2, i)));
    * }
    * ```
-   * @param ram - Amount of RAM of a potential purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
+   * @param ram - Amount of RAM of a potential purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
    * @returns The cost to purchase a server with the specified amount of ram.
    */
   getPurchasedServerCost(ram: number): number;
@@ -5256,7 +5256,7 @@ export interface NS extends Singularity {
    * }
    * ```
    * @param hostname - Host of the purchased server.
-   * @param ram - Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
+   * @param ram - Amount of RAM of the purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).
    * @returns The hostname of the newly purchased server.
    */
   purchaseServer(hostname: string, ram: number): string;
@@ -5297,7 +5297,7 @@ export interface NS extends Singularity {
    * Returns the maximum RAM that a purchased server can have.
    *
    * @remarks RAM cost: 0.05 GB
-   * @returns Returns the maximum RAM that a purchased server can have.
+   * @returns Returns the maximum RAM (in GB) that a purchased server can have.
    */
   getPurchasedServerMaxRam(): number;
 
@@ -5504,7 +5504,7 @@ export interface NS extends Singularity {
    *
    * @param script - Filename of script. This is case-sensitive.
    * @param host - Host of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.
-   * @returns Amount of RAM required to run the specified script on the target server, and 0 if the script does not exist.
+   * @returns Amount of RAM (in GB) required to run the specified script on the target server, and 0 if the script does not exist.
    */
   getScriptRam(script: string, host?: string): number;
 
