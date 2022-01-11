@@ -2583,7 +2583,6 @@ function installAugmentations(): boolean {
     augmentationList += aug.name + level + "<br>";
   }
   Player.queuedAugmentations = [];
-  Router.clearHistory();
 
   dialogBoxCreate(
     "You slowly drift to sleep as scientists put you under in order " +
