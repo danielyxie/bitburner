@@ -151,6 +151,24 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
           start: node.source.range[0] + 1,
           end: node.source.range[1] - 1
         });
+      },
+      ExportNamedDeclaration(node: any) {
+        if (node.source) {
+          importNodes.push({
+            filename: node.source.value,
+            start: node.source.range[0] + 1,
+            end: node.source.range[1] - 1
+          });
+        }
+      },
+      ExportAllDeclaration(node: any) {
+        if (node.source) {
+          importNodes.push({
+            filename: node.source.value,
+            start: node.source.range[0] + 1,
+            end: node.source.range[1] - 1
+          });
+        }
       }
     });
     // Sort the nodes from last start index to first. This replaces the last import with a blob first,
