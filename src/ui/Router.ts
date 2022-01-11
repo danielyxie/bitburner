@@ -53,6 +53,9 @@ export interface IRouter {
   // toRedPill(): void;
   // toworkInProgress(): void;
   page(): Page;
+  previousPage(): Page;
+  clearHistory(): void;
+  toPreviousPage(fallback?: (...args: any[]) => void): void;
   toActiveScripts(): void;
   toAugmentations(): void;
   toBitVerse(flume: boolean, quick: boolean): void;
