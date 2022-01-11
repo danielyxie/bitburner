@@ -427,6 +427,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 </>} />
             </ListItem>
             <ListItem>
+              <OptionSwitch checked={Settings.ExcludeRunningScriptsFromSave}
+                onChange={(newValue) => Settings.ExcludeRunningScriptsFromSave = newValue}
+                text="Exclude Running Scripts from Save"
+                tooltip={<>
+                  If this is set, the save file will exclude all running scripts. This is only useful if your save is lagging a lot. You'll have to restart your script every time you launch the game.
+                </>} />
+            </ListItem>
+            <ListItem>
               <Tooltip
                 title={
                   <Typography>
