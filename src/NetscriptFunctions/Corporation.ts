@@ -62,6 +62,7 @@ export function NetscriptCorporation(
   function createCorporation(corporationName: string, selfFund = true): boolean {
     if (!player.canAccessCorporation() || player.hasCorporation()) return false;
     if (!corporationName) return false;
+    if (player.bitNodeN !== 3 && !selfFund) throw new Error("cannot use seed funds outside of BitNode 3");
 
     if (selfFund) {
       if (!player.canAfford(150e9)) return false;
@@ -498,7 +499,6 @@ export function NetscriptCorporation(
       };
     },
     createCorporation: function (corporationName: string, selfFund = true): boolean {
-      checkAccess("createCorporation");
       return createCorporation(corporationName, selfFund);
     },
     getCorporation: function (): CorporationInfo {
