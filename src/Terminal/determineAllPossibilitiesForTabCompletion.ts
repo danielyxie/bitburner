@@ -299,7 +299,7 @@ export async function determineAllPossibilitiesForTabCompletion(
     const filename = command[1] + "";
     if (!isScriptFilename(filename)) return; // Not a script.
     if (filename.endsWith(".script")) return; // Doesn't work with ns1.
-    const script = currServ.scripts.find((script) => script.filename === filename);
+    const script = currServ.scripts.find((script) => script.filename === filename || script.filename === '/' + filename);
     if (!script) return; // Doesn't exist.
     if (!script.module) {
       await compile(p, script, currServ.scripts);
