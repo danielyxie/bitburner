@@ -182,7 +182,7 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
             </TableCell>
             <TableCell colSpan={2}>
               <Typography>
-                <Money money={node.totalMoneyGenerated} player={props.player} /> (
+                <Money money={node.totalMoneyGenerated} /> (
                 <MoneyRate money={node.moneyGainRatePerSecond} />)
               </Typography>
             </TableCell>
