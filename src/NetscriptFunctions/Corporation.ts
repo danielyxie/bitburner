@@ -53,6 +53,7 @@ import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlock
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
 import { EmployeePositions } from "../Corporation/EmployeePositions";
 import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
+import { Industry } from "../Corporation/Industry";
 
 export function NetscriptCorporation(
   player: IPlayer,
@@ -131,6 +132,28 @@ export function NetscriptCorporation(
 
     if (!player.corporation.unlockUpgrades[api])
       throw helper.makeRuntimeErrorMsg(`corporation.${func}`, "You do not have access to this API.");
+  }
+
+  function getSafeDivision(division: Industry): NSDivision {
+    const cities: string[] = [];
+      for (const office of Object.values(division.offices)) {
+        if (office === 0) continue;
+        cities.push(office.loc);
+      }
+      return {
+        name: division.name,
+        type: division.type,
+        awareness: division.awareness,
+        popularity: division.popularity,
+        prodMult: division.prodMult,
+        research: division.sciResearch.qty,
+        lastCycleRevenue: division.lastCycleRevenue,
+        lastCycleExpenses: division.lastCycleExpenses,
+        thisCycleRevenue: division.thisCycleRevenue,
+        thisCycleExpenses: division.thisCycleExpenses,
+        upgrades: division.upgrades,
+        cities: cities,
+      };
   }
 
   const warehouseAPI: WarehouseAPI = {
@@ -478,25 +501,7 @@ export function NetscriptCorporation(
       checkAccess("getDivision");
       const divisionName = helper.string("getDivision", "divisionName", adivisionName);
       const division = getDivision(divisionName);
-      const cities: string[] = [];
-      for (const office of Object.values(division.offices)) {
-        if (office === 0) continue;
-        cities.push(office.loc);
-      }
-      return {
-        name: division.name,
-        type: division.type,
-        awareness: division.awareness,
-        popularity: division.popularity,
-        prodMult: division.prodMult,
-        research: division.sciResearch.qty,
-        lastCycleRevenue: division.lastCycleRevenue,
-        lastCycleExpenses: division.lastCycleExpenses,
-        thisCycleRevenue: division.thisCycleRevenue,
-        thisCycleExpenses: division.thisCycleExpenses,
-        upgrades: division.upgrades,
-        cities: cities,
-      };
+      return getSafeDivision(division);
     },
     createCorporation: function (corporationName: string, selfFund = true): boolean {
       return createCorporation(corporationName, selfFund);
@@ -516,6 +521,7 @@ export function NetscriptCorporation(
         issuedShares: corporation.issuedShares,
         sharePrice: corporation.sharePrice,
         state: corporation.state.getState(),
+        divisions: corporation.divisions.map((division): NSDivision => getSafeDivision(division)),
       };
     },
   };
