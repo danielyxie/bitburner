@@ -1821,7 +1821,7 @@ export function getNextCompanyPosition(
 }
 
 export function quitJob(this: IPlayer, company: string): void {
-  if (this.isWorking == true && this.workType == "Working for Company" && this.companyName == company) {
+  if (this.isWorking == true && this.workType.includes("Working for Company") && this.companyName == company) {
     this.isWorking = false;
     this.companyName = "";
   }
