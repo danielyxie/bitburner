@@ -315,6 +315,7 @@ export class Terminal implements ITerminal {
       this.print("Root Access: " + (hasAdminRights ? "YES" : "NO"));
       this.print("Can run scripts on this host: " + (hasAdminRights ? "YES" : "NO"));
       if (currServ instanceof Server) {
+        this.print("Backdoor: " + (currServ.backdoorInstalled ? "YES" : "NO"));
         const hackingSkill = currServ.requiredHackingSkill;
         this.print("Required hacking skill for hack() and backdoor: " + (!isHacknet ? hackingSkill : "N/A"));
         const security = currServ.hackDifficulty;
