@@ -157,7 +157,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     (
       <>
         MegaCorp does what no other dares to do. We imagine. We create. We invent. We create what others have never even
-        dreamed of. Our work fills the world's needs for food, water, power, and transporation on an unprecendented
+        dreamed of. Our work fills the world's needs for food, water, power, and transportation on an unprecendented
         scale, in ways that no other company can.
         <br />
         <br />
