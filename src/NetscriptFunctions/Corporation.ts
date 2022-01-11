@@ -54,6 +54,9 @@ import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
 import { EmployeePositions } from "../Corporation/EmployeePositions";
 import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
 import { Industry } from "../Corporation/Industry";
+import { IndustryStartingCosts } from "../Corporation/IndustryData";
+import { CorporationConstants } from "../Corporation/data/Constants";
+import { IndustryUpgrades } from "../Corporation/IndustryUpgrades";
 
 export function NetscriptCorporation(
   player: IPlayer,
@@ -74,6 +77,53 @@ export function NetscriptCorporation(
       player.startCorporation(corporationName, 500e6);
     }
     return true;
+  }
+
+  function hasUnlockUpgrade(upgradeName: string): boolean {
+    const corporation = getCorporation();
+    const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade[2] === upgradeName);
+    if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
+    const upgN = upgrade[0];
+    return corporation.unlockUpgrades[upgN] === 1;
+  }
+
+  function getUnlockUpgradeCost(upgradeName: string): number {
+    const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade[2] === upgradeName);
+    if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
+    return upgrade[1];
+  }
+
+  function getUpgradeLevel(aupgradeName: string): number {
+    const upgradeName = helper.string("levelUpgrade", "upgradeName", aupgradeName);
+    const corporation = getCorporation();
+    const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
+    if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
+    const upgN = upgrade[0];
+    return corporation.upgrades[upgN];
+  }
+
+  function getUpgradeLevelCost(aupgradeName: string): number {
+    const upgradeName = helper.string("levelUpgrade", "upgradeName", aupgradeName);
+    const corporation = getCorporation();
+    const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
+    if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
+    const upgN = upgrade[0];
+    const baseCost = upgrade[1];
+    const priceMult = upgrade[2];
+    const level = corporation.upgrades[upgN];
+    return baseCost * Math.pow(priceMult, level);
+  }
+
+  function getExpandIndustryCost(industryName: string): number {
+    const cost = IndustryStartingCosts[industryName];
+    if (cost === undefined) {
+      throw new Error(`Invalid industry: '${industryName}'`);
+    }
+    return cost;
+  }
+
+  function getExpandCityCost(): number {
+    return CorporationConstants.OfficeInitialCost;
   }
 
   function getCorporation(): ICorporation {
@@ -107,7 +157,8 @@ export function NetscriptCorporation(
 
   function getMaterial(divisionName: any, cityName: any, materialName: any): Material {
     const warehouse = getWarehouse(divisionName, cityName);
-    const material = warehouse.materials[materialName];
+    const matName = (materialName as string).replace(/ /g, "");
+    const material = warehouse.materials[matName];
     if (material === undefined) throw new Error(`Invalid material name: '${materialName}'`);
     return material;
   }
@@ -157,6 +208,26 @@ export function NetscriptCorporation(
   }
 
   const warehouseAPI: WarehouseAPI = {
+    getPurchaseWarehouseCost: function (): number {
+      checkAccess("getPurchaseWarehouseCost", 7);
+      return CorporationConstants.WarehouseInitialCost;
+    },
+    getUpgradeWarehouseCost: function (adivisionName: any, acityName: any): number {
+      checkAccess("upgradeWarehouse", 7);
+      const divisionName = helper.string("getUpgradeWarehouseCost", "divisionName", adivisionName);
+      const cityName = helper.string("getUpgradeWarehouseCost", "cityName", acityName);
+      const warehouse = getWarehouse(divisionName, cityName);
+      return CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
+    },
+    hasWarehouse: function (adivisionName: any, acityName: any): boolean {
+      checkAccess("hasWarehouse", 7);
+      const divisionName = helper.string("getWarehouse", "divisionName", adivisionName);
+      const cityName = helper.string("getWarehouse", "cityName", acityName);
+      const division = getDivision(divisionName);
+      if (!(cityName in division.warehouses)) throw new Error(`Invalid city name '${cityName}'`);
+      const warehouse = division.warehouses[cityName];
+      return warehouse !== 0;
+    },
     getWarehouse: function (adivisionName: any, acityName: any): NSWarehouse {
       checkAccess("getWarehouse", 7);
       const divisionName = helper.string("getWarehouse", "divisionName", adivisionName);
@@ -167,6 +238,7 @@ export function NetscriptCorporation(
         loc: warehouse.loc,
         size: warehouse.size,
         sizeUsed: warehouse.sizeUsed,
+        smartSupplyEnabled: warehouse.smartSupplyEnabled
       };
     },
     getMaterial: function (adivisionName: any, acityName: any, amaterialName: any): NSMaterial {
@@ -342,6 +414,19 @@ export function NetscriptCorporation(
   };
 
   const officeAPI: OfficeAPI = {
+    getHireAdVertCost: function (adivisionName: string): number {
+      checkAccess("hireAdVert", 8);
+      const divisionName = helper.string("hireAdVert", "divisionName", adivisionName);
+      const division = getDivision(divisionName);
+      const upgrade = IndustryUpgrades[1];
+      return upgrade[1] * Math.pow(upgrade[2], division.upgrades[1]);
+    },
+    getHireAdVertCount: function (adivisionName: string): number {
+      checkAccess("hireAdVert", 8);
+      const divisionName = helper.string("hireAdVert", "divisionName", adivisionName);
+      const division = getDivision(divisionName);
+      return division.upgrades[1]
+    },
     assignJob: function (adivisionName: any, acityName: any, aemployeeName: any, ajob: any): Promise<void> {
       checkAccess("assignJob", 8);
       const divisionName = helper.string("assignJob", "divisionName", adivisionName);
@@ -503,9 +588,6 @@ export function NetscriptCorporation(
       const division = getDivision(divisionName);
       return getSafeDivision(division);
     },
-    createCorporation: function (corporationName: string, selfFund = true): boolean {
-      return createCorporation(corporationName, selfFund);
-    },
     getCorporation: function (): CorporationInfo {
       checkAccess("getCorporation");
       const corporation = getCorporation();
@@ -524,5 +606,32 @@ export function NetscriptCorporation(
         divisions: corporation.divisions.map((division): NSDivision => getSafeDivision(division)),
       };
     },
+    createCorporation: function (corporationName: string, selfFund = true): boolean {
+      return createCorporation(corporationName, selfFund);
+    },
+    hasUnlockUpgrade: function (upgradeName: string): boolean {
+      checkAccess("hasUnlockUpgrade");
+      return hasUnlockUpgrade(upgradeName);
+    },
+    getUnlockUpgradeCost: function (upgradeName: string): number {
+      checkAccess("getUnlockUpgradeCost");
+      return getUnlockUpgradeCost(upgradeName);
+    },
+    getUpgradeLevel: function (upgradeName: string): number {
+      checkAccess("hasUnlockUpgrade");
+      return getUpgradeLevel(upgradeName);
+    },
+    getUpgradeLevelCost: function (upgradeName: string): number {
+      checkAccess("getUpgradeLevelCost");
+      return getUpgradeLevelCost(upgradeName);
+    },
+    getExpandIndustryCost: function (industryName: string): number {
+      checkAccess("getExpandIndustryCost");
+      return getExpandIndustryCost(industryName);
+    },
+    getExpandCityCost: function(): number {
+      checkAccess("getExpandCityCost");
+      return getExpandCityCost();
+    }
   };
 }
