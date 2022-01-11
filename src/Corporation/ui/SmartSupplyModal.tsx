@@ -20,7 +20,8 @@ function Leftover(props: ILeftoverProps): React.ReactElement {
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
     try {
-      const material = props.warehouse.materials[props.matName];
+      const matName = props.matName.replace(/ /g, "");
+      const material = props.warehouse.materials[matName];
       SetSmartSupplyUseLeftovers(props.warehouse, material, event.target.checked);
     } catch (err) {
       dialogBoxCreate(err + "");
