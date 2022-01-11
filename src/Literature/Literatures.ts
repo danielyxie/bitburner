@@ -309,7 +309,7 @@ export const Literatures: IMap<Literature> = {};
   fn = LiteratureNames.CodedIntelligence;
   txt =
     "Tremendous progress has been made in the field of Artificial Intelligence over the past few decades. " +
-    "Our autonomous vehicles and transporation systems. The electronic personal assistants that control our everyday lives. " +
+    "Our autonomous vehicles and transportation systems. The electronic personal assistants that control our everyday lives. " +
     "Medical, service, and manufacturing robots. All of these are examples of how far AI has come and how much it has " +
     "improved our daily lives. However, the question still remains of whether AI will ever be advanced enough to re-create " +
     "human intelligence.<br><br>" +
