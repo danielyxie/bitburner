@@ -120,9 +120,10 @@ export function ls(
   interface ClickableScriptRowProps {
     row: string;
     prefix: string;
+    hostname: string;
   }
 
-  function ClickableScriptRow({ row, prefix }: ClickableScriptRowProps): React.ReactElement {
+  function ClickableScriptRow({ row, prefix, hostname }: ClickableScriptRowProps): React.ReactElement {
     const classes = makeStyles((theme: Theme) =>
       createStyles({
         scriptLinksWrap: {
@@ -144,6 +145,9 @@ export function ls(
       .filter((x) => !!x);
 
     function onScriptLinkClick(filename: string): void {
+      if (player.getCurrentServer().hostname !== hostname) {
+        return terminal.error(`File is not on this server, connect to ${hostname} and try again`);
+      }
       if (filename.startsWith("/")) filename = filename.slice(1);
       const filepath = terminal.getFilepath(`${prefix}${filename}`);
       const code = toString(terminal.getScript(player, filepath)?.code);
@@ -177,7 +181,7 @@ export function ls(
         terminal.print(row);
       } else {
         if (linked) {
-          terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} />);
+          terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
         } else {
           terminal.printRaw(<span style={style}>{row}</span>);
         }
