@@ -59,6 +59,21 @@ export function NetscriptCorporation(
   workerScript: WorkerScript,
   helper: INetscriptHelper,
 ): NSCorporation {
+  function createCorporation(corporationName: string, selfFund = true): boolean {
+    if (!player.canAccessCorporation() || player.hasCorporation()) return false;
+    if (!corporationName) return false;
+
+    if (selfFund) {
+      if (!player.canAfford(150e9)) return false;
+
+      player.startCorporation(corporationName);
+      player.loseMoney(150e9, "corporation");
+    } else {
+      player.startCorporation(corporationName, 500e6);
+    }
+    return true;
+  }
+
   function getCorporation(): ICorporation {
     const corporation = player.corporation;
     if (corporation === null) throw new Error("cannot be called without a corporation");
@@ -481,6 +496,10 @@ export function NetscriptCorporation(
         upgrades: division.upgrades,
         cities: cities,
       };
+    },
+    createCorporation: function (corporationName: string, selfFund = true): boolean {
+      checkAccess("createCorporation");
+      return createCorporation(corporationName, selfFund);
     },
     getCorporation: function (): CorporationInfo {
       checkAccess("getCorporation");
