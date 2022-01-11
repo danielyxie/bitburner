@@ -7,6 +7,7 @@ import createStyles from "@mui/styles/createStyles";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Reputation } from "./Reputation";
 import { KillScriptsModal } from "./KillScriptsModal";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -90,12 +91,14 @@ function Work(): React.ReactElement {
       <>
         <TableRow>
           <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-            <Typography>Work&nbsp;in&nbsp;progress:</Typography>
+            <Tooltip title={'You are ' + player.className}>
+              <Typography>Work&nbsp;in&nbsp;progress:</Typography>
+            </Tooltip>
           </TableCell>
         </TableRow>
         <TableRow>
           <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-            <Typography>{player.className}</Typography>
+            <Typography>{convertTimeMsToTimeElapsedString(player.timeWorked)}</Typography>
           </TableCell>
         </TableRow>
         <TableRow>
@@ -119,7 +122,9 @@ function Work(): React.ReactElement {
       <>
         <TableRow>
           <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-            <Typography>Work&nbsp;in&nbsp;progress:</Typography>
+            <Tooltip title={`Coding ${player.createProgramName}`}>
+              <Typography>Work&nbsp;in&nbsp;progress:</Typography>
+            </Tooltip>
           </TableCell>
         </TableRow>
         <TableRow>
@@ -150,7 +155,9 @@ function Work(): React.ReactElement {
     <>
       <TableRow>
         <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-          <Typography>Work&nbsp;in&nbsp;progress:</Typography>
+          <Tooltip title={player.workType}>
+            <Typography>Work&nbsp;in&nbsp;progress:</Typography>
+          </Tooltip>
         </TableCell>
       </TableRow>
       <TableRow>
