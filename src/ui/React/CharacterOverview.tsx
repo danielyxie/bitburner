@@ -436,13 +436,15 @@ export function CharacterOverview({ save, killScripts, router, allowBackButton }
             </Tooltip>
           </IconButton>
           {allowBackButton && (
-            <IconButton
-              disabled={!previousPageName}
-              onClick={() => router.toPreviousPage()}>
-              <Tooltip title={previousPageName ? `Go back to "${previousPageName}"` : ''}>
-                <ArrowBackIcon />
-              </Tooltip>
-            </IconButton>
+            <Tooltip title={previousPageName ? `Go back to "${previousPageName}"` : 'Go back one page (disabled: nowhere to go)'}>
+              <Box sx={{ cursor: (!previousPageName ? 'not-allowed': 'inherit') }}>
+                <IconButton
+                  disabled={!previousPageName}
+                  onClick={() => router.toPreviousPage()}>
+                    <ArrowBackIcon />
+                </IconButton>
+              </Box>
+            </Tooltip>
           )}
         </Box>
         <Box sx={{ display: 'flex', flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
