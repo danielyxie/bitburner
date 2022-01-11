@@ -183,7 +183,7 @@ export async function determineAllPossibilitiesForTabCompletion(
    * has input ./partialexecutablename so autocomplete the script or program.
    * Put './' in front of each script/executable
    */
-  if (isCommand("./") && index == -1) {
+  if (input.startsWith("./") && index == -1) {
     //All programs and scripts
     for (let i = 0; i < currServ.scripts.length; ++i) {
       allPos.push("./" + currServ.scripts[i].filename);
@@ -192,6 +192,11 @@ export async function determineAllPossibilitiesForTabCompletion(
     //Programs are on home computer
     for (let i = 0; i < homeComputer.programs.length; ++i) {
       allPos.push("./" + homeComputer.programs[i]);
+    }
+
+    //Contracts on current server
+    for (let i = 0; i < currServ.contracts.length; ++i) {
+      allPos.push("./" + currServ.contracts[i].fn)
     }
     return allPos;
   }
@@ -286,7 +291,8 @@ export async function determineAllPossibilitiesForTabCompletion(
   }
 
   async function scriptAutocomplete(): Promise<string[] | undefined> {
-    if (!isCommand("run") && !isCommand("tail") && !isCommand("kill")) return;
+    if (!isCommand("run") && !isCommand("tail") && !isCommand("kill") && !input.startsWith("./")) return;
+    if (input.startsWith("./")) input = "run " + input.slice(2);
     const commands = ParseCommands(input);
     if (commands.length === 0) return;
     const command = ParseCommand(commands[commands.length - 1]);
