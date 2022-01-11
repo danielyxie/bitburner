@@ -759,13 +759,13 @@ export const achievements: IMap<Achievement> = {
 // { ID: "FLIGHT.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.Flight.name) },
 
 export function calculateAchievements(): void {
-  const availableAchievements = Object.values(achievements)
-    .filter((a) => a.Condition())
-    .map((a) => a.ID);
   const playerAchievements = Player.achievements.map((a) => a.ID);
-  const newAchievements = availableAchievements.filter((a) => !playerAchievements.includes(a));
 
-  for (const id of newAchievements) {
+  const missingAchievements = Object.values(achievements)
+    .filter((a) => !playerAchievements.includes(a.ID) && a.Condition())
+    .map((a) => a.ID);
+
+  for (const id of missingAchievements) {
     Player.giveAchievement(id);
   }
 
