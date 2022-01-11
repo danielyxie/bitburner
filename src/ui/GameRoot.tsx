@@ -101,6 +101,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "block",
       padding: "8px",
       minHeight: "100vh",
+      boxSizing: 'border-box',
     },
   }),
 );
