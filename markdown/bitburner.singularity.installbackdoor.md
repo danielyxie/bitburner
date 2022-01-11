@@ -15,8 +15,6 @@ installBackdoor(): Promise<void>;
 
 Promise&lt;void&gt;
 
-True if the installation was successful.
-
 ## Remarks
 
 RAM cost: 2 GB
