@@ -110,6 +110,32 @@ interface RunningScript {
 }
 
 /**
+ * Interface of a netscript port
+ * @public
+ */
+export interface IPort {
+  /** write data to the port and removes and returns first element if full */
+  write: (value: any) => any;
+  /** add data to port if not full.
+   * @returns true if added and false if full and not added */
+  tryWrite: (value: any) => boolean;
+  /** reads and removes first element from port 
+   * if no data in port returns "NULL PORT DATA"
+   */
+  read: () => any;
+  /** reads first element without removing it from port
+   * if no data in port returns "NULL PORT DATA"
+   */
+  peek: () => any;
+  /** check if port is full */
+  full: () => boolean;
+  /** check if port is empty */
+  empty: () => boolean;
+  /** removes all data from port */
+  clear: () => void;
+}
+
+/**
  * Data representing the internal values of a crime.
  * @public
  */
@@ -5409,7 +5435,7 @@ export interface NS extends Singularity {
    * @param port - Port number. Must be an integer between 1 and 20.
    * @returns Data in the specified port.
    */
-  getPortHandle(port: number): any[];
+  getPortHandle(port: number): IPort;
 
   /**
    * Delete a file.
