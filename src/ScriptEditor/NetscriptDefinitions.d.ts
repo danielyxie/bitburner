@@ -93,6 +93,7 @@ interface Player {
   jobs: any;
   factions: string[];
   tor: boolean;
+  hasCorporation: boolean;
 }
 
 /**
