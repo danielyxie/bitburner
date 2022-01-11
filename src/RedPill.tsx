@@ -4,6 +4,7 @@
 import React from "react";
 import { Player } from "./Player";
 import { prestigeSourceFile } from "./Prestige";
+import { GetAllServers } from "./Server/AllServers";
 import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
 import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SourceFiles } from "./SourceFile/SourceFiles";
@@ -73,6 +74,11 @@ function giveSourceFile(bitNodeNumber: number): void {
 }
 
 export function enterBitNode(router: IRouter, flume: boolean, destroyedBitNode: number, newBitNode: number): void {
+  // Kill all running scripts to prevent going back to another screen
+  for (const server of GetAllServers()) {
+    server.runningScripts = [];
+  }
+
   if (!flume) {
     giveSourceFile(destroyedBitNode);
   } else {
