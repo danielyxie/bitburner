@@ -306,5 +306,7 @@ export function prestigeSourceFile(flume: boolean): void {
   // Gain int exp
   if (SourceFileFlags[5] !== 0 && !flume) Player.gainIntelligenceExp(300);
 
+  Router.clearHistory();
+
   resetPidCounter();
 }

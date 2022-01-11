@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { cloneDeep } from "lodash";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IEngine } from "../IEngine";
 import { ITerminal } from "../Terminal/ITerminal";
@@ -86,6 +86,11 @@ interface IProps {
   engine: IEngine;
 }
 
+interface PageHistoryEntry {
+  page: Page;
+  args: any[];
+}
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -102,6 +107,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export let Router: IRouter = {
   page: () => {
+    throw new Error("Router called before initialization");
+  },
+  previousPage: () => {
+    throw new Error("Router called before initialization");
+  },
+  clearHistory: () => {
+    throw new Error("Router called before initialization");
+  },
+  toPreviousPage: (): boolean => {
     throw new Error("Router called before initialization");
   },
   toActiveScripts: () => {
@@ -202,7 +216,9 @@ function determineStartPage(player: IPlayer): Page {
 export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
   const classes = useStyles();
   const [{ files, vim }, setEditorOptions] = useState({ files: {}, vim: false });
-  const [page, setPage] = useState(determineStartPage(player));
+  const startPage = determineStartPage(player);
+  const [page, setPage] = useState(startPage);
+  const [pageHistory, setPageHistory] = useState<PageHistoryEntry[]>([{ page: startPage, args: [] }]);
   const setRerender = useState(0)[1];
   const [faction, setFaction] = useState<Faction>(
     player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : (undefined as unknown as Faction),
@@ -233,70 +249,131 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     setTimeout(() => htmlLocation.reload(), 2000);
   }
 
+  function setCurrentPage(page: Page, ...args: any): void {
+    const history = [
+        { page, args: cloneDeep(args) },
+        ...pageHistory
+      ].slice(0, 20);
+    setPageHistory(history)
+    setPage(page)
+  }
+
+  function goBack(fallback: (...args: any[]) => void): void {
+    const [ , previousPage ] = pageHistory;
+    if (previousPage) {
+      const handler = pageToRouterMap[previousPage?.page];
+      handler(...previousPage.args);
+    } else {
+      if (fallback) fallback();
+    }
+    const [ , ...history] = pageHistory;
+    setPageHistory(cloneDeep(history));
+  }
+
+  const pageToRouterMap: { [key: number] : (...args: any[]) => void } = {
+    [Page.ActiveScripts]: Router.toActiveScripts,
+    [Page.Augmentations]: Router.toAugmentations,
+    [Page.Bladeburner]: Router.toBladeburner,
+    [Page.Stats]: Router.toStats,
+    [Page.Corporation]: Router.toCorporation,
+    [Page.CreateProgram]: Router.toCreateProgram,
+    [Page.DevMenu]: Router.toDevMenu,
+    [Page.Faction]: Router.toFaction,
+    [Page.Factions]: Router.toFactions,
+    [Page.Options]: Router.toGameOptions,
+    [Page.Gang]: Router.toGang,
+    [Page.Hacknet]: Router.toHacknetNodes,
+    [Page.Milestones]: Router.toMilestones,
+    [Page.Resleeves]: Router.toResleeves,
+    [Page.ScriptEditor]: Router.toScriptEditor,
+    [Page.Sleeves]: Router.toSleeves,
+    [Page.StockMarket]: Router.toStockMarket,
+    [Page.Terminal]: Router.toTerminal,
+    [Page.Tutorial]: Router.toTutorial,
+    [Page.Job]: Router.toJob,
+    [Page.City]: Router.toCity,
+    [Page.Travel]: Router.toTravel,
+    [Page.BitVerse]: Router.toBitVerse,
+    [Page.Infiltration]: Router.toInfiltration,
+    [Page.Work]: Router.toWork,
+    [Page.BladeburnerCinematic]: Router.toBladeburnerCinematic,
+    [Page.Location]: Router.toLocation,
+    [Page.StaneksGift]: Router.toStaneksGift,
+    [Page.Achievements]: Router.toAchievements,
+  }
+
   Router = {
     page: () => page,
-    toActiveScripts: () => setPage(Page.ActiveScripts),
-    toAugmentations: () => setPage(Page.Augmentations),
-    toBladeburner: () => setPage(Page.Bladeburner),
-    toStats: () => setPage(Page.Stats),
-    toCorporation: () => setPage(Page.Corporation),
-    toCreateProgram: () => setPage(Page.CreateProgram),
-    toDevMenu: () => setPage(Page.DevMenu),
+    previousPage: () => {
+      const [ , previousPage] = pageHistory;
+      return previousPage?.page ?? -1;
+    },
+    clearHistory: () => setPageHistory([]),
+    toPreviousPage: goBack,
+    toActiveScripts: () => setCurrentPage(Page.ActiveScripts),
+    toAugmentations: () => setCurrentPage(Page.Augmentations),
+    toBladeburner: () => setCurrentPage(Page.Bladeburner),
+    toStats: () => setCurrentPage(Page.Stats),
+    toCorporation: () => setCurrentPage(Page.Corporation),
+    toCreateProgram: () => setCurrentPage(Page.CreateProgram),
+    toDevMenu: () => setCurrentPage(Page.DevMenu),
     toFaction: (faction?: Faction) => {
-      setPage(Page.Faction);
+      setCurrentPage(Page.Faction, faction);
       if (faction) setFaction(faction);
     },
-    toFactions: () => setPage(Page.Factions),
-    toGameOptions: () => setPage(Page.Options),
-    toGang: () => setPage(Page.Gang),
-    toHacknetNodes: () => setPage(Page.Hacknet),
-    toMilestones: () => setPage(Page.Milestones),
-    toResleeves: () => setPage(Page.Resleeves),
+    toFactions: () => setCurrentPage(Page.Factions),
+    toGameOptions: () => setCurrentPage(Page.Options),
+    toGang: () => setCurrentPage(Page.Gang),
+    toHacknetNodes: () => setCurrentPage(Page.Hacknet),
+    toMilestones: () => setCurrentPage(Page.Milestones),
+    toResleeves: () => setCurrentPage(Page.Resleeves),
     toScriptEditor: (files: Record<string, string>, options?: ScriptEditorRouteOptions) => {
       setEditorOptions({
         files,
         vim: !!options?.vim,
       });
-      setPage(Page.ScriptEditor);
+      setCurrentPage(Page.ScriptEditor, files, options);
     },
-    toSleeves: () => setPage(Page.Sleeves),
-    toStockMarket: () => setPage(Page.StockMarket),
-    toTerminal: () => setPage(Page.Terminal),
-    toTutorial: () => setPage(Page.Tutorial),
+    toSleeves: () => setCurrentPage(Page.Sleeves),
+    toStockMarket: () => setCurrentPage(Page.StockMarket),
+    toTerminal: () => setCurrentPage(Page.Terminal),
+    toTutorial: () => setCurrentPage(Page.Tutorial),
     toJob: () => {
       setLocation(Locations[player.companyName]);
-      setPage(Page.Job);
+      setCurrentPage(Page.Job);
     },
     toCity: () => {
-      setPage(Page.City);
+      setCurrentPage(Page.City);
     },
     toTravel: () => {
       player.gotoLocation(LocationName.TravelAgency);
-      setPage(Page.Travel);
+      setCurrentPage(Page.Travel);
     },
     toBitVerse: (flume: boolean, quick: boolean) => {
       setFlume(flume);
       setQuick(quick);
-      setPage(Page.BitVerse);
+      setCurrentPage(Page.BitVerse, flume, quick);
     },
     toInfiltration: (location: Location) => {
       setLocation(location);
-      setPage(Page.Infiltration);
+      setCurrentPage(Page.Infiltration, location);
     },
-    toWork: () => setPage(Page.Work),
+    toWork: () => {
+      setCurrentPage(Page.Work);
+    },
     toBladeburnerCinematic: () => {
-      setPage(Page.BladeburnerCinematic);
+      setCurrentPage(Page.BladeburnerCinematic);
       setCinematicText(cinematicText);
     },
     toLocation: (location: Location) => {
       setLocation(location);
-      setPage(Page.Location);
+      setCurrentPage(Page.Location, location);
     },
     toStaneksGift: () => {
-      setPage(Page.StaneksGift);
+      setCurrentPage(Page.StaneksGift);
     },
     toAchievements: () => {
-      setPage(Page.Achievements);
+      setCurrentPage(Page.Achievements);
     },
   };
 
@@ -499,7 +576,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         <SnackbarProvider>
           <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
             {!ITutorial.isRunning ? (
-              <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
+              <CharacterOverview
+                save={() => saveObject.saveGame()}
+                killScripts={killAllScripts}
+                router={Router}
+                allowBackButton={withSidebar} />
             ) : (
               <InteractiveTutorialRoot />
             )}
