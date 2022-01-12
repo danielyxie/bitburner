@@ -3916,7 +3916,7 @@ export declare interface NS extends Singularity {
      * @param args - Formating arguments.
      * @returns Formated text.
      */
-    sprintf(format: string, ...args: string[]): string;
+    sprintf(format: string, ...args: any[]): string;
 
     /**
      * Format a string with an array of arguments.
@@ -3928,7 +3928,7 @@ export declare interface NS extends Singularity {
      * @param args - Formating arguments.
      * @returns Formated text.
      */
-    vsprintf(format: string, args: string[]): string;
+    vsprintf(format: string, args: any[]): string;
 
     /**
      * Format a number
