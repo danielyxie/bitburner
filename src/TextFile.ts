@@ -1,7 +1,6 @@
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { BaseServer } from "./Server/BaseServer";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
-import { removeLeadingSlash, isInRootDirectory } from "./Terminal/DirectoryHelpers"
 
 /**
  * Represents a plain text file that is typically stored on a server.
@@ -10,7 +9,7 @@ export class TextFile {
   /**
    * The full file name.
    */
-  fn: string;
+  filename: string;
 
   /**
    * The content of the file.
@@ -18,7 +17,7 @@ export class TextFile {
   text: string;
 
   constructor(fn = "", txt = "") {
-    this.fn = (fn.endsWith(".txt") ? fn : `${fn}.txt`).replace(/\s+/g, "");
+    this.filename = (fn.endsWith(".txt") ? fn : `${fn}.txt`).replace(/\s+/g, "");
     this.text = txt;
   }
 
@@ -33,7 +32,7 @@ export class TextFile {
    * Serves the file to the user as a downloadable resource through the browser.
    */
   download(): void {
-    const filename: string = this.fn;
+    const filename: string = this.filename;
     const file: Blob = new Blob([this.text], { type: "text/plain" });
     /* tslint:disable-next-line:strict-boolean-expressions */
     const navigator = window.navigator as any;
@@ -45,7 +44,7 @@ export class TextFile {
       const a: HTMLAnchorElement = document.createElement("a");
       const url: string = URL.createObjectURL(file);
       a.href = url;
-      a.download = this.fn;
+      a.download = this.filename;
       document.body.appendChild(a);
       a.click();
       setTimeout(() => {
@@ -66,7 +65,7 @@ export class TextFile {
    * Shows the content to the user via the game's dialog box.
    */
   show(): void {
-    dialogBoxCreate(`${this.fn}<br /><br />${this.text}`);
+    dialogBoxCreate(`${this.filename}<br /><br />${this.text}`);
   }
 
   /**
@@ -102,19 +101,8 @@ Reviver.constructors.TextFile = TextFile;
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getTextFile(fn: string, server: BaseServer): TextFile | null {
-  let filename: string = !fn.endsWith(".txt") ? `${fn}.txt` : fn;
-
-  if (isInRootDirectory(filename)) {
-    filename = removeLeadingSlash(filename);
-  }
-
-  for (const file of server.textFiles as TextFile[]) {
-    if (file.fn === filename) {
-      return file;
-    }
-  }
-
-  return null;
+  const filename: string = !fn.endsWith(".txt") ? `${fn}.txt` : fn;
+  return server.getFile(filename);
 }
 
 /**
@@ -133,8 +121,8 @@ export function createTextFile(fn: string, txt: string, server: BaseServer): Tex
 
     return undefined;
   }
-  const file: TextFile = new TextFile(fn, txt);
-  server.textFiles.push(file);
-
+  server.writeToTextFile(fn, txt);
+  const file: TextFile | null = server.getFile(fn);
+  if (file === null) return undefined;
   return file;
 }

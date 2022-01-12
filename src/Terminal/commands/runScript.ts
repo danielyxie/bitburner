@@ -46,53 +46,50 @@ export function runScript(
   }
 
   // Check if the script exists and if it does run it
-  for (let i = 0; i < server.scripts.length; i++) {
-    if (server.scripts[i].filename !== scriptName) {
-      continue;
-    }
-    // Check for admin rights and that there is enough RAM availble to run
-    const script = server.scripts[i];
-    script.server = player.getCurrentServer().hostname;
-    const ramUsage = script.ramUsage * numThreads;
-    const ramAvailable = server.maxRam - server.ramUsed;
+  const script = server.getScript(scriptName);
+  if (script === null) {
+    terminal.error("No such script");
+    return;
+  }
+  // Check for admin rights and that there is enough RAM availble to run
+  script.server = player.getCurrentServer().hostname;
+  const ramUsage = script.ramUsage * numThreads;
+  const ramAvailable = server.maxRam - server.ramUsed;
 
-    if (!server.hasAdminRights) {
-      terminal.error("Need root access to run script");
-      return;
-    }
-
-    if (ramUsage > ramAvailable) {
-      terminal.error(
-        "This machine does not have enough RAM to run this script with " +
-          numThreads +
-          " threads. Script requires " +
-          numeralWrapper.formatRAM(ramUsage) +
-          " of RAM",
-      );
-      return;
-    }
-
-    // Able to run script
-    const runningScript = new RunningScript(script, args);
-    runningScript.threads = numThreads;
-
-    const success = startWorkerScript(player, runningScript, server);
-    if (!success) {
-      terminal.error(`Failed to start script`);
-      return;
-    }
-
-    terminal.print(
-      `Running script with ${numThreads} thread(s), pid ${runningScript.pid} and args: ${JSON.stringify(args)}.`,
-    );
-    if (runningScript.filename.endsWith(".ns")) {
-      terminal.warn(".ns files are deprecated, please rename everything to .js");
-    }
-    if (tailFlag) {
-      LogBoxEvents.emit(runningScript);
-    }
+  if (!server.hasAdminRights) {
+    terminal.error("Need root access to run script");
     return;
   }
 
-  terminal.error("No such script");
+  if (ramUsage > ramAvailable) {
+    terminal.error(
+      "This machine does not have enough RAM to run this script with " +
+        numThreads +
+        " threads. Script requires " +
+        numeralWrapper.formatRAM(ramUsage) +
+        " of RAM",
+    );
+    return;
+  }
+
+  // Able to run script
+  const runningScript = new RunningScript(script, args);
+  runningScript.threads = numThreads;
+
+  const success = startWorkerScript(player, runningScript, server);
+  if (!success) {
+    terminal.error(`Failed to start script`);
+    return;
+  }
+
+  terminal.print(
+    `Running script with ${numThreads} thread(s), pid ${runningScript.pid} and args: ${JSON.stringify(args)}.`,
+  );
+  if (runningScript.filename.endsWith(".ns")) {
+    terminal.warn(".ns files are deprecated, please rename everything to .js");
+  }
+  if (tailFlag) {
+    LogBoxEvents.emit(runningScript);
+  }
+  return;
 }

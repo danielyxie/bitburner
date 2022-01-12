@@ -35,14 +35,14 @@ export function download(
       // In the case of script files, we pull from the server.scripts array
       if (!matchEnding || isScriptFilename(matchEnding))
         zipFiles(
-          server.scripts.map((s) => s.filename),
-          server.scripts.map((s) => s.code),
+          server.getAllScriptFiles().map((s) => s.filename),
+          server.getAllScriptFiles().map((s) => s.code),
         );
       // In the case of text files, we pull from the server.scripts array
       if (!matchEnding || matchEnding.endsWith(".txt"))
         zipFiles(
-          server.textFiles.map((s) => s.fn),
-          server.textFiles.map((s) => s.text),
+          server.getAllTextFiles().map((s) => s.filename),
+          server.getAllTextFiles().map((s) => s.text),
         );
       // Return an error if no files matched, rather than an empty zip folder
       if (Object.keys(zip.files).length == 0) return terminal.error(`No files match the pattern ${fn}`);

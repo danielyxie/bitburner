@@ -1,5 +1,5 @@
+import { IPlayer } from "src/PersonObjects/IPlayer";
 import { Player } from "../Player";
-import { Script } from "../Script/Script";
 import { GetAllServers } from "../Server/AllServers";
 
 const detect: [string, string][] = [
@@ -71,7 +71,7 @@ function convert(code: string): string {
   return out.join("\n");
 }
 
-export function v1APIBreak(): void {
+export async function v1APIBreak(): Promise<void> {
   interface IFileLine {
     file: string;
     line: number;
@@ -80,7 +80,7 @@ export function v1APIBreak(): void {
   for (const server of GetAllServers()) {
     for (const change of detect) {
       const s: IFileLine[] = [];
-      for (const script of server.scripts) {
+      for (const script of server.getAllScriptFiles()) {
         const lines = script.code.split("\n");
         for (let i = 0; i < lines.length; i++) {
           if (lines[i].includes(change[0])) {
@@ -106,13 +106,16 @@ export function v1APIBreak(): void {
   }
 
   for (const server of GetAllServers()) {
-    const backups: Script[] = [];
-    for (const script of server.scripts) {
+    const backups: [IPlayer, string, string][] = [];
+    for (const script of server.getAllScriptFiles()) {
       if (!hasChanges(script.code)) continue;
       const prefix = script.filename.includes("/") ? "/BACKUP_" : "BACKUP_";
-      backups.push(new Script(Player, prefix + script.filename, script.code, script.server));
+      backups.push([Player, prefix + script.filename, script.code]);
       script.code = convert(script.code);
     }
-    server.scripts = server.scripts.concat(backups);
+    for (const [player, filename, code] of backups) {
+      // eslint-disable-next-line no-await-in-loop
+      await server.writeToScriptFile(player, filename, code);
+    }
   }
 }

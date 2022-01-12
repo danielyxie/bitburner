@@ -40,9 +40,9 @@ export function LoadingScreen(): React.ReactElement {
   useEffect(() => {
     async function doLoad(): Promise<void> {
       await load()
-        .then((saveString) => {
+        .then(async (saveString) => {
           try {
-            Engine.load(saveString);
+            await Engine.load(saveString);
           } catch (err: any) {
             ActivateRecoveryMode();
             setLoaded(true);
@@ -51,9 +51,9 @@ export function LoadingScreen(): React.ReactElement {
 
           setLoaded(true);
         })
-        .catch((reason) => {
+        .catch(async (reason) => {
           console.error(reason);
-          Engine.load("");
+          await Engine.load("");
           setLoaded(true);
         });
     }

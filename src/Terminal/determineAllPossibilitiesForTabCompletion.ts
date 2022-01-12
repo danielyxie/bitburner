@@ -98,8 +98,8 @@ export async function determineAllPossibilitiesForTabCompletion(
   }
 
   function addAllScripts(): void {
-    for (const script of currServ.scripts) {
-      const res = processFilepath(script.filename);
+    for (const filename of currServ.getAllScriptFilenames()) {
+      const res = processFilepath(filename);
       if (res) {
         allPos.push(res);
       }
@@ -107,8 +107,8 @@ export async function determineAllPossibilitiesForTabCompletion(
   }
 
   function addAllTextFiles(): void {
-    for (const txt of currServ.textFiles) {
-      const res = processFilepath(txt.fn);
+    for (const filename of currServ.getAllTextFilenames()) {
+      const res = processFilepath(filename);
       if (res) {
         allPos.push(res);
       }
@@ -280,13 +280,15 @@ export async function determineAllPossibilitiesForTabCompletion(
     // Use regex to remove any leading './', and then check if it matches against
     // the output of processFilepath or if it matches with a '/' prepended,
     // this way autocomplete works inside of directories
-    const script = currServ.scripts.find((script) => {
+    const scriptFilename = currServ.getAllScriptFilenames().find((scriptFilename) => {
       const fn = filename.replace(/^\.\//g, '');
-      return (processFilepath(script.filename) === fn || script.filename === '/' + fn);
+      return (processFilepath(scriptFilename) === fn || scriptFilename === '/' + fn);
     })
-    if (!script) return; // Doesn't exist.
+    if (scriptFilename === undefined) return;
+    const script = currServ.getScript(scriptFilename);
+    if (script === null) return; // Doesn't exist.
     if (!script.module) {
-      await compile(p, script, currServ.scripts);
+      await compile(p, script, currServ.getAllScriptFiles());
     }
     const loadedModule = await script.module;
     if (!loadedModule.autocomplete) return; // Doesn't have an autocomplete function.
@@ -303,8 +305,8 @@ export async function determineAllPossibilitiesForTabCompletion(
       loadedModule.autocomplete(
         {
           servers: GetAllServers().map((server) => server.hostname),
-          scripts: currServ.scripts.map((script) => script.filename),
-          txts: currServ.textFiles.map((txt) => txt.fn),
+          scripts: currServ.getAllScriptFilenames(),
+          txts: currServ.getAllTextFilenames(),
           flags: (schema: any) => {
             pos2 = schema.map((f: any) => {
               if (f[0].length === 1) return "-" + f[0];
@@ -329,8 +331,8 @@ export async function determineAllPossibilitiesForTabCompletion(
   // invocation of `run`.
   if (input.startsWith("./")) {
     // All programs and scripts
-    for (const script of currServ.scripts) {
-      const res = processFilepath(script.filename);
+    for (const filename of currServ.getAllScriptFilenames()) {
+      const res = processFilepath(filename);
       if (res) {
         allPos.push(res);
       }

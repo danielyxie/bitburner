@@ -266,7 +266,7 @@ export const achievements: IMap<Achievement> = {
     ...achievementData["NS2"],
     Icon: "ns2",
     Condition: () =>
-      Player.getHomeComputer().scripts.some((s) => s.filename.endsWith(".js") || s.filename.endsWith(".ns")),
+      Player.getHomeComputer().getAllScriptFilenames().some((filename) => filename.endsWith(".js") || filename.endsWith(".ns")),
   },
   FROZE: {
     ...achievementData["FROZE"],
@@ -309,7 +309,7 @@ export const achievements: IMap<Achievement> = {
   SCRIPTS_30: {
     ...achievementData["SCRIPTS_30"],
     Icon: "folders",
-    Condition: () => Player.getHomeComputer().scripts.length >= 30,
+    Condition: () => Player.getHomeComputer().getAllScriptFilenames().length >= 30,
   },
   KARMA_1000000: {
     ...achievementData["KARMA_1000000"],
@@ -334,7 +334,7 @@ export const achievements: IMap<Achievement> = {
   SCRIPT_32GB: {
     ...achievementData["SCRIPT_32GB"],
     Icon: "bigcost",
-    Condition: () => Player.getHomeComputer().scripts.some((s) => s.ramUsage >= 32),
+    Condition: () => Player.getHomeComputer().getAllScriptFiles().some((s) => s.ramUsage >= 32),
   },
   FIRST_HACKNET_NODE: {
     ...achievementData["FIRST_HACKNET_NODE"],

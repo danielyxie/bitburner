@@ -32,7 +32,6 @@ import { sprintf } from "sprintf-js";
 
 import { parse } from "acorn";
 import { simple as walksimple } from "acorn-walk";
-import { areFilesEqual } from "./Terminal/DirectoryHelpers";
 import { Player } from "./Player";
 import { Terminal } from "./Terminal";
 import { IPlayer } from "./PersonObjects/IPlayer";
@@ -125,7 +124,7 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
   // Note: the environment that we pass to the JS script only needs to contain the functions visible
   // to that script, which env.vars does at this point.
   return new Promise<WorkerScript>((resolve, reject) => {
-    executeJSScript(player, workerScript.getServer().scripts, workerScript)
+    executeJSScript(player, workerScript.getServer().getAllScriptFiles(), workerScript)
       .then(() => {
         resolve(workerScript);
       })
@@ -334,12 +333,7 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
   }
 
   function getScript(scriptName: string): Script | null {
-    for (let i = 0; i < server.scripts.length; ++i) {
-      if (server.scripts[i].filename === scriptName) {
-        return server.scripts[i];
-      }
-    }
-    return null;
+    return server.getScript(scriptName);
   }
 
   let generatedCode = ""; // Generated Javascript Code
@@ -632,8 +626,8 @@ export function loadAllRunningScripts(player: IPlayer): void {
     server.ramUsed = 0;
 
     // Reset modules on all scripts
-    for (let i = 0; i < server.scripts.length; ++i) {
-      server.scripts[i].markUpdated();
+    for (const script of server.getAllScriptFiles()) {
+      script.markUpdated();
     }
 
     if (skipScriptLoad) {
@@ -704,43 +698,39 @@ export function runScriptFromScript(
   }
 
   // Check if the script exists and if it does run it
-  for (let i = 0; i < server.scripts.length; ++i) {
-    if (!areFilesEqual(server.scripts[i].filename, scriptname)) continue;
-    // Check for admin rights and that there is enough RAM availble to run
-    const script = server.scripts[i];
-    let ramUsage = script.ramUsage;
-    threads = Math.floor(Number(threads));
-    if (threads === 0) {
-      return 0;
-    }
-    ramUsage = ramUsage * threads;
-    const ramAvailable = server.maxRam - server.ramUsed;
-
-    if (server.hasAdminRights == false) {
-      workerScript.log(caller, () => `You do not have root access on '${server.hostname}'`);
-      return 0;
-    } else if (ramUsage > ramAvailable) {
-      workerScript.log(
-        caller,
-        () =>
-          `Cannot run script '${scriptname}' (t=${threads}) on '${server.hostname}' because there is not enough available RAM!`,
-      );
-      return 0;
-    } else {
-      // Able to run script
-      workerScript.log(
-        caller,
-        () => `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
-      );
-      const runningScriptObj = new RunningScript(script, args);
-      runningScriptObj.threads = threads;
-      runningScriptObj.server = server.hostname;
-
-      return startWorkerScript(player, runningScriptObj, server, workerScript);
-    }
-    break;
+  const script = server.getScript(scriptname);
+  if (script === null) {
+    workerScript.log(caller, () => `Could not find script '${scriptname}' on '${server.hostname}'`);
+    return 0;
   }
+  let ramUsage = script.ramUsage;
+  threads = Math.floor(Number(threads));
+  if (threads === 0) {
+    return 0;
+  }
+  ramUsage = ramUsage * threads;
+  const ramAvailable = server.maxRam - server.ramUsed;
 
-  workerScript.log(caller, () => `Could not find script '${scriptname}' on '${server.hostname}'`);
-  return 0;
+  if (server.hasAdminRights == false) {
+    workerScript.log(caller, () => `You do not have root access on '${server.hostname}'`);
+    return 0;
+  } else if (ramUsage > ramAvailable) {
+    workerScript.log(
+      caller,
+      () =>
+        `Cannot run script '${scriptname}' (t=${threads}) on '${server.hostname}' because there is not enough available RAM!`,
+    );
+    return 0;
+  } else {
+    // Able to run script
+    workerScript.log(
+      caller,
+      () => `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
+    );
+    const runningScriptObj = new RunningScript(script, args);
+    runningScriptObj.threads = threads;
+    runningScriptObj.server = server.hostname;
+
+    return startWorkerScript(player, runningScriptObj, server, workerScript);
+  }
 }

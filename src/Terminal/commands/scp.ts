@@ -5,13 +5,13 @@ import { BaseServer } from "../../Server/BaseServer";
 import { GetServer } from "../../Server/AllServers";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 
-export function scp(
+export async function scp(
   terminal: ITerminal,
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
   args: (string | number | boolean)[],
-): void {
+): Promise<void> {
   try {
     if (args.length !== 2) {
       terminal.error("Incorrect usage of scp command. Usage: scp [file] [destination hostname]");
@@ -55,19 +55,13 @@ export function scp(
 
     // Scp for txt files
     if (scriptname.endsWith(".txt")) {
-      let txtFile = null;
-      for (let i = 0; i < server.textFiles.length; ++i) {
-        if (server.textFiles[i].fn === scriptname) {
-          txtFile = server.textFiles[i];
-          break;
-        }
-      }
+      const txtFile = server.getFile(scriptname);
 
       if (txtFile === null) {
         return terminal.error("No such file exists!");
       }
 
-      const tRes = destServer.writeToTextFile(txtFile.fn, txtFile.text);
+      const tRes = destServer.writeToTextFile(txtFile.filename, txtFile.text);
       if (!tRes.success) {
         terminal.error("scp failed");
         return;
@@ -82,19 +76,13 @@ export function scp(
     }
 
     // Get the current script
-    let sourceScript = null;
-    for (let i = 0; i < server.scripts.length; ++i) {
-      if (scriptname == server.scripts[i].filename) {
-        sourceScript = server.scripts[i];
-        break;
-      }
-    }
+    const sourceScript = server.getScript(scriptname);
     if (sourceScript == null) {
       terminal.error("scp failed. No such script exists");
       return;
     }
 
-    const sRes = destServer.writeToScriptFile(player, scriptname, sourceScript.code);
+    const sRes = await destServer.writeToScriptFile(player, scriptname, sourceScript.code);
     if (!sRes.success) {
       terminal.error(`scp failed`);
       return;

@@ -100,8 +100,8 @@ export function ls(
   // Get all of the programs and scripts on the machine into one temporary array
   const s = player.getCurrentServer();
   for (const program of s.programs) handleFn(program, allPrograms);
-  for (const script of s.scripts) handleFn(script.filename, allScripts);
-  for (const txt of s.textFiles) handleFn(txt.fn, allTextFiles);
+  for (const filename of s.getAllScriptFilenames()) handleFn(filename, allScripts);
+  for (const filename of s.getAllTextFilenames()) handleFn(filename, allTextFiles);
   for (const contract of s.contracts) handleFn(contract.fn, allContracts);
   for (const msgOrLit of s.messages) handleFn(msgOrLit, allMessages);
 

@@ -94,7 +94,7 @@ export function mv(
         }
       }
 
-      textFile.fn = destPath;
+      textFile.filename = destPath;
     }
   } catch (e) {
     terminal.error(e + "");

@@ -112,8 +112,9 @@ export function prestigeHomeComputer(player: IPlayer, homeComp: Server): void {
   }
 
   //Update RAM usage on all scripts
-  homeComp.scripts.forEach(function (script) {
-    script.updateRamUsage(player, homeComp.scripts);
+  const homeCompScripts = homeComp.getAllScriptFiles();
+  homeCompScripts.forEach(function (script) {
+    script.updateRamUsage(player, homeCompScripts);
   });
 
   homeComp.messages.length = 0; //Remove .lit and .msg files

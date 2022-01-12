@@ -22,6 +22,7 @@ import { v1APIBreak } from "./utils/v1APIBreak";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "./Augmentation/PlayerOwnedAugmentation";
 import { LocationName } from "./Locations/data/LocationNames";
+import { sanitizeFilename, isValidFilename, generateRecoveryFilename } from "./utils/helpers/sanitizeFilename";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -100,7 +101,7 @@ class BitburnerSaveObject {
 
 // Makes necessary changes to the loaded/imported data to ensure
 // the game stills works with new versions
-function evaluateVersionCompatibility(ver: string | number): void {
+async function evaluateVersionCompatibility(ver: string | number): Promise<void> {
   // We have to do this because ts won't let us otherwise
   const anyPlayer = Player as any;
   if (typeof ver === "string") {
@@ -199,12 +200,12 @@ function evaluateVersionCompatibility(ver: string | number): void {
         return code;
       }
       for (const server of GetAllServers()) {
-        for (const script of server.scripts) {
+        for (const script of server.getAllScriptFiles()) {
           script.code = convert(script.code);
         }
       }
     }
-    v1APIBreak();
+    await v1APIBreak();
     ver = 1;
   }
   if (typeof ver === "number") {
@@ -256,10 +257,38 @@ function evaluateVersionCompatibility(ver: string | number): void {
         }
       }
     }
+    if (ver < 11) {
+      // sanitize all script and textfile filenames
+      for (const server of GetAllServers()) {
+        for (const script of server.getAllScriptFiles()) {
+          script.filename = sanitizeFilename(script.filename);
+          if (!isValidFilename(script.filename)) {
+            let newFilename = generateRecoveryFilename();
+            if (script.filename.endsWith('.script')) {
+              newFilename = newFilename + '.script';
+            } else {
+              newFilename = newFilename + '.js';
+            }
+            script.code = `// old filename '${script.filename}'\n` + script.code;
+            script.filename = newFilename;
+          }
+        }
+        for (const textfile of server.getAllTextFiles()) {
+          // @ts-expect-error migrate textfile fn property to filename
+          if (textfile.fn !== undefined) textfile.filename = textfile.fn;
+          textfile.filename = sanitizeFilename(textfile.filename);
+          if (!isValidFilename(textfile.filename)) {
+            const newFilename = generateRecoveryFilename()+'.txt';
+            textfile.text = `// old filename '${textfile.filename}'\n` + textfile.text;
+            textfile.filename = newFilename;
+          }
+        }
+      }
+    }
   }
 }
 
-function loadGame(saveString: string): boolean {
+async function loadGame(saveString: string): Promise<boolean> {
   if (!saveString) return false;
   saveString = decodeURIComponent(escape(atob(saveString)));
 
@@ -346,7 +375,8 @@ function loadGame(saveString: string): boolean {
   if (saveObj.hasOwnProperty("VersionSave")) {
     try {
       const ver = JSON.parse(saveObj.VersionSave, Reviver);
-      evaluateVersionCompatibility(ver);
+      console.log('VersionSave', ver)
+      await evaluateVersionCompatibility(ver);
       if (window.location.href.toLowerCase().includes("bitburner-beta")) {
         // Beta branch, always show changes
         createBetaUpdateText();

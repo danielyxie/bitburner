@@ -236,7 +236,7 @@ export function Root(props: IProps): React.ReactElement {
     }
     setUpdatingRam(true);
     const codeCopy = newCode + "";
-    const ramUsage = await calculateRamUsage(props.player, codeCopy, props.player.getCurrentServer().scripts);
+    const ramUsage = await calculateRamUsage(props.player, codeCopy, props.player.getCurrentServer().getAllScriptFiles());
     if (ramUsage.cost > 0) {
       debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage.cost));
       return;
@@ -439,50 +439,21 @@ export function Root(props: IProps): React.ReactElement {
     const server = GetServer(scriptToSave.hostname);
     if (server === null) throw new Error("Server should not be null but it is.");
     if (isScriptFilename(scriptToSave.fileName)) {
-      //If the current script already exists on the server, overwrite it
-      for (let i = 0; i < server.scripts.length; i++) {
-        if (scriptToSave.fileName == server.scripts[i].filename) {
-          server.scripts[i].saveScript(
-            props.player,
-            scriptToSave.fileName,
-            scriptToSave.code,
-            props.player.currentServer,
-            server.scripts,
-          );
-          if (Settings.SaveGameOnFileSave) saveObject.saveGame();
-          props.router.toTerminal();
-          return;
-        }
-      }
-
-      //If the current script does NOT exist, create a new one
-      const script = new Script();
-      script.saveScript(
-        props.player,
-        scriptToSave.fileName,
-        scriptToSave.code,
-        props.player.currentServer,
-        server.scripts,
-      );
-      server.scripts.push(script);
+      server.writeToScriptFile(props.player, scriptToSave.fileName, scriptToSave.code).then(() => {
+        if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+        props.router.toTerminal();
+        return;
+      });
+      return;
     } else if (scriptToSave.fileName.endsWith(".txt")) {
-      for (let i = 0; i < server.textFiles.length; ++i) {
-        if (server.textFiles[i].fn === scriptToSave.fileName) {
-          server.textFiles[i].write(scriptToSave.code);
-          if (Settings.SaveGameOnFileSave) saveObject.saveGame();
-          props.router.toTerminal();
-          return;
-        }
-      }
-      const textFile = new TextFile(scriptToSave.fileName, scriptToSave.code);
-      server.textFiles.push(textFile);
+      server.writeToTextFile(scriptToSave.fileName, scriptToSave.code)
+      if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+      props.router.toTerminal();
+      return;
     } else {
       dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " + " or text file (.txt)");
       return;
     }
-
-    if (Settings.SaveGameOnFileSave) saveObject.saveGame();
-    props.router.toTerminal();
   }
 
   function save(): void {
@@ -524,48 +495,7 @@ export function Root(props: IProps): React.ReactElement {
 
     const server = GetServer(currentScript.hostname);
     if (server === null) throw new Error("Server should not be null but it is.");
-    if (isScriptFilename(currentScript.fileName)) {
-      //If the current script already exists on the server, overwrite it
-      for (let i = 0; i < server.scripts.length; i++) {
-        if (currentScript.fileName == server.scripts[i].filename) {
-          server.scripts[i].saveScript(
-            props.player,
-            currentScript.fileName,
-            currentScript.code,
-            props.player.currentServer,
-            server.scripts,
-          );
-          if (Settings.SaveGameOnFileSave) saveObject.saveGame();
-          return;
-        }
-      }
-
-      //If the current script does NOT exist, create a new one
-      const script = new Script();
-      script.saveScript(
-        props.player,
-        currentScript.fileName,
-        currentScript.code,
-        props.player.currentServer,
-        server.scripts,
-      );
-      server.scripts.push(script);
-    } else if (currentScript.fileName.endsWith(".txt")) {
-      for (let i = 0; i < server.textFiles.length; ++i) {
-        if (server.textFiles[i].fn === currentScript.fileName) {
-          server.textFiles[i].write(currentScript.code);
-          if (Settings.SaveGameOnFileSave) saveObject.saveGame();
-          return;
-        }
-      }
-      const textFile = new TextFile(currentScript.fileName, currentScript.code);
-      server.textFiles.push(textFile);
-    } else {
-      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " + " or text file (.txt)");
-      return;
-    }
-
-    if (Settings.SaveGameOnFileSave) saveObject.saveGame();
+    return saveScript(currentScript);
   }
 
   function reorder(list: Array<OpenScript>, startIndex: number, endIndex: number): OpenScript[] {
@@ -628,8 +558,8 @@ export function Root(props: IProps): React.ReactElement {
     const server = GetServer(closingScript.hostname);
     if (server === null) throw new Error(`Server '${closingScript.hostname}' should not be null, but it is.`);
 
-    const serverScriptIndex = server.scripts.findIndex((script) => script.filename === closingScript.fileName);
-    if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex as number].code) {
+    const oldScript = server.getScript(closingScript.fileName);
+    if (oldScript !== null && oldScript.code !== savedScriptCode) {
       PromptEvent.emit({
         txt: "Do you want to save changes to " + closingScript.fileName + "?",
         resolve: (result: boolean) => {
@@ -683,8 +613,8 @@ export function Root(props: IProps): React.ReactElement {
     const server = GetServer(openScript.hostname);
     if (server === null) throw new Error(`Server '${openScript.hostname}' should not be null, but it is.`);
 
-    const serverScript = server.scripts.find((s) => s.filename === openScript.fileName);
-    if (serverScript === undefined) return " *";
+    const serverScript = server.getScript(openScript.fileName);
+    if (serverScript === null) return " *";
 
     return serverScript.code !== openScript.code ? " *" : "";
   }

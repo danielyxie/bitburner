@@ -402,25 +402,13 @@ export class Terminal implements ITerminal {
   getScript(player: IPlayer, filename: string): Script | null {
     const s = player.getCurrentServer();
     const filepath = this.getFilepath(filename);
-    for (const script of s.scripts) {
-      if (filepath === script.filename) {
-        return script;
-      }
-    }
-
-    return null;
+    return s.getScript(filepath);
   }
 
   getTextFile(player: IPlayer, filename: string): TextFile | null {
     const s = player.getCurrentServer();
     const filepath = this.getFilepath(filename);
-    for (const txt of s.textFiles) {
-      if (filepath === txt.fn) {
-        return txt;
-      }
-    }
-
-    return null;
+    return s.getFile(filepath);
   }
 
   getLitFile(player: IPlayer, filename: string): string | null {

@@ -32,8 +32,8 @@ export function cd(
 
       const server = player.getCurrentServer();
       if (
-        !server.scripts.some((script) => script.filename.startsWith(evaledDir + "")) &&
-        !server.textFiles.some((file) => file.fn.startsWith(evaledDir + ""))
+        !server.getAllScriptFilenames().some((filename) => filename.startsWith(evaledDir + "")) &&
+        !server.getAllTextFilenames().some((filename) => filename.startsWith(evaledDir + ""))
       ) {
         terminal.error("Invalid path. Failed to change directories");
         return;

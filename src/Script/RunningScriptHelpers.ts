@@ -10,13 +10,10 @@ export function getRamUsageFromRunningScript(script: RunningScript): number {
   if (server == null) {
     return 0;
   }
-  for (let i = 0; i < server.scripts.length; ++i) {
-    if (server.scripts[i].filename === script.filename) {
-      // Cache the ram usage for the next call
-      script.ramUsage = server.scripts[i].ramUsage;
-      return script.ramUsage;
-    }
+  const scriptFile = server.getScript(script.filename);
+  if (scriptFile === null) {
+    return 0;
   }
-
-  return 0;
+  script.ramUsage = scriptFile.ramUsage;
+  return script.ramUsage;
 }

@@ -13,6 +13,7 @@ import { isScriptFilename } from "../Script/isScriptFilename";
 import { createRandomIp } from "../utils/IPAddress";
 import { compareArrays } from "../utils/helpers/compareArrays";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { isValidFilename, sanitizeFilename } from "../utils/helpers/sanitizeFilename";
 
 interface IConstructorParams {
   adminRights?: boolean;
@@ -74,7 +75,7 @@ export class BaseServer {
   runningScripts: RunningScript[] = [];
 
   // Script files on this Server
-  scripts: Script[] = [];
+  private scripts: Script[] = [];
 
   // Contains the IP Addresses of all servers that are immediately
   // reachable from this one
@@ -90,7 +91,7 @@ export class BaseServer {
   sshPortOpen = false;
 
   // Text files on this server
-  textFiles: TextFile[] = [];
+  private textFiles: TextFile[] = [];
 
   // Flag indicating wehther this is a purchased server
   purchasedByPlayer = false;
@@ -141,13 +142,64 @@ export class BaseServer {
    * Script object on the server (if it exists)
    */
   getScript(scriptName: string): Script | null {
+    const filename = sanitizeFilename(scriptName);
     for (let i = 0; i < this.scripts.length; i++) {
-      if (this.scripts[i].filename === scriptName) {
+      if (this.scripts[i].filename === filename) {
         return this.scripts[i];
       }
     }
 
     return null;
+  }
+
+  /**
+   * @returns Array of all script filenames on server
+   */
+  getAllScriptFilenames(): string[] {
+    const filenames: string[] = [];
+    for (const file of this.scripts) {
+      filenames.push(file.filename);
+    }
+    return filenames;
+  }
+
+  /**
+   * @returns Array of all script files on server
+   */
+  getAllScriptFiles(): Script[] {
+    return [...this.scripts];
+  }
+
+  /**
+   * Given the name of the textfile, returns the corresponding
+   * TextFile object on the server (if it exists)
+   */
+  getFile(textFileName: string): TextFile | null {
+    const filename = sanitizeFilename(textFileName);
+    for (let i = 0; i < this.textFiles.length; i++) {
+      if (this.textFiles[i].filename === filename) {
+        return this.textFiles[i];
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @returns Array of all textfile filenames on server
+   */
+  getAllTextFilenames(): string[] {
+    const filenames: string[] = [];
+    for (const file of this.textFiles) {
+      filenames.push(file.filename);
+    }
+    return filenames;
+  }
+
+  /**
+   * @returns Array of all text files on server
+   */
+  getAllTextFiles(): TextFile[] {
+    return [...this.textFiles];
   }
 
   /**
@@ -212,7 +264,7 @@ export class BaseServer {
       }
     } else if (fn.endsWith(".txt")) {
       for (let i = 0; i < this.textFiles.length; ++i) {
-        if (this.textFiles[i].fn === fn) {
+        if (this.textFiles[i].filename === fn) {
           this.textFiles.splice(i, 1);
           return { res: true };
         }
@@ -252,43 +304,50 @@ export class BaseServer {
    * Write to a script file
    * Overwrites existing files. Creates new files if the script does not eixst
    */
-  writeToScriptFile(player: IPlayer, fn: string, code: string): writeResult {
-    const ret = { success: false, overwritten: false };
-    if (!isValidFilePath(fn) || !isScriptFilename(fn)) {
-      return ret;
-    }
-
-    // Check if the script already exists, and overwrite it if it does
-    for (let i = 0; i < this.scripts.length; ++i) {
-      if (fn === this.scripts[i].filename) {
-        const script = this.scripts[i];
-        script.code = code;
-        script.updateRamUsage(player, this.scripts);
-        script.markUpdated();
-        ret.overwritten = true;
-        ret.success = true;
+  writeToScriptFile(player: IPlayer, filename: string, code: string): Promise<writeResult> {
+    filename = sanitizeFilename(filename);
+    return new Promise((resolve) => {
+      const ret = { success: false, overwritten: false };
+      if (!isValidFilePath(filename) || !isScriptFilename(filename) || !isValidFilename(filename)) {
         return ret;
       }
-    }
-
-    // Otherwise, create a new script
-    const newScript = new Script(player, fn, code, this.hostname, this.scripts);
-    this.scripts.push(newScript);
-    ret.success = true;
-    return ret;
+  
+      // Check if the script already exists, and overwrite it if it does
+      for (let i = 0; i < this.scripts.length; ++i) {
+        if (filename === this.scripts[i].filename) {
+          const script = this.scripts[i];
+          script.code = code;
+          script.updateRamUsage(player, this.scripts).then(() => {
+            ret.overwritten = true;
+            ret.success = true;
+            resolve(ret);  
+          });
+          script.markUpdated();
+        }
+      }
+  
+      // Otherwise, create a new script
+      const newScript = new Script(player, filename, code, this.hostname, this.scripts);
+      this.scripts.push(newScript);
+      newScript.updateRamUsage(player, this.scripts).then(() => {
+        ret.success = true;
+        resolve(ret);
+      })
+    })
   }
 
   // Write to a text file
   // Overwrites existing files. Creates new files if the text file does not exist
-  writeToTextFile(fn: string, txt: string): writeResult {
+  writeToTextFile(filename: string, txt: string): writeResult {
+    filename = sanitizeFilename(filename);
     const ret = { success: false, overwritten: false };
-    if (!isValidFilePath(fn) || !fn.endsWith("txt")) {
+    if (!isValidFilePath(filename) || !filename.endsWith("txt") || !isValidFilename(filename)) {
       return ret;
     }
 
     // Check if the text file already exists, and overwrite if it does
     for (let i = 0; i < this.textFiles.length; ++i) {
-      if (this.textFiles[i].fn === fn) {
+      if (this.textFiles[i].filename === filename) {
         ret.overwritten = true;
         this.textFiles[i].text = txt;
         ret.success = true;
@@ -297,7 +356,7 @@ export class BaseServer {
     }
 
     // Otherwise create a new text file
-    const newFile = new TextFile(fn, txt);
+    const newFile = new TextFile(filename, txt);
     this.textFiles.push(newFile);
     ret.success = true;
     return ret;

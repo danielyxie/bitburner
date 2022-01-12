@@ -76,7 +76,7 @@ export function NetscriptSingularity(
     //Run a script after reset
     if (cbScript && isString(cbScript)) {
       const home = player.getHomeComputer();
-      for (const script of home.scripts) {
+      for (const script of home.getAllScriptFiles()) {
         if (script.filename === cbScript) {
           const ramUsage = script.ramUsage;
           const ramAvailable = home.maxRam - home.ramUsed;

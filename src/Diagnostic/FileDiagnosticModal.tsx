@@ -24,11 +24,11 @@ function ServerAccordion(props: IServerProps): React.ReactElement {
   const server = GetServer(props.hostname);
   if (server === null) throw new Error(`server '${props.hostname}' should not be null`);
   let totalSize = 0;
-  for (const f of server.scripts) {
+  for (const f of server.getAllScriptFiles()) {
     totalSize += f.code.length;
   }
 
-  for (const f of server.textFiles) {
+  for (const f of server.getAllTextFiles()) {
     totalSize += f.text.length;
   }
 
@@ -43,12 +43,12 @@ function ServerAccordion(props: IServerProps): React.ReactElement {
 
   const files: File[] = [];
 
-  for (const f of server.scripts) {
+  for (const f of server.getAllScriptFiles()) {
     files.push({ name: f.filename, size: f.code.length });
   }
 
-  for (const f of server.textFiles) {
-    files.push({ name: f.fn, size: f.text.length });
+  for (const f of server.getAllTextFiles()) {
+    files.push({ name: f.filename, size: f.text.length });
   }
 
   files.sort((a: File, b: File): number => b.size - a.size);

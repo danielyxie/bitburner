@@ -1,6 +1,5 @@
 import { Player } from "./Player";
 import { isScriptFilename } from "./Script/isScriptFilename";
-import { Script } from "./Script/Script";
 import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { Terminal } from "./Terminal";
 import { SnackbarEvents } from "./ui/React/Snackbar";
@@ -28,18 +27,14 @@ function initWebserver(): void {
     const home = GetServer("home");
     if (home === null) return "'home' server not found.";
     if (isScriptFilename(filename)) {
-      //If the current script already exists on the server, overwrite it
-      for (let i = 0; i < home.scripts.length; i++) {
-        if (filename == home.scripts[i].filename) {
-          home.scripts[i].saveScript(Player, filename, code, "home", home.scripts);
-          return "written";
-        }
+      const script = home.getScript(filename);
+      if (script === null) {
+        //If the current script does NOT exist, create a new one
+        home.writeToScriptFile(Player, filename, code);
+        return 'written';
       }
-
-      //If the current script does NOT exist, create a new one
-      const script = new Script();
-      script.saveScript(Player, filename, code, "home", home.scripts);
-      home.scripts.push(script);
+      //If the current script already exists on the server, overwrite it
+      script.saveScript(Player, filename, code, "home", home.getAllScriptFiles())
       return "written";
     }
 

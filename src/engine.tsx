@@ -70,7 +70,7 @@ const Engine: {
   };
   decrementAllCounters: (numCycles?: number) => void;
   checkCounters: () => void;
-  load: (saveString: string) => void;
+  load: (saveString: string) => Promise<void>;
   start: () => void;
 } = {
   // Time variables (milliseconds unix epoch time)
@@ -244,11 +244,11 @@ const Engine: {
     }
   },
 
-  load: function (saveString) {
+  load: async function (saveString) {
     startExploits();
     setupUncaughtPromiseHandler();
     // Load game from save or create new game
-    if (loadGame(saveString)) {
+    if (await loadGame(saveString)) {
       ThemeEvents.emit();
 
       initBitNodeMultipliers(Player);

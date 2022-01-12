@@ -23,10 +23,10 @@ export function wget(
   }
   $.get(
     url,
-    function (data: any) {
+    async function (data: any) {
       let res;
       if (isScriptFilename(target)) {
-        res = server.writeToScriptFile(player, target, data);
+        res = await server.writeToScriptFile(player, target, data);
       } else {
         res = server.writeToTextFile(target, data);
       }

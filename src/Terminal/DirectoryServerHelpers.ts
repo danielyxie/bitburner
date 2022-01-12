@@ -27,9 +27,9 @@ export function getSubdirectories(serv: BaseServer, dir: string): string[] {
   }
 
   function processFile(fn: string): void {
-    if (t_dir === "/" && isInRootDirectory(fn)) {
+    if (t_dir === "" && isInRootDirectory(fn)) {
       const subdir = getFirstParentDirectory(fn);
-      if (subdir !== "/" && !res.includes(subdir)) {
+      if (subdir !== "" && !res.includes(subdir)) {
         res.push(subdir);
       }
     } else if (fn.startsWith(t_dir)) {
@@ -41,12 +41,12 @@ export function getSubdirectories(serv: BaseServer, dir: string): string[] {
     }
   }
 
-  for (const script of serv.scripts) {
-    processFile(script.filename);
+  for (const filename of serv.getAllScriptFilenames()) {
+    processFile('/'+filename);
   }
 
-  for (const txt of serv.textFiles) {
-    processFile(txt.fn);
+  for (const filename of serv.getAllTextFilenames()) {
+    processFile('/'+filename);
   }
 
   return res;

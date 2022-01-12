@@ -24,7 +24,6 @@ import { Terminal } from "./Terminal";
 
 import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
-import { Script } from "./Script/Script";
 import { findRunningScript, findRunningScriptByPid } from "./Script/ScriptHelpers";
 import { isScriptFilename } from "./Script/isScriptFilename";
 import { PromptEvent } from "./ui/React/PromptManager";
@@ -43,7 +42,7 @@ import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { influenceStockThroughServerHack, influenceStockThroughServerGrow } from "./StockMarket/PlayerInfluencing";
 
 import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
-import { TextFile, getTextFile, createTextFile } from "./TextFile";
+import { getTextFile, createTextFile } from "./TextFile";
 
 import { NetscriptPorts, runScriptFromScript } from "./NetscriptWorker";
 import { killWorkerScript } from "./Netscript/killWorkerScript";
@@ -238,11 +237,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     const errstack = new Error().stack;
     if (errstack === undefined) throw new Error("how did we not throw an error?");
     const stack = errstack.split("\n").slice(1);
-    const scripts = workerScript.getServer().scripts;
+    const server = workerScript.getServer();
+    const scripts = server.getAllScriptFilenames();
     const userstack = [];
     for (const stackline of stack) {
       let filename;
-      for (const script of scripts) {
+      for (const file of scripts) {
+        const script = server.getScript(file)
+        if (script === null) continue;
         if (script.url && stackline.includes(script.url)) {
           filename = script.filename;
         }
@@ -1167,75 +1169,43 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       // Scp for text files
       if (scriptname.endsWith(".txt")) {
-        let txtFile;
-        for (let i = 0; i < currServ.textFiles.length; ++i) {
-          if (currServ.textFiles[i].fn === scriptname) {
-            txtFile = currServ.textFiles[i];
-            break;
-          }
-        }
-        if (txtFile === undefined) {
+        const txtFile = currServ.getFile(scriptname);
+        if (txtFile === null) {
           workerScript.log("scp", () => `File '${scriptname}' does not exist.`);
           return Promise.resolve(false);
         }
-
-        for (let i = 0; i < destServer.textFiles.length; ++i) {
-          if (destServer.textFiles[i].fn === scriptname) {
-            // Overwrite
-            destServer.textFiles[i].text = txtFile.text;
-            workerScript.log("scp", () => `File '${scriptname}' copied over to '${destServer?.hostname}'.`);
-            return Promise.resolve(true);
-          }
+        const destFile = destServer.getFile(scriptname);
+        if (destFile === null) {
+          destServer.writeToTextFile(txtFile.filename, txtFile.text);
+          workerScript.log("scp", () => `File '${scriptname}' copied over to '${destServer?.hostname}'.`);
+          return Promise.resolve(true);
         }
-        const newFile = new TextFile(txtFile.fn, txtFile.text);
-        destServer.textFiles.push(newFile);
+        destFile.text = txtFile.text;
         workerScript.log("scp", () => `File '${scriptname}' copied over to '${destServer?.hostname}'.`);
         return Promise.resolve(true);
       }
 
       // Scp for script files
-      let sourceScript = null;
-      for (let i = 0; i < currServ.scripts.length; ++i) {
-        if (scriptname == currServ.scripts[i].filename) {
-          sourceScript = currServ.scripts[i];
-          break;
-        }
-      }
+      const sourceScript = currServ.getScript(scriptname);
       if (sourceScript == null) {
         workerScript.log("scp", () => `File '${scriptname}' does not exist.`);
         return Promise.resolve(false);
       }
 
       // Overwrite script if it already exists
-      for (let i = 0; i < destServer.scripts.length; ++i) {
-        if (scriptname == destServer.scripts[i].filename) {
-          workerScript.log("scp", () => `WARNING: File '${scriptname}' overwritten on '${destServer?.hostname}'`);
-          const oldScript = destServer.scripts[i];
-          // If it's the exact same file don't actually perform the
-          // copy to avoid recompiling uselessly. Players tend to scp
-          // liberally.
-          if (oldScript.code === sourceScript.code) return Promise.resolve(true);
-          oldScript.code = sourceScript.code;
-          oldScript.ramUsage = sourceScript.ramUsage;
-          oldScript.markUpdated();
-          return Promise.resolve(true);
-        }
+      const oldScript = destServer.getScript(scriptname);
+      if (oldScript === null) {
+        return destServer.writeToScriptFile(Player, scriptname, sourceScript.code).then(() => {
+          workerScript.log("scp", () => `File '${scriptname}' copied over to '${destServer?.hostname}'.`);
+          return true;
+        })
       }
-
-      // Create new script if it does not already exist
-      const newScript = new Script(Player, scriptname);
-      newScript.code = sourceScript.code;
-      newScript.ramUsage = sourceScript.ramUsage;
-      newScript.server = destServer.hostname;
-      destServer.scripts.push(newScript);
-      workerScript.log("scp", () => `File '${scriptname}' copied over to '${destServer?.hostname}'.`);
-      return new Promise((resolve) => {
-        if (destServer === null) {
-          resolve(false);
-          return;
-        }
-        newScript.updateRamUsage(Player, destServer.scripts).then(() => resolve(true));
-      });
+      workerScript.log("scp", () => `WARNING: File '${scriptname}' overwritten on '${destServer?.hostname}'`);
+      if (oldScript.code === sourceScript.code) return Promise.resolve(true);
+      oldScript.code = sourceScript.code;
+      oldScript.ramUsage = sourceScript.ramUsage;
+      oldScript.markUpdated();
+      return Promise.resolve(true);
     },
     ls: function (hostname: any, grep: any): any {
       updateDynamicRam("ls", getRamCost(Player, "ls"));
@@ -1260,13 +1230,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           allFiles.push(server.programs[i]);
         }
       }
-      for (let i = 0; i < server.scripts.length; i++) {
+      for (const filename of server.getAllScriptFilenames()) {
         if (filter) {
-          if (server.scripts[i].filename.includes(filter)) {
-            allFiles.push(server.scripts[i].filename);
+          if (filename.includes(filter)) {
+            allFiles.push(filename);
           }
         } else {
-          allFiles.push(server.scripts[i].filename);
+          allFiles.push(filename);
         }
       }
       for (let i = 0; i < server.messages.length; i++) {
@@ -1279,17 +1249,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           allFiles.push(server.messages[i]);
         }
       }
-
-      for (let i = 0; i < server.textFiles.length; i++) {
+      for (const filename of server.getAllTextFilenames()) {
         if (filter) {
-          if (server.textFiles[i].fn.includes(filter)) {
-            allFiles.push(server.textFiles[i].fn);
+          if (filename.includes(filter)) {
+            allFiles.push(filename);
           }
         } else {
-          allFiles.push(server.textFiles[i].fn);
+          allFiles.push(filename);
         }
       }
-
       for (let i = 0; i < server.contracts.length; ++i) {
         if (filter) {
           if (server.contracts[i].fn.includes(filter)) {
@@ -1563,11 +1531,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("fileExists", "Usage: fileExists(scriptname, [server])");
       }
       const server = safeGetServer(hostname, "fileExists");
-      for (let i = 0; i < server.scripts.length; ++i) {
-        if (filename == server.scripts[i].filename) {
-          return true;
-        }
-      }
+      if (server.getScript(filename) !== null) return true;
       for (let i = 0; i < server.programs.length; ++i) {
         if (filename.toLowerCase() == server.programs[i].toLowerCase()) {
           return true;
@@ -1791,15 +1755,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         }
         if (isScriptFilename(fn)) {
           // Write to script
-          let script = workerScript.getScriptOnServer(fn, server);
+          const script = workerScript.getScriptOnServer(fn, server);
           if (script == null) {
             // Create a new script
-            script = new Script(Player, fn, data, server.hostname, server.scripts);
-            server.scripts.push(script);
-            return script.updateRamUsage(Player, server.scripts);
+            return server.writeToScriptFile(Player, fn, data)
           }
           mode === "w" ? (script.code = data) : (script.code += data);
-          return script.updateRamUsage(Player, server.scripts);
+          return script.updateRamUsage(Player, server.getAllScriptFiles());
         } else {
           // Write to text file
           const txtFile = getTextFile(fn, server);
@@ -1950,12 +1912,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getScriptRam: function (scriptname: any, hostname: any = workerScript.hostname): any {
       updateDynamicRam("getScriptRam", getRamCost(Player, "getScriptRam"));
       const server = safeGetServer(hostname, "getScriptRam");
-      for (let i = 0; i < server.scripts.length; ++i) {
-        if (server.scripts[i].filename == scriptname) {
-          return server.scripts[i].ramUsage;
-        }
-      }
-      return 0;
+      const script = server.getScript(scriptname);
+      if (script === null) return 0;
+      return script.ramUsage;
     },
     getRunningScript: function (fn: any, hostname: any, ...args: any[]): any {
       updateDynamicRam("getRunningScript", getRamCost(Player, "getRunningScript"));
@@ -2121,12 +2080,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return new Promise(function (resolve) {
         $.get(
           url,
-          function (data) {
+          async function (data) {
             let res;
             if (isScriptFilename(target)) {
-              res = s.writeToScriptFile(Player, target, data);
+              res = await s.writeToScriptFile(Player, target, data);
             } else {
-              res = s.writeToTextFile(target, data);
+              res = await s.writeToTextFile(target, data);
             }
             if (!res.success) {
               workerScript.log("wget", () => "Failed.");

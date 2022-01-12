@@ -5,13 +5,13 @@ import { BaseServer } from "../../Server/BaseServer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
 import { getDestinationFilepath, areFilesEqual } from "../DirectoryHelpers";
 
-export function cp(
+export async function cp(
   terminal: ITerminal,
   router: IRouter,
   player: IPlayer,
   server: BaseServer,
   args: (string | number | boolean)[],
-): void {
+): Promise<void> {
   try {
     if (args.length !== 2) {
       terminal.error("Incorrect usage of cp command. Usage: cp [src] [dst]");
@@ -50,13 +50,7 @@ export function cp(
 
     // Scp for txt files
     if (src.endsWith(".txt")) {
-      let txtFile = null;
-      for (let i = 0; i < server.textFiles.length; ++i) {
-        if (areFilesEqual(server.textFiles[i].fn, src)) {
-          txtFile = server.textFiles[i];
-          break;
-        }
-      }
+      const txtFile = server.getFile(src);
 
       if (txtFile === null) {
         return terminal.error("No such file exists!");
@@ -77,19 +71,13 @@ export function cp(
     }
 
     // Get the current script
-    let sourceScript = null;
-    for (let i = 0; i < server.scripts.length; ++i) {
-      if (areFilesEqual(server.scripts[i].filename, src)) {
-        sourceScript = server.scripts[i];
-        break;
-      }
-    }
+    const sourceScript = server.getScript(src);
     if (sourceScript == null) {
       terminal.error("cp failed. No such script exists");
       return;
     }
 
-    const sRes = server.writeToScriptFile(player, dst, sourceScript.code);
+    const sRes = await server.writeToScriptFile(player, dst, sourceScript.code);
     if (!sRes.success) {
       terminal.error(`cp failed`);
       return;

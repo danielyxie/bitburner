@@ -112,7 +112,7 @@ export const CONSTANTS: {
   LatestUpdate: string;
 } = {
   VersionString: "1.3.0",
-  VersionNumber: 9,
+  VersionNumber: 11,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
