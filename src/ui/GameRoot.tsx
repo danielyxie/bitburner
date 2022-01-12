@@ -319,8 +319,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toCreateProgram: () => setCurrentPage(Page.CreateProgram),
     toDevMenu: () => setCurrentPage(Page.DevMenu),
     toFaction: (faction?: Faction) => {
+      if (faction) setFaction(Factions[faction.name]);
       setCurrentPage(Page.Faction, faction);
-      if (faction) setFaction(faction);
     },
     toFactions: () => setCurrentPage(Page.Factions),
     toGameOptions: () => setCurrentPage(Page.Options),
