@@ -92,7 +92,12 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
         workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, runningFn, propName));
         throw workerScript;
       }
-      runningFn = propName;
+
+      // If we register exit as running, Netscript functions cannot be called from atExit anymore, as it would be considered
+      // as a call concurrent to exit. As long as exit only kills the script, we do not need to register it.
+      if (propName !== "exit") {
+        runningFn = propName;
+      }
 
       // If the function throws an error, clear the runningFn flag first, and then re-throw it
       // This allows people to properly catch errors thrown by NS functions without getting
