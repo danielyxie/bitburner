@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * @public
  */
@@ -119,7 +121,7 @@ export interface IPort {
   /** add data to port if not full.
    * @returns true if added and false if full and not added */
   tryWrite: (value: any) => boolean;
-  /** reads and removes first element from port 
+  /** reads and removes first element from port
    * if no data in port returns "NULL PORT DATA"
    */
   read: () => any;
@@ -3880,6 +3882,37 @@ interface UserInterface {
    * RAM cost: cost: 0 GB
    */
   resetTheme(): void;
+
+
+  /**
+   * Get the current styles
+   * @remarks
+   * RAM cost: cost: 0 GB
+   *
+   * @returns An object containing the player's styles
+   */
+  getStyles(): IStyleSettings;
+
+  /**
+   * Sets the current styles
+   * @remarks
+   * RAM cost: cost: 0 GB
+   * @example
+   * Usage example (NS2)
+   * ```ts
+   * const styles = ns.ui.getStyles();
+   * styles.fontFamily = 'Comic Sans Ms';
+   * ns.ui.setStyles(styles);
+   * ```
+   */
+  setStyles(newStyles: IStyleSettings): void;
+
+  /**
+   * Resets the player's styles to the default values
+   * @remarks
+   * RAM cost: cost: 0 GB
+   */
+  resetStyles(): void;
 }
 
 /**
@@ -6353,4 +6386,13 @@ interface UserInterfaceTheme {
   backgroundprimary: string;
   backgroundsecondary: string;
   button: string;
+}
+
+/**
+ * Interface Styles
+ * @internal
+ */
+interface IStyleSettings {
+  fontFamily: React.CSSProperties["fontFamily"];
+  lineHeight: React.CSSProperties["lineHeight"];
 }

@@ -1,9 +1,4 @@
-import React from "react";
-
-export interface IStyleSettings {
-  fontFamily: React.CSSProperties["fontFamily"];
-  lineHeight: React.CSSProperties["lineHeight"];
-}
+import { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
 
 export const defaultStyles: IStyleSettings = {
   lineHeight: 1.5,
