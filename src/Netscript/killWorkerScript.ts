@@ -68,6 +68,7 @@ function killWorkerScriptByPid(pid: number, rerenderUi = true): boolean {
 }
 
 function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = true): void {
+  killNetscriptDelay(workerScript); // Run before atExit to avoid concurrence of calls
   if (workerScript.exiting == true) {
     dialogBoxCreate(
       `Error trying to call exit from inside the function of atExit in script ${workerScript.name} on ${workerScript.hostname} ${workerScript.scriptRef.args}`,
@@ -88,7 +89,6 @@ function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = tru
     workerScript.exiting = false;
   }
   workerScript.env.stopFlag = true;
-  killNetscriptDelay(workerScript);
   removeWorkerScript(workerScript, rerenderUi);
 }
 
