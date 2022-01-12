@@ -36,12 +36,12 @@ export function WorkInProgressRoot(): React.ReactElement {
   const faction = Factions[player.currentWorkFactionName];
   if (player.workType == CONSTANTS.WorkTypeFaction) {
     function cancel(): void {
+      router.toFaction(faction);
       player.finishFactionWork(true);
-      router.toPreviousPage(() => router.toFaction(faction));
     }
     function unfocus(): void {
+      router.toFaction(faction);
       player.stopFocusing();
-      router.toPreviousPage(() => router.toFaction(faction));
     }
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
@@ -120,12 +120,13 @@ export function WorkInProgressRoot(): React.ReactElement {
   if (player.className !== "") {
     function cancel(): void {
       player.finishClass(true);
-      router.toPreviousPage(() => router.toCity());
+      router.toCity();
     }
 
     function unfocus(): void {
+      router.toFaction(faction);
+      router.toCity();
       player.stopFocusing();
-      router.toPreviousPage(() => router.toCity());
     }
 
     let stopText = "";
@@ -211,11 +212,11 @@ export function WorkInProgressRoot(): React.ReactElement {
 
     function cancel(): void {
       player.finishWork(true);
-      router.toPreviousPage(() => router.toJob());
+      router.toJob();
     }
     function unfocus(): void {
       player.stopFocusing();
-      router.toPreviousPage(() => router.toJob());
+      router.toJob();
     }
 
     const position = player.jobs[player.companyName];
@@ -303,11 +304,11 @@ export function WorkInProgressRoot(): React.ReactElement {
   if (player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
     function cancel(): void {
       player.finishWorkPartTime(true);
-      router.toPreviousPage(() => router.toJob());
+      router.toJob();
     }
     function unfocus(): void {
       player.stopFocusing();
-      router.toPreviousPage(() => router.toJob());
+      router.toJob();
     }
     const comp = Companies[player.companyName];
     let companyRep = 0;
@@ -439,11 +440,11 @@ export function WorkInProgressRoot(): React.ReactElement {
   if (player.createProgramName !== "") {
     function cancel(): void {
       player.finishCreateProgramWork(true);
-      router.toPreviousPage(() => router.toTerminal());
+      router.toTerminal();
     }
     function unfocus(): void {
+      router.toTerminal();
       player.stopFocusing();
-      router.toPreviousPage(() => router.toTerminal());
     }
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
