@@ -335,7 +335,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     workerScript.log(
       "hack",
       () =>
-        `Executing ${hostname} in ${convertTimeMsToTimeElapsedString(
+        `Executing on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(
           hackingTime * 1000,
           true,
         )} (t=${numeralWrapper.formatThreads(threads)})`,
