@@ -432,8 +432,11 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeErrorMsg(funcName, `${argName} should be a string`);
     },
     number: (funcName: string, argName: string, v: any): number => {
-      if (typeof v === "number") return v;
-      if (!isNaN(v) && !isNaN(parseFloat(v))) return parseFloat(v);
+      if (!isNaN(v))
+      {
+        if (typeof v === "number") return v;
+        if (!isNaN(parseFloat(v))) return parseFloat(v);
+      }
       throw makeRuntimeErrorMsg(funcName, `${argName} should be a number`);
     },
     boolean: (v: any): boolean => {
