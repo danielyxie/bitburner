@@ -10,7 +10,7 @@ async function enableAchievementsInterval(window) {
   // here. Hey if it works it works.
   const steamAchievements = greenworks.getAchievementNames();
   log.info(`All Steam achievements ${JSON.stringify(steamAchievements)}`);
-  const playerAchieved = (await Promise.all(steamAchievements.map(name => new Promise((resolve, reject) => { greenworks.getAchievement(name, (playerHas) => resolve(playerHas ? name : ""), reject); })))).filter(name => !!name);
+  const playerAchieved = (await Promise.all(steamAchievements.map(checkSteamAchievement))).filter(name => !!name);
   log.info(`Player has Steam achievements ${JSON.stringify(playerAchieved)}`);
   const intervalID = setInterval(async () => {
     try {
@@ -32,6 +32,15 @@ async function enableAchievementsInterval(window) {
     }
   }, 1000);
   window.achievementsIntervalID = intervalID;
+}
+
+function checkSteamAchievement(name) {
+  return new Promise((resolve) => {
+    greenworks.getAchievement(name, playerHas => resolve(playerHas ? name : ""), err => {
+      log.warn(`Failed to get Steam achievement ${name} status: ${err}`);
+      resolve("");
+    });
+  });
 }
 
 function disableAchievementsInterval(window) {
