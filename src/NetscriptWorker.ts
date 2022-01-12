@@ -88,7 +88,7 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
         "Concurrent calls to Netscript functions are not allowed! " +
         "Did you forget to await hack(), grow(), or some other " +
         "promise-returning function? (Currently running: %s tried to run: %s)";
-      if (runningFn) {
+      if (runningFn && !(runningFn === "sleep" && workerScript.exiting)) {
         workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, runningFn, propName));
         throw workerScript;
       }
