@@ -172,7 +172,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeRejectMsg(
         workerScript,
         `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-          `This is probably a bug. Please report to game developer`,
+        `This is probably a bug. Please report to game developer`,
       );
     }
 
@@ -697,8 +697,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log(
           "weaken",
           () =>
-            `'${server.hostname}' security level weakened to ${
-              server.hackDifficulty
+            `'${server.hostname}' security level weakened to ${server.hackDifficulty
             }. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)})`,
         );
         workerScript.scriptRef.onlineExpGained += expGain;
@@ -2263,6 +2262,64 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("atExit", "argument should be function");
       }
       workerScript.atExit = f;
+    },
+    mv: function (host: string, source: string, destination: string): void {
+      updateDynamicRam("mv", getRamCost(Player, "mv"));
+
+      if (arguments.length != 3) throw makeRuntimeErrorMsg("mv", "Takes 3 argument.");
+
+      if (!isValidFilePath(source)) throw makeRuntimeErrorMsg("mv", `Invalid filename: '${source}'`);
+      if (!isValidFilePath(destination)) throw makeRuntimeErrorMsg("mv", `Invalid filename: '${destination}'`);
+
+      const source_is_txt = source.endsWith(".txt");
+      const dest_is_txt = destination.endsWith(".txt");
+
+      if (!isScriptFilename(source) && !source_is_txt) throw makeRuntimeErrorMsg("mv", `'mv' can only be used on scripts and text files (.txt)`);
+      if (source_is_txt != dest_is_txt) throw makeRuntimeErrorMsg("mv", `Source and destination files must have the same type`);
+
+      if (source === destination) {
+        return;
+      }
+
+      // This will throw if the server is not found, we do not need to validate result.
+      const destServer: BaseServer | null = safeGetServer(host, "mv");
+
+      if (!source_is_txt && destServer.isRunning(source)) throw makeRuntimeErrorMsg("mv", `Cannot use 'mv' on a script that is running`)
+
+      interface File {
+        filename: string;
+      }
+
+      const files = source_is_txt ? destServer.textFiles : destServer.scripts;
+      let source_file: File | null = null;
+      let dest_file: File | null = null;
+
+      for (let i = 0; i < files.length; ++i) {
+        const file = files[i];
+        if (file.filename === source) {
+          source_file = file;
+        } else if (file.filename === destination) {
+          dest_file = file;
+        }
+      }
+
+      if (source_file == null) throw makeRuntimeErrorMsg("mv", `Source file ${source} does not exist`)
+
+      if (dest_file != null) {
+        if (dest_file instanceof TextFile && source_file instanceof TextFile) {
+          dest_file.text = source_file.text;
+        } else if (dest_file instanceof Script && source_file instanceof Script) {
+          dest_file.code = source_file.code;
+          dest_file.markUpdated();
+        }
+
+        destServer.removeFile(source);
+      } else {
+        source_file.filename = destination;
+        if (source_file instanceof Script) {
+          source_file.markUpdated();
+        }
+      }
     },
     flags: Flags(workerScript.args),
   };
