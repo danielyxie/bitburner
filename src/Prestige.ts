@@ -161,8 +161,6 @@ export function prestigeAugmentation(): void {
   resetPidCounter();
   ProgramsSeen.splice(0, ProgramsSeen.length);
   InvitationsSeen.splice(0, InvitationsSeen.length);
-
-  Router.clearHistory();
 }
 
 // Prestige by destroying Bit Node and gaining a Source File
