@@ -1341,9 +1341,10 @@ export interface Singularity {
    *
    * @param universityName - Name of university. You must be in the correct city for whatever university you specify.
    * @param courseName - Name of course.
+   * @param focus - Acquire player focus on this class. Optional. Defaults to true.
    * @returns True if actions is successfully started, false otherwise.
    */
-  universityCourse(universityName: string, courseName: string): boolean;
+  universityCourse(universityName: string, courseName: string, focus?: boolean): boolean;
 
   /**
    * Workout at the gym.
@@ -1362,9 +1363,10 @@ export interface Singularity {
    *
    * @param gymName - Name of gym. You must be in the correct city for whatever gym you specify.
    * @param stat - The stat you want to train.
+   * @param focus - Acquire player focus on this gym workout. Optional. Defaults to true.
    * @returns True if actions is successfully started, false otherwise.
    */
-  gymWorkout(gymName: string, stat: string): boolean;
+  gymWorkout(gymName: string, stat: string, focus?: boolean): boolean;
 
   /**
    * Travel to another city.
@@ -1775,9 +1777,10 @@ export interface Singularity {
    * ns.createProgram(“relaysmtp.exe”);
    * ```
    * @param program - Name of program to create.
+   * @param focus - Acquire player focus on this program creation. Optional. Defaults to true.
    * @returns True if you successfully start working on the specified program, and false otherwise.
    */
-  createProgram(program: string): boolean;
+  createProgram(program: string, focus?: boolean): boolean;
 
   /**
    * Commit a crime.
