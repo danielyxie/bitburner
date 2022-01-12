@@ -68,15 +68,24 @@ function killWorkerScriptByPid(pid: number, rerenderUi = true): boolean {
 }
 
 function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = true): void {
-  if (typeof workerScript.atExit === "function") {
-    try {
-      workerScript.atExit();
-    } catch (e: any) {
-      dialogBoxCreate(
-        `Error trying to call atExit for script ${workerScript.name} on ${workerScript.hostname} ${workerScript.scriptRef.args} ${e}`,
-      );
+  if (workerScript.exiting == true) {
+    dialogBoxCreate(
+      `Error trying to call exit from inside the function of atExit in script ${workerScript.name} on ${workerScript.hostname} ${workerScript.scriptRef.args}`,
+    );
+  }
+  else {
+    workerScript.exiting = true;
+    if (typeof workerScript.atExit === "function") {
+      try {
+        workerScript.atExit();
+      } catch (e: any) {
+        dialogBoxCreate(
+          `Error trying to call atExit for script ${workerScript.name} on ${workerScript.hostname} ${workerScript.scriptRef.args} ${e}`,
+        );
+      }
+      workerScript.atExit = undefined;
     }
-    workerScript.atExit = undefined;
+    workerScript.exiting = false;
   }
   workerScript.env.stopFlag = true;
   killNetscriptDelay(workerScript);

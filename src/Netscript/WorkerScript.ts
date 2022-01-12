@@ -97,6 +97,11 @@ export class WorkerScript {
   running = false;
 
   /**
+   * Whether or not this workerScript is currently exiting
+   */
+  exiting = false;
+
+  /**
    * Reference to underlying RunningScript object
    */
   scriptRef: RunningScript;
