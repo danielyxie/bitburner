@@ -165,7 +165,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       applyAugmentation({ name: AugmentationNames.StaneksGift1, level: 1 });
     }
 
-    router.toFaction(faction);
+    router.toFaction(faction?.name);
   }
 
   function renderCotMG(): React.ReactElement {

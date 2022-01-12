@@ -38,7 +38,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
   }, []);
 
   function openFaction(faction: Faction): void {
-    props.router.toFaction(faction);
+    props.router.toFaction(faction?.name);
   }
 
   function acceptInvitation(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, faction: string): void {

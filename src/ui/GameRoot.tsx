@@ -317,9 +317,12 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toCorporation: () => setCurrentPage(Page.Corporation),
     toCreateProgram: () => setCurrentPage(Page.CreateProgram),
     toDevMenu: () => setCurrentPage(Page.DevMenu),
-    toFaction: (faction?: Faction) => {
-      setCurrentPage(Page.Faction, faction);
-      if (faction) setFaction(faction);
+    toFaction: (factionName?: string) => {
+      setCurrentPage(Page.Faction, factionName);
+      if (factionName) {
+        const faction = Factions[factionName];
+        setFaction(faction);
+      }
     },
     toFactions: () => setCurrentPage(Page.Factions),
     toGameOptions: () => setCurrentPage(Page.Options),

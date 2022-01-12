@@ -40,7 +40,7 @@ export function Stats(props: IProps): React.ReactElement {
       joinFaction(faction);
     }
 
-    props.router.toFaction(faction);
+    props.router.toFaction(faction?.name);
   }
 
   return (

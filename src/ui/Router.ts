@@ -1,4 +1,3 @@
-import { Faction } from "../Faction/Faction";
 import { Location } from "../Locations/Location";
 
 /**
@@ -65,7 +64,7 @@ export interface IRouter {
   toCorporation(): void;
   toCreateProgram(): void;
   toDevMenu(): void;
-  toFaction(faction?: Faction): void; // faction name
+  toFaction(factionName?: string): void; // faction name
   toFactions(): void;
   toGameOptions(): void;
   toGang(): void;

@@ -37,11 +37,11 @@ export function WorkInProgressRoot(): React.ReactElement {
   if (player.workType == CONSTANTS.WorkTypeFaction) {
     function cancel(): void {
       player.finishFactionWork(true);
-      router.toPreviousPage(() => router.toFaction(faction));
+      router.toPreviousPage(() => router.toFaction(faction.name));
     }
     function unfocus(): void {
       player.stopFocusing();
-      router.toPreviousPage(() => router.toFaction(faction));
+      router.toPreviousPage(() => router.toFaction(faction.name));
     }
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
