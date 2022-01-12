@@ -17,7 +17,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import SaveIcon from "@mui/icons-material/Save";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 
 import { Settings } from "../../Settings/Settings";
@@ -26,6 +26,7 @@ import { StatsProgressOverviewCell } from "./StatsProgressBar";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { IRouter, Page } from "../Router";
 import { Box, Tooltip } from "@mui/material";
+import { CONSTANTS } from "../../Constants";
 
 interface IProps {
   save: () => void;
@@ -80,101 +81,39 @@ function Bladeburner(): React.ReactElement {
   );
 }
 
-function Work(): React.ReactElement {
-  const player = use.Player();
-  const router = use.Router();
+interface WorkInProgressOverviewProps {
+  tooltip: React.ReactNode;
+  header: React.ReactNode;
+  children: React.ReactNode;
+  onClickFocus: () => void;
+}
+
+function WorkInProgressOverview({
+  tooltip,
+  children,
+  onClickFocus,
+  header,
+}: WorkInProgressOverviewProps): React.ReactElement {
   const classes = useStyles();
-  if (!player.isWorking || player.focus) return <></>;
-
-  if (player.className !== "") {
-    return (
-      <>
-        <TableRow>
-          <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-            <Tooltip title={'You are ' + player.className}>
-              <Typography>Work&nbsp;in&nbsp;progress:</Typography>
-            </Tooltip>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-            <Typography>{convertTimeMsToTimeElapsedString(player.timeWorked)}</Typography>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell component="th" scope="row" align="center" colSpan={2} classes={{ root: classes.cellNone }}>
-            <Button
-              onClick={() => {
-                player.startFocusing();
-                router.toWork();
-              }}
-            >
-              Focus
-            </Button>
-          </TableCell>
-        </TableRow>
-      </>
-    );
-  }
-
-  if (player.createProgramName !== "") {
-    return (
-      <>
-        <TableRow>
-          <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-            <Tooltip title={`Coding ${player.createProgramName}`}>
-              <Typography>Work&nbsp;in&nbsp;progress:</Typography>
-            </Tooltip>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-            <Typography>
-              {player.createProgramName}{" "}
-              {((player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100).toFixed(2)}%
-            </Typography>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell component="th" scope="row" align="center" colSpan={2} classes={{ root: classes.cellNone }}>
-            <Button
-              onClick={() => {
-                player.startFocusing();
-                router.toWork();
-              }}
-            >
-              Focus
-            </Button>
-          </TableCell>
-        </TableRow>
-      </>
-    );
-  }
-
   return (
     <>
       <TableRow>
-        <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-          <Tooltip title={player.workType}>
-            <Typography>Work&nbsp;in&nbsp;progress:</Typography>
+        <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.workCell }}>
+          <Tooltip title={<>{tooltip}</>}>
+            <Typography className={classes.workHeader} sx={{ pt: 1, pb: 0.5 }}>
+              {header}
+            </Typography>
           </Tooltip>
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.cellNone }}>
-          <Typography>
-            +<Reputation reputation={player.workRepGained} /> rep
-          </Typography>
+        <TableCell component="th" scope="row" colSpan={2} classes={{ root: classes.workCell }}>
+          <Typography className={classes.workSubtitles}>{children}</Typography>
         </TableCell>
       </TableRow>
       <TableRow>
         <TableCell component="th" scope="row" align="center" colSpan={2} classes={{ root: classes.cellNone }}>
-          <Button
-            onClick={() => {
-              player.startFocusing();
-              router.toWork();
-            }}
-          >
+          <Button sx={{ mt: 1 }} onClick={onClickFocus}>
             Focus
           </Button>
         </TableCell>
@@ -183,8 +122,91 @@ function Work(): React.ReactElement {
   );
 }
 
+function Work(): React.ReactElement {
+  const player = use.Player();
+  const router = use.Router();
+  const onClickFocus = (): void => {
+    player.startFocusing();
+    router.toWork();
+  };
+
+  if (!player.isWorking || player.focus) return <></>;
+
+  let details = <></>;
+  let header = <></>;
+  let innerText = <></>;
+  if (player.workType === CONSTANTS.WorkTypeCompanyPartTime || player.workType === CONSTANTS.WorkTypeCompany) {
+    details = (
+      <>
+        {player.jobs[player.companyName]} at <strong>{player.companyName}</strong>
+      </>
+    );
+    header = (
+      <>
+        Working at <strong>{player.companyName}</strong>
+      </>
+    );
+    innerText = (
+      <>
+        +<Reputation reputation={player.workRepGained} /> rep
+      </>
+    );
+  } else if (player.workType === CONSTANTS.WorkTypeFaction) {
+    details = (
+      <>
+        {player.factionWorkType} for <strong>{player.currentWorkFactionName}</strong>
+      </>
+    );
+    header = (
+      <>
+        Working for <strong>{player.currentWorkFactionName}</strong>
+      </>
+    );
+    innerText = (
+      <>
+        +<Reputation reputation={player.workRepGained} /> rep
+      </>
+    );
+  } else if (player.workType === CONSTANTS.WorkTypeStudyClass) {
+    details = <>{player.workType}</>;
+    header = <>You are {player.className}</>;
+    innerText = <>{convertTimeMsToTimeElapsedString(player.timeWorked)}</>;
+  } else if (player.workType === CONSTANTS.WorkTypeCreateProgram) {
+    details = <>Coding {player.createProgramName}</>;
+    header = <>Creating a program</>;
+    innerText = (
+      <>
+        {player.createProgramName}{" "}
+        {((player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100).toFixed(2)}%
+      </>
+    );
+  }
+
+  return (
+    <WorkInProgressOverview tooltip={details} header={header} onClickFocus={onClickFocus}>
+      {innerText}
+    </WorkInProgressOverview>
+  );
+}
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    workCell: {
+      textAlign: "center",
+      maxWidth: "200px",
+      borderBottom: "none",
+      padding: 0,
+      margin: 0,
+    },
+
+    workHeader: {
+      fontSize: "0.9rem",
+    },
+
+    workSubtitles: {
+      fontSize: "0.8rem",
+    },
+
     cellNone: {
       borderBottom: "none",
       padding: 0,
@@ -256,8 +278,8 @@ export function CharacterOverview({ save, killScripts, router, allowBackButton }
     player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
   );
 
-  const previousPageName = router.previousPage() < 0
-    ? '' : Page[router.previousPage() ?? 0].replace(/([a-z])([A-Z])/g, '$1 $2');
+  const previousPageName =
+    router.previousPage() < 0 ? "" : Page[router.previousPage() ?? 0].replace(/([a-z])([A-Z])/g, "$1 $2");
 
   return (
     <>
@@ -435,24 +457,22 @@ export function CharacterOverview({ save, killScripts, router, allowBackButton }
           <Bladeburner />
         </TableBody>
       </Table>
-      <Box sx={{ display: 'flex', borderTop: `1px solid ${Settings.theme.welllight}` }}>
-        <Box sx={{ display: 'flex', flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
+      <Box sx={{ display: "flex", borderTop: `1px solid ${Settings.theme.welllight}` }}>
+        <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
           <IconButton onClick={save}>
             <Tooltip title="Save game">
               <SaveIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
             </Tooltip>
           </IconButton>
           {allowBackButton && (
-            <IconButton
-              disabled={!previousPageName}
-              onClick={() => router.toPreviousPage()}>
-              <Tooltip title={previousPageName ? `Go back to "${previousPageName}"` : ''}>
+            <IconButton disabled={!previousPageName} onClick={() => router.toPreviousPage()}>
+              <Tooltip title={previousPageName ? `Go back to "${previousPageName}"` : ""}>
                 <ArrowBackIcon />
               </Tooltip>
             </IconButton>
           )}
         </Box>
-        <Box sx={{ display: 'flex', flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
+        <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-end", alignItems: "center" }}>
           <IconButton onClick={() => setKillOpen(true)}>
             <Tooltip title="Kill all running scripts">
               <ClearAllIcon color="error" />
