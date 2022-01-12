@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { cloneDeep, isEqual } from "lodash";
+import { cloneDeep } from "lodash";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IEngine } from "../IEngine";
 import { ITerminal } from "../Terminal/ITerminal";
@@ -251,16 +251,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   }
 
   function setCurrentPage(page: Page, ...args: any): void {
-    const newPage = { page, args: cloneDeep(args) };
-    const previousPage = pageHistory[0];
-    const isDifferentThenPrevious = page !== previousPage?.page || !isEqual([...args], previousPage?.args);
-    if (isDifferentThenPrevious) {
-      const history = [
-        newPage,
+    const history = [
+        { page, args: cloneDeep(args) },
         ...pageHistory
       ].slice(0, 20);
-      setPageHistory(history)
-    }
+    setPageHistory(history)
     setPage(page)
   }
 
