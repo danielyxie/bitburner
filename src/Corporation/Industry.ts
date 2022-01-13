@@ -435,8 +435,17 @@ export class Industry implements IIndustry {
       const popularityGain = corporation.getDreamSenseGain(),
         awarenessGain = popularityGain * 4;
       if (popularityGain > 0) {
-        this.popularity += popularityGain * marketCycles;
-        this.awareness += awarenessGain * marketCycles;
+        if (this.awareness === Number.MAX_VALUE || this.awareness + (awarenessGain * marketCycles) > Number.MAX_VALUE) {
+          this.awareness == Number.MAX_VALUE;
+        } else {
+          this.awareness += awarenessGain * marketCycles;
+        }
+        
+        if (this.popularity === Number.MAX_VALUE || this.popularity + (popularityGain * marketCycles) > Number.MAX_VALUE) {
+          this.popularity == Number.MAX_VALUE;
+        } else {
+          this.popularity += popularityGain * marketCycles;
+        }
       }
 
       return;
