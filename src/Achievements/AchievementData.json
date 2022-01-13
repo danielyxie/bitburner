@@ -479,7 +479,7 @@
     },
     "DEVMENU": {
       "ID": "DEVMENU",
-      "Name": "Exploit: edit",
+      "Name": "Exploit: you're not meant to access this",
       "Description": "Open the dev menu."
     }
   }
