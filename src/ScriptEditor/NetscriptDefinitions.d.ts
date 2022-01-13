@@ -6145,13 +6145,27 @@ export interface OfficeAPI {
    * @param divisionName - Name of the division
    * @returns Cost
    */
-  getHireAdVertCost(adivisionName: string): number;
+  getHireAdVertCost(divisionName: string): number;
   /**
    * Get the number of times you have Hired AdVert
    * @param divisionName - Name of the division
    * @returns Number of times you have Hired AdVert
    */
   getHireAdVertCount(adivisionName: string): number;
+  /**
+   * Get the cost to unlock research
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @returns cost
+   */
+  getResearchCost(divisionName: string, researchName: string): number;
+  /**
+   * Gets if you have unlocked a research
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @returns true is unlocked, false if not
+   */
+  hasResearched(divisionName: string, researchName: string): boolean;
 }
 
 /**
@@ -6396,6 +6410,12 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    */
   acceptInvestmentOffer(): boolean;
   /**
+   * Go public
+   * @param numShares number of shares you would like to issue for your IPO
+   * @returns true if you successfully go public, false if not
+   */
+  goPublic(numShares: number): boolean;
+  /**
    * Get corporation data
    * @returns Corporation data
    */
@@ -6507,6 +6527,12 @@ interface Product {
   pCost: number;
   /** Sell cost, can be "MP+5" */
   sCost: string | number;
+  /** Data refers to the production, sale, and quantity of the products 
+   * These values are specific to a city 
+   * For each city, the data is [qty, prod, sell] */
+   cityData: {[key: string]:number[]};
+  /** Creation progress - A number betwee 0-100 representing percentage */
+  developmentProgress: number;
 }
 
 /**
@@ -6520,6 +6546,10 @@ interface Material {
   qty: number;
   /** Quality of the material */
   qlt: number;
+  /** Amount of material produced  */
+  prod: number;
+  /** Amount of material sold  */
+  sell: number;
 }
 
 /**
@@ -6607,6 +6637,8 @@ interface Division {
   upgrades: number[];
   /** Cities in which this division has expanded */
   cities: string[];
+  /** Products developed by this division */
+  products: string[];
 }
 
 /**

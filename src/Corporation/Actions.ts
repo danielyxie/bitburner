@@ -94,7 +94,7 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
     throw new Error("Invalid value or expression for sell price field: " + e);
   }
 
-  if (temp == null || isNaN(parseFloat(temp))) {
+  if (temp == null || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
     throw new Error("Invalid value or expression for sell price field");
   }
 
@@ -117,13 +117,13 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
       throw new Error("Invalid value or expression for sell price field: " + e);
     }
 
-    if (tempQty == null || isNaN(parseFloat(tempQty))) {
+    if (tempQty == null || isNaN(parseFloat(tempQty)) || parseFloat(tempQty) < 0) {
       throw new Error("Invalid value or expression for sell price field");
     }
 
     mat.sllman[0] = true;
     mat.sllman[1] = q; //Use sanitized input
-  } else if (isNaN(parseFloat(amt))) {
+  } else if (isNaN(parseFloat(amt)) || parseFloat(amt) < 0) {
     throw new Error("Invalid value for sell quantity field! Must be numeric or 'MAX'");
   } else {
     let q = parseFloat(amt);
@@ -153,7 +153,7 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
     } catch (e) {
       throw new Error("Invalid value or expression for sell quantity field: " + e);
     }
-    if (temp == null || isNaN(parseFloat(temp))) {
+    if (temp == null || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
       throw new Error("Invalid value or expression for sell quantity field.");
     }
     product.sCost = price; //Use sanitized price
@@ -182,7 +182,7 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
       throw new Error("Invalid value or expression for sell price field: " + e);
     }
 
-    if (temp == null || isNaN(parseFloat(temp))) {
+    if (temp == null || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
       throw new Error("Invalid value or expression for sell price field");
     }
     if (all) {
@@ -195,7 +195,7 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
       product.sllman[city][0] = true;
       product.sllman[city][1] = qty; //Use sanitized input
     }
-  } else if (isNaN(parseFloat(amt))) {
+  } else if (isNaN(parseFloat(amt)) || parseFloat(amt) < 0) {
     throw new Error("Invalid value for sell quantity field! Must be numeric");
   } else {
     let qty = parseFloat(amt);
@@ -239,7 +239,7 @@ export function SetSmartSupplyUseLeftovers(warehouse: Warehouse, material: Mater
 }
 
 export function BuyMaterial(material: Material, amt: number): void {
-  if (isNaN(amt)) {
+  if (isNaN(amt) || amt < 0) {
     throw new Error(`Invalid amount '${amt}' to buy material '${material.name}'`);
   }
   material.buy = amt;

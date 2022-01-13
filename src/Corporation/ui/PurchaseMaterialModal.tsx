@@ -30,7 +30,7 @@ function BulkPurchaseText(props: IBulkPurchaseTextProps): React.ReactElement {
         <Typography color={"error"}>Not enough warehouse space to purchase this amount</Typography>
       </>
     );
-  } else if (isNaN(cost)) {
+  } else if (isNaN(cost) || parsedAmt < 0) {
     return (
       <>
         <Typography color={"error"}>Invalid put for Bulk Purchase amount</Typography>
@@ -68,7 +68,7 @@ function BulkPurchase(props: IBPProps): React.ReactElement {
       return;
     }
 
-    if (isNaN(amount)) {
+    if (isNaN(amount) || amount < 0) {
       dialogBoxCreate("Invalid input amount");
     } else {
       const cost = amount * props.mat.bCost;

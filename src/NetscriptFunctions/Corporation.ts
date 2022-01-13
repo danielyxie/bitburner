@@ -55,9 +55,10 @@ import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
 import { EmployeePositions } from "../Corporation/EmployeePositions";
 import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
 import { Industry } from "../Corporation/Industry";
-import { IndustryStartingCosts } from "../Corporation/IndustryData";
+import { IndustryResearchTrees, IndustryStartingCosts } from "../Corporation/IndustryData";
 import { CorporationConstants } from "../Corporation/data/Constants";
 import { IndustryUpgrades } from "../Corporation/IndustryUpgrades";
+import { ResearchMap } from "../Corporation/ResearchMap";
 
 export function NetscriptCorporation(
   player: IPlayer,
@@ -129,7 +130,7 @@ export function NetscriptCorporation(
 
   function getInvestmentOffer(): InvestmentOffer {
     const corporation = getCorporation();
-    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length) 
+    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length || corporation.public) 
       return {
         funds: 0,
         shares: 0,
@@ -149,7 +150,7 @@ export function NetscriptCorporation(
 
   function acceptInvestmentOffer(): boolean {
     const corporation = getCorporation();
-    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length) return false;
+    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length || corporation.public) return false;
     const val = corporation.determineValuation();
     const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
     const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
@@ -159,6 +160,33 @@ export function NetscriptCorporation(
     corporation.addFunds(funding);
     corporation.numShares -= investShares;
     return true;
+  }
+
+  function goPublic(numShares: number): boolean {
+    const corporation = getCorporation();
+    const initialSharePrice = corporation.determineValuation() / corporation.totalShares;
+    if (isNaN(numShares)) throw new Error("Invalid value for number of issued shares");
+    if (numShares < 0) throw new Error("Invalid value for number of issued shares");
+    if (numShares > corporation.numShares) throw new Error("You don't have that many shares to issue!");
+    corporation.public = true;
+    corporation.sharePrice = initialSharePrice;
+    corporation.issuedShares = numShares;
+    corporation.numShares -= numShares;
+    corporation.addFunds(numShares * initialSharePrice);
+    return true;
+  }
+
+  function getResearchCost(division: IIndustry, researchName: string): number {
+    const researchTree = IndustryResearchTrees[division.type];
+    if (researchTree === undefined) throw new Error(`No research tree for industry '${division.type}'`);
+    const allResearch = researchTree.getAllNodes();
+    if (!allResearch.includes(researchName)) throw new Error(`No research named '${researchName}'`);
+    const research = ResearchMap[researchName];
+    return research.cost;
+  }
+
+  function hasResearched(division: IIndustry, researchName: string): boolean {
+    return division.researched[researchName] === undefined ? false : division.researched[researchName] as boolean;
   }
 
   function getCorporation(): ICorporation {
@@ -239,6 +267,7 @@ export function NetscriptCorporation(
         thisCycleExpenses: division.thisCycleExpenses,
         upgrades: division.upgrades,
         cities: cities,
+        products: division.products === undefined ? [] : Object.keys(division.products),
       };
   }
 
@@ -286,6 +315,8 @@ export function NetscriptCorporation(
         name: material.name,
         qty: material.qty,
         qlt: material.qlt,
+        prod: material.prd,
+        sell: material.sll,
       };
     },
     getProduct: function (adivisionName: any, aproductName: any): NSProduct {
@@ -299,6 +330,8 @@ export function NetscriptCorporation(
         cmp: product.cmp,
         pCost: product.pCost,
         sCost: product.sCost,
+        cityData: product.data,
+        developmentProgress: product.prog,
       };
     },
     purchaseWarehouse: function (adivisionName: any, acityName: any): void {
@@ -363,6 +396,7 @@ export function NetscriptCorporation(
       const cityName = helper.string("buyMaterial", "cityName", acityName);
       const materialName = helper.string("buyMaterial", "materialName", amaterialName);
       const amt = helper.number("buyMaterial", "amt", aamt);
+      if (amt < 0) throw new Error("Invalid value for ammount field! Must be numeric and grater than 0");
       const material = getMaterial(divisionName, cityName, materialName);
       BuyMaterial(material, amt);
     },
@@ -449,18 +483,30 @@ export function NetscriptCorporation(
   };
 
   const officeAPI: OfficeAPI = {
-    getHireAdVertCost: function (adivisionName: string): number {
-      checkAccess("hireAdVert", 8);
-      const divisionName = helper.string("hireAdVert", "divisionName", adivisionName);
+    getHireAdVertCost: function (adivisionName: any): number {
+      checkAccess("getHireAdVertCost", 8);
+      const divisionName = helper.string("getHireAdVertCost", "divisionName", adivisionName);
       const division = getDivision(divisionName);
       const upgrade = IndustryUpgrades[1];
       return upgrade[1] * Math.pow(upgrade[2], division.upgrades[1]);
     },
-    getHireAdVertCount: function (adivisionName: string): number {
-      checkAccess("hireAdVert", 8);
-      const divisionName = helper.string("hireAdVert", "divisionName", adivisionName);
+    getHireAdVertCount: function (adivisionName: any): number {
+      checkAccess("getHireAdVertCount", 8);
+      const divisionName = helper.string("getHireAdVertCount", "divisionName", adivisionName);
       const division = getDivision(divisionName);
       return division.upgrades[1]
+    },
+    getResearchCost: function (adivisionName: any, aresearchName: any): number {
+      checkAccess("getResearchCost", 8);
+      const divisionName = helper.string("getResearchCost", "divisionName", adivisionName);
+      const researchName = helper.string("getResearchCost", "researchName", aresearchName);
+      return getResearchCost(getDivision(divisionName), researchName);
+    },
+    hasResearched: function (adivisionName: any, aresearchName: any): boolean {
+      checkAccess("hasResearched", 8);
+      const divisionName = helper.string("hasResearched", "divisionName", adivisionName);
+      const researchName = helper.string("hasResearched", "researchName", aresearchName);
+      return hasResearched(getDivision(divisionName), researchName);
     },
     assignJob: function (adivisionName: any, acityName: any, aemployeeName: any, ajob: any): Promise<void> {
       checkAccess("assignJob", 8);
@@ -485,6 +531,7 @@ export function NetscriptCorporation(
       const divisionName = helper.string("upgradeOfficeSize", "divisionName", adivisionName);
       const cityName = helper.string("upgradeOfficeSize", "cityName", acityName);
       const size = helper.number("upgradeOfficeSize", "size", asize);
+      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and grater than 0");
       const office = getOffice(divisionName, cityName);
       const corporation = getCorporation();
       UpgradeOfficeSize(corporation, office, size);
@@ -494,6 +541,7 @@ export function NetscriptCorporation(
       const divisionName = helper.string("throwParty", "divisionName", adivisionName);
       const cityName = helper.string("throwParty", "cityName", acityName);
       const costPerEmployee = helper.number("throwParty", "costPerEmployee", acostPerEmployee);
+      if (costPerEmployee < 0) throw new Error("Invalid value for Cost Per Employee field! Must be numeric and grater than 0");
       const office = getOffice(divisionName, cityName);
       const corporation = getCorporation();
       return netscriptDelay(
@@ -588,6 +636,7 @@ export function NetscriptCorporation(
       checkAccess("expandCity");
       const divisionName = helper.string("expandCity", "divisionName", adivisionName);
       const cityName = helper.string("expandCity", "cityName", acityName);
+      if (!CorporationConstants.Cities.includes(cityName)) throw new Error("Invalid city name");
       const corporation = getCorporation();
       const division = getDivision(divisionName);
       NewCity(corporation, division, cityName);
@@ -611,6 +660,7 @@ export function NetscriptCorporation(
     issueDividends: function (apercent: any): void {
       checkAccess("issueDividends");
       const percent = helper.number("issueDividends", "percent", apercent);
+      if (percent < 0 || percent > 100) throw new Error("Invalid value for Cost Per Employee field! Must be numeric, grater than 0, and less than 100");
       const corporation = getCorporation();
       IssueDividends(corporation, percent);
     },
@@ -641,27 +691,33 @@ export function NetscriptCorporation(
         divisions: corporation.divisions.map((division): NSDivision => getSafeDivision(division)),
       };
     },
-    createCorporation: function (corporationName: string, selfFund = true): boolean {
+    createCorporation: function (acorporationName: string, selfFund = true): boolean {
+      const corporationName = helper.string("createCorporation", "corporationName", acorporationName);
       return createCorporation(corporationName, selfFund);
     },
-    hasUnlockUpgrade: function (upgradeName: string): boolean {
+    hasUnlockUpgrade: function (aupgradeName: any): boolean {
       checkAccess("hasUnlockUpgrade");
+      const upgradeName = helper.string("hasUnlockUpgrade", "upgradeName", aupgradeName);
       return hasUnlockUpgrade(upgradeName);
     },
-    getUnlockUpgradeCost: function (upgradeName: string): number {
+    getUnlockUpgradeCost: function (aupgradeName: any): number {
       checkAccess("getUnlockUpgradeCost");
+      const upgradeName = helper.string("getUnlockUpgradeCost", "upgradeName", aupgradeName);
       return getUnlockUpgradeCost(upgradeName);
     },
-    getUpgradeLevel: function (upgradeName: string): number {
+    getUpgradeLevel: function (aupgradeName: any): number {
       checkAccess("hasUnlockUpgrade");
+      const upgradeName = helper.string("getUpgradeLevel", "upgradeName", aupgradeName);
       return getUpgradeLevel(upgradeName);
     },
-    getUpgradeLevelCost: function (upgradeName: string): number {
+    getUpgradeLevelCost: function (aupgradeName: any): number {
       checkAccess("getUpgradeLevelCost");
+      const upgradeName = helper.string("getUpgradeLevelCost", "upgradeName", aupgradeName);
       return getUpgradeLevelCost(upgradeName);
     },
-    getExpandIndustryCost: function (industryName: string): number {
+    getExpandIndustryCost: function (aindustryName: any): number {
       checkAccess("getExpandIndustryCost");
+      const industryName = helper.string("getExpandIndustryCost", "industryName", aindustryName);
       return getExpandIndustryCost(industryName);
     },
     getExpandCityCost: function(): number {
@@ -675,6 +731,11 @@ export function NetscriptCorporation(
     acceptInvestmentOffer: function(): boolean {
       checkAccess("acceptInvestmentOffer");
       return acceptInvestmentOffer();
+    },
+    goPublic(anumShares: any): boolean {
+      checkAccess("acceptInvestmentOffer");
+      const numShares = helper.number("goPublic", "numShares", anumShares);
+      return goPublic(numShares);
     },
   };
 }
