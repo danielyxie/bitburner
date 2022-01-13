@@ -675,7 +675,7 @@ export function NetscriptCorporation(
     issueDividends: function (apercent: any): void {
       checkAccess("issueDividends");
       const percent = helper.number("issueDividends", "percent", apercent);
-      if (percent < 0 || percent > 100) throw new Error("Invalid value for Cost Per Employee field! Must be numeric, grater than 0, and less than 100");
+      if (percent < 0 || percent > 100) throw new Error("Invalid value for percent field! Must be numeric, grater than 0, and less than 100");
       const corporation = getCorporation();
       IssueDividends(corporation, percent);
     },
