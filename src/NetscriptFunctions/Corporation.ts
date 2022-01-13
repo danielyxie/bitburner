@@ -508,6 +508,21 @@ export function NetscriptCorporation(
       const researchName = helper.string("hasResearched", "researchName", aresearchName);
       return hasResearched(getDivision(divisionName), researchName);
     },
+    setAutoJobAssignment: function (adivisionName: any, acityName: any, ajob: any, aamount: any): Promise<boolean> {
+      checkAccess("setAutoJobAssignment", 8);
+      const divisionName = helper.string("setAutoJobAssignment", "divisionName", adivisionName);
+      const cityName = helper.string("setAutoJobAssignment", "cityName", acityName);
+      const amount = helper.number("setAutoJobAssignment", "amount", aamount);
+      const job = helper.string("setAutoJobAssignment", "job", ajob);
+      const office = getOffice(divisionName, cityName);
+      if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
+      return netscriptDelay(1000, workerScript).then(function () {
+        if (workerScript.env.stopFlag) {
+          return Promise.reject(workerScript);
+        }
+        return Promise.resolve(office.setEmployeeToJob(job, amount));
+      });
+    },
     assignJob: function (adivisionName: any, acityName: any, aemployeeName: any, ajob: any): Promise<void> {
       checkAccess("assignJob", 8);
       const divisionName = helper.string("assignJob", "divisionName", adivisionName);

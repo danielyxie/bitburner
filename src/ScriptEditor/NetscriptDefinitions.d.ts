@@ -6086,7 +6086,7 @@ export interface OfficeAPI {
    */
   assignJob(divisionName: string, cityName: string, employeeName: string, job: string): Promise<void>;
   /**
-   * Assign an employee to a job.
+   * Hire an employee.
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @returns The newly hired employee, if any
@@ -6100,7 +6100,7 @@ export interface OfficeAPI {
    */
   upgradeOfficeSize(divisionName: string, cityName: string, size: number): void;
   /**
-   * Assign an employee to a job.
+   * Throw a party for your employees
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param costPerEmployee - Amount to spend per employee.
@@ -6120,7 +6120,7 @@ export interface OfficeAPI {
    */
   hireAdVert(divisionName: string): void;
   /**
-   * Hire AdVert.
+   * purchace a research
    * @param divisionName - Name of the division
    * @param researchName - Name of the research
    */
@@ -6166,6 +6166,15 @@ export interface OfficeAPI {
    * @returns true is unlocked, false if not
    */
   hasResearched(divisionName: string, researchName: string): boolean;
+  /**
+   * Set the auto job assignment for a job
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param job - Name of the job
+   * @param amount - Number of employees to assign to that job
+   * @returns A promise that is fulfilled when the assignment is complete.
+   */
+  setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): Promise<boolean>;
 }
 
 /**
@@ -6411,7 +6420,7 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
   acceptInvestmentOffer(): boolean;
   /**
    * Go public
-   * @param numShares number of shares you would like to issue for your IPO
+   * @param numShares - number of shares you would like to issue for your IPO
    * @returns true if you successfully go public, false if not
    */
   goPublic(numShares: number): boolean;
@@ -6439,7 +6448,7 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    */
   expandCity(divisionName: string, cityName: string): void;
   /**
-   * Unlock an upgrade.
+   * Unlock an upgrade.npm run doc
    * @param upgradeName - Name of the upgrade
    */
   unlockUpgrade(upgradeName: string): void;
