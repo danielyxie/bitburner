@@ -33,5 +33,5 @@ export interface Corporation extends WarehouseAPI, OfficeAPI
 |  [hasUnlockUpgrade(upgradeName)](./bitburner.corporation.hasunlockupgrade.md) | Check if you have a one time unlockable upgrade |
 |  [issueDividends(percent)](./bitburner.corporation.issuedividends.md) | Issue dividends |
 |  [levelUpgrade(upgradeName)](./bitburner.corporation.levelupgrade.md) | Level an upgrade. |
-|  [unlockUpgrade(upgradeName)](./bitburner.corporation.unlockupgrade.md) | Unlock an upgrade.npm run doc |
+|  [unlockUpgrade(upgradeName)](./bitburner.corporation.unlockupgrade.md) | Unlock an upgrade |
 
