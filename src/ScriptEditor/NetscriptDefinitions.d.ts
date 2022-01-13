@@ -6430,7 +6430,7 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * @param factionName - Faction name
    * @param amountCash - Amount of money to bribe
    * @param amountShares - Amount of shares to bribe
-   * @return True if successful, false if not
+   * @returns True if successful, false if not
    */
   bribe(factionName: string, amountCash: number, amountShares: number): boolean;
   /**
