@@ -4,7 +4,7 @@
 
 ## Corporation.unlockUpgrade() method
 
-Unlock an upgrade.
+Unlock an upgrade.npm run doc
 
 <b>Signature:</b>
 

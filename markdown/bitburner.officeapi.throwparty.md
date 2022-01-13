@@ -4,7 +4,7 @@
 
 ## OfficeAPI.throwParty() method
 
-Assign an employee to a job.
+Throw a party for your employees
 
 <b>Signature:</b>
 
