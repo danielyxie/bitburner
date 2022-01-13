@@ -4,7 +4,7 @@
 
 ## OfficeAPI.research() method
 
-purchace a research
+Purchase a research
 
 <b>Signature:</b>
 

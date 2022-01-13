@@ -18,6 +18,7 @@ export interface Corporation extends WarehouseAPI, OfficeAPI
 |  Method | Description |
 |  --- | --- |
 |  [acceptInvestmentOffer()](./bitburner.corporation.acceptinvestmentoffer.md) | Accept investment based on you companies current valuation |
+|  [bribe(factionName, amountCash, amountShares)](./bitburner.corporation.bribe.md) | Bribe a faction |
 |  [createCorporation(corporationName, selfFund)](./bitburner.corporation.createcorporation.md) | Create a Corporation |
 |  [expandCity(divisionName, cityName)](./bitburner.corporation.expandcity.md) | Expand to a new city |
 |  [expandIndustry(industryType, divisionName)](./bitburner.corporation.expandindustry.md) | Expand to a new industry |
