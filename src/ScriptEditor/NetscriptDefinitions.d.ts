@@ -6426,6 +6426,14 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    */
   goPublic(numShares: number): boolean;
   /**
+   * Bribe a faction
+   * @param factionName - Faction name
+   * @param amountCash - Amount of money to bribe
+   * @param amountShares - Amount of shares to bribe
+   * @return True if successful, false if not
+   */
+  bribe(factionName: string, amountCash: number, amountShares: number): boolean;
+  /**
    * Get corporation data
    * @returns Corporation data
    */

@@ -59,6 +59,7 @@ import { IndustryResearchTrees, IndustryStartingCosts } from "../Corporation/Ind
 import { CorporationConstants } from "../Corporation/data/Constants";
 import { IndustryUpgrades } from "../Corporation/IndustryUpgrades";
 import { ResearchMap } from "../Corporation/ResearchMap";
+import { Factions } from "../Faction/Factions";
 
 export function NetscriptCorporation(
   player: IPlayer,
@@ -187,6 +188,25 @@ export function NetscriptCorporation(
 
   function hasResearched(division: IIndustry, researchName: string): boolean {
     return division.researched[researchName] === undefined ? false : division.researched[researchName] as boolean;
+  }
+
+  function bribe(factionName: string, amountCash: number, amountShares: number): boolean {
+    if (!player.factions.includes(factionName)) throw new Error("Invalid faction name");
+    if (isNaN(amountCash) || amountCash < 0 || isNaN(amountShares) || amountShares < 0)  throw new Error("Invalid value for amount field! Must be numeric, grater than 0.");
+    const corporation = getCorporation();
+    if (corporation.funds < amountCash) return false;
+    if (corporation.numShares < amountShares) return false;
+    const faction = Factions[factionName]
+    const info = faction.getInfo();
+    if (!info.offersWork()) return false;
+    if (player.hasGangWith(factionName)) return false;
+
+    const repGain = (amountCash + amountShares * corporation.sharePrice) / CorporationConstants.BribeToRepRatio;
+    faction.playerReputation += repGain;
+    corporation.funds = corporation.funds - amountCash;
+    corporation.numShares -= amountShares;
+
+    return true;
   }
 
   function getCorporation(): ICorporation {
@@ -396,7 +416,7 @@ export function NetscriptCorporation(
       const cityName = helper.string("buyMaterial", "cityName", acityName);
       const materialName = helper.string("buyMaterial", "materialName", amaterialName);
       const amt = helper.number("buyMaterial", "amt", aamt);
-      if (amt < 0) throw new Error("Invalid value for ammount field! Must be numeric and grater than 0");
+      if (amt < 0) throw new Error("Invalid value for amount field! Must be numeric and grater than 0");
       const material = getMaterial(divisionName, cityName, materialName);
       BuyMaterial(material, amt);
     },
@@ -747,10 +767,17 @@ export function NetscriptCorporation(
       checkAccess("acceptInvestmentOffer");
       return acceptInvestmentOffer();
     },
-    goPublic(anumShares: any): boolean {
+    goPublic: function(anumShares: any): boolean {
       checkAccess("acceptInvestmentOffer");
       const numShares = helper.number("goPublic", "numShares", anumShares);
       return goPublic(numShares);
+    },
+    bribe: function(afactionName: string, aamountCash: any, aamountShares: any): boolean {
+      checkAccess("bribe");
+      const factionName = helper.string("bribe", "factionName", afactionName);
+      const amountCash = helper.number("bribe", "amountCash", aamountCash);
+      const amountShares = helper.number("bribe", "amountShares", aamountShares);
+      return bribe(factionName, amountCash, amountShares);
     },
   };
 }
