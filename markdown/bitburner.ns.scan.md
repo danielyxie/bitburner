@@ -22,7 +22,7 @@ scan(host?: string): string[];
 
 string\[\]
 
-Returns an string of hostnames.
+Returns a string of hostnames.
 
 ## Remarks
 
