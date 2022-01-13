@@ -21,6 +21,7 @@ import {
   Division as NSDivision,
   WarehouseAPI,
   OfficeAPI,
+  InvestmentOffer
 } from "../ScriptEditor/NetscriptDefinitions";
 
 import {
@@ -124,6 +125,40 @@ export function NetscriptCorporation(
 
   function getExpandCityCost(): number {
     return CorporationConstants.OfficeInitialCost;
+  }
+
+  function getInvestmentOffer(): InvestmentOffer {
+    const corporation = getCorporation();
+    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length) 
+      return {
+        funds: 0,
+        shares: 0,
+        round: corporation.fundingRound + 1 // Make more readable 
+      }; // Don't throw an error here, no reason to have a second function to check if you can get investment.
+    const val = corporation.determineValuation();
+    const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
+    const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
+    const funding = val * percShares * roundMultiplier;
+    const investShares = Math.floor(CorporationConstants.INITIALSHARES * percShares);
+    return {
+      funds: funding,
+      shares: investShares,
+      round: corporation.fundingRound + 1 // Make more readable 
+    };
+  }
+
+  function acceptInvestmentOffer(): boolean {
+    const corporation = getCorporation();
+    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length) return false;
+    const val = corporation.determineValuation();
+    const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
+    const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
+    const funding = val * percShares * roundMultiplier;
+    const investShares = Math.floor(CorporationConstants.INITIALSHARES * percShares);
+    corporation.fundingRound++;
+    corporation.addFunds(funding);
+    corporation.numShares -= investShares;
+    return true;
   }
 
   function getCorporation(): ICorporation {
@@ -632,6 +667,14 @@ export function NetscriptCorporation(
     getExpandCityCost: function(): number {
       checkAccess("getExpandCityCost");
       return getExpandCityCost();
-    }
+    },
+    getInvestmentOffer: function(): InvestmentOffer {
+      checkAccess("getInvestmentOffer");
+      return getInvestmentOffer();
+    },
+    acceptInvestmentOffer: function(): boolean {
+      checkAccess("acceptInvestmentOffer");
+      return acceptInvestmentOffer();
+    },
   };
 }

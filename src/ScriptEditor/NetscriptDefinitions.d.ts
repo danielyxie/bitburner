@@ -6384,6 +6384,18 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    */
   getExpandCityCost(): number;
   /**
+   * Get an offer for investment based on you companies current valuation
+   * @returns An offer of investment
+   */
+  getInvestmentOffer(): InvestmentOffer;
+  /**
+   * Accept investment based on you companies current valuation
+   * @remarks
+   * Is based on current valuation and will not honer a specific Offer
+   * @returns An offer of investment
+   */
+  acceptInvestmentOffer(): boolean;
+  /**
    * Get corporation data
    * @returns Corporation data
    */
@@ -6595,6 +6607,19 @@ interface Division {
   upgrades: number[];
   /** Cities in which this division has expanded */
   cities: string[];
+}
+
+/**
+ * Corporation investment offer
+ * @public
+ */
+interface InvestmentOffer {
+  /** Amount of funds you will get from this investment */
+  funds: number;
+  /** Amount of share you will give in exchange for this investment */
+  shares: number;
+  /** Current round of funding (max 4) */
+  round: number;
 }
 
 /**
