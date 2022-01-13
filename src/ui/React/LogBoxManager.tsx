@@ -17,6 +17,7 @@ import { GetServer } from "../../Server/AllServers";
 import { Theme } from "@mui/material";
 import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
+import { debounce } from "lodash";
 
 let layerCounter = 0;
 
@@ -118,6 +119,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const logBoxBaseZIndex = 1500;
 
 function LogWindow(props: IProps): React.ReactElement {
+  const draggableRef = useRef<HTMLDivElement>(null);
   const [script, setScript] = useState(props.script);
   const classes = useStyles();
   const container = useRef<HTMLDivElement>(null);
@@ -185,8 +187,39 @@ function LogWindow(props: IProps): React.ReactElement {
     return classes.primary;
   }
 
+  // Trigger fakeDrag once to make sure loaded data is not outside bounds
+  useEffect(() => fakeDrag(), []);
+
+  // And trigger fakeDrag when the window is resized
+  useEffect(() => {
+    window.addEventListener("resize", fakeDrag);
+    return () => {
+      window.removeEventListener("resize", fakeDrag);
+    };
+  }, []);
+
+
+  const fakeDrag = debounce((): void => {
+    const node = draggableRef?.current;
+    if (!node) return;
+
+    // No official way to trigger an onChange to recompute the bounds
+    // See: https://github.com/react-grid-layout/react-draggable/issues/363#issuecomment-947751127
+    triggerMouseEvent(node, "mouseover");
+    triggerMouseEvent(node, "mousedown");
+    triggerMouseEvent(document, "mousemove");
+    triggerMouseEvent(node, "mouseup");
+    triggerMouseEvent(node, "click");
+  }, 100);
+
+  const triggerMouseEvent = (node: HTMLDivElement | Document, eventType: string): void => {
+    const clickEvent = document.createEvent("MouseEvents");
+    clickEvent.initEvent(eventType, true, true);
+    node.dispatchEvent(clickEvent);
+  };
+
   return (
-    <Draggable handle=".drag">
+    <Draggable handle=".drag" bounds="body">
       <Paper
         style={{
           display: "flex",
@@ -205,7 +238,7 @@ function LogWindow(props: IProps): React.ReactElement {
               cursor: "grab",
             }}
           >
-            <Box className="drag" display="flex" alignItems="center">
+            <Box className="drag" display="flex" alignItems="center" ref={draggableRef}>
               <Typography color="primary" variant="h6" title={title(true)}>
                 {title()}
               </Typography>
