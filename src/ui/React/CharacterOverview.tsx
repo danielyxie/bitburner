@@ -17,22 +17,19 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import SaveIcon from "@mui/icons-material/Save";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 
 import { Settings } from "../../Settings/Settings";
 import { use } from "../Context";
 import { StatsProgressOverviewCell } from "./StatsProgressBar";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { IRouter, Page } from "../Router";
+
 import { Box, Tooltip } from "@mui/material";
 import { CONSTANTS } from "../../Constants";
 
 interface IProps {
   save: () => void;
   killScripts: () => void;
-  router: IRouter;
-  allowBackButton: boolean;
 }
 
 function Intelligence(): React.ReactElement {
@@ -239,7 +236,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export { useStyles as characterOverviewStyles };
 
-export function CharacterOverview({ save, killScripts, router, allowBackButton }: IProps): React.ReactElement {
+export function CharacterOverview({ save, killScripts }: IProps): React.ReactElement {
   const [killOpen, setKillOpen] = useState(false);
   const player = use.Player();
 
@@ -277,9 +274,6 @@ export function CharacterOverview({ save, killScripts, router, allowBackButton }
     player.charisma_exp,
     player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
   );
-
-  const previousPageName =
-    router.previousPage() < 0 ? "" : Page[router.previousPage() ?? 0].replace(/([a-z])([A-Z])/g, "$1 $2");
 
   return (
     <>
@@ -464,13 +458,6 @@ export function CharacterOverview({ save, killScripts, router, allowBackButton }
               <SaveIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
             </Tooltip>
           </IconButton>
-          {allowBackButton && (
-            <IconButton disabled={!previousPageName} onClick={() => router.toPreviousPage()}>
-              <Tooltip title={previousPageName ? `Go back to "${previousPageName}"` : ""}>
-                <ArrowBackIcon />
-              </Tooltip>
-            </IconButton>
-          )}
         </Box>
         <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-end", alignItems: "center" }}>
           <IconButton onClick={() => setKillOpen(true)}>

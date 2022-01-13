@@ -2582,7 +2582,6 @@ function installAugmentations(): boolean {
     augmentationList += aug.name + level + "<br>";
   }
   Player.queuedAugmentations = [];
-
   dialogBoxCreate(
     "You slowly drift to sleep as scientists put you under in order " +
       "to install the following Augmentations:<br>" +
