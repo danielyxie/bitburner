@@ -6368,6 +6368,7 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
   /**
    * Create a Corporation
    * @param divisionName - Name of the division
+   * @param selfFund - If you should self fund, defaults to true, false will only work on Bitnode 3
    * @returns true if created and false if not 
    */
   createCorporation(corporationName: string, selfFund: boolean): boolean;
