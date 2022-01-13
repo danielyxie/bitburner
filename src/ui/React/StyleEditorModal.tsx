@@ -11,8 +11,9 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { ThemeEvents } from "./Theme";
 import { Settings } from "../../Settings/Settings";
-import { IStyleSettings, defaultStyles } from "../../Settings/Styles";
+import { defaultStyles } from "../../Settings/Styles";
 import { Tooltip } from "@mui/material";
+import { IStyleSettings } from "../../ScriptEditor/NetscriptDefinitions";
 
 interface IProps {
   open: boolean;

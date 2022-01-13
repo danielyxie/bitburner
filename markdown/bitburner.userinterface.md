@@ -16,7 +16,10 @@ interface UserInterface
 
 |  Method | Description |
 |  --- | --- |
+|  [getStyles()](./bitburner.userinterface.getstyles.md) | Get the current styles |
 |  [getTheme()](./bitburner.userinterface.gettheme.md) | Get the current theme |
+|  [resetStyles()](./bitburner.userinterface.resetstyles.md) | Resets the player's styles to the default values |
 |  [resetTheme()](./bitburner.userinterface.resettheme.md) | Resets the player's theme to the default values |
+|  [setStyles(newStyles)](./bitburner.userinterface.setstyles.md) | Sets the current styles |
 |  [setTheme(newTheme)](./bitburner.userinterface.settheme.md) | Sets the current theme |
 
