@@ -6120,7 +6120,7 @@ export interface OfficeAPI {
    */
   hireAdVert(divisionName: string): void;
   /**
-   * purchace a research
+   * Purchase a research
    * @param divisionName - Name of the division
    * @param researchName - Name of the research
    */
