@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import ReplyIcon from "@mui/icons-material/Reply";
-import SaveIcon from '@mui/icons-material/Save';
+import SaveIcon from "@mui/icons-material/Save";
 
 import { ThemeEvents } from "./Theme";
 import { Settings } from "../../Settings/Settings";
@@ -26,16 +26,16 @@ interface FontFamilyProps {
   refreshId: number;
 }
 
-function FontFamilyField({ value, onChange, refreshId } : FontFamilyProps): React.ReactElement {
+function FontFamilyField({ value, onChange, refreshId }: FontFamilyProps): React.ReactElement {
   const [errorText, setErrorText] = useState<string | undefined>();
   const [fontFamily, setFontFamily] = useState<React.CSSProperties["fontFamily"]>(value);
 
   function update(newValue: React.CSSProperties["fontFamily"]): void {
     setFontFamily(newValue);
     if (!newValue) {
-      setErrorText('Must have a value');
+      setErrorText("Must have a value");
     } else {
-      setErrorText('');
+      setErrorText("");
     }
   }
 
@@ -56,7 +56,7 @@ function FontFamilyField({ value, onChange, refreshId } : FontFamilyProps): Reac
       onChange={onTextChange}
       fullWidth
     />
-  )
+  );
 }
 
 interface LineHeightProps {
@@ -65,18 +65,18 @@ interface LineHeightProps {
   refreshId: number;
 }
 
-function LineHeightField({ value, onChange, refreshId } : LineHeightProps): React.ReactElement {
+function LineHeightField({ value, onChange, refreshId }: LineHeightProps): React.ReactElement {
   const [errorText, setErrorText] = useState<string | undefined>();
   const [lineHeight, setLineHeight] = useState<React.CSSProperties["lineHeight"]>(value);
 
   function update(newValue: React.CSSProperties["lineHeight"]): void {
     setLineHeight(newValue);
     if (!newValue) {
-      setErrorText('Must have a value');
+      setErrorText("Must have a value");
     } else if (isNaN(Number(newValue))) {
-      setErrorText('Must be a number');
+      setErrorText("Must be a number");
     } else {
-      setErrorText('');
+      setErrorText("");
     }
   }
 
@@ -96,7 +96,7 @@ function LineHeightField({ value, onChange, refreshId } : LineHeightProps): Reac
       helperText={errorText}
       onChange={onTextChange}
     />
-  )
+  );
 }
 
 export function StyleEditorModal(props: IProps): React.ReactElement {
@@ -116,7 +116,7 @@ export function StyleEditorModal(props: IProps): React.ReactElement {
   }
 
   function setDefaults(): void {
-    const styles = {...defaultStyles}
+    const styles = { ...defaultStyles };
     setCustomStyle(styles);
     persistToSettings(styles);
     setRefreshId(refreshId + 1);
@@ -133,16 +133,23 @@ export function StyleEditorModal(props: IProps): React.ReactElement {
     <Modal open={props.open} onClose={props.onClose}>
       <Typography variant="h6">Styles Editor</Typography>
       <Typography>
-        WARNING: Changing styles <strong>may mess up</strong> the interface. Drastic changes are <strong>NOT recommended</strong>.
+        WARNING: Changing styles <strong>may mess up</strong> the interface. Drastic changes are{" "}
+        <strong>NOT recommended</strong>.
       </Typography>
       <Paper sx={{ p: 2, my: 2 }}>
-        <FontFamilyField value={customStyle.fontFamily} refreshId={refreshId}
-          onChange={(value, error) => update({ ...customStyle, fontFamily: value }, error)} />
+        <FontFamilyField
+          value={customStyle.fontFamily}
+          refreshId={refreshId}
+          onChange={(value, error) => update({ ...customStyle, fontFamily: value as any }, error)}
+        />
         <br />
-        <LineHeightField value={customStyle.lineHeight} refreshId={refreshId}
-          onChange={(value, error) => update({ ...customStyle, lineHeight: value }, error)} />
+        <LineHeightField
+          value={customStyle.lineHeight}
+          refreshId={refreshId}
+          onChange={(value, error) => update({ ...customStyle, lineHeight: value as any }, error)}
+        />
         <br />
-        <ButtonGroup sx={{ my: 1}}>
+        <ButtonGroup sx={{ my: 1 }}>
           <Button onClick={setDefaults} startIcon={<ReplyIcon />} color="secondary" variant="outlined">
             Revert to Defaults
           </Button>

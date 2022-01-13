@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * @public
  */
@@ -3883,7 +3881,6 @@ interface UserInterface {
    */
   resetTheme(): void;
 
-
   /**
    * Get the current styles
    * @remarks
@@ -6393,6 +6390,6 @@ interface UserInterfaceTheme {
  * @internal
  */
 interface IStyleSettings {
-  fontFamily: React.CSSProperties["fontFamily"];
-  lineHeight: React.CSSProperties["lineHeight"];
+  fontFamily: string;
+  lineHeight: number;
 }
