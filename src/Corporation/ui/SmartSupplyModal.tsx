@@ -16,7 +16,7 @@ interface ILeftoverProps {
 }
 
 function Leftover(props: ILeftoverProps): React.ReactElement {
-  const [checked, setChecked] = useState(!!props.warehouse.smartSupplyUseLeftovers[props.matName]);
+  const [checked, setChecked] = useState(!!props.warehouse.smartSupplyUseLeftovers[props.matName.replace(/ /g, "")]);
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
     try {
@@ -33,7 +33,7 @@ function Leftover(props: ILeftoverProps): React.ReactElement {
     <>
       <FormControlLabel
         control={<Switch checked={checked} onChange={onChange} />}
-        label={<Typography>{props.warehouse.materials[props.matName].name}</Typography>}
+        label={<Typography>{props.warehouse.materials[props.matName.replace(/ /g, "")].name}</Typography>}
       />
       <br />
     </>

@@ -233,9 +233,9 @@ export function SetSmartSupply(warehouse: Warehouse, smartSupply: boolean): void
 }
 
 export function SetSmartSupplyUseLeftovers(warehouse: Warehouse, material: Material, useLeftover: boolean): void {
-  if (!Object.keys(warehouse.smartSupplyUseLeftovers).includes(material.name))
+  if (!Object.keys(warehouse.smartSupplyUseLeftovers).includes(material.name.replace(/ /g, "")))
     throw new Error(`Invalid material '${material.name}'`);
-  warehouse.smartSupplyUseLeftovers[material.name] = useLeftover;
+  warehouse.smartSupplyUseLeftovers[material.name.replace(/ /g, "")] = useLeftover;
 }
 
 export function BuyMaterial(material: Material, amt: number): void {
