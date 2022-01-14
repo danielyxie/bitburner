@@ -49,8 +49,13 @@ function Intelligence(): React.ReactElement {
       </TableRow>
 
       <TableRow>
+        <TableCell id="overview-int-hook-0" component="th" scope="row" classes={{ root: classes.cell }}>
+          <Typography classes={{ root: classes.int }}>
+            {/*Hook for player scripts*/}
+          </Typography>
+        </TableCell>
         <TableCell align="right" classes={{ root: classes.cell }}>
-          <Typography id="overview-int-hook" classes={{ root: classes.int }}>
+          <Typography id="overview-int-hook-1" classes={{ root: classes.int }}>
             {/*Hook for player scripts*/}
           </Typography>
         </TableCell>
@@ -315,8 +320,13 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
+            <TableCell id="overview-hp-hook-0" component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.hp }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-hp-hook" classes={{ root: classes.hp }}>
+              <Typography id="overview-hp-hook-1" classes={{ root: classes.hp }}>
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
@@ -332,8 +342,13 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
+            <TableCell id="overview-money-hook-0" component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.money }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-money-hook" classes={{ root: classes.money }}>
+              <Typography id="overview-money-hook-1" classes={{ root: classes.money }}>
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
@@ -356,11 +371,13 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-              <Typography classes={{ root: classes.hack }}></Typography>
+            <TableCell id="overview-hack-hook-0" component="th" scope="row" classes={{ root: classes.cell }}>
+              <Typography classes={{ root: classes.hack }}>
+                {/*Hook for player scripts*/}
+              </Typography>
             </TableCell>
             <TableCell align="right" classes={{ root: classes.cell }}>
-              <Typography id="overview-hack-hook" classes={{ root: classes.hack }}>
+              <Typography id="overview-hack-hook-1" classes={{ root: classes.hack }}>
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
@@ -383,8 +400,13 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
+            <TableCell id="overview-str-hook-0" component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-str-hook" classes={{ root: classes.combat }}>
+              <Typography id="overview-str-hook-1" classes={{ root: classes.combat }}>
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
@@ -407,8 +429,13 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
+            <TableCell id="overview-def-hook-0" component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-def-hook" classes={{ root: classes.combat }}>
+              <Typography id="overview-def-hook-1" classes={{ root: classes.combat }}>
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
@@ -431,8 +458,13 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
+            <TableCell id="overview-dex-hook-0" component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-dex-hook" classes={{ root: classes.combat }}>
+              <Typography id="overview-dex-hook-1" classes={{ root: classes.combat }}>
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
@@ -455,8 +487,13 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
+            <TableCell id="overview-agi-hook-0" component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-agi-hook" classes={{ root: classes.combat }}>
+              <Typography id="overview-agi-hook-1" classes={{ root: classes.combat }}>
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
@@ -479,8 +516,13 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
+            <TableCell id="overview-cha-hook-0" component="th" scope="row" classes={{ root: classes.cellNone }}>
+              <Typography classes={{ root: classes.cha }}>
+                {/*Hook for player scripts*/}
+              </Typography>
+            </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-cha-hook" classes={{ root: classes.cha }}>
+              <Typography id="overview-cha-hook-1" classes={{ root: classes.cha }}>
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
