@@ -6,6 +6,7 @@ import { DarkWebItems } from "../DarkWeb/DarkWebItems";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { GetServer, GetAllServers } from "../Server/AllServers";
 import { ParseCommand, ParseCommands } from "./Parser";
+import { HelpTexts } from "./HelpText";
 import { isScriptFilename } from "../Script/isScriptFilename";
 import { compile } from "../NetscriptJSEvaluator";
 import { Flags } from "../NetscriptFunctions/Flags";
@@ -394,6 +395,12 @@ export async function determineAllPossibilitiesForTabCompletion(
 
   if (isCommand("ls") && index === 0) {
     addAllDirectories();
+  }
+
+  if (isCommand("help")) {
+    // Get names from here instead of commands array because some
+    // undocumented/nonexistent commands are in the array
+    return Object.keys(HelpTexts);
   }
 
   return allPos;
