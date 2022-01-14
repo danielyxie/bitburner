@@ -436,13 +436,13 @@ export class Industry implements IIndustry {
         awarenessGain = popularityGain * 4;
       if (popularityGain > 0) {
         if (this.awareness === Number.MAX_VALUE || this.awareness + (awarenessGain * marketCycles) > Number.MAX_VALUE) {
-          this.awareness == Number.MAX_VALUE;
+          this.awareness = Number.MAX_VALUE;
         } else {
           this.awareness += awarenessGain * marketCycles;
         }
         
         if (this.popularity === Number.MAX_VALUE || this.popularity + (popularityGain * marketCycles) > Number.MAX_VALUE) {
-          this.popularity == Number.MAX_VALUE;
+          this.popularity = Number.MAX_VALUE;
         } else {
           this.popularity += popularityGain * marketCycles;
         }
@@ -1289,26 +1289,26 @@ export class Industry implements IIndustry {
         //AdVert.Inc,
         const advMult = corporation.getAdvertisingMultiplier() * this.getAdvertisingMultiplier();
         if (this.awareness === Number.MAX_VALUE || this.awareness + (3 * advMult) > Number.MAX_VALUE) {
-          this.awareness == Number.MAX_VALUE;
+          this.awareness = Number.MAX_VALUE;
         } else {
           this.awareness += 3 * advMult;
         }
 
         if (this.awareness === Number.MAX_VALUE || this.awareness * (1.01 * advMult) > Number.MAX_VALUE) {
-          this.awareness == Number.MAX_VALUE;
+          this.awareness = Number.MAX_VALUE;
         } else {
           this.awareness *= 1.01 * advMult;
         }
         
         if (this.popularity === Number.MAX_VALUE || this.popularity + (1 * advMult) > Number.MAX_VALUE) {
-          this.popularity == Number.MAX_VALUE;
+          this.popularity = Number.MAX_VALUE;
         } else {
           this.popularity += 1 * advMult;
         }
         
         const rand = (1 + getRandomInt(1, 3) / 100);
         if (this.popularity === Number.MAX_VALUE || this.popularity * (rand * advMult) > Number.MAX_VALUE) {
-          this.popularity == Number.MAX_VALUE;
+          this.popularity = Number.MAX_VALUE;
         } else {
           this.popularity *= rand * advMult;
         }
