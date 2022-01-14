@@ -117,7 +117,7 @@ export function Overview({ children, mode }: IProps): React.ReactElement {
     return <></>;
   return (
     <Draggable handle=".drag" bounds="body" onStop={handleStop} defaultPosition={{ x, y }}>
-      <Paper className={classes.overviewContainer} square>
+      <Paper id="overview" className={classes.overviewContainer} square>
         <Box className="drag" onDoubleClick={() => setOpen((old) => !old)} ref={draggableRef}>
           <Box className={classes.header}>
             <LeftIcon color="secondary" className={classes.icon} sx={{ padding: "2px" }} />

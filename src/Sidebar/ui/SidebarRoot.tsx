@@ -340,7 +340,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   const [open, setOpen] = useState(true);
   const toggleDrawer = (): void => setOpen((old) => !old);
   return (
-    <Drawer open={open} anchor="left" variant="permanent">
+    <Drawer id="drawer" open={open} anchor="left" variant="permanent">
       <ListItem classes={{ root: classes.listitem }} button onClick={toggleDrawer}>
         <ListItemIcon>
           {!open ? <ChevronRightIcon color="primary" /> : <ChevronLeftIcon color="primary" />}
