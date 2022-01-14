@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
     },
     input: {
-      backgroundColor: "#000",
+      backgroundColor: theme.colors.backgroundsecondary,
     },
     nopadding: {
       padding: theme.spacing(0),
@@ -56,6 +56,7 @@ export function Console(props: IProps): React.ReactElement {
   const classes = useStyles();
   const [command, setCommand] = useState("");
   const setRerender = useState(false)[1];
+  const consoleInput = useRef<HTMLInputElement>(null);
 
   function handleCommandChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setCommand(event.target.value);
@@ -131,15 +132,21 @@ export function Console(props: IProps): React.ReactElement {
     }
   }
 
+  function handleClick(): void {
+    if (!consoleInput.current) return
+    consoleInput.current.focus();
+  }
+
   return (
-    <Paper>
+    <Paper sx={{ p: 1 }}>
       <Box sx={{
         height: '60vh',
         paddingBottom: '8px',
         display: 'flex',
         alignItems: 'stretch',
         whiteSpace: 'pre-wrap',
-      }}>
+      }}
+        onClick={handleClick}>
         <Box>
           <Logs entries={[...props.bladeburner.consoleLogs]} />
         </Box>
@@ -149,6 +156,7 @@ export function Console(props: IProps): React.ReactElement {
         autoFocus
         tabIndex={1}
         type="text"
+        inputRef={consoleInput}
         value={command}
         onChange={handleCommandChange}
         onKeyDown={handleKeyDown}
@@ -171,7 +179,7 @@ interface ILogProps {
   entries: string[];
 }
 
-function Logs({entries}: ILogProps): React.ReactElement {
+function Logs({ entries }: ILogProps): React.ReactElement {
   const scrollHook = useRef<HTMLUListElement>(null);
 
   // TODO: Text gets shifted up as new entries appear, if the user scrolled up it should attempt to keep the text focused
@@ -182,7 +190,7 @@ function Logs({entries}: ILogProps): React.ReactElement {
 
   useEffect(() => {
     scrollToBottom();
-  }, [entries]);
+  }, [entries.length]);
 
   return (
     <List sx={{ height: "100%", overflow: "auto", p: 1 }} ref={scrollHook}>
