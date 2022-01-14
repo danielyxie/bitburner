@@ -133,7 +133,7 @@ export function Console(props: IProps): React.ReactElement {
   }
 
   function handleClick(): void {
-    if (!consoleInput.current) return
+    if (!consoleInput.current) return;
     consoleInput.current.focus();
   }
 
