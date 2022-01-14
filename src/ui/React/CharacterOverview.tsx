@@ -26,6 +26,7 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 import { Box, Tooltip } from "@mui/material";
 import { CONSTANTS } from "../../Constants";
+import { ISkillProgress } from "src/PersonObjects/formulas/skill";
 
 interface IProps {
   save: () => void;
@@ -37,19 +38,24 @@ function Intelligence(): React.ReactElement {
   const classes = useStyles();
   if (player.intelligence === 0) return <></>;
   return (
-    <TableRow>
-      <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-        <Typography classes={{ root: classes.int }}>Int&nbsp;</Typography>
-      </TableCell>
-      <TableCell align="right" classes={{ root: classes.cell }}>
-        <Typography classes={{ root: classes.int }}>{numeralWrapper.formatSkill(player.intelligence)}</Typography>
-      </TableCell>
-      <TableCell align="right" classes={{ root: classes.cell }}>
-        <Typography id="overview-int-hook" classes={{ root: classes.int }}>
-          {/*Hook for player scripts*/}
-        </Typography>
-      </TableCell>
-    </TableRow>
+    <>
+      <TableRow>
+        <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+          <Typography classes={{ root: classes.int }}>Int&nbsp;</Typography>
+        </TableCell>
+        <TableCell align="right" classes={{ root: classes.cell }}>
+          <Typography classes={{ root: classes.int }}>{numeralWrapper.formatSkill(player.intelligence)}</Typography>
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell align="right" classes={{ root: classes.cell }}>
+          <Typography id="overview-int-hook" classes={{ root: classes.int }}>
+            {/*Hook for player scripts*/}
+          </Typography>
+        </TableCell>
+      </TableRow>
+    </>
   );
 }
 
@@ -275,6 +281,24 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
     player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
   );
 
+  const generateTooltip = ({
+    baseExperience: min,
+    nextExperience: max,
+    currentExperience: current,
+    remainingExperience: remaining,
+    progress
+  }: ISkillProgress): React.ReactElement => {
+    return (
+      <Typography sx={{ textAlign: 'right' }}>
+        <strong>Progress:</strong>&nbsp;
+        {numeralWrapper.formatExp(current)} / {numeralWrapper.formatExp(max - min)}
+        <br />
+        <strong>Remaining:</strong>&nbsp;
+        {numeralWrapper.formatExp(remaining)} ({progress.toFixed(2)}%)
+      </Typography>
+    );
+  }
+
   return (
     <>
       <Table sx={{ display: "block", m: 1 }}>
@@ -288,6 +312,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
                 {numeralWrapper.formatHp(player.hp)}&nbsp;/&nbsp;{numeralWrapper.formatHp(player.max_hp)}
               </Typography>
             </TableCell>
+          </TableRow>
+
+          <TableRow>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-hp-hook" classes={{ root: classes.hp }}>
                 {/*Hook for player scripts*/}
@@ -302,6 +329,9 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography classes={{ root: classes.money }}>{numeralWrapper.formatMoney(player.money)}</Typography>
             </TableCell>
+          </TableRow>
+
+          <TableRow>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-money-hook" classes={{ root: classes.money }}>
                 {/*Hook for player scripts*/}
@@ -309,19 +339,22 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
           </TableRow>
 
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.hack }}>{numeralWrapper.formatSkill(player.hacking)}</Typography>
-            </TableCell>
-          </TableRow>
+          <Tooltip title={generateTooltip(hackingProgress)}>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.hack }}>Hack&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.hack }}>{numeralWrapper.formatSkill(player.hacking)}</Typography>
+              </TableCell>
+            </TableRow>
+          </Tooltip>
           <TableRow>
             {!Settings.DisableOverviewProgressBars && (
               <StatsProgressOverviewCell progress={hackingProgress} color={theme.colors.hack} />
             )}
           </TableRow>
+
           <TableRow>
             <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
               <Typography classes={{ root: classes.hack }}></Typography>
@@ -333,19 +366,16 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
             </TableCell>
           </TableRow>
 
-          <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>Str&nbsp;</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.strength)}</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-str-hook" classes={{ root: classes.combat }}>
-                {/*Hook for player scripts*/}
-              </Typography>
-            </TableCell>
-          </TableRow>
+          <Tooltip title={generateTooltip(strengthProgress)}>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>Str&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.strength)}</Typography>
+              </TableCell>
+            </TableRow>
+          </Tooltip>
           <TableRow>
             {!Settings.DisableOverviewProgressBars && (
               <StatsProgressOverviewCell progress={strengthProgress} color={theme.colors.combat} />
@@ -353,18 +383,23 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>Def&nbsp;</Typography>
-            </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.defense)}</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-def-hook" classes={{ root: classes.combat }}>
+              <Typography id="overview-str-hook" classes={{ root: classes.combat }}>
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
           </TableRow>
+
+          <Tooltip title={generateTooltip(defenseProgress)}>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>Def&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.defense)}</Typography>
+              </TableCell>
+            </TableRow>
+          </Tooltip>
           <TableRow>
             {!Settings.DisableOverviewProgressBars && (
               <StatsProgressOverviewCell progress={defenseProgress} color={theme.colors.combat} />
@@ -372,18 +407,23 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>Dex&nbsp;</Typography>
-            </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.dexterity)}</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography id="overview-dex-hook" classes={{ root: classes.combat }}>
+              <Typography id="overview-def-hook" classes={{ root: classes.combat }}>
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
           </TableRow>
+
+          <Tooltip title={generateTooltip(dexterityProgress)}>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>Dex&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.dexterity)}</Typography>
+              </TableCell>
+            </TableRow>
+          </Tooltip>
           <TableRow>
             {!Settings.DisableOverviewProgressBars && (
               <StatsProgressOverviewCell progress={dexterityProgress} color={theme.colors.combat} />
@@ -391,18 +431,23 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-              <Typography classes={{ root: classes.combat }}>Agi&nbsp;</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cell }}>
-              <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.agility)}</Typography>
-            </TableCell>
-            <TableCell align="right" classes={{ root: classes.cell }}>
-              <Typography id="overview-agi-hook" classes={{ root: classes.combat }}>
+            <TableCell align="right" classes={{ root: classes.cellNone }}>
+              <Typography id="overview-dex-hook" classes={{ root: classes.combat }}>
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
           </TableRow>
+
+          <Tooltip title={generateTooltip(agilityProgress)}>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+                <Typography classes={{ root: classes.combat }}>Agi&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cell }}>
+                <Typography classes={{ root: classes.combat }}>{numeralWrapper.formatSkill(player.agility)}</Typography>
+              </TableCell>
+            </TableRow>
+          </Tooltip>
           <TableRow>
             {!Settings.DisableOverviewProgressBars && (
               <StatsProgressOverviewCell progress={agilityProgress} color={theme.colors.combat} />
@@ -410,22 +455,35 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
           </TableRow>
 
           <TableRow>
-            <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.cha }}>Cha&nbsp;</Typography>
-            </TableCell>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
-              <Typography classes={{ root: classes.cha }}>{numeralWrapper.formatSkill(player.charisma)}</Typography>
+              <Typography id="overview-agi-hook" classes={{ root: classes.combat }}>
+                {/*Hook for player scripts*/}
+              </Typography>
             </TableCell>
+          </TableRow>
+
+          <Tooltip title={generateTooltip(charismaProgress)}>
+            <TableRow>
+              <TableCell component="th" scope="row" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.cha }}>Cha&nbsp;</Typography>
+              </TableCell>
+              <TableCell align="right" classes={{ root: classes.cellNone }}>
+                <Typography classes={{ root: classes.cha }}>{numeralWrapper.formatSkill(player.charisma)}</Typography>
+              </TableCell>
+            </TableRow>
+          </Tooltip>
+          <TableRow>
+            {!Settings.DisableOverviewProgressBars && (
+              <StatsProgressOverviewCell progress={charismaProgress} color={theme.colors.cha} />
+            )}
+          </TableRow>
+
+          <TableRow>
             <TableCell align="right" classes={{ root: classes.cellNone }}>
               <Typography id="overview-cha-hook" classes={{ root: classes.cha }}>
                 {/*Hook for player scripts*/}
               </Typography>
             </TableCell>
-          </TableRow>
-          <TableRow>
-            {!Settings.DisableOverviewProgressBars && (
-              <StatsProgressOverviewCell progress={charismaProgress} color={theme.colors.cha} />
-            )}
           </TableRow>
 
           <Intelligence />

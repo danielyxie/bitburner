@@ -1,15 +1,10 @@
 import * as React from "react";
 import LinearProgress from "@mui/material/LinearProgress";
-import { TableCell, Tooltip, Typography } from "@mui/material";
+import { TableCell } from "@mui/material";
 import { characterOverviewStyles } from "./CharacterOverview";
 import { ISkillProgress } from "src/PersonObjects/formulas/skill";
-import { numeralWrapper } from "../numeralFormat";
 
 interface IProgressProps {
-  min: number;
-  max: number;
-  current: number;
-  remaining: number;
   progress: number;
   color?: React.CSSProperties["color"];
 }
@@ -19,30 +14,18 @@ interface IStatsOverviewCellProps {
   color?: React.CSSProperties["color"];
 }
 
-export function StatsProgressBar({ min, max, current, remaining, progress, color }: IProgressProps): React.ReactElement {
-  const tooltip = (
-    <Typography sx={{ textAlign: 'right' }}>
-      <strong>Progress:</strong>&nbsp;
-      {numeralWrapper.formatExp(current)} / {numeralWrapper.formatExp(max - min)}
-      <br />
-      <strong>Remaining:</strong>&nbsp;
-      {numeralWrapper.formatExp(remaining)} ({progress.toFixed(2)}%)
-    </Typography>
-  );
-
+export function StatsProgressBar({ progress, color }: IProgressProps): React.ReactElement {
   return (
-    <Tooltip title={tooltip}>
-      <LinearProgress
-        variant="determinate"
-        value={progress}
-        sx={{
-          backgroundColor: "#111111",
-          "& .MuiLinearProgress-bar1Determinate": {
-            backgroundColor: color,
-          },
-        }}
-      />
-    </Tooltip>
+    <LinearProgress
+      variant="determinate"
+      value={progress}
+      sx={{
+        backgroundColor: "#111111",
+        "& .MuiLinearProgress-bar1Determinate": {
+          backgroundColor: color,
+        },
+      }}
+    />
   );
 }
 
@@ -57,10 +40,6 @@ export function StatsProgressOverviewCell({ progress: skill, color }: IStatsOver
       style={{ paddingBottom: "2px", position: "relative", top: "-3px" }}
     >
       <StatsProgressBar
-        min={skill.baseExperience}
-        max={skill.nextExperience}
-        current={skill.currentExperience}
-        remaining={skill.remainingExperience}
         progress={skill.progress}
         color={color}
       />
