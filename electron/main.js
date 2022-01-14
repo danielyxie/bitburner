@@ -16,10 +16,18 @@ process.on('uncaughtException', function () {
   process.exit(1);
 });
 
-if (greenworks.init()) {
-  log.info("Steam API has been initialized.");
-} else {
-  log.warn("Steam API has failed to initialize.");
+// We want to fail gracefully if we cannot connect to Steam
+try {
+  if (greenworks.init()) {
+    log.info("Steam API has been initialized.");
+  } else {
+    const error = "Steam API has failed to initialize.";
+    log.warn(error);
+    global.greenworksError = error;
+  }
+} catch (ex) {
+  log.warn(ex.message);
+  global.greenworksError = ex.message;
 }
 
 function setStopProcessHandler(app, window, enabled) {
@@ -112,5 +120,14 @@ app.whenReady().then(async () => {
     await utils.exportSave(window);
   } else {
     startWindow(process.argv.includes("--no-scripts"));
+  }
+
+  if (global.greenworksError) {
+    dialog.showMessageBox({
+      title: 'Bitburner',
+      message: 'Could not connect to Steam',
+      detail: `${global.greenworksError}\n\nYou won't be able to receive achievements until this is resolved and you restart the game.`,
+      type: 'warning', buttons: ['OK']
+    });
   }
 });

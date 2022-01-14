@@ -3,6 +3,9 @@ const greenworks = require("./greenworks");
 const log = require("electron-log");
 
 function enableAchievementsInterval(window) {
+  // If the Steam API could not be initialized on game start, we'll abort this.
+  if (global.greenworksError) return;
+
    // This is backward but the game fills in an array called `document.achievements` and we retrieve it from
   // here. Hey if it works it works.
   const steamAchievements = greenworks.getAchievementNames();
