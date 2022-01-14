@@ -435,17 +435,11 @@ export class Industry implements IIndustry {
       const popularityGain = corporation.getDreamSenseGain(),
         awarenessGain = popularityGain * 4;
       if (popularityGain > 0) {
-        if (this.awareness === Number.MAX_VALUE || this.awareness + (awarenessGain * marketCycles) > Number.MAX_VALUE) {
-          this.awareness = Number.MAX_VALUE;
-        } else {
-          this.awareness += awarenessGain * marketCycles;
-        }
-        
-        if (this.popularity === Number.MAX_VALUE || this.popularity + (popularityGain * marketCycles) > Number.MAX_VALUE) {
-          this.popularity = Number.MAX_VALUE;
-        } else {
-          this.popularity += popularityGain * marketCycles;
-        }
+        const awareness = this.awareness + (awarenessGain * marketCycles);
+        this.awareness = Math.min(awareness, Number.MAX_VALUE);
+
+        const popularity = this.popularity + (popularityGain * marketCycles);
+        this.popularity = Math.min(popularity, Number.MAX_VALUE);
       }
 
       return;
@@ -1288,31 +1282,11 @@ export class Industry implements IIndustry {
       case 1: {
         //AdVert.Inc,
         const advMult = corporation.getAdvertisingMultiplier() * this.getAdvertisingMultiplier();
-        if (this.awareness === Number.MAX_VALUE || this.awareness + (3 * advMult) > Number.MAX_VALUE) {
-          this.awareness = Number.MAX_VALUE;
-        } else {
-          this.awareness += 3 * advMult;
-        }
+        const awareness = (this.awareness + (3 * advMult)) * (1.01 * advMult);
+        this.awareness = Math.min(awareness, Number.MAX_VALUE);
 
-        if (this.awareness === Number.MAX_VALUE || this.awareness * (1.01 * advMult) > Number.MAX_VALUE) {
-          this.awareness = Number.MAX_VALUE;
-        } else {
-          this.awareness *= 1.01 * advMult;
-        }
-        
-        if (this.popularity === Number.MAX_VALUE || this.popularity + (1 * advMult) > Number.MAX_VALUE) {
-          this.popularity = Number.MAX_VALUE;
-        } else {
-          this.popularity += 1 * advMult;
-        }
-        
-        const rand = (1 + getRandomInt(1, 3) / 100);
-        if (this.popularity === Number.MAX_VALUE || this.popularity * (rand * advMult) > Number.MAX_VALUE) {
-          this.popularity = Number.MAX_VALUE;
-        } else {
-          this.popularity *= rand * advMult;
-        }
-        
+        const popularity = (this.popularity + (1 * advMult)) * ((1 + getRandomInt(1, 3) / 100) * advMult);
+        this.popularity = Math.min(popularity, Number.MAX_VALUE);       
         break;
       }
       default: {
