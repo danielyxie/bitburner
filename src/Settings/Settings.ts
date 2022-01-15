@@ -1,9 +1,10 @@
 import { ISelfInitializer, ISelfLoading } from "../types";
 import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
 import { defaultTheme, ITheme } from "./Themes";
-import { defaultStyles, IStyleSettings } from "./Styles";
+import { defaultStyles } from "./Styles";
 import { WordWrapOptions } from "../ScriptEditor/ui/Options";
 import { OverviewSettings } from "../ui/React/Overview";
+import { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
 
 /**
  * Represents the default settings the player could customize.

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { use } from "../../ui/Context";
 import { getAvailableCreatePrograms } from "../ProgramHelpers";
 
-import { Tooltip, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 
 export const ProgramsSeen: string[] = [];
@@ -38,27 +38,28 @@ export function ProgramsRoot(): React.ReactElement {
         time. Your progress will be saved and you can continue later.
       </Typography>
 
-      {programs.map((program) => {
-        const create = program.create;
-        if (create === null) return <></>;
+      <Box sx={{ display: 'grid', width: 'fit-content' }}>
+        {programs.map((program) => {
+          const create = program.create;
+          if (create === null) return <></>;
 
-        return (
-          <React.Fragment key={program.name}>
-            <Tooltip title={create.tooltip}>
-              <Button
-                sx={{ my: 1 }}
-                onClick={(event) => {
-                  if (!event.isTrusted) return;
-                  player.startCreateProgramWork(router, program.name, create.time, create.level);
-                }}
-              >
-                {program.name}
-              </Button>
-            </Tooltip>
-            <br />
-          </React.Fragment>
-        );
-      })}
+          return (
+            <React.Fragment key={program.name}>
+              <Tooltip title={create.tooltip}>
+                <Button
+                  sx={{ my: 1 }}
+                  onClick={(event) => {
+                    if (!event.isTrusted) return;
+                    player.startCreateProgramWork(router, program.name, create.time, create.level);
+                  }}
+                >
+                  {program.name}
+                </Button>
+              </Tooltip>
+            </React.Fragment>
+          );
+        })}
+      </Box>
     </>
   );
 }

@@ -10,6 +10,7 @@ import { CoinFlip } from "../../Casino/CoinFlip";
 import { Roulette } from "../../Casino/Roulette";
 import { SlotMachine } from "../../Casino/SlotMachine";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Box } from "@mui/material";
 
 enum GameType {
   None = "none",
@@ -33,15 +34,12 @@ export function CasinoLocation(props: IProps): React.ReactElement {
   return (
     <>
       {game === GameType.None && (
-        <>
+        <Box sx={{ display: 'grid', width: 'fit-content' }}>
           <Button onClick={() => updateGame(GameType.Coin)}>Play coin flip</Button>
-          <br />
           <Button onClick={() => updateGame(GameType.Slots)}>Play slots</Button>
-          <br />
           <Button onClick={() => updateGame(GameType.Roulette)}>Play roulette</Button>
-          <br />
           <Button onClick={() => updateGame(GameType.Blackjack)}>Play blackjack</Button>
-        </>
+        </Box>
       )}
       {game !== GameType.None && (
         <>

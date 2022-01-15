@@ -686,7 +686,9 @@ export function Root(props: IProps): React.ReactElement {
     const serverScript = server.scripts.find((s) => s.filename === openScript.fileName);
     if (serverScript === undefined) return " *";
 
-    return serverScript.code !== openScript.code ? " *" : "";
+    // The server code is stored with its starting & trailing whitespace removed
+    const openScriptFormatted = Script.formatCode(openScript.code);
+    return serverScript.code !== openScriptFormatted ? " *" : "";
   }
 
   // Toolbars are roughly 112px:
@@ -846,7 +848,7 @@ export function Root(props: IProps): React.ReactElement {
         <span style={{ color: Settings.theme.primary, fontSize: "20px", textAlign: "center" }}>
           <Typography variant="h4">No open files</Typography>
           <Typography variant="h5">
-            Use `nano FILENAME` in
+            Use <code>nano FILENAME</code> in
             <br />
             the terminal to open files
           </Typography>

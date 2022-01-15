@@ -172,7 +172,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeRejectMsg(
         workerScript,
         `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-          `This is probably a bug. Please report to game developer`,
+        `This is probably a bug. Please report to game developer`,
       );
     }
 
@@ -335,16 +335,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     workerScript.log(
       "hack",
       () =>
-        `Executing ${hostname} in ${convertTimeMsToTimeElapsedString(
+        `Executing on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(
           hackingTime * 1000,
           true,
         )} (t=${numeralWrapper.formatThreads(threads)})`,
     );
 
     return netscriptDelay(hackingTime * 1000, workerScript).then(function () {
-      if (workerScript.env.stopFlag) {
-        return Promise.reject(workerScript);
-      }
       const hackChance = calculateHackingChance(server, Player);
       const rand = Math.random();
       let expGainedOnSuccess = calculateHackingExpGain(server, Player) * threads;
@@ -352,7 +349,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (rand < hackChance) {
         // Success!
         const percentHacked = calculatePercentMoneyHacked(server, Player);
-        let maxThreadNeeded = Math.ceil((1 / percentHacked) * (server.moneyAvailable / server.moneyMax));
+        let maxThreadNeeded = Math.ceil(1 / percentHacked);
         if (isNaN(maxThreadNeeded)) {
           // Server has a 'max money' of 0 (probably). We'll set this to an arbitrarily large value
           maxThreadNeeded = 1e6;
@@ -432,8 +429,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeErrorMsg(funcName, `${argName} should be a string`);
     },
     number: (funcName: string, argName: string, v: any): number => {
-      if (typeof v === "number") return v;
-      if (!isNaN(v) && !isNaN(parseFloat(v))) return parseFloat(v);
+      if (!isNaN(v)) {
+        if (typeof v === "number") return v;
+        if (!isNaN(parseFloat(v))) return parseFloat(v);
+      }
       throw makeRuntimeErrorMsg(funcName, `${argName} should be a number`);
     },
     boolean: (v: any): boolean => {
@@ -613,9 +612,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           )} (t=${numeralWrapper.formatThreads(threads)}).`,
       );
       return netscriptDelay(growTime * 1000, workerScript).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
         processSingleServerGrowth(server, threads, Player, host.cpuCores);
         const moneyAfter = server.moneyAvailable;
@@ -684,7 +680,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           )} (t=${numeralWrapper.formatThreads(threads)})`,
       );
       return netscriptDelay(weakenTime * 1000, workerScript).then(function () {
-        if (workerScript.env.stopFlag) return Promise.reject(workerScript);
         const host = GetServer(workerScript.hostname);
         if (host === null) {
           workerScript.log("weaken", () => "Server is null, did it die?");
@@ -697,8 +692,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log(
           "weaken",
           () =>
-            `'${server.hostname}' security level weakened to ${
-              server.hackDifficulty
+            `'${server.hostname}' security level weakened to ${server.hackDifficulty
             }. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)})`,
         );
         workerScript.scriptRef.onlineExpGained += expGain;
@@ -2011,7 +2005,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculateGrowTime(server, Player) * 1000;
     },
-    getWeakenTime: function (hostname: any): any {
+    getWeakenTime: function (hostname: any = workerScript.hostname): any {
       updateDynamicRam("getWeakenTime", getRamCost(Player, "getWeakenTime"));
       const server = safeGetServer(hostname, "getWeakenTime");
       if (!(server instanceof Server)) {

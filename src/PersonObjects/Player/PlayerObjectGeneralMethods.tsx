@@ -946,11 +946,6 @@ export function workForFaction(this: IPlayer, numCycles: number): boolean {
     default:
       break;
   }
-  let favorMult = 1 + faction.favor / 100;
-  if (isNaN(favorMult)) {
-    favorMult = 1;
-  }
-  this.workRepGainRate *= favorMult;
   this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
 
   //Cap the number of cycles being processed to whatever would put you at limit (20 hours)

@@ -3,12 +3,17 @@ import { GetServer } from "./Server/AllServers";
 import { WorkerScript } from "./Netscript/WorkerScript";
 
 export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
-  return new Promise(function (resolve) {
+  return new Promise(function (resolve, reject) {
     workerScript.delay = window.setTimeout(() => {
       workerScript.delay = null;
-      resolve();
+      workerScript.delayReject = undefined;
+
+      if (workerScript.env.stopFlag)
+        reject(workerScript);
+      else
+        resolve();
     }, time);
-    workerScript.delayResolve = resolve;
+    workerScript.delayReject = reject;
   });
 }
 

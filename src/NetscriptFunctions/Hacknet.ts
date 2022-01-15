@@ -111,7 +111,7 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript, he
       }
       const node = getHacknetNode(i, "upgradeCache");
       if (!(node instanceof HacknetServer)) {
-        workerScript.log("upgradeCache", () => "Can only be called on hacknet servers");
+        workerScript.log("hacknet.upgradeCache", () => "Can only be called on hacknet servers");
         return false;
       }
       const res = purchaseCacheUpgrade(player, node, n);
@@ -138,7 +138,7 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript, he
       }
       const node = getHacknetNode(i, "upgradeCache");
       if (!(node instanceof HacknetServer)) {
-        workerScript.log("getCacheUpgradeCost", () => "Can only be called on hacknet servers");
+        workerScript.log("hacknet.getCacheUpgradeCost", () => "Can only be called on hacknet servers");
         return -1;
       }
       return node.calculateCacheUpgradeCost(n);

@@ -114,7 +114,7 @@ export const Literatures: IMap<Literature> = {};
     "as working for any military/defense organization or conducting any bioengineering, computing, or robotics related research.<br><br>" +
     "Unfortunately, many believe that not all of the rogue MK-VI Synthoids from the Uprising were found and destroyed, " +
     "and that many of them are blending in as normal humans in society today. In response, many nations have created " +
-    "Bladeburner divisions, special military branches that are tasked with investigating and dealing with any Synthoid threads.<br><br>" +
+    "Bladeburner divisions, special military branches that are tasked with investigating and dealing with any Synthoid threats.<br><br>" +
     "To this day, tensions still exist between the remaining Synthoids and humans as a result of the Uprising.<br><br>" +
     "Nobody knows what happened to the terrorist group Ascendis Totalis.";
   Literatures[fn] = new Literature(title, fn, txt);

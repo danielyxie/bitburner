@@ -118,7 +118,7 @@ export class Script {
    */
   saveScript(player: IPlayer, filename: string, code: string, hostname: string, otherScripts: Script[]): void {
     // Update code and filename
-    this.code = code.replace(/^\s+|\s+$/g, "");
+    this.code = Script.formatCode(code);
 
     this.filename = filename;
     this.server = hostname;
@@ -157,6 +157,15 @@ export class Script {
     // Rehash the code to ensure that hash is set properly.
     s.rehash();
     return s;
+  }
+
+  /**
+   * Formats code: Removes the starting & trailing whitespace
+   * @param {string} code - The code to format
+   * @returns The formatted code
+   */
+   static formatCode(code: string): string {
+    return code.replace(/^\s+|\s+$/g, "");
   }
 }
 

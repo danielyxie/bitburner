@@ -1,5 +1,7 @@
 /* Generic Reviver, toJSON, and fromJSON functions used for saving and loading objects */
 
+import { validateObject } from "./Validator";
+
 interface IReviverValue {
   ctor: string;
   data: any;
@@ -26,7 +28,11 @@ export function Reviver(key: string, value: IReviverValue | null): any {
     const ctor = Reviver.constructors[value.ctor];
 
     if (typeof ctor === "function" && typeof ctor.fromJSON === "function") {
-      return ctor.fromJSON(value);
+      const obj = ctor.fromJSON(value);
+      if (ctor.validationData !== undefined) {
+        validateObject(obj, ctor.validationData);
+      }
+      return obj;
     }
   }
   return value;
