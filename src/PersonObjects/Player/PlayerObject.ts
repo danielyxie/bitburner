@@ -77,6 +77,7 @@ export class PlayerObject implements IPlayer {
   sourceFiles: IPlayerOwnedSourceFile[];
   exploits: Exploit[];
   achievements: PlayerAchievement[];
+  terminalCommandHistory: string[];
   lastUpdate: number;
   totalPlaytime: number;
 
@@ -471,6 +472,7 @@ export class PlayerObject implements IPlayer {
 
     this.exploits = [];
     this.achievements = [];
+    this.terminalCommandHistory = [];
 
     this.init = generalMethods.init;
     this.prestigeAugmentation = generalMethods.prestigeAugmentation;
