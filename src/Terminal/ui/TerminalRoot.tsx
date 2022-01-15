@@ -122,20 +122,40 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
   }
 
   function ansiCodeStyle(code: string|null): Record<string,any> {
-    const COLOR_MAP : Record<string|number,any> = {
-      0: 'black',
-      1: 'red',
-      2: 'green',
-      3: 'yellow',
-      4: 'blue',
-      5: 'magenta',
-      6: 'cyan',
-      7: 'white',
+    // The ANSI colors actually have the dark color set as default and require extra work to get
+    //  bright colors.  But these are rarely used or, if they are, are often re-mapped by the
+    //  terminal emulator to brighter colors.  So for foreground colors we use the bright color set
+    //  and for background colors we use the dark color set.  Of course, all colors are available
+    //  via the longer ESC[n8;5;c] sequence (n={3,4}, c=color).  Ideally, these 8-bit maps could
+    //  be managed in the user preferences/theme.
+    const COLOR_MAP_BRIGHT : Record<string|number,any> = {
+      0: '#404040',
+      1: '#ff0000',
+      2: '#00ff00',
+      3: '#ffff00',
+      4: '#0000ff',
+      5: '#ff00ff',
+      6: '#00ffff',
+      7: '#ffffff',
+    }
+    const COLOR_MAP_DARK : Record<string|number,any> = {
+      0: '#000000',
+      1: '#800000',
+      2: '#008000',
+      3: '#808000',
+      4: '#000080',
+      5: '#800080',
+      6: '#008080',
+      7: '#c0c0c0',
     }
     const ansi2rgb = (code:number):string => {  /* eslint-disable yoda */
       if((0 <= code) && (code < 8)){
         // x8 RGB
-        return COLOR_MAP[code]
+        return COLOR_MAP_BRIGHT[code]
+      }
+      if((8 <= code) && (code < 16)){
+        // x8 RGB - "High Intensity" (but here, actually the dark set)
+        return COLOR_MAP_DARK[code]
       }
       if((16 <= code) && (code < 232)){
         // x216 RGB
@@ -157,12 +177,13 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
       // shouldn't get here (under normal circumstances), but just in case
       return 'initial'
     }
-    type styleKey = "fontWeight" | "textDecoration" | "color" | "backgroundColor"
+    type styleKey = "fontWeight" | "textDecoration" | "color" | "backgroundColor" | "display"
     const style : {
       fontWeight?: string;
       textDecoration?: string;
       color?: string;
       backgroundColor?: string;
+      display?: string;
     } = {}
 
     if(code !== null){ /* eslint-disable yoda */
@@ -187,14 +208,14 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
         }
         // Forground Color (x8)
         else if((30 <= codePart)&&(codePart < 38)){
-          if(COLOR_MAP[codePart%10]){
-            style.color = COLOR_MAP[codePart%10]
+          if(COLOR_MAP_BRIGHT[codePart%10]){
+            style.color = COLOR_MAP_BRIGHT[codePart%10]
           }
         }
         // Background Color (x8)
         else if((40 <= codePart)&&(codePart < 48)){
-          if(COLOR_MAP[codePart%10]){
-            style.backgroundColor = COLOR_MAP[codePart%10]
+          if(COLOR_MAP_DARK[codePart%10]){
+            style.backgroundColor = COLOR_MAP_DARK[codePart%10]
           }
         }
         // Forground Color (x256)
@@ -207,6 +228,11 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
         }
       })
     }
+    // If a background color is set, render this as an inline block element (instead of inline)
+    //  so that the background between lines (at least those that don't wrap) is uninterrupted.
+    if(style.backgroundColor !== undefined){
+      style.display = 'inline-block'
+    }
     return style
   }
 
@@ -217,15 +243,24 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
     if(typeof item.text === 'string'){
       // eslint-disable-next-line no-control-regex
       const ANSI_ESCAPE = new RegExp('\u{001b}\\[(?<code>.*?)m', 'ug');
-      const matches = [null, ...item.text.matchAll(ANSI_ESCAPE), null]
+      // Build a look-alike regex match to place at the front of the matches list
+      const INITIAL = {
+        0: '',
+        index: 0,
+        groups: {code: null}
+      }
+      const matches = [INITIAL, ...item.text.matchAll(ANSI_ESCAPE), null]
       if(matches.length > 2){
         matches.slice(0, -1).forEach((m,i) => {
           const n = matches[i+1]
           if(m&&m.index!==undefined&&m.groups!==undefined){
-            const startIndex = m ? m.index + m[0].length : 0
-            const stopIndex  = n ? n.index               : item.text.length
+            const startIndex = m.index + m[0].length
+            const stopIndex  = n ? n.index : item.text.length
             const partText   = item.text.slice(startIndex, stopIndex)
-            parts.push({code:m.groups.code, text:partText})
+            if(startIndex !== stopIndex){
+              // Don't generate "empty" spans
+              parts.push({code:m.groups.code, text:partText})
+            }
           }
         })
       }
@@ -233,6 +268,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
     if(parts.length === 0){
       parts.push({code:null, text:item.text})
     }
+    // Filter out an
     return (
       <Typography classes={{ root: lineClass(item.color) }} paragraph={false}>
         {parts.map((item, index) => {
