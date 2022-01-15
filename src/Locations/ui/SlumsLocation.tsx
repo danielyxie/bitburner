@@ -11,6 +11,7 @@ import { Crimes } from "../../Crime/Crimes";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { use } from "../../ui/Context";
+import { Box } from "@mui/material";
 
 export function SlumsLocation(): React.ReactElement {
   const player = use.Player();
@@ -113,73 +114,61 @@ export function SlumsLocation(): React.ReactElement {
   const heistChance = Crimes.Heist.successRate(player);
 
   return (
-    <>
+    <Box sx={{ display: 'grid', width: 'fit-content' }}>
       <Tooltip title={<>Attempt to shoplift from a low-end retailer</>}>
         <Button onClick={shoplift}>
           Shoplift ({numeralWrapper.formatPercentage(shopliftChance)} chance of success)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={<>Attempt to commit armed robbery on a high-end store</>}>
         <Button onClick={robStore}>
           Rob store ({numeralWrapper.formatPercentage(robStoreChance)} chance of success)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={<>Attempt to mug a random person on the street</>}>
         <Button onClick={mug}>Mug someone ({numeralWrapper.formatPercentage(mugChance)} chance of success)</Button>
       </Tooltip>
-      <br />
       <Tooltip title={<>Attempt to rob property from someone's house</>}>
         <Button onClick={larceny}>Larceny ({numeralWrapper.formatPercentage(larcenyChance)} chance of success)</Button>
       </Tooltip>
-      <br />
       <Tooltip title={<>Attempt to deal drugs</>}>
         <Button onClick={dealDrugs}>
           Deal Drugs ({numeralWrapper.formatPercentage(drugsChance)} chance of success)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={<>Attempt to forge corporate bonds</>}>
         <Button onClick={bondForgery}>
           Bond Forgery ({numeralWrapper.formatPercentage(bondChance)} chance of success)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={<>Attempt to smuggle illegal arms into the city</>}>
         <Button onClick={traffickArms}>
           Traffick illegal Arms ({numeralWrapper.formatPercentage(armsChance)} chance of success)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={<>Attempt to murder a random person on the street</>}>
         <Button onClick={homicide}>
           Homicide ({numeralWrapper.formatPercentage(homicideChance)} chance of success)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={<>Attempt to commit grand theft auto</>}>
         <Button onClick={grandTheftAuto}>
           Grand theft Auto ({numeralWrapper.formatPercentage(gtaChance)} chance of success)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={<>Attempt to kidnap and ransom a high-profile-target</>}>
         <Button onClick={kidnap}>
           Kidnap and Ransom ({numeralWrapper.formatPercentage(kidnapChance)} chance of success)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={<>Attempt to assassinate a high-profile target</>}>
         <Button onClick={assassinate}>
           Assassinate ({numeralWrapper.formatPercentage(assassinateChance)} chance of success)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={<>Attempt to pull off the ultimate heist</>}>
         <Button onClick={heist}>Heist ({numeralWrapper.formatPercentage(heistChance)} chance of success)</Button>
       </Tooltip>
-      <br />
-    </>
+    </Box>
   );
 }

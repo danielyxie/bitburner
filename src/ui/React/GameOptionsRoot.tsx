@@ -427,6 +427,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 </>} />
             </ListItem>
             <ListItem>
+              <OptionSwitch checked={Settings.ExcludeRunningScriptsFromSave}
+                onChange={(newValue) => Settings.ExcludeRunningScriptsFromSave = newValue}
+                text="Exclude Running Scripts from Save"
+                tooltip={<>
+                  If this is set, the save file will exclude all running scripts. This is only useful if your save is lagging a lot. You'll have to restart your script every time you launch the game.
+                </>} />
+            </ListItem>
+            <ListItem>
               <Tooltip
                 title={
                   <Typography>
@@ -521,19 +529,19 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </>
           )}
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Box>
+        <Box sx={{ display: 'grid', width: 'fit-content', height: 'fit-content' }}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
             <Button onClick={() => props.save()}>Save Game</Button>
             <Button onClick={() => setDeleteOpen(true)}>Delete Game</Button>
           </Box>
-          <Box>
+          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
             <Tooltip title={<Typography>Export your game to a text file.</Typography>}>
               <Button onClick={() => props.export()}>
                 <DownloadIcon color="primary" />
                 Export Game
               </Button>
             </Tooltip>
-            <Tooltip title={<Typography>Import your game from a text file.<br/>This will <strong>overwrite</strong> your current game. Back it up first!</Typography>}>
+            <Tooltip title={<Typography>Import your game from a text file.<br />This will <strong>overwrite</strong> your current game. Back it up first!</Typography>}>
               <Button onClick={startImport}>
                 <UploadIcon color="primary" />
                 Import Game
@@ -563,7 +571,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               }
             />
           </Box>
-          <Box>
+          <Box sx={{ display: 'grid' }}>
             <Tooltip
               title={
                 <Typography>
@@ -578,7 +586,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <Button onClick={() => props.forceKill()}>Force kill all active scripts</Button>
             </Tooltip>
           </Box>
-          <Box>
+          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
             <Tooltip
               title={
                 <Typography>
@@ -605,7 +613,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <Button onClick={() => setDiagnosticOpen(true)}>Diagnose files</Button>
             </Tooltip>
           </Box>
-          <Box>
+          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
             <Button onClick={() => setThemeEditorOpen(true)}>Theme editor</Button>
             <Button onClick={() => setStyleEditorOpen(true)}>Style editor</Button>
           </Box>
@@ -629,7 +637,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <Typography>Incremental game plaza</Typography>
             </Link>
           </Box>
-        </Grid>
+        </Box>
       </Grid>
       <FileDiagnosticModal open={diagnosticOpen} onClose={() => setDiagnosticOpen(false)} />
       <ConfirmationModal

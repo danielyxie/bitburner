@@ -611,9 +611,6 @@ export function NetscriptSingularity(
       );
 
       return netscriptDelay(installTime, workerScript).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         workerScript.log("installBackdoor", () => `Successfully installed backdoor on '${server.hostname}'`);
 
         server.backdoorInstalled = true;

@@ -16,6 +16,7 @@ import { Server } from "../../Server/Server";
 import { Money } from "../../ui/React/Money";
 import { IRouter } from "../../ui/Router";
 import { serverMetadata } from "../../Server/data/servers";
+import { Box } from "@mui/material";
 
 type IProps = {
   loc: Location;
@@ -56,7 +57,7 @@ export function GymLocation(props: IProps): React.ReactElement {
   const cost = CONSTANTS.ClassGymBaseCost * calculateCost();
 
   return (
-    <>
+    <Box sx={{ display: 'grid', width: 'fit-content' }}>
       <Button onClick={trainStrength}>
         Train Strength (<Money money={cost} player={props.p} /> / sec)
       </Button>
@@ -72,6 +73,6 @@ export function GymLocation(props: IProps): React.ReactElement {
       <Button onClick={trainAgility}>
         Train Agility (<Money money={cost} player={props.p} /> / sec)
       </Button>
-    </>
+    </Box>
   );
 }

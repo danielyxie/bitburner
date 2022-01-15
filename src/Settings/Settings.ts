@@ -1,9 +1,10 @@
 import { ISelfInitializer, ISelfLoading } from "../types";
 import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
 import { defaultTheme, ITheme } from "./Themes";
-import { defaultStyles, IStyleSettings } from "./Styles";
+import { defaultStyles } from "./Styles";
 import { WordWrapOptions } from "../ScriptEditor/ui/Options";
 import { OverviewSettings } from "../ui/React/Overview";
+import { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
 
 /**
  * Represents the default settings the player could customize.
@@ -118,6 +119,11 @@ interface IDefaultSettings {
   SuppressSavedGameToast: boolean;
 
   /*
+   * Whether the game should skip saving the running scripts for late game
+   */
+  ExcludeRunningScriptsFromSave: boolean;
+
+  /*
    * Theme colors
    */
   theme: ITheme;
@@ -187,6 +193,7 @@ export const defaultSettings: IDefaultSettings = {
   SuppressTIXPopup: false,
   SuppressSavedGameToast: false,
   UseIEC60027_2: false,
+  ExcludeRunningScriptsFromSave: false,
 
   theme: defaultTheme,
   styles: defaultStyles,
@@ -223,6 +230,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressTIXPopup: defaultSettings.SuppressTIXPopup,
   SuppressSavedGameToast: defaultSettings.SuppressSavedGameToast,
   UseIEC60027_2: defaultSettings.UseIEC60027_2,
+  ExcludeRunningScriptsFromSave: defaultSettings.ExcludeRunningScriptsFromSave,
   MonacoTheme: "monokai",
   MonacoInsertSpaces: false,
   MonacoFontSize: 20,

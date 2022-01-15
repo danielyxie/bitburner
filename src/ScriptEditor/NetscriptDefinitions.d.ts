@@ -110,12 +110,6 @@ interface RunningScript {
 }
 
 /**
- * Filename or PID of a script.
- * @public
- */
-type FilenameOrPID = string | number;
-
-/**
  * Data representing the internal values of a crime.
  * @public
  */
@@ -3965,6 +3959,36 @@ interface UserInterface {
    * RAM cost: cost: 0 GB
    */
   resetTheme(): void;
+
+  /**
+   * Get the current styles
+   * @remarks
+   * RAM cost: cost: 0 GB
+   *
+   * @returns An object containing the player's styles
+   */
+  getStyles(): IStyleSettings;
+
+  /**
+   * Sets the current styles
+   * @remarks
+   * RAM cost: cost: 0 GB
+   * @example
+   * Usage example (NS2)
+   * ```ts
+   * const styles = ns.ui.getStyles();
+   * styles.fontFamily = 'Comic Sans Ms';
+   * ns.ui.setStyles(styles);
+   * ```
+   */
+  setStyles(newStyles: IStyleSettings): void;
+
+  /**
+   * Resets the player's styles to the default values
+   * @remarks
+   * RAM cost: cost: 0 GB
+   */
+  resetStyles(): void;
 }
 
 /**
@@ -5719,7 +5743,7 @@ export interface NS extends Singularity {
    * @param args - Formating arguments.
    * @returns Formated text.
    */
-  sprintf(format: string, ...args: string[]): string;
+  sprintf(format: string, ...args: any[]): string;
 
   /**
    * Format a string with an array of arguments.
@@ -5731,7 +5755,7 @@ export interface NS extends Singularity {
    * @param args - Formating arguments.
    * @returns Formated text.
    */
-  vsprintf(format: string, args: string[]): string;
+  vsprintf(format: string, args: any[]): string;
 
   /**
    * Format a number
@@ -6442,4 +6466,13 @@ interface UserInterfaceTheme {
   backgroundprimary: string;
   backgroundsecondary: string;
   button: string;
+}
+
+/**
+ * Interface Styles
+ * @internal
+ */
+interface IStyleSettings {
+  fontFamily: string;
+  lineHeight: number;
 }

@@ -9,15 +9,15 @@ Format a string.
 <b>Signature:</b>
 
 ```typescript
-sprintf(format: string, ...args: string[]): string;
+sprintf(format: string, ...args: any[]): string;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  format | string | String to format. |
-|  args | string\[\] | Formating arguments. |
+| Parameter | Type    | Description          |
+| --------- | ------- | -------------------- |
+| format    | string  | String to format.    |
+| args      | any\[\] | Formating arguments. |
 
 <b>Returns:</b>
 
@@ -30,4 +30,3 @@ Formated text.
 RAM cost: 0 GB
 
 see: https://github.com/alexei/sprintf.js
-

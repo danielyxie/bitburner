@@ -2,10 +2,11 @@ import { INetscriptHelper } from "./INetscriptHelper";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { getRamCost } from "../Netscript/RamCostGenerator";
-import { UserInterface as IUserInterface, UserInterfaceTheme } from "../ScriptEditor/NetscriptDefinitions";
+import { IStyleSettings, UserInterface as IUserInterface, UserInterfaceTheme } from "../ScriptEditor/NetscriptDefinitions";
 import { Settings } from "../Settings/Settings";
 import { ThemeEvents } from "../ui/React/Theme";
 import { defaultTheme } from "../Settings/Themes";
+import { defaultStyles } from "../Settings/Styles";
 
 export function NetscriptUserInterface(
   player: IPlayer,
@@ -16,6 +17,11 @@ export function NetscriptUserInterface(
     getTheme: function (): UserInterfaceTheme {
       helper.updateDynamicRam("getTheme", getRamCost(player, "ui", "getTheme"));
       return { ...Settings.theme };
+    },
+
+    getStyles: function (): IStyleSettings {
+      helper.updateDynamicRam("getStyles", getRamCost(player, "ui", "getStyles"));
+      return { ...Settings.styles };
     },
 
     setTheme: function (newTheme: UserInterfaceTheme): void {
@@ -43,11 +49,41 @@ export function NetscriptUserInterface(
       }
     },
 
+    setStyles: function (newStyles: IStyleSettings): void {
+      helper.updateDynamicRam("setStyles", getRamCost(player, "ui", "setStyles"));
+
+      const currentStyles = {...Settings.styles}
+      const errors: string[] = [];
+      for (const key of Object.keys(newStyles)) {
+        if (!((currentStyles as any)[key])) {
+          // Invalid key
+          errors.push(`Invalid key "${key}"`);
+        } else {
+          (currentStyles as any)[key] = (newStyles as any)[key];
+        }
+      }
+
+      if (errors.length === 0) {
+        Object.assign(Settings.styles, currentStyles);
+        ThemeEvents.emit();
+        workerScript.log("ui.setStyles", () => `Successfully set styles`);
+      } else {
+        workerScript.log("ui.setStyles", () => `Failed to set styles. Errors: ${errors.join(', ')}`);
+      }
+    },
+
     resetTheme: function (): void {
       helper.updateDynamicRam("resetTheme", getRamCost(player, "ui", "resetTheme"));
-      Settings.theme = defaultTheme;
+      Settings.theme = { ...defaultTheme };
       ThemeEvents.emit();
       workerScript.log("ui.resetTheme", () => `Reinitialized theme to default`);
     },
+
+    resetStyles: function (): void {
+      helper.updateDynamicRam("resetStyles", getRamCost(player, "ui", "resetStyles"));
+      Settings.styles = { ...defaultStyles };
+      ThemeEvents.emit();
+      workerScript.log("ui.resetStyles", () => `Reinitialized styles to default`);
+    }
   }
 }

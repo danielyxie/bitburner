@@ -6,6 +6,9 @@ const achievements = require("./achievements");
 const menu = require("./menu");
 const api = require("./api-server");
 const cp = require("child_process");
+const path = require("path");
+const fs = require("fs");
+const { fileURLToPath } = require("url");
 
 const debug = process.argv.includes("--debug");
 
@@ -24,15 +27,54 @@ async function createWindow(killall) {
   window.show();
   if (debug) window.webContents.openDevTools();
 
-  window.webContents.on("new-window", function (e, url) {
-    if (process.platform === "win32") {
-      cp.spawn("explorer", [url], { detached: true, stdio: "ignore" });
-    } else {
-      // make sure local urls stay in electron perimeter
-      if (url.substr(0, "file://".length) === "file://") {
-        return;
+  window.webContents.on("new-window", async function (e, url) {
+    // Let's make sure sure we have a proper url
+    let parsedUrl
+    try {
+      parsedUrl = new URL(url);
+    } catch (_) {
+      // This is an invalid url, let's just do nothing
+      log.warn(`Invalid url found: ${url}`)
+      e.preventDefault();
+      return;
+    }
+
+    // make sure local urls stay in electron perimeter
+    if (url.substr(0, "file://".length) === "file://") {
+      const requestedPath = fileURLToPath(url);
+      const appPath = path.parse(app.getAppPath());
+      const filePath = path.parse(requestedPath);
+      const isChild = filePath.dir.startsWith(appPath.dir);
+
+      // eslint-disable-next-line no-sync
+      const fileExists = fs.existsSync(requestedPath);
+
+      if (!isChild) {
+        // If we're not relative to our app's path let's abort
+        log.warn(`Requested path ${filePath.dir}${path.sep}${filePath.base} is not relative to the app: ${appPath.dir}${path.sep}${appPath.base}`)
+        e.preventDefault();
+      } else if (!fileExists) {
+        // If the file does not exist let's abort
+        log.warn(`Requested path ${filePath.dir}${path.sep}${filePath.base} does not exist`)
+        e.preventDefault();
       }
 
+      return;
+    }
+
+    if (process.platform === "win32") {
+      // If we have parameters in the URL, explorer.exe won't register the URL and will open the file explorer instead.
+      let urlToOpen = parsedUrl.toString();
+      if (parsedUrl.search) {
+        log.log(`Cannot open a path with parameters: ${parsedUrl.search}`);
+        urlToOpen = urlToOpen.replace(parsedUrl.search, '');
+        // It would be possible to launch an URL with parameter using this, but it would mess up the process again...
+        // const escapedUri = parsedUrl.href.replace('&', '^&');
+        // cp.spawn("cmd.exe", ["/c", "start", escapedUri], { detached: true, stdio: "ignore" });
+      }
+
+      cp.spawn("explorer", [urlToOpen], { detached: true, stdio: "ignore" });
+    } else {
       // and open every other protocols on the browser
       utils.openExternal(url);
     }
