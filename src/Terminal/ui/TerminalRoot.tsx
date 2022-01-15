@@ -188,7 +188,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
       display?: string;
     } = {}
 
-    if(code === null){ return style }
+    if(code === null||code==='0'){ return style }
 
     const codeParts = code.split(';').map((p) => parseInt(p)).filter((p,i,arr) =>
       // If the sequence is 38;5 (x256 foreground color) or 48;5 (x256 background color),
@@ -275,9 +275,18 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
     return (
       <Typography classes={{ root: lineClass(item.color) }} paragraph={false}>
         {parts.map((part, index) => {
-          return (
-            <Typography key={index} paragraph={false} component="span" sx={ansiCodeStyle(part.code)}>{part.text}</Typography>
-          )
+          const spanStyle = ansiCodeStyle(part.code)
+          if(!_.isEmpty(spanStyle)){
+            // Only wrap parts with spans if the calculated spanStyle is non-empty...
+            return (
+              <Typography key={index} paragraph={false} component="span" sx={spanStyle}>{part.text}</Typography>
+            )
+          } else {
+            // ... otherwise yield the unmodified, unwrapped part.
+            return (
+              part.text
+            )
+          }
         })}
       </Typography>
     )
