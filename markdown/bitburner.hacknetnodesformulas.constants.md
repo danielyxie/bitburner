@@ -9,11 +9,11 @@ All constants used by the game.
 <b>Signature:</b>
 
 ```typescript
-constants(): number;
+constants(): HacknetNodeConstants;
 ```
 <b>Returns:</b>
 
-number
+[HacknetNodeConstants](./bitburner.hacknetnodeconstants.md)
 
 An object with all hacknet node constants used by the game.
 

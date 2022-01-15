@@ -9,5 +9,5 @@ Order type
 <b>Signature:</b>
 
 ```typescript
-type: string;
+type: OrderTypes;
 ```

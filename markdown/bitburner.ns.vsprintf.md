@@ -14,10 +14,10 @@ vsprintf(format: string, args: any[]): string;
 
 ## Parameters
 
-| Parameter | Type    | Description          |
-| --------- | ------- | -------------------- |
-| format    | string  | String to format.    |
-| args      | any\[\] | Formating arguments. |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  format | string | String to format. |
+|  args | any\[\] | Formating arguments. |
 
 <b>Returns:</b>
 
@@ -30,3 +30,4 @@ Formated text.
 RAM cost: 0 GB
 
 see: https://github.com/alexei/sprintf.js
+

@@ -16,8 +16,8 @@ export interface StockOrderObject
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [position](./bitburner.stockorderobject.position.md) | string | Order position |
+|  [position](./bitburner.stockorderobject.position.md) | [PositionTypes](./bitburner.positiontypes.md) | Order position |
 |  [price](./bitburner.stockorderobject.price.md) | number | Price per share |
 |  [shares](./bitburner.stockorderobject.shares.md) | number | Number of shares |
-|  [type](./bitburner.stockorderobject.type.md) | string | Order type |
+|  [type](./bitburner.stockorderobject.type.md) | [OrderTypes](./bitburner.ordertypes.md) | Order type |
 

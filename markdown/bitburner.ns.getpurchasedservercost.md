@@ -16,7 +16,7 @@ getPurchasedServerCost(ram: number): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  ram | number | Amount of RAM of a potential purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20). |
+|  ram | number | Amount of RAM of a potential purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20). |
 
 <b>Returns:</b>
 

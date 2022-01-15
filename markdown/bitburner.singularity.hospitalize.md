@@ -4,7 +4,7 @@
 
 ## Singularity.hospitalize() method
 
-SF4.1 - Hospitalize the player.
+Hospitalize the player.
 
 <b>Signature:</b>
 
@@ -19,5 +19,5 @@ The cost of the hospitalization.
 
 ## Remarks
 
-RAM cost: 0.25 GB
+RAM cost: 0.25 GB \* 16/4/1
 

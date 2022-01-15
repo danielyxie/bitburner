@@ -1,6 +1,11 @@
 /**
  * @public
  */
+type FilenameOrPID = number | string;
+
+/**
+ * @public
+ */
 interface Player {
   hacking: number;
   hp: number;
@@ -1041,7 +1046,7 @@ export interface NetscriptPort {
    *
    * @returns The data popped off the queue if it was full.
    */
-  write(value: string|number): null|string|number;
+  write(value: string | number): null | string | number;
 
   /**
    * Attempt to write data to the port.
@@ -1050,7 +1055,7 @@ export interface NetscriptPort {
    *
    * @returns True if the data was added to the port, false if the port was full
    */
-  tryWrite(value: string|number): boolean;
+  tryWrite(value: string | number): boolean;
 
   /**
    * Shift an element out of the port.
@@ -1061,7 +1066,7 @@ export interface NetscriptPort {
    * If the port is empty, then the string “NULL PORT DATA” will be returned.
    * @returns the data read.
    */
-  read(): string|number;
+  read(): string | number;
 
   /**
    * Retrieve the first element from the port without removing it.
@@ -1073,7 +1078,7 @@ export interface NetscriptPort {
    * the port is empty, the string “NULL PORT DATA” will be returned.
    * @returns the data read
    */
-  peek(): string|number;
+  peek(): string | number;
 
   /**
    * Check if the port is full.
@@ -6011,7 +6016,7 @@ export interface NS extends Singularity {
    * to convert from script to text file, or vice versa.
    *
    * This function can also be used to rename files.
-   * 
+   *
    * @param host - Host of target server.
    * @param source - Filename of the source file.
    * @param destination - Filename of the destination file.

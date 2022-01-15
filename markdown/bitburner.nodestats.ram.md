@@ -4,7 +4,7 @@
 
 ## NodeStats.ram property
 
-Node's RAM
+Node's RAM (GB)
 
 <b>Signature:</b>
 

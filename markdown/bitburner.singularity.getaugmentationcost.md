@@ -9,7 +9,7 @@
 > use getAugmentationPrice getAugmentationRepCost
 > 
 
-SF4.3 - Get the price and reputation of an augmentation.
+Get the price and reputation of an augmentation.
 
 <b>Signature:</b>
 
@@ -31,7 +31,7 @@ Array with first element as a reputation requirement and second element as the m
 
 ## Remarks
 
-RAM cost: 5 GB
+RAM cost: 5 GB \* 16/4/1
 
 This function returns an array with two elements that gives the cost for the specified Augmentation. The first element in the returned array is the reputation requirement of the Augmentation, and the second element is the money cost.
 

@@ -4,7 +4,7 @@
 
 ## Singularity.getCompanyFavor() method
 
-SF4.2 - Get company favor.
+Get company favor.
 
 <b>Signature:</b>
 
@@ -26,7 +26,7 @@ Amount of favor you have at the specified company.
 
 ## Remarks
 
-RAM cost: 1 GB
+RAM cost: 1 GB \* 16/4/1
 
 This function will return the amount of favor you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.
 

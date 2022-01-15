@@ -4,7 +4,7 @@
 
 ## Singularity.setFocus() method
 
-SF4.2 - Set the players focus.
+Set the players focus.
 
 <b>Signature:</b>
 
@@ -26,5 +26,5 @@ True if the focus was changed.
 
 ## Remarks
 
-RAM cost: 0.1 GB
+RAM cost: 0.1 GB \* 16/4/1
 
