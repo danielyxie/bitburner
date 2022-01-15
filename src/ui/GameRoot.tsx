@@ -77,6 +77,7 @@ import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
 import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
 import { AchievementsRoot } from "../Achievements/AchievementsRoot";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 const htmlLocation = location;
 
@@ -218,6 +219,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     throw new Error("Trying to go to a page without the proper setup");
 
   const [cinematicText, setCinematicText] = useState("");
+  const [errorBoundaryKey, setErrorBoundaryKey] = useState<number>(0);
+
+  function resetErrorBoundary(): void {
+    setErrorBoundaryKey(errorBoundaryKey+1);
+  }
 
   function rerender(): void {
     setRerender((old) => old + 1);
@@ -305,12 +311,19 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     if (page !== Page.Terminal) window.scrollTo(0, 0);
   });
 
+  function softReset(): void {
+    dialogBoxCreate("Soft Reset!");
+    prestigeAugmentation();
+    resetErrorBoundary();
+    Router.toTerminal();
+  }
+
   let mainPage = <Typography>Cannot load</Typography>;
   let withSidebar = true;
   let withPopups = true;
   switch (page) {
     case Page.Recovery: {
-      mainPage = <RecoveryRoot router={Router} />;
+      mainPage = <RecoveryRoot router={Router} softReset={softReset} />;
       withSidebar = false;
       withPopups = false;
       break;
@@ -463,11 +476,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
             saveObject.exportGame();
           }}
           forceKill={killAllScripts}
-          softReset={() => {
-            dialogBoxCreate("Soft Reset!");
-            prestigeAugmentation();
-            Router.toTerminal();
-          }}
+          softReset={softReset}
         />
       );
       break;
@@ -496,34 +505,27 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
 
   return (
     <Context.Player.Provider value={player}>
-      <Context.Router.Provider value={Router}>
+      <Context.Router.Provider value={Router}>  
+        <ErrorBoundary key={errorBoundaryKey} router={Router} softReset={softReset}>
         <SnackbarProvider>
           <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
             {!ITutorial.isRunning ? (
               <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
             ) : (
-              <InteractiveTutorialRoot />
-            )}
-          </Overview>
-          {withSidebar ? (
-            <Box display="flex" flexDirection="row" width="100%">
-              <SidebarRoot player={player} router={Router} page={page} />
               <Box className={classes.root}>{mainPage}</Box>
-            </Box>
-          ) : (
-            <Box className={classes.root}>{mainPage}</Box>
-          )}
-          <Unclickable />
-          {withPopups && (
-            <>
-              <LogBoxManager />
-              <AlertManager />
-              <PromptManager />
-              <InvitationModal />
-              <Snackbar />
-            </>
-          )}
-        </SnackbarProvider>
+            )}
+            <Unclickable />
+            {withPopups && (
+              <>
+                <LogBoxManager />
+                <AlertManager />
+                <PromptManager />
+                <InvitationModal />
+                <Snackbar />
+              </>
+            )}
+          </SnackbarProvider>
+        </ErrorBoundary>
       </Context.Router.Provider>
     </Context.Player.Provider>
   );
