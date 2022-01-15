@@ -6549,7 +6549,7 @@ interface Product {
    * These values are specific to a city 
    * For each city, the data is [qty, prod, sell] */
    cityData: {[key: string]:number[]};
-  /** Creation progress - A number betwee 0-100 representing percentage */
+  /** Creation progress - A number between 0-100 representing percentage */
   developmentProgress: number;
 }
 
