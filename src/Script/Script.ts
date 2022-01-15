@@ -118,7 +118,7 @@ export class Script {
    */
   saveScript(player: IPlayer, filename: string, code: string, hostname: string, otherScripts: Script[]): void {
     // Update code and filename
-    this.code = Script.formatCode(this.code);
+    this.code = Script.formatCode(code);
 
     this.filename = filename;
     this.server = hostname;
