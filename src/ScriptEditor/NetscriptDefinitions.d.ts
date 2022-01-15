@@ -345,6 +345,74 @@ export interface HacknetMultipliers {
 }
 
 /**
+ * Hacknet node related constants
+ * @public
+ */
+export interface HacknetNodeConstants {
+  /** Amount of money gained per level */
+  MoneyGainPerLevel: number;
+  /** Base cost for a new node */
+  BaseCost: number;
+  /** Base cost per level */
+  LevelBaseCost: number;
+  /** Base cost to incrase RAM */
+  RamBaseCost: number;
+  /** Base cost to increase cores */
+  CoreBaseCost: number;
+  /** Multiplier to purchase new node */
+  PurchaseNextMult: number;
+  /** Multiplier to increase node level */
+  UpgradeLevelMult: number;
+  /** Multiplier to increase RAM */
+  UpgradeRamMult: number;
+  /** Multiplier to increase cores */
+  UpgradeCoreMult: number;
+  /** Max node level */
+  MaxLevel: number;
+  /** Max amount of RAM in GB */
+  MaxRam: number;
+  /** Max number of cores */
+  MaxCores: number;
+}
+
+/**
+ * Hacknet server related constants
+ * @public
+ */
+export interface HacknetServerConstants {
+  /** Number of hashes calculated per level */
+  HashesPerLevel: number;
+  /** Base cost for a new server */
+  BaseCost: number;
+  /** Base cost to increase RAM */
+  RamBaseCost: number;
+  /** Base cost to increase cores */
+  CoreBaseCost: number;
+  /** Base cost to upgrade cache */
+  CacheBaseCost: number;
+  /** Multiplier to purchase a new server */
+  PurchaseMult: number;
+  /** Multiplier to increase server level */
+  UpgradeLevelMult: number;
+  /** Multiplier to increase RAM */
+  UpgradeRamMult: number;
+  /** Multiplier to increase cores */
+  UpgradeCoreMult: number;
+  /** Multiplier to upgrade cache */
+  UpgradeCacheMult: number;
+  /** Max number of servers */
+  MaxServers: number;
+  /** Max level for a server */
+  MaxLevel: number;
+  /** Max amount of RAM in GB */
+  MaxRam: number;
+  /** Max number of cores */
+  MaxCores: number;
+  /** Max cache size */
+  MaxCache: number;
+}
+
+/**
  * A single server.
  * @public
  */
@@ -3663,7 +3731,7 @@ interface HacknetNodesFormulas {
    * All constants used by the game.
    * @returns An object with all hacknet node constants used by the game.
    */
-  constants(): number;
+  constants(): HacknetNodeConstants;
 }
 
 /**
@@ -3730,7 +3798,7 @@ interface HacknetServersFormulas {
    * All constants used by the game.
    * @returns An object with all hacknet server constants used by the game.
    */
-  constants(): any;
+  constants(): HacknetServerConstants;
 }
 
 /**
