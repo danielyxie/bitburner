@@ -543,6 +543,21 @@ export function NetscriptCorporation(
         return Promise.resolve(office.setEmployeeToJob(job, amount));
       });
     },
+    getOfficeSizeUpgradeCost: function (adivisionName: any, acityName: any, asize: any): number {
+      checkAccess("getOfficeSizeUpgradeCost", 8);
+      const divisionName = helper.string("getOfficeSizeUpgradeCost", "divisionName", adivisionName);
+      const cityName = helper.string("getOfficeSizeUpgradeCost", "cityName", acityName);
+      const size = helper.number("getOfficeSizeUpgradeCost", "size", asize);
+      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and grater than 0");
+      const office = getOffice(divisionName, cityName);
+      const initialPriceMult = Math.round(office.size / CorporationConstants.OfficeInitialSize);
+      const costMultiplier = 1.09;
+      let mult = 0;
+      for (let i = 0; i < size / CorporationConstants.OfficeInitialSize; ++i) {
+        mult += Math.pow(costMultiplier, initialPriceMult + i);
+      }
+      return CorporationConstants.OfficeInitialCost * mult;
+    },
     assignJob: function (adivisionName: any, acityName: any, aemployeeName: any, ajob: any): Promise<void> {
       checkAccess("assignJob", 8);
       const divisionName = helper.string("assignJob", "divisionName", adivisionName);

@@ -6175,6 +6175,14 @@ export interface OfficeAPI {
    * @returns A promise that is fulfilled when the assignment is complete.
    */
   setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): Promise<boolean>;
+  /**
+   * Cost to Upgrade office size.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param size - Amount of positions to open
+   * @returns Cost of upgrading the office
+   */
+  getOfficeSizeUpgradeCost(divisionName: string, cityName: string, asize: number): number;
 }
 
 /**
