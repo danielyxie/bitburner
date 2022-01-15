@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "block",
       padding: "8px",
       minHeight: "100vh",
-      boxSizing: 'border-box',
+      boxSizing: "border-box",
     },
   }),
 );
@@ -222,7 +222,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   const [errorBoundaryKey, setErrorBoundaryKey] = useState<number>(0);
 
   function resetErrorBoundary(): void {
-    setErrorBoundaryKey(errorBoundaryKey+1);
+    setErrorBoundaryKey(errorBoundaryKey + 1);
   }
 
   function rerender(): void {
@@ -505,12 +505,21 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
 
   return (
     <Context.Player.Provider value={player}>
-      <Context.Router.Provider value={Router}>  
+      <Context.Router.Provider value={Router}>
         <ErrorBoundary key={errorBoundaryKey} router={Router} softReset={softReset}>
-        <SnackbarProvider>
-          <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
-            {!ITutorial.isRunning ? (
-              <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
+          <SnackbarProvider>
+            <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
+              {!ITutorial.isRunning ? (
+                <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
+              ) : (
+                <InteractiveTutorialRoot />
+              )}
+            </Overview>
+            {withSidebar ? (
+              <Box display="flex" flexDirection="row" width="100%">
+                <SidebarRoot player={player} router={Router} page={page} />
+                <Box className={classes.root}>{mainPage}</Box>
+              </Box>
             ) : (
               <Box className={classes.root}>{mainPage}</Box>
             )}

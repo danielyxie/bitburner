@@ -21,6 +21,9 @@ interface IProps {
 export function SourceFiles(props: IProps): React.ReactElement {
   function setSF(sfN: number, sfLvl: number) {
     return function () {
+      if (sfN === 9) {
+        props.player.hacknetNodes = [];
+      }
       if (sfLvl === 0) {
         props.player.sourceFiles = props.player.sourceFiles.filter((sf) => sf.n !== sfN);
         return;
