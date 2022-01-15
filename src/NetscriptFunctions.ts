@@ -2014,7 +2014,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculateGrowTime(server, Player) * 1000;
     },
-    getWeakenTime: function (hostname: any): any {
+    getWeakenTime: function (hostname: any = workerScript.hostname): any {
       updateDynamicRam("getWeakenTime", getRamCost(Player, "getWeakenTime"));
       const server = safeGetServer(hostname, "getWeakenTime");
       if (!(server instanceof Server)) {

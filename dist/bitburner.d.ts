@@ -3848,7 +3848,7 @@ export declare interface NS extends Singularity {
      * @param host - Host of target server.
      * @returns Returns the amount of time in milliseconds it takes to execute the weaken Netscript function. Returns Infinity if called on a Hacknet Server.
      */
-    getWeakenTime(host: string): number;
+    getWeakenTime(host?: string): number;
 
     /**
      * Get the income of a script.
