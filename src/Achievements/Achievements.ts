@@ -724,6 +724,7 @@ export const achievements: IMap<Achievement> = {
   DEVMENU: {
     ...achievementData["DEVMENU"],
     Icon: "SF-1",
+    Secret: true,
     Condition: () => Player.exploits.includes(Exploit.YoureNotMeantToAccessThis),
   },
 };
