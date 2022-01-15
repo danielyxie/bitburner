@@ -1320,7 +1320,7 @@ export interface TIX {
 /**
  * Singularity API
  * @remarks
- * This API requires Source-File 4 level 1 to use. The RAM cost of all these functions is multiplied by 16/4/1 based on Source-File 4 levels.
+ * This API requires Source-File 4 to use. The RAM cost of all these functions is multiplied by 16/4/1 based on Source-File 4 levels.
  * @public
  */
 export interface Singularity {

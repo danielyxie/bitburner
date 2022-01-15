@@ -1,6 +1,6 @@
 import { CompanyPosition } from "./CompanyPosition";
 import * as posNames from "./data/companypositionnames";
-import { favorToRep, repToFavor } from "./formulas/favor";
+import { favorToRep, repToFavor } from "../Faction/formulas/favor";
 
 import { IMap } from "../types";
 
