@@ -148,6 +148,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
       6: '#008080',
       7: '#c0c0c0',
     }
+
     const ansi2rgb = (code:number):string => {  /* eslint-disable yoda */
       if((0 <= code) && (code < 8)){
         // x8 RGB
@@ -177,6 +178,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
       // shouldn't get here (under normal circumstances), but just in case
       return 'initial'
     }
+
     type styleKey = "fontWeight" | "textDecoration" | "color" | "backgroundColor" | "display"
     const style : {
       fontWeight?: string;
@@ -186,48 +188,48 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
       display?: string;
     } = {}
 
-    if(code !== null){ /* eslint-disable yoda */
-      const codeParts = code.split(';').map((p) => parseInt(p)).filter((p,i,arr) =>
-        // If the sequence is 38;5 (x256 foreground color) or 48;5 (x256 background color),
-        //  filter out the 5 so the next codePart after {38,48} is the color code.
-        (p!=5) || i==0 || ((arr[i-1] != 38)&&(arr[i-1] != 48))
-      )
+    if(code === null){ return style }
 
-      let nextStyleKey:styleKey|null = null;
-      codeParts.forEach(codePart => {
-        if(nextStyleKey !== null){
-          style[nextStyleKey] = ansi2rgb(codePart)
-          nextStyleKey = null
+    const codeParts = code.split(';').map((p) => parseInt(p)).filter((p,i,arr) =>
+      // If the sequence is 38;5 (x256 foreground color) or 48;5 (x256 background color),
+      //  filter out the 5 so the next codePart after {38,48} is the color code.
+      (p!=5) || i==0 || ((arr[i-1] != 38)&&(arr[i-1] != 48))
+    )
+
+    let nextStyleKey:styleKey|null = null;
+    codeParts.forEach(codePart => { /* eslint-disable yoda */
+      if(nextStyleKey !== null){
+        style[nextStyleKey] = ansi2rgb(codePart)
+        nextStyleKey = null
+      }
+      // Decorations
+      else if(codePart == 1){
+        style.fontWeight = 'bold'
+      }
+      else if(codePart == 4){
+        style.textDecoration = 'underline'
+      }
+      // Forground Color (x8)
+      else if((30 <= codePart)&&(codePart < 38)){
+        if(COLOR_MAP_BRIGHT[codePart%10]){
+          style.color = COLOR_MAP_BRIGHT[codePart%10]
         }
-        // Decorations
-        else if(codePart == 1){
-          style.fontWeight = 'bold'
+      }
+      // Background Color (x8)
+      else if((40 <= codePart)&&(codePart < 48)){
+        if(COLOR_MAP_DARK[codePart%10]){
+          style.backgroundColor = COLOR_MAP_DARK[codePart%10]
         }
-        else if(codePart == 4){
-          style.textDecoration = 'underline'
-        }
-        // Forground Color (x8)
-        else if((30 <= codePart)&&(codePart < 38)){
-          if(COLOR_MAP_BRIGHT[codePart%10]){
-            style.color = COLOR_MAP_BRIGHT[codePart%10]
-          }
-        }
-        // Background Color (x8)
-        else if((40 <= codePart)&&(codePart < 48)){
-          if(COLOR_MAP_DARK[codePart%10]){
-            style.backgroundColor = COLOR_MAP_DARK[codePart%10]
-          }
-        }
-        // Forground Color (x256)
-        else if(codePart == 38){
-          nextStyleKey = 'color'
-        }
-        // Background Color (x256)
-        else if(codePart == 48){
-          nextStyleKey = 'backgroundColor'
-        }
-      })
-    }
+      }
+      // Forground Color (x256)
+      else if(codePart == 38){
+        nextStyleKey = 'color'
+      }
+      // Background Color (x256)
+      else if(codePart == 48){
+        nextStyleKey = 'backgroundColor'
+      }
+    })
     // If a background color is set, render this as an inline block element (instead of inline)
     //  so that the background between lines (at least those that don't wrap) is uninterrupted.
     if(style.backgroundColor !== undefined){
@@ -237,9 +239,9 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
   }
 
   function parseOutputText(item: Output): React.ReactElement {
+    const parts = []
     // Some things, oddly, can cause item.text to not be a string (e.g. expr from the CLI), which
     //  causes .matchAll to throw.  Ensure it's a string immediately
-    const parts = []
     if(typeof item.text === 'string'){
       // eslint-disable-next-line no-control-regex
       const ANSI_ESCAPE = new RegExp('\u{001b}\\[(?<code>.*?)m', 'ug');
@@ -253,27 +255,28 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
       if(matches.length > 2){
         matches.slice(0, -1).forEach((m,i) => {
           const n = matches[i+1]
-          if(m&&m.index!==undefined&&m.groups!==undefined){
-            const startIndex = m.index + m[0].length
-            const stopIndex  = n ? n.index : item.text.length
-            const partText   = item.text.slice(startIndex, stopIndex)
-            if(startIndex !== stopIndex){
-              // Don't generate "empty" spans
-              parts.push({code:m.groups.code, text:partText})
-            }
+          if(!m || m.index===undefined || m.groups===undefined){
+            return
+          }
+          const startIndex = m.index + m[0].length
+          const stopIndex  = n ? n.index : item.text.length
+          const partText   = item.text.slice(startIndex, stopIndex)
+          if(startIndex !== stopIndex){
+            // Don't generate "empty" spans
+            parts.push({code:m.groups.code, text:partText})
           }
         })
       }
     }
     if(parts.length === 0){
+      // For example, if the string was empty or there were no escape sequence matches
       parts.push({code:null, text:item.text})
     }
-    // Filter out an
     return (
       <Typography classes={{ root: lineClass(item.color) }} paragraph={false}>
-        {parts.map((item, index) => {
+        {parts.map((part, index) => {
           return (
-            <Typography key={index} paragraph={false} component="span" sx={ansiCodeStyle(item.code)}>{item.text}</Typography>
+            <Typography key={index} paragraph={false} component="span" sx={ansiCodeStyle(part.code)}>{part.text}</Typography>
           )
         })}
       </Typography>
