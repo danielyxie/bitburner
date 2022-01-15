@@ -43,10 +43,10 @@ class BitburnerSaveObject {
   StaneksGiftSave = "";
   SaveTimestamp = "";
 
-  getSaveString(): string {
+  getSaveString(excludeRunningScripts = false): string {
     this.PlayerSave = JSON.stringify(Player);
 
-    this.AllServersSave = saveAllServers();
+    this.AllServersSave = saveAllServers(excludeRunningScripts);
     this.CompaniesSave = JSON.stringify(Companies);
     this.FactionsSave = JSON.stringify(Factions);
     this.AliasesSave = JSON.stringify(Aliases);
@@ -68,7 +68,7 @@ class BitburnerSaveObject {
   }
 
   saveGame(emitToastEvent = true): void {
-    const saveString = this.getSaveString();
+    const saveString = this.getSaveString(Settings.ExcludeRunningScriptsFromSave);
 
     save(saveString)
       .then(() => {
@@ -80,7 +80,7 @@ class BitburnerSaveObject {
   }
 
   exportGame(): void {
-    const saveString = this.getSaveString();
+    const saveString = this.getSaveString(Settings.ExcludeRunningScriptsFromSave);
 
     // Save file name is based on current timestamp and BitNode
     const epochTime = Math.round(Date.now() / 1000);

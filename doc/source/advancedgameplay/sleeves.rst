@@ -39,8 +39,7 @@ There are two methods of obtaining Duplicate Sleeves:
 
 1. Destroy BitNode-10. Each completion give you one additional Duplicate Sleeve
 2. Purchase Duplicate Sleeves from :ref:`the faction The Covenant <gameplay_factions>`.
-   This is only available in BitNodes-10 and above, and is only available after defeating
-   BitNode-10 at least once. Sleeves purchased this way are **permanent** (they persist
+   This is only available in BitNodes-10. Sleeves purchased this way are **permanent** (they persist
    through BitNodes). You can purchase up to 5 Duplicate Sleeves from The Covenant.
 
 Synchronization

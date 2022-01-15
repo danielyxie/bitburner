@@ -34,6 +34,7 @@ export interface Achievement {
   Secret?: boolean;
   Condition: () => boolean;
   Visible?: () => boolean;
+  AdditionalUnlock?: string[]; // IDs of achievements that should be awarded when awarding this one
 }
 
 export interface PlayerAchievement {
@@ -337,6 +338,7 @@ export const achievements: IMap<Achievement> = {
   },
   FIRST_HACKNET_NODE: {
     ...achievementData["FIRST_HACKNET_NODE"],
+    Icon: "node",
     Condition: () => !hasHacknetServers(Player) && Player.hacknetNodes.length > 0,
   },
   "30_HACKNET_NODE": {
@@ -509,12 +511,14 @@ export const achievements: IMap<Achievement> = {
     Icon: "HASHNET",
     Visible: () => hasAccessToSF(Player, 9),
     Condition: () => hasHacknetServers(Player) && Player.hacknetNodes.length > 0,
+    AdditionalUnlock: [achievementData.FIRST_HACKNET_NODE.ID],
   },
   ALL_HACKNET_SERVER: {
     ...achievementData["ALL_HACKNET_SERVER"],
     Icon: "HASHNETALL",
     Visible: () => hasAccessToSF(Player, 9),
     Condition: () => hasHacknetServers(Player) && Player.hacknetNodes.length === HacknetServerConstants.MaxServers,
+    AdditionalUnlock: [achievementData["30_HACKNET_NODE"].ID],
   },
   MAX_HACKNET_SERVER: {
     ...achievementData["MAX_HACKNET_SERVER"],
@@ -536,12 +540,14 @@ export const achievements: IMap<Achievement> = {
       }
       return false;
     },
+    AdditionalUnlock: [achievementData.MAX_HACKNET_NODE.ID],
   },
   HACKNET_SERVER_1B: {
     ...achievementData["HACKNET_SERVER_1B"],
     Icon: "HASHNETMONEY",
     Visible: () => hasAccessToSF(Player, 9),
     Condition: () => hasHacknetServers(Player) && Player.moneySourceB.hacknet >= 1e9,
+    AdditionalUnlock: [achievementData.HACKNET_NODE_10M.ID],
   },
   MAX_CACHE: {
     ...achievementData["MAX_CACHE"],
@@ -718,6 +724,7 @@ export const achievements: IMap<Achievement> = {
   DEVMENU: {
     ...achievementData["DEVMENU"],
     Icon: "SF-1",
+    Secret: true,
     Condition: () => Player.exploits.includes(Exploit.YoureNotMeantToAccessThis),
   },
 };
@@ -758,13 +765,14 @@ export const achievements: IMap<Achievement> = {
 // { ID: "FLIGHT.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.Flight.name) },
 
 export function calculateAchievements(): void {
-  const availableAchievements = Object.values(achievements)
-    .filter((a) => a.Condition())
-    .map((a) => a.ID);
   const playerAchievements = Player.achievements.map((a) => a.ID);
-  const newAchievements = availableAchievements.filter((a) => !playerAchievements.includes(a));
 
-  for (const id of newAchievements) {
+  const missingAchievements = Object.values(achievements)
+    .filter((a) => !playerAchievements.includes(a.ID) && a.Condition())
+    // callback returns array of achievement id and id of any in the additional list, flatmap means we have only a 1D array
+    .flatMap((a) => [a.ID, ...(a.AdditionalUnlock || [])]);
+
+  for (const id of missingAchievements) {
     Player.giveAchievement(id);
   }
 

@@ -15,24 +15,28 @@ const useStyles = makeStyles(() =>
   createStyles({
     level0: {
       color: "red",
+      cursor: "pointer",
       "&:hover": {
         color: "#fff",
       },
     },
     level1: {
       color: "yellow",
+      cursor: "pointer",
       "&:hover": {
         color: "#fff",
       },
     },
     level2: {
       color: "#48d1cc",
+      cursor: "pointer",
       "&:hover": {
         color: "#fff",
       },
     },
     level3: {
       color: "blue",
+      cursor: "pointer",
       "&:hover": {
         color: "#fff",
       },

@@ -15,7 +15,7 @@ getPurchasedServerMaxRam(): number;
 
 number
 
-Returns the maximum RAM that a purchased server can have.
+Returns the maximum RAM (in GB) that a purchased server can have.
 
 ## Remarks
 

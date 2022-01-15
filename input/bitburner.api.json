@@ -1834,6 +1834,32 @@
             },
             {
               "kind": "PropertySignature",
+              "canonicalReference": "bitburner!BitNodeMultipliers#GangSoftcap:member",
+              "docComment": "/**\n * Influences the respect gain and money gain of your gang.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "GangSoftcap: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "GangSoftcap",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "bitburner!BitNodeMultipliers#HackExpGain:member",
               "docComment": "/**\n * Influences the experienced gained when hacking a server.\n */\n",
               "excerptTokens": [
@@ -2094,6 +2120,32 @@
             },
             {
               "kind": "PropertySignature",
+              "canonicalReference": "bitburner!BitNodeMultipliers#PurchasedServerSoftCap:member",
+              "docComment": "/**\n * Influences cost of any purchased server at or above 128GB\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "PurchasedServerSoftCap: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "PurchasedServerSoftCap",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "bitburner!BitNodeMultipliers#RepToDonateToFaction:member",
               "docComment": "/**\n * Influences the minimum favor the player must have with a faction before they can donate to gain rep.\n */\n",
               "excerptTokens": [
@@ -2121,7 +2173,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!BitNodeMultipliers#ScriptHackMoney:member",
-              "docComment": "/**\n * Influences how much money can be stolen from a server when a script performs a hack against it.\n */\n",
+              "docComment": "/**\n * Influences how much the money on a server can be reduced when a script performs a hack against it.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2139,6 +2191,32 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "ScriptHackMoney",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!BitNodeMultipliers#ScriptHackMoneyGain:member",
+              "docComment": "/**\n * Influences how much of the money stolen by a scripted hack will be added to the player's money.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ScriptHackMoneyGain: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "ScriptHackMoneyGain",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -2276,6 +2354,58 @@
             },
             {
               "kind": "PropertySignature",
+              "canonicalReference": "bitburner!BitNodeMultipliers#StaneksGiftExtraSize:member",
+              "docComment": "/**\n * Influences the size of the gift\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "StaneksGiftExtraSize: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "StaneksGiftExtraSize",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!BitNodeMultipliers#StaneksGiftPowerMultiplier:member",
+              "docComment": "/**\n * Influences the power of the gift\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "StaneksGiftPowerMultiplier: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "StaneksGiftPowerMultiplier",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "bitburner!BitNodeMultipliers#StrengthLevelMultiplier:member",
               "docComment": "/**\n * Influences how quickly the player's strength level (not exp) scales\n */\n",
               "excerptTokens": [
@@ -2295,6 +2425,32 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "StrengthLevelMultiplier",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!BitNodeMultipliers#WorldDaemonDifficulty:member",
+              "docComment": "/**\n * Influences the hacking skill required to backdoor the world daemon.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "WorldDaemonDifficulty: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "WorldDaemonDifficulty",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -7405,6 +7561,31 @@
             }
           ],
           "extendsTokenRanges": []
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "bitburner!FilenameOrPID:type",
+          "docComment": "/**\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "type FilenameOrPID = "
+            },
+            {
+              "kind": "Content",
+              "text": "number | string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "FilenameOrPID",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
         },
         {
           "kind": "Interface",
@@ -12917,6 +13098,334 @@
         },
         {
           "kind": "Interface",
+          "canonicalReference": "bitburner!HacknetNodeConstants:interface",
+          "docComment": "/**\n * Hacknet node related constants\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface HacknetNodeConstants "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "HacknetNodeConstants",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetNodeConstants#BaseCost:member",
+              "docComment": "/**\n * Base cost for a new node\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "BaseCost: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "BaseCost",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetNodeConstants#CoreBaseCost:member",
+              "docComment": "/**\n * Base cost to increase cores\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "CoreBaseCost: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "CoreBaseCost",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetNodeConstants#LevelBaseCost:member",
+              "docComment": "/**\n * Base cost per level\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "LevelBaseCost: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "LevelBaseCost",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetNodeConstants#MaxCores:member",
+              "docComment": "/**\n * Max number of cores\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MaxCores: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "MaxCores",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetNodeConstants#MaxLevel:member",
+              "docComment": "/**\n * Max node level\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MaxLevel: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "MaxLevel",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetNodeConstants#MaxRam:member",
+              "docComment": "/**\n * Max amount of RAM in GB\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MaxRam: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "MaxRam",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetNodeConstants#MoneyGainPerLevel:member",
+              "docComment": "/**\n * Amount of money gained per level\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MoneyGainPerLevel: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "MoneyGainPerLevel",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetNodeConstants#PurchaseNextMult:member",
+              "docComment": "/**\n * Multiplier to purchase new node\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "PurchaseNextMult: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "PurchaseNextMult",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetNodeConstants#RamBaseCost:member",
+              "docComment": "/**\n * Base cost to incrase RAM\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "RamBaseCost: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "RamBaseCost",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetNodeConstants#UpgradeCoreMult:member",
+              "docComment": "/**\n * Multiplier to increase cores\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "UpgradeCoreMult: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "UpgradeCoreMult",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetNodeConstants#UpgradeLevelMult:member",
+              "docComment": "/**\n * Multiplier to increase node level\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "UpgradeLevelMult: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "UpgradeLevelMult",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetNodeConstants#UpgradeRamMult:member",
+              "docComment": "/**\n * Multiplier to increase RAM\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "UpgradeRamMult: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "UpgradeRamMult",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
           "canonicalReference": "bitburner!HacknetNodesFormulas:interface",
           "docComment": "/**\n * Hacknet Node formulas\n *\n * @public\n */\n",
           "excerptTokens": [
@@ -12938,8 +13447,9 @@
                   "text": "constants(): "
                 },
                 {
-                  "kind": "Content",
-                  "text": "number"
+                  "kind": "Reference",
+                  "text": "HacknetNodeConstants",
+                  "canonicalReference": "bitburner!HacknetNodeConstants:interface"
                 },
                 {
                   "kind": "Content",
@@ -13331,6 +13841,412 @@
         },
         {
           "kind": "Interface",
+          "canonicalReference": "bitburner!HacknetServerConstants:interface",
+          "docComment": "/**\n * Hacknet server related constants\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface HacknetServerConstants "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "HacknetServerConstants",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#BaseCost:member",
+              "docComment": "/**\n * Base cost for a new server\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "BaseCost: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "BaseCost",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#CacheBaseCost:member",
+              "docComment": "/**\n * Base cost to upgrade cache\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "CacheBaseCost: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "CacheBaseCost",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#CoreBaseCost:member",
+              "docComment": "/**\n * Base cost to increase cores\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "CoreBaseCost: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "CoreBaseCost",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#HashesPerLevel:member",
+              "docComment": "/**\n * Number of hashes calculated per level\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "HashesPerLevel: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "HashesPerLevel",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#MaxCache:member",
+              "docComment": "/**\n * Max cache size\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MaxCache: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "MaxCache",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#MaxCores:member",
+              "docComment": "/**\n * Max number of cores\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MaxCores: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "MaxCores",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#MaxLevel:member",
+              "docComment": "/**\n * Max level for a server\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MaxLevel: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "MaxLevel",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#MaxRam:member",
+              "docComment": "/**\n * Max amount of RAM in GB\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MaxRam: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "MaxRam",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#MaxServers:member",
+              "docComment": "/**\n * Max number of servers\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MaxServers: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "MaxServers",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#PurchaseMult:member",
+              "docComment": "/**\n * Multiplier to purchase a new server\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "PurchaseMult: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "PurchaseMult",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#RamBaseCost:member",
+              "docComment": "/**\n * Base cost to increase RAM\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "RamBaseCost: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "RamBaseCost",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#UpgradeCacheMult:member",
+              "docComment": "/**\n * Multiplier to upgrade cache\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "UpgradeCacheMult: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "UpgradeCacheMult",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#UpgradeCoreMult:member",
+              "docComment": "/**\n * Multiplier to increase cores\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "UpgradeCoreMult: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "UpgradeCoreMult",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#UpgradeLevelMult:member",
+              "docComment": "/**\n * Multiplier to increase server level\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "UpgradeLevelMult: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "UpgradeLevelMult",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!HacknetServerConstants#UpgradeRamMult:member",
+              "docComment": "/**\n * Multiplier to increase RAM\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "UpgradeRamMult: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "UpgradeRamMult",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
           "canonicalReference": "bitburner!HacknetServersFormulas:interface",
           "docComment": "/**\n * Hacknet Server formulas\n *\n * @public\n */\n",
           "excerptTokens": [
@@ -13411,8 +14327,9 @@
                   "text": "constants(): "
                 },
                 {
-                  "kind": "Content",
-                  "text": "any"
+                  "kind": "Reference",
+                  "text": "HacknetServerConstants",
+                  "canonicalReference": "bitburner!HacknetServerConstants:interface"
                 },
                 {
                   "kind": "Content",
@@ -13972,6 +14889,250 @@
         },
         {
           "kind": "Interface",
+          "canonicalReference": "bitburner!NetscriptPort:interface",
+          "docComment": "/**\n * Object representing a port. A port is a serialized queue.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface NetscriptPort "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "NetscriptPort",
+          "members": [
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NetscriptPort#clear:member(1)",
+              "docComment": "/**\n * Empties all data from the port.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "clear(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "clear"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NetscriptPort#empty:member(1)",
+              "docComment": "/**\n * Check if the port is empty.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @returns true if the port is empty, otherwise false\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "empty(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "empty"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NetscriptPort#full:member(1)",
+              "docComment": "/**\n * Check if the port is full.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @returns true if the port is full, otherwise false\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "full(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "full"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NetscriptPort#peek:member(1)",
+              "docComment": "/**\n * Retrieve the first element from the port without removing it.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function is used to peek at the data from a port. It returns the first element in the specified port without removing that element. If the port is empty, the string “NULL PORT DATA” will be returned.\n *\n * @returns the data read\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "peek(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "peek"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NetscriptPort#read:member(1)",
+              "docComment": "/**\n * Shift an element out of the port.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function will remove the first element from the port and return it. If the port is empty, then the string “NULL PORT DATA” will be returned.\n *\n * @returns the data read.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "read(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "read"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NetscriptPort#tryWrite:member(1)",
+              "docComment": "/**\n * Attempt to write data to the port.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @returns True if the data was added to the port, false if the port was full\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "tryWrite(value: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "value",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "tryWrite"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NetscriptPort#write:member(1)",
+              "docComment": "/**\n * Write data to a port.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @returns The data popped off the queue if it was full.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "write(value: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "null | string | number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "value",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "write"
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
           "canonicalReference": "bitburner!NodeStats:interface",
           "docComment": "/**\n * Object representing all the values related to a hacknet node.\n *\n * @public\n */\n",
           "excerptTokens": [
@@ -14142,7 +15303,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!NodeStats#ram:member",
-              "docComment": "/**\n * Node's RAM\n */\n",
+              "docComment": "/**\n * Node's RAM (GB)\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -14168,7 +15329,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!NodeStats#ramUsed:member",
-              "docComment": "/**\n * Node's used RAM\n */\n",
+              "docComment": "/**\n * Node's used RAM (GB)\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15451,7 +16612,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getPortHandle:member(1)",
-              "docComment": "/**\n * Get all data on a port.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Get a handle to a Netscript Port.\n *\n * WARNING: Port Handles only work in NetscriptJS (Netscript 2.0). They will not work in Netscript 1.0.\n *\n * @param port - Port number. Must be an integer between 1 and 20.\n *\n * @returns Data in the specified port.\n *\n * @see\n *\n * https://bitburner.readthedocs.io/en/latest/netscript/netscriptmisc.html#netscript-ports\n */\n",
+              "docComment": "/**\n * Get all data on a port.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Get a handle to a Netscript Port.\n *\n * WARNING: Port Handles only work in NetscriptJS (Netscript 2.0). They will not work in Netscript 1.0.\n *\n * @param port - Port number. Must be an integer between 1 and 20.\n *\n * @see\n *\n * https://bitburner.readthedocs.io/en/latest/netscript/netscriptmisc.html#netscript-ports\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15466,8 +16627,9 @@
                   "text": "): "
                 },
                 {
-                  "kind": "Content",
-                  "text": "any[]"
+                  "kind": "Reference",
+                  "text": "NetscriptPort",
+                  "canonicalReference": "bitburner!NetscriptPort:interface"
                 },
                 {
                   "kind": "Content",
@@ -15495,7 +16657,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getPurchasedServerCost:member(1)",
-              "docComment": "/**\n * Get cost of purchasing a server.\n *\n * @remarks\n *\n * RAM cost: 0.25 GB\n *\n * Returns the cost to purchase a server with the specified amount of ram.\n *\n * @param ram - Amount of RAM of a potential purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).\n *\n * @returns The cost to purchase a server with the specified amount of ram.\n *\n * @example\n * ```ts\n * // NS1:\n * for (i = 1; i <= 20; i++) {\n *     tprint(i + \" -- \" + getPurchasedServerCost(Math.pow(2, i)));\n * }\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * for (i = 1; i <= 20; i++) {\n *     ns.tprint(i + \" -- \" + ns.getPurchasedServerCost(Math.pow(2, i)));\n * }\n * ```\n *\n */\n",
+              "docComment": "/**\n * Get cost of purchasing a server.\n *\n * @remarks\n *\n * RAM cost: 0.25 GB\n *\n * Returns the cost to purchase a server with the specified amount of ram.\n *\n * @param ram - Amount of RAM of a potential purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).\n *\n * @returns The cost to purchase a server with the specified amount of ram.\n *\n * @example\n * ```ts\n * // NS1:\n * for (i = 1; i <= 20; i++) {\n *     tprint(i + \" -- \" + getPurchasedServerCost(Math.pow(2, i)));\n * }\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * for (i = 1; i <= 20; i++) {\n *     ns.tprint(i + \" -- \" + ns.getPurchasedServerCost(Math.pow(2, i)));\n * }\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15567,7 +16729,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getPurchasedServerMaxRam:member(1)",
-              "docComment": "/**\n * Returns the maximum RAM that a purchased server can have.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * @returns Returns the maximum RAM that a purchased server can have.\n */\n",
+              "docComment": "/**\n * Returns the maximum RAM that a purchased server can have.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * @returns Returns the maximum RAM (in GB) that a purchased server can have.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -15623,15 +16785,16 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getRunningScript:member(1)",
-              "docComment": "/**\n * Get general info about a running script.\n *\n * @remarks\n *\n * RAM cost: 0.3 GB\n *\n * Running with no args returns curent script.\n *\n * @returns info about a running script\n */\n",
+              "docComment": "/**\n * Get general info about a running script.\n *\n * @remarks\n *\n * RAM cost: 0.3 GB\n *\n * Running with no args returns curent script. If you use a PID as the first parameter, the hostname and args parameters are unnecessary.\n *\n * @param filename - Optional. Filename or PID of the script.\n *\n * @param hostname - Optional. Name of host server the script is running on.\n *\n * @param args - Arguments to identify the script\n *\n * @returns info about a running script\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "getRunningScript(filename?: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "string | number"
+                  "kind": "Reference",
+                  "text": "FilenameOrPID",
+                  "canonicalReference": "bitburner!FilenameOrPID:type"
                 },
                 {
                   "kind": "Content",
@@ -16004,7 +17167,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getScriptRam:member(1)",
-              "docComment": "/**\n * Get the ram cost of a script.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns the amount of RAM required to run the specified script on the target server. Returns 0 if the script does not exist.\n *\n * @param script - Filename of script. This is case-sensitive.\n *\n * @param host - Host of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.\n *\n * @returns Amount of RAM required to run the specified script on the target server, and 0 if the script does not exist.\n */\n",
+              "docComment": "/**\n * Get the ram cost of a script.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns the amount of RAM required to run the specified script on the target server. Returns 0 if the script does not exist.\n *\n * @param script - Filename of script. This is case-sensitive.\n *\n * @param host - Host of target server the script is located on. This is optional, If it is not specified then the function will se the current server as the target server.\n *\n * @returns Amount of RAM (in GB) required to run the specified script on the target server, and 0 if the script does not exist.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -16240,7 +17403,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getServerMaxRam:member(1)",
-              "docComment": "/**\n * Get the max RAM on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * @param host - Hostname of the target server.\n *\n * @returns max ram\n */\n",
+              "docComment": "/**\n * Get the max RAM on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * @param host - Hostname of the target server.\n *\n * @returns max ram (GB)\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -16416,7 +17579,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getServerRam:member(1)",
-              "docComment": "/**\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns an array with two elements that gives information about a server’s memory (RAM). The first element in the array is the amount of RAM that the server has total (in GB). The second element in the array is the amount of RAM that is currently being used on the server (in GB).\n *\n * @deprecated\n *\n * use getServerMaxRam / getServerUsedRam\n *\n * @param host - Host of target server.\n *\n * @returns Array with total and used memory on the specified server.\n *\n * @example\n * ```ts\n * // NS1:\n * var serverRam = getServerRam(\"helios\");\n * var totalRam = serverRam[0];\n * var ramUsed = serverRam[1];\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * const [totalRam, ramUsed] = ns.getServerRam(\"helios\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns an array with two elements that gives information about a server’s memory (RAM). The first element in the array is the amount of RAM that the server has total (in GB). The second element in the array is the amount of RAM that is currently being used on the server (in GB).\n *\n * @deprecated\n *\n * use getServerMaxRam / getServerUsedRam\n *\n * @param host - Host of target server.\n *\n * @returns Array with total and used memory on the specified server, in GB.\n *\n * @example\n * ```ts\n * // NS1:\n * var serverRam = getServerRam(\"helios\");\n * var totalRam = serverRam[0];\n * var ramUsed = serverRam[1];\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * const [totalRam, ramUsed] = ns.getServerRam(\"helios\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -16548,7 +17711,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getServerUsedRam:member(1)",
-              "docComment": "/**\n * Get the used RAM on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * @param host - Hostname of the target server.\n *\n * @returns used ram\n */\n",
+              "docComment": "/**\n * Get the used RAM on a server.\n *\n * @remarks\n *\n * RAM cost: 0.05 GB\n *\n * @param host - Hostname of the target server.\n *\n * @returns used ram (GB)\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -17262,15 +18425,16 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#isRunning:member(1)",
-              "docComment": "/**\n * Check if a script is running.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns a boolean indicating whether the specified script is running on the target server. Remember that a script is uniquely identified by both its name and its arguments.\n *\n * @param script - Filename of script to check. This is case-sensitive.\n *\n * @param host - Host of target server.\n *\n * @param args - Arguments to specify/identify which scripts to search for.\n *\n * @returns True if specified script is running on the target server, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:\n * isRunning(\"foo.script\", \"foodnstuff\");\n *\n * //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:\n * isRunning(\"foo.script\", getHostname());\n *\n * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:\n * isRunning(\"foo.script\", \"joesguns\", 1, 5, \"test\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:\n * ns.isRunning(\"foo.script\", \"foodnstuff\");\n *\n * //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:\n * ns.isRunning(\"foo.script\", ns.getHostname());\n *\n * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:\n * ns.isRunning(\"foo.script\", \"joesguns\", 1, 5, \"test\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Check if a script is running.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns a boolean indicating whether the specified script is running on the target server. If you use a PID instead of a filename, the hostname and args parameters are unnecessary. Remember that a script is uniquely identified by both its name and its arguments.\n *\n * @param script - Filename or PID of script to check. This is case-sensitive.\n *\n * @param host - Host of target server.\n *\n * @param args - Arguments to specify/identify which scripts to search for.\n *\n * @returns True if specified script is running on the target server, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:\n * isRunning(\"foo.script\", \"foodnstuff\");\n *\n * //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:\n * isRunning(\"foo.script\", getHostname());\n *\n * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:\n * isRunning(\"foo.script\", \"joesguns\", 1, 5, \"test\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //The function call will return true if there is a script named foo.script with no arguments running on the foodnstuff server, and false otherwise:\n * ns.isRunning(\"foo.script\", \"foodnstuff\");\n *\n * //The function call will return true if there is a script named foo.script with no arguments running on the current server, and false otherwise:\n * ns.isRunning(\"foo.script\", ns.getHostname());\n *\n * //The function call will return true if there is a script named foo.script running with the arguments 1, 5, and “test” (in that order) on the joesguns server, and false otherwise:\n * ns.isRunning(\"foo.script\", \"joesguns\", 1, 5, \"test\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "isRunning(script: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "string"
+                  "kind": "Reference",
+                  "text": "FilenameOrPID",
+                  "canonicalReference": "bitburner!FilenameOrPID:type"
                 },
                 {
                   "kind": "Content",
@@ -17553,6 +18717,80 @@
                 }
               ],
               "name": "ls"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NS#mv:member(1)",
+              "docComment": "/**\n * Move a file on the target server.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * NS2 exclusive\n *\n * Move the source file to the specified destination on the target server.\n *\n * This command only works for scripts and text files (.txt). It cannot, however, be used to convert from script to text file, or vice versa.\n *\n * This function can also be used to rename files.\n *\n * @param host - Host of target server.\n *\n * @param source - Filename of the source file.\n *\n * @param destination - Filename of the destination file.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "mv(host: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", source: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", destination: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "host",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "source",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "destination",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                }
+              ],
+              "name": "mv"
             },
             {
               "kind": "MethodSignature",
@@ -17846,7 +19084,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#purchaseServer:member(1)",
-              "docComment": "/**\n * Purchase a server.\n *\n * @remarks\n *\n * 2.25 GB\n *\n * Purchased a server with the specified hostname and amount of RAM.\n *\n * The hostname argument can be any data type, but it will be converted to a string and have whitespace removed. Anything that resolves to an empty string will cause the function to fail. If there is already a server with the specified hostname, then the function will automatically append a number at the end of the hostname argument value until it finds a unique hostname. For example, if the script calls `purchaseServer(“foo”, 4)` but a server named “foo” already exists, the it will automatically change the hostname to `foo-0`. If there is already a server with the hostname `foo-0`, then it will change the hostname to `foo-1`, and so on.\n *\n * Note that there is a maximum limit to the amount of servers you can purchase.\n *\n * Returns the hostname of the newly purchased server as a string. If the function fails to purchase a server, then it will return an empty string. The function will fail if the arguments passed in are invalid, if the player does not have enough money to purchase the specified server, or if the player has exceeded the maximum amount of servers.\n *\n * @param hostname - Host of the purchased server.\n *\n * @param ram - Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).\n *\n * @returns The hostname of the newly purchased server.\n *\n * @example\n * ```ts\n * // NS1:\n * var ram = 64;\n * var prefix = \"pserv-\";\n * for (i = 0; i < 5; ++i) {\n *    purchaseServer(prefix + i, ram);\n * }\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * const ram = 64;\n * const prefix = \"pserv-\";\n * for (i = 0; i < 5; ++i) {\n *    ns.purchaseServer(prefix + i, ram);\n * }\n * ```\n *\n */\n",
+              "docComment": "/**\n * Purchase a server.\n *\n * @remarks\n *\n * 2.25 GB\n *\n * Purchased a server with the specified hostname and amount of RAM.\n *\n * The hostname argument can be any data type, but it will be converted to a string and have whitespace removed. Anything that resolves to an empty string will cause the function to fail. If there is already a server with the specified hostname, then the function will automatically append a number at the end of the hostname argument value until it finds a unique hostname. For example, if the script calls `purchaseServer(“foo”, 4)` but a server named “foo” already exists, the it will automatically change the hostname to `foo-0`. If there is already a server with the hostname `foo-0`, then it will change the hostname to `foo-1`, and so on.\n *\n * Note that there is a maximum limit to the amount of servers you can purchase.\n *\n * Returns the hostname of the newly purchased server as a string. If the function fails to purchase a server, then it will return an empty string. The function will fail if the arguments passed in are invalid, if the player does not have enough money to purchase the specified server, or if the player has exceeded the maximum amount of servers.\n *\n * @param hostname - Host of the purchased server.\n *\n * @param ram - Amount of RAM of the purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20).\n *\n * @returns The hostname of the newly purchased server.\n *\n * @example\n * ```ts\n * // NS1:\n * var ram = 64;\n * var prefix = \"pserv-\";\n * for (i = 0; i < 5; ++i) {\n *    purchaseServer(prefix + i, ram);\n * }\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * const ram = 64;\n * const prefix = \"pserv-\";\n * for (i = 0; i < 5; ++i) {\n *    ns.purchaseServer(prefix + i, ram);\n * }\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -17905,7 +19143,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#read:member(1)",
-              "docComment": "/**\n * Read content of a file.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function is used to read data from a port or from a text file (.txt).\n *\n * This function will return the data in the specified text file. If the text file does not exist, an empty string will be returned.\n *\n * @param handle - Port or text file to read from.\n *\n * @returns Data in the specified text file or port.\n */\n",
+              "docComment": "/**\n * Read content of a file.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function is used to read data from a text file (.txt).\n *\n * This function will return the data in the specified text file. If the text file does not exist, an empty string will be returned.\n *\n * @param handle - Filename to read from.\n *\n * @returns Data in the specified text file.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -18231,6 +19469,70 @@
                 },
                 {
                   "kind": "Content",
+                  "text": ", destination: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<boolean>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 7
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "files",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "destination",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "scp"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NS#scp:member(2)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "scp(files: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | string[]"
+                },
+                {
+                  "kind": "Content",
                   "text": ", source: "
                 },
                 {
@@ -18269,7 +19571,7 @@
                 "endIndex": 9
               },
               "releaseTag": "Public",
-              "overloadIndex": 1,
+              "overloadIndex": 2,
               "parameters": [
                 {
                   "parameterName": "files",
@@ -18626,7 +19928,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "string[]"
+                  "text": "any[]"
                 },
                 {
                   "kind": "Content",
@@ -18767,15 +20069,16 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#tail:member(1)",
-              "docComment": "/**\n * Open the tail window of a script.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Opens a script’s logs. This is functionally the same as the tail Terminal command.\n *\n * If the function is called with no arguments, it will open the current script’s logs.\n *\n * Otherwise, the fn, hostname/ip, and args… arguments can be used to get the logs from another script. Remember that scripts are uniquely identified by both their names and arguments.\n *\n * @param fn - Optional. Filename of the script being tailed. If omitted, the current script is tailed.\n *\n * @param host - Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional.\n *\n * @param args - Arguments for the script being tailed.\n *\n * @example\n * ```ts\n * // NS1:\n * //Open logs from foo.script on the current server that was run with no args\n * tail(\"foo.script\");\n *\n * //Get logs from foo.script on the foodnstuff server that was run with no args\n * tail(\"foo.script\", \"foodnstuff\");\n *\n * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, \"test\"]\n * tail(\"foo.script\", \"foodnstuff\", 1, \"test\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //Open logs from foo.script on the current server that was run with no args\n * ns.tail(\"foo.script\");\n *\n * //Get logs from foo.script on the foodnstuff server that was run with no args\n * ns.tail(\"foo.script\", \"foodnstuff\");\n *\n * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, \"test\"]\n * ns.tail(\"foo.script\", \"foodnstuff\", 1, \"test\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Open the tail window of a script.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * Opens a script’s logs. This is functionally the same as the tail Terminal command.\n *\n * If the function is called with no arguments, it will open the current script’s logs.\n *\n * Otherwise, the fn, hostname/ip, and args… arguments can be used to get the logs from another script. Remember that scripts are uniquely identified by both their names and arguments.\n *\n * @param fn - Optional. Filename or PID of the script being tailed. If omitted, the current script is tailed.\n *\n * @param host - Optional. Hostname of the script being tailed. Defaults to the server this script is running on. If args are specified, this is not optional.\n *\n * @param args - Arguments for the script being tailed.\n *\n * @example\n * ```ts\n * // NS1:\n * //Open logs from foo.script on the current server that was run with no args\n * tail(\"foo.script\");\n *\n * //Get logs from foo.script on the foodnstuff server that was run with no args\n * tail(\"foo.script\", \"foodnstuff\");\n *\n * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, \"test\"]\n * tail(\"foo.script\", \"foodnstuff\", 1, \"test\");\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //Open logs from foo.script on the current server that was run with no args\n * ns.tail(\"foo.script\");\n *\n * //Get logs from foo.script on the foodnstuff server that was run with no args\n * ns.tail(\"foo.script\", \"foodnstuff\");\n *\n * //Get logs from foo.script on the foodnstuff server that was run with the arguments [1, \"test\"]\n * ns.tail(\"foo.script\", \"foodnstuff\", 1, \"test\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
                   "text": "tail(fn?: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "string"
+                  "kind": "Reference",
+                  "text": "FilenameOrPID",
+                  "canonicalReference": "bitburner!FilenameOrPID:type"
                 },
                 {
                   "kind": "Content",
@@ -18900,7 +20203,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#toast:member(1)",
-              "docComment": "/**\n * Queue a toast (bottom-right notification).\n *\n * @param msg - Message in the toast.\n *\n * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.\n *\n * @param duration - Duration of toast in ms, defaults to 2000\n */\n",
+              "docComment": "/**\n * Queue a toast (bottom-right notification).\n *\n * @param msg - Message in the toast.\n *\n * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.\n *\n * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -18924,7 +20227,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "number"
+                  "text": "number | null"
                 },
                 {
                   "kind": "Content",
@@ -19184,7 +20487,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "string[]"
+                  "text": "any[]"
                 },
                 {
                   "kind": "Content",
@@ -19430,7 +20733,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#write:member(1)",
-              "docComment": "/**\n * Write data to a file.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function can be used to either write data to a text file (.txt).\n *\n * This function will write data to that text file. If the specified text file does not exist, then it will be created. The third argument mode, defines how the data will be written to the text file. If *mode is set to “w”, then the data is written in “write” mode which means that it will overwrite all existing data on the text file. If mode is set to any other value then the data will be written in “append” mode which means that the data will be added at the end of the text file.\n *\n * @param handle - Port or text file that will be written to.\n *\n * @param data - Data to write.\n *\n * @param mode - Defines the write mode. Only valid when writing to text files.\n */\n",
+              "docComment": "/**\n * Write data to a file.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * This function can be used to write data to a text file (.txt).\n *\n * This function will write data to that text file. If the specified text file does not exist, then it will be created. The third argument mode, defines how the data will be written to the text file. If *mode is set to “w”, then the data is written in “write” mode which means that it will overwrite all existing data on the text file. If mode is set to any other value then the data will be written in “append” mode which means that the data will be added at the end of the text file.\n *\n * @param handle - Filename of the text file that will be written to.\n *\n * @param data - Data to write.\n *\n * @param mode - Defines the write mode. Only valid when writing to text files.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20457,6 +21760,105 @@
             }
           ],
           "extendsTokenRanges": []
+        },
+        {
+          "kind": "Enum",
+          "canonicalReference": "bitburner!OrderTypes:enum",
+          "docComment": "/**\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export enum OrderTypes "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "OrderTypes",
+          "members": [
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "bitburner!OrderTypes.LimitBuy:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "LimitBuy = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"Limit Buy Order\""
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "LimitBuy",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "bitburner!OrderTypes.LimitSell:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "LimitSell = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"Limit Sell Order\""
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "LimitSell",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "bitburner!OrderTypes.StopBuy:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "StopBuy = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"Stop Buy Order\""
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "StopBuy",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "bitburner!OrderTypes.StopSell:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "StopSell = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"Stop Sell Order\""
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "StopSell",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ]
         },
         {
           "kind": "Interface",
@@ -22909,6 +24311,63 @@
           "extendsTokenRanges": []
         },
         {
+          "kind": "Enum",
+          "canonicalReference": "bitburner!PositionTypes:enum",
+          "docComment": "/**\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export enum PositionTypes "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "PositionTypes",
+          "members": [
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "bitburner!PositionTypes.Long:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Long = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"L\""
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Long",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "bitburner!PositionTypes.Short:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Short = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"S\""
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Short",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ]
+        },
+        {
           "kind": "Interface",
           "canonicalReference": "bitburner!ProcessInfo:interface",
           "docComment": "/**\n * A single process on a server.\n *\n * @public\n */\n",
@@ -24171,7 +25630,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!Singularity:interface",
-          "docComment": "/**\n * Singularity API\n *\n * @remarks\n *\n * This API requires Source-File 4 level 1 / 2 / 3 to use.\n *\n * @public\n */\n",
+          "docComment": "/**\n * Singularity API\n *\n * @remarks\n *\n * This API requires Source-File 4 to use. The RAM cost of all these functions is multiplied by 16/4/1 based on Source-File 4 levels.\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -24184,7 +25643,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#applyToCompany:member(1)",
-              "docComment": "/**\n * SF4.2 - Apply for a job at a company.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically try to apply to the specified company for a position in the specified field. This function can also be used to apply for promotions by specifying the company and field you are already employed at.\n *\n * This function will return true if you successfully get a job/promotion, and false otherwise. Note that if you are trying to use this function to apply for a promotion and you don’t get one, it will return false.\n *\n * @param companyName - Name of company to apply to.\n *\n * @param field - Field to which you want to apply.\n *\n * @returns True if the player successfully get a job/promotion, and false otherwise.\n */\n",
+              "docComment": "/**\n * Apply for a job at a company.\n *\n * @remarks\n *\n * RAM cost: 3 GB * 16/4/1\n *\n * This function will automatically try to apply to the specified company for a position in the specified field. This function can also be used to apply for promotions by specifying the company and field you are already employed at.\n *\n * This function will return true if you successfully get a job/promotion, and false otherwise. Note that if you are trying to use this function to apply for a promotion and you don’t get one, it will return false.\n *\n * @param companyName - Name of company to apply to.\n *\n * @param field - Field to which you want to apply.\n *\n * @returns True if the player successfully get a job/promotion, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24243,7 +25702,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#checkFactionInvitations:member(1)",
-              "docComment": "/**\n * SF4.2 - List all current faction invitations.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * Returns an array with the name of all Factions you currently have oustanding invitations from.\n *\n * @returns Array with the name of all Factions you currently have oustanding invitations from.\n */\n",
+              "docComment": "/**\n * List all current faction invitations.\n *\n * @remarks\n *\n * RAM cost: 3 GB * 16/4/1\n *\n * Returns an array with the name of all Factions you currently have oustanding invitations from.\n *\n * @returns Array with the name of all Factions you currently have oustanding invitations from.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24271,7 +25730,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#commitCrime:member(1)",
-              "docComment": "/**\n * SF4.3 - Commit a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function is used to automatically attempt to commit crimes. If you are already in the middle of some ‘working’ action (such as working for a company or training at a gym), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function returns the number of milliseconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, so running `commitCrime('rob store')` will return 60,000).\n *\n * Warning: I do not recommend using the time returned from this function to try and schedule your crime attempts. Instead, I would use the isBusy Singularity function to check whether you have finished attempting a crime. This is because although the game sets a certain crime to be X amount of seconds, there is no guarantee that your browser will follow that time limit.\n *\n * @param crime - Name of crime to attempt.\n *\n * @returns True if you successfully start working on the specified program, and false otherwise.\n */\n",
+              "docComment": "/**\n * Commit a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * This function is used to automatically attempt to commit crimes. If you are already in the middle of some ‘working’ action (such as working for a company or training at a gym), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function returns the number of milliseconds it takes to attempt the specified crime (e.g It takes 60 seconds to attempt the ‘Rob Store’ crime, so running `commitCrime('rob store')` will return 60,000).\n *\n * Warning: I do not recommend using the time returned from this function to try and schedule your crime attempts. Instead, I would use the isBusy Singularity function to check whether you have finished attempting a crime. This is because although the game sets a certain crime to be X amount of seconds, there is no guarantee that your browser will follow that time limit.\n *\n * @param crime - Name of crime to attempt.\n *\n * @returns The number of milliseconds it takes to attempt the specified crime.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24315,7 +25774,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#connect:member(1)",
-              "docComment": "/**\n * SF4.1 - Connect to a server.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * Run the connect HOSTNAME command in the terminal. Can only connect to neighbors.\n *\n * @returns True if the connect command was successful, false otherwise.\n */\n",
+              "docComment": "/**\n * Connect to a server.\n *\n * @remarks\n *\n * RAM cost: 2 GB * 16/4/1\n *\n * Run the connect HOSTNAME command in the terminal. Can only connect to neighbors.\n *\n * @returns True if the connect command was successful, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24359,7 +25818,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#createProgram:member(1)",
-              "docComment": "/**\n * SF4.3 - Create a program.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function will automatically set you to start working on creating the specified program. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or taking a course), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function returns true if you successfully start working on the specified program, and false otherwise.\n *\n * Note that creating a program using this function has the same hacking level requirements as it normally would. These level requirements are: * BruteSSH.exe: 50 * FTPCrack.exe: 100 * relaySMTP.exe: 250 * HTTPWorm.exe: 500 * SQLInject.exe: 750 * DeepscanV1.exe: 75 * DeepscanV2.exe: 400 * ServerProfiler.exe: 75 * AutoLink.exe: 25\n *\n * @param program - Name of program to create.\n *\n * @returns True if you successfully start working on the specified program, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * createProgram(“relaysmtp.exe”);\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * ns.createProgram(“relaysmtp.exe”);\n * ```\n *\n */\n",
+              "docComment": "/**\n * Create a program.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * This function will automatically set you to start working on creating the specified program. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or taking a course), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function returns true if you successfully start working on the specified program, and false otherwise.\n *\n * Note that creating a program using this function has the same hacking level requirements as it normally would. These level requirements are: * BruteSSH.exe: 50 * FTPCrack.exe: 100 * relaySMTP.exe: 250 * HTTPWorm.exe: 500 * SQLInject.exe: 750 * DeepscanV1.exe: 75 * DeepscanV2.exe: 400 * ServerProfiler.exe: 75 * AutoLink.exe: 25\n *\n * @param program - Name of program to create.\n *\n * @param focus - Acquire player focus on this program creation. Optional. Defaults to true.\n *\n * @returns True if you successfully start working on the specified program, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * createProgram(“relaysmtp.exe”);\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * ns.createProgram(“relaysmtp.exe”);\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24368,6 +25827,14 @@
                 {
                   "kind": "Content",
                   "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", focus?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
                 },
                 {
                   "kind": "Content",
@@ -24384,8 +25851,8 @@
               ],
               "isOptional": false,
               "returnTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
+                "startIndex": 5,
+                "endIndex": 6
               },
               "releaseTag": "Public",
               "overloadIndex": 1,
@@ -24396,6 +25863,13 @@
                     "startIndex": 1,
                     "endIndex": 2
                   }
+                },
+                {
+                  "parameterName": "focus",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
                 }
               ],
               "name": "createProgram"
@@ -24403,7 +25877,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#donateToFaction:member(1)",
-              "docComment": "/**\n * SF4.3 - Donate to a faction.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Attempts to donate money to the specified faction in exchange for reputation. Returns true if you successfully donate the money, and false otherwise.\n *\n * @param faction - Name of faction to donate to.\n *\n * @param amount - Amount of money to donate.\n *\n * @returns True if the money was donated, and false otherwise.\n */\n",
+              "docComment": "/**\n * Donate to a faction.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * Attempts to donate money to the specified faction in exchange for reputation. Returns true if you successfully donate the money, and false otherwise.\n *\n * @param faction - Name of faction to donate to.\n *\n * @param amount - Amount of money to donate.\n *\n * @returns True if the money was donated, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24462,7 +25936,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getAugmentationCost:member(1)",
-              "docComment": "/**\n * SF4.3 - Get the price and reputation of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function returns an array with two elements that gives the cost for the specified Augmentation. The first element in the returned array is the reputation requirement of the Augmentation, and the second element is the money cost.\n *\n * If an invalid Augmentation name is passed in for the augName argument, this function will return the array [-1, -1].\n *\n * @deprecated\n *\n * use getAugmentationPrice getAugmentationRepCost\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Array with first element as a reputation requirement and second element as the money cost.\n */\n",
+              "docComment": "/**\n * Get the price and reputation of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * This function returns an array with two elements that gives the cost for the specified Augmentation. The first element in the returned array is the reputation requirement of the Augmentation, and the second element is the money cost.\n *\n * If an invalid Augmentation name is passed in for the augName argument, this function will return the array [-1, -1].\n *\n * @deprecated\n *\n * use getAugmentationPrice getAugmentationRepCost\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Array with first element as a reputation requirement and second element as the money cost.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24506,7 +25980,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getAugmentationPrereq:member(1)",
-              "docComment": "/**\n * SF4.3 - Get the pre-requisite of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation. If there are no prerequisites, a blank array is returned.\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Array with the names of the prerequisite Augmentation(s) for the specified Augmentation.\n */\n",
+              "docComment": "/**\n * Get the pre-requisite of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * This function returns an array with the names of the prerequisite Augmentation(s) for the specified Augmentation. If there are no prerequisites, a blank array is returned.\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Array with the names of the prerequisite Augmentation(s) for the specified Augmentation.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24550,7 +26024,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getAugmentationPrice:member(1)",
-              "docComment": "/**\n * SF4.3 - Get price of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Price of the augmentation.\n */\n",
+              "docComment": "/**\n * Get price of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB * 16/4/1\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Price of the augmentation.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24594,7 +26068,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getAugmentationRepReq:member(1)",
-              "docComment": "/**\n * SF4.3 - Get reputation requirement of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Reputation requirement of the augmentation.\n */\n",
+              "docComment": "/**\n * Get reputation requirement of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB * 16/4/1\n *\n * @param augName - Name of Augmentation.\n *\n * @returns Reputation requirement of the augmentation.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24638,7 +26112,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getAugmentationsFromFaction:member(1)",
-              "docComment": "/**\n * SF4.3 - Get a list of augmentation available from a faction.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Returns an array containing the names (as strings) of all Augmentations that are available from the specified faction.\n *\n * @param faction - Name of faction.\n *\n * @returns Array containing the names of all Augmentations.\n */\n",
+              "docComment": "/**\n * Get a list of augmentation available from a faction.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * Returns an array containing the names (as strings) of all Augmentations that are available from the specified faction.\n *\n * @param faction - Name of faction.\n *\n * @returns Array containing the names of all Augmentations.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24682,7 +26156,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getAugmentationStats:member(1)",
-              "docComment": "/**\n * SF4.3 - Get the stats of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function returns augmentation stats.\n *\n * @param name - Name of Augmentation. CASE-SENSITIVE.\n *\n * @returns Augmentation stats.\n */\n",
+              "docComment": "/**\n * Get the stats of an augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * This function returns augmentation stats.\n *\n * @param name - Name of Augmentation. CASE-SENSITIVE.\n *\n * @returns Augmentation stats.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24727,7 +26201,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCharacterInformation:member(1)",
-              "docComment": "/**\n * SF4.1 - Returns an object with various information about your character.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * @deprecated\n *\n * use getPlayer\n *\n * @returns Object with various information about your character.\n */\n",
+              "docComment": "/**\n * Returns an object with various information about your character.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB * 16/4/1\n *\n * @deprecated\n *\n * use getPlayer\n *\n * @returns Object with various information about your character.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24756,7 +26230,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCompanyFavor:member(1)",
-              "docComment": "/**\n * SF4.2 - Get company favor.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function will return the amount of favor you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.\n *\n * @param companyName - Name of the company.\n *\n * @returns Amount of favor you have at the specified company.\n */\n",
+              "docComment": "/**\n * Get company favor.\n *\n * @remarks\n *\n * RAM cost: 1 GB * 16/4/1\n *\n * This function will return the amount of favor you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.\n *\n * @param companyName - Name of the company.\n *\n * @returns Amount of favor you have at the specified company.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24800,7 +26274,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCompanyFavorGain:member(1)",
-              "docComment": "/**\n * SF4.2 - Get company favor gain.\n *\n * @remarks\n *\n * RAM cost: 0.75 GB\n *\n * This function will return the amount of favor you will gain for the specified company when you reset by installing Augmentations.\n *\n * @param companyName - Name of the company.\n *\n * @returns Amount of favor you gain at the specified company when you reset by installing Augmentations.\n */\n",
+              "docComment": "/**\n * Get company favor gain.\n *\n * @remarks\n *\n * RAM cost: 0.75 GB * 16/4/1\n *\n * This function will return the amount of favor you will gain for the specified company when you reset by installing Augmentations.\n *\n * @param companyName - Name of the company.\n *\n * @returns Amount of favor you gain at the specified company when you reset by installing Augmentations.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24844,7 +26318,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCompanyRep:member(1)",
-              "docComment": "/**\n * SF4.2 - Get company reputation.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function will return the amount of reputation you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.\n *\n * @param companyName - Name of the company.\n *\n * @returns Amount of reputation you have at the specified company.\n */\n",
+              "docComment": "/**\n * Get company reputation.\n *\n * @remarks\n *\n * RAM cost: 1 GB * 16/4/1\n *\n * This function will return the amount of reputation you have at the specified company. If the company passed in as an argument is invalid, -1 will be returned.\n *\n * @param companyName - Name of the company.\n *\n * @returns Amount of reputation you have at the specified company.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24888,7 +26362,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCrimeChance:member(1)",
-              "docComment": "/**\n * SF4.3 - Get chance to successfully commit a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function returns your chance of success at commiting the specified crime.\n *\n * @param crime - Name of crime.\n *\n * @returns Chance of success at commiting the specified crime.\n */\n",
+              "docComment": "/**\n * Get chance to successfully commit a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * This function returns your chance of success at commiting the specified crime.\n *\n * @param crime - Name of crime.\n *\n * @returns Chance of success at commiting the specified crime.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24932,7 +26406,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCrimeStats:member(1)",
-              "docComment": "/**\n * SF4.3 - Get stats related to a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Returns the stats of the crime.\n *\n * @param crime - Name of crime. Not case-sensitive\n *\n * @returns The stats of the crime.\n */\n",
+              "docComment": "/**\n * Get stats related to a crime.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * Returns the stats of the crime.\n *\n * @param crime - Name of crime. Not case-sensitive\n *\n * @returns The stats of the crime.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -24977,7 +26451,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getCurrentServer:member(1)",
-              "docComment": "/**\n * SF4.1 - Get the current server.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @returns Name of the current server.\n */\n",
+              "docComment": "/**\n * Get the current server.\n *\n * @remarks\n *\n * RAM cost: 2 GB * 16/4/1\n *\n * @returns Name of the current server.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25005,7 +26479,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getFactionFavor:member(1)",
-              "docComment": "/**\n * SF4.2 - Get faction favor.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function returns the amount of favor you have for the specified faction.\n *\n * @param faction - Name of faction.\n *\n * @returns Amount of favor you have for the specified faction.\n */\n",
+              "docComment": "/**\n * Get faction favor.\n *\n * @remarks\n *\n * RAM cost: 1 GB * 16/4/1\n *\n * This function returns the amount of favor you have for the specified faction.\n *\n * @param faction - Name of faction.\n *\n * @returns Amount of favor you have for the specified faction.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25049,7 +26523,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getFactionFavorGain:member(1)",
-              "docComment": "/**\n * SF4.2 - Get faction favor gain.\n *\n * @remarks\n *\n * RAM cost: 0.75 GB\n *\n * This function returns the amount of favor you will gain for the specified faction when you reset by installing Augmentations.\n *\n * @param faction - Name of faction.\n *\n * @returns Amount of favor you will gain for the specified faction when you reset by installing Augmentations.\n */\n",
+              "docComment": "/**\n * Get faction favor gain.\n *\n * @remarks\n *\n * RAM cost: 0.75 GB * 16/4/1\n *\n * This function returns the amount of favor you will gain for the specified faction when you reset by installing Augmentations.\n *\n * @param faction - Name of faction.\n *\n * @returns Amount of favor you will gain for the specified faction when you reset by installing Augmentations.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25093,7 +26567,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getFactionRep:member(1)",
-              "docComment": "/**\n * SF4.2 - Get faction reputation.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function returns the amount of reputation you have for the specified faction.\n *\n * @param faction - Name of faction to work for.\n *\n * @returns Amount of reputation you have for the specified faction.\n */\n",
+              "docComment": "/**\n * Get faction reputation.\n *\n * @remarks\n *\n * RAM cost: 1 GB * 16/4/1\n *\n * This function returns the amount of reputation you have for the specified faction.\n *\n * @param faction - Name of faction to work for.\n *\n * @returns Amount of reputation you have for the specified faction.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25137,7 +26611,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getOwnedAugmentations:member(1)",
-              "docComment": "/**\n * SF4.3 - Get a list of owned augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function returns an array containing the names (as strings) of all Augmentations you have.\n *\n * @param purchased - Specifies whether the returned array should include Augmentations you have purchased but not yet installed. By default, this argument is false which means that the return value will NOT have the purchased Augmentations.\n *\n * @returns Array containing the names (as strings) of all Augmentations you have.\n */\n",
+              "docComment": "/**\n * Get a list of owned augmentation.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * This function returns an array containing the names (as strings) of all Augmentations you have.\n *\n * @param purchased - Specifies whether the returned array should include Augmentations you have purchased but not yet installed. By default, this argument is false which means that the return value will NOT have the purchased Augmentations.\n *\n * @returns Array containing the names (as strings) of all Augmentations you have.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25181,7 +26655,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getStats:member(1)",
-              "docComment": "/**\n * SF4.1 - Returns an object with the Player’s stats.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * @deprecated\n *\n * use getPlayer\n *\n * @returns Object with the Player’s stats.\n *\n * @example\n * ```ts\n * res = getStats();\n * print('My charisma level is: ' + res.charisma);\n * ```\n *\n */\n",
+              "docComment": "/**\n * Returns an object with the Player’s stats.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB * 16/4/1\n *\n * @deprecated\n *\n * use getPlayer\n *\n * @returns Object with the Player’s stats.\n *\n * @example\n * ```ts\n * res = getStats();\n * print('My charisma level is: ' + res.charisma);\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25210,7 +26684,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getUpgradeHomeCoresCost:member(1)",
-              "docComment": "/**\n * SF4.2 - Get the price of upgrading home cores.\n *\n * @remarks\n *\n * RAM cost: 1.5 GB\n *\n * Returns the cost of upgrading the player’s home computer cores.\n *\n * @returns Cost of upgrading the player’s home computer cores.\n */\n",
+              "docComment": "/**\n * Get the price of upgrading home cores.\n *\n * @remarks\n *\n * RAM cost: 1.5 GB * 16/4/1\n *\n * Returns the cost of upgrading the player’s home computer cores.\n *\n * @returns Cost of upgrading the player’s home computer cores.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25238,7 +26712,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#getUpgradeHomeRamCost:member(1)",
-              "docComment": "/**\n * SF4.2 - Get the price of upgrading home RAM.\n *\n * @remarks\n *\n * RAM cost: 1.5 GB\n *\n * Returns the cost of upgrading the player’s home computer RAM.\n *\n * @returns Cost of upgrading the player’s home computer RAM.\n */\n",
+              "docComment": "/**\n * Get the price of upgrading home RAM.\n *\n * @remarks\n *\n * RAM cost: 1.5 GB * 16/4/1\n *\n * Returns the cost of upgrading the player’s home computer RAM.\n *\n * @returns Cost of upgrading the player’s home computer RAM.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25266,7 +26740,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#goToLocation:member(1)",
-              "docComment": "/**\n * SF4.3 - Go to a location.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * Move the player to a specific location.\n *\n * @param locationName - Name of the location.\n *\n * @returns True if the player was moved there, false otherwise.\n */\n",
+              "docComment": "/**\n * Go to a location.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * Move the player to a specific location.\n *\n * @param locationName - Name of the location.\n *\n * @returns True if the player was moved there, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25310,7 +26784,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#gymWorkout:member(1)",
-              "docComment": "/**\n * SF4.1 - Workout at the gym.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * This function will automatically set you to start working out at a gym to train a particular stat. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * The cost and experience gains for all of these gyms are the same as if you were to manually visit these gyms and train\n *\n * @param gymName - Name of gym. You must be in the correct city for whatever gym you specify.\n *\n * @param stat - The stat you want to train.\n *\n * @returns True if actions is successfully started, false otherwise.\n */\n",
+              "docComment": "/**\n * Workout at the gym.\n *\n * @remarks\n *\n * RAM cost: 2 GB * 16/4/1\n *\n * This function will automatically set you to start working out at a gym to train a particular stat. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * The cost and experience gains for all of these gyms are the same as if you were to manually visit these gyms and train\n *\n * @param gymName - Name of gym. You must be in the correct city for whatever gym you specify.\n *\n * @param stat - The stat you want to train.\n *\n * @param focus - Acquire player focus on this gym workout. Optional. Defaults to true.\n *\n * @returns True if actions is successfully started, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25330,6 +26804,14 @@
                 },
                 {
                   "kind": "Content",
+                  "text": ", focus?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
                   "text": "): "
                 },
                 {
@@ -25343,8 +26825,8 @@
               ],
               "isOptional": false,
               "returnTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
+                "startIndex": 7,
+                "endIndex": 8
               },
               "releaseTag": "Public",
               "overloadIndex": 1,
@@ -25362,6 +26844,13 @@
                     "startIndex": 3,
                     "endIndex": 4
                   }
+                },
+                {
+                  "parameterName": "focus",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
                 }
               ],
               "name": "gymWorkout"
@@ -25369,7 +26858,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#hospitalize:member(1)",
-              "docComment": "/**\n * SF4.1 - Hospitalize the player.\n *\n * @remarks\n *\n * RAM cost: 0.25 GB\n *\n * @returns The cost of the hospitalization.\n */\n",
+              "docComment": "/**\n * Hospitalize the player.\n *\n * @remarks\n *\n * RAM cost: 0.25 GB * 16/4/1\n *\n * @returns The cost of the hospitalization.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25397,7 +26886,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#installAugmentations:member(1)",
-              "docComment": "/**\n * SF4.3 - Install your purchased augmentations.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function will automatically install your Augmentations, resetting the game as usual.\n *\n * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.\n */\n",
+              "docComment": "/**\n * Install your purchased augmentations.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * This function will automatically install your Augmentations, resetting the game as usual.\n *\n * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25441,7 +26930,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#installBackdoor:member(1)",
-              "docComment": "/**\n * SF4.1 - Run the backdoor command in the terminal.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @returns True if the installation was successful.\n */\n",
+              "docComment": "/**\n * Run the backdoor command in the terminal.\n *\n * @remarks\n *\n * RAM cost: 2 GB * 16/4/1\n *\n * @returns Promise waiting for the installation to finish.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25474,7 +26963,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#isBusy:member(1)",
-              "docComment": "/**\n * SF4.1 - Check if the player is busy.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * Returns a boolean indicating whether or not the player is currently performing an ‘action’. These actions include working for a company/faction, studying at a univeristy, working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.\n *\n * @returns True if the player is currently performing an ‘action’, false otherwise.\n */\n",
+              "docComment": "/**\n * Check if the player is busy.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB * 16/4/1\n *\n * Returns a boolean indicating whether or not the player is currently performing an ‘action’. These actions include working for a company/faction, studying at a univeristy, working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.\n *\n * @returns True if the player is currently performing an ‘action’, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25502,7 +26991,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#isFocused:member(1)",
-              "docComment": "/**\n * SF4.2 - Check if the player is focused.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * @returns True if the player is focused.\n */\n",
+              "docComment": "/**\n * Check if the player is focused.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB * 16/4/1\n *\n * @returns True if the player is focused.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25530,7 +27019,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#joinFaction:member(1)",
-              "docComment": "/**\n * SF4.2 - Join a faction.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically accept an invitation from a faction and join it.\n *\n * @param faction - Name of faction to join.\n *\n * @returns True if player joined the faction, and false otherwise.\n */\n",
+              "docComment": "/**\n * Join a faction.\n *\n * @remarks\n *\n * RAM cost: 3 GB * 16/4/1\n *\n * This function will automatically accept an invitation from a faction and join it.\n *\n * @param faction - Name of faction to join.\n *\n * @returns True if player joined the faction, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25574,7 +27063,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#manualHack:member(1)",
-              "docComment": "/**\n * SF4.1 - Run the hack command in the terminal.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * @returns Amount of money stolen by manual hacking.\n */\n",
+              "docComment": "/**\n * Run the hack command in the terminal.\n *\n * @remarks\n *\n * RAM cost: 2 GB * 16/4/1\n *\n * @returns Amount of money stolen by manual hacking.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25607,7 +27096,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#purchaseAugmentation:member(1)",
-              "docComment": "/**\n * SF4.3 - Purchase an augmentation\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function will try to purchase the specified Augmentation through the given Faction.\n *\n * This function will return true if the Augmentation is successfully purchased, and false otherwise.\n *\n * @param faction - Name of faction to purchase Augmentation from.\n *\n * @param augmentation - Name of Augmentation to purchase.\n *\n * @returns True if the Augmentation is successfully purchased, and false otherwise.\n */\n",
+              "docComment": "/**\n * Purchase an augmentation\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * This function will try to purchase the specified Augmentation through the given Faction.\n *\n * This function will return true if the Augmentation is successfully purchased, and false otherwise.\n *\n * @param faction - Name of faction to purchase Augmentation from.\n *\n * @param augmentation - Name of Augmentation to purchase.\n *\n * @returns True if the Augmentation is successfully purchased, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25666,7 +27155,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#purchaseProgram:member(1)",
-              "docComment": "/**\n * SF4.1 - Purchase a program from the dark web.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * This function allows you to automatically purchase programs. You MUST have a TOR router in order to use this function. The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web using the Terminal buy command.\n *\n * @param programName - Name of program to purchase.\n *\n * @returns True if the specified program is purchased, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1\n * purchaseProgram(\"brutessh.exe\");\n * ```\n *\n * @example\n * ```ts\n * // NS2\n * ns.purchaseProgram(\"brutessh.exe\");\n * ```\n *\n */\n",
+              "docComment": "/**\n * Purchase a program from the dark web.\n *\n * @remarks\n *\n * RAM cost: 2 GB * 16/4/1\n *\n * This function allows you to automatically purchase programs. You MUST have a TOR router in order to use this function. The cost of purchasing programs using this function is the same as if you were purchasing them through the Dark Web using the Terminal buy command.\n *\n * @param programName - Name of program to purchase.\n *\n * @returns True if the specified program is purchased, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1\n * purchaseProgram(\"brutessh.exe\");\n * ```\n *\n * @example\n * ```ts\n * // NS2\n * ns.purchaseProgram(\"brutessh.exe\");\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25710,7 +27199,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#purchaseTor:member(1)",
-              "docComment": "/**\n * SF4.1 - Purchase the TOR router.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * This function allows you to automatically purchase a TOR router. The cost for purchasing a TOR router using this function is the same as if you were to manually purchase one.\n *\n * @returns True if actions is successful, false otherwise.\n */\n",
+              "docComment": "/**\n * Purchase the TOR router.\n *\n * @remarks\n *\n * RAM cost: 2 GB * 16/4/1\n *\n * This function allows you to automatically purchase a TOR router. The cost for purchasing a TOR router using this function is the same as if you were to manually purchase one.\n *\n * @returns True if actions is successful, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25738,7 +27227,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#setFocus:member(1)",
-              "docComment": "/**\n * SF4.2 - Set the players focus.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * @returns True if the focus was changed.\n */\n",
+              "docComment": "/**\n * Set the players focus.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB * 16/4/1\n *\n * @returns True if the focus was changed.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25782,7 +27271,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#softReset:member(1)",
-              "docComment": "/**\n * SF4.3 - Soft reset the game.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * This function will perform a reset even if you don’t have any augmentation installed.\n *\n * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.\n */\n",
+              "docComment": "/**\n * Soft reset the game.\n *\n * @remarks\n *\n * RAM cost: 5 GB * 16/4/1\n *\n * This function will perform a reset even if you don’t have any augmentation installed.\n *\n * @param cbScript - This is a script that will automatically be run after Augmentations are installed (after the reset). This script will be run with no arguments and 1 thread. It must be located on your home computer.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25826,7 +27315,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#stopAction:member(1)",
-              "docComment": "/**\n * SF4.1 - Stop the current action.\n *\n * @remarks\n *\n * RAM cost: 1 GB\n *\n * This function is used to end whatever ‘action’ the player is currently performing. The player will receive whatever money/experience/etc. he has earned from that action.\n *\n * The actions that can be stopped with this function are:\n *\n * * Studying at a university * Working for a company/faction * Creating a program * Committing a Crime\n *\n * This function will return true if the player’s action was ended. It will return false if the player was not performing an action when this function was called.\n *\n * @returns True if the player’s action was ended, false if the player was not performing an action.\n */\n",
+              "docComment": "/**\n * Stop the current action.\n *\n * @remarks\n *\n * RAM cost: 1 GB * 16/4/1\n *\n * This function is used to end whatever ‘action’ the player is currently performing. The player will receive whatever money/experience/etc. he has earned from that action.\n *\n * The actions that can be stopped with this function are:\n *\n * * Studying at a university * Working for a company/faction * Creating a program * Committing a Crime\n *\n * This function will return true if the player’s action was ended. It will return false if the player was not performing an action when this function was called.\n *\n * @returns True if the player’s action was ended, false if the player was not performing an action.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25854,7 +27343,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#travelToCity:member(1)",
-              "docComment": "/**\n * SF4.1 - Travel to another city.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * This function allows the player to travel to any city. The cost for using this function is the same as the cost for traveling through the Travel Agency.\n *\n * @param city - City to travel to.\n *\n * @returns True if actions is successful, false otherwise.\n */\n",
+              "docComment": "/**\n * Travel to another city.\n *\n * @remarks\n *\n * RAM cost: 2 GB * 16/4/1\n *\n * This function allows the player to travel to any city. The cost for using this function is the same as the cost for traveling through the Travel Agency.\n *\n * @param city - City to travel to.\n *\n * @returns True if actions is successful, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25898,7 +27387,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#universityCourse:member(1)",
-              "docComment": "/**\n * SF4.1 - Take university class.\n *\n * @remarks\n *\n * RAM cost: 2 GB\n *\n * This function will automatically set you to start taking a course at a university. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * The cost and experience gains for all of these universities and classes are the same as if you were to manually visit and take these classes.\n *\n * @param universityName - Name of university. You must be in the correct city for whatever university you specify.\n *\n * @param courseName - Name of course.\n *\n * @returns True if actions is successfully started, false otherwise.\n */\n",
+              "docComment": "/**\n * Take university class.\n *\n * @remarks\n *\n * RAM cost: 2 GB * 16/4/1\n *\n * This function will automatically set you to start taking a course at a university. If you are already in the middle of some “working” action (such as working at a company, for a faction, or on a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * The cost and experience gains for all of these universities and classes are the same as if you were to manually visit and take these classes.\n *\n * @param universityName - Name of university. You must be in the correct city for whatever university you specify.\n *\n * @param courseName - Name of course.\n *\n * @param focus - Acquire player focus on this class. Optional. Defaults to true.\n *\n * @returns True if actions is successfully started, false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25918,6 +27407,14 @@
                 },
                 {
                   "kind": "Content",
+                  "text": ", focus?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
                   "text": "): "
                 },
                 {
@@ -25931,8 +27428,8 @@
               ],
               "isOptional": false,
               "returnTypeTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
+                "startIndex": 7,
+                "endIndex": 8
               },
               "releaseTag": "Public",
               "overloadIndex": 1,
@@ -25950,6 +27447,13 @@
                     "startIndex": 3,
                     "endIndex": 4
                   }
+                },
+                {
+                  "parameterName": "focus",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
                 }
               ],
               "name": "universityCourse"
@@ -25957,7 +27461,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#upgradeHomeCores:member(1)",
-              "docComment": "/**\n * SF4.2 - Upgrade home computer cores.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will upgrade amount of cores on the player’s home computer. The cost is the same as if you were to do it manually.\n *\n * This function will return true if the player’s home computer cores is successfully upgraded, and false otherwise.\n *\n * @returns True if the player’s home computer cores is successfully upgraded, and false otherwise.\n */\n",
+              "docComment": "/**\n * Upgrade home computer cores.\n *\n * @remarks\n *\n * RAM cost: 3 GB * 16/4/1\n *\n * This function will upgrade amount of cores on the player’s home computer. The cost is the same as if you were to do it manually.\n *\n * This function will return true if the player’s home computer cores is successfully upgraded, and false otherwise.\n *\n * @returns True if the player’s home computer cores is successfully upgraded, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25985,7 +27489,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#upgradeHomeRam:member(1)",
-              "docComment": "/**\n * SF4.2 - Upgrade home computer RAM.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will upgrade amount of RAM on the player’s home computer. The cost is the same as if you were to do it manually.\n *\n * This function will return true if the player’s home computer RAM is successfully upgraded, and false otherwise.\n *\n * @returns True if the player’s home computer RAM is successfully upgraded, and false otherwise.\n */\n",
+              "docComment": "/**\n * Upgrade home computer RAM.\n *\n * @remarks\n *\n * RAM cost: 3 GB * 16/4/1\n *\n * This function will upgrade amount of RAM on the player’s home computer. The cost is the same as if you were to do it manually.\n *\n * This function will return true if the player’s home computer RAM is successfully upgraded, and false otherwise.\n *\n * @returns True if the player’s home computer RAM is successfully upgraded, and false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -26013,7 +27517,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#workForCompany:member(1)",
-              "docComment": "/**\n * SF4.2 - Work for a company.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically set you to start working at the company at which you are employed. If you are already in the middle of some “working” action (such as working for a faction, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function will return true if the player starts working, and false otherwise.\n *\n * Note that when you are working for a company, you will not actually receive your earnings (reputation, money, experience) until you FINISH the action.\n *\n * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked\n *\n * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.\n *\n * @returns True if the player starts working, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (getCompanyRep(COMPANY HERE) < VALUE) {\n *    workForCompany();\n *    sleep(60000);\n * }\n * //This way, your company reputation will be updated every minute.\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (ns.getCompanyRep(COMPANY HERE) < VALUE) {\n *    ns.workForCompany();\n *    await ns.sleep(60000);\n * }\n * //This way, your company reputation will be updated every minute.\n * ```\n *\n */\n",
+              "docComment": "/**\n * Work for a company.\n *\n * @remarks\n *\n * RAM cost: 3 GB * 16/4/1\n *\n * This function will automatically set you to start working at the company at which you are employed. If you are already in the middle of some “working” action (such as working for a faction, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function will return true if the player starts working, and false otherwise.\n *\n * Note that when you are working for a company, you will not actually receive your earnings (reputation, money, experience) until you FINISH the action.\n *\n * @param companyName - Name of company to work for. Must be an exact match. Optional. If not specified, this argument defaults to the last job that you worked\n *\n * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.\n *\n * @returns True if the player starts working, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (getCompanyRep(COMPANY HERE) < VALUE) {\n *    workForCompany();\n *    sleep(60000);\n * }\n * //This way, your company reputation will be updated every minute.\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //If you only want to work until you get 100,000 company reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (ns.getCompanyRep(COMPANY HERE) < VALUE) {\n *    ns.workForCompany();\n *    await ns.sleep(60000);\n * }\n * //This way, your company reputation will be updated every minute.\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -26072,7 +27576,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Singularity#workForFaction:member(1)",
-              "docComment": "/**\n * SF4.2 - Work for a faction.\n *\n * @remarks\n *\n * RAM cost: 3 GB\n *\n * This function will automatically set you to start working for the specified faction. Obviously, you must be a member of the faction or else this function will fail. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function will return true if you successfully start working for the specified faction, and false otherwise.\n *\n * Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience) until you FINISH the action.\n *\n * @param faction - Name of faction to work for.\n *\n * @param workType - Type of work to perform for the faction.\n *\n * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.\n *\n * @returns True if the player starts working, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (getFactionRep(FACTION NAME) < VALUE) {\n *    workForFaction(FACNAME, WORKTYPE);\n *    sleep(60000);\n * }\n * //This way, your faction reputation will be updated every minute.\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (ns.getFactionRep(FACTION NAME) < VALUE) {\n *    ns.workForFaction(FACNAME, WORKTYPE);\n *    await ns.sleep(60000);\n * }\n * //This way, your faction reputation will be updated every minute.\n * ```\n *\n */\n",
+              "docComment": "/**\n * Work for a faction.\n *\n * @remarks\n *\n * RAM cost: 3 GB * 16/4/1\n *\n * This function will automatically set you to start working for the specified faction. Obviously, you must be a member of the faction or else this function will fail. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.\n *\n * This function will return true if you successfully start working for the specified faction, and false otherwise.\n *\n * Note that when you are working for a faction, you will not actually receive your earnings (reputation, experience) until you FINISH the action.\n *\n * @param faction - Name of faction to work for.\n *\n * @param workType - Type of work to perform for the faction.\n *\n * @param focus - Acquire player focus on this work operation. Optional. Defaults to true.\n *\n * @returns True if the player starts working, and false otherwise.\n *\n * @example\n * ```ts\n * // NS1:\n * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (getFactionRep(FACTION NAME) < VALUE) {\n *    workForFaction(FACNAME, WORKTYPE);\n *    sleep(60000);\n * }\n * //This way, your faction reputation will be updated every minute.\n * ```\n *\n * @example\n * ```ts\n * // NS2:\n * //If you only want to work until you get 100,000 faction reputation. One small hack to get around this is to continuously restart the action to receive your earnings:\n * while (ns.getFactionRep(FACTION NAME) < VALUE) {\n *    ns.workForFaction(FACNAME, WORKTYPE);\n *    await ns.sleep(60000);\n * }\n * //This way, your faction reputation will be updated every minute.\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -28600,7 +30104,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "bitburner!StockOrder:interface",
-          "docComment": "/**\n * Return value of {@link TIX.getOrders | getOrders}\n *\n * @public\n */\n",
+          "docComment": "/**\n * Return value of {@link TIX.getOrders | getOrders}\n *\n * Keys are stock symbols, properties are arrays of {@link StockOrderObject}\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -28613,7 +30117,7 @@
             {
               "kind": "IndexSignature",
               "canonicalReference": "bitburner!StockOrder:index(1)",
-              "docComment": "/**\n * Stock Symbol\n */\n",
+              "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -28683,8 +30187,9 @@
                   "text": "position: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "string"
+                  "kind": "Reference",
+                  "text": "PositionTypes",
+                  "canonicalReference": "bitburner!PositionTypes:enum"
                 },
                 {
                   "kind": "Content",
@@ -28761,8 +30266,9 @@
                   "text": "type: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "string"
+                  "kind": "Reference",
+                  "text": "OrderTypes",
+                  "canonicalReference": "bitburner!OrderTypes:enum"
                 },
                 {
                   "kind": "Content",
@@ -29135,7 +30641,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!TIX#getOrders:member(1)",
-              "docComment": "/**\n * Returns your order book for the stock market.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB This is an object containing information for all the Limit and Stop Orders you have in the stock market. The object has the following structure:\n * ```ts\n * {\n *  string1: [ // Array of orders for this stock\n *      {\n *          shares: Order quantity\n *          price: Order price\n *          type: Order type\n *          position: Either \"L\" or \"S\" for Long or Short position\n *      },\n *      {\n *          ...\n *      },\n *      ...\n *  ],\n *  string2: [ // Array of orders for this stock\n *      ...\n *  ],\n *  ...\n * }\n * ```\n *\n * The “Order type” property can have one of the following four values: \"Limit Buy Order\", \"Limit Sell Order\", \"Stop Buy Order\", \"Stop Sell Order\". Note that the order book will only contain information for stocks that you actually have orders in.\n *\n * @returns Object containing information for all the Limit and Stop Orders you have in the stock market.\n *\n * @example\n * ```ts\n * \"If you do not have orders in Nova Medical (NVMD), then the returned object will not have a “NVMD” property.\"\n * {\n *  ECP: [\n *      {\n *          shares: 5,\n *          price: 100,000\n *          type: \"Stop Buy Order\",\n *          position: \"S\",\n *      },\n *      {\n *          shares: 25,\n *          price: 125,000\n *          type: \"Limit Sell Order\",\n *          position: \"L\",\n *      },\n *  ],\n *  SYSC: [\n *      {\n *          shares: 100,\n *          price: 10,000\n *          type: \"Limit Buy Order\",\n *          position: \"L\",\n *      },\n *  ],\n * }\n * ```\n *\n */\n",
+              "docComment": "/**\n * Returns your order book for the stock market.\n *\n * @remarks\n *\n * RAM cost: 2.5 GB This is an object containing information for all the Limit and Stop Orders you have in the stock market. For each symbol you have a position in, the returned object will have a key with that symbol's name. The object's properties are each an array of {@link StockOrderObject} The object has the following structure:\n * ```ts\n * {\n *  string1: [ // Array of orders for this stock\n *      {\n *          shares: Order quantity\n *          price: Order price\n *          type: Order type\n *          position: Either \"L\" or \"S\" for Long or Short position\n *      },\n *      {\n *          ...\n *      },\n *      ...\n *  ],\n *  string2: [ // Array of orders for this stock\n *      ...\n *  ],\n *  ...\n * }\n * ```\n *\n * The “Order type” property can have one of the following four values: \"Limit Buy Order\", \"Limit Sell Order\", \"Stop Buy Order\", \"Stop Sell Order\". Note that the order book will only contain information for stocks that you actually have orders in.\n *\n * @returns Object containing information for all the Limit and Stop Orders you have in the stock market.\n *\n * @example\n * ```ts\n * \"If you do not have orders in Nova Medical (NVMD), then the returned object will not have a “NVMD” property.\"\n * {\n *  ECP: [\n *      {\n *          shares: 5,\n *          price: 100,000\n *          type: \"Stop Buy Order\",\n *          position: \"S\",\n *      },\n *      {\n *          shares: 25,\n *          price: 125,000\n *          type: \"Limit Sell Order\",\n *          position: \"L\",\n *      },\n *  ],\n *  SYSC: [\n *      {\n *          shares: 100,\n *          price: 10,000\n *          type: \"Limit Buy Order\",\n *          position: \"L\",\n *      },\n *  ],\n * }\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29824,6 +31330,35 @@
           "members": [
             {
               "kind": "MethodSignature",
+              "canonicalReference": "bitburner!UserInterface#getStyles:member(1)",
+              "docComment": "/**\n * Get the current styles\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n *\n * @returns An object containing the player's styles\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getStyles(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IStyleSettings",
+                  "canonicalReference": "bitburner!IStyleSettings:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "getStyles"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "bitburner!UserInterface#getTheme:member(1)",
               "docComment": "/**\n * Get the current theme\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n *\n * @returns An object containing the theme's colors\n */\n",
               "excerptTokens": [
@@ -29853,6 +31388,34 @@
             },
             {
               "kind": "MethodSignature",
+              "canonicalReference": "bitburner!UserInterface#resetStyles:member(1)",
+              "docComment": "/**\n * Resets the player's styles to the default values\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "resetStyles(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "resetStyles"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "bitburner!UserInterface#resetTheme:member(1)",
               "docComment": "/**\n * Resets the player's theme to the default values\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n */\n",
               "excerptTokens": [
@@ -29878,6 +31441,51 @@
               "overloadIndex": 1,
               "parameters": [],
               "name": "resetTheme"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!UserInterface#setStyles:member(1)",
+              "docComment": "/**\n * Sets the current styles\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n *\n * @example\n *\n * Usage example (NS2)\n * ```ts\n * const styles = ns.ui.getStyles();\n * styles.fontFamily = 'Comic Sans Ms';\n * ns.ui.setStyles(styles);\n * ```\n *\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setStyles(newStyles: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IStyleSettings",
+                  "canonicalReference": "bitburner!IStyleSettings:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "newStyles",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "setStyles"
             },
             {
               "kind": "MethodSignature",

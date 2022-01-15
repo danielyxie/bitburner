@@ -4,7 +4,6 @@ import { Console } from "./Console";
 import { AllPages } from "./AllPages";
 
 import { use } from "../../ui/Context";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
 export function BladeburnerRoot(): React.ReactElement {
@@ -24,14 +23,10 @@ export function BladeburnerRoot(): React.ReactElement {
   if (bladeburner === null) return <></>;
   return (
     <Box display="flex" flexDirection="column">
-      <Grid container>
-        <Grid item xs={6}>
-          <Stats bladeburner={bladeburner} player={player} router={router} />
-        </Grid>
-        <Grid item xs={6}>
-          <Console bladeburner={bladeburner} player={player} />
-        </Grid>
-      </Grid>
+      <Box sx={{ display: "grid", gridTemplateColumns: "4fr 8fr", p: 1 }}>
+        <Stats bladeburner={bladeburner} player={player} router={router} />
+        <Console bladeburner={bladeburner} player={player} />
+      </Box>
 
       <AllPages bladeburner={bladeburner} player={player} />
     </Box>

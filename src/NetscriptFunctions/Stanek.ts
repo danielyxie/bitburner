@@ -38,9 +38,6 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
       if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.charge", `No fragment with root (${rootX}, ${rootY}).`);
       const time = staneksGift.inBonus() ? 200 : 1000;
       return netscriptDelay(time, workerScript).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         const charge = staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
         workerScript.log("stanek.charge", () => `Charged fragment for ${charge} charge.`);
         return Promise.resolve();

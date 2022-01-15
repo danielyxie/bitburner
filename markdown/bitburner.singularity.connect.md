@@ -4,7 +4,7 @@
 
 ## Singularity.connect() method
 
-SF4.1 - Connect to a server.
+Connect to a server.
 
 <b>Signature:</b>
 
@@ -26,7 +26,7 @@ True if the connect command was successful, false otherwise.
 
 ## Remarks
 
-RAM cost: 2 GB
+RAM cost: 2 GB \* 16/4/1
 
 Run the connect HOSTNAME command in the terminal. Can only connect to neighbors.
 

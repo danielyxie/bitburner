@@ -4,7 +4,7 @@
 
 ## Singularity.workForFaction() method
 
-SF4.2 - Work for a faction.
+Work for a faction.
 
 <b>Signature:</b>
 
@@ -28,7 +28,7 @@ True if the player starts working, and false otherwise.
 
 ## Remarks
 
-RAM cost: 3 GB
+RAM cost: 3 GB \* 16/4/1
 
 This function will automatically set you to start working for the specified faction. Obviously, you must be a member of the faction or else this function will fail. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or creating a program), then running this function will automatically cancel that action and give you your earnings.
 

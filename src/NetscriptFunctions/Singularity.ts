@@ -267,9 +267,10 @@ export function NetscriptSingularity(
       player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 500);
       return true;
     },
-    universityCourse: function (universityName: any, className: any): any {
+    universityCourse: function (universityName: any, className: any, focus = true): any {
       helper.updateDynamicRam("universityCourse", getRamCost(player, "universityCourse"));
       helper.checkSingularityAccess("universityCourse");
+      const wasFocusing = player.focus;
       if (player.isWorking) {
         const txt = player.singularityStopWork();
         workerScript.log("universityCourse", () => txt);
@@ -343,13 +344,21 @@ export function NetscriptSingularity(
           return false;
       }
       player.startClass(Router, costMult, expMult, task);
+      if (focus) {
+        player.startFocusing();
+        Router.toWork();
+      } else if (wasFocusing) {
+        player.stopFocusing();
+        Router.toTerminal();
+      }
       workerScript.log("universityCourse", () => `Started ${task} at ${universityName}`);
       return true;
     },
 
-    gymWorkout: function (gymName: any, stat: any): any {
+    gymWorkout: function (gymName: any, stat: any, focus = true): any {
       helper.updateDynamicRam("gymWorkout", getRamCost(player, "gymWorkout"));
       helper.checkSingularityAccess("gymWorkout");
+      const wasFocusing = player.focus;
       if (player.isWorking) {
         const txt = player.singularityStopWork();
         workerScript.log("gymWorkout", () => txt);
@@ -441,6 +450,13 @@ export function NetscriptSingularity(
         default:
           workerScript.log("gymWorkout", () => `Invalid stat: ${stat}.`);
           return false;
+      }
+      if (focus) {
+        player.startFocusing();
+        Router.toWork();
+      } else if (wasFocusing) {
+        player.stopFocusing();
+        Router.toTerminal();
       }
       workerScript.log("gymWorkout", () => `Started training ${stat} at ${gymName}`);
       return true;
@@ -611,9 +627,6 @@ export function NetscriptSingularity(
       );
 
       return netscriptDelay(installTime, workerScript).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         workerScript.log("installBackdoor", () => `Successfully installed backdoor on '${server.hostname}'`);
 
         server.backdoorInstalled = true;
@@ -738,6 +751,7 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("stopAction");
       if (player.isWorking) {
         if (player.focus) {
+          player.stopFocusing();
           Router.toTerminal();
         }
         const txt = player.singularityStopWork();
@@ -1217,10 +1231,11 @@ export function NetscriptSingularity(
       );
       return true;
     },
-    createProgram: function (name: any): any {
+    createProgram: function (name: any, focus = true): any {
       helper.updateDynamicRam("createProgram", getRamCost(player, "createProgram"));
       helper.checkSingularityAccess("createProgram");
 
+      const wasFocusing = player.focus;
       if (player.isWorking) {
         const txt = player.singularityStopWork();
         workerScript.log("createProgram", () => txt);
@@ -1255,6 +1270,13 @@ export function NetscriptSingularity(
       }
 
       player.startCreateProgramWork(Router, p.name, create.time, create.level);
+      if (focus) {
+        player.startFocusing();
+        Router.toWork();
+      } else if (wasFocusing) {
+        player.stopFocusing();
+        Router.toTerminal();
+      }
       workerScript.log("createProgram", () => `Began creating program: '${name}'`);
       return true;
     },

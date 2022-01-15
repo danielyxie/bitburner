@@ -4,7 +4,7 @@
 
 ## Singularity.getUpgradeHomeRamCost() method
 
-SF4.2 - Get the price of upgrading home RAM.
+Get the price of upgrading home RAM.
 
 <b>Signature:</b>
 
@@ -19,7 +19,7 @@ Cost of upgrading the player’s home computer RAM.
 
 ## Remarks
 
-RAM cost: 1.5 GB
+RAM cost: 1.5 GB \* 16/4/1
 
 Returns the cost of upgrading the player’s home computer RAM.
 

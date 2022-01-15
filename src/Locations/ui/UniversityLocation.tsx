@@ -15,6 +15,7 @@ import { Server } from "../../Server/Server";
 
 import { Money } from "../../ui/React/Money";
 import { use } from "../../ui/Context";
+import { Box } from "@mui/material";
 
 type IProps = {
   loc: Location;
@@ -72,45 +73,40 @@ export function UniversityLocation(props: IProps): React.ReactElement {
   const earnCharismaExpTooltip = `Gain charisma experience!`;
 
   return (
-    <>
+    <Box sx={{ display: 'grid', width: 'fit-content' }}>
       <Tooltip title={earnHackingExpTooltip}>
         <Button onClick={study}>Study Computer Science (free)</Button>
       </Tooltip>
-      <br />
       <Tooltip title={earnHackingExpTooltip}>
         <Button onClick={dataStructures}>
           Take Data Structures course (
           <Money money={dataStructuresCost} player={player} /> / sec)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={earnHackingExpTooltip}>
         <Button onClick={networks}>
           Take Networks course (
           <Money money={networksCost} player={player} /> / sec)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={earnHackingExpTooltip}>
         <Button onClick={algorithms}>
           Take Algorithms course (
           <Money money={algorithmsCost} player={player} /> / sec)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={earnCharismaExpTooltip}>
         <Button onClick={management}>
           Take Management course (
           <Money money={managementCost} player={player} /> / sec)
         </Button>
       </Tooltip>
-      <br />
       <Tooltip title={earnCharismaExpTooltip}>
         <Button onClick={leadership}>
           Take Leadership course (
           <Money money={leadershipCost} player={player} /> / sec)
         </Button>
       </Tooltip>
-    </>
+    </Box>
   );
 }

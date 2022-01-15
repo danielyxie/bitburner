@@ -4,7 +4,7 @@
 
 ## Singularity.getCurrentServer() method
 
-SF4.1 - Get the current server.
+Get the current server.
 
 <b>Signature:</b>
 
@@ -19,5 +19,5 @@ Name of the current server.
 
 ## Remarks
 
-RAM cost: 2 GB
+RAM cost: 2 GB \* 16/4/1
 

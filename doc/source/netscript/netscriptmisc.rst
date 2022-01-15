@@ -59,15 +59,14 @@ And the data in port 1 will look like::
 
 .. warning:: In :ref:`netscriptjs`, do not trying writing base
              `Promises <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise>`_
-             to a port. 
+             to a port.
 
 **Port Handles**
 
 WARNING: Port Handles only work in :ref:`netscriptjs`. They do not work in :ref:`netscript1`
 
 The :js:func:`getPortHandle` Netscript function can be used to get a handle to a Netscript Port.
-This handle allows you to access several new port-related functions and the
-port's underlying data structure, which is just a JavaScript array. The functions are:
+This handle allows you to access several new port-related functions. The functions are:
 
 .. js:method:: NetscriptPort.writePort(data)
 
@@ -111,21 +110,10 @@ port's underlying data structure, which is just a JavaScript array. The function
 
     Clears all data from the port. Works the same as the Netscript function `clear`
 
-.. js:attribute:: NetscriptPort.data
-
-    The Netscript port underlying data structure, which is just a Javascript array. All
-    valid Javascript Array methods can be called on this.
-
 Port Handle Example::
 
     port = getPortHandle(5);
     back = port.data.pop(); //Get and remove last element in port
-
-    //Remove an element from the port
-    i = port.data.findIndex("foo");
-    if (i != -1) {
-        port.data.slice(i, 1);
-    }
 
     //Wait for port data before reading
     while(port.empty()) {

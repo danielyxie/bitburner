@@ -15,9 +15,10 @@ export function ActivateRecoveryMode(): void {
 
 interface IProps {
   router: IRouter;
+  softReset: () => void;
 }
 
-export function RecoveryRoot({ router }: IProps): React.ReactElement {
+export function RecoveryRoot({ router, softReset }: IProps): React.ReactElement {
   function recover(): void {
     RecoveryMode = false;
     router.toTerminal();
@@ -48,6 +49,7 @@ export function RecoveryRoot({ router }: IProps): React.ReactElement {
       <br />
       <Typography>You can disable recovery mode now. But chances are the game will not work correctly.</Typography>
       <Button onClick={recover}>DISABLE RECOVERY MODE</Button>
+      <Button onClick={softReset}>PERFORM SOFT RESET</Button>
     </>
   );
 }

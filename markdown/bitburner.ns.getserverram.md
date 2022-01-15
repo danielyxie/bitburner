@@ -25,7 +25,7 @@ getServerRam(host: string): [number, number];
 
 \[number, number\]
 
-Array with total and used memory on the specified server.
+Array with total and used memory on the specified server, in GB.
 
 ## Remarks
 

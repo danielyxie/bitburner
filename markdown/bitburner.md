@@ -4,6 +4,13 @@
 
 ## bitburner package
 
+## Enumerations
+
+|  Enumeration | Description |
+|  --- | --- |
+|  [OrderTypes](./bitburner.ordertypes.md) |  |
+|  [PositionTypes](./bitburner.positiontypes.md) |  |
+
 ## Interfaces
 
 |  Interface | Description |
@@ -41,9 +48,12 @@
 |  [HackingMultipliers](./bitburner.hackingmultipliers.md) | Hack related multipliers. |
 |  [Hacknet](./bitburner.hacknet.md) | Hacknet API |
 |  [HacknetMultipliers](./bitburner.hacknetmultipliers.md) | Hacknet related multipliers. |
+|  [HacknetNodeConstants](./bitburner.hacknetnodeconstants.md) | Hacknet node related constants |
 |  [HacknetNodesFormulas](./bitburner.hacknetnodesformulas.md) | Hacknet Node formulas |
+|  [HacknetServerConstants](./bitburner.hacknetserverconstants.md) | Hacknet server related constants |
 |  [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) | Hacknet Server formulas |
 |  [Material](./bitburner.material.md) | Material in a warehouse |
+|  [NetscriptPort](./bitburner.netscriptport.md) | Object representing a port. A port is a serialized queue. |
 |  [NodeStats](./bitburner.nodestats.md) | Object representing all the values related to a hacknet node. |
 |  [NS](./bitburner.ns.md) | Collection of all functions passed to scripts |
 |  [Office](./bitburner.office.md) | Office for a division in a city. |
@@ -63,10 +73,16 @@
 |  [SleeveWorkGains](./bitburner.sleeveworkgains.md) |  |
 |  [SourceFileLvl](./bitburner.sourcefilelvl.md) |  |
 |  [Stanek](./bitburner.stanek.md) | Stanek's Gift API. |
-|  [StockOrder](./bitburner.stockorder.md) | Return value of [getOrders](./bitburner.tix.getorders.md) |
+|  [StockOrder](./bitburner.stockorder.md) | Return value of [getOrders](./bitburner.tix.getorders.md)<!-- -->Keys are stock symbols, properties are arrays of [StockOrderObject](./bitburner.stockorderobject.md) |
 |  [StockOrderObject](./bitburner.stockorderobject.md) | Value in map of [StockOrder](./bitburner.stockorder.md) |
 |  [TIX](./bitburner.tix.md) | Stock market API |
 |  [UserInterface](./bitburner.userinterface.md) | User Interface API. |
 |  [Warehouse](./bitburner.warehouse.md) | Warehouse for a division in a city |
 |  [WarehouseAPI](./bitburner.warehouseapi.md) | Corporation Warehouse API |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [FilenameOrPID](./bitburner.filenameorpid.md) |  |
 

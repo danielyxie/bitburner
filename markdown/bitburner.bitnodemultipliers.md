@@ -37,6 +37,7 @@ export interface BitNodeMultipliers
 |  [FactionWorkRepGain](./bitburner.bitnodemultipliers.factionworkrepgain.md) | number | Influences how much rep the player gains when performing work for a faction. |
 |  [FourSigmaMarketDataApiCost](./bitburner.bitnodemultipliers.foursigmamarketdataapicost.md) | number | Influences how much it costs to unlock the stock market's 4S Market Data API |
 |  [FourSigmaMarketDataCost](./bitburner.bitnodemultipliers.foursigmamarketdatacost.md) | number | Influences how much it costs to unlock the stock market's 4S Market Data (NOT API) |
+|  [GangSoftcap](./bitburner.bitnodemultipliers.gangsoftcap.md) | number | Influences the respect gain and money gain of your gang. |
 |  [HackExpGain](./bitburner.bitnodemultipliers.hackexpgain.md) | number | Influences the experienced gained when hacking a server. |
 |  [HackingLevelMultiplier](./bitburner.bitnodemultipliers.hackinglevelmultiplier.md) | number | Influences how quickly the player's hacking level (not experience) scales |
 |  [HacknetNodeMoney](./bitburner.bitnodemultipliers.hacknetnodemoney.md) | number | Influences how much money is produced by Hacknet Nodes and the hash rate of Hacknet Servers (unlocked in BitNode-9) |
@@ -47,12 +48,17 @@ export interface BitNodeMultipliers
 |  [PurchasedServerCost](./bitburner.bitnodemultipliers.purchasedservercost.md) | number | Influence how much it costs to purchase a server |
 |  [PurchasedServerLimit](./bitburner.bitnodemultipliers.purchasedserverlimit.md) | number | Influences the maximum number of purchased servers you can have |
 |  [PurchasedServerMaxRam](./bitburner.bitnodemultipliers.purchasedservermaxram.md) | number | Influences the maximum allowed RAM for a purchased server |
+|  [PurchasedServerSoftCap](./bitburner.bitnodemultipliers.purchasedserversoftcap.md) | number | Influences cost of any purchased server at or above 128GB |
 |  [RepToDonateToFaction](./bitburner.bitnodemultipliers.reptodonatetofaction.md) | number | Influences the minimum favor the player must have with a faction before they can donate to gain rep. |
-|  [ScriptHackMoney](./bitburner.bitnodemultipliers.scripthackmoney.md) | number | Influences how much money can be stolen from a server when a script performs a hack against it. |
+|  [ScriptHackMoney](./bitburner.bitnodemultipliers.scripthackmoney.md) | number | Influences how much the money on a server can be reduced when a script performs a hack against it. |
+|  [ScriptHackMoneyGain](./bitburner.bitnodemultipliers.scripthackmoneygain.md) | number | Influences how much of the money stolen by a scripted hack will be added to the player's money. |
 |  [ServerGrowthRate](./bitburner.bitnodemultipliers.servergrowthrate.md) | number | Influences the growth percentage per cycle against a server. |
 |  [ServerMaxMoney](./bitburner.bitnodemultipliers.servermaxmoney.md) | number | Influences the maxmimum money that a server can grow to. |
 |  [ServerStartingMoney](./bitburner.bitnodemultipliers.serverstartingmoney.md) | number | Influences the initial money that a server starts with. |
 |  [ServerStartingSecurity](./bitburner.bitnodemultipliers.serverstartingsecurity.md) | number | Influences the initial security level (hackDifficulty) of a server. |
 |  [ServerWeakenRate](./bitburner.bitnodemultipliers.serverweakenrate.md) | number | Influences the weaken amount per invocation against a server. |
+|  [StaneksGiftExtraSize](./bitburner.bitnodemultipliers.staneksgiftextrasize.md) | number | Influences the size of the gift |
+|  [StaneksGiftPowerMultiplier](./bitburner.bitnodemultipliers.staneksgiftpowermultiplier.md) | number | Influences the power of the gift |
 |  [StrengthLevelMultiplier](./bitburner.bitnodemultipliers.strengthlevelmultiplier.md) | number | Influences how quickly the player's strength level (not exp) scales |
+|  [WorldDaemonDifficulty](./bitburner.bitnodemultipliers.worlddaemondifficulty.md) | number | Influences the hacking skill required to backdoor the world daemon. |
 

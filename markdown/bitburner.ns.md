@@ -125,6 +125,7 @@ export async function main(ns) {
 |  [kill(script, host, args)](./bitburner.ns.kill_1.md) |  |
 |  [killall(host)](./bitburner.ns.killall.md) | Terminate all scripts on a server. |
 |  [ls(host, grep)](./bitburner.ns.ls.md) | List files on a server. |
+|  [mv(host, source, destination)](./bitburner.ns.mv.md) | Move a file on the target server. |
 |  [nFormat(n, format)](./bitburner.ns.nformat.md) | Format a number |
 |  [nuke(host)](./bitburner.ns.nuke.md) | Runs NUKE.exe on a server. |
 |  [peek(port)](./bitburner.ns.peek.md) | Get a copy of the data from a port without popping it. |
@@ -138,7 +139,8 @@ export async function main(ns) {
 |  [rm(name, host)](./bitburner.ns.rm.md) | Delete a file. |
 |  [run(script, numThreads, args)](./bitburner.ns.run.md) | Start another script on the current server. |
 |  [scan(host)](./bitburner.ns.scan.md) | Get the list of servers connected to a server. |
-|  [scp(files, source, destination)](./bitburner.ns.scp.md) | Copy file between servers. |
+|  [scp(files, destination)](./bitburner.ns.scp.md) | Copy file between servers. |
+|  [scp(files, source, destination)](./bitburner.ns.scp_1.md) |  |
 |  [scriptKill(script, host)](./bitburner.ns.scriptkill.md) | Kill all scripts with a filename. |
 |  [scriptRunning(script, host)](./bitburner.ns.scriptrunning.md) | Check if any script with a filename is running. |
 |  [serverExists(host)](./bitburner.ns.serverexists.md) | Returns a boolean denoting whether or not the specified server exists. |

@@ -9,7 +9,7 @@ Format a string.
 <b>Signature:</b>
 
 ```typescript
-sprintf(format: string, ...args: string[]): string;
+sprintf(format: string, ...args: any[]): string;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ sprintf(format: string, ...args: string[]): string;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  format | string | String to format. |
-|  args | string\[\] | Formating arguments. |
+|  args | any\[\] | Formating arguments. |
 
 <b>Returns:</b>
 

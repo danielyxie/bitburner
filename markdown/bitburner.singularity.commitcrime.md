@@ -4,7 +4,7 @@
 
 ## Singularity.commitCrime() method
 
-SF4.3 - Commit a crime.
+Commit a crime.
 
 <b>Signature:</b>
 
@@ -22,11 +22,11 @@ commitCrime(crime: string): number;
 
 number
 
-True if you successfully start working on the specified program, and false otherwise.
+The number of milliseconds it takes to attempt the specified crime.
 
 ## Remarks
 
-RAM cost: 5 GB
+RAM cost: 5 GB \* 16/4/1
 
 This function is used to automatically attempt to commit crimes. If you are already in the middle of some ‘working’ action (such as working for a company or training at a gym), then running this function will automatically cancel that action and give you your earnings.
 

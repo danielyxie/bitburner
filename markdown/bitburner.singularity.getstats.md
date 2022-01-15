@@ -9,7 +9,7 @@
 > use getPlayer
 > 
 
-SF4.1 - Returns an object with the Player’s stats.
+Returns an object with the Player’s stats.
 
 <b>Signature:</b>
 
@@ -24,7 +24,7 @@ Object with the Player’s stats.
 
 ## Remarks
 
-RAM cost: 0.5 GB
+RAM cost: 0.5 GB \* 16/4/1
 
 ## Example
 

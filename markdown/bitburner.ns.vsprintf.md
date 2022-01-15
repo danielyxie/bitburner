@@ -9,7 +9,7 @@ Format a string with an array of arguments.
 <b>Signature:</b>
 
 ```typescript
-vsprintf(format: string, args: string[]): string;
+vsprintf(format: string, args: any[]): string;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ vsprintf(format: string, args: string[]): string;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  format | string | String to format. |
-|  args | string\[\] | Formating arguments. |
+|  args | any\[\] | Formating arguments. |
 
 <b>Returns:</b>
 

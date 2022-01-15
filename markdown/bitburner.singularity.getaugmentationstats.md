@@ -4,7 +4,7 @@
 
 ## Singularity.getAugmentationStats() method
 
-SF4.3 - Get the stats of an augmentation.
+Get the stats of an augmentation.
 
 <b>Signature:</b>
 
@@ -26,7 +26,7 @@ Augmentation stats.
 
 ## Remarks
 
-RAM cost: 5 GB
+RAM cost: 5 GB \* 16/4/1
 
 This function returns augmentation stats.
 

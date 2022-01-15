@@ -1,8 +1,10 @@
 import { ISelfInitializer, ISelfLoading } from "../types";
 import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
 import { defaultTheme, ITheme } from "./Themes";
-import { defaultStyles, IStyleSettings } from "./Styles";
-import { WordWrapOptions } from '../ScriptEditor/ui/Options';
+import { defaultStyles } from "./Styles";
+import { WordWrapOptions } from "../ScriptEditor/ui/Options";
+import { OverviewSettings } from "../ui/React/Overview";
+import { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
 
 /**
  * Represents the default settings the player could customize.
@@ -40,6 +42,11 @@ interface IDefaultSettings {
    * Whether text effects such as corruption should be visible.
    */
   DisableTextEffects: boolean;
+
+  /**
+   * Whether overview progress bars should be visible.
+   */
+  DisableOverviewProgressBars: boolean;
 
   /**
    * Enable bash hotkeys
@@ -112,6 +119,11 @@ interface IDefaultSettings {
   SuppressSavedGameToast: boolean;
 
   /*
+   * Whether the game should skip saving the running scripts for late game
+   */
+  ExcludeRunningScriptsFromSave: boolean;
+
+  /*
    * Theme colors
    */
   theme: ITheme;
@@ -125,6 +137,11 @@ interface IDefaultSettings {
    * Use GiB instead of GB
    */
   UseIEC60027_2: boolean;
+
+  /*
+   * Character overview settings
+   */
+  overview: OverviewSettings;
 }
 
 /**
@@ -160,6 +177,7 @@ export const defaultSettings: IDefaultSettings = {
   DisableASCIIArt: false,
   DisableHotkeys: false,
   DisableTextEffects: false,
+  DisableOverviewProgressBars: false,
   EnableBashHotkeys: false,
   TimestampsFormat: "",
   Locale: "en",
@@ -175,9 +193,11 @@ export const defaultSettings: IDefaultSettings = {
   SuppressTIXPopup: false,
   SuppressSavedGameToast: false,
   UseIEC60027_2: false,
+  ExcludeRunningScriptsFromSave: false,
 
   theme: defaultTheme,
   styles: defaultStyles,
+  overview: { x: 0, y: 0, opened: true },
 };
 
 /**
@@ -192,6 +212,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   DisableASCIIArt: defaultSettings.DisableASCIIArt,
   DisableHotkeys: defaultSettings.DisableHotkeys,
   DisableTextEffects: defaultSettings.DisableTextEffects,
+  DisableOverviewProgressBars: defaultSettings.DisableOverviewProgressBars,
   EnableBashHotkeys: defaultSettings.EnableBashHotkeys,
   TimestampsFormat: defaultSettings.TimestampsFormat,
   Locale: "en",
@@ -209,14 +230,16 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressTIXPopup: defaultSettings.SuppressTIXPopup,
   SuppressSavedGameToast: defaultSettings.SuppressSavedGameToast,
   UseIEC60027_2: defaultSettings.UseIEC60027_2,
+  ExcludeRunningScriptsFromSave: defaultSettings.ExcludeRunningScriptsFromSave,
   MonacoTheme: "monokai",
   MonacoInsertSpaces: false,
   MonacoFontSize: 20,
   MonacoVim: false,
-  MonacoWordWrap: 'off',
+  MonacoWordWrap: "off",
 
   theme: { ...defaultTheme },
   styles: { ...defaultStyles },
+  overview: defaultSettings.overview,
   init() {
     Object.assign(Settings, defaultSettings);
   },
@@ -226,6 +249,8 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     delete save.theme;
     Object.assign(Settings.styles, save.styles);
     delete save.styles;
+    Object.assign(Settings.overview, save.overview);
+    delete save.overview;
     Object.assign(Settings, save);
   },
 };
