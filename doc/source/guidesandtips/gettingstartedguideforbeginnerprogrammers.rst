@@ -200,52 +200,52 @@ Here's what mine showed at the time I made this::
     --Root Access: YES, Required hacking skill: 1
     --Number of open ports required to NUKE: 0
     --RAM: 4.00GB
-    
+
     ----zer0
     ------Root Access: NO, Required hacking skill: 75
     ------Number of open ports required to NUKE: 1
     ------RAM: 32.00GB
-    
+
     foodnstuff
     --Root Access: NO, Required hacking skill: 1
     --Number of open ports required to NUKE: 0
     --RAM: 16.00GB
-    
+
     sigma-cosmetics
     --Root Access: NO, Required hacking skill: 5
     --Number of open ports required to NUKE: 0
     --RAM: 16.00GB
-    
+
     joesguns
     --Root Access: NO, Required hacking skill: 10
     --Number of open ports required to NUKE: 0
     --RAM: 16.00GB
-    
+
     ----max-hardware
     ------Root Access: NO, Required hacking skill: 80
     ------Number of open ports required to NUKE: 1
     ------RAM: 32.00GB
-    
+
     ----CSEC
     ------Root Access: NO, Required hacking skill: 54
     ------Number of open ports required to NUKE: 1
     ------RAM: 8.00GB
-    
+
     hong-fang-tea
     --Root Access: NO, Required hacking skill: 30
     --Number of open ports required to NUKE: 0
     --RAM: 16.00GB
-    
+
     ----nectar-net
     ------Root Access: NO, Required hacking skill: 20
     ------Number of open ports required to NUKE: 0
     ------RAM: 16.00GB
-    
+
     harakiri-sushi
     --Root Access: NO, Required hacking skill: 40
     --Number of open ports required to NUKE: 0
     --RAM: 16.00GB
-    
+
     iron-gym
     --Root Access: NO, Required hacking skill: 100
     --Number of open ports required to NUKE: 1
@@ -806,8 +806,7 @@ startup script. Feel free to adjust it to your liking.
 
     // Array of all servers that don't need any ports opened
     // to gain root access. These have 16 GB of RAM
-    var servers0Port = ["n00dles",
-                        "sigma-cosmetics",
+    var servers0Port = ["sigma-cosmetics",
                         "joesguns",
                         "nectar-net",
                         "hong-fang-tea",
