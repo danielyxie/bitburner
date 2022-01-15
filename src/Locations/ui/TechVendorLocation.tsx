@@ -18,6 +18,7 @@ import { Money } from "../../ui/React/Money";
 import { use } from "../../ui/Context";
 import { PurchaseServerModal } from "./PurchaseServerModal";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Box } from "@mui/material";
 
 interface IServerProps {
   ram: number;
@@ -70,7 +71,9 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
   return (
     <>
       <br />
-      {purchaseServerButtons}
+      <Box sx={{ display: 'grid', width: 'fit-content' }}>
+        {purchaseServerButtons}
+      </Box>
       <br />
       <Typography>
         <i>"You can order bigger servers via scripts. We don't take custom orders in person."</i>
