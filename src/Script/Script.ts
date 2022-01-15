@@ -118,7 +118,7 @@ export class Script {
    */
   saveScript(player: IPlayer, filename: string, code: string, hostname: string, otherScripts: Script[]): void {
     // Update code and filename
-    this.code = Script.formatCode(this.code);
+    this.code = Script.formatCode(code);
 
     this.filename = filename;
     this.server = hostname;
@@ -164,7 +164,7 @@ export class Script {
    * @param {string} code - The code to format
    * @returns The formatted code
    */
-   static formatCode(code: string): string {
+  static formatCode(code: string): string {
     return code.replace(/^\s+|\s+$/g, "");
   }
 }
