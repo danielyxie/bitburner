@@ -279,7 +279,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "i to i+n.",
         "\n\nAssuming you are initially positioned",
         "at the start of the array, determine whether you are",
-        "able to reach the last index exactly.\n\n",
+        "able to reach the last index.\n\n",
         "Your answer should be submitted as 1 or 0, representing true and false respectively",
       ].join(" ");
     },
