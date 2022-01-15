@@ -4898,6 +4898,7 @@ export interface NS extends Singularity {
    * @param destination - Host of the destination server, which is the server to which the file will be copied.
    * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
    */
+  scp(files: string | string[], destination: string): Promise<boolean>;
   scp(files: string | string[], source: string, destination: string): Promise<boolean>;
 
   /**

@@ -1074,7 +1074,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("exit", () => "Failed. This is a bug. Report to dev.");
       }
     },
-    scp: async function (scriptname: any, hostname1: any, hostname2: any): Promise<boolean> {
+    scp: async function (scriptname: any, hostname1: any, hostname2?: any): Promise<boolean> {
       updateDynamicRam("scp", getRamCost(Player, "scp"));
       if (arguments.length !== 2 && arguments.length !== 3) {
         throw makeRuntimeErrorMsg("scp", "Takes 2 or 3 arguments");
