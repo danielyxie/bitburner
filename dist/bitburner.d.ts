@@ -4100,6 +4100,26 @@ export declare interface NS extends Singularity {
     atExit(f: () => void): void;
 
     /**
+     * Move a file on the target server.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * NS2 exclusive
+     *
+     * Move the source file to the specified destination on the target server.
+     *
+     * This command only works for scripts and text files (.txt). It cannot, however,  be used
+     * to convert from script to text file, or vice versa.
+     *
+     * This function can also be used to rename files.
+     * 
+     * @param host - Host of target server.
+     * @param source - Filename of the source file.
+     * @param destination - Filename of the destination file.
+     */
+    mv(host: string, source: string, destination: string): void;
+
+    /**
      * Parse command line flags.
      * @remarks
      * RAM cost: 0 GB
@@ -6190,12 +6210,12 @@ export declare interface WarehouseAPI {
      * @param all - Sell in all city
      */
     sellProduct(
-    divisionName: string,
-    cityName: string,
-    productName: string,
-    amt: string,
-    price: string,
-    all: boolean,
+        divisionName: string,
+        cityName: string,
+        productName: string,
+        amt: string,
+        price: string,
+        all: boolean,
     ): void;
     /**
      * Discontinue a product.
@@ -6279,12 +6299,12 @@ export declare interface WarehouseAPI {
      * @param amt - Amount of material to export.
      */
     exportMaterial(
-    sourceDivision: string,
-    sourceCity: string,
-    targetDivision: string,
-    targetCity: string,
-    materialName: string,
-    amt: number,
+        sourceDivision: string,
+        sourceCity: string,
+        targetDivision: string,
+        targetCity: string,
+        materialName: string,
+        amt: number,
     ): void;
     /**
      * Cancel material export
@@ -6296,12 +6316,12 @@ export declare interface WarehouseAPI {
      * @param amt - Amount of material to export.
      */
     cancelExportMaterial(
-    sourceDivision: string,
-    sourceCity: string,
-    targetDivision: string,
-    targetCity: string,
-    materialName: string,
-    amt: number,
+        sourceDivision: string,
+        sourceCity: string,
+        targetDivision: string,
+        targetCity: string,
+        materialName: string,
+        amt: number,
     ): void;
     /**
      * Purchase warehouse for a new city
@@ -6324,11 +6344,11 @@ export declare interface WarehouseAPI {
      * @param marketingInvest - Amount to invest for the marketing of the product.
      */
     makeProduct(
-    divisionName: string,
-    cityName: string,
-    productName: string,
-    designInvest: number,
-    marketingInvest: number,
+        divisionName: string,
+        cityName: string,
+        productName: string,
+        designInvest: number,
+        marketingInvest: number,
     ): void;
 }
 
