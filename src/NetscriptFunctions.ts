@@ -352,7 +352,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (rand < hackChance) {
         // Success!
         const percentHacked = calculatePercentMoneyHacked(server, Player);
-        let maxThreadNeeded = Math.ceil((1 / percentHacked) * (server.moneyAvailable / server.moneyMax));
+        let maxThreadNeeded = Math.ceil(1 / percentHacked);
         if (isNaN(maxThreadNeeded)) {
           // Server has a 'max money' of 0 (probably). We'll set this to an arbitrarily large value
           maxThreadNeeded = 1e6;
