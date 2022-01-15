@@ -72,6 +72,7 @@ export interface IPlayer {
   sourceFiles: IPlayerOwnedSourceFile[];
   exploits: Exploit[];
   achievements: PlayerAchievement[];
+  terminalCommandHistory: string[];
   lastUpdate: number;
   totalPlaytime: number;
 
