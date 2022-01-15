@@ -735,6 +735,7 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("stopAction");
       if (player.isWorking) {
         if (player.focus) {
+          player.stopFocusing();
           Router.toTerminal();
         }
         const txt = player.singularityStopWork();

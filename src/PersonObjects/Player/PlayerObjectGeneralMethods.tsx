@@ -729,6 +729,7 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
   }
 
   this.isWorking = false;
+  this.focus = false;
 
   this.resetWorkStatus();
   if (sing) {
