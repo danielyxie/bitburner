@@ -68,6 +68,10 @@ export function SellMaterialModal(props: IProps): React.ReactElement {
         of the material than you produce.
         <br />
         <br />
+        Setting the sell amount to 'STORE' can be used to retain a certain amount and sell the rest. For example, if you
+        set the amount to 'STORE-10', you will sell all material in store, but retain 10 units/second.
+        <br />
+        <br />
         When setting the sell price, you can use the 'MP' variable to designate a dynamically changing price that
         depends on the market price. For example, if you set the sell price to 'MP+10' then it will always be sold at
         $10 above the market price.

@@ -106,11 +106,10 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
 
   //Parse quantity
   amt = amt.toUpperCase();
-  if (amt.includes("MAX") || amt.includes("PROD")) {
+  if (amt.includes("MAX") || amt.includes("PROD") || amt.includes("STORE")) {
     let q = amt.replace(/\s+/g, "");
-    q = q.replace(/[^-()\d/*+.MAXPROD]/g, "");
-    let tempQty = q.replace(/MAX/g, "1");
-    tempQty = tempQty.replace(/PROD/g, "1");
+    q = q.replace(/[^-()\d/*+.MAXPRODSTE]/g, "");
+    let tempQty = q.replace(/(MAX|PROD|STORE)/g, "1");
     try {
       tempQty = eval(tempQty);
     } catch (e) {
@@ -145,16 +144,17 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
   if (price.includes("MP")) {
     //Dynamically evaluated quantity. First test to make sure its valid
     //Sanitize input, then replace dynamic variables with arbitrary numbers
+
     price = price.replace(/\s+/g, "");
     price = price.replace(/[^-()\d/*+.MP]/g, "");
     let temp = price.replace(/MP/g, "1");
     try {
       temp = eval(temp);
     } catch (e) {
-      throw new Error("Invalid value or expression for sell quantity field: " + e);
+      throw new Error("Invalid value or expression for sell price field: " + e);
     }
     if (temp == null || isNaN(parseFloat(temp))) {
-      throw new Error("Invalid value or expression for sell quantity field.");
+      throw new Error("Invalid value or expression for sell price field.");
     }
     product.sCost = price; //Use sanitized price
   } else {
@@ -170,20 +170,19 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
 
   // Parse quantity
   amt = amt.toUpperCase();
-  if (amt.includes("MAX") || amt.includes("PROD")) {
+  if (amt.includes("MAX") || amt.includes("PROD") || amt.includes("STORE")) {
     //Dynamically evaluated quantity. First test to make sure its valid
     let qty = amt.replace(/\s+/g, "");
-    qty = qty.replace(/[^-()\d/*+.MAXPROD]/g, "");
-    let temp = qty.replace(/MAX/g, "1");
-    temp = temp.replace(/PROD/g, "1");
+    qty = qty.replace(/[^-()\d/*+.MAXPRODSTE]/g, "");
+    let temp = qty.replace(/(MAX|PROD|STORE)/g, "1");
     try {
       temp = eval(temp);
     } catch (e) {
-      throw new Error("Invalid value or expression for sell price field: " + e);
+      throw new Error("Invalid value or expression for sell quantity field: " + e);
     }
 
     if (temp == null || isNaN(parseFloat(temp))) {
-      throw new Error("Invalid value or expression for sell price field");
+      throw new Error("Invalid value or expression for sell quantity field");
     }
     if (all) {
       for (let i = 0; i < cities.length; ++i) {

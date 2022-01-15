@@ -838,6 +838,7 @@ export class Industry implements IIndustry {
                   //Dynamically evaluated
                   let tmp = (mat.sllman[1] as string).replace(/MAX/g, (maxSell + "").toUpperCase());
                   tmp = tmp.replace(/PROD/g, mat.prd + "");
+                  tmp = tmp.replace(/STORE/g, (mat.qty / (CorporationConstants.SecsPerMarketCycle * marketCycles)) + "");
                   try {
                     sellAmt = eval(tmp);
                   } catch (e) {
@@ -861,7 +862,6 @@ export class Industry implements IIndustry {
                   //Player's input value is just a number
                   sellAmt = Math.min(maxSell, mat.sllman[1] as number);
                 }
-
                 sellAmt = sellAmt * CorporationConstants.SecsPerMarketCycle * marketCycles;
                 sellAmt = Math.min(mat.qty, sellAmt);
                 if (sellAmt < 0) {
@@ -1199,6 +1199,7 @@ export class Industry implements IIndustry {
               //Sell amount is dynamically evaluated
               let tmp = product.sllman[city][1].replace(/MAX/g, (maxSell + "").toUpperCase());
               tmp = tmp.replace(/PROD/g, product.data[city][1]);
+              tmp = tmp.replace(/STORE/g, (product.data[city][0] / (CorporationConstants.SecsPerMarketCycle * marketCycles)) + '');
               try {
                 tmp = eval(tmp);
               } catch (e) {
