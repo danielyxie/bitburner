@@ -128,7 +128,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
     //  and for background colors we use the dark color set.  Of course, all colors are available
     //  via the longer ESC[n8;5;c] sequence (n={3,4}, c=color).  Ideally, these 8-bit maps could
     //  be managed in the user preferences/theme.
-    const COLOR_MAP_BRIGHT : Record<string|number,any> = {
+    const COLOR_MAP_BRIGHT : Record<string|number,string> = {
       0: '#404040',
       1: '#ff0000',
       2: '#00ff00',
@@ -138,7 +138,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
       6: '#00ffff',
       7: '#ffffff',
     }
-    const COLOR_MAP_DARK : Record<string|number,any> = {
+    const COLOR_MAP_DARK : Record<string|number,string> = {
       0: '#000000',
       1: '#800000',
       2: '#008000',
