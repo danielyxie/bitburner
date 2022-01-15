@@ -311,9 +311,6 @@ export function NetscriptCorporation(
       const job = helper.string("assignJob", "job", ajob);
       const employee = getEmployee(divisionName, cityName, employeeName);
       return netscriptDelay(1000, workerScript).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         return Promise.resolve(AssignJob(employee, job));
       });
     },
@@ -344,9 +341,6 @@ export function NetscriptCorporation(
         (60 * 1000) / (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1)),
         workerScript,
       ).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         return Promise.resolve(ThrowParty(corporation, office, costPerEmployee));
       });
     },
@@ -359,9 +353,6 @@ export function NetscriptCorporation(
         (60 * 1000) / (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1)),
         workerScript,
       ).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         return Promise.resolve(BuyCoffee(corporation, getDivision(divisionName), getOffice(divisionName, cityName)));
       });
     },

@@ -3,6 +3,7 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Settings } from "../../Settings/Settings";
 
 export function mem(
   terminal: ITerminal,
@@ -40,8 +41,9 @@ export function mem(
     );
 
     const verboseEntries = script.ramUsageEntries?.sort((a, b) => b.cost - a.cost) ?? [];
+    const padding = Settings.UseIEC60027_2 ? 9 : 8;
     for (const entry of verboseEntries) {
-      terminal.print(`${numeralWrapper.formatRAM(entry.cost * numThreads).padStart(8)} | ${entry.name} (${entry.type})`);
+      terminal.print(`${numeralWrapper.formatRAM(entry.cost * numThreads).padStart(padding)} | ${entry.name} (${entry.type})`);
     }
 
     if (ramUsage > 0 && verboseEntries.length === 0) {

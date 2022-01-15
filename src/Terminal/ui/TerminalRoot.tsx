@@ -95,20 +95,42 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
     setKey((key) => key + 1);
   }
 
-  useEffect(() => TerminalEvents.subscribe(_.debounce(async () => rerender(), 25, { maxWait: 50 })), []);
-  useEffect(() => TerminalClearEvents.subscribe(_.debounce(async () => clear(), 25, { maxWait: 50 })), []);
+  useEffect(() => {
+    const debounced = _.debounce(async () => rerender(), 25, { maxWait: 50 });
+    const unsubscribe = TerminalEvents.subscribe(debounced);
+    return () => {
+      debounced.cancel();
+      unsubscribe();
+    }
+  }, []);
 
-  function doScroll(): void {
+  useEffect(() => {
+    const debounced = _.debounce(async () => clear(), 25, { maxWait: 50 });
+    const unsubscribe = TerminalClearEvents.subscribe(debounced);
+    return () => {
+      debounced.cancel();
+      unsubscribe();
+    }
+  }, []);
+
+  function doScroll(): number | undefined {
     const hook = scrollHook.current;
     if (hook !== null) {
-      setTimeout(() => hook.scrollIntoView(true), 50);
+      return window.setTimeout(() => hook.scrollIntoView(true), 50);
     }
   }
 
   doScroll();
 
   useEffect(() => {
-    setTimeout(doScroll, 50);
+    let scrollId: number;
+    const id = setTimeout(() => {
+      scrollId = doScroll() ?? 0;
+    }, 50);
+    return () => {
+      clearTimeout(id);
+      clearTimeout(scrollId);
+    }
   }, []);
 
   function lineClass(s: string): string {

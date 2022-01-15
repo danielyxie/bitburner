@@ -110,6 +110,32 @@ interface RunningScript {
 }
 
 /**
+ * Interface of a netscript port
+ * @public
+ */
+export interface IPort {
+  /** write data to the port and removes and returns first element if full */
+  write: (value: any) => any;
+  /** add data to port if not full.
+   * @returns true if added and false if full and not added */
+  tryWrite: (value: any) => boolean;
+  /** reads and removes first element from port
+   * if no data in port returns "NULL PORT DATA"
+   */
+  read: () => any;
+  /** reads first element without removing it from port
+   * if no data in port returns "NULL PORT DATA"
+   */
+  peek: () => any;
+  /** check if port is full */
+  full: () => boolean;
+  /** check if port is empty */
+  empty: () => boolean;
+  /** removes all data from port */
+  clear: () => void;
+}
+
+/**
  * Data representing the internal values of a crime.
  * @public
  */
@@ -1776,7 +1802,7 @@ export interface Singularity {
    * guarantee that your browser will follow that time limit.
    *
    * @param crime - Name of crime to attempt.
-   * @returns True if you successfully start working on the specified program, and false otherwise.
+   * @returns The number of milliseconds it takes to attempt the specified crime.
    */
   commitCrime(crime: string): number;
 
@@ -3854,6 +3880,36 @@ interface UserInterface {
    * RAM cost: cost: 0 GB
    */
   resetTheme(): void;
+
+  /**
+   * Get the current styles
+   * @remarks
+   * RAM cost: cost: 0 GB
+   *
+   * @returns An object containing the player's styles
+   */
+  getStyles(): IStyleSettings;
+
+  /**
+   * Sets the current styles
+   * @remarks
+   * RAM cost: cost: 0 GB
+   * @example
+   * Usage example (NS2)
+   * ```ts
+   * const styles = ns.ui.getStyles();
+   * styles.fontFamily = 'Comic Sans Ms';
+   * ns.ui.setStyles(styles);
+   * ```
+   */
+  setStyles(newStyles: IStyleSettings): void;
+
+  /**
+   * Resets the player's styles to the default values
+   * @remarks
+   * RAM cost: cost: 0 GB
+   */
+  resetStyles(): void;
 }
 
 /**
@@ -5409,7 +5465,7 @@ export interface NS extends Singularity {
    * @param port - Port number. Must be an integer between 1 and 20.
    * @returns Data in the specified port.
    */
-  getPortHandle(port: number): any[];
+  getPortHandle(port: number): IPort;
 
   /**
    * Delete a file.
@@ -5604,7 +5660,7 @@ export interface NS extends Singularity {
    * @param args - Formating arguments.
    * @returns Formated text.
    */
-  sprintf(format: string, ...args: string[]): string;
+  sprintf(format: string, ...args: any[]): string;
 
   /**
    * Format a string with an array of arguments.
@@ -5616,7 +5672,7 @@ export interface NS extends Singularity {
    * @param args - Formating arguments.
    * @returns Formated text.
    */
-  vsprintf(format: string, args: string[]): string;
+  vsprintf(format: string, args: any[]): string;
 
   /**
    * Format a number
@@ -6327,4 +6383,13 @@ interface UserInterfaceTheme {
   backgroundprimary: string;
   backgroundsecondary: string;
   button: string;
+}
+
+/**
+ * Interface Styles
+ * @internal
+ */
+interface IStyleSettings {
+  fontFamily: string;
+  lineHeight: number;
 }

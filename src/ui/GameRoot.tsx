@@ -77,7 +77,6 @@ import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
 import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
 import { AchievementsRoot } from "../Achievements/AchievementsRoot";
-import { Settings } from "../Settings/Settings";
 
 const htmlLocation = location;
 
@@ -93,6 +92,11 @@ const useStyles = makeStyles((theme: Theme) =>
       "-ms-overflow-style": "none" /* for Internet Explorer, Edge */,
       "scrollbar-width": "none" /* for Firefox */,
       margin: theme.spacing(0),
+      flexGrow: 1,
+      display: "block",
+      padding: "8px",
+      minHeight: "100vh",
+      boxSizing: 'border-box',
     },
   }),
 );
@@ -187,7 +191,7 @@ export let Router: IRouter = {
   },
   toAchievements: () => {
     throw new Error("Router called before initialization");
-  }
+  },
 };
 
 function determineStartPage(player: IPlayer): Page {
@@ -198,7 +202,7 @@ function determineStartPage(player: IPlayer): Page {
 
 export function GameRoot({ player, engine, terminal }: IProps): React.ReactElement {
   const classes = useStyles();
-  const [{files, vim}, setEditorOptions] = useState({files: {}, vim: false})
+  const [{ files, vim }, setEditorOptions] = useState({ files: {}, vim: false });
   const [page, setPage] = useState(determineStartPage(player));
   const setRerender = useState(0)[1];
   const [faction, setFaction] = useState<Faction>(
@@ -315,7 +319,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       mainPage = <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />;
       withSidebar = false;
       withPopups = false;
-      break
+      break;
     }
     case Page.Infiltration: {
       mainPage = <InfiltrationRoot location={location} />;
@@ -351,13 +355,15 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.ScriptEditor: {
-      mainPage = <ScriptEditorRoot
-        files={files}
-        hostname={player.getCurrentServer().hostname}
-        player={player}
-        router={Router}
-        vim={vim}
-      />;
+      mainPage = (
+        <ScriptEditorRoot
+          files={files}
+          hostname={player.getCurrentServer().hostname}
+          player={player}
+          router={Router}
+          vim={vim}
+        />
+      );
       break;
     }
     case Page.ActiveScripts: {
@@ -385,13 +391,15 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Tutorial: {
-      mainPage = <TutorialRoot
-        reactivateTutorial={() => {
-          prestigeAugmentation();
-          Router.toTerminal();
-          iTutorialStart();
-        }}
-      />;
+      mainPage = (
+        <TutorialRoot
+          reactivateTutorial={() => {
+            prestigeAugmentation();
+            Router.toTerminal();
+            iTutorialStart();
+          }}
+        />
+      );
       break;
     }
     case Page.DevMenu: {
@@ -419,59 +427,65 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.StockMarket: {
-      mainPage = <StockMarketRoot
-        buyStockLong={buyStock}
-        buyStockShort={shortStock}
-        cancelOrder={cancelOrder}
-        eventEmitterForReset={eventEmitterForUiReset}
-        initStockMarket={initStockMarketFnForReact}
-        p={player}
-        placeOrder={placeOrder}
-        sellStockLong={sellStock}
-        sellStockShort={sellShort}
-        stockMarket={StockMarket}
-      />;
+      mainPage = (
+        <StockMarketRoot
+          buyStockLong={buyStock}
+          buyStockShort={shortStock}
+          cancelOrder={cancelOrder}
+          eventEmitterForReset={eventEmitterForUiReset}
+          initStockMarket={initStockMarketFnForReact}
+          p={player}
+          placeOrder={placeOrder}
+          sellStockLong={sellStock}
+          sellStockShort={sellShort}
+          stockMarket={StockMarket}
+        />
+      );
       break;
     }
     case Page.City: {
       mainPage = <LocationCity />;
       break;
     }
-    case Page.Job: 
+    case Page.Job:
     case Page.Location: {
       mainPage = <GenericLocation loc={location} />;
       break;
     }
     case Page.Options: {
-      mainPage = <GameOptionsRoot
-        player={player}
-        save={() => saveObject.saveGame()}
-        export={() => {
-          // Apply the export bonus before saving the game
-          onExport(player);
-          saveObject.exportGame()
-        }}
-        forceKill={killAllScripts}
-        softReset={() => {
-          dialogBoxCreate("Soft Reset!");
-          prestigeAugmentation();
-          Router.toTerminal();
-        }}
-      />;
+      mainPage = (
+        <GameOptionsRoot
+          player={player}
+          save={() => saveObject.saveGame()}
+          export={() => {
+            // Apply the export bonus before saving the game
+            onExport(player);
+            saveObject.exportGame();
+          }}
+          forceKill={killAllScripts}
+          softReset={() => {
+            dialogBoxCreate("Soft Reset!");
+            prestigeAugmentation();
+            Router.toTerminal();
+          }}
+        />
+      );
       break;
     }
     case Page.Augmentations: {
-      mainPage = <AugmentationsRoot
-        exportGameFn={() => {
-          // Apply the export bonus before saving the game
-          onExport(player);
-          saveObject.exportGame();
-        }}
-        installAugmentationsFn={() => {
-          installAugmentations();
-          Router.toTerminal();
-        }}
-      />;
+      mainPage = (
+        <AugmentationsRoot
+          exportGameFn={() => {
+            // Apply the export bonus before saving the game
+            onExport(player);
+            saveObject.exportGame();
+          }}
+          installAugmentationsFn={() => {
+            installAugmentations();
+            Router.toTerminal();
+          }}
+        />
+      );
       break;
     }
     case Page.Achievements: {
@@ -479,12 +493,12 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
   }
-  
+
   return (
     <Context.Player.Provider value={player}>
       <Context.Router.Provider value={Router}>
         <SnackbarProvider>
-          <Overview>
+          <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
             {!ITutorial.isRunning ? (
               <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
             ) : (
@@ -494,19 +508,19 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
           {withSidebar ? (
             <Box display="flex" flexDirection="row" width="100%">
               <SidebarRoot player={player} router={Router} page={page} />
-              <Box className={classes.root} flexGrow={1} display="block" px={1} min-height="100vh">
-                {mainPage}
-              </Box>
+              <Box className={classes.root}>{mainPage}</Box>
             </Box>
-          ) : mainPage }
+          ) : (
+            <Box className={classes.root}>{mainPage}</Box>
+          )}
           <Unclickable />
           {withPopups && (
             <>
-            <LogBoxManager />
-            <AlertManager />
-            <PromptManager />
-            <InvitationModal />
-            <Snackbar />
+              <LogBoxManager />
+              <AlertManager />
+              <PromptManager />
+              <InvitationModal />
+              <Snackbar />
             </>
           )}
         </SnackbarProvider>

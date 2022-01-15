@@ -29,7 +29,7 @@ export function AchievementList({ achievements, playerAchievements }: IProps): J
   const secret = data.filter(entry => !entry.unlockedOn && entry.achievement.Secret)
 
   // Locked behind locked content (bitnode x)
-  const unavailable = data.filter(entry => !entry.unlockedOn && !entry.achievement.Secret && entry.achievement.Visible && entry.achievement.Visible());
+  const unavailable = data.filter(entry => !entry.unlockedOn && !entry.achievement.Secret && entry.achievement.Visible && !entry.achievement.Visible());
 
   // Remaining achievements
   const locked = data
@@ -53,7 +53,7 @@ export function AchievementList({ achievements, playerAchievements }: IProps): J
             </AccordionSummary>
             <AccordionDetails sx={{ pt: 2 }}>
               {unlocked.map(item => (
-                <AchievementEntry key={item.achievement.ID}
+                <AchievementEntry key={`unlocked_${item.achievement.ID}`}
                   achievement={item.achievement}
                   unlockedOn={item.unlockedOn}
                   cssFiltersUnlocked={cssPrimary}
@@ -72,7 +72,7 @@ export function AchievementList({ achievements, playerAchievements }: IProps): J
             </AccordionSummary>
             <AccordionDetails sx={{ pt: 2 }}>
               {locked.map(item => (
-                <AchievementEntry key={item.achievement.ID}
+                <AchievementEntry key={`locked_${item.achievement.ID}`}
                   achievement={item.achievement}
                   cssFiltersUnlocked={cssPrimary}
                   cssFiltersLocked={cssSecondary} />
@@ -106,10 +106,10 @@ export function AchievementList({ achievements, playerAchievements }: IProps): J
             <AccordionDetails>
               <Typography color="secondary" sx={{ mt: 1 }}>
                 {secret.map(item => (
-                  <>
+                  <span key={`secret_${item.achievement.ID}`}>
                     <CorruptableText content={item.achievement.ID}></CorruptableText>
                     <br />
-                  </>
+                  </span>
                 ))}
               </Typography>
             </AccordionDetails>

@@ -24,7 +24,7 @@ function getDB(): Promise<IDBObjectStore> {
     indexedDbRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
       const db = this.result;
       if (!db) {
-        reject("database loadign result was undefined");
+        reject("database loading result was undefined");
         return;
       }
       resolve(db.transaction(["savestring"], "readwrite").objectStore("savestring"));

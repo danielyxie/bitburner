@@ -2,3 +2,14 @@ node_modules
 package.json
 dist
 doc/build/
+doc/source
+.build
+.package
+
+editor.main.js
+main.bundle.js
+index.html
+markdown
+
+package.json
+package.lock.json

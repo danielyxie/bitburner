@@ -81,7 +81,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       return <></>;
     }
     const text = inBladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";
-    return <Button onClick={handleBladeburner}>{text}</Button>;
+    return <><br/><Button onClick={handleBladeburner}>{text}</Button></>;
   }
 
   function renderNoodleBar(): React.ReactElement {
