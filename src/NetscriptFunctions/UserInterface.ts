@@ -2,11 +2,13 @@ import { INetscriptHelper } from "./INetscriptHelper";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { getRamCost } from "../Netscript/RamCostGenerator";
-import { IStyleSettings, UserInterface as IUserInterface, UserInterfaceTheme } from "../ScriptEditor/NetscriptDefinitions";
+import { GameInfo, IStyleSettings, UserInterface as IUserInterface, UserInterfaceTheme } from "../ScriptEditor/NetscriptDefinitions";
 import { Settings } from "../Settings/Settings";
 import { ThemeEvents } from "../ui/React/Theme";
 import { defaultTheme } from "../Settings/Themes";
 import { defaultStyles } from "../Settings/Styles";
+import { CONSTANTS } from "../Constants";
+import { hash } from "../hash/hash";
 
 export function NetscriptUserInterface(
   player: IPlayer,
@@ -84,6 +86,19 @@ export function NetscriptUserInterface(
       Settings.styles = { ...defaultStyles };
       ThemeEvents.emit();
       workerScript.log("ui.resetStyles", () => `Reinitialized styles to default`);
+    },
+
+    getGameInfo: function (): GameInfo {
+      helper.updateDynamicRam("getGameInfo", getRamCost(player, "ui", "getGameInfo"));
+      const version = CONSTANTS.VersionString;
+      const commit = hash();
+      const platform = (navigator.userAgent.toLowerCase().indexOf(" electron/") > -1) ? 'Steam' : 'Browser';
+
+      const gameInfo = {
+        version, commit, platform,
+      }
+
+      return gameInfo;
     }
   }
 }

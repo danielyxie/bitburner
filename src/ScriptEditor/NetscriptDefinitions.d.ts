@@ -4065,6 +4065,13 @@ interface UserInterface {
    * RAM cost: cost: 0 GB
    */
   resetStyles(): void;
+
+  /**
+   * Gets the current game information (version, commit, ...)
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  getGameInfo(): GameInfo;
 }
 
 /**
@@ -6572,4 +6579,14 @@ interface UserInterfaceTheme {
 interface IStyleSettings {
   fontFamily: string;
   lineHeight: number;
+}
+
+/**
+ * Game Information
+ * @internal
+ */
+interface GameInfo {
+  version: string;
+  commit: string;
+  platform: string;
 }
