@@ -5175,9 +5175,9 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0.1 GB
    *
-   * Returns the server’s instrinsic “growth parameter”. This growth
-   * parameter is a number between 0 and 100 that represents how
-   * quickly the server’s money grows. This parameter affects the
+   * Returns the server’s intrinsic “growth parameter”. This growth
+   * parameter is a number typically between 0 and 100 that represents
+   * how quickly the server’s money grows. This parameter affects the
    * percentage by which the server’s money is increased when using the
    * grow function. A higher growth parameter will result in a
    * higher percentage increase from grow.
