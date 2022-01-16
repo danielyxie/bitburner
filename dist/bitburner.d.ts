@@ -4785,6 +4785,36 @@ export declare interface Singularity {
     purchaseTor(): boolean;
 
     /**
+     * Check the price of an exploit on the dark web 
+     * @remarks
+     * RAM cost: 0.5 GB * 16/4/1
+     *
+     *
+     * This function allows you to check the price of a darkweb exploit/program. 
+     * You MUST have a TOR router in order to use this function. The price returned 
+     * by this function is the same price you would see with buy -l from the terminal.
+     * Returns the cost of the program if it has not been purchased yet, 0 if it 
+     * has already been purchased, or -1 if the program does not exist
+     * 
+     *
+     * @example
+     * ```ts
+     * // NS1
+     * getDarkwebProgramCost("brutessh.exe");
+     * ```
+     * @example
+     * ```ts
+     * // NS2
+     * ns.getDarkwebProgramCost("brutessh.exe");
+     * ```
+     * @param programName - Name of program to check the price of
+     * @returns Floating point number representing the price of the specified darkweb program
+     * (if not yet purchased), 0 if it has already been purchased, or -1 if the specified 
+     * program/exploit does not exist
+     */
+    getDarkwebProgramCost(programName: string): number;
+
+    /**
      * Purchase a program from the dark web.
      * @remarks
      * RAM cost: 2 GB * 16/4/1

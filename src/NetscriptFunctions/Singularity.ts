@@ -558,6 +558,34 @@ export function NetscriptSingularity(
       player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
       return true;
     },
+    getDarkwebProgramCost: function (programName: any): any {
+      helper.updateDynamicRam("getDarkwebProgramCost", getRamCost(player, "getDarkwebProgramCost"));
+      helper.checkSingularityAccess("getDarkwebProgramCost");
+
+      // If we don't have Tor, log it and return -1
+      if (!player.hasTorRouter()) {
+        workerScript.log("getDarkwebProgramCost", () => "You do not have the TOR router.");
+        return -1;
+      }
+
+      programName = programName.toLowerCase();
+      const item = Object.values(DarkWebItems).find((i) => i.program.toLowerCase() === programName);
+
+      // If the program doesn't exist, throw an error. The reasoning here is that the 99% case is that
+      // the player will be using this in automation scripts, and if they're asking for a program that 
+      // doesn't exist, it's the first time they've run the script. So throw an error to let them know
+      // that they need to fix it.
+      if (item == null) {
+        throw helper.makeRuntimeErrorMsg("getDarkwebProgramCost", `No such exploit ('${programName}') found on the darkweb! ` 
+            + `\nThis function is not case-sensitive. Did you perhaps forget .exe at the end?`);
+      }
+
+      if (player.hasProgram(item.program)) {
+        workerScript.log("purchaseProgram", () => `You already have the '${item.program}' program`);
+        return 0;
+      }
+      return item.price;
+    },
     getCurrentServer: function (): any {
       helper.updateDynamicRam("getCurrentServer", getRamCost(player, "getCurrentServer"));
       helper.checkSingularityAccess("getCurrentServer");
