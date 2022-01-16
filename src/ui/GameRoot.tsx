@@ -78,6 +78,7 @@ import { Context } from "./Context";
 import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
 import { AchievementsRoot } from "../Achievements/AchievementsRoot";
 import { ErrorBoundary } from "./ErrorBoundary";
+import { Settings } from "../Settings/Settings";
 
 const htmlLocation = location;
 
@@ -220,6 +221,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
 
   const [cinematicText, setCinematicText] = useState("");
   const [errorBoundaryKey, setErrorBoundaryKey] = useState<number>(0);
+  const [sidebarOpened, setSideBarOpened] = useState(Settings.IsSidebarOpened);
 
   function resetErrorBoundary(): void {
     setErrorBoundaryKey(errorBoundaryKey + 1);
@@ -517,7 +519,12 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
             </Overview>
             {withSidebar ? (
               <Box display="flex" flexDirection="row" width="100%">
-                <SidebarRoot player={player} router={Router} page={page} />
+                <SidebarRoot player={player} router={Router} page={page}
+                  opened={sidebarOpened}
+                  onToggled={(isOpened) => {
+                    setSideBarOpened(isOpened);
+                    Settings.IsSidebarOpened = isOpened;
+                  }} />
                 <Box className={classes.root}>{mainPage}</Box>
               </Box>
             ) : (

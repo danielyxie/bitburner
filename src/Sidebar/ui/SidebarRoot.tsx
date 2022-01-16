@@ -106,6 +106,8 @@ interface IProps {
   player: IPlayer;
   router: IRouter;
   page: Page;
+  opened: boolean;
+  onToggled: (newValue: boolean) => void;
 }
 
 export function SidebarRoot(props: IProps): React.ReactElement {
@@ -337,8 +339,13 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   }, []);
 
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(props.opened);
   const toggleDrawer = (): void => setOpen((old) => !old);
+
+  useEffect(() => {
+    props.onToggled(open);
+  }, [open]);
+
   return (
     <Drawer open={open} anchor="left" variant="permanent">
       <ListItem classes={{ root: classes.listitem }} button onClick={toggleDrawer}>
