@@ -120,6 +120,7 @@ export const logBoxBaseZIndex = 1500;
 
 function LogWindow(props: IProps): React.ReactElement {
   const draggableRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<Draggable>(null)
   const [script, setScript] = useState(props.script);
   const classes = useStyles();
   const container = useRef<HTMLDivElement>(null);
@@ -187,39 +188,50 @@ function LogWindow(props: IProps): React.ReactElement {
     return classes.primary;
   }
 
-  // Trigger fakeDrag once to make sure loaded data is not outside bounds
-  useEffect(() => fakeDrag(), []);
-
   // And trigger fakeDrag when the window is resized
   useEffect(() => {
-    window.addEventListener("resize", fakeDrag);
+    window.addEventListener("resize", onResize);
     return () => {
-      window.removeEventListener("resize", fakeDrag);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
-
-  const fakeDrag = debounce((): void => {
+  const onResize = debounce((): void => {
     const node = draggableRef?.current;
     if (!node) return;
 
-    // No official way to trigger an onChange to recompute the bounds
-    // See: https://github.com/react-grid-layout/react-draggable/issues/363#issuecomment-947751127
-    triggerMouseEvent(node, "mouseover");
-    triggerMouseEvent(node, "mousedown");
-    triggerMouseEvent(document, "mousemove");
-    triggerMouseEvent(node, "mouseup");
-    triggerMouseEvent(node, "click");
+    if(!isOnScreen(node)) {
+      resetPosition();
+    }
   }, 100);
 
-  const triggerMouseEvent = (node: HTMLDivElement | Document, eventType: string): void => {
-    const clickEvent = document.createEvent("MouseEvents");
-    clickEvent.initEvent(eventType, true, true);
-    node.dispatchEvent(clickEvent);
-  };
+  const isOnScreen = (node: HTMLDivElement): boolean => {
+    const bounds = node.getBoundingClientRect();
+
+    return !(bounds.right < 0 ||
+            bounds.bottom < 0 ||
+            bounds.left > innerWidth ||
+            bounds.top > outerWidth);
+  }
+
+  const resetPosition = (): void => {
+    const node = rootRef?.current;
+    if (!node) return;
+    const state = node.state as {x: number; y: number};
+    state.x = 0;
+    state.y = 0;
+    node.setState(state);
+  }
+
+  const boundToBody = (e: any): void | false => {
+    if(e.clientX < 0 ||
+       e.clientY < 0 ||
+       e.clientX > innerWidth ||
+       e.clientY > innerHeight) return false;
+  }
 
   return (
-    <Draggable handle=".drag" bounds="body">
+    <Draggable handle=".drag" onDrag={boundToBody} ref={rootRef}>
       <Paper
         style={{
           display: "flex",
