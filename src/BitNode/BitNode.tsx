@@ -578,7 +578,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
   if (p.bitNodeN == null) {
     p.bitNodeN = 1;
   }
-  for (const mult in BitNodeMultipliers) {
+  for (const mult of Object.keys(BitNodeMultipliers)) {
     if (BitNodeMultipliers.hasOwnProperty(mult)) {
       BitNodeMultipliers[mult] = 1;
     }

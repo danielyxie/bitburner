@@ -55,7 +55,7 @@ export function placeOrder(
   const order = new Order(stock.symbol, shares, price, type, position);
   if (StockMarket["Orders"] == null) {
     const orders: IOrderBook = {};
-    for (const name in StockMarket) {
+    for (const name of Object.keys(StockMarket)) {
       const stk = StockMarket[name];
       if (!(stk instanceof Stock)) {
         continue;
@@ -157,7 +157,7 @@ export function deleteStockMarket(): void {
 }
 
 export function initStockMarket(): void {
-  for (const stk in StockMarket) {
+  for (const stk of Object.keys(StockMarket)) {
     if (StockMarket.hasOwnProperty(stk)) {
       delete StockMarket[stk];
     }
@@ -169,7 +169,7 @@ export function initStockMarket(): void {
   }
 
   const orders: IOrderBook = {};
-  for (const name in StockMarket) {
+  for (const name of Object.keys(StockMarket)) {
     const stock = StockMarket[name];
     if (!(stock instanceof Stock)) {
       continue;
@@ -184,7 +184,7 @@ export function initStockMarket(): void {
 }
 
 export function initSymbolToStockMap(): void {
-  for (const name in StockSymbols) {
+  for (const name of Object.keys(StockSymbols)) {
     if (StockSymbols.hasOwnProperty(name)) {
       const stock = StockMarket[name];
       if (stock == null) {
@@ -198,7 +198,7 @@ export function initSymbolToStockMap(): void {
 }
 
 function stockMarketCycle(): void {
-  for (const name in StockMarket) {
+  for (const name of Object.keys(StockMarket)) {
     const stock = StockMarket[name];
     if (!(stock instanceof Stock)) {
       continue;
@@ -247,7 +247,7 @@ export function processStockPrices(numCycles = 1): void {
   }
 
   const v = Math.random();
-  for (const name in StockMarket) {
+  for (const name of Object.keys(StockMarket)) {
     const stock = StockMarket[name];
     if (!(stock instanceof Stock)) {
       continue;

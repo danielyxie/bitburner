@@ -169,7 +169,7 @@ const Engine: {
   },
 
   decrementAllCounters: function (numCycles = 1) {
-    for (const counterName in Engine.Counters) {
+    for (const counterName of Object.keys(Engine.Counters)) {
       const counter = Engine.Counters[counterName];
       if (counter === undefined) throw new Error("counter should not be undefined");
       Engine.Counters[counterName] = counter - numCycles;

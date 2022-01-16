@@ -221,7 +221,7 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
     return urlStack;
   } catch (err) {
     // If there is an error, we need to clean up the URLs.
-    for (const url in urlStack) URL.revokeObjectURL(url);
+    for (const url of urlStack) URL.revokeObjectURL(url.url);
     throw err;
   } finally {
     seen.pop();

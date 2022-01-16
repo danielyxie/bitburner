@@ -38,7 +38,7 @@ export function StockMarket(): React.ReactElement {
       };
     }
 
-    for (const name in SM) {
+    for (const name of Object.keys(SM)) {
       if (SM.hasOwnProperty(name)) {
         const stock = SM[name];
         if (stock instanceof Stock && match(stock.symbol)) {

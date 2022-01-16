@@ -28,7 +28,7 @@ export function Programs(props: IProps): React.ReactElement {
   }
 
   function addAllPrograms(): void {
-    for (const i in AllPrograms) {
+    for (const i of Object.keys(AllPrograms)) {
       if (!props.player.hasProgram(AllPrograms[i].name)) {
         props.player.getHomeComputer().programs.push(AllPrograms[i].name);
       }

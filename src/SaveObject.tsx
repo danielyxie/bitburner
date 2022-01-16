@@ -115,7 +115,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
       }
 
       // The "companyName" property of all Companies is renamed to "name"
-      for (const companyName in Companies) {
+      for (const companyName of Object.keys(Companies)) {
         const company: any = Companies[companyName];
         if (company.name == 0 && company.companyName != null) {
           company.name = company.companyName;

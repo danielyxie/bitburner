@@ -27,7 +27,7 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
   //Data map: [MoneyStolen, NumTimesHacked, NumTimesGrown, NumTimesWeaken]
 
   // Grow
-  for (const hostname in runningScript.dataMap) {
+  for (const hostname of Object.keys(runningScript.dataMap)) {
     if (runningScript.dataMap.hasOwnProperty(hostname)) {
       if (runningScript.dataMap[hostname][2] == 0 || runningScript.dataMap[hostname][2] == null) {
         continue;
@@ -60,7 +60,7 @@ export function scriptCalculateOfflineProduction(runningScript: RunningScript): 
   runningScript.offlineExpGained += expGain;
 
   // Weaken
-  for (const hostname in runningScript.dataMap) {
+  for (const hostname of Object.keys(runningScript.dataMap)) {
     if (runningScript.dataMap.hasOwnProperty(hostname)) {
       if (runningScript.dataMap[hostname][3] == 0 || runningScript.dataMap[hostname][3] == null) {
         continue;

@@ -75,14 +75,14 @@ export function prestigeAugmentation(): void {
   initForeignServers(Player.getHomeComputer());
 
   // Gain favor for Companies
-  for (const member in Companies) {
+  for (const member of Object.keys(Companies)) {
     if (Companies.hasOwnProperty(member)) {
       Companies[member].gainFavor();
     }
   }
 
   // Gain favor for factions
-  for (const member in Factions) {
+  for (const member of Object.keys(Factions)) {
     if (Factions.hasOwnProperty(member)) {
       Factions[member].gainFavor();
     }
@@ -200,14 +200,14 @@ export function prestigeSourceFile(flume: boolean): void {
   homeComp.cpuCores = 1;
 
   // Reset favor for Companies
-  for (const member in Companies) {
+  for (const member of Object.keys(Companies)) {
     if (Companies.hasOwnProperty(member)) {
       Companies[member].favor = 0;
     }
   }
 
   // Reset favor for factions
-  for (const member in Factions) {
+  for (const member of Object.keys(Factions)) {
     if (Factions.hasOwnProperty(member)) {
       Factions[member].favor = 0;
     }
@@ -219,7 +219,7 @@ export function prestigeSourceFile(flume: boolean): void {
   }
 
   // Delete all Augmentations
-  for (const name in Augmentations) {
+  for (const name of Object.keys(Augmentations)) {
     if (Augmentations.hasOwnProperty(name)) {
       delete Augmentations[name];
     }

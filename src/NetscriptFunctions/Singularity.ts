@@ -113,7 +113,7 @@ export function NetscriptSingularity(
       // If player has a gang with this faction, return all augmentations.
       if (player.hasGangWith(facname)) {
         const res = [];
-        for (const augName in Augmentations) {
+        for (const augName of Object.keys(Augmentations)) {
           if (augName === AugmentationNames.NeuroFluxGovernor) continue;
           if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
           const aug = Augmentations[augName];
@@ -165,7 +165,7 @@ export function NetscriptSingularity(
 
       let augs = [];
       if (player.hasGangWith(faction)) {
-        for (const augName in Augmentations) {
+        for (const augName of Object.keys(Augmentations)) {
           if (augName === AugmentationNames.NeuroFluxGovernor) continue;
           if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
           const tempAug = Augmentations[augName];

@@ -21,7 +21,7 @@ export function checkIfConnectedToDarkweb(): void {
 }
 
 export function listAllDarkwebItems(): void {
-  for (const key in DarkWebItems) {
+  for (const key of Object.keys(DarkWebItems)) {
     const item = DarkWebItems[key];
 
     const cost = Player.getHomeComputer().programs.includes(item.program) ? (
@@ -44,7 +44,7 @@ export function buyDarkwebItem(itemName: string): void {
   // find the program that matches, if any
   let item: DarkWebItem | null = null;
 
-  for (const key in DarkWebItems) {
+  for (const key of Object.keys(DarkWebItems)) {
     const i = DarkWebItems[key];
     if (i.program.toLowerCase() == itemName) {
       item = i;
@@ -93,7 +93,7 @@ export function buyAllDarkwebItems(): void {
   const itemsToBuy: DarkWebItem[] = [];
   let cost = 0;
 
-  for (const key in DarkWebItems) {
+  for (const key of Object.keys(DarkWebItems)) {
     const item = DarkWebItems[key];
     if (!Player.hasProgram(item.program)) {
       itemsToBuy.push(item);

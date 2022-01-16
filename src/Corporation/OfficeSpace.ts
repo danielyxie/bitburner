@@ -103,7 +103,7 @@ export class OfficeSpace {
 
   calculateEmployeeProductivity(corporation: ICorporation, industry: IIndustry): void {
     //Reset
-    for (const name in this.employeeProd) {
+    for (const name of Object.keys(this.employeeProd)) {
       this.employeeProd[name] = 0;
     }
 
