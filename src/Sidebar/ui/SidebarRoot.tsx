@@ -319,10 +319,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       } else if (event.keyCode === KEY.U && event.altKey) {
         event.preventDefault();
         clickTutorial();
-      } else if (event.keyCode === KEY.B && event.altKey) {
+      } else if (event.keyCode === KEY.B && event.altKey && props.player.bladeburner) {
         event.preventDefault();
         clickBladeburner();
-      } else if (event.keyCode === KEY.G && event.altKey) {
+      } else if (event.keyCode === KEY.G && event.altKey && props.player.gang) {
         event.preventDefault();
         clickGang();
       }
