@@ -581,7 +581,7 @@ export function NetscriptSingularity(
       }
 
       if (player.hasProgram(item.program)) {
-        workerScript.log("purchaseProgram", () => `You already have the '${item.program}' program`);
+        workerScript.log("getDarkwebProgramCost", () => `You already have the '${item.program}' program`);
         return 0;
       }
       return item.price;
