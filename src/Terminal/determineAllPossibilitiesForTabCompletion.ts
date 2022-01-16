@@ -6,6 +6,7 @@ import { DarkWebItems } from "../DarkWeb/DarkWebItems";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { GetServer, GetAllServers } from "../Server/AllServers";
 import { ParseCommand, ParseCommands } from "./Parser";
+import { HelpTexts } from "./HelpText";
 import { isScriptFilename } from "../Script/isScriptFilename";
 import { compile } from "../NetscriptJSEvaluator";
 import { Flags } from "../NetscriptFunctions/Flags";
@@ -178,26 +179,8 @@ export async function determineAllPossibilitiesForTabCompletion(
     return input.startsWith(t_cmd);
   }
 
-  /**
-   * If the command starts with './' and the index == -1, then the user
-   * has input ./partialexecutablename so autocomplete the script or program.
-   * Put './' in front of each script/executable
-   */
-  if (isCommand("./") && index == -1) {
-    //All programs and scripts
-    for (let i = 0; i < currServ.scripts.length; ++i) {
-      allPos.push("./" + currServ.scripts[i].filename);
-    }
-
-    //Programs are on home computer
-    for (let i = 0; i < homeComputer.programs.length; ++i) {
-      allPos.push("./" + homeComputer.programs[i]);
-    }
-    return allPos;
-  }
-
   // Autocomplete the command
-  if (index === -1) {
+  if (index === -1 && !input.startsWith('./')) {
     return commands.concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
   }
 
@@ -286,14 +269,22 @@ export async function determineAllPossibilitiesForTabCompletion(
   }
 
   async function scriptAutocomplete(): Promise<string[] | undefined> {
-    if (!isCommand("run") && !isCommand("tail") && !isCommand("kill")) return;
-    const commands = ParseCommands(input);
+    if (!isCommand("run") && !isCommand("tail") && !isCommand("kill") && !input.startsWith("./")) return;
+    let copy = input;
+    if (input.startsWith("./")) copy = "run " + input.slice(2);
+    const commands = ParseCommands(copy);
     if (commands.length === 0) return;
     const command = ParseCommand(commands[commands.length - 1]);
     const filename = command[1] + "";
     if (!isScriptFilename(filename)) return; // Not a script.
     if (filename.endsWith(".script")) return; // Doesn't work with ns1.
-    const script = currServ.scripts.find((script) => script.filename === filename);
+    // Use regex to remove any leading './', and then check if it matches against
+    // the output of processFilepath or if it matches with a '/' prepended,
+    // this way autocomplete works inside of directories
+    const script = currServ.scripts.find((script) => {
+      const fn = filename.replace(/^\.\//g, '');
+      return (processFilepath(script.filename) === fn || script.filename === '/' + fn);
+    })
     if (!script) return; // Doesn't exist.
     if (!script.module) {
       await compile(p, script, currServ.scripts);
@@ -335,6 +326,35 @@ export async function determineAllPossibilitiesForTabCompletion(
   const pos = await scriptAutocomplete();
   if (pos) return pos;
 
+  // If input starts with './', essentially treat it as a slimmer
+  // invocation of `run`.
+  if (input.startsWith("./")) {
+    // All programs and scripts
+    for (const script of currServ.scripts) {
+      const res = processFilepath(script.filename);
+      if (res) {
+        allPos.push(res);
+      }
+    }
+
+    for (const program of currServ.programs) {
+      const res = processFilepath(program);
+      if (res) {
+        allPos.push(res);
+      }
+    }
+
+    // All coding contracts
+    for (const cct of currServ.contracts) {
+      const res = processFilepath(cct.fn);
+      if (res) {
+        allPos.push(res);
+      }
+    }
+
+    return allPos;
+  }
+
   if (isCommand("run")) {
     addAllScripts();
     addAllPrograms();
@@ -375,6 +395,12 @@ export async function determineAllPossibilitiesForTabCompletion(
 
   if (isCommand("ls") && index === 0) {
     addAllDirectories();
+  }
+
+  if (isCommand("help")) {
+    // Get names from here instead of commands array because some
+    // undocumented/nonexistent commands are in the array
+    return Object.keys(HelpTexts);
   }
 
   return allPos;

@@ -4,7 +4,7 @@
 
 ## Singularity.isFocused() method
 
-SF4.2 - Check if the player is focused.
+Check if the player is focused.
 
 <b>Signature:</b>
 
@@ -19,5 +19,5 @@ True if the player is focused.
 
 ## Remarks
 
-RAM cost: 0.1 GB
+RAM cost: 0.1 GB \* 16/4/1
 

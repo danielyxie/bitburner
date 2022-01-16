@@ -209,7 +209,7 @@
     },
     "STOCK_1q": {
       "ID": "STOCK_1q",
-      "Name": "Wolf of wall stree.",
+      "Name": "Wolf of wall street.",
       "Description": "Make 1q on the stock market."
     },
     "DISCOUNT": {
@@ -479,8 +479,9 @@
     },
     "DEVMENU": {
       "ID": "DEVMENU",
-      "Name": "Exploit: edit",
+      "Name": "Exploit: you're not meant to access this",
       "Description": "Open the dev menu."
     }
   }
 }
+

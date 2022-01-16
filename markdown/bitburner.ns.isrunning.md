@@ -9,14 +9,14 @@ Check if a script is running.
 <b>Signature:</b>
 
 ```typescript
-isRunning(script: string, host: string, ...args: string[]): boolean;
+isRunning(script: FilenameOrPID, host: string, ...args: string[]): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  script | string | Filename of script to check. This is case-sensitive. |
+|  script | [FilenameOrPID](./bitburner.filenameorpid.md) | Filename or PID of script to check. This is case-sensitive. |
 |  host | string | Host of target server. |
 |  args | string\[\] | Arguments to specify/identify which scripts to search for. |
 
@@ -30,7 +30,7 @@ True if specified script is running on the target server, and false otherwise.
 
 RAM cost: 0.1 GB
 
-Returns a boolean indicating whether the specified script is running on the target server. Remember that a script is uniquely identified by both its name and its arguments.
+Returns a boolean indicating whether the specified script is running on the target server. If you use a PID instead of a filename, the hostname and args parameters are unnecessary. Remember that a script is uniquely identified by both its name and its arguments.
 
 ## Example 1
 

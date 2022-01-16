@@ -4,7 +4,7 @@
 
 ## Singularity.donateToFaction() method
 
-SF4.3 - Donate to a faction.
+Donate to a faction.
 
 <b>Signature:</b>
 
@@ -27,7 +27,7 @@ True if the money was donated, and false otherwise.
 
 ## Remarks
 
-RAM cost: 5 GB
+RAM cost: 5 GB \* 16/4/1
 
 Attempts to donate money to the specified faction in exchange for reputation. Returns true if you successfully donate the money, and false otherwise.
 

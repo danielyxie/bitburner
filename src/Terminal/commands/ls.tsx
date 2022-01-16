@@ -1,9 +1,13 @@
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { toString } from "lodash";
 import React from "react";
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { getFirstParentDirectory, isValidDirectoryPath, evaluateDirectoryPath } from "../../Terminal/DirectoryHelpers";
+import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../../Terminal/DirectoryHelpers";
+import { IRouter } from "../../ui/Router";
+import { ITerminal } from "../ITerminal";
 
 export function ls(
   terminal: ITerminal,
@@ -113,7 +117,55 @@ export function ls(
   allMessages.sort();
   folders.sort();
 
-  function postSegments(segments: string[], style?: any): void {
+  interface ClickableScriptRowProps {
+    row: string;
+    prefix: string;
+    hostname: string;
+  }
+
+  function ClickableScriptRow({ row, prefix, hostname }: ClickableScriptRowProps): React.ReactElement {
+    const classes = makeStyles((theme: Theme) =>
+      createStyles({
+        scriptLinksWrap: {
+          display: "flex",
+          color: theme.palette.warning.main,
+        },
+        scriptLink: {
+          cursor: "pointer",
+          textDecorationLine: "underline",
+          paddingRight: "1.15em",
+          "&:last-child": { padding: 0 },
+        },
+      }),
+    )();
+
+    const rowSplit = row
+      .split(" ")
+      .map((x) => x.trim())
+      .filter((x) => !!x);
+
+    function onScriptLinkClick(filename: string): void {
+      if (player.getCurrentServer().hostname !== hostname) {
+        return terminal.error(`File is not on this server, connect to ${hostname} and try again`);
+      }
+      if (filename.startsWith("/")) filename = filename.slice(1);
+      const filepath = terminal.getFilepath(`${prefix}${filename}`);
+      const code = toString(terminal.getScript(player, filepath)?.code);
+      router.toScriptEditor({ [filepath]: code });
+    }
+
+    return (
+      <span className={classes.scriptLinksWrap}>
+        {rowSplit.map((rowItem) => (
+          <span key={rowItem} className={classes.scriptLink} onClick={() => onScriptLinkClick(rowItem)}>
+            {rowItem}
+          </span>
+        ))}
+      </span>
+    );
+  }
+
+  function postSegments(segments: string[], style?: any, linked?: boolean): void {
     const maxLength = Math.max(...segments.map((s) => s.length)) + 1;
     const filesPerRow = Math.floor(80 / maxLength);
     for (let i = 0; i < segments.length; i++) {
@@ -128,7 +180,11 @@ export function ls(
       if (!style) {
         terminal.print(row);
       } else {
-        terminal.printRaw(<span style={style}>{row}</span>);
+        if (linked) {
+          terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
+        } else {
+          terminal.printRaw(<span style={style}>{row}</span>);
+        }
       }
     }
   }
@@ -139,9 +195,9 @@ export function ls(
     { segments: allTextFiles },
     { segments: allPrograms },
     { segments: allContracts },
-    { segments: allScripts, style: { color: "yellow", fontStyle: "bold" } },
+    { segments: allScripts, style: { color: "yellow", fontStyle: "bold" }, linked: true },
   ].filter((g) => g.segments.length > 0);
   for (let i = 0; i < groups.length; i++) {
-    postSegments(groups[i].segments, groups[i].style);
+    postSegments(groups[i].segments, groups[i].style, groups[i].linked);
   }
 }

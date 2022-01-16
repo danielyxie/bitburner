@@ -138,8 +138,8 @@ function killNetscriptDelay(workerScript: WorkerScript): void {
   if (workerScript instanceof WorkerScript) {
     if (workerScript.delay) {
       clearTimeout(workerScript.delay);
-      if (workerScript.delayResolve) {
-        workerScript.delayResolve();
+      if (workerScript.delayReject) {
+        workerScript.delayReject(workerScript);
       }
     }
   }

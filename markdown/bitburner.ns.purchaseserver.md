@@ -17,7 +17,7 @@ purchaseServer(hostname: string, ram: number): string;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  hostname | string | Host of the purchased server. |
-|  ram | number | Amount of RAM of the purchased server. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20). |
+|  ram | number | Amount of RAM of the purchased server, in GB. Must be a power of 2 (2, 4, 8, 16, etc.). Maximum value of 1048576 (2^20). |
 
 <b>Returns:</b>
 

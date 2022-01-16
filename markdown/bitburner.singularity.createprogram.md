@@ -4,12 +4,12 @@
 
 ## Singularity.createProgram() method
 
-SF4.3 - Create a program.
+Create a program.
 
 <b>Signature:</b>
 
 ```typescript
-createProgram(program: string): boolean;
+createProgram(program: string, focus?: boolean): boolean;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ createProgram(program: string): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  program | string | Name of program to create. |
+|  focus | boolean | Acquire player focus on this program creation. Optional. Defaults to true. |
 
 <b>Returns:</b>
 
@@ -26,7 +27,7 @@ True if you successfully start working on the specified program, and false other
 
 ## Remarks
 
-RAM cost: 5 GB
+RAM cost: 5 GB \* 16/4/1
 
 This function will automatically set you to start working on creating the specified program. If you are already in the middle of some “working” action (such as working for a company, training at a gym, or taking a course), then running this function will automatically cancel that action and give you your earnings.
 

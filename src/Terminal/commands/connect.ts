@@ -5,8 +5,6 @@ import { BaseServer } from "../../Server/BaseServer";
 import { getServerOnNetwork } from "../../Server/ServerHelpers";
 import { GetServer } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
-import { Programs } from "src/Programs/Programs";
-import { programsMetadata } from "src/Programs/data/ProgramsMetadata";
 
 export function connect(
   terminal: ITerminal,

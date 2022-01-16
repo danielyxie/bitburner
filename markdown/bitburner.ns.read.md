@@ -16,19 +16,19 @@ read(handle: string): any;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  handle | string | Port or text file to read from. |
+|  handle | string | Filename to read from. |
 
 <b>Returns:</b>
 
 any
 
-Data in the specified text file or port.
+Data in the specified text file.
 
 ## Remarks
 
 RAM cost: 0 GB
 
-This function is used to read data from a port or from a text file (.txt).
+This function is used to read data from a text file (.txt).
 
 This function will return the data in the specified text file. If the text file does not exist, an empty string will be returned.
 

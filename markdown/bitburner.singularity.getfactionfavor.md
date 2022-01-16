@@ -4,7 +4,7 @@
 
 ## Singularity.getFactionFavor() method
 
-SF4.2 - Get faction favor.
+Get faction favor.
 
 <b>Signature:</b>
 
@@ -26,7 +26,7 @@ Amount of favor you have for the specified faction.
 
 ## Remarks
 
-RAM cost: 1 GB
+RAM cost: 1 GB \* 16/4/1
 
 This function returns the amount of favor you have for the specified faction.
 

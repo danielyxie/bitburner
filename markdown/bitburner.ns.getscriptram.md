@@ -23,7 +23,7 @@ getScriptRam(script: string, host?: string): number;
 
 number
 
-Amount of RAM required to run the specified script on the target server, and 0 if the script does not exist.
+Amount of RAM (in GB) required to run the specified script on the target server, and 0 if the script does not exist.
 
 ## Remarks
 

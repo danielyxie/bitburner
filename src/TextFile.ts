@@ -17,6 +17,20 @@ export class TextFile {
    */
   text: string;
 
+  /**
+   * The full file name.
+   */
+   get filename(): string {
+    return this.fn;
+  }
+
+  /**
+   * The full file name.
+   */
+   set filename(value: string) {
+    this.fn = value;
+  }
+
   constructor(fn = "", txt = "") {
     this.fn = (fn.endsWith(".txt") ? fn : `${fn}.txt`).replace(/\s+/g, "");
     this.text = txt;

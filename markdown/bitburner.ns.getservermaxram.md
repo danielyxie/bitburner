@@ -22,7 +22,7 @@ getServerMaxRam(host: string): number;
 
 number
 
-max ram
+max ram (GB)
 
 ## Remarks
 

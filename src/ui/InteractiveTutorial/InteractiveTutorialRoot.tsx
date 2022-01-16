@@ -12,7 +12,6 @@ import { CopyableText } from "../React/CopyableText";
 import ListItem from "@mui/material/ListItem";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import HelpIcon from "@mui/icons-material/Help";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import StorageIcon from "@mui/icons-material/Storage";
@@ -61,7 +60,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
             This tutorial will show you the basics of the game. You may skip the tutorial at any time.
             <br />
             <br />
-            You can also click the eye symbol <VisibilityOffIcon /> to temporarily hide this tutorial.
+            You can also collapse this panel to temporarily hide this tutorial.
           </Typography>
         </>
       ),

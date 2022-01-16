@@ -172,7 +172,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeRejectMsg(
         workerScript,
         `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-          `This is probably a bug. Please report to game developer`,
+        `This is probably a bug. Please report to game developer`,
       );
     }
 
@@ -335,16 +335,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     workerScript.log(
       "hack",
       () =>
-        `Executing ${hostname} in ${convertTimeMsToTimeElapsedString(
+        `Executing on '${server.hostname}' in ${convertTimeMsToTimeElapsedString(
           hackingTime * 1000,
           true,
         )} (t=${numeralWrapper.formatThreads(threads)})`,
     );
 
     return netscriptDelay(hackingTime * 1000, workerScript).then(function () {
-      if (workerScript.env.stopFlag) {
-        return Promise.reject(workerScript);
-      }
       const hackChance = calculateHackingChance(server, Player);
       const rand = Math.random();
       let expGainedOnSuccess = calculateHackingExpGain(server, Player) * threads;
@@ -352,7 +349,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (rand < hackChance) {
         // Success!
         const percentHacked = calculatePercentMoneyHacked(server, Player);
-        let maxThreadNeeded = Math.ceil((1 / percentHacked) * (server.moneyAvailable / server.moneyMax));
+        let maxThreadNeeded = Math.ceil(1 / percentHacked);
         if (isNaN(maxThreadNeeded)) {
           // Server has a 'max money' of 0 (probably). We'll set this to an arbitrarily large value
           maxThreadNeeded = 1e6;
@@ -432,8 +429,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeErrorMsg(funcName, `${argName} should be a string`);
     },
     number: (funcName: string, argName: string, v: any): number => {
-      if (typeof v === "number") return v;
-      if (!isNaN(v) && !isNaN(parseFloat(v))) return parseFloat(v);
+      if (!isNaN(v)) {
+        if (typeof v === "number") return v;
+        if (!isNaN(parseFloat(v))) return parseFloat(v);
+      }
       throw makeRuntimeErrorMsg(funcName, `${argName} should be a number`);
     },
     boolean: (v: any): boolean => {
@@ -613,9 +612,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           )} (t=${numeralWrapper.formatThreads(threads)}).`,
       );
       return netscriptDelay(growTime * 1000, workerScript).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
         processSingleServerGrowth(server, threads, Player, host.cpuCores);
         const moneyAfter = server.moneyAvailable;
@@ -684,7 +680,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           )} (t=${numeralWrapper.formatThreads(threads)})`,
       );
       return netscriptDelay(weakenTime * 1000, workerScript).then(function () {
-        if (workerScript.env.stopFlag) return Promise.reject(workerScript);
         const host = GetServer(workerScript.hostname);
         if (host === null) {
           workerScript.log("weaken", () => "Server is null, did it die?");
@@ -697,8 +692,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log(
           "weaken",
           () =>
-            `'${server.hostname}' security level weakened to ${
-              server.hackDifficulty
+            `'${server.hostname}' security level weakened to ${server.hackDifficulty
             }. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)})`,
         );
         workerScript.scriptRef.onlineExpGained += expGain;
@@ -1080,7 +1074,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("exit", () => "Failed. This is a bug. Report to dev.");
       }
     },
-    scp: async function (scriptname: any, hostname1: any, hostname2: any): Promise<boolean> {
+    scp: async function (scriptname: any, hostname1: any, hostname2?: any): Promise<boolean> {
       updateDynamicRam("scp", getRamCost(Player, "scp"));
       if (arguments.length !== 2 && arguments.length !== 3) {
         throw makeRuntimeErrorMsg("scp", "Takes 2 or 3 arguments");
@@ -1901,7 +1895,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const iport = helper.getValidPort("clearPort", port);
       return iport.clear();
     },
-    getPortHandle: function (port: any): any {
+    getPortHandle: function (port: any): IPort {
       updateDynamicRam("getPortHandle", getRamCost(Player, "getPortHandle"));
       const iport = helper.getValidPort("getPortHandle", port);
       return iport;
@@ -2011,7 +2005,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculateGrowTime(server, Player) * 1000;
     },
-    getWeakenTime: function (hostname: any): any {
+    getWeakenTime: function (hostname: any = workerScript.hostname): any {
       updateDynamicRam("getWeakenTime", getRamCost(Player, "getWeakenTime"));
       const server = safeGetServer(hostname, "getWeakenTime");
       if (!(server instanceof Server)) {
@@ -2263,6 +2257,64 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("atExit", "argument should be function");
       }
       workerScript.atExit = f;
+    },
+    mv: function (host: string, source: string, destination: string): void {
+      updateDynamicRam("mv", getRamCost(Player, "mv"));
+
+      if (arguments.length != 3) throw makeRuntimeErrorMsg("mv", "Takes 3 argument.");
+
+      if (!isValidFilePath(source)) throw makeRuntimeErrorMsg("mv", `Invalid filename: '${source}'`);
+      if (!isValidFilePath(destination)) throw makeRuntimeErrorMsg("mv", `Invalid filename: '${destination}'`);
+
+      const source_is_txt = source.endsWith(".txt");
+      const dest_is_txt = destination.endsWith(".txt");
+
+      if (!isScriptFilename(source) && !source_is_txt) throw makeRuntimeErrorMsg("mv", `'mv' can only be used on scripts and text files (.txt)`);
+      if (source_is_txt != dest_is_txt) throw makeRuntimeErrorMsg("mv", `Source and destination files must have the same type`);
+
+      if (source === destination) {
+        return;
+      }
+
+      // This will throw if the server is not found, we do not need to validate result.
+      const destServer: BaseServer | null = safeGetServer(host, "mv");
+
+      if (!source_is_txt && destServer.isRunning(source)) throw makeRuntimeErrorMsg("mv", `Cannot use 'mv' on a script that is running`)
+
+      interface File {
+        filename: string;
+      }
+
+      const files = source_is_txt ? destServer.textFiles : destServer.scripts;
+      let source_file: File | null = null;
+      let dest_file: File | null = null;
+
+      for (let i = 0; i < files.length; ++i) {
+        const file = files[i];
+        if (file.filename === source) {
+          source_file = file;
+        } else if (file.filename === destination) {
+          dest_file = file;
+        }
+      }
+
+      if (source_file == null) throw makeRuntimeErrorMsg("mv", `Source file ${source} does not exist`)
+
+      if (dest_file != null) {
+        if (dest_file instanceof TextFile && source_file instanceof TextFile) {
+          dest_file.text = source_file.text;
+        } else if (dest_file instanceof Script && source_file instanceof Script) {
+          dest_file.code = source_file.code;
+          dest_file.markUpdated();
+        }
+
+        destServer.removeFile(source);
+      } else {
+        source_file.filename = destination;
+        if (source_file instanceof Script) {
+          source_file.markUpdated();
+        }
+      }
     },
     flags: Flags(workerScript.args),
   };

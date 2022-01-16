@@ -204,10 +204,14 @@ export function loadAllServers(saveString: string): void {
   AllServers = JSON.parse(saveString, Reviver);
 }
 
-export function saveAllServers(): string {
+export function saveAllServers(excludeRunningScripts = false): string {
   const TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
   for (const key in TempAllServers) {
     const server = TempAllServers[key];
+    if (excludeRunningScripts) {
+      server.runningScripts = [];
+      continue;
+    }
     for (let i = 0; i < server.runningScripts.length; ++i) {
       const runningScriptObj = server.runningScripts[i];
       runningScriptObj.logs.length = 0;

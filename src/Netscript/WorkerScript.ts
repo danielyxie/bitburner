@@ -33,9 +33,9 @@ export class WorkerScript {
   delay: number | null = null;
 
   /**
-   * Holds the Promise resolve() function for when the script is "blocked" by an async op
+   * Holds the Promise reject() function while the script is "blocked" by an async op
    */
-  delayResolve?: () => void;
+  delayReject?: (reason?: any) => void;
 
   /**
    * Stores names of all functions that have logging disabled

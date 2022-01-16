@@ -207,6 +207,7 @@ export const RamCosts: IMap<any> = {
   wget: 0,
   getFavorToDonate: RamCostConstants.ScriptGetFavorToDonate,
   getPlayer: RamCostConstants.ScriptSingularityFn1RamCost / 4,
+  mv: 0,
   getOwnedSourceFiles: RamCostConstants.ScriptGetOwnedSourceFiles,
 
   // Singularity Functions
@@ -365,6 +366,9 @@ export const RamCosts: IMap<any> = {
     getTheme: 0,
     setTheme: 0,
     resetTheme: 0,
+    getStyles: 0,
+    setStyles: 0,
+    resetStyles: 0,
   },
 
   heart: {

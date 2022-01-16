@@ -729,6 +729,7 @@ export function finishWork(this: IPlayer, cancelled: boolean, sing = false): str
   }
 
   this.isWorking = false;
+  this.focus = false;
 
   this.resetWorkStatus();
   if (sing) {
@@ -946,11 +947,6 @@ export function workForFaction(this: IPlayer, numCycles: number): boolean {
     default:
       break;
   }
-  let favorMult = 1 + faction.favor / 100;
-  if (isNaN(favorMult)) {
-    favorMult = 1;
-  }
-  this.workRepGainRate *= favorMult;
   this.workRepGainRate *= BitNodeMultipliers.FactionWorkRepGain;
 
   //Cap the number of cycles being processed to whatever would put you at limit (20 hours)
@@ -1821,7 +1817,7 @@ export function getNextCompanyPosition(
 }
 
 export function quitJob(this: IPlayer, company: string): void {
-  if (this.isWorking == true && this.workType == "Working for Company" && this.companyName == company) {
+  if (this.isWorking == true && this.workType.includes("Working for Company") && this.companyName == company) {
     this.isWorking = false;
     this.companyName = "";
   }
