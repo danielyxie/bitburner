@@ -42,7 +42,6 @@ function ServerButton(props: IServerProps): React.ReactElement {
         cost={cost}
         rerender={props.rerender}
       />
-      <br />
     </>
   );
 }
