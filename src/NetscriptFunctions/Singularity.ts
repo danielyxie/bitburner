@@ -733,6 +733,18 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("isBusy");
       return player.isWorking || Router.page() === Page.Infiltration || Router.page() === Page.BitVerse;
     },
+    getDarkwebProgramsAvailable: function(includePurchased: boolean): string[] {
+      helper.updateDynamicRam("getDarkwebProgramsAvailable", getRamCost(player, "getDarkwebProgramsAvailable"));
+      helper.checkSingularityAccess("getDarkwebProgramsAvailable");
+
+      // If we don't have Tor, log it and return [] (empty list)
+      if (!player.hasTorRouter()) {
+        workerScript.log("getDarkwebProgramsAvailable", () => "You do not have the TOR router.");
+        return [];
+      }
+      return Object.values(DarkWebItems).map(p => p.program)
+          .filter(p => !player.hasProgram(p) || includePurchased);
+    },
     stopAction: function (): any {
       helper.updateDynamicRam("stopAction", getRamCost(player, "stopAction"));
       helper.checkSingularityAccess("stopAction");

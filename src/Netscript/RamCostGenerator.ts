@@ -224,6 +224,7 @@ export const RamCosts: IMap<any> = {
   getCharacterInformation: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   hospitalize: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   isBusy: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
+  getDarkwebProgramsAvailable: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 2),
   stopAction: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 2),
   upgradeHomeRam: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),
   upgradeHomeCores: SF4Cost(RamCostConstants.ScriptSingularityFn2RamCost),

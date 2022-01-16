@@ -4614,6 +4614,36 @@ export declare interface Singularity {
     isBusy(): boolean;
 
     /**
+     * Get a list of programs offered on the dark web
+     * @remarks
+     * RAM cost: 1 GB * 16/4/1
+     *
+     *
+     * This function allows the player to get a list of programs available for purchase 
+     * on the dark web. Players MUST have purchased Tor to get the list of programs 
+     * available. If Tor has not been purchased yet, this function will return an 
+     * empty list. Pass true into the optional paramter to include already purchased
+     * programs.
+     * 
+     * @example
+     * ```ts
+     * // NS1
+     * getDarkwebProgramsAvailable(true);
+     * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
+     * ```
+     * @example
+     * ```ts
+     * // NS2
+     * ns.getDarkwebProgramsAvailable(true);
+     * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
+     * ```
+     * @param includePurchased - Include already purchased programs. Defaults to false
+     * @returns - a list of programs available for purchase on the dark web, or [] if Tor has not
+     * been purchased
+     */
+     getDarkwebProgramsAvailable(includePurchased?: boolean ): string[];
+
+    /**
      * SF4.1 - Stop the current action.
      * @remarks
      * RAM cost: 1 GB

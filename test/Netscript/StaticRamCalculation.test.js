@@ -651,6 +651,11 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
       const f = ["isBusy"];
       await expectNonZeroRamCost(f);
     });
+    
+    it("getDarkwebProgramsAvailable()", async function () {
+      const f = ["getDarkwebProgramsAvailable"];
+      await expectNonZeroRamCost(f);
+    });
 
     it("stopAction()", async function () {
       const f = ["stopAction"];
