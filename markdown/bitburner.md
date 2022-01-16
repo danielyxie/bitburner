@@ -53,7 +53,6 @@
 |  [HacknetServerConstants](./bitburner.hacknetserverconstants.md) | Hacknet server related constants |
 |  [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) | Hacknet Server formulas |
 |  [InvestmentOffer](./bitburner.investmentoffer.md) | Corporation investment offer |
-|  [IPort](./bitburner.iport.md) | Interface of a netscript port |
 |  [Material](./bitburner.material.md) | Material in a warehouse |
 |  [NetscriptPort](./bitburner.netscriptport.md) | Object representing a port. A port is a serialized queue. |
 |  [NodeStats](./bitburner.nodestats.md) | Object representing all the values related to a hacknet node. |
