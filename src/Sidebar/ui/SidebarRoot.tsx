@@ -297,7 +297,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       } else if (event.keyCode === KEY.W && event.altKey) {
         event.preventDefault();
         clickCity();
-      } else if (event.keyCode === KEY.J && event.altKey && !event.ctrlKey && !event.metaKey && props.player.hasJob()) {
+      } else if (event.keyCode === KEY.J && event.altKey && !event.ctrlKey && !event.metaKey && canJob) {
         // ctrl/cmd + alt + j is shortcut to open Chrome dev tools
         event.preventDefault();
         clickJob();
