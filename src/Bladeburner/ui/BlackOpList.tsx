@@ -12,7 +12,7 @@ interface IProps {
 
 export function BlackOpList(props: IProps): React.ReactElement {
   let blackops: BlackOperation[] = [];
-  for (const blackopName in BlackOperations) {
+  for (const blackopName of Object.keys(BlackOperations)) {
     if (BlackOperations.hasOwnProperty(blackopName)) {
       blackops.push(BlackOperations[blackopName]);
     }

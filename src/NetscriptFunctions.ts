@@ -762,7 +762,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     disableLog: function (fn: any): any {
       if (fn === "ALL") {
-        for (fn in possibleLogs) {
+        for (fn of Object.keys(possibleLogs)) {
           workerScript.disableLogs[fn] = true;
         }
         workerScript.log("disableLog", () => `Disabled logging for all functions`);
@@ -775,7 +775,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     enableLog: function (fn: any): any {
       if (fn === "ALL") {
-        for (fn in possibleLogs) {
+        for (fn of Object.keys(possibleLogs)) {
           delete workerScript.disableLogs[fn];
         }
         workerScript.log("enableLog", () => `Enabled logging for all functions`);
@@ -1302,8 +1302,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("ps", getRamCost(Player, "ps"));
       const server = safeGetServer(hostname, "ps");
       const processes = [];
-      for (const i in server.runningScripts) {
-        const script = server.runningScripts[i];
+      for (const script of server.runningScripts) {
         processes.push({
           filename: script.filename,
           threads: script.threads,

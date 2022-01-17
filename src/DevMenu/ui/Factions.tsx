@@ -36,7 +36,7 @@ export function Factions(props: IProps): React.ReactElement {
   }
 
   function receiveAllInvites(): void {
-    for (const i in AllFaction) {
+    for (const i of Object.keys(AllFaction)) {
       props.player.receiveInvite(AllFaction[i].name);
     }
   }
@@ -74,25 +74,25 @@ export function Factions(props: IProps): React.ReactElement {
   }
 
   function tonsOfRep(): void {
-    for (const i in AllFaction) {
+    for (const i of Object.keys(AllFaction)) {
       AllFaction[i].playerReputation = bigNumber;
     }
   }
 
   function resetAllRep(): void {
-    for (const i in AllFaction) {
+    for (const i of Object.keys(AllFaction)) {
       AllFaction[i].playerReputation = 0;
     }
   }
 
   function tonsOfFactionFavor(): void {
-    for (const i in AllFaction) {
+    for (const i of Object.keys(AllFaction)) {
       AllFaction[i].favor = bigNumber;
     }
   }
 
   function resetAllFactionFavor(): void {
-    for (const i in AllFaction) {
+    for (const i of Object.keys(AllFaction)) {
       AllFaction[i].favor = 0;
     }
   }

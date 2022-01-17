@@ -7,7 +7,7 @@ import { dialogBoxCreate } from "../ui/React/DialogBox";
 export function determineCrimeSuccess(p: IPlayer, type: string): boolean {
   let chance = 0;
   let found = false;
-  for (const i in Crimes) {
+  for (const i of Object.keys(Crimes)) {
     const crime = Crimes[i];
     if (crime.type == type) {
       chance = crime.successRate(p);

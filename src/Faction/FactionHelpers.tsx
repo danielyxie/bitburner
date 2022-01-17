@@ -34,8 +34,7 @@ export function joinFaction(faction: Faction): void {
   const factionInfo = faction.getInfo();
 
   //Determine what factions you are banned from now that you have joined this faction
-  for (const i in factionInfo.enemies) {
-    const enemy = factionInfo.enemies[i];
+  for (const enemy of factionInfo.enemies) {
     if (Factions[enemy] instanceof Faction) {
       Factions[enemy].isBanned = true;
     }
@@ -121,7 +120,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
       }
     }
 
-    for (const name in Augmentations) {
+    for (const name of Object.keys(Augmentations)) {
       if (Augmentations.hasOwnProperty(name)) {
         Augmentations[name].baseCost *= CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
       }
@@ -170,7 +169,7 @@ export function getNextNeurofluxLevel(): number {
 }
 
 export function processPassiveFactionRepGain(numCycles: number): void {
-  for (const name in Factions) {
+  for (const name of Object.keys(Factions)) {
     if (name === Player.currentWorkFactionName) continue;
     if (!Factions.hasOwnProperty(name)) continue;
     const faction = Factions[name];

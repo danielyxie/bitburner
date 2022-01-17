@@ -24,7 +24,7 @@ export class HashManager {
   upgrades: IMap<number> = {};
 
   constructor() {
-    for (const name in HashUpgrades) {
+    for (const name of Object.keys(HashUpgrades)) {
       this.upgrades[name] = 0;
     }
   }
@@ -85,7 +85,7 @@ export class HashManager {
   }
 
   prestige(): void {
-    for (const name in HashUpgrades) {
+    for (const name of Object.keys(HashUpgrades)) {
       this.upgrades[name] = 0;
     }
     this.hashes = 0;

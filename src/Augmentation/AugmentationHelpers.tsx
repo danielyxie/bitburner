@@ -112,7 +112,7 @@ function getRandomBonus(): any {
 }
 
 function initAugmentations(): void {
-  for (const name in Factions) {
+  for (const name of Object.keys(Factions)) {
     if (Factions.hasOwnProperty(name)) {
       Factions[name].augmentations = [];
     }
@@ -2498,7 +2498,7 @@ function initAugmentations(): void {
     CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]],
     Player.queuedAugmentations.length,
   );
-  for (const name in Augmentations) {
+  for (const name of Object.keys(Augmentations)) {
     if (Augmentations.hasOwnProperty(name)) {
       Augmentations[name].baseCost *= mult;
     }
@@ -2525,7 +2525,7 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
   const augObj = Augmentations[aug.name];
 
   // Apply multipliers
-  for (const mult in augObj.mults) {
+  for (const mult of Object.keys(augObj.mults)) {
     const v = Player.getMult(mult) * augObj.mults[mult];
     Player.setMult(mult, v);
   }

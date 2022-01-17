@@ -158,7 +158,7 @@ export class Gang implements IGang {
 
     // Process power first
     const gangName = this.facName;
-    for (const name in AllGangs) {
+    for (const name of Object.keys(AllGangs)) {
       if (AllGangs.hasOwnProperty(name)) {
         if (name == gangName) {
           AllGangs[name].power += this.calculatePower();

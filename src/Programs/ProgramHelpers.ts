@@ -6,7 +6,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 //Returns the programs this player can create.
 export function getAvailableCreatePrograms(player: IPlayer): Program[] {
   const programs: Program[] = [];
-  for (const key in Programs) {
+  for (const key of Object.keys(Programs)) {
     // Non-creatable program
     const create = Programs[key].create;
     if (create == null) continue;

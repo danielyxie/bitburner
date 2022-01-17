@@ -307,7 +307,7 @@ export class Corporation {
     if (upgN === 1) {
       for (let i = 0; i < this.divisions.length; ++i) {
         const industry = this.divisions[i];
-        for (const city in industry.warehouses) {
+        for (const city of Object.keys(industry.warehouses)) {
           const warehouse = industry.warehouses[city];
           if (warehouse === 0) continue;
           if (industry.warehouses.hasOwnProperty(city) && warehouse instanceof Warehouse) {

@@ -198,7 +198,7 @@ export class Product {
 
     //Calculate the product's required materials
     //For now, just set it to be the same as the requirements to make materials
-    for (const matName in industry.reqMats) {
+    for (const matName of Object.keys(industry.reqMats)) {
       if (industry.reqMats.hasOwnProperty(matName)) {
         const reqMat = industry.reqMats[matName];
         if (reqMat === undefined) continue;
@@ -209,7 +209,7 @@ export class Product {
     //Calculate the product's size
     //For now, just set it to be the same size as the requirements to make materials
     this.siz = 0;
-    for (const matName in industry.reqMats) {
+    for (const matName of Object.keys(industry.reqMats)) {
       const reqMat = industry.reqMats[matName];
       if (reqMat === undefined) continue;
       this.siz += MaterialSizes[matName] * reqMat;

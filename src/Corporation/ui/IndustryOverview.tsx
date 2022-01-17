@@ -215,7 +215,7 @@ function Upgrades(props: { office: OfficeSpace; rerender: () => void }): React.R
   const corp = useCorporation();
   const division = useDivision();
   const upgrades = [];
-  for (const index in IndustryUpgrades) {
+  for (const index of Object.keys(IndustryUpgrades)) {
     const upgrade = IndustryUpgrades[index];
 
     // AutoBrew research disables the Coffee upgrade

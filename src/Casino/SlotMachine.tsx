@@ -157,7 +157,7 @@ export function SlotMachine(props: IProps): React.ReactElement {
   function step(): void {
     let stoppedOne = false;
     const copy = index.slice();
-    for (const i in copy) {
+    for (let i = 0; i < copy.length; i++) {
       if (copy[i] === locks[i] && !stoppedOne) continue;
       copy[i] = (copy[i] + 1) % symbols.length;
       stoppedOne = true;

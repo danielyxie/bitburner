@@ -204,7 +204,7 @@ export async function determineAllPossibilitiesForTabCompletion(
 
   if (isCommand("buy")) {
     const options = [];
-    for (const i in DarkWebItems) {
+    for (const i of Object.keys(DarkWebItems)) {
       const item = DarkWebItems[i];
       options.push(item.program);
     }

@@ -101,7 +101,7 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       helper.updateDynamicRam("getOtherGangInformation", getRamCost(player, "gang", "getOtherGangInformation"));
       checkGangApiAccess("getOtherGangInformation");
       const cpy: any = {};
-      for (const gang in AllGangs) {
+      for (const gang of Object.keys(AllGangs)) {
         cpy[gang] = Object.assign({}, AllGangs[gang]);
       }
 

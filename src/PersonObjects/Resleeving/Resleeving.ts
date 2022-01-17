@@ -37,7 +37,7 @@ export function purchaseResleeve(r: Resleeve, p: IPlayer): boolean {
   p.charisma_exp = r.charisma_exp;
 
   // Reset Augmentation "owned" data
-  for (const augKey in Augmentations) {
+  for (const augKey of Object.keys(Augmentations)) {
     Augmentations[augKey].owned = false;
   }
 

@@ -1485,7 +1485,7 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
     if (determineCrimeSuccess(this, this.crimeType)) {
       //Handle Karma and crime statistics
       let crime = null;
-      for (const i in Crimes) {
+      for (const i of Object.keys(Crimes)) {
         if (Crimes[i].type == this.crimeType) {
           crime = Crimes[i];
           break;
@@ -2557,15 +2557,15 @@ export function setBitNodeNumber(this: IPlayer, n: number): void {
 }
 
 export function queueAugmentation(this: IPlayer, name: string): void {
-  for (const i in this.queuedAugmentations) {
-    if (this.queuedAugmentations[i].name == name) {
+  for (const aug of this.queuedAugmentations) {
+    if (aug.name == name) {
       console.warn(`tried to queue ${name} twice, this may be a bug`);
       return;
     }
   }
 
-  for (const i in this.augmentations) {
-    if (this.augmentations[i].name == name) {
+  for (const aug of this.augmentations) {
+    if (aug.name == name) {
       console.warn(`tried to queue ${name} twice, this may be a bug`);
       return;
     }
