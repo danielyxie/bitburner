@@ -334,6 +334,9 @@ export function MakeProduct(
   if (productName == null || productName === "") {
     throw new Error("You must specify a name for your product!");
   }
+  if (!division.makesProducts) {
+    throw new Error("You cannot create products for this industry!");
+  }
   if (isNaN(designInvest)) {
     throw new Error("Invalid value for design investment");
   }
