@@ -49,6 +49,9 @@ import {
   SetMaterialMarketTA2,
   SetProductMarketTA1,
   SetProductMarketTA2,
+  BulkPurchase,
+  SellShares,
+  BuyBackShares,
 } from "../Corporation/Actions";
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
@@ -60,6 +63,7 @@ import { CorporationConstants } from "../Corporation/data/Constants";
 import { IndustryUpgrades } from "../Corporation/IndustryUpgrades";
 import { ResearchMap } from "../Corporation/ResearchMap";
 import { Factions } from "../Faction/Factions";
+import { sellStock } from '../StockMarket/BuyingAndSelling';
 
 export function NetscriptCorporation(
   player: IPlayer,
@@ -131,11 +135,11 @@ export function NetscriptCorporation(
 
   function getInvestmentOffer(): InvestmentOffer {
     const corporation = getCorporation();
-    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length || corporation.public) 
+    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length || corporation.public)
       return {
         funds: 0,
         shares: 0,
-        round: corporation.fundingRound + 1 // Make more readable 
+        round: corporation.fundingRound + 1 // Make more readable
       }; // Don't throw an error here, no reason to have a second function to check if you can get investment.
     const val = corporation.determineValuation();
     const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
@@ -145,7 +149,7 @@ export function NetscriptCorporation(
     return {
       funds: funding,
       shares: investShares,
-      round: corporation.fundingRound + 1 // Make more readable 
+      round: corporation.fundingRound + 1 // Make more readable
     };
   }
 
@@ -177,6 +181,7 @@ export function NetscriptCorporation(
     return true;
   }
 
+
   function getResearchCost(division: IIndustry, researchName: string): number {
     const researchTree = IndustryResearchTrees[division.type];
     if (researchTree === undefined) throw new Error(`No research tree for industry '${division.type}'`);
@@ -192,7 +197,7 @@ export function NetscriptCorporation(
 
   function bribe(factionName: string, amountCash: number, amountShares: number): boolean {
     if (!player.factions.includes(factionName)) throw new Error("Invalid faction name");
-    if (isNaN(amountCash) || amountCash < 0 || isNaN(amountShares) || amountShares < 0)  throw new Error("Invalid value for amount field! Must be numeric, grater than 0.");
+    if (isNaN(amountCash) || amountCash < 0 || isNaN(amountShares) || amountShares < 0) throw new Error("Invalid value for amount field! Must be numeric, grater than 0.");
     const corporation = getCorporation();
     if (corporation.funds < amountCash) return false;
     if (corporation.numShares < amountShares) return false;
@@ -270,25 +275,25 @@ export function NetscriptCorporation(
 
   function getSafeDivision(division: Industry): NSDivision {
     const cities: string[] = [];
-      for (const office of Object.values(division.offices)) {
-        if (office === 0) continue;
-        cities.push(office.loc);
-      }
-      return {
-        name: division.name,
-        type: division.type,
-        awareness: division.awareness,
-        popularity: division.popularity,
-        prodMult: division.prodMult,
-        research: division.sciResearch.qty,
-        lastCycleRevenue: division.lastCycleRevenue,
-        lastCycleExpenses: division.lastCycleExpenses,
-        thisCycleRevenue: division.thisCycleRevenue,
-        thisCycleExpenses: division.thisCycleExpenses,
-        upgrades: division.upgrades,
-        cities: cities,
-        products: division.products === undefined ? [] : Object.keys(division.products),
-      };
+    for (const office of Object.values(division.offices)) {
+      if (office === 0) continue;
+      cities.push(office.loc);
+    }
+    return {
+      name: division.name,
+      type: division.type,
+      awareness: division.awareness,
+      popularity: division.popularity,
+      prodMult: division.prodMult,
+      research: division.sciResearch.qty,
+      lastCycleRevenue: division.lastCycleRevenue,
+      lastCycleExpenses: division.lastCycleExpenses,
+      thisCycleRevenue: division.thisCycleRevenue,
+      thisCycleExpenses: division.thisCycleExpenses,
+      upgrades: division.upgrades,
+      cities: cities,
+      products: division.products === undefined ? [] : Object.keys(division.products),
+    };
   }
 
   const warehouseAPI: WarehouseAPI = {
@@ -419,6 +424,17 @@ export function NetscriptCorporation(
       if (amt < 0) throw new Error("Invalid value for amount field! Must be numeric and grater than 0");
       const material = getMaterial(divisionName, cityName, materialName);
       BuyMaterial(material, amt);
+    },
+    bulkPurchase: function (adivisionName: any, acityName: any, amaterialName: any, aamt: any): void {
+      checkAccess("bulkPurchase", 7);
+      const corporation = getCorporation();
+      const divisionName = helper.string("bulkPurchase", "divisionName", adivisionName);
+      const cityName = helper.string("bulkPurchase", "cityName", acityName);
+      const materialName = helper.string("bulkPurchase", "materialName", amaterialName);
+      const amt = helper.number("bulkPurchase", "amt", aamt);
+      const warehouse = getWarehouse(divisionName, cityName)
+      const material = getMaterial(divisionName, cityName, materialName);
+      BulkPurchase(corporation, warehouse, material, amt);
     },
     makeProduct: function (
       adivisionName: any,
@@ -770,24 +786,34 @@ export function NetscriptCorporation(
       const industryName = helper.string("getExpandIndustryCost", "industryName", aindustryName);
       return getExpandIndustryCost(industryName);
     },
-    getExpandCityCost: function(): number {
+    getExpandCityCost: function (): number {
       checkAccess("getExpandCityCost");
       return getExpandCityCost();
     },
-    getInvestmentOffer: function(): InvestmentOffer {
+    getInvestmentOffer: function (): InvestmentOffer {
       checkAccess("getInvestmentOffer");
       return getInvestmentOffer();
     },
-    acceptInvestmentOffer: function(): boolean {
+    acceptInvestmentOffer: function (): boolean {
       checkAccess("acceptInvestmentOffer");
       return acceptInvestmentOffer();
     },
-    goPublic: function(anumShares: any): boolean {
+    goPublic: function (anumShares: any): boolean {
       checkAccess("acceptInvestmentOffer");
       const numShares = helper.number("goPublic", "numShares", anumShares);
       return goPublic(numShares);
     },
-    bribe: function(afactionName: string, aamountCash: any, aamountShares: any): boolean {
+    sellShares: function (anumShares: any): number {
+      checkAccess("acceptInvestmentOffer");
+      const numShares = helper.number("sellStock", "numShares", anumShares);
+      return SellShares(getCorporation(), player, numShares);
+    },
+    buyBackShares: function (anumShares: any): boolean {
+      checkAccess("acceptInvestmentOffer");
+      const numShares = helper.number("buyStock", "numShares", anumShares);
+      return BuyBackShares(getCorporation(), player, numShares);
+    },
+    bribe: function (afactionName: string, aamountCash: any, aamountShares: any): boolean {
       checkAccess("bribe");
       const factionName = helper.string("bribe", "factionName", afactionName);
       const amountCash = helper.number("bribe", "amountCash", aamountCash);

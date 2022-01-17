@@ -4,7 +4,7 @@ import { MaterialSizes } from "../MaterialSizes";
 import { Warehouse } from "../Warehouse";
 import { Material } from "../Material";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { BuyMaterial } from "../Actions";
+import { BulkPurchase, BuyMaterial } from "../Actions";
 import { Modal } from "../../ui/React/Modal";
 import { useCorporation, useDivision } from "./Context";
 import Typography from "@mui/material/Typography";
@@ -54,32 +54,16 @@ interface IBPProps {
   warehouse: Warehouse;
 }
 
-function BulkPurchase(props: IBPProps): React.ReactElement {
+function BulkPurchaseSection(props: IBPProps): React.ReactElement {
   const corp = useCorporation();
   const [buyAmt, setBuyAmt] = useState("");
 
   function bulkPurchase(): void {
-    const amount = parseFloat(buyAmt);
-
-    const matSize = MaterialSizes[props.mat.name];
-    const maxAmount = (props.warehouse.size - props.warehouse.sizeUsed) / matSize;
-    if (amount * matSize > maxAmount) {
-      dialogBoxCreate(`You do not have enough warehouse size to fit this purchase`);
-      return;
-    }
-
-    if (isNaN(amount) || amount < 0) {
-      dialogBoxCreate("Invalid input amount");
-    } else {
-      const cost = amount * props.mat.bCost;
-      if (corp.funds >= cost) {
-        corp.funds = corp.funds - cost;
-        props.mat.qty += amount;
-      } else {
-        dialogBoxCreate(`You cannot afford this purchase.`);
-        return;
-      }
+    try {
+      BulkPurchase(corp, props.warehouse, props.mat, buyAmt);
       props.onClose();
+    } catch (err) {
+      dialogBoxCreate(err + "");
     }
   }
 
@@ -164,7 +148,7 @@ export function PurchaseMaterialModal(props: IProps): React.ReactElement {
         <Button onClick={purchaseMaterial}>Confirm</Button>
         <Button onClick={clearPurchase}>Clear Purchase</Button>
         {division.hasResearch("Bulk Purchasing") && (
-          <BulkPurchase onClose={props.onClose} mat={props.mat} warehouse={props.warehouse} />
+          <BulkPurchaseSection onClose={props.onClose} mat={props.mat} warehouse={props.warehouse} />
         )}
       </>
     </Modal>
