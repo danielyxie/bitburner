@@ -240,7 +240,7 @@ export function Root(props: IProps): React.ReactElement {
 
   async function updateRAM(newCode: string): Promise<void> {
     if (currentScript != null && currentScript.fileName.endsWith(".txt")) {
-      debouncedSetRAM("", []);
+      debouncedSetRAM("N/A", [["N/A", ""]]);
       return;
     }
     setUpdatingRam(true);
