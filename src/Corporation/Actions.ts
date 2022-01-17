@@ -270,6 +270,7 @@ export function SellShares(corporation: ICorporation, player: IPlayer, numShares
   if (numShares < 0) throw new Error("Invalid value for number of shares");
   if (numShares > corporation.numShares) throw new Error("You don't have that many shares to sell!");
   if (!corporation.public) throw new Error("You haven't gone public!");
+  if (corporation.shareSaleCooldown) throw new Error("Share sale on cooldown!");
   const stockSaleResults = corporation.calculateShareSale(numShares);
   const profit = stockSaleResults[0];
   const newSharePrice = stockSaleResults[1];

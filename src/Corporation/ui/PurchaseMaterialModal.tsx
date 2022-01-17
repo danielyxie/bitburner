@@ -60,7 +60,7 @@ function BulkPurchaseSection(props: IBPProps): React.ReactElement {
 
   function bulkPurchase(): void {
     try {
-      BulkPurchase(corp, props.warehouse, props.mat, buyAmt);
+      BulkPurchase(corp, props.warehouse, props.mat, parseFloat(buyAmt));
       props.onClose();
     } catch (err) {
       dialogBoxCreate(err + "");

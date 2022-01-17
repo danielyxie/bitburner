@@ -63,7 +63,6 @@ import { CorporationConstants } from "../Corporation/data/Constants";
 import { IndustryUpgrades } from "../Corporation/IndustryUpgrades";
 import { ResearchMap } from "../Corporation/ResearchMap";
 import { Factions } from "../Faction/Factions";
-import { sellStock } from '../StockMarket/BuyingAndSelling';
 
 export function NetscriptCorporation(
   player: IPlayer,
@@ -427,8 +426,9 @@ export function NetscriptCorporation(
     },
     bulkPurchase: function (adivisionName: any, acityName: any, amaterialName: any, aamt: any): void {
       checkAccess("bulkPurchase", 7);
-      const corporation = getCorporation();
       const divisionName = helper.string("bulkPurchase", "divisionName", adivisionName);
+      if (!hasResearched(getDivision(adivisionName), "Bulk Purchasing")) throw new Error(`You have not researched Bulk Purchase in ${adivisionName}`)
+      const corporation = getCorporation();
       const cityName = helper.string("bulkPurchase", "cityName", acityName);
       const materialName = helper.string("bulkPurchase", "materialName", amaterialName);
       const amt = helper.number("bulkPurchase", "amt", aamt);
