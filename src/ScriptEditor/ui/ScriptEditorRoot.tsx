@@ -198,7 +198,7 @@ export function Root(props: IProps): React.ReactElement {
           });
           editor.focus();
         });
-      } catch {}
+      } catch { }
     } else if (!options.vim) {
       // Whem vim mode is disabled
       vimEditor?.dispose();
@@ -432,7 +432,7 @@ export function Root(props: IProps): React.ReactElement {
     }
     try {
       infLoop(newCode);
-    } catch (err) {}
+    } catch (err) { }
   }
 
   function saveScript(scriptToSave: OpenScript): void {
@@ -714,7 +714,9 @@ export function Root(props: IProps): React.ReactElement {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 style={{
-                  backgroundColor: snapshot.isDraggingOver ? "#1F2022" : Settings.theme.backgroundprimary,
+                  backgroundColor: snapshot.isDraggingOver
+                    ? Settings.theme.backgroundsecondary
+                    : Settings.theme.backgroundprimary,
                   overflowX: "scroll",
                 }}
               >
@@ -738,12 +740,14 @@ export function Root(props: IProps): React.ReactElement {
                       >
                         <Button
                           onClick={() => onTabClick(index)}
-                          style={{
-                            background:
-                              currentScript?.fileName === openScripts[index].fileName
-                                ? Settings.theme.secondarydark
-                                : "",
-                          }}
+                          style={
+                            currentScript?.fileName === openScripts[index].fileName ? {
+                              background: Settings.theme.button,
+                              color: Settings.theme.primary
+                            } : {
+                              background: Settings.theme.backgroundsecondary,
+                              color: Settings.theme.secondary
+                            }}
                         >
                           {hostname}:~/{fileName} {dirty(index)}
                         </Button>
@@ -752,10 +756,13 @@ export function Root(props: IProps): React.ReactElement {
                           style={{
                             maxWidth: "20px",
                             minWidth: "20px",
-                            background:
-                              currentScript?.fileName === openScripts[index].fileName
-                                ? Settings.theme.secondarydark
-                                : "",
+                            ...(currentScript?.fileName === openScripts[index].fileName ? {
+                              background: Settings.theme.button,
+                              color: Settings.theme.primary
+                            } : {
+                              background: Settings.theme.backgroundsecondary,
+                              color: Settings.theme.secondary
+                            })
                           }}
                         >
                           x
