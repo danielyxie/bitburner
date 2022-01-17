@@ -32,7 +32,6 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
@@ -814,24 +813,11 @@ export function Root(props: IProps): React.ReactElement {
         ></Box>
 
         <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
+          <Button startIcon={<SettingsIcon />} onClick={() => setOptionsOpen(true)} sx={{ mr: 1 }}>Options</Button>
           <Button onClick={beautify}>Beautify</Button>
           <Button color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }} onClick={() => { setRamInfoOpen(true) }}>
             {ram}
           </Button>
-          <Modal open={ramInfoOpen} onClose={() => setRamInfoOpen(false)}>
-            <Table>
-              <TableBody>
-                {ramEntries.map(([n, r]) => (
-                  <React.Fragment key={n + r}>
-                    <TableRow>
-                      <TableCell sx={{ color: Settings.theme.primary }}>{n}</TableCell>
-                      <TableCell align="right" sx={{ color: Settings.theme.primary }}>{r}</TableCell>
-                    </TableRow>
-                  </React.Fragment>
-                ))}
-              </TableBody>
-            </Table>
-          </Modal>
           <Button onClick={save}>Save (Ctrl/Cmd + s)</Button>
           <Button onClick={props.router.toTerminal}>Close (Ctrl/Cmd + b)</Button>
           <Typography sx={{ mx: 1 }}>
@@ -845,12 +831,6 @@ export function Root(props: IProps): React.ReactElement {
               Full
             </Link>
           </Typography>
-          <IconButton style={{ marginLeft: "auto" }} onClick={() => setOptionsOpen(true)}>
-            <>
-              <SettingsIcon />
-              options
-            </>
-          </IconButton>
         </Box>
         <OptionsModal
           open={optionsOpen}
@@ -871,6 +851,20 @@ export function Root(props: IProps): React.ReactElement {
             Settings.MonacoVim = options.vim;
           }}
         />
+        <Modal open={ramInfoOpen} onClose={() => setRamInfoOpen(false)}>
+          <Table>
+            <TableBody>
+              {ramEntries.map(([n, r]) => (
+                <React.Fragment key={n + r}>
+                  <TableRow>
+                    <TableCell sx={{ color: Settings.theme.primary }}>{n}</TableCell>
+                    <TableCell align="right" sx={{ color: Settings.theme.primary }}>{r}</TableCell>
+                  </TableRow>
+                </React.Fragment>
+              ))}
+            </TableBody>
+          </Table>
+        </Modal>
       </div>
       <div
         style={{
