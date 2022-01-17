@@ -17,6 +17,7 @@ import { GetServer } from "../../Server/AllServers";
 import { Theme } from "@mui/material";
 import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
+import { debounce } from "lodash";
 
 let layerCounter = 0;
 
@@ -118,6 +119,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export const logBoxBaseZIndex = 1500;
 
 function LogWindow(props: IProps): React.ReactElement {
+  const draggableRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<Draggable>(null)
   const [script, setScript] = useState(props.script);
   const classes = useStyles();
   const container = useRef<HTMLDivElement>(null);
@@ -185,8 +188,50 @@ function LogWindow(props: IProps): React.ReactElement {
     return classes.primary;
   }
 
+  // And trigger fakeDrag when the window is resized
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
+  const onResize = debounce((): void => {
+    const node = draggableRef?.current;
+    if (!node) return;
+
+    if(!isOnScreen(node)) {
+      resetPosition();
+    }
+  }, 100);
+
+  const isOnScreen = (node: HTMLDivElement): boolean => {
+    const bounds = node.getBoundingClientRect();
+
+    return !(bounds.right < 0 ||
+            bounds.bottom < 0 ||
+            bounds.left > innerWidth ||
+            bounds.top > outerWidth);
+  }
+
+  const resetPosition = (): void => {
+    const node = rootRef?.current;
+    if (!node) return;
+    const state = node.state as {x: number; y: number};
+    state.x = 0;
+    state.y = 0;
+    node.setState(state);
+  }
+
+  const boundToBody = (e: any): void | false => {
+    if(e.clientX < 0 ||
+       e.clientY < 0 ||
+       e.clientX > innerWidth ||
+       e.clientY > innerHeight) return false;
+  }
+
   return (
-    <Draggable handle=".drag">
+    <Draggable handle=".drag" onDrag={boundToBody} ref={rootRef}>
       <Paper
         style={{
           display: "flex",
@@ -205,7 +250,7 @@ function LogWindow(props: IProps): React.ReactElement {
               cursor: "grab",
             }}
           >
-            <Box className="drag" display="flex" alignItems="center">
+            <Box className="drag" display="flex" alignItems="center" ref={draggableRef}>
               <Typography color="primary" variant="h6" title={title(true)}>
                 {title()}
               </Typography>
