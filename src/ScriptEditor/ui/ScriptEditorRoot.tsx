@@ -34,7 +34,12 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
+import Table from "@mui/material/Table";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import TableBody from "@mui/material/TableBody";
 import { PromptEvent } from "../../ui/React/PromptManager";
+import { Modal } from "../../ui/React/Modal";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
 
@@ -109,6 +114,7 @@ export function Root(props: IProps): React.ReactElement {
   const [editor, setEditor] = useState<IStandaloneCodeEditor | null>(null);
 
   const [ram, setRAM] = useState("RAM: ???");
+  const [ramEntries, setRamEntries] = useState<string[][]>([["???", ""]]);
   const [updatingRam, setUpdatingRam] = useState(false);
   const [decorations, setDecorations] = useState<string[]>([]);
 
@@ -120,6 +126,8 @@ export function Root(props: IProps): React.ReactElement {
     wordWrap: Settings.MonacoWordWrap,
     vim: props.vim || Settings.MonacoVim,
   });
+
+  const [ramInfoOpen, setRamInfoOpen] = useState(false);
 
   // Prevent Crash if script is open on deleted server
   openScripts = openScripts.filter((script) => {
@@ -222,8 +230,9 @@ export function Root(props: IProps): React.ReactElement {
 
   const debouncedSetRAM = useMemo(
     () =>
-      debounce((s) => {
+      debounce((s, e) => {
         setRAM(s);
+        setRamEntries(e);
         setUpdatingRam(false);
       }, 300),
     [],
@@ -231,28 +240,34 @@ export function Root(props: IProps): React.ReactElement {
 
   async function updateRAM(newCode: string): Promise<void> {
     if (currentScript != null && currentScript.fileName.endsWith(".txt")) {
-      debouncedSetRAM("");
+      debouncedSetRAM("", []);
       return;
     }
     setUpdatingRam(true);
     const codeCopy = newCode + "";
     const ramUsage = await calculateRamUsage(props.player, codeCopy, props.player.getCurrentServer().scripts);
     if (ramUsage.cost > 0) {
-      debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage.cost));
+      const entries = ramUsage.entries?.sort((a, b) => b.cost - a.cost) ?? [];
+      const entriesDisp = [];
+      for (const entry of entries) {
+        entriesDisp.push([`${entry.name} (${entry.type})`, numeralWrapper.formatRAM(entry.cost)]);
+      }
+
+      debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage.cost), entriesDisp);
       return;
     }
     switch (ramUsage.cost) {
       case RamCalculationErrorCode.ImportError: {
-        debouncedSetRAM("RAM: Import Error");
+        debouncedSetRAM("RAM: Import Error", [["Import Error", ""]]);
         break;
       }
       case RamCalculationErrorCode.URLImportError: {
-        debouncedSetRAM("RAM: HTTP Import Error");
+        debouncedSetRAM("RAM: HTTP Import Error", [["HTTP Import Error", ""]]);
         break;
       }
       case RamCalculationErrorCode.SyntaxError:
       default: {
-        debouncedSetRAM("RAM: Syntax Error");
+        debouncedSetRAM("RAM: Syntax Error", [["Syntax Error", ""]]);
         break;
       }
     }
@@ -800,9 +815,23 @@ export function Root(props: IProps): React.ReactElement {
 
         <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
           <Button onClick={beautify}>Beautify</Button>
-          <Typography color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
+          <Button color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }} onClick={() => { setRamInfoOpen(true) }}>
             {ram}
-          </Typography>
+          </Button>
+          <Modal open={ramInfoOpen} onClose={() => setRamInfoOpen(false)}>
+            <Table>
+              <TableBody>
+                {ramEntries.map(([n, r]) => (
+                  <React.Fragment key={n + r}>
+                    <TableRow>
+                      <TableCell sx={{ color: Settings.theme.primary }}>{n}</TableCell>
+                      <TableCell align="right" sx={{ color: Settings.theme.primary }}>{r}</TableCell>
+                    </TableRow>
+                  </React.Fragment>
+                ))}
+              </TableBody>
+            </Table>
+          </Modal>
           <Button onClick={save}>Save (Ctrl/Cmd + s)</Button>
           <Button onClick={props.router.toTerminal}>Close (Ctrl/Cmd + b)</Button>
           <Typography sx={{ mx: 1 }}>
