@@ -242,7 +242,7 @@ export function prestigeSourceFile(flume: boolean): void {
   // Messages
   initMessages();
 
-  if (Player.sourceFileLvl(5) > 0) {
+  if (Player.sourceFileLvl(5) > 0 || Player.bitNodeN === 5) {
     homeComp.programs.push(Programs.Formulas.name);
   }
 
