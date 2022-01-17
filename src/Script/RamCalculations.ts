@@ -388,7 +388,8 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): any {
           }
         },
         FunctionDeclaration: (node: any) => {
-          const key = currentModule + "." + node.id.name;
+          // node.id will be null when using 'export default'. Add a module name indicating the default export.
+          const key = currentModule + "." + (node.id === null ? "__SPECIAL_DEFAULT_EXPORT__" : node.id.name);
           walk.recursive(node, { key: key }, commonVisitors());
         },
       },
