@@ -368,6 +368,7 @@ export const RamCosts: IMap<any> = {
     getStyles: 0,
     setStyles: 0,
     resetStyles: 0,
+    getGameInfo: 0,
   },
 
   heart: {
