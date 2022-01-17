@@ -82,6 +82,16 @@ export async function executeJSScript(
   return loadedModule.main(ns);
 }
 
+function isDependencyOutOfDate(filename: string, scripts: Script[], scriptModuleSequenceNumber: number): boolean {
+  const depScript = scripts.find((s) => s.filename == filename);
+
+  // If the script is not present on the server, we should recompile, if only to get any necessary
+  // compilation errors.
+  if (!depScript) return true;
+
+  const depIsMoreRecent = depScript.moduleSequenceNumber > scriptModuleSequenceNumber;
+  return depIsMoreRecent;
+}
 /** Returns whether we should compile the script parameter.
  *
  * @param {Script} script
@@ -89,16 +99,7 @@ export async function executeJSScript(
  */
 function shouldCompile(script: Script, scripts: Script[]): boolean {
   if (script.module === "") return true;
-  return script.dependencies.some((dep) => {
-    const depScript = scripts.find((s) => s.filename == dep.filename);
-
-    // If the script is not present on the server, we should recompile, if only to get any necessary
-    // compilation errors.
-    if (!depScript) return true;
-
-    const depIsMoreRecent = depScript.moduleSequenceNumber > script.moduleSequenceNumber;
-    return depIsMoreRecent;
-  });
+  return script.dependencies.some((dep) => isDependencyOutOfDate(dep.filename, scripts, script.moduleSequenceNumber));
 }
 
 // Gets a stack of blob urls, the top/right-most element being
@@ -123,8 +124,13 @@ function shouldCompile(script: Script, scripts: Script[]): boolean {
 // BUG: apparently seen is never consulted. Oops.
 function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): ScriptUrl[] {
   // Inspired by: https://stackoverflow.com/a/43834063/91401
-  /** @type {ScriptUrl[]} */
-  const urlStack = [];
+  const urlStack: ScriptUrl[] = [];
+  // Seen contains the dependents of the current script. Make sure we include that in the script dependents.
+  for (const dependent of seen) {
+    if (!script.dependents.some(s => s.server === dependent.server && s.filename == dependent.filename)) {
+      script.dependents.push({ server: dependent.server, filename: dependent.filename });
+    }
+  }
   seen.push(script);
   try {
     // Replace every import statement with an import to a blob url containing
@@ -187,6 +193,19 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
       // Check to see if the urls for this script are stored in the cache by the hash value.
       let urls = ImportCache.get(importedScript.hash());
       // If we don't have it in the cache, then we need to generate the urls for it.
+      if (urls) {
+          // Verify that these urls are valid and have not been updated.
+          for(const url of urls) {
+            if (isDependencyOutOfDate(url.filename, scripts, url.moduleSequenceNumber)) {
+              // Revoke these URLs from the browser. We will be unable to use them again.
+              for (const url of urls) URL.revokeObjectURL(url.url);
+              // Clear the cache and prepare for new blobs.
+              urls = null;
+              ImportCache.remove(importedScript.hash());
+              break;
+            }
+          }
+      }
       if (!urls) {
         // Try to get a URL for the requested script and its dependencies.
         urls = _getScriptUrls(importedScript, scripts, seen);
@@ -217,7 +236,7 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
     // (e.g. same scripts on server, same hash value, etc) can use this blob url.
     BlobCache.store(transformedHash, blob);
     // Push the blob URL onto the top of the stack.
-    urlStack.push(new ScriptUrl(script.filename, blob));
+    urlStack.push(new ScriptUrl(script.filename, blob, script.moduleSequenceNumber));
     return urlStack;
   } catch (err) {
     // If there is an error, we need to clean up the URLs.
