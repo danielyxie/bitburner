@@ -522,7 +522,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (isNaN(hackAmount)) {
         throw makeRuntimeErrorMsg(
           "hackAnalyzeThreads",
-          `Invalid growth argument passed into hackAnalyzeThreads: ${hackAmount}. Must be numeric.`,
+          `Invalid hackAmount argument passed into hackAnalyzeThreads: ${hackAmount}. Must be numeric.`,
         );
       }
 
