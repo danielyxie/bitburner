@@ -61,15 +61,12 @@ export function GymLocation(props: IProps): React.ReactElement {
       <Button onClick={trainStrength}>
         Train Strength (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <br />
       <Button onClick={trainDefense}>
         Train Defense (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <br />
       <Button onClick={trainDexterity}>
         Train Dexterity (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <br />
       <Button onClick={trainAgility}>
         Train Agility (<Money money={cost} player={props.p} /> / sec)
       </Button>

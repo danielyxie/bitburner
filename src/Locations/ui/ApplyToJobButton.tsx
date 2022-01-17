@@ -39,7 +39,6 @@ export function ApplyToJobButton(props: IProps): React.ReactElement {
       <Tooltip title={<span dangerouslySetInnerHTML={{ __html: getJobRequirementTooltip() }}></span>}>
         <Button onClick={props.onClick}>{props.text}</Button>
       </Tooltip>
-      <br />
     </>
   );
 }
