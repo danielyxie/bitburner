@@ -380,7 +380,7 @@ export const achievements: IMap<Achievement> = {
   },
   TRAVEL: {
     ...achievementData["TRAVEL"],
-    Icon: "travel",
+    Icon: "TRAVEL",
     Condition: () => Player.city !== CityName.Sector12,
   },
   WORKOUT: {
