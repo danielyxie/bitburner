@@ -40,14 +40,12 @@ export function LogBoxManager(): React.ReactElement {
     () =>
       LogBoxEvents.subscribe((script: RunningScript) => {
         const id = script.server + "-" + script.filename + script.args.map((x: any): string => `${x}`).join("-");
-        if (logs.find((l) => l.id === id)) close(id);
-        Promise.resolve().then(() => {
-          logs.push({
-            id: id,
-            script: script,
-          });
-          rerender();
-        })
+        if (logs.find((l) => l.id === id)) return;
+        logs.push({
+          id: id,
+          script: script,
+        });
+        rerender();
       }),
     [],
   );
