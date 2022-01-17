@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import { RecruitModal } from "./RecruitModal";
 import { GangConstants } from "../data/Constants";
-import { formatNumber } from "../../utils/StringHelperFunctions";
+import { numeralWrapper } from "../../ui/numeralFormat";
 import { useGang } from "./Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -28,7 +28,7 @@ export function RecruitButton(props: IProps): React.ReactElement {
         <Button sx={{ mx: 1 }} disabled>
           Recruit Gang Member
         </Button>
-        <Typography>{formatNumber(respect, 2)} respect needed to recruit next member</Typography>
+        <Typography>{numeralWrapper.formatRespect(respect)} respect needed to recruit next member</Typography>
       </Box>
     );
   }
