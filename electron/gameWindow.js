@@ -86,6 +86,7 @@ async function createWindow(killall) {
   window.webContents.backgroundThrottling = false;
 
   achievements.enableAchievementsInterval(window);
+
   utils.attachUnresponsiveAppHandler(window);
   utils.setZoomFactor(window);
 

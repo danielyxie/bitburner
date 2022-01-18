@@ -1,12 +1,19 @@
 /* eslint-disable no-process-exit */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { app, dialog, BrowserWindow } = require("electron");
+const { app, dialog, BrowserWindow, ipcMain } = require("electron");
 const log = require("electron-log");
 const greenworks = require("./greenworks");
 const api = require("./api-server");
 const gameWindow = require("./gameWindow");
 const achievements = require("./achievements");
 const utils = require("./utils");
+const storage = require("./storage");
+const debounce = require("lodash/debounce");
+const Config = require("electron-config");
+const config = new Config();
+
+log.transports.file.level = config.get("file-log-level", "info");
+log.transports.console.level = config.get("console-log-level", "debug");
 
 log.catchErrors();
 log.info(`Started app: ${JSON.stringify(process.argv)}`);
@@ -40,6 +47,18 @@ function setStopProcessHandler(app, window, enabled) {
 
     // Shutdown the http server
     api.disable();
+
+    // Trigger debounced saves right now...
+    try {
+      await saveToDisk.flush();
+    } catch (error) {
+      log.error(error);
+    }
+    try {
+      await saveToCloud.flush();
+    } catch (error) {
+      log.error(error);
+    }
 
     // Because of a steam limitation, if the player has launched an external browser,
     // steam will keep displaying the game as "Running" in their UI as long as the browser is up.
@@ -87,13 +106,71 @@ function setStopProcessHandler(app, window, enabled) {
     process.exit(0);
   };
 
+  const receivedGameReadyHandler = async (event, arg) => {
+    if (!window) {
+      log.error('Window was undefined in game info handler');
+      return;
+    }
+
+    log.info(`Received game information`, arg);
+    window.gameInfo = { ...arg };
+    await storage.prepareSaveFolders(window);
+
+    // TODO:
+    // Check local saves for latest modified one
+    // Check Steam Cloud data
+    // Compare with current and figure out which should be pushed to the player
+  }
+
+  const saveToCloud = debounce(async (save) => {
+    log.info("Saving to Steam Cloud ...")
+    try {
+      await storage.pushGameSaveToSteamCloud(save);
+      log.debug('Saved Game to Steam Cloud');
+    } catch (error) {
+      log.error(error);
+      utils.writeToast(window, `Could not save to Steam Cloud.`, "error", 5000);
+    }
+  }, config.get("cloud-save-min-time", 1000 * 60 * 15), { leading: true });
+
+  const saveToDisk = debounce(async (save, fileName) => {
+    log.info("Saving to Disk ...")
+    try {
+      const file = await storage.saveGameToDisk(window, { save, fileName });
+      log.debug(`Saved Game to '${file.replaceAll('\\', '\\\\')}'`);
+    } catch (error) {
+      log.error(error);
+      utils.writeToast(window, `Could not save to disk`, "error", 5000);
+    }
+  }, config.get("disk-save-min-time", 1000 * 60 * 5), { leading: true });
+
+  const receivedGameSavedHandler = async (event, arg) => {
+    if (!window) {
+      log.error('Window was undefined in game info handler');
+      return;
+    }
+
+    const { save, ...other } = arg;
+    log.silly(`Received game saved info`, {...other, save: `${save.length} bytes`});
+
+    if (storage.isAutosaveEnabled()) {
+      saveToDisk(save, arg.fileName);
+    }
+    if (storage.isCloudEnabled()) {
+      saveToCloud(save);
+    }
+  }
+
   if (enabled) {
     log.debug('Adding closing handlers');
+    ipcMain.on('push-game-ready', receivedGameReadyHandler);
+    ipcMain.on('push-game-saved', receivedGameSavedHandler);
     window.on("closed", clearWindowHandler);
     window.on("close", closingWindowHandler)
     app.on("window-all-closed", stopProcessHandler);
   } else {
     log.debug('Removing closing handlers');
+    ipcMain.removeAllListeners();
     window.removeListener("closed", clearWindowHandler);
     window.removeListener("close", closingWindowHandler);
     app.removeListener("window-all-closed", stopProcessHandler);
