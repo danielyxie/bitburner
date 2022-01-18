@@ -435,8 +435,11 @@ export class Industry implements IIndustry {
       const popularityGain = corporation.getDreamSenseGain(),
         awarenessGain = popularityGain * 4;
       if (popularityGain > 0) {
-        this.popularity += popularityGain * marketCycles;
-        this.awareness += awarenessGain * marketCycles;
+        const awareness = this.awareness + (awarenessGain * marketCycles);
+        this.awareness = Math.min(awareness, Number.MAX_VALUE);
+
+        const popularity = this.popularity + (popularityGain * marketCycles);
+        this.popularity = Math.min(popularity, Number.MAX_VALUE);
       }
 
       return;
@@ -1279,10 +1282,11 @@ export class Industry implements IIndustry {
       case 1: {
         //AdVert.Inc,
         const advMult = corporation.getAdvertisingMultiplier() * this.getAdvertisingMultiplier();
-        this.awareness += 3 * advMult;
-        this.popularity += 1 * advMult;
-        this.awareness *= 1.01 * advMult;
-        this.popularity *= (1 + getRandomInt(1, 3) / 100) * advMult;
+        const awareness = (this.awareness + (3 * advMult)) * (1.01 * advMult);
+        this.awareness = Math.min(awareness, Number.MAX_VALUE);
+
+        const popularity = (this.popularity + (1 * advMult)) * ((1 + getRandomInt(1, 3) / 100) * advMult);
+        this.popularity = Math.min(popularity, Number.MAX_VALUE);       
         break;
       }
       default: {

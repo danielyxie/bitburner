@@ -4,7 +4,7 @@
 
 ## OfficeAPI.hireEmployee() method
 
-Assign an employee to a job.
+Hire an employee.
 
 <b>Signature:</b>
 

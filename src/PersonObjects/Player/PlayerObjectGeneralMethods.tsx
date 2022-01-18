@@ -1253,14 +1253,12 @@ export function getWorkRepGain(this: IPlayer): number {
 /* Creating a Program */
 export function startCreateProgramWork(
   this: IPlayer,
-  router: IRouter,
   programName: string,
   time: number,
   reqLevel: number,
 ): void {
   this.resetWorkStatus();
   this.isWorking = true;
-  this.focus = true;
   this.workType = CONSTANTS.WorkTypeCreateProgram;
 
   //Time needed to complete work affected by hacking skill (linearly based on
@@ -1289,7 +1287,6 @@ export function startCreateProgramWork(
   }
 
   this.createProgramName = programName;
-  router.toWork();
 }
 
 export function createProgramWork(this: IPlayer, numCycles: number): boolean {
@@ -1337,10 +1334,9 @@ export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): stri
   return "You've finished creating " + programName + "! The new program can be found on your home computer.";
 }
 /* Studying/Taking Classes */
-export function startClass(this: IPlayer, router: IRouter, costMult: number, expMult: number, className: string): void {
+export function startClass(this: IPlayer, costMult: number, expMult: number, className: string): void {
   this.resetWorkStatus();
   this.isWorking = true;
-  this.focus = true;
   this.workType = CONSTANTS.WorkTypeStudyClass;
   this.workCostMult = costMult;
   this.workExpMult = expMult;
@@ -1353,7 +1349,6 @@ export function startClass(this: IPlayer, router: IRouter, costMult: number, exp
   this.workDexExpGainRate = earnings.workDexExpGainRate;
   this.workAgiExpGainRate = earnings.workAgiExpGainRate;
   this.workChaExpGainRate = earnings.workChaExpGainRate;
-  router.toWork();
 }
 
 export function takeClass(this: IPlayer, numCycles: number): boolean {

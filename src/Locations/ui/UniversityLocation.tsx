@@ -34,7 +34,9 @@ export function UniversityLocation(props: IProps): React.ReactElement {
 
   function take(stat: string): void {
     const loc = props.loc;
-    player.startClass(router, calculateCost(), loc.expMult, stat);
+    player.startClass(calculateCost(), loc.expMult, stat);
+    player.startFocusing();
+    router.toWork();
   }
 
   function study(): void {

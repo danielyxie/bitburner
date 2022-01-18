@@ -16,6 +16,7 @@ interface CorporationInfo
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [divisions](./bitburner.corporationinfo.divisions.md) | [Division](./bitburner.division.md)<!-- -->\[\] | Array of all divisions |
 |  [expenses](./bitburner.corporationinfo.expenses.md) | number | Expenses per second this cycle |
 |  [funds](./bitburner.corporationinfo.funds.md) | number | Funds available |
 |  [issuedShares](./bitburner.corporationinfo.issuedshares.md) | number | Amount of shares issued |

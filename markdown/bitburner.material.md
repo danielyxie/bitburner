@@ -17,6 +17,8 @@ interface Material
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [name](./bitburner.material.name.md) | string | Name of the material |
+|  [prod](./bitburner.material.prod.md) | number | Amount of material produced |
 |  [qlt](./bitburner.material.qlt.md) | number | Quality of the material |
 |  [qty](./bitburner.material.qty.md) | number | Amount of material |
+|  [sell](./bitburner.material.sell.md) | number | Amount of material sold |
 

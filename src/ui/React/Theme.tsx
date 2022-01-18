@@ -362,7 +362,7 @@ export function refreshTheme(): void {
     },
   });
 
-  document.body.style.backgroundColor = theme.colors.black?.toString() ?? "black";
+  document.body.style.backgroundColor = theme.colors.backgroundprimary?.toString() ?? "black";
 }
 refreshTheme();
 

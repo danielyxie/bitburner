@@ -23,6 +23,7 @@ interface Division
 |  [name](./bitburner.division.name.md) | string | Name of the division |
 |  [popularity](./bitburner.division.popularity.md) | number | Popularity of the division |
 |  [prodMult](./bitburner.division.prodmult.md) | number | Production multiplier |
+|  [products](./bitburner.division.products.md) | string\[\] | Products developed by this division |
 |  [research](./bitburner.division.research.md) | number | Amount of research in that division |
 |  [thisCycleExpenses](./bitburner.division.thiscycleexpenses.md) | number | Expenses this cycle |
 |  [thisCycleRevenue](./bitburner.division.thiscyclerevenue.md) | number | Revenue this cycle |

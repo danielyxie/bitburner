@@ -20,4 +20,5 @@ interface Warehouse
 |  [loc](./bitburner.warehouse.loc.md) | string | City in which the warehouse is located |
 |  [size](./bitburner.warehouse.size.md) | number | Total space in the warehouse |
 |  [sizeUsed](./bitburner.warehouse.sizeused.md) | number | Used space in the warehouse |
+|  [smartSupplyEnabled](./bitburner.warehouse.smartsupplyenabled.md) | boolean | Smart Supply status in the warehouse |
 
