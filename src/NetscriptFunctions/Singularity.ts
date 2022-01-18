@@ -343,7 +343,7 @@ export function NetscriptSingularity(
           workerScript.log("universityCourse", () => `Invalid class name: ${className}.`);
           return false;
       }
-      player.startClass(Router, costMult, expMult, task);
+      player.startClass(costMult, expMult, task);
       if (focus) {
         player.startFocusing();
         Router.toWork();
@@ -433,19 +433,19 @@ export function NetscriptSingularity(
       switch (stat.toLowerCase()) {
         case "strength".toLowerCase():
         case "str".toLowerCase():
-          player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymStrength);
+          player.startClass(costMult, expMult, CONSTANTS.ClassGymStrength);
           break;
         case "defense".toLowerCase():
         case "def".toLowerCase():
-          player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymDefense);
+          player.startClass(costMult, expMult, CONSTANTS.ClassGymDefense);
           break;
         case "dexterity".toLowerCase():
         case "dex".toLowerCase():
-          player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymDexterity);
+          player.startClass(costMult, expMult, CONSTANTS.ClassGymDexterity);
           break;
         case "agility".toLowerCase():
         case "agi".toLowerCase():
-          player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymAgility);
+          player.startClass(costMult, expMult, CONSTANTS.ClassGymAgility);
           break;
         default:
           workerScript.log("gymWorkout", () => `Invalid stat: ${stat}.`);
@@ -1271,7 +1271,7 @@ export function NetscriptSingularity(
         return false;
       }
 
-      player.startCreateProgramWork(Router, p.name, create.time, create.level);
+      player.startCreateProgramWork(p.name, create.time, create.level);
       if (focus) {
         player.startFocusing();
         Router.toWork();
