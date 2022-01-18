@@ -23,10 +23,18 @@ import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "./Augmentation/PlayerOwnedAugmentation";
 import { LocationName } from "./Locations/data/LocationNames";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
+import { pushGameSaved } from "./Electron";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
  */
+
+export interface SaveData {
+  playerIdentifier: string;
+  fileName: string;
+  save: string;
+  savedOn: number;
+}
 
 export interface ImportData {
   base64: string;
@@ -90,11 +98,20 @@ class BitburnerSaveObject {
   }
 
   saveGame(emitToastEvent = true): Promise<void> {
-    Player.lastSave = new Date().getTime();
+    const savedOn = new Date().getTime();
+    Player.lastSave = savedOn;
     const saveString = this.getSaveString(Settings.ExcludeRunningScriptsFromSave);
     return new Promise((resolve, reject) => {
       save(saveString)
         .then(() => {
+          const saveData: SaveData = {
+            playerIdentifier: Player.identifier,
+            fileName: this.getSaveFileName(),
+            save: saveString,
+            savedOn,
+          };
+          pushGameSaved(saveData);
+
           if (emitToastEvent) {
             SnackbarEvents.emit("Game Saved!", "info", 2000);
           }

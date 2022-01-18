@@ -18,6 +18,9 @@ async function createWindow(killall) {
     show: false,
     backgroundThrottling: false,
     backgroundColor: "#000000",
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js')
+    }
   });
 
   window.removeMenu();

@@ -15,7 +15,7 @@ import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import WarningIcon from '@mui/icons-material/Warning';
 import { ConfirmationModal } from "./ConfirmationModal";
-
+import { pushImportResult } from "../../Electron";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,6 +90,7 @@ export function ImportSaveRoot({ importString, automatic, onReturning }: ImportS
 
   function handleGoBack(): void {
     Settings.AutosaveInterval = initialAutosave;
+    pushImportResult(false);
     onReturning();
   }
 
