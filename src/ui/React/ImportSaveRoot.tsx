@@ -30,7 +30,7 @@ import { Settings } from "../../Settings/Settings";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { numeralWrapper } from "../numeralFormat";
 import { ConfirmationModal } from "./ConfirmationModal";
-
+import { pushImportResult } from "../../Electron";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -117,11 +117,13 @@ export function ImportSaveRoot({ importString, automatic, onReturning }: ImportS
 
   function handleGoBack(): void {
     Settings.AutosaveInterval = initialAutosave;
+    pushImportResult(false);
     onReturning();
   }
 
   async function handleImport(): Promise<void> {
     await saveObject.importGame(importString, true);
+    pushImportResult(true);
   }
 
   useEffect(() => {
