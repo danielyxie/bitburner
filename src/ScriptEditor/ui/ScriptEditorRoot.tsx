@@ -32,9 +32,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
+import Table from "@mui/material/Table";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import TableBody from "@mui/material/TableBody";
 import { PromptEvent } from "../../ui/React/PromptManager";
+import { Modal } from "../../ui/React/Modal";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
 
@@ -109,6 +113,7 @@ export function Root(props: IProps): React.ReactElement {
   const [editor, setEditor] = useState<IStandaloneCodeEditor | null>(null);
 
   const [ram, setRAM] = useState("RAM: ???");
+  const [ramEntries, setRamEntries] = useState<string[][]>([["???", ""]]);
   const [updatingRam, setUpdatingRam] = useState(false);
   const [decorations, setDecorations] = useState<string[]>([]);
 
@@ -120,6 +125,8 @@ export function Root(props: IProps): React.ReactElement {
     wordWrap: Settings.MonacoWordWrap,
     vim: props.vim || Settings.MonacoVim,
   });
+
+  const [ramInfoOpen, setRamInfoOpen] = useState(false);
 
   // Prevent Crash if script is open on deleted server
   openScripts = openScripts.filter((script) => {
@@ -198,7 +205,7 @@ export function Root(props: IProps): React.ReactElement {
           });
           editor.focus();
         });
-      } catch {}
+      } catch { }
     } else if (!options.vim) {
       // Whem vim mode is disabled
       vimEditor?.dispose();
@@ -222,8 +229,9 @@ export function Root(props: IProps): React.ReactElement {
 
   const debouncedSetRAM = useMemo(
     () =>
-      debounce((s) => {
+      debounce((s, e) => {
         setRAM(s);
+        setRamEntries(e);
         setUpdatingRam(false);
       }, 300),
     [],
@@ -231,28 +239,34 @@ export function Root(props: IProps): React.ReactElement {
 
   async function updateRAM(newCode: string): Promise<void> {
     if (currentScript != null && currentScript.fileName.endsWith(".txt")) {
-      debouncedSetRAM("");
+      debouncedSetRAM("N/A", [["N/A", ""]]);
       return;
     }
     setUpdatingRam(true);
     const codeCopy = newCode + "";
     const ramUsage = await calculateRamUsage(props.player, codeCopy, props.player.getCurrentServer().scripts);
     if (ramUsage.cost > 0) {
-      debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage.cost));
+      const entries = ramUsage.entries?.sort((a, b) => b.cost - a.cost) ?? [];
+      const entriesDisp = [];
+      for (const entry of entries) {
+        entriesDisp.push([`${entry.name} (${entry.type})`, numeralWrapper.formatRAM(entry.cost)]);
+      }
+
+      debouncedSetRAM("RAM: " + numeralWrapper.formatRAM(ramUsage.cost), entriesDisp);
       return;
     }
     switch (ramUsage.cost) {
       case RamCalculationErrorCode.ImportError: {
-        debouncedSetRAM("RAM: Import Error");
+        debouncedSetRAM("RAM: Import Error", [["Import Error", ""]]);
         break;
       }
       case RamCalculationErrorCode.URLImportError: {
-        debouncedSetRAM("RAM: HTTP Import Error");
+        debouncedSetRAM("RAM: HTTP Import Error", [["HTTP Import Error", ""]]);
         break;
       }
       case RamCalculationErrorCode.SyntaxError:
       default: {
-        debouncedSetRAM("RAM: Syntax Error");
+        debouncedSetRAM("RAM: Syntax Error", [["Syntax Error", ""]]);
         break;
       }
     }
@@ -432,7 +446,7 @@ export function Root(props: IProps): React.ReactElement {
     }
     try {
       infLoop(newCode);
-    } catch (err) {}
+    } catch (err) { }
   }
 
   function saveScript(scriptToSave: OpenScript): void {
@@ -714,7 +728,9 @@ export function Root(props: IProps): React.ReactElement {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 style={{
-                  backgroundColor: snapshot.isDraggingOver ? "#1F2022" : Settings.theme.backgroundprimary,
+                  backgroundColor: snapshot.isDraggingOver
+                    ? Settings.theme.backgroundsecondary
+                    : Settings.theme.backgroundprimary,
                   overflowX: "scroll",
                 }}
               >
@@ -738,12 +754,14 @@ export function Root(props: IProps): React.ReactElement {
                       >
                         <Button
                           onClick={() => onTabClick(index)}
-                          style={{
-                            background:
-                              currentScript?.fileName === openScripts[index].fileName
-                                ? Settings.theme.secondarydark
-                                : "",
-                          }}
+                          style={
+                            currentScript?.fileName === openScripts[index].fileName ? {
+                              background: Settings.theme.button,
+                              color: Settings.theme.primary
+                            } : {
+                              background: Settings.theme.backgroundsecondary,
+                              color: Settings.theme.secondary
+                            }}
                         >
                           {hostname}:~/{fileName} {dirty(index)}
                         </Button>
@@ -752,10 +770,13 @@ export function Root(props: IProps): React.ReactElement {
                           style={{
                             maxWidth: "20px",
                             minWidth: "20px",
-                            background:
-                              currentScript?.fileName === openScripts[index].fileName
-                                ? Settings.theme.secondarydark
-                                : "",
+                            ...(currentScript?.fileName === openScripts[index].fileName ? {
+                              background: Settings.theme.button,
+                              color: Settings.theme.primary
+                            } : {
+                              background: Settings.theme.backgroundsecondary,
+                              color: Settings.theme.secondary
+                            })
                           }}
                         >
                           x
@@ -792,10 +813,11 @@ export function Root(props: IProps): React.ReactElement {
         ></Box>
 
         <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
+          <Button startIcon={<SettingsIcon />} onClick={() => setOptionsOpen(true)} sx={{ mr: 1 }}>Options</Button>
           <Button onClick={beautify}>Beautify</Button>
-          <Typography color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }}>
+          <Button color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }} onClick={() => { setRamInfoOpen(true) }}>
             {ram}
-          </Typography>
+          </Button>
           <Button onClick={save}>Save (Ctrl/Cmd + s)</Button>
           <Button onClick={props.router.toTerminal}>Close (Ctrl/Cmd + b)</Button>
           <Typography sx={{ mx: 1 }}>
@@ -809,12 +831,6 @@ export function Root(props: IProps): React.ReactElement {
               Full
             </Link>
           </Typography>
-          <IconButton style={{ marginLeft: "auto" }} onClick={() => setOptionsOpen(true)}>
-            <>
-              <SettingsIcon />
-              options
-            </>
-          </IconButton>
         </Box>
         <OptionsModal
           open={optionsOpen}
@@ -835,6 +851,20 @@ export function Root(props: IProps): React.ReactElement {
             Settings.MonacoVim = options.vim;
           }}
         />
+        <Modal open={ramInfoOpen} onClose={() => setRamInfoOpen(false)}>
+          <Table>
+            <TableBody>
+              {ramEntries.map(([n, r]) => (
+                <React.Fragment key={n + r}>
+                  <TableRow>
+                    <TableCell sx={{ color: Settings.theme.primary }}>{n}</TableCell>
+                    <TableCell align="right" sx={{ color: Settings.theme.primary }}>{r}</TableCell>
+                  </TableRow>
+                </React.Fragment>
+              ))}
+            </TableBody>
+          </Table>
+        </Modal>
       </div>
       <div
         style={{
