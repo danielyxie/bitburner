@@ -577,9 +577,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("asleep", "Takes 1 argument.");
       }
       workerScript.log("asleep", () => `Sleeping for ${time} milliseconds`);
-      return netscriptDelay(time, workerScript).then(function () {
-        return Promise.resolve(true);
-      });
+      return new Promise((resolve) => setTimeout(resolve, time));
     },
     grow: function (hostname: any, { threads: requestedThreads, stock }: any = {}): any {
       updateDynamicRam("grow", getRamCost(Player, "grow"));
@@ -715,7 +713,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         end();
       });
     },
-    getSharePower: function(): number {
+    getSharePower: function (): number {
       return CalculateShareMult();
     },
     print: function (...args: any[]): void {
