@@ -27,6 +27,7 @@ async function createWindow(killall) {
     backgroundColor: "#000000",
     webPreferences: {
       nativeWindowOpen: true,
+      preload: path.join(__dirname, 'preload.js'),
     },
   });
 
