@@ -653,7 +653,9 @@ export function NetscriptSingularity(
         !(
           player.workType == CONSTANTS.WorkTypeFaction ||
           player.workType == CONSTANTS.WorkTypeCompany ||
-          player.workType == CONSTANTS.WorkTypeCompanyPartTime
+          player.workType == CONSTANTS.WorkTypeCompanyPartTime ||
+          player.workType == CONSTANTS.WorkTypeCreateProgram ||
+          player.workType == CONSTANTS.WorkTypeStudyClass
         )
       ) {
         throw helper.makeRuntimeErrorMsg("setFocus", "Cannot change focus for current job");
