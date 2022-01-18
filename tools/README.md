@@ -20,3 +20,13 @@ Used to synchronize the achievements info in steamworks to the game's data.json
 # Get your key here: https://steamcommunity.com/dev/apikey
 node fetch-steam-achievements-data.js DEVKEYDEVKEYDEVKEYDEVKEY
 ```
+
+## Changelog script
+
+Used to generate a basic git commit log (in markdown) between commit A & commit B
+
+**Usage**
+```sh
+# Will default to HEAD if second is not specified.
+./tools/changelog.sh 9a0062b 05cbc25
+```
