@@ -117,7 +117,7 @@ export class Action implements IAction {
 
     // Check to make sure weights are summed properly
     let sum = 0;
-    for (const weight in this.weights) {
+    for (const weight of Object.keys(this.weights)) {
       if (this.weights.hasOwnProperty(weight)) {
         sum += this.weights[weight];
       }
@@ -131,7 +131,7 @@ export class Action implements IAction {
       );
     }
 
-    for (const decay in this.decays) {
+    for (const decay of Object.keys(this.decays)) {
       if (this.decays.hasOwnProperty(decay)) {
         if (this.decays[decay] > 1) {
           throw new Error(
@@ -240,7 +240,7 @@ export class Action implements IAction {
     }
     let difficulty = this.getDifficulty();
     let competence = 0;
-    for (const stat in this.weights) {
+    for (const stat of Object.keys(this.weights)) {
       if (this.weights.hasOwnProperty(stat)) {
         const playerStatLvl = Player.queryStatFromString(stat);
         const key = "eff" + stat.charAt(0).toUpperCase() + stat.slice(1);

@@ -2,6 +2,7 @@ import { IPlayer } from "../IPlayer";
 import { Faction } from "../../Faction/Faction";
 import { CONSTANTS } from "../../Constants";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { CalculateShareMult } from "../../NetworkShare/Share";
 
 function mult(f: Faction): number {
   let favorMult = 1 + f.favor / 100;
@@ -16,7 +17,8 @@ export function getHackingWorkRepGain(p: IPlayer, f: Faction): number {
     ((p.hacking + p.intelligence / 3) / CONSTANTS.MaxSkillLevel) *
     p.faction_rep_mult *
     p.getIntelligenceBonus(1) *
-    mult(f)
+    mult(f) *
+    CalculateShareMult()
   );
 }
 

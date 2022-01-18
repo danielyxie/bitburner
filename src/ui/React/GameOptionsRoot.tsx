@@ -21,6 +21,7 @@ import TextField from "@mui/material/TextField";
 
 import DownloadIcon from "@mui/icons-material/Download";
 import UploadIcon from "@mui/icons-material/Upload";
+import SaveIcon from '@mui/icons-material/Save';
 
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { dialogBoxCreate } from "./DialogBox";
@@ -31,9 +32,11 @@ import { StyleEditorModal } from "./StyleEditorModal";
 import { SnackbarEvents } from "./Snackbar";
 
 import { Settings } from "../../Settings/Settings";
-import { save, deleteGame } from "../../db";
+import { save } from "../../db";
 import { formatTime } from "../../utils/helpers/formatTime";
 import { OptionSwitch } from "./OptionSwitch";
+import { DeleteGameButton } from "./DeleteGameButton";
+import { SoftResetButton } from "./SoftResetButton";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,10 +74,8 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [timestampFormat, setTimestampFormat] = useState(Settings.TimestampsFormat);
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
-  const [deleteGameOpen, setDeleteOpen] = useState(false);
   const [themeEditorOpen, setThemeEditorOpen] = useState(false);
   const [styleEditorOpen, setStyleEditorOpen] = useState(false);
-  const [softResetOpen, setSoftResetOpen] = useState(false);
   const [importSaveOpen, setImportSaveOpen] = useState(false);
   const [importData, setImportData] = useState<ImportData | null>(null);
 
@@ -192,14 +193,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
       setImportData(null);
       setTimeout(() => location.reload(), 1000)
     });
-  }
-
-  function doSoftReset(): void {
-    if (!Settings.SuppressBuyAugmentationConfirmation) {
-      setSoftResetOpen(true);
-    } else {
-      props.softReset();
-    }
   }
 
   return (
@@ -531,19 +524,19 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         </Grid>
         <Box sx={{ display: 'grid', width: 'fit-content', height: 'fit-content' }}>
           <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-            <Button onClick={() => props.save()}>Save Game</Button>
-            <Button onClick={() => setDeleteOpen(true)}>Delete Game</Button>
+            <Button onClick={() => props.save()} startIcon={<SaveIcon />} >
+              Save Game
+            </Button>
+            <DeleteGameButton />
           </Box>
           <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
             <Tooltip title={<Typography>Export your game to a text file.</Typography>}>
-              <Button onClick={() => props.export()}>
-                <DownloadIcon color="primary" />
+              <Button onClick={() => props.export()} startIcon={<DownloadIcon />}>
                 Export Game
               </Button>
             </Tooltip>
             <Tooltip title={<Typography>Import your game from a text file.<br />This will <strong>overwrite</strong> your current game. Back it up first!</Typography>}>
-              <Button onClick={startImport}>
-                <UploadIcon color="primary" />
+              <Button onClick={startImport} startIcon={<UploadIcon />}>
                 Import Game
                 <input ref={importInput} id="import-game-file-selector" type="file" hidden onChange={onImport} />
               </Button>
@@ -587,21 +580,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </Tooltip>
           </Box>
           <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-            <Tooltip
-              title={
-                <Typography>
-                  Perform a soft reset. Resets everything as if you had just purchased an Augmentation.
-                </Typography>
-              }
-            >
-              <Button onClick={doSoftReset}>Soft Reset</Button>
-            </Tooltip>
-            <ConfirmationModal
-              open={softResetOpen}
-              onClose={() => setSoftResetOpen(false)}
-              onConfirm={props.softReset}
-              confirmationText={"This will perform the same action as installing Augmentations, are you sure?"}
-            />
+            <SoftResetButton noConfirmation={Settings.SuppressBuyAugmentationConfirmation} onTriggered={props.softReset} />
             <Tooltip
               title={
                 <Typography>
@@ -640,17 +619,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         </Box>
       </Grid>
       <FileDiagnosticModal open={diagnosticOpen} onClose={() => setDiagnosticOpen(false)} />
-      <ConfirmationModal
-        onConfirm={() => {
-          setDeleteOpen(false);
-          deleteGame()
-            .then(() => setTimeout(() => location.reload(), 1000))
-            .catch((r) => console.error(`Could not delete game: ${r}`));
-        }}
-        open={deleteGameOpen}
-        onClose={() => setDeleteOpen(false)}
-        confirmationText={"Really delete your game? (It's permanent!)"}
-      />
       <ThemeEditorModal open={themeEditorOpen} onClose={() => setThemeEditorOpen(false)} />
       <StyleEditorModal open={styleEditorOpen} onClose={() => setStyleEditorOpen(false)} />
     </div>

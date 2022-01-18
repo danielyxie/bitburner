@@ -107,6 +107,7 @@ export async function main(ns) {
 |  [getServerRequiredHackingLevel(host)](./bitburner.ns.getserverrequiredhackinglevel.md) | Returns the required hacking level of the target server. |
 |  [getServerSecurityLevel(host)](./bitburner.ns.getserversecuritylevel.md) | Get server security level. |
 |  [getServerUsedRam(host)](./bitburner.ns.getserverusedram.md) | Get the used RAM on a server. |
+|  [getSharePower()](./bitburner.ns.getsharepower.md) | Calculate your share power. |
 |  [getTimeSinceLastAug()](./bitburner.ns.gettimesincelastaug.md) | Returns the amount of time in milliseconds that have passed since you last installed Augmentations. |
 |  [getWeakenTime(host)](./bitburner.ns.getweakentime.md) | Get the execution time of a weaken() call. |
 |  [grow(host, opts)](./bitburner.ns.grow.md) | Spoof money in a servers bank account, increasing the amount available. |
@@ -144,6 +145,7 @@ export async function main(ns) {
 |  [scriptKill(script, host)](./bitburner.ns.scriptkill.md) | Kill all scripts with a filename. |
 |  [scriptRunning(script, host)](./bitburner.ns.scriptrunning.md) | Check if any script with a filename is running. |
 |  [serverExists(host)](./bitburner.ns.serverexists.md) | Returns a boolean denoting whether or not the specified server exists. |
+|  [share()](./bitburner.ns.share.md) | Share your computer with your factions. Increasing your rep gain for a short duration. |
 |  [sleep(millis)](./bitburner.ns.sleep.md) | Suspends the script for n milliseconds. |
 |  [spawn(script, numThreads, args)](./bitburner.ns.spawn.md) | Terminate current script and start another in 10s. |
 |  [sprintf(format, args)](./bitburner.ns.sprintf.md) | Format a string. |

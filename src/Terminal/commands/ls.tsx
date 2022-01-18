@@ -127,7 +127,7 @@ export function ls(
     const classes = makeStyles((theme: Theme) =>
       createStyles({
         scriptLinksWrap: {
-          display: "flex",
+          display: "inline-flex",
           color: theme.palette.warning.main,
         },
         scriptLink: {

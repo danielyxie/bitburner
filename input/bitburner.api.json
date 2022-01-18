@@ -17315,7 +17315,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getServerGrowth:member(1)",
-              "docComment": "/**\n * Get a server growth parameter.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns the server’s instrinsic “growth parameter”. This growth parameter is a number between 0 and 100 that represents how quickly the server’s money grows. This parameter affects the percentage by which the server’s money is increased when using the grow function. A higher growth parameter will result in a higher percentage increase from grow.\n *\n * @param host - Host of target server.\n *\n * @returns Parameter that affects the percentage by which the server’s money is increased when using the grow function.\n */\n",
+              "docComment": "/**\n * Get a server growth parameter.\n *\n * @remarks\n *\n * RAM cost: 0.1 GB\n *\n * Returns the server’s intrinsic “growth parameter”. This growth parameter is a number typically between 0 and 100 that represents how quickly the server’s money grows. This parameter affects the percentage by which the server’s money is increased when using the grow function. A higher growth parameter will result in a higher percentage increase from grow.\n *\n * @param host - Host of target server.\n *\n * @returns Parameter that affects the percentage by which the server’s money is increased when using the grow function.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -17751,6 +17751,34 @@
                 }
               ],
               "name": "getServerUsedRam"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NS#getSharePower:member(1)",
+              "docComment": "/**\n * Calculate your share power.\n *\n * @remarks\n *\n * RAM cost: 0.2 GB\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getSharePower(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "getSharePower"
             },
             {
               "kind": "MethodSignature",
@@ -19758,6 +19786,39 @@
                 }
               ],
               "name": "serverExists"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!NS#share:member(1)",
+              "docComment": "/**\n * Share your computer with your factions. Increasing your rep gain for a short duration.\n *\n * @remarks\n *\n * RAM cost: 2.4 GB\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "share(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "share"
             },
             {
               "kind": "MethodSignature",
@@ -29586,7 +29647,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Stanek#activeFragments:member(1)",
-              "docComment": "/**\n * List of fragments in Stanek's Gift.\n *\n * @remarks\n *\n * RAM cost: cost: 5 GB\n *\n * @returns List of active fragments placed on Stanek's Gift.\n */\n",
+              "docComment": "/**\n * List of fragments in Stanek's Gift.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * @returns List of active fragments placed on Stanek's Gift.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29619,7 +29680,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Stanek#canPlace:member(1)",
-              "docComment": "/**\n * Check if fragment can be placed at specified location.\n *\n * @remarks\n *\n * RAM cost: cost: 0.5 GB\n *\n * @param rootX - rootX Root X against which to align the top left of the fragment.\n *\n * @param rootY - rootY Root Y against which to align the top left of the fragment.\n *\n * @param rotation - rotation A number from 0 to 3, the mount of 90 degree turn to take.\n *\n * @param fragmentId - fragmentId ID of the fragment to place.\n *\n * @returns true if the fragment can be placed at that position. false otherwise.\n */\n",
+              "docComment": "/**\n * Check if fragment can be placed at specified location.\n *\n * @remarks\n *\n * RAM cost: 0.5 GB\n *\n * @param rootX - rootX Root X against which to align the top left of the fragment.\n *\n * @param rootY - rootY Root Y against which to align the top left of the fragment.\n *\n * @param rotation - rotation A number from 0 to 3, the mount of 90 degree turn to take.\n *\n * @param fragmentId - fragmentId ID of the fragment to place.\n *\n * @returns true if the fragment can be placed at that position. false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29772,7 +29833,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Stanek#clear:member(1)",
-              "docComment": "/**\n * Clear the board of all fragments.\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n */\n",
+              "docComment": "/**\n * Clear the board of all fragments.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29800,7 +29861,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Stanek#fragmentDefinitions:member(1)",
-              "docComment": "/**\n * List possible fragments.\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n *\n * @returns List of possible fragments.\n */\n",
+              "docComment": "/**\n * List possible fragments.\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @returns List of possible fragments.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29833,7 +29894,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Stanek#get:member(1)",
-              "docComment": "/**\n * Get placed fragment at location.\n *\n * @remarks\n *\n * RAM cost: cost: 5 GB\n *\n * @param rootX - X against which to align the top left of the fragment.\n *\n * @param rootY - Y against which to align the top left of the fragment.\n *\n * @returns The fragment at [rootX, rootY], if any.\n */\n",
+              "docComment": "/**\n * Get placed fragment at location.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * @param rootX - X against which to align the top left of the fragment.\n *\n * @param rootY - Y against which to align the top left of the fragment.\n *\n * @returns The fragment at [rootX, rootY], if any.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -29925,7 +29986,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Stanek#place:member(1)",
-              "docComment": "/**\n * Place fragment on Stanek's Gift.\n *\n * @remarks\n *\n * RAM cost: cost: 5 GB\n *\n * @param rootX - X against which to align the top left of the fragment.\n *\n * @param rootY - Y against which to align the top left of the fragment.\n *\n * @param rotation - A number from 0 to 3, the mount of 90 degree turn to take.\n *\n * @param fragmentId - ID of the fragment to place.\n *\n * @returns true if the fragment can be placed at that position. false otherwise.\n */\n",
+              "docComment": "/**\n * Place fragment on Stanek's Gift.\n *\n * @remarks\n *\n * RAM cost: 5 GB\n *\n * @param rootX - X against which to align the top left of the fragment.\n *\n * @param rootY - Y against which to align the top left of the fragment.\n *\n * @param rotation - A number from 0 to 3, the mount of 90 degree turn to take.\n *\n * @param fragmentId - ID of the fragment to place.\n *\n * @returns true if the fragment can be placed at that position. false otherwise.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -30014,7 +30075,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Stanek#remove:member(1)",
-              "docComment": "/**\n * Remove fragment at location.\n *\n * @remarks\n *\n * RAM cost: cost: 0.15 GB\n *\n * @param rootX - X against which to align the top left of the fragment.\n *\n * @param rootY - Y against which to align the top left of the fragment.\n *\n * @returns The fragment at [rootX, rootY], if any.\n */\n",
+              "docComment": "/**\n * Remove fragment at location.\n *\n * @remarks\n *\n * RAM cost: 0.15 GB\n *\n * @param rootX - X against which to align the top left of the fragment.\n *\n * @param rootY - Y against which to align the top left of the fragment.\n *\n * @returns The fragment at [rootX, rootY], if any.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -31330,8 +31391,37 @@
           "members": [
             {
               "kind": "MethodSignature",
+              "canonicalReference": "bitburner!UserInterface#getGameInfo:member(1)",
+              "docComment": "/**\n * Gets the current game information (version, commit, ...)\n *\n * @remarks\n *\n * RAM cost: 0 GB\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getGameInfo(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "GameInfo",
+                  "canonicalReference": "bitburner!GameInfo:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "getGameInfo"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "bitburner!UserInterface#getStyles:member(1)",
-              "docComment": "/**\n * Get the current styles\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n *\n * @returns An object containing the player's styles\n */\n",
+              "docComment": "/**\n * Get the current styles\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @returns An object containing the player's styles\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -31360,7 +31450,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!UserInterface#getTheme:member(1)",
-              "docComment": "/**\n * Get the current theme\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n *\n * @returns An object containing the theme's colors\n */\n",
+              "docComment": "/**\n * Get the current theme\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @returns An object containing the theme's colors\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -31389,7 +31479,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!UserInterface#resetStyles:member(1)",
-              "docComment": "/**\n * Resets the player's styles to the default values\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n */\n",
+              "docComment": "/**\n * Resets the player's styles to the default values\n *\n * @remarks\n *\n * RAM cost: 0 GB\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -31417,7 +31507,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!UserInterface#resetTheme:member(1)",
-              "docComment": "/**\n * Resets the player's theme to the default values\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n */\n",
+              "docComment": "/**\n * Resets the player's theme to the default values\n *\n * @remarks\n *\n * RAM cost: 0 GB\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -31445,7 +31535,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!UserInterface#setStyles:member(1)",
-              "docComment": "/**\n * Sets the current styles\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n *\n * @example\n *\n * Usage example (NS2)\n * ```ts\n * const styles = ns.ui.getStyles();\n * styles.fontFamily = 'Comic Sans Ms';\n * ns.ui.setStyles(styles);\n * ```\n *\n */\n",
+              "docComment": "/**\n * Sets the current styles\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @example\n *\n * Usage example (NS2)\n * ```ts\n * const styles = ns.ui.getStyles();\n * styles.fontFamily = 'Comic Sans Ms';\n * ns.ui.setStyles(styles);\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -31490,7 +31580,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!UserInterface#setTheme:member(1)",
-              "docComment": "/**\n * Sets the current theme\n *\n * @remarks\n *\n * RAM cost: cost: 0 GB\n *\n * @example\n *\n * Usage example (NS2)\n * ```ts\n * const theme = ns.ui.getTheme();\n * theme.primary = '#ff5500';\n * ns.ui.setTheme(theme);\n * ```\n *\n */\n",
+              "docComment": "/**\n * Sets the current theme\n *\n * @remarks\n *\n * RAM cost: 0 GB\n *\n * @example\n *\n * Usage example (NS2)\n * ```ts\n * const theme = ns.ui.getTheme();\n * theme.primary = '#ff5500';\n * ns.ui.setTheme(theme);\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",

@@ -10,9 +10,12 @@ import { ScriptUrl } from "./ScriptUrl";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
 import { computeHash } from "../utils/helpers/computeHash";
+import { ImportCache } from "../utils/ImportCache";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 let globalModuleSequenceNumber = 0;
+
+interface ScriptReference { filename: string; server: string }
 
 export class Script {
   // Code for this script
@@ -35,6 +38,7 @@ export class Script {
   // whenever the script is first evaluated, and therefore may be out of date if the script
   // has been updated since it was last run.
   dependencies: ScriptUrl[] = [];
+  dependents: ScriptReference[] = [];
 
   // Amount of RAM this Script requres to run
   ramUsage = 0;
@@ -99,7 +103,11 @@ export class Script {
    * Force update of the computed hash based on the source code.
    */
   rehash(): void {
+    const oldHash = this._hash;
     this._hash = computeHash(this.code);
+    if (oldHash !== this._hash) {
+      ImportCache.remove(oldHash);
+    }
   }
 
   /**
@@ -124,6 +132,10 @@ export class Script {
     this.server = hostname;
     this.updateRamUsage(player, otherScripts);
     this.markUpdated();
+    for (const dependent of this.dependents) {
+      const [dependentScript] = otherScripts.filter(s => s.filename === dependent.filename && s.server == dependent.server);
+      if (dependentScript !== null) dependentScript.markUpdated();
+    }
   }
 
   /**
@@ -156,6 +168,7 @@ export class Script {
     s.url = "";
     // Rehash the code to ensure that hash is set properly.
     s.rehash();
+    s.dependents = [];
     return s;
   }
 

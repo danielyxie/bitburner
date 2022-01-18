@@ -88,6 +88,8 @@ import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { SnackbarEvents } from "./ui/React/Snackbar";
 
 import { Flags } from "./NetscriptFunctions/Flags";
+import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
+import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
 
 interface NS extends INS {
   [key: string]: any;
@@ -172,7 +174,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeRejectMsg(
         workerScript,
         `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-        `This is probably a bug. Please report to game developer`,
+          `This is probably a bug. Please report to game developer`,
       );
     }
 
@@ -692,7 +694,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log(
           "weaken",
           () =>
-            `'${server.hostname}' security level weakened to ${server.hackDifficulty
+            `'${server.hostname}' security level weakened to ${
+              server.hackDifficulty
             }. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)})`,
         );
         workerScript.scriptRef.onlineExpGained += expGain;
@@ -703,6 +706,17 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     weakenAnalyze: function (threads: any, cores: any = 1): number {
       const coreBonus = 1 + (cores - 1) / 16;
       return CONSTANTS.ServerWeakenAmount * threads * coreBonus;
+    },
+    share: function (): Promise<void> {
+      workerScript.log("share", () => "Sharing this computer.");
+      const end = StartSharing(workerScript.scriptRef.threads * calculateIntelligenceBonus(Player.intelligence, 2));
+      return netscriptDelay(10000, workerScript).finally(function () {
+        workerScript.log("share", () => "Finished sharing this computer.");
+        end();
+      });
+    },
+    getSharePower: function(): number {
+      return CalculateShareMult();
     },
     print: function (...args: any[]): void {
       if (args.length === 0) {
@@ -762,7 +776,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     disableLog: function (fn: any): any {
       if (fn === "ALL") {
-        for (fn in possibleLogs) {
+        for (fn of Object.keys(possibleLogs)) {
           workerScript.disableLogs[fn] = true;
         }
         workerScript.log("disableLog", () => `Disabled logging for all functions`);
@@ -775,7 +789,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     enableLog: function (fn: any): any {
       if (fn === "ALL") {
-        for (fn in possibleLogs) {
+        for (fn of Object.keys(possibleLogs)) {
           delete workerScript.disableLogs[fn];
         }
         workerScript.log("enableLog", () => `Enabled logging for all functions`);
@@ -1302,8 +1316,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("ps", getRamCost(Player, "ps"));
       const server = safeGetServer(hostname, "ps");
       const processes = [];
-      for (const i in server.runningScripts) {
-        const script = server.runningScripts[i];
+      for (const script of server.runningScripts) {
         processes.push({
           filename: script.filename,
           threads: script.threads,
@@ -2269,8 +2282,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const source_is_txt = source.endsWith(".txt");
       const dest_is_txt = destination.endsWith(".txt");
 
-      if (!isScriptFilename(source) && !source_is_txt) throw makeRuntimeErrorMsg("mv", `'mv' can only be used on scripts and text files (.txt)`);
-      if (source_is_txt != dest_is_txt) throw makeRuntimeErrorMsg("mv", `Source and destination files must have the same type`);
+      if (!isScriptFilename(source) && !source_is_txt)
+        throw makeRuntimeErrorMsg("mv", `'mv' can only be used on scripts and text files (.txt)`);
+      if (source_is_txt != dest_is_txt)
+        throw makeRuntimeErrorMsg("mv", `Source and destination files must have the same type`);
 
       if (source === destination) {
         return;
@@ -2279,7 +2294,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       // This will throw if the server is not found, we do not need to validate result.
       const destServer: BaseServer | null = safeGetServer(host, "mv");
 
-      if (!source_is_txt && destServer.isRunning(source)) throw makeRuntimeErrorMsg("mv", `Cannot use 'mv' on a script that is running`)
+      if (!source_is_txt && destServer.isRunning(source))
+        throw makeRuntimeErrorMsg("mv", `Cannot use 'mv' on a script that is running`);
 
       interface File {
         filename: string;
@@ -2298,7 +2314,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         }
       }
 
-      if (source_file == null) throw makeRuntimeErrorMsg("mv", `Source file ${source} does not exist`)
+      if (source_file == null) throw makeRuntimeErrorMsg("mv", `Source file ${source} does not exist`);
 
       if (dest_file != null) {
         if (dest_file instanceof TextFile && source_file instanceof TextFile) {

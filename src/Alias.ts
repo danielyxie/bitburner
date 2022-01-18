@@ -22,12 +22,12 @@ export function loadGlobalAliases(saveString: string): void {
 
 // Prints all aliases to terminal
 export function printAliases(): void {
-  for (const name in Aliases) {
+  for (const name of Object.keys(Aliases)) {
     if (Aliases.hasOwnProperty(name)) {
       Terminal.print("alias " + name + "=" + Aliases[name]);
     }
   }
-  for (const name in GlobalAliases) {
+  for (const name of Object.keys(GlobalAliases)) {
     if (GlobalAliases.hasOwnProperty(name)) {
       Terminal.print("global alias " + name + "=" + GlobalAliases[name]);
     }

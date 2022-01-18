@@ -3932,7 +3932,7 @@ interface Stanek {
   /**
    * List possible fragments.
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    *
    * @returns List of possible fragments.
    */
@@ -3941,7 +3941,7 @@ interface Stanek {
   /**
    * List of fragments in Stanek's Gift.
    * @remarks
-   * RAM cost: cost: 5 GB
+   * RAM cost: 5 GB
    *
    * @returns List of active fragments placed on Stanek's Gift.
    */
@@ -3950,14 +3950,14 @@ interface Stanek {
   /**
    * Clear the board of all fragments.
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    */
   clear(): void;
 
   /**
    * Check if fragment can be placed at specified location.
    * @remarks
-   * RAM cost: cost: 0.5 GB
+   * RAM cost: 0.5 GB
    *
    * @param rootX - rootX Root X against which to align the top left of the fragment.
    * @param rootY - rootY Root Y against which to align the top left of the fragment.
@@ -3969,7 +3969,7 @@ interface Stanek {
   /**
    * Place fragment on Stanek's Gift.
    * @remarks
-   * RAM cost: cost: 5 GB
+   * RAM cost: 5 GB
    *
    * @param rootX - X against which to align the top left of the fragment.
    * @param rootY - Y against which to align the top left of the fragment.
@@ -3981,7 +3981,7 @@ interface Stanek {
   /**
    * Get placed fragment at location.
    * @remarks
-   * RAM cost: cost: 5 GB
+   * RAM cost: 5 GB
    *
    * @param rootX - X against which to align the top left of the fragment.
    * @param rootY - Y against which to align the top left of the fragment.
@@ -3992,7 +3992,7 @@ interface Stanek {
   /**
    * Remove fragment at location.
    * @remarks
-   * RAM cost: cost: 0.15 GB
+   * RAM cost: 0.15 GB
    *
    * @param rootX - X against which to align the top left of the fragment.
    * @param rootY - Y against which to align the top left of the fragment.
@@ -4009,7 +4009,7 @@ interface UserInterface {
   /**
    * Get the current theme
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    *
    * @returns An object containing the theme's colors
    */
@@ -4018,7 +4018,7 @@ interface UserInterface {
   /**
    * Sets the current theme
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    * @example
    * Usage example (NS2)
    * ```ts
@@ -4032,14 +4032,14 @@ interface UserInterface {
   /**
    * Resets the player's theme to the default values
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    */
   resetTheme(): void;
 
   /**
    * Get the current styles
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    *
    * @returns An object containing the player's styles
    */
@@ -4048,7 +4048,7 @@ interface UserInterface {
   /**
    * Sets the current styles
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    * @example
    * Usage example (NS2)
    * ```ts
@@ -4062,9 +4062,16 @@ interface UserInterface {
   /**
    * Resets the player's styles to the default values
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    */
   resetStyles(): void;
+
+  /**
+   * Gets the current game information (version, commit, ...)
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  getGameInfo(): GameInfo;
 }
 
 /**
@@ -5175,9 +5182,9 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0.1 GB
    *
-   * Returns the server’s instrinsic “growth parameter”. This growth
-   * parameter is a number between 0 and 100 that represents how
-   * quickly the server’s money grows. This parameter affects the
+   * Returns the server’s intrinsic “growth parameter”. This growth
+   * parameter is a number typically between 0 and 100 that represents
+   * how quickly the server’s money grows. This parameter affects the
    * percentage by which the server’s money is increased when using the
    * grow function. A higher growth parameter will result in a
    * higher percentage increase from grow.
@@ -6066,6 +6073,20 @@ export interface NS extends Singularity {
    * ```
    */
   flags(schema: [string, string | number | boolean | string[]][]): any;
+
+  /**
+   * Share your computer with your factions. Increasing your rep gain for a short duration.
+   * @remarks
+   * RAM cost: 2.4 GB
+   */
+  share(): Promise<void>;
+
+  /**
+   * Calculate your share power.
+   * @remarks
+   * RAM cost: 0.2 GB
+   */
+  getSharePower(): number;
 }
 
 /**
@@ -6572,4 +6593,14 @@ interface UserInterfaceTheme {
 interface IStyleSettings {
   fontFamily: string;
   lineHeight: number;
+}
+
+/**
+ * Game Information
+ * @internal
+ */
+interface GameInfo {
+  version: string;
+  commit: string;
+  platform: string;
 }

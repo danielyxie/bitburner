@@ -273,7 +273,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       const orders: any = {};
 
       const stockMarketOrders = StockMarket["Orders"];
-      for (const symbol in stockMarketOrders) {
+      for (const symbol of Object.keys(stockMarketOrders)) {
         const orderBook = stockMarketOrders[symbol];
         if (orderBook.constructor === Array && orderBook.length > 0) {
           orders[symbol] = [];

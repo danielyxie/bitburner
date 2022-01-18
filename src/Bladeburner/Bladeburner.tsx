@@ -135,7 +135,7 @@ export class Bladeburner implements IBladeburner {
 
     // Can't start a BlackOp if you haven't done the one before it
     const blackops = [];
-    for (const nm in BlackOperations) {
+    for (const nm of Object.keys(BlackOperations)) {
       if (BlackOperations.hasOwnProperty(nm)) {
         blackops.push(nm);
       }
@@ -1074,7 +1074,7 @@ export class Bladeburner implements IBladeburner {
 
   updateSkillMultipliers(): void {
     this.resetSkillMultipliers();
-    for (const skillName in this.skills) {
+    for (const skillName of Object.keys(this.skills)) {
       if (this.skills.hasOwnProperty(skillName)) {
         const skill = Skills[skillName];
         if (skill == null) {

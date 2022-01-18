@@ -44,7 +44,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   function getAugs(): string[] {
     if (isPlayersGang) {
       const augs: string[] = [];
-      for (const augName in Augmentations) {
+      for (const augName of Object.keys(Augmentations)) {
         if (augName === AugmentationNames.NeuroFluxGovernor) continue;
         if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
         const aug = Augmentations[augName];

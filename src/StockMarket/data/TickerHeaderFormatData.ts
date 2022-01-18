@@ -5,7 +5,7 @@ export const TickerHeaderFormatData = {
   longestSymbol: 0,
 };
 
-for (const key in StockSymbols) {
+for (const key of Object.keys(StockSymbols)) {
   TickerHeaderFormatData.longestName = Math.max(key.length, TickerHeaderFormatData.longestName);
   TickerHeaderFormatData.longestSymbol = Math.max(StockSymbols[key].length, TickerHeaderFormatData.longestSymbol);
 }
