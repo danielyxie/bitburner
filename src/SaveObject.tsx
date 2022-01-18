@@ -23,10 +23,34 @@ import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "./Augmentation/PlayerOwnedAugmentation";
 import { LocationName } from "./Locations/data/LocationNames";
 import { SxProps } from "@mui/system";
+import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
  */
+
+export interface ImportData {
+  base64: string;
+  parsed: any;
+  playerData?: ImportPlayerData;
+}
+
+export interface ImportPlayerData {
+  identifier: string;
+  lastSave: number;
+  totalPlaytime: number;
+
+  money: number;
+  hacking: number;
+
+  augmentations: number;
+  factions: number;
+  achievements: number;
+
+  bitNode: number;
+  bitNodeLevel: number;
+  sourceFiles: number;
+}
 
 class BitburnerSaveObject {
   PlayerSave = "";
@@ -42,7 +66,6 @@ class BitburnerSaveObject {
   AllGangsSave = "";
   LastExportBonus = "";
   StaneksGiftSave = "";
-  SaveTimestamp = "";
 
   getSaveString(excludeRunningScripts = false): string {
     this.PlayerSave = JSON.stringify(Player);
@@ -58,7 +81,6 @@ class BitburnerSaveObject {
     this.VersionSave = JSON.stringify(CONSTANTS.VersionNumber);
     this.LastExportBonus = JSON.stringify(ExportBonus.LastExportBonus);
     this.StaneksGiftSave = JSON.stringify(staneksGift);
-    this.SaveTimestamp = new Date().getTime().toString();
 
     if (Player.inGang()) {
       this.AllGangsSave = JSON.stringify(AllGangs);
@@ -68,26 +90,123 @@ class BitburnerSaveObject {
     return saveString;
   }
 
-  saveGame(emitToastEvent = true): void {
+  saveGame(emitToastEvent = true): Promise<void> {
+    Player.lastSave = new Date().getTime();
     const saveString = this.getSaveString(Settings.ExcludeRunningScriptsFromSave);
+    return new Promise((resolve, reject) => {
+      save(saveString)
+        .then(() => {
+          if (emitToastEvent) {
+            SnackbarEvents.emit("Game Saved!", "info", 2000);
+          }
+          return resolve();
+        })
+        .catch((err) => {
+          console.error(err);
+          return reject();
+        });
+    });
+  }
 
-    save(saveString)
-      .then(() => {
-        if (emitToastEvent) {
-          SnackbarEvents.emit("Game Saved!", "info", 2000);
-        }
-      })
-      .catch((err) => console.error(err));
+  getSaveFileName(isRecovery = false): string {
+    // Save file name is based on current timestamp and BitNode
+    const epochTime = Math.round(Date.now() / 1000);
+    const bn = Player.bitNodeN;
+    let filename = `bitburnerSave_${epochTime}_BN${bn}x${SourceFileFlags[bn]}.json`;
+    if (isRecovery) filename = "RECOVERY" + filename;
+    return filename;
   }
 
   exportGame(): void {
     const saveString = this.getSaveString(Settings.ExcludeRunningScriptsFromSave);
-
-    // Save file name is based on current timestamp and BitNode
-    const epochTime = Math.round(Date.now() / 1000);
-    const bn = Player.bitNodeN;
-    const filename = `bitburnerSave_${epochTime}_BN${bn}x${SourceFileFlags[bn]}.json`;
+    const filename = this.getSaveFileName();
     download(filename, saveString);
+  }
+
+  importGame(base64Save: string, reload = true): Promise<void> {
+    if (!base64Save || base64Save === "") throw new Error("Invalid import string");
+    return save(base64Save).then(() => {
+      if (reload) setTimeout(() => location.reload(), 1000);
+      return Promise.resolve();
+    });
+  }
+
+  getImportStringFromFile(files: FileList | null): Promise<string> {
+    if (files === null) return Promise.reject(new Error("No file selected"));
+    const file = files[0];
+    if (!file) return Promise.reject(new Error("Invalid file selected"));
+
+    const reader = new FileReader();
+    const promise: Promise<string> = new Promise((resolve, reject) => {
+      reader.onload = function (this: FileReader, e: ProgressEvent<FileReader>) {
+        const target = e.target;
+        if (target === null) {
+          return reject(new Error("Error importing file"));
+        }
+        const result = target.result;
+        if (typeof result !== "string" || result === null) {
+          return reject(new Error("FileReader event was not type string"));
+        }
+        const contents = result;
+        resolve(contents);
+      };
+    });
+    reader.readAsText(file);
+    return promise;
+  }
+
+  async getImportDataFromString(base64Save: string): Promise<ImportData> {
+    if (!base64Save || base64Save === "") throw new Error("Invalid import string");
+
+    let newSave;
+    try {
+      newSave = window.atob(base64Save);
+      newSave = newSave.trim();
+    } catch (error) {
+      console.error(error); // We'll handle below
+    }
+
+    if (!newSave || newSave === "") {
+      return Promise.reject(new Error("Save game had not content or was not base64 encoded"));
+    }
+
+    let parsedSave;
+    try {
+      parsedSave = JSON.parse(newSave);
+    } catch (error) {
+      console.log(error); // We'll handle below
+    }
+
+    if (!parsedSave || parsedSave.ctor !== "BitburnerSaveObject" || !parsedSave.data) {
+      return Promise.reject(new Error("Save game did not seem valid"));
+    }
+
+    const data: ImportData = {
+      base64: base64Save,
+      parsed: parsedSave,
+    };
+
+    const importedPlayer = PlayerObject.fromJSON(JSON.parse(parsedSave.data.PlayerSave));
+
+    const playerData: ImportPlayerData = {
+      identifier: importedPlayer.identifier,
+      lastSave: importedPlayer.lastSave,
+      totalPlaytime: importedPlayer.totalPlaytime,
+
+      money: importedPlayer.money,
+      hacking: importedPlayer.hacking,
+
+      augmentations: importedPlayer.augmentations?.reduce<number>((total, current) => (total += current.level), 0) ?? 0,
+      factions: importedPlayer.factions?.length ?? 0,
+      achievements: importedPlayer.achievements?.length ?? 0,
+
+      bitNode: importedPlayer.bitNodeN,
+      bitNodeLevel: importedPlayer.sourceFileLvl(Player.bitNodeN) + 1,
+      sourceFiles: importedPlayer.sourceFiles?.reduce<number>((total, current) => (total += current.lvl), 0) ?? 0,
+    };
+
+    data.playerData = playerData;
+    return Promise.resolve(data);
   }
 
   toJSON(): any {
