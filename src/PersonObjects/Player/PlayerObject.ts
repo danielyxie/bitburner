@@ -36,6 +36,8 @@ import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
 import { ISkillProgress } from "../formulas/skill";
 import { PlayerAchievement } from '../../Achievements/Achievements';
+import { cyrb53 } from "../../utils/StringHelperFunctions";
+import { getRandomInt } from "../../utils/helpers/getRandomInt";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -77,7 +79,9 @@ export class PlayerObject implements IPlayer {
   sourceFiles: IPlayerOwnedSourceFile[];
   exploits: Exploit[];
   achievements: PlayerAchievement[];
+  identifier: string;
   lastUpdate: number;
+  lastSave: number;
   totalPlaytime: number;
 
   // Stats
@@ -459,7 +463,9 @@ export class PlayerObject implements IPlayer {
 
     //Used to store the last update time.
     this.lastUpdate = 0;
+    this.lastSave = 0;
     this.totalPlaytime = 0;
+
     this.playtimeSinceLastAug = 0;
     this.playtimeSinceLastBitnode = 0;
 
@@ -471,6 +477,11 @@ export class PlayerObject implements IPlayer {
 
     this.exploits = [];
     this.achievements = [];
+
+    // Let's get a hash of some semi-random stuff so we have something unique.
+    this.identifier = cyrb53(
+      'I-' + new Date().getTime() + navigator.userAgent + window.innerWidth + window.innerHeight + getRandomInt(100, 999)
+    );
 
     this.init = generalMethods.init;
     this.prestigeAugmentation = generalMethods.prestigeAugmentation;

@@ -24,7 +24,6 @@ import UploadIcon from "@mui/icons-material/Upload";
 import SaveIcon from "@mui/icons-material/Save";
 
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
-import { dialogBoxCreate } from "./DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { ThemeEditorModal } from "./ThemeEditorModal";
 import { StyleEditorModal } from "./StyleEditorModal";
@@ -32,11 +31,11 @@ import { StyleEditorModal } from "./StyleEditorModal";
 import { SnackbarEvents } from "./Snackbar";
 
 import { Settings } from "../../Settings/Settings";
-import { save } from "../../db";
-import { formatTime } from "../../utils/helpers/formatTime";
-import { OptionSwitch } from "./OptionSwitch";
 import { DeleteGameButton } from "./DeleteGameButton";
 import { SoftResetButton } from "./SoftResetButton";
+import { formatTime } from "../../utils/helpers/formatTime";
+import { OptionSwitch } from "./OptionSwitch";
+import { saveObject } from "../../SaveObject";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -121,78 +120,28 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
     ii.click();
   }
 
-  function onImport(event: React.ChangeEvent<HTMLInputElement>): void {
-    const files = event.target.files;
-    if (files === null) return;
-    const file = files[0];
-    if (!file) {
-      dialogBoxCreate("Invalid file selected");
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function (this: FileReader, e: ProgressEvent<FileReader>) {
-      const target = e.target;
-      if (target === null) {
-        console.error("error importing file");
-        return;
-      }
-      const result = target.result;
-      if (typeof result !== "string" || result === null) {
-        console.error("FileReader event was not type string");
-        return;
-      }
-      const contents = result;
-
-      let newSave;
-      try {
-        newSave = window.atob(contents);
-        newSave = newSave.trim();
-      } catch (error) {
-        console.log(error); // We'll handle below
-      }
-
-      if (!newSave || newSave === "") {
-        SnackbarEvents.emit("Save game had not content or was not base64 encoded", "error", 5000);
-        return;
-      }
-
-      let parsedSave;
-      try {
-        parsedSave = JSON.parse(newSave);
-      } catch (error) {
-        console.log(error); // We'll handle below
-      }
-
-      if (!parsedSave || parsedSave.ctor !== "BitburnerSaveObject" || !parsedSave.data) {
-        SnackbarEvents.emit("Save game did not seem valid", "error", 5000);
-        return;
-      }
-
-      const data: ImportData = {
-        base64: contents,
-        parsed: parsedSave,
-      };
-
-      const timestamp = parsedSave.data.SaveTimestamp;
-      if (timestamp && timestamp !== "0") {
-        data.exportDate = new Date(parseInt(timestamp, 10));
-      }
-
-      setImportData(data);
+  async function onImport(event: React.ChangeEvent<HTMLInputElement>): Promise<void> {
+    try {
+      const base64Save = await saveObject.getImportStringFromFile(event.target.files);
+      const data = await saveObject.getImportDataFromString(base64Save);
+      setImportData(data)
       setImportSaveOpen(true);
-    };
-    reader.readAsText(file);
+    } catch (ex: any) {
+      SnackbarEvents.emit(ex.toString(), "error", 5000);
+    }
   }
 
-  function confirmedImportGame(): void {
+  async function confirmedImportGame(): Promise<void> {
     if (!importData) return;
 
+    try {
+      await saveObject.importGame(importData.base64);
+    } catch (ex: any) {
+      SnackbarEvents.emit(ex.toString(), "error", 5000);
+    }
+
     setImportSaveOpen(false);
-    save(importData.base64).then(() => {
-      setImportData(null);
-      setTimeout(() => location.reload(), 1000);
-    });
+    setImportData(null);
   }
 
   return (
