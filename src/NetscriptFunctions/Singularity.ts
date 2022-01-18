@@ -264,7 +264,7 @@ export function NetscriptSingularity(
         return false;
       }
       Router.toLocation(location);
-      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 500);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50000);
       return true;
     },
     universityCourse: function (universityName: any, className: any, focus = true): any {
@@ -479,7 +479,7 @@ export function NetscriptSingularity(
           player.loseMoney(CONSTANTS.TravelCost, "other");
           player.city = cityname;
           workerScript.log("travelToCity", () => `Traveled to ${cityname}`);
-          player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
+          player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50000);
           return true;
         default:
           workerScript.log("travelToCity", () => `Invalid city name: '${cityname}'.`);
@@ -515,7 +515,7 @@ export function NetscriptSingularity(
 
       player.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
       darkweb.serversOnNetwork.push(player.getHomeComputer().hostname);
-      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 500);
       workerScript.log("purchaseTor", () => "You have purchased a Tor router!");
       return true;
     },
@@ -555,7 +555,7 @@ export function NetscriptSingularity(
         "purchaseProgram",
         () => `You have purchased the '${item.program}' program. The new program can be found on your home computer.`,
       );
-      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 5000);
       return true;
     },
     getCurrentServer: function (): any {

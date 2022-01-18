@@ -113,6 +113,15 @@ export function prestigeAugmentation(): void {
     if (faction instanceof Faction) {
       joinFaction(faction);
     }
+    const penalty = 0.95;
+    for (const m of gang.members) {
+      m.hack_asc_points *= penalty;
+      m.str_asc_points *= penalty;
+      m.def_asc_points *= penalty;
+      m.dex_asc_points *= penalty;
+      m.agi_asc_points *= penalty;
+      m.cha_asc_points *= penalty;
+    }
   }
 
   // BitNode 3: Corporatocracy

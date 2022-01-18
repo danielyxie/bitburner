@@ -24,7 +24,7 @@ void
 
 ## Remarks
 
-RAM cost: cost: 0 GB
+RAM cost: 0 GB
 
 ## Example
 

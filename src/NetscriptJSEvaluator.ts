@@ -127,7 +127,7 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
   const urlStack: ScriptUrl[] = [];
   // Seen contains the dependents of the current script. Make sure we include that in the script dependents.
   for (const dependent of seen) {
-    if (!script.dependents.some(s => s.server === dependent.server && s.filename == dependent.filename)) {
+    if (!script.dependents.some((s) => s.server === dependent.server && s.filename == dependent.filename)) {
       script.dependents.push({ server: dependent.server, filename: dependent.filename });
     }
   }
@@ -155,7 +155,7 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
         importNodes.push({
           filename: node.source.value,
           start: node.source.range[0] + 1,
-          end: node.source.range[1] - 1
+          end: node.source.range[1] - 1,
         });
       },
       ExportNamedDeclaration(node: any) {
@@ -163,7 +163,7 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
           importNodes.push({
             filename: node.source.value,
             start: node.source.range[0] + 1,
-            end: node.source.range[1] - 1
+            end: node.source.range[1] - 1,
           });
         }
       },
@@ -172,10 +172,10 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
           importNodes.push({
             filename: node.source.value,
             start: node.source.range[0] + 1,
-            end: node.source.range[1] - 1
+            end: node.source.range[1] - 1,
           });
         }
-      }
+      },
     });
     // Sort the nodes from last start index to first. This replaces the last import with a blob first,
     // preventing the ranges for other imports from being shifted.
@@ -194,17 +194,17 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
       let urls = ImportCache.get(importedScript.hash());
       // If we don't have it in the cache, then we need to generate the urls for it.
       if (urls) {
-          // Verify that these urls are valid and have not been updated.
-          for(const url of urls) {
-            if (isDependencyOutOfDate(url.filename, scripts, url.moduleSequenceNumber)) {
-              // Revoke these URLs from the browser. We will be unable to use them again.
-              for (const url of urls) URL.revokeObjectURL(url.url);
-              // Clear the cache and prepare for new blobs.
-              urls = null;
-              ImportCache.remove(importedScript.hash());
-              break;
-            }
+        // Verify that these urls are valid and have not been updated.
+        for (const url of urls) {
+          if (isDependencyOutOfDate(url.filename, scripts, url.moduleSequenceNumber)) {
+            // Revoke these URLs from the browser. We will be unable to use them again.
+            for (const url of urls) URL.revokeObjectURL(url.url);
+            // Clear the cache and prepare for new blobs.
+            urls = null;
+            ImportCache.remove(importedScript.hash());
+            break;
           }
+        }
       }
       if (!urls) {
         // Try to get a URL for the requested script and its dependencies.

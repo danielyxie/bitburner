@@ -120,7 +120,7 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
     if (typeof workerScript.env.vars[prop] !== "function") continue;
     workerScript.env.vars[prop] = wrap(prop, workerScript.env.vars[prop]);
   }
-  workerScript.env.vars.stanek.charge = wrap("stanek.prop", workerScript.env.vars.stanek.charge);
+  workerScript.env.vars.stanek.charge = wrap("stanek.charge", workerScript.env.vars.stanek.charge);
 
   // Note: the environment that we pass to the JS script only needs to contain the functions visible
   // to that script, which env.vars does at this point.
@@ -131,7 +131,6 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
       })
       .catch((e) => reject(e));
   }).catch((e) => {
-    console.log(e);
     if (e instanceof Error) {
       if (e instanceof SyntaxError) {
         workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e.message + " (sorry we can't be more helpful)");

@@ -106,6 +106,8 @@ export const RamCosts: IMap<any> = {
   hackAnalyzeSecurity: RamCostConstants.ScriptHackAnalyzeRamCost,
   hackAnalyzeChance: RamCostConstants.ScriptHackAnalyzeRamCost,
   sleep: 0,
+  share: 2.4,
+  getSharePower: 0.2,
   grow: RamCostConstants.ScriptGrowRamCost,
   growthAnalyze: RamCostConstants.ScriptGrowthAnalyzeRamCost,
   growthAnalyzeSecurity: RamCostConstants.ScriptGrowthAnalyzeRamCost,

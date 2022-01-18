@@ -6073,6 +6073,20 @@ export interface NS extends Singularity {
    * ```
    */
   flags(schema: [string, string | number | boolean | string[]][]): any;
+
+  /**
+   * Share your computer with your factions. Increasing your rep gain for a short duration.
+   * @remarks
+   * RAM cost: 2.4 GB
+   */
+  share(): Promise<void>;
+
+  /**
+   * Calculate your share power.
+   * @remarks
+   * RAM cost: 0.2 GB
+   */
+  getSharePower(): number;
 }
 
 /**

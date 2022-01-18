@@ -111,8 +111,8 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  VersionString: "1.3.0",
-  VersionNumber: 9,
+  VersionString: "1.4.0",
+  VersionNumber: 10,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -273,89 +273,22 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v1.3.0 - 2022-01-04 Cleaning up
-    -------------------------------
+    v1.4.0 - 2022-01-18 Sharing is caring
+    -------------------------------------
 
-    ** External IDE integration **
+    ** Computer sharing **
 
-    * The Steam version has a webserver that allows integration with external IDEs.
-      A VSCode extension is available on the market place. (The documentation for the ext. isn't
-      written yet)
+    * A new mechanic has been added, it's is invoked by calling the new function 'share'.
+      This mechanic helps you farm reputation faster.
 
-    ** Source-Files **
-    
-    * SF4 has been reworked.
-    * New SF -1.
+    ** gang **
 
-    ** UI **
+    * Installing augs means losing a little bit of ascension multipliers.
 
-    * Fix some edge case with skill bat tooltips (@MartinFournier)
-    * Made some background match theme color (@Kejikus)
-    * Fix problem with script editor height not adjusting correctly (@billyvg)
-    * Fix some formatting issues with Bladeburner (@MartinFournier, @nickofolas)
-    * Fix some functions like 'alert' format messages better (@MageKing17)
-    * Many community themes added.
-    * New script editor theme (@Hedrauta, @Dexalt142)
-    * Improvements to tail windows (@theit8514)
-    * Training is more consise (@mikomyazaki)
-    * Fix Investopedia not displaying properly (@JotaroS)
-    * Remove alpha from theme editor (@MartinFournier)
-    * Fix corporation tooltip not displaying properly (@MartinFournier)
-    * Add tooltip on backdoored location names (@MartinFournier)
-    * Allow toasts to be dismissed by clicking them (@nickofolas)
-    * Darkweb item listing now shows what you own. (@hexnaught)
-
-    ** Bug fix **
-
-    * Fix unit tests (@MartinFournier)
-    * Fixed issue with 'cat' and 'read' not finding foldered files (@Nick-Colclasure)
-    * Buying on the dark web will remove incomplete exe (@hexnaught)
-    * Fix bug that would cause the game to crash trying to go to a job without a job (@hexnaught)
-    * purchaseServer validation (@nickofolas)
-    * Script Editor focuses code when changing tab (@MartinFournier)
-    * Fix script editor for .txt files (@65-7a)
-    * Fix 'buy' command not displaying correctly. (@hexnaught)
-    * Fix hackAnalyzeThread returning NaN (@mikomyazaki)
-    * Electron handles exceptions better (@MageKing17)
-    * Electron will handle 'unresponsive' event and present the opportunity to reload the game with no scripts (@MartinFournier)
-    * Fix 'cp' between folders (@theit8514)
-    * Fix throwing null/undefined errors (@nickofolas)
-    * Allow shortcuts to work when unfocused (@MageKing17)
-    * Fix some dependency issue (@locriacyber)
-    * Fix corporation state returning an object instead of a string (@antonvmironov)
-    * Fix 'mv' overwriting files (@theit8514)
-    * Fix joesguns not being influenced by hack/grow (@dou867, @MartinFournier)
-    * Added warning when opening external links. (@MartinFournier)
-    * Prevent applying for positions that aren't offered (@TheMas3212)
-    * Import has validation (@MartinFournier)
+    ** There's more but I'm going to write it later. **
 
     ** Misc. **
 
-    * Added vim mode to script editor (@billyvg)
-    * Clean up script editor code (@Rez855)
-    * 'cat' works on scripts (@65-7a)
-    * Add wordWrap for Monaco (@MartinFournier)
-    * Include map bundles in electron for easier debugging (@MartinFournier)
-    * Fix importing very large files (@MartinFournier)
-    * Cache program blob, reducing ram usage of the game (@theit8514)
-    * Dev menu can set server to $0 (@mikomyazaki)
-    * 'backdoor' allows direct connect (@mikomyazaki)
-    * Github workflow work (@MartinFournier)
-    * workForFaction / workForCompany have a new parameter (@theit8514)
-    * Alias accept single quotes (@sporkwitch, @FaintSpeaker)
-    * Add grep options to 'ps' (@maxtimum)
-    * Added buy all option to 'buy' (@anthonydroberts)
-    * Added more shortcuts to terminal input (@Frank-py)
-    * Refactor some port code (@ErzengelLichtes)
-    * Settings to control GiB vs GB (@ErzengelLichtes)
-    * Add electron option to export save game (@MartinFournier)
-    * Electron improvements (@MartinFournier)
-    * Expose some notifications functions to electron (@MartinFournier)
-    * Documentation (@MartinFournier, @cyn, @millennIumAMbiguity, @2PacIsAlive,
-      @TheCoderJT, @hexnaught, @sschmidTU, @FOLLGAD, @Hedrauta, @Xynrati,
-      @mikomyazaki, @Icehawk78, @aaronransley, @TheMas3212, @Hedrauta, @alkemann,
-      @ReeseJones, @amclark42, @thadguidry, @jasonhaxstuff, @pan-kuleczka, @jhollowe,
-      @ApatheticsAnonymous, @erplsf, @daanflore, @nickofolas, @Kebap, @smolgumball,
-      @woody-lam-cwl)
+    * Nerf noodle bar.
 `,
 };

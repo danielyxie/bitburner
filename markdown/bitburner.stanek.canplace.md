@@ -29,5 +29,5 @@ true if the fragment can be placed at that position. false otherwise.
 
 ## Remarks
 
-RAM cost: cost: 0.5 GB
+RAM cost: 0.5 GB
 
