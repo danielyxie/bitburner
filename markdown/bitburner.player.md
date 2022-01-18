@@ -64,6 +64,7 @@ interface Player
 |  [hacknet\_node\_ram\_cost\_mult](./bitburner.player.hacknet_node_ram_cost_mult.md) | number |  |
 |  [has4SData](./bitburner.player.has4sdata.md) | boolean |  |
 |  [has4SDataTixApi](./bitburner.player.has4sdatatixapi.md) | boolean |  |
+|  [hasCorporation](./bitburner.player.hascorporation.md) | boolean |  |
 |  [hasTixApiAccess](./bitburner.player.hastixapiaccess.md) | boolean |  |
 |  [hasWseAccount](./bitburner.player.haswseaccount.md) | boolean |  |
 |  [hp](./bitburner.player.hp.md) | number |  |

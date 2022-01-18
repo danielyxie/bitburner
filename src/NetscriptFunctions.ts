@@ -2261,6 +2261,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         jobs: {},
         factions: Player.factions.slice(),
         tor: Player.hasTorRouter(),
+        hasCorporation: Player.hasCorporation(),
       };
       Object.assign(data.jobs, Player.jobs);
       return data;

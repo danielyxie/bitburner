@@ -4,7 +4,7 @@
 
 ## OfficeAPI.research() method
 
-Hire AdVert.
+Purchase a research
 
 <b>Signature:</b>
 

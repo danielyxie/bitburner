@@ -5364,6 +5364,167 @@
           "members": [
             {
               "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Corporation#acceptInvestmentOffer:member(1)",
+              "docComment": "/**\n * Accept investment based on you companies current valuation\n *\n * @remarks\n *\n * Is based on current valuation and will not honer a specific Offer\n *\n * @returns An offer of investment\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "acceptInvestmentOffer(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "acceptInvestmentOffer"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Corporation#bribe:member(1)",
+              "docComment": "/**\n * Bribe a faction\n *\n * @param factionName - Faction name\n *\n * @param amountCash - Amount of money to bribe\n *\n * @param amountShares - Amount of shares to bribe\n *\n * @returns True if successful, false if not\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "bribe(factionName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", amountCash: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", amountShares: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "factionName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "amountCash",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "amountShares",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                }
+              ],
+              "name": "bribe"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Corporation#createCorporation:member(1)",
+              "docComment": "/**\n * Create a Corporation\n *\n * @param divisionName - Name of the division\n *\n * @param selfFund - If you should self fund, defaults to true, false will only work on Bitnode 3\n *\n * @returns true if created and false if not\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "createCorporation(corporationName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", selfFund: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "corporationName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "selfFund",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "createCorporation"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "bitburner!Corporation#expandCity:member(1)",
               "docComment": "/**\n * Expand to a new city\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n */\n",
               "excerptTokens": [
@@ -5556,6 +5717,327 @@
             },
             {
               "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Corporation#getExpandCityCost:member(1)",
+              "docComment": "/**\n * Gets the cost to expand into a new city\n *\n * @returns cost\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getExpandCityCost(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "getExpandCityCost"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Corporation#getExpandIndustryCost:member(1)",
+              "docComment": "/**\n * Gets the cost to expand into a new industry\n *\n * @param industryName - Name of the industry\n *\n * @returns cost\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getExpandIndustryCost(industryName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "industryName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "getExpandIndustryCost"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Corporation#getInvestmentOffer:member(1)",
+              "docComment": "/**\n * Get an offer for investment based on you companies current valuation\n *\n * @returns An offer of investment\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getInvestmentOffer(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "InvestmentOffer",
+                  "canonicalReference": "bitburner!InvestmentOffer:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "getInvestmentOffer"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Corporation#getUnlockUpgradeCost:member(1)",
+              "docComment": "/**\n * Gets the cost to unlock a one time unlockable upgrade\n *\n * @param upgradeName - Name of the upgrade\n *\n * @returns cost of the upgrade\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUnlockUpgradeCost(upgradeName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "upgradeName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "getUnlockUpgradeCost"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Corporation#getUpgradeLevel:member(1)",
+              "docComment": "/**\n * Get the level of a levelable upgrade\n *\n * @param upgradeName - Name of the upgrade\n *\n * @returns the level of the upgrade\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUpgradeLevel(upgradeName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "upgradeName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "getUpgradeLevel"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Corporation#getUpgradeLevelCost:member(1)",
+              "docComment": "/**\n * Gets the cost to unlock the next level of a levelable upgrade\n *\n * @param upgradeName - Name of the upgrade\n *\n * @returns cost of the upgrade\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUpgradeLevelCost(upgradeName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "upgradeName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "getUpgradeLevelCost"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Corporation#goPublic:member(1)",
+              "docComment": "/**\n * Go public\n *\n * @param numShares - number of shares you would like to issue for your IPO\n *\n * @returns true if you successfully go public, false if not\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "goPublic(numShares: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "numShares",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "goPublic"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!Corporation#hasUnlockUpgrade:member(1)",
+              "docComment": "/**\n * Check if you have a one time unlockable upgrade\n *\n * @param upgradeName - Name of the upgrade\n *\n * @returns true if unlocked and false if not\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "hasUnlockUpgrade(upgradeName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "upgradeName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "hasUnlockUpgrade"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "bitburner!Corporation#issueDividends:member(1)",
               "docComment": "/**\n * Issue dividends\n *\n * @param percent - Percent of profit to issue as dividends.\n */\n",
               "excerptTokens": [
@@ -5645,7 +6127,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!Corporation#unlockUpgrade:member(1)",
-              "docComment": "/**\n * Unlock an upgrade.\n *\n * @param upgradeName - Name of the upgrade\n */\n",
+              "docComment": "/**\n * Unlock an upgrade\n *\n * @param upgradeName - Name of the upgrade\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -5711,6 +6193,37 @@
           "releaseTag": "Public",
           "name": "CorporationInfo",
           "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!CorporationInfo#divisions:member",
+              "docComment": "/**\n * Array of all divisions\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "divisions: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Division",
+                  "canonicalReference": "bitburner!Division:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "divisions",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
             {
               "kind": "PropertySignature",
               "canonicalReference": "bitburner!CorporationInfo#expenses:member",
@@ -6726,6 +7239,32 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "prodMult",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Division#products:member",
+              "docComment": "/**\n * Products developed by this division\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "products: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "products",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -14795,6 +15334,100 @@
         },
         {
           "kind": "Interface",
+          "canonicalReference": "bitburner!InvestmentOffer:interface",
+          "docComment": "/**\n * Corporation investment offer\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "interface InvestmentOffer "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "InvestmentOffer",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!InvestmentOffer#funds:member",
+              "docComment": "/**\n * Amount of funds you will get from this investment\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "funds: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "funds",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!InvestmentOffer#round:member",
+              "docComment": "/**\n * Current round of funding (max 4)\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "round: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "round",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!InvestmentOffer#shares:member",
+              "docComment": "/**\n * Amount of share you will give in exchange for this investment\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "shares: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "shares",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
           "canonicalReference": "bitburner!Material:interface",
           "docComment": "/**\n * Material in a warehouse\n *\n * @public\n */\n",
           "excerptTokens": [
@@ -14827,6 +15460,32 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "name",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Material#prod:member",
+              "docComment": "/**\n * Amount of material produced\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "prod: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "prod",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -14879,6 +15538,32 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "qty",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Material#sell:member",
+              "docComment": "/**\n * Amount of material sold\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "sell: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "sell",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -21441,6 +22126,94 @@
             },
             {
               "kind": "MethodSignature",
+              "canonicalReference": "bitburner!OfficeAPI#getHireAdVertCost:member(1)",
+              "docComment": "/**\n * Get the cost to Hire AdVert\n *\n * @param divisionName - Name of the division\n *\n * @returns Cost\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getHireAdVertCost(divisionName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "divisionName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "getHireAdVertCost"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!OfficeAPI#getHireAdVertCount:member(1)",
+              "docComment": "/**\n * Get the number of times you have Hired AdVert\n *\n * @param divisionName - Name of the division\n *\n * @returns Number of times you have Hired AdVert\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getHireAdVertCount(adivisionName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "adivisionName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "getHireAdVertCount"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#getOffice:member(1)",
               "docComment": "/**\n * Get data about an office\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @returns Office data\n */\n",
               "excerptTokens": [
@@ -21501,6 +22274,198 @@
             },
             {
               "kind": "MethodSignature",
+              "canonicalReference": "bitburner!OfficeAPI#getOfficeSizeUpgradeCost:member(1)",
+              "docComment": "/**\n * Cost to Upgrade office size.\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param size - Amount of positions to open\n *\n * @returns Cost of upgrading the office\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getOfficeSizeUpgradeCost(divisionName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", cityName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", asize: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "divisionName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "cityName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "asize",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                }
+              ],
+              "name": "getOfficeSizeUpgradeCost"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!OfficeAPI#getResearchCost:member(1)",
+              "docComment": "/**\n * Get the cost to unlock research\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @returns cost\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getResearchCost(divisionName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", researchName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "divisionName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "researchName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "getResearchCost"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!OfficeAPI#hasResearched:member(1)",
+              "docComment": "/**\n * Gets if you have unlocked a research\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @returns true is unlocked, false if not\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "hasResearched(divisionName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", researchName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "divisionName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "researchName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "hasResearched"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#hireAdVert:member(1)",
               "docComment": "/**\n * Hire AdVert.\n *\n * @param divisionName - Name of the division\n */\n",
               "excerptTokens": [
@@ -21546,7 +22511,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#hireEmployee:member(1)",
-              "docComment": "/**\n * Assign an employee to a job.\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @returns The newly hired employee, if any\n */\n",
+              "docComment": "/**\n * Hire an employee.\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @returns The newly hired employee, if any\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21610,7 +22575,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#research:member(1)",
-              "docComment": "/**\n * Hire AdVert.\n *\n * @param divisionName - Name of the division\n *\n * @param researchName - Name of the research\n */\n",
+              "docComment": "/**\n * Purchase a research\n *\n * @param divisionName - Name of the division\n *\n * @param researchName - Name of the research\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -21668,8 +22633,102 @@
             },
             {
               "kind": "MethodSignature",
+              "canonicalReference": "bitburner!OfficeAPI#setAutoJobAssignment:member(1)",
+              "docComment": "/**\n * Set the auto job assignment for a job\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param job - Name of the job\n *\n * @param amount - Number of employees to assign to that job\n *\n * @returns A promise that is fulfilled when the assignment is complete.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setAutoJobAssignment(divisionName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", cityName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", job: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", amount: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<boolean>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 11
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "divisionName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "cityName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "job",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                },
+                {
+                  "parameterName": "amount",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 7,
+                    "endIndex": 8
+                  }
+                }
+              ],
+              "name": "setAutoJobAssignment"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "bitburner!OfficeAPI#throwParty:member(1)",
-              "docComment": "/**\n * Assign an employee to a job.\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param costPerEmployee - Amount to spend per employee.\n *\n * @returns Amount of happiness increased.\n */\n",
+              "docComment": "/**\n * Throw a party for your employees\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @param costPerEmployee - Amount to spend per employee.\n *\n * @returns Amount of happiness increased.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -23210,6 +24269,32 @@
             },
             {
               "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Player#hasCorporation:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "hasCorporation: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "hasCorporation",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "bitburner!Player#hasTixApiAccess:member",
               "docComment": "",
               "excerptTokens": [
@@ -24563,6 +25648,32 @@
           "members": [
             {
               "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Product#cityData:member",
+              "docComment": "/**\n * Data refers to the production, sale, and quantity of the products These values are specific to a city For each city, the data is [qty, prod, sell]\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "cityData: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{[key: string]:number[]}"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "cityData",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
               "canonicalReference": "bitburner!Product#cmp:member",
               "docComment": "/**\n * Competition for the product\n */\n",
               "excerptTokens": [
@@ -24582,6 +25693,32 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "cmp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Product#developmentProgress:member",
+              "docComment": "/**\n * Creation progress - A number between 0-100 representing percentage\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "developmentProgress: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "developmentProgress",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -31741,6 +32878,32 @@
                 "startIndex": 1,
                 "endIndex": 2
               }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "bitburner!Warehouse#smartSupplyEnabled:member",
+              "docComment": "/**\n * Smart Supply status in the warehouse\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "smartSupplyEnabled: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "smartSupplyEnabled",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
             }
           ],
           "extendsTokenRanges": []
@@ -32281,6 +33444,93 @@
             },
             {
               "kind": "MethodSignature",
+              "canonicalReference": "bitburner!WarehouseAPI#getPurchaseWarehouseCost:member(1)",
+              "docComment": "/**\n * Gets the cost to purchase a warehouse\n *\n * @returns cost\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getPurchaseWarehouseCost(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "getPurchaseWarehouseCost"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!WarehouseAPI#getUpgradeWarehouseCost:member(1)",
+              "docComment": "/**\n * Gets the cost to upgrade a warehouse to the next level\n *\n * @returns cost to upgrade\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getUpgradeWarehouseCost(adivisionName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "any"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", acityName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "any"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "adivisionName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "acityName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "getUpgradeWarehouseCost"
+            },
+            {
+              "kind": "MethodSignature",
               "canonicalReference": "bitburner!WarehouseAPI#getWarehouse:member(1)",
               "docComment": "/**\n * Get warehouse data\n *\n * @param divisionName - Name of the division\n *\n * @param cityName - Name of the city\n *\n * @returns warehouse data\n */\n",
               "excerptTokens": [
@@ -32338,6 +33588,65 @@
                 }
               ],
               "name": "getWarehouse"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "bitburner!WarehouseAPI#hasWarehouse:member(1)",
+              "docComment": "/**\n * Check if you have a warehouse in city\n *\n * @returns true if warehouse is present, false if not\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "hasWarehouse(adivisionName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "any"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", acityName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "any"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "adivisionName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "acityName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "hasWarehouse"
             },
             {
               "kind": "MethodSignature",

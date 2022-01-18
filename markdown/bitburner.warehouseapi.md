@@ -26,7 +26,10 @@ Requires the Warehouse API upgrade from your corporation.
 |  [exportMaterial(sourceDivision, sourceCity, targetDivision, targetCity, materialName, amt)](./bitburner.warehouseapi.exportmaterial.md) | Set material export data |
 |  [getMaterial(divisionName, cityName, materialName)](./bitburner.warehouseapi.getmaterial.md) | Get material data |
 |  [getProduct(divisionName, productName)](./bitburner.warehouseapi.getproduct.md) | Get product data |
+|  [getPurchaseWarehouseCost()](./bitburner.warehouseapi.getpurchasewarehousecost.md) | Gets the cost to purchase a warehouse |
+|  [getUpgradeWarehouseCost(adivisionName, acityName)](./bitburner.warehouseapi.getupgradewarehousecost.md) | Gets the cost to upgrade a warehouse to the next level |
 |  [getWarehouse(divisionName, cityName)](./bitburner.warehouseapi.getwarehouse.md) | Get warehouse data |
+|  [hasWarehouse(adivisionName, acityName)](./bitburner.warehouseapi.haswarehouse.md) | Check if you have a warehouse in city |
 |  [makeProduct(divisionName, cityName, productName, designInvest, marketingInvest)](./bitburner.warehouseapi.makeproduct.md) | Create a new product |
 |  [purchaseWarehouse(divisionName, cityName)](./bitburner.warehouseapi.purchasewarehouse.md) | Purchase warehouse for a new city |
 |  [sellMaterial(divisionName, cityName, materialName, amt, price)](./bitburner.warehouseapi.sellmaterial.md) | Set material sell data. |
