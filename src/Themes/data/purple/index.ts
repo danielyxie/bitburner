@@ -1,10 +1,12 @@
 import { IPredefinedTheme } from "../../Themes";
+import img1 from "./screenshot.png";
 
 export const Theme: IPredefinedTheme = {
   name: "Purple",
   credit: "zer0ney",
   description: "Essentially all defaults except for purple replacing the main colors",
   reference: "https://discord.com/channels/415207508303544321/921991895230611466/922091815849570395",
+  screenshot: img1,
   colors: {
     primarylight: "#BA55D3",
     primary: "#9370DB",

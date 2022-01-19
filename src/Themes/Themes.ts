@@ -40,9 +40,10 @@ export interface ITheme {
 
 export interface IPredefinedTheme {
   colors: ITheme;
-  name?: string;
-  credit?: string;
-  description?: string;
+  name: string;
+  credit: string;
+  screenshot: string;
+  description: string;
   reference?: string;
 }
 

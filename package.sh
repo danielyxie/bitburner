@@ -8,6 +8,7 @@ cp index.html .package
 cp -r electron/* .package
 cp -r dist/ext .package/dist
 cp -r dist/icons .package/dist
+cp -r dist/images .package/dist
 
 # The css files
 cp dist/vendor.css .package/dist
