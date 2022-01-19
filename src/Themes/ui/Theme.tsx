@@ -336,6 +336,24 @@ export function refreshTheme(): void {
               color: Settings.theme.primary,
             },
           },
+          root: {
+            backgroundColor: Settings.theme.backgroundsecondary,
+            border: "1px solid " + Settings.theme.well,
+            margin: '3px',
+
+            "&.Mui-selected": {
+              backgroundColor: Settings.theme.button
+            },
+          },
+        },
+      },
+      MuiTabs: {
+        defaultProps: {
+          TabIndicatorProps: {
+            style: {
+              display: "none"
+            }
+          }
         },
       },
       MuiAlert: {
