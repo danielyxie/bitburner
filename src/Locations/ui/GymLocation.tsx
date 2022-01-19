@@ -35,7 +35,9 @@ export function GymLocation(props: IProps): React.ReactElement {
 
   function train(stat: string): void {
     const loc = props.loc;
-    props.p.startClass(props.router, calculateCost(), loc.expMult, stat);
+    props.p.startClass(calculateCost(), loc.expMult, stat);
+    props.p.startFocusing();
+    props.router.toWork();
   }
 
   function trainStrength(): void {

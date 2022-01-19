@@ -220,7 +220,7 @@ export class PlayerObject implements IPlayer {
   singularityStopWork: () => string;
   startBladeburner: (p: any) => void;
   startFactionWork: (faction: Faction) => void;
-  startClass: (router: IRouter, costMult: number, expMult: number, className: string) => void;
+  startClass: (costMult: number, expMult: number, className: string) => void;
   startCorporation: (corpName: string, additionalShares?: number) => void;
   startCrime: (
     router: IRouter,
@@ -253,7 +253,7 @@ export class PlayerObject implements IPlayer {
   hasJob: () => boolean;
   process: (router: IRouter, numCycles?: number) => void;
   createHacknetServer: () => HacknetServer;
-  startCreateProgramWork: (router: IRouter, programName: string, time: number, reqLevel: number) => void;
+  startCreateProgramWork: (programName: string, time: number, reqLevel: number) => void;
   queueAugmentation: (augmentationName: string) => void;
   receiveInvite: (factionName: string) => void;
   updateSkillLevels: () => void;

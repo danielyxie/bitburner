@@ -853,6 +853,74 @@ export declare interface CodingContract {
  */
 export declare interface Corporation extends WarehouseAPI, OfficeAPI {
     /**
+     * Create a Corporation
+     * @param divisionName - Name of the division
+     * @param selfFund - If you should self fund, defaults to true, false will only work on Bitnode 3
+     * @returns true if created and false if not
+     */
+    createCorporation(corporationName: string, selfFund: boolean): boolean;
+    /**
+     * Check if you have a one time unlockable upgrade
+     * @param upgradeName - Name of the upgrade
+     * @returns true if unlocked and false if not
+     */
+    hasUnlockUpgrade(upgradeName: string): boolean;
+    /**
+     * Gets the cost to unlock a one time unlockable upgrade
+     * @param upgradeName - Name of the upgrade
+     * @returns cost of the upgrade
+     */
+    getUnlockUpgradeCost(upgradeName: string): number;
+    /**
+     * Get the level of a levelable upgrade
+     * @param upgradeName - Name of the upgrade
+     * @returns the level of the upgrade
+     */
+    getUpgradeLevel(upgradeName: string): number;
+    /**
+     * Gets the cost to unlock the next level of a levelable upgrade
+     * @param upgradeName - Name of the upgrade
+     * @returns cost of the upgrade
+     */
+    getUpgradeLevelCost(upgradeName: string): number;
+    /**
+     * Gets the cost to expand into a new industry
+     * @param industryName - Name of the industry
+     * @returns cost
+     */
+    getExpandIndustryCost(industryName: string): number;
+    /**
+     * Gets the cost to expand into a new city
+     * @returns cost
+     */
+    getExpandCityCost(): number;
+    /**
+     * Get an offer for investment based on you companies current valuation
+     * @returns An offer of investment
+     */
+    getInvestmentOffer(): InvestmentOffer;
+    /**
+     * Accept investment based on you companies current valuation
+     * @remarks
+     * Is based on current valuation and will not honer a specific Offer
+     * @returns An offer of investment
+     */
+    acceptInvestmentOffer(): boolean;
+    /**
+     * Go public
+     * @param numShares - number of shares you would like to issue for your IPO
+     * @returns true if you successfully go public, false if not
+     */
+    goPublic(numShares: number): boolean;
+    /**
+     * Bribe a faction
+     * @param factionName - Faction name
+     * @param amountCash - Amount of money to bribe
+     * @param amountShares - Amount of shares to bribe
+     * @returns True if successful, false if not
+     */
+    bribe(factionName: string, amountCash: number, amountShares: number): boolean;
+    /**
      * Get corporation data
      * @returns Corporation data
      */
@@ -876,7 +944,7 @@ export declare interface Corporation extends WarehouseAPI, OfficeAPI {
      */
     expandCity(divisionName: string, cityName: string): void;
     /**
-     * Unlock an upgrade.
+     * Unlock an upgrade
      * @param upgradeName - Name of the upgrade
      */
     unlockUpgrade(upgradeName: string): void;
@@ -919,6 +987,8 @@ export declare interface CorporationInfo {
     sharePrice: number;
     /** State of the corporation. Possible states are START, PURCHASE, PRODUCTION, SALE, EXPORT. */
     state: string;
+    /** Array of all divisions */
+    divisions: Division[];
 }
 
 /**
@@ -997,6 +1067,8 @@ export declare interface Division {
     upgrades: number[];
     /** Cities in which this division has expanded */
     cities: string[];
+    /** Products developed by this division */
+    products: string[];
 }
 
 /**
@@ -2224,6 +2296,19 @@ export declare interface HacknetServersFormulas {
 }
 
 /**
+ * Corporation investment offer
+ * @public
+ */
+export declare interface InvestmentOffer {
+    /** Amount of funds you will get from this investment */
+    funds: number;
+    /** Amount of share you will give in exchange for this investment */
+    shares: number;
+    /** Current round of funding (max 4) */
+    round: number;
+}
+
+/**
  * Interface Styles
  * @internal
  */
@@ -2243,6 +2328,10 @@ export declare interface Material {
     qty: number;
     /** Quality of the material */
     qlt: number;
+    /** Amount of material produced  */
+    prod: number;
+    /** Amount of material sold  */
+    sell: number;
 }
 
 /**
@@ -4345,14 +4434,17 @@ export declare interface NS extends Singularity {
     flags(schema: [string, string | number | boolean | string[]][]): any;
 
     /**
-     * Share your computer with your factions. Increasing your rep gain for a short duration.
+     * Share your computer with your factions.
      * @remarks
      * RAM cost: 2.4 GB
+     *
+     * Increases your rep gain of hacking contracts while share is called.
+     * Scales with thread count.
      */
     share(): Promise<void>;
 
     /**
-     * Calculate your share power.
+     * Calculate your share power. Based on all the active share calls.
      * @remarks
      * RAM cost: 0.2 GB
      */
@@ -4401,7 +4493,7 @@ export declare interface OfficeAPI {
      */
     assignJob(divisionName: string, cityName: string, employeeName: string, job: string): Promise<void>;
     /**
-     * Assign an employee to a job.
+     * Hire an employee.
      * @param divisionName - Name of the division
      * @param cityName - Name of the city
      * @returns The newly hired employee, if any
@@ -4415,7 +4507,7 @@ export declare interface OfficeAPI {
      */
     upgradeOfficeSize(divisionName: string, cityName: string, size: number): void;
     /**
-     * Assign an employee to a job.
+     * Throw a party for your employees
      * @param divisionName - Name of the division
      * @param cityName - Name of the city
      * @param costPerEmployee - Amount to spend per employee.
@@ -4435,7 +4527,7 @@ export declare interface OfficeAPI {
      */
     hireAdVert(divisionName: string): void;
     /**
-     * Hire AdVert.
+     * Purchase a research
      * @param divisionName - Name of the division
      * @param researchName - Name of the research
      */
@@ -4455,6 +4547,49 @@ export declare interface OfficeAPI {
      * @returns Employee data
      */
     getEmployee(divisionName: string, cityName: string, employeeName: string): Employee;
+    /**
+     * Get the cost to Hire AdVert
+     * @param divisionName - Name of the division
+     * @returns Cost
+     */
+    getHireAdVertCost(divisionName: string): number;
+    /**
+     * Get the number of times you have Hired AdVert
+     * @param divisionName - Name of the division
+     * @returns Number of times you have Hired AdVert
+     */
+    getHireAdVertCount(adivisionName: string): number;
+    /**
+     * Get the cost to unlock research
+     * @param divisionName - Name of the division
+     * @param cityName - Name of the city
+     * @returns cost
+     */
+    getResearchCost(divisionName: string, researchName: string): number;
+    /**
+     * Gets if you have unlocked a research
+     * @param divisionName - Name of the division
+     * @param cityName - Name of the city
+     * @returns true is unlocked, false if not
+     */
+    hasResearched(divisionName: string, researchName: string): boolean;
+    /**
+     * Set the auto job assignment for a job
+     * @param divisionName - Name of the division
+     * @param cityName - Name of the city
+     * @param job - Name of the job
+     * @param amount - Number of employees to assign to that job
+     * @returns A promise that is fulfilled when the assignment is complete.
+     */
+    setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): Promise<boolean>;
+    /**
+     * Cost to Upgrade office size.
+     * @param divisionName - Name of the division
+     * @param cityName - Name of the city
+     * @param size - Amount of positions to open
+     * @returns Cost of upgrading the office
+     */
+    getOfficeSizeUpgradeCost(divisionName: string, cityName: string, asize: number): number;
 }
 
 /**
@@ -4557,6 +4692,7 @@ export declare interface Player {
     jobs: any;
     factions: string[];
     tor: boolean;
+    hasCorporation: boolean;
 }
 
 /**
@@ -4618,6 +4754,12 @@ export declare interface Product {
     pCost: number;
     /** Sell cost, can be "MP+5" */
     sCost: string | number;
+    /** Data refers to the production, sale, and quantity of the products
+     * These values are specific to a city
+     * For each city, the data is [qty, prod, sell] */
+    cityData: { [key: string]: number[] };
+    /** Creation progress - A number between 0-100 representing percentage */
+    developmentProgress: number;
 }
 
 /**
@@ -6435,6 +6577,8 @@ export declare interface Warehouse {
     size: number;
     /** Used space in the warehouse */
     sizeUsed: number;
+    /** Smart Supply status in the warehouse */
+    smartSupplyEnabled: boolean;
 }
 
 /**
@@ -6603,6 +6747,21 @@ export declare interface WarehouseAPI {
     designInvest: number,
     marketingInvest: number,
     ): void;
+    /**
+     * Gets the cost to purchase a warehouse
+     * @returns cost
+     */
+    getPurchaseWarehouseCost(): number;
+    /**
+     * Gets the cost to upgrade a warehouse to the next level
+     * @returns cost to upgrade
+     */
+    getUpgradeWarehouseCost(adivisionName: any, acityName: any): number;
+    /**
+     * Check if you have a warehouse in city
+     * @returns true if warehouse is present, false if not
+     */
+    hasWarehouse(adivisionName: any, acityName: any): boolean;
 }
 
 export { }

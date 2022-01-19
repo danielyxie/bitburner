@@ -4,7 +4,7 @@
 
 ## NS.share() method
 
-Share your computer with your factions. Increasing your rep gain for a short duration.
+Share your computer with your factions.
 
 <b>Signature:</b>
 
@@ -18,4 +18,6 @@ Promise&lt;void&gt;
 ## Remarks
 
 RAM cost: 2.4 GB
+
+Increases your rep gain of hacking contracts while share is called. Scales with thread count.
 

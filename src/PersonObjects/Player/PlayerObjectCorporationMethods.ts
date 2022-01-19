@@ -1,4 +1,5 @@
 import { Corporation } from "../../Corporation/Corporation";
+import { CorporationUnlockUpgrades } from "../../Corporation/data/CorporationUnlockUpgrades";
 import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { IPlayer } from "../IPlayer";
 
@@ -17,6 +18,14 @@ export function startCorporation(this: IPlayer, corpName: string, additionalShar
   this.corporation = new Corporation({
     name: corpName,
   });
+
+  if (SourceFileFlags[3] === 3) {
+    const warehouseApi = CorporationUnlockUpgrades["7"][0];
+    const OfficeApi = CorporationUnlockUpgrades["8"][0];
+
+    this.corporation.unlockUpgrades[warehouseApi] = 1;
+    this.corporation.unlockUpgrades[OfficeApi] = 1;
+  }
 
   this.corporation.totalShares += additionalShares;
 }

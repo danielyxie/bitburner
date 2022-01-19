@@ -50,7 +50,9 @@ export function ProgramsRoot(): React.ReactElement {
                   sx={{ my: 1 }}
                   onClick={(event) => {
                     if (!event.isTrusted) return;
-                    player.startCreateProgramWork(router, program.name, create.time, create.level);
+                    player.startCreateProgramWork(program.name, create.time, create.level);
+                    player.startFocusing();
+                    router.toWork();
                   }}
                 >
                   {program.name}

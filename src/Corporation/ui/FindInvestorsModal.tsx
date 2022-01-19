@@ -15,37 +15,18 @@ interface IProps {
 
 // Create a popup that lets the player manage exports
 export function FindInvestorsModal(props: IProps): React.ReactElement {
-  const corp = useCorporation();
-  const val = corp.determineValuation();
-  let percShares = 0;
-  let roundMultiplier = 4;
-  switch (corp.fundingRound) {
-    case 0: //Seed
-      percShares = 0.1;
-      roundMultiplier = 4;
-      break;
-    case 1: //Series A
-      percShares = 0.35;
-      roundMultiplier = 3;
-      break;
-    case 2: //Series B
-      percShares = 0.25;
-      roundMultiplier = 3;
-      break;
-    case 3: //Series C
-      percShares = 0.2;
-      roundMultiplier = 2.5;
-      break;
-    default:
-      return <></>;
-  }
+  const corporation = useCorporation();
+  const val = corporation.determineValuation();
+  if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length) return <></>;
+  const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
+  const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
   const funding = val * percShares * roundMultiplier;
   const investShares = Math.floor(CorporationConstants.INITIALSHARES * percShares);
 
   function findInvestors(): void {
-    corp.fundingRound++;
-    corp.addFunds(funding);
-    corp.numShares -= investShares;
+    corporation.fundingRound++;
+    corporation.addFunds(funding);
+    corporation.numShares -= investShares;
     props.rerender();
     props.onClose();
   }
