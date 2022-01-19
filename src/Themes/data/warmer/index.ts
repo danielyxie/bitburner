@@ -1,9 +1,12 @@
 import { IPredefinedTheme } from "../../Themes";
+import img1 from "./screenshot.png";
 
 export const Theme: IPredefinedTheme = {
+  name: "Warmer",
   credit: "hexnaught",
   description: "Warmer, softer theme",
   reference: "https://discord.com/channels/415207508303544321/921991895230611466/921999581020028938",
+  screenshot: img1,
   colors: {
     primarylight: "#EA9062",
     primary: "#DD7B4A",

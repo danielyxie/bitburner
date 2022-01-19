@@ -1,9 +1,12 @@
 import { IPredefinedTheme } from "../../Themes";
+import img1 from "./screenshot.png";
 
 export const Theme: IPredefinedTheme = {
   name: "Dracula",
+  description: "Dracula Look-alike",
   credit: "H3draut3r",
   reference: "https://discord.com/channels/415207508303544321/921991895230611466/922296307836678144",
+  screenshot: img1,
   colors: {
     primarylight: "#7082B8",
     primary: "#F8F8F2",

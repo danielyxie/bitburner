@@ -1,9 +1,12 @@
 import { IPredefinedTheme } from "../../Themes";
+import img1 from "./screenshot.png";
 
 export const Theme: IPredefinedTheme = {
   name: "One Dark",
+  description: "Dark with a greenish tint",
   credit: "Dexalt142",
   reference: "https://discord.com/channels/415207508303544321/921991895230611466/924650660694208512",
+  screenshot: img1,
   colors: {
     primarylight: "#98C379",
     primary: "#98C379",

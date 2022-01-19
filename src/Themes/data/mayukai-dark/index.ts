@@ -1,10 +1,12 @@
 import { IPredefinedTheme } from "../../Themes";
+import img1 from "./screenshot.png";
 
 export const Theme: IPredefinedTheme = {
   name: "Mayukai Dark",
   description: "Mayukai Dark-esque",
   credit: "Festive Noire",
   reference: "https://discord.com/channels/415207508303544321/921991895230611466/922037502334889994",
+  screenshot: img1,
   colors: {
     primarylight: "#DDDFC5",
     primary: "#CDCFB6",
