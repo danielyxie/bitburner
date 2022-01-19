@@ -8,6 +8,5 @@ export function StartSharing(threads: number): () => void {
 }
 
 export function CalculateShareMult(): number {
-  console.log(`${sharePower} => ${CSM(sharePower)}`);
   return CSM(sharePower);
 }
