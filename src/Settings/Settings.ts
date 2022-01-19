@@ -1,6 +1,6 @@
 import { ISelfInitializer, ISelfLoading } from "../types";
 import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
-import { defaultTheme, ITheme } from "./Themes";
+import { defaultTheme, ITheme } from "../Themes/Themes";
 import { defaultStyles } from "./Styles";
 import { WordWrapOptions } from "../ScriptEditor/ui/Options";
 import { OverviewSettings } from "../ui/React/Overview";

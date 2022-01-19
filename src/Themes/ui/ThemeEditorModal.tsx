@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal } from "./Modal";
+import { Modal } from "../../ui/React/Modal";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
@@ -11,7 +11,7 @@ import PaletteSharpIcon from "@mui/icons-material/PaletteSharp";
 import { Color, ColorPicker } from "material-ui-color";
 import { ThemeEvents } from "./Theme";
 import { Settings, defaultSettings } from "../../Settings/Settings";
-import { getPredefinedThemes } from "../../Settings/Themes";
+import { getPredefinedThemes } from "../Themes";
 import { UserInterfaceTheme } from "../../ScriptEditor/NetscriptDefinitions";
 
 interface IProps {
