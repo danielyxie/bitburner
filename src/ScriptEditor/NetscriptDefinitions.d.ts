@@ -4613,8 +4613,9 @@ export interface NS extends Singularity {
    * @usage below:
    * ```ts
    * let recentScripts = ns.getRecentScripts();
-   * let mostRcent = recentScripts.pop()
-   * ns.tprint(mostRecent.logs.join('\n'))
+   * let mostRecent = recentScripts.shift()
+   * if (mostRecent)
+   *   ns.tprint(mostRecent.logs.join('\n'))
    * ```
    *
    * @returns Array with information about previously killed scripts.
