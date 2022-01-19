@@ -8,7 +8,8 @@ See [CONTRIBUTING.md](/CONTRIBUTING.md) for details.
 
 1. Duplicate one of the folders in `/src/Themes/data` and give it a new name (keep the hyphenated format)
 2. Modify the data in the new `/src/Themes/data/new-folder/index.ts` file
-3. Add the import/export into the `/src/Themes/data/index.ts` file
+3. Replace the screenshot.png with one of your theme
+4. Add the import/export into the `/src/Themes/data/index.ts` file
 
 The themes are ordered according to the export order in `index.ts`
 

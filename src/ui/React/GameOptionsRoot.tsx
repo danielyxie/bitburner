@@ -22,12 +22,11 @@ import TextField from "@mui/material/TextField";
 import DownloadIcon from "@mui/icons-material/Download";
 import UploadIcon from "@mui/icons-material/Upload";
 import SaveIcon from "@mui/icons-material/Save";
+import PaletteIcon from '@mui/icons-material/Palette';
 
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { dialogBoxCreate } from "./DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
-import { ThemeEditorModal } from "../../Themes/ui/ThemeEditorModal";
-import { StyleEditorModal } from "./StyleEditorModal";
 
 import { SnackbarEvents } from "./Snackbar";
 
@@ -37,6 +36,9 @@ import { formatTime } from "../../utils/helpers/formatTime";
 import { OptionSwitch } from "./OptionSwitch";
 import { DeleteGameButton } from "./DeleteGameButton";
 import { SoftResetButton } from "./SoftResetButton";
+import { IRouter } from "../Router";
+import { ThemeEditorButton } from "../../Themes/ui/ThemeEditorButton";
+import { StyleEditorButton } from "../../Themes/ui/StyleEditorButton";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   player: IPlayer;
+  router: IRouter;
   save: () => void;
   export: () => void;
   forceKill: () => void;
@@ -74,8 +77,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [timestampFormat, setTimestampFormat] = useState(Settings.TimestampsFormat);
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
-  const [themeEditorOpen, setThemeEditorOpen] = useState(false);
-  const [styleEditorOpen, setStyleEditorOpen] = useState(false);
   const [importSaveOpen, setImportSaveOpen] = useState(false);
   const [importData, setImportData] = useState<ImportData | null>(null);
 
@@ -642,9 +643,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <Button onClick={() => setDiagnosticOpen(true)}>Diagnose files</Button>
             </Tooltip>
           </Box>
-          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-            <Button onClick={() => setThemeEditorOpen(true)}>Theme editor</Button>
-            <Button onClick={() => setStyleEditorOpen(true)}>Style editor</Button>
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}>
+            <Tooltip title="Head to the theme browser to see a collection of prebuilt themes.">
+              <Button startIcon={<PaletteIcon />} onClick={() => props.router.toThemeBrowser()}>
+                Theme Browser
+              </Button>
+            </Tooltip>
+            <ThemeEditorButton router={props.router} />
+            <StyleEditorButton />
           </Box>
           <Box>
             <Link href="https://github.com/danielyxie/bitburner/issues/new" target="_blank">
@@ -669,8 +675,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         </Box>
       </Grid>
       <FileDiagnosticModal open={diagnosticOpen} onClose={() => setDiagnosticOpen(false)} />
-      <ThemeEditorModal open={themeEditorOpen} onClose={() => setThemeEditorOpen(false)} />
-      <StyleEditorModal open={styleEditorOpen} onClose={() => setStyleEditorOpen(false)} />
     </div>
   );
 }

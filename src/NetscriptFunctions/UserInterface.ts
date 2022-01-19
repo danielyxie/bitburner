@@ -6,7 +6,7 @@ import { GameInfo, IStyleSettings, UserInterface as IUserInterface, UserInterfac
 import { Settings } from "../Settings/Settings";
 import { ThemeEvents } from "../Themes/ui/Theme";
 import { defaultTheme } from "../Themes/Themes";
-import { defaultStyles } from "../Settings/Styles";
+import { defaultStyles } from "../Themes/Styles";
 import { CONSTANTS } from "../Constants";
 import { hash } from "../hash/hash";
 
