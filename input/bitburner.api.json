@@ -18440,7 +18440,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#getSharePower:member(1)",
-              "docComment": "/**\n * Calculate your share power.\n *\n * @remarks\n *\n * RAM cost: 0.2 GB\n */\n",
+              "docComment": "/**\n * Calculate your share power. Based on all the active share calls.\n *\n * @remarks\n *\n * RAM cost: 0.2 GB\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -20475,7 +20475,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "bitburner!NS#share:member(1)",
-              "docComment": "/**\n * Share your computer with your factions. Increasing your rep gain for a short duration.\n *\n * @remarks\n *\n * RAM cost: 2.4 GB\n */\n",
+              "docComment": "/**\n * Share your computer with your factions.\n *\n * @remarks\n *\n * RAM cost: 2.4 GB\n *\n * Increases your rep gain of hacking contracts while share is called. Scales with thread count.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -25657,7 +25657,7 @@
                 },
                 {
                   "kind": "Content",
-                  "text": "{[key: string]:number[]}"
+                  "text": "{ [key: string]: number[] }"
                 },
                 {
                   "kind": "Content",

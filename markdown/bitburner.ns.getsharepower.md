@@ -4,7 +4,7 @@
 
 ## NS.getSharePower() method
 
-Calculate your share power.
+Calculate your share power. Based on all the active share calls.
 
 <b>Signature:</b>
 

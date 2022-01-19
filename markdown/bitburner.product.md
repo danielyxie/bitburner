@@ -16,7 +16,7 @@ interface Product
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [cityData](./bitburner.product.citydata.md) | {\[key: string\]:number\[\]} | Data refers to the production, sale, and quantity of the products These values are specific to a city For each city, the data is \[qty, prod, sell\] |
+|  [cityData](./bitburner.product.citydata.md) | { \[key: string\]: number\[\] } | Data refers to the production, sale, and quantity of the products These values are specific to a city For each city, the data is \[qty, prod, sell\] |
 |  [cmp](./bitburner.product.cmp.md) | number | Competition for the product |
 |  [developmentProgress](./bitburner.product.developmentprogress.md) | number | Creation progress - A number between 0-100 representing percentage |
 |  [dmd](./bitburner.product.dmd.md) | number | Demand for the product |

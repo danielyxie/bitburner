@@ -9,5 +9,5 @@ Data refers to the production, sale, and quantity of the products These values a
 <b>Signature:</b>
 
 ```typescript
-cityData: {[key: string]:number[]};
+cityData: { [key: string]: number[] };
 ```
