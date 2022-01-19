@@ -6489,12 +6489,16 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
   issueDividends(percent: number): void;
   /**
    * Buyback Shares
+   * @param amount - Amount of shares to buy back.
+   *
    */
-  buyBackShares(amt: number): void;
+  buyBackShares(amount: number): void;
   /**
-  * Sell Shares
-  */
-  sellShares(amt: number): void;
+   * Sell Shares
+   * @param amount -  Amount of shares to sell.
+   *
+   */
+  sellShares(amount: number): void;
 }
 
 /**

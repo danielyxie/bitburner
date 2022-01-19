@@ -9,14 +9,14 @@ Buyback Shares
 <b>Signature:</b>
 
 ```typescript
-buyBackShares(amt: number): void;
+buyBackShares(amount: number): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  amt | number |  |
+|  amount | number | Amount of shares to buy back. |
 
 <b>Returns:</b>
 

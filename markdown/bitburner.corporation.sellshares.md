@@ -9,14 +9,14 @@ Sell Shares
 <b>Signature:</b>
 
 ```typescript
-sellShares(amt: number): void;
+sellShares(amount: number): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  amt | number |  |
+|  amount | number | Amount of shares to sell. |
 
 <b>Returns:</b>
 
