@@ -726,48 +726,71 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (args.length === 0) {
         throw makeRuntimeErrorMsg("tprint", "Takes at least 1 argument.");
       }
-      const str = argsToString(args);
-      if (str.startsWith("ERROR") || str.startsWith("FAIL")) {
-        Terminal.error(`${workerScript.scriptRef.filename}: ${str}`);
-        return;
+
+      Terminal.print(`${workerScript.scriptRef.filename}: ${argsToString(args)}`);
+    },
+    tsuccess: function (...args: any[]): void {
+      if (args.length === 0) {
+        throw makeRuntimeErrorMsg("tsuccess", "Takes at least 1 argument.");
       }
-      if (str.startsWith("SUCCESS")) {
-        Terminal.success(`${workerScript.scriptRef.filename}: ${str}`);
-        return;
+
+      Terminal.success(`${workerScript.scriptRef.filename}: ${argsToString(args)}`);
+    },
+    tinfo: function (...args: any[]): void {
+      if (args.length === 0) {
+        throw makeRuntimeErrorMsg("tinfo", "Takes at least 1 argument.");
       }
-      if (str.startsWith("WARN")) {
-        Terminal.warn(`${workerScript.scriptRef.filename}: ${str}`);
-        return;
+
+      Terminal.info(`${workerScript.scriptRef.filename}: ${argsToString(args)}`);
+    },
+    twarn: function (...args: any[]): void {
+      if (args.length === 0) {
+        throw makeRuntimeErrorMsg("twarn", "Takes at least 1 argument.");
       }
-      if (str.startsWith("INFO")) {
-        Terminal.info(`${workerScript.scriptRef.filename}: ${str}`);
-        return;
+
+      Terminal.warn(`${workerScript.scriptRef.filename}: ${argsToString(args)}`);
+    },
+    terror: function (...args: any[]): void {
+      if (args.length === 0) {
+        throw makeRuntimeErrorMsg("terror", "Takes at least 1 argument.");
       }
-      Terminal.print(`${workerScript.scriptRef.filename}: ${str}`);
+
+      Terminal.error(`${workerScript.scriptRef.filename}: ${argsToString(args)}`);
     },
     tprintf: function (format: any, ...args: any): any {
       if (typeof format !== "string") {
         throw makeRuntimeErrorMsg("tprintf", "First argument must be string for the format.");
       }
-      const str = vsprintf(format, args);
 
-      if (str.startsWith("ERROR") || str.startsWith("FAIL")) {
-        Terminal.error(`${str}`);
-        return;
+      Terminal.print(vsprintf(format, args));
+    },
+    twarnf: function (format: any, ...args: any): any {
+      if (typeof format !== "string") {
+        throw makeRuntimeErrorMsg("twarnf", "First argument must be string for the format.");
       }
-      if (str.startsWith("SUCCESS")) {
-        Terminal.success(`${str}`);
-        return;
+
+      Terminal.warn(vsprintf(format, args));
+    },
+    terrorf: function (format: any, ...args: any): any {
+      if (typeof format !== "string") {
+        throw makeRuntimeErrorMsg("terrorf", "First argument must be string for the format.");
       }
-      if (str.startsWith("WARN")) {
-        Terminal.warn(`${str}`);
-        return;
+
+      Terminal.error(vsprintf(format, args));
+    },
+    tsuccessf: function (format: any, ...args: any): any {
+      if (typeof format !== "string") {
+        throw makeRuntimeErrorMsg("tsuccessf", "First argument must be string for the format.");
       }
-      if (str.startsWith("INFO")) {
-        Terminal.info(`${str}`);
-        return;
+
+      Terminal.success(vsprintf(format, args));
+    },
+    tinfof: function (format: any, ...args: any): any {
+      if (typeof format !== "string") {
+        throw makeRuntimeErrorMsg("tinfof", "First argument must be string for the format.");
       }
-      Terminal.print(`${str}`);
+
+      Terminal.info(vsprintf(format, args));
     },
     clearLog: function (): any {
       workerScript.scriptRef.clearLog();

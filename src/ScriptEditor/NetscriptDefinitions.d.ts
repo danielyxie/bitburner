@@ -4461,7 +4461,7 @@ export interface NS extends Singularity {
   print(...args: any[]): void;
 
   /**
-   * Prints one or more values or variables to the Terminal.
+   * Prints one or more values or variables to the Terminal using the DEFAULT coloring.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -4470,7 +4470,43 @@ export interface NS extends Singularity {
   tprint(...args: any[]): void;
 
   /**
-   * Prints a raw value or a variable to the Terminal.
+   * Prints one or more values or variables to the Terminal using the WARN coloring.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @param args - Value(s) to be printed.
+   */
+  twarn(...args: any[]): void;
+  
+  /**
+   * Prints one or more values or variables to the Terminal using the INFO coloring.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @param args - Value(s) to be printed.
+   */
+  tinfo(...args: any[]): void;
+  
+  /**
+   * Prints one or more values or variables to the Terminal using the SUCCESS coloring.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @param args - Value(s) to be printed.
+   */
+  tsuccess(...args: any[]): void;
+
+  /**
+   * Prints one or more values or variables to the Terminal using the ERROR coloring.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @param args - Value(s) to be printed.
+   */
+  terror(...args: any[]): void;
+
+  /**
+   * Prints a raw value or a variable to the Terminal with the DEFAULT coloring.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -4478,6 +4514,46 @@ export interface NS extends Singularity {
    * @param msg - Value to be printed.
    */
   tprintf(format: string, ...values: any[]): void;
+
+  /**
+   * Prints a raw value or a variable to the Terminal with the WARN coloring.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @param format - format of the message
+   * @param msg - Value to be printed.
+   */
+  twarnf(format: string, ...values: any[]): void;
+
+  /**
+   * Prints a raw value or a variable to the Terminal with the INFO coloring.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @param format - format of the message
+   * @param msg - Value to be printed.
+   */
+  tinfof(format: string, ...values: any[]): void;
+
+  /**
+   * Prints a raw value or a variable to the Terminal with the SUCCESS coloring.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @param format - format of the message
+   * @param msg - Value to be printed.
+   */
+  tsuccessf(format: string, ...values: any[]): void;
+
+  /**
+   * Prints a raw value or a variable to the Terminal with the ERROR coloring.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * @param format - format of the message
+   * @param msg - Value to be printed.
+   */
+  terrorf(format: string, ...values: any[]): void;
 
   /**
    * Clears the script’s logs.
