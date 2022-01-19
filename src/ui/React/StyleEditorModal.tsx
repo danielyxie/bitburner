@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import ReplyIcon from "@mui/icons-material/Reply";
 import SaveIcon from "@mui/icons-material/Save";
 
-import { ThemeEvents } from "./Theme";
+import { ThemeEvents } from "../../Themes/ui/Theme";
 import { Settings } from "../../Settings/Settings";
 import { defaultStyles } from "../../Settings/Styles";
 import { Tooltip } from "@mui/material";

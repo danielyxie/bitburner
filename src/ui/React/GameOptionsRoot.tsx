@@ -26,7 +26,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { dialogBoxCreate } from "./DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
-import { ThemeEditorModal } from "./ThemeEditorModal";
+import { ThemeEditorModal } from "../../Themes/ui/ThemeEditorModal";
 import { StyleEditorModal } from "./StyleEditorModal";
 
 import { SnackbarEvents } from "./Snackbar";
