@@ -131,12 +131,11 @@ export function Root(props: IProps): React.ReactElement {
   // Prevent Crash if script is open on deleted server
   openScripts = openScripts.filter((script) => {
     return GetServer(script.hostname) !== null;
-  })
-  if (currentScript && (GetServer(currentScript.hostname) === null)) {
+  });
+  if (currentScript && GetServer(currentScript.hostname) === null) {
     currentScript = openScripts[0];
     if (currentScript === undefined) currentScript = null;
   }
-
 
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
@@ -205,7 +204,7 @@ export function Root(props: IProps): React.ReactElement {
           });
           editor.focus();
         });
-      } catch { }
+      } catch {}
     } else if (!options.vim) {
       // Whem vim mode is disabled
       vimEditor?.dispose();
@@ -314,13 +313,18 @@ export function Root(props: IProps): React.ReactElement {
         .loader();
       // replaced the bare tokens with regexes surrounded by \b, e.g. \b{token}\b which matches a word-break on either side
       // this prevents the highlighter from highlighting pieces of variables that start with a reserved token name
-      l.language.tokenizer.root.unshift([new RegExp('\\bns\\b'), { token: "ns" }]);
-      for (const symbol of symbols) l.language.tokenizer.root.unshift([new RegExp(`\\b${symbol}\\b`), { token: "netscriptfunction" }]);
+      l.language.tokenizer.root.unshift([new RegExp("\\bns\\b"), { token: "ns" }]);
+      for (const symbol of symbols)
+        l.language.tokenizer.root.unshift([new RegExp(`\\b${symbol}\\b`), { token: "netscriptfunction" }]);
       const otherKeywords = ["let", "const", "var", "function"];
       const otherKeyvars = ["true", "false", "null", "undefined"];
-      otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeywords" }]));
-      otherKeyvars.forEach((k) => l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeyvars" }]));
-      l.language.tokenizer.root.unshift([new RegExp('\\bthis\\b'), { token: "this" }]);
+      otherKeywords.forEach((k) =>
+        l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeywords" }]),
+      );
+      otherKeyvars.forEach((k) =>
+        l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeyvars" }]),
+      );
+      l.language.tokenizer.root.unshift([new RegExp("\\bthis\\b"), { token: "this" }]);
     })();
 
     const source = (libSource + "").replace(/export /g, "");
@@ -446,7 +450,7 @@ export function Root(props: IProps): React.ReactElement {
     }
     try {
       infLoop(newCode);
-    } catch (err) { }
+    } catch (err) {}
   }
 
   function saveScript(scriptToSave: OpenScript): void {
@@ -755,13 +759,16 @@ export function Root(props: IProps): React.ReactElement {
                         <Button
                           onClick={() => onTabClick(index)}
                           style={
-                            currentScript?.fileName === openScripts[index].fileName ? {
-                              background: Settings.theme.button,
-                              color: Settings.theme.primary
-                            } : {
-                              background: Settings.theme.backgroundsecondary,
-                              color: Settings.theme.secondary
-                            }}
+                            currentScript?.fileName === openScripts[index].fileName
+                              ? {
+                                  background: Settings.theme.button,
+                                  color: Settings.theme.primary,
+                                }
+                              : {
+                                  background: Settings.theme.backgroundsecondary,
+                                  color: Settings.theme.secondary,
+                                }
+                          }
                         >
                           {hostname}:~/{fileName} {dirty(index)}
                         </Button>
@@ -770,13 +777,15 @@ export function Root(props: IProps): React.ReactElement {
                           style={{
                             maxWidth: "20px",
                             minWidth: "20px",
-                            ...(currentScript?.fileName === openScripts[index].fileName ? {
-                              background: Settings.theme.button,
-                              color: Settings.theme.primary
-                            } : {
-                              background: Settings.theme.backgroundsecondary,
-                              color: Settings.theme.secondary
-                            })
+                            ...(currentScript?.fileName === openScripts[index].fileName
+                              ? {
+                                  background: Settings.theme.button,
+                                  color: Settings.theme.primary,
+                                }
+                              : {
+                                  background: Settings.theme.backgroundsecondary,
+                                  color: Settings.theme.secondary,
+                                }),
                           }}
                         >
                           x
@@ -813,20 +822,30 @@ export function Root(props: IProps): React.ReactElement {
         ></Box>
 
         <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
-          <Button startIcon={<SettingsIcon />} onClick={() => setOptionsOpen(true)} sx={{ mr: 1 }}>Options</Button>
+          <Button startIcon={<SettingsIcon />} onClick={() => setOptionsOpen(true)} sx={{ mr: 1 }}>
+            Options
+          </Button>
           <Button onClick={beautify}>Beautify</Button>
-          <Button color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }} onClick={() => { setRamInfoOpen(true) }}>
+          <Button
+            color={updatingRam ? "secondary" : "primary"}
+            sx={{ mx: 1 }}
+            onClick={() => {
+              setRamInfoOpen(true);
+            }}
+          >
             {ram}
           </Button>
-          <Button onClick={save}>Save (Ctrl/Cmd + s)</Button>
+          <Button sx={{ mr: 1 }} onClick={save}>
+            Save (Ctrl/Cmd + s)
+          </Button>
           <Button onClick={props.router.toTerminal}>Close (Ctrl/Cmd + b)</Button>
           <Typography sx={{ mx: 1 }}>
             {" "}
-            Documentation:{" "}
+            <strong>Documentation:</strong>{" "}
             <Link target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
               Basic
-            </Link>{" "}
-            |
+            </Link>
+            {" | "}
             <Link target="_blank" href="https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md">
               Full
             </Link>
@@ -858,7 +877,9 @@ export function Root(props: IProps): React.ReactElement {
                 <React.Fragment key={n + r}>
                   <TableRow>
                     <TableCell sx={{ color: Settings.theme.primary }}>{n}</TableCell>
-                    <TableCell align="right" sx={{ color: Settings.theme.primary }}>{r}</TableCell>
+                    <TableCell align="right" sx={{ color: Settings.theme.primary }}>
+                      {r}
+                    </TableCell>
                   </TableRow>
                 </React.Fragment>
               ))}

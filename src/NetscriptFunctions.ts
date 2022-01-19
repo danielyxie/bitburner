@@ -78,6 +78,8 @@ import {
   Gang as IGang,
   Bladeburner as IBladeburner,
   Stanek as IStanek,
+  RunningScript as IRunningScript,
+  RecentScript as IRecentScript,
   SourceFileLvl,
 } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
@@ -90,6 +92,7 @@ import { SnackbarEvents } from "./ui/React/Snackbar";
 import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
+import { recentScripts } from "./Netscript/RecentScripts";
 
 interface NS extends INS {
   [key: string]: any;
@@ -202,6 +205,32 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (runningScript) return runningScript;
     }
     return null;
+  };
+
+  /**
+   * Sanitizes a `RunningScript` to remove sensitive information, making it suitable for
+   * return through an NS function.
+   * @see NS.getRecentScripts
+   * @see NS.getRunningScript
+   * @param runningScript Existing, internal RunningScript
+   * @returns A sanitized, NS-facing copy of the RunningScript
+   */
+  const createPublicRunningScript = function (runningScript: RunningScript): IRunningScript {
+    return {
+      args: runningScript.args.slice(),
+      filename: runningScript.filename,
+      logs: runningScript.logs.slice(),
+      offlineExpGained: runningScript.offlineExpGained,
+      offlineMoneyMade: runningScript.offlineMoneyMade,
+      offlineRunningTime: runningScript.offlineRunningTime,
+      onlineExpGained: runningScript.onlineExpGained,
+      onlineMoneyMade: runningScript.onlineMoneyMade,
+      onlineRunningTime: runningScript.onlineRunningTime,
+      pid: runningScript.pid,
+      ramUsage: runningScript.ramUsage,
+      server: runningScript.server,
+      threads: runningScript.threads,
+    };
   };
 
   /**
@@ -1310,6 +1339,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       allFiles.sort();
       return allFiles;
     },
+    getRecentScripts: function (): IRecentScript[] {
+      updateDynamicRam("getRecentScripts", getRamCost(Player, "getRecentScripts"));
+      return recentScripts.map((rs) => ({ ...rs, runningScript: createPublicRunningScript(rs.runningScript) }));
+    },
     ps: function (hostname: any = workerScript.hostname): any {
       updateDynamicRam("ps", getRamCost(Player, "ps"));
       const server = safeGetServer(hostname, "ps");
@@ -1974,21 +2007,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         runningScript = getRunningScript(fn, hostname, "getRunningScript", args);
       }
       if (runningScript === null) return null;
-      return {
-        args: runningScript.args.slice(),
-        filename: runningScript.filename,
-        logs: runningScript.logs.slice(),
-        offlineExpGained: runningScript.offlineExpGained,
-        offlineMoneyMade: runningScript.offlineMoneyMade,
-        offlineRunningTime: runningScript.offlineRunningTime,
-        onlineExpGained: runningScript.onlineExpGained,
-        onlineMoneyMade: runningScript.onlineMoneyMade,
-        onlineRunningTime: runningScript.onlineRunningTime,
-        pid: runningScript.pid,
-        ramUsage: runningScript.ramUsage,
-        server: runningScript.server,
-        threads: runningScript.threads,
-      };
+      return createPublicRunningScript(runningScript);
     },
     getHackTime: function (hostname: any): any {
       updateDynamicRam("getHackTime", getRamCost(Player, "getHackTime"));
