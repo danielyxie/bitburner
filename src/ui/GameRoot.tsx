@@ -72,6 +72,7 @@ import { LogBoxManager } from "./React/LogBoxManager";
 import { AlertManager } from "./React/AlertManager";
 import { PromptManager } from "./React/PromptManager";
 import { InvitationModal } from "../Faction/ui/InvitationModal";
+import { calculateAchievements } from "../Achievements/Achievements";
 
 import { enterBitNode } from "../RedPill";
 import { Context } from "./Context";
@@ -290,6 +291,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toBitVerse: (flume: boolean, quick: boolean) => {
       setFlume(flume);
       setQuick(quick);
+      calculateAchievements();
       setPage(Page.BitVerse);
     },
     toInfiltration: (location: Location) => {
