@@ -709,6 +709,9 @@ export function Root(props: IProps): React.ReactElement {
             // Save changes
             openScript.code = serverScriptCode;
 
+            // Switch to target tab
+            onTabClick(index)
+
             if (editorRef.current !== null && openScript !== null) {
               if (openScript.model === undefined || openScript.model.isDisposed()) {
                 regenerateModel(openScript);
