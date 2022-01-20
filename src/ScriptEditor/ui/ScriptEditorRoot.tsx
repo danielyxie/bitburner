@@ -34,6 +34,7 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import SettingsIcon from "@mui/icons-material/Settings";
 import SyncIcon from '@mui/icons-material/Sync';
+import CloseIcon from '@mui/icons-material/Close';
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
@@ -42,6 +43,7 @@ import { PromptEvent } from "../../ui/React/PromptManager";
 import { Modal } from "../../ui/React/Modal";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
+import { Tooltip } from "@mui/material";
 
 interface IProps {
   // Map of filename -> code
@@ -700,7 +702,7 @@ export function Root(props: IProps): React.ReactElement {
 
     if (openScript.code !== serverScriptCode) {
       PromptEvent.emit({
-        txt: "Do you want to overwrite " + openScript.fileName + " with the contents saved on the server?",
+        txt: "Do you want to overwrite " + openScript.fileName + " with the contents saved on the server? This cannot be undone.",
         resolve: (result: boolean) => {
           if (result) {
             // Save changes
@@ -718,7 +720,6 @@ export function Root(props: IProps): React.ReactElement {
               updateRAM(openScript.code);
               editorRef.current.focus();
             }
-            rerender();
           }
         },
       });
@@ -773,79 +774,74 @@ export function Root(props: IProps): React.ReactElement {
                   overflowX: "scroll",
                 }}
               >
-                {openScripts.map(({ fileName, hostname }, index) => (
-                  <Draggable
-                    key={fileName + hostname}
-                    draggableId={fileName + hostname}
-                    index={index}
-                    disableInteractiveElementBlocking={true}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        style={{
-                          ...provided.draggableProps.style,
-                          marginRight: "5px",
-                          flexShrink: 0,
-                        }}
-                      >
-                        <Button
-                          onClick={() => onTabClick(index)}
-                          onMouseDown={e => {
-                            e.preventDefault();
-                            if (e.button === 1) onTabClose(index);
+                {openScripts.map(({ fileName, hostname }, index) => {
+                  const iconButtonStyle = {
+                    maxWidth: "25px",
+                    minWidth: "25px",
+                    minHeight: '38.5px',
+                    maxHeight: '38.5px',
+                    ...(currentScript?.fileName === openScripts[index].fileName ? {
+                      background: Settings.theme.button,
+                      borderColor: Settings.theme.button,
+                      color: Settings.theme.primary
+                    } : {
+                      background: Settings.theme.backgroundsecondary,
+                      borderColor: Settings.theme.backgroundsecondary,
+                      color: Settings.theme.secondary
+                    })
+                  };
+                  return (
+                    <Draggable
+                      key={fileName + hostname}
+                      draggableId={fileName + hostname}
+                      index={index}
+                      disableInteractiveElementBlocking={true}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          style={{
+                            ...provided.draggableProps.style,
+                            marginRight: "5px",
+                            flexShrink: 0,
+                            border: '1px solid ' + Settings.theme.well,
                           }}
-                          style={
-                            currentScript?.fileName === openScripts[index].fileName ? {
-                              background: Settings.theme.button,
-                              color: Settings.theme.primary
-                            } : {
-                              background: Settings.theme.backgroundsecondary,
-                              color: Settings.theme.secondary
+                        >
+                          <Button
+                            onClick={() => onTabClick(index)}
+                            onMouseDown={e => {
+                              e.preventDefault();
+                              if (e.button === 1) onTabClose(index);
                             }}
-                        >
-                          {hostname}:~/{fileName} {dirty(index)}
-                        </Button>
-                        <Button
-                          onClick={() => onTabClose(index)}
-                          style={{
-                            maxWidth: "20px",
-                            minWidth: "20px",
-                            ...(currentScript?.fileName === openScripts[index].fileName ? {
-                              background: Settings.theme.button,
-                              color: Settings.theme.primary
-                            } : {
-                              background: Settings.theme.backgroundsecondary,
-                              color: Settings.theme.secondary
-                            })
-                          }}
-                        >
-                          x
-                        </Button>
-                        <Button
-                          onClick={() => onTabUpdate(index)}
-                          style={{
-                            maxWidth: "20px",
-                            minWidth: "20px",
-                            minHeight: '38.5px',
-                            maxHeight: '38.5px',
-                            ...(currentScript?.fileName === openScripts[index].fileName ? {
-                              background: Settings.theme.button,
-                              color: Settings.theme.primary
-                            } : {
-                              background: Settings.theme.backgroundsecondary,
-                              color: Settings.theme.secondary
-                            })
-                          }}
-                        >
-                          <SyncIcon fontSize='small' />
-                        </Button>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
+                            style={{
+                              ...(currentScript?.fileName === openScripts[index].fileName ? {
+                                background: Settings.theme.button,
+                                borderColor: Settings.theme.button,
+                                color: Settings.theme.primary
+                              } : {
+                                background: Settings.theme.backgroundsecondary,
+                                borderColor: Settings.theme.backgroundsecondary,
+                                color: Settings.theme.secondary
+                              })
+                            }}
+                          >
+                            {hostname}:~/{fileName} {dirty(index)}
+                          </Button>
+                          <Tooltip title="Overwrite editor content with saved file content">
+                            <Button onClick={() => onTabUpdate(index)} style={iconButtonStyle} >
+                              <SyncIcon fontSize='small' />
+                            </Button>
+                          </Tooltip>
+                          <Button onClick={() => onTabClose(index)} style={iconButtonStyle}>
+                            <CloseIcon fontSize='small' />
+                          </Button>
+                        </div>
+                      )}
+                    </Draggable>
+                  )
+                })}
                 {provided.placeholder}
               </Box>
             )}
