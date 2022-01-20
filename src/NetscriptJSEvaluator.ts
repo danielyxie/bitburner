@@ -9,9 +9,6 @@ import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { ScriptUrl } from "./Script/ScriptUrl";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { Script } from "./Script/Script";
-import { computeHash } from "./utils/helpers/computeHash";
-import { BlobCache } from "./utils/BlobCache";
-import { ImportCache } from "./utils/ImportCache";
 import { areImportsEquals } from "./Terminal/DirectoryHelpers";
 import { IPlayer } from "./PersonObjects/IPlayer";
 
@@ -190,31 +187,12 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
       if (matchingScripts.length === 0) continue;
 
       const [importedScript] = matchingScripts;
-      // Check to see if the urls for this script are stored in the cache by the hash value.
-      let urls = ImportCache.get(importedScript.hash());
-      // If we don't have it in the cache, then we need to generate the urls for it.
-      if (urls) {
-        // Verify that these urls are valid and have not been updated.
-        for (const url of urls) {
-          if (isDependencyOutOfDate(url.filename, scripts, url.moduleSequenceNumber)) {
-            // Revoke these URLs from the browser. We will be unable to use them again.
-            for (const url of urls) URL.revokeObjectURL(url.url);
-            // Clear the cache and prepare for new blobs.
-            urls = null;
-            ImportCache.remove(importedScript.hash());
-            break;
-          }
-        }
-      }
-      if (!urls) {
-        // Try to get a URL for the requested script and its dependencies.
-        urls = _getScriptUrls(importedScript, scripts, seen);
-      }
+
+      const urls = _getScriptUrls(importedScript, scripts, seen);
 
       // The top url in the stack is the replacement import file for this script.
       urlStack.push(...urls);
       const blob = urls[urls.length - 1].url;
-      ImportCache.store(importedScript.hash(), urls);
 
       // Replace the blob inside the import statement.
       transformedCode = transformedCode.substring(0, node.start) + blob + transformedCode.substring(node.end);
@@ -224,17 +202,7 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
     // accidental calls to window.print() do not bring up the "print screen" dialog
     transformedCode += `\n\nfunction print() {throw new Error("Invalid call to window.print(). Did you mean to use Netscript's print()?");}`;
 
-    // If we successfully transformed the code, create a blob url for it
-    // Compute the hash for the transformed code
-    const transformedHash = computeHash(transformedCode);
-    // Check to see if this transformed hash is in our cache
-    let blob = BlobCache.get(transformedHash);
-    if (!blob) {
-      blob = URL.createObjectURL(makeScriptBlob(transformedCode));
-    }
-    // Store this blob in the cache. Any script that transforms the same
-    // (e.g. same scripts on server, same hash value, etc) can use this blob url.
-    BlobCache.store(transformedHash, blob);
+    const blob = URL.createObjectURL(makeScriptBlob(transformedCode));
     // Push the blob URL onto the top of the stack.
     urlStack.push(new ScriptUrl(script.filename, blob, script.moduleSequenceNumber));
     return urlStack;
