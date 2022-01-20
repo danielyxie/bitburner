@@ -18,7 +18,7 @@ async function initialize(win) {
       body += chunk.toString(); // convert Buffer to string
     });
 
-    req.on("end", () => {
+    req.on("end", async () => {
       const providedToken = req.headers?.authorization?.replace('Bearer ', '') ?? '';
       const isValid = providedToken === getAuthenticationToken();
       if (isValid) {
@@ -48,17 +48,11 @@ async function initialize(win) {
         return;
       }
 
-
+      let result;
       switch(req.method) {
         // Request files
         case "GET":
-          window.webContents.executeJavaScript(`document.getFiles("${data.filename}", "${data.code}")`).then((result) => {
-            res.end(JSON.stringify({
-              success: result.res,
-              msg: result.msg,
-              data: result.data
-            }));
-          });
+          result = await window.webContents.executeJavaScript(`document.getFiles("${data.filename}", "${data.code}")`);
           break;
 
         // Create or update files
@@ -72,35 +66,29 @@ async function initialize(win) {
               success: false,
               msg: 'Invalid script update request - No data'
             }));
+            return;
           }
 
-          window.webContents.executeJavaScript(`document.saveFile("${data.filename}", "${data.code}")`).then((result) => {
-            res.write(result);
-  
-            if (!result.res) {
-              //We've encountered an error
-              res.writeHead(JSON.stringify({
-                success: result.res,
-                msg: result.msg,
-                data: result.data
-              }));
-            }
-  
-            res.end();
-          });
+          result = await window.webContents.executeJavaScript(`document.saveFile("${data.filename}", "${data.code}")`);
           break;
         
         // Delete files
         case "DELETE":
-          window.webContents.executeJavaScript(`document.deleteFiles("${data.filename}", "${data.code}")`).then((result) => {
-            res.end(JSON.stringify({
-              success: result.res,
-              msg: result.msg,
-              data: result.data
-            }));
-          });
+          result = await window.webContents.executeJavaScript(`document.deleteFiles("${data.filename}", "${data.code}")`);
           break;
       }
+
+      if (!result.res) {
+        //We've encountered an error
+        res.writeHead(400);
+        log.warn(`Api Server Error`, result.msg);
+      }
+
+      res.end(JSON.stringify({
+        success: result.res,
+        msg: result.msg,
+        data: result.data
+      }));
 
     });
   });
