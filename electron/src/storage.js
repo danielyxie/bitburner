@@ -10,6 +10,7 @@ const gunzip = promisify(zlib.gunzip);
 
 const greenworks = require("../lib/greenworks");
 const log = require("electron-log");
+const flatten = require("lodash/flatten");
 const Config = require("electron-config");
 const config = new Config();
 
@@ -38,6 +39,18 @@ const getNewestFile = async (directory) => {
   const data = await getDirFileStats(directory)
   return data.sort((a, b) => b.stat.mtime.getTime() - a.stat.mtime.getTime())[0];
 };
+
+const getAllSaves = async (window) => {
+  const rootDirectory = await getSaveFolder(window, true);
+  const data = await fs.readdir(rootDirectory, { withFileTypes: true});
+  const savesPromises = data.filter((e) => e.isDirectory()).
+    map((dir) => path.join(rootDirectory, dir.name)).
+    map((dir) => getDirFileStats(dir));
+  const saves = await Promise.all(savesPromises);
+  const flat = flatten(saves);
+  return flat;
+
+}
 
 async function prepareSaveFolders(window) {
   const rootFolder = await getSaveFolder(window, true);
@@ -140,13 +153,6 @@ async function getSteamCloudQuota() {
 
 async function pushGameSaveToSteamCloud(base64save) {
   if (!isCloudEnabled) return Promise.reject("Steam Cloud is not Enabled");
-
-  try {
-    // We have a limit of one file only
-    await deleteSteamCloudSave();
-  } catch (error) {
-    log.error(error);
-  }
 
   // Let's decode the base64 string so GZIP is more efficient.
   const buffer = Buffer.from(base64save, 'base64');
@@ -255,6 +261,15 @@ function getSaveInformation(window, save) {
   });
 }
 
+function getCurrentSave(window) {
+  return new Promise((resolve) => {
+    ipcMain.once('get-save-data-response', (event, data) => {
+      resolve(data);
+    });
+    window.webContents.send('get-save-data-request');
+  });
+}
+
 function enableAutosaveInterval(window) {
   const interval = 1000 * 60 * config.get("autosave-interval-mins", 15);
   if (window.autosaveInterval) {
@@ -290,16 +305,62 @@ function disableAutosaveInterval(window) {
   clearInterval(window.autosaveInterval);
 }
 
-function importIfRequired(window) {
-  log.info(window.gameInfo);
+async function restoreIfNewerExists(window) {
+  const currentSave = await getCurrentSave(window);
+  const currentData = await getSaveInformation(window, currentSave.save);
+  const steam = {};
+  const disk = {};
+  try {
+    steam.save = await getSteamCloudSaveString();
+    steam.data = await getSaveInformation(window, steam.save);
+  } catch (error) {
+    log.error('Could not retrieve steam file', error);
+  }
+
+  try {
+    const saves = (await getAllSaves()).
+      sort((a, b) => b.stat.mtime.getTime() - a.stat.mtime.getTime());
+    if (saves.length > 0) {
+      disk.save = await loadFileFromDisk(saves[0].file);
+      disk.data = await getSaveInformation(window, disk.save);
+    }
+  } catch(error) {
+    log.error('Could not retrieve disk file', error);
+  }
+
+  let bestMatch;
+  if (!steam.data && !disk.data) {
+    log.info("No data to import");
+  } else {
+    // We'll just compare using the lastSave field for now.
+    if (!steam.data) {
+      bestMatch = disk;
+    } else if (!disk.data) {
+      bestMatch = steam;
+    } else if (steam.data.lastSave > disk.data.lastSave) {
+      bestMatch = steam;
+    } else {
+      bestMatch = disk;
+    }
+  }
+  if (bestMatch) {
+    if (bestMatch.data.lastSave > (currentData.lastSave)) {
+      log.info("Found newer data");
+      window.webContents.send('push-save-request', { save: bestMatch.save, automatic: true });
+      return true;
+    } else {
+      log.info("Current save data is the freshest");
+      return false;
+    }
+  }
 }
 
 module.exports = {
   pushGameSaveToSteamCloud, getSteamCloudSaveString, getSteamCloudQuota,
-  saveGameToDisk, loadLastFromDisk, loadFileFromDisk, getSaveFolder,
+  saveGameToDisk, loadLastFromDisk, loadFileFromDisk, getSaveFolder, getAllSaves,
   enableAutosaveInterval, disableAutosaveInterval,
   isCloudEnabled, setCloudEnabledConfig,
   isAutosaveEnabled, setAutosaveConfig,
   isSaveCompressionEnabled, setSaveCompressionConfig,
-  importIfRequired, getSaveInformation, prepareSaveFolders,
+  restoreIfNewerExists, getSaveInformation, prepareSaveFolders, getCurrentSave,
  };

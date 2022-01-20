@@ -116,10 +116,14 @@ function setStopProcessHandler(app, window, enabled) {
     window.gameInfo = { ...arg };
     await storage.prepareSaveFolders(window);
 
-    // TODO:
-    // Check local saves for latest modified one
-    // Check Steam Cloud data
-    // Compare with current and figure out which should be pushed to the player
+    const restoreNewest = config.get('onload-restore-newest', true);
+    if (restoreNewest) {
+      try {
+        await storage.restoreIfNewerExists(window)
+      } catch (error) {
+        log.error('Could not restore newer file', error);
+      }
+    }
   }
 
   const saveToCloud = debounce(async (save) => {

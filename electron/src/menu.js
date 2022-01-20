@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { app, Menu, clipboard, dialog, ipcMain, shell } = require("electron");
 const log = require("electron-log");
+const Config = require("electron-config");
 const api = require("./api-server");
 const utils = require("./utils");
 const storage = require("./storage");
-
+const config = new Config();
 
 function getMenu(window) {
   return Menu.buildFromTemplate([
@@ -118,6 +119,18 @@ function getMenu(window) {
             refreshMenu(window);
           },
         },
+        {
+          label: "Restore Newest on Load",
+          type: 'checkbox',
+          checked: config.get('onload-restore-newest', true),
+          click: (menuItem) => {
+            config.set('onload-restore-newest', menuItem.checked);
+            utils.writeToast(window,
+              `${menuItem.checked ? 'Enabled' : 'Disabled'} Restore Newest on Load`, "info", 5000);
+            refreshMenu(window);
+          },
+        },
+
         {
           type: 'separator',
         },
