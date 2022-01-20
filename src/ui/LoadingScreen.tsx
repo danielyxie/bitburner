@@ -30,6 +30,13 @@ export function LoadingScreen(): React.ReactElement {
   const [show, setShow] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
+  const version = `v${CONSTANTS.VersionString} (${hash()})`;
+  if (process.env.NODE_ENV === "development") {
+    document.title = `[dev] Bitburner ${version}`;
+  } else {
+    document.title = `Bitburner ${version}`;
+  }
+
   useEffect(() => {
     const id = setTimeout(() => {
       if (!loaded) setShow(true);
@@ -70,9 +77,7 @@ export function LoadingScreen(): React.ReactElement {
             <CircularProgress size={150} color="primary" />
           </Grid>
           <Grid item>
-            <Typography variant="h3">
-              Loading Bitburner v{CONSTANTS.VersionString} ({hash()})
-            </Typography>
+            <Typography variant="h3">Loading Bitburner {version}</Typography>
           </Grid>
           {show && (
             <Grid item>

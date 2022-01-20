@@ -453,14 +453,14 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
       </Table>
       <Box sx={{ display: "flex", borderTop: `1px solid ${Settings.theme.welllight}` }}>
         <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
-          <IconButton onClick={save}>
+          <IconButton aria-label="save game" onClick={save}>
             <Tooltip title="Save game">
               <SaveIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
             </Tooltip>
           </IconButton>
         </Box>
         <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-end", alignItems: "center" }}>
-          <IconButton onClick={() => setKillOpen(true)}>
+          <IconButton aria-label="kill all scripts" onClick={() => setKillOpen(true)}>
             <Tooltip title="Kill all running scripts">
               <ClearAllIcon color="error" />
             </Tooltip>

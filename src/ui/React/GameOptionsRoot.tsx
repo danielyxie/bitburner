@@ -21,7 +21,7 @@ import TextField from "@mui/material/TextField";
 
 import DownloadIcon from "@mui/icons-material/Download";
 import UploadIcon from "@mui/icons-material/Upload";
-import SaveIcon from '@mui/icons-material/Save';
+import SaveIcon from "@mui/icons-material/Save";
 
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { dialogBoxCreate } from "./DialogBox";
@@ -152,7 +152,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         console.log(error); // We'll handle below
       }
 
-      if (!newSave || newSave === '') {
+      if (!newSave || newSave === "") {
         SnackbarEvents.emit("Save game had not content or was not base64 encoded", "error", 5000);
         return;
       }
@@ -164,7 +164,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         console.log(error); // We'll handle below
       }
 
-      if (!parsedSave || parsedSave.ctor !== 'BitburnerSaveObject' || !parsedSave.data) {
+      if (!parsedSave || parsedSave.ctor !== "BitburnerSaveObject" || !parsedSave.data) {
         SnackbarEvents.emit("Save game did not seem valid", "error", 5000);
         return;
       }
@@ -172,14 +172,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
       const data: ImportData = {
         base64: contents,
         parsed: parsedSave,
-      }
+      };
 
       const timestamp = parsedSave.data.SaveTimestamp;
-      if (timestamp && timestamp !== '0') {
-        data.exportDate = new Date(parseInt(timestamp, 10))
+      if (timestamp && timestamp !== "0") {
+        data.exportDate = new Date(parseInt(timestamp, 10));
       }
 
-      setImportData(data)
+      setImportData(data);
       setImportSaveOpen(true);
     };
     reader.readAsText(file);
@@ -191,7 +191,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
     setImportSaveOpen(false);
     save(importData.base64).then(() => {
       setImportData(null);
-      setTimeout(() => location.reload(), 1000)
+      setTimeout(() => location.reload(), 1000);
     });
   }
 
@@ -213,7 +213,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                   </Typography>
                 }
               >
-                <Typography>Netscript exec time (ms)</Typography>
+                <Typography>.script exec time (ms)</Typography>
               </Tooltip>
               <Slider
                 value={execTime}
@@ -304,128 +304,165 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               />
             </ListItem>
             <ListItem>
-              <OptionSwitch checked={Settings.SuppressMessages}
-                onChange={(newValue) => Settings.SuppressMessages = newValue}
+              <OptionSwitch
+                checked={Settings.SuppressMessages}
+                onChange={(newValue) => (Settings.SuppressMessages = newValue)}
                 text="Suppress story messages"
-                tooltip={<>
-                  If this is set, then any messages you receive will not appear as popups on the screen. They will
-                  still get sent to your home computer as '.msg' files and can be viewed with the 'cat' Terminal
-                  command.
-                </>} />
+                tooltip={
+                  <>
+                    If this is set, then any messages you receive will not appear as popups on the screen. They will
+                    still get sent to your home computer as '.msg' files and can be viewed with the 'cat' Terminal
+                    command.
+                  </>
+                }
+              />
             </ListItem>
             <ListItem>
-              <OptionSwitch checked={Settings.SuppressFactionInvites}
-                onChange={(newValue) => Settings.SuppressFactionInvites = newValue}
+              <OptionSwitch
+                checked={Settings.SuppressFactionInvites}
+                onChange={(newValue) => (Settings.SuppressFactionInvites = newValue)}
                 text="Suppress faction invites"
-                tooltip={<>
-                  If this is set, then any faction invites you receive will not appear as popups on the screen.
-                  Your outstanding faction invites can be viewed in the 'Factions' page.
-                </>} />
+                tooltip={
+                  <>
+                    If this is set, then any faction invites you receive will not appear as popups on the screen. Your
+                    outstanding faction invites can be viewed in the 'Factions' page.
+                  </>
+                }
+              />
             </ListItem>
             <ListItem>
-              <OptionSwitch checked={Settings.SuppressTravelConfirmation}
-                onChange={(newValue) => Settings.SuppressTravelConfirmation = newValue}
+              <OptionSwitch
+                checked={Settings.SuppressTravelConfirmation}
+                onChange={(newValue) => (Settings.SuppressTravelConfirmation = newValue)}
                 text="Suppress travel confirmations"
-                tooltip={<>
-                  If this is set, the confirmation message before traveling will not show up. You will
-                  automatically be deducted the travel cost as soon as you click.
-                </>} />
+                tooltip={
+                  <>
+                    If this is set, the confirmation message before traveling will not show up. You will automatically
+                    be deducted the travel cost as soon as you click.
+                  </>
+                }
+              />
             </ListItem>
             <ListItem>
-              <OptionSwitch checked={Settings.SuppressBuyAugmentationConfirmation}
-                onChange={(newValue) => Settings.SuppressBuyAugmentationConfirmation = newValue}
+              <OptionSwitch
+                checked={Settings.SuppressBuyAugmentationConfirmation}
+                onChange={(newValue) => (Settings.SuppressBuyAugmentationConfirmation = newValue)}
                 text="Suppress augmentations confirmation"
-                tooltip={<>
-                  If this is set, the confirmation message before buying augmentation will not show up.
-                </>} />
+                tooltip={<>If this is set, the confirmation message before buying augmentation will not show up.</>}
+              />
             </ListItem>
             <ListItem>
-              <OptionSwitch checked={Settings.SuppressTIXPopup}
-                onChange={(newValue) => Settings.SuppressTIXPopup = newValue}
+              <OptionSwitch
+                checked={Settings.SuppressTIXPopup}
+                onChange={(newValue) => (Settings.SuppressTIXPopup = newValue)}
                 text="Suppress TIX messages"
-                tooltip={<>
-                  If this is set, the stock market will never create any popup.
-                </>} />
+                tooltip={<>If this is set, the stock market will never create any popup.</>}
+              />
             </ListItem>
             {!!props.player.bladeburner && (
               <ListItem>
-                <OptionSwitch checked={Settings.SuppressBladeburnerPopup}
-                  onChange={(newValue) => Settings.SuppressBladeburnerPopup = newValue}
+                <OptionSwitch
+                  checked={Settings.SuppressBladeburnerPopup}
+                  onChange={(newValue) => (Settings.SuppressBladeburnerPopup = newValue)}
                   text="Suppress bladeburner popup"
-                  tooltip={<>
-                    If this is set, then having your Bladeburner actions interrupted by being busy with something
-                    else will not display a popup message.
-                  </>} />
+                  tooltip={
+                    <>
+                      If this is set, then having your Bladeburner actions interrupted by being busy with something else
+                      will not display a popup message.
+                    </>
+                  }
+                />
               </ListItem>
             )}
             <ListItem>
-              <OptionSwitch checked={Settings.SuppressSavedGameToast}
-                onChange={(newValue) => Settings.SuppressSavedGameToast = newValue}
+              <OptionSwitch
+                checked={Settings.SuppressSavedGameToast}
+                onChange={(newValue) => (Settings.SuppressSavedGameToast = newValue)}
                 text="Suppress Auto-Save Game Toast"
-                tooltip={<>
-                  If this is set, there will be no "Game Saved!" toast appearing after an auto-save.
-                </>} />
+                tooltip={<>If this is set, there will be no "Game Saved!" toast appearing after an auto-save.</>}
+              />
             </ListItem>
             <ListItem>
-              <OptionSwitch checked={Settings.DisableHotkeys}
-                onChange={(newValue) => Settings.DisableHotkeys = newValue}
+              <OptionSwitch
+                checked={Settings.DisableHotkeys}
+                onChange={(newValue) => (Settings.DisableHotkeys = newValue)}
                 text="Disable hotkeys"
-                tooltip={<>
-                  If this is set, then most hotkeys (keyboard shortcuts) in the game are disabled. This includes
-                  Terminal commands, hotkeys to navigate between different parts of the game, and the "Save and
-                  Close (Ctrl + b)" hotkey in the Text Editor.
-                </>} />
+                tooltip={
+                  <>
+                    If this is set, then most hotkeys (keyboard shortcuts) in the game are disabled. This includes
+                    Terminal commands, hotkeys to navigate between different parts of the game, and the "Save and Close
+                    (Ctrl + b)" hotkey in the Text Editor.
+                  </>
+                }
+              />
             </ListItem>
             <ListItem>
-              <OptionSwitch checked={Settings.DisableASCIIArt}
-                onChange={(newValue) => Settings.DisableASCIIArt = newValue}
+              <OptionSwitch
+                checked={Settings.DisableASCIIArt}
+                onChange={(newValue) => (Settings.DisableASCIIArt = newValue)}
                 text="Disable ascii art"
-                tooltip={<>
-                  If this is set all ASCII art will be disabled.
-                </>} />
+                tooltip={<>If this is set all ASCII art will be disabled.</>}
+              />
             </ListItem>
             <ListItem>
-              <OptionSwitch checked={Settings.DisableTextEffects}
-                onChange={(newValue) => Settings.DisableTextEffects = newValue}
+              <OptionSwitch
+                checked={Settings.DisableTextEffects}
+                onChange={(newValue) => (Settings.DisableTextEffects = newValue)}
                 text="Disable text effects"
-                tooltip={<>
-                  If this is set, text effects will not be displayed. This can help if text is difficult to read
-                  in certain areas.
-                </>} />
+                tooltip={
+                  <>
+                    If this is set, text effects will not be displayed. This can help if text is difficult to read in
+                    certain areas.
+                  </>
+                }
+              />
             </ListItem>
             <ListItem>
-              <OptionSwitch checked={Settings.DisableOverviewProgressBars}
-                onChange={(newValue) => Settings.DisableOverviewProgressBars = newValue}
+              <OptionSwitch
+                checked={Settings.DisableOverviewProgressBars}
+                onChange={(newValue) => (Settings.DisableOverviewProgressBars = newValue)}
                 text="Disable Overview Progress Bars"
-                tooltip={<>
-                  If this is set, the progress bars in the character overview will be hidden.
-                </>} />
+                tooltip={<>If this is set, the progress bars in the character overview will be hidden.</>}
+              />
             </ListItem>
             <ListItem>
-              <OptionSwitch checked={Settings.EnableBashHotkeys}
-                onChange={(newValue) => Settings.EnableBashHotkeys = newValue}
+              <OptionSwitch
+                checked={Settings.EnableBashHotkeys}
+                onChange={(newValue) => (Settings.EnableBashHotkeys = newValue)}
                 text="Enable bash hotkeys"
-                tooltip={<>
-                  Improved Bash emulation mode. Setting this to 1 enables several new Terminal shortcuts and
-                  features that more closely resemble a real Bash-style shell. Note that when this mode is
-                  enabled, the default browser shortcuts are overriden by the new Bash shortcuts.
-                </>} />
+                tooltip={
+                  <>
+                    Improved Bash emulation mode. Setting this to 1 enables several new Terminal shortcuts and features
+                    that more closely resemble a real Bash-style shell. Note that when this mode is enabled, the default
+                    browser shortcuts are overriden by the new Bash shortcuts.
+                  </>
+                }
+              />
             </ListItem>
             <ListItem>
-              <OptionSwitch checked={Settings.UseIEC60027_2}
-                onChange={(newValue) => Settings.UseIEC60027_2 = newValue}
+              <OptionSwitch
+                checked={Settings.UseIEC60027_2}
+                onChange={(newValue) => (Settings.UseIEC60027_2 = newValue)}
                 text="Use GiB instead of GB"
-                tooltip={<>
-                  If this is set all references to memory will use GiB instead of GB, in accordance with IEC 60027-2.
-                </>} />
+                tooltip={
+                  <>
+                    If this is set all references to memory will use GiB instead of GB, in accordance with IEC 60027-2.
+                  </>
+                }
+              />
             </ListItem>
             <ListItem>
-              <OptionSwitch checked={Settings.ExcludeRunningScriptsFromSave}
-                onChange={(newValue) => Settings.ExcludeRunningScriptsFromSave = newValue}
+              <OptionSwitch
+                checked={Settings.ExcludeRunningScriptsFromSave}
+                onChange={(newValue) => (Settings.ExcludeRunningScriptsFromSave = newValue)}
                 text="Exclude Running Scripts from Save"
-                tooltip={<>
-                  If this is set, the save file will exclude all running scripts. This is only useful if your save is lagging a lot. You'll have to restart your script every time you launch the game.
-                </>} />
+                tooltip={
+                  <>
+                    If this is set, the save file will exclude all running scripts. This is only useful if your save is
+                    lagging a lot. You'll have to restart your script every time you launch the game.
+                  </>
+                }
+              />
             </ListItem>
             <ListItem>
               <Tooltip
@@ -460,12 +497,12 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
 
             <ListItem>
-              <OptionSwitch checked={Settings.SaveGameOnFileSave}
-                onChange={(newValue) => Settings.SaveGameOnFileSave = newValue}
+              <OptionSwitch
+                checked={Settings.SaveGameOnFileSave}
+                onChange={(newValue) => (Settings.SaveGameOnFileSave = newValue)}
                 text="Save game on file save"
-                tooltip={<>
-                  Save your game any time a file is saved in the script editor.
-                </>} />
+                tooltip={<>Save your game any time a file is saved in the script editor.</>}
+              />
             </ListItem>
 
             <ListItem>
@@ -522,20 +559,28 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </>
           )}
         </Grid>
-        <Box sx={{ display: 'grid', width: 'fit-content', height: 'fit-content' }}>
-          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-            <Button onClick={() => props.save()} startIcon={<SaveIcon />} >
+        <Box sx={{ display: "grid", width: "fit-content", height: "fit-content" }}>
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+            <Button onClick={() => props.save()} startIcon={<SaveIcon />}>
               Save Game
             </Button>
             <DeleteGameButton />
           </Box>
-          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
             <Tooltip title={<Typography>Export your game to a text file.</Typography>}>
               <Button onClick={() => props.export()} startIcon={<DownloadIcon />}>
                 Export Game
               </Button>
             </Tooltip>
-            <Tooltip title={<Typography>Import your game from a text file.<br />This will <strong>overwrite</strong> your current game. Back it up first!</Typography>}>
+            <Tooltip
+              title={
+                <Typography>
+                  Import your game from a text file.
+                  <br />
+                  This will <strong>overwrite</strong> your current game. Back it up first!
+                </Typography>
+              }
+            >
               <Button onClick={startImport} startIcon={<UploadIcon />}>
                 Import Game
                 <input ref={importInput} id="import-game-file-selector" type="file" hidden onChange={onImport} />
@@ -555,16 +600,18 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                   The file you are attempting to import seems valid.
                   <br />
                   <br />
-                  {importData?.exportDate && (<>
-                    The export date of the save file is <strong>{importData?.exportDate.toString()}</strong>
-                    <br />
-                    <br />
-                  </>)}
+                  {importData?.exportDate && (
+                    <>
+                      The export date of the save file is <strong>{importData?.exportDate.toString()}</strong>
+                      <br />
+                      <br />
+                    </>
+                  )}
                 </>
               }
             />
           </Box>
-          <Box sx={{ display: 'grid' }}>
+          <Box sx={{ display: "grid" }}>
             <Tooltip
               title={
                 <Typography>
@@ -579,8 +626,11 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <Button onClick={() => props.forceKill()}>Force kill all active scripts</Button>
             </Tooltip>
           </Box>
-          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-            <SoftResetButton noConfirmation={Settings.SuppressBuyAugmentationConfirmation} onTriggered={props.softReset} />
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+            <SoftResetButton
+              noConfirmation={Settings.SuppressBuyAugmentationConfirmation}
+              onTriggered={props.softReset}
+            />
             <Tooltip
               title={
                 <Typography>
@@ -592,7 +642,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <Button onClick={() => setDiagnosticOpen(true)}>Diagnose files</Button>
             </Tooltip>
           </Box>
-          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
             <Button onClick={() => setThemeEditorOpen(true)}>Theme editor</Button>
             <Button onClick={() => setStyleEditorOpen(true)}>Style editor</Button>
           </Box>
