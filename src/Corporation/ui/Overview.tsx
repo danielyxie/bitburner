@@ -89,19 +89,21 @@ export function Overview({ rerender }: IProps): React.ReactElement {
       <StatsTable rows={multRows} />
       <br />
       <BonusTime />
-      <Tooltip
-        title={
-          <Typography>
-            Get a copy of and read 'The Complete Handbook for Creating a Successful Corporation.' This is a .lit file
-            that guides you through the beginning of setting up a Corporation and provides some tips/pointers for
-            helping you get started with managing it.
-          </Typography>
-        }
-      >
-        <Button onClick={() => corp.getStarterGuide(player)}>Getting Started Guide</Button>
-      </Tooltip>
-      {corp.public ? <PublicButtons rerender={rerender} /> : <PrivateButtons rerender={rerender} />}
-      <BribeButton />
+      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', width: 'fit-content' }}>
+        <Tooltip
+          title={
+            <Typography>
+              Get a copy of and read 'The Complete Handbook for Creating a Successful Corporation.' This is a .lit file
+              that guides you through the beginning of setting up a Corporation and provides some tips/pointers for
+              helping you get started with managing it.
+            </Typography>
+          }
+        >
+          <Button onClick={() => corp.getStarterGuide(player)}>Getting Started Guide</Button>
+        </Tooltip>
+        {corp.public ? <PublicButtons rerender={rerender} /> : <PrivateButtons rerender={rerender} />}
+        <BribeButton />
+      </Box>
       <br />
       <Upgrades rerender={rerender} />
     </>
@@ -125,11 +127,9 @@ function PrivateButtons({ rerender }: IPrivateButtonsProps): React.ReactElement 
   return (
     <>
       <Tooltip title={<Typography>{findInvestorsTooltip}</Typography>}>
-        <span>
-          <Button disabled={!fundingAvailable} onClick={() => setFindInvestorsopen(true)}>
-            Find Investors
-          </Button>
-        </span>
+        <Button disabled={!fundingAvailable} onClick={() => setFindInvestorsopen(true)}>
+          Find Investors
+        </Button>
       </Tooltip>
       <Tooltip
         title={
@@ -143,7 +143,6 @@ function PrivateButtons({ rerender }: IPrivateButtonsProps): React.ReactElement 
       </Tooltip>
       <FindInvestorsModal open={findInvestorsopen} onClose={() => setFindInvestorsopen(false)} rerender={rerender} />
       <GoPublicModal open={goPublicopen} onClose={() => setGoPublicopen(false)} rerender={rerender} />
-      <br />
     </>
   );
 }
@@ -201,8 +200,8 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
   const sellSharesTooltip = sellSharesOnCd
     ? "Cannot sell shares for " + corp.convertCooldownToString(corp.shareSaleCooldown)
     : "Sell your shares in the company. The money earned from selling your " +
-      "shares goes into your personal account, not the Corporation's. " +
-      "This is one of the only ways to profit from your business venture.";
+    "shares goes into your personal account, not the Corporation's. " +
+    "This is one of the only ways to profit from your business venture.";
 
   const issueNewSharesOnCd = corp.issueNewSharesCooldown > 0;
   const issueNewSharesTooltip = issueNewSharesOnCd
@@ -212,28 +211,21 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
   return (
     <>
       <Tooltip title={<Typography>{sellSharesTooltip}</Typography>}>
-        <span>
-          <Button disabled={sellSharesOnCd} onClick={() => setSellSharesOpen(true)}>
-            Sell Shares
-          </Button>
-        </span>
+        <Button disabled={sellSharesOnCd} onClick={() => setSellSharesOpen(true)}>
+          Sell Shares
+        </Button>
       </Tooltip>
       <SellSharesModal open={sellSharesOpen} onClose={() => setSellSharesOpen(false)} rerender={rerender} />
       <Tooltip title={<Typography>Buy back shares you that previously issued or sold at market price.</Typography>}>
-        <span>
-          <Button disabled={corp.issuedShares < 1} onClick={() => setBuybackSharesOpen(true)}>
-            Buyback shares
-          </Button>
-        </span>
+        <Button disabled={corp.issuedShares < 1} onClick={() => setBuybackSharesOpen(true)}>
+          Buyback shares
+        </Button>
       </Tooltip>
       <BuybackSharesModal open={buybackSharesOpen} onClose={() => setBuybackSharesOpen(false)} rerender={rerender} />
-      <br />
       <Tooltip title={<Typography>{issueNewSharesTooltip}</Typography>}>
-        <span>
-          <Button disabled={issueNewSharesOnCd} onClick={() => setIssueNewSharesOpen(true)}>
-            Issue New Shares
-          </Button>
-        </span>
+        <Button disabled={issueNewSharesOnCd} onClick={() => setIssueNewSharesOpen(true)}>
+          Issue New Shares
+        </Button>
       </Tooltip>
       <IssueNewSharesModal open={issueNewSharesOpen} onClose={() => setIssueNewSharesOpen(false)} />
       <Tooltip
@@ -242,7 +234,6 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
         <Button onClick={() => setIssueDividendsOpen(true)}>Issue Dividends</Button>
       </Tooltip>
       <IssueDividendsModal open={issueDividendsOpen} onClose={() => setIssueDividendsOpen(false)} />
-      <br />
     </>
   );
 }
@@ -269,11 +260,9 @@ function BribeButton(): React.ReactElement {
             : "Your Corporation is not powerful enough to bribe Faction leaders"
         }
       >
-        <span>
-          <Button disabled={!canBribe} onClick={openBribe}>
-            Bribe Factions
-          </Button>
-        </span>
+        <Button disabled={!canBribe} onClick={openBribe}>
+          Bribe Factions
+        </Button>
       </Tooltip>
       <BribeFactionModal open={open} onClose={() => setOpen(false)} />
     </>
