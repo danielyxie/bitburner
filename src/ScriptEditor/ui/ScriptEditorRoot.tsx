@@ -33,6 +33,7 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import SettingsIcon from "@mui/icons-material/Settings";
+import SyncIcon from '@mui/icons-material/Sync';
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
@@ -692,17 +693,55 @@ export function Root(props: IProps): React.ReactElement {
     }
   }
 
+  function onTabUpdate(index: number): void {
+    const openScript = openScripts[index];
+    const serverScriptCode = getServerCode(index);
+    if (serverScriptCode === null) return;
+
+    if (openScript.code !== serverScriptCode) {
+      PromptEvent.emit({
+        txt: "Do you want to overwrite " + openScript.fileName + " with the contents saved on the server?",
+        resolve: (result: boolean) => {
+          if (result) {
+            // Save changes
+            openScript.code = serverScriptCode;
+
+            if (editorRef.current !== null && openScript !== null) {
+              if (openScript.model === undefined || openScript.model.isDisposed()) {
+                regenerateModel(openScript);
+              }
+              editorRef.current.setModel(openScript.model);
+
+              editorRef.current.setPosition(openScript.lastPosition);
+              editorRef.current.revealLineInCenter(openScript.lastPosition.lineNumber);
+              editorRef.current.setValue(openScript.code);
+              updateRAM(openScript.code);
+              editorRef.current.focus();
+            }
+            rerender();
+          }
+        },
+      });
+    }
+  }
+
   function dirty(index: number): string {
+    const openScript = openScripts[index];
+    const serverScriptCode = getServerCode(index);
+    if (serverScriptCode === null) return " *";
+
+    // The server code is stored with its starting & trailing whitespace removed
+    const openScriptFormatted = Script.formatCode(openScript.code);
+    return serverScriptCode !== openScriptFormatted ? " *" : "";
+  }
+
+  function getServerCode(index: number): string | null {
     const openScript = openScripts[index];
     const server = GetServer(openScript.hostname);
     if (server === null) throw new Error(`Server '${openScript.hostname}' should not be null, but it is.`);
 
     const serverScript = server.scripts.find((s) => s.filename === openScript.fileName);
-    if (serverScript === undefined) return " *";
-
-    // The server code is stored with its starting & trailing whitespace removed
-    const openScriptFormatted = Script.formatCode(openScript.code);
-    return serverScript.code !== openScriptFormatted ? " *" : "";
+    return serverScript?.code ?? null;
   }
 
   // Toolbars are roughly 112px:
@@ -754,6 +793,10 @@ export function Root(props: IProps): React.ReactElement {
                       >
                         <Button
                           onClick={() => onTabClick(index)}
+                          onMouseDown={e => {
+                            e.preventDefault();
+                            if (e.button === 1) onTabClose(index);
+                          }}
                           style={
                             currentScript?.fileName === openScripts[index].fileName ? {
                               background: Settings.theme.button,
@@ -780,6 +823,24 @@ export function Root(props: IProps): React.ReactElement {
                           }}
                         >
                           x
+                        </Button>
+                        <Button
+                          onClick={() => onTabUpdate(index)}
+                          style={{
+                            maxWidth: "20px",
+                            minWidth: "20px",
+                            minHeight: '38.5px',
+                            maxHeight: '38.5px',
+                            ...(currentScript?.fileName === openScripts[index].fileName ? {
+                              background: Settings.theme.button,
+                              color: Settings.theme.primary
+                            } : {
+                              background: Settings.theme.backgroundsecondary,
+                              color: Settings.theme.secondary
+                            })
+                          }}
+                        >
+                          <SyncIcon fontSize='small' />
                         </Button>
                       </div>
                     )}
