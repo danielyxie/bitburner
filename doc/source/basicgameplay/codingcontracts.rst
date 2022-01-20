@@ -113,7 +113,7 @@ The list contains the name of (i.e. the value returned by
 |                                    | | to any position from i to i+n.                                                         |
 |                                    | |                                                                                        |
 |                                    | | Assuming you are initially positioned at the start of the array, determine             |
-|                                    | | whether you are able to reach the last index of the array.                     |
+|                                    | | whether you are able to reach the last index of the array.                             |
 +------------------------------------+------------------------------------------------------------------------------------------+
 | Merge Overlapping Intervals        | | Given an array of intervals, merge all overlapping intervals. An interval              |
 |                                    | | is an array with two numbers, where the first number is always less than               |
