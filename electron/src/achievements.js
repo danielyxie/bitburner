@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const greenworks = require("./greenworks");
+const greenworks = require("../lib/greenworks");
 const log = require("electron-log");
 
 async function enableAchievementsInterval(window) {

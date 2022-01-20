@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Clear out any old files
+rm -rf .package
+
 mkdir -p .package/dist/src/ThirdParty || true
 mkdir -p .package/src/ThirdParty || true
 mkdir -p .package/node_modules || true

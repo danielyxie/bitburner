@@ -8,7 +8,7 @@ const { promisify } = require("util");
 const gzip = promisify(zlib.gzip);
 const gunzip = promisify(zlib.gunzip);
 
-const greenworks = require("./greenworks");
+const greenworks = require("../lib/greenworks");
 const log = require("electron-log");
 const Config = require("electron-config");
 const config = new Config();

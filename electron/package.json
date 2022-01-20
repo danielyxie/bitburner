@@ -2,7 +2,7 @@
   "name": "bitburner",
   "version": "1.0.0",
   "description": "A cyberpunk-themed programming incremental game",
-  "main": "main.js",
+  "main": "src/main.js",
   "author": "Daniel Xie & Olivier Gagnon",
   "mac": {
     "icon": "./public/icons/mac/icon.icns",
