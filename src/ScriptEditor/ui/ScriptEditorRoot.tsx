@@ -715,8 +715,6 @@ export function Root(props: IProps): React.ReactElement {
               }
               editorRef.current.setModel(openScript.model);
 
-              editorRef.current.setPosition(openScript.lastPosition);
-              editorRef.current.revealLineInCenter(openScript.lastPosition.lineNumber);
               editorRef.current.setValue(openScript.code);
               updateRAM(openScript.code);
               editorRef.current.focus();
