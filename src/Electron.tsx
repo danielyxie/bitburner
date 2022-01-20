@@ -1,10 +1,8 @@
 import { Player } from "./Player";
-import { isScriptFilename } from "./Script/isScriptFilename";
-import { Script } from "./Script/Script";
 import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { Terminal } from "./Terminal";
 import { SnackbarEvents } from "./ui/React/Snackbar";
-import { IMap } from "./types";
+import { IMap, IReturnStatus } from "./types";
 import { GetServer } from "./Server/AllServers";
 
 export function initElectron(): void {
@@ -18,32 +16,70 @@ export function initElectron(): void {
 }
 
 function initWebserver(): void {
-  (document as any).saveFile = function (filename: string, code: string): string {
+  interface IReturnWebStatus extends IReturnStatus {
+    data?: {
+      [propName: string]: any;
+    };
+  }
+  function normalizeFileName(filename: string): string {
     filename = filename.replace(/\/\/+/g, "/");
     filename = removeLeadingSlash(filename);
     if (filename.includes("/")) {
       filename = "/" + removeLeadingSlash(filename);
     }
+    return filename;
+  }
+
+  (document as any).getFiles = function (): IReturnWebStatus {
+    const home = GetServer("home");
+    if (home === null) {
+      return {
+        res: false,
+        msg: "Home server does not exist."
+      }
+    }
+    return {
+      res: true,
+      data: {
+        files: home.scripts.map((script) => ({
+          filename: script.filename,
+          code: script.code
+        }))
+      }
+    }
+  };
+
+  (document as any).deleteFile = function (filename: string): IReturnWebStatus {
+    filename = normalizeFileName(filename);
+    const home = GetServer("home");
+    if (home === null) {
+      return {
+        res: false,
+        msg: "Home server does not exist."
+      }
+    }
+    return home.removeFile(filename);
+  };
+
+  (document as any).saveFile = function (filename: string, code: string): IReturnWebStatus {
+    filename = normalizeFileName(filename);
+
     code = Buffer.from(code, "base64").toString();
     const home = GetServer("home");
-    if (home === null) return "'home' server not found.";
-    if (isScriptFilename(filename)) {
-      //If the current script already exists on the server, overwrite it
-      for (let i = 0; i < home.scripts.length; i++) {
-        if (filename == home.scripts[i].filename) {
-          home.scripts[i].saveScript(Player, filename, code, "home", home.scripts);
-          return "written";
-        }
+    if (home === null) {
+      return {
+        res: false,
+        msg: "Home server does not exist."
       }
-
-      //If the current script does NOT exist, create a new one
-      const script = new Script();
-      script.saveScript(Player, filename, code, "home", home.scripts);
-      home.scripts.push(script);
-      return "written";
     }
+    const result = home.writeToScriptFile(Player, filename, code);
 
-    return "not a script file";
+    return {
+      res: result.success,
+      data: {
+        overwritten: result.overwritten
+      }
+    };
   };
 }
 

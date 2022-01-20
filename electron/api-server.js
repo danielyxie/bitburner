@@ -12,10 +12,12 @@ async function initialize(win) {
   window = win;
   server = http.createServer(async function (req, res) {
     let body = "";
+    res.setHeader('Content-Type', 'application/json');
 
     req.on("data", (chunk) => {
       body += chunk.toString(); // convert Buffer to string
     });
+
     req.on("end", () => {
       const providedToken = req.headers?.authorization?.replace('Bearer ', '') ?? '';
       const isValid = providedToken === getAuthenticationToken();
@@ -24,8 +26,11 @@ async function initialize(win) {
       } else {
         log.log('Invalid authentication token');
         res.writeHead(401);
-        res.write('Invalid authentication token');
-        res.end();
+       
+        res.end(JSON.stringify({
+          success: false,
+          msg: 'Invalid authentication token'
+        }));
         return;
       }
 
@@ -35,17 +40,68 @@ async function initialize(win) {
       } catch (error) {
         log.warn(`Invalid body data`);
         res.writeHead(400);
-        res.write('Invalid body data');
-        res.end();
+        res.end(JSON.stringify({
+          success: false,
+          msg: 'Invalid body data'
+        }));
+
         return;
       }
 
-      if (data) {
-        window.webContents.executeJavaScript(`document.saveFile("${data.filename}", "${data.code}")`).then((result) => {
-          res.write(result);
-          res.end();
-        });
+
+      switch(req.method) {
+        // Request files
+        case "GET":
+          window.webContents.executeJavaScript(`document.getFiles("${data.filename}", "${data.code}")`).then((result) => {
+            res.end(JSON.stringify({
+              success: result.res,
+              msg: result.msg,
+              data: result.data
+            }));
+          });
+          break;
+
+        // Create or update files
+        // Support POST for VScode implementation
+        case "POST":
+        case "PUT":
+          if (!data) {
+            log.warn(`Invalid script update request - No data`);
+            res.writeHead(400);
+            res.end(JSON.stringify({
+              success: false,
+              msg: 'Invalid script update request - No data'
+            }));
+          }
+
+          window.webContents.executeJavaScript(`document.saveFile("${data.filename}", "${data.code}")`).then((result) => {
+            res.write(result);
+  
+            if (!result.res) {
+              //We've encountered an error
+              res.writeHead(JSON.stringify({
+                success: result.res,
+                msg: result.msg,
+                data: result.data
+              }));
+            }
+  
+            res.end();
+          });
+          break;
+        
+        // Delete files
+        case "DELETE":
+          window.webContents.executeJavaScript(`document.deleteFiles("${data.filename}", "${data.code}")`).then((result) => {
+            res.end(JSON.stringify({
+              success: result.res,
+              msg: result.msg,
+              data: result.data
+            }));
+          });
+          break;
       }
+
     });
   });
 
