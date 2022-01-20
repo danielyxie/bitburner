@@ -52,7 +52,7 @@ async function initialize(win) {
       switch(req.method) {
         // Request files
         case "GET":
-          result = await window.webContents.executeJavaScript(`document.getFiles("${data.filename}", "${data.code}")`);
+          result = await window.webContents.executeJavaScript(`document.getFiles()`);
           break;
 
         // Create or update files
@@ -74,7 +74,7 @@ async function initialize(win) {
         
         // Delete files
         case "DELETE":
-          result = await window.webContents.executeJavaScript(`document.deleteFiles("${data.filename}", "${data.code}")`);
+          result = await window.webContents.executeJavaScript(`document.deleteFiles("${data.filename}")`);
           break;
       }
 
