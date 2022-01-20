@@ -81,6 +81,8 @@ import { AchievementsRoot } from "../Achievements/AchievementsRoot";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { Settings } from "../Settings/Settings";
 import { ThemeBrowser } from "../Themes/ui/ThemeBrowser";
+import { ImportSaveRoot } from "./React/ImportSaveRoot";
+import { BypassWrapper } from "./React/BypassWrapper";
 
 const htmlLocation = location;
 
@@ -199,6 +201,9 @@ export let Router: IRouter = {
   toThemeBrowser: () => {
     throw new Error("Router called before initialization");
   },
+  toImportSave: () => {
+    throw new Error("Router called before initialization");
+  },
 };
 
 function determineStartPage(player: IPlayer): Page {
@@ -227,6 +232,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   const [cinematicText, setCinematicText] = useState("");
   const [errorBoundaryKey, setErrorBoundaryKey] = useState<number>(0);
   const [sidebarOpened, setSideBarOpened] = useState(Settings.IsSidebarOpened);
+
+  const [importString, setImportString] = useState<string>(undefined as unknown as string);
+  const [importAutomatic, setImportAutomatic] = useState<boolean>(false);
+  if (importString === undefined && page === Page.ImportSave)
+    throw new Error("Trying to go to a page without the proper setup");
 
   function resetErrorBoundary(): void {
     setErrorBoundaryKey(errorBoundaryKey + 1);
@@ -315,7 +325,12 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     },
     toThemeBrowser: () => {
       setPage(Page.ThemeBrowser);
-    }
+    },
+    toImportSave: (base64save: string, automatic = false) => {
+      setImportString(base64save);
+      setImportAutomatic(automatic);
+      setPage(Page.ImportSave);
+    },
   };
 
   useEffect(() => {
@@ -332,11 +347,13 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   let mainPage = <Typography>Cannot load</Typography>;
   let withSidebar = true;
   let withPopups = true;
+  let bypassGame = false;
   switch (page) {
     case Page.Recovery: {
       mainPage = <RecoveryRoot router={Router} softReset={softReset} />;
       withSidebar = false;
       withPopups = false;
+      bypassGame = true;
       break;
     }
     case Page.BitVerse: {
@@ -517,44 +534,62 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       mainPage = <ThemeBrowser router={Router} />;
       break;
     }
+    case Page.ImportSave: {
+      mainPage = (
+        <ImportSaveRoot
+          importString={importString}
+          automatic={importAutomatic}
+          onReturning={() => Router.toTerminal()}
+        />
+      );
+      withSidebar = false;
+      withPopups = false;
+      bypassGame = true;
+    }
   }
 
   return (
     <Context.Player.Provider value={player}>
       <Context.Router.Provider value={Router}>
         <ErrorBoundary key={errorBoundaryKey} router={Router} softReset={softReset}>
-          <SnackbarProvider>
-            <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
-              {!ITutorial.isRunning ? (
-                <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
+          <BypassWrapper content={bypassGame ? mainPage : null}>
+            <SnackbarProvider>
+              <Overview mode={ITutorial.isRunning ? "tutorial" : "overview"}>
+                {!ITutorial.isRunning ? (
+                  <CharacterOverview save={() => saveObject.saveGame()} killScripts={killAllScripts} />
+                ) : (
+                  <InteractiveTutorialRoot />
+                )}
+              </Overview>
+              {withSidebar ? (
+                <Box display="flex" flexDirection="row" width="100%">
+                  <SidebarRoot
+                    player={player}
+                    router={Router}
+                    page={page}
+                    opened={sidebarOpened}
+                    onToggled={(isOpened) => {
+                      setSideBarOpened(isOpened);
+                      Settings.IsSidebarOpened = isOpened;
+                    }}
+                  />
+                  <Box className={classes.root}>{mainPage}</Box>
+                </Box>
               ) : (
-                <InteractiveTutorialRoot />
-              )}
-            </Overview>
-            {withSidebar ? (
-              <Box display="flex" flexDirection="row" width="100%">
-                <SidebarRoot player={player} router={Router} page={page}
-                  opened={sidebarOpened}
-                  onToggled={(isOpened) => {
-                    setSideBarOpened(isOpened);
-                    Settings.IsSidebarOpened = isOpened;
-                  }} />
                 <Box className={classes.root}>{mainPage}</Box>
-              </Box>
-            ) : (
-              <Box className={classes.root}>{mainPage}</Box>
-            )}
-            <Unclickable />
-            {withPopups && (
-              <>
-                <LogBoxManager />
-                <AlertManager />
-                <PromptManager />
-                <InvitationModal />
-                <Snackbar />
-              </>
-            )}
-          </SnackbarProvider>
+              )}
+              <Unclickable />
+              {withPopups && (
+                <>
+                  <LogBoxManager />
+                  <AlertManager />
+                  <PromptManager />
+                  <InvitationModal />
+                  <Snackbar />
+                </>
+              )}
+            </SnackbarProvider>
+          </BypassWrapper>
         </ErrorBoundary>
       </Context.Router.Provider>
     </Context.Player.Provider>

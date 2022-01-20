@@ -38,6 +38,7 @@ export enum Page {
   Recovery,
   Achievements,
   ThemeBrowser,
+  ImportSave,
 }
 
 export interface ScriptEditorRouteOptions {
@@ -84,4 +85,5 @@ export interface IRouter {
   toStaneksGift(): void;
   toAchievements(): void;
   toThemeBrowser(): void;
+  toImportSave(base64Save: string, automatic?: boolean): void;
 }
