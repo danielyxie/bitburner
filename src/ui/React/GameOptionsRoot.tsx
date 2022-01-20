@@ -35,7 +35,9 @@ import { DeleteGameButton } from "./DeleteGameButton";
 import { SoftResetButton } from "./SoftResetButton";
 import { formatTime } from "../../utils/helpers/formatTime";
 import { OptionSwitch } from "./OptionSwitch";
-import { saveObject } from "../../SaveObject";
+import { ImportData, saveObject } from "../../SaveObject";
+import { IRouter } from "../Router";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,16 +51,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   player: IPlayer;
+  router: IRouter;
   save: () => void;
   export: () => void;
   forceKill: () => void;
   softReset: () => void;
-}
-
-interface ImportData {
-  base64: string;
-  parsed: any;
-  exportDate?: Date;
 }
 
 export function GameOptionsRoot(props: IProps): React.ReactElement {
@@ -140,6 +137,13 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
       SnackbarEvents.emit(ex.toString(), "error", 5000);
     }
 
+    setImportSaveOpen(false);
+    setImportData(null);
+  }
+
+  function compareSaveGame(): void {
+    if (!importData) return;
+    props.router.toImportSave(importData.base64)
     setImportSaveOpen(false);
     setImportData(null);
   }
@@ -539,6 +543,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               open={importSaveOpen}
               onClose={() => setImportSaveOpen(false)}
               onConfirm={() => confirmedImportGame()}
+              additionalButton={<Button onClick={compareSaveGame}>Compare Save</Button>}
               confirmationText={
                 <>
                   Importing a new game will <strong>completely wipe</strong> the current data!
@@ -547,15 +552,23 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                   Make sure to have a backup of your current save file before importing.
                   <br />
                   The file you are attempting to import seems valid.
-                  <br />
-                  <br />
-                  {importData?.exportDate && (
+
+                  {(importData?.playerData?.lastSave ?? 0) > 0 && (
                     <>
-                      The export date of the save file is <strong>{importData?.exportDate.toString()}</strong>
                       <br />
                       <br />
+                      The export date of the save file is <strong>{importData?.playerData?.lastSave?.toLocaleString()}</strong>
                     </>
                   )}
+                  {(importData?.playerData?.totalPlaytime ?? 0) > 0 && (
+                    <>
+                      <br />
+                      <br />
+                      Total play time of imported game: {convertTimeMsToTimeElapsedString(importData?.playerData?.totalPlaytime ?? 0)}
+                    </>
+                  )}
+                   <br />
+                  <br />
                 </>
               }
             />

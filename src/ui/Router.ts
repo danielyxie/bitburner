@@ -37,6 +37,7 @@ export enum Page {
   StaneksGift,
   Recovery,
   Achievements,
+  ImportSave,
 }
 
 export interface ScriptEditorRouteOptions {
@@ -82,4 +83,5 @@ export interface IRouter {
   toLocation(location: Location): void;
   toStaneksGift(): void;
   toAchievements(): void;
+  toImportSave(base64Save: string, automatic?: boolean): void;
 }
