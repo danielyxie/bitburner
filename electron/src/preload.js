@@ -15,6 +15,7 @@ contextBridge.exposeInMainWorld(
         "push-game-saved",
         "push-game-ready",
         "push-import-result",
+        "push-disable-restore",
       ];
       if (validChannels.includes(channel)) {
           ipcRenderer.send(channel, data);

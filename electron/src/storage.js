@@ -307,7 +307,7 @@ async function restoreIfNewerExists(window) {
     }
   }
   if (bestMatch) {
-    if (bestMatch.data.lastSave > (currentData.lastSave - 1000)) {
+    if ((bestMatch.data.lastSave - 5000) > currentData.lastSave) {
       log.info("Found newer data than the current's save file");
       log.silly(bestMatch.data);
       await pushSaveGameForImport(window, bestMatch.save, true);

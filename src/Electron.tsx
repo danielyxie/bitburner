@@ -187,4 +187,12 @@ export function pushImportResult(wasImported: boolean): void {
   if (!bridge) return;
 
   bridge.send("push-import-result", { wasImported });
+  pushDisableRestore();
+}
+
+export function pushDisableRestore(): void {
+  const bridge = (window as any).electronBridge as any;
+  if (!bridge) return;
+
+  bridge.send("push-disable-restore", { duration: 1000 * 60 });
 }

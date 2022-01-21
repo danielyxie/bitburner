@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       padding: theme.spacing(2),
+      maxWidth: "1000px",
 
       "& .MuiTable-root": {
         "& .MuiTableCell-root": {
@@ -122,6 +123,7 @@ export function ImportSaveRoot({ importString, automatic, onReturning }: ImportS
 
   async function handleImport(): Promise<void> {
     await saveObject.importGame(importString, true);
+    pushImportResult(true);
   }
 
   useEffect(() => {
@@ -149,7 +151,11 @@ export function ImportSaveRoot({ importString, automatic, onReturning }: ImportS
       <Typography variant="h4" sx={{ mb: 2 }}>
         Import Save Comparison
       </Typography>
-      {automatic && <Typography>We've detected your current game differ from another save available.</Typography>}
+      {automatic && (
+        <Typography sx={{ mb: 2 }}>
+          We've found a <b>NEWER save</b> that you may want to use instead.
+        </Typography>
+      )}
       <Typography variant="body1" sx={{ mb: 2 }}>
         Your current game's data is on the left and the data that will be imported is on the right.
         <br />
@@ -196,8 +202,8 @@ export function ImportSaveRoot({ importString, automatic, onReturning }: ImportS
 
             <TableRow>
               <TableCell>Saved On</TableCell>
-              <TableCell>{currentData.playerData?.lastSave.toLocaleString()}</TableCell>
-              <TableCell>{importData.playerData?.lastSave.toLocaleString()}</TableCell>
+              <TableCell>{new Date(currentData.playerData?.lastSave ?? 0).toLocaleString()}</TableCell>
+              <TableCell>{new Date(importData.playerData?.lastSave ?? 0).toLocaleString()}</TableCell>
               <TableCell>
                 {importData.playerData?.lastSave !== currentData.playerData?.lastSave && (
                   <ComparisonIcon

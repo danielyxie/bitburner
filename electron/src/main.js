@@ -37,6 +37,8 @@ try {
   global.greenworksError = ex.message;
 }
 
+let isRestoreDisabled = false;
+
 function setStopProcessHandler(app, window, enabled) {
   const closingWindowHandler = async (e) => {
     // We need to prevent the default closing event to add custom logic
@@ -108,21 +110,52 @@ function setStopProcessHandler(app, window, enabled) {
 
   const receivedGameReadyHandler = async (event, arg) => {
     if (!window) {
-      log.error('Window was undefined in game info handler');
+      log.warn("Window was undefined in game info handler");
       return;
     }
 
-    log.debug(`Received game information`, arg);
+    log.debug("Received game information", arg);
     window.gameInfo = { ...arg };
     await storage.prepareSaveFolders(window);
 
-    const restoreNewest = config.get('onload-restore-newest', true);
-    if (restoreNewest) {
+    const restoreNewest = config.get("onload-restore-newest", true);
+    if (restoreNewest && !isRestoreDisabled) {
       try {
         await storage.restoreIfNewerExists(window)
       } catch (error) {
-        log.error('Could not restore newer file', error);
+        log.error("Could not restore newer file", error);
       }
+    }
+  }
+
+  const receivedDisableRestoreHandler = async (event, arg) => {
+    if (!window) {
+      log.warn("Window was undefined in disable import handler");
+      return;
+    }
+
+    log.debug(`Disabling auto-restore for ${arg.duration}ms.`);
+    isRestoreDisabled = true;
+    setTimeout(() => {
+      isRestoreDisabled = false;
+      log.debug("Re-enabling auto-restore");
+    }, arg.duration);
+  }
+
+  const receivedGameSavedHandler = async (event, arg) => {
+    if (!window) {
+      log.warn("Window was undefined in game saved handler");
+      return;
+    }
+
+    const { save, ...other } = arg;
+    log.silly("Received game saved info", {...other, save: `${save.length} bytes`});
+
+    if (storage.isAutosaveEnabled()) {
+      saveToDisk(save, arg.fileName);
+    }
+    if (storage.isCloudEnabled()) {
+      saveToCloud(save);
     }
   }
 
@@ -148,27 +181,11 @@ function setStopProcessHandler(app, window, enabled) {
     }
   }, config.get("disk-save-min-time", 1000 * 60 * 5), { leading: true });
 
-  const receivedGameSavedHandler = async (event, arg) => {
-    if (!window) {
-      log.error("Window was undefined in game info handler");
-      return;
-    }
-
-    const { save, ...other } = arg;
-    log.silly("Received game saved info", {...other, save: `${save.length} bytes`});
-
-    if (storage.isAutosaveEnabled()) {
-      saveToDisk(save, arg.fileName);
-    }
-    if (storage.isCloudEnabled()) {
-      saveToCloud(save);
-    }
-  }
-
   if (enabled) {
     log.debug("Adding closing handlers");
     ipcMain.on("push-game-ready", receivedGameReadyHandler);
     ipcMain.on("push-game-saved", receivedGameSavedHandler);
+    ipcMain.on("push-disable-restore", receivedDisableRestoreHandler)
     window.on("closed", clearWindowHandler);
     window.on("close", closingWindowHandler)
     app.on("window-all-closed", stopProcessHandler);
