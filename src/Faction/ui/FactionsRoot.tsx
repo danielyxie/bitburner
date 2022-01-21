@@ -60,16 +60,18 @@ export function FactionsRoot(props: IProps): React.ReactElement {
         Factions you have joined:
       </Typography>
       {(props.player.factions.length > 0 && (
-        <Paper sx={{ my: 1, p: 1, display: "inline-block" }}>
+        <Paper sx={{ my: 1, p: 1, pb: 0, display: "inline-block" }}>
           <Table padding="none">
             <TableBody>
               {props.player.factions.map((faction: string) => (
                 <TableRow key={faction}>
                   <TableCell>
-                    <Typography noWrap>{faction}</Typography>
+                    <Typography noWrap mb={1}>
+                      {faction}
+                    </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <Box ml={1}>
+                    <Box ml={1} mb={1}>
                       <Button onClick={() => openFaction(Factions[faction])}>Details</Button>
                     </Box>
                   </TableCell>
@@ -86,7 +88,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
         Factions you have been invited to. You can accept these faction invitations at any time:
       </Typography>
       {(props.player.factionInvitations.length > 0 && (
-        <Paper sx={{ my: 1, mb: 4, p: 1, display: "inline-block" }}>
+        <Paper sx={{ my: 1, mb: 4, p: 1, pb: 0, display: "inline-block" }}>
           <Table padding="none">
             <TableBody>
               {props.player.factionInvitations.map((faction: string) => (
