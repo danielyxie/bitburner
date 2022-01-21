@@ -6182,14 +6182,14 @@ export interface OfficeAPI {
   /**
    * Get the cost to unlock research
    * @param divisionName - Name of the division
-   * @param cityName - Name of the city
+   * @param researchName - Name of the research
    * @returns cost
    */
   getResearchCost(divisionName: string, researchName: string): number;
   /**
    * Gets if you have unlocked a research
    * @param divisionName - Name of the division
-   * @param cityName - Name of the city
+   * @param researchName - Name of the research
    * @returns true is unlocked, false if not
    */
   hasResearched(divisionName: string, researchName: string): boolean;
