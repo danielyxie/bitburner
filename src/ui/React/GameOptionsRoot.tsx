@@ -205,103 +205,97 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         <Grid item xs={12} sm={6}>
           <List>
             <ListItem>
-              <Tooltip
-                title={
-                  <Typography>
-                    The minimum number of milliseconds it takes to execute an operation in Netscript. Setting this too
-                    low can result in poor performance if you have many scripts running.
-                  </Typography>
-                }
-              >
-                <Typography>.script exec time (ms)</Typography>
-              </Tooltip>
-              <Slider
-                value={execTime}
-                onChange={handleExecTimeChange}
-                step={1}
-                min={5}
-                max={100}
-                valueLabelDisplay="auto"
-              />
-            </ListItem>
-            <ListItem>
-              <Tooltip
-                title={
-                  <Typography>
-                    The maximum number of lines a script's logs can hold. Setting this too high can cause the game to
-                    use a lot of memory if you have many scripts running.
-                  </Typography>
-                }
-              >
-                <Typography>Netscript log size</Typography>
-              </Tooltip>
-              <Slider
-                value={logSize}
-                onChange={handleLogSizeChange}
-                step={20}
-                min={20}
-                max={500}
-                valueLabelDisplay="auto"
-              />
-            </ListItem>
-            <ListItem>
-              <Tooltip
-                title={
-                  <Typography>
-                    The maximum number of entries that can be written to a port using Netscript's write() function.
-                    Setting this too high can cause the game to use a lot of memory.
-                  </Typography>
-                }
-              >
-                <Typography>Netscript port size</Typography>
-              </Tooltip>
-              <Slider
-                value={portSize}
-                onChange={handlePortSizeChange}
-                step={1}
-                min={20}
-                max={100}
-                valueLabelDisplay="auto"
-              />
-            </ListItem>
-            <ListItem>
-              <Tooltip
-                title={
-                  <Typography>
-                    The maximum number of entries that can be written to the terminal. Setting this too high can cause
-                    the game to use a lot of memory.
-                  </Typography>
-                }
-              >
-                <Typography>Terminal capacity</Typography>
-              </Tooltip>
-              <Slider
-                value={terminalSize}
-                onChange={handleTerminalSizeChange}
-                step={50}
-                min={50}
-                max={500}
-                valueLabelDisplay="auto"
-                marks
-              />
-            </ListItem>
-            <ListItem>
-              <Tooltip
-                title={
-                  <Typography>The time (in seconds) between each autosave. Set to 0 to disable autosave.</Typography>
-                }
-              >
-                <Typography>Autosave interval (s)</Typography>
-              </Tooltip>
-              <Slider
-                value={autosaveInterval}
-                onChange={handleAutosaveIntervalChange}
-                step={30}
-                min={0}
-                max={600}
-                valueLabelDisplay="auto"
-                marks
-              />
+              <Box display="grid" sx={{ width: 'fit-content', gridTemplateColumns: '1fr 3.5fr', gap: 1 }}>
+                <Tooltip
+                  title={
+                    <Typography>
+                      The minimum number of milliseconds it takes to execute an operation in Netscript. Setting this too
+                      low can result in poor performance if you have many scripts running.
+                    </Typography>
+                  }
+                >
+                  <Typography>.script exec time (ms)</Typography>
+                </Tooltip>
+                <Slider
+                  value={execTime}
+                  onChange={handleExecTimeChange}
+                  step={1}
+                  min={5}
+                  max={100}
+                  valueLabelDisplay="auto"
+                />
+                <Tooltip
+                  title={
+                    <Typography>
+                      The maximum number of lines a script's logs can hold. Setting this too high can cause the game to
+                      use a lot of memory if you have many scripts running.
+                    </Typography>
+                  }
+                >
+                  <Typography>Netscript log size</Typography>
+                </Tooltip>
+                <Slider
+                  value={logSize}
+                  onChange={handleLogSizeChange}
+                  step={20}
+                  min={20}
+                  max={500}
+                  valueLabelDisplay="auto"
+                />
+                <Tooltip
+                  title={
+                    <Typography>
+                      The maximum number of entries that can be written to a port using Netscript's write() function.
+                      Setting this too high can cause the game to use a lot of memory.
+                    </Typography>
+                  }
+                >
+                  <Typography>Netscript port size</Typography>
+                </Tooltip>
+                <Slider
+                  value={portSize}
+                  onChange={handlePortSizeChange}
+                  step={1}
+                  min={20}
+                  max={100}
+                  valueLabelDisplay="auto"
+                />
+                <Tooltip
+                  title={
+                    <Typography>
+                      The maximum number of entries that can be written to the terminal. Setting this too high can cause
+                      the game to use a lot of memory.
+                    </Typography>
+                  }
+                >
+                  <Typography>Terminal capacity</Typography>
+                </Tooltip>
+                <Slider
+                  value={terminalSize}
+                  onChange={handleTerminalSizeChange}
+                  step={50}
+                  min={50}
+                  max={500}
+                  valueLabelDisplay="auto"
+                  marks
+                />
+                <Tooltip
+                  title={
+                    <Typography>The time (in seconds) between each autosave. Set to 0 to disable autosave.</Typography>
+                  }
+                >
+                  <Typography>Autosave interval (s)</Typography>
+                </Tooltip>
+                <Slider
+                  value={autosaveInterval}
+                  onChange={handleAutosaveIntervalChange}
+                  step={30}
+                  min={0}
+                  max={600}
+                  valueLabelDisplay="auto"
+                  marks
+                />
+              </Box>
             </ListItem>
             <ListItem>
               <OptionSwitch
