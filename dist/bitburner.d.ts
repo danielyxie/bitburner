@@ -4794,7 +4794,10 @@ export declare interface Singularity {
      * You MUST have a TOR router in order to use this function. The price returned 
      * by this function is the same price you would see with buy -l from the terminal.
      * Returns the cost of the program if it has not been purchased yet, 0 if it 
-     * has already been purchased, or -1 if the program does not exist
+     * has already been purchased, or -1 if Tor has not been purchased (and thus
+     * the program/exploit is not available for purchase).
+     * 
+     * If the program does not exist, an error is thrown.
      * 
      *
      * @example
@@ -4809,8 +4812,8 @@ export declare interface Singularity {
      * ```
      * @param programName - Name of program to check the price of
      * @returns Floating point number representing the price of the specified darkweb program
-     * (if not yet purchased), 0 if it has already been purchased, or -1 if the specified 
-     * program/exploit does not exist
+     * (if not yet purchased), 0 if it has already been purchased, or -1 if Tor has not been 
+     * purchased. Throws an error if the specified program/exploit does not exist
      */
     getDarkwebProgramCost(programName: string): number;
 

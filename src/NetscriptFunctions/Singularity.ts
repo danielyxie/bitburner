@@ -565,6 +565,8 @@ export function NetscriptSingularity(
       // If we don't have Tor, log it and return -1
       if (!player.hasTorRouter()) {
         workerScript.log("getDarkwebProgramCost", () => "You do not have the TOR router.");
+        // returning -1 rather than throwing an error to be consistent with purchaseProgram
+        // which returns false if tor has 
         return -1;
       }
 
