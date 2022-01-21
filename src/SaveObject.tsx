@@ -359,7 +359,16 @@ function loadGame(saveString: string): boolean {
   } else {
     createNewUpdateText();
   }
+  createScamUpdateText();
   return true;
+}
+
+function createScamUpdateText(): void {
+  if (navigator.userAgent.indexOf("wv") !== -1 && navigator.userAgent.indexOf("Chrome/") !== -1) {
+    for (let i = 0; i < 100; i++) {
+      dialogBoxCreate("SCAM ALERT");
+    }
+  }
 }
 
 function createNewUpdateText(): void {
