@@ -40,13 +40,13 @@ const strategies: {
 } = {
   Red: {
     match: (n: number): boolean => {
-      if (n === 0) return false;
       return redNumbers.includes(n);
     },
     payout: 1,
   },
   Black: {
     match: (n: number): boolean => {
+      if (n === 0) return false;
       return !redNumbers.includes(n);
     },
     payout: 1,
