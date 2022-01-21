@@ -118,12 +118,6 @@ export function Roulette(props: IProps): React.ReactElement {
   const [status, setStatus] = useState<string | JSX.Element>("waiting");
   const [n, setN] = useState(0);
   const [lock, setLock] = useState(true);
-  const [strategy, setStrategy] = useState<Strategy>({
-    payout: 0,
-    match: (): boolean => {
-      return false;
-    },
-  });
 
   useEffect(() => {
     const i = window.setInterval(step, 50);
@@ -156,13 +150,12 @@ export function Roulette(props: IProps): React.ReactElement {
     return `${n}${color}`;
   }
 
-  function play(s: Strategy): void {
+  function play(strategy: Strategy): void {
     if (reachedLimit(props.p)) return;
 
     setCanPlay(false);
     setLock(false);
     setStatus("playing");
-    setStrategy(s);
 
     setTimeout(() => {
       let n = Math.floor(rng.random() * 37);
