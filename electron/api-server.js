@@ -74,7 +74,7 @@ async function initialize(win) {
         
         // Delete files
         case "DELETE":
-          result = await window.webContents.executeJavaScript(`document.deleteFiles("${data.filename}")`);
+          result = await window.webContents.executeJavaScript(`document.deleteFile("${data.filename}")`);
           break;
       }
 
