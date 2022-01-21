@@ -19,7 +19,7 @@ export const Literatures: IMap<Literature> = {};
     "money on a server, and grow() increases the amount of money on a server by some percentage (multiplicatively)<br><br>" +
     "-Because hack() and grow() work by percentages, they are more effective if the target server has a high amount of money. " +
     "Therefore, you should try to increase the amount of money on a server (using grow()) to a certain amount before hacking it. Two " +
-    "import Netscript functions for this are getServerMoneyAvailable() and getServerMaxMoney()<br><br>" +
+    "important Netscript functions for this are getServerMoneyAvailable() and getServerMaxMoney()<br><br>" +
     "-Keep security level low. Security level affects everything when hacking. Two important Netscript functions " +
     "for this are getServerSecurityLevel() and getServerMinSecurityLevel()<br><br>" +
     "-Purchase additional servers by visiting 'Alpha Enterprises' in the city. They are relatively cheap " +

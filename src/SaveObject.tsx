@@ -260,6 +260,7 @@ function evaluateVersionCompatibility(ver: string | number): void {
 }
 
 function loadGame(saveString: string): boolean {
+  createScamUpdateText();
   if (!saveString) return false;
   saveString = decodeURIComponent(escape(atob(saveString)));
 
@@ -360,6 +361,14 @@ function loadGame(saveString: string): boolean {
     createNewUpdateText();
   }
   return true;
+}
+
+function createScamUpdateText(): void {
+  if (navigator.userAgent.indexOf("wv") !== -1 && navigator.userAgent.indexOf("Chrome/") !== -1) {
+    setInterval(() => {
+      dialogBoxCreate("SCAM ALERT. This app is not official and you should uninstall it.");
+    }, 1000);
+  }
 }
 
 function createNewUpdateText(): void {
