@@ -1,20 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { app, ipcMain } = require("electron");
-
 const zlib = require("zlib");
 const path = require("path");
 const fs = require("fs/promises");
 const { promisify } = require("util");
 const gzip = promisify(zlib.gzip);
 const gunzip = promisify(zlib.gunzip);
-
 const greenworks = require("../lib/greenworks");
 const log = require("electron-log");
 const flatten = require("lodash/flatten");
 const Config = require("electron-config");
 const config = new Config();
-
-const utils = require("./utils");
 
 const steamSaveName = 'bitburner-save.json.gz';
 
@@ -49,7 +45,6 @@ const getAllSaves = async (window) => {
   const saves = await Promise.all(savesPromises);
   const flat = flatten(saves);
   return flat;
-
 }
 
 async function prepareSaveFolders(window) {
@@ -89,7 +84,7 @@ function setAutosaveConfig(value) {
 }
 
 function isAutosaveEnabled() {
-  return config.get('autosave-enabled', true);
+  return config.get("autosave-enabled", true);
 }
 
 function setSaveCompressionConfig(value) {
@@ -97,7 +92,7 @@ function setSaveCompressionConfig(value) {
 }
 
 function isSaveCompressionEnabled() {
-  return config.get('save-compression-enabled', true);
+  return config.get("save-compression-enabled", true);
 }
 
 function setCloudEnabledConfig(value) {
@@ -105,9 +100,9 @@ function setCloudEnabledConfig(value) {
 }
 
 async function getSaveFolder(window, root = false) {
-  if (root) return path.join(app.getPath("userData"), `/saves`);
+  if (root) return path.join(app.getPath("userData"), "/saves");
   const identifier = window.gameInfo?.player?.identifier ?? "";
-  return path.join(app.getPath("userData"), `/saves`, `/${identifier}`);
+  return path.join(app.getPath("userData"), "/saves", `/${identifier}`);
 }
 
 function isCloudEnabled() {
@@ -125,12 +120,6 @@ function isCloudEnabled() {
   if (!isAppEnabled) greenworks.enableCloud(true);
 
   return true;
-}
-
-function deleteSteamCloudSave() {
-  return new Promise((resolve, reject) => {
-    greenworks.deleteFile(steamSaveName, resolve, reject);
-  });
 }
 
 function saveCloudFile(name, content) {
@@ -155,10 +144,10 @@ async function pushGameSaveToSteamCloud(base64save) {
   if (!isCloudEnabled) return Promise.reject("Steam Cloud is not Enabled");
 
   // Let's decode the base64 string so GZIP is more efficient.
-  const buffer = Buffer.from(base64save, 'base64');
+  const buffer = Buffer.from(base64save, "base64");
   const compressedBuffer = await gzip(buffer);
   // We can't use utf8 for some reason, steamworks is unhappy.
-  const content = compressedBuffer.toString('base64');
+  const content = compressedBuffer.toString("base64");
   log.debug(`Uncompressed: ${base64save.length} bytes`);
   log.debug(`Compressed: ${content.length} bytes`);
   log.debug(`Saving to Steam Cloud as ${steamSaveName}`);
@@ -166,7 +155,7 @@ async function pushGameSaveToSteamCloud(base64save) {
   try {
     await saveCloudFile(steamSaveName, content);
   } catch (error) {
-    log.error(errror);
+    log.error(error);
   }
 }
 
@@ -174,9 +163,9 @@ async function getSteamCloudSaveString() {
   if (!isCloudEnabled) return Promise.reject("Steam Cloud is not Enabled");
   log.debug(`Fetching ${steamSaveName} in Steam Cloud`);
   const cloudString = await getCloudFile();
-  const gzippedBase64Buffer = Buffer.from(cloudString, 'base64');
+  const gzippedBase64Buffer = Buffer.from(cloudString, "base64");
   const uncompressedBuffer = await gunzip(gzippedBase64Buffer);
-  const content = uncompressedBuffer.toString('base64');
+  const content = uncompressedBuffer.toString("base64");
   log.debug(`Compressed: ${cloudString.length} bytes`);
   log.debug(`Uncompressed: ${content.length} bytes`);
   return content;
@@ -185,7 +174,7 @@ async function getSteamCloudSaveString() {
 async function saveGameToDisk(window, saveData, isAutomatic = false) {
   const currentFolder = await getSaveFolder(window);
   let saveFolderSizeBytes = await getFolderSizeInBytes(currentFolder);
-  const maxFolderSizeBytes = config.get('autosave-quota', 1e8); // 100Mb per playerIndentifier
+  const maxFolderSizeBytes = config.get("autosave-quota", 1e8); // 100Mb per playerIndentifier
   const remainingSpaceBytes = maxFolderSizeBytes - saveFolderSizeBytes;
   log.debug(`Folder Usage: ${saveFolderSizeBytes} bytes`);
   log.debug(`Folder Capacity: ${maxFolderSizeBytes} bytes`);
@@ -213,15 +202,17 @@ async function saveGameToDisk(window, saveData, isAutomatic = false) {
   const oldestFiles = fileStats
     .sort((a, b) => a.stat.mtime.getTime() - b.stat.mtime.getTime())
     .map(f => f.file).filter(f => f !== file);
+
   while (saveFolderSizeBytes > maxFolderSizeBytes && oldestFiles.length > 0) {
     const fileToRemove = oldestFiles.shift();
-    log.info(`Over Quota -> Removing "${fileToRemove}"`);
+    log.debug(`Over Quota -> Removing "${fileToRemove}"`);
     try {
       // eslint-disable-next-line no-await-in-loop
       await fs.unlink(fileToRemove);
     } catch (error) {
       log.error(error);
     }
+
     // eslint-disable-next-line no-await-in-loop
     saveFolderSizeBytes = await getFolderSizeInBytes(currentFolder);
     log.debug(`Save Folder: ${saveFolderSizeBytes} bytes`);
@@ -254,10 +245,10 @@ async function loadFileFromDisk(path) {
 
 function getSaveInformation(window, save) {
   return new Promise((resolve) => {
-    ipcMain.once('get-save-info-response', async (event, data) => {
+    ipcMain.once("get-save-info-response", async (event, data) => {
       resolve(data);
     });
-    window.webContents.send('get-save-info-request', save);
+    window.webContents.send("get-save-info-request", save);
   });
 }
 
@@ -270,39 +261,11 @@ function getCurrentSave(window) {
   });
 }
 
-function enableAutosaveInterval(window) {
-  const interval = 1000 * 60 * config.get("autosave-interval-mins", 15);
-  if (window.autosaveInterval) {
-    log.warn("Autosave interval was already defined");
-    return;
-  }
-
-  function autosaveHandler() {
-    if (!isAutosaveEnabled()) return;
-    ipcMain.once('get-save-data-response', async (event, arg) => {
-      try {
-        const file = await saveGameToDisk(window, arg.save, arg.fileName);
-        utils.writeToast(window, `Saved Game to '${file.replaceAll('\\', '\\\\')}'!`, "success", 5000);
-      } catch (error) {
-        log.error(error);
-        utils.writeToast(window, `Could not save to disk`, "error", 5000);
-      }
-    });
-    window.webContents.send('get-save-data-request');
-  }
-
-  log.info("Initializing auto-save interval");
-  window.autosaveInterval = setInterval(autosaveHandler, interval);
-}
-
-function disableAutosaveInterval(window) {
-  if (!window.autosaveInterval) {
-    log.warn("Autosave interval could not be found");
-    return;
-  }
-
-  log.info("Disabling auto-save interval");
-  clearInterval(window.autosaveInterval);
+function pushSaveGameForImport(window, save, automatic) {
+  ipcMain.once("push-import-result", async (event, arg) => {
+    log.debug(`Was save imported? ${arg.wasImported ? "Yes" : "No"}`);
+  });
+  window.webContents.send("push-save-request", { save, automatic });
 }
 
 async function restoreIfNewerExists(window) {
@@ -314,7 +277,7 @@ async function restoreIfNewerExists(window) {
     steam.save = await getSteamCloudSaveString();
     steam.data = await getSaveInformation(window, steam.save);
   } catch (error) {
-    log.error('Could not retrieve steam file', error);
+    log.error("Could not retrieve steam file", error);
   }
 
   try {
@@ -325,7 +288,7 @@ async function restoreIfNewerExists(window) {
       disk.data = await getSaveInformation(window, disk.save);
     }
   } catch(error) {
-    log.error('Could not retrieve disk file', error);
+    log.error("Could not retrieve disk file", error);
   }
 
   let bestMatch;
@@ -344,23 +307,25 @@ async function restoreIfNewerExists(window) {
     }
   }
   if (bestMatch) {
-    if (bestMatch.data.lastSave > (currentData.lastSave)) {
-      log.info("Found newer data");
-      window.webContents.send('push-save-request', { save: bestMatch.save, automatic: true });
+    if (bestMatch.data.lastSave > (currentData.lastSave - 1000)) {
+      log.info("Found newer data than the current's save file");
+      log.silly(bestMatch.data);
+      await pushSaveGameForImport(window, bestMatch.save, true);
       return true;
     } else {
-      log.info("Current save data is the freshest");
+      log.debug("Current save data is the freshest");
       return false;
     }
   }
 }
 
 module.exports = {
+  getCurrentSave, getSaveInformation,
+  restoreIfNewerExists, pushSaveGameForImport,
   pushGameSaveToSteamCloud, getSteamCloudSaveString, getSteamCloudQuota,
-  saveGameToDisk, loadLastFromDisk, loadFileFromDisk, getSaveFolder, getAllSaves,
-  enableAutosaveInterval, disableAutosaveInterval,
+  saveGameToDisk, loadLastFromDisk, loadFileFromDisk,
+  getSaveFolder, prepareSaveFolders, getAllSaves,
   isCloudEnabled, setCloudEnabledConfig,
   isAutosaveEnabled, setAutosaveConfig,
   isSaveCompressionEnabled, setSaveCompressionConfig,
-  restoreIfNewerExists, getSaveInformation, prepareSaveFolders, getCurrentSave,
  };

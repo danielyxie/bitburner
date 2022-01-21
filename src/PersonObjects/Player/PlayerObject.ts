@@ -35,7 +35,7 @@ import { CityName } from "../../Locations/data/CityNames";
 import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
 import { ISkillProgress } from "../formulas/skill";
-import { PlayerAchievement } from '../../Achievements/Achievements';
+import { PlayerAchievement } from "../../Achievements/Achievements";
 import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 
@@ -480,7 +480,12 @@ export class PlayerObject implements IPlayer {
 
     // Let's get a hash of some semi-random stuff so we have something unique.
     this.identifier = cyrb53(
-      'I-' + new Date().getTime() + navigator.userAgent + window.innerWidth + window.innerHeight + getRandomInt(100, 999)
+      "I-" +
+        new Date().getTime() +
+        navigator.userAgent +
+        window.innerWidth +
+        window.innerHeight +
+        getRandomInt(100, 999),
     );
 
     this.init = generalMethods.init;

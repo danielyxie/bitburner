@@ -198,7 +198,7 @@ export let Router: IRouter = {
   },
   toImportSave: () => {
     throw new Error("Router called before initialization");
-  }
+  },
 };
 
 function determineStartPage(player: IPlayer): Page {
@@ -321,7 +321,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       setImportString(base64save);
       setImportAutomatic(automatic);
       setPage(Page.ImportSave);
-    }
+    },
   };
 
   useEffect(() => {
@@ -550,12 +550,16 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
               </Overview>
               {withSidebar ? (
                 <Box display="flex" flexDirection="row" width="100%">
-                  <SidebarRoot player={player} router={Router} page={page}
+                  <SidebarRoot
+                    player={player}
+                    router={Router}
+                    page={page}
                     opened={sidebarOpened}
                     onToggled={(isOpened) => {
                       setSideBarOpened(isOpened);
                       Settings.IsSidebarOpened = isOpened;
-                    }} />
+                    }}
+                  />
                   <Box className={classes.root}>{mainPage}</Box>
                 </Box>
               ) : (

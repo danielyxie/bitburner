@@ -2,6 +2,8 @@
 const { ipcRenderer, contextBridge } = require('electron')
 const log = require("electron-log");
 
+Object.assign(console, log.functions);
+
 contextBridge.exposeInMainWorld(
   "electronBridge", {
     send: (channel, data) => {
@@ -10,9 +12,9 @@ contextBridge.exposeInMainWorld(
       let validChannels = [
         "get-save-data-response",
         "get-save-info-response",
-        'push-game-saved',
-        'push-game-ready',
-        'push-import-result',
+        "push-game-saved",
+        "push-game-ready",
+        "push-import-result",
       ];
       if (validChannels.includes(channel)) {
           ipcRenderer.send(channel, data);

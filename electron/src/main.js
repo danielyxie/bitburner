@@ -48,7 +48,7 @@ function setStopProcessHandler(app, window, enabled) {
     // Shutdown the http server
     api.disable();
 
-    // Trigger debounced saves right now...
+    // Trigger debounced saves right now before closing
     try {
       await saveToDisk.flush();
     } catch (error) {
@@ -112,7 +112,7 @@ function setStopProcessHandler(app, window, enabled) {
       return;
     }
 
-    log.info(`Received game information`, arg);
+    log.debug(`Received game information`, arg);
     window.gameInfo = { ...arg };
     await storage.prepareSaveFolders(window);
 
@@ -127,35 +127,35 @@ function setStopProcessHandler(app, window, enabled) {
   }
 
   const saveToCloud = debounce(async (save) => {
-    log.info("Saving to Steam Cloud ...")
+    log.debug("Saving to Steam Cloud ...")
     try {
       await storage.pushGameSaveToSteamCloud(save);
-      log.debug('Saved Game to Steam Cloud');
+      log.silly("Saved Game to Steam Cloud");
     } catch (error) {
       log.error(error);
-      utils.writeToast(window, `Could not save to Steam Cloud.`, "error", 5000);
+      utils.writeToast(window, "Could not save to Steam Cloud.", "error", 5000);
     }
   }, config.get("cloud-save-min-time", 1000 * 60 * 15), { leading: true });
 
   const saveToDisk = debounce(async (save, fileName) => {
-    log.info("Saving to Disk ...")
+    log.debug("Saving to Disk ...")
     try {
       const file = await storage.saveGameToDisk(window, { save, fileName });
-      log.debug(`Saved Game to '${file.replaceAll('\\', '\\\\')}'`);
+      log.silly(`Saved Game to '${file.replaceAll('\\', '\\\\')}'`);
     } catch (error) {
       log.error(error);
-      utils.writeToast(window, `Could not save to disk`, "error", 5000);
+      utils.writeToast(window, "Could not save to disk", "error", 5000);
     }
   }, config.get("disk-save-min-time", 1000 * 60 * 5), { leading: true });
 
   const receivedGameSavedHandler = async (event, arg) => {
     if (!window) {
-      log.error('Window was undefined in game info handler');
+      log.error("Window was undefined in game info handler");
       return;
     }
 
     const { save, ...other } = arg;
-    log.silly(`Received game saved info`, {...other, save: `${save.length} bytes`});
+    log.silly("Received game saved info", {...other, save: `${save.length} bytes`});
 
     if (storage.isAutosaveEnabled()) {
       saveToDisk(save, arg.fileName);
@@ -166,14 +166,14 @@ function setStopProcessHandler(app, window, enabled) {
   }
 
   if (enabled) {
-    log.debug('Adding closing handlers');
-    ipcMain.on('push-game-ready', receivedGameReadyHandler);
-    ipcMain.on('push-game-saved', receivedGameSavedHandler);
+    log.debug("Adding closing handlers");
+    ipcMain.on("push-game-ready", receivedGameReadyHandler);
+    ipcMain.on("push-game-saved", receivedGameSavedHandler);
     window.on("closed", clearWindowHandler);
     window.on("close", closingWindowHandler)
     app.on("window-all-closed", stopProcessHandler);
   } else {
-    log.debug('Removing closing handlers');
+    log.debug("Removing closing handlers");
     ipcMain.removeAllListeners();
     window.removeListener("closed", clearWindowHandler);
     window.removeListener("close", closingWindowHandler);
@@ -191,7 +191,7 @@ global.app_handlers = {
 }
 
 app.whenReady().then(async () => {
-  log.info('Application is ready!');
+  log.info("Application is ready!");
 
   if (process.argv.includes("--export-save")) {
     const window = new BrowserWindow({ show: false });
@@ -205,10 +205,10 @@ app.whenReady().then(async () => {
 
   if (global.greenworksError) {
     dialog.showMessageBox({
-      title: 'Bitburner',
-      message: 'Could not connect to Steam',
+      title: "Bitburner",
+      message: "Could not connect to Steam",
       detail: `${global.greenworksError}\n\nYou won't be able to receive achievements until this is resolved and you restart the game.`,
-      type: 'warning', buttons: ['OK']
+      type: "warning", buttons: ["OK"]
     });
   }
 });

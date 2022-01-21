@@ -54,7 +54,7 @@ export function download(
     if (fn.startsWith("*")) {
       try {
         exportScripts(fn, server);
-        return
+        return;
       } catch (error: any) {
         return terminal.error(error);
       }

@@ -1,5 +1,5 @@
 import { Player } from "./Player";
-import { Router } from "./ui/GameRoot"
+import { Router } from "./ui/GameRoot";
 import { isScriptFilename } from "./Script/isScriptFilename";
 import { Script } from "./Script/Script";
 import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
@@ -84,19 +84,18 @@ function initSaveFunctions(): void {
     triggerSave: (): Promise<void> => saveObject.saveGame(true),
     triggerGameExport: (): void => {
       try {
-        saveObject.exportGame()
+        saveObject.exportGame();
       } catch (error) {
         console.log(error);
-        SnackbarEvents.emit('Could not export game.', "error", 2000);
+        SnackbarEvents.emit("Could not export game.", "error", 2000);
       }
-
     },
     triggerScriptsExport: (): void => exportScripts("*", Player.getHomeComputer()),
     getSaveData: (): { save: string; fileName: string } => {
       return {
         save: saveObject.getSaveString(Settings.ExcludeRunningScriptsFromSave),
-        fileName: saveObject.getSaveFileName()
-      }
+        fileName: saveObject.getSaveFileName(),
+      };
     },
     getSaveInfo: async (base64save: string): Promise<ImportPlayerData | undefined> => {
       try {
@@ -118,39 +117,42 @@ function initElectronBridge(): void {
   const bridge = (window as any).electronBridge as any;
   if (!bridge) return;
 
-  bridge.receive('get-save-data-request', () => {
+  bridge.receive("get-save-data-request", () => {
     const data = (window as any).appSaveFns.getSaveData();
-    bridge.send('get-save-data-response', data)
+    bridge.send("get-save-data-response", data);
   });
-  bridge.receive('get-save-info-request', async (save: string) => {
+  bridge.receive("get-save-info-request", async (save: string) => {
     const data = await (window as any).appSaveFns.getSaveInfo(save);
-    bridge.send('get-save-info-response', data)
+    bridge.send("get-save-info-response", data);
   });
-  bridge.receive('push-save-request', ({ save, automatic = false}: { save: string; automatic: boolean}) => {
+  bridge.receive("push-save-request", ({ save, automatic = false }: { save: string; automatic: boolean }) => {
     (window as any).appSaveFns.pushSaveData(save, automatic);
   });
-  bridge.receive('trigger-save', () => {
-    return (window as any).appSaveFns.triggerSave().then(() => {
-      bridge.send('save-completed');
-    }).catch((error: any) => {
-      console.log(error);
-      SnackbarEvents.emit('Could not save game.', "error", 2000);
-    });
+  bridge.receive("trigger-save", () => {
+    return (window as any).appSaveFns
+      .triggerSave()
+      .then(() => {
+        bridge.send("save-completed");
+      })
+      .catch((error: any) => {
+        console.log(error);
+        SnackbarEvents.emit("Could not save game.", "error", 2000);
+      });
   });
-  bridge.receive('trigger-game-export', () => {
+  bridge.receive("trigger-game-export", () => {
     try {
       (window as any).appSaveFns.triggerGameExport();
     } catch (error) {
       console.log(error);
-      SnackbarEvents.emit('Could not export game.', "error", 2000);
+      SnackbarEvents.emit("Could not export game.", "error", 2000);
     }
   });
-  bridge.receive('trigger-scripts-export', () => {
+  bridge.receive("trigger-scripts-export", () => {
     try {
       (window as any).appSaveFns.triggerScriptsExport();
     } catch (error) {
       console.log(error);
-      SnackbarEvents.emit('Could not export scripts.', "error", 2000);
+      SnackbarEvents.emit("Could not export scripts.", "error", 2000);
     }
   });
 }
@@ -159,15 +161,15 @@ export function pushGameSaved(data: SaveData): void {
   const bridge = (window as any).electronBridge as any;
   if (!bridge) return;
 
-  bridge.send('push-game-saved', data);
+  bridge.send("push-game-saved", data);
 }
 
 export function pushGameReady(): void {
   const bridge = (window as any).electronBridge as any;
   if (!bridge) return;
 
-   // Send basic information to the electron wrapper
-   bridge.send('push-game-ready', {
+  // Send basic information to the electron wrapper
+  bridge.send("push-game-ready", {
     player: {
       identifier: Player.identifier,
       playtime: Player.totalPlaytime,
@@ -176,7 +178,7 @@ export function pushGameReady(): void {
     game: {
       version: CONSTANTS.VersionString,
       hash: hash(),
-    }
+    },
   });
 }
 
@@ -184,5 +186,5 @@ export function pushImportResult(wasImported: boolean): void {
   const bridge = (window as any).electronBridge as any;
   if (!bridge) return;
 
-  bridge.send('push-import-result', { wasImported });
+  bridge.send("push-import-result", { wasImported });
 }

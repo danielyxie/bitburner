@@ -121,7 +121,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
     try {
       const base64Save = await saveObject.getImportStringFromFile(event.target.files);
       const data = await saveObject.getImportDataFromString(base64Save);
-      setImportData(data)
+      setImportData(data);
       setImportSaveOpen(true);
     } catch (ex: any) {
       SnackbarEvents.emit(ex.toString(), "error", 5000);
@@ -143,7 +143,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
 
   function compareSaveGame(): void {
     if (!importData) return;
-    props.router.toImportSave(importData.base64)
+    props.router.toImportSave(importData.base64);
     setImportSaveOpen(false);
     setImportData(null);
   }
@@ -552,22 +552,23 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                   Make sure to have a backup of your current save file before importing.
                   <br />
                   The file you are attempting to import seems valid.
-
                   {(importData?.playerData?.lastSave ?? 0) > 0 && (
                     <>
                       <br />
                       <br />
-                      The export date of the save file is <strong>{importData?.playerData?.lastSave?.toLocaleString()}</strong>
+                      The export date of the save file is{" "}
+                      <strong>{importData?.playerData?.lastSave?.toLocaleString()}</strong>
                     </>
                   )}
                   {(importData?.playerData?.totalPlaytime ?? 0) > 0 && (
                     <>
                       <br />
                       <br />
-                      Total play time of imported game: {convertTimeMsToTimeElapsedString(importData?.playerData?.totalPlaytime ?? 0)}
+                      Total play time of imported game:{" "}
+                      {convertTimeMsToTimeElapsedString(importData?.playerData?.totalPlaytime ?? 0)}
                     </>
                   )}
-                   <br />
+                  <br />
                   <br />
                 </>
               }

@@ -118,10 +118,10 @@ class BitburnerSaveObject {
           return resolve();
         })
         .catch((err) => {
-          console.error(err)
+          console.error(err);
           return reject();
         });
-    })
+    });
   }
 
   getSaveFileName(isRecovery = false): string {
@@ -129,7 +129,7 @@ class BitburnerSaveObject {
     const epochTime = Math.round(Date.now() / 1000);
     const bn = Player.bitNodeN;
     let filename = `bitburnerSave_${epochTime}_BN${bn}x${SourceFileFlags[bn]}.json`;
-    if (isRecovery) filename = 'RECOVERY' + filename;
+    if (isRecovery) filename = "RECOVERY" + filename;
     return filename;
   }
 
@@ -140,7 +140,7 @@ class BitburnerSaveObject {
   }
 
   importGame(base64Save: string, reload = true): Promise<void> {
-    if (!base64Save || base64Save === '') throw new Error('Invalid import string');
+    if (!base64Save || base64Save === "") throw new Error("Invalid import string");
     return save(base64Save).then(() => {
       if (reload) setTimeout(() => location.reload(), 1000);
       return Promise.resolve();
@@ -148,7 +148,7 @@ class BitburnerSaveObject {
   }
 
   getImportStringFromFile(files: FileList | null): Promise<string> {
-    if (files === null) return Promise.reject(new Error('No file selected'));
+    if (files === null) return Promise.reject(new Error("No file selected"));
     const file = files[0];
     if (!file) return Promise.reject(new Error("Invalid file selected"));
 
@@ -165,14 +165,14 @@ class BitburnerSaveObject {
         }
         const contents = result;
         resolve(contents);
-      }
+      };
     });
     reader.readAsText(file);
     return promise;
   }
 
   async getImportDataFromString(base64Save: string): Promise<ImportData> {
-    if (!base64Save || base64Save === '') throw new Error('Invalid import string');
+    if (!base64Save || base64Save === "") throw new Error("Invalid import string");
 
     let newSave;
     try {
@@ -182,7 +182,7 @@ class BitburnerSaveObject {
       console.error(error); // We'll handle below
     }
 
-    if (!newSave || newSave === '') {
+    if (!newSave || newSave === "") {
       return Promise.reject(new Error("Save game had not content or was not base64 encoded"));
     }
 
@@ -193,14 +193,14 @@ class BitburnerSaveObject {
       console.log(error); // We'll handle below
     }
 
-    if (!parsedSave || parsedSave.ctor !== 'BitburnerSaveObject' || !parsedSave.data) {
+    if (!parsedSave || parsedSave.ctor !== "BitburnerSaveObject" || !parsedSave.data) {
       return Promise.reject(new Error("Save game did not seem valid"));
     }
 
     const data: ImportData = {
       base64: base64Save,
       parsed: parsedSave,
-    }
+    };
 
     const importedPlayer = PlayerObject.fromJSON(JSON.parse(parsedSave.data.PlayerSave));
 
@@ -212,14 +212,14 @@ class BitburnerSaveObject {
       money: importedPlayer.money,
       hacking: importedPlayer.hacking,
 
-      augmentations: importedPlayer.augmentations?.reduce<number>((total, current) => total += current.level, 0) ?? 0,
+      augmentations: importedPlayer.augmentations?.reduce<number>((total, current) => (total += current.level), 0) ?? 0,
       factions: importedPlayer.factions?.length ?? 0,
       achievements: importedPlayer.achievements?.length ?? 0,
 
       bitNode: importedPlayer.bitNodeN,
       bitNodeLevel: importedPlayer.sourceFileLvl(Player.bitNodeN) + 1,
-      sourceFiles: importedPlayer.sourceFiles?.reduce<number>((total, current) => total += current.lvl, 0) ?? 0,
-    }
+      sourceFiles: importedPlayer.sourceFiles?.reduce<number>((total, current) => (total += current.lvl), 0) ?? 0,
+    };
 
     data.playerData = playerData;
     return Promise.resolve(data);

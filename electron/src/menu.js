@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { app, Menu, clipboard, dialog, ipcMain, shell } = require("electron");
+const { app, Menu, clipboard, dialog, shell } = require("electron");
 const log = require("electron-log");
 const Config = require("electron-config");
 const api = require("./api-server");
@@ -14,28 +14,28 @@ function getMenu(window) {
       submenu: [
         {
           label: "Save Game",
-          click: () => window.webContents.send('trigger-save'),
+          click: () => window.webContents.send("trigger-save"),
         },
         {
           label: "Export Save",
-          click: () => window.webContents.send('trigger-game-export'),
+          click: () => window.webContents.send("trigger-game-export"),
         },
         {
           label: "Export Scripts",
-          click: async () => window.webContents.send('trigger-scripts-export'),
+          click: async () => window.webContents.send("trigger-scripts-export"),
         },
         {
-          type: 'separator',
+          type: "separator",
         },
         {
           label: "Load Last Save",
           click: async () => {
             try {
               const saveGame = await storage.loadLastFromDisk();
-              window.webContents.send('push-save-request', { save: saveGame });
+              window.webContents.send("push-save-request", { save: saveGame });
             } catch (error) {
               log.error(error);
-              utils.writeToast(window, `Could not load last save from disk`, "error", 5000);
+              utils.writeToast(window, "Could not load last save from disk", "error", 5000);
             }
           }
         },
@@ -44,12 +44,12 @@ function getMenu(window) {
           click: async () => {
             const defaultPath = await storage.getSaveFolder(window);
             const result = await dialog.showOpenDialog(window, {
-              title: 'Load From File',
+              title: "Load From File",
               defaultPath: defaultPath,
-              buttonLabel: 'Load',
+              buttonLabel: "Load",
               filters: [
-                { name: 'Game Saves', extensions: ['json', 'json.gz', 'txt'] },
-                { name: 'All', extensions: ['*'] },
+                { name: "Game Saves", extensions: ["json", "json.gz", "txt"] },
+                { name: "All", extensions: ["*"] },
               ],
               properties: [
                 "openFile", "dontAddToRecent",
@@ -60,10 +60,10 @@ function getMenu(window) {
 
             try {
               const saveGame = await storage.loadFileFromDisk(file);
-              window.webContents.send('push-save-request', { save: saveGame });
+              window.webContents.send("push-save-request", { save: saveGame });
             } catch (error) {
               log.error(error);
-              utils.writeToast(window, `Could not load last save from disk`, "error", 5000);
+              utils.writeToast(window, "Could not load save from disk", "error", 5000);
             }
           }
         },
@@ -73,97 +73,92 @@ function getMenu(window) {
           click: async () => {
             try {
               const saveGame = await storage.getSteamCloudSaveString();
-              ipcMain.once('push-import-result', async (event, arg) => {
-                log.info(`Was Imported: ${arg.wasImported}`);
-              });
-              window.webContents.send('push-save-request', { save: saveGame });
+              await storage.pushSaveGameForImport(window, saveGame, false);
             } catch (error) {
               log.error(error);
-              utils.writeToast(window, `Could not load from Steam Cloud`, "error", 5000);
+              utils.writeToast(window, "Could not load from Steam Cloud", "error", 5000);
             }
           }
         },
         {
-          type: 'separator',
+          type: "separator",
         },
         {
           label: "Compress Disk Saves (.gz)",
-          type: 'checkbox',
+          type: "checkbox",
           checked: storage.isSaveCompressionEnabled(),
           click: (menuItem) => {
             storage.setSaveCompressionConfig(menuItem.checked);
             utils.writeToast(window,
-              `${menuItem.checked ? 'Enabled' : 'Disabled'} Save Compression`, "info", 5000);
+              `${menuItem.checked ? "Enabled" : "Disabled"} Save Compression`, "info", 5000);
             refreshMenu(window);
           },
         },
         {
           label: "Auto-Save to Disk",
-          type: 'checkbox',
+          type: "checkbox",
           checked: storage.isAutosaveEnabled(),
           click: (menuItem) => {
             storage.setAutosaveConfig(menuItem.checked);
             utils.writeToast(window,
-              `${menuItem.checked ? 'Enabled' : 'Disabled'} Auto-Save to Disk`, "info", 5000);
+              `${menuItem.checked ? "Enabled" : "Disabled"} Auto-Save to Disk`, "info", 5000);
             refreshMenu(window);
           },
         },
         {
           label: "Auto-Save to Steam Cloud",
-          type: 'checkbox',
+          type: "checkbox",
           checked: storage.isCloudEnabled(),
           click: (menuItem) => {
             storage.setCloudEnabledConfig(menuItem.checked);
             utils.writeToast(window,
-              `${menuItem.checked ? 'Enabled' : 'Disabled'} Auto-Save to Steam Cloud`, "info", 5000);
+              `${menuItem.checked ? "Enabled" : "Disabled"} Auto-Save to Steam Cloud`, "info", 5000);
             refreshMenu(window);
           },
         },
         {
           label: "Restore Newest on Load",
-          type: 'checkbox',
-          checked: config.get('onload-restore-newest', true),
+          type: "checkbox",
+          checked: config.get("onload-restore-newest", true),
           click: (menuItem) => {
-            config.set('onload-restore-newest', menuItem.checked);
+            config.set("onload-restore-newest", menuItem.checked);
             utils.writeToast(window,
-              `${menuItem.checked ? 'Enabled' : 'Disabled'} Restore Newest on Load`, "info", 5000);
+              `${menuItem.checked ? "Enabled" : "Disabled"} Restore Newest on Load`, "info", 5000);
             refreshMenu(window);
           },
         },
-
         {
-          type: 'separator',
+          type: "separator",
         },
-
         {
-          label: 'Open Directory',
+          label: "Open Directory",
           submenu: [
             {
-              label: 'Open Game Directory',
+              label: "Open Game Directory",
               click: () => shell.openExternal(app.getAppPath()),
             },
             {
-              label: 'Open Saves Directory',
+              label: "Open Saves Directory",
               click: async () => {
                 const path = await storage.getSaveFolder(window);
                 shell.openExternal(path);
               },
             },
             {
-              label: 'Open Logs Directory',
-              click: () => shell.openExternal(app.getPath('logs')),
+              label: "Open Logs Directory",
+              click: () => shell.openExternal(app.getPath("logs")),
             },
             {
-              label: 'Open Data Directory',
-              click: () => shell.openExternal(app.getPath('userData')),
+              label: "Open Data Directory",
+              click: () => shell.openExternal(app.getPath("userData")),
             },
           ]
         },
         {
-          type: 'separator',
+          type: "separator",
         },
         {
-          label: 'Quit',
+          label: "Quit",
           click: () => app.quit(),
         },
       ]
