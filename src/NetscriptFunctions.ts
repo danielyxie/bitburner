@@ -722,6 +722,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       workerScript.print(argsToString(args));
     },
+    printf: function (format: string, ...args: any[]): void {
+      if (typeof format !== "string") {
+        throw makeRuntimeErrorMsg("printf", "First argument must be string for the format.");
+      }
+      workerScript.print(vsprintf(format, args));
+    },
     tprint: function (...args: any[]): void {
       if (args.length === 0) {
         throw makeRuntimeErrorMsg("tprint", "Takes at least 1 argument.");
