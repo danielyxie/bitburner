@@ -81,41 +81,41 @@ export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, h
   return {
     skills: {
       calculateSkill: function (exp: any, mult: any = 1): any {
-        checkFormulasAccess("basic.calculateSkill");
+        checkFormulasAccess("skills.calculateSkill");
         return calculateSkill(exp, mult);
       },
       calculateExp: function (skill: any, mult: any = 1): any {
-        checkFormulasAccess("basic.calculateExp");
+        checkFormulasAccess("skills.calculateExp");
         return calculateExp(skill, mult);
       },
     },
     hacking: {
       hackChance: function (server: any, player: any): any {
-        checkFormulasAccess("basic.hackChance");
+        checkFormulasAccess("hacking.hackChance");
         return calculateHackingChance(server, player);
       },
       hackExp: function (server: any, player: any): any {
-        checkFormulasAccess("basic.hackExp");
+        checkFormulasAccess("hacking.hackExp");
         return calculateHackingExpGain(server, player);
       },
       hackPercent: function (server: any, player: any): any {
-        checkFormulasAccess("basic.hackPercent");
+        checkFormulasAccess("hacking.hackPercent");
         return calculatePercentMoneyHacked(server, player);
       },
       growPercent: function (server: any, threads: any, player: any, cores: any = 1): any {
-        checkFormulasAccess("basic.growPercent");
+        checkFormulasAccess("hacking.growPercent");
         return calculateServerGrowth(server, threads, player, cores);
       },
       hackTime: function (server: any, player: any): any {
-        checkFormulasAccess("basic.hackTime");
+        checkFormulasAccess("hacking.hackTime");
         return calculateHackingTime(server, player) * 1000;
       },
       growTime: function (server: any, player: any): any {
-        checkFormulasAccess("basic.growTime");
+        checkFormulasAccess("hacking.growTime");
         return calculateGrowTime(server, player) * 1000;
       },
       weakenTime: function (server: any, player: any): any {
-        checkFormulasAccess("basic.weakenTime");
+        checkFormulasAccess("hacking.weakenTime");
         return calculateWeakenTime(server, player) * 1000;
       },
     },
@@ -188,21 +188,27 @@ export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, h
     },
     gang: {
       wantedPenalty(gang: any): number {
+        checkFormulasAccess("gang.wantedPenalty");
         return calculateWantedPenalty(gang);
       },
       respectGain: function (gang: any, member: any, task: any): number {
+        checkFormulasAccess("gang.respectGain");
         return calculateRespectGain(gang, member, task);
       },
       wantedLevelGain: function (gang: any, member: any, task: any): number {
+        checkFormulasAccess("gang.wantedLevelGain");
         return calculateWantedLevelGain(gang, member, task);
       },
       moneyGain: function (gang: any, member: any, task: any): number {
+        checkFormulasAccess("gang.moneyGain");
         return calculateMoneyGain(gang, member, task);
       },
       ascensionPointsGain: function (exp: any): number {
+        checkFormulasAccess("gang.ascensionPointsGain");
         return calculateAscensionPointsGain(exp);
       },
       ascensionMultiplier: function (points: any): number {
+        checkFormulasAccess("gang.ascensionMultiplier");
         return calculateAscensionMult(points);
       },
     },
