@@ -99,9 +99,13 @@ export function GangMemberStats(props: IProps): React.ReactElement {
             {generateTableRow("Dexterity", props.member.dex, props.member.dex_exp, Settings.theme.combat)}
             {generateTableRow("Agility", props.member.agi, props.member.agi_exp, Settings.theme.combat)}
             {generateTableRow("Charisma", props.member.cha, props.member.cha_exp, Settings.theme.cha)}
-            <br />
+            <TableRow>
+              <TableCell classes={{ root: classes.cellNone }}>
+                <br />
+              </TableCell>
+            </TableRow>
             {data.map(([a, b]) => (
-              <TableRow>
+              <TableRow key={a.toString() + b.toString()}>
                 <TableCell classes={{ root: classes.cellNone }}>
                   <Typography>{a}</Typography>
                 </TableCell>
