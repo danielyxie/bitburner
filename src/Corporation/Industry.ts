@@ -828,7 +828,7 @@ export class Industry implements IIndustry {
                   }
                 }
 
-                const maxSell =
+                mat.maxsll =
                   (mat.qlt + 0.001) *
                   marketFactor *
                   markup *
@@ -839,7 +839,7 @@ export class Industry implements IIndustry {
                 let sellAmt;
                 if (isString(mat.sllman[1])) {
                   //Dynamically evaluated
-                  let tmp = (mat.sllman[1] as string).replace(/MAX/g, (maxSell + "").toUpperCase());
+                  let tmp = (mat.sllman[1] as string).replace(/MAX/g, (mat.maxsll + "").toUpperCase());
                   tmp = tmp.replace(/PROD/g, mat.prd + "");
                   try {
                     sellAmt = eval(tmp);
@@ -856,13 +856,13 @@ export class Industry implements IIndustry {
                     );
                     sellAmt = 0;
                   }
-                  sellAmt = Math.min(maxSell, sellAmt);
+                  sellAmt = Math.min(mat.maxsll, sellAmt);
                 } else if (mat.sllman[1] === -1) {
                   //Backwards compatibility, -1 = MAX
-                  sellAmt = maxSell;
+                  sellAmt = mat.maxsll;
                 } else {
                   //Player's input value is just a number
-                  sellAmt = Math.min(maxSell, mat.sllman[1] as number);
+                  sellAmt = Math.min(mat.maxsll, mat.sllman[1] as number);
                 }
 
                 sellAmt = sellAmt * CorporationConstants.SecsPerMarketCycle * marketCycles;

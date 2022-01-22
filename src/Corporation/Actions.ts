@@ -109,8 +109,8 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
   if (amt.includes("MAX") || amt.includes("PROD")) {
     let q = amt.replace(/\s+/g, "");
     q = q.replace(/[^-()\d/*+.MAXPROD]/g, "");
-    let tempQty = q.replace(/MAX/g, "1");
-    tempQty = tempQty.replace(/PROD/g, "1");
+    let tempQty = q.replace(/MAX/g, mat.maxsll.toString());
+    tempQty = tempQty.replace(/PROD/g, mat.prd.toString());
     try {
       tempQty = eval(tempQty);
     } catch (e) {
