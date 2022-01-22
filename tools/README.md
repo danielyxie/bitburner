@@ -34,3 +34,15 @@ npm install
 export GITHUB_API_TOKEN=tokenhere # this could go into your .bashrc or .profile etc.
 node index.js --from=31ebdbb139981a604bd0e8fc1e364916762e11b9 > ../bump-version/changes.md
 ```
+
+## Bump Version
+
+Used to update the game's various version identifier.
+Requires pandoc installed to convert .md to .rst
+
+**Usage**
+```sh
+cd ./tools/bump-version
+npm install
+node index.js --version=1.10.3 --versionNumber=10 < changes.md
+```
