@@ -31,6 +31,7 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { numeralWrapper } from "../numeralFormat";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { pushImportResult } from "../../Electron";
+import { IRouter } from "../Router";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -101,28 +102,30 @@ function ComparisonIcon({ isBetter }: { isBetter: boolean }): JSX.Element {
   }
 }
 
-export interface ImportSaveProps {
+export interface IProps {
   importString: string;
   automatic: boolean;
-  onReturning: () => void;
+  router: IRouter;
 }
 
 let initialAutosave = 0;
 
-export function ImportSaveRoot({ importString, automatic, onReturning }: ImportSaveProps): JSX.Element {
+export function ImportSaveRoot(props: IProps): JSX.Element {
   const classes = useStyles();
   const [importData, setImportData] = useState<ImportData | undefined>();
   const [currentData, setCurrentData] = useState<ImportData | undefined>();
   const [importModalOpen, setImportModalOpen] = useState(false);
+  const [headback, setHeadback] = useState(false);
 
   function handleGoBack(): void {
     Settings.AutosaveInterval = initialAutosave;
     pushImportResult(false);
-    onReturning();
+    props.router.allowRouting(true);
+    setHeadback(true)
   }
 
   async function handleImport(): Promise<void> {
-    await saveObject.importGame(importString, true);
+    await saveObject.importGame(props.importString, true);
     pushImportResult(true);
   }
 
@@ -130,11 +133,16 @@ export function ImportSaveRoot({ importString, automatic, onReturning }: ImportS
     // We want to disable autosave while we're in this mode
     initialAutosave = Settings.AutosaveInterval;
     Settings.AutosaveInterval = 0;
+    props.router.allowRouting(false);
   }, []);
 
   useEffect(() => {
+    if (headback) props.router.toTerminal();
+  }, [headback]);
+
+  useEffect(() => {
     async function fetchData(): Promise<void> {
-      const dataBeingImported = await saveObject.getImportDataFromString(importString);
+      const dataBeingImported = await saveObject.getImportDataFromString(props.importString);
       const dataCurrentlyInGame = await saveObject.getImportDataFromString(saveObject.getSaveString(true));
 
       setImportData(dataBeingImported);
@@ -142,8 +150,8 @@ export function ImportSaveRoot({ importString, automatic, onReturning }: ImportS
 
       return Promise.resolve();
     }
-    if (importString) fetchData();
-  }, [importString]);
+    if (props.importString) fetchData();
+  }, [props.importString]);
 
   if (!importData || !currentData) return <></>;
   return (
@@ -151,7 +159,7 @@ export function ImportSaveRoot({ importString, automatic, onReturning }: ImportS
       <Typography variant="h4" sx={{ mb: 2 }}>
         Import Save Comparison
       </Typography>
-      {automatic && (
+      {props.automatic && (
         <Typography sx={{ mb: 2 }}>
           We've found a <b>NEWER save</b> that you may want to use instead.
         </Typography>
@@ -202,8 +210,14 @@ export function ImportSaveRoot({ importString, automatic, onReturning }: ImportS
 
             <TableRow>
               <TableCell>Saved On</TableCell>
-              <TableCell>{new Date(currentData.playerData?.lastSave ?? 0).toLocaleString()}</TableCell>
-              <TableCell>{new Date(importData.playerData?.lastSave ?? 0).toLocaleString()}</TableCell>
+              <TableCell>
+                {(currentData.playerData?.lastSave ?? 0) > 0 ?
+                    new Date(currentData.playerData?.lastSave ?? 0).toLocaleString() : 'n/a'}
+              </TableCell>
+              <TableCell>
+                {(importData.playerData?.lastSave ?? 0) > 0 ?
+                    new Date(importData.playerData?.lastSave ?? 0).toLocaleString() : 'n/a'}
+              </TableCell>
               <TableCell>
                 {importData.playerData?.lastSave !== currentData.playerData?.lastSave && (
                   <ComparisonIcon
