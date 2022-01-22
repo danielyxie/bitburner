@@ -24,18 +24,20 @@ export function RecruitButton(props: IProps): React.ReactElement {
   if (!gang.canRecruitMember()) {
     const respect = gang.getRespectNeededToRecruitMember();
     return (
-      <Box display="flex" alignItems="center">
-        <Button sx={{ mx: 1 }} disabled>
+      <Box display="flex" alignItems="center" sx={{ mx: 1 }}>
+        <Button disabled>
           Recruit Gang Member
         </Button>
-        <Typography>{numeralWrapper.formatRespect(respect)} respect needed to recruit next member</Typography>
+        <Typography sx={{ ml: 1 }}>{numeralWrapper.formatRespect(respect)} respect needed to recruit next member</Typography>
       </Box>
     );
   }
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Recruit Gang Member</Button>
+      <Box sx={{ mx: 1 }}>
+        <Button onClick={() => setOpen(true)}>Recruit Gang Member</Button>
+      </Box>
       <RecruitModal open={open} onClose={() => setOpen(false)} onRecruit={props.onRecruit} />
     </>
   );
