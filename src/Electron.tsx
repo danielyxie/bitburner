@@ -4,6 +4,7 @@ import { Terminal } from "./Terminal";
 import { SnackbarEvents } from "./ui/React/Snackbar";
 import { IMap, IReturnStatus } from "./types";
 import { GetServer } from "./Server/AllServers";
+import { resolve } from "cypress/types/bluebird";
 
 export function initElectron(): void {
   const userAgent = navigator.userAgent.toLowerCase();
@@ -43,7 +44,9 @@ function initWebserver(): void {
       data: {
         files: home.scripts.map((script) => ({
           filename: script.filename,
-          code: script.code
+          code: script.code,
+          hash: script.hash(),
+          ramUsage: script.ramUsage
         }))
       }
     }
@@ -72,12 +75,17 @@ function initWebserver(): void {
         msg: "Home server does not exist."
       }
     }
-    const result = home.writeToScriptFile(Player, filename, code);
-
+    const {success, overwritten} = home.writeToScriptFile(Player, filename, code);
+    let script;
+    if (success) {
+      script = home.getScript(filename);
+    }
     return {
-      res: result.success,
+      res: success,
       data: {
-        overwritten: result.overwritten
+        overwritten,
+        hash: script?.hash() || undefined,
+        ramUsage: script?.ramUsage
       }
     };
   };
