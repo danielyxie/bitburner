@@ -56,7 +56,7 @@ export function download(
         exportScripts(fn, server);
         return;
       } catch (error: any) {
-        return terminal.error(error);
+        return terminal.error(error.message);
       }
     } else if (isScriptFilename(fn)) {
       // Download a single script

@@ -20,10 +20,9 @@ export function initElectron(): void {
     (document as any).achievements = [];
     initWebserver();
     initAppNotifier();
+    initSaveFunctions();
+    initElectronBridge();
   }
-
-  initSaveFunctions();
-  initElectronBridge();
 }
 
 function initWebserver(): void {

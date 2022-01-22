@@ -31,7 +31,7 @@ function getMenu(window) {
           label: "Load Last Save",
           click: async () => {
             try {
-              const saveGame = await storage.loadLastFromDisk();
+              const saveGame = await storage.loadLastFromDisk(window);
               window.webContents.send("push-save-request", { save: saveGame });
             } catch (error) {
               log.error(error);
@@ -68,7 +68,7 @@ function getMenu(window) {
           }
         },
         {
-          label: "Load from Steam Cloud",
+          label: "Load From Steam Cloud",
           enabled: storage.isCloudEnabled(),
           click: async () => {
             try {
@@ -108,6 +108,7 @@ function getMenu(window) {
         {
           label: "Auto-Save to Steam Cloud",
           type: "checkbox",
+          enabled: !global.greenworksError,
           checked: storage.isCloudEnabled(),
           click: (menuItem) => {
             storage.setCloudEnabledConfig(menuItem.checked);
@@ -135,22 +136,22 @@ function getMenu(window) {
           submenu: [
             {
               label: "Open Game Directory",
-              click: () => shell.openExternal(app.getAppPath()),
+              click: () => shell.openPath(app.getAppPath()),
             },
             {
               label: "Open Saves Directory",
               click: async () => {
                 const path = await storage.getSaveFolder(window);
-                shell.openExternal(path);
+                shell.openPath(path);
               },
             },
             {
               label: "Open Logs Directory",
-              click: () => shell.openExternal(app.getPath("logs")),
+              click: () => shell.openPath(app.getPath("logs")),
             },
             {
               label: "Open Data Directory",
-              click: () => shell.openExternal(app.getPath("userData")),
+              click: () => shell.openPath(app.getPath("userData")),
             },
           ]
         },
@@ -320,6 +321,17 @@ function getMenu(window) {
           label: "Activate",
           click: () => window.webContents.openDevTools(),
         },
+        {
+          label: "Delete Steam Cloud Data",
+          enabled: !global.greenworksError,
+          click: async () => {
+            try {
+              await storage.deleteCloudFile();
+            } catch (error) {
+              log.error(error);
+            }
+          }
+        }
       ],
     },
   ]);

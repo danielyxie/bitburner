@@ -12,8 +12,6 @@ const flatten = require("lodash/flatten");
 const Config = require("electron-config");
 const config = new Config();
 
-const steamSaveName = 'bitburner-save.json.gz';
-
 // https://stackoverflow.com/a/69418940
 const dirSize = async (directory) => {
   const files = await fs.readdir(directory);
@@ -50,7 +48,8 @@ const getAllSaves = async (window) => {
 async function prepareSaveFolders(window) {
   const rootFolder = await getSaveFolder(window, true);
   const currentFolder = await getSaveFolder(window);
-  await prepareFolders(rootFolder, currentFolder);
+  const backupsFolder = path.join(rootFolder, "/_backups")
+  await prepareFolders(rootFolder, currentFolder, backupsFolder);
 }
 
 async function prepareFolders(...folders) {
@@ -128,9 +127,26 @@ function saveCloudFile(name, content) {
   })
 }
 
+function getFirstCloudFile() {
+  const nbFiles = greenworks.getFileCount();
+  if (nbFiles === 0) throw new Error('No files in cloud');
+  const file = greenworks.getFileNameAndSize(0);
+  log.silly(`Found ${nbFiles} files.`)
+  log.silly(`First File: ${file.name} (${file.size} bytes)`);
+  return file.name;
+}
+
 function getCloudFile() {
+  const file = getFirstCloudFile();
   return new Promise((resolve, reject) => {
-    greenworks.readTextFromFile(steamSaveName, resolve, reject);
+    greenworks.readTextFromFile(file, resolve, reject);
+  });
+}
+
+function deleteCloudFile() {
+  const file = getFirstCloudFile();
+  return new Promise((resolve, reject) => {
+    greenworks.deleteFile(file, resolve, reject);
   });
 }
 
@@ -140,8 +156,32 @@ async function getSteamCloudQuota() {
   });
 }
 
-async function pushGameSaveToSteamCloud(base64save) {
+async function backupSteamDataToDisk(currentPlayerId) {
+  const nbFiles = greenworks.getFileCount();
+  if (nbFiles === 0) return;
+
+  const file = greenworks.getFileNameAndSize(0);
+  const previousPlayerId = file.name.replace(".json.gz", "");
+  if (previousPlayerId !== currentPlayerId) {
+    const backupSave = await getSteamCloudSaveString();
+    const backupFile = path.join(app.getPath("userData"), "/saves/_backups", `${previousPlayerId}.json.gz`);
+    const buffer = Buffer.from(backupSave, 'base64').toString('utf8');
+    saveContent = await gzip(buffer);
+    await fs.writeFile(backupFile, saveContent, 'utf8');
+    log.debug(`Saved backup game to '${backupFile}`);
+  }
+}
+
+async function pushGameSaveToSteamCloud(base64save, currentPlayerId) {
   if (!isCloudEnabled) return Promise.reject("Steam Cloud is not Enabled");
+
+  try {
+    backupSteamDataToDisk(currentPlayerId);
+  } catch (error) {
+    log.error(error);
+  }
+
+  const steamSaveName = `${currentPlayerId}.json.gz`;
 
   // Let's decode the base64 string so GZIP is more efficient.
   const buffer = Buffer.from(base64save, "base64");
@@ -160,8 +200,8 @@ async function pushGameSaveToSteamCloud(base64save) {
 }
 
 async function getSteamCloudSaveString() {
-  if (!isCloudEnabled) return Promise.reject("Steam Cloud is not Enabled");
-  log.debug(`Fetching ${steamSaveName} in Steam Cloud`);
+  if (!isCloudEnabled()) return Promise.reject("Steam Cloud is not Enabled");
+  log.debug(`Fetching Save in Steam Cloud`);
   const cloudString = await getCloudFile();
   const gzippedBase64Buffer = Buffer.from(cloudString, "base64");
   const uncompressedBuffer = await gunzip(gzippedBase64Buffer);
@@ -171,7 +211,7 @@ async function getSteamCloudSaveString() {
   return content;
 }
 
-async function saveGameToDisk(window, saveData, isAutomatic = false) {
+async function saveGameToDisk(window, saveData) {
   const currentFolder = await getSaveFolder(window);
   let saveFolderSizeBytes = await getFolderSizeInBytes(currentFolder);
   const maxFolderSizeBytes = config.get("autosave-quota", 1e8); // 100Mb per playerIndentifier
@@ -180,9 +220,7 @@ async function saveGameToDisk(window, saveData, isAutomatic = false) {
   log.debug(`Folder Capacity: ${maxFolderSizeBytes} bytes`);
   log.debug(`Remaining: ${remainingSpaceBytes} bytes (${(saveFolderSizeBytes / maxFolderSizeBytes * 100).toFixed(2)}% used)`)
   const shouldCompress = isSaveCompressionEnabled();
-  const fileName = isAutomatic
-    ? saveData.fileName.replace(".json", "__autosave.json")
-    : saveData.fileName
+  const fileName = saveData.fileName;
   const file = path.join(currentFolder, fileName + (shouldCompress ? ".gz" : ""));
   try {
     let saveContent = saveData.save;
@@ -222,8 +260,8 @@ async function saveGameToDisk(window, saveData, isAutomatic = false) {
   return file;
 }
 
-async function loadLastFromDisk() {
-  const folder = await getSaveFolder();
+async function loadLastFromDisk(window) {
+  const folder = await getSaveFolder(window);
   const last = await getNewestFile(folder);
   log.debug(`Last modified file: "${last.file}" (${last.stat.mtime.toLocaleString()})`);
   return loadFileFromDisk(last.file);
@@ -273,11 +311,13 @@ async function restoreIfNewerExists(window) {
   const currentData = await getSaveInformation(window, currentSave.save);
   const steam = {};
   const disk = {};
+
   try {
     steam.save = await getSteamCloudSaveString();
     steam.data = await getSaveInformation(window, steam.save);
   } catch (error) {
-    log.error("Could not retrieve steam file", error);
+    log.error("Could not retrieve steam file");
+    log.debug(error);
   }
 
   try {
@@ -288,27 +328,41 @@ async function restoreIfNewerExists(window) {
       disk.data = await getSaveInformation(window, disk.save);
     }
   } catch(error) {
-    log.error("Could not retrieve disk file", error);
+    log.error("Could not retrieve disk file");
+    log.debug(error);
   }
 
+  const lowPlaytime = 1000 * 60 * 15;
   let bestMatch;
   if (!steam.data && !disk.data) {
     log.info("No data to import");
   } else {
     // We'll just compare using the lastSave field for now.
     if (!steam.data) {
+      log.debug('Best potential save match: Disk');
       bestMatch = disk;
     } else if (!disk.data) {
+      log.debug('Best potential save match: Steam Cloud');
       bestMatch = steam;
-    } else if (steam.data.lastSave > disk.data.lastSave) {
+    } else if ((steam.data.lastSave >= disk.data.lastSave)
+      || (steam.data.playtime + lowPlaytime > disk.data.playtime)) {
+      // We want to prioritze steam data if the playtime is very close
+      log.debug('Best potential save match: Steam Cloud');
       bestMatch = steam;
     } else {
+      log.debug('Best potential save match: disk');
       bestMatch = disk;
     }
   }
   if (bestMatch) {
-    if ((bestMatch.data.lastSave - 5000) > currentData.lastSave) {
+    if (bestMatch.data.lastSave > currentData.lastSave + 5000) {
+      // We add a few seconds to the currentSave's lastSave to prioritize it
       log.info("Found newer data than the current's save file");
+      log.silly(bestMatch.data);
+      await pushSaveGameForImport(window, bestMatch.save, true);
+      return true;
+    } else if(bestMatch.data.playtime > currentData.playtime && currentData.playtime < lowPlaytime) {
+      log.info("Found older save, but with more playtime, and current less than 15 mins played");
       log.silly(bestMatch.data);
       await pushSaveGameForImport(window, bestMatch.save, true);
       return true;
@@ -322,7 +376,7 @@ async function restoreIfNewerExists(window) {
 module.exports = {
   getCurrentSave, getSaveInformation,
   restoreIfNewerExists, pushSaveGameForImport,
-  pushGameSaveToSteamCloud, getSteamCloudSaveString, getSteamCloudQuota,
+  pushGameSaveToSteamCloud, getSteamCloudSaveString, getSteamCloudQuota, deleteCloudFile,
   saveGameToDisk, loadLastFromDisk, loadFileFromDisk,
   getSaveFolder, prepareSaveFolders, getAllSaves,
   isCloudEnabled, setCloudEnabledConfig,

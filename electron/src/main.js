@@ -8,6 +8,7 @@ const gameWindow = require("./gameWindow");
 const achievements = require("./achievements");
 const utils = require("./utils");
 const storage = require("./storage");
+const { pagePaths } = require("./appPaths");
 const debounce = require("lodash/debounce");
 const Config = require("electron-config");
 const config = new Config();
@@ -81,7 +82,7 @@ function setStopProcessHandler(app, window, enabled) {
     setTimeout(() => {
       // Wait a few milliseconds to prevent a race condition before loading the exit screen
       window.webContents.stop();
-      window.loadFile("pages/exit.html")
+      window.loadURL(pagePaths.exit())
     }, 20);
 
     // Wait 200ms, if the promise has not yet resolved, let's crash the process since we're possibly in a stuck scenario
@@ -155,14 +156,22 @@ function setStopProcessHandler(app, window, enabled) {
       saveToDisk(save, arg.fileName);
     }
     if (storage.isCloudEnabled()) {
-      saveToCloud(save);
+      const minimumPlaytime = 1000 * 60 * 15;
+      const playtime = window.gameInfo.player.playtime;
+      log.silly(window.gameInfo);
+      if (playtime > minimumPlaytime) {
+        saveToCloud(save);
+      } else {
+        log.debug(`Auto-save to cloud disabled for save game under ${minimumPlaytime}ms (${playtime}ms)`);
+      }
     }
   }
 
   const saveToCloud = debounce(async (save) => {
     log.debug("Saving to Steam Cloud ...")
     try {
-      await storage.pushGameSaveToSteamCloud(save);
+      const playerId = window.gameInfo.player.identifier;
+      await storage.pushGameSaveToSteamCloud(save, playerId);
       log.silly("Saved Game to Steam Cloud");
     } catch (error) {
       log.error(error);
@@ -198,8 +207,8 @@ function setStopProcessHandler(app, window, enabled) {
   }
 }
 
-function startWindow(noScript) {
-  gameWindow.createWindow(noScript);
+async function startWindow(noScript) {
+  return gameWindow.createWindow(noScript);
 }
 
 global.app_handlers = {
@@ -212,20 +221,19 @@ app.whenReady().then(async () => {
 
   if (process.argv.includes("--export-save")) {
     const window = new BrowserWindow({ show: false });
-    await window.loadFile("pages/export.html", false);
+    await window.loadURL(pagePaths.export());
     window.show();
     setStopProcessHandler(app, window, true);
     await utils.exportSave(window);
   } else {
-    startWindow(process.argv.includes("--no-scripts"));
-  }
-
-  if (global.greenworksError) {
-    dialog.showMessageBox({
-      title: "Bitburner",
-      message: "Could not connect to Steam",
-      detail: `${global.greenworksError}\n\nYou won't be able to receive achievements until this is resolved and you restart the game.`,
-      type: "warning", buttons: ["OK"]
-    });
+    const window = await startWindow(process.argv.includes("--no-scripts"));
+    if (global.greenworksError) {
+      await dialog.showMessageBox(window ,{
+        title: "Bitburner",
+        message: "Could not connect to Steam",
+        detail: `${global.greenworksError}\n\nYou won't be able to receive achievements until this is resolved and you restart the game.`,
+        type: "warning", buttons: ["OK"]
+      });
+    }
   }
 });

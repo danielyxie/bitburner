@@ -557,7 +557,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                       <br />
                       <br />
                       The export date of the save file is{" "}
-                      <strong>{importData?.playerData?.lastSave?.toLocaleString()}</strong>
+                      <strong>{new Date(importData?.playerData?.lastSave ?? 0).toLocaleString()}</strong>
                     </>
                   )}
                   {(importData?.playerData?.totalPlaytime ?? 0) > 0 && (

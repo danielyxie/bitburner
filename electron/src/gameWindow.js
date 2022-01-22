@@ -8,25 +8,33 @@ const api = require("./api-server");
 const cp = require("child_process");
 const path = require("path");
 const fs = require("fs");
+const { pagePaths } = require("./appPaths");
 const { fileURLToPath } = require("url");
 
 const debug = process.argv.includes("--debug");
 
 async function createWindow(killall) {
   const setStopProcessHandler = global.app_handlers.stopProcess;
+
+  let icon;
+  if (process.platform == 'linux') {
+    icon = path.join(__dirname, '../icon.png');
+  }
+
   const window = new BrowserWindow({
+    icon,
     show: false,
     backgroundThrottling: false,
     backgroundColor: "#000000",
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
+      preload: path.join(__dirname, 'preload.js'),
+      nativeWindowOpen: true,
+    },
   });
 
   window.removeMenu();
   window.maximize();
-  noScripts = killall ? { query: { noScripts: killall } } : {};
-  window.loadFile("index.html", noScripts);
+  window.loadURL(pagePaths.main(killall));
   window.show();
   if (debug) window.webContents.openDevTools();
 
