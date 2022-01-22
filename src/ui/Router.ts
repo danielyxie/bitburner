@@ -54,6 +54,7 @@ export interface IRouter {
   // toRedPill(): void;
   // toworkInProgress(): void;
   page(): Page;
+  allowRouting(value: boolean): void;
   toActiveScripts(): void;
   toAugmentations(): void;
   toBitVerse(flume: boolean, quick: boolean): void;

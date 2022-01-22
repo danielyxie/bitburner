@@ -82,6 +82,9 @@ import { Settings } from "../Settings/Settings";
 import { ImportSaveRoot } from "./React/ImportSaveRoot";
 import { BypassWrapper } from "./React/BypassWrapper";
 
+import _wrap from "lodash/wrap";
+import _functions from "lodash/functions";
+
 const htmlLocation = location;
 
 interface IProps {
@@ -107,6 +110,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export let Router: IRouter = {
   page: () => {
+    throw new Error("Router called before initialization");
+  },
+  allowRouting: () => {
     throw new Error("Router called before initialization");
   },
   toActiveScripts: () => {
@@ -233,6 +239,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   if (importString === undefined && page === Page.ImportSave)
     throw new Error("Trying to go to a page without the proper setup");
 
+  const [allowRoutingCalls, setAllowRoutingCalls] = useState(true);
+
   function resetErrorBoundary(): void {
     setErrorBoundaryKey(errorBoundaryKey + 1);
   }
@@ -254,6 +262,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
 
   Router = {
     page: () => page,
+    allowRouting: (value: boolean) => setAllowRoutingCalls(value),
     toActiveScripts: () => setPage(Page.ActiveScripts),
     toAugmentations: () => setPage(Page.Augmentations),
     toBladeburner: () => setPage(Page.Bladeburner),
@@ -323,6 +332,26 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       setPage(Page.ImportSave);
     },
   };
+
+
+  useEffect(() => {
+    // Wrap Router navigate functions to be able to disable the execution
+    _functions(Router).
+      filter((fnName) => fnName.startsWith('to')).
+      forEach((fnName) => {
+        // @ts-ignore - tslint does not like this, couldn't find a way to make it cooperate
+        Router[fnName] = _wrap(Router[fnName], (func, ...args) => {
+          if (!allowRoutingCalls) {
+            // Let's just log to console.
+            console.log(`Routing is currently disabled - Attempted router.${fnName}()`);
+            return;
+          }
+
+           // Call the function normally
+          return func(...args);
+        });
+      });
+  });
 
   useEffect(() => {
     if (page !== Page.Terminal) window.scrollTo(0, 0);
@@ -526,7 +555,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
         <ImportSaveRoot
           importString={importString}
           automatic={importAutomatic}
-          onReturning={() => Router.toTerminal()}
+          router={Router}
         />
       );
       withSidebar = false;
