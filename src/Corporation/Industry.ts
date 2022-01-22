@@ -1188,8 +1188,7 @@ export class Industry implements IIndustry {
               }
             }
 
-            const maxSell =
-              0.5 *
+            product.maxsll = 0.5 *
               Math.pow(product.rat, 0.65) *
               marketFactor *
               corporation.getSalesMultiplier() *
@@ -1200,7 +1199,7 @@ export class Industry implements IIndustry {
             let sellAmt;
             if (product.sllman[city][0] && isString(product.sllman[city][1])) {
               //Sell amount is dynamically evaluated
-              let tmp = product.sllman[city][1].replace(/MAX/g, (maxSell + "").toUpperCase());
+              let tmp = product.sllman[city][1].replace(/MAX/g, (product.maxsll + "").toUpperCase());
               tmp = tmp.replace(/PROD/g, product.data[city][1]);
               try {
                 tmp = eval(tmp);
@@ -1214,16 +1213,16 @@ export class Industry implements IIndustry {
                     city +
                     " office. Sell price is being set to MAX",
                 );
-                tmp = maxSell;
+                tmp = product.maxsll;
               }
-              sellAmt = Math.min(maxSell, tmp);
+              sellAmt = Math.min(product.maxsll, tmp);
             } else if (product.sllman[city][0] && product.sllman[city][1] > 0) {
               //Sell amount is manually limited
-              sellAmt = Math.min(maxSell, product.sllman[city][1]);
+              sellAmt = Math.min(product.maxsll, product.sllman[city][1]);
             } else if (product.sllman[city][0] === false) {
               sellAmt = 0;
             } else {
-              sellAmt = maxSell;
+              sellAmt = product.maxsll;
             }
             if (sellAmt < 0) {
               sellAmt = 0;

@@ -96,6 +96,8 @@ export class Product {
   marketTa2 = false;
   marketTa2Price: IMap<number> = createCityMap<number>(0);
 
+  // Determines the maximum amount of this product that can be sold in one market cycle
+  maxsll = 0
   constructor(params: IConstructorParams = {}) {
     this.name = params.name ? params.name : "";
     this.dmd = params.demand ? params.demand : 0;

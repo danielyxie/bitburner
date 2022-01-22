@@ -174,8 +174,8 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
     //Dynamically evaluated quantity. First test to make sure its valid
     let qty = amt.replace(/\s+/g, "");
     qty = qty.replace(/[^-()\d/*+.MAXPROD]/g, "");
-    let temp = qty.replace(/MAX/g, "1");
-    temp = temp.replace(/PROD/g, "1");
+    let temp = qty.replace(/MAX/g, product.maxsll.toString());
+    temp = temp.replace(/PROD/g, product.data[city][1].toString());
     try {
       temp = eval(temp);
     } catch (e) {
