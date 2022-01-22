@@ -25,6 +25,28 @@ interface IProps {
   member: GangMember;
 }
 
+export const generateTableRow = (
+  name: string,
+  level: number,
+  exp: number,
+  color: string,
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  classes: any
+): React.ReactElement => {
+  return (
+    <TableRow>
+      <TableCell classes={{ root: classes.cellNone }}>
+        <Typography style={{ color: color }}>{name}</Typography>
+      </TableCell>
+      <TableCell align="right" classes={{ root: classes.cellNone }}>
+        <Typography style={{ color: color }}>
+          {formatNumber(level, 0)} ({numeralWrapper.formatExp(exp)} exp)
+        </Typography>
+      </TableCell>
+    </TableRow>
+  )
+}
+
 export function GangMemberStats(props: IProps): React.ReactElement {
   const classes = useStyles();
 
@@ -37,20 +59,7 @@ export function GangMemberStats(props: IProps): React.ReactElement {
     cha: props.member.calculateAscensionMult(props.member.cha_asc_points),
   };
 
-  const generateTableRow = (name: string, level: number, exp: number, color: string): React.ReactElement => {
-    return (
-      <TableRow>
-        <TableCell classes={{ root: classes.cellNone }}>
-          <Typography style={{ color: color }}>{name}</Typography>
-        </TableCell>
-        <TableCell align="right" classes={{ root: classes.cellNone }}>
-          <Typography style={{ color: color }}>
-            {formatNumber(level, 0)} ({numeralWrapper.formatExp(exp)} exp)
-          </Typography>
-        </TableCell>
-      </TableRow>
-    )
-  }
+
 
   const gang = useGang();
   const data = [
@@ -93,12 +102,12 @@ export function GangMemberStats(props: IProps): React.ReactElement {
       >
         <Table sx={{ display: 'table', mb: 1, width: '100%' }}>
           <TableBody>
-            {generateTableRow("Hacking", props.member.hack, props.member.hack_exp, Settings.theme.hack)}
-            {generateTableRow("Strength", props.member.str, props.member.str_exp, Settings.theme.combat)}
-            {generateTableRow("Defense", props.member.def, props.member.def_exp, Settings.theme.combat)}
-            {generateTableRow("Dexterity", props.member.dex, props.member.dex_exp, Settings.theme.combat)}
-            {generateTableRow("Agility", props.member.agi, props.member.agi_exp, Settings.theme.combat)}
-            {generateTableRow("Charisma", props.member.cha, props.member.cha_exp, Settings.theme.cha)}
+            {generateTableRow("Hacking", props.member.hack, props.member.hack_exp, Settings.theme.hack, classes)}
+            {generateTableRow("Strength", props.member.str, props.member.str_exp, Settings.theme.combat, classes)}
+            {generateTableRow("Defense", props.member.def, props.member.def_exp, Settings.theme.combat, classes)}
+            {generateTableRow("Dexterity", props.member.dex, props.member.dex_exp, Settings.theme.combat, classes)}
+            {generateTableRow("Agility", props.member.agi, props.member.agi_exp, Settings.theme.combat, classes)}
+            {generateTableRow("Charisma", props.member.cha, props.member.cha_exp, Settings.theme.cha, classes)}
             <TableRow>
               <TableCell classes={{ root: classes.cellNone }}>
                 <br />
