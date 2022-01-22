@@ -143,7 +143,7 @@ export class Terminal implements ITerminal {
   startGrow(player: IPlayer): void {
     const server = player.getCurrentServer();
     if (server instanceof HacknetServer) {
-      this.error("Cannot hack this kind of server");
+      this.error("Cannot grow this kind of server");
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
@@ -152,7 +152,7 @@ export class Terminal implements ITerminal {
   startWeaken(player: IPlayer): void {
     const server = player.getCurrentServer();
     if (server instanceof HacknetServer) {
-      this.error("Cannot hack this kind of server");
+      this.error("Cannot weaken this kind of server");
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
@@ -241,7 +241,7 @@ export class Terminal implements ITerminal {
     if (cancelled) return;
 
     if (server instanceof HacknetServer) {
-      this.error("Cannot hack this kind of server");
+      this.error("Cannot grow this kind of server");
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
@@ -268,7 +268,7 @@ export class Terminal implements ITerminal {
     if (cancelled) return;
 
     if (server instanceof HacknetServer) {
-      this.error("Cannot hack this kind of server");
+      this.error("Cannot weaken this kind of server");
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
