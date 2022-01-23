@@ -9,7 +9,7 @@ async function enableAchievementsInterval(window) {
    // This is backward but the game fills in an array called `document.achievements` and we retrieve it from
   // here. Hey if it works it works.
   const steamAchievements = greenworks.getAchievementNames();
-  log.debug(`All Steam achievements ${JSON.stringify(steamAchievements)}`);
+  log.silly(`All Steam achievements ${JSON.stringify(steamAchievements)}`);
   const playerAchieved = (await Promise.all(steamAchievements.map(checkSteamAchievement))).filter(name => !!name);
   log.debug(`Player has Steam achievements ${JSON.stringify(playerAchieved)}`);
   const intervalID = setInterval(async () => {
