@@ -18,6 +18,9 @@ async function createWindow(killall) {
     show: false,
     backgroundThrottling: false,
     backgroundColor: "#000000",
+    webPreferences: {
+      nativeWindowOpen: true,
+    },
   });
 
   window.removeMenu();
