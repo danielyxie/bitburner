@@ -3633,6 +3633,7 @@ interface SkillsFormulas {
 interface HackingFormulas {
   /**
    * Calculate hack chance.
+   * (Ex: 0.25 would indicate a 25% chance of success.)
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
    * @returns The calculated hack chance.
@@ -3649,6 +3650,7 @@ interface HackingFormulas {
   hackExp(server: Server, player: Player): number;
   /**
    * Calculate hack percent for one thread.
+   * (Ex: 0.25 would steal 25% of the server's current value.)
    * @remarks
    * Multiply by thread to get total percent hacked.
    * @param server - Server info from {@link NS.getServer | getServer}
@@ -3657,7 +3659,8 @@ interface HackingFormulas {
    */
   hackPercent(server: Server, player: Player): number;
   /**
-   * Calculate the percent a server would grow.
+   * Calculate the percent a server would grow to.
+   * (Ex: 3.0 would would grow the server to 300% of its current value.)
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param threads - Amount of thread.
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
