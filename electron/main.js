@@ -100,8 +100,8 @@ function setStopProcessHandler(app, window, enabled) {
   }
 }
 
-function startWindow(noScript) {
-  gameWindow.createWindow(noScript);
+async function startWindow(noScript) {
+  return gameWindow.createWindow(noScript);
 }
 
 global.app_handlers = {
@@ -119,15 +119,14 @@ app.whenReady().then(async () => {
     setStopProcessHandler(app, window, true);
     await utils.exportSave(window);
   } else {
-    startWindow(process.argv.includes("--no-scripts"));
-  }
-
-  if (global.greenworksError) {
-    dialog.showMessageBox({
-      title: 'Bitburner',
-      message: 'Could not connect to Steam',
-      detail: `${global.greenworksError}\n\nYou won't be able to receive achievements until this is resolved and you restart the game.`,
-      type: 'warning', buttons: ['OK']
-    });
+    const window = await startWindow(process.argv.includes("--no-scripts"));
+    if (global.greenworksError) {
+      await dialog.showMessageBox(window, {
+        title: "Bitburner",
+        message: "Could not connect to Steam",
+        detail: `${global.greenworksError}\n\nYou won't be able to receive achievements until this is resolved and you restart the game.`,
+        type: 'warning', buttons: ['OK']
+      });
+    }
   }
 });
