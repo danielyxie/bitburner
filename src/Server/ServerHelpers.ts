@@ -74,8 +74,8 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
     serverGrowth = 1;
   }
 
+  server.moneyAvailable = Math.max(server.moneyAvailable, 1); // It can be grown even if it has no money. 1$ min
   const oldMoneyAvailable = server.moneyAvailable;
-  server.moneyAvailable += 1 * threads; // It can be grown even if it has no money
   server.moneyAvailable *= serverGrowth;
 
   // in case of data corruption
