@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Clear out any files remaining from old builds
+rm -rf .package
+
 mkdir -p .package/dist/src/ThirdParty || true
 mkdir -p .package/src/ThirdParty || true
 mkdir -p .package/node_modules || true
