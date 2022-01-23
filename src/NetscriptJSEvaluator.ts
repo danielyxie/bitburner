@@ -21,6 +21,11 @@ export async function compile(player: IPlayer, script: Script, scripts: Script[]
   if (!shouldCompile(script, scripts)) return;
   // The URL at the top is the one we want to import. It will
   // recursively import all the other modules in the urlStack.
+  //
+  // Webpack likes to turn the import into a require, which sort of
+  // but not really behaves like import. Particularly, it cannot
+  // load fully dynamic content. So we hide the import from webpack
+  // by placing it inside an eval call.
   await script.updateRamUsage(player, scripts);
   const uurls = _getScriptUrls(script, scripts, []);
   const url = uurls[uurls.length - 1].url;
@@ -38,7 +43,7 @@ export async function compile(player: IPlayer, script: Script, scripts: Script[]
     // }
   }
   script.url = url;
-  script.module = await import(/* webpackIgnore: true */ url);
+  script.module = new Promise((resolve) => resolve(eval("import(url)")));
   script.dependencies = uurls;
 }
 
