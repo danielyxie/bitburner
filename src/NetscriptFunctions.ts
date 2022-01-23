@@ -357,7 +357,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           maxThreadNeeded = 1e6;
         }
 
-        let moneyDrained = Math.floor(server.moneyAvailable * percentHacked) * threads;
+        let moneyDrained = Math.floor(server.moneyAvailable * percentHacked * threads);
 
         // Over-the-top safety checks
         if (moneyDrained <= 0) {
