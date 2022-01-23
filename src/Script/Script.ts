@@ -121,7 +121,7 @@ export class Script {
    * @param {Script[]} otherScripts - Other scripts on the server. Used to process imports
    */
   async updateRamUsage(player: IPlayer, otherScripts: Script[]): Promise<void> {
-    const res = await calculateRamUsage(player, this.code, otherScripts);
+    const res = await calculateRamUsage(player, this.filename, this.code, otherScripts);
     if (res.cost > 0) {
       this.ramUsage = roundToTwo(res.cost);
       this.ramUsageEntries = res.entries;

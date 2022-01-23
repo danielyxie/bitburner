@@ -11,6 +11,21 @@ import { WorkerScript } from "./Netscript/WorkerScript";
 import { Script } from "./Script/Script";
 import { areImportsEquals } from "./Terminal/DirectoryHelpers";
 import { IPlayer } from "./PersonObjects/IPlayer";
+import {NsImportCache} from './utils/NsImportCache';
+import {RamCosts} from './Netscript/RamCostGenerator';
+import {Settings} from './Settings/Settings';
+
+
+const nsSymbol = Symbol.for('ns');
+class NS{
+  private constructor() {
+    //do nothing
+  }
+}
+// Put the NS class onto the document so it's accessible from the NS modules
+// @ts-ignore
+document[nsSymbol] = NS;
+
 
 // Makes a blob that contains the code of a given script.
 function makeScriptBlob(code: string): Blob {
@@ -66,7 +81,49 @@ export async function executeJSScript(
   workerScript.ramUsage = script.ramUsage;
   const loadedModule = await script.module;
 
-  const ns = workerScript.env.vars;
+  let ns = workerScript.env.vars;
+  if(Settings.AlternateStaticRamAlgorithm){
+    // If using the alternate RAM algorithm, wrap NS in a proxy that detects old-style calls and instructs them on how
+    //  to replace them
+
+    function proxyFor(original: any, name: string, module: string, prototype?: any): any {
+      return new Proxy(original, {
+        // Override so `xyz instanceof NS` checks work
+        // eslint-disable-next-line
+        getPrototypeOf(target: any): object | null {
+          return prototype ?? Object.getPrototypeOf(target);
+        },
+        get(target: any, key: string | symbol){
+          if(key === nsSymbol)
+            return original;
+          if(typeof key === 'symbol')
+            return original[key];
+          if(module === 'ns' && key === 'args'){
+            throw makeRuntimeRejectMsg(workerScript,
+              `Cannot get ns.args. New syntax is required with the alt static RAM algorithm:\n` +
+              `import {getArgs} from "ns";\n` +
+              `...\n` +
+              `getArgs(ns)`
+            );
+          }
+          const value = original[key];
+          if(typeof value === 'function'){
+            throw makeRuntimeRejectMsg(workerScript,
+              `Cannot call ${name}.${key}. New syntax is required with the alt static RAM algorithm:\n` +
+              `import {${key}} from "${module}";\n` +
+              `...\n` +
+              `${key}(ns, ...)`
+            );
+          }
+          if(typeof value === 'object' && value != null)
+            return proxyFor(original[key], `${name}.${key}`, `${module}/${key}`);
+          return original[key];
+        }
+      });
+    }
+
+    ns = proxyFor(ns, 'ns', 'ns', NS.prototype);
+  }
 
   // TODO: putting await in a non-async function yields unhelpful
   // "SyntaxError: unexpected reserved word" with no line number information.
@@ -179,20 +236,93 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
     importNodes.sort((a, b) => b.start - a.start);
     let transformedCode = script.code;
     // Loop through each node and replace the script name with a blob url.
+    outer:
     for (const node of importNodes) {
-      const filename = node.filename.startsWith("./") ? node.filename.substring(2) : node.filename;
+      let blob;
+      const match = node.filename.match(/^ns(?:\/(.+))?$/);
+      if(match){
+        const namespace = match[1];
+        blob = NsImportCache.get(namespace);
+        if(!blob){
+          const namespacePath = namespace ? namespace.split('/') : [];
 
-      // Find the corresponding script.
-      const matchingScripts = scripts.filter((s) => areImportsEquals(s.filename, filename));
-      if (matchingScripts.length === 0) continue;
+          let funcs = RamCosts;
+          for(const key of namespacePath){
+            funcs = funcs[key];
+            if(typeof funcs !== 'object' || funcs == null)
+              continue outer;
+          }
 
-      const [importedScript] = matchingScripts;
+          let code = [
+            "const nsSymbol = Symbol.for('ns');",
+            "function _redefine(obj, key, value){",
+            "  Object.defineProperty(obj, key, {",
+            "    ...Object.getOwnPropertyDescriptor(obj, key),",
+            "    value",
+            "  });",
+            "}"
+          ].join("\n");
+          if(!namespace) {
+            code += [
+              "export const NS = document[nsSymbol];",
+              "export function getArgs(ns){ return ns[nsSymbol].args; }"
+            ].join("\n");
+          }
 
-      const urls = _getScriptUrls(importedScript, scripts, seen);
+          code += Object.entries(funcs)
+            .filter(([, func]) => {
+              return typeof func === 'number' || typeof func === 'function';
+            })
+            .map(([key, ]) => {
+              if(!key.match(/^[a-zA-Z$_][a-zA-Z$_0-9]*$/))
+                throw new Error(`Key ${JSON.stringify(key)} is not valid identifier?!`);
 
-      // The top url in the stack is the replacement import file for this script.
-      urlStack.push(...urls);
-      const blob = urls[urls.length - 1].url;
+              // note: this is only safe because we've already confirmed that the identifier doesn't contain special
+              //  chars/spaces
+              function isReserved(key: string): boolean {
+                try{
+                  eval(`let ${key};`);
+                  return false;
+                }catch(err){
+                  return true;
+                }
+              }
+
+              let nsKey = key;
+              if(namespacePath.length > 0)
+                nsKey = `${namespacePath.join('.')}.${nsKey}`;
+              const lines = [];
+              // we have to do some special gymnastics to support reserved words (e.g. heart.break)
+              if(isReserved(key)){
+                lines.push(
+                  `function ${key}_(ns, ...args){ return ns[nsSymbol].${nsKey}(...args); }`,
+                  `_redefine(${key}_, 'name', '${key}');`,
+                  `export {${key}_ as ${key}};`
+                );
+              }else{
+                lines.push(`export function ${key}(ns, ...args){ return ns[nsSymbol].${nsKey}(...args); }`);
+              }
+              return lines.join("\n");
+            })
+            .join('\n');
+          blob = URL.createObjectURL(makeScriptBlob(code));
+          NsImportCache.store(namespace, blob);
+        }
+      }else{
+        const filename = node.filename.startsWith("./") ? node.filename.substring(2) : node.filename;
+
+        // Find the corresponding script.
+        const matchingScripts = scripts.filter((s) => areImportsEquals(s.filename, filename));
+        if (matchingScripts.length === 0) continue;
+
+        const [importedScript] = matchingScripts;
+
+        const urls = _getScriptUrls(importedScript, scripts, seen);
+
+        // The top url in the stack is the replacement import file for this script.
+        urlStack.push(...urls);
+        blob = urls[urls.length - 1].url;
+      }
 
       // Replace the blob inside the import statement.
       transformedCode = transformedCode.substring(0, node.start) + blob + transformedCode.substring(node.end);

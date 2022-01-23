@@ -36,11 +36,11 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
 
     const code = fnDesc.join(".") + "(); ";
 
-    const calculated = (await calculateRamUsage(Player, code, [])).cost;
+    const calculated = (await calculateRamUsage(Player, 'test.js', code, [])).cost;
     testEquality(calculated, expected + ScriptBaseCost);
 
     const multipleCallsCode = code.repeat(3);
-    const multipleCallsCalculated = (await calculateRamUsage(Player, multipleCallsCode, [])).cost;
+    const multipleCallsCalculated = (await calculateRamUsage(Player, 'test.js', multipleCallsCode, [])).cost;
     expect(multipleCallsCalculated).toEqual(calculated);
   }
 
@@ -60,10 +60,10 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
     expect(expected).toEqual(0);
 
     const code = fnDesc.join(".") + "(); ";
-    const calculated = (await calculateRamUsage(Player, code, [])).cost;
+    const calculated = (await calculateRamUsage(Player, 'test.js', code, [])).cost;
     testEquality(calculated, ScriptBaseCost);
 
-    const multipleCallsCalculated = (await calculateRamUsage(Player, code, [])).cost;
+    const multipleCallsCalculated = (await calculateRamUsage(Player, 'test.js', code, [])).cost;
     expect(multipleCallsCalculated).toEqual(ScriptBaseCost);
   }
 
@@ -509,7 +509,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
         code += "hacknet." + fn + "(); ";
       }
 
-      const calculated = await calculateRamUsage(Player, code, []);
+      const calculated = await calculateRamUsage(Player, 'test.js', code, []);
       testEquality(calculated.cost, ScriptBaseCost + HacknetNamespaceCost);
     });
   });

@@ -14,6 +14,9 @@ import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
 import { Script } from "../Script/Script";
 import { areImportsEquals } from "../Terminal/DirectoryHelpers";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import {calculateRamUsage as calculateRamUsageAlt} from './RamCalculationsAlt';
+import {Settings} from '../Settings/Settings';
+
 
 export interface RamUsageEntry {
   type: 'ns' | 'dom' | 'fn' | 'misc';
@@ -386,9 +389,13 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): any {
  */
 export async function calculateRamUsage(
   player: IPlayer,
+  filename: string,
   codeCopy: string,
   otherScripts: Script[],
 ): Promise<RamCalculation> {
+  if(Settings.AlternateStaticRamAlgorithm)
+    return calculateRamUsageAlt(player, filename, codeCopy, otherScripts);
+
   try {
     return await parseOnlyRamCalculate(player, otherScripts, codeCopy);
   } catch (e) {

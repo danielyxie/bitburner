@@ -18,6 +18,12 @@ interface IDefaultSettings {
    * How many scripts per page
    */
   ActiveScriptsScriptPageSize: number;
+
+  /**
+   * Enables the alternate import-based static RAM calculation.
+   */
+  AlternateStaticRamAlgorithm: boolean;
+
   /**
    * How often the game should autosave the player's progress, in seconds.
    */
@@ -177,6 +183,7 @@ interface ISettings extends IDefaultSettings {
 export const defaultSettings: IDefaultSettings = {
   ActiveScriptsServerPageSize: 10,
   ActiveScriptsScriptPageSize: 10,
+  AlternateStaticRamAlgorithm: false,
   AutosaveInterval: 60,
   CodeInstructionRunTime: 50,
   DisableASCIIArt: false,
@@ -213,6 +220,7 @@ export const defaultSettings: IDefaultSettings = {
 export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   ActiveScriptsServerPageSize: defaultSettings.ActiveScriptsServerPageSize,
   ActiveScriptsScriptPageSize: defaultSettings.ActiveScriptsScriptPageSize,
+  AlternateStaticRamAlgorithm: defaultSettings.AlternateStaticRamAlgorithm,
   AutosaveInterval: defaultSettings.AutosaveInterval,
   CodeInstructionRunTime: 25,
   DisableASCIIArt: defaultSettings.DisableASCIIArt,

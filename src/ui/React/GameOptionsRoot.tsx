@@ -527,6 +527,15 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 <MenuItem value="ru">ru</MenuItem>
               </Select>
             </ListItem>
+
+            <ListItem>
+              <OptionSwitch
+                checked={Settings.AlternateStaticRamAlgorithm}
+                onChange={(newValue) => (Settings.AlternateStaticRamAlgorithm = newValue)}
+                text="(Experimental) Use alternate import-based static RAM algorithm"
+                tooltip={<>Calculates static RAM usage via imports from the NS package.</>}
+              />
+            </ListItem>
           </List>
           {!location.href.startsWith("file://") && (
             <>
