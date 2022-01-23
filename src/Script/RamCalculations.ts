@@ -43,6 +43,7 @@ const memCheckGlobalKey = ".__GLOBAL__";
  * @param {string} codeCopy - The code being parsed
  * @param {WorkerScript} workerScript - Object containing RAM costs of Netscript functions. Also used to
  *                                      keep track of what functions have/havent been accounted for
+ * @param {string} scriptPath - Full filename for the script. Used to resolve relative imports.
  */
 async function parseOnlyRamCalculate(
   player: IPlayer,
@@ -407,6 +408,7 @@ function parseOnlyCalculateDeps(code: string, currentModule: string, modulePath:
  * @param {string} codeCopy - The script's code
  * @param {Script[]} otherScripts - All other scripts on the server.
  *                                  Used to account for imported scripts
+ * @param {string} scriptPath - Full filename for the script. Used to resolve relative imports.
  */
 export async function calculateRamUsage(
   player: IPlayer,

@@ -320,11 +320,17 @@ export function areImportsEquals(f0: string, f1: string): boolean {
   return areFilesEqual(f0, f1);
 }
 
-export function resolveImportPath(parentScriptPath: string, importedScriptPath: string): string {
-  let importPath = importedScriptPath;
+/**
+ * Resolves import paths either relatively or absolutely depending on what the player
+ * has the setting set to.
+ * @param {string} parentScriptFullPath - The full filename of the script doing the importing.
+ * @param {string} importedScriptFullPath - The full filename of the script being imported.
+ */
+export function resolveImportPath(parentScriptFullPath: string, importedScriptFullPath: string): string {
+  let importPath = importedScriptFullPath;
   if (Settings.EnableRelativeImports) {
     if (!path.isAbsolute(importPath)) {
-      const parentScriptDirectory = path.dirname(parentScriptPath);
+      const parentScriptDirectory = path.dirname(parentScriptFullPath);
       importPath = path.resolve(parentScriptDirectory, importPath);
     }
 
