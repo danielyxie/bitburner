@@ -43,14 +43,14 @@ const memCheckGlobalKey = ".__GLOBAL__";
  * @param {string} codeCopy - The code being parsed
  * @param {WorkerScript} workerScript - Object containing RAM costs of Netscript functions. Also used to
  *                                      keep track of what functions have/havent been accounted for
- * @param {string} scriptPath - Full filename for the script. Used to resolve relative imports.
+ * @param {string} scriptFullPath - Full filename for the script containing codeCopy. Used to resolve relative imports.
  */
 async function parseOnlyRamCalculate(
   player: IPlayer,
   otherScripts: Script[],
   code: string,
   workerScript: WorkerScript,
-  scriptPath: string,
+  scriptFullPath: string,
 ): Promise<RamCalculation> {
   try {
     /**
@@ -89,7 +89,7 @@ async function parseOnlyRamCalculate(
 
     // Parse the initial module, which is the "main" script that is being run
     const initialModule = "__SPECIAL_INITIAL_MODULE__";
-    parseCode(code, initialModule, scriptPath);
+    parseCode(code, initialModule, scriptFullPath);
 
     // Process additional modules, which occurs if the "main" script has any imports
     while (parseQueue.length > 0) {
@@ -406,13 +406,13 @@ function parseOnlyCalculateDeps(code: string, currentModule: string, modulePath:
  * @param {string} codeCopy - The script's code
  * @param {Script[]} otherScripts - All other scripts on the server.
  *                                  Used to account for imported scripts
- * @param {string} scriptPath - Full filename for the script. Used to resolve relative imports.
+ * @param {string} scriptFullPath - Full filename for the script containing codeCopy. Used to resolve relative imports.
  */
 export async function calculateRamUsage(
   player: IPlayer,
   codeCopy: string,
   otherScripts: Script[],
-  scriptPath: string,
+  scriptFullPath: string,
 ): Promise<RamCalculation> {
   // We don't need a real WorkerScript for this. Just an object that keeps
   // track of whatever's needed for RAM calculations
@@ -424,7 +424,7 @@ export async function calculateRamUsage(
   } as WorkerScript;
 
   try {
-    return await parseOnlyRamCalculate(player, otherScripts, codeCopy, workerScript, scriptPath);
+    return await parseOnlyRamCalculate(player, otherScripts, codeCopy, workerScript, scriptFullPath);
   } catch (e) {
     console.error(`Failed to parse script for RAM calculations:`);
     console.error(e);
