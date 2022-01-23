@@ -119,6 +119,10 @@
     "watch:dev": "webpack --watch --mode development",
     "electron": "sh ./package.sh",
     "electron:packager": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png --no-prune",
+    "electron:packager-all": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png",
+    "electron:packager-win": "electron-packager .package bitburner --platform win32 --arch x64 --out .build --overwrite --icon .package/icon.png",
+    "electron:packager-mac": "electron-packager .package bitburner --platform darwin --arch x64 --out .build --overwrite --icon .package/icon.png",
+    "electron:packager-linux": "electron-packager .package bitburner --platform linux --arch x64 --out .build --overwrite --icon .package/icon.png",
     "allbuild": "npm run build && npm run electron && git add --all && git commit --amend --no-edit && git push -f -u origin dev"
   }
 }

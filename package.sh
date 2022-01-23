@@ -26,5 +26,6 @@ cd electron
 npm install
 cd ..
 
+BUILD_PLATFORM="${1:-"all"}"
 # And finally build the app.
-npm run electron:packager
+npm run electron:packager-$BUILD_PLATFORM
