@@ -5547,7 +5547,7 @@ export interface NS extends Singularity {
    * @param data - Data to write.
    * @returns True if the data is successfully written to the port, and false otherwise.
    */
-  tryWritePort(port: number, data: string[] | number): Promise<boolean>;
+  tryWritePort(port: number, data: any): Promise<boolean>;
 
   /**
    * Read content of a file.
@@ -5608,7 +5608,7 @@ export interface NS extends Singularity {
    * Write data to that netscript port.
    * @returns The data popped off the queue if it was full.
    */
-  writePort(port: number, data: string | number): Promise<any>;
+  writePort(port: number, data: any): Promise<any>;
   /**
    * Read data from a port.
    * @remarks
