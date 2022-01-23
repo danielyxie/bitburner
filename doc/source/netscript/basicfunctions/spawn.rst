@@ -23,4 +23,4 @@ spawn() Netscript Function
 
     .. code-block:: javascript
 
-        spawn('foo.script', 10, 'foodnstuff', 90); // "run foo.script 10 foodnstuff 90" in 10 seconds.
+        spawn('foo.script', 10, 'foodnstuff', 90); // "run foo.script foodnstuff 90 -t 10" in 10 seconds.
