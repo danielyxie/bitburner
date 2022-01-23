@@ -916,8 +916,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "You are given the following string which contains only digits between 0 and 9:\n\n",
         `${digits}\n\n`,
         `You are also given a target number of ${target}. Return all possible ways`,
-        "you can add the +, -, and * operators to the string such that it evaluates",
-        "to the target number.\n\n",
+        "you can add the +(add), -(subtract), and *(multiply) operators to the string such",
+        "that it evaluates to the target number. (Normal order of operations applies.)\n\n",
         "The provided answer should be an array of strings containing the valid expressions.",
         "The data provided by this problem is an array with two elements. The first element",
         "is the string of digits, while the second element is the target number:\n\n",
@@ -949,7 +949,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
 
       return [digits, target];
     },
-    name: "Find All Valid Math Expressions",
+    name: "c",
     numTries: 10,
     solver: (data: any[], ans: string): boolean => {
       const num: string = data[0];
