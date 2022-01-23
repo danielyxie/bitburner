@@ -949,7 +949,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
 
       return [digits, target];
     },
-    name: "c",
+    name: "Find All Valid Math Expressions",
     numTries: 10,
     solver: (data: any[], ans: string): boolean => {
       const num: string = data[0];
