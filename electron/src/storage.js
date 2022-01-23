@@ -337,6 +337,10 @@ async function restoreIfNewerExists(window) {
   if (!steam.data && !disk.data) {
     log.info("No data to import");
   } else {
+    log.silly('Steam Cloud Data:');
+    log.silly(steam.data);
+    log.silly('Latest Disk Data:');
+    log.silly(disk.data);
     // We'll just compare using the lastSave field for now.
     if (!steam.data) {
       log.debug('Best potential save match: Disk');

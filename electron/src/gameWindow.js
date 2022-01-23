@@ -9,6 +9,7 @@ const cp = require("child_process");
 const path = require("path");
 const fs = require("fs");
 const { pagePaths } = require("./appPaths");
+const { windowTracker } = require("./windowTracker");
 const { fileURLToPath } = require("url");
 
 const debug = process.argv.includes("--debug");
@@ -21,19 +22,29 @@ async function createWindow(killall) {
     icon = path.join(__dirname, '../icon.png');
   }
 
+  const tracker = windowTracker('main');
   const window = new BrowserWindow({
+    title: 'Bitburner',
     icon,
     show: false,
     backgroundThrottling: false,
     backgroundColor: "#000000",
+    x: tracker.state.x,
+    y: tracker.state.y,
+    width: tracker.state.width,
+    height: tracker.state.height,
+    minWidth: 600,
+    minHeight: 400,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nativeWindowOpen: true,
     },
   });
 
+  setTimeout(() => tracker.track(window), 1000);
+  if (tracker.state.isMaximized) window.maximize();
+
   window.removeMenu();
-  window.maximize();
   window.loadURL(pagePaths.main(killall));
   window.show();
   if (debug) window.webContents.openDevTools();
