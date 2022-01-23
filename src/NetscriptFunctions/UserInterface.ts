@@ -1,7 +1,6 @@
 import { INetscriptHelper } from "./INetscriptHelper";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { getRamCost } from "../Netscript/RamCostGenerator";
 import { GameInfo, IStyleSettings, UserInterface as IUserInterface, UserInterfaceTheme } from "../ScriptEditor/NetscriptDefinitions";
 import { Settings } from "../Settings/Settings";
 import { ThemeEvents } from "../ui/React/Theme";
@@ -17,17 +16,17 @@ export function NetscriptUserInterface(
 ): IUserInterface {
   return {
     getTheme: function (): UserInterfaceTheme {
-      helper.updateDynamicRam("getTheme", getRamCost(player, "ui", "getTheme"));
+      helper.updateDynamicRam("ui.getTheme");
       return { ...Settings.theme };
     },
 
     getStyles: function (): IStyleSettings {
-      helper.updateDynamicRam("getStyles", getRamCost(player, "ui", "getStyles"));
+      helper.updateDynamicRam("ui.getStyles");
       return { ...Settings.styles };
     },
 
     setTheme: function (newTheme: UserInterfaceTheme): void {
-      helper.updateDynamicRam("setTheme", getRamCost(player, "ui", "setTheme"));
+      helper.updateDynamicRam("ui.setTheme");
       const hex = /^(#)((?:[A-Fa-f0-9]{3}){1,2})$/;
       const currentTheme = {...Settings.theme}
       const errors: string[] = [];
@@ -52,7 +51,7 @@ export function NetscriptUserInterface(
     },
 
     setStyles: function (newStyles: IStyleSettings): void {
-      helper.updateDynamicRam("setStyles", getRamCost(player, "ui", "setStyles"));
+      helper.updateDynamicRam("ui.setStyles");
 
       const currentStyles = {...Settings.styles}
       const errors: string[] = [];
@@ -75,21 +74,21 @@ export function NetscriptUserInterface(
     },
 
     resetTheme: function (): void {
-      helper.updateDynamicRam("resetTheme", getRamCost(player, "ui", "resetTheme"));
+      helper.updateDynamicRam("ui.resetTheme");
       Settings.theme = { ...defaultTheme };
       ThemeEvents.emit();
       workerScript.log("ui.resetTheme", () => `Reinitialized theme to default`);
     },
 
     resetStyles: function (): void {
-      helper.updateDynamicRam("resetStyles", getRamCost(player, "ui", "resetStyles"));
+      helper.updateDynamicRam("ui.resetStyles");
       Settings.styles = { ...defaultStyles };
       ThemeEvents.emit();
       workerScript.log("ui.resetStyles", () => `Reinitialized styles to default`);
     },
 
     getGameInfo: function (): GameInfo {
-      helper.updateDynamicRam("getGameInfo", getRamCost(player, "ui", "getGameInfo"));
+      helper.updateDynamicRam("ui.getGameInfo");
       const version = CONSTANTS.VersionString;
       const commit = hash();
       const platform = (navigator.userAgent.toLowerCase().indexOf(" electron/") > -1) ? 'Steam' : 'Browser';

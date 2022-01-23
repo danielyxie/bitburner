@@ -44,6 +44,7 @@ export class Script {
   // Amount of RAM this Script requres to run
   ramUsage = 0;
   ramUsageEntries?: RamUsageEntry[];
+  ramUsageFunctions?: Set<string>;
 
   // hostname of server that this script is on.
   server = "";
@@ -124,6 +125,7 @@ export class Script {
     if (res.cost > 0) {
       this.ramUsage = roundToTwo(res.cost);
       this.ramUsageEntries = res.entries;
+      this.ramUsageFunctions = new Set(res.entries?.map(entry => entry.name) ?? []);
     }
     this.markUpdated();
   }

@@ -2,7 +2,6 @@ import { INetscriptHelper } from "./INetscriptHelper";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { netscriptDelay } from "../NetscriptEvaluator";
-import { getRamCost } from "../Netscript/RamCostGenerator";
 
 import { staneksGift } from "../CotMG/Helper";
 import { Fragments, FragmentById } from "../CotMG/Fragment";
@@ -32,7 +31,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
       const rootX = helper.number("stanek.charge", "rootX", arootX);
       const rootY = helper.number("stanek.charge", "rootY", arootY);
 
-      helper.updateDynamicRam("charge", getRamCost(player, "stanek", "charge"));
+      helper.updateDynamicRam("stanek.charge");
       checkStanekAPIAccess("charge");
       const fragment = staneksGift.findFragment(rootX, rootY);
       if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.charge", `No fragment with root (${rootX}, ${rootY}).`);
@@ -44,13 +43,13 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
       });
     },
     fragmentDefinitions: function (): IFragment[] {
-      helper.updateDynamicRam("fragmentDefinitions", getRamCost(player, "stanek", "fragmentDefinitions"));
+      helper.updateDynamicRam("stanek.fragmentDefinitions");
       checkStanekAPIAccess("fragmentDefinitions");
       workerScript.log("stanek.fragmentDefinitions", () => `Returned ${Fragments.length} fragments`);
       return Fragments.map((f) => f.copy());
     },
     activeFragments: function (): IActiveFragment[] {
-      helper.updateDynamicRam("activeFragments", getRamCost(player, "stanek", "activeFragments"));
+      helper.updateDynamicRam("stanek.activeFragments");
       checkStanekAPIAccess("activeFragments");
       workerScript.log("stanek.activeFragments", () => `Returned ${staneksGift.fragments.length} fragments`);
       return staneksGift.fragments.map((af) => {
@@ -58,7 +57,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
       });
     },
     clear: function (): void {
-      helper.updateDynamicRam("clear", getRamCost(player, "stanek", "clear"));
+      helper.updateDynamicRam("stanek.clear");
       checkStanekAPIAccess("clear");
       workerScript.log("stanek.clear", () => `Cleared Stanek's Gift.`);
       staneksGift.clear();
@@ -68,7 +67,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
       const rootY = helper.number("stanek.canPlace", "rootY", arootY);
       const rotation = helper.number("stanek.canPlace", "rotation", arotation);
       const fragmentId = helper.number("stanek.canPlace", "fragmentId", afragmentId);
-      helper.updateDynamicRam("canPlace", getRamCost(player, "stanek", "canPlace"));
+      helper.updateDynamicRam("stanek.canPlace");
       checkStanekAPIAccess("canPlace");
       const fragment = FragmentById(fragmentId);
       if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.canPlace", `Invalid fragment id: ${fragmentId}`);
@@ -80,7 +79,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
       const rootY = helper.number("stanek.place", "rootY", arootY);
       const rotation = helper.number("stanek.place", "rotation", arotation);
       const fragmentId = helper.number("stanek.place", "fragmentId", afragmentId);
-      helper.updateDynamicRam("place", getRamCost(player, "stanek", "place"));
+      helper.updateDynamicRam("stanek.place");
       checkStanekAPIAccess("place");
       const fragment = FragmentById(fragmentId);
       if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.place", `Invalid fragment id: ${fragmentId}`);
@@ -89,7 +88,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
     get: function (arootX: any, arootY: any): IActiveFragment | undefined {
       const rootX = helper.number("stanek.get", "rootX", arootX);
       const rootY = helper.number("stanek.get", "rootY", arootY);
-      helper.updateDynamicRam("get", getRamCost(player, "stanek", "get"));
+      helper.updateDynamicRam("stanek.get");
       checkStanekAPIAccess("get");
       const fragment = staneksGift.findFragment(rootX, rootY);
       if (fragment !== undefined) return fragment.copy();
@@ -98,7 +97,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
     remove: function (arootX: any, arootY: any): boolean {
       const rootX = helper.number("stanek.remove", "rootX", arootX);
       const rootY = helper.number("stanek.remove", "rootY", arootY);
-      helper.updateDynamicRam("remove", getRamCost(player, "stanek", "remove"));
+      helper.updateDynamicRam("stanek.remove");
       checkStanekAPIAccess("remove");
       return staneksGift.delete(rootX, rootY);
     },

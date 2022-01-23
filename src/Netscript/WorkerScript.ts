@@ -7,7 +7,6 @@
  * RunningScript objects
  */
 import { Environment } from "./Environment";
-import { RamCostConstants } from "./RamCostGenerator";
 
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
@@ -43,18 +42,6 @@ export class WorkerScript {
   disableLogs: IMap<boolean> = {};
 
   /**
-   * Used for dynamic RAM calculation. Stores names of all functions that have
-   * already been checked by this script.
-   * TODO: Could probably just combine this with loadedFns?
-   */
-  dynamicLoadedFns: IMap<boolean> = {};
-
-  /**
-   * Tracks dynamic RAM usage
-   */
-  dynamicRamUsage: number = RamCostConstants.ScriptBaseRamCost;
-
-  /**
    * Netscript Environment for this script
    */
   env: Environment;
@@ -63,12 +50,6 @@ export class WorkerScript {
    * Status message in case of script error. Currently unused I think
    */
   errorMessage = "";
-
-  /**
-   * Used for static RAM calculation. Stores names of all functions that have
-   * already been checked by this script
-   */
-  loadedFns: IMap<boolean> = {};
 
   /**
    * Filename of script

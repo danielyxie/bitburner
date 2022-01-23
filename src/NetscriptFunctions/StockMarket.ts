@@ -1,7 +1,6 @@
 import { INetscriptHelper } from "./INetscriptHelper";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { getRamCost } from "../Netscript/RamCostGenerator";
 import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";
 import { StockMarket, SymbolToStockMap, placeOrder, cancelOrder } from "../StockMarket/StockMarket";
 import { getBuyTransactionCost, getSellTransactionGain } from "../StockMarket/StockMarketHelpers";
@@ -35,33 +34,33 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
   };
   return {
     getSymbols: function (): any {
-      helper.updateDynamicRam("getSymbols", getRamCost(player, "stock", "getSymbols"));
+      helper.updateDynamicRam("stock.getSymbols");
       checkTixApiAccess("getSymbols");
       return Object.values(StockSymbols);
     },
     getPrice: function (symbol: any): any {
-      helper.updateDynamicRam("getPrice", getRamCost(player, "stock", "getPrice"));
+      helper.updateDynamicRam("stock.getPrice");
       checkTixApiAccess("getPrice");
       const stock = getStockFromSymbol(symbol, "getPrice");
 
       return stock.price;
     },
     getAskPrice: function (symbol: any): any {
-      helper.updateDynamicRam("getAskPrice", getRamCost(player, "stock", "getAskPrice"));
+      helper.updateDynamicRam("stock.getAskPrice");
       checkTixApiAccess("getAskPrice");
       const stock = getStockFromSymbol(symbol, "getAskPrice");
 
       return stock.getAskPrice();
     },
     getBidPrice: function (symbol: any): any {
-      helper.updateDynamicRam("getBidPrice", getRamCost(player, "stock", "getBidPrice"));
+      helper.updateDynamicRam("stock.getBidPrice");
       checkTixApiAccess("getBidPrice");
       const stock = getStockFromSymbol(symbol, "getBidPrice");
 
       return stock.getBidPrice();
     },
     getPosition: function (symbol: any): any {
-      helper.updateDynamicRam("getPosition", getRamCost(player, "stock", "getPosition"));
+      helper.updateDynamicRam("stock.getPosition");
       checkTixApiAccess("getPosition");
       const stock = SymbolToStockMap[symbol];
       if (stock == null) {
@@ -70,14 +69,14 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
     },
     getMaxShares: function (symbol: any): any {
-      helper.updateDynamicRam("getMaxShares", getRamCost(player, "stock", "getMaxShares"));
+      helper.updateDynamicRam("stock.getMaxShares");
       checkTixApiAccess("getMaxShares");
       const stock = getStockFromSymbol(symbol, "getMaxShares");
 
       return stock.maxShares;
     },
     getPurchaseCost: function (symbol: any, shares: any, posType: any): any {
-      helper.updateDynamicRam("getPurchaseCost", getRamCost(player, "stock", "getPurchaseCost"));
+      helper.updateDynamicRam("stock.getPurchaseCost");
       checkTixApiAccess("getPurchaseCost");
       const stock = getStockFromSymbol(symbol, "getPurchaseCost");
       shares = Math.round(shares);
@@ -100,7 +99,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       return res;
     },
     getSaleGain: function (symbol: any, shares: any, posType: any): any {
-      helper.updateDynamicRam("getSaleGain", getRamCost(player, "stock", "getSaleGain"));
+      helper.updateDynamicRam("stock.getSaleGain");
       checkTixApiAccess("getSaleGain");
       const stock = getStockFromSymbol(symbol, "getSaleGain");
       shares = Math.round(shares);
@@ -123,14 +122,14 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       return res;
     },
     buy: function (symbol: any, shares: any): any {
-      helper.updateDynamicRam("buy", getRamCost(player, "stock", "buy"));
+      helper.updateDynamicRam("stock.buy");
       checkTixApiAccess("buy");
       const stock = getStockFromSymbol(symbol, "buy");
       const res = buyStock(stock, shares, workerScript, {});
       return res ? stock.getAskPrice() : 0;
     },
     sell: function (symbol: any, shares: any): any {
-      helper.updateDynamicRam("sell", getRamCost(player, "stock", "sell"));
+      helper.updateDynamicRam("stock.sell");
       checkTixApiAccess("sell");
       const stock = getStockFromSymbol(symbol, "sell");
       const res = sellStock(stock, shares, workerScript, {});
@@ -138,7 +137,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       return res ? stock.getBidPrice() : 0;
     },
     short: function (symbol: any, shares: any): any {
-      helper.updateDynamicRam("short", getRamCost(player, "stock", "short"));
+      helper.updateDynamicRam("stock.short");
       checkTixApiAccess("short");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 1) {
@@ -154,7 +153,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       return res ? stock.getBidPrice() : 0;
     },
     sellShort: function (symbol: any, shares: any): any {
-      helper.updateDynamicRam("sellShort", getRamCost(player, "stock", "sellShort"));
+      helper.updateDynamicRam("stock.sellShort");
       checkTixApiAccess("sellShort");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 1) {
@@ -170,7 +169,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       return res ? stock.getAskPrice() : 0;
     },
     placeOrder: function (symbol: any, shares: any, price: any, type: any, pos: any): any {
-      helper.updateDynamicRam("placeOrder", getRamCost(player, "stock", "placeOrder"));
+      helper.updateDynamicRam("stock.placeOrder");
       checkTixApiAccess("placeOrder");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 2) {
@@ -209,7 +208,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       return placeOrder(stock, shares, price, orderType, orderPos, workerScript);
     },
     cancelOrder: function (symbol: any, shares: any, price: any, type: any, pos: any): any {
-      helper.updateDynamicRam("cancelOrder", getRamCost(player, "stock", "cancelOrder"));
+      helper.updateDynamicRam("stock.cancelOrder");
       checkTixApiAccess("cancelOrder");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 2) {
@@ -259,7 +258,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       return cancelOrder(params, workerScript);
     },
     getOrders: function (): any {
-      helper.updateDynamicRam("getOrders", getRamCost(player, "stock", "getOrders"));
+      helper.updateDynamicRam("stock.getOrders");
       checkTixApiAccess("getOrders");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 2) {
@@ -291,7 +290,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       return orders;
     },
     getVolatility: function (symbol: any): any {
-      helper.updateDynamicRam("getVolatility", getRamCost(player, "stock", "getVolatility"));
+      helper.updateDynamicRam("stock.getVolatility");
       if (!player.has4SDataTixApi) {
         throw helper.makeRuntimeErrorMsg("getVolatility", "You don't have 4S Market Data TIX API Access!");
       }
@@ -300,7 +299,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       return stock.mv / 100; // Convert from percentage to decimal
     },
     getForecast: function (symbol: any): any {
-      helper.updateDynamicRam("getForecast", getRamCost(player, "stock", "getForecast"));
+      helper.updateDynamicRam("stock.getForecast");
       if (!player.has4SDataTixApi) {
         throw helper.makeRuntimeErrorMsg("getForecast", "You don't have 4S Market Data TIX API Access!");
       }
@@ -311,7 +310,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       return forecast / 100; // Convert from percentage to decimal
     },
     purchase4SMarketData: function () {
-      helper.updateDynamicRam("purchase4SMarketData", getRamCost(player, "stock", "purchase4SMarketData"));
+      helper.updateDynamicRam("stock.purchase4SMarketData");
       checkTixApiAccess("purchase4SMarketData");
 
       if (player.has4SData) {
@@ -330,7 +329,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       return true;
     },
     purchase4SMarketDataTixApi: function () {
-      helper.updateDynamicRam("purchase4SMarketDataTixApi", getRamCost(player, "stock", "purchase4SMarketDataTixApi"));
+      helper.updateDynamicRam("stock.purchase4SMarketDataTixApi");
       checkTixApiAccess("purchase4SMarketDataTixApi");
 
       if (player.has4SDataTixApi) {

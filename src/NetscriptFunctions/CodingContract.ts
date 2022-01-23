@@ -1,7 +1,6 @@
 import { INetscriptHelper } from "./INetscriptHelper";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { getRamCost } from "../Netscript/RamCostGenerator";
 import { is2DArray } from "../utils/helpers/is2DArray";
 import { CodingContract } from "../CodingContracts";
 import { CodingContract as ICodingContract } from "../ScriptEditor/NetscriptDefinitions";
@@ -31,7 +30,7 @@ export function NetscriptCodingContract(
       hostname: any = workerScript.hostname,
       { returnReward }: any = {},
     ): boolean | string {
-      helper.updateDynamicRam("attempt", getRamCost(player, "codingcontract", "attempt"));
+      helper.updateDynamicRam("codingcontract.attempt");
       const contract = getCodingContract("attempt", hostname, filename);
 
       // Convert answer to string. If the answer is a 2D array, then we have to
@@ -77,12 +76,12 @@ export function NetscriptCodingContract(
       }
     },
     getContractType: function (filename: any, hostname: any = workerScript.hostname): string {
-      helper.updateDynamicRam("getContractType", getRamCost(player, "codingcontract", "getContractType"));
+      helper.updateDynamicRam("codingcontract.getContractType");
       const contract = getCodingContract("getContractType", hostname, filename);
       return contract.getType();
     },
     getData: function (filename: any, hostname: any = workerScript.hostname): any {
-      helper.updateDynamicRam("getData", getRamCost(player, "codingcontract", "getData"));
+      helper.updateDynamicRam("codingcontract.getData");
       const contract = getCodingContract("getData", hostname, filename);
       const data = contract.getData();
       if (data.constructor === Array) {
@@ -102,12 +101,12 @@ export function NetscriptCodingContract(
       }
     },
     getDescription: function (filename: any, hostname: any = workerScript.hostname): string {
-      helper.updateDynamicRam("getDescription", getRamCost(player, "codingcontract", "getDescription"));
+      helper.updateDynamicRam("codingcontract.getDescription");
       const contract = getCodingContract("getDescription", hostname, filename);
       return contract.getDescription();
     },
     getNumTriesRemaining: function (filename: any, hostname: any = workerScript.hostname): number {
-      helper.updateDynamicRam("getNumTriesRemaining", getRamCost(player, "codingcontract", "getNumTriesRemaining"));
+      helper.updateDynamicRam("codingcontract.getNumTriesRemaining");
       const contract = getCodingContract("getNumTriesRemaining", hostname, filename);
       return contract.getMaxNumTries() - contract.tries;
     },

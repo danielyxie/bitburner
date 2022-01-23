@@ -15,6 +15,7 @@ import { Script } from "../Script/Script";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { areImportsEquals } from "../Terminal/DirectoryHelpers";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import {IMap} from '../types.js';
 
 export interface RamUsageEntry {
   type: 'ns' | 'dom' | 'fn' | 'misc';
@@ -43,12 +44,15 @@ const memCheckGlobalKey = ".__GLOBAL__";
  * @param {string} codeCopy - The code being parsed
  * @param {WorkerScript} workerScript - Object containing RAM costs of Netscript functions. Also used to
  *                                      keep track of what functions have/havent been accounted for
+ * @param {IMap<boolean>} loadedFns - Used for static RAM calculation. Stores names of all functions that have already
+ *                                    been checked by this script
  */
 async function parseOnlyRamCalculate(
   player: IPlayer,
   otherScripts: Script[],
   code: string,
   workerScript: WorkerScript,
+  loadedFns: IMap<boolean>
 ): Promise<RamCalculation> {
   try {
     /**
@@ -195,10 +199,10 @@ async function parseOnlyRamCalculate(
         }
 
         // Only count each function once
-        if (workerScript.loadedFns[ref]) {
+        if (loadedFns[ref]) {
           continue;
         } else {
-          workerScript.loadedFns[ref] = true;
+          loadedFns[ref] = true;
         }
 
         // This accounts for namespaces (Bladeburner, CodingCpntract, etc.)
@@ -414,14 +418,13 @@ export async function calculateRamUsage(
   // We don't need a real WorkerScript for this. Just an object that keeps
   // track of whatever's needed for RAM calculations
   const workerScript = {
-    loadedFns: {},
     env: {
       vars: RamCosts,
     },
   } as WorkerScript;
 
   try {
-    return await parseOnlyRamCalculate(player, otherScripts, codeCopy, workerScript);
+    return await parseOnlyRamCalculate(player, otherScripts, codeCopy, workerScript, {});
   } catch (e) {
     console.error(`Failed to parse script for RAM calculations:`);
     console.error(e);
