@@ -14,7 +14,14 @@ const debug = process.argv.includes("--debug");
 
 async function createWindow(killall) {
   const setStopProcessHandler = global.app_handlers.stopProcess;
+
+  let icon;
+  if (process.platform == 'linux') {
+    icon = path.join(__dirname, 'icon.png');
+  }
+
   const window = new BrowserWindow({
+    icon,
     show: false,
     backgroundThrottling: false,
     backgroundColor: "#000000",
