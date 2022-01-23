@@ -12,10 +12,8 @@ import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
 import { Script } from "../Script/Script";
-import { WorkerScript } from "../Netscript/WorkerScript";
 import { areImportsEquals } from "../Terminal/DirectoryHelpers";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import {IMap} from '../types.js';
 
 export interface RamUsageEntry {
   type: 'ns' | 'dom' | 'fn' | 'misc';
@@ -37,22 +35,73 @@ const specialReferenceWHILE = "__SPECIAL_referenceWhile";
 // The global scope of a script is registered under this key during parsing.
 const memCheckGlobalKey = ".__GLOBAL__";
 
+export function getRamCalculationForKeys(player: IPlayer, keys: Iterable<string>): RamCalculation {
+  let entries: RamUsageEntry[] = [{ type: 'misc', name: 'baseCost', cost: RamCostConstants.ScriptBaseRamCost}];
+  const seen: Set<string> = new Set();
+  for(const key of keys){
+    if(seen.has(key))
+      continue;
+    seen.add(key);
+    // Check if this is one of the special keys, and add the appropriate ram cost if so.
+    switch(key){
+      case 'hacknet': {
+        entries.push({ type: 'ns', name: 'hacknet', cost: RamCostConstants.ScriptHacknetNodesRamCost});
+        continue;
+      }
+      case 'document': {
+        entries.push({ type: 'dom', name: 'document', cost: RamCostConstants.ScriptDomRamCost});
+        continue;
+      }
+      case 'window': {
+        entries.push({ type: 'dom', name: 'window', cost: RamCostConstants.ScriptDomRamCost});
+        continue;
+      }
+      case 'corporation': {
+        entries.push({ type: 'ns', name: 'corporation', cost: RamCostConstants.ScriptCorporationRamCost});
+        continue;
+      }
+    }
+
+    let cost, name: string | null = null;
+    for(const namespace of ['bladeburner', 'codingcontract', 'stanek', 'gang', 'sleeve', 'stock', 'ui']){
+      if(key in RamCosts[namespace]){
+        cost = RamCosts[namespace][key];
+        name = `${namespace}.${key}`;
+        break;
+      }
+    }
+    if(name == null){
+      cost = RamCosts[key];
+      name = key;
+    }
+
+    if(typeof cost === 'function')
+      cost = cost(player);
+    else if(typeof cost !== 'number')
+      cost = 0;
+    if(cost == 0)
+      continue;
+
+    entries.push({ type: 'fn', name, cost});
+  }
+  entries = entries.filter(entry => entry.cost > 0);
+  let totalRam = 0;
+  for(const entry of entries)
+    totalRam += entry.cost;
+  return {cost: totalRam, entries};
+}
+
+
 /**
  * Parses code into an AST and walks through it recursively to calculate
  * RAM usage. Also accounts for imported modules.
  * @param {Script[]} otherScripts - All other scripts on the server. Used to account for imported scripts
  * @param {string} codeCopy - The code being parsed
- * @param {WorkerScript} workerScript - Object containing RAM costs of Netscript functions. Also used to
- *                                      keep track of what functions have/havent been accounted for
- * @param {IMap<boolean>} loadedFns - Used for static RAM calculation. Stores names of all functions that have already
- *                                    been checked by this script
  */
 async function parseOnlyRamCalculate(
   player: IPlayer,
   otherScripts: Script[],
-  code: string,
-  workerScript: WorkerScript,
-  loadedFns: IMap<boolean>
+  code: string
 ): Promise<RamCalculation> {
   try {
     /**
@@ -142,31 +191,11 @@ async function parseOnlyRamCalculate(
 
     // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
     // are those that start with __SPECIAL_INITIAL_MODULE__.
-    let ram = RamCostConstants.ScriptBaseRamCost;
-    const detailedCosts: RamUsageEntry[] = [{ type: 'misc', name: 'baseCost', cost: RamCostConstants.ScriptBaseRamCost}];
     const unresolvedRefs = Object.keys(dependencyMap).filter((s) => s.startsWith(initialModule));
-    const resolvedRefs = new Set();
+    const resolvedRefs = new Set<string>();
     while (unresolvedRefs.length > 0) {
       const ref = unresolvedRefs.shift();
       if (ref === undefined) throw new Error("ref should not be undefined");
-
-      // Check if this is one of the special keys, and add the appropriate ram cost if so.
-      if (ref === "hacknet" && !resolvedRefs.has("hacknet")) {
-        ram += RamCostConstants.ScriptHacknetNodesRamCost;
-        detailedCosts.push({ type: 'ns', name: 'hacknet', cost: RamCostConstants.ScriptHacknetNodesRamCost});
-      }
-      if (ref === "document" && !resolvedRefs.has("document")) {
-        ram += RamCostConstants.ScriptDomRamCost;
-        detailedCosts.push({ type: 'dom', name: 'document', cost: RamCostConstants.ScriptDomRamCost});
-      }
-      if (ref === "window" && !resolvedRefs.has("window")) {
-        ram += RamCostConstants.ScriptDomRamCost;
-        detailedCosts.push({ type: 'dom', name: 'window', cost: RamCostConstants.ScriptDomRamCost});
-      }
-      if (ref === "corporation" && !resolvedRefs.has("corporation")) {
-        ram += RamCostConstants.ScriptCorporationRamCost;
-        detailedCosts.push({ type: 'ns', name: 'corporation', cost: RamCostConstants.ScriptCorporationRamCost});
-      }
 
       resolvedRefs.add(ref);
 
@@ -184,63 +213,8 @@ async function parseOnlyRamCalculate(
           if (!resolvedRefs.has(dep)) unresolvedRefs.push(dep);
         }
       }
-
-      // Check if this identifier is a function in the workerScript environment.
-      // If it is, then we need to get its RAM cost.
-      try {
-        function applyFuncRam(cost: any): number {
-          if (typeof cost === "number") {
-            return cost;
-          } else if (typeof cost === "function") {
-            return cost(player);
-          } else {
-            return 0;
-          }
-        }
-
-        // Only count each function once
-        if (loadedFns[ref]) {
-          continue;
-        } else {
-          loadedFns[ref] = true;
-        }
-
-        // This accounts for namespaces (Bladeburner, CodingCpntract, etc.)
-        let func;
-        let refDetail = 'n/a';
-        if (ref in workerScript.env.vars.bladeburner) {
-          func = workerScript.env.vars.bladeburner[ref];
-          refDetail = `bladeburner.${ref}`;
-        } else if (ref in workerScript.env.vars.codingcontract) {
-          func = workerScript.env.vars.codingcontract[ref];
-          refDetail = `codingcontract.${ref}`;
-        } else if (ref in workerScript.env.vars.stanek) {
-          func = workerScript.env.vars.stanek[ref];
-          refDetail = `stanek.${ref}`;
-        } else if (ref in workerScript.env.vars.gang) {
-          func = workerScript.env.vars.gang[ref];
-          refDetail = `gang.${ref}`;
-        } else if (ref in workerScript.env.vars.sleeve) {
-          func = workerScript.env.vars.sleeve[ref];
-          refDetail = `sleeve.${ref}`;
-        } else if (ref in workerScript.env.vars.stock) {
-          func = workerScript.env.vars.stock[ref];
-          refDetail = `stock.${ref}`;
-        } else if (ref in workerScript.env.vars.ui) {
-          func = workerScript.env.vars.ui[ref];
-          refDetail = `ui.${ref}`;
-        } else {
-          func = workerScript.env.vars[ref];
-          refDetail = `${ref}`;
-        }
-        const fnRam = applyFuncRam(func);
-        ram += fnRam;
-        detailedCosts.push({ type: 'fn', name: refDetail, cost: fnRam});
-      } catch (error) {
-        continue;
-      }
     }
-    return { cost: ram, entries: detailedCosts.filter(e => e.cost > 0) };
+    return getRamCalculationForKeys(player, resolvedRefs);
   } catch (error) {
     // console.info("parse or eval error: ", error);
     // This is not unexpected. The user may be editing a script, and it may be in
@@ -415,16 +389,8 @@ export async function calculateRamUsage(
   codeCopy: string,
   otherScripts: Script[],
 ): Promise<RamCalculation> {
-  // We don't need a real WorkerScript for this. Just an object that keeps
-  // track of whatever's needed for RAM calculations
-  const workerScript = {
-    env: {
-      vars: RamCosts,
-    },
-  } as WorkerScript;
-
   try {
-    return await parseOnlyRamCalculate(player, otherScripts, codeCopy, workerScript, {});
+    return await parseOnlyRamCalculate(player, otherScripts, codeCopy);
   } catch (e) {
     console.error(`Failed to parse script for RAM calculations:`);
     console.error(e);
