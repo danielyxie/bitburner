@@ -1,0 +1,31 @@
+name: Fetch Merged Changes
+on:
+  workflow_dispatch:
+    inputs:
+      fromCommit:
+        description: 'From Commit (SHA)'
+        required: true
+      toCommit:
+        description: 'To Commit (SHA)'
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node v16.13.1
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.1
+          cache: 'npm'
+      - name: Install NPM dependencies
+        working-directory: ./tools/changelog
+        run: npm ci
+      - name: Fetch Changes from GitHub API
+        working-directory: ./tools/changelog
+        run: |
+          node index.js --key=${{ secrets.GITHUB_TOKEN }} --from=${{ github.event.inputs.fromCommit }} --to=${{ github.event.inputs.toCommit }} > gistUrl
+          echo ""
+          echo "Draft Changelog uploaded as a gist:"
+          cat gistUrl
+

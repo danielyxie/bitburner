@@ -1,4 +1,3 @@
-import { EOL } from 'os';
 import { Octokit } from "@octokit/rest";
 import commandLineArgs from "command-line-args";
 
@@ -175,7 +174,17 @@ class MergeChangelog {
       repo,
       branch,
     });
-    return response.commit.sha;
+    return response.data.commit.sha;
+  }
+
+  async createGist(data) {
+    const description = `[draft] Bitburner Changelog - v1.x.x (${data.changes.to.date.toISOString().split('T')[0]}).md`;
+    const response = await this.octokit.rest.gists.create({
+      files: { "bitburner_changelog_v1.x.x__DRAFT.md": {content: data.log } },
+      description,
+      public: false,
+    });
+    return response.data.html_url;
   }
 
   async getChangelog(from, to) {
@@ -186,7 +195,7 @@ class MergeChangelog {
 Changelog
 =========
 
-v.1.X.X - ${changes.to.date.toISOString().split('T')[0]} - Description
+v1.X.X - ${changes.to.date.toISOString().split('T')[0]} - Description
 ----------------------------
 
 **Information**
@@ -199,9 +208,9 @@ ${changes.from.date.toISOString()} and ${changes.to.date.toISOString()}
 
 **Merged Pull Requests**
 
-[See on GitHub](https://github.com/search?q=${encodeURIComponent(changes.query)})
+[See on GitHub](https://github.com/search?q=${encodeURIComponent(changes.pullQuery)})
 
-${pullLines.join(EOL)}
+${pullLines.join('\n')}
 
 `;
 
@@ -209,12 +218,16 @@ ${pullLines.join(EOL)}
       log += `
 ** Other Commits **
 
-${commitLines.join(EOL)}
+[See on GitHub](https://github.com/search?q=${encodeURIComponent(changes.commitQuery)})
+
+${commitLines.join('\n')}
 `;
     }
-    return log.trim();
+    return {
+      log: log.trim(),
+      changes: changes,
+    };
   }
-
 
   getPullMarkdown(pr) {
     return `* [${pr.merge_commit_sha.slice(0, 7)}](${basePath}/commit/${pr.merge_commit_sha}) | ` +
@@ -229,4 +242,6 @@ ${commitLines.join(EOL)}
 }
 
 const api = new MergeChangelog({ auth: cliArgs.key });
-api.getChangelog(cliArgs.from, cliArgs.to).then(console.log);
+api.getChangelog(cliArgs.from, cliArgs.to).then((data) => {
+  api.createGist(data).then((gist) => console.log(gist));
+});
