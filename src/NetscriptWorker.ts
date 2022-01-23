@@ -32,7 +32,7 @@ import { sprintf } from "sprintf-js";
 
 import { parse } from "acorn";
 import { simple as walksimple } from "acorn-walk";
-import { areFilesEqual } from "./Terminal/DirectoryHelpers";
+import { areFilesEqual, resolveImportPath } from "./Terminal/DirectoryHelpers";
 import { Player } from "./Player";
 import { Terminal } from "./Terminal";
 import { IPlayer } from "./PersonObjects/IPlayer";
@@ -348,10 +348,8 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
   walksimple(ast, {
     ImportDeclaration: (node: any) => {
       hasImports = true;
-      let scriptName = node.source.value;
-      if (scriptName.startsWith("./")) {
-        scriptName = scriptName.slice(2);
-      }
+      const scriptName = resolveImportPath(workerScript.name, node.source.value);
+
       const script = getScript(scriptName);
       if (script == null) {
         throw new Error("'Import' failed due to invalid script: " + scriptName);

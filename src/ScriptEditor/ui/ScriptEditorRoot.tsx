@@ -243,7 +243,12 @@ export function Root(props: IProps): React.ReactElement {
     }
     setUpdatingRam(true);
     const codeCopy = newCode + "";
-    const ramUsage = await calculateRamUsage(props.player, codeCopy, props.player.getCurrentServer().scripts);
+    const ramUsage = await calculateRamUsage(
+      props.player,
+      codeCopy,
+      props.player.getCurrentServer().scripts,
+      currentScript ? currentScript.fileName : "",
+    );
     if (ramUsage.cost > 0) {
       const entries = ramUsage.entries?.sort((a, b) => b.cost - a.cost) ?? [];
       const entriesDisp = [];

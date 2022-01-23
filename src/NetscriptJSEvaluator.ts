@@ -9,7 +9,7 @@ import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { ScriptUrl } from "./Script/ScriptUrl";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { Script } from "./Script/Script";
-import { areImportsEquals } from "./Terminal/DirectoryHelpers";
+import { areImportsEquals, resolveImportPath } from "./Terminal/DirectoryHelpers";
 import { IPlayer } from "./PersonObjects/IPlayer";
 
 // Makes a blob that contains the code of a given script.
@@ -21,11 +21,6 @@ export async function compile(player: IPlayer, script: Script, scripts: Script[]
   if (!shouldCompile(script, scripts)) return;
   // The URL at the top is the one we want to import. It will
   // recursively import all the other modules in the urlStack.
-  //
-  // Webpack likes to turn the import into a require, which sort of
-  // but not really behaves like import. Particularly, it cannot
-  // load fully dynamic content. So we hide the import from webpack
-  // by placing it inside an eval call.
   await script.updateRamUsage(player, scripts);
   const uurls = _getScriptUrls(script, scripts, []);
   const url = uurls[uurls.length - 1].url;
@@ -43,7 +38,7 @@ export async function compile(player: IPlayer, script: Script, scripts: Script[]
     // }
   }
   script.url = url;
-  script.module = new Promise((resolve) => resolve(eval("import(url)")));
+  script.module = await import(/* webpackIgnore: true */ url);
   script.dependencies = uurls;
 }
 
@@ -180,7 +175,7 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
     let transformedCode = script.code;
     // Loop through each node and replace the script name with a blob url.
     for (const node of importNodes) {
-      const filename = node.filename.startsWith("./") ? node.filename.substring(2) : node.filename;
+      const filename = resolveImportPath(script.filename, node.filename);
 
       // Find the corresponding script.
       const matchingScripts = scripts.filter((s) => areImportsEquals(s.filename, filename));

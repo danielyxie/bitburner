@@ -1,3 +1,6 @@
+import path from "path-browserify";
+import { Settings } from "../Settings/Settings";
+
 /**
  * Helper functions that implement "directory" functionality in the Terminal.
  * These aren't "real" directories, it's more of a pseudo-directory implementation
@@ -315,4 +318,21 @@ export function areImportsEquals(f0: string, f1: string): boolean {
   if (!f0.endsWith(".ns") && !f0.endsWith(".js")) f0 = f0 + ".js";
   if (!f1.endsWith(".ns") && !f1.endsWith(".js")) f1 = f1 + ".js";
   return areFilesEqual(f0, f1);
+}
+
+export function resolveImportPath(parentScriptPath: string, importedScriptPath: string): string {
+  let importPath = importedScriptPath;
+  if (Settings.EnableRelativeImports) {
+    if (!path.isAbsolute(importPath)) {
+      const parentScriptDirectory = path.dirname(parentScriptPath);
+      importPath = path.resolve(parentScriptDirectory, importPath);
+    }
+
+    if (isInRootDirectory(importPath) && importPath.startsWith("/")) importPath = importPath.slice(1);
+    else if (!isInRootDirectory(importPath) && !importPath.startsWith("/")) importPath = `/${importPath}`;
+  } else {
+    importPath = importPath.startsWith("./") ? importPath.substring(2) : importPath;
+  }
+
+  return importPath;
 }

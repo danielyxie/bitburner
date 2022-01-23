@@ -13,7 +13,7 @@ import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
 import { Script } from "../Script/Script";
 import { WorkerScript } from "../Netscript/WorkerScript";
-import { areImportsEquals } from "../Terminal/DirectoryHelpers";
+import { areImportsEquals, resolveImportPath } from "../Terminal/DirectoryHelpers";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 export interface RamUsageEntry {
@@ -49,6 +49,7 @@ async function parseOnlyRamCalculate(
   otherScripts: Script[],
   code: string,
   workerScript: WorkerScript,
+  scriptPath: string,
 ): Promise<RamCalculation> {
   try {
     /**
@@ -70,8 +71,8 @@ async function parseOnlyRamCalculate(
     const parseQueue: string[] = [];
 
     // Parses a chunk of code with a given module name, and updates parseQueue and dependencyMap.
-    function parseCode(code: string, moduleName: string): void {
-      const result = parseOnlyCalculateDeps(code, moduleName);
+    function parseCode(code: string, moduleName: string, modulePath: string): void {
+      const result = parseOnlyCalculateDeps(code, moduleName, modulePath);
       completedParses.add(moduleName);
 
       // Add any additional modules to the parse queue;
@@ -87,7 +88,7 @@ async function parseOnlyRamCalculate(
 
     // Parse the initial module, which is the "main" script that is being run
     const initialModule = "__SPECIAL_INITIAL_MODULE__";
-    parseCode(code, initialModule);
+    parseCode(code, initialModule, scriptPath);
 
     // Process additional modules, which occurs if the "main" script has any imports
     while (parseQueue.length > 0) {
@@ -100,7 +101,7 @@ async function parseOnlyRamCalculate(
       if (nextModule.startsWith("https://") || nextModule.startsWith("http://")) {
         try {
           // eslint-disable-next-line no-await-in-loop
-          const module = await eval("import(nextModule)");
+          const module = await import(/* webpackIgnore: true */ nextModule);
           code = "";
           for (const prop in module) {
             if (typeof module[prop] === "function") {
@@ -118,9 +119,8 @@ async function parseOnlyRamCalculate(
         }
 
         let script = null;
-        const fn = nextModule.startsWith("./") ? nextModule.slice(2) : nextModule;
         for (const s of otherScripts) {
-          if (areImportsEquals(s.filename, fn)) {
+          if (areImportsEquals(s.filename, nextModule)) {
             script = s;
             break;
           }
@@ -133,7 +133,7 @@ async function parseOnlyRamCalculate(
         code = script.code;
       }
 
-      parseCode(code, nextModule);
+      parseCode(code, nextModule, nextModule);
     }
 
     // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
@@ -292,7 +292,7 @@ export function checkInfiniteLoop(code: string): number {
  * for RAM usage calculations. It also returns an array of additional modules
  * that need to be parsed (i.e. are 'import'ed scripts).
  */
-function parseOnlyCalculateDeps(code: string, currentModule: string): any {
+function parseOnlyCalculateDeps(code: string, currentModule: string, modulePath: string): any {
   const ast = parse(code, { sourceType: "module", ecmaVersion: "latest" });
   // Everything from the global scope goes in ".". Everything else goes in ".function", where only
   // the outermost layer of functions counts.
@@ -367,7 +367,7 @@ function parseOnlyCalculateDeps(code: string, currentModule: string): any {
     Object.assign(
       {
         ImportDeclaration: (node: any, st: any) => {
-          const importModuleName = node.source.value;
+          const importModuleName = resolveImportPath(modulePath, node.source.value);
           additionalModules.push(importModuleName);
 
           // This module's global scope refers to that module's global scope, no matter how we
@@ -412,6 +412,7 @@ export async function calculateRamUsage(
   player: IPlayer,
   codeCopy: string,
   otherScripts: Script[],
+  scriptPath: string,
 ): Promise<RamCalculation> {
   // We don't need a real WorkerScript for this. Just an object that keeps
   // track of whatever's needed for RAM calculations
@@ -423,7 +424,7 @@ export async function calculateRamUsage(
   } as WorkerScript;
 
   try {
-    return await parseOnlyRamCalculate(player, otherScripts, codeCopy, workerScript);
+    return await parseOnlyRamCalculate(player, otherScripts, codeCopy, workerScript, scriptPath);
   } catch (e) {
     console.error(`Failed to parse script for RAM calculations:`);
     console.error(e);

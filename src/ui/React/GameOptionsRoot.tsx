@@ -37,6 +37,8 @@ import { formatTime } from "../../utils/helpers/formatTime";
 import { OptionSwitch } from "./OptionSwitch";
 import { DeleteGameButton } from "./DeleteGameButton";
 import { SoftResetButton } from "./SoftResetButton";
+import { GetAllServers } from "../../Server/AllServers";
+import { Player } from "../../Player";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -112,6 +114,21 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handleTimestampFormatChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setTimestampFormat(event.target.value);
     Settings.TimestampsFormat = event.target.value;
+  }
+
+  async function handleRelativeImportChange(newValue: boolean): Promise<void> {
+    Settings.EnableRelativeImports = newValue;
+
+    // Need to update ram usage in case any imports flipped on or off
+    const allServers = GetAllServers();
+    const promises: Promise<void>[] = [];
+    for (const server of allServers) {
+      for (const script of server.scripts) {
+        promises.push(script.updateRamUsage(Player, server.scripts));
+      }
+    }
+
+    await Promise.all(promises);
   }
 
   function startImport(): void {
@@ -502,6 +519,15 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 onChange={(newValue) => (Settings.SaveGameOnFileSave = newValue)}
                 text="Save game on file save"
                 tooltip={<>Save your game any time a file is saved in the script editor.</>}
+              />
+            </ListItem>
+
+            <ListItem>
+              <OptionSwitch
+                checked={Settings.EnableRelativeImports}
+                onChange={handleRelativeImportChange}
+                text="Enable relative imports"
+                tooltip={<>Enable relative import paths within your scripts.</>}
               />
             </ListItem>
 

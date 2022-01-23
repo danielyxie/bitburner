@@ -84,6 +84,11 @@ interface IDefaultSettings {
   SaveGameOnFileSave: boolean;
 
   /**
+   * Enable relative import paths.
+   */
+  EnableRelativeImports: boolean;
+
+  /**
    * Whether the player should be asked to confirm purchasing each and every augmentation.
    */
   SuppressBuyAugmentationConfirmation: boolean;
@@ -200,6 +205,7 @@ export const defaultSettings: IDefaultSettings = {
   UseIEC60027_2: false,
   ExcludeRunningScriptsFromSave: false,
   IsSidebarOpened: true,
+  EnableRelativeImports: false,
 
   theme: defaultTheme,
   styles: defaultStyles,
@@ -238,6 +244,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   UseIEC60027_2: defaultSettings.UseIEC60027_2,
   ExcludeRunningScriptsFromSave: defaultSettings.ExcludeRunningScriptsFromSave,
   IsSidebarOpened: defaultSettings.IsSidebarOpened,
+  EnableRelativeImports: defaultSettings.EnableRelativeImports,
 
   MonacoTheme: "monokai",
   MonacoInsertSpaces: false,
