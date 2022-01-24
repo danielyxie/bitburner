@@ -33,6 +33,11 @@ from faction to faction.
 
 List of Factions and their Requirements
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. raw:: html
+
+	<details><summary><a>Early Game Factions</a></summary>
+
+.. _gameplay_factions:: 
 
 +---------------------+----------------+-----------------------------------------+-------------------------------+
 | Early Game          | Faction Name   | Requirements                            | Joining this Faction prevents |
@@ -49,7 +54,18 @@ List of Factions and their Requirements
 |                     |                | * Total Hacknet RAM of 8                |                               |
 |                     |                | * Total Hacknet Cores of 4              |                               |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
-| City Factions       | Sector-12      | * Be in Sector-12                       | * Chongqing                   |
+.. raw:: html
+
+	</details>
+	<details><summary><a>City Factions</a></summary>
+
+.. _gameplay_factions:: 
+
++---------------------+----------------+-----------------------------------------+-------------------------------+
+| City Factions       | Faction Name   | Requirements                            | Joining this Faction prevents |
+|                     |                |                                         | you from joining:             |
++                     +----------------+-----------------------------------------+-------------------------------+
+|                     | Sector-12      | * Be in Sector-12                       | * Chongqing                   |
 |                     |                | * $15m                                  | * New Tokyo                   |
 |                     |                |                                         | * Ishima                      |
 |                     |                |                                         | * Volhaven                    |
@@ -77,8 +93,19 @@ List of Factions and their Requirements
 |                     |                |                                         | * New Tokyo                   |
 |                     |                |                                         | * Ishima                      |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
-| Hacking             | NiteSec        | * Install a backdoor on the avmnite-02h |                               |
-| Groups              |                |   server                                |                               |
+.. raw:: html
+
+	</details>
+	<details><summary><a>Hacking Groups</a></summary>
+
+.. _gameplay_factions:: 
+
++---------------------+----------------+-----------------------------------------+-------------------------------+
+| Hacking             | Faction Name   | Requirements                            | Joining this Faction prevents |
+| Groups              |                |                                         | you from joining:             |
++                     +----------------+-----------------------------------------+-------------------------------+
+|                     | NiteSec        | * Install a backdoor on the avmnite-02h |                               |
+|                     |                |   server                                |                               |
 |                     |                |                                         |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
 |                     | The Black Hand | * Install a backdoor on the I.I.I.I     |                               |
@@ -89,7 +116,18 @@ List of Factions and their Requirements
 |                     |                |   server                                |                               |
 |                     |                |                                         |                               |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
-| Megacorporations    | ECorp          | * Have 200k reputation with             |                               |
+.. raw:: html
+
+	</details>
+	<details><summary><a>Megacorporations</a></summary>
+
+.. _gameplay_factions:: 
+
++---------------------+----------------+-----------------------------------------+-------------------------------+
+| Megacorporations    | Faction Name   | Requirements                            | Joining this Faction prevents |
+|                     |                |                                         | you from joining:             |
++                     +----------------+-----------------------------------------+-------------------------------+
+|                     | ECorp          | * Have 200k reputation with             |                               |
 |                     |                |   the Corporation                       |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
 |                     | MegaCorp       | * Have 200k reputation with             |                               |
@@ -121,8 +159,19 @@ List of Factions and their Requirements
 |                     |                | * Install a backdoor on the             |                               |
 |                     |                |   fulcrumassets server                  |                               |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
-| Criminal            | Slum Snakes    | * All Combat Stats of 30                |                               |
-| Organizations       |                | * -9 Karma                              |                               |
+.. raw:: html
+
+	</details>
+	<details><summary><a>Criminal Organizations</a></summary>
+
+.. _gameplay_factions:: 
+
++---------------------+----------------+-----------------------------------------+-------------------------------+
+| Criminal            | Faction Name   | Requirements                            | Joining this Faction prevents |
+| Organizations       |                |                                         | you from joining:             |
++                     +----------------+-----------------------------------------+-------------------------------+
+|                     | Slum Snakes    | * All Combat Stats of 30                |                               |
+|                     |                | * -9 Karma                              |                               |
 |                     |                | * $1m                                   |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
 |                     | Tetrads        | * Be in Chongqing, New Tokyo, or Ishima |                               |
@@ -153,8 +202,19 @@ List of Factions and their Requirements
 |                     |                | * -90 Karma                             |                               |
 |                     |                | * Not working for CIA or NSA            |                               |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
-| Endgame             | The Covenant   | * 20 Augmentations                      |                               |
-| Factions            |                | * $75b                                  |                               |
+.. raw:: html
+
+	</details>
+	<details><summary><a>Endgame Factions</a></summary>
+
+.. _gameplay_factions:: 
+
++---------------------+----------------+-----------------------------------------+-------------------------------+
+| Endgame             | Faction Name   | Requirements                            | Joining this Faction prevents |
+| Factions            |                |                                         | you from joining:             |
++                     +----------------+-----------------------------------------+-------------------------------+
+|                     | The Covenant   | * 20 Augmentations                      |                               |
+|                     |                | * $75b                                  |                               |
 |                     |                | * Hacking Level of 850                  |                               |
 |                     |                | * All Combat Stats of 850               |                               |
 +                     +----------------+-----------------------------------------+-------------------------------+
@@ -168,3 +228,6 @@ List of Factions and their Requirements
 |                     |                | * Hacking Level of 1500                 |                               |
 |                     |                | * All Combat Stats of 1200              |                               |
 +---------------------+----------------+-----------------------------------------+-------------------------------+
+.. raw:: html
+
+	</details><br>
