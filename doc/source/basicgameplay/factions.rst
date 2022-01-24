@@ -2,6 +2,9 @@
 
 Factions
 ========
+
+.. warning:: This page contains spoilers regarding the game's story/plot-line.
+
 Throughout the game you may receive invitations from factions. There are
 many different factions, and each faction has different criteria for
 determining its potential members. Joining a faction and furthering
