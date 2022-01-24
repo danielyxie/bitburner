@@ -49,7 +49,7 @@ for (let i = 0; i < scripts.length; ++i) {
 // NS2:
 const ps = ns.ps("home");
 for (let script of ps) {
-    ns.tprint(`${script.filename} ${ps[i].threads}`);
+    ns.tprint(`${script.filename} ${script.threads}`);
     ns.tprint(script.args);
 }
 ```
