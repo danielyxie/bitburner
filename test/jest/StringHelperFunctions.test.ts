@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { jest, describe, expect, test } from '@jest/globals'
-import { convertTimeMsToTimeElapsedString } from "../src/utils/StringHelperFunctions";
+import { convertTimeMsToTimeElapsedString } from "../../src/utils/StringHelperFunctions";
 
 describe("StringHelperFunctions Tests", function () {
   it("transforms strings", () => {

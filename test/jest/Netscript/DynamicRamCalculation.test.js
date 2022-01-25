@@ -1,1143 +1,1205 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { jest, describe, expect } from "@jest/globals";
+import { jest, describe, expect, test } from "@jest/globals";
 
-import { Player } from "../../src/Player";
-import { getRamCost, RamCostConstants } from "../../src/Netscript/RamCostGenerator";
-import { calculateRamUsage } from "../../src/Script/RamCalculations";
+import { Player } from "../../../src/Player";
+import { NetscriptFunctions } from "../../../src/NetscriptFunctions";
+import { getRamCost, RamCostConstants } from "../../../src/Netscript/RamCostGenerator";
+import { Environment } from "../../../src/Netscript/Environment";
+import { RunningScript } from "../../../src/Script/RunningScript";
+import { Script } from "../../../src/Script/Script";
+import { SourceFileFlags } from "../../../src/SourceFile/SourceFileFlags";
 
 jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
   virtual: true,
 });
 
 const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
-const HacknetNamespaceCost = RamCostConstants.ScriptHacknetNodesRamCost;
 
-describe("Netscript Static RAM Calculation/Generation Tests", function () {
+describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
+  // Creates a mock RunningScript object
+  async function createRunningScript(code) {
+    const script = new Script();
+    script.code = code;
+    await script.updateRamUsage(Player, []);
+
+    const runningScript = new RunningScript(script);
+
+    return runningScript;
+  }
+
   // Tests numeric equality, allowing for floating point imprecision
   function testEquality(val, expected) {
     expect(val).toBeGreaterThanOrEqual(expected - 100 * Number.EPSILON);
     expect(val).toBeLessThanOrEqual(expected + 100 * Number.EPSILON);
   }
 
+  // Runs a Netscript function and properly catches it if it returns promise
+  function runPotentiallyAsyncFunction(fn, ...args) {
+    const res = fn(...args);
+    if (res instanceof Promise) {
+      res.catch(() => undefined);
+    }
+  }
+
   /**
    * Tests that:
    *      1. A function has non-zero RAM cost
-   *      2. The calculator and the generator result in equal values
+   *      2. Running the function properly updates the MockWorkerScript's dynamic RAM calculation
    *      3. Running multiple calls of the function does not result in additional RAM cost
    * @param {string[]} fnDesc - describes the name of the function being tested,
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    */
-  async function expectNonZeroRamCost(fnDesc) {
+  async function testNonzeroDynamicRamCost(fnDesc, ...args) {
     if (!Array.isArray(fnDesc)) {
-      expect.fail("Non-array passed to expectNonZeroRamCost()");
+      throw new Error("Non-array passed to testNonzeroDynamicRamCost()");
     }
     const expected = getRamCost(Player, ...fnDesc);
     expect(expected).toBeGreaterThan(0);
 
-    const code = fnDesc.join(".") + "(); ";
+    const code = `${fnDesc.join(".")}();`;
 
-    const calculated = (await calculateRamUsage(Player, code, [])).cost;
-    testEquality(calculated, expected + ScriptBaseCost);
+    const runningScript = await createRunningScript(code);
 
-    const multipleCallsCode = code.repeat(3);
-    const multipleCallsCalculated = (await calculateRamUsage(Player, multipleCallsCode, [])).cost;
-    expect(multipleCallsCalculated).toEqual(calculated);
+    // We don't need a real WorkerScript
+    const workerScript = {
+      args: args,
+      code: code,
+      dynamicLoadedFns: {},
+      dynamicRamUsage: RamCostConstants.ScriptBaseRamCost,
+      env: new Environment(null),
+      ramUsage: runningScript.ramUsage,
+      scriptRef: runningScript,
+    };
+    workerScript.env.vars = NetscriptFunctions(workerScript);
+
+    // Run the function through the workerscript's args
+    const scope = workerScript.env.vars;
+    let curr = scope[fnDesc[0]];
+    for (let i = 1; i < fnDesc.length; ++i) {
+      if (curr == null) {
+        throw new Error(`Invalid function specified: [${fnDesc}]`);
+      }
+
+      if (typeof curr === "function") {
+        break;
+      }
+
+      curr = curr[fnDesc[i]];
+    }
+
+    if (typeof curr === "function") {
+      // We use a try/catch because the function will probably fail since the game isn't
+      // actually initialized. Call the fn multiple times to test that repeated calls
+      // do not incur extra RAM costs.
+      try {
+        runPotentiallyAsyncFunction(curr, ...args);
+        runPotentiallyAsyncFunction(curr, ...args);
+        runPotentiallyAsyncFunction(curr, ...args);
+      } catch (e) {}
+    } else {
+      throw new Error(`Invalid function specified: [${fnDesc}]`);
+    }
+
+    const fnName = fnDesc[fnDesc.length - 1];
+    testEquality(workerScript.dynamicRamUsage - ScriptBaseCost, expected);
+    testEquality(workerScript.dynamicRamUsage, runningScript.ramUsage);
+    expect(workerScript.dynamicLoadedFns).toHaveProperty(fnName);
   }
 
   /**
    * Tests that:
    *      1. A function has zero RAM cost
-   *      2. The calculator and the generator result in equal values
-   *      3. Running multiple calls of the function does not result in additional RAM cost
+   *      2. Running the function does NOT update the MockWorkerScript's dynamic RAM calculation
+   *      3. Running multiple calls of the function does not result in dynamic RAM calculation
    * @param {string[]} fnDesc - describes the name of the function being tested,
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    */
-  async function expectZeroRamCost(fnDesc) {
+  async function testZeroDynamicRamCost(fnDesc, skipRun = false) {
     if (!Array.isArray(fnDesc)) {
-      expect.fail("Non-array passed to expectZeroRamCost()");
+      throw new Error("Non-array passed to testZeroDynamicRamCost()");
     }
     const expected = getRamCost(Player, ...fnDesc);
     expect(expected).toEqual(0);
+    if (skipRun) return;
 
-    const code = fnDesc.join(".") + "(); ";
-    const calculated = (await calculateRamUsage(Player, code, [])).cost;
-    testEquality(calculated, ScriptBaseCost);
+    const code = `${fnDesc.join(".")}();`;
 
-    const multipleCallsCalculated = (await calculateRamUsage(Player, code, [])).cost;
-    expect(multipleCallsCalculated).toEqual(ScriptBaseCost);
+    const runningScript = await createRunningScript(code);
+
+    // We don't need a real WorkerScript
+    const workerScript = {
+      args: [],
+      code: code,
+      dynamicLoadedFns: {},
+      dynamicRamUsage: RamCostConstants.ScriptBaseRamCost,
+      env: new Environment(null),
+      ramUsage: runningScript.ramUsage,
+      scriptRef: runningScript,
+    };
+    workerScript.env.vars = NetscriptFunctions(workerScript);
+
+    // Run the function through the workerscript's args
+    const scope = workerScript.env.vars;
+    let curr = scope[fnDesc[0]];
+    for (let i = 1; i < fnDesc.length; ++i) {
+      if (curr == null) {
+        throw new Error(`Invalid function specified: [${fnDesc}]`);
+      }
+
+      if (typeof curr === "function") {
+        break;
+      }
+
+      curr = curr[fnDesc[i]];
+    }
+
+    if (typeof curr === "function") {
+      // We use a try/catch because the function will probably fail since the game isn't
+      // actually initialized. Call the fn multiple times to test that repeated calls
+      // do not incur extra RAM costs.
+      try {
+        runPotentiallyAsyncFunction(curr);
+        runPotentiallyAsyncFunction(curr);
+        runPotentiallyAsyncFunction(curr);
+      } catch (e) {}
+    } else {
+      throw new Error(`Invalid function specified: [${fnDesc}]`);
+    }
+
+    testEquality(workerScript.dynamicRamUsage, ScriptBaseCost);
+    testEquality(workerScript.dynamicRamUsage, runningScript.ramUsage);
   }
+
+  beforeEach(function () {
+    for (let i = 0; i < SourceFileFlags.length; ++i) {
+      SourceFileFlags[i] = 3;
+    }
+  });
 
   describe("Basic Functions", function () {
     it("hack()", async function () {
       const f = ["hack"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("grow()", async function () {
       const f = ["grow"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("weaken()", async function () {
       const f = ["weaken"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("hackAnalyzeThreads()", async function () {
       const f = ["hackAnalyzeThreads"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("hackAnalyze()", async function () {
       const f = ["hackAnalyze"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("hackAnalyzeChance()", async function () {
       const f = ["hackAnalyzeChance"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("growthAnalyze()", async function () {
       const f = ["growthAnalyze"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("sleep()", async function () {
       const f = ["sleep"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("print()", async function () {
       const f = ["print"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("tprint()", async function () {
       const f = ["tprint"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("clearLog()", async function () {
       const f = ["clearLog"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("disableLog()", async function () {
       const f = ["disableLog"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("enableLog()", async function () {
       const f = ["enableLog"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("isLogEnabled()", async function () {
       const f = ["isLogEnabled"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("getScriptLogs()", async function () {
       const f = ["getScriptLogs"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("scan()", async function () {
       const f = ["scan"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("nuke()", async function () {
       const f = ["nuke"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("brutessh()", async function () {
       const f = ["brutessh"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("ftpcrack()", async function () {
       const f = ["ftpcrack"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("relaysmtp()", async function () {
       const f = ["relaysmtp"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("httpworm()", async function () {
       const f = ["httpworm"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("sqlinject()", async function () {
       const f = ["sqlinject"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("run()", async function () {
       const f = ["run"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("exec()", async function () {
       const f = ["exec"];
-      await expectNonZeroRamCost(f);
+      jest.spyOn(console, "log").mockImplementation(() => {}); // eslint-disable-line
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("spawn()", async function () {
       const f = ["spawn"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("kill()", async function () {
       const f = ["kill"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("killall()", async function () {
       const f = ["killall"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("exit()", async function () {
       const f = ["exit"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f, true);
     });
 
     it("scp()", async function () {
       const f = ["scp"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("ls()", async function () {
       const f = ["ls"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("ps()", async function () {
       const f = ["ps"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("hasRootAccess()", async function () {
       const f = ["hasRootAccess"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getHostname()", async function () {
       const f = ["getHostname"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getHackingLevel()", async function () {
       const f = ["getHackingLevel"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getHackingMultipliers()", async function () {
       const f = ["getHackingMultipliers"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getHacknetMultipliers()", async function () {
       const f = ["getHacknetMultipliers"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getServerMoneyAvailable()", async function () {
       const f = ["getServerMoneyAvailable"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getServerMaxMoney()", async function () {
       const f = ["getServerMaxMoney"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getServerGrowth()", async function () {
       const f = ["getServerGrowth"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getServerSecurityLevel()", async function () {
       const f = ["getServerSecurityLevel"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getServerBaseSecurityLevel()", async function () {
       const f = ["getServerBaseSecurityLevel"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getServerMinSecurityLevel()", async function () {
       const f = ["getServerMinSecurityLevel"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getServerRequiredHackingLevel()", async function () {
       const f = ["getServerRequiredHackingLevel"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getServerNumPortsRequired()", async function () {
       const f = ["getServerNumPortsRequired"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getServerRam()", async function () {
       const f = ["getServerRam"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getServerMaxRam()", async function () {
       const f = ["getServerMaxRam"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getServerUsedRam()", async function () {
       const f = ["getServerUsedRam"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("serverExists()", async function () {
       const f = ["serverExists"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("fileExists()", async function () {
       const f = ["fileExists"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("isRunning()", async function () {
       const f = ["isRunning"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getPurchasedServerCost()", async function () {
       const f = ["getPurchasedServerCost"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("purchaseServer()", async function () {
       const f = ["purchaseServer"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f, "abc", "64");
     });
 
     it("deleteServer()", async function () {
       const f = ["deleteServer"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getPurchasedServers()", async function () {
       const f = ["getPurchasedServers"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getPurchasedServerLimit()", async function () {
       const f = ["getPurchasedServerLimit"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getPurchasedServerMaxRam()", async function () {
       const f = ["getPurchasedServerMaxRam"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("write()", async function () {
       const f = ["write"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("tryWritePort()", async function () {
       const f = ["tryWritePort"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("read()", async function () {
       const f = ["read"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("peek()", async function () {
       const f = ["peek"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("clear()", async function () {
       const f = ["clear"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("getPortHandle()", async function () {
       const f = ["getPortHandle"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("rm()", async function () {
       const f = ["rm"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("scriptRunning()", async function () {
       const f = ["scriptRunning"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("scriptKill()", async function () {
       const f = ["scriptKill"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getScriptName()", async function () {
       const f = ["getScriptName"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("getScriptRam()", async function () {
       const f = ["getScriptRam"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getHackTime()", async function () {
       const f = ["getHackTime"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getGrowTime()", async function () {
       const f = ["getGrowTime"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getWeakenTime()", async function () {
       const f = ["getWeakenTime"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getScriptIncome()", async function () {
       const f = ["getScriptIncome"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getScriptExpGain()", async function () {
       const f = ["getScriptExpGain"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getRunningScript()", async function () {
       const f = ["getRunningScript"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getTimeSinceLastAug()", async function () {
       const f = ["getTimeSinceLastAug"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("sprintf()", async function () {
       const f = ["sprintf"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("vsprintf()", async function () {
       const f = ["vsprintf"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("nFormat()", async function () {
       const f = ["nFormat"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("prompt()", async function () {
       const f = ["prompt"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("wget()", async function () {
       const f = ["wget"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
 
     it("getFavorToDonate()", async function () {
       const f = ["getFavorToDonate"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
   });
 
   describe("Advanced Functions", function () {
     it("getBitNodeMultipliers()", async function () {
       const f = ["getBitNodeMultipliers"];
-      await expectNonZeroRamCost(f);
-    });
-  });
-
-  describe("Hacknet Node API", function () {
-    // The Hacknet Node API RAM cost is a bit different because
-    // it's just a one-time cost to access the 'hacknet' namespace.
-    // Otherwise, all functions cost 0 RAM
-    const apiFunctions = [
-      "numNodes",
-      "purchaseNode",
-      "getPurchaseNodeCost",
-      "getNodeStats",
-      "upgradeLevel",
-      "upgradeRam",
-      "upgradeCore",
-      "upgradeCache",
-      "getLevelUpgradeCost",
-      "getRamUpgradeCost",
-      "getCoreUpgradeCost",
-      "getCacheUpgradeCost",
-      "numHashes",
-      "hashCost",
-      "spendHashes",
-    ];
-    it("should have zero RAM cost for all functions", function () {
-      for (const fn of apiFunctions) {
-        expect(getRamCost(Player, "hacknet", fn)).toEqual(0);
-      }
-    });
-
-    it("should incur a one time cost of for accesing the namespace", async function () {
-      let code = "";
-      for (const fn of apiFunctions) {
-        code += "hacknet." + fn + "(); ";
-      }
-
-      const calculated = await calculateRamUsage(Player, code, []);
-      testEquality(calculated.cost, ScriptBaseCost + HacknetNamespaceCost);
+      await testNonzeroDynamicRamCost(f);
     });
   });
 
   describe("TIX API", function () {
     it("stock.getSymbols()", async function () {
       const f = ["stock", "getSymbols"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.getPrice()", async function () {
       const f = ["stock", "getPrice"];
-      await expectNonZeroRamCost(f);
-    });
-
-    it("stock.getAskPrice()", async function () {
-      const f = ["stock", "getAskPrice"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.getBidPrice()", async function () {
       const f = ["stock", "getBidPrice"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
+    });
+
+    it("stock.getBidPrice()", async function () {
+      const f = ["stock", "getBidPrice"];
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.getPosition()", async function () {
       const f = ["stock", "getPosition"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.getMaxShares()", async function () {
       const f = ["stock", "getMaxShares"];
-      await expectNonZeroRamCost(f);
-    });
-
-    it("stock.getPurchaseCost()", async function () {
-      const f = ["stock", "getPurchaseCost"];
-      await expectNonZeroRamCost(f);
-    });
-
-    it("stock.getSaleGain()", async function () {
-      const f = ["stock", "getSaleGain"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.buy()", async function () {
       const f = ["stock", "buy"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.sell()", async function () {
       const f = ["stock", "sell"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.short()", async function () {
       const f = ["stock", "short"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.sellShort()", async function () {
-      const f = ["stock", "sell"];
-      await expectNonZeroRamCost(f);
+      const f = ["stock", "sellShort"];
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.placeOrder()", async function () {
       const f = ["stock", "placeOrder"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.cancelOrder()", async function () {
       const f = ["stock", "cancelOrder"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.getOrders()", async function () {
       const f = ["stock", "getOrders"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.getVolatility()", async function () {
       const f = ["stock", "getVolatility"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.getForecast()", async function () {
       const f = ["stock", "getForecast"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.purchase4SMarketData()", async function () {
       const f = ["stock", "purchase4SMarketData"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stock.purchase4SMarketDataTixApi()", async function () {
       const f = ["stock", "purchase4SMarketDataTixApi"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
   });
 
   describe("Singularity Functions", function () {
     it("universityCourse()", async function () {
       const f = ["universityCourse"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("gymWorkout()", async function () {
       const f = ["gymWorkout"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("travelToCity()", async function () {
       const f = ["travelToCity"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("purchaseTor()", async function () {
       const f = ["purchaseTor"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("purchaseProgram()", async function () {
       const f = ["purchaseProgram"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getStats()", async function () {
       const f = ["getStats"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getCharacterInformation()", async function () {
       const f = ["getCharacterInformation"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("isBusy()", async function () {
       const f = ["isBusy"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stopAction()", async function () {
       const f = ["stopAction"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("upgradeHomeRam()", async function () {
       const f = ["upgradeHomeRam"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getUpgradeHomeRamCost()", async function () {
       const f = ["getUpgradeHomeRamCost"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("workForCompany()", async function () {
       const f = ["workForCompany"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("applyToCompany()", async function () {
       const f = ["applyToCompany"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getCompanyRep()", async function () {
       const f = ["getCompanyRep"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getCompanyFavor()", async function () {
       const f = ["getCompanyFavor"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getCompanyFavorGain()", async function () {
       const f = ["getCompanyFavorGain"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("checkFactionInvitations()", async function () {
       const f = ["checkFactionInvitations"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("joinFaction()", async function () {
       const f = ["joinFaction"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("workForFaction()", async function () {
       const f = ["workForFaction"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getFactionRep()", async function () {
       const f = ["getFactionRep"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getFactionFavor()", async function () {
       const f = ["getFactionFavor"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getFactionFavorGain()", async function () {
       const f = ["getFactionFavorGain"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("donateToFaction()", async function () {
       const f = ["donateToFaction"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("createProgram()", async function () {
       const f = ["createProgram"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("commitCrime()", async function () {
       const f = ["commitCrime"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getCrimeChance()", async function () {
       const f = ["getCrimeChance"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getOwnedAugmentations()", async function () {
       const f = ["getOwnedAugmentations"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getOwnedSourceFiles()", async function () {
       const f = ["getOwnedSourceFiles"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getAugmentationsFromFaction()", async function () {
       const f = ["getAugmentationsFromFaction"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getAugmentationCost()", async function () {
       const f = ["getAugmentationCost"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getAugmentationPrereq()", async function () {
       const f = ["getAugmentationPrereq"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getAugmentationPrice()", async function () {
       const f = ["getAugmentationPrice"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getAugmentationRepReq()", async function () {
       const f = ["getAugmentationRepReq"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("purchaseAugmentation()", async function () {
       const f = ["purchaseAugmentation"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("installAugmentations()", async function () {
       const f = ["installAugmentations"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
   });
 
   describe("Bladeburner API", function () {
     it("getContractNames()", async function () {
       const f = ["bladeburner", "getContractNames"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getOperationNames()", async function () {
       const f = ["bladeburner", "getOperationNames"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getBlackOpNames()", async function () {
       const f = ["bladeburner", "getBlackOpNames"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getGeneralActionNames()", async function () {
       const f = ["bladeburner", "getGeneralActionNames"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getSkillNames()", async function () {
       const f = ["bladeburner", "getSkillNames"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("startAction()", async function () {
       const f = ["bladeburner", "startAction"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("stopBladeburnerAction()", async function () {
       const f = ["bladeburner", "stopBladeburnerAction"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getCurrentAction()", async function () {
       const f = ["bladeburner", "getCurrentAction"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getActionTime()", async function () {
       const f = ["bladeburner", "getActionTime"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getActionEstimatedSuccessChance()", async function () {
       const f = ["bladeburner", "getActionEstimatedSuccessChance"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getActionRepGain()", async function () {
       const f = ["bladeburner", "getActionRepGain"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getActionCountRemaining()", async function () {
       const f = ["bladeburner", "getActionCountRemaining"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getActionMaxLevel()", async function () {
       const f = ["bladeburner", "getActionMaxLevel"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getActionCurrentLevel()", async function () {
       const f = ["bladeburner", "getActionCurrentLevel"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getActionAutolevel()", async function () {
       const f = ["bladeburner", "getActionAutolevel"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("setActionAutolevel()", async function () {
       const f = ["bladeburner", "setActionAutolevel"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("setActionLevel()", async function () {
       const f = ["bladeburner", "setActionLevel"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getRank()", async function () {
       const f = ["bladeburner", "getRank"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getBlackOpRank()", async function () {
       const f = ["bladeburner", "getBlackOpRank"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getSkillPoints()", async function () {
       const f = ["bladeburner", "getSkillPoints"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getSkillLevel()", async function () {
       const f = ["bladeburner", "getSkillLevel"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getSkillUpgradeCost()", async function () {
       const f = ["bladeburner", "getSkillUpgradeCost"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("upgradeSkill()", async function () {
       const f = ["bladeburner", "upgradeSkill"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getTeamSize()", async function () {
       const f = ["bladeburner", "getTeamSize"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("setTeamSize()", async function () {
       const f = ["bladeburner", "setTeamSize"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getCityEstimatedPopulation()", async function () {
       const f = ["bladeburner", "getCityEstimatedPopulation"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getCityChaos()", async function () {
       const f = ["bladeburner", "getCityChaos"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getCity()", async function () {
       const f = ["bladeburner", "getCity"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("switchCity()", async function () {
       const f = ["bladeburner", "switchCity"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getStamina()", async function () {
       const f = ["bladeburner", "getStamina"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("joinBladeburnerFaction()", async function () {
       const f = ["bladeburner", "joinBladeburnerFaction"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("joinBladeburnerDivision()", async function () {
       const f = ["bladeburner", "joinBladeburnerDivision"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getBonusTime()", async function () {
       const f = ["bladeburner", "getBonusTime"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
   });
 
   describe("Gang API", function () {
     it("getMemberNames()", async function () {
       const f = ["gang", "getMemberNames"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getGangInformation()", async function () {
       const f = ["gang", "getGangInformation"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getOtherGangInformation()", async function () {
       const f = ["gang", "getOtherGangInformation"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getMemberInformation()", async function () {
       const f = ["gang", "getMemberInformation"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("canRecruitMember()", async function () {
       const f = ["gang", "canRecruitMember"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("recruitMember()", async function () {
       const f = ["gang", "recruitMember"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getTaskNames()", async function () {
       const f = ["gang", "getTaskNames"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("setMemberTask()", async function () {
       const f = ["gang", "setMemberTask"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getEquipmentNames()", async function () {
       const f = ["gang", "getEquipmentNames"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getEquipmentCost()", async function () {
       const f = ["gang", "getEquipmentCost"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getEquipmentType()", async function () {
       const f = ["gang", "getEquipmentType"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("purchaseEquipment()", async function () {
       const f = ["gang", "purchaseEquipment"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("ascendMember()", async function () {
       const f = ["gang", "ascendMember"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("setTerritoryWarfare()", async function () {
       const f = ["gang", "setTerritoryWarfare"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getChanceToWinClash()", async function () {
       const f = ["gang", "getChanceToWinClash"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getBonusTime()", async function () {
       const f = ["gang", "getBonusTime"];
-      await expectZeroRamCost(f);
+      await testZeroDynamicRamCost(f);
     });
   });
 
   describe("Coding Contract API", function () {
     it("attempt()", async function () {
       const f = ["codingcontract", "attempt"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getContractType()", async function () {
       const f = ["codingcontract", "getContractType"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getDescription()", async function () {
       const f = ["codingcontract", "getDescription"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getData()", async function () {
       const f = ["codingcontract", "getData"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getNumTriesRemaining()", async function () {
       const f = ["codingcontract", "getNumTriesRemaining"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
   });
 
   describe("Sleeve API", function () {
     it("getNumSleeves()", async function () {
       const f = ["sleeve", "getNumSleeves"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getSleeveStats()", async function () {
       const f = ["sleeve", "getSleeveStats"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getInformation()", async function () {
       const f = ["sleeve", "getInformation"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getTask()", async function () {
       const f = ["sleeve", "getTask"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("setToShockRecovery()", async function () {
       const f = ["sleeve", "setToShockRecovery"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("setToSynchronize()", async function () {
       const f = ["sleeve", "setToSynchronize"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("setToCommitCrime()", async function () {
       const f = ["sleeve", "setToCommitCrime"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("setToFactionWork()", async function () {
       const f = ["sleeve", "setToFactionWork"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("setToCompanyWork()", async function () {
       const f = ["sleeve", "setToCompanyWork"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("setToUniversityCourse()", async function () {
       const f = ["sleeve", "setToUniversityCourse"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("setToGymWorkout()", async function () {
       const f = ["sleeve", "setToGymWorkout"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("travel()", async function () {
       const f = ["sleeve", "travel"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getSleeveAugmentations()", async function () {
       const f = ["sleeve", "getSleeveAugmentations"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("getSleevePurchasableAugs()", async function () {
       const f = ["sleeve", "getSleevePurchasableAugs"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
 
     it("purchaseSleeveAug()", async function () {
       const f = ["sleeve", "purchaseSleeveAug"];
-      await expectNonZeroRamCost(f);
+      await testNonzeroDynamicRamCost(f);
     });
   });
 });
