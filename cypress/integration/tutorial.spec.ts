@@ -55,7 +55,7 @@ describe("tutorial", () => {
     // monaco can take a bit
     cy.findByRole("code", { timeout: 15_000 }).type("{selectall}{del}").type("while(true) {{}{enter}hack('n00dles');");
 
-    cy.findByRole("button", { name: /Save & Close/i }).click();
+    cy.findByRole("button", { name: /Save \(Ctrl\/Cmd \+ s\)/i }).click();
 
     cy.findByText(/now we'll run the script/i);
     cy.findByRole("textbox").type("free{enter}");
@@ -89,8 +89,7 @@ describe("tutorial", () => {
 
     cy.findByText(/a lot of different documentation about the game/i);
     cy.findByRole("button", { name: "FINISH TUTORIAL" }).click();
-    cy.findByText("Got it!").click();
 
-    cy.findByText(/Tutorial \(AKA Links to Documentation\)/i);
+    cy.findByText(/Tutorial \/ Documentation/i);
   });
 });
