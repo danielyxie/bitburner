@@ -13,7 +13,7 @@ cypress/
 doc/
 markdown/
 netscript_tests/
-scripts/
+tools/engines-check/
 
 electron/lib
 electron/greenworks.js
