@@ -113,7 +113,7 @@
     "build:dev": "webpack --mode development",
     "lint": "eslint --fix . --ext js,jsx,ts,tsx",
     "lint:report": "eslint --ext js,jsx,ts,tsx .",
-    "preinstall": "node ./scripts/engines-check.js",
+    "preinstall": "node ./tools/engines-check/engines-check.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "watch": "webpack --watch --mode production",
