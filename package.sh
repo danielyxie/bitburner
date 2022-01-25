@@ -13,10 +13,6 @@ cp -r dist/ext .package/dist
 cp -r dist/icons .package/dist
 cp -r dist/images .package/dist
 
-# The css files
-cp dist/vendor.css .package/dist
-cp main.css .package/main.css
-
 # The js files.
 cp dist/vendor.bundle.js .package/dist/vendor.bundle.js
 cp main.bundle.js .package/main.bundle.js
