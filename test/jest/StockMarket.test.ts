@@ -1,25 +1,25 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { jest, describe, expect, test } from '@jest/globals'
 
-import { CONSTANTS } from "../src/Constants";
-import { Player } from "../src/Player";
-import { IMap } from "../src/types";
+import { CONSTANTS } from "../../src/Constants";
+import { Player } from "../../src/Player";
+import { IMap } from "../../src/types";
 
-import { Company } from "../src/Company/Company";
-import { Server } from "../src/Server/Server";
+import { Company } from "../../src/Company/Company";
+import { Server } from "../../src/Server/Server";
 
-import { buyStock, sellStock, shortStock, sellShort } from "../src/StockMarket/BuyingAndSelling";
-import { IStockMarket } from "../src/StockMarket/IStockMarket";
-import { Order } from "../src/StockMarket/Order";
+import { buyStock, sellStock, shortStock, sellShort } from "../../src/StockMarket/BuyingAndSelling";
+import { IStockMarket } from "../../src/StockMarket/IStockMarket";
+import { Order } from "../../src/StockMarket/Order";
 import {
   forecastForecastChangeFromCompanyWork,
   forecastForecastChangeFromHack,
   influenceStockThroughCompanyWork,
   influenceStockThroughServerGrow,
   influenceStockThroughServerHack,
-} from "../src/StockMarket/PlayerInfluencing";
-import { processOrders, IProcessOrderRefs } from "../src/StockMarket/OrderProcessing";
-import { Stock, StockForecastInfluenceLimit } from "../src/StockMarket/Stock";
+} from "../../src/StockMarket/PlayerInfluencing";
+import { processOrders, IProcessOrderRefs } from "../../src/StockMarket/OrderProcessing";
+import { Stock, StockForecastInfluenceLimit } from "../../src/StockMarket/Stock";
 import {
   cancelOrder,
   deleteStockMarket,
@@ -29,15 +29,15 @@ import {
   processStockPrices,
   StockMarket,
   SymbolToStockMap,
-} from "../src/StockMarket/StockMarket";
+} from "../../src/StockMarket/StockMarket";
 import {
   forecastChangePerPriceMovement,
   getBuyTransactionCost,
   getSellTransactionGain,
   processTransactionForecastMovement,
-} from "../src/StockMarket/StockMarketHelpers";
-import { OrderTypes } from "../src/StockMarket/data/OrderTypes";
-import { PositionTypes } from "../src/StockMarket/data/PositionTypes";
+} from "../../src/StockMarket/StockMarketHelpers";
+import { OrderTypes } from "../../src/StockMarket/data/OrderTypes";
+import { PositionTypes } from "../../src/StockMarket/data/PositionTypes";
 
 jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => '', {
   virtual: true,
