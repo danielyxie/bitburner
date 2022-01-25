@@ -26,7 +26,7 @@ export function InstalledAugmentations(): React.ReactElement {
 
   if (Settings.OwnedAugmentationsOrder === OwnedAugmentationsOrderSetting.Alphabetically) {
     sourceAugs.sort((aug1, aug2) => {
-      return aug1.name <= aug2.name ? -1 : 1;
+      return aug1.name.localeCompare(aug2.name);
     });
   }
 
