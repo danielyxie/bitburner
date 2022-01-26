@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal } from "./Modal";
+import { Modal } from "../../ui/React/Modal";
 
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -11,7 +11,7 @@ import SaveIcon from "@mui/icons-material/Save";
 
 import { ThemeEvents } from "./Theme";
 import { Settings } from "../../Settings/Settings";
-import { defaultStyles } from "../../Settings/Styles";
+import { defaultStyles } from "../Styles";
 import { Tooltip } from "@mui/material";
 import { IStyleSettings } from "../../ScriptEditor/NetscriptDefinitions";
 

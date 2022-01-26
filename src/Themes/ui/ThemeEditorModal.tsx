@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Modal } from "./Modal";
+import { Modal } from "../../ui/React/Modal";
 import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import Paper from "@mui/material/Paper";
@@ -8,15 +9,19 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import ReplyIcon from "@mui/icons-material/Reply";
 import PaletteSharpIcon from "@mui/icons-material/PaletteSharp";
+import HistoryIcon from '@mui/icons-material/History';
 import { Color, ColorPicker } from "material-ui-color";
 import { ThemeEvents } from "./Theme";
 import { Settings, defaultSettings } from "../../Settings/Settings";
-import { getPredefinedThemes } from "../../Settings/Themes";
+import { defaultTheme } from "../Themes";
 import { UserInterfaceTheme } from "../../ScriptEditor/NetscriptDefinitions";
+import { IRouter } from "../../ui/Router";
+import { ThemeCollaborate } from "./ThemeCollaborate";
 
 interface IProps {
   open: boolean;
   onClose: () => void;
+  router: IRouter;
 }
 
 interface IColorEditorProps {
@@ -67,28 +72,6 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
   const [customTheme, setCustomTheme] = useState<{ [key: string]: string | undefined }>({
     ...Settings.theme,
   });
-
-  const predefinedThemes = getPredefinedThemes();
-  const themes = predefinedThemes && Object.entries(predefinedThemes)
-    .map(([key, templateTheme]) => {
-      const name = templateTheme.name || key;
-      let inner = <Typography>{name}</Typography>;
-      let toolTipTitle;
-      if (templateTheme.credit) {
-        toolTipTitle = <Typography>{templateTheme.description || name} <em>by {templateTheme.credit}</em></Typography>;
-      } else if (templateTheme.description) {
-        toolTipTitle = <Typography>{templateTheme.description}</Typography>;
-      }
-      if (toolTipTitle) {
-        inner = <Tooltip title={toolTipTitle}>{inner}</Tooltip>
-      }
-      return (
-        <Button onClick={() => setTemplateTheme(templateTheme.colors)}
-          startIcon={<PaletteSharpIcon />} key={key} sx={{ mr: 1, mb: 1 }}>
-            {inner}
-        </Button>
-      );
-    }) || <></>;
 
   function setTheme(theme: UserInterfaceTheme): void {
     setCustomTheme(theme);
@@ -372,8 +355,18 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
         />
           <>
             <Typography sx={{ my: 1 }}>Backup your theme or share it with others by copying the string above.</Typography>
-            <Typography sx={{ my: 1 }}>Replace the current theme with a pre-built template using the buttons below.</Typography>
-            {themes}
+            <ThemeCollaborate />
+            <ButtonGroup>
+              <Tooltip title="Reverts all modification back to the default theme. This is permanent.">
+                <Button onClick={() => setTemplateTheme(defaultTheme)}
+                  startIcon={<HistoryIcon />}>
+                    Revert to Default
+                </Button>
+              </Tooltip>
+              <Tooltip title="Move over to the theme browser's page to use one of our predefined themes.">
+                <Button startIcon={<PaletteSharpIcon />} onClick={() => props.router.toThemeBrowser()}>See more themes</Button>
+              </Tooltip>
+            </ButtonGroup>
           </>
       </Paper>
     </Modal>

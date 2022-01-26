@@ -156,6 +156,14 @@ module.exports = (env, argv) => {
           test: /\.s?css$/,
           use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
         },
+        {
+          test: /\.(png|jpe?g|gif|jp2|webp)$/,
+          loader: 'file-loader',
+          options: {
+            name: '[contenthash].[ext]',
+            outputPath: 'dist/images',
+          },
+        },
       ],
     },
     optimization: {

@@ -79,6 +79,7 @@ import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
 import { AchievementsRoot } from "../Achievements/AchievementsRoot";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { Settings } from "../Settings/Settings";
+import { ThemeBrowser } from "../Themes/ui/ThemeBrowser";
 
 const htmlLocation = location;
 
@@ -194,6 +195,9 @@ export let Router: IRouter = {
   toAchievements: () => {
     throw new Error("Router called before initialization");
   },
+  toThemeBrowser: () => {
+    throw new Error("Router called before initialization");
+  },
 };
 
 function determineStartPage(player: IPlayer): Page {
@@ -307,6 +311,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toAchievements: () => {
       setPage(Page.Achievements);
     },
+    toThemeBrowser: () => {
+      setPage(Page.ThemeBrowser);
+    }
   };
 
   useEffect(() => {
@@ -471,6 +478,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       mainPage = (
         <GameOptionsRoot
           player={player}
+          router={Router}
           save={() => saveObject.saveGame()}
           export={() => {
             // Apply the export bonus before saving the game
@@ -501,6 +509,10 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     }
     case Page.Achievements: {
       mainPage = <AchievementsRoot />;
+      break;
+    }
+    case Page.ThemeBrowser: {
+      mainPage = <ThemeBrowser router={Router} />;
       break;
     }
   }
