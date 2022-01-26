@@ -524,7 +524,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (isNaN(hackAmount)) {
         throw makeRuntimeErrorMsg(
           "hackAnalyzeThreads",
-          `Invalid growth argument passed into hackAnalyzeThreads: ${hackAmount}. Must be numeric.`,
+          `Invalid hackAmount argument passed into hackAnalyzeThreads: ${hackAmount}. Must be numeric.`,
         );
       }
 
@@ -1649,7 +1649,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       const cost = getPurchaseServerCost(ram);
       if (cost === Infinity) {
-        workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be a positive power of 2`);
+        if(ram > getPurchaseServerMaxRam()){
+          workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must not be greater than getPurchaseServerMaxRam`);
+        }else{
+          workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be a positive power of 2`);
+        }
+        
         return "";
       }
 
