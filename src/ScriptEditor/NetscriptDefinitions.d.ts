@@ -5396,7 +5396,7 @@ export interface NS extends Singularity {
    * @param filename - Optional. Filename or PID of the script.
    * @param hostname - Optional. Name of host server the script is running on.
    * @param args  - Arguments to identify the script
-   * @returns info about a running script
+   * @returns The info about the running script if found, and null otherwise.
    */
   getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript;
 
