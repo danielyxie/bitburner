@@ -52,6 +52,12 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   const [possibilities, setPossibilities] = useState<string[]>([]);
   const classes = useStyles();
 
+  // If we have no data in the current terminal history, let's initialize it from the player save
+  if (terminal.commandHistory.length === 0 && player.terminalCommandHistory.length > 0) {
+    terminal.commandHistory = player.terminalCommandHistory;
+    terminal.commandHistoryIndex = terminal.commandHistory.length;
+  }
+
   // Need to run after state updates, for example if we need to move cursor
   // *after* we modify input
   useEffect(() => {
