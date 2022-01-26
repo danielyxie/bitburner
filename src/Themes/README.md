@@ -2,7 +2,7 @@
 
 Feel free to contribute a new theme by submitting a pull request to the game!
 
-See [CONTRIBUTING.md](/CONTRIBUTING.md) for details.
+See [CONTRIBUTING.md](/doc/CONTRIBUTING.md) for details.
 
 ## How create a new theme
 

@@ -182,7 +182,7 @@ To contribute to and view your changes to the BitBurner documentation on [Read T
 Docs](http://bitburner.readthedocs.io/), you will
 need to have Python installed, along with [Sphinx](http://www.sphinx-doc.org).
 
-To make change to the [in-game documentation](./markdown/bitburner.md), you will need to modify the [TypeScript definitions](./src/ScriptEditor/NetscriptDefinitions.d.ts), not the markdown files.
+To make change to the [in-game documentation](../markdown/bitburner.md), you will need to modify the [TypeScript definitions](../src/ScriptEditor/NetscriptDefinitions.d.ts), not the markdown files.
 
 We are using [API Extractor](https://api-extractor.com/pages/tsdoc/doc_comment_syntax/) (tsdoc hints) to generate the markdown doc. Make your changes to the TypeScript definitions and then run `npm run doc`.
 
