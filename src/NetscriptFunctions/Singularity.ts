@@ -474,7 +474,8 @@ export function NetscriptSingularity(
         case CityName.Ishima:
         case CityName.Volhaven:
           if (player.money < CONSTANTS.TravelCost) {
-            throw helper.makeRuntimeErrorMsg("travelToCity", "Not enough money to travel.");
+            workerScript.log("travelToCity", () => "Not enough money to travel.");
+            return false
           }
           player.loseMoney(CONSTANTS.TravelCost, "other");
           player.city = cityname;
@@ -482,8 +483,7 @@ export function NetscriptSingularity(
           player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50000);
           return true;
         default:
-          workerScript.log("travelToCity", () => `Invalid city name: '${cityname}'.`);
-          return false;
+          throw helper.makeRuntimeErrorMsg("travelToCity", `Invalid city name: '${cityname}'.`);
       }
     },
 
