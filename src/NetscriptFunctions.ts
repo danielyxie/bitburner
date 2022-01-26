@@ -612,12 +612,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           )} (t=${numeralWrapper.formatThreads(threads)}).`,
       );
       return netscriptDelay(growTime * 1000, workerScript).then(function () {
-        const moneyBefore = server.moneyAvailable <= 0 ? 1 : server.moneyAvailable;
-        processSingleServerGrowth(server, threads, Player, host.cpuCores);
+        const moneyBefore = server.moneyAvailable;
+        const growth = processSingleServerGrowth(server, threads, Player, host.cpuCores);
         const moneyAfter = server.moneyAvailable;
         workerScript.scriptRef.recordGrow(server.hostname, threads);
         const expGain = calculateHackingExpGain(server, Player) * threads;
-        const logGrowPercent = moneyAfter / moneyBefore - 1;
+        const logGrowPercent = growth;
         workerScript.log(
           "grow",
           () =>
