@@ -8,6 +8,7 @@ const api = require("./api-server");
 const cp = require("child_process");
 const path = require("path");
 const fs = require("fs");
+const { windowTracker } = require("./windowTracker");
 const { fileURLToPath } = require("url");
 
 const debug = process.argv.includes("--debug");
@@ -20,19 +21,29 @@ async function createWindow(killall) {
     icon = path.join(__dirname, 'icon.png');
   }
 
+  const tracker = windowTracker('main');
   const window = new BrowserWindow({
     icon,
     show: false,
     backgroundThrottling: false,
     backgroundColor: "#000000",
+    title: 'Bitburner',
+    x: tracker.state.x,
+    y: tracker.state.y,
+    width: tracker.state.width,
+    height: tracker.state.height,
+    minWidth: 600,
+    minHeight: 400,
     webPreferences: {
       nativeWindowOpen: true,
       preload: path.join(__dirname, 'preload.js'),
     },
   });
 
+  setTimeout(() => tracker.track(window), 1000);
+  if (tracker.state.isMaximized) window.maximize();
+
   window.removeMenu();
-  window.maximize();
   noScripts = killall ? { query: { noScripts: killall } } : {};
   window.loadFile("index.html", noScripts);
   window.show();
