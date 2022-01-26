@@ -4464,6 +4464,17 @@ export interface NS extends Singularity {
   print(...args: any[]): void;
 
   /**
+   * Prints a formatted string to the script’s logs.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * see: https://github.com/alexei/sprintf.js
+   * @param format - format of the message
+   * @param args - Value(s) to be printed.
+   */
+  printf(format: string, ...args: any[]): void;
+
+  /**
    * Prints one or more values or variables to the Terminal.
    * @remarks
    * RAM cost: 0 GB
