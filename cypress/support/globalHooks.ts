@@ -1,9 +1,10 @@
 export {};
 
 beforeEach(() => {
-  cy.visit("/");
-  cy.clearLocalStorage();
-  cy.window().then((win) => {
-    win.indexedDB.deleteDatabase("bitburnerSave");
+  cy.visit("/", {
+    onBeforeLoad(win: Cypress.AUTWindow) {
+      win.indexedDB.deleteDatabase("bitburnerSave");
+    }
   });
+  cy.clearLocalStorage();
 });

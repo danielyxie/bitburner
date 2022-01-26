@@ -3,7 +3,6 @@ export {};
 describe("netscript", () => {
   it("Do naviguation", () => {
     cy.findByRole("button", { name: "SKIP TUTORIAL" }).click();
-    cy.findByText("Got it!").click();
 
     cy.findByText("Dev").click();
     cy.findByText(/Source-Files/i).click();
@@ -23,11 +22,11 @@ describe("netscript", () => {
     cy.findByText(/Experience/i).click();
     cy.findByText(/Tons of exp/i).click();
 
-    cy.findByText("Create Script").click();
-    cy.findByText(/Script name:/i);
+    cy.findByText("Script Editor").click();
+    cy.findByText(/No Open Files/i);
 
     cy.findByText("Active Scripts").click();
-    cy.findByText(/Total online production of/i);
+    cy.findByText(/Total production since last Augment/i);
 
     cy.findByText("Create Program").click();
     cy.findByText(/This page displays/i);
@@ -65,9 +64,9 @@ describe("netscript", () => {
     cy.findByText(/don't reward you for/i);
 
     cy.findByText("Tutorial").click();
-    cy.findByText(/AKA Links to/i);
+    cy.findByText(/Tutorial \/ Documentation/i);
 
     cy.findByText("Options").click();
-    cy.findByText(/Netscript exec time/i);
+    cy.findByText(/\.script exec time/i);
   });
 });
