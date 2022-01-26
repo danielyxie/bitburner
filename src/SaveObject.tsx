@@ -22,6 +22,7 @@ import { v1APIBreak } from "./utils/v1APIBreak";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { PlayerOwnedAugmentation } from "./Augmentation/PlayerOwnedAugmentation";
 import { LocationName } from "./Locations/data/LocationNames";
+import { SxProps } from "@mui/system";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -371,6 +372,18 @@ function createScamUpdateText(): void {
   }
 }
 
+const resets: SxProps = {
+  "& h1, & h2, & h3, & h4, & p, & a, & ul": {
+    margin: 0,
+    color: Settings.theme.primary,
+    whiteSpace: "initial",
+  },
+  "& ul": {
+    paddingLeft: "1.5em",
+    lineHeight: 1.5,
+  },
+};
+
 function createNewUpdateText(): void {
   setTimeout(
     () =>
@@ -379,6 +392,7 @@ function createNewUpdateText(): void {
           "Please report any bugs/issues through the github repository " +
           "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
           CONSTANTS.LatestUpdate,
+        resets,
       ),
     1000,
   );
@@ -391,6 +405,7 @@ function createBetaUpdateText(): void {
       "Please report any bugs/issues through the github repository (https://github.com/danielyxie/bitburner/issues) " +
       "or the Bitburner subreddit (reddit.com/r/bitburner).<br><br>" +
       CONSTANTS.LatestUpdate,
+    resets,
   );
 }
 
