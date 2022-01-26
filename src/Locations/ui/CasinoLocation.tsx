@@ -5,7 +5,7 @@
  */
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
-import { Blackjack } from "../../Casino/Blackjack";
+import { Blackjack, DECK_COUNT } from "../../Casino/Blackjack";
 import { CoinFlip } from "../../Casino/CoinFlip";
 import { Roulette } from "../../Casino/Roulette";
 import { SlotMachine } from "../../Casino/SlotMachine";
@@ -38,7 +38,7 @@ export function CasinoLocation(props: IProps): React.ReactElement {
           <Button onClick={() => updateGame(GameType.Coin)}>Play coin flip</Button>
           <Button onClick={() => updateGame(GameType.Slots)}>Play slots</Button>
           <Button onClick={() => updateGame(GameType.Roulette)}>Play roulette</Button>
-          <Button onClick={() => updateGame(GameType.Blackjack)}>Play blackjack</Button>
+          <Button onClick={() => updateGame(GameType.Blackjack)}>Play blackjack ({DECK_COUNT} decks)</Button>
         </Box>
       )}
       {game !== GameType.None && (
