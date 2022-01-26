@@ -31,7 +31,7 @@ export function AscensionModal(props: IProps): React.ReactElement {
     props.onAscend();
     const res = gang.ascendMember(props.member);
     dialogBoxCreate(
-      <Typography>
+      <>
         You ascended {props.member.name}!<br />
         <br />
         Your gang lost {numeralWrapper.formatRespect(res.respect)} respect.
@@ -51,7 +51,7 @@ export function AscensionModal(props: IProps): React.ReactElement {
         <br />
         Charisma: x{numeralWrapper.format(res.cha, "0.000")}
         <br />
-      </Typography>,
+      </>
     );
     props.onClose();
   }

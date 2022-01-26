@@ -2,26 +2,53 @@
  * React Component for the first part of a gang member details.
  * Contains skills and exp.
  */
-import React, { useState } from "react";
-import { formatNumber } from "../../utils/StringHelperFunctions";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { GangMember } from "../GangMember";
-import { AscensionModal } from "./AscensionModal";
+import React from "react";
+import { useGang } from "./Context";
+
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
-import { StaticModal } from "../../ui/React/StaticModal";
-import IconButton from "@mui/material/IconButton";
-import HelpIcon from "@mui/icons-material/Help";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@mui/material";
+
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { GangMember } from "../GangMember";
+import { Settings } from "../../Settings/Settings";
+import { formatNumber } from "../../utils/StringHelperFunctions";
+import { MoneyRate } from "../../ui/React/MoneyRate";
+import { characterOverviewStyles as useStyles } from "../../ui/React/CharacterOverview";
 
 interface IProps {
   member: GangMember;
-  onAscend: () => void;
+}
+
+export const generateTableRow = (
+  name: string,
+  level: number,
+  exp: number,
+  color: string,
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  classes: any
+): React.ReactElement => {
+  return (
+    <TableRow>
+      <TableCell classes={{ root: classes.cellNone }}>
+        <Typography style={{ color: color }}>{name}</Typography>
+      </TableCell>
+      <TableCell align="right" classes={{ root: classes.cellNone }}>
+        <Typography style={{ color: color }}>
+          {formatNumber(level, 0)} ({numeralWrapper.formatExp(exp)} exp)
+        </Typography>
+      </TableCell>
+    </TableRow>
+  )
 }
 
 export function GangMemberStats(props: IProps): React.ReactElement {
-  const [helpOpen, setHelpOpen] = useState(false);
-  const [ascendOpen, setAscendOpen] = useState(false);
+  const classes = useStyles();
 
   const asc = {
     hack: props.member.calculateAscensionMult(props.member.hack_asc_points),
@@ -31,6 +58,16 @@ export function GangMemberStats(props: IProps): React.ReactElement {
     agi: props.member.calculateAscensionMult(props.member.agi_asc_points),
     cha: props.member.calculateAscensionMult(props.member.cha_asc_points),
   };
+
+
+
+  const gang = useGang();
+  const data = [
+    [`Money:`, <MoneyRate money={5 * props.member.calculateMoneyGain(gang)} />],
+    [`Respect:`, `${numeralWrapper.formatRespect(5 * props.member.calculateRespectGain(gang))} / sec`],
+    [`Wanted Level:`, `${numeralWrapper.formatWanted(5 * props.member.calculateWantedLevelGain(gang))} / sec`],
+    [`Total Respect:`, `${numeralWrapper.formatRespect(props.member.earnedRespect)}`],
+  ];
 
   return (
     <>
@@ -63,50 +100,32 @@ export function GangMemberStats(props: IProps): React.ReactElement {
           </Typography>
         }
       >
-        <Typography>
-          Hacking: {formatNumber(props.member.hack, 0)} ({numeralWrapper.formatExp(props.member.hack_exp)} exp)
-          <br />
-          Strength: {formatNumber(props.member.str, 0)} ({numeralWrapper.formatExp(props.member.str_exp)} exp)
-          <br />
-          Defense: {formatNumber(props.member.def, 0)} ({numeralWrapper.formatExp(props.member.def_exp)} exp)
-          <br />
-          Dexterity: {formatNumber(props.member.dex, 0)} ({numeralWrapper.formatExp(props.member.dex_exp)} exp)
-          <br />
-          Agility: {formatNumber(props.member.agi, 0)} ({numeralWrapper.formatExp(props.member.agi_exp)} exp)
-          <br />
-          Charisma: {formatNumber(props.member.cha, 0)} ({numeralWrapper.formatExp(props.member.cha_exp)} exp)
-          <br />
-        </Typography>
+        <Table sx={{ display: 'table', mb: 1, width: '100%' }}>
+          <TableBody>
+            {generateTableRow("Hacking", props.member.hack, props.member.hack_exp, Settings.theme.hack, classes)}
+            {generateTableRow("Strength", props.member.str, props.member.str_exp, Settings.theme.combat, classes)}
+            {generateTableRow("Defense", props.member.def, props.member.def_exp, Settings.theme.combat, classes)}
+            {generateTableRow("Dexterity", props.member.dex, props.member.dex_exp, Settings.theme.combat, classes)}
+            {generateTableRow("Agility", props.member.agi, props.member.agi_exp, Settings.theme.combat, classes)}
+            {generateTableRow("Charisma", props.member.cha, props.member.cha_exp, Settings.theme.cha, classes)}
+            <TableRow>
+              <TableCell classes={{ root: classes.cellNone }}>
+                <br />
+              </TableCell>
+            </TableRow>
+            {data.map(([a, b]) => (
+              <TableRow key={a.toString() + b.toString()}>
+                <TableCell classes={{ root: classes.cellNone }}>
+                  <Typography>{a}</Typography>
+                </TableCell>
+                <TableCell align="right" classes={{ root: classes.cellNone }}>
+                  <Typography>{b}</Typography>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </Tooltip>
-      <br />
-      {props.member.canAscend() && (
-        <>
-          <Button onClick={() => setAscendOpen(true)}>Ascend</Button>
-          <AscensionModal
-            open={ascendOpen}
-            onClose={() => setAscendOpen(false)}
-            member={props.member}
-            onAscend={props.onAscend}
-          />
-          <IconButton onClick={() => setHelpOpen(true)}>
-            <HelpIcon />
-          </IconButton>
-          <StaticModal open={helpOpen} onClose={() => setHelpOpen(false)}>
-            <Typography>
-              Ascending a Gang Member resets the member's progress and stats in exchange for a permanent boost to their
-              stat multipliers.
-              <br />
-              <br />
-              The additional stat multiplier that the Gang Member gains upon ascension is based on the amount of exp
-              they have.
-              <br />
-              <br />
-              Upon ascension, the member will lose all of its non-Augmentation Equipment and your gang will lose respect
-              equal to the total respect earned by the member.
-            </Typography>
-          </StaticModal>
-        </>
-      )}
     </>
   );
 }

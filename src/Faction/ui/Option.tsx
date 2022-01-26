@@ -19,7 +19,7 @@ type IProps = {
 export function Option(props: IProps): React.ReactElement {
   return (
     <Box>
-      <Paper sx={{ my: 1, p: 1, width: "100%" }}>
+      <Paper sx={{ my: 1, p: 1 }}>
         <Button onClick={props.onClick}>{props.buttonText}</Button>
         <Typography>{props.infoText}</Typography>
       </Paper>
