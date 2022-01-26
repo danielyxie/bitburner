@@ -8,6 +8,7 @@ Netburner.txt
 /test/*.map
 /test/*.bundle.*
 /test/*.css
+/input/bitburner.api.json
 .cypress
 
 # tmp folder for electron
