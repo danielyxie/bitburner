@@ -16,6 +16,8 @@
     "./dist/**/*",
     "./node_modules/**/*",
     "./public/**/*",
+    "./src/**",
+    "./lib/**,",
     "*.js"
   ],
   "directories": {
