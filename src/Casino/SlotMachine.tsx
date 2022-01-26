@@ -159,18 +159,18 @@ export function SlotMachine(props: IProps): React.ReactElement {
     const copy = index.slice();
     for (let i = 0; i < copy.length; i++) {
       if (copy[i] === locks[i] && !stoppedOne) continue;
-      copy[i] = (copy[i] + 1) % symbols.length;
+      copy[i] = (copy[i] - 1 >= 0) ? copy[i] - 1 : symbols.length - 1;
       stoppedOne = true;
     }
 
     setIndex(copy);
 
     if (stoppedOne && copy.every((e, i) => e === locks[i])) {
-      checkWinnings();
+      checkWinnings(getTable(copy, symbols));
     }
   }
 
-  function getTable(): string[][] {
+  function getTable(index:number[], symbols:string[]): string[][] {
     return [
       [
         symbols[(index[0] + symbols.length - 1) % symbols.length],
@@ -209,8 +209,7 @@ export function SlotMachine(props: IProps): React.ReactElement {
     ]);
   }
 
-  function checkWinnings(): void {
-    const t = getTable();
+  function checkWinnings(t:string[][]): void {
     const getPaylineData = function (payline: number[][]): string[] {
       const data = [];
       for (const point of payline) {
@@ -267,7 +266,7 @@ export function SlotMachine(props: IProps): React.ReactElement {
     setInvestment(investment);
   }
 
-  const t = getTable();
+  const t = getTable(index, symbols);
   // prettier-ignore
   return (
       <>
@@ -288,7 +287,7 @@ export function SlotMachine(props: IProps): React.ReactElement {
             disabled={!canPlay}
           >Spin!</Button>)}}
         />
-        
+
         <Typography variant="h4">{status}</Typography>
         <Typography>Pay lines</Typography>
 
