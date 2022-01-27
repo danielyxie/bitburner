@@ -28,7 +28,7 @@ export function NetscriptUserInterface(
 
     setTheme: function (newTheme: UserInterfaceTheme): void {
       helper.updateDynamicRam("setTheme", getRamCost(player, "ui", "setTheme"));
-      const hex = /^(#)((?:[A-Fa-f0-9]{3}){1,2})$/;
+      const hex = /^(#)((?:[A-Fa-f0-9]{2}){3,4}|(?:[A-Fa-f0-9]{3}))$/;
       const currentTheme = {...Settings.theme}
       const errors: string[] = [];
       for (const key of Object.keys(newTheme)) {
