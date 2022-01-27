@@ -1,11 +1,169 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { Menu, clipboard, dialog } = require("electron");
+const { app, Menu, clipboard, dialog, shell } = require("electron");
 const log = require("electron-log");
+const Config = require("electron-config");
 const api = require("./api-server");
 const utils = require("./utils");
+const storage = require("./storage");
+const config = new Config();
 
 function getMenu(window) {
   return Menu.buildFromTemplate([
+    {
+      label: "File",
+      submenu: [
+        {
+          label: "Save Game",
+          click: () => window.webContents.send("trigger-save"),
+        },
+        {
+          label: "Export Save",
+          click: () => window.webContents.send("trigger-game-export"),
+        },
+        {
+          label: "Export Scripts",
+          click: async () => window.webContents.send("trigger-scripts-export"),
+        },
+        {
+          type: "separator",
+        },
+        {
+          label: "Load Last Save",
+          click: async () => {
+            try {
+              const saveGame = await storage.loadLastFromDisk(window);
+              window.webContents.send("push-save-request", { save: saveGame });
+            } catch (error) {
+              log.error(error);
+              utils.writeToast(window, "Could not load last save from disk", "error", 5000);
+            }
+          }
+        },
+        {
+          label: "Load From File",
+          click: async () => {
+            const defaultPath = await storage.getSaveFolder(window);
+            const result = await dialog.showOpenDialog(window, {
+              title: "Load From File",
+              defaultPath: defaultPath,
+              buttonLabel: "Load",
+              filters: [
+                { name: "Game Saves", extensions: ["json", "json.gz", "txt"] },
+                { name: "All", extensions: ["*"] },
+              ],
+              properties: [
+                "openFile", "dontAddToRecent",
+              ]
+            });
+            if (result.canceled) return;
+            const file = result.filePaths[0];
+
+            try {
+              const saveGame = await storage.loadFileFromDisk(file);
+              window.webContents.send("push-save-request", { save: saveGame });
+            } catch (error) {
+              log.error(error);
+              utils.writeToast(window, "Could not load save from disk", "error", 5000);
+            }
+          }
+        },
+        {
+          label: "Load From Steam Cloud",
+          enabled: storage.isCloudEnabled(),
+          click: async () => {
+            try {
+              const saveGame = await storage.getSteamCloudSaveString();
+              await storage.pushSaveGameForImport(window, saveGame, false);
+            } catch (error) {
+              log.error(error);
+              utils.writeToast(window, "Could not load from Steam Cloud", "error", 5000);
+            }
+          }
+        },
+        {
+          type: "separator",
+        },
+        {
+          label: "Compress Disk Saves (.gz)",
+          type: "checkbox",
+          checked: storage.isSaveCompressionEnabled(),
+          click: (menuItem) => {
+            storage.setSaveCompressionConfig(menuItem.checked);
+            utils.writeToast(window,
+              `${menuItem.checked ? "Enabled" : "Disabled"} Save Compression`, "info", 5000);
+            refreshMenu(window);
+          },
+        },
+        {
+          label: "Auto-Save to Disk",
+          type: "checkbox",
+          checked: storage.isAutosaveEnabled(),
+          click: (menuItem) => {
+            storage.setAutosaveConfig(menuItem.checked);
+            utils.writeToast(window,
+              `${menuItem.checked ? "Enabled" : "Disabled"} Auto-Save to Disk`, "info", 5000);
+            refreshMenu(window);
+          },
+        },
+        {
+          label: "Auto-Save to Steam Cloud",
+          type: "checkbox",
+          enabled: !global.greenworksError,
+          checked: storage.isCloudEnabled(),
+          click: (menuItem) => {
+            storage.setCloudEnabledConfig(menuItem.checked);
+            utils.writeToast(window,
+              `${menuItem.checked ? "Enabled" : "Disabled"} Auto-Save to Steam Cloud`, "info", 5000);
+            refreshMenu(window);
+          },
+        },
+        {
+          label: "Restore Newest on Load",
+          type: "checkbox",
+          checked: config.get("onload-restore-newest", true),
+          click: (menuItem) => {
+            config.set("onload-restore-newest", menuItem.checked);
+            utils.writeToast(window,
+              `${menuItem.checked ? "Enabled" : "Disabled"} Restore Newest on Load`, "info", 5000);
+            refreshMenu(window);
+          },
+        },
+        {
+          type: "separator",
+        },
+        {
+          label: "Open Directory",
+          submenu: [
+            {
+              label: "Open Game Directory",
+              click: () => shell.openPath(app.getAppPath()),
+            },
+            {
+              label: "Open Saves Directory",
+              click: async () => {
+                const path = await storage.getSaveFolder(window);
+                shell.openPath(path);
+              },
+            },
+            {
+              label: "Open Logs Directory",
+              click: () => shell.openPath(app.getPath("logs")),
+            },
+            {
+              label: "Open Data Directory",
+              click: () => shell.openPath(app.getPath("userData")),
+            },
+          ]
+        },
+        {
+          type: "separator",
+        },
+        {
+          label: "Quit",
+          click: () => app.quit(),
+        },
+      ]
+    },
     {
       label: "Edit",
       submenu: [
@@ -163,6 +321,17 @@ function getMenu(window) {
           label: "Activate",
           click: () => window.webContents.openDevTools(),
         },
+        {
+          label: "Delete Steam Cloud Data",
+          enabled: !global.greenworksError,
+          click: async () => {
+            try {
+              await storage.deleteCloudFile();
+            } catch (error) {
+              log.error(error);
+            }
+          }
+        }
       ],
     },
   ]);
