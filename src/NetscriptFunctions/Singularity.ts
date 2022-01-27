@@ -42,6 +42,8 @@ import { Terminal } from "../Terminal";
 import { calculateHackingTime } from "../Hacking";
 import { Server } from "../Server/Server";
 import { netscriptCanHack } from "../Hacking/netscriptCanHack";
+import { canGetBonus } from "../ExportBonus";
+import { exportGame } from '../ExportGame';
 
 export function NetscriptSingularity(
   player: IPlayer,
@@ -250,7 +252,12 @@ export function NetscriptSingularity(
       workerScript.running = false; // Prevent workerScript from "finishing execution naturally"
       killWorkerScript(workerScript);
     },
-
+    backupSave: function (): void {
+      return exportGame(player)
+    },
+    backupSaveBonus: function (): boolean {
+      return canGetBonus();
+    },
     goToLocation: function (locationName: any): boolean {
       helper.updateDynamicRam("goToLocation", getRamCost(player, "goToLocation"));
       helper.checkSingularityAccess("goToLocation");

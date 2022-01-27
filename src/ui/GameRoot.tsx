@@ -5,7 +5,6 @@ import { IEngine } from "../IEngine";
 import { ITerminal } from "../Terminal/ITerminal";
 import { installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { saveObject } from "../SaveObject";
-import { onExport } from "../ExportBonus";
 import { LocationName } from "../Locations/data/LocationNames";
 import { Location } from "../Locations/Location";
 import { Locations } from "../Locations/Locations";
@@ -81,6 +80,7 @@ import { AchievementsRoot } from "../Achievements/AchievementsRoot";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { Settings } from "../Settings/Settings";
 import { ThemeBrowser } from "../Themes/ui/ThemeBrowser";
+import { exportGame } from "../ExportGame";
 
 const htmlLocation = location;
 
@@ -483,9 +483,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
           router={Router}
           save={() => saveObject.saveGame()}
           export={() => {
-            // Apply the export bonus before saving the game
-            onExport(player);
-            saveObject.exportGame();
+            exportGame(player);
           }}
           forceKill={killAllScripts}
           softReset={softReset}
@@ -497,9 +495,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       mainPage = (
         <AugmentationsRoot
           exportGameFn={() => {
-            // Apply the export bonus before saving the game
-            onExport(player);
-            saveObject.exportGame();
+            exportGame(player);
           }}
           installAugmentationsFn={() => {
             installAugmentations();

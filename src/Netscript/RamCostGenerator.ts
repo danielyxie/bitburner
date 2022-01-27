@@ -259,6 +259,8 @@ export const RamCosts: IMap<any> = {
   purchaseAugmentation: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   softReset: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   installAugmentations: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
+  backupSave: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 2),
+  backupSaveBonus: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   isFocused: SF4Cost(0.1),
   setFocus: SF4Cost(0.1),
 
