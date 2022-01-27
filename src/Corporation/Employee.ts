@@ -2,9 +2,7 @@ import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { EmployeePositions } from "./EmployeePositions";
-import { ICorporation } from "./ICorporation";
 import { OfficeSpace } from "./OfficeSpace";
-import { IIndustry } from "./IIndustry";
 
 interface IParams {
   name?: string;
@@ -18,6 +16,13 @@ interface IParams {
   efficiency?: number;
   salary?: number;
   loc?: string;
+}
+
+interface EmployeeStatMultipliers {
+  cre: number;
+  cha: number;
+  int: number;
+  eff: number;
 }
 
 export class Employee {
@@ -82,11 +87,11 @@ export class Employee {
     return salary;
   }
 
-  calculateProductivity(corporation: ICorporation, industry: IIndustry): number {
-    const effCre = this.cre * corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
-      effCha = this.cha * corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
-      effInt = this.int * corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),
-      effEff = this.eff * corporation.getEmployeeEffMultiplier() * industry.getEmployeeEffMultiplier();
+  calculateProductivity(mults: EmployeeStatMultipliers): number {
+    const effCre = this.cre * mults.cre,
+      effCha = this.cha * mults.cha,
+      effInt = this.int * mults.int,
+      effEff = this.eff * mults.eff;
     const prodBase = this.mor * this.hap * this.ene * 1e-6;
     let prodMult = 0;
     switch (this.pos) {

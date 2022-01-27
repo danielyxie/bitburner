@@ -107,10 +107,17 @@ export class OfficeSpace {
       this.employeeProd[name] = 0;
     }
 
+    const mults = {
+      cre: corporation.getEmployeeCreMultiplier() * industry.getEmployeeCreMultiplier(),
+      cha: corporation.getEmployeeChaMultiplier() * industry.getEmployeeChaMultiplier(),
+      int: corporation.getEmployeeIntMultiplier() * industry.getEmployeeIntMultiplier(),
+      eff: corporation.getEmployeeEffMultiplier() * industry.getEmployeeEffMultiplier(),
+    };
+
     let total = 0;
     for (let i = 0; i < this.employees.length; ++i) {
       const employee = this.employees[i];
-      const prod = employee.calculateProductivity(corporation, industry);
+      const prod = employee.calculateProductivity(mults);
       this.employeeProd[employee.pos] += prod;
       total += prod;
     }
