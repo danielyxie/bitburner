@@ -14,6 +14,10 @@ const useStyles = makeStyles(() => ({
   snackbar: {
     // Log popup z-index increments, so let's add a padding to be well above them.
     zIndex: `${logBoxBaseZIndex + 1000} !important` as any,
+
+    "& .MuiAlert-icon": {
+      alignSelf: 'center',
+    },
   }
 }));
 
@@ -27,7 +31,7 @@ export function SnackbarProvider(props: IProps): React.ReactElement {
   );
 }
 
-export const SnackbarEvents = new EventEmitter<[string, "success" | "warning" | "error" | "info", number]>();
+export const SnackbarEvents = new EventEmitter<[string | React.ReactNode, "success" | "warning" | "error" | "info", number]>();
 
 export function Snackbar(): React.ReactElement {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();

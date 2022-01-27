@@ -30,7 +30,7 @@ export function getPurchaseServerCost(ram: number): number {
 
   const upg = Math.max(0, Math.log(sanitizedRam) / Math.log(2) - 6);
 
-  return (
+  return Math.round(
     sanitizedRam *
     CONSTANTS.BaseCostFor1GBOfRamServer *
     BitNodeMultipliers.PurchasedServerCost *

@@ -30,7 +30,7 @@ import { Player } from "./Player";
 import { saveObject, loadGame } from "./SaveObject";
 import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
-import { ThemeEvents } from "./ui/React/Theme";
+import { ThemeEvents } from "./Themes/ui/Theme";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";

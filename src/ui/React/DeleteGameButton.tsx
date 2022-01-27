@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import { Tooltip } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
+import { pushDisableRestore } from '../../Electron';
 
 interface IProps {
   color?: "primary" | "warning" | "error";
@@ -21,7 +22,10 @@ export function DeleteGameButton({ color = "primary" }: IProps): React.ReactElem
       onConfirm={() => {
         setModalOpened(false);
         deleteGame()
-          .then(() => setTimeout(() => location.reload(), 1000))
+          .then(() => {
+            pushDisableRestore();
+            setTimeout(() => location.reload(), 1000);
+          })
           .catch((r) => console.error(`Could not delete game: ${r}`));
       }}
       open={modalOpened}

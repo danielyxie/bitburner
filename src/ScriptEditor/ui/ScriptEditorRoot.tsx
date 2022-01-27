@@ -33,6 +33,8 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import SettingsIcon from "@mui/icons-material/Settings";
+import SyncIcon from "@mui/icons-material/Sync";
+import CloseIcon from "@mui/icons-material/Close";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
@@ -41,6 +43,7 @@ import { PromptEvent } from "../../ui/React/PromptManager";
 import { Modal } from "../../ui/React/Modal";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
+import { Tooltip } from "@mui/material";
 
 interface IProps {
   // Map of filename -> code
@@ -696,17 +699,58 @@ export function Root(props: IProps): React.ReactElement {
     }
   }
 
+  function onTabUpdate(index: number): void {
+    const openScript = openScripts[index];
+    const serverScriptCode = getServerCode(index);
+    if (serverScriptCode === null) return;
+
+    if (openScript.code !== serverScriptCode) {
+      PromptEvent.emit({
+        txt:
+          "Do you want to overwrite the current editor content with the contents of " +
+          openScript.fileName +
+          " on the server? This cannot be undone.",
+        resolve: (result: boolean) => {
+          if (result) {
+            // Save changes
+            openScript.code = serverScriptCode;
+
+            // Switch to target tab
+            onTabClick(index);
+
+            if (editorRef.current !== null && openScript !== null) {
+              if (openScript.model === undefined || openScript.model.isDisposed()) {
+                regenerateModel(openScript);
+              }
+              editorRef.current.setModel(openScript.model);
+
+              editorRef.current.setValue(openScript.code);
+              updateRAM(openScript.code);
+              editorRef.current.focus();
+            }
+          }
+        },
+      });
+    }
+  }
+
   function dirty(index: number): string {
+    const openScript = openScripts[index];
+    const serverScriptCode = getServerCode(index);
+    if (serverScriptCode === null) return " *";
+
+    // The server code is stored with its starting & trailing whitespace removed
+    const openScriptFormatted = Script.formatCode(openScript.code);
+    return serverScriptCode !== openScriptFormatted ? " *" : "";
+  }
+
+  function getServerCode(index: number): string | null {
     const openScript = openScripts[index];
     const server = GetServer(openScript.hostname);
     if (server === null) throw new Error(`Server '${openScript.hostname}' should not be null, but it is.`);
 
     const serverScript = server.scripts.find((s) => s.filename === openScript.fileName);
-    if (serverScript === undefined) return " *";
-
-    // The server code is stored with its starting & trailing whitespace removed
-    const openScriptFormatted = Script.formatCode(openScript.code);
-    return serverScript.code !== openScriptFormatted ? " *" : "";
+    return serverScript?.code ?? null;
   }
 
   // Toolbars are roughly 112px:
@@ -738,62 +782,78 @@ export function Root(props: IProps): React.ReactElement {
                   overflowX: "scroll",
                 }}
               >
-                {openScripts.map(({ fileName, hostname }, index) => (
-                  <Draggable
-                    key={fileName + hostname}
-                    draggableId={fileName + hostname}
-                    index={index}
-                    disableInteractiveElementBlocking={true}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        style={{
-                          ...provided.draggableProps.style,
-                          marginRight: "5px",
-                          flexShrink: 0,
-                        }}
-                      >
-                        <Button
-                          onClick={() => onTabClick(index)}
-                          style={
-                            currentScript?.fileName === openScripts[index].fileName
-                              ? {
-                                  background: Settings.theme.button,
-                                  color: Settings.theme.primary,
-                                }
-                              : {
-                                  background: Settings.theme.backgroundsecondary,
-                                  color: Settings.theme.secondary,
-                                }
-                          }
-                        >
-                          {hostname}:~/{fileName} {dirty(index)}
-                        </Button>
-                        <Button
-                          onClick={() => onTabClose(index)}
+                {openScripts.map(({ fileName, hostname }, index) => {
+                  const iconButtonStyle = {
+                    maxWidth: "25px",
+                    minWidth: "25px",
+                    minHeight: "38.5px",
+                    maxHeight: "38.5px",
+                    ...(currentScript?.fileName === openScripts[index].fileName
+                      ? {
+                          background: Settings.theme.button,
+                          borderColor: Settings.theme.button,
+                          color: Settings.theme.primary,
+                        }
+                      : {
+                          background: Settings.theme.backgroundsecondary,
+                          borderColor: Settings.theme.backgroundsecondary,
+                          color: Settings.theme.secondary,
+                        }),
+                  };
+                  return (
+                    <Draggable
+                      key={fileName + hostname}
+                      draggableId={fileName + hostname}
+                      index={index}
+                      disableInteractiveElementBlocking={true}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
                           style={{
-                            maxWidth: "20px",
-                            minWidth: "20px",
-                            ...(currentScript?.fileName === openScripts[index].fileName
-                              ? {
-                                  background: Settings.theme.button,
-                                  color: Settings.theme.primary,
-                                }
-                              : {
-                                  background: Settings.theme.backgroundsecondary,
-                                  color: Settings.theme.secondary,
-                                }),
+                            ...provided.draggableProps.style,
+                            marginRight: "5px",
+                            flexShrink: 0,
+                            border: "1px solid " + Settings.theme.well,
                           }}
                         >
-                          x
-                        </Button>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
+                          <Button
+                            onClick={() => onTabClick(index)}
+                            onMouseDown={(e) => {
+                              e.preventDefault();
+                              if (e.button === 1) onTabClose(index);
+                            }}
+                            style={{
+                              ...(currentScript?.fileName === openScripts[index].fileName
+                                ? {
+                                    background: Settings.theme.button,
+                                    borderColor: Settings.theme.button,
+                                    color: Settings.theme.primary,
+                                  }
+                                : {
+                                    background: Settings.theme.backgroundsecondary,
+                                    borderColor: Settings.theme.backgroundsecondary,
+                                    color: Settings.theme.secondary,
+                                  }),
+                            }}
+                          >
+                            {hostname}:~/{fileName} {dirty(index)}
+                          </Button>
+                          <Tooltip title="Overwrite editor content with saved file content">
+                            <Button onClick={() => onTabUpdate(index)} style={iconButtonStyle}>
+                              <SyncIcon fontSize="small" />
+                            </Button>
+                          </Tooltip>
+                          <Button onClick={() => onTabClose(index)} style={iconButtonStyle}>
+                            <CloseIcon fontSize="small" />
+                          </Button>
+                        </div>
+                      )}
+                    </Draggable>
+                  );
+                })}
                 {provided.placeholder}
               </Box>
             )}

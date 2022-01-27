@@ -22,21 +22,23 @@ import TextField from "@mui/material/TextField";
 import DownloadIcon from "@mui/icons-material/Download";
 import UploadIcon from "@mui/icons-material/Upload";
 import SaveIcon from "@mui/icons-material/Save";
+import PaletteIcon from "@mui/icons-material/Palette";
 
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
-import { dialogBoxCreate } from "./DialogBox";
 import { ConfirmationModal } from "./ConfirmationModal";
-import { ThemeEditorModal } from "./ThemeEditorModal";
-import { StyleEditorModal } from "./StyleEditorModal";
 
 import { SnackbarEvents } from "./Snackbar";
 
 import { Settings } from "../../Settings/Settings";
-import { save } from "../../db";
-import { formatTime } from "../../utils/helpers/formatTime";
-import { OptionSwitch } from "./OptionSwitch";
 import { DeleteGameButton } from "./DeleteGameButton";
 import { SoftResetButton } from "./SoftResetButton";
+import { IRouter } from "../Router";
+import { ThemeEditorButton } from "../../Themes/ui/ThemeEditorButton";
+import { StyleEditorButton } from "../../Themes/ui/StyleEditorButton";
+import { formatTime } from "../../utils/helpers/formatTime";
+import { OptionSwitch } from "./OptionSwitch";
+import { ImportData, saveObject } from "../../SaveObject";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,16 +52,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   player: IPlayer;
+  router: IRouter;
   save: () => void;
   export: () => void;
   forceKill: () => void;
   softReset: () => void;
-}
-
-interface ImportData {
-  base64: string;
-  parsed: any;
-  exportDate?: Date;
 }
 
 export function GameOptionsRoot(props: IProps): React.ReactElement {
@@ -75,8 +72,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [timestampFormat, setTimestampFormat] = useState(Settings.TimestampsFormat);
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
-  const [themeEditorOpen, setThemeEditorOpen] = useState(false);
-  const [styleEditorOpen, setStyleEditorOpen] = useState(false);
   const [importSaveOpen, setImportSaveOpen] = useState(false);
   const [importData, setImportData] = useState<ImportData | null>(null);
 
@@ -127,78 +122,35 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
     ii.click();
   }
 
-  function onImport(event: React.ChangeEvent<HTMLInputElement>): void {
-    const files = event.target.files;
-    if (files === null) return;
-    const file = files[0];
-    if (!file) {
-      dialogBoxCreate("Invalid file selected");
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function (this: FileReader, e: ProgressEvent<FileReader>) {
-      const target = e.target;
-      if (target === null) {
-        console.error("error importing file");
-        return;
-      }
-      const result = target.result;
-      if (typeof result !== "string" || result === null) {
-        console.error("FileReader event was not type string");
-        return;
-      }
-      const contents = result;
-
-      let newSave;
-      try {
-        newSave = window.atob(contents);
-        newSave = newSave.trim();
-      } catch (error) {
-        console.log(error); // We'll handle below
-      }
-
-      if (!newSave || newSave === "") {
-        SnackbarEvents.emit("Save game had not content or was not base64 encoded", "error", 5000);
-        return;
-      }
-
-      let parsedSave;
-      try {
-        parsedSave = JSON.parse(newSave);
-      } catch (error) {
-        console.log(error); // We'll handle below
-      }
-
-      if (!parsedSave || parsedSave.ctor !== "BitburnerSaveObject" || !parsedSave.data) {
-        SnackbarEvents.emit("Save game did not seem valid", "error", 5000);
-        return;
-      }
-
-      const data: ImportData = {
-        base64: contents,
-        parsed: parsedSave,
-      };
-
-      const timestamp = parsedSave.data.SaveTimestamp;
-      if (timestamp && timestamp !== "0") {
-        data.exportDate = new Date(parseInt(timestamp, 10));
-      }
-
+  async function onImport(event: React.ChangeEvent<HTMLInputElement>): Promise<void> {
+    try {
+      const base64Save = await saveObject.getImportStringFromFile(event.target.files);
+      const data = await saveObject.getImportDataFromString(base64Save);
       setImportData(data);
       setImportSaveOpen(true);
-    };
-    reader.readAsText(file);
+    } catch (ex: any) {
+      SnackbarEvents.emit(ex.toString(), "error", 5000);
+    }
   }
 
-  function confirmedImportGame(): void {
+  async function confirmedImportGame(): Promise<void> {
     if (!importData) return;
 
+    try {
+      await saveObject.importGame(importData.base64);
+    } catch (ex: any) {
+      SnackbarEvents.emit(ex.toString(), "error", 5000);
+    }
+
     setImportSaveOpen(false);
-    save(importData.base64).then(() => {
-      setImportData(null);
-      setTimeout(() => location.reload(), 1000);
-    });
+    setImportData(null);
+  }
+
+  function compareSaveGame(): void {
+    if (!importData) return;
+    props.router.toImportSave(importData.base64);
+    setImportSaveOpen(false);
+    setImportData(null);
   }
 
   return (
@@ -211,123 +163,115 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         <Grid item xs={12} sm={6}>
           <List>
             <ListItem>
-              <Tooltip
-                title={
-                  <Typography>
-                    The minimum number of milliseconds it takes to execute an operation in Netscript. Setting this too
-                    low can result in poor performance if you have many scripts running.
-                  </Typography>
-                }
-              >
-                <Typography>.script exec time (ms)</Typography>
-              </Tooltip>
-              <Slider
-                value={execTime}
-                onChange={handleExecTimeChange}
-                step={1}
-                min={5}
-                max={100}
-                valueLabelDisplay="auto"
-              />
-            </ListItem>
-            <ListItem>
-              <Tooltip
-                title={
-                  <Typography>
-                    The maximum number of recently killed script entries being tracked. Setting this too high can cause
-                    the game to use a lot of memory.
-                  </Typography>
-                }
-              >
-                <Typography>Recently killed scripts size</Typography>
-              </Tooltip>
-              <Slider
-                value={recentScriptsSize}
-                onChange={handleRecentScriptsSizeChange}
-                step={25}
-                min={25}
-                max={500}
-                valueLabelDisplay="auto"
-              />
-            </ListItem>
-            <ListItem>
-              <Tooltip
-                title={
-                  <Typography>
-                    The maximum number of lines a script's logs can hold. Setting this too high can cause the game to
-                    use a lot of memory if you have many scripts running.
-                  </Typography>
-                }
-              >
-                <Typography>Netscript log size</Typography>
-              </Tooltip>
-              <Slider
-                value={logSize}
-                onChange={handleLogSizeChange}
-                step={20}
-                min={20}
-                max={500}
-                valueLabelDisplay="auto"
-              />
-            </ListItem>
-            <ListItem>
-              <Tooltip
-                title={
-                  <Typography>
-                    The maximum number of entries that can be written to a port using Netscript's write() function.
-                    Setting this too high can cause the game to use a lot of memory.
-                  </Typography>
-                }
-              >
-                <Typography>Netscript port size</Typography>
-              </Tooltip>
-              <Slider
-                value={portSize}
-                onChange={handlePortSizeChange}
-                step={1}
-                min={20}
-                max={100}
-                valueLabelDisplay="auto"
-              />
-            </ListItem>
-            <ListItem>
-              <Tooltip
-                title={
-                  <Typography>
-                    The maximum number of entries that can be written to the terminal. Setting this too high can cause
-                    the game to use a lot of memory.
-                  </Typography>
-                }
-              >
-                <Typography>Terminal capacity</Typography>
-              </Tooltip>
-              <Slider
-                value={terminalSize}
-                onChange={handleTerminalSizeChange}
-                step={50}
-                min={50}
-                max={500}
-                valueLabelDisplay="auto"
-                marks
-              />
-            </ListItem>
-            <ListItem>
-              <Tooltip
-                title={
-                  <Typography>The time (in seconds) between each autosave. Set to 0 to disable autosave.</Typography>
-                }
-              >
-                <Typography>Autosave interval (s)</Typography>
-              </Tooltip>
-              <Slider
-                value={autosaveInterval}
-                onChange={handleAutosaveIntervalChange}
-                step={30}
-                min={0}
-                max={600}
-                valueLabelDisplay="auto"
-                marks
-              />
+              <Box display="grid" sx={{ width: "fit-content", gridTemplateColumns: "1fr 3.5fr", gap: 1 }}>
+                <Tooltip
+                  title={
+                    <Typography>
+                      The minimum number of milliseconds it takes to execute an operation in Netscript. Setting this too
+                      low can result in poor performance if you have many scripts running.
+                    </Typography>
+                  }
+                >
+                  <Typography>.script exec time (ms)</Typography>
+                </Tooltip>
+                <Slider
+                  value={execTime}
+                  onChange={handleExecTimeChange}
+                  step={1}
+                  min={5}
+                  max={100}
+                  valueLabelDisplay="auto"
+                />
+                <Tooltip
+                  title={
+                    <Typography>
+                      The maximum number of recently killed script entries being tracked. Setting this too high can
+                      cause the game to use a lot of memory.
+                    </Typography>
+                  }
+                >
+                  <Typography>Recently killed scripts size</Typography>
+                </Tooltip>
+                <Slider
+                  value={recentScriptsSize}
+                  onChange={handleRecentScriptsSizeChange}
+                  step={25}
+                  min={25}
+                  max={500}
+                  valueLabelDisplay="auto"
+                />
+                <Tooltip
+                  title={
+                    <Typography>
+                      The maximum number of lines a script's logs can hold. Setting this too high can cause the game to
+                      use a lot of memory if you have many scripts running.
+                    </Typography>
+                  }
+                >
+                  <Typography>Netscript log size</Typography>
+                </Tooltip>
+                <Slider
+                  value={logSize}
+                  onChange={handleLogSizeChange}
+                  step={20}
+                  min={20}
+                  max={500}
+                  valueLabelDisplay="auto"
+                />
+                <Tooltip
+                  title={
+                    <Typography>
+                      The maximum number of entries that can be written to a port using Netscript's write() function.
+                      Setting this too high can cause the game to use a lot of memory.
+                    </Typography>
+                  }
+                >
+                  <Typography>Netscript port size</Typography>
+                </Tooltip>
+                <Slider
+                  value={portSize}
+                  onChange={handlePortSizeChange}
+                  step={1}
+                  min={20}
+                  max={100}
+                  valueLabelDisplay="auto"
+                />
+                <Tooltip
+                  title={
+                    <Typography>
+                      The maximum number of entries that can be written to the terminal. Setting this too high can cause
+                      the game to use a lot of memory.
+                    </Typography>
+                  }
+                >
+                  <Typography>Terminal capacity</Typography>
+                </Tooltip>
+                <Slider
+                  value={terminalSize}
+                  onChange={handleTerminalSizeChange}
+                  step={50}
+                  min={50}
+                  max={500}
+                  valueLabelDisplay="auto"
+                  marks
+                />
+                <Tooltip
+                  title={
+                    <Typography>The time (in seconds) between each autosave. Set to 0 to disable autosave.</Typography>
+                  }
+                >
+                  <Typography>Autosave interval (s)</Typography>
+                </Tooltip>
+                <Slider
+                  value={autosaveInterval}
+                  onChange={handleAutosaveIntervalChange}
+                  step={30}
+                  min={0}
+                  max={600}
+                  valueLabelDisplay="auto"
+                  marks
+                />
+              </Box>
             </ListItem>
             <ListItem>
               <OptionSwitch
@@ -616,6 +560,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               open={importSaveOpen}
               onClose={() => setImportSaveOpen(false)}
               onConfirm={() => confirmedImportGame()}
+              additionalButton={<Button onClick={compareSaveGame}>Compare Save</Button>}
               confirmationText={
                 <>
                   Importing a new game will <strong>completely wipe</strong> the current data!
@@ -624,15 +569,24 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                   Make sure to have a backup of your current save file before importing.
                   <br />
                   The file you are attempting to import seems valid.
-                  <br />
-                  <br />
-                  {importData?.exportDate && (
+                  {(importData?.playerData?.lastSave ?? 0) > 0 && (
                     <>
-                      The export date of the save file is <strong>{importData?.exportDate.toString()}</strong>
                       <br />
                       <br />
+                      The export date of the save file is{" "}
+                      <strong>{new Date(importData?.playerData?.lastSave ?? 0).toLocaleString()}</strong>
                     </>
                   )}
+                  {(importData?.playerData?.totalPlaytime ?? 0) > 0 && (
+                    <>
+                      <br />
+                      <br />
+                      Total play time of imported game:{" "}
+                      {convertTimeMsToTimeElapsedString(importData?.playerData?.totalPlaytime ?? 0)}
+                    </>
+                  )}
+                  <br />
+                  <br />
                 </>
               }
             />
@@ -668,9 +622,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <Button onClick={() => setDiagnosticOpen(true)}>Diagnose files</Button>
             </Tooltip>
           </Box>
-          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-            <Button onClick={() => setThemeEditorOpen(true)}>Theme editor</Button>
-            <Button onClick={() => setStyleEditorOpen(true)}>Style editor</Button>
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}>
+            <Tooltip title="Head to the theme browser to see a collection of prebuilt themes.">
+              <Button startIcon={<PaletteIcon />} onClick={() => props.router.toThemeBrowser()}>
+                Theme Browser
+              </Button>
+            </Tooltip>
+            <ThemeEditorButton router={props.router} />
+            <StyleEditorButton />
           </Box>
           <Box>
             <Link href="https://github.com/danielyxie/bitburner/issues/new" target="_blank">
@@ -695,8 +654,6 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         </Box>
       </Grid>
       <FileDiagnosticModal open={diagnosticOpen} onClose={() => setDiagnosticOpen(false)} />
-      <ThemeEditorModal open={themeEditorOpen} onClose={() => setThemeEditorOpen(false)} />
-      <StyleEditorModal open={styleEditorOpen} onClose={() => setStyleEditorOpen(false)} />
     </div>
   );
 }

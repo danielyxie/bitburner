@@ -12,11 +12,13 @@ async function initialize(win) {
   window = win;
   server = http.createServer(async function (req, res) {
     let body = "";
+    res.setHeader('Content-Type', 'application/json');
 
     req.on("data", (chunk) => {
       body += chunk.toString(); // convert Buffer to string
     });
-    req.on("end", () => {
+
+    req.on("end", async () => {
       const providedToken = req.headers?.authorization?.replace('Bearer ', '') ?? '';
       const isValid = providedToken === getAuthenticationToken();
       if (isValid) {
@@ -24,8 +26,11 @@ async function initialize(win) {
       } else {
         log.log('Invalid authentication token');
         res.writeHead(401);
-        res.write('Invalid authentication token');
-        res.end();
+       
+        res.end(JSON.stringify({
+          success: false,
+          msg: 'Invalid authentication token'
+        }));
         return;
       }
 
@@ -35,17 +40,56 @@ async function initialize(win) {
       } catch (error) {
         log.warn(`Invalid body data`);
         res.writeHead(400);
-        res.write('Invalid body data');
-        res.end();
+        res.end(JSON.stringify({
+          success: false,
+          msg: 'Invalid body data'
+        }));
+
         return;
       }
 
-      if (data) {
-        window.webContents.executeJavaScript(`document.saveFile("${data.filename}", "${data.code}")`).then((result) => {
-          res.write(result);
-          res.end();
-        });
+      let result;
+      switch(req.method) {
+        // Request files
+        case "GET":
+          result = await window.webContents.executeJavaScript(`document.getFiles()`);
+          break;
+
+        // Create or update files
+        // Support POST for VScode implementation
+        case "POST":
+        case "PUT":
+          if (!data) {
+            log.warn(`Invalid script update request - No data`);
+            res.writeHead(400);
+            res.end(JSON.stringify({
+              success: false,
+              msg: 'Invalid script update request - No data'
+            }));
+            return;
+          }
+
+          result = await window.webContents.executeJavaScript(`document.saveFile("${data.filename}", "${data.code}")`);
+          break;
+        
+        // Delete files
+        case "DELETE":
+          result = await window.webContents.executeJavaScript(`document.deleteFile("${data.filename}")`);
+          break;
       }
+
+      if (!result.res) {
+        //We've encountered an error
+        res.writeHead(400);
+        log.warn(`Api Server Error`, result.msg);
+      }
+
+      res.end(JSON.stringify({
+        success: result.res,
+        msg: result.msg,
+        data: result.data
+      }));
+
     });
   });
 

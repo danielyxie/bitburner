@@ -163,7 +163,7 @@ export interface CrimeStats {
   /** How much money is given */
   money: number;
   /** Name of crime */
-  name: number;
+  name: string;
   /** Milliseconds it takes to attempt the crime */
   time: number;
   /** Description of the crime activity */
@@ -3667,6 +3667,7 @@ interface SkillsFormulas {
 interface HackingFormulas {
   /**
    * Calculate hack chance.
+   * (Ex: 0.25 would indicate a 25% chance of success.)
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
    * @returns The calculated hack chance.
@@ -3683,6 +3684,7 @@ interface HackingFormulas {
   hackExp(server: Server, player: Player): number;
   /**
    * Calculate hack percent for one thread.
+   * (Ex: 0.25 would steal 25% of the server's current value.)
    * @remarks
    * Multiply by thread to get total percent hacked.
    * @param server - Server info from {@link NS.getServer | getServer}
@@ -3691,7 +3693,8 @@ interface HackingFormulas {
    */
   hackPercent(server: Server, player: Player): number;
   /**
-   * Calculate the percent a server would grow.
+   * Calculate the percent a server would grow to.
+   * (Ex: 3.0 would would grow the server to 300% of its current value.)
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param threads - Amount of thread.
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
@@ -4231,13 +4234,11 @@ export interface NS extends Singularity {
    * ```ts
    * // NS1:
    * var earnedMoney = hack("foodnstuff");
-   * earnedMoney = earnedMoney + hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
    * ```
    * @example
    * ```ts
    * // NS2:
    * let earnedMoney = await ns.hack("foodnstuff");
-   * earnedMoney += await ns.hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
    * ```
    * @param host - Hostname of the target server to hack.
    * @param opts - Optional parameters for configuring function behavior.
@@ -4265,16 +4266,14 @@ export interface NS extends Singularity {
    * @example
    * ```ts
    * // NS1:
-   * var availableMoney = getServerMoneyAvailable("foodnstuff");
+   * var currentMoney = getServerMoneyAvailable("foodnstuff");
    * currentMoney = currentMoney * (1 + grow("foodnstuff"));
-   * currentMoney = currentMoney * (1 + grow("foodnstuff", { threads: 5 })); // Only use 5 threads to grow
    * ```
    * @example
    * ```ts
    * // NS2:
-   * let availableMoney = ns.getServerMoneyAvailable("foodnstuff");
+   * let currentMoney = ns.getServerMoneyAvailable("foodnstuff");
    * currentMoney *= (1 + await ns.grow("foodnstuff"));
-   * currentMoney *= (1 + await ns.grow("foodnstuff", { threads: 5 })); // Only use 5 threads to grow
    * ```
    * @param host - Hostname of the target server to grow.
    * @param opts - Optional parameters for configuring function behavior.
@@ -4300,14 +4299,12 @@ export interface NS extends Singularity {
    * // NS1:
    * var currentSecurity = getServerSecurityLevel("foodnstuff");
    * currentSecurity = currentSecurity - weaken("foodnstuff");
-   * currentSecurity = currentSecurity - weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
    * ```
    * @example
    * ```ts
    * // NS2:
    * let currentSecurity = ns.getServerSecurityLevel("foodnstuff");
    * currentSecurity -= await ns.weaken("foodnstuff");
-   * currentSecurity -= await ns.weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
    * ```
    * @param host - Hostname of the target server to weaken.
    * @param opts - Optional parameters for configuring function behavior.
@@ -4493,6 +4490,17 @@ export interface NS extends Singularity {
    * @param args - Value(s) to be printed.
    */
   print(...args: any[]): void;
+
+  /**
+   * Prints a formatted string to the script’s logs.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * see: https://github.com/alexei/sprintf.js
+   * @param format - format of the message
+   * @param args - Value(s) to be printed.
+   */
+  printf(format: string, ...args: any[]): void;
 
   /**
    * Prints one or more values or variables to the Terminal.
@@ -5451,7 +5459,7 @@ export interface NS extends Singularity {
    * @param filename - Optional. Filename or PID of the script.
    * @param hostname - Optional. Name of host server the script is running on.
    * @param args  - Arguments to identify the script
-   * @returns info about a running script
+   * @returns The info about the running script if found, and null otherwise.
    */
   getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript;
 
@@ -6234,14 +6242,14 @@ export interface OfficeAPI {
   /**
    * Get the cost to unlock research
    * @param divisionName - Name of the division
-   * @param cityName - Name of the city
+   * @param researchName - Name of the research
    * @returns cost
    */
   getResearchCost(divisionName: string, researchName: string): number;
   /**
    * Gets if you have unlocked a research
    * @param divisionName - Name of the division
-   * @param cityName - Name of the city
+   * @param researchName - Name of the research
    * @returns true is unlocked, false if not
    */
   hasResearched(divisionName: string, researchName: string): boolean;
@@ -6310,6 +6318,14 @@ export interface WarehouseAPI {
    * @param enabled - smart supply enabled
    */
   setSmartSupply(divisionName: string, cityName: string, enabled: boolean): void;
+  /**
+   * Set whether smart supply uses leftovers before buying
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param enabled - smart supply use leftovers enabled
+   */
+  setSmartSupplyUseLeftovers(divisionName: string, cityName: string, materialName: string, enabled: boolean): void;
   /**
    * Set material buy data
    * @param divisionName - Name of the division

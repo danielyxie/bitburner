@@ -5,10 +5,10 @@ Netburner.txt
 /doc/build
 /node_modules
 /electron/node_modules
-/dist/*.map
 /test/*.map
 /test/*.bundle.*
 /test/*.css
+/input/bitburner.api.json
 .cypress
 
 # tmp folder for electron

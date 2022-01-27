@@ -114,6 +114,7 @@ export const RamCosts: IMap<any> = {
   weaken: RamCostConstants.ScriptWeakenRamCost,
   weakenAnalyze: RamCostConstants.ScriptWeakenAnalyzeRamCost,
   print: 0,
+  printf: 0,
   tprint: 0,
   clearLog: 0,
   disableLog: 0,
