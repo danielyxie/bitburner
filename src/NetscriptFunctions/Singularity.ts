@@ -1282,7 +1282,7 @@ export function NetscriptSingularity(
       workerScript.log("createProgram", () => `Began creating program: '${name}'`);
       return true;
     },
-    commitCrime: function (crimeRoughName: any): any {
+    commitCrime: function (crimeRoughName: any, focus = true): any {
       helper.updateDynamicRam("commitCrime", getRamCost(player, "commitCrime"));
       helper.checkSingularityAccess("commitCrime");
 
@@ -1300,7 +1300,15 @@ export function NetscriptSingularity(
         throw helper.makeRuntimeErrorMsg("commitCrime", `Invalid crime: '${crimeRoughName}'`);
       }
       workerScript.log("commitCrime", () => `Attempting to commit ${crime.name}...`);
-      return crime.commit(Router, player, 1, workerScript);
+      crime.commit(Router, player, 1, workerScript);
+      if (focus) {
+        player.startFocusing();
+        Router.toWork();
+      } else {
+        player.stopFocusing();
+        Router.toTerminal();
+      }
+      return true
     },
     getCrimeChance: function (crimeRoughName: any): any {
       helper.updateDynamicRam("getCrimeChance", getRamCost(player, "getCrimeChance"));

@@ -407,10 +407,13 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
     // const progressBar = "[" + Array(numBars + 1).join("|") + Array(20 - numBars + 1).join(" ") + "]";
     const progressBar = createProgressBarText({ progress: (numBars + 1) / 20, totalTicks: 20 });
-
+    function unfocus(): void {
+      player.stopFocusing();
+      router.toTerminal();
+    }
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
-        <Grid item>
+        <Grid item sx={{ my: 2 }}>
           <Typography>
             <Typography>You are attempting to {player.crimeType}.</Typography>
             <br />
@@ -418,13 +421,18 @@ export function WorkInProgressRoot(): React.ReactElement {
             <Typography>
               Time remaining: {convertTimeMsToTimeElapsedString(player.timeNeededToCompleteWork - player.timeWorked)}
             </Typography>
-
-            <br />
-            <pre>{progressBar}</pre>
           </Typography>
         </Grid>
-        <Grid item>
+
+        <Grid item sx={{ my: 2 }}>
+          <Typography>
+            {progressBar}
+          </Typography>
+        </Grid>
+
+        <Grid item sx={{ my: 2 }}>
           <Button
+            sx={{ mx: 2 }}
             onClick={() => {
               router.toLocation(Locations[LocationName.Slums]);
               player.finishCrime(true);
@@ -432,6 +440,7 @@ export function WorkInProgressRoot(): React.ReactElement {
           >
             Cancel crime
           </Button>
+          <Button onClick={unfocus}>Do something else simultaneously</Button>
         </Grid>
       </Grid>
     );
