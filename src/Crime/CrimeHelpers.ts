@@ -42,9 +42,9 @@ export function findCrime(roughName: string): Crime | null {
     return Crimes.Larceny;
   } else if (roughName.includes("drugs")) {
     return Crimes.DealDrugs;
-  } else if ((roughName.includes("bond") && roughName.includes("forge")) {
+  } else if (roughName.includes("bond") && roughName.includes("forge")) {
     return Crimes.BondForgery;
-  } else if (((roughName.includes("traffic") || (roughName.includes("illegal")) && roughName.includes("arms")) {
+  } else if ((roughName.includes("traffic") || roughName.includes("illegal")) && roughName.includes("arms")) {
     return Crimes.TraffickArms;
   } else if (roughName.includes("homicide")) {
     return Crimes.Homicide;
