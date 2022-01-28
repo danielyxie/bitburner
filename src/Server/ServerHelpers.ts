@@ -104,6 +104,7 @@ export function numCycleForGrowthTransition(server: Server, growth: number, p: I
  * @param startMoney - How much you are growing the server from, for instance, to grow from 200 to 600, input 200
  * @param p - Reference to Player object
  * @returns Number of "growth cycles" needed
+ */
 export function numCycleForGrowthCorrected(server: Server, targetMoney: number, startMoney: number, p: IPlayer, cores = 1): number {
   return 0; //left off here.
 }
