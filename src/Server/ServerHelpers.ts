@@ -146,7 +146,6 @@ export function numCycleForGrowthCorrected(server: Server, targetMoney: number, 
  * @param p - Reference to Player object
  * @returns Number of "growth cycles" needed to reverse the described hack
  */
-server: Server, targetMoney: number, startMoney: number, p: IPlayer, cores = 1): number
 export function numCycleForGrowthByHackAmt(server, hackAmt: number, prehackMoney: number, p: IPlayer, cores = 1) {
 	if (prehackMoney > server.moneyMax) { preHackAmt = server.moneyMax; }
 	const posthackAmt = Math.floor(prehackMoney * Math.min(1, Math.max(0, (1 - hackAmt))));
