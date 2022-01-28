@@ -47,6 +47,7 @@ export function safetlyCreateUniqueServer(params: IConstructorParams): Server {
  * @returns Number of "growth cycles" needed
  */
 export function numCycleForGrowth(server: Server, growth: number, p: IPlayer, cores = 1): number {
+  growth = Math.min(growth, server.moneyMax); //cap growth at moneyMax to account for growing a server from $1 instead of $0
   let ajdGrowthRate = 1 + (CONSTANTS.ServerBaseGrowthRate - 1) / server.hackDifficulty;
   if (ajdGrowthRate > CONSTANTS.ServerMaxGrowthRate) {
     ajdGrowthRate = CONSTANTS.ServerMaxGrowthRate;
@@ -63,7 +64,7 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer, co
       BitNodeMultipliers.ServerGrowthRate *
       coreBonus);
 
-  return Math.min(server.moneyMax, cycles);
+  return cycles;
 }
 
 //Applied server growth for a single server. Returns the percentage growth
