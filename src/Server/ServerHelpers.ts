@@ -77,9 +77,6 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
   if (server.moneyAvailable < 1) { //can grow a server reduced to $0
     server.server.moneyAvailable = 1;
   }
-  if (server.moneyAvailable > server.moneyMax) { //but not one that has a max of $0
-    server.moneyAvailable = server.moneyMax;
-  }
   const oldMoneyAvailable = server.moneyAvailable;
   //server.moneyAvailable += 1 * threads; // It can be grown even if it has no money
   server.moneyAvailable *= serverGrowth;
@@ -97,11 +94,11 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
   // if there was any growth at all, increase security
   if (oldMoneyAvailable !== server.moneyAvailable) {
     //Growing increases server security twice as much as hacking
-    let usedCycles = numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable, p, cores);
+    let usedCycles = (server.moneyAvailable == 0 || oldMoneyAvailable == 0) ? 0 : numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable, p, cores); //catch /0 case
     usedCycles = Math.min(Math.max(0, Math.ceil(usedCycles)), threads);
     server.fortify(2 * CONSTANTS.ServerFortifyAmount * usedCycles);
   }
-  return server.moneyAvailable / oldMoneyAvailable;
+  return (oldMoneyAvailable == 0) ? 0.0 : server.moneyAvailable / oldMoneyAvailable; //catch for case of 0/0
 }
 
 export function prestigeHomeComputer(player: IPlayer, homeComp: Server): void {
