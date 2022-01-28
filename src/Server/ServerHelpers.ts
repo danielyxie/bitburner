@@ -98,7 +98,7 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
     usedCycles = Math.min(Math.max(0, Math.ceil(usedCycles)), threads);
     server.fortify(2 * CONSTANTS.ServerFortifyAmount * usedCycles);
   }
-  return (oldMoneyAvailable == 0) ? 0.0 : server.moneyAvailable / oldMoneyAvailable; //catch for case of 0/0
+  return (oldMoneyAvailable == 0) ? 0.0 : server.moneyAvailable / oldMoneyAvailable; // catch for case of 0/0
 }
 
 export function prestigeHomeComputer(player: IPlayer, homeComp: Server): void {
