@@ -1285,7 +1285,7 @@ export function NetscriptSingularity(
     commitCrime: function (crimeRoughName: any, focus = true): any {
       helper.updateDynamicRam("commitCrime", getRamCost(player, "commitCrime"));
       helper.checkSingularityAccess("commitCrime");
-
+      const wasFocusing = player.focus;
       if (player.isWorking) {
         const txt = player.singularityStopWork();
         workerScript.log("commitCrime", () => txt);
@@ -1304,7 +1304,7 @@ export function NetscriptSingularity(
       if (focus) {
         player.startFocusing();
         Router.toWork();
-      } else {
+      } else if (wasFocusing) {
         player.stopFocusing();
         Router.toTerminal();
       }
