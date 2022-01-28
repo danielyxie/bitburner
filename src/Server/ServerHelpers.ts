@@ -63,7 +63,7 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer, co
       BitNodeMultipliers.ServerGrowthRate *
       coreBonus);
 
-  return cycles;
+  return Math.min(server.moneyMax, cycles);
 }
 
 //Applied server growth for a single server. Returns the percentage growth
