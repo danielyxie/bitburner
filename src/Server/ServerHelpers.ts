@@ -75,7 +75,7 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
   }
 
   if (server.moneyAvailable < 1) { //can grow a server reduced to $0
-    server.server.moneyAvailable = 1;
+    server.moneyAvailable = 1;
   }
   const oldMoneyAvailable = server.moneyAvailable;
   //server.moneyAvailable += 1 * threads; // It can be grown even if it has no money
