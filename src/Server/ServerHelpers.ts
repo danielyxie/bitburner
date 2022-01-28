@@ -95,11 +95,11 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
   // if there was any growth at all, increase security
   if (oldMoneyAvailable !== server.moneyAvailable) {
     //Growing increases server security twice as much as hacking
-    let usedCycles = (server.moneyAvailable == 0 || oldMoneyAvailable == 0) ? 0 : numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable, p, cores); //catch /0 case
+    let usedCycles = (server.moneyAvailable == 0) ? 0 : numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable, p, cores); //catch /0 case
     usedCycles = Math.min(Math.max(0, Math.ceil(usedCycles)), threads);
     server.fortify(2 * CONSTANTS.ServerFortifyAmount * usedCycles);
   }
-  return (oldMoneyAvailable == 0) ? 0.0 : server.moneyAvailable / oldMoneyAvailable; // catch for case of 0/0
+  return server.moneyAvailable / Math.max(1, oldMoneyAvailable); //treat a server as having minimum $1, though shouldn't be needed
 }
 
 export function prestigeHomeComputer(player: IPlayer, homeComp: Server): void {
