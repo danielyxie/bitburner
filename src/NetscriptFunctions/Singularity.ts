@@ -253,9 +253,13 @@ export function NetscriptSingularity(
       killWorkerScript(workerScript);
     },
     backupSave: function (): void {
+      helper.updateDynamicRam("backupSave", getRamCost(player, "backupSave"));
+      helper.checkSingularityAccess("backupSave");
       return exportGame(player)
     },
     backupSaveBonus: function (): boolean {
+      helper.updateDynamicRam("backupSaveBonus", getRamCost(player, "backupSaveBonus"));
+      helper.checkSingularityAccess("backupSaveBonus");
       return canGetBonus();
     },
     goToLocation: function (locationName: any): boolean {
