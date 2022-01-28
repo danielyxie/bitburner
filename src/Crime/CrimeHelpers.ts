@@ -34,7 +34,7 @@ export function findCrime(roughName: string): Crime | null {
   roughName = roughName.toLowerCase();
   if (roughName.includes("shoplift")) {
     return Crimes.Shoplift;
-  } else if ((roughName.includes("rob") && roughName.includes("store")) {
+  } else if (roughName.includes("rob") && roughName.includes("store")) {
     return Crimes.RobStore;
   } else if (roughName.includes("mug")) {
     return Crimes.Mug;
