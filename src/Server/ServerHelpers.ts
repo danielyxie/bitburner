@@ -106,7 +106,51 @@ export function numCycleForGrowthTransition(server: Server, growth: number, p: I
  * @returns Number of "growth cycles" needed
  */
 export function numCycleForGrowthCorrected(server: Server, targetMoney: number, startMoney: number, p: IPlayer, cores = 1): number {
-  return 0; //left off here.
+ 	if (startMoney == server.moneyMax) { return 0; } //no growth possible, no threads needed
+	if (startMoney < 0) { startMoney = 0; } // servers "can't" have less than 0 dollars on them
+	if (targetMoney > server.moneyMax) { targetMoney = server.moneyMax; } // can't grow a server to more than its moneyMax
+
+	const growthMultiplier = Math.max(1.0, Math.min(targetMoney, targetMoney / startMoney)); //need a starting point, this is worst case grow multiplier
+
+	const adjGrowthRate = (1 + (CONSTANTS.ServerBaseGrowthRate - 1) / server.hackDifficulty); // adj exponential base for security
+	const exponentialBase = Math.min(adjGrowthRate, CONSTANTS.ServerMaxGrowthRate); //cap growth rate
+
+	const serverGrowthPercentage = server.serverGrowth / 100.0;
+	const coreMultiplier = 1 + ((cores -1) / 16);
+	const threadMultiplier = serverGrowthPercentage * p.hacking_grow_mult * coreMultiplier * BitNodeMultipliers.ServerGrowthRate; //total of all grow thread multipliers
+
+	let cycles = Math.log(growthMultiplier) / Math.log(exponentialBase) / threadMultiplier; //this is the completely naive cycle amt and is always >= the real cycles required
+	let cycleAdjust = 0.5 * cycles;
+
+	let overGrowth = 0;
+	while (cycleAdjust > 0.5) { //go until we get an overage of less than $1 or we're adjusting by less than half a thread
+		overGrowth = (startMoney + cycles) * Math.pow(exponentialBase, cycles * threadMultiplier) - targetMoney;
+		if (overGrowth < 0) { cycles += cycleAdjust; }
+		else if (overGrowth > 1) { cycles -= cycleAdjust; }
+		else { break; } //we're over by less than $1, return cycles
+		cycleAdjust *= 0.5; //basic 50% partition search
+	}
+
+	cycles = Math.ceil(cycles);
+  //might be worth doing some checks here +/- 1 thread just to make sure we didn't quit too early
+	return cycles;
+}
+
+/**
+ * This function calculates the number of threads needed to grow a server based on a pre-hack money and hackAmt
+ * (ie, if you're hacking a server with $1e6 moneyAvail for 60%, this function will tell you how many threads to regrow it
+ * PROBABLY the best replacement for the current ns.growthAnalyze
+ * @param server - Server being grown
+ * @param hackAmt - the amount hacked (total, not per thread) - as a decimal (like 0.60 for hacking 60% of available money)
+ * @param prehackMoney - how much money the server had before being hacked (like 200000 for hacking a server that had $200000 on it at time of hacking)
+ * @param p - Reference to Player object
+ * @returns Number of "growth cycles" needed to reverse the described hack
+ */
+server: Server, targetMoney: number, startMoney: number, p: IPlayer, cores = 1): number
+export function numCycleForGrowthByHackAmt(server, hackAmt: number, prehackMoney: number, p: IPlayer, cores = 1) {
+	if (prehackMoney > server.moneyMax) { preHackAmt = server.moneyMax; }
+	const posthackAmt = Math.floor(prehackMoney * Math.min(1, Math.max(0, (1 - hackAmt))));
+	return numCycleForGrowthCorrected(server, preHackAmt, posthackAmt, player, difficulty, cores, capGrowMult);
 }
 
 //Applied server growth for a single server. Returns the percentage growth
