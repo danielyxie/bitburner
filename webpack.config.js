@@ -158,10 +158,10 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(png|jpe?g|gif|jp2|webp)$/,
-          loader: 'file-loader',
+          loader: "file-loader",
           options: {
-            name: '[contenthash].[ext]',
-            outputPath: 'dist/images',
+            name: "[contenthash].[ext]",
+            outputPath: "dist/images",
           },
         },
       ],

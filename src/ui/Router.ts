@@ -38,6 +38,7 @@ export enum Page {
   Recovery,
   Achievements,
   ThemeBrowser,
+  ImportSave,
 }
 
 export interface ScriptEditorRouteOptions {
@@ -54,6 +55,7 @@ export interface IRouter {
   // toRedPill(): void;
   // toworkInProgress(): void;
   page(): Page;
+  allowRouting(value: boolean): void;
   toActiveScripts(): void;
   toAugmentations(): void;
   toBitVerse(flume: boolean, quick: boolean): void;
@@ -84,4 +86,5 @@ export interface IRouter {
   toStaneksGift(): void;
   toAchievements(): void;
   toThemeBrowser(): void;
+  toImportSave(base64Save: string, automatic?: boolean): void;
 }
