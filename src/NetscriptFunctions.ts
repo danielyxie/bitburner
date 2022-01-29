@@ -1628,6 +1628,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return cost;
     },
     purchaseServer: function (aname: any, aram: any): any {
+      if (arguments.length !== 2) throw makeRuntimeErrorMsg("purchaseServer", "Takes 2 arguments");
       const name = helper.string("purchaseServer", "name", aname);
       const ram = helper.number("purchaseServer", "ram", aram);
       updateDynamicRam("purchaseServer", getRamCost(Player, "purchaseServer"));
