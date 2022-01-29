@@ -167,65 +167,65 @@ export interface CrimeStats {
  * @public
  */
 export interface AugmentationStats {
-  /** Multipler to hacking skill */
+  /** Multiplier to hacking skill */
   hacking_mult?: number;
-  /** Multipler to strength skill */
+  /** Multiplier to strength skill */
   strength_mult?: number;
-  /** Multipler to defense skill */
+  /** Multiplier to defense skill */
   defense_mult?: number;
-  /** Multipler to dexterity skill */
+  /** Multiplier to dexterity skill */
   dexterity_mult?: number;
-  /** Multipler to agility skill */
+  /** Multiplier to agility skill */
   agility_mult?: number;
-  /** Multipler to charisma skill */
+  /** Multiplier to charisma skill */
   charisma_mult?: number;
-  /** Multipler to hacking experience gain rate */
+  /** Multiplier to hacking experience gain rate */
   hacking_exp_mult?: number;
-  /** Multipler to strength experience gain rate */
+  /** Multiplier to strength experience gain rate */
   strength_exp_mult?: number;
-  /** Multipler to defense experience gain rate */
+  /** Multiplier to defense experience gain rate */
   defense_exp_mult?: number;
-  /** Multipler to dexterity experience gain rate */
+  /** Multiplier to dexterity experience gain rate */
   dexterity_exp_mult?: number;
-  /** Multipler to agility experience gain rate */
+  /** Multiplier to agility experience gain rate */
   agility_exp_mult?: number;
-  /** Multipler to charisma experience gain rate */
+  /** Multiplier to charisma experience gain rate */
   charisma_exp_mult?: number;
-  /** Multipler to chance of successfully performing a hack */
+  /** Multiplier to chance of successfully performing a hack */
   hacking_chance_mult?: number;
-  /** Multipler to hacking speed */
+  /** Multiplier to hacking speed */
   hacking_speed_mult?: number;
-  /** Multipler to amount of money the player gains from hacking */
+  /** Multiplier to amount of money the player gains from hacking */
   hacking_money_mult?: number;
-  /** Multipler to amount of money injected into servers using grow */
+  /** Multiplier to amount of money injected into servers using grow */
   hacking_grow_mult?: number;
-  /** Multipler to amount of reputation gained when working */
+  /** Multiplier to amount of reputation gained when working */
   company_rep_mult?: number;
-  /** Multipler to amount of reputation gained when working */
+  /** Multiplier to amount of reputation gained when working */
   faction_rep_mult?: number;
-  /** Multipler to amount of money gained from crimes */
+  /** Multiplier to amount of money gained from crimes */
   crime_money_mult?: number;
-  /** Multipler to crime success rate */
+  /** Multiplier to crime success rate */
   crime_success_mult?: number;
-  /** Multipler to amount of money gained from working */
+  /** Multiplier to amount of money gained from working */
   work_money_mult?: number;
-  /** Multipler to amount of money produced by Hacknet Nodes */
+  /** Multiplier to amount of money produced by Hacknet Nodes */
   hacknet_node_money_mult?: number;
-  /** Multipler to cost of purchasing a Hacknet Node */
+  /** Multiplier to cost of purchasing a Hacknet Node */
   hacknet_node_purchase_cost_mult?: number;
-  /** Multipler to cost of ram for a Hacknet Node */
+  /** Multiplier to cost of ram for a Hacknet Node */
   hacknet_node_ram_cost_mult?: number;
-  /** Multipler to cost of core for a Hacknet Node */
+  /** Multiplier to cost of core for a Hacknet Node */
   hacknet_node_core_cost_mult?: number;
-  /** Multipler to cost of leveling up a Hacknet Node */
+  /** Multiplier to cost of leveling up a Hacknet Node */
   hacknet_node_level_cost_mult?: number;
-  /** Multipler to Bladeburner max stamina */
+  /** Multiplier to Bladeburner max stamina */
   bladeburner_max_stamina_mult?: number;
-  /** Multipler to Bladeburner stamina gain rate */
+  /** Multiplier to Bladeburner stamina gain rate */
   bladeburner_stamina_gain_mult?: number;
-  /** Multipler to effectiveness in Bladeburner Field Analysis */
+  /** Multiplier to effectiveness in Bladeburner Field Analysis */
   bladeburner_analysis_mult?: number;
-  /** Multipler to success chance in Bladeburner contracts/operations */
+  /** Multiplier to success chance in Bladeburner contracts/operations */
   bladeburner_success_chance_mult?: number;
 }
 
@@ -444,7 +444,7 @@ export interface Server {
   /** IP Address. Must be unique */
   ip: string;
 
-  /** Flag indicating whether player is curently connected to this server */
+  /** Flag indicating whether player is currently connected to this server */
   isConnectedTo: boolean;
 
   /** RAM (GB) available on this server */
@@ -587,7 +587,7 @@ export interface BitNodeMultipliers {
   ScriptHackMoneyGain: number;
   /** Influences the growth percentage per cycle against a server. */
   ServerGrowthRate: number;
-  /** Influences the maxmimum money that a server can grow to. */
+  /** Influences the maximum money that a server can grow to. */
   ServerMaxMoney: number;
   /** Influences the initial money that a server starts with. */
   ServerStartingMoney: number;
@@ -647,7 +647,7 @@ export interface PlayerSkills {
   dexterity: number;
   /** Agility level */
   agility: number;
-  /** Chraisma level */
+  /** Charisma level */
   charisma: number;
   /** Intelligence level */
   intelligence: number;
@@ -847,7 +847,7 @@ export interface GangTaskStats {
   baseMoney: number;
   /** Hacking skill impact on task scaling */
   hackWeight: number;
-  /** Stength skill impact on task scaling */
+  /** Strength skill impact on task scaling */
   strWeight: number;
   /** Defense skill impact on task scaling */
   defWeight: number;
@@ -1582,7 +1582,7 @@ export interface Singularity {
    *
    *
    * Returns a boolean indicating whether or not the player is currently performing an
-   * ‘action’. These actions include working for a company/faction, studying at a univeristy,
+   * ‘action’. These actions include working for a company/faction, studying at a university,
    * working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.
    *
    * @returns True if the player is currently performing an ‘action’, false otherwise.
@@ -2594,7 +2594,7 @@ export interface Hacknet {
   getHashUpgradeLevel(upgName: string): number;
 
   /**
-   * Get the multipler to study.
+   * Get the multiplier to study.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -2605,7 +2605,7 @@ export interface Hacknet {
   getStudyMult(): number;
 
   /**
-   * Get the multipler to training.
+   * Get the multiplier to training.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -3099,7 +3099,7 @@ export interface Bladeburner {
  */
 export interface CodingContract {
   /**
-   * Attemps a coding contract.
+   * Attempts a coding contract.
    * @remarks
    * RAM cost: 10 GB
    *
@@ -5420,7 +5420,7 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0.3 GB
    *
-   * Running with no args returns curent script.
+   * Running with no args returns current script.
    * If you use a PID as the first parameter, the hostname and args parameters are unnecessary.
    *
    * @param filename - Optional. Filename or PID of the script.
@@ -6703,7 +6703,7 @@ interface EmployeeJobs {
 interface Division {
   /** Name of the division */
   name: string;
-  /** Type of division, like Aggriculture */
+  /** Type of division, like Agriculture */
   type: string;
   /** Awareness of the division */
   awareness: number;
