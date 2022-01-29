@@ -63,8 +63,7 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         title: "Bitburner",
         template: "src/index.html",
-        filename: "../index.html",
-        favicon: "assets/favicon.ico",
+        favicon: "favicon.ico",
         googleAnalytics: {
           trackingId: "UA-100157497-1",
         },
@@ -137,7 +136,7 @@ module.exports = (env, argv) => {
     // },
     entry: entry,
     output: {
-      path: path.resolve(__dirname, outputDirectory),
+      path: path.resolve(__dirname, "./"),
       filename: "[name].bundle.js",
     },
     module: {
@@ -159,10 +158,10 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(png|jpe?g|gif|jp2|webp)$/,
-          loader: 'file-loader',
+          loader: "file-loader",
           options: {
-            name: '[contenthash].[ext]',
-            outputPath: 'images',
+            name: "[contenthash].[ext]",
+            outputPath: "dist/images",
           },
         },
       ],
@@ -185,7 +184,7 @@ module.exports = (env, argv) => {
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
-            name: `vendor`,
+            name: `${outputDirectory}/vendor`,
             chunks: "all",
           },
         },
