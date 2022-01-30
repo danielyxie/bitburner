@@ -26,9 +26,12 @@ export function PromptManager(): React.ReactElement {
     [],
   );
 
+  const valueState = useState('')
+
   function close(): void {
     if (prompt === null) return;
     prompt.resolve(false);
+    valueState[1]('')
     setPrompt(null);
   }
 
@@ -48,8 +51,6 @@ export function PromptManager(): React.ReactElement {
       promptRenderer = promptMenuBoolean;
     }
   }
-
-  const valueState = useState('')
 
   return (
     <>
