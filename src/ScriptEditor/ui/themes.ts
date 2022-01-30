@@ -1,3 +1,182 @@
+export interface IScriptEditorTheme {
+  base: string;
+  inherit: boolean;
+  common: {
+    accent: string;
+    bg: string;
+    fg: string;
+  };
+  syntax: {
+    tag: string;
+    entity: string;
+    string: string;
+    regexp: string;
+    markup: string;
+    keyword: string;
+    comment: string;
+    constant: string;
+    operator: string;
+    error: string;
+  };
+  ui: {
+    line: string;
+    panel: {
+      bg: string;
+      shadow: string;
+      border: string;
+    };
+    selection: {
+      bg: string;
+    };
+  };
+}
+
+export const defaultMonacoTheme: IScriptEditorTheme = {
+  base: "vs-dark",
+  inherit: true,
+  common: {
+    accent: "b5cea8",
+    bg: "1E1E1E",
+    fg: "D4D4D4",
+  },
+  syntax: {
+    tag: "569cd6",
+    entity: "569cd6",
+    string: "ce9178",
+    regexp: "646695",
+    markup: "569cd6",
+    keyword: "569cd6",
+    comment: "6A9955",
+    constant: "1E1E1E",
+    operator: "d4d4d4",
+    error: "f44747"
+  },
+  ui: {
+    line: "1E1E1E",
+    panel: {
+      bg: "252526",
+      shadow: "252526",
+      border: "1E1E1E"
+    },
+    selection: {
+      bg: "ADD6FF26"
+    }
+  }
+}
+
+export function makeTheme(theme: IScriptEditorTheme): any {
+  const themeRules = [
+    {
+      token: "",
+      background: theme.ui.line,
+      foreground: theme.common.fg
+    },
+    {
+      token: "identifier",
+      foreground: theme.common.accent
+    },
+    {
+      token: "operators",
+      foreground: theme.syntax.operator
+    },
+    {
+      token: "keyword",
+      foreground: theme.syntax.keyword
+    },
+    {
+      token: "string",
+      foreground: theme.syntax.string
+    },
+    {
+      token: "string.escape",
+      foreground: theme.syntax.regexp
+    },
+    {
+      token: "comment",
+      foreground: theme.syntax.comment
+    },
+    {
+      token: "constant",
+      foreground: theme.syntax.constant
+    },
+    {
+      token: "entity",
+      foreground: theme.syntax.entity
+    },
+    {
+      token: "tag",
+      foreground: theme.syntax.tag
+    },
+    {
+      token: "regexp",
+      foreground: theme.syntax.regexp
+    },
+    {
+      token: "attribute",
+      foreground: theme.syntax.tag
+    },
+    {
+      token: "constructor",
+      foreground: theme.syntax.markup
+    },
+    {
+      token: "invalid",
+      foreground: theme.syntax.error
+    },
+    {
+      token: "number",
+      foreground: theme.common.accent
+    },
+    {
+      token: "delimiter",
+      foreground: theme.common.fg + "B3"
+    },
+    // Custom tokens
+    {
+      token: "ns",
+      foreground: theme.syntax.tag
+    },
+    {
+      token: "netscriptfunction",
+      foreground: theme.syntax.markup
+    },
+    {
+      token: "otherkeywords",
+      foreground: theme.syntax.keyword
+    },
+    {
+      token: "otherkeyvars",
+      foreground: theme.common.accent
+    },
+    {
+      token: "this",
+      foreground: theme.syntax.tag
+    }
+  ];
+
+  const themeColors = Object.fromEntries([
+    ["editor.background", theme.common.bg],
+    ["editor.foreground", theme.common.fg],
+    ["editor.lineHighlightBackground", theme.ui.line],
+    ["editor.selectionBackground", theme.ui.selection.bg],
+
+    ["editorSuggestWidget.background", theme.ui.panel.bg],
+    ["editorSuggestWidget.border", theme.ui.panel.border],
+    ["editorSuggestWidget.selectedBackground", theme.ui.panel.shadow],
+
+    ["editorHoverWidget.background", theme.ui.panel.bg],
+    ["editorHoverWidget.border", theme.ui.panel.border],
+
+    ["editorWidget.background", theme.ui.panel.bg],
+    ["editorWidget.border", theme.ui.panel.border],
+
+    ["input.background", theme.ui.panel.bg],
+    ["input.border", theme.ui.panel.border]
+  ].map(([k, v]) => [k, "#" + v]));
+
+  return { base: theme.base, inherit: theme.inherit, rules: themeRules, colors: themeColors }
+}
+
 export async function loadThemes(monaco: { editor: any }): Promise<void> {
   monaco.editor.defineTheme("monokai", {
     base: "vs-dark",
@@ -260,7 +439,6 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         token: "ns",
         foreground: "FFB86C",
         fontStyle: "italic",
-        
       },
       {
         token: "netscriptfunction",
