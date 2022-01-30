@@ -25,7 +25,7 @@ import { Settings } from "../../Settings/Settings";
 import { iTutorialNextStep, ITutorial, iTutorialSteps } from "../../InteractiveTutorial";
 import { debounce } from "lodash";
 import { saveObject } from "../../SaveObject";
-import { loadThemes } from "./themes";
+import { loadThemes, makeTheme } from "./themes";
 import { GetServer } from "../../Server/AllServers";
 
 import Button from "@mui/material/Button";
@@ -330,6 +330,7 @@ export function Root(props: IProps): React.ReactElement {
     monaco.languages.typescript.javascriptDefaults.addExtraLib(source, "netscript.d.ts");
     monaco.languages.typescript.typescriptDefaults.addExtraLib(source, "netscript.d.ts");
     loadThemes(monaco);
+    monaco.editor.defineTheme("customTheme", makeTheme(Settings.EditorTheme));
   }
 
   // When the editor is mounted
@@ -902,6 +903,7 @@ export function Root(props: IProps): React.ReactElement {
             vim: Settings.MonacoVim,
           }}
           save={(options: Options) => {
+            monacoRef.current?.editor.defineTheme("customTheme", makeTheme(Settings.EditorTheme));
             setOptions(options);
             Settings.MonacoTheme = options.theme;
             Settings.MonacoInsertSpaces = options.insertSpaces;
