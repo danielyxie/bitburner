@@ -9,6 +9,10 @@ import Select from "@mui/material/Select";
 import Switch from "@mui/material/Switch";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
+
+import { ThemeEditorModal } from "./ThemeEditorModal";
 
 interface IProps {
   options: Options;
@@ -23,6 +27,7 @@ export function OptionsModal(props: IProps): React.ReactElement {
   const [fontSize, setFontSize] = useState(props.options.fontSize);
   const [wordWrap, setWordWrap] = useState(props.options.wordWrap);
   const [vim, setVim] = useState(props.options.vim);
+  const [themeEditorOpen, setThemeEditorOpen] = useState(false);
 
   function save(): void {
     props.save({
@@ -43,6 +48,10 @@ export function OptionsModal(props: IProps): React.ReactElement {
 
   return (
     <Modal open={props.open} onClose={props.onClose}>
+      <ThemeEditorModal
+        open={themeEditorOpen}
+        onClose={() => setThemeEditorOpen(false)}
+      />
       <Box display="flex" flexDirection="row" alignItems="center">
         <Typography>Theme: </Typography>
         <Select onChange={(event) => setTheme(event.target.value)} value={theme}>
@@ -53,7 +62,11 @@ export function OptionsModal(props: IProps): React.ReactElement {
           <MenuItem value="light">light</MenuItem>
           <MenuItem value="dracula">dracula</MenuItem>
           <MenuItem value="one-dark">one-dark</MenuItem>
+          <MenuItem value="customTheme">Custom theme</MenuItem>
         </Select>
+        <Button onClick={() => setThemeEditorOpen(true)} sx={{ mx: 1 }} startIcon={<EditIcon />}>
+          Edit custom theme
+        </Button>
       </Box>
 
       <Box display="flex" flexDirection="row" alignItems="center">
@@ -80,7 +93,7 @@ export function OptionsModal(props: IProps): React.ReactElement {
         <TextField type="number" label="Font size" value={fontSize} onChange={onFontChange} />
       </Box>
       <br />
-      <Button onClick={save}>Save</Button>
+      <Button onClick={save} startIcon={<SaveIcon />}>Save</Button>
     </Modal>
   );
 }
