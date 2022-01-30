@@ -98,6 +98,10 @@ export function makeTheme(theme: IScriptEditorTheme): any {
       foreground: theme.syntax.entity
     },
     {
+      token: "type",
+      foreground: theme.syntax.tag
+    },
+    {
       token: "tag",
       foreground: theme.syntax.tag
     },
