@@ -994,7 +994,10 @@ export function Root(props: IProps): React.ReactElement {
         </Box>
         <OptionsModal
           open={optionsOpen}
-          onClose={() => setOptionsOpen(false)}
+          onClose={() => {
+            monacoRef.current?.editor.defineTheme("customTheme", makeTheme(Settings.EditorTheme));
+            setOptionsOpen(false);
+          }}
           options={{
             theme: Settings.MonacoTheme,
             insertSpaces: Settings.MonacoInsertSpaces,
