@@ -15,14 +15,13 @@ export interface IScriptEditorTheme {
     keyword: string;
     comment: string;
     constant: string;
-    operator: string;
     error: string;
   };
   ui: {
     line: string;
     panel: {
       bg: string;
-      shadow: string;
+      selected: string;
       border: string;
     };
     selection: {
@@ -47,15 +46,14 @@ export const defaultMonacoTheme: IScriptEditorTheme = {
     markup: "569cd6",
     keyword: "569cd6",
     comment: "6A9955",
-    constant: "1E1E1E",
-    operator: "d4d4d4",
+    constant: "569cd6",
     error: "f44747"
   },
   ui: {
     line: "1E1E1E",
     panel: {
       bg: "252526",
-      shadow: "252526",
+      selected: "252526",
       border: "1E1E1E"
     },
     selection: {
@@ -74,10 +72,6 @@ export function makeTheme(theme: IScriptEditorTheme): any {
     {
       token: "identifier",
       foreground: theme.common.accent
-    },
-    {
-      token: "operators",
-      foreground: theme.syntax.operator
     },
     {
       token: "keyword",
@@ -129,7 +123,7 @@ export function makeTheme(theme: IScriptEditorTheme): any {
     },
     {
       token: "delimiter",
-      foreground: theme.common.fg + "B3"
+      foreground: theme.common.fg
     },
     // Custom tokens
     {
@@ -162,7 +156,7 @@ export function makeTheme(theme: IScriptEditorTheme): any {
 
     ["editorSuggestWidget.background", theme.ui.panel.bg],
     ["editorSuggestWidget.border", theme.ui.panel.border],
-    ["editorSuggestWidget.selectedBackground", theme.ui.panel.shadow],
+    ["editorSuggestWidget.selectedBackground", theme.ui.panel.selected],
 
     ["editorHoverWidget.background", theme.ui.panel.bg],
     ["editorHoverWidget.border", theme.ui.panel.border],
