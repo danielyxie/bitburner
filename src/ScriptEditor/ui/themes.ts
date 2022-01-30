@@ -1,12 +1,15 @@
 export interface IScriptEditorTheme {
+  [key: string]: any;
   base: string;
   inherit: boolean;
   common: {
+    [key: string]: string;
     accent: string;
     bg: string;
     fg: string;
   };
   syntax: {
+    [key: string]: string;
     tag: string;
     entity: string;
     string: string;
@@ -18,13 +21,16 @@ export interface IScriptEditorTheme {
     error: string;
   };
   ui: {
+    [key: string]: any;
     line: string;
     panel: {
+      [key: string]: string;
       bg: string;
       selected: string;
       border: string;
     };
     selection: {
+      [key: string]: string;
       bg: string;
     };
   };
@@ -34,20 +40,20 @@ export const defaultMonacoTheme: IScriptEditorTheme = {
   base: "vs-dark",
   inherit: true,
   common: {
-    accent: "b5cea8",
+    accent: "B5CEA8",
     bg: "1E1E1E",
     fg: "D4D4D4",
   },
   syntax: {
-    tag: "569cd6",
-    entity: "569cd6",
-    string: "ce9178",
+    tag: "569CD6",
+    entity: "569CD6",
+    string: "CE9178",
     regexp: "646695",
-    markup: "569cd6",
-    keyword: "569cd6",
+    markup: "569CD6",
+    keyword: "569CD6",
     comment: "6A9955",
-    constant: "569cd6",
-    error: "f44747"
+    constant: "569CD6",
+    error: "F44747"
   },
   ui: {
     line: "1E1E1E",
@@ -59,6 +65,36 @@ export const defaultMonacoTheme: IScriptEditorTheme = {
     selection: {
       bg: "ADD6FF26"
     }
+  }
+}
+
+// Regex used for token color validation
+// https://github.com/microsoft/vscode/blob/973684056e67153952f495fce93bf50d0ec0b892/src/vs/editor/common/languages/supports/tokenization.ts#L153
+const colorRegExp = /^#?([0-9A-Fa-f]{6})([0-9A-Fa-f]{2})?$/;
+
+// Recursively sanitize the theme data to prevent errors
+// Invalid data will be replaced with FF0000 (bright red)
+export const sanitizeTheme = (theme: IScriptEditorTheme): void => {
+  for (const [k, v] of Object.entries(theme)) {
+    switch (k) {
+      case "base":
+        if (!["vs-dark", "vs"].includes(theme.base)) theme.base = "vs-dark";
+        continue;
+      case "inherit":
+        if (typeof theme.inherit !== "boolean") theme.inherit = true;
+        continue;
+    }
+
+    const repairBlock = (block: { [key: string]: any }): void => {
+      for (const [k, v] of Object.entries(block)) {
+        if (typeof v === "object") {
+          repairBlock(v as { [key: string]: string });
+        } else {
+          if (!v.match(colorRegExp)) block[k] = "FF0000";
+        }
+      }
+    }
+    repairBlock(v);
   }
 }
 
