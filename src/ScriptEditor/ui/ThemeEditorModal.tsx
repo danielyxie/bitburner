@@ -171,7 +171,7 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
         <Box>
           <Typography variant="h6">Syntax</Typography>
           <ColorEditor
-            label="Numbers, func names, and other key vars"
+            label="Numbers, function names, and other key vars"
             themePath="common.accent"
             onColorChange={onColorChange}
             color={themeCopy.common.accent}
