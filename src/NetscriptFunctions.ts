@@ -1654,7 +1654,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         }else{
           workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be a positive power of 2`);
         }
-        
+
         return "";
       }
 
@@ -2116,7 +2116,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       message = argsToString([message]);
       SnackbarEvents.emit(message, variant, duration);
     },
-    prompt: function (txt: any): any {
+    prompt: function (txt: any, options?: { type?: string; options?: string[] }): any {
       if (!isString(txt)) {
         txt = JSON.stringify(txt);
       }
@@ -2124,6 +2124,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return new Promise(function (resolve) {
         PromptEvent.emit({
           txt: txt,
+          options,
           resolve: resolve,
         });
       });
