@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal } from "../../ui/React/Modal";
-import { defaultMonacoTheme } from "./themes";
+import { defaultMonacoTheme, IScriptEditorTheme } from "./themes";
 
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -80,7 +80,7 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
   }
 
   // Need to deep copy the object since it has nested attributes
-  const [themeCopy, setThemeCopy] = useState(JSON.parse(JSON.stringify(Settings.EditorTheme)));
+  const [themeCopy, setThemeCopy] = useState<IScriptEditorTheme>(JSON.parse(JSON.stringify(Settings.EditorTheme)));
 
   function onColorChange(name: string, value: string): void {
     setThemeCopy(_.set(themeCopy, name, value));
@@ -98,7 +98,10 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
   }
 
   return (
-    <Modal open={props.open} onClose={props.onClose}>
+    <Modal open={props.open} onClose={() => {
+      setThemeCopy(Settings.EditorTheme);
+      props.onClose();
+    }}>
       <Typography variant="h4">Customize Editor theme</Typography>
       <Typography>Hover over input boxes for more information</Typography>
       <OptionSwitch
