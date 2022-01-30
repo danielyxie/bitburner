@@ -71,9 +71,9 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer, co
  * with parameters that are the same (for compatibility), but functionality is slightly different.
  * This function can ONLY be used to calculate the threads needed for a given server in its current state,
  * and so wouldn't be appropriate to use for formulas.exe or ns.growthAnalyze (as those are meant to
- * provide theoretical scenaarios, or inverse hack respectively). Players COULD use this function with a
+ * provide theoretical scenarios, or inverse hack respectively). Players COULD use this function with a
  * custom server object with the correct moneyAvailable and moneyMax amounts, combined with a multplier
- * correctly calculated to bring the server to a new moneyAvailable (ie, pasing in moneyAvailable 300 and x2
+ * correctly calculated to bring the server to a new moneyAvailable (ie, passing in moneyAvailable 300 and x2
  * when you want the number of threads required to grow that particular server from 300 to 600), and this
  * function would pass back the correct number of threads. But the key thing is that it doesn't just
  * inverse/undo a hack (since the amount hacked from/to matters, not just the multiplier).
@@ -81,11 +81,11 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer, co
  * application, so another function with different parameters is provided for that case below this one.
  * Instead this function is meant to hand-off from the old numCycleForGrowth function to the new one
  * where used internally for pro-rating or the like. Where you have applied a grow and want to determine
- * how many htreads were needed for THAT SPECIFIC grow case using a multiplier.
- * Idealy, this function, and the original function above will be depreciated to use the methodology
+ * how many threads were needed for THAT SPECIFIC grow case using a multiplier.
+ * Ideally, this function, and the original function above will be depreciated to use the methodology
  * and inputs of the new function below this one. Even for internal cases (it's actually easier to do so).
  * @param server - Server being grown
- * @param growth - How much the server is being grown by, in DECIMAL form (e.g. 1.5 rather than 50)
+ * @param growth - How much the server money is expected to be multiplied by (e.g. 1.5 for *1.5 / +50%)
  * @param p - Reference to Player object
  * @returns Number of "growth cycles" needed
  */
@@ -97,8 +97,8 @@ export function numCycleForGrowthTransition(server: Server, growth: number, p: I
  * This function calculates the number of threads needed to grow a server from one $amount to a the same or higher $amount
  * (ie, how many threads to grow this server from $200 to $600 for example). Used primarily for a formulas (or possibly growthAnalyze)
  * type of application. It lets you "theorycraft" and easily ask what-if type questions. It's also the one that implements the
- * main thread calculation algorith, and so is the fuinction all helper functions should call.
- * It protects the inputs (so putting in INFINITY for targetMoney will use moneyMax, putting in a nagitive for start will use 0, etc.)
+ * main thread calculation algorithm, and so is the function all helper functions should call.
+ * It protects the inputs (so putting in INFINITY for targetMoney will use moneyMax, putting in a negitive for start will use 0, etc.)
  * @param server - Server being grown
  * @param targetMoney - How much you want the server grown TO (not by), for instance, to grow from 200 to 600, input 600
  * @param startMoney - How much you are growing the server from, for instance, to grow from 200 to 600, input 200
@@ -106,34 +106,124 @@ export function numCycleForGrowthTransition(server: Server, growth: number, p: I
  * @returns Number of "growth cycles" needed
  */
 export function numCycleForGrowthCorrected(server: Server, targetMoney: number, startMoney: number, p: IPlayer, cores = 1): number {
- 	if (startMoney == server.moneyMax) { return 0; } //no growth possible, no threads needed
 	if (startMoney < 0) { startMoney = 0; } // servers "can't" have less than 0 dollars on them
 	if (targetMoney > server.moneyMax) { targetMoney = server.moneyMax; } // can't grow a server to more than its moneyMax
+	if (targetMoney <= startMoney) { return 0; } // no growth --> no threads
 
-	const growthMultiplier = Math.max(1.0, Math.min(targetMoney, targetMoney / startMoney)); //need a starting point, this is worst case grow multiplier
+	// exponential base adjusted by security
+	const adjGrowthRate = (1 + (CONSTANTS.ServerBaseGrowthRate - 1) / server.hackDifficulty);
+	const exponentialBase = Math.min(adjGrowthRate, CONSTANTS.ServerMaxGrowthRate); // cap growth rate
 
-	const adjGrowthRate = (1 + (CONSTANTS.ServerBaseGrowthRate - 1) / server.hackDifficulty); // adj exponential base for security
-	const exponentialBase = Math.min(adjGrowthRate, CONSTANTS.ServerMaxGrowthRate); //cap growth rate
-
+	// total of all grow thread multipliers
 	const serverGrowthPercentage = server.serverGrowth / 100.0;
-	const coreMultiplier = 1 + ((cores -1) / 16);
-	const threadMultiplier = serverGrowthPercentage * p.hacking_grow_mult * coreMultiplier * BitNodeMultipliers.ServerGrowthRate; //total of all grow thread multipliers
+	const coreMultiplier = 1 + ((cores - 1) / 16);
+	const threadMultiplier = serverGrowthPercentage * p.hacking_grow_mult * coreMultiplier * BitNodeMultipliers.ServerGrowthRate;
 
-	let cycles = Math.log(growthMultiplier) / Math.log(exponentialBase) / threadMultiplier; //this is the completely naive cycle amt and is always >= the real cycles required
-	let cycleAdjust = 0.5 * cycles;
-
-	let overGrowth = 0;
-	while (cycleAdjust > 0.5) { //go until we get an overage of less than $1 or we're adjusting by less than half a thread
-		overGrowth = (startMoney + cycles) * Math.pow(exponentialBase, cycles * threadMultiplier) - targetMoney;
-		if (overGrowth < 0) { cycles += cycleAdjust; }
-		else if (overGrowth > 1) { cycles -= cycleAdjust; }
-		else { break; } //we're over by less than $1, return cycles
-		cycleAdjust *= 0.5; //basic 50% partition search
+	/* To understand what is done below we need to do some math. I hope the explanation is clear enough.
+	 * First of, the names will be shortened for ease of manipulation:
+	 * n:= targetMoney (n for new), o:= startMoney (o for old), b:= exponentialBase, t:= threadMultiplier, c:= cycles/threads
+	 * c is what we are trying to compute.
+	 *
+	 * After growing, the money on a server is n = (o + c) * b^(c*t)
+	 * c appears in an exponent and outside it, this is usually solved using the productLog/lambert's W special function
+	 * this function will be noted W in the following
+	 * The idea behind lambert's W function is W(x)*exp(W(x)) = x, or in other words, solving for y, y*exp(y) = x, as a function of x
+	 * This function is provided in some advanced math library but we will compute it ourself here.
+	 *
+	 * Let's get back to solving the equation. It cannot be rewrote using W immediately because the base of the exponentiation is b
+	 * b^(c*t) = exp(ln(b)*c*t) (this is how a^b is defined on reals, it matches the definition on integers)
+	 * so n = (o + c) * exp(ln(b)*c*t) , W still cannot be used directly. We want to eliminate the other terms in 'o + c' and 'ln(b)*c*t'.
+	 *
+	 * A change of variable will do. The idea is to add an equation introducing a new variable (w here) in the form c = f(w) (for some f)
+	 * With this equation we will eliminate all references to c, then solve for w and plug the result in the new equation to get c.
+	 * The change of variable performed here should get rid of the unwanted terms mentionned above, c = w/(ln(b)*t) - o should help.
+	 * This change of variable is allowed because whatever the value of c is, there is a value of w such that this equation holds:
+	 * w = (c + o)*ln(b)*t  (see how we used the terms we wanted to eliminate in order to build this variable change)
+	 *
+	 * We get n = (o + w/(ln(b)*t) - o) * exp(ln(b)*(w/(ln(b)*t) - o)*t) [ = w/(ln(b)*t) * exp(w - ln(b)*o*t) ]
+	 * The change of variable exposed exp(w - o*ln(b)*t), we can rewrite that with exp(a - b) = exp(a)/exp(b) to isolate 'w*exp(w)'
+	 * n = w/(ln(b)*t) * exp(w)/exp(ln(b)*o*t) [ = w*exp(w) / (ln(b) * t * b^(o*t)) ]
+	 * Almost there, we just need to cancel the denominator on the right side of the equation:
+	 * n * ln(b) * t * b^(o*t) = w*exp(w), Thus w = W(n * ln(b) * t * b^(o*t))
+	 * Finally we invert the variable change: c = W(n * ln(b) * t * b^(o*t))/(ln(b)*t) - o
+	 *
+	 * There is still an issue left: b^(o*t) doesn't fit inside a double precision float
+	 * because the typical amount of money on servers is arround 10^6~10^9
+	 * We need to get an approximation of W without computing the power when o is huge
+	 * Thankfully an approximation giving ~30% error uses log immediately so we will use
+	 * W(n * ln(b) * t * b^(o*t)) ~= log(n * ln(b) * t * b^(o*t)) = log(n * ln(b) * t) + log(exp(ln(b) * o * t))
+	 * = log(n * ln(b) * t) + ln(b) * o * t
+	 * (thanks to Drak for the grow formula, f4113nb34st and Wolfram Alpha for the rewrite, dwRchyngqxs for the explanation)
+	 */
+	const x = threadMultiplier * Math.log(exponentialBase);
+	const y = startMoney * x + Math.log(targetMoney * x);
+	/* Code for the approximation of lambert's W function is adapted from
+	 * https://git.savannah.gnu.org/cgit/gsl.git/tree/specfunc/lambert.c
+	 * using the articles [1] https://doi.org/10.1007/BF02124750 (algorithm above)
+	 * and [2] https://doi.org/10.1145/361952.361970 (initial approximation when x < 2.5)
+	 */
+	let w;
+	if (y < Math.log(2.5)) {
+		/* exp(y) can be safely computed without overflow.
+		 * The relative error on the result is better when exp(y) < 2.5
+		 * using Padé rational fraction approximation [2](5)
+		 */
+		const ey = Math.exp(y);
+		w = (ey + 4/3 * ey*ey) / (1 + 7/3 * ey + 5/6 * ey*ey);
+	} else {
+		/* obtain initial approximation from rough asymptotic [1](4.18)
+		 * w = y [- log y when 0 <= y]
+		 */
+		w = y;
+		if (y > 0) w -= Math.log(y);
 	}
+	let cycles = w/x - startMoney;
 
-	cycles = Math.ceil(cycles);
-  //might be worth doing some checks here +/- 1 thread just to make sure we didn't quit too early
-	return cycles;
+	/* Iterative refinement, the goal is to correct c until |(o + c) * b^(c*t) - n| < 1
+	 * or the correction on the approximation is less than 1
+	 * The Newton-Raphson method will be used, this method is a classic to find roots of functions
+	 * (given f, find c such that f(c) = 0).
+	 *
+	 * The idea of this method is to take the horizontal position at which the horizontal axis
+	 * intersects with of the tangent of the function's curve as the next approximation.
+	 * It is equivalent to treating the curve as a line (it is called a first order approximation)
+	 * If the current approximation is c then the new approximated value is c - f(c)/f'(c)
+	 * (where f' is the derivative of f).
+	 *
+	 * In our case f(c) = (o + c) * b^(c*t) - n, f'(c) = d((o + c) * b^(c*t) - n)/dc
+	 * = (ln(b)*t * (c + o) + 1) * b^(c*t)
+	 * And the update step is c[new] = c[old] - ((o + c) * b^(c*t) - n)/((ln(b)*t * (o + c) + 1) * b^(c*t))
+	 *
+	 * The main question to ask when using this method is "does it converges?"
+	 * (are the approximations getting better?), if it does then it does quickly.
+	 * DOES IT CONVERGES? In the present case it does. The reason why doesn't help explaining the algorithm.
+	 * If you are intrested then check out the wikipedia page.
+	 */
+	const bt = exponentialBase**threadMultiplier;
+	let corr = Infinity;
+	// Two sided error because we do not want to get stuck if the error stays on the wrong side
+	do {
+		// c should be above 0 so Halley's method can't be used, we have to stick to Newton-Raphson
+		const bct = bt**cycles;
+		const opc = startMoney + cycles;
+		const diff = opc * bct - targetMoney;
+		corr = diff / (opc * x + 1.0) / bct
+		cycles -= corr;
+	} while (Math.abs(corr) >= 1)
+	/* c is now within +/- 1 of the exact result.
+	 * We want the ceiling of the exact result, so the floor if the approximation is above,
+	 * the ceiling if the approximation is in the same unit as the exact result,
+	 * and the ceiling + 1 if the approximation is below.
+	 */
+	const fca = Math.floor(cycles);
+	if (targetMoney <= (startMoney + fca)*Math.pow(exponentialBase, fca*threadMultiplier)) {
+		return fca;
+	}
+	const cca = Math.ceil(cycles);
+	if (targetMoney <= (startMoney + cca)*Math.pow(exponentialBase, cca*threadMultiplier)) {
+		return cca;
+	}
+	return cca + 1;
 }
 
 /**
@@ -141,18 +231,18 @@ export function numCycleForGrowthCorrected(server: Server, targetMoney: number, 
  * (ie, if you're hacking a server with $1e6 moneyAvail for 60%, this function will tell you how many threads to regrow it
  * PROBABLY the best replacement for the current ns.growthAnalyze
  * @param server - Server being grown
- * @param hackAmt - the amount hacked (total, not per thread) - as a decimal (like 0.60 for hacking 60% of available money)
+ * @param hackProp - the proportion of money hacked (total, not per thread, like 0.60 for hacking 60% of available money)
  * @param prehackMoney - how much money the server had before being hacked (like 200000 for hacking a server that had $200000 on it at time of hacking)
  * @param p - Reference to Player object
  * @returns Number of "growth cycles" needed to reverse the described hack
  */
-export function numCycleForGrowthByHackAmt(server: Server, hackAmt: number, prehackMoney: number, p: IPlayer, cores = 1): number{
+export function numCycleForGrowthByHackAmt(server: Server, hackProp: number, prehackMoney: number, p: IPlayer, cores = 1): number{
 	if (prehackMoney > server.moneyMax) { prehackMoney = server.moneyMax; }
-	const posthackAmt = Math.floor(prehackMoney * Math.min(1, Math.max(0, (1 - hackAmt))));
+	const posthackAmt = Math.floor(prehackMoney * Math.min(1, Math.max(0, (1 - hackProp))));
 	return numCycleForGrowthCorrected(server, prehackMoney, posthackAmt, p, cores);
 }
 
-//Applied server growth for a single server. Returns the percentage growth
+// Applied server growth for a single server. Returns the percentage growth
 export function processSingleServerGrowth(server: Server, threads: number, p: IPlayer, cores = 1): number {
   let serverGrowth = calculateServerGrowth(server, threads, p, cores);
   if (serverGrowth < 1) {
@@ -176,8 +266,8 @@ export function processSingleServerGrowth(server: Server, threads: number, p: IP
 
   // if there was any growth at all, increase security
   if (oldMoneyAvailable !== server.moneyAvailable) {
-    //Growing increases server security twice as much as hacking
-    let usedCycles = numCycleForGrowth(server, server.moneyAvailable / oldMoneyAvailable, p, cores);
+    let usedCycles = numCycleForGrowthCorrected(server, server.moneyAvailable, oldMoneyAvailable, p, cores);
+    // Growing increases server security twice as much as hacking
     usedCycles = Math.min(Math.max(0, Math.ceil(usedCycles)), threads);
     server.fortify(2 * CONSTANTS.ServerFortifyAmount * usedCycles);
   }
