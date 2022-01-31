@@ -12,7 +12,7 @@ export const PromptEvent = new EventEmitter<[Prompt]>();
 
 interface Prompt {
   txt: string;
-  options?: { type?: string; options?: string[] };
+  options?: { type?: string; choices?: string[] | { [key: string]: string | number } };
   resolve: (result: boolean | string) => void;
 }
 
@@ -153,11 +153,11 @@ function promptMenuSelect(prompt: Prompt | null, setPrompt: Dispatch<SetStateAct
     setValue(event.target.value);
   }
 
-  const getItems = (options: string[] | { [key: string]: string }) : React.ReactElement[] => {
+  const getItems = (choices: string[] | { [key: string]: string | number }) : React.ReactElement[] => {
     const content = [];
-    for (const i in options) {
+    for (const i in choices) {
       // @ts-ignore
-      content.push(<MenuItem value={i}>{options[i]}</MenuItem>);
+      content.push(<MenuItem value={i}>{choices[i]}</MenuItem>);
     }
     return content;
   }
@@ -166,7 +166,7 @@ function promptMenuSelect(prompt: Prompt | null, setPrompt: Dispatch<SetStateAct
     <>
       <div style={{ display: 'flex', alignItems: 'center', paddingTop: '10px' }}>
         <Select onChange={onChange} value={value} style={{ flex: '1 0 auto' }}>
-          {getItems(prompt?.options?.options || [])}
+          {getItems(prompt?.options?.choices || [])}
         </Select>
         <Button onClick={submit}>Confirm</Button>
       </div>
