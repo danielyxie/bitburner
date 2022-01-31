@@ -670,7 +670,6 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.InfiltrationMoney = 0.75;
       BitNodeMultipliers.CorporationValuation = 0.2;
       BitNodeMultipliers.HacknetNodeMoney = 0.2;
-      BitNodeMultipliers.FactionPassiveRepGain = 0;
       BitNodeMultipliers.HackExpGain = 0.25;
       BitNodeMultipliers.DaedalusAugsRequirement = 1.166; // Results in 35 Augs needed
       BitNodeMultipliers.PurchasedServerSoftcap = 2;
@@ -694,7 +693,6 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.InfiltrationMoney = 0.75;
       BitNodeMultipliers.CorporationValuation = 0.2;
       BitNodeMultipliers.HacknetNodeMoney = 0.2;
-      BitNodeMultipliers.FactionPassiveRepGain = 0;
       BitNodeMultipliers.HackExpGain = 0.25;
       BitNodeMultipliers.FourSigmaMarketDataCost = 2;
       BitNodeMultipliers.FourSigmaMarketDataApiCost = 2;
