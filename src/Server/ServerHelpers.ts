@@ -71,8 +71,8 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer, co
  * with parameters that are the same (for compatibility), but functionality is slightly different.
  * This function can ONLY be used to calculate the threads needed for a given server in its current state,
  * and so wouldn't be appropriate to use for formulas.exe or ns.growthAnalyze (as those are meant to
- * provide theoretical scenaarios, or inverse hack respectively). Players COULD use this function with a
- * custom server object with the correct moneyAvailable and moneyMax amounts, combined with a multplier
+ * provide theoretical scenarios, or inverse hack respectively). Players COULD use this function with a
+ * custom server object with the correct moneyAvailable and moneyMax amounts, combined with a multiplier
  * correctly calculated to bring the server to a new moneyAvailable (ie, pasing in moneyAvailable 300 and x2
  * when you want the number of threads required to grow that particular server from 300 to 600), and this
  * function would pass back the correct number of threads. But the key thing is that it doesn't just
@@ -81,8 +81,8 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer, co
  * application, so another function with different parameters is provided for that case below this one.
  * Instead this function is meant to hand-off from the old numCycleForGrowth function to the new one
  * where used internally for pro-rating or the like. Where you have applied a grow and want to determine
- * how many htreads were needed for THAT SPECIFIC grow case using a multiplier.
- * Idealy, this function, and the original function above will be depreciated to use the methodology
+ * how many threads were needed for THAT SPECIFIC grow case using a multiplier.
+ * Ideally, this function, and the original function above will be depreciated to use the methodology
  * and inputs of the new function below this one. Even for internal cases (it's actually easier to do so).
  * @param server - Server being grown
  * @param growth - How much the server is being grown by, in DECIMAL form (e.g. 1.5 rather than 50)
@@ -98,7 +98,7 @@ export function numCycleForGrowthTransition(server: Server, growth: number, p: I
  * (ie, how many threads to grow this server from $200 to $600 for example). Used primarily for a formulas (or possibly growthAnalyze)
  * type of application. It lets you "theorycraft" and easily ask what-if type questions. It's also the one that implements the
  * main thread calculation algorith, and so is the fuinction all helper functions should call.
- * It protects the inputs (so putting in INFINITY for targetMoney will use moneyMax, putting in a nagitive for start will use 0, etc.)
+ * It protects the inputs (so putting in INFINITY for targetMoney will use moneyMax, putting in a negative for start will use 0, etc.)
  * @param server - Server being grown
  * @param targetMoney - How much you want the server grown TO (not by), for instance, to grow from 200 to 600, input 600
  * @param startMoney - How much you are growing the server from, for instance, to grow from 200 to 600, input 200
