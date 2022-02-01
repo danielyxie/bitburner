@@ -73,7 +73,7 @@ export function numCycleForGrowth(server: Server, growth: number, p: IPlayer, co
  * and so wouldn't be appropriate to use for formulas.exe or ns.growthAnalyze (as those are meant to
  * provide theoretical scenarios, or inverse hack respectively). Players COULD use this function with a
  * custom server object with the correct moneyAvailable and moneyMax amounts, combined with a multiplier
- * correctly calculated to bring the server to a new moneyAvailable (ie, pasing in moneyAvailable 300 and x2
+ * correctly calculated to bring the server to a new moneyAvailable (ie, passing in moneyAvailable 300 and x2
  * when you want the number of threads required to grow that particular server from 300 to 600), and this
  * function would pass back the correct number of threads. But the key thing is that it doesn't just
  * inverse/undo a hack (since the amount hacked from/to matters, not just the multiplier).
