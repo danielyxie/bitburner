@@ -139,9 +139,7 @@ export function numCycleForGrowthCorrected(server: Server, targetMoney: number, 
 /**
  * This function calculates the number of threads needed to grow a server based on a pre-hack money and hackAmt
  * (ie, if you're hacking a server with $1e6 moneyAvail for 60%, this function will tell you how many threads to regrow it
- * PROBABLY the best replacement for the current ns.growthAnalyze
- * NOTE: prehackMoney can be removed as a parameter and server.moneyMax used in its place. The return value would then give a thread count
- * that would slowly grow the server more than it is hacked until reaching moneyMax where it would return the correct number of threads.
+ * A good replacement for the current ns.growthAnalyze if you want players to have more control/responsibility
  * @param server - Server being grown
  * @param hackAmt - the amount hacked (total, not per thread) - as a decimal (like 0.60 for hacking 60% of available money)
  * @param prehackMoney - how much money the server had before being hacked (like 200000 for hacking a server that had $200000 on it at time of hacking)
@@ -149,10 +147,27 @@ export function numCycleForGrowthCorrected(server: Server, targetMoney: number, 
  * @returns Number of "growth cycles" needed to reverse the described hack
  */
 export function numCycleForGrowthByHackAmt(server: Server, hackAmt: number, prehackMoney: number, p: IPlayer, cores = 1): number{
-	if (prehackMoney > server.moneyMax) { prehackMoney = server.moneyMax; }
-	const posthackAmt = Math.floor(prehackMoney * Math.min(1, Math.max(0, (1 - hackAmt))));
-	return numCycleForGrowthCorrected(server, prehackMoney, posthackAmt, p, cores);
+	if (prehackMoney > server.moneyMax) prehackMoney = server.moneyMax;
+	const posthacMoney = Math.floor(prehackMoney * Math.min(1, Math.max(0, (1 - hackAmt))));
+	return numCycleForGrowthCorrected(server, posthacMoney, prehackMoney, p, cores);
 }
+
+/**
+ * This function calculates the number of threads needed to grow a server based on a multiplier (and assumes the hack was against a moneyMax'ed server)
+ * (ie, if you're hacking a server with for 60%, this function will tell you how many threads to regrow it if it were maxed when you hacked it)
+ * PROBABLY the best replacement for the current ns.growthAnalyze to maintain existing scripts
+ * @param server - Server being grown
+ * @param growth - How much the server is being grown by, as a multiple in DECIMAL form (e.g. 1.5 rather than 50). Infinity is acceptable.
+ * @param p - Reference to Player object
+ * @returns Number of "growth cycles" needed
+ */
+export function numCycleForGrowthByMultiplier(server: Server, growth: number, p: IPlayer, cores = 1): number{
+  if (!(growth > 1.0)) growth = 1.0;
+	const posthacMoney = server.moneyMax;
+  const prehackMoney = server.moneyMax / growth;
+	return numCycleForGrowthCorrected(server, posthacMoney, prehackMoney, p, cores);
+}
+
 
 //Applied server growth for a single server. Returns the percentage growth
 export function processSingleServerGrowth(server: Server, threads: number, p: IPlayer, cores = 1): number {
