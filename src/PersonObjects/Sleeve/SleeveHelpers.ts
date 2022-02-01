@@ -33,6 +33,9 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
     if (aug.isSpecial) {
       return false;
     }
+    if (aug.name.contains("Hacknet")){
+      return false:
+    }
 
     return true;
   }
