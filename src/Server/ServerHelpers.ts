@@ -140,6 +140,8 @@ export function numCycleForGrowthCorrected(server: Server, targetMoney: number, 
  * This function calculates the number of threads needed to grow a server based on a pre-hack money and hackAmt
  * (ie, if you're hacking a server with $1e6 moneyAvail for 60%, this function will tell you how many threads to regrow it
  * PROBABLY the best replacement for the current ns.growthAnalyze
+ * NOTE: prehackMoney can be removed as a parameter and server.moneyMax used in its place. The return value would then give a thread count
+ * that would slowly grow the server more than it is hacked until reaching moneyMax where it would return the correct number of threads.
  * @param server - Server being grown
  * @param hackAmt - the amount hacked (total, not per thread) - as a decimal (like 0.60 for hacking 60% of available money)
  * @param prehackMoney - how much money the server had before being hacked (like 200000 for hacking a server that had $200000 on it at time of hacking)
