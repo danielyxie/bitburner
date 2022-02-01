@@ -106,7 +106,7 @@ export function numCycleForGrowthTransition(server: Server, growth: number, p: I
  * @returns Number of "growth cycles" needed
  */
 export function numCycleForGrowthCorrected(server: Server, targetMoney: number, startMoney: number, p: IPlayer, cores = 1): number {
- 	if (startMoney == server.moneyMax) { return 0; } //no growth possible, no threads needed
+ 	if (startMoney >= server.moneyMax) { return 0; } //no growth possible, no threads needed
 	if (startMoney < 0) { startMoney = 0; } // servers "can't" have less than 0 dollars on them
 	if (targetMoney > server.moneyMax) { targetMoney = server.moneyMax; } // can't grow a server to more than its moneyMax
 
