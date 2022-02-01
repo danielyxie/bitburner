@@ -284,7 +284,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     },
     purchaseSleeveAug: function (asleeveNumber: any = 0, aaugName: any = ""): boolean {
       const sleeveNumber = helper.number("purchaseSleeveAug", "sleeveNumber", asleeveNumber);
-      const augName = helper.string("setToUniversityCourse", "augName", aaugName);
+      const augName = helper.string("purchaseSleeveAug", "augName", aaugName);
       helper.updateDynamicRam("purchaseSleeveAug", getRamCost(player, "sleeve", "purchaseSleeveAug"));
       checkSleeveAPIAccess("purchaseSleeveAug");
       checkSleeveNumber("purchaseSleeveAug", sleeveNumber);
