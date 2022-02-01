@@ -94,7 +94,7 @@ export function numCycleForGrowthTransition(server: Server, growth: number, p: I
 }
 
 /**
- * This function calculates the number of threads needed to grow a server from one $amount to a the same or higher $amount
+ * This function calculates the number of threads needed to grow a server from one $amount to a higher $amount
  * (ie, how many threads to grow this server from $200 to $600 for example). Used primarily for a formulas (or possibly growthAnalyze)
  * type of application. It lets you "theorycraft" and easily ask what-if type questions. It's also the one that implements the
  * main thread calculation algorith, and so is the fuinction all helper functions should call.
