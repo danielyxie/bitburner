@@ -6779,3 +6779,14 @@ interface GameInfo {
   commit: string;
   platform: string;
 }
+
+/**
+ * Used for autocompletion
+ * @public
+ */
+interface AutocompleteData {
+  servers: string[];
+  scripts: string[];
+  txts: string[];
+  flags(schema: [string, string | number | boolean | string[]][]): any;
+}
