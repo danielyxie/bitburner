@@ -433,7 +433,7 @@ export class Sleeve extends Person {
   }
 
   /**
-   * Called on every sleeve for a Source File prestige
+   * Called on every sleeve for a Source File Prestige
    */
   prestige(p: IPlayer): void {
     // Reset exp
@@ -453,7 +453,11 @@ export class Sleeve extends Person {
     // Reset augs and multipliers
     this.augmentations = [];
     this.resetMultipliers();
-
+    
+    // Reset Location
+    
+    this.city=CityName.Sector12;
+    
     // Reset sleeve-related stats
     this.shock = 1;
     this.storedCycles = 0;
