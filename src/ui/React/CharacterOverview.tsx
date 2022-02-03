@@ -132,62 +132,55 @@ function Work(): React.ReactElement {
   let details = <></>;
   let header = <></>;
   let innerText = <></>;
-  switch (player.workType) {
-    case CONSTANTS.WorkTypeCompanyPartTime:
-    case CONSTANTS.WorkTypeCompany:
-      details = (
-        <>
-          {player.jobs[player.companyName]} at <strong>{player.companyName}</strong>
-        </>
-      );
-      header = (
-        <>
-          Working at <strong>{player.companyName}</strong>
-        </>
-      );
-      innerText = (
-        <>
-          +<Reputation reputation={player.workRepGained} /> rep
-        </>
-      );
-      break;
-    case CONSTANTS.WorkTypeFaction:
-      details = (
-        <>
-          {player.factionWorkType} for <strong>{player.currentWorkFactionName}</strong>
-        </>
-      );
-      header = (
-        <>
-          Working for <strong>{player.currentWorkFactionName}</strong>
-        </>
-      );
-      innerText = (
-        <>
-          +<Reputation reputation={player.workRepGained} /> rep
-        </>
-      );
-      break;
-    case CONSTANTS.WorkTypeStudyClass:
-      details = <>{player.workType}</>;
-      header = <>You are {player.className}</>;
-      innerText = <>{convertTimeMsToTimeElapsedString(player.timeWorked)}</>;
-      break;
-    case CONSTANTS.WorkTypeCreateProgram:
-      details = <>Coding {player.createProgramName}</>;
-      header = <>Creating a program</>;
-      innerText = (
-        <>
-          {player.createProgramName}{" "}
-          {((player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100).toFixed(2)}%
-        </>
-      );
-      break;
-    case CONSTANTS.WorkTypeCrime:
-      details = <>{player.workType}</>;
-      header = <>You are attempting to {player.crimeType}</>;
-      innerText = <>{convertTimeMsToTimeElapsedString(player.timeNeededToCompleteWork - player.timeWorked)} remaining</>;
-      break;
+  if (player.workType === CONSTANTS.WorkTypeCompanyPartTime || player.workType === CONSTANTS.WorkTypeCompany) {
+    details = (
+      <>
+        {player.jobs[player.companyName]} at <strong>{player.companyName}</strong>
+      </>
+    );
+    header = (
+      <>
+        Working at <strong>{player.companyName}</strong>
+      </>
+    );
+    innerText = (
+      <>
+        +<Reputation reputation={player.workRepGained} /> rep
+      </>
+    );
+  } else if (player.workType === CONSTANTS.WorkTypeFaction) {
+    details = (
+      <>
+        {player.factionWorkType} for <strong>{player.currentWorkFactionName}</strong>
+      </>
+    );
+    header = (
+      <>
+        Working for <strong>{player.currentWorkFactionName}</strong>
+      </>
+    );
+    innerText = (
+      <>
+        +<Reputation reputation={player.workRepGained} /> rep
+      </>
+    );
+  } else if (player.workType === CONSTANTS.WorkTypeStudyClass) {
+    details = <>{player.workType}</>;
+    header = <>You are {player.className}</>;
+    innerText = <>{convertTimeMsToTimeElapsedString(player.timeWorked)}</>;
+  } else if (player.workType === CONSTANTS.WorkTypeCreateProgram) {
+    details = <>Coding {player.createProgramName}</>;
+    header = <>Creating a program</>;
+    innerText = (
+      <>
+        {player.createProgramName}{" "}
+        {((player.timeWorkedCreateProgram / player.timeNeededToCompleteWork) * 100).toFixed(2)}%
+      </>
+    );
+  } else if (player.workType === CONSTANTS.WorkTypeCrime) {
+    details = <>{player.workType}</>;
+    header = <>You are attempting to {player.crimeType}</>;
+    innerText = <>{convertTimeMsToTimeElapsedString(player.timeNeededToCompleteWork - player.timeWorked)} remaining</>;
   }
 
   return (
