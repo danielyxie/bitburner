@@ -1,3 +1,4 @@
+import { IApplyForJob } from './../types';
 import { INetscriptHelper } from "./INetscriptHelper";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
@@ -897,7 +898,7 @@ export function NetscriptSingularity(
       getCompany("applyToCompany", companyName);
 
       player.location = companyName;
-      let res;
+      let res: IApplyForJob;
       switch (field.toLowerCase()) {
         case "software":
           res = player.applyForSoftwareJob(true);
@@ -939,27 +940,24 @@ export function NetscriptSingularity(
           res = player.applyForPartTimeWaiterJob(true);
           break;
         default:
+          res = { gotJob: false, reason: `Invalid job: '${field}'.` }
           workerScript.log("applyToCompany", () => `Invalid job: '${field}'.`);
-          return false;
+          return res.gotJob;
       }
-      // TODO https://github.com/danielyxie/bitburner/issues/1378
-      // The player object's applyForJob function can return string with special error messages
-      // if (isString(res)) {
-      //   workerScript.log("applyToCompany",()=> res);
-      //   return false;
-      // }
-      if (res) {
+
+      if (res.gotJob) {
         workerScript.log(
           "applyToCompany",
-          () => `You were offered a new job at '${companyName}' as a '${player.jobs[companyName]}'`,
+          () => res.reason || `You were offered a new job at '${companyName}' as a '${player.jobs[companyName]}'`,
         );
       } else {
         workerScript.log(
           "applyToCompany",
-          () => `You failed to get a new job/promotion at '${companyName}' in the '${field}' field.`,
+          () => res.reason || `You failed to get a new job/promotion at '${companyName}' in the '${field}' field.`,
         );
       }
-      return res;
+
+      return res.gotJob;
     },
     getCompanyRep: function (companyName: any): any {
       helper.updateDynamicRam("getCompanyRep", getRamCost(player, "getCompanyRep"));

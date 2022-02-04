@@ -61,3 +61,16 @@ export interface IMinMaxRange {
    */
   min: number;
 }
+
+
+export interface IApplyForJob {
+  /**
+   *  Boolean representing if application was successful
+   */
+  gotJob: boolean;
+
+  /**
+   *  Message of why an application was rejected/accepted
+   */
+  reason?: string;
+}

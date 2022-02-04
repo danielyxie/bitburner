@@ -1,3 +1,4 @@
+import { IApplyForJob } from './../../types';
 import * as augmentationMethods from "./PlayerObjectAugmentationMethods";
 import * as bladeburnerMethods from "./PlayerObjectBladeburnerMethods";
 import * as corporationMethods from "./PlayerObjectCorporationMethods";
@@ -173,20 +174,20 @@ export class PlayerObject implements IPlayer {
   work: (numCycles: number) => boolean;
   workPartTime: (numCycles: number) => boolean;
   workForFaction: (numCycles: number) => boolean;
-  applyForAgentJob: (sing?: boolean) => boolean;
-  applyForBusinessConsultantJob: (sing?: boolean) => boolean;
-  applyForBusinessJob: (sing?: boolean) => boolean;
-  applyForEmployeeJob: (sing?: boolean) => boolean;
-  applyForItJob: (sing?: boolean) => boolean;
-  applyForJob: (entryPosType: CompanyPosition, sing?: boolean) => boolean;
-  applyForNetworkEngineerJob: (sing?: boolean) => boolean;
-  applyForPartTimeEmployeeJob: (sing?: boolean) => boolean;
-  applyForPartTimeWaiterJob: (sing?: boolean) => boolean;
-  applyForSecurityEngineerJob: (sing?: boolean) => boolean;
-  applyForSecurityJob: (sing?: boolean) => boolean;
-  applyForSoftwareConsultantJob: (sing?: boolean) => boolean;
-  applyForSoftwareJob: (sing?: boolean) => boolean;
-  applyForWaiterJob: (sing?: boolean) => boolean;
+  applyForAgentJob: (sing?: boolean) => IApplyForJob;
+  applyForBusinessConsultantJob: (sing?: boolean) => IApplyForJob;
+  applyForBusinessJob: (sing?: boolean) => IApplyForJob;
+  applyForEmployeeJob: (sing?: boolean) => IApplyForJob;
+  applyForItJob: (sing?: boolean) => IApplyForJob;
+  applyForJob: (entryPosType: CompanyPosition, sing?: boolean) => IApplyForJob;
+  applyForNetworkEngineerJob: (sing?: boolean) => IApplyForJob;
+  applyForPartTimeEmployeeJob: (sing?: boolean) => IApplyForJob;
+  applyForPartTimeWaiterJob: (sing?: boolean) => IApplyForJob;
+  applyForSecurityEngineerJob: (sing?: boolean) => IApplyForJob;
+  applyForSecurityJob: (sing?: boolean) => IApplyForJob;
+  applyForSoftwareConsultantJob: (sing?: boolean) => IApplyForJob;
+  applyForSoftwareJob: (sing?: boolean) => IApplyForJob;
+  applyForWaiterJob: (sing?: boolean) => IApplyForJob;
   canAccessBladeburner: () => boolean;
   canAccessCorporation: () => boolean;
   canAccessGang: () => boolean;
@@ -483,11 +484,11 @@ export class PlayerObject implements IPlayer {
     // Let's get a hash of some semi-random stuff so we have something unique.
     this.identifier = cyrb53(
       "I-" +
-        new Date().getTime() +
-        navigator.userAgent +
-        window.innerWidth +
-        window.innerHeight +
-        getRandomInt(100, 999),
+      new Date().getTime() +
+      navigator.userAgent +
+      window.innerWidth +
+      window.innerHeight +
+      getRandomInt(100, 999),
     );
 
     this.init = generalMethods.init;

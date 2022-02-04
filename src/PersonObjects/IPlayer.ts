@@ -6,7 +6,7 @@
 import { Resleeve } from "./Resleeving/Resleeve";
 import { Sleeve } from "./Sleeve/Sleeve";
 
-import { IMap } from "../types";
+import { IMap, IApplyForJob } from '../types';
 
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { Augmentation } from "../Augmentation/Augmentation";
@@ -164,20 +164,21 @@ export interface IPlayer {
   work(numCycles: number): boolean;
   workPartTime(numCycles: number): boolean;
   workForFaction(numCycles: number): boolean;
-  applyForAgentJob(sing?: boolean): boolean;
-  applyForBusinessConsultantJob(sing?: boolean): boolean;
-  applyForBusinessJob(sing?: boolean): boolean;
-  applyForEmployeeJob(sing?: boolean): boolean;
-  applyForItJob(sing?: boolean): boolean;
-  applyForJob(entryPosType: CompanyPosition, sing?: boolean): boolean;
-  applyForNetworkEngineerJob(sing?: boolean): boolean;
-  applyForPartTimeEmployeeJob(sing?: boolean): boolean;
-  applyForPartTimeWaiterJob(sing?: boolean): boolean;
-  applyForSecurityEngineerJob(sing?: boolean): boolean;
-  applyForSecurityJob(sing?: boolean): boolean;
-  applyForSoftwareConsultantJob(sing?: boolean): boolean;
-  applyForSoftwareJob(sing?: boolean): boolean;
-  applyForWaiterJob(sing?: boolean): boolean;
+
+  applyForAgentJob(sing?: boolean): IApplyForJob;
+  applyForBusinessConsultantJob(sing?: boolean): IApplyForJob;
+  applyForBusinessJob(sing?: boolean): IApplyForJob;
+  applyForEmployeeJob(sing?: boolean): IApplyForJob;
+  applyForItJob(sing?: boolean): IApplyForJob;
+  applyForJob(entryPosType: CompanyPosition, sing?: boolean): IApplyForJob;
+  applyForNetworkEngineerJob(sing?: boolean): IApplyForJob;
+  applyForPartTimeEmployeeJob(sing?: boolean): IApplyForJob;
+  applyForPartTimeWaiterJob(sing?: boolean): IApplyForJob;
+  applyForSecurityEngineerJob(sing?: boolean): IApplyForJob;
+  applyForSecurityJob(sing?: boolean): IApplyForJob;
+  applyForSoftwareConsultantJob(sing?: boolean): IApplyForJob;
+  applyForSoftwareJob(sing?: boolean): IApplyForJob;
+  applyForWaiterJob(sing?: boolean): IApplyForJob;
   canAccessBladeburner(): boolean;
   canAccessCorporation(): boolean;
   canAccessGang(): boolean;
