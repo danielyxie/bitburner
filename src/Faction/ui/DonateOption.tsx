@@ -77,7 +77,7 @@ export function DonateOption(props: IProps): React.ReactElement {
   }
 
   return (
-    <Paper sx={{ my: 1, p: 1, width: "100%" }}>
+    <Paper sx={{ my: 1, p: 1 }}>
       <Status />
       {props.disabled ? (
         <Typography>

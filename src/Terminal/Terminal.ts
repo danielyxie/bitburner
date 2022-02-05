@@ -48,6 +48,7 @@ import { free } from "./commands/free";
 import { grow } from "./commands/grow";
 import { hack } from "./commands/hack";
 import { help } from "./commands/help";
+import { history } from "./commands/history";
 import { home } from "./commands/home";
 import { hostname } from "./commands/hostname";
 import { kill } from "./commands/kill";
@@ -143,7 +144,7 @@ export class Terminal implements ITerminal {
   startGrow(player: IPlayer): void {
     const server = player.getCurrentServer();
     if (server instanceof HacknetServer) {
-      this.error("Cannot hack this kind of server");
+      this.error("Cannot grow this kind of server");
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
@@ -152,7 +153,7 @@ export class Terminal implements ITerminal {
   startWeaken(player: IPlayer): void {
     const server = player.getCurrentServer();
     if (server instanceof HacknetServer) {
-      this.error("Cannot hack this kind of server");
+      this.error("Cannot weaken this kind of server");
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
@@ -241,7 +242,7 @@ export class Terminal implements ITerminal {
     if (cancelled) return;
 
     if (server instanceof HacknetServer) {
-      this.error("Cannot hack this kind of server");
+      this.error("Cannot grow this kind of server");
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
@@ -268,7 +269,7 @@ export class Terminal implements ITerminal {
     if (cancelled) return;
 
     if (server instanceof HacknetServer) {
-      this.error("Cannot hack this kind of server");
+      this.error("Cannot weaken this kind of server");
       return;
     }
     if (!(server instanceof Server)) throw new Error("server should be normal server");
@@ -313,7 +314,9 @@ export class Terminal implements ITerminal {
       this.print("Organization name: " + (!isHacknet ? org : "player"));
       const hasAdminRights = (!isHacknet && currServ.hasAdminRights) || isHacknet;
       this.print("Root Access: " + (hasAdminRights ? "YES" : "NO"));
-      this.print("Can run scripts on this host: " + (hasAdminRights ? "YES" : "NO"));
+      const canRunScripts = hasAdminRights && currServ.maxRam > 0;
+      this.print("Can run scripts on this host: " + (canRunScripts ? "YES" : "NO"));
+      this.print("RAM: " + numeralWrapper.formatRAM(currServ.maxRam));
       if (currServ instanceof Server) {
         this.print("Backdoor: " + (currServ.backdoorInstalled ? "YES" : "NO"));
         const hackingSkill = currServ.requiredHackingSkill;
@@ -576,6 +579,7 @@ export class Terminal implements ITerminal {
       if (this.commandHistory.length > 50) {
         this.commandHistory.splice(0, 1);
       }
+      player.terminalCommandHistory = this.commandHistory;
     }
     this.commandHistoryIndex = this.commandHistory.length;
     const allCommands = ParseCommands(commands);
@@ -785,6 +789,7 @@ export class Terminal implements ITerminal {
       grow: grow,
       hack: hack,
       help: help,
+      history: history,
       home: home,
       hostname: hostname,
       kill: kill,

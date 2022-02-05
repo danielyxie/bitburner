@@ -81,7 +81,7 @@ export function ProductElem(props: IProductProps): React.ReactElement {
     );
   } else if (product.sCost) {
     if (isString(product.sCost)) {
-      const sCost = (product.sCost as string).replace(/MP/g, product.pCost + "");
+      const sCost = (product.sCost as string).replace(/MP/g, product.pCost + product.rat / product.mku + "");
       sellButtonText = (
         <>
           {sellButtonText} @ <Money money={eval(sCost)} />

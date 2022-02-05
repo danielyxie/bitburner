@@ -2050,7 +2050,7 @@ function initAugmentations(): void {
     info:
       "A brain implant carefully assembled around the synapses, which " +
       "micromanages the activity and levels of various neuroreceptor " +
-      "chemicals and modulates electrical acvitiy to optimize concentration, " +
+      "chemicals and modulates electrical activity to optimize concentration, " +
       "allowing the user to multitask much more effectively.",
     stats: (
       <>
