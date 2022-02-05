@@ -142,7 +142,7 @@ class WebSocketInterface extends EventTarget {
         connectionAttempt.addEventListener("message", this._handleMessage);
         connectionAttempt.addEventListener("open", (e:Event) => {
             this._socket = connectionAttempt;
-            this._handleOpen(e);
+            this._handleOpen();
         });
         connectionAttempt.addEventListener("close", this._handleClose);
 
