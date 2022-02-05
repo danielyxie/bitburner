@@ -21,7 +21,8 @@ export function ls(
   try {
     flags = libarg({
       '--grep': String,
-      '-g': '--grep'
+      '-g': '--grep',
+      '-l': Boolean,
     },
       { argv: args }
     )
@@ -37,7 +38,7 @@ export function ls(
     terminal.error("Incorrect usage of ls command. Usage: ls [dir] [-g, --grep pattern]");
   }
 
-  if (numArgs > 3) {
+  if (numArgs > 4) {
     return incorrectUsage();
   }
 
@@ -47,17 +48,15 @@ export function ls(
     prefix += "/";
   }
 
-  // If no filter then it must be for listing a directory
-  if (filter === undefined) {
-    const dir = args[0] || ""
-    const newPath = evaluateDirectoryPath(dir + "", terminal.cwd());
-    prefix = newPath || "";
-    if (!prefix.endsWith("/")) {
-      prefix += "/";
-    }
-    if (!isValidDirectoryPath(prefix)) {
-      return incorrectUsage();
-    }
+  // If first arg doesn't contain a - it must be the file/folder
+  const dir = (args[0] && typeof args[0] == "string" && !args[0].startsWith("-")) ? args[0] : ""
+  const newPath = evaluateDirectoryPath(dir + "", terminal.cwd());
+  prefix = newPath || "";
+  if (!prefix.endsWith("/")) {
+    prefix += "/";
+  }
+  if (!isValidDirectoryPath(prefix)) {
+    return incorrectUsage();
   }
 
   // Root directory, which is the same as no 'prefix' at all
@@ -169,9 +168,9 @@ export function ls(
     );
   }
 
-  function postSegments(segments: string[], style?: any, linked?: boolean): void {
+  function postSegments(segments: string[], flags: any, style?: any, linked?: boolean): void {
     const maxLength = Math.max(...segments.map((s) => s.length)) + 1;
-    const filesPerRow = Math.floor(80 / maxLength);
+    const filesPerRow = flags["-l"] === true ? 1 : Math.floor(80 / maxLength);
     for (let i = 0; i < segments.length; i++) {
       let row = "";
       for (let col = 0; col < filesPerRow; col++) {
@@ -202,6 +201,6 @@ export function ls(
     { segments: allScripts, style: { color: "yellow", fontStyle: "bold" }, linked: true },
   ].filter((g) => g.segments.length > 0);
   for (let i = 0; i < groups.length; i++) {
-    postSegments(groups[i].segments, groups[i].style, groups[i].linked);
+    postSegments(groups[i].segments, flags, groups[i].style, groups[i].linked);
   }
 }
