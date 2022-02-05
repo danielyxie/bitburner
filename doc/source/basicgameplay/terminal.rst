@@ -335,7 +335,7 @@ Then to kill this script the same arguments would have to be used::
 
     $ kill foo.script 50e3 sigma-cosmetics
 
-If you are killing the script using its PID, then the PID argument must be numeric. 
+If you are killing the script using its PID, then the PID argument must be numeric.
 
 killall
 ^^^^^^^
@@ -347,7 +347,7 @@ Kills all scripts on the current server.
 ls
 ^^
 
-    $ ls [dir] [| grep pattern]
+    $ ls [dir] [--grep pattern]
 
 Prints files and directories on the current server to the Terminal screen.
 
@@ -358,19 +358,19 @@ followed by the files (also in alphabetical order).
 The :code:`dir` optional parameter allows you to specify the directory for which to display
 files.
 
-The :code:`| grep pattern` optional parameter allows you to only display files and directories
+The :code:`--grep pattern` optional parameter allows you to only display files and directories
 with a certain pattern in their names.
 
 Examples::
 
     // List files/directories with the '.script' extension in the current directory
-    $ ls | grep .script
+    $ ls --grep .script
 
     // List files/directories with the '.js' extension in the root directory
-    $ ls / | grep .js
+    $ ls / --grep .js
 
     // List files/directories with the word 'purchase' in the name, in the :code:`scripts` directory
-    $ ls scripts | grep purchase
+    $ ls scripts --grep purchase
 
 
 lscpu
