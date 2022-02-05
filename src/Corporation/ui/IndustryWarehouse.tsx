@@ -139,12 +139,12 @@ function WarehouseRoot(props: IProps): React.ReactElement {
             {numeralWrapper.formatBigNumber(props.warehouse.size)}
           </Typography>
         </Tooltip>
-
-        <Button disabled={!canAffordUpgrade} onClick={upgradeWarehouseOnClick}>
-          Upgrade Warehouse Size -&nbsp;
-          <MoneyCost money={sizeUpgradeCost} corp={corp} />
-        </Button>
       </Box>
+
+      <Button disabled={!canAffordUpgrade} onClick={upgradeWarehouseOnClick}>
+        Upgrade Warehouse Size -&nbsp;
+        <MoneyCost money={sizeUpgradeCost} corp={corp} />
+      </Button>
 
       <Typography>This industry uses the following equation for its production: </Typography>
       <br />

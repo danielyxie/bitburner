@@ -85,7 +85,7 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
           </Typography>
         }
       >
-        <span onClick={() => setPortalOpen(true)} className={cssClass}>
+        <span onClick={() => setPortalOpen(true)} className={cssClass} aria-label={`enter-bitnode-${bitNode.number.toString()}`}>
           <b>O</b>
         </span>
       </Tooltip>

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
+import { Table, TableCell } from "../../ui/React/Table";
 import { IRouter } from "../../ui/Router";
-import { Factions } from "../Factions";
 import { Faction } from "../Faction";
 import { joinFaction } from "../FactionHelpers";
-
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
-import Button from "@mui/material/Button";
-import TableBody from "@mui/material/TableBody";
-import { Table, TableCell } from "../../ui/React/Table";
-import TableRow from "@mui/material/TableRow";
+import { Factions } from "../Factions";
 
 export const InvitationsSeen: string[] = [];
 
@@ -48,42 +48,67 @@ export function FactionsRoot(props: IProps): React.ReactElement {
   }
 
   return (
-    <>
+    <Container disableGutters maxWidth="md" sx={{ mx: 0, mb: 10 }}>
       <Typography variant="h4">Factions</Typography>
-      <Typography>Lists all factions you have joined</Typography>
-      <br />
-      <Box display="flex" flexDirection="column">
-        {props.player.factions.map((faction: string) => (
-          <Link key={faction} variant="h6" onClick={() => openFaction(Factions[faction])}>
-            {faction}
-          </Link>
-        ))}
-      </Box>
-      <br />
-      {props.player.factionInvitations.length > 0 && (
-        <>
-          <Typography variant="h5" color="primary">
-            Outstanding Faction Invitations
-          </Typography>
-          <Typography>
-            Lists factions you have been invited to. You can accept these faction invitations at any time.
-          </Typography>
-          <Table size="small" padding="none">
+      <Typography mb={4}>
+        Throughout the game you may receive invitations from factions. There are many different factions, and each
+        faction has different criteria for determining its potential members. Joining a faction and furthering its cause
+        is crucial to progressing in the game and unlocking endgame content.
+      </Typography>
+
+      <Typography variant="h5" color="primary" mt={2} mb={1}>
+        Factions you have joined:
+      </Typography>
+      {(props.player.factions.length > 0 && (
+        <Paper sx={{ my: 1, p: 1, pb: 0, display: "inline-block" }}>
+          <Table padding="none">
             <TableBody>
-              {props.player.factionInvitations.map((faction: string) => (
+              {props.player.factions.map((faction: string) => (
                 <TableRow key={faction}>
                   <TableCell>
-                    <Typography noWrap>{faction}</Typography>
+                    <Typography noWrap mb={1}>
+                      {faction}
+                    </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <Button onClick={(e) => acceptInvitation(e, faction)}>Join!</Button>
+                    <Box ml={1} mb={1}>
+                      <Button onClick={() => openFaction(Factions[faction])}>Details</Button>
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        </>
-      )}
-    </>
+        </Paper>
+      )) || <Typography>You haven't joined any factions.</Typography>}
+      <Typography variant="h5" color="primary" mt={4} mb={1}>
+        Outstanding Faction Invitations
+      </Typography>
+      <Typography mb={1}>
+        Factions you have been invited to. You can accept these faction invitations at any time:
+      </Typography>
+      {(props.player.factionInvitations.length > 0 && (
+        <Paper sx={{ my: 1, mb: 4, p: 1, pb: 0, display: "inline-block" }}>
+          <Table padding="none">
+            <TableBody>
+              {props.player.factionInvitations.map((faction: string) => (
+                <TableRow key={faction}>
+                  <TableCell>
+                    <Typography noWrap mb={1}>
+                      {faction}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Box ml={1} mb={1}>
+                      <Button onClick={(e) => acceptInvitation(e, faction)}>Join!</Button>
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      )) || <Typography>You have no outstanding faction invites.</Typography>}
+    </Container>
   );
 }

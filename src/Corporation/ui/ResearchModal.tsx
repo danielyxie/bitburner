@@ -6,17 +6,18 @@ import { IIndustry } from "../IIndustry";
 import { Research } from "../Actions";
 import { Node } from "../ResearchTree";
 import { ResearchMap } from "../ResearchMap";
+import { Settings } from "../../Settings/Settings";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import ExpandLess from "@mui/icons-material/ExpandLess";
+import CheckIcon from '@mui/icons-material/Check';
+
 interface INodeProps {
   n: Node | null;
   division: IIndustry;
@@ -42,8 +43,8 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
 
     dialogBoxCreate(
       `Researched ${n.text}. It may take a market cycle ` +
-        `(~${CorporationConstants.SecsPerMarketCycle} seconds) before the effects of ` +
-        `the Research apply.`,
+      `(~${CorporationConstants.SecsPerMarketCycle} seconds) before the effects of ` +
+      `the Research apply.`,
     );
   }
 
@@ -52,8 +53,8 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
     color = "info";
   }
 
-  const but = (
-    <Box>
+  const wrapInTooltip = (ele: React.ReactElement): React.ReactElement => {
+    return (
       <Tooltip
         title={
           <Typography>
@@ -63,12 +64,22 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
           </Typography>
         }
       >
+        {ele}
+      </Tooltip>
+    )
+  }
+
+  const but = (
+    <Box>
+      {wrapInTooltip(
         <span>
-          <Button color={color} disabled={disabled && !n.researched} onClick={research}>
-            {n.text}
+          <Button color={color} disabled={disabled && !n.researched} onClick={research}
+            style={{ width: '100%', textAlign: 'left', justifyContent: 'unset' }}
+          >
+            {n.researched && (<CheckIcon sx={{ mr: 1 }} />)}{n.text}
           </Button>
         </span>
-      </Tooltip>
+      )}
     </Box>
   );
 
@@ -76,15 +87,25 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
 
   return (
     <Box>
-      <Box display="flex">
-        {but}
-        <ListItemButton onClick={() => setOpen((old) => !old)}>
-          <ListItemText />
+      <Box display="flex" sx={{ border: '1px solid ' + Settings.theme.well }}>
+        {wrapInTooltip(
+          <span style={{ width: '100%' }}>
+            <Button color={color} disabled={disabled && !n.researched} onClick={research} sx={{
+              width: '100%',
+              textAlign: 'left',
+              justifyContent: 'unset',
+              borderColor: Settings.theme.button
+            }}>
+              {n.researched && (<CheckIcon sx={{ mr: 1 }} />)}{n.text}
+            </Button>
+          </span>
+        )}
+        <Button onClick={() => setOpen((old) => !old)} sx={{ borderColor: Settings.theme.button, minWidth: 'fit-content' }}>
           {open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
-        </ListItemButton>
+        </Button>
       </Box>
       <Collapse in={open} unmountOnExit>
-        <Box m={4}>
+        <Box m={1}>
           {n.children.map((m) => (
             <Upgrade key={m.text} division={division} n={m} />
           ))}
@@ -108,7 +129,7 @@ export function ResearchModal(props: IProps): React.ReactElement {
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Upgrade division={props.industry} n={researchTree.root} />
-      <Typography>
+      <Typography sx={{ mt: 1 }}>
         Research points: {props.industry.sciResearch.qty.toFixed(3)}
         <br />
         Multipliers from research:

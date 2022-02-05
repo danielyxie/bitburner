@@ -1,10 +1,18 @@
 import { Player } from "./Player";
+import { Router } from "./ui/GameRoot";
+import { isScriptFilename } from "./Script/isScriptFilename";
+import { Script } from "./Script/Script";
 import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { Terminal } from "./Terminal";
 import { SnackbarEvents } from "./ui/React/Snackbar";
 import { IMap, IReturnStatus } from "./types";
 import { GetServer } from "./Server/AllServers";
 import { resolve } from "cypress/types/bluebird";
+import { ImportPlayerData, SaveData, saveObject } from "./SaveObject";
+import { Settings } from "./Settings/Settings";
+import { exportScripts } from "./Terminal/commands/download";
+import { CONSTANTS } from "./Constants";
+import { hash } from "./hash/hash";
 
 export function initElectron(): void {
   const userAgent = navigator.userAgent.toLowerCase();
@@ -13,6 +21,8 @@ export function initElectron(): void {
     (document as any).achievements = [];
     initWebserver();
     initAppNotifier();
+    initSaveFunctions();
+    initElectronBridge();
   }
 }
 
@@ -36,8 +46,8 @@ function initWebserver(): void {
     if (home === null) {
       return {
         res: false,
-        msg: "Home server does not exist."
-      }
+        msg: "Home server does not exist.",
+      };
     }
     return {
       res: true,
@@ -45,11 +55,10 @@ function initWebserver(): void {
         files: home.scripts.map((script) => ({
           filename: script.filename,
           code: script.code,
-          hash: script.hash(),
-          ramUsage: script.ramUsage
-        }))
-      }
-    }
+          ramUsage: script.ramUsage,
+        })),
+      },
+    };
   };
 
   (document as any).deleteFile = function (filename: string): IReturnWebStatus {
@@ -58,8 +67,8 @@ function initWebserver(): void {
     if (home === null) {
       return {
         res: false,
-        msg: "Home server does not exist."
-      }
+        msg: "Home server does not exist.",
+      };
     }
     return home.removeFile(filename);
   };
@@ -72,10 +81,10 @@ function initWebserver(): void {
     if (home === null) {
       return {
         res: false,
-        msg: "Home server does not exist."
-      }
+        msg: "Home server does not exist.",
+      };
     }
-    const {success, overwritten} = home.writeToScriptFile(Player, filename, code);
+    const { success, overwritten } = home.writeToScriptFile(Player, filename, code);
     let script;
     if (success) {
       script = home.getScript(filename);
@@ -84,9 +93,8 @@ function initWebserver(): void {
       res: success,
       data: {
         overwritten,
-        hash: script?.hash() || undefined,
-        ramUsage: script?.ramUsage
-      }
+        ramUsage: script?.ramUsage,
+      },
     };
   };
 }
@@ -111,6 +119,123 @@ function initAppNotifier(): void {
   };
 
   // Will be consumud by the electron wrapper.
-  // @ts-ignore
-  window.appNotifier = funcs;
+  (window as any).appNotifier = funcs;
+}
+
+function initSaveFunctions(): void {
+  const funcs = {
+    triggerSave: (): Promise<void> => saveObject.saveGame(true),
+    triggerGameExport: (): void => {
+      try {
+        saveObject.exportGame();
+      } catch (error) {
+        console.log(error);
+        SnackbarEvents.emit("Could not export game.", "error", 2000);
+      }
+    },
+    triggerScriptsExport: (): void => exportScripts("*", Player.getHomeComputer()),
+    getSaveData: (): { save: string; fileName: string } => {
+      return {
+        save: saveObject.getSaveString(Settings.ExcludeRunningScriptsFromSave),
+        fileName: saveObject.getSaveFileName(),
+      };
+    },
+    getSaveInfo: async (base64save: string): Promise<ImportPlayerData | undefined> => {
+      try {
+        const data = await saveObject.getImportDataFromString(base64save);
+        return data.playerData;
+      } catch (error) {
+        console.error(error);
+        return;
+      }
+    },
+    pushSaveData: (base64save: string, automatic = false): void => Router.toImportSave(base64save, automatic),
+  };
+
+  // Will be consumud by the electron wrapper.
+  (window as any).appSaveFns = funcs;
+}
+
+function initElectronBridge(): void {
+  const bridge = (window as any).electronBridge as any;
+  if (!bridge) return;
+
+  bridge.receive("get-save-data-request", () => {
+    const data = (window as any).appSaveFns.getSaveData();
+    bridge.send("get-save-data-response", data);
+  });
+  bridge.receive("get-save-info-request", async (save: string) => {
+    const data = await (window as any).appSaveFns.getSaveInfo(save);
+    bridge.send("get-save-info-response", data);
+  });
+  bridge.receive("push-save-request", ({ save, automatic = false }: { save: string; automatic: boolean }) => {
+    (window as any).appSaveFns.pushSaveData(save, automatic);
+  });
+  bridge.receive("trigger-save", () => {
+    return (window as any).appSaveFns
+      .triggerSave()
+      .then(() => {
+        bridge.send("save-completed");
+      })
+      .catch((error: any) => {
+        console.log(error);
+        SnackbarEvents.emit("Could not save game.", "error", 2000);
+      });
+  });
+  bridge.receive("trigger-game-export", () => {
+    try {
+      (window as any).appSaveFns.triggerGameExport();
+    } catch (error) {
+      console.log(error);
+      SnackbarEvents.emit("Could not export game.", "error", 2000);
+    }
+  });
+  bridge.receive("trigger-scripts-export", () => {
+    try {
+      (window as any).appSaveFns.triggerScriptsExport();
+    } catch (error) {
+      console.log(error);
+      SnackbarEvents.emit("Could not export scripts.", "error", 2000);
+    }
+  });
+}
+
+export function pushGameSaved(data: SaveData): void {
+  const bridge = (window as any).electronBridge as any;
+  if (!bridge) return;
+
+  bridge.send("push-game-saved", data);
+}
+
+export function pushGameReady(): void {
+  const bridge = (window as any).electronBridge as any;
+  if (!bridge) return;
+
+  // Send basic information to the electron wrapper
+  bridge.send("push-game-ready", {
+    player: {
+      identifier: Player.identifier,
+      playtime: Player.totalPlaytime,
+      lastSave: Player.lastSave,
+    },
+    game: {
+      version: CONSTANTS.VersionString,
+      hash: hash(),
+    },
+  });
+}
+
+export function pushImportResult(wasImported: boolean): void {
+  const bridge = (window as any).electronBridge as any;
+  if (!bridge) return;
+
+  bridge.send("push-import-result", { wasImported });
+  pushDisableRestore();
+}
+
+export function pushDisableRestore(): void {
+  const bridge = (window as any).electronBridge as any;
+  if (!bridge) return;
+
+  bridge.send("push-disable-restore", { duration: 1000 * 60 });
 }

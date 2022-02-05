@@ -3,13 +3,14 @@
  * the task selector as well as some stats.
  */
 import React, { useState } from "react";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { StatsTable } from "../../ui/React/StatsTable";
-import { MoneyRate } from "../../ui/React/MoneyRate";
 import { useGang } from "./Context";
-import { GangMember } from "../GangMember";
+import { TaskDescription } from "./TaskDescription";
+
+import { Box } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+
+import { GangMember } from "../GangMember";
 
 interface IProps {
   member: GangMember;
@@ -29,16 +30,9 @@ export function TaskSelector(props: IProps): React.ReactElement {
 
   const tasks = gang.getAllTaskNames();
 
-  const data = [
-    [`Money:`, <MoneyRate money={5 * props.member.calculateMoneyGain(gang)} />],
-    [`Respect:`, `${numeralWrapper.formatRespect(5 * props.member.calculateRespectGain(gang))} / sec`],
-    [`Wanted Level:`, `${numeralWrapper.formatWanted(5 * props.member.calculateWantedLevelGain(gang))} / sec`],
-    [`Total Respect:`, `${numeralWrapper.formatRespect(props.member.earnedRespect)}`],
-  ];
-
   return (
-    <>
-      <Select onChange={onChange} value={currentTask}>
+    <Box>
+      <Select onChange={onChange} value={currentTask} sx={{ width: '100%' }}>
         <MenuItem key={0} value={"Unassigned"}>
           Unassigned
         </MenuItem>
@@ -48,8 +42,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
           </MenuItem>
         ))}
       </Select>
-
-      <StatsTable rows={data} />
-    </>
+      <TaskDescription member={props.member} />
+    </Box>
   );
 }

@@ -26,6 +26,7 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import { TableCell } from "../../ui/React/Table";
+import { Box } from "@mui/material";
 
 interface IProps {
   office: OfficeSpace;
@@ -430,51 +431,46 @@ export function IndustryOffice(props: IProps): React.ReactElement {
       <Typography>
         Size: {props.office.employees.length} / {props.office.size} employees
       </Typography>
-      <Tooltip title={<Typography>Automatically hires an employee and gives him/her a random name</Typography>}>
-        <span>
-          <Button disabled={props.office.atCapacity()} onClick={autohireEmployeeButtonOnClick}>
-            Hire Employee
-          </Button>
-        </span>
-      </Tooltip>
-      <br />
-      <Tooltip title={<Typography>Upgrade the office's size so that it can hold more employees!</Typography>}>
-        <span>
-          <Button disabled={corp.funds < 0} onClick={() => setUpgradeOfficeSizeOpen(true)}>
-            Upgrade size
-          </Button>
-        </span>
-      </Tooltip>
-      <UpgradeOfficeSizeModal
-        rerender={props.rerender}
-        office={props.office}
-        open={upgradeOfficeSizeOpen}
-        onClose={() => setUpgradeOfficeSizeOpen(false)}
-      />
-
-      {!division.hasResearch("AutoPartyManager") && (
-        <>
-          <Tooltip
-            title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
-          >
-            <span>
-              <Button disabled={corp.funds < 0} onClick={() => setThrowPartyOpen(true)}>
-                Throw Party
-              </Button>
-            </span>
+      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr', width: 'fit-content' }}>
+        <Box sx={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          <Tooltip title={<Typography>Automatically hires an employee and gives him/her a random name</Typography>}>
+            <Button disabled={props.office.atCapacity()} onClick={autohireEmployeeButtonOnClick}>
+              Hire Employee
+            </Button>
           </Tooltip>
-          <ThrowPartyModal
+          <Tooltip title={<Typography>Upgrade the office's size so that it can hold more employees!</Typography>}>
+            <Button disabled={corp.funds < 0} onClick={() => setUpgradeOfficeSizeOpen(true)}>
+              Upgrade size
+            </Button>
+          </Tooltip>
+          <UpgradeOfficeSizeModal
             rerender={props.rerender}
             office={props.office}
-            open={throwPartyOpen}
-            onClose={() => setThrowPartyOpen(false)}
+            open={upgradeOfficeSizeOpen}
+            onClose={() => setUpgradeOfficeSizeOpen(false)}
           />
-        </>
-      )}
 
-      <br />
+          {!division.hasResearch("AutoPartyManager") && (
+            <>
+              <Tooltip
+                title={<Typography>Throw an office party to increase your employee's morale and happiness</Typography>}
+              >
+                <Button disabled={corp.funds < 0} onClick={() => setThrowPartyOpen(true)}>
+                  Throw Party
+                </Button>
+              </Tooltip>
+              <ThrowPartyModal
+                rerender={props.rerender}
+                office={props.office}
+                open={throwPartyOpen}
+                onClose={() => setThrowPartyOpen(false)}
+              />
+            </>
+          )}
 
-      <SwitchButton manualMode={employeeManualAssignMode} switchMode={setEmployeeManualAssignMode} />
+        </Box>
+        <SwitchButton manualMode={employeeManualAssignMode} switchMode={setEmployeeManualAssignMode} />
+      </Box>
       {employeeManualAssignMode ? (
         <ManualManagement rerender={props.rerender} office={props.office} />
       ) : (
