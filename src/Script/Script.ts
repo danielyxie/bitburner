@@ -4,6 +4,7 @@
  * This does NOT represent a script that is actively running and
  * being evaluated. See RunningScript for that
  */
+import FileInterface from "../APIServer/FileInterface";
 import { calculateRamUsage, RamUsageEntry } from "./RamCalculations";
 import { ScriptUrl } from "./ScriptUrl";
 
@@ -136,6 +137,8 @@ export class Script {
       const [dependentScript] = otherScripts.filter(s => s.filename === dependent.filename && s.server == dependent.server);
       if (dependentScript !== null) dependentScript.markUpdated();
     }
+    // Pass reference since this script may not exist on the server yet
+    FileInterface.pushToEditor(this);
   }
 
   /**

@@ -1,6 +1,7 @@
 /**
  * Abstract Base Class for any Server object
  */
+import FileInterface from "../APIServer/FileInterface";
 import { CodingContract } from "../CodingContracts";
 import { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
@@ -199,6 +200,7 @@ export class BaseServer {
           }
 
           this.scripts.splice(i, 1);
+          FileInterface.removeFromEditor(this.hostname, fn);
           return { res: true };
         }
       }
@@ -214,6 +216,7 @@ export class BaseServer {
       for (let i = 0; i < this.textFiles.length; ++i) {
         if (this.textFiles[i].fn === fn) {
           this.textFiles.splice(i, 1);
+          FileInterface.removeFromEditor(this.hostname, fn);
           return { res: true };
         }
       }
