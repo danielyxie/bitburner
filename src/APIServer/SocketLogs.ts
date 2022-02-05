@@ -1,22 +1,23 @@
 
 class APILogger {
-    _enabled:boolean = false;
-    log(...args: any[]) {
+    _enabled = false;
+    log(...args: any[]):void {
         if (!this._enabled) {
             return;
         }
 
         console.log(...args);
     }
-    error(...args: any[]) {
+    error(...args: any[]):void {
         if (!this._enabled) {
             return;
         }
+        console.error(...args);
     }
-    enable = () => {
+    enable = ():void => {
         this._enabled = true;
     }
-    disable = () => {
+    disable = ():void => {
         this._enabled = false;
     }
 }

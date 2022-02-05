@@ -4,38 +4,26 @@ import APIServerConfiguration from "./APIServerConfiguration";
 import {CLIENT_EVENTS, SERVER_EVENTS} from './APIServerEvents';
 
 interface WebsocketMessage<T> {
-    type:string,
-    action:string,
-    token:string,
-    payload?:T,
+    type:string;
+    action:string;
+    token:string;
+    payload?:T;
 }
 
 export interface WebsocketEvent {
-    action:string,
-    payload:string,
+    action:string;
+    payload:string;
 }
 
 class WebSocketInterface extends EventTarget {
     _enabled: boolean;
-    _connected: boolean = false;
+    _connected = false;
     _socket: WebSocket | undefined;
-    _sessionToken: string = "";
-    _authenticated: boolean = false;
-    _host:string = "localhost";
-    _port:number = 9991;
+    _sessionToken = "";
+    _authenticated = false;
+    _host = "localhost";
+    _port = 9991;
     _protocol:"ws"|"wss" = "ws";
-
-    initialize = () => {
-        let win = (window as any);
-        if (!win._APIServer) {
-            win._APIServer = {
-                start: this.start,
-                stop: this.stop,
-                debug: (mode:boolean) => mode ? logger.enable() : logger.disable(),
-                autostart: (mode:boolean) => APIServerConfiguration.autostart = mode,
-            }
-        }
-    }
 
     constructor() {
         super();
@@ -45,10 +33,21 @@ class WebSocketInterface extends EventTarget {
             this.start();
         }
     }
-    get connected() {
+    initialize = ():void => {
+        const win = (window as any);
+        if (!win._APIServer) {
+            win._APIServer = {
+                start: this.start,
+                stop: this.stop,
+                debug: (mode:boolean) => (mode ? logger.enable() : logger.disable()),
+                autostart: (mode:boolean) => APIServerConfiguration.autostart = mode,
+            }
+        }
+    }
+    get connected():boolean {
         return this._connected && this._authenticated;
     }
-    send<T>(type:string, action:string, payload:T) {
+    send<T>(type:string, action:string, payload:T):void {
         if (!CLIENT_EVENTS[type] || !CLIENT_EVENTS[type][action]) {
             logger.error(`[Websocket] Cannot send message. Invalid type '${type}' or action '${action}'`);
             return;
@@ -58,7 +57,7 @@ class WebSocketInterface extends EventTarget {
             return;
         }
 
-        let data:WebsocketMessage<T> = {type, action, payload, token: this._sessionToken};
+        const data:WebsocketMessage<T> = {type, action, payload, token: this._sessionToken};
 
         if (this._socket?.readyState === 1) {
             this._socket?.send(JSON.stringify(data));
@@ -66,15 +65,15 @@ class WebSocketInterface extends EventTarget {
             if (this._socket && this._socket.readyState > 1) {
                 this._handleClose();
             }
-            throw "[Websocket] Connection is not open or has been closed";
+            throw new Error("[Websocket] Connection is not open or has been closed");
         }
     }
-    _handleOpen = (e:Event) => {
+    _handleOpen = ():void => {
         this._connected = true;
         logger.log("[Websocket] Open");
         this.send<{token:string}>("AUTH", "LOGIN", {token: APIServerConfiguration.authToken} );
     }
-    _handleAuth = (token?:string) => {
+    _handleAuth = (token?:string):void => {
         if (!token){
             // Auth was unsuccessful
             this.stop();
@@ -87,15 +86,15 @@ class WebSocketInterface extends EventTarget {
         console.log("[Websocket] Connection is now ready.")
         this.dispatchEvent(new CustomEvent("CONNECTED"));
     }
-    _handleClose = (e?:CloseEvent) => {
+    _handleClose = ():void => {
         delete this._socket;
         this._connected = false;
         this._authenticated = false;
         this._sessionToken = "";
     }
-    _handleMessage = (e:MessageEvent) => {
+    _handleMessage = (e:MessageEvent):void => {
         try {
-            const {token, payload, type, action}:WebsocketMessage<any> = JSON.parse(e.data);
+            const {payload, type, action}:WebsocketMessage<any> = JSON.parse(e.data);
 
             if (!SERVER_EVENTS[type] || !SERVER_EVENTS[type][action]) {
                 logger.error(`[Websocket] Invalid type '${type}' or action '${action}'`);
@@ -114,21 +113,21 @@ class WebSocketInterface extends EventTarget {
                     payload
                 }
             }));
-        } catch (e) {
+        } catch (err) {
             logger.error("[Websocket] Unable to process message from server");
         }
     }
-    _handleError(e:Event) {
+    _handleError(e:Event):void {
         logger.log("[Websocket] Error", e);
     }
 
-    _startServer = () => {
+    _startServer = ():void => {
         // If the server has been disabled, skip any connection attempts
         if (!this._enabled) {
             return;
         }
         console.log("[Websocket] Attempting to connect...");
-        let connectionAttempt = new WebSocket(`${this._protocol}://${this._host}:${this._port}`);
+        const connectionAttempt = new WebSocket(`${this._protocol}://${this._host}:${this._port}`);
         connectionAttempt.addEventListener("error", (e:Event) => {
             // We lost our connection, poll for the server
             if (connectionAttempt.readyState === 3) {
@@ -155,7 +154,7 @@ class WebSocketInterface extends EventTarget {
             }
         }, 2000);
     }
-    start = (token?: string, options?:{host:string, port:number, secure:boolean}):void => {
+    start = (token?: string, options?:{host:string; port:number; secure:boolean}):void => {
         // Mantain this for attempting to reconnect
         this._enabled = true;
 

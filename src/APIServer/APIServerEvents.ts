@@ -1,6 +1,6 @@
 interface WebsocketMessageTypes {
   [type:string]: {
-      [type:string]: string 
+      [type:string]: string; 
   };
 }
 

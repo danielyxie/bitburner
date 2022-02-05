@@ -1,8 +1,8 @@
 import logger from './SocketLogs';
 interface QueueItem<T> {
-    key:string,
-    timestamp: number,
-    params: [string, string, T]
+    key:string;
+    timestamp: number;
+    params: [string, string, T];
 }
 
 export default class InterfaceQueue<PayloadParams> {
@@ -17,7 +17,7 @@ export default class InterfaceQueue<PayloadParams> {
     //Load data from localstorage
     let parsedData;
     try {
-        let cachedData = localStorage.getItem(this._storageKey) || '{}';
+        const cachedData = localStorage.getItem(this._storageKey) || '{}';
         parsedData = JSON.parse(cachedData);
         // Bootstrap if needed
         if (parsedData.data) {
@@ -39,10 +39,10 @@ export default class InterfaceQueue<PayloadParams> {
 
     window.addEventListener("beforeunload", () => this._saveCache);
   }
-  get lastUpdated() {
+  get lastUpdated():number|null {
     return this._meta.updated;
   }
-  _saveCache = () => {
+  _saveCache = ():void => {
     logger.log('[InterfaceQueue] Saving queue...');
     this._meta.updated = Date.now();
     localStorage.setItem(this._storageKey, JSON.stringify({
@@ -51,7 +51,7 @@ export default class InterfaceQueue<PayloadParams> {
     }));
     logger.log('[InterfaceQueue] Cache Saved!');
   };
-  push = (type:string, action:string, payload:PayloadParams, key:string, queueTime:number = -1) => {
+  push = (type:string, action:string, payload:PayloadParams, key:string, queueTime = -1):void => {
     // If given a key they event should be unique
     if (key && this._keys[key]) {
       this._data = this._data.filter((item) => item.key !== key);
@@ -63,17 +63,17 @@ export default class InterfaceQueue<PayloadParams> {
       params: [type, action, payload],
     });
   };
-  flush = (handler:Function) => {
+  flush = (handler:(type:string, action:string, payload:PayloadParams, key:string, timestamp:number) => void):void => {
     // Copy and reset the queue, this is to avoid an infinte pattern if items are added to queue as they are flushed
     const flushQueue = [...this._data];
     this._data = [];
     this._keys = {};
-    let item;
-
-    while (item = flushQueue.shift()) {
+    let item = flushQueue.shift();
+    while (item) {
       if (item) {
         handler(...item.params, item.key, item.timestamp);
       }
+      item = flushQueue.shift();
     }
   };
 }
