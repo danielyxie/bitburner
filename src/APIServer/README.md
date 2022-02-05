@@ -103,7 +103,6 @@ This event is sent when the client is sending information about a file to the We
 	"payload": {
 			"timestamp":  number, // When the event was created
 			"filename":  string, // Filename on the Bitburner server
-			"hash"?:  hash, // Hash of the script, will not be retured after DELETE events
 			"code"?: code, // Code of the script, will not be retured after DELETE events
 			"ramUsage"?: number // Ram used by script (gb), will not be retured after DELETE events
 	}
@@ -120,7 +119,6 @@ This event is sent when the client is pushing new code due to a file being creat
 	"payload": {
 			"timestamp":  number, // When the event was created
 			"filename":  string, // Filename on the Bitburner server
-			"hash":  hash, // Hash of the script
 			"code": code, // Code of the script
 			"ramUsage": number // Ram used by script (gb)
 	}

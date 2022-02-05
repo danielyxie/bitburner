@@ -26,7 +26,6 @@ export interface FilePayload {
     filename: string;
     ramUsage?: number;
     code?: string;
-    hash?: string;
 }
 
 
@@ -125,7 +124,6 @@ class FileInterface {
         return {
             timestamp: timestamp || Date.now(),
             filename: script?.filename || params.filename,
-            hash: script?.hash(),
             code: script?.code,
             ramUsage: script?.ramUsage
         };
