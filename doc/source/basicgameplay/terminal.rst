@@ -361,16 +361,18 @@ files.
 The :code:`--grep pattern` optional parameter allows you to only display files and directories
 with a certain pattern in their names.
 
+The :code:`-l` optional parameter allows you to force each item onto a single line.
+
 Examples::
 
     // List files/directories with the '.script' extension in the current directory
-    $ ls --grep .script
+    $ ls -l --grep .script
 
     // List files/directories with the '.js' extension in the root directory
-    $ ls / --grep .js
+    $ ls / -l --grep .js
 
     // List files/directories with the word 'purchase' in the name, in the :code:`scripts` directory
-    $ ls scripts --grep purchase
+    $ ls scripts -l --grep purchase
 
 
 lscpu
