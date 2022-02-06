@@ -56,7 +56,7 @@ Here is everything you will KEEP when you install an Augmentation:
 
 * Every Augmentation you have installed
 * Scripts on your home computer
-* RAM Upgrades on your home computer
+* RAM/Core Upgrades on your home computer
 * World Stock Exchange account and TIX API Access
 
 .. _gameplay_augmentations_purchasingmultiple:
