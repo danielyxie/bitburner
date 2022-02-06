@@ -3,6 +3,7 @@
  * that allows for scripts to run
  */
 import { killWorkerScript } from "./Netscript/killWorkerScript";
+import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
@@ -79,7 +80,7 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
       // This is not a problem for legacy Netscript because it also checks the
       // stop flag in the evaluator.
       if (workerScript.env.stopFlag) {
-        throw workerScript;
+        throw new ScriptDeath(workerScript);
       }
 
       if (propName === "asleep") return f(...args); // OK for multiple simultaneous calls to sleep.
@@ -90,7 +91,7 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
         "promise-returning function? (Currently running: %s tried to run: %s)";
       if (runningFn) {
         workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, sprintf(msg, runningFn, propName));
-        throw workerScript;
+        throw new ScriptDeath(workerScript);
       }
       runningFn = propName;
 
@@ -140,16 +141,16 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
           e.message + ((e.stack && "\nstack:\n" + e.stack.toString()) || ""),
         );
       }
-      throw workerScript;
+      throw new ScriptDeath(workerScript);
     } else if (isScriptErrorMessage(e)) {
       workerScript.errorMessage = e;
-      throw workerScript;
-    } else if (e instanceof WorkerScript) {
+      throw new ScriptDeath(workerScript);
+    } else if (e instanceof ScriptDeath) {
       throw e;
     }
 
     workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e);
-    throw workerScript; // Don't know what to do with it, let's rethrow.
+    throw new ScriptDeath(workerScript); // Don't know what to do with it, let's rethrow.
   });
 }
 
@@ -199,7 +200,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
               })
               .catch(function (err: any) {
                 // workerscript is when you cancel a delay
-                if (!(err instanceof WorkerScript)) {
+                if (!(err instanceof ScriptDeath)) {
                   console.error(err);
                   const errorTextArray = err.split("|DELIMITER|");
                   const hostname = errorTextArray[1];
@@ -212,7 +213,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
                   workerScript.env.stopFlag = true;
                   workerScript.running = false;
                   killWorkerScript(workerScript);
-                  return Promise.resolve(workerScript);
+                  return Promise.resolve();
                 }
               });
           };
@@ -282,7 +283,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
     function runInterpreter(): void {
       try {
         if (workerScript.env.stopFlag) {
-          return reject(workerScript);
+          return reject(new ScriptDeath(workerScript));
         }
 
         let more = true;
@@ -303,7 +304,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
           e = makeRuntimeRejectMsg(workerScript, e);
         }
         workerScript.errorMessage = e;
-        return reject(workerScript);
+        return reject(new ScriptDeath(workerScript));
       }
     }
 
@@ -312,11 +313,12 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
     } catch (e: any) {
       if (isString(e)) {
         workerScript.errorMessage = e;
-        return reject(workerScript);
-      } else if (e instanceof WorkerScript) {
+        return reject(new ScriptDeath(workerScript));
+      } else if (e instanceof ScriptDeath) {
         return reject(e);
       } else {
-        return reject(workerScript);
+        console.error(e);
+        return reject(new ScriptDeath(workerScript));
       }
     }
   });
@@ -539,29 +541,30 @@ function createAndAddWorkerScript(
 
   // Create the WorkerScript. NOTE: WorkerScript ctor will set the underlying
   // RunningScript's PID as well
-  const s = new WorkerScript(runningScriptObj, pid, NetscriptFunctions);
-  s.ramUsage = oneRamUsage;
+  const workerScript = new WorkerScript(runningScriptObj, pid, NetscriptFunctions);
+  workerScript.ramUsage = oneRamUsage;
 
   // Add the WorkerScript to the global pool
-  workerScripts.set(pid, s);
+  workerScripts.set(pid, workerScript);
   WorkerScriptStartStopEventEmitter.emit();
 
   // Start the script's execution
-  let p: Promise<WorkerScript> | null = null; // Script's resulting promise
-  if (s.name.endsWith(".js") || s.name.endsWith(".ns")) {
-    p = startNetscript2Script(player, s);
+  let scriptExecution: Promise<WorkerScript> | null = null; // Script's resulting promise
+  if (workerScript.name.endsWith(".js") || workerScript.name.endsWith(".ns")) {
+    scriptExecution = startNetscript2Script(player, workerScript);
   } else {
-    p = startNetscript1Script(s);
-    if (!(p instanceof Promise)) {
+    scriptExecution = startNetscript1Script(workerScript);
+    if (!(scriptExecution instanceof Promise)) {
       return false;
     }
   }
 
   // Once the code finishes (either resolved or rejected, doesnt matter), set its
   // running status to false
-  p.then(function (w: WorkerScript) {
-    w.running = false;
-    w.env.stopFlag = true;
+  scriptExecution.then(function (w: WorkerScript) {
+    if(w !== workerScript) console.error("!BUG! Wrong WorkerScript instance !BUG!")
+    workerScript.running = false;
+    workerScript.env.stopFlag = true;
     // On natural death, the earnings are transfered to the parent if it still exists.
     if (parent !== undefined) {
       if (parent.running) {
@@ -570,51 +573,51 @@ function createAndAddWorkerScript(
       }
     }
 
-    killWorkerScript(s);
-    w.log("", () => "Script finished running");
-  }).catch(function (w) {
-    if (w instanceof Error) {
+    killWorkerScript(workerScript);
+    workerScript.log("", () => "Script finished running");
+  }).catch(function (e) {
+    if (e instanceof Error) {
       dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-      console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + w.toString());
+      console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + e.toString());
       return;
-    } else if (w instanceof WorkerScript) {
-      if (isScriptErrorMessage(w.errorMessage)) {
-        const errorTextArray = w.errorMessage.split("|DELIMITER|");
+    } else if (e instanceof ScriptDeath) {
+      if (isScriptErrorMessage(workerScript.errorMessage)) {
+        const errorTextArray = workerScript.errorMessage.split("|DELIMITER|");
         if (errorTextArray.length != 4) {
           console.error("ERROR: Something wrong with Error text in evaluator...");
-          console.error("Error text: " + w.errorMessage);
+          console.error("Error text: " + workerScript.errorMessage);
           return;
         }
         const hostname = errorTextArray[1];
         const scriptName = errorTextArray[2];
         const errorMsg = errorTextArray[3];
 
-        let msg = `RUNTIME ERROR<br>${scriptName}@${hostname}<br>`;
-        if (w.args.length > 0) {
-          msg += `Args: ${arrayToString(w.args)}<br>`;
+        let msg = `RUNTIME ERROR<br>${scriptName}@${hostname} (PID - ${workerScript.pid})<br>`;
+        if (workerScript.args.length > 0) {
+          msg += `Args: ${arrayToString(workerScript.args)}<br>`;
         }
         msg += "<br>";
         msg += errorMsg;
 
         dialogBoxCreate(msg);
-        w.log("", () => "Script crashed with runtime error");
+        workerScript.log("", () => "Script crashed with runtime error");
       } else {
-        w.log("", () => "Script killed");
+        workerScript.log("", () => "Script killed");
         return; // Already killed, so stop here
       }
-    } else if (isScriptErrorMessage(w)) {
+    } else if (isScriptErrorMessage(e)) {
       dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
       console.error(
         "ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " +
-          w.toString(),
+          e.toString(),
       );
       return;
     } else {
       dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
-      console.error(w);
+      console.error(e);
     }
 
-    killWorkerScript(s);
+    killWorkerScript(workerScript);
   });
 
   return true;
