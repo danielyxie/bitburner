@@ -1841,6 +1841,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     tryWritePort: function (port: any, data: any = ""): any {
       updateDynamicRam("tryWritePort", getRamCost(Player, "tryWritePort"));
+      if ((typeof data !== "string" && typeof data !== "number") || isNS(data)) {
+        throw makeRuntimeErrorMsg(
+          "writePort",
+          `Trying to write invalid data to a port: only strings and numbers are valid.`,
+        );
+      }
       if (!isNaN(port)) {
         port = Math.round(port);
         if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
