@@ -206,6 +206,32 @@ export function Root(props: IProps): React.ReactElement {
             save();
             props.router.toTerminal();
           });
+
+          // Setup "go to next tab" and "go to previous tab". This is a little more involved
+          // since these aren't Ex commands (they run in normal mode, not after typing `:`)
+          MonacoVim.VimMode.Vim.defineAction("nextTabs", function (_cm: any, args: {repeat?: number}, _vim: any) {
+            const nTabs = args.repeat ?? 1;
+            // Go to the next tab (to the right). Wraps around when at the rightmost tab
+            const currIndex = currentTabIndex();
+            if (currIndex !== undefined) {
+              const nextIndex = (currIndex + nTabs) % openScripts.length;
+              onTabClick(nextIndex);
+            }
+          });
+          MonacoVim.VimMode.Vim.defineAction("prevTabs", function (_cm: any, args: {repeat?: number}, _vim: any) {
+            const nTabs = args.repeat ?? 1;
+            // Go to the previous tab (to the left). Wraps around when at the leftmost tab
+            const currIndex = currentTabIndex();
+            if (currIndex !== undefined) {
+              let nextIndex = (currIndex - nTabs);
+              while (nextIndex < 0) {
+                nextIndex += openScripts.length;
+              }
+              onTabClick(nextIndex);
+            }
+          });
+          MonacoVim.VimMode.Vim.mapCommand("gt", "action", "nextTabs", {}, {context: "normal"});
+          MonacoVim.VimMode.Vim.mapCommand("gT", "action", "prevTabs", {}, {context: "normal"});
           editor.focus();
         });
       } catch { }
@@ -605,16 +631,26 @@ export function Root(props: IProps): React.ReactElement {
     openScripts = items;
   }
 
+  function currentTabIndex(): number | undefined {
+    if (currentScript !== null) {
+      return openScripts.findIndex(
+          (script) =>
+            currentScript !== null &&
+            script.fileName === currentScript.fileName &&
+            script.hostname === currentScript.hostname,
+        );
+    } 
+
+    return undefined;
+  }
+
   function onTabClick(index: number): void {
     if (currentScript !== null) {
       // Save currentScript to openScripts
-      const curIndex = openScripts.findIndex(
-        (script) =>
-          currentScript !== null &&
-          script.fileName === currentScript.fileName &&
-          script.hostname === currentScript.hostname,
-      );
-      openScripts[curIndex] = currentScript;
+      const curIndex = currentTabIndex();
+      if (curIndex !== undefined) {
+        openScripts[curIndex] = currentScript;
+      }
     }
 
     currentScript = { ...openScripts[index] };
