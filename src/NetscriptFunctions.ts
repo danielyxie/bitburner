@@ -98,6 +98,11 @@ interface NS extends INS {
   stanek: IStanek;
 }
 
+//interface guard
+function isNS(object: any): boolean {
+  return (object as NS).gang !== undefined;
+}
+
 export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const updateDynamicRam = function (fnName: string, ramCost: number): void {
     if (workerScript.dynamicLoadedFns[fnName]) {
@@ -1772,7 +1777,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return res;
     },
     writePort: function (port: any, data: any = ""): any {
-      if (typeof data !== "string" && typeof data !== "number") {
+      if ((typeof data !== "string" && typeof data !== "number") || isNS(data)) {
         throw makeRuntimeErrorMsg(
           "writePort",
           `Trying to write invalid data to a port: only strings and numbers are valid.`,
