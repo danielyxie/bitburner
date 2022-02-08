@@ -120,7 +120,7 @@ export const BlackOperations: {
     desc: (
       <>
         CODE RED SITUATION. Our intelligence tells us that VitaLife has discovered a new android cloning technology.
-        This technology is supposedly capable of cloning Synthoid, not only physically but also their advanced AI
+        This technology is supposedly capable of cloning Synthoids, not only physically but also their advanced AI
         modules. We do not believe that VitaLife is trying to use this technology illegally or maliciously, but if any
         Synthoids were able to infiltrate the corporation and take advantage of this technology then the results would
         be catastrophic.
