@@ -165,7 +165,7 @@ export function numCycleForGrowthByMultiplier(server: Server, growth: number, p:
   if (!(growth > 1.0)) growth = 1.0;
 	const posthacMoney = server.moneyMax;
   const prehackMoney = server.moneyMax / growth;
-	return numCycleForGrowthCorrected(server, posthacMoney, prehackMoney, p, cores);
+	return numCycleForGrowthCorrected(server, prehackMoney, posthacMoney, p, cores);
 }
 
 
