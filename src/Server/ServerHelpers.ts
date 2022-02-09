@@ -149,7 +149,7 @@ export function numCycleForGrowthCorrected(server: Server, targetMoney: number, 
 export function numCycleForGrowthByHackAmt(server: Server, hackAmt: number, prehackMoney: number, p: IPlayer, cores = 1): number{
 	if (prehackMoney > server.moneyMax) prehackMoney = server.moneyMax;
 	const posthacMoney = Math.floor(prehackMoney * Math.min(1, Math.max(0, (1 - hackAmt))));
-	return numCycleForGrowthCorrected(server, posthacMoney, prehackMoney, p, cores);
+	return numCycleForGrowthCorrected(server, prehackMoney, posthacMoney, p, cores);
 }
 
 /**
@@ -165,7 +165,7 @@ export function numCycleForGrowthByMultiplier(server: Server, growth: number, p:
   if (!(growth > 1.0)) growth = 1.0; //prevent /0 and other issues
 	const posthacMoney = server.moneyMax;
   const prehackMoney = server.moneyMax / growth;
-	return numCycleForGrowthCorrected(server, posthacMoney, prehackMoney, p, cores);
+	return numCycleForGrowthCorrected(server, prehackMoney, posthacMoney, p, cores);
 }
 
 
