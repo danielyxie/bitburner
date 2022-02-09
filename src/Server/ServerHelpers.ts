@@ -162,10 +162,10 @@ export function numCycleForGrowthByHackAmt(server: Server, hackAmt: number, preh
  * @returns Number of "growth cycles" needed
  */
 export function numCycleForGrowthByMultiplier(server: Server, growth: number, p: IPlayer, cores = 1): number{
-  if (!(growth > 1.0)) growth = 1.0;
+  if (!(growth > 1.0)) growth = 1.0; //prevent /0 and other issues
 	const posthacMoney = server.moneyMax;
   const prehackMoney = server.moneyMax / growth;
-	return numCycleForGrowthCorrected(server, prehackMoney, posthacMoney, p, cores);
+	return numCycleForGrowthCorrected(server, posthacMoney, prehackMoney, p, cores);
 }
 
 
