@@ -27,8 +27,7 @@ export function WorkInProgressRoot(): React.ReactElement {
   const router = use.Router();
   function rerender(): void {
     setRerender((old) => !old);
-    // note working out at the gym returns this also
-    if (player.workType == CONSTANTS.WorkTypeStudyClass && player.money <= 0) {
+    if (player.className != CONSTANTS.ClassStudyComputerScience && player.workType == CONSTANTS.WorkTypeStudyClass && player.money <= 0) {
       player.finishClass(true);
       router.toCity();
     }
