@@ -23,16 +23,22 @@ const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 
 export function WorkInProgressRoot(): React.ReactElement {
   const setRerender = useState(false)[1];
+  const player = use.Player();
+  const router = use.Router();
   function rerender(): void {
     setRerender((old) => !old);
+    // note working out at the gym returns this also
+    if (player.workType == CONSTANTS.WorkTypeStudyClass && player.money <= 0) {
+      player.finishClass(true);
+      router.toCity();
+    }
   }
 
   useEffect(() => {
     const id = setInterval(rerender, CONSTANTS.MilliPerCycle);
     return () => clearInterval(id);
   }, []);
-  const player = use.Player();
-  const router = use.Router();
+
   const faction = Factions[player.currentWorkFactionName];
   if (player.workType == CONSTANTS.WorkTypeFaction) {
     function cancel(): void {

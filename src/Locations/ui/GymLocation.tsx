@@ -57,19 +57,19 @@ export function GymLocation(props: IProps): React.ReactElement {
   }
 
   const cost = CONSTANTS.ClassGymBaseCost * calculateCost();
-
+  const hasCash = props.p.money > 0
   return (
     <Box sx={{ display: 'grid', width: 'fit-content' }}>
-      <Button onClick={trainStrength}>
+      <Button onClick={trainStrength} disabled={!hasCash}>
         Train Strength (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <Button onClick={trainDefense}>
+      <Button onClick={trainDefense} disabled={!hasCash}>
         Train Defense (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <Button onClick={trainDexterity}>
+      <Button onClick={trainDexterity} disabled={!hasCash}>
         Train Dexterity (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <Button onClick={trainAgility}>
+      <Button onClick={trainAgility} disabled={!hasCash}>
         Train Agility (<Money money={cost} player={props.p} /> / sec)
       </Button>
     </Box>

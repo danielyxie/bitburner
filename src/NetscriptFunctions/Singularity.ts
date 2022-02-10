@@ -270,6 +270,13 @@ export function NetscriptSingularity(
     universityCourse: function (universityName: any, className: any, focus = true): any {
       helper.updateDynamicRam("universityCourse", getRamCost(player, "universityCourse"));
       helper.checkSingularityAccess("universityCourse");
+
+
+      if (player.money <= 0) {
+        workerScript.log("universityCourse", () => `You do not have enough money!`);
+        return false;
+      }
+
       const wasFocusing = player.focus;
       if (player.isWorking) {
         const txt = player.singularityStopWork();
@@ -358,6 +365,12 @@ export function NetscriptSingularity(
     gymWorkout: function (gymName: any, stat: any, focus = true): any {
       helper.updateDynamicRam("gymWorkout", getRamCost(player, "gymWorkout"));
       helper.checkSingularityAccess("gymWorkout");
+
+      if (player.money <= 0) {
+        workerScript.log("gymWorkout", () => `You do not have enough money!`);
+        return false;
+      }
+
       const wasFocusing = player.focus;
       if (player.isWorking) {
         const txt = player.singularityStopWork();

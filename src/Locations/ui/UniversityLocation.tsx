@@ -73,6 +73,7 @@ export function UniversityLocation(props: IProps): React.ReactElement {
 
   const earnHackingExpTooltip = `Gain hacking experience!`;
   const earnCharismaExpTooltip = `Gain charisma experience!`;
+  const hasCash = player.money > 0
 
   return (
     <Box sx={{ display: 'grid', width: 'fit-content' }}>
@@ -80,31 +81,31 @@ export function UniversityLocation(props: IProps): React.ReactElement {
         <Button onClick={study}>Study Computer Science (free)</Button>
       </Tooltip>
       <Tooltip title={earnHackingExpTooltip}>
-        <Button onClick={dataStructures}>
+        <Button onClick={dataStructures} disabled={!hasCash}>
           Take Data Structures course (
           <Money money={dataStructuresCost} player={player} /> / sec)
         </Button>
       </Tooltip>
       <Tooltip title={earnHackingExpTooltip}>
-        <Button onClick={networks}>
+        <Button onClick={networks} disabled={!hasCash}>
           Take Networks course (
           <Money money={networksCost} player={player} /> / sec)
         </Button>
       </Tooltip>
       <Tooltip title={earnHackingExpTooltip}>
-        <Button onClick={algorithms}>
+        <Button onClick={algorithms} disabled={!hasCash}>
           Take Algorithms course (
           <Money money={algorithmsCost} player={player} /> / sec)
         </Button>
       </Tooltip>
       <Tooltip title={earnCharismaExpTooltip}>
-        <Button onClick={management}>
+        <Button onClick={management} disabled={!hasCash}>
           Take Management course (
           <Money money={managementCost} player={player} /> / sec)
         </Button>
       </Tooltip>
       <Tooltip title={earnCharismaExpTooltip}>
-        <Button onClick={leadership}>
+        <Button onClick={leadership} disabled={!hasCash}>
           Take Leadership course (
           <Money money={leadershipCost} player={player} /> / sec)
         </Button>
