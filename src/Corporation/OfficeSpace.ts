@@ -184,6 +184,7 @@ export class OfficeSpace {
       }
     }
 
+    if (jobCount == amount) return false;
     if ((jobCount + unassignedCount) < amount) return false;
 
     for (let i = 0; i < this.employees.length; ++i) {
