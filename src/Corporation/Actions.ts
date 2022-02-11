@@ -19,7 +19,6 @@ export function NewIndustry(corporation: ICorporation, industry: string, name: s
   for (let i = 0; i < corporation.divisions.length; ++i) {
     if (corporation.divisions[i].name === name) {
       throw new Error("This division name is already in use!");
-      return;
     }
   }
 
@@ -290,6 +289,7 @@ export function PurchaseWarehouse(corp: ICorporation, division: IIndustry, city:
 
 export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, warehouse: Warehouse): void {
   const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
+  if (corp.funds < sizeUpgradeCost) return;
   ++warehouse.level;
   warehouse.updateSize(corp, division);
   corp.funds = corp.funds - sizeUpgradeCost;
@@ -343,17 +343,29 @@ export function MakeProduct(
   if (corp.funds < designInvest + marketingInvest) {
     throw new Error("You don't have enough company funds to make this large of an investment");
   }
+  let maxProducts = 3
+  if (division.hasResearch("uPgrade: Capacity.II")) {
+    maxProducts = 5
+  } else if (division.hasResearch("uPgrade: Capacity.I")) {
+    maxProducts = 4
+  }
+  const products = division.products
+  if (Object.keys(products).length >= maxProducts) {
+    throw new Error(`You are already at the max products (${maxProducts}) for division: ${division.name}!`);
+  }
+
   const product = new Product({
     name: productName.replace(/[<>]/g, ""), //Sanitize for HTMl elements
     createCity: city,
     designCost: designInvest,
     advCost: marketingInvest,
   });
-  if (division.products[product.name] instanceof Product) {
+  if (products[product.name] instanceof Product) {
     throw new Error(`You already have a product with this name!`);
   }
+
   corp.funds = corp.funds - (designInvest + marketingInvest);
-  division.products[product.name] = product;
+  products[product.name] = product;
 }
 
 export function Research(division: IIndustry, researchName: string): void {
@@ -372,7 +384,7 @@ export function Research(division: IIndustry, researchName: string): void {
   division.researched[researchName] = true;
 }
 
-export function ExportMaterial(divisionName: string, cityName: string, material: Material, amt: string): void {
+export function ExportMaterial(divisionName: string, cityName: string, material: Material, amt: string, warehouse?: Warehouse | 0): void {
   // Sanitize amt
   let sanitizedAmt = amt.replace(/\s+/g, "").toUpperCase();
   sanitizedAmt = sanitizedAmt.replace(/[^-()\d/*+.MAX]/g, "");
@@ -388,6 +400,11 @@ export function ExportMaterial(divisionName: string, cityName: string, material:
   if (n == null || isNaN(n) || n < 0) {
     throw new Error("Invalid amount entered for export");
   }
+
+  if (!warehouse || !warehouse.materials.hasOwnProperty(material.name)) {
+    throw new Error(`You cannot export material: ${material.name} to division: ${divisionName}!`);
+  }
+
   const exportObj = { ind: divisionName, city: cityName, amt: sanitizedAmt };
   material.exp.push(exportObj);
 }

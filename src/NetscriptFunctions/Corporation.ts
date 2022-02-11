@@ -132,11 +132,11 @@ export function NetscriptCorporation(
 
   function getInvestmentOffer(): InvestmentOffer {
     const corporation = getCorporation();
-    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length || corporation.public) 
+    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length || corporation.public)
       return {
         funds: 0,
         shares: 0,
-        round: corporation.fundingRound + 1 // Make more readable 
+        round: corporation.fundingRound + 1 // Make more readable
       }; // Don't throw an error here, no reason to have a second function to check if you can get investment.
     const val = corporation.determineValuation();
     const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
@@ -146,7 +146,7 @@ export function NetscriptCorporation(
     return {
       funds: funding,
       shares: investShares,
-      round: corporation.fundingRound + 1 // Make more readable 
+      round: corporation.fundingRound + 1 // Make more readable
     };
   }
 
@@ -462,7 +462,7 @@ export function NetscriptCorporation(
       const targetCity = helper.string("exportMaterial", "targetCity", atargetCity);
       const materialName = helper.string("exportMaterial", "materialName", amaterialName);
       const amt = helper.string("exportMaterial", "amt", aamt);
-      ExportMaterial(targetDivision, targetCity, getMaterial(sourceDivision, sourceCity, materialName), amt + "");
+      ExportMaterial(targetDivision, targetCity, getMaterial(sourceDivision, sourceCity, materialName), amt + "", getWarehouse(targetDivision,targetCity));
     },
     cancelExportMaterial: function (
       asourceDivision: any,
@@ -487,7 +487,9 @@ export function NetscriptCorporation(
       const cityName = helper.string("setMaterialMarketTA1", "cityName", acityName);
       const materialName = helper.string("setMaterialMarketTA1", "materialName", amaterialName);
       const on = helper.boolean(aon);
-      SetMaterialMarketTA1(getMaterial(divisionName, cityName, materialName), on);
+      if (!getDivision(divisionName).hasResearch("Market-TA.I"))
+        throw helper.makeRuntimeErrorMsg(`corporation.setMaterialMarketTA1`, `You have not researched MarketTA.I for division: ${divisionName}`);
+      SetMaterialMarketTA1( getMaterial(divisionName, cityName, materialName), on);
     },
     setMaterialMarketTA2: function (adivisionName: any, acityName: any, amaterialName: any, aon: any): void {
       checkAccess("setMaterialMarketTA2", 7);
@@ -495,6 +497,8 @@ export function NetscriptCorporation(
       const cityName = helper.string("setMaterialMarketTA2", "cityName", acityName);
       const materialName = helper.string("setMaterialMarketTA2", "materialName", amaterialName);
       const on = helper.boolean(aon);
+      if (!getDivision(divisionName).hasResearch("Market-TA.II"))
+        throw helper.makeRuntimeErrorMsg(`corporation.setMaterialMarketTA2`, `You have not researched MarketTA.II for division: ${divisionName}`);
       SetMaterialMarketTA2(getMaterial(divisionName, cityName, materialName), on);
     },
     setProductMarketTA1: function (adivisionName: any, aproductName: any, aon: any): void {
@@ -502,6 +506,8 @@ export function NetscriptCorporation(
       const divisionName = helper.string("setProductMarketTA1", "divisionName", adivisionName);
       const productName = helper.string("setProductMarketTA1", "productName", aproductName);
       const on = helper.boolean(aon);
+      if (!getDivision(divisionName).hasResearch("Market-TA.I"))
+        throw helper.makeRuntimeErrorMsg(`corporation.setProductMarketTA1`, `You have not researched MarketTA.I for division: ${divisionName}`);
       SetProductMarketTA1(getProduct(divisionName, productName), on);
     },
     setProductMarketTA2: function (adivisionName: any, aproductName: any, aon: any): void {
@@ -509,6 +515,8 @@ export function NetscriptCorporation(
       const divisionName = helper.string("setProductMarketTA2", "divisionName", adivisionName);
       const productName = helper.string("setProductMarketTA2", "productName", aproductName);
       const on = helper.boolean(aon);
+      if (!getDivision(divisionName).hasResearch("Market-TA.II"))
+        throw helper.makeRuntimeErrorMsg(`corporation.setMaterialMarketTA2`, `You have not researched MarketTA.II for division: ${divisionName}`);
       SetProductMarketTA2(getProduct(divisionName, productName), on);
     },
   };

@@ -50,7 +50,8 @@ export function ExportModal(props: IProps): React.ReactElement {
 
   function exportMaterial(): void {
     try {
-      ExportMaterial(industry, city, props.mat, amt);
+      const warehouse = currentDivision && currentDivision.warehouses.first
+      ExportMaterial(industry, city, props.mat, amt, warehouse);
     } catch (err) {
       dialogBoxCreate(err + "");
     }
