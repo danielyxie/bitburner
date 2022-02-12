@@ -22,7 +22,7 @@ export function General(props: IProps): React.ReactElement {
   const [error, setError] = useState(false);
 
   function addTonsMoney(): void {
-    props.player.setMoney(bigNumber);
+    props.player.setMoney(props.player.money + bigNumber);
   }
 
   function modifyMoney(modify: number): (x: number) => void {
