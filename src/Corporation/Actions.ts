@@ -14,6 +14,7 @@ import { EmployeePositions } from "./EmployeePositions";
 import { Employee } from "./Employee";
 import { IndustryUpgrades } from "./IndustryUpgrades";
 import { ResearchMap } from "./ResearchMap";
+import { isRelevantMaterial } from "./ui/Helpers";
 
 export function NewIndustry(corporation: ICorporation, industry: string, name: string): void {
   for (let i = 0; i < corporation.divisions.length; ++i) {
@@ -384,7 +385,7 @@ export function Research(division: IIndustry, researchName: string): void {
   division.researched[researchName] = true;
 }
 
-export function ExportMaterial(divisionName: string, cityName: string, material: Material, amt: string, warehouse?: Warehouse | 0): void {
+export function ExportMaterial(divisionName: string, cityName: string, material: Material, amt: string, division?: Industry): void {
   // Sanitize amt
   let sanitizedAmt = amt.replace(/\s+/g, "").toUpperCase();
   sanitizedAmt = sanitizedAmt.replace(/[^-()\d/*+.MAX]/g, "");
@@ -401,7 +402,7 @@ export function ExportMaterial(divisionName: string, cityName: string, material:
     throw new Error("Invalid amount entered for export");
   }
 
-  if (!warehouse || !warehouse.materials.hasOwnProperty(material.name)) {
+  if (!division || !isRelevantMaterial(material.name, division)) {
     throw new Error(`You cannot export material: ${material.name} to division: ${divisionName}!`);
   }
 
