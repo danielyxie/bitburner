@@ -606,6 +606,10 @@ export class Sleeve extends Person {
       this.resetTaskStatus();
     }
 
+    if (p.money <= 0) {
+      return false;
+    }
+
     // Set exp/money multipliers based on which university.
     // Also check that the sleeve is in the right city
     let costMult = 1;
@@ -917,6 +921,10 @@ export class Sleeve extends Person {
       this.finishTask(p);
     } else {
       this.resetTaskStatus();
+    }
+
+    if (p.money <= 0) {
+      return false;
     }
 
     // Set exp/money multipliers based on which university.

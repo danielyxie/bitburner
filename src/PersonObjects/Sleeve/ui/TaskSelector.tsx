@@ -143,7 +143,7 @@ const tasks: {
 
     return { first: universitySelectorOptions, second: () => universities };
   },
-  "Workout at Gym": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
+  "Workout at Gym": (_player: IPlayer, sleeve: Sleeve): ITaskDetails => {
     let gyms: string[] = [];
     switch (sleeve.city) {
       case CityName.Aevum:
@@ -185,12 +185,12 @@ const canDo: {
   "Work for Company": (player: IPlayer, sleeve: Sleeve) => possibleJobs(player, sleeve).length > 0,
   "Work for Faction": (player: IPlayer, sleeve: Sleeve) => possibleFactions(player, sleeve).length > 0,
   "Commit Crime": () => true,
-  "Take University Course": (player: IPlayer, sleeve: Sleeve) =>
+  "Take University Course": (_player: IPlayer, sleeve: Sleeve) =>
     [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
-  "Workout at Gym": (player: IPlayer, sleeve: Sleeve) =>
+  "Workout at Gym": (_player: IPlayer, sleeve: Sleeve) =>
     [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
-  "Shock Recovery": (player: IPlayer, sleeve: Sleeve) => sleeve.shock < 100,
-  Synchronize: (player: IPlayer, sleeve: Sleeve) => sleeve.sync < 100,
+  "Shock Recovery": (_player: IPlayer, sleeve: Sleeve) => sleeve.shock < 100,
+  Synchronize: (_player: IPlayer, sleeve: Sleeve) => sleeve.sync < 100,
 };
 
 function getABC(sleeve: Sleeve): [string, string, string] {

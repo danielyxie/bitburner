@@ -69,11 +69,16 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       helper.updateDynamicRam("setToUniversityCourse", getRamCost(player, "sleeve", "setToUniversityCourse"));
       checkSleeveAPIAccess("setToUniversityCourse");
       checkSleeveNumber("setToUniversityCourse", sleeveNumber);
+      if (player.money <= 0)
+        throw helper.makeRuntimeErrorMsg(
+          "sleeve.setToUniversityCourse",
+          `You do not have any cash left!`,
+        );
       return player.sleeves[sleeveNumber].takeUniversityCourse(player, universityName, className);
     },
     travel: function (asleeveNumber: any = 0, acityName: any = ""): boolean {
       const sleeveNumber = helper.number("travel", "sleeveNumber", asleeveNumber);
-      const cityName = helper.string("setToUniversityCourse", "cityName", acityName);
+      const cityName = helper.string("travel", "cityName", acityName);
       helper.updateDynamicRam("travel", getRamCost(player, "sleeve", "travel"));
       checkSleeveAPIAccess("travel");
       checkSleeveNumber("travel", sleeveNumber);
@@ -81,7 +86,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     },
     setToCompanyWork: function (asleeveNumber: any = 0, acompanyName: any = ""): boolean {
       const sleeveNumber = helper.number("setToCompanyWork", "sleeveNumber", asleeveNumber);
-      const companyName = helper.string("setToUniversityCourse", "companyName", acompanyName);
+      const companyName = helper.string("setToCompanyWork", "companyName", acompanyName);
       helper.updateDynamicRam("setToCompanyWork", getRamCost(player, "sleeve", "setToCompanyWork"));
       checkSleeveAPIAccess("setToCompanyWork");
       checkSleeveNumber("setToCompanyWork", sleeveNumber);
@@ -104,8 +109,8 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     },
     setToFactionWork: function (asleeveNumber: any = 0, afactionName: any = "", aworkType: any = ""): boolean {
       const sleeveNumber = helper.number("setToFactionWork", "sleeveNumber", asleeveNumber);
-      const factionName = helper.string("setToUniversityCourse", "factionName", afactionName);
-      const workType = helper.string("setToUniversityCourse", "workType", aworkType);
+      const factionName = helper.string("setToFactionWork", "factionName", afactionName);
+      const workType = helper.string("setToFactionWork", "workType", aworkType);
       helper.updateDynamicRam("setToFactionWork", getRamCost(player, "sleeve", "setToFactionWork"));
       checkSleeveAPIAccess("setToFactionWork");
       checkSleeveNumber("setToFactionWork", sleeveNumber);
@@ -128,12 +133,16 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     },
     setToGymWorkout: function (asleeveNumber: any = 0, agymName: any = "", astat: any = ""): boolean {
       const sleeveNumber = helper.number("setToGymWorkout", "sleeveNumber", asleeveNumber);
-      const gymName = helper.string("setToUniversityCourse", "gymName", agymName);
-      const stat = helper.string("setToUniversityCourse", "stat", astat);
+      const gymName = helper.string("setToGymWorkout", "gymName", agymName);
+      const stat = helper.string("setToGymWorkout", "stat", astat);
       helper.updateDynamicRam("setToGymWorkout", getRamCost(player, "sleeve", "setToGymWorkout"));
       checkSleeveAPIAccess("setToGymWorkout");
       checkSleeveNumber("setToGymWorkout", sleeveNumber);
-
+      if (player.money <= 0)
+        throw helper.makeRuntimeErrorMsg(
+          "sleeve.setToGymWorkout",
+          `You do not have any cash left!`,
+        );
       return player.sleeves[sleeveNumber].workoutAtGym(player, gymName, stat);
     },
     getSleeveStats: function (asleeveNumber: any = 0): {
