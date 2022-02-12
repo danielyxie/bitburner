@@ -7,9 +7,11 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Money } from "../../ui/React/Money";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
+import { Adjuster } from "./Adjuster";
+
+const bigNumber = 1e27;
 
 interface IProps {
   player: IPlayer;
@@ -19,10 +21,18 @@ interface IProps {
 export function General(props: IProps): React.ReactElement {
   const [error, setError] = useState(false);
 
-  function addMoney(n: number) {
-    return function () {
-      props.player.gainMoney(n, "other");
+  function addTonsMoney(): void {
+    props.player.setMoney(bigNumber);
+  }
+
+  function modifyMoney(modify: number): (x: number) => void {
+    return function (money: number): void {
+      props.player.setMoney(props.player.money + money * modify);
     };
+  }
+
+  function resetMoney(): void {
+    props.player.setMoney(0);
   }
 
   function upgradeRam(): void {
@@ -55,31 +65,16 @@ export function General(props: IProps): React.ReactElement {
         <Typography>General</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Button onClick={addMoney(1e6)}>
-          <pre>
-            + <Money money={1e6} />
-          </pre>
-        </Button>
-        <Button onClick={addMoney(1e9)}>
-          <pre>
-            + <Money money={1e9} />
-          </pre>
-        </Button>
-        <Button onClick={addMoney(1e12)}>
-          <pre>
-            + <Money money={1e12} />
-          </pre>
-        </Button>
-        <Button onClick={addMoney(1e15)}>
-          <pre>
-            + <Money money={1000e12} />
-          </pre>
-        </Button>
-        <Button onClick={addMoney(Infinity)}>
-          <pre>
-            + <Money money={Infinity} />
-          </pre>
-        </Button>
+        <Typography>Money:</Typography>
+        <Adjuster
+          label="money"
+          placeholder="amt"
+          tons={addTonsMoney}
+          add={modifyMoney(1)}
+          subtract={modifyMoney(-1)}
+          reset={resetMoney}
+        />
+        <br />
         <Button onClick={upgradeRam}>+ RAM</Button>
         <br />
 
