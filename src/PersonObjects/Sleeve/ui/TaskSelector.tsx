@@ -126,6 +126,9 @@ const tasks: {
   },
   "Take University Course": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
     let universities: string[] = [];
+    if (player.money <= 0)
+      return { first: ["Not Enough Money"], second: () => ["------"] };
+
     switch (sleeve.city) {
       case CityName.Aevum:
         universities = [LocationName.AevumSummitUniversity];
@@ -143,8 +146,11 @@ const tasks: {
 
     return { first: universitySelectorOptions, second: () => universities };
   },
-  "Workout at Gym": (_player: IPlayer, sleeve: Sleeve): ITaskDetails => {
+  "Workout at Gym": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
     let gyms: string[] = [];
+    if (player.money <= 0)
+      return { first: ["Not Enough Money"], second: () => ["------"] };
+
     switch (sleeve.city) {
       case CityName.Aevum:
         gyms = [LocationName.AevumCrushFitnessGym, LocationName.AevumSnapFitnessGym];
