@@ -6199,12 +6199,12 @@ export interface OfficeAPI {
    */
   hasResearched(divisionName: string, researchName: string): boolean;
   /**
-   * Set the auto job assignment for a job
+   * Set the auto job assignment for a job. Switches workers in to/from the job from/to unassigned as possible to ensure the listed amount of employees ends up in the given job.
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
    * @param job - Name of the job
    * @param amount - Number of employees to assign to that job
-   * @returns A promise that is fulfilled when the assignment is complete.
+   * @returns A promise that is fulfilled when the assignment is complete. Promise result is whether the requested number of employees were assigned to the job.
    */
   setAutoJobAssignment(divisionName: string, cityName: string, job: string, amount: number): Promise<boolean>;
   /**
