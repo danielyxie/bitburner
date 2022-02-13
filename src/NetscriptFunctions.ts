@@ -1837,7 +1837,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("tryWritePort", getRamCost(Player, "tryWritePort"));
       if (typeof data !== "string" && typeof data !== "number") {
         throw makeRuntimeErrorMsg(
-          "writePort",
+          "tryWritePort",
           `Trying to write invalid data to a port: only strings and numbers are valid.`,
         );
       }
