@@ -98,11 +98,6 @@ interface NS extends INS {
   stanek: IStanek;
 }
 
-//interface guard
-function isNS(object: any): boolean {
-  return (object as NS).gang !== undefined;
-}
-
 export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const updateDynamicRam = function (fnName: string, ramCost: number): void {
     if (workerScript.dynamicLoadedFns[fnName]) {
@@ -179,7 +174,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeRejectMsg(
         workerScript,
         `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-          `This is probably a bug. Please report to game developer`,
+        `This is probably a bug. Please report to game developer`,
       );
     }
 
@@ -697,8 +692,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log(
           "weaken",
           () =>
-            `'${server.hostname}' security level weakened to ${
-              server.hackDifficulty
+            `'${server.hostname}' security level weakened to ${server.hackDifficulty
             }. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)})`,
         );
         workerScript.scriptRef.onlineExpGained += expGain;
@@ -1654,12 +1648,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       const cost = getPurchaseServerCost(ram);
       if (cost === Infinity) {
-        if(ram > getPurchaseServerMaxRam()){
+        if (ram > getPurchaseServerMaxRam()) {
           workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must not be greater than getPurchaseServerMaxRam`);
-        }else{
+        } else {
           workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be a positive power of 2`);
         }
-        
+
         return "";
       }
 
@@ -1777,7 +1771,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return res;
     },
     writePort: function (port: any, data: any = ""): any {
-      if ((typeof data !== "string" && typeof data !== "number") || isNS(data)) {
+      if (typeof data !== "string" && typeof data !== "number") {
         throw makeRuntimeErrorMsg(
           "writePort",
           `Trying to write invalid data to a port: only strings and numbers are valid.`,
@@ -1841,7 +1835,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     tryWritePort: function (port: any, data: any = ""): any {
       updateDynamicRam("tryWritePort", getRamCost(Player, "tryWritePort"));
-      if ((typeof data !== "string" && typeof data !== "number") || isNS(data)) {
+      if (typeof data !== "string" && typeof data !== "number") {
         throw makeRuntimeErrorMsg(
           "writePort",
           `Trying to write invalid data to a port: only strings and numbers are valid.`,
