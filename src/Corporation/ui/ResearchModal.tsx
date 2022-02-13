@@ -35,7 +35,9 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
   function research(): void {
     if (n === null || disabled) return;
     try {
-      Research(division, n.text);
+      if (!Research(division, n.text)) {
+        dialogBoxCreate(`Could not purchase ${research.name}`);
+      }
     } catch (err) {
       dialogBoxCreate(err + "");
       return;

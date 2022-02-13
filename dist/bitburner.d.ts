@@ -935,24 +935,28 @@ export declare interface Corporation extends WarehouseAPI, OfficeAPI {
      * Expand to a new industry
      * @param industryType - Name of the industry
      * @param divisionName - Name of the division
+     * @returns Was industry expanded
      */
-    expandIndustry(industryType: string, divisionName: string): void;
+    expandIndustry(industryType: string, divisionName: string): boolean;
     /**
      * Expand to a new city
      * @param divisionName - Name of the division
      * @param cityName - Name of the city
+     * @returns Was expansion successful
      */
-    expandCity(divisionName: string, cityName: string): void;
+    expandCity(divisionName: string, cityName: string): boolean;
     /**
      * Unlock an upgrade
      * @param upgradeName - Name of the upgrade
+     * @returns Was upgrade unlocked
      */
-    unlockUpgrade(upgradeName: string): void;
+    unlockUpgrade(upgradeName: string): boolean;
     /**
      * Level an upgrade.
      * @param upgradeName - Name of the upgrade
+     * @returns Was upgrade leveled
      */
-    levelUpgrade(upgradeName: string): void;
+    levelUpgrade(upgradeName: string): boolean;
     /**
      * Issue dividends
      * @param percent - Percent of profit to issue as dividends.
@@ -4504,8 +4508,9 @@ export declare interface OfficeAPI {
      * @param divisionName - Name of the division
      * @param cityName - Name of the city
      * @param size - Amount of positions to open
+     * @returns Was office size upgraded
      */
-    upgradeOfficeSize(divisionName: string, cityName: string, size: number): void;
+    upgradeOfficeSize(divisionName: string, cityName: string, size: number): boolean;
     /**
      * Throw a party for your employees
      * @param divisionName - Name of the division
@@ -4524,14 +4529,16 @@ export declare interface OfficeAPI {
     /**
      * Hire AdVert.
      * @param divisionName - Name of the division
+     * @returns Was AdVert hired
      */
-    hireAdVert(divisionName: string): void;
+    hireAdVert(divisionName: string): boolean;
     /**
      * Purchase a research
      * @param divisionName - Name of the division
      * @param researchName - Name of the research
+     * @returns Was research completed
      */
-    research(divisionName: string, researchName: string): void;
+    research(divisionName: string, researchName: string): boolean;
     /**
      * Get data about an office
      * @param divisionName - Name of the division
@@ -6628,6 +6635,14 @@ export declare interface WarehouseAPI {
      */
     setSmartSupply(divisionName: string, cityName: string, enabled: boolean): void;
     /**
+     * Set smart supply to use leftovers for a material
+     * @param divisionName - Name of the division
+     * @param cityName - Name of the city
+     * @param materialName - Name of the material
+     * @param enabled - smart supply use leftovers enabled
+     */
+    setSmartSupplyUseLeftovers(divisionName: string, cityName: string, materialName: string, enabled: boolean): void;
+    /**
      * Set material buy data
      * @param divisionName - Name of the division
      * @param cityName - Name of the city
@@ -6724,14 +6739,16 @@ export declare interface WarehouseAPI {
      * Purchase warehouse for a new city
      * @param divisionName - Name of the division
      * @param cityName - Name of the city
+     * @returns Did purchase succeed
      */
-    purchaseWarehouse(divisionName: string, cityName: string): void;
+    purchaseWarehouse(divisionName: string, cityName: string): boolean;
     /**
      * Upgrade warehouse
      * @param divisionName - Name of the division
      * @param cityName - Name of the city
+     * @returns Did upgrade succeed
      */
-    upgradeWarehouse(divisionName: string, cityName: string): void;
+    upgradeWarehouse(divisionName: string, cityName: string): boolean;
     /**
      * Create a new product
      * @param divisionName - Name of the division
@@ -6739,6 +6756,7 @@ export declare interface WarehouseAPI {
      * @param productName - Name of the product
      * @param designInvest - Amount to invest for the design of the product.
      * @param marketingInvest - Amount to invest for the marketing of the product.
+     * @returns Was a new product started
      */
     makeProduct(
     divisionName: string,
@@ -6746,7 +6764,7 @@ export declare interface WarehouseAPI {
     productName: string,
     designInvest: number,
     marketingInvest: number,
-    ): void;
+    ): boolean;
     /**
      * Gets the cost to purchase a warehouse
      * @returns cost

@@ -27,7 +27,10 @@ export function ExpandNewCity(props: IProps): React.ReactElement {
 
   function expand(): void {
     try {
-      NewCity(corp, division, city);
+      if (!NewCity(corp, division, city)) {
+        dialogBoxCreate("Could not expand to new city");
+        return;
+      }
     } catch (err) {
       dialogBoxCreate(err + "");
       return;

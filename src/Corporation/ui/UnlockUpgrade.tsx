@@ -23,10 +23,9 @@ export function UnlockUpgrade(props: IProps): React.ReactElement {
   const tooltip = data[3];
   function onClick(): void {
     if (corp.funds < data[1]) return;
-    try {
-      UU(corp, props.upgradeData);
-    } catch (err) {
-      dialogBoxCreate(err + "");
+    if (!UU(corp, props.upgradeData))
+    {
+      dialogBoxCreate("Could not unlock upgrade");
     }
     props.rerender();
   }
