@@ -29,10 +29,8 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
   const tooltip = data[5];
   function onClick(): void {
     if (corp.funds < cost) return;
-    try {
-      LevelUpgrade(corp, props.upgrade);
-    } catch (err) {
-      dialogBoxCreate(err + "");
+    if (!LevelUpgrade(corp, props.upgrade)) {
+      dialogBoxCreate("Could not level upgrade");
     }
     props.rerender();
   }

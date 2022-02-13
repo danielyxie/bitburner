@@ -36,10 +36,9 @@ export function ExpandIndustryTab(props: IProps): React.ReactElement {
 
   function newIndustry(): void {
     if (disabled) return;
-    try {
-      NewIndustry(corp, industry, name);
-    } catch (err) {
-      dialogBoxCreate(err + "");
+    let error;
+    if (error = NewIndustry(corp, industry, name)) {
+      dialogBoxCreate(error);
       return;
     }
 

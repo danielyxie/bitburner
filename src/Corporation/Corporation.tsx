@@ -262,6 +262,9 @@ export class Corporation {
   unlock(upgrade: CorporationUnlockUpgrade): void {
     const upgN = upgrade[0],
       price = upgrade[1];
+    if (this.unlockUpgrades[upgN]) {
+      return;
+    }
     while (this.unlockUpgrades.length <= upgN) {
       this.unlockUpgrades.push(0);
     }
