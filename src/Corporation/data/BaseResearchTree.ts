@@ -49,7 +49,6 @@ function createBaseResearchTreeNodes(): Node {
   rootNode.addChild(autoBrew);
   rootNode.addChild(autoParty);
   rootNode.addChild(autoDrugs);
-  rootNode.addChild(bulkPurchasing);
   rootNode.addChild(drones);
   rootNode.addChild(hrRecruitment);
   rootNode.addChild(joywire);
