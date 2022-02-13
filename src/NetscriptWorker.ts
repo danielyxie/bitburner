@@ -149,8 +149,9 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
       throw e;
     }
 
-    workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, e);
-    throw new ScriptDeath(workerScript); // Don't know what to do with it, let's rethrow.
+    // Don't know what to do with it, let's try making an error message out of it
+    workerScript.errorMessage = makeRuntimeRejectMsg(workerScript, "" + e);
+    throw new ScriptDeath(workerScript);
   });
 }
 
