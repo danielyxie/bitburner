@@ -4,8 +4,10 @@ import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { WorkerScript } from "./Netscript/WorkerScript";
 
 export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
-  if (workerScript.delayReject)
-    workerScript.delayReject(new ScriptDeath(workerScript));
+  // Cancel any pre-existing netscriptDelay'ed function call
+  // TODO: the rejection almost certainly ends up in the uncaught rejection handler.
+  //       Maybe reject with a stack-trace'd error message?
+  if (workerScript.delayReject) workerScript.delayReject();
 
   return new Promise(function (resolve, reject) {
     workerScript.delay = window.setTimeout(() => {
