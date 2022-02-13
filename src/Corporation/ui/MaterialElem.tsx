@@ -156,7 +156,6 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
               <Button
                 color={tutorial ? "error" : "primary"}
                 onClick={() => setPurchaseMaterialOpen(true)}
-                disabled={props.warehouse.smartSupplyEnabled && Object.keys(division.reqMats).includes(props.mat.name)}
               >
                 {purchaseButtonText}
               </Button>

@@ -6,6 +6,7 @@ interface IConstructorParams {
 }
 
 export class Material {
+  [x: string]: any;
   // Name of material
   name = "InitName";
 
@@ -36,6 +37,7 @@ export class Material {
 
   // How much of this material is being bought, sold, imported and produced every second
   buy = 0;
+  buyBulk = 0;
   sll = 0;
   prd = 0;
   imp = 0;
