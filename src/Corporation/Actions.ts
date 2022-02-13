@@ -14,6 +14,7 @@ import { EmployeePositions } from "./EmployeePositions";
 import { Employee } from "./Employee";
 import { IndustryUpgrades } from "./IndustryUpgrades";
 import { ResearchMap } from "./ResearchMap";
+import { MaterialSizes } from "src/Corporation/MaterialSizes.js";
 
 export function NewIndustry(corporation: ICorporation, industry: string, name: string): string | null {
   for (let i = 0; i < corporation.divisions.length; ++i) {
@@ -249,6 +250,13 @@ export function BuyMaterial(material: Material, amt: number): void {
     throw new Error(`Invalid amount '${amt}' to buy material '${material.name}'`);
   }
   material.buy = amt;
+}
+
+export function BulkPurchaseMaterial(material: Material, amt: number): void {
+  if (isNaN(amt) || amt < 0) {
+    throw new Error(`Invalid amount '${amt}' to bulk buy material '${material.name}'`);
+  }
+  material.buyBulk = amt;
 }
 
 export function AssignJob(employee: Employee, job: string): void {

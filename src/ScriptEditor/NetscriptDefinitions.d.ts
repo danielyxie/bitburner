@@ -6280,6 +6280,14 @@ export interface WarehouseAPI {
    */
   buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
+   * Set material bulk buy data
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param amt - Amount of material to buy
+   */
+  bulkBuyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
+  /**
    * Get warehouse data
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
@@ -6616,6 +6624,10 @@ interface Material {
   prod: number;
   /** Amount of material sold  */
   sell: number;
+  /** Amount of material bought on an ongoing basis */
+  buy: number;
+  /** Amount of material scheduled to be bought in bulk */
+  buyBulk: number;
 }
 
 /**

@@ -4,9 +4,9 @@ import { MaterialSizes } from "../MaterialSizes";
 import { Warehouse } from "../Warehouse";
 import { Material } from "../Material";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { BuyMaterial } from "../Actions";
+import { BulkPurchaseMaterial, BuyMaterial } from "../Actions";
 import { Modal } from "../../ui/React/Modal";
-import { useCorporation, useDivision } from "./Context";
+import { useDivision } from "./Context";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -33,7 +33,7 @@ function BulkPurchaseText(props: IBulkPurchaseTextProps): React.ReactElement {
   } else if (isNaN(cost) || parsedAmt < 0) {
     return (
       <>
-        <Typography color={"error"}>Invalid put for Bulk Purchase amount</Typography>
+        <Typography color={"error"}>Invalid input for Bulk Purchase amount</Typography>
       </>
     );
   } else {
@@ -41,73 +41,11 @@ function BulkPurchaseText(props: IBulkPurchaseTextProps): React.ReactElement {
       <>
         <Typography>
           Purchasing {numeralWrapper.format(parsedAmt, "0,0.00")} of {props.mat.name} will cost{" "}
-          {numeralWrapper.formatMoney(cost)}
+          {numeralWrapper.formatMoney(cost)} at current market price
         </Typography>
       </>
     );
   }
-}
-
-interface IBPProps {
-  onClose: () => void;
-  mat: Material;
-  warehouse: Warehouse;
-}
-
-function BulkPurchase(props: IBPProps): React.ReactElement {
-  const corp = useCorporation();
-  const [buyAmt, setBuyAmt] = useState("");
-
-  function bulkPurchase(): void {
-    const amount = parseFloat(buyAmt);
-
-    const matSize = MaterialSizes[props.mat.name];
-    const maxAmount = (props.warehouse.size - props.warehouse.sizeUsed) / matSize;
-    if (amount * matSize > maxAmount) {
-      dialogBoxCreate(`You do not have enough warehouse size to fit this purchase`);
-      return;
-    }
-
-    if (isNaN(amount) || amount < 0) {
-      dialogBoxCreate("Invalid input amount");
-    } else {
-      const cost = amount * props.mat.bCost;
-      if (corp.funds >= cost) {
-        corp.funds = corp.funds - cost;
-        props.mat.qty += amount;
-      } else {
-        dialogBoxCreate(`You cannot afford this purchase.`);
-        return;
-      }
-      props.onClose();
-    }
-  }
-
-  function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) bulkPurchase();
-  }
-
-  function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setBuyAmt(event.target.value);
-  }
-
-  return (
-    <>
-      <Typography>
-        Enter the amount of {props.mat.name} you would like to bulk purchase. This purchases the specified amount
-        instantly (all at once).
-      </Typography>
-      <BulkPurchaseText warehouse={props.warehouse} mat={props.mat} amount={buyAmt} />
-      <TextField
-        value={buyAmt}
-        onChange={onChange}
-        type="number"
-        placeholder="Bulk Purchase amount"
-        onKeyDown={onKeyDown}
-      />
-      <Button onClick={bulkPurchase}>Confirm Bulk Purchase</Button>
-    </>
-  );
 }
 
 interface IProps {
@@ -121,11 +59,19 @@ interface IProps {
 export function PurchaseMaterialModal(props: IProps): React.ReactElement {
   const division = useDivision();
   const [buyAmt, setBuyAmt] = useState(props.mat.buy ? props.mat.buy : 0);
+  const [buyBulkAmt, setBuyBulkAmt] = useState(props.mat.buyBulk ? props.mat.buyBulk : 0);
 
   function purchaseMaterial(): void {
     if (buyAmt === null) return;
     try {
       BuyMaterial(props.mat, buyAmt);
+    } catch (err) {
+      dialogBoxCreate(err + "");
+    }
+    
+    if (buyAmt === null) return;
+    try {
+      BulkPurchaseMaterial(props.mat, buyAmt);
     } catch (err) {
       dialogBoxCreate(err + "");
     }
@@ -135,6 +81,7 @@ export function PurchaseMaterialModal(props: IProps): React.ReactElement {
 
   function clearPurchase(): void {
     props.mat.buy = 0;
+    props.mat.buyBulk = 0;
     props.onClose();
   }
 
@@ -144,6 +91,10 @@ export function PurchaseMaterialModal(props: IProps): React.ReactElement {
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setBuyAmt(parseFloat(event.target.value));
+  }
+
+  function onBulkChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setBuyBulkAmt(parseFloat(event.target.value));
   }
 
   return (
@@ -160,12 +111,21 @@ export function PurchaseMaterialModal(props: IProps): React.ReactElement {
           placeholder="Purchase amount"
           type="number"
           onKeyDown={onKeyDown}
+          disabled={props.warehouse.smartSupplyEnabled && Object.keys(division.reqMats).includes(props.mat.name)}
+        />
+        <Typography>
+          Enter the amount of {props.mat.name} you would like to bulk purchase. That amount materials will be purchased at the start of the next market cycle.
+        </Typography>
+        <BulkPurchaseText warehouse={props.warehouse} mat={props.mat} amount={buyBulkAmt} />
+        <TextField
+          value={buyBulkAmt}
+          onChange={onBulkChange}
+          type="number"
+          placeholder="Bulk Purchase amount"
+          onKeyDown={onKeyDown}
         />
         <Button onClick={purchaseMaterial}>Confirm</Button>
         <Button onClick={clearPurchase}>Clear Purchase</Button>
-        {division.hasResearch("Bulk Purchasing") && (
-          <BulkPurchase onClose={props.onClose} mat={props.mat} warehouse={props.warehouse} />
-        )}
       </>
     </Modal>
   );

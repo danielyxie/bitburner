@@ -28,13 +28,6 @@ export const researchMetadata: IConstructorParams[] = [
       "your employees. This unlocks Drug-related Research.",
   },
   {
-    name: "Bulk Purchasing",
-    cost: 5e3,
-    desc:
-      "Research the art of buying materials in bulk. This allows you to purchase " +
-      "any amount of a material instantly.",
-  },
-  {
     name: "CPH4 Injections",
     cost: 25e3,
     desc:

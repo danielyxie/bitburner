@@ -20,7 +20,6 @@ function createBaseResearchTreeNodes(): Node {
   const autoBrew: Node = makeNode("AutoBrew");
   const autoParty: Node = makeNode("AutoPartyManager");
   const autoDrugs: Node = makeNode("Automatic Drug Administration");
-  const bulkPurchasing: Node = makeNode("Bulk Purchasing");
   const cph4: Node = makeNode("CPH4 Injections");
   const drones: Node = makeNode("Drones");
   const dronesAssembly: Node = makeNode("Drones - Assembly");

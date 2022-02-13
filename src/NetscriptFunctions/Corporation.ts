@@ -50,6 +50,7 @@ import {
   SetProductMarketTA1,
   SetProductMarketTA2,
   SetSmartSupplyUseLeftovers,
+  BulkPurchaseMaterial,
 } from "../Corporation/Actions";
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
@@ -338,6 +339,8 @@ export function NetscriptCorporation(
         qlt: material.qlt,
         prod: material.prd,
         sell: material.sll,
+        buy: material.buy,
+        buyBulk: material.buyBulk,
       };
     },
     getProduct: function (adivisionName: any, aproductName: any): NSProduct {
@@ -429,6 +432,15 @@ export function NetscriptCorporation(
       const amt = Math.max(helper.number("buyMaterial", "amt", aamt), 0);
       const material = getMaterial(divisionName, cityName, materialName);
       BuyMaterial(material, amt);
+    },
+    bulkBuyMaterial: function (adivisionName: any, acityName: any, amaterialName: any, aamt: any): void {
+      checkAccess("bulkBuyMaterial", 7);
+      const divisionName = helper.string("buyMaterial", "divisionName", adivisionName);
+      const cityName = helper.string("buyMaterial", "cityName", acityName);
+      const materialName = helper.string("buyMaterial", "materialName", amaterialName);
+      const amt = Math.max(helper.number("buyMaterial", "amt", aamt), 0);
+      const material = getMaterial(divisionName, cityName, materialName);
+      BulkPurchaseMaterial(material, amt);
     },
     makeProduct: function (
       adivisionName: any,

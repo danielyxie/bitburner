@@ -645,6 +645,22 @@ export class Industry implements IIndustry {
               mat.qty += buyAmt;
               expenses += buyAmt * mat.bCost;
             }
+
+            // Handle bulk purchases
+            for (const matName of Object.keys(warehouse.materials)) {
+              if (!warehouse.materials.hasOwnProperty(matName)) continue;
+              const mat = warehouse.materials[matName];
+              let buyAmt = mat.buyBulk;
+              let maxAmt = Math.floor((warehouse.size - warehouse.sizeUsed) / MaterialSizes[matName]);
+
+              buyAmt = Math.min(buyAmt, maxAmt);
+              if (buyAmt > 0) {
+                mat.qty += buyAmt;
+                mat.buyBulk -= buyAmt;
+                expenses += buyAmt * mat.bCost;
+              }
+              this.updateWarehouseSizeUsed(warehouse);
+            }
             break;
           }
           case "PRODUCTION":
