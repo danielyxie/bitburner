@@ -49,6 +49,8 @@ export function NewCity(corporation: ICorporation, division: IIndustry, city: st
 
   if (corporation.funds < CorporationConstants.OfficeInitialCost) {
     return false;
+  } else if (division.offices[city]) {
+    return true;
   } else {
     corporation.funds = corporation.funds - CorporationConstants.OfficeInitialCost;
     division.offices[city] = new OfficeSpace({
@@ -285,7 +287,8 @@ export function ThrowParty(corp: ICorporation, office: OfficeSpace, costPerEmplo
 
 export function PurchaseWarehouse(corp: ICorporation, division: IIndustry, city: string): boolean {
   if (corp.funds < CorporationConstants.WarehouseInitialCost) return false;
-  if (division.warehouses[city] instanceof Warehouse) return false;
+  if (!division.offices[city]) return false;
+  if (division.warehouses[city] instanceof Warehouse) return true;
   division.warehouses[city] = new Warehouse({
     corp: corp,
     industry: division,

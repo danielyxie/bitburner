@@ -235,7 +235,7 @@ export function NetscriptCorporation(
     const division = getDivision(divisionName);
     if (!(cityName in division.warehouses)) throw new Error(`Invalid city name '${cityName}'`);
     const warehouse = division.warehouses[cityName];
-    if (warehouse === 0) throw new Error(`${division.name} has not expanded to '${cityName}'`);
+    if (warehouse === 0) throw new Error(`${division.name} has not purchased a warehouse in '${cityName}'`);
     return warehouse;
   }
 
