@@ -6774,12 +6774,12 @@ export declare interface WarehouseAPI {
      * Gets the cost to upgrade a warehouse to the next level
      * @returns cost to upgrade
      */
-    getUpgradeWarehouseCost(adivisionName: any, acityName: any): number;
+    getUpgradeWarehouseCost(divisionName: string, cityName: string): number;
     /**
      * Check if you have a warehouse in city
      * @returns true if warehouse is present, false if not
      */
-    hasWarehouse(adivisionName: any, acityName: any): boolean;
+    hasWarehouse(divisionName: string, cityName: string): boolean;
 }
 
 export { }
