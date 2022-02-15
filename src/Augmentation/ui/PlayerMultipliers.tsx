@@ -17,7 +17,7 @@ function calculateAugmentedStats(): any {
   const augP: any = {};
   for (const aug of Player.queuedAugmentations) {
     const augObj = Augmentations[aug.name];
-    for (const mult in augObj.mults) {
+    for (const mult of Object.keys(augObj.mults)) {
       const v = augP[mult] ? augP[mult] : 1;
       augP[mult] = v * augObj.mults[mult];
     }

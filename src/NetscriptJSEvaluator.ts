@@ -9,9 +9,6 @@ import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { ScriptUrl } from "./Script/ScriptUrl";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { Script } from "./Script/Script";
-import { computeHash } from "./utils/helpers/computeHash";
-import { BlobCache } from "./utils/BlobCache";
-import { ImportCache } from "./utils/ImportCache";
 import { areImportsEquals } from "./Terminal/DirectoryHelpers";
 import { IPlayer } from "./PersonObjects/IPlayer";
 
@@ -82,6 +79,16 @@ export async function executeJSScript(
   return loadedModule.main(ns);
 }
 
+function isDependencyOutOfDate(filename: string, scripts: Script[], scriptModuleSequenceNumber: number): boolean {
+  const depScript = scripts.find((s) => s.filename == filename);
+
+  // If the script is not present on the server, we should recompile, if only to get any necessary
+  // compilation errors.
+  if (!depScript) return true;
+
+  const depIsMoreRecent = depScript.moduleSequenceNumber > scriptModuleSequenceNumber;
+  return depIsMoreRecent;
+}
 /** Returns whether we should compile the script parameter.
  *
  * @param {Script} script
@@ -89,16 +96,7 @@ export async function executeJSScript(
  */
 function shouldCompile(script: Script, scripts: Script[]): boolean {
   if (script.module === "") return true;
-  return script.dependencies.some((dep) => {
-    const depScript = scripts.find((s) => s.filename == dep.filename);
-
-    // If the script is not present on the server, we should recompile, if only to get any necessary
-    // compilation errors.
-    if (!depScript) return true;
-
-    const depIsMoreRecent = depScript.moduleSequenceNumber > script.moduleSequenceNumber;
-    return depIsMoreRecent;
-  });
+  return script.dependencies.some((dep) => isDependencyOutOfDate(dep.filename, scripts, script.moduleSequenceNumber));
 }
 
 // Gets a stack of blob urls, the top/right-most element being
@@ -123,8 +121,13 @@ function shouldCompile(script: Script, scripts: Script[]): boolean {
 // BUG: apparently seen is never consulted. Oops.
 function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): ScriptUrl[] {
   // Inspired by: https://stackoverflow.com/a/43834063/91401
-  /** @type {ScriptUrl[]} */
-  const urlStack = [];
+  const urlStack: ScriptUrl[] = [];
+  // Seen contains the dependents of the current script. Make sure we include that in the script dependents.
+  for (const dependent of seen) {
+    if (!script.dependents.some((s) => s.server === dependent.server && s.filename == dependent.filename)) {
+      script.dependents.push({ server: dependent.server, filename: dependent.filename });
+    }
+  }
   seen.push(script);
   try {
     // Replace every import statement with an import to a blob url containing
@@ -149,7 +152,7 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
         importNodes.push({
           filename: node.source.value,
           start: node.source.range[0] + 1,
-          end: node.source.range[1] - 1
+          end: node.source.range[1] - 1,
         });
       },
       ExportNamedDeclaration(node: any) {
@@ -157,7 +160,7 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
           importNodes.push({
             filename: node.source.value,
             start: node.source.range[0] + 1,
-            end: node.source.range[1] - 1
+            end: node.source.range[1] - 1,
           });
         }
       },
@@ -166,10 +169,10 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
           importNodes.push({
             filename: node.source.value,
             start: node.source.range[0] + 1,
-            end: node.source.range[1] - 1
+            end: node.source.range[1] - 1,
           });
         }
-      }
+      },
     });
     // Sort the nodes from last start index to first. This replaces the last import with a blob first,
     // preventing the ranges for other imports from being shifted.
@@ -184,18 +187,12 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
       if (matchingScripts.length === 0) continue;
 
       const [importedScript] = matchingScripts;
-      // Check to see if the urls for this script are stored in the cache by the hash value.
-      let urls = ImportCache.get(importedScript.hash());
-      // If we don't have it in the cache, then we need to generate the urls for it.
-      if (!urls) {
-        // Try to get a URL for the requested script and its dependencies.
-        urls = _getScriptUrls(importedScript, scripts, seen);
-      }
+
+      const urls = _getScriptUrls(importedScript, scripts, seen);
 
       // The top url in the stack is the replacement import file for this script.
       urlStack.push(...urls);
       const blob = urls[urls.length - 1].url;
-      ImportCache.store(importedScript.hash(), urls);
 
       // Replace the blob inside the import statement.
       transformedCode = transformedCode.substring(0, node.start) + blob + transformedCode.substring(node.end);
@@ -205,23 +202,13 @@ function _getScriptUrls(script: Script, scripts: Script[], seen: Script[]): Scri
     // accidental calls to window.print() do not bring up the "print screen" dialog
     transformedCode += `\n\nfunction print() {throw new Error("Invalid call to window.print(). Did you mean to use Netscript's print()?");}`;
 
-    // If we successfully transformed the code, create a blob url for it
-    // Compute the hash for the transformed code
-    const transformedHash = computeHash(transformedCode);
-    // Check to see if this transformed hash is in our cache
-    let blob = BlobCache.get(transformedHash);
-    if (!blob) {
-      blob = URL.createObjectURL(makeScriptBlob(transformedCode));
-    }
-    // Store this blob in the cache. Any script that transforms the same
-    // (e.g. same scripts on server, same hash value, etc) can use this blob url.
-    BlobCache.store(transformedHash, blob);
+    const blob = URL.createObjectURL(makeScriptBlob(transformedCode));
     // Push the blob URL onto the top of the stack.
-    urlStack.push(new ScriptUrl(script.filename, blob));
+    urlStack.push(new ScriptUrl(script.filename, blob, script.moduleSequenceNumber));
     return urlStack;
   } catch (err) {
     // If there is an error, we need to clean up the URLs.
-    for (const url in urlStack) URL.revokeObjectURL(url);
+    for (const url of urlStack) URL.revokeObjectURL(url.url);
     throw err;
   } finally {
     seen.pop();

@@ -220,7 +220,7 @@ for (const metadata of LocationsMetadata) {
   const cityName = loc.city;
   if (cityName === null) {
     // Generic location, add to all cities
-    for (const city in Cities) {
+    for (const city of Object.keys(Cities)) {
       Cities[city].addLocation(loc.name);
     }
   } else {

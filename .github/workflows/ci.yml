@@ -51,5 +51,5 @@ jobs:
           cache: 'npm'
       - name: Install npm dependencies
         run: npm ci
-      - name: Run linter
+      - name: Run tests
         run: npm run test

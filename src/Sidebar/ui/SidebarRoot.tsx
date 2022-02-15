@@ -106,6 +106,8 @@ interface IProps {
   player: IPlayer;
   router: IRouter;
   page: Page;
+  opened: boolean;
+  onToggled: (newValue: boolean) => void;
 }
 
 export function SidebarRoot(props: IProps): React.ReactElement {
@@ -297,7 +299,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       } else if (event.keyCode === KEY.W && event.altKey) {
         event.preventDefault();
         clickCity();
-      } else if (event.keyCode === KEY.J && event.altKey && !event.ctrlKey && !event.metaKey && props.player.hasJob()) {
+      } else if (event.keyCode === KEY.J && event.altKey && !event.ctrlKey && !event.metaKey && canJob) {
         // ctrl/cmd + alt + j is shortcut to open Chrome dev tools
         event.preventDefault();
         clickJob();
@@ -319,10 +321,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       } else if (event.keyCode === KEY.U && event.altKey) {
         event.preventDefault();
         clickTutorial();
-      } else if (event.keyCode === KEY.B && event.altKey) {
+      } else if (event.keyCode === KEY.B && event.altKey && props.player.bladeburner) {
         event.preventDefault();
         clickBladeburner();
-      } else if (event.keyCode === KEY.G && event.altKey) {
+      } else if (event.keyCode === KEY.G && event.altKey && props.player.gang) {
         event.preventDefault();
         clickGang();
       }
@@ -337,8 +339,13 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   }, []);
 
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(props.opened);
   const toggleDrawer = (): void => setOpen((old) => !old);
+
+  useEffect(() => {
+    props.onToggled(open);
+  }, [open]);
+
   return (
     <Drawer open={open} anchor="left" variant="permanent">
       <ListItem classes={{ root: classes.listitem }} button onClick={toggleDrawer}>
@@ -357,7 +364,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
       <List>
         <ListItem classes={{ root: classes.listitem }} button onClick={() => setHackingOpen((old) => !old)}>
           <ListItemIcon>
-            <ComputerIcon color="primary" />
+            <Tooltip title={!open ? "Hacking" : ""}>
+              <ComputerIcon color="primary" />
+            </Tooltip>
           </ListItemIcon>
           <ListItemText primary={<Typography>Hacking</Typography>} />
           {hackingOpen ? <ExpandLessIcon color="primary" /> : <ExpandMoreIcon color="primary" />}
@@ -374,9 +383,11 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickTerminal}
             >
               <ListItemIcon>
-                <LastPageIcon
-                  color={flashTerminal ? "error" : props.page !== Page.Terminal ? "secondary" : "primary"}
-                />
+                <Tooltip title={!open ? "Terminal" : ""}>
+                  <LastPageIcon
+                    color={flashTerminal ? "error" : props.page !== Page.Terminal ? "secondary" : "primary"}
+                  />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText>
                 <Typography color={flashTerminal ? "error" : props.page !== Page.Terminal ? "secondary" : "primary"}>
@@ -394,7 +405,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickScriptEditor}
             >
               <ListItemIcon>
-                <CreateIcon color={props.page !== Page.ScriptEditor ? "secondary" : "primary"} />
+                <Tooltip title={!open ? "Script Editor" : ""}>
+                  <CreateIcon color={props.page !== Page.ScriptEditor ? "secondary" : "primary"} />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText>
                 <Typography color={props.page !== Page.ScriptEditor ? "secondary" : "primary"}>
@@ -412,9 +425,11 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickActiveScripts}
             >
               <ListItemIcon>
-                <StorageIcon
-                  color={flashActiveScripts ? "error" : props.page !== Page.ActiveScripts ? "secondary" : "primary"}
-                />
+                <Tooltip title={!open ? "Active Scripts" : ""}>
+                  <StorageIcon
+                    color={flashActiveScripts ? "error" : props.page !== Page.ActiveScripts ? "secondary" : "primary"}
+                  />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText>
                 <Typography
@@ -435,7 +450,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               >
                 <ListItemIcon>
                   <Badge badgeContent={programCount > 0 ? programCount : undefined} color="error">
-                    <BugReportIcon color={props.page !== Page.CreateProgram ? "secondary" : "primary"} />
+                    <Tooltip title={!open ? "Create Program" : ""}>
+                      <BugReportIcon color={props.page !== Page.CreateProgram ? "secondary" : "primary"} />
+                    </Tooltip>
                   </Badge>
                 </ListItemIcon>
                 <ListItemText>
@@ -455,7 +472,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 onClick={clickStaneksGift}
               >
                 <ListItemIcon>
-                  <DeveloperBoardIcon color={props.page !== Page.StaneksGift ? "secondary" : "primary"} />
+                  <Tooltip title={!open ? "Stanek's Gift" : ""}>
+                    <DeveloperBoardIcon color={props.page !== Page.StaneksGift ? "secondary" : "primary"} />
+                  </Tooltip>
                 </ListItemIcon>
                 <ListItemText>
                   <Typography color={props.page !== Page.StaneksGift ? "secondary" : "primary"}>
@@ -470,7 +489,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         <Divider />
         <ListItem classes={{ root: classes.listitem }} button onClick={() => setCharacterOpen((old) => !old)}>
           <ListItemIcon>
-            <AccountBoxIcon color="primary" />
+            <Tooltip title={!open ? "Character" : ""}>
+              <AccountBoxIcon color="primary" />
+            </Tooltip>
           </ListItemIcon>
           <ListItemText primary={<Typography>Character</Typography>} />
           {characterOpen ? <ExpandLessIcon color="primary" /> : <ExpandMoreIcon color="primary" />}
@@ -485,7 +506,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             onClick={clickStats}
           >
             <ListItemIcon>
-              <EqualizerIcon color={flashStats ? "error" : props.page !== Page.Stats ? "secondary" : "primary"} />
+              <Tooltip title={!open ? "Stats" : ""}>
+                <EqualizerIcon color={flashStats ? "error" : props.page !== Page.Stats ? "secondary" : "primary"} />
+              </Tooltip>
             </ListItemIcon>
             <ListItemText>
               <Typography color={flashStats ? "error" : props.page !== Page.Stats ? "secondary" : "primary"}>
@@ -505,7 +528,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             >
               <ListItemIcon>
                 <Badge badgeContent={invitationsCount !== 0 ? invitationsCount : undefined} color="error">
-                  <ContactsIcon color={![Page.Factions, Page.Faction].includes(props.page) ? "secondary" : "primary"} />
+                  <Tooltip title={!open ? "Factions" : ""}>
+                    <ContactsIcon color={![Page.Factions, Page.Faction].includes(props.page) ? "secondary" : "primary"} />
+                  </Tooltip>
                 </Badge>
               </ListItemIcon>
               <ListItemText>
@@ -527,10 +552,12 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             >
               <ListItemIcon>
                 <Badge badgeContent={augmentationCount !== 0 ? augmentationCount : undefined} color="error">
-                  <DoubleArrowIcon
-                    style={{ transform: "rotate(-90deg)" }}
-                    color={props.page !== Page.Augmentations ? "secondary" : "primary"}
-                  />
+                  <Tooltip title={!open ? "Augmentations" : ""}>
+                    <DoubleArrowIcon
+                      style={{ transform: "rotate(-90deg)" }}
+                      color={props.page !== Page.Augmentations ? "secondary" : "primary"}
+                    />
+                  </Tooltip>
                 </Badge>
               </ListItemIcon>
               <ListItemText>
@@ -549,7 +576,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             onClick={clickHacknet}
           >
             <ListItemIcon>
-              <AccountTreeIcon color={flashHacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"} />
+              <Tooltip title={!open ? "Hacknet" : ""}>
+                <AccountTreeIcon color={flashHacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"} />
+              </Tooltip>
             </ListItemIcon>
             <ListItemText>
               <Typography color={flashHacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"}>
@@ -568,7 +597,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickSleeves}
             >
               <ListItemIcon>
-                <PeopleAltIcon color={props.page !== Page.Sleeves ? "secondary" : "primary"} />
+                <Tooltip title={!open ? "Sleeves" : ""}>
+                  <PeopleAltIcon color={props.page !== Page.Sleeves ? "secondary" : "primary"} />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText>
                 <Typography color={props.page !== Page.Sleeves ? "secondary" : "primary"}>Sleeves</Typography>
@@ -580,7 +611,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         <Divider />
         <ListItem classes={{ root: classes.listitem }} button onClick={() => setWorldOpen((old) => !old)}>
           <ListItemIcon>
-            <PublicIcon color="primary" />
+            <Tooltip title={!open ? "World" : ""}>
+              <PublicIcon color="primary" />
+            </Tooltip>
           </ListItemIcon>
           <ListItemText primary={<Typography>World</Typography>} />
           {worldOpen ? <ExpandLessIcon color="primary" /> : <ExpandMoreIcon color="primary" />}
@@ -596,7 +629,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             onClick={clickCity}
           >
             <ListItemIcon>
-              <LocationCityIcon color={flashCity ? "error" : props.page !== Page.City ? "secondary" : "primary"} />
+              <Tooltip title={!open ? "City" : ""}>
+                <LocationCityIcon color={flashCity ? "error" : props.page !== Page.City ? "secondary" : "primary"} />
+              </Tooltip>
             </ListItemIcon>
             <ListItemText>
               <Typography color={flashCity ? "error" : props.page !== Page.City ? "secondary" : "primary"}>
@@ -613,7 +648,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             onClick={clickTravel}
           >
             <ListItemIcon>
-              <AirplanemodeActiveIcon color={props.page !== Page.Travel ? "secondary" : "primary"} />
+              <Tooltip title={!open ? "Travel" : ""}>
+                <AirplanemodeActiveIcon color={props.page !== Page.Travel ? "secondary" : "primary"} />
+              </Tooltip>
             </ListItemIcon>
             <ListItemText>
               <Typography color={props.page !== Page.Travel ? "secondary" : "primary"}>Travel</Typography>
@@ -630,7 +667,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickJob}
             >
               <ListItemIcon>
-                <WorkIcon color={props.page !== Page.Job ? "secondary" : "primary"} />
+                <Tooltip title={!open ? "Job" : ""}>
+                  <WorkIcon color={props.page !== Page.Job ? "secondary" : "primary"} />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText>
                 <Typography color={props.page !== Page.Job ? "secondary" : "primary"}>Job</Typography>
@@ -648,7 +687,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickStockMarket}
             >
               <ListItemIcon>
-                <TrendingUpIcon color={props.page !== Page.StockMarket ? "secondary" : "primary"} />
+                <Tooltip title={!open ? "Stock Market" : ""}>
+                  <TrendingUpIcon color={props.page !== Page.StockMarket ? "secondary" : "primary"} />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText>
                 <Typography color={props.page !== Page.StockMarket ? "secondary" : "primary"}>Stock Market</Typography>
@@ -666,7 +707,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickBladeburner}
             >
               <ListItemIcon>
-                <FormatBoldIcon color={props.page !== Page.Bladeburner ? "secondary" : "primary"} />
+                <Tooltip title={!open ? "Bladeburner" : ""}>
+                  <FormatBoldIcon color={props.page !== Page.Bladeburner ? "secondary" : "primary"} />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText>
                 <Typography color={props.page !== Page.Bladeburner ? "secondary" : "primary"}>Bladeburner</Typography>
@@ -684,7 +727,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickCorp}
             >
               <ListItemIcon>
-                <BusinessIcon color={props.page !== Page.Corporation ? "secondary" : "primary"} />
+                <Tooltip title={!open ? "Corp" : ""}>
+                  <BusinessIcon color={props.page !== Page.Corporation ? "secondary" : "primary"} />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText>
                 <Typography color={props.page !== Page.Corporation ? "secondary" : "primary"}>Corp</Typography>
@@ -702,7 +747,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickGang}
             >
               <ListItemIcon>
-                <SportsMmaIcon color={props.page !== Page.Gang ? "secondary" : "primary"} />
+                <Tooltip title={!open ? "Gang" : ""}>
+                  <SportsMmaIcon color={props.page !== Page.Gang ? "secondary" : "primary"} />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText>
                 <Typography color={props.page !== Page.Gang ? "secondary" : "primary"}>Gang</Typography>
@@ -714,7 +761,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
         <Divider />
         <ListItem classes={{ root: classes.listitem }} button onClick={() => setHelpOpen((old) => !old)}>
           <ListItemIcon>
-            <LiveHelpIcon color="primary" />
+            <Tooltip title={!open ? "Help" : ""}>
+              <LiveHelpIcon color="primary" />
+            </Tooltip>
           </ListItemIcon>
           <ListItemText primary={<Typography>Help</Typography>} />
           {helpOpen ? <ExpandLessIcon color="primary" /> : <ExpandMoreIcon color="primary" />}
@@ -729,7 +778,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             onClick={clickMilestones}
           >
             <ListItemIcon>
-              <CheckIcon color={props.page !== Page.Milestones ? "secondary" : "primary"} />
+              <Tooltip title={!open ? "Milestones" : ""}>
+                <CheckIcon color={props.page !== Page.Milestones ? "secondary" : "primary"} />
+              </Tooltip>
             </ListItemIcon>
             <ListItemText>
               <Typography color={props.page !== Page.Milestones ? "secondary" : "primary"}>Milestones</Typography>
@@ -744,7 +795,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             onClick={clickTutorial}
           >
             <ListItemIcon>
-              <HelpIcon color={flashTutorial ? "error" : props.page !== Page.Tutorial ? "secondary" : "primary"} />
+              <Tooltip title={!open ? "Tutorial" : ""}>
+                <HelpIcon color={flashTutorial ? "error" : props.page !== Page.Tutorial ? "secondary" : "primary"} />
+              </Tooltip>
             </ListItemIcon>
             <ListItemText>
               <Typography color={flashTutorial ? "error" : props.page !== Page.Tutorial ? "secondary" : "primary"}>
@@ -761,7 +814,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             onClick={clickAchievements}
           >
             <ListItemIcon>
-              <EmojiEventsIcon color={props.page !== Page.Achievements ? "secondary" : "primary"} />
+              <Tooltip title={!open ? "Achievements" : ""}>
+                <EmojiEventsIcon color={props.page !== Page.Achievements ? "secondary" : "primary"} />
+              </Tooltip>
             </ListItemIcon>
             <ListItemText>
               <Typography color={props.page !== Page.Achievements ? "secondary" : "primary"}>Achievements</Typography>
@@ -776,7 +831,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             onClick={clickOptions}
           >
             <ListItemIcon>
-              <SettingsIcon color={props.page !== Page.Options ? "secondary" : "primary"} />
+              <Tooltip title={!open ? "Options" : ""}>
+                <SettingsIcon color={props.page !== Page.Options ? "secondary" : "primary"} />
+              </Tooltip>
             </ListItemIcon>
             <ListItemText>
               <Typography color={props.page !== Page.Options ? "secondary" : "primary"}>Options</Typography>
@@ -793,7 +850,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               onClick={clickDev}
             >
               <ListItemIcon>
-                <DeveloperBoardIcon color={props.page !== Page.DevMenu ? "secondary" : "primary"} />
+                <Tooltip title={!open ? "Dev" : ""}>
+                  <DeveloperBoardIcon color={props.page !== Page.DevMenu ? "secondary" : "primary"} />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText>
                 <Typography color={props.page !== Page.DevMenu ? "secondary" : "primary"}>Dev</Typography>

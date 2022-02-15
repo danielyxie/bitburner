@@ -35,7 +35,9 @@ export function GymLocation(props: IProps): React.ReactElement {
 
   function train(stat: string): void {
     const loc = props.loc;
-    props.p.startClass(props.router, calculateCost(), loc.expMult, stat);
+    props.p.startClass(calculateCost(), loc.expMult, stat);
+    props.p.startFocusing();
+    props.router.toWork();
   }
 
   function trainStrength(): void {
@@ -61,15 +63,12 @@ export function GymLocation(props: IProps): React.ReactElement {
       <Button onClick={trainStrength}>
         Train Strength (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <br />
       <Button onClick={trainDefense}>
         Train Defense (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <br />
       <Button onClick={trainDexterity}>
         Train Dexterity (<Money money={cost} player={props.p} /> / sec)
       </Button>
-      <br />
       <Button onClick={trainAgility}>
         Train Agility (<Money money={cost} player={props.p} /> / sec)
       </Button>

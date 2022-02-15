@@ -30,7 +30,7 @@ import { Player } from "./Player";
 import { saveObject, loadGame } from "./SaveObject";
 import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
-import { ThemeEvents } from "./ui/React/Theme";
+import { ThemeEvents } from "./Themes/ui/Theme";
 import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
@@ -169,7 +169,7 @@ const Engine: {
   },
 
   decrementAllCounters: function (numCycles = 1) {
-    for (const counterName in Engine.Counters) {
+    for (const counterName of Object.keys(Engine.Counters)) {
       const counter = Engine.Counters[counterName];
       if (counter === undefined) throw new Error("counter should not be undefined");
       Engine.Counters[counterName] = counter - numCycles;

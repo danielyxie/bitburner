@@ -526,7 +526,7 @@ export class Augmentation {
 
   // Adds this Augmentation to all Factions
   addToAllFactions(): void {
-    for (const fac in Factions) {
+    for (const fac of Object.keys(Factions)) {
       if (Factions.hasOwnProperty(fac)) {
         const facObj: Faction | null = Factions[fac];
         if (facObj == null) {

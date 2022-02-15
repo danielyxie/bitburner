@@ -42,7 +42,7 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
   if (p.inGang()) {
     const fac = p.getGangFaction();
 
-    for (const augName in Augmentations) {
+    for (const augName of Object.keys(Augmentations)) {
       const aug = Augmentations[augName];
       if (!isAvailableForSleeve(aug)) {
         continue;

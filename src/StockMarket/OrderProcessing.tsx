@@ -42,7 +42,7 @@ export function processOrders(
   const orderBook = refs.stockMarket["Orders"];
   if (orderBook == null) {
     const orders: IOrderBook = {};
-    for (const name in refs.stockMarket) {
+    for (const name of Object.keys(refs.stockMarket)) {
       const stock = refs.stockMarket[name];
       if (!(stock instanceof Stock)) {
         continue;

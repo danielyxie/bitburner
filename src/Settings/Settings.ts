@@ -1,7 +1,7 @@
 import { ISelfInitializer, ISelfLoading } from "../types";
 import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
-import { defaultTheme, ITheme } from "./Themes";
-import { defaultStyles } from "./Styles";
+import { defaultTheme, ITheme } from "../Themes/Themes";
+import { defaultStyles } from "../Themes/Styles";
 import { WordWrapOptions } from "../ScriptEditor/ui/Options";
 import { OverviewSettings } from "../ui/React/Overview";
 import { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
@@ -142,6 +142,11 @@ interface IDefaultSettings {
    * Character overview settings
    */
   overview: OverviewSettings;
+
+  /**
+   *  If the game's sidebar is opened
+   */
+  IsSidebarOpened: boolean;
 }
 
 /**
@@ -194,6 +199,7 @@ export const defaultSettings: IDefaultSettings = {
   SuppressSavedGameToast: false,
   UseIEC60027_2: false,
   ExcludeRunningScriptsFromSave: false,
+  IsSidebarOpened: true,
 
   theme: defaultTheme,
   styles: defaultStyles,
@@ -231,6 +237,8 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressSavedGameToast: defaultSettings.SuppressSavedGameToast,
   UseIEC60027_2: defaultSettings.UseIEC60027_2,
   ExcludeRunningScriptsFromSave: defaultSettings.ExcludeRunningScriptsFromSave,
+  IsSidebarOpened: defaultSettings.IsSidebarOpened,
+
   MonacoTheme: "monokai",
   MonacoInsertSpaces: false,
   MonacoFontSize: 20,

@@ -112,7 +112,7 @@ export abstract class Person {
    * Updates this object's multipliers for the given augmentation
    */
   applyAugmentation(aug: Augmentation): void {
-    for (const mult in aug.mults) {
+    for (const mult of Object.keys(aug.mults)) {
       if ((this as any)[mult] == null) {
         console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);
       } else {

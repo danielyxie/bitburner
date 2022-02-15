@@ -380,7 +380,7 @@ export const achievements: IMap<Achievement> = {
   },
   TRAVEL: {
     ...achievementData["TRAVEL"],
-    Icon: "travel",
+    Icon: "TRAVEL",
     Condition: () => Player.city !== CityName.Sector12,
   },
   WORKOUT: {
@@ -553,7 +553,9 @@ export const achievements: IMap<Achievement> = {
     ...achievementData["MAX_CACHE"],
     Icon: "HASHNETCAP",
     Visible: () => hasAccessToSF(Player, 9),
-    Condition: () => hasHacknetServers(Player) && Player.hashManager.hashes === Player.hashManager.capacity,
+    Condition: () => hasHacknetServers(Player) &&
+      Player.hashManager.hashes === Player.hashManager.capacity &&
+      Player.hashManager.capacity > 0,
   },
   SLEEVE_8: {
     ...achievementData["SLEEVE_8"],

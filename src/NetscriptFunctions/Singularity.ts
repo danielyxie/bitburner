@@ -113,7 +113,7 @@ export function NetscriptSingularity(
       // If player has a gang with this faction, return all augmentations.
       if (player.hasGangWith(facname)) {
         const res = [];
-        for (const augName in Augmentations) {
+        for (const augName of Object.keys(Augmentations)) {
           if (augName === AugmentationNames.NeuroFluxGovernor) continue;
           if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
           const aug = Augmentations[augName];
@@ -165,7 +165,7 @@ export function NetscriptSingularity(
 
       let augs = [];
       if (player.hasGangWith(faction)) {
-        for (const augName in Augmentations) {
+        for (const augName of Object.keys(Augmentations)) {
           if (augName === AugmentationNames.NeuroFluxGovernor) continue;
           if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
           const tempAug = Augmentations[augName];
@@ -264,7 +264,7 @@ export function NetscriptSingularity(
         return false;
       }
       Router.toLocation(location);
-      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 500);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50000);
       return true;
     },
     universityCourse: function (universityName: any, className: any, focus = true): any {
@@ -343,7 +343,7 @@ export function NetscriptSingularity(
           workerScript.log("universityCourse", () => `Invalid class name: ${className}.`);
           return false;
       }
-      player.startClass(Router, costMult, expMult, task);
+      player.startClass(costMult, expMult, task);
       if (focus) {
         player.startFocusing();
         Router.toWork();
@@ -433,19 +433,19 @@ export function NetscriptSingularity(
       switch (stat.toLowerCase()) {
         case "strength".toLowerCase():
         case "str".toLowerCase():
-          player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymStrength);
+          player.startClass(costMult, expMult, CONSTANTS.ClassGymStrength);
           break;
         case "defense".toLowerCase():
         case "def".toLowerCase():
-          player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymDefense);
+          player.startClass(costMult, expMult, CONSTANTS.ClassGymDefense);
           break;
         case "dexterity".toLowerCase():
         case "dex".toLowerCase():
-          player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymDexterity);
+          player.startClass(costMult, expMult, CONSTANTS.ClassGymDexterity);
           break;
         case "agility".toLowerCase():
         case "agi".toLowerCase():
-          player.startClass(Router, costMult, expMult, CONSTANTS.ClassGymAgility);
+          player.startClass(costMult, expMult, CONSTANTS.ClassGymAgility);
           break;
         default:
           workerScript.log("gymWorkout", () => `Invalid stat: ${stat}.`);
@@ -474,16 +474,16 @@ export function NetscriptSingularity(
         case CityName.Ishima:
         case CityName.Volhaven:
           if (player.money < CONSTANTS.TravelCost) {
-            throw helper.makeRuntimeErrorMsg("travelToCity", "Not enough money to travel.");
+            workerScript.log("travelToCity", () => "Not enough money to travel.");
+            return false
           }
           player.loseMoney(CONSTANTS.TravelCost, "other");
           player.city = cityname;
           workerScript.log("travelToCity", () => `Traveled to ${cityname}`);
-          player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
+          player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50000);
           return true;
         default:
-          workerScript.log("travelToCity", () => `Invalid city name: '${cityname}'.`);
-          return false;
+          throw helper.makeRuntimeErrorMsg("travelToCity", `Invalid city name: '${cityname}'.`);
       }
     },
 
@@ -515,7 +515,7 @@ export function NetscriptSingularity(
 
       player.getHomeComputer().serversOnNetwork.push(darkweb.hostname);
       darkweb.serversOnNetwork.push(player.getHomeComputer().hostname);
-      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 500);
       workerScript.log("purchaseTor", () => "You have purchased a Tor router!");
       return true;
     },
@@ -555,7 +555,7 @@ export function NetscriptSingularity(
         "purchaseProgram",
         () => `You have purchased the '${item.program}' program. The new program can be found on your home computer.`,
       );
-      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 50);
+      player.gainIntelligenceExp(CONSTANTS.IntelligenceSingFnBaseExpGain / 5000);
       return true;
     },
     getCurrentServer: function (): any {
@@ -653,7 +653,9 @@ export function NetscriptSingularity(
         !(
           player.workType == CONSTANTS.WorkTypeFaction ||
           player.workType == CONSTANTS.WorkTypeCompany ||
-          player.workType == CONSTANTS.WorkTypeCompanyPartTime
+          player.workType == CONSTANTS.WorkTypeCompanyPartTime ||
+          player.workType == CONSTANTS.WorkTypeCreateProgram ||
+          player.workType == CONSTANTS.WorkTypeStudyClass
         )
       ) {
         throw helper.makeRuntimeErrorMsg("setFocus", "Cannot change focus for current job");
@@ -1269,7 +1271,7 @@ export function NetscriptSingularity(
         return false;
       }
 
-      player.startCreateProgramWork(Router, p.name, create.time, create.level);
+      player.startCreateProgramWork(p.name, create.time, create.level);
       if (focus) {
         player.startFocusing();
         Router.toWork();

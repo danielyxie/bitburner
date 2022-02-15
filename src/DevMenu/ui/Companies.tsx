@@ -46,25 +46,25 @@ export function Companies(): React.ReactElement {
   }
 
   function tonsOfRepCompanies(): void {
-    for (const c in AllCompanies) {
+    for (const c of Object.keys(AllCompanies)) {
       AllCompanies[c].playerReputation = bigNumber;
     }
   }
 
   function resetAllRepCompanies(): void {
-    for (const c in AllCompanies) {
+    for (const c of Object.keys(AllCompanies)) {
       AllCompanies[c].playerReputation = 0;
     }
   }
 
   function tonsOfFavorCompanies(): void {
-    for (const c in AllCompanies) {
+    for (const c of Object.keys(AllCompanies)) {
       AllCompanies[c].favor = bigNumber;
     }
   }
 
   function resetAllFavorCompanies(): void {
-    for (const c in AllCompanies) {
+    for (const c of Object.keys(AllCompanies)) {
       AllCompanies[c].favor = 0;
     }
   }

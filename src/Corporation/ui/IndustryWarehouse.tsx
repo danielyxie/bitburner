@@ -81,7 +81,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
 
   // Create React components for materials
   const mats = [];
-  for (const matName in props.warehouse.materials) {
+  for (const matName of Object.keys(props.warehouse.materials)) {
     if (!(props.warehouse.materials[matName] instanceof Material)) continue;
     // Only create UI for materials that are relevant for the industry
     if (!isRelevantMaterial(matName, division)) continue;
@@ -99,7 +99,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
   // Create React components for products
   const products = [];
   if (division.makesProducts && Object.keys(division.products).length > 0) {
-    for (const productName in division.products) {
+    for (const productName of Object.keys(division.products)) {
       const product = division.products[productName];
       if (!(product instanceof Product)) continue;
       products.push(
@@ -109,14 +109,14 @@ function WarehouseRoot(props: IProps): React.ReactElement {
   }
 
   const breakdownItems: JSX.Element[] = [];
-  for (const matName in props.warehouse.materials) {
+  for (const matName of Object.keys(props.warehouse.materials)) {
     const mat = props.warehouse.materials[matName];
     if (!MaterialSizes.hasOwnProperty(matName)) continue;
     if (mat.qty === 0) continue;
     breakdownItems.push(<>{matName}: {numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0")}</>);
   }
 
-  for (const prodName in division.products) {
+  for (const prodName of Object.keys(division.products)) {
     const prod = division.products[prodName];
     if (prod === undefined) continue;
     breakdownItems.push(<>{prodName}: {numeralWrapper.format(prod.data[props.warehouse.loc][0] * prod.siz, "0,0.0")}</>);
@@ -139,12 +139,12 @@ function WarehouseRoot(props: IProps): React.ReactElement {
             {numeralWrapper.formatBigNumber(props.warehouse.size)}
           </Typography>
         </Tooltip>
-
-        <Button disabled={!canAffordUpgrade} onClick={upgradeWarehouseOnClick}>
-          Upgrade Warehouse Size -&nbsp;
-          <MoneyCost money={sizeUpgradeCost} corp={corp} />
-        </Button>
       </Box>
+
+      <Button disabled={!canAffordUpgrade} onClick={upgradeWarehouseOnClick}>
+        Upgrade Warehouse Size -&nbsp;
+        <MoneyCost money={sizeUpgradeCost} corp={corp} />
+      </Button>
 
       <Typography>This industry uses the following equation for its production: </Typography>
       <br />

@@ -61,7 +61,7 @@ export function SmartSupplyModal(props: IProps): React.ReactElement {
 
   // Create React components for materials
   const mats = [];
-  for (const matName in props.warehouse.materials) {
+  for (const matName of Object.keys(props.warehouse.materials)) {
     if (!(props.warehouse.materials[matName] instanceof Material)) continue;
     if (!Object.keys(division.reqMats).includes(matName)) continue;
     mats.push(<Leftover key={matName} warehouse={props.warehouse} matName={matName} />);

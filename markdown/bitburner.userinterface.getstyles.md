@@ -19,5 +19,5 @@ An object containing the player's styles
 
 ## Remarks
 
-RAM cost: cost: 0 GB
+RAM cost: 0 GB
 

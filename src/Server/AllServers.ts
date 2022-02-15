@@ -20,7 +20,7 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 let AllServers: IMap<Server | HacknetServer> = {};
 
 function GetServerByIP(ip: string): BaseServer | undefined {
-  for (const key in AllServers) {
+  for (const key of Object.keys(AllServers)) {
     const server = AllServers[key];
     if (server.ip !== ip) continue;
     return server;
@@ -30,7 +30,7 @@ function GetServerByIP(ip: string): BaseServer | undefined {
 //Returns server object with corresponding hostname
 //    Relatively slow, would rather not use this a lot
 function GetServerByHostname(hostname: string): BaseServer | null {
-  for (const key in AllServers) {
+  for (const key of Object.keys(AllServers)) {
     const server = AllServers[key];
     if (server.hostname == hostname) {
       return server;
@@ -58,14 +58,14 @@ export function GetServer(s: string): BaseServer | null {
 
 export function GetAllServers(): BaseServer[] {
   const servers: BaseServer[] = [];
-  for (const key in AllServers) {
+  for (const key of Object.keys(AllServers)) {
     servers.push(AllServers[key]);
   }
   return servers;
 }
 
 export function DeleteServer(serverkey: string): void {
-  for (const key in AllServers) {
+  for (const key of Object.keys(AllServers)) {
     const server = AllServers[key];
     if (server.ip !== serverkey && server.hostname !== serverkey) continue;
     delete AllServers[key];
@@ -194,7 +194,7 @@ export function initForeignServers(homeComputer: Server): void {
 }
 
 export function prestigeAllServers(): void {
-  for (const member in AllServers) {
+  for (const member of Object.keys(AllServers)) {
     delete AllServers[member];
   }
   AllServers = {};
@@ -206,7 +206,7 @@ export function loadAllServers(saveString: string): void {
 
 export function saveAllServers(excludeRunningScripts = false): string {
   const TempAllServers = JSON.parse(JSON.stringify(AllServers), Reviver);
-  for (const key in TempAllServers) {
+  for (const key of Object.keys(TempAllServers)) {
     const server = TempAllServers[key];
     if (excludeRunningScripts) {
       server.runningScripts = [];

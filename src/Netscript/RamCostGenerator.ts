@@ -106,12 +106,15 @@ export const RamCosts: IMap<any> = {
   hackAnalyzeSecurity: RamCostConstants.ScriptHackAnalyzeRamCost,
   hackAnalyzeChance: RamCostConstants.ScriptHackAnalyzeRamCost,
   sleep: 0,
+  share: 2.4,
+  getSharePower: 0.2,
   grow: RamCostConstants.ScriptGrowRamCost,
   growthAnalyze: RamCostConstants.ScriptGrowthAnalyzeRamCost,
   growthAnalyzeSecurity: RamCostConstants.ScriptGrowthAnalyzeRamCost,
   weaken: RamCostConstants.ScriptWeakenRamCost,
   weakenAnalyze: RamCostConstants.ScriptWeakenAnalyzeRamCost,
   print: 0,
+  printf: 0,
   tprint: 0,
   clearLog: 0,
   disableLog: 0,
@@ -368,6 +371,7 @@ export const RamCosts: IMap<any> = {
     getStyles: 0,
     setStyles: 0,
     resetStyles: 0,
+    getGameInfo: 0,
   },
 
   heart: {

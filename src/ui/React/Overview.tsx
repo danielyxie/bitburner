@@ -124,7 +124,12 @@ export function Overview({ children, mode }: IProps): React.ReactElement {
             <Typography flexGrow={1} color="secondary">
               {header}
             </Typography>
-            <Button variant="text" size="small" className={classes.visibilityToggle}>
+            <Button
+              aria-label="expand or collapse character overview"
+              variant="text"
+              size="small"
+              className={classes.visibilityToggle}
+            >
               {<CurrentIcon className={classes.icon} color="secondary" onClick={() => setOpen((old) => !old)} />}
             </Button>
           </Box>

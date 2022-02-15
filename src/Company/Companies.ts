@@ -26,7 +26,7 @@ export function initCompanies(): void {
   });
 
   // Reset data
-  for (const companyName in Companies) {
+  for (const companyName of Object.keys(Companies)) {
     const company = Companies[companyName];
     const oldCompany = oldCompanies[companyName];
     if (!(oldCompany instanceof Company)) {

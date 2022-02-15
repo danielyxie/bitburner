@@ -52,6 +52,7 @@ import {
   BulkPurchase,
   SellShares,
   BuyBackShares,
+  SetSmartSupplyUseLeftovers,
 } from "../Corporation/Actions";
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
@@ -413,6 +414,16 @@ export function NetscriptCorporation(
       const enabled = helper.boolean(aenabled);
       const warehouse = getWarehouse(divisionName, cityName);
       SetSmartSupply(warehouse, enabled);
+    },
+    setSmartSupplyUseLeftovers: function (adivisionName: any, acityName: any, amaterialName: any, aenabled: any): void {
+      checkAccess("setSmartSupplyUseLeftovers", 7);
+      const divisionName = helper.string("setSmartSupply", "divisionName", adivisionName);
+      const cityName = helper.string("sellProduct", "cityName", acityName);
+      const materialName = helper.string("sellProduct", "materialName", amaterialName);
+      const enabled = helper.boolean(aenabled);
+      const warehouse = getWarehouse(divisionName, cityName);
+      const material = getMaterial(divisionName, cityName, materialName);
+      SetSmartSupplyUseLeftovers(warehouse, material, enabled);
     },
     buyMaterial: function (adivisionName: any, acityName: any, amaterialName: any, aamt: any): void {
       checkAccess("buyMaterial", 7);

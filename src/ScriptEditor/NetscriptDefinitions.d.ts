@@ -129,7 +129,7 @@ export interface CrimeStats {
   /** How much money is given */
   money: number;
   /** Name of crime */
-  name: number;
+  name: string;
   /** Milliseconds it takes to attempt the crime */
   time: number;
   /** Description of the crime activity */
@@ -167,65 +167,65 @@ export interface CrimeStats {
  * @public
  */
 export interface AugmentationStats {
-  /** Multipler to hacking skill */
+  /** Multiplier to hacking skill */
   hacking_mult?: number;
-  /** Multipler to strength skill */
+  /** Multiplier to strength skill */
   strength_mult?: number;
-  /** Multipler to defense skill */
+  /** Multiplier to defense skill */
   defense_mult?: number;
-  /** Multipler to dexterity skill */
+  /** Multiplier to dexterity skill */
   dexterity_mult?: number;
-  /** Multipler to agility skill */
+  /** Multiplier to agility skill */
   agility_mult?: number;
-  /** Multipler to charisma skill */
+  /** Multiplier to charisma skill */
   charisma_mult?: number;
-  /** Multipler to hacking experience gain rate */
+  /** Multiplier to hacking experience gain rate */
   hacking_exp_mult?: number;
-  /** Multipler to strength experience gain rate */
+  /** Multiplier to strength experience gain rate */
   strength_exp_mult?: number;
-  /** Multipler to defense experience gain rate */
+  /** Multiplier to defense experience gain rate */
   defense_exp_mult?: number;
-  /** Multipler to dexterity experience gain rate */
+  /** Multiplier to dexterity experience gain rate */
   dexterity_exp_mult?: number;
-  /** Multipler to agility experience gain rate */
+  /** Multiplier to agility experience gain rate */
   agility_exp_mult?: number;
-  /** Multipler to charisma experience gain rate */
+  /** Multiplier to charisma experience gain rate */
   charisma_exp_mult?: number;
-  /** Multipler to chance of successfully performing a hack */
+  /** Multiplier to chance of successfully performing a hack */
   hacking_chance_mult?: number;
-  /** Multipler to hacking speed */
+  /** Multiplier to hacking speed */
   hacking_speed_mult?: number;
-  /** Multipler to amount of money the player gains from hacking */
+  /** Multiplier to amount of money the player gains from hacking */
   hacking_money_mult?: number;
-  /** Multipler to amount of money injected into servers using grow */
+  /** Multiplier to amount of money injected into servers using grow */
   hacking_grow_mult?: number;
-  /** Multipler to amount of reputation gained when working */
+  /** Multiplier to amount of reputation gained when working */
   company_rep_mult?: number;
-  /** Multipler to amount of reputation gained when working */
+  /** Multiplier to amount of reputation gained when working */
   faction_rep_mult?: number;
-  /** Multipler to amount of money gained from crimes */
+  /** Multiplier to amount of money gained from crimes */
   crime_money_mult?: number;
-  /** Multipler to crime success rate */
+  /** Multiplier to crime success rate */
   crime_success_mult?: number;
-  /** Multipler to amount of money gained from working */
+  /** Multiplier to amount of money gained from working */
   work_money_mult?: number;
-  /** Multipler to amount of money produced by Hacknet Nodes */
+  /** Multiplier to amount of money produced by Hacknet Nodes */
   hacknet_node_money_mult?: number;
-  /** Multipler to cost of purchasing a Hacknet Node */
+  /** Multiplier to cost of purchasing a Hacknet Node */
   hacknet_node_purchase_cost_mult?: number;
-  /** Multipler to cost of ram for a Hacknet Node */
+  /** Multiplier to cost of ram for a Hacknet Node */
   hacknet_node_ram_cost_mult?: number;
-  /** Multipler to cost of core for a Hacknet Node */
+  /** Multiplier to cost of core for a Hacknet Node */
   hacknet_node_core_cost_mult?: number;
-  /** Multipler to cost of leveling up a Hacknet Node */
+  /** Multiplier to cost of leveling up a Hacknet Node */
   hacknet_node_level_cost_mult?: number;
-  /** Multipler to Bladeburner max stamina */
+  /** Multiplier to Bladeburner max stamina */
   bladeburner_max_stamina_mult?: number;
-  /** Multipler to Bladeburner stamina gain rate */
+  /** Multiplier to Bladeburner stamina gain rate */
   bladeburner_stamina_gain_mult?: number;
-  /** Multipler to effectiveness in Bladeburner Field Analysis */
+  /** Multiplier to effectiveness in Bladeburner Field Analysis */
   bladeburner_analysis_mult?: number;
-  /** Multipler to success chance in Bladeburner contracts/operations */
+  /** Multiplier to success chance in Bladeburner contracts/operations */
   bladeburner_success_chance_mult?: number;
 }
 
@@ -444,7 +444,7 @@ export interface Server {
   /** IP Address. Must be unique */
   ip: string;
 
-  /** Flag indicating whether player is curently connected to this server */
+  /** Flag indicating whether player is currently connected to this server */
   isConnectedTo: boolean;
 
   /** RAM (GB) available on this server */
@@ -587,7 +587,7 @@ export interface BitNodeMultipliers {
   ScriptHackMoneyGain: number;
   /** Influences the growth percentage per cycle against a server. */
   ServerGrowthRate: number;
-  /** Influences the maxmimum money that a server can grow to. */
+  /** Influences the maximum money that a server can grow to. */
   ServerMaxMoney: number;
   /** Influences the initial money that a server starts with. */
   ServerStartingMoney: number;
@@ -647,7 +647,7 @@ export interface PlayerSkills {
   dexterity: number;
   /** Agility level */
   agility: number;
-  /** Chraisma level */
+  /** Charisma level */
   charisma: number;
   /** Intelligence level */
   intelligence: number;
@@ -847,7 +847,7 @@ export interface GangTaskStats {
   baseMoney: number;
   /** Hacking skill impact on task scaling */
   hackWeight: number;
-  /** Stength skill impact on task scaling */
+  /** Strength skill impact on task scaling */
   strWeight: number;
   /** Defense skill impact on task scaling */
   defWeight: number;
@@ -1582,7 +1582,7 @@ export interface Singularity {
    *
    *
    * Returns a boolean indicating whether or not the player is currently performing an
-   * ‘action’. These actions include working for a company/faction, studying at a univeristy,
+   * ‘action’. These actions include working for a company/faction, studying at a university,
    * working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.
    *
    * @returns True if the player is currently performing an ‘action’, false otherwise.
@@ -2572,7 +2572,7 @@ export interface Hacknet {
   getHashUpgradeLevel(upgName: string): number;
 
   /**
-   * Get the multipler to study.
+   * Get the multiplier to study.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -2583,7 +2583,7 @@ export interface Hacknet {
   getStudyMult(): number;
 
   /**
-   * Get the multipler to training.
+   * Get the multiplier to training.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -3077,7 +3077,7 @@ export interface Bladeburner {
  */
 export interface CodingContract {
   /**
-   * Attemps a coding contract.
+   * Attempts a coding contract.
    * @remarks
    * RAM cost: 10 GB
    *
@@ -3633,6 +3633,7 @@ interface SkillsFormulas {
 interface HackingFormulas {
   /**
    * Calculate hack chance.
+   * (Ex: 0.25 would indicate a 25% chance of success.)
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
    * @returns The calculated hack chance.
@@ -3649,6 +3650,7 @@ interface HackingFormulas {
   hackExp(server: Server, player: Player): number;
   /**
    * Calculate hack percent for one thread.
+   * (Ex: 0.25 would steal 25% of the server's current value.)
    * @remarks
    * Multiply by thread to get total percent hacked.
    * @param server - Server info from {@link NS.getServer | getServer}
@@ -3657,7 +3659,8 @@ interface HackingFormulas {
    */
   hackPercent(server: Server, player: Player): number;
   /**
-   * Calculate the percent a server would grow.
+   * Calculate the percent a server would grow to.
+   * (Ex: 3.0 would would grow the server to 300% of its current value.)
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param threads - Amount of thread.
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
@@ -3933,7 +3936,7 @@ interface Stanek {
   /**
    * List possible fragments.
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    *
    * @returns List of possible fragments.
    */
@@ -3942,7 +3945,7 @@ interface Stanek {
   /**
    * List of fragments in Stanek's Gift.
    * @remarks
-   * RAM cost: cost: 5 GB
+   * RAM cost: 5 GB
    *
    * @returns List of active fragments placed on Stanek's Gift.
    */
@@ -3951,14 +3954,14 @@ interface Stanek {
   /**
    * Clear the board of all fragments.
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    */
   clear(): void;
 
   /**
    * Check if fragment can be placed at specified location.
    * @remarks
-   * RAM cost: cost: 0.5 GB
+   * RAM cost: 0.5 GB
    *
    * @param rootX - rootX Root X against which to align the top left of the fragment.
    * @param rootY - rootY Root Y against which to align the top left of the fragment.
@@ -3970,7 +3973,7 @@ interface Stanek {
   /**
    * Place fragment on Stanek's Gift.
    * @remarks
-   * RAM cost: cost: 5 GB
+   * RAM cost: 5 GB
    *
    * @param rootX - X against which to align the top left of the fragment.
    * @param rootY - Y against which to align the top left of the fragment.
@@ -3982,7 +3985,7 @@ interface Stanek {
   /**
    * Get placed fragment at location.
    * @remarks
-   * RAM cost: cost: 5 GB
+   * RAM cost: 5 GB
    *
    * @param rootX - X against which to align the top left of the fragment.
    * @param rootY - Y against which to align the top left of the fragment.
@@ -3993,7 +3996,7 @@ interface Stanek {
   /**
    * Remove fragment at location.
    * @remarks
-   * RAM cost: cost: 0.15 GB
+   * RAM cost: 0.15 GB
    *
    * @param rootX - X against which to align the top left of the fragment.
    * @param rootY - Y against which to align the top left of the fragment.
@@ -4010,7 +4013,7 @@ interface UserInterface {
   /**
    * Get the current theme
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    *
    * @returns An object containing the theme's colors
    */
@@ -4019,7 +4022,7 @@ interface UserInterface {
   /**
    * Sets the current theme
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    * @example
    * Usage example (NS2)
    * ```ts
@@ -4033,14 +4036,14 @@ interface UserInterface {
   /**
    * Resets the player's theme to the default values
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    */
   resetTheme(): void;
 
   /**
    * Get the current styles
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    *
    * @returns An object containing the player's styles
    */
@@ -4049,7 +4052,7 @@ interface UserInterface {
   /**
    * Sets the current styles
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    * @example
    * Usage example (NS2)
    * ```ts
@@ -4063,9 +4066,16 @@ interface UserInterface {
   /**
    * Resets the player's styles to the default values
    * @remarks
-   * RAM cost: cost: 0 GB
+   * RAM cost: 0 GB
    */
   resetStyles(): void;
+
+  /**
+   * Gets the current game information (version, commit, ...)
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  getGameInfo(): GameInfo;
 }
 
 /**
@@ -4190,13 +4200,11 @@ export interface NS extends Singularity {
    * ```ts
    * // NS1:
    * var earnedMoney = hack("foodnstuff");
-   * earnedMoney = earnedMoney + hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
    * ```
    * @example
    * ```ts
    * // NS2:
    * let earnedMoney = await ns.hack("foodnstuff");
-   * earnedMoney += await ns.hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
    * ```
    * @param host - Hostname of the target server to hack.
    * @param opts - Optional parameters for configuring function behavior.
@@ -4224,16 +4232,14 @@ export interface NS extends Singularity {
    * @example
    * ```ts
    * // NS1:
-   * var availableMoney = getServerMoneyAvailable("foodnstuff");
+   * var currentMoney = getServerMoneyAvailable("foodnstuff");
    * currentMoney = currentMoney * (1 + grow("foodnstuff"));
-   * currentMoney = currentMoney * (1 + grow("foodnstuff", { threads: 5 })); // Only use 5 threads to grow
    * ```
    * @example
    * ```ts
    * // NS2:
-   * let availableMoney = ns.getServerMoneyAvailable("foodnstuff");
+   * let currentMoney = ns.getServerMoneyAvailable("foodnstuff");
    * currentMoney *= (1 + await ns.grow("foodnstuff"));
-   * currentMoney *= (1 + await ns.grow("foodnstuff", { threads: 5 })); // Only use 5 threads to grow
    * ```
    * @param host - Hostname of the target server to grow.
    * @param opts - Optional parameters for configuring function behavior.
@@ -4259,14 +4265,12 @@ export interface NS extends Singularity {
    * // NS1:
    * var currentSecurity = getServerSecurityLevel("foodnstuff");
    * currentSecurity = currentSecurity - weaken("foodnstuff");
-   * currentSecurity = currentSecurity - weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
    * ```
    * @example
    * ```ts
    * // NS2:
    * let currentSecurity = ns.getServerSecurityLevel("foodnstuff");
    * currentSecurity -= await ns.weaken("foodnstuff");
-   * currentSecurity -= await ns.weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
    * ```
    * @param host - Hostname of the target server to weaken.
    * @param opts - Optional parameters for configuring function behavior.
@@ -4452,6 +4456,17 @@ export interface NS extends Singularity {
    * @param args - Value(s) to be printed.
    */
   print(...args: any[]): void;
+
+  /**
+   * Prints a formatted string to the script’s logs.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * see: https://github.com/alexei/sprintf.js
+   * @param format - format of the message
+   * @param args - Value(s) to be printed.
+   */
+  printf(format: string, ...args: any[]): void;
 
   /**
    * Prints one or more values or variables to the Terminal.
@@ -5176,9 +5191,9 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0.1 GB
    *
-   * Returns the server’s instrinsic “growth parameter”. This growth
-   * parameter is a number between 0 and 100 that represents how
-   * quickly the server’s money grows. This parameter affects the
+   * Returns the server’s intrinsic “growth parameter”. This growth
+   * parameter is a number typically between 0 and 100 that represents
+   * how quickly the server’s money grows. This parameter affects the
    * percentage by which the server’s money is increased when using the
    * grow function. A higher growth parameter will result in a
    * higher percentage increase from grow.
@@ -5383,13 +5398,13 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0.3 GB
    *
-   * Running with no args returns curent script.
+   * Running with no args returns current script.
    * If you use a PID as the first parameter, the hostname and args parameters are unnecessary.
    *
    * @param filename - Optional. Filename or PID of the script.
    * @param hostname - Optional. Name of host server the script is running on.
    * @param args  - Arguments to identify the script
-   * @returns info about a running script
+   * @returns The info about the running script if found, and null otherwise.
    */
   getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript;
 
@@ -6067,6 +6082,23 @@ export interface NS extends Singularity {
    * ```
    */
   flags(schema: [string, string | number | boolean | string[]][]): any;
+
+  /**
+   * Share your computer with your factions.
+   * @remarks
+   * RAM cost: 2.4 GB
+   *
+   * Increases your rep gain of hacking contracts while share is called.
+   * Scales with thread count.
+   */
+  share(): Promise<void>;
+
+  /**
+   * Calculate your share power. Based on all the active share calls.
+   * @remarks
+   * RAM cost: 0.2 GB
+   */
+  getSharePower(): number;
 }
 
 /**
@@ -6155,14 +6187,14 @@ export interface OfficeAPI {
   /**
    * Get the cost to unlock research
    * @param divisionName - Name of the division
-   * @param cityName - Name of the city
+   * @param researchName - Name of the research
    * @returns cost
    */
   getResearchCost(divisionName: string, researchName: string): number;
   /**
    * Gets if you have unlocked a research
    * @param divisionName - Name of the division
-   * @param cityName - Name of the city
+   * @param researchName - Name of the research
    * @returns true is unlocked, false if not
    */
   hasResearched(divisionName: string, researchName: string): boolean;
@@ -6231,6 +6263,14 @@ export interface WarehouseAPI {
    * @param enabled - smart supply enabled
    */
   setSmartSupply(divisionName: string, cityName: string, enabled: boolean): void;
+  /**
+   * Set whether smart supply uses leftovers before buying
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param enabled - smart supply use leftovers enabled
+   */
+  setSmartSupplyUseLeftovers(divisionName: string, cityName: string, materialName: string, enabled: boolean): void;
   /**
    * Set material buy data
    * @param divisionName - Name of the division
@@ -6661,7 +6701,7 @@ interface EmployeeJobs {
 interface Division {
   /** Name of the division */
   name: string;
-  /** Type of division, like Aggriculture */
+  /** Type of division, like Agriculture */
   type: string;
   /** Awareness of the division */
   awareness: number;
@@ -6748,4 +6788,14 @@ interface UserInterfaceTheme {
 interface IStyleSettings {
   fontFamily: string;
   lineHeight: number;
+}
+
+/**
+ * Game Information
+ * @internal
+ */
+interface GameInfo {
+  version: string;
+  commit: string;
+  platform: string;
 }

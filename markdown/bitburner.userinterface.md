@@ -16,6 +16,7 @@ interface UserInterface
 
 |  Method | Description |
 |  --- | --- |
+|  [getGameInfo()](./bitburner.userinterface.getgameinfo.md) | Gets the current game information (version, commit, ...) |
 |  [getStyles()](./bitburner.userinterface.getstyles.md) | Get the current styles |
 |  [getTheme()](./bitburner.userinterface.gettheme.md) | Get the current theme |
 |  [resetStyles()](./bitburner.userinterface.resetstyles.md) | Resets the player's styles to the default values |
