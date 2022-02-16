@@ -779,8 +779,7 @@ export function Root(props: IProps): React.ReactElement {
                 {openScripts.map(({ fileName, hostname }, index) => {
                   const editingCurrentScript = currentScript?.fileName === openScripts[index].fileName &&
                     currentScript?.hostname === openScripts[index].hostname
-                  const externalScript = currentScript?.hostname !== 'home'
-                  const scriptFilenameTextColor = externalScript
+                  const externalScript = hostname !== 'home'
                   const colorProps = editingCurrentScript ? {
                     background: Settings.theme.button,
                     borderColor: Settings.theme.button,
@@ -790,6 +789,11 @@ export function Root(props: IProps): React.ReactElement {
                     borderColor: Settings.theme.backgroundsecondary,
                     color: Settings.theme.secondary
                   }
+
+                  if (externalScript) {
+                    colorProps.color = Settings.theme.error
+                  }
+
                   const iconButtonStyle = {
                     maxWidth: "25px",
                     minWidth: "25px",
