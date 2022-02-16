@@ -648,7 +648,7 @@ export function Root(props: IProps): React.ReactElement {
     const serverScriptIndex = server.scripts.findIndex((script) => script.filename === closingScript.fileName);
     if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex as number].code) {
       PromptEvent.emit({
-        txt: "Do you want to save changes to " + closingScript.fileName + "?",
+        txt: `Do you want to save changes to ${closingScript.fileName} on ${closingScript.hostname}?`,
         resolve: (result: boolean) => {
           if (result) {
             // Save changes
@@ -779,20 +779,23 @@ export function Root(props: IProps): React.ReactElement {
                 {openScripts.map(({ fileName, hostname }, index) => {
                   const editingCurrentScript = currentScript?.fileName === openScripts[index].fileName &&
                     currentScript?.hostname === openScripts[index].hostname
+                  const externalScript = currentScript?.hostname !== 'home'
+                  const scriptFilenameTextColor = externalScript
+                  const colorProps = editingCurrentScript ? {
+                    background: Settings.theme.button,
+                    borderColor: Settings.theme.button,
+                    color: Settings.theme.primary
+                  } : {
+                    background: Settings.theme.backgroundsecondary,
+                    borderColor: Settings.theme.backgroundsecondary,
+                    color: Settings.theme.secondary
+                  }
                   const iconButtonStyle = {
                     maxWidth: "25px",
                     minWidth: "25px",
                     minHeight: '38.5px',
                     maxHeight: '38.5px',
-                    ...(editingCurrentScript ? {
-                      background: Settings.theme.button,
-                      borderColor: Settings.theme.button,
-                      color: Settings.theme.primary
-                    } : {
-                      background: Settings.theme.backgroundsecondary,
-                      borderColor: Settings.theme.backgroundsecondary,
-                      color: Settings.theme.secondary
-                    })
+                    ...colorProps
                   };
                   return (
                     <Draggable
@@ -820,15 +823,7 @@ export function Root(props: IProps): React.ReactElement {
                               if (e.button === 1) onTabClose(index);
                             }}
                             style={{
-                              ...(editingCurrentScript ? {
-                                background: Settings.theme.button,
-                                borderColor: Settings.theme.button,
-                                color: Settings.theme.primary
-                              } : {
-                                background: Settings.theme.backgroundsecondary,
-                                borderColor: Settings.theme.backgroundsecondary,
-                                color: Settings.theme.secondary
-                              })
+                              ...colorProps
                             }}
                           >
                             {hostname}:~/{fileName} {dirty(index)}
