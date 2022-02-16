@@ -54,7 +54,7 @@ interface IProps {
   vim: boolean;
 }
 
-// TODO: try to removve global symbols
+// TODO: try to remove global symbols
 let symbolsLoaded = false;
 let symbols: string[] = [];
 export function SetupTextEditor(): void {
@@ -777,12 +777,14 @@ export function Root(props: IProps): React.ReactElement {
                 }}
               >
                 {openScripts.map(({ fileName, hostname }, index) => {
+                  const editingCurrentScript = currentScript?.fileName === openScripts[index].fileName &&
+                    currentScript?.hostname === openScripts[index].hostname
                   const iconButtonStyle = {
                     maxWidth: "25px",
                     minWidth: "25px",
                     minHeight: '38.5px',
                     maxHeight: '38.5px',
-                    ...(currentScript?.fileName === openScripts[index].fileName ? {
+                    ...(editingCurrentScript ? {
                       background: Settings.theme.button,
                       borderColor: Settings.theme.button,
                       color: Settings.theme.primary
@@ -818,7 +820,7 @@ export function Root(props: IProps): React.ReactElement {
                               if (e.button === 1) onTabClose(index);
                             }}
                             style={{
-                              ...(currentScript?.fileName === openScripts[index].fileName ? {
+                              ...(editingCurrentScript ? {
                                 background: Settings.theme.button,
                                 borderColor: Settings.theme.button,
                                 color: Settings.theme.primary
