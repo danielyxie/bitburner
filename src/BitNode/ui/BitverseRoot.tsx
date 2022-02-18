@@ -8,38 +8,34 @@ import { CinematicText } from "../../ui/React/CinematicText";
 import { use } from "../../ui/Context";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
+import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 
 const useStyles = makeStyles(() =>
   createStyles({
-    level0: {
-      color: "red",
+    portal: {
       cursor: "pointer",
+      fontFamily: "inherit",
+      fontSize: "1rem",
+      fontWeight: "bold",
+      lineHeight: 1,
+      padding: 0,
       "&:hover": {
         color: "#fff",
       },
+    },
+    level0: {
+      color: "red",
     },
     level1: {
       color: "yellow",
-      cursor: "pointer",
-      "&:hover": {
-        color: "#fff",
-      },
     },
     level2: {
       color: "#48d1cc",
-      cursor: "pointer",
-      "&:hover": {
-        color: "#fff",
-      },
     },
     level3: {
       color: "blue",
-      cursor: "pointer",
-      "&:hover": {
-        color: "#fff",
-      },
     },
   }),
 );
@@ -71,6 +67,7 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
   if (props.level === 2) {
     cssClass = classes.level2;
   }
+  cssClass = `${classes.portal} ${cssClass}`
 
   return (
     <>
@@ -85,9 +82,13 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
           </Typography>
         }
       >
-        <span onClick={() => setPortalOpen(true)} className={cssClass} aria-label={`enter-bitnode-${bitNode.number.toString()}`}>
-          <b>O</b>
-        </span>
+        <IconButton
+          onClick={() => setPortalOpen(true)}
+          className={cssClass}
+          aria-label={`enter bitnode ${bitNode.number.toString()}`}
+        >
+          O
+        </IconButton>
       </Tooltip>
       <PortalModal
         open={portalOpen}
