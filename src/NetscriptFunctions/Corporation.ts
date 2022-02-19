@@ -438,7 +438,7 @@ export function NetscriptCorporation(
     bulkPurchase: function (adivisionName: any, acityName: any, amaterialName: any, aamt: any): void {
       checkAccess("bulkPurchase", 7);
       const divisionName = helper.string("bulkPurchase", "divisionName", adivisionName);
-      if (!hasResearched(getDivision(adivisionName), "Bulk Purchasing")) throw new Error(`You have not researched Bulk Purchasing in ${adivisionName}`)
+      if (!hasResearched(getDivision(adivisionName), "Bulk Purchasing")) throw new Error(`You have not researched Bulk Purchasing in ${divisionName}`)
       const corporation = getCorporation();
       const cityName = helper.string("bulkPurchase", "cityName", acityName);
       const materialName = helper.string("bulkPurchase", "materialName", amaterialName);
