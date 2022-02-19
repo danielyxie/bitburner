@@ -61,10 +61,10 @@ function BulkPurchaseSection(props: IBPProps): React.ReactElement {
   function bulkPurchase(): void {
     try {
       BulkPurchase(corp, props.warehouse, props.mat, parseFloat(buyAmt));
-      props.onClose();
     } catch (err) {
       dialogBoxCreate(err + "");
     }
+    props.onClose();
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {

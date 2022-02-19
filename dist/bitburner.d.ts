@@ -960,10 +960,12 @@ export declare interface Corporation extends WarehouseAPI, OfficeAPI {
     issueDividends(percent: number): void;
     /**
      * Buyback Shares
+     * @param amt - Number of shares to attempt to buyback.
      */
     buyBackShares(amt: number): void;
     /**
      * Sell Shares
+     * @param amt - Number of shares to attempt to sell.
      */
     sellShares(amt: number): void;
 }

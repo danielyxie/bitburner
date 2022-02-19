@@ -21,7 +21,6 @@ export function NewIndustry(corporation: ICorporation, industry: string, name: s
   for (let i = 0; i < corporation.divisions.length; ++i) {
     if (corporation.divisions[i].name === name) {
       throw new Error("This division name is already in use!");
-      return;
     }
   }
 
@@ -290,9 +289,8 @@ export function BuyBackShares(corporation: ICorporation, player: IPlayer, numSha
   if (numShares < 0) throw new Error("Invalid value for number of shares");
   if (numShares > corporation.issuedShares) throw new Error("You don't have that many shares to buy!");
   if (!corporation.public) throw new Error("You haven't gone public!");
-  if (corporation.funds < (numShares * corporation.sharePrice)) throw new Error("You cant afford that many shares!");
-
   const buybackPrice = corporation.sharePrice * 1.1;
+  if (corporation.funds < (numShares * buybackPrice)) throw new Error("You cant afford that many shares!");
   corporation.numShares += numShares;
   corporation.issuedShares -= numShares;
   player.loseMoney(numShares * buybackPrice, "corporation");

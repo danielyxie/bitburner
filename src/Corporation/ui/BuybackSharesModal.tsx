@@ -40,12 +40,12 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
     if (disabled) return;
     try {
       BuyBackShares(corp, player, shares)
-      props.onClose();
-      props.rerender();
     }
     catch (err) {
       dialogBoxCreate(err + "");
     }
+    props.onClose();
+    props.rerender();
   }
 
   function CostIndicator(): React.ReactElement {
