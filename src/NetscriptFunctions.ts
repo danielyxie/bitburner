@@ -703,7 +703,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     weakenAnalyze: function (threads: any, cores: any = 1): number {
       const coreBonus = 1 + (cores - 1) / 16;
-      return CONSTANTS.ServerWeakenAmount * threads * coreBonus;
+      return CONSTANTS.ServerWeakenAmount * threads * coreBonus * BitNodeMultipliers.ServerWeakenRate;
     },
     share: function (): Promise<void> {
       workerScript.log("share", () => "Sharing this computer.");
