@@ -86,17 +86,19 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
         }
       >
         {Settings.DisableASCIIArt ? (
-          <>
-            <Button onClick={() => setPortalOpen(true)} sx={{ m: 2 }} aria-label={`enter-bitnode-${bitNode.number.toString()}`}>
-              <Typography>Enter Bitnode {bitNode.number.toString()}</Typography>
-            </Button>
-            <br/>
-          </>
+          <Button
+            onClick={() => setPortalOpen(true)}
+            sx={{ m: 2 }}
+            aria-description={bitNode.desc}
+          >
+            <Typography>BitNode-{bitNode.number.toString()}: {bitNode.name}</Typography>
+          </Button>
         ) : (
           <IconButton
             onClick={() => setPortalOpen(true)}
             className={cssClass}
-            aria-label={`enter bitnode ${bitNode.number.toString()}`}
+            aria-label={`BitNode-${bitNode.number.toString()}: ${bitNode.name}`}
+            aria-description={bitNode.desc}
           >
             O
           </IconButton>
@@ -111,6 +113,10 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
         destroyedBitNode={props.destroyedBitNode}
         flume={props.flume}
       />
+
+      {Settings.DisableASCIIArt && (
+        <br/>
+      )}
     </>
   );
 }
