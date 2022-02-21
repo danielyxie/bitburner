@@ -111,6 +111,10 @@ value if you are trying to weaken() it.
 Backdoors
 ^^^^^^^^^
 Servers that have been hacked can have backdoors installed. These backdoors
-will provide you with a benefit. The services may be cheaper, penalties may
+will provide you with a benefit; the services may be cheaper, penalties may
 be reduced or there may be other results. Honeypots exist and will let factions
-know when you have succeeded at backdooring their system. 
+know when you have succeeded at backdooring their system. Once you have a 
+backdoor installed, you can connect directly that a server. 
+
+When you visit a location in the city and see that the name is partially scrambled,
+this indicates that you have backdoored the server related to the location. 
