@@ -1,3 +1,5 @@
+NOTE: Forking this project is prohibited under the terms of this license.
+
 LIMITED USE SOFTWARE LICENSE AGREEMENT
 
 This Limited Use Software License Agreement (the "Agreement") is a legal agreement between you, the end-user, and Daniel Y Xie,
