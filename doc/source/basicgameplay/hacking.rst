@@ -107,3 +107,10 @@ starting security, rounded to the nearest integer. To be more precise::
 
 This means that a server's security level will not fall below this
 value if you are trying to weaken() it.
+
+Backdoors
+^^^^^^^^^
+Servers that have been hacked can have backdoors installed. These backdoors
+will provide you with a benefit. The services may be cheaper, penalties may
+be reduced or there may be other results. Honeypots exist and will let factions
+know when you have succeeded at backdooring their system. 
