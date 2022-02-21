@@ -35,3 +35,10 @@ Contributor's License Agreement will be drawn up in the future.
 
 If you would like to make significant contributions to the project as a
 collaborator, please reach out to @danielyxie to help coordinate the effort.
+
+# Unmaintained
+
+This software is unmaintained due to the appallingly poor decision to release
+game on Steam without hydrofluke considering that he wasn't prepared to
+handle the increased interest. Killed by your own success, like so many other
+FOSS (and non-FOSS) projects.
