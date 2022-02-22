@@ -7,7 +7,7 @@ these companies, you can apply for jobs.
 
 Working a job lets you earn money, experience, and reputation with that company.
 
-While working for a company, you can click "Do something else simultaneously" be able 
+While working for a company, you can click "Do something else simultaneously" to be able 
 to do things while you continue to work in the background. There is a 20% penalty the 
 related gains. Clicking the "Focus" button under the overview will return you to the 
 current work.   
