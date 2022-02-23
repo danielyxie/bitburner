@@ -46,7 +46,7 @@ export function getUpgradeHomeCoresCost(this: IPlayer): number {
 
 export function createHacknetServer(this: IPlayer): HacknetServer {
   const numOwned = this.hacknetNodes.length;
-  const name = `hacknet-node-${numOwned}`;
+  const name = `hacknet-server-${numOwned}`;
   const server = new HacknetServer({
     adminRights: true,
     hostname: name,
