@@ -339,24 +339,23 @@ export const achievements: IMap<Achievement> = {
   FIRST_HACKNET_NODE: {
     ...achievementData["FIRST_HACKNET_NODE"],
     Icon: "node",
-    Condition: () => !hasHacknetServers(Player) && Player.hacknetNodes.length > 0,
+    Condition: () => Player.hacknetNodes.length > 0,
   },
   "30_HACKNET_NODE": {
     ...achievementData["30_HACKNET_NODE"],
     Icon: "hacknet-all",
-    Condition: () => !hasHacknetServers(Player) && Player.hacknetNodes.length >= 30,
+    Condition: () => Player.hacknetNodes.length >= 30,
   },
   MAX_HACKNET_NODE: {
     ...achievementData["MAX_HACKNET_NODE"],
     Icon: "hacknet-max",
     Condition: (): boolean => {
-      if (hasHacknetServers(Player)) return false;
       for (const h of Player.hacknetNodes) {
-        if (!(h instanceof HacknetNode)) return false;
+        if (!(h instanceof HacknetNode) || !(h instanceof HacknetServer)) return false;
         if (
-          h.ram === HacknetNodeConstants.MaxRam &&
-          h.cores === HacknetNodeConstants.MaxCores &&
-          h.level === HacknetNodeConstants.MaxLevel
+          h.ram >= HacknetNodeConstants.MaxRam &&
+          h.cores >= HacknetNodeConstants.MaxCores &&
+          h.level >= HacknetNodeConstants.MaxLevel
         )
           return true;
       }
@@ -366,7 +365,7 @@ export const achievements: IMap<Achievement> = {
   HACKNET_NODE_10M: {
     ...achievementData["HACKNET_NODE_10M"],
     Icon: "hacknet-10m",
-    Condition: () => !hasHacknetServers(Player) && Player.moneySourceB.hacknet >= 10e6,
+    Condition: () => Player.moneySourceB.hacknet >= 10e6,
   },
   REPUTATION_10M: {
     ...achievementData["REPUTATION_10M"],
