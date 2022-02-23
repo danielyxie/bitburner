@@ -114,6 +114,7 @@
     "lint": "eslint --fix . --ext js,jsx,ts,tsx",
     "lint:report": "eslint --ext js,jsx,ts,tsx .",
     "preinstall": "node ./tools/engines-check/engines-check.js",
+    "postinstall": "cd electron && npm install",
     "test": "jest",
     "test:watch": "jest --watch",
     "watch": "webpack --watch --mode production",
