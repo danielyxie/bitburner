@@ -130,7 +130,7 @@
     "MONEY_1Q": {
       "ID": "MONEY_1Q",
       "Name": "Here comes the money!",
-      "Description": "Have $1Q on your home computer."
+      "Description": "Have $1Q (Quintillion) on your home computer."
     },
     "MONEY_M1B": {
       "ID": "MONEY_M1B",
@@ -210,7 +210,7 @@
     "STOCK_1q": {
       "ID": "STOCK_1q",
       "Name": "Wolf of wall street.",
-      "Description": "Make 1q on the stock market."
+      "Description": "Make 1q (quadrillion) on the stock market."
     },
     "DISCOUNT": {
       "ID": "DISCOUNT",
