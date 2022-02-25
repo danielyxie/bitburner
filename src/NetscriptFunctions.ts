@@ -2279,7 +2279,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (typeof f !== "function") {
         throw makeRuntimeErrorMsg("atExit", "argument should be function");
       }
-      workerScript.atExit = f;
+      workerScript.atExit = () => { f(); }; // Wrap the user function to prevent WorkerScript leaking as 'this'
     },
     mv: function (host: string, source: string, destination: string): void {
       updateDynamicRam("mv", getRamCost(Player, "mv"));
