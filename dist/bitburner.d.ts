@@ -668,7 +668,7 @@ export declare interface Bladeburner {
      * For example, if an action takes 30 seconds to complete but you’ve accumulated over
      * 30 seconds in bonus time, then the action will only take 6 seconds in real life to complete.
      *
-     * @returns Amount of accumulated “bonus time” (milliseconds) for the Bladeburner mechanic.
+     * @returns Amount of accumulated “bonus time” (seconds) for the Bladeburner mechanic.
      */
     getBonusTime(): number;
 }
