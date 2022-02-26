@@ -24,8 +24,15 @@
     "buildResources": "public"
   },
   "dependencies": {
+    "electron": "^17.1.0",
     "electron-config": "^2.0.0",
     "electron-log": "^4.4.4",
     "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  },
+  "scripts": {
+    "install-electron": "npx cross-env ELECTRON_GET_USE_PROXY=true GLOBAL_AGENT_HTTPS_PROXY=http://bos-proxy.ext.ray.com:80/ npm install electron"
   }
 }

@@ -109,7 +109,7 @@ export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, h
       numCycleForGrowth(server: any, growth: number, player: any, cores = 1): number {
         checkFormulasAccess("hacking.numCycleForGrowth");
         return numCycleForGrowth(server, growth, player, cores);
-      },
+      }
     },
     hacknetNodes: {
       moneyGainRate: function (_level: unknown, _ram: unknown, _cores: unknown, _mult: unknown = 1): number {

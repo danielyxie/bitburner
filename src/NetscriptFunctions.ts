@@ -95,6 +95,7 @@ import { SnackbarEvents } from "./ui/React/Snackbar";
 import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
+import { work } from "./PersonObjects/Player/PlayerObjectGeneralMethods";
 
 interface NS extends INS {
   [key: string]: any;
