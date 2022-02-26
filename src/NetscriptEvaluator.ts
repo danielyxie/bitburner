@@ -1,6 +1,7 @@
 import { isString } from "./utils/helpers/isString";
 import { GetServer } from "./Server/AllServers";
 import { WorkerScript } from "./Netscript/WorkerScript";
+import { IPlayer } from "./PersonObjects/IPlayer";
 
 export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
   if (workerScript.delayReject) workerScript.delayReject();
@@ -53,6 +54,31 @@ export function resolveNetscriptRequestedThreads(
     );
   }
   return requestedThreadsAsInt;
+}
+
+export function resolveNetscriptHackOverride(
+  workerScript: WorkerScript,
+  functionName: string,
+  player: IPlayer,
+  hackOverride: number,
+): number {
+  if (!hackOverride) {
+    return isNaN(hackOverride) || player.hacking < 1 ? 1 : player.hacking;
+  }
+  const hackOverrideAsInt = hackOverride | 0;
+  if (isNaN(hackOverride) || hackOverrideAsInt < 1) {
+    throw makeRuntimeRejectMsg(
+      workerScript,
+      `Invalid hack override passed to ${functionName}: ${hackOverride}. Override must be a positive number.`,
+    );
+  }
+  if (hackOverrideAsInt > player.hacking) {
+    throw makeRuntimeRejectMsg(
+      workerScript,
+      `Hack override requested by ${functionName} exceeds the players hacking skill. Requested: ${hackOverride}. Has: ${player.hacking}.`,
+    );
+  }
+  return hackOverrideAsInt;
 }
 
 export function isScriptErrorMessage(msg: string): boolean {
