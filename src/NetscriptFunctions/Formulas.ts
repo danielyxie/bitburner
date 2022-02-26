@@ -25,8 +25,11 @@ import {
   calculatePercentMoneyHacked,
   calculateHackingTime,
   calculateGrowTime,
-  calculateWeakenTime,
+  calculateWeakenTime
 } from "../Hacking";
+import {
+  numCycleForGrowth
+} from "../Server/ServerHelpers";
 import { Programs } from "../Programs/Programs";
 import { Formulas as IFormulas } from "../ScriptEditor/NetscriptDefinitions";
 import {
@@ -78,18 +81,22 @@ export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, h
         checkFormulasAccess("hacking.growPercent");
         return calculateServerGrowth(server, threads, player, cores);
       },
-      hackTime: function (server: any, player: any): number {
+      hackTime: function (server: any, player: any, hackOverride?: number): number {
         checkFormulasAccess("hacking.hackTime");
-        return calculateHackingTime(server, player) * 1000;
+        return calculateHackingTime(server, player, hackOverride) * 1000;
       },
-      growTime: function (server: any, player: any): number {
+      growTime: function (server: any, player: any, hackOverride?: number): number {
         checkFormulasAccess("hacking.growTime");
-        return calculateGrowTime(server, player) * 1000;
+        return calculateGrowTime(server, player, hackOverride) * 1000;
       },
-      weakenTime: function (server: any, player: any): number {
+      weakenTime: function (server: any, player: any, hackOverride?: number): number {
         checkFormulasAccess("hacking.weakenTime");
-        return calculateWeakenTime(server, player) * 1000;
+        return calculateWeakenTime(server, player, hackOverride) * 1000;
       },
+	  numCycleForGrowth(server: any, growth: number, player: any, cores = 1): number {
+		checkFormulasAccess("hacking.numCycleForGrowth");
+		return numCycleForGrowth(server, growth, player, cores);
+	  }
     },
     hacknetNodes: {
       moneyGainRate: function (_level: unknown, _ram: unknown, _cores: unknown, _mult: unknown = 1): number {

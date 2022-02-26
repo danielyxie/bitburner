@@ -49,7 +49,11 @@ import { NetscriptPorts, runScriptFromScript } from "./NetscriptWorker";
 import { killWorkerScript } from "./Netscript/killWorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScript } from "./Netscript/WorkerScript";
-import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads } from "./NetscriptEvaluator";
+import { makeRuntimeRejectMsg, 
+  netscriptDelay,
+  resolveNetscriptRequestedThreads,
+  resolveNetscriptHackOverride 
+} from "./NetscriptEvaluator";
 
 import { numeralWrapper } from "./ui/numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
@@ -90,6 +94,7 @@ import { SnackbarEvents } from "./ui/React/Snackbar";
 import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
+import { work } from "./PersonObjects/Player/PlayerObjectGeneralMethods";
 
 interface NS extends INS {
   [key: string]: any;
@@ -315,7 +320,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     }
   };
 
-  const hack = function (hostname: any, manual: any, { threads: requestedThreads, stock }: any = {}): Promise<number> {
+  const hack = function (hostname: any, manual: any, { threads: requestedThreads, stock, hackOverride: requestedHackOverride }: any = {}): Promise<number> {
     if (hostname === undefined) {
       throw makeRuntimeErrorMsg("hack", "Takes 1 argument.");
     }
@@ -326,7 +331,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     }
 
     // Calculate the hacking time
-    const hackingTime = calculateHackingTime(server, Player); // This is in seconds
+    const hackSkill = resolveNetscriptHackOverride(workerScript, "hack", Player, requestedHackOverride);
+    const hackingTime = calculateHackingTime(server, Player, hackSkill); // This is in seconds
 
     // No root access or skill level too low
     const canHack = netscriptCanHack(server, Player);
@@ -511,9 +517,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       workerScript.log("scan", () => `returned ${server.serversOnNetwork.length} connections for ${server.hostname}`);
       return out;
     },
-    hack: function (hostname: any, { threads: requestedThreads, stock }: any = {}): any {
+    hack: function (hostname: any, { threads: requestedThreads, stock, hackOverride: requestedHackOverride }: any = {}): any {
       updateDynamicRam("hack", getRamCost(Player, "hack"));
-      return hack(hostname, false, { threads: requestedThreads, stock: stock });
+      return hack(hostname, false, { threads: requestedThreads, stock: stock, hackOverride: requestedHackOverride });
     },
     hackAnalyzeThreads: function (hostname: any, hackAmount: any): any {
       updateDynamicRam("hackAnalyzeThreads", getRamCost(Player, "hackAnalyzeThreads"));
@@ -589,7 +595,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       workerScript.log("asleep", () => `Sleeping for ${time} milliseconds`);
       return new Promise((resolve) => setTimeout(resolve, time));
     },
-    grow: function (hostname: any, { threads: requestedThreads, stock }: any = {}): any {
+    grow: function (hostname: any, { threads: requestedThreads, stock, hackOverride: requestedHackOverride }: any = {}): any {
       updateDynamicRam("grow", getRamCost(Player, "grow"));
       const threads = resolveNetscriptRequestedThreads(workerScript, "grow", requestedThreads);
       if (hostname === undefined) {
@@ -612,7 +618,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("grow", canHack.msg || "");
       }
 
-      const growTime = calculateGrowTime(server, Player);
+      const hackSkill = resolveNetscriptHackOverride(workerScript, "hack", Player, requestedHackOverride);
+      const growTime = calculateGrowTime(server, Player, hackSkill);
       workerScript.log(
         "grow",
         () =>
@@ -663,7 +670,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("growthAnalyzeSecurity", getRamCost(Player, "growthAnalyzeSecurity"));
       return 2 * CONSTANTS.ServerFortifyAmount * threads;
     },
-    weaken: function (hostname: any, { threads: requestedThreads }: any = {}): any {
+    weaken: function (hostname: any, { threads: requestedThreads, hackOverride: requestedHackOverride }: any = {}): any {
       updateDynamicRam("weaken", getRamCost(Player, "weaken"));
       const threads = resolveNetscriptRequestedThreads(workerScript, "weaken", requestedThreads);
       if (hostname === undefined) {
@@ -681,7 +688,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("weaken", canHack.msg || "");
       }
 
-      const weakenTime = calculateWeakenTime(server, Player);
+      const hackSkill = resolveNetscriptHackOverride(workerScript, "hack", Player, requestedHackOverride);
+      const weakenTime = calculateWeakenTime(server, Player, hackSkill);
       workerScript.log(
         "weaken",
         () =>
@@ -2037,7 +2045,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         threads: runningScript.threads,
       };
     },
-    getHackTime: function (hostname: any): any {
+    getHackTime: function (hostname: any, hackOverride?: number): any {
       updateDynamicRam("getHackTime", getRamCost(Player, "getHackTime"));
       const server = safeGetServer(hostname, "getHackTime");
       if (!(server instanceof Server)) {
@@ -2048,9 +2056,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         return Infinity;
       }
 
-      return calculateHackingTime(server, Player) * 1000;
+      return calculateHackingTime(server, Player, hackOverride) * 1000;
     },
-    getGrowTime: function (hostname: any): any {
+    getGrowTime: function (hostname: any, hackOverride?: number): any {
       updateDynamicRam("getGrowTime", getRamCost(Player, "getGrowTime"));
       const server = safeGetServer(hostname, "getGrowTime");
       if (!(server instanceof Server)) {
@@ -2061,9 +2069,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         return Infinity;
       }
 
-      return calculateGrowTime(server, Player) * 1000;
+      return calculateGrowTime(server, Player, hackOverride) * 1000;
     },
-    getWeakenTime: function (hostname: any = workerScript.hostname): any {
+    getWeakenTime: function (hostname: any = workerScript.hostname, hackOverride?: number): any {
       updateDynamicRam("getWeakenTime", getRamCost(Player, "getWeakenTime"));
       const server = safeGetServer(hostname, "getWeakenTime");
       if (!(server instanceof Server)) {
@@ -2074,7 +2082,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         return Infinity;
       }
 
-      return calculateWeakenTime(server, Player) * 1000;
+      return calculateWeakenTime(server, Player, hackOverride) * 1000;
     },
     getScriptIncome: function (scriptname?: any, hostname?: any, ...args: any[]): any {
       updateDynamicRam("getScriptIncome", getRamCost(Player, "getScriptIncome"));

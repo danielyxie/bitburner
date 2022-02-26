@@ -63,15 +63,16 @@ export function calculatePercentMoneyHacked(server: Server, player: IPlayer): nu
 /**
  * Returns time it takes to complete a hack on a server, in seconds
  */
-export function calculateHackingTime(server: Server, player: IPlayer): number {
+export function calculateHackingTime(server: Server, player: IPlayer, hackOverride?: number): number {
   const difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
+  const hackSkill = hackOverride ? hackOverride : player.hacking;
 
   const baseDiff = 500;
   const baseSkill = 50;
   const diffFactor = 2.5;
   let skillFactor = diffFactor * difficultyMult + baseDiff;
   // tslint:disable-next-line
-  skillFactor /= player.hacking + baseSkill;
+  skillFactor /= hackSkill + baseSkill;
 
   const hackTimeMultiplier = 5;
   const hackingTime =
@@ -84,17 +85,17 @@ export function calculateHackingTime(server: Server, player: IPlayer): number {
 /**
  * Returns time it takes to complete a grow operation on a server, in seconds
  */
-export function calculateGrowTime(server: Server, player: IPlayer): number {
+export function calculateGrowTime(server: Server, player: IPlayer, hackOverride?: number): number {
   const growTimeMultiplier = 3.2; // Relative to hacking time. 16/5 = 3.2
 
-  return growTimeMultiplier * calculateHackingTime(server, player);
+  return growTimeMultiplier * calculateHackingTime(server, player, hackOverride);
 }
 
 /**
  * Returns time it takes to complete a weaken operation on a server, in seconds
  */
-export function calculateWeakenTime(server: Server, player: IPlayer): number {
+export function calculateWeakenTime(server: Server, player: IPlayer, hackOverride?: number): number {
   const weakenTimeMultiplier = 4; // Relative to hacking time
 
-  return weakenTimeMultiplier * calculateHackingTime(server, player);
+  return weakenTimeMultiplier * calculateHackingTime(server, player, hackOverride);
 }
