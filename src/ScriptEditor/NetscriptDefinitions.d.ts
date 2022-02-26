@@ -3672,23 +3672,36 @@ interface HackingFormulas {
    * Calculate hack time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @param hackOverride - Optional value to override the player's hack skill for timing purposes
    * @returns The calculated hack time.
    */
-  hackTime(server: Server, player: Player): number;
+  hackTime(server: Server, player: Player, hackOverride?: number): number;
   /**
    * Calculate grow time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @param hackOverride - Optional value to override the player's hack skill for timing purposes
    * @returns The calculated grow time.
    */
-  growTime(server: Server, player: Player): number;
+  growTime(server: Server, player: Player, hackOverride?: number): number;
   /**
    * Calculate weaken time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @param hackOverride - Optional value to override the player's hack skill for timing purposes
    * @returns The calculated weaken time.
    */
-  weakenTime(server: Server, player: Player): number;
+  weakenTime(server: Server, player: Player, hackOverride?: number): number;
+  /**
+   * Calculate threads needed to grow a server by a % amount.
+   * (Ex: growth:3.0 return the threads to grow the server by 300%.)
+   * @param server - Server info from {@link NS.getServer | getServer}
+   * @param growth - The grow percent.
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @param cores - Number of cores on the computer that will execute grow.
+   * @returns The calculated number of threads.
+   */
+  numCycleForGrowth(server: any, growth: number, player: any, cores?: number): number;
 }
 
 /**
@@ -5734,13 +5747,14 @@ export interface NS extends Singularity {
    * RAM cost: 0.05 GB
    *When `hack` completes an amount of money is stolen depending on the player's skills.
    * Returns the amount of time in milliseconds it takes to execute the hack Netscript function on the target server.
-   * The function takes in an optional hackLvl parameter that can be specified to see what the hack time would be at different hacking levels.
+   * The function takes in an optional hackOverride parameter that can be specified to see what the hack time would be at different hacking levels.
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
+   * @param hackOverride - Player hack level override for timing purposes.
    * @returns Returns the amount of time in milliseconds it takes to execute the hack Netscript function. Returns Infinity if called on a Hacknet Server.
    */
-  getHackTime(host: string): number;
+  getHackTime(host: string, hackOverride?: number): number;
 
   /**
    * Get the execution time of a grow() call.
@@ -5748,13 +5762,14 @@ export interface NS extends Singularity {
    * RAM cost: 0.05 GB
    *
    * Returns the amount of time in milliseconds it takes to execute the grow Netscript function on the target server.
-   * The function takes in an optional hackLvl parameter that can be specified to see what the grow time would be at different hacking levels.
+   * The function takes in an optional hackOverride parameter that can be specified to see what the grow time would be at different hacking levels.
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
+   * @param hackOverride - Player hack level override for timing purposes.
    * @returns Returns the amount of time in milliseconds it takes to execute the grow Netscript function. Returns Infinity if called on a Hacknet Server.
    */
-  getGrowTime(host: string): number;
+  getGrowTime(host: string, hackOverride?: number): number;
 
   /**
    * Get the execution time of a weaken() call.
@@ -5762,13 +5777,14 @@ export interface NS extends Singularity {
    * RAM cost: 0.05 GB
    *
    * Returns the amount of time in milliseconds it takes to execute the weaken Netscript function on the target server.
-   * The function takes in an optional hackLvl parameter that can be specified to see what the weaken time would be at different hacking levels.
+   * The function takes in an optional hackOverride parameter that can be specified to see what the weaken time would be at different hacking levels.
    * The required time is increased by the security level of the target server and decreased by the player's hacking level.
    *
    * @param host - Host of target server.
+   * @param hackOverride - Player hack level override for timing purposes.
    * @returns Returns the amount of time in milliseconds it takes to execute the weaken Netscript function. Returns Infinity if called on a Hacknet Server.
    */
-  getWeakenTime(host: string): number;
+  getWeakenTime(host: string, hackOverride?: number): number;
 
   /**
    * Get the income of a script.
