@@ -60,13 +60,13 @@ export function resolveNetscriptHackOverride(
   workerScript: WorkerScript,
   functionName: string,
   player: IPlayer,
-  hackOverride: number,
+  hackOverride: number | undefined,
 ): number {
-  if (!hackOverride) {
-    return isNaN(hackOverride) || player.hacking < 1 ? 1 : player.hacking;
-  }
+  if (hackOverride === undefined || isNaN(hackOverride))
+    return player.hacking;
+
   const hackOverrideAsInt = hackOverride | 0;
-  if (isNaN(hackOverride) || hackOverrideAsInt < 1) {
+  if (hackOverrideAsInt < 1) {
     throw makeRuntimeRejectMsg(
       workerScript,
       `Invalid hack override passed to ${functionName}: ${hackOverride}. Override must be a positive number.`,
