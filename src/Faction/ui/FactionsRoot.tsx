@@ -75,6 +75,15 @@ export function FactionsRoot(props: IProps): React.ReactElement {
                       <Button onClick={() => openFaction(Factions[faction])}>Details</Button>
                     </Box>
                   </TableCell>
+                  <TableCell align="right">
+                    <Typography noWrap ml={2} mb={1}>
+                      Augmentations Left: {Factions[faction]
+                        .augmentations
+                        .filter((augmentation: string) =>
+                          !props.player.hasAugmentation(augmentation))
+                        .length}
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
