@@ -110,7 +110,7 @@ value if you are trying to weaken() it.
 
 Backdoors
 ^^^^^^^^^
-Servers that have been hacked can have backdoors installed. These backdoors
+Servers that can be hacked can also have backdoors installed. These backdoors
 will provide you with a benefit; the services may be cheaper, penalties may
 be reduced or there may be other results. Honeypots exist and will let factions
 know when you have succeeded at backdooring their system. Once you have a 
