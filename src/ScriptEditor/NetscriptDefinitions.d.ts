@@ -5112,8 +5112,8 @@ export interface NS extends Singularity {
    * @example
    * ```ts
    * // NS1:
-   * const scripts = ps("home");
-   * for (let i = 0; i < scripts.length; ++i) {
+   * var scripts = ps("home");
+   * for (var i = 0; i < scripts.length; ++i) {
    *     tprint(scripts[i].filename + ' ' + scripts[i].threads);
    *     tprint(scripts[i].args);
    * }
@@ -5122,8 +5122,8 @@ export interface NS extends Singularity {
    * ```ts
    * // NS2:
    * const ps = ns.ps("home");
-   * for (script of ps) {
-   *     ns.tprint(`${script.filename} ${ps[i].threads}`);
+   * for (let script of ps) {
+   *     ns.tprint(`${script.filename} ${script.threads}`);
    *     ns.tprint(script.args);
    * }
    * ```
