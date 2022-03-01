@@ -65,20 +65,19 @@ export function resolveNetscriptHackOverride(
   if (hackOverride === undefined || isNaN(hackOverride))
     return player.hacking;
 
-  const hackOverrideAsInt = hackOverride | 0;
-  if (hackOverrideAsInt < 1) {
+  if ((hackOverride | 0) <= 0) {
     throw makeRuntimeRejectMsg(
       workerScript,
       `Invalid hack override passed to ${functionName}: ${hackOverride}. Override must be a positive number.`,
     );
   }
-  if (hackOverrideAsInt > player.hacking) {
+  if (hackOverride > player.hacking) {
     throw makeRuntimeRejectMsg(
       workerScript,
       `Hack override requested by ${functionName} exceeds the players hacking skill. Requested: ${hackOverride}. Has: ${player.hacking}.`,
     );
   }
-  return hackOverrideAsInt;
+  return hackOverride;
 }
 
 export function isScriptErrorMessage(msg: string): boolean {
