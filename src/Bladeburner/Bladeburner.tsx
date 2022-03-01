@@ -2083,7 +2083,7 @@ export class Bladeburner implements IBladeburner {
       this.startAction(player, actionId);
       workerScript.log(
         "bladeburner.startAction",
-        () => `Starting bladeburner action with type '${type}' and name ${name}"`,
+        () => `Starting bladeburner action with type '${type}' and name '${name}'`,
       );
       return true;
     } catch (e: any) {
