@@ -27,6 +27,8 @@ import Tooltip from "@mui/material/Tooltip";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 
 interface IProps {
   corp: ICorporation;
@@ -36,6 +38,14 @@ interface IProps {
   player: IPlayer;
   rerender: () => void;
 }
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    retainHeight: {
+      minHeight: '3em',
+    },
+  })
+);
 
 function WarehouseRoot(props: IProps): React.ReactElement {
   const corp = useCorporation();
@@ -55,6 +65,8 @@ function WarehouseRoot(props: IProps): React.ReactElement {
     corp.funds = corp.funds - sizeUpgradeCost;
     props.rerender();
   }
+
+  const classes = useStyles();
 
   // Current State:
   let stateText;
@@ -158,7 +170,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
       </Typography>
       <br />
 
-      <Typography>{stateText}</Typography>
+      <Typography className={classes.retainHeight}>{stateText}</Typography>
 
       {corp.unlockUpgrades[1] && (
         <>
