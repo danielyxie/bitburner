@@ -898,42 +898,75 @@ export interface GangTerritory {
  * @public
  */
 export interface GangMemberInfo {
+  /** Name of the gang member */
   name: string;
-  task: string;
+  /** Currently assigned task */
+  task: string;  
   earnedRespect: number;
+  
+  /** Hack skill level */
   hack: number;
+  /** Strength skill level */
   str: number;
+  /** Defense skill level */
   def: number;
+  /** Dexterity skill level */
   dex: number;
+  /** Agility skill level */
   agi: number;
+  /** Charisma skill level */
   cha: number;
 
+  /** Current hack experience */
   hack_exp: number;
+  /** Current strength experience */
   str_exp: number;
+  /** Current defense experience */
   def_exp: number;
+  /** Current dexterity experience */
   dex_exp: number;
+  /** Current agility experience */
   agi_exp: number;
+  /** Current charisma experience */
   cha_exp: number;
 
+  /** Hack multiplier from equipment */
   hack_mult: number;
+  /** Strength multiplier from equipment */
   str_mult: number;
+  /** Defense multiplier from equipment */
   def_mult: number;
+  /** Dexterity multiplier from equipment */
   dex_mult: number;
+  /** Agility multiplier from equipment */
   agi_mult: number;
+  /** Charisma multiplier from equipment */
   cha_mult: number;
 
+  /** Hack multiplier from ascensions */
   hack_asc_mult: number;
+  /** Strength multiplier from ascensions */
   str_asc_mult: number;
+  /** Defense multiplier from ascensions */
   def_asc_mult: number;
+  /** Dexterity multiplier from ascensions */
   dex_asc_mult: number;
+  /** Agility multiplier from ascensions */
   agi_asc_mult: number;
+  /** Charisma multiplier from ascensions */
   cha_asc_mult: number;
 
+  /** Total earned hack experience */
   hack_asc_points: number;
+  /** Total earned strength experience */
   str_asc_points: number;
+  /** Total earned defense experience */
   def_asc_points: number;
+  /** Total earned dexterity experience */
   dex_asc_points: number;
+  /** Total earned agility experience */
   agi_asc_points: number;
+  /** Total earned charisma experience */
   cha_asc_points: number;
 
   upgrades: string[];
