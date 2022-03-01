@@ -52,8 +52,6 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
         availableAugs.push(aug);
       }
     }
-
-    return availableAugs;
   }
 
   for (const facName of p.factions) {
