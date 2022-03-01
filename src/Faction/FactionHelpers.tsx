@@ -7,6 +7,7 @@ import { CONSTANTS } from "../Constants";
 
 import { Faction } from "./Faction";
 import { Factions } from "./Factions";
+import { FactionInfos } from "./FactionInfo";
 import { Player } from "../Player";
 import { Settings } from "../Settings/Settings";
 import {
@@ -18,42 +19,6 @@ import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";
-
-const factionOrder = [
-  "CyberSec",
-  "Tian Di Hui",
-  "Netburners",
-  "Sector-12",
-  "Chongqing",
-  "New Tokyo",
-  "Ishima",
-  "Aevum",
-  "Volhaven",
-  "NiteSec",
-  "The Black Hand",
-  "BitRunners",
-  "ECorp",
-  "MegaCorp",
-  "KuaiGong International",
-  "Four Sigma",
-  "NWO",
-  "Blade Industries",
-  "OmniTek Incorporated",
-  "Bachman & Associates",
-  "Clarke Incorporated",
-  "Fulcrum Secret Technologies",
-  "Slum Snakes",
-  "Tetrads",
-  "Silhouette",
-  "Speakers for the Dead",
-  "The Dark Army",
-  "The Syndicate",
-  "The Covenant",
-  "Daedalus",
-  "Illuminati",
-  "Bladeburners",
-  "Church of the Machine God",
-]
 
 export function inviteToFaction(faction: Faction): void {
   Player.receiveInvite(faction.name);
@@ -67,6 +32,7 @@ export function joinFaction(faction: Faction): void {
   if (faction.isMember) return;
   faction.isMember = true;
   Player.factions.push(faction.name);
+  const factionOrder = Object.keys(FactionInfos);
   Player.factions.sort((a, b) =>
     factionOrder.indexOf(a) - factionOrder.indexOf(b));
   const factionInfo = faction.getInfo();
