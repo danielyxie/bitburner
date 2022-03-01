@@ -4134,7 +4134,7 @@ interface UserInterface {
  *  ns.getHostname();
  *  // Some related functions are gathered under a sub-property of the ns object
  *  ns.stock.getPrice();
- *  // Some functions need to be await ed
+ *  // Some functions need to be awaited
  *  await ns.hack('n00dles');
  * }
  * ```
