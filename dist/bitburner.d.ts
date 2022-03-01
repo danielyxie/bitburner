@@ -111,7 +111,11 @@ export declare interface BasicHGWOptions {
     /** Override hack skill level for purposes of HGW timing. Must be less than or equal to the player's hack level. */
     hackOverrideTiming?: number;
     /** Override hack skill level for purposes of HGW effect. Must be less than or equal to the player's hack level. 
+<<<<<<< HEAD
     *    Only affects magnitude of hack operations*/
+=======
+		 *    Only affects magnitude of hack operations*/
+>>>>>>> 566d2b82 (added parameter to lock in hack level for hack operation effect. Added formulas API functions to retrieve target hack level for an operation given a time in ms)
     hackOverrideEffect?: number;
 }
 

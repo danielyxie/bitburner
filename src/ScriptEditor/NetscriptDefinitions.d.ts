@@ -3802,13 +3802,28 @@ interface HackingFormulas {
 =======
 >>>>>>> ee51332e (Added support for hackOverride and exposed numCycleForGrowth)
   /**
+   * Calculate hack level to hit a specific hack time for a server.
+   * @param server - Server info from {@link NS.getServer | getServer}
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @param ms - Time in ms to have the hack take.
+   * @returns The calculated hack level.
+   */
+  hackLevelForTime(server: Server, player: Player, ms: number): number;
+  /**
    * Calculate grow time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
-   * @param hackOverride - Optional value to override the player's hack skill for timing purposes
    * @returns The calculated grow time.
    */
-  growTime(server: Server, player: Player, hackOverride?: number): number;
+  growTime(server: Server, player: Player): number;
+  /**
+   * Calculate hack level to hit a specific grow time for a server.
+   * @param server - Server info from {@link NS.getServer | getServer}
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   * @param ms - Time in ms to have the grow take.
+   * @returns The calculated hack level.
+   */
+  growLevelForTime(server: Server, player: Player, ms: number): number;
   /**
    * Calculate hack level to hit a specific grow time for a server.
    * @param server - Server info from {@link NS.getServer | getServer}
@@ -3821,7 +3836,6 @@ interface HackingFormulas {
    * Calculate weaken time.
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
-   * @param hackOverride - Optional value to override the player's hack skill for timing purposes
    * @returns The calculated weaken time.
    */
   weakenTime(server: Server, player: Player): number;
