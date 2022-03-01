@@ -193,7 +193,7 @@ export function NetscriptCorporation(
 
   function bribe(factionName: string, amountCash: number, amountShares: number): boolean {
     if (!player.factions.includes(factionName)) throw new Error("Invalid faction name");
-    if (isNaN(amountCash) || amountCash < 0 || isNaN(amountShares) || amountShares < 0)  throw new Error("Invalid value for amount field! Must be numeric, grater than 0.");
+    if (isNaN(amountCash) || amountCash < 0 || isNaN(amountShares) || amountShares < 0)  throw new Error("Invalid value for amount field! Must be numeric, greater than 0.");
     const corporation = getCorporation();
     if (corporation.funds < amountCash) return false;
     if (corporation.numShares < amountShares) return false;
@@ -427,7 +427,7 @@ export function NetscriptCorporation(
       const cityName = helper.string("buyMaterial", "cityName", acityName);
       const materialName = helper.string("buyMaterial", "materialName", amaterialName);
       const amt = helper.number("buyMaterial", "amt", aamt);
-      if (amt < 0) throw new Error("Invalid value for amount field! Must be numeric and grater than 0");
+      if (amt < 0) throw new Error("Invalid value for amount field! Must be numeric and greater than 0");
       const material = getMaterial(divisionName, cityName, materialName);
       BuyMaterial(material, amt);
     },
@@ -559,7 +559,7 @@ export function NetscriptCorporation(
       const divisionName = helper.string("getOfficeSizeUpgradeCost", "divisionName", adivisionName);
       const cityName = helper.string("getOfficeSizeUpgradeCost", "cityName", acityName);
       const size = helper.number("getOfficeSizeUpgradeCost", "size", asize);
-      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and grater than 0");
+      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
       const initialPriceMult = Math.round(office.size / CorporationConstants.OfficeInitialSize);
       const costMultiplier = 1.09;
@@ -592,7 +592,7 @@ export function NetscriptCorporation(
       const divisionName = helper.string("upgradeOfficeSize", "divisionName", adivisionName);
       const cityName = helper.string("upgradeOfficeSize", "cityName", acityName);
       const size = helper.number("upgradeOfficeSize", "size", asize);
-      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and grater than 0");
+      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
       const corporation = getCorporation();
       UpgradeOfficeSize(corporation, office, size);
@@ -602,7 +602,7 @@ export function NetscriptCorporation(
       const divisionName = helper.string("throwParty", "divisionName", adivisionName);
       const cityName = helper.string("throwParty", "cityName", acityName);
       const costPerEmployee = helper.number("throwParty", "costPerEmployee", acostPerEmployee);
-      if (costPerEmployee < 0) throw new Error("Invalid value for Cost Per Employee field! Must be numeric and grater than 0");
+      if (costPerEmployee < 0) throw new Error("Invalid value for Cost Per Employee field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
       const corporation = getCorporation();
       return netscriptDelay(
@@ -721,7 +721,7 @@ export function NetscriptCorporation(
     issueDividends: function (apercent: any): void {
       checkAccess("issueDividends");
       const percent = helper.number("issueDividends", "percent", apercent);
-      if (percent < 0 || percent > 100) throw new Error("Invalid value for percent field! Must be numeric, grater than 0, and less than 100");
+      if (percent < 0 || percent > 100) throw new Error("Invalid value for percent field! Must be numeric, greater than 0, and less than 100");
       const corporation = getCorporation();
       IssueDividends(corporation, percent);
     },
