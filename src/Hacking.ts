@@ -89,17 +89,19 @@ export function calculateHackingTime(server: Server, player: IPlayer, hackOverri
  */
 export function calculateHackLevelForTime(server: Server, player: IPlayer, ms: number): number {
   const difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-
+      
+  const hackTime = ms / 1000;
   const baseDiff = 500;
   const baseSkill = 50;
   const diffFactor = 2.5;
   const hackTimeMultiplier = 5;
 
-  const speedFactor = player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1);
+  const difficultyFactor = (diffFactor * difficultyMult + baseDiff)
+  const speedFactor = (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1));
 
-  const hackSkill = (diffFactor * difficultyMult + baseDiff) / (ms * speedFactor) / hackTimeMultiplier - baseSkill;
+  const hackLvl = ((hackTimeMultiplier * difficultyFactor) / (hackTime * speedFactor)) - baseSkill;
 
-  return hackSkill;
+  return hackLvl;
 }
 
 /**
@@ -116,18 +118,20 @@ export function calculateGrowTime(server: Server, player: IPlayer, hackOverride?
  */
  export function calculateGrowLevelForTime(server: Server, player: IPlayer, ms: number): number {
   const difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-
+      
+  const hackTime = ms / 1000;
   const baseDiff = 500;
   const baseSkill = 50;
   const diffFactor = 2.5;
-	const growTimeMultiplier = 3.2;
+  const growTimeMultiplier = 3.2;
   const hackTimeMultiplier = 5 * growTimeMultiplier;
 
-  const speedFactor = player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1);
+  const difficultyFactor = (diffFactor * difficultyMult + baseDiff)
+  const speedFactor = (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1));
 
-  const hackSkill = (diffFactor * difficultyMult + baseDiff) / (ms * speedFactor) / hackTimeMultiplier - baseSkill;
+  const hackLvl = ((hackTimeMultiplier * difficultyFactor) / (hackTime * speedFactor)) - baseSkill;
 
-  return hackSkill;
+  return hackLvl;
 }
 
 /**
@@ -144,16 +148,18 @@ export function calculateWeakenTime(server: Server, player: IPlayer, hackOverrid
  */
  export function calculateWeakenLevelForTime(server: Server, player: IPlayer, ms: number): number {
   const difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-
+      
+  const hackTime = ms / 1000;
   const baseDiff = 500;
   const baseSkill = 50;
   const diffFactor = 2.5;
 	const weakenTimeMultiplier = 4;
   const hackTimeMultiplier = 5 * weakenTimeMultiplier;
 
-  const speedFactor = player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1);
+  const difficultyFactor = (diffFactor * difficultyMult + baseDiff)
+  const speedFactor = (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1));
 
-  const hackSkill = (diffFactor * difficultyMult + baseDiff) / (ms * speedFactor) / hackTimeMultiplier - baseSkill;
+  const hackLvl = ((hackTimeMultiplier * difficultyFactor) / (hackTime * speedFactor)) - baseSkill;
 
-  return hackSkill;
+  return hackLvl;
 }
