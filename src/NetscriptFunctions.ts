@@ -807,7 +807,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (possibleLogs[fn] === undefined) {
         throw makeRuntimeErrorMsg("isLogEnabled", `Invalid argument: ${fn}.`);
       }
-      return workerScript.disableLogs[fn] ? false : true;
+      return !workerScript.disableLogs[fn];
     },
     getScriptLogs: function (fn: any, hostname: any, ...scriptArgs: any): any {
       const runningScriptObj = getRunningScript(fn, hostname, "getScriptLogs", scriptArgs);
@@ -1590,10 +1590,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         }
       }
       const txtFile = getTextFile(filename, server);
-      if (txtFile != null) {
-        return true;
-      }
-      return false;
+      return txtFile != null;
     },
     isRunning: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any): any {
       updateDynamicRam("isRunning", getRamCost(Player, "isRunning"));
@@ -1655,7 +1652,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         }else{
           workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be a positive power of 2`);
         }
-        
+
         return "";
       }
 
