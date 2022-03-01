@@ -42,7 +42,9 @@ export function PromptManager(): React.ReactElement {
     <>
       {prompt != null && (
         <Modal open={true} onClose={close}>
-          <Typography>{prompt.txt}</Typography>
+          <pre>
+            <Typography>{prompt.txt}</Typography>
+          </pre>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '10px' }}>
             <Button style={{ marginRight: 'auto' }} onClick={yes}>Yes</Button>
             <Button onClick={no}>No</Button>
