@@ -89,7 +89,6 @@ export function calculateHackingTime(server: Server, player: IPlayer, hackOverri
  */
 export function calculateHackLevelForTime(server: Server, player: IPlayer, ms: number): number {
   const difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-
   const hackTime = ms / 1000;
   const baseDiff = 500;
   const baseSkill = 50;
@@ -118,7 +117,6 @@ export function calculateGrowTime(server: Server, player: IPlayer, hackOverride?
  */
 export function calculateGrowLevelForTime(server: Server, player: IPlayer, ms: number): number {
   const difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-
   const hackTime = ms / 1000;
   const baseDiff = 500;
   const baseSkill = 50;
@@ -148,7 +146,6 @@ export function calculateWeakenTime(server: Server, player: IPlayer, hackOverrid
  */
 export function calculateWeakenLevelForTime(server: Server, player: IPlayer, ms: number): number {
   const difficultyMult = server.requiredHackingSkill * server.hackDifficulty;
-
   const hackTime = ms / 1000;
   const baseDiff = 500;
   const baseSkill = 50;
