@@ -105,9 +105,11 @@ interface RunningScript {
   logs: string[];
   offlineExpGained: number;
   offlineMoneyMade: number;
+  /** Offline running time of the script, in seconds **/
   offlineRunningTime: number;
   onlineExpGained: number;
   onlineMoneyMade: number;
+  /** Online running time of the script, in seconds **/
   onlineRunningTime: number;
   pid: number;
   ramUsage: number;
