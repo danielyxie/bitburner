@@ -76,7 +76,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
                     </Box>
                   </TableCell>
                   <TableCell align="right">
-                    <Typography noWrap ml={2} mb={1}>
+                    <Typography noWrap ml={10} mb={1}>
                       Augmentations Left: {Factions[faction]
                         .augmentations
                         .filter((augmentation: string) =>
