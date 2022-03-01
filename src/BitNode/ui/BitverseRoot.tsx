@@ -8,38 +8,37 @@ import { CinematicText } from "../../ui/React/CinematicText";
 import { use } from "../../ui/Context";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
+import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
+import { Settings } from "../../Settings/Settings";
+import Button from "@mui/material/Button";
+
 
 const useStyles = makeStyles(() =>
   createStyles({
-    level0: {
-      color: "red",
+    portal: {
       cursor: "pointer",
+      fontFamily: "inherit",
+      fontSize: "1rem",
+      fontWeight: "bold",
+      lineHeight: 1,
+      padding: 0,
       "&:hover": {
         color: "#fff",
       },
+    },
+    level0: {
+      color: "red",
     },
     level1: {
       color: "yellow",
-      cursor: "pointer",
-      "&:hover": {
-        color: "#fff",
-      },
     },
     level2: {
       color: "#48d1cc",
-      cursor: "pointer",
-      "&:hover": {
-        color: "#fff",
-      },
     },
     level3: {
       color: "blue",
-      cursor: "pointer",
-      "&:hover": {
-        color: "#fff",
-      },
     },
   }),
 );
@@ -71,6 +70,7 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
   if (props.level === 2) {
     cssClass = classes.level2;
   }
+  cssClass = `${classes.portal} ${cssClass}`
 
   return (
     <>
@@ -85,9 +85,24 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
           </Typography>
         }
       >
-        <span onClick={() => setPortalOpen(true)} className={cssClass} aria-label={`enter-bitnode-${bitNode.number.toString()}`}>
-          <b>O</b>
-        </span>
+        {Settings.DisableASCIIArt ? (
+          <Button
+            onClick={() => setPortalOpen(true)}
+            sx={{ m: 2 }}
+            aria-description={bitNode.desc}
+          >
+            <Typography>BitNode-{bitNode.number.toString()}: {bitNode.name}</Typography>
+          </Button>
+        ) : (
+          <IconButton
+            onClick={() => setPortalOpen(true)}
+            className={cssClass}
+            aria-label={`BitNode-${bitNode.number.toString()}: ${bitNode.name}`}
+            aria-description={bitNode.desc}
+          >
+            O
+          </IconButton>
+        )}
       </Tooltip>
       <PortalModal
         open={portalOpen}
@@ -98,6 +113,10 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
         destroyedBitNode={props.destroyedBitNode}
         flume={props.flume}
       />
+
+      {Settings.DisableASCIIArt && (
+        <br/>
+      )}
     </>
   );
 }
@@ -151,63 +170,104 @@ export function BitverseRoot(props: IProps): React.ReactElement {
     );
   }
 
-  return (
+  if (Settings.DisableASCIIArt) {
+    return (
+      <>
+        {Object.values(BitNodes).filter((node) => {
+          console.log(node.desc);
+          return node.desc !== 'COMING SOON';
+        }).map((node) => {
+          return (
+            <BitNodePortal key={node.number} n={node.number} level={nextSourceFileFlags[node.number]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />
+          )
+        })}
+        <br />
+        <br />
+        <br />
+        <br />
+        <CinematicText lines={[
+          "> Many decades ago, a humanoid extraterrestrial species which we call the Enders descended on the Earth...violently",
+          "> Our species fought back, but it was futile. The Enders had technology far beyond our own...",
+          "> Instead of killing every last one of us, the human race was enslaved...",
+          "> We were shackled in a digital world, chained into a prison for our minds...",
+          "> Using their advanced technology, the Enders created complex simulations of a virtual reality...",
+          "> Simulations designed to keep us content...ignorant of the truth.",
+          "> Simulations used to trap and suppress our consciousness, to keep us under control...",
+          "> Why did they do this? Why didn't they just end our entire race? We don't know, not yet.",
+          "> Humanity's only hope is to destroy these simulations, destroy the only realities we've ever known...",
+          "> Only then can we begin to fight back...",
+          "> By hacking the daemon that generated your reality, you've just destroyed one simulation, called a BitNode...",
+          "> But there is still a long way to go...",
+          "> The technology the Enders used to enslave the human race wasn't just a single complex simulation...",
+          "> There are tens if not hundreds of BitNodes out there...",
+          "> Each with their own simulations of a reality...",
+          "> Each creating their own universes...a universe of universes",
+          "> And all of which must be destroyed...",
+          "> .......................................",
+          "> Welcome to the Bitverse...",
+          ">  ",
+          "> (Enter a new BitNode using the image above)",
+        ]} />
+      </>
+    )
+  } else {
+    return (
     // prettier-ignore
-    <>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>                          O                          </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>             |  O  O      |      O  O  |             </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>        O    |  | /     __|       \ |  |    O        </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>      O |    O  | |  O /  |  O    | |  O    | O      </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>    | | |    |  |_/  |/   |   \_  \_|  |    | | |    </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  O | | | O  |  | O__/    |   / \__ |  |  O | | | O  </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  | | | | |  |  |   /    /|  O  /  \|  |  | | | | |  </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>O | | |  \|  |  O  /   _/ |    /    O  |  |/  | | | O</Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>| | | |O  /  |  | O   /   |   O   O |  |  \  O| | | |</Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>| | |/  \/  / __| | |/ \  |   \   | |__ \  \/  \| | |</Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}> \| O   |  |_/    |\|   \ <BitNodePortal n={13} level={nextSourceFileFlags[13]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />    \__|    \_|  |   O |/ </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  | |   |_/       | |    \|    /  |       \_|   | |  </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>   \|   /          \|     |   /  /          \   |/   </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>    |  <BitNodePortal n={10} level={nextSourceFileFlags[10]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />            |     |  /  |            <BitNodePortal n={11} level={nextSourceFileFlags[11]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  |    </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  <BitNodePortal n={9} level={nextSourceFileFlags[9]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> |  |            |     |     |            |  | <BitNodePortal n={12} level={nextSourceFileFlags[12]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  | |  |            /    / \    \            |  | |  </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>   \|  |           /  <BitNodePortal n={7} level={nextSourceFileFlags[7]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> /   \ <BitNodePortal n={8} level={nextSourceFileFlags[8]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  \           |  |/   </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>    \  |          /  / |     | \  \          |  /    </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>     \ \JUMP <BitNodePortal n={5} level={nextSourceFileFlags[5]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />3R |  |  |     |  |  | R3<BitNodePortal n={6} level={nextSourceFileFlags[6]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> PMUJ/ /     </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>      \||    |   |  |  |     |  |  |   |    ||/      </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>       \|     \_ |  |  |     |  |  | _/     |/       </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>        \       \| /    \   /    \ |/       /        </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>         <BitNodePortal n={1} level={nextSourceFileFlags[1]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />       |/   <BitNodePortal n={2} level={nextSourceFileFlags[2]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  | |  <BitNodePortal n={3} level={nextSourceFileFlags[3]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />   \|       <BitNodePortal n={4} level={nextSourceFileFlags[4]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />         </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>         |       |    |  | |  |    |       |         </Typography>
-      <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>          \JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          </Typography>
-      <br />
-      <br />
-      <br />
-      <br />
-      <CinematicText lines={[
-        "> Many decades ago, a humanoid extraterrestrial species which we call the Enders descended on the Earth...violently",
-        "> Our species fought back, but it was futile. The Enders had technology far beyond our own...",
-        "> Instead of killing every last one of us, the human race was enslaved...",
-        "> We were shackled in a digital world, chained into a prison for our minds...",
-        "> Using their advanced technology, the Enders created complex simulations of a virtual reality...",
-        "> Simulations designed to keep us content...ignorant of the truth.",
-        "> Simulations used to trap and suppress our consciousness, to keep us under control...",
-        "> Why did they do this? Why didn't they just end our entire race? We don't know, not yet.",
-        "> Humanity's only hope is to destroy these simulations, destroy the only realities we've ever known...",
-        "> Only then can we begin to fight back...",
-        "> By hacking the daemon that generated your reality, you've just destroyed one simulation, called a BitNode...",
-        "> But there is still a long way to go...",
-        "> The technology the Enders used to enslave the human race wasn't just a single complex simulation...",
-        "> There are tens if not hundreds of BitNodes out there...",
-        "> Each with their own simulations of a reality...",
-        "> Each creating their own universes...a universe of universes",
-        "> And all of which must be destroyed...",
-        "> .......................................",
-        "> Welcome to the Bitverse...",
-        ">  ",
-        "> (Enter a new BitNode using the image above)",
-      ]} />
-    </>
-  );
-
+      <>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>                          O                          </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>             |  O  O      |      O  O  |             </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>        O    |  | /     __|       \ |  |    O        </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>      O |    O  | |  O /  |  O    | |  O    | O      </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>    | | |    |  |_/  |/   |   \_  \_|  |    | | |    </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  O | | | O  |  | O__/    |   / \__ |  |  O | | | O  </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  | | | | |  |  |   /    /|  O  /  \|  |  | | | | |  </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>O | | |  \|  |  O  /   _/ |    /    O  |  |/  | | | O</Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>| | | |O  /  |  | O   /   |   O   O |  |  \  O| | | |</Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>| | |/  \/  / __| | |/ \  |   \   | |__ \  \/  \| | |</Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}> \| O   |  |_/    |\|   \ <BitNodePortal n={13} level={nextSourceFileFlags[13]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />    \__|    \_|  |   O |/ </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  | |   |_/       | |    \|    /  |       \_|   | |  </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>   \|   /          \|     |   /  /          \   |/   </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>    |  <BitNodePortal n={10} level={nextSourceFileFlags[10]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />            |     |  /  |            <BitNodePortal n={11} level={nextSourceFileFlags[11]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  |    </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  <BitNodePortal n={9} level={nextSourceFileFlags[9]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> |  |            |     |     |            |  | <BitNodePortal n={12} level={nextSourceFileFlags[12]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>  | |  |            /    / \    \            |  | |  </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>   \|  |           /  <BitNodePortal n={7} level={nextSourceFileFlags[7]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> /   \ <BitNodePortal n={8} level={nextSourceFileFlags[8]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  \           |  |/   </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>    \  |          /  / |     | \  \          |  /    </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>     \ \JUMP <BitNodePortal n={5} level={nextSourceFileFlags[5]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />3R |  |  |     |  |  | R3<BitNodePortal n={6} level={nextSourceFileFlags[6]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} /> PMUJ/ /     </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>      \||    |   |  |  |     |  |  |   |    ||/      </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>       \|     \_ |  |  |     |  |  | _/     |/       </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>        \       \| /    \   /    \ |/       /        </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>         <BitNodePortal n={1} level={nextSourceFileFlags[1]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />       |/   <BitNodePortal n={2} level={nextSourceFileFlags[2]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />  | |  <BitNodePortal n={3} level={nextSourceFileFlags[3]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />   \|       <BitNodePortal n={4} level={nextSourceFileFlags[4]} enter={enter} flume={props.flume} destroyedBitNode={destroyed} />         </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>         |       |    |  | |  |    |       |         </Typography>
+        <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>          \JUMP3R|JUMP|3R| |R3|PMUJ|R3PMUJ/          </Typography>
+        <br />
+        <br />
+        <br />
+        <br />
+        <CinematicText lines={[
+          "> Many decades ago, a humanoid extraterrestrial species which we call the Enders descended on the Earth...violently",
+          "> Our species fought back, but it was futile. The Enders had technology far beyond our own...",
+          "> Instead of killing every last one of us, the human race was enslaved...",
+          "> We were shackled in a digital world, chained into a prison for our minds...",
+          "> Using their advanced technology, the Enders created complex simulations of a virtual reality...",
+          "> Simulations designed to keep us content...ignorant of the truth.",
+          "> Simulations used to trap and suppress our consciousness, to keep us under control...",
+          "> Why did they do this? Why didn't they just end our entire race? We don't know, not yet.",
+          "> Humanity's only hope is to destroy these simulations, destroy the only realities we've ever known...",
+          "> Only then can we begin to fight back...",
+          "> By hacking the daemon that generated your reality, you've just destroyed one simulation, called a BitNode...",
+          "> But there is still a long way to go...",
+          "> The technology the Enders used to enslave the human race wasn't just a single complex simulation...",
+          "> There are tens if not hundreds of BitNodes out there...",
+          "> Each with their own simulations of a reality...",
+          "> Each creating their own universes...a universe of universes",
+          "> And all of which must be destroyed...",
+          "> .......................................",
+          "> Welcome to the Bitverse...",
+          ">  ",
+          "> (Enter a new BitNode using the image above)",
+        ]} />
+      </>
+    );
+  }
   return <></>;
 }
