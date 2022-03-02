@@ -65,7 +65,7 @@ export function resolveNetscriptHackOverride(
   if (hackOverride === undefined || isNaN(hackOverride))
     return player.hacking;
 
-  if ((hackOverride | 0) <= 0) {
+  if (hackOverride <= 0) {
     throw makeRuntimeRejectMsg(
       workerScript,
       `Invalid hack override passed to ${functionName}: ${hackOverride}. Override must be a positive number.`,

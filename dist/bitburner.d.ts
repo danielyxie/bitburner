@@ -100,7 +100,7 @@ export declare interface BasicHGWOptions {
     /** Override hack skill level for purposes of HGW timing. Must be less than or equal to the player's hack level. */
     hackOverrideTiming?: number;
     /** Override hack skill level for purposes of HGW effect. Must be less than or equal to the player's hack level. 
-		 *    Only affects magnitude of hack operations*/
+    *    Only affects magnitude of hack operations*/
     hackOverrideEffect?: number;
 }
 
@@ -1692,7 +1692,7 @@ export declare interface HackingFormulas {
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
      * @returns The calculated hack percent.
      */
-    hackPercent(server: Server, player: Player): number;
+    hackPercent(server: Server, player: Player, hackOverride?: number): number;
     /**
      * Calculate the percent a server would grow.
      * @param server - Server info from {@link NS.getServer | getServer}
@@ -1706,9 +1706,10 @@ export declare interface HackingFormulas {
      * Calculate hack time.
      * @param server - Server info from {@link NS.getServer | getServer}
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
+     * @param hackOverride - Optional value to override the player's hack skill for timing purposes
      * @returns The calculated hack time.
      */
-    hackTime(server: Server, player: Player): number;
+    hackTime(server: Server, player: Player, hackOverride?: number): number;
     /**
      * Calculate hack level to hit a specific hack time for a server.
      * @param server - Server info from {@link NS.getServer | getServer}
@@ -1721,9 +1722,10 @@ export declare interface HackingFormulas {
      * Calculate grow time.
      * @param server - Server info from {@link NS.getServer | getServer}
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
+     * @param hackOverride - Optional value to override the player's hack skill for timing purposes
      * @returns The calculated grow time.
      */
-    growTime(server: Server, player: Player): number;
+    growTime(server: Server, player: Player, hackOverride?: number): number;
     /**
      * Calculate hack level to hit a specific grow time for a server.
      * @param server - Server info from {@link NS.getServer | getServer}
@@ -1731,14 +1733,15 @@ export declare interface HackingFormulas {
      * @param ms - Time in ms to have the grow take.
      * @returns The calculated hack level.
      */
-		growLevelForTime(server: Server, player: Player, ms: number): number;
+    growLevelForTime(server: Server, player: Player, ms: number): number;
     /**
      * Calculate weaken time.
      * @param server - Server info from {@link NS.getServer | getServer}
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
+     * @param hackOverride - Optional value to override the player's hack skill for timing purposes
      * @returns The calculated weaken time.
      */
-    weakenTime(server: Server, player: Player): number;
+    weakenTime(server: Server, player: Player, hackOverride?: number): number;
     /**
      * Calculate hack level to hit a specific weaken time for a server.
      * @param server - Server info from {@link NS.getServer | getServer}
@@ -1746,7 +1749,7 @@ export declare interface HackingFormulas {
      * @param ms - Time in ms to have the weaken take.
      * @returns The calculated hack level.
      */
-		weakenLevelForTime(server: Server, player: Player, ms: number): number;
+    weakenLevelForTime(server: Server, player: Player, ms: number): number;
     /**
      * Calculate threads needed to grow a server by a % amount.
      * (Ex: growth:3.0 return the threads to grow the server by 300%.)
@@ -1756,7 +1759,7 @@ export declare interface HackingFormulas {
      * @param cores - Number of cores on the computer that will execute grow.
      * @returns The calculated number of threads.
      */
-     numCycleForGrowth(server: any, growth: number, player: any, cores?: number): number;
+    numCycleForGrowth(server: any, growth: number, player: any, cores?: number): number;
 }
 
 /**

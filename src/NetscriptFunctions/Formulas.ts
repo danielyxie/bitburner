@@ -24,11 +24,11 @@ import {
   calculateHackingExpGain,
   calculatePercentMoneyHacked,
   calculateHackingTime,
-	calculateHackLevelForTime,
+  calculateHackLevelForTime,
   calculateGrowTime,
-	calculateGrowLevelForTime,
+  calculateGrowLevelForTime,
   calculateWeakenTime,
-	calculateWeakenLevelForTime
+  calculateWeakenLevelForTime
 } from "../Hacking";
 import { numCycleForGrowth } from "../Server/ServerHelpers";
 import { Programs } from "../Programs/Programs";
@@ -50,11 +50,15 @@ export interface INetscriptFormulas {
   hacking: {
     hackChance(server: any, player: any): any;
     hackExp(server: any, player: any): any;
-    hackPercent(server: any, player: any): any;
+    hackPercent(server: any, player: any, hackOverride?: any): any;
     growPercent(server: any, threads: any, player: any, cores?: any): any;
-    hackTime(server: any, player: any): any;
-    growTime(server: any, player: any): any;
-    weakenTime(server: any, player: any): any;
+    hackTime(server: any, player: any, hackOverride?: any): any;
+    hackLevelForTime(server: any, player: any, ms: any): any;
+    growTime(server: any, player: any, hackOverride?: any): any;
+    growLevelForTime(server: any, player: any, ms: any): any;
+    weakenTime(server: any, player: any, hackOverride?: any): any;
+    weakenLevelForTime(server: any, player: any, ms: any): any;
+    numCycleForGrowth(server: any, growth: any, player: any, cores: any): any;
   };
   hacknetNodes: {
     moneyGainRate(level: any, ram: any, cores: any, mult?: any): any;
