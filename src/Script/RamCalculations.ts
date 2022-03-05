@@ -1,3 +1,4 @@
+import { IMap } from './../types';
 /**
  * Implements RAM Calculation functionality.
  *
@@ -139,30 +140,26 @@ async function parseOnlyRamCalculate(
     // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
     // are those that start with __SPECIAL_INITIAL_MODULE__.
     let ram = RamCostConstants.ScriptBaseRamCost;
-    const detailedCosts: RamUsageEntry[] = [{ type: 'misc', name: 'baseCost', cost: RamCostConstants.ScriptBaseRamCost}];
-    const unresolvedRefs = Object.keys(dependencyMap).filter((s) => s.startsWith(initialModule));
+    const detailedCosts: RamUsageEntry[] = [{ type: 'misc', name: 'baseCost', cost: RamCostConstants.ScriptBaseRamCost }];
+    const unresolvedRefs = Object.keys(dependencyMap).filter((s) => s.startsWith(initialModule) || s.includes(".js") || s.includes(".script"));
     const resolvedRefs = new Set();
     while (unresolvedRefs.length > 0) {
       const ref = unresolvedRefs.shift();
       if (ref === undefined) throw new Error("ref should not be undefined");
+      const specialKeyChecks: RamUsageEntry[] = [
+        { type: "ns", cost: RamCostConstants.ScriptHacknetNodesRamCost, name: "hacknet" },
+        { type: "dom", cost: RamCostConstants.ScriptDomRamCost, name: "document" },
+        { type: "dom", cost: RamCostConstants.ScriptDomRamCost, name: "window" },
+        { type: "ns", cost: RamCostConstants.ScriptCorporationRamCost, name: "corporation" },
+      ]
 
       // Check if this is one of the special keys, and add the appropriate ram cost if so.
-      if (ref === "hacknet" && !resolvedRefs.has("hacknet")) {
-        ram += RamCostConstants.ScriptHacknetNodesRamCost;
-        detailedCosts.push({ type: 'ns', name: 'hacknet', cost: RamCostConstants.ScriptHacknetNodesRamCost});
-      }
-      if (ref === "document" && !resolvedRefs.has("document")) {
-        ram += RamCostConstants.ScriptDomRamCost;
-        detailedCosts.push({ type: 'dom', name: 'document', cost: RamCostConstants.ScriptDomRamCost});
-      }
-      if (ref === "window" && !resolvedRefs.has("window")) {
-        ram += RamCostConstants.ScriptDomRamCost;
-        detailedCosts.push({ type: 'dom', name: 'window', cost: RamCostConstants.ScriptDomRamCost});
-      }
-      if (ref === "corporation" && !resolvedRefs.has("corporation")) {
-        ram += RamCostConstants.ScriptCorporationRamCost;
-        detailedCosts.push({ type: 'ns', name: 'corporation', cost: RamCostConstants.ScriptCorporationRamCost});
-      }
+      specialKeyChecks.forEach((specialKeyCheck) => {
+        if (ref === specialKeyCheck.name && !resolvedRefs.has(specialKeyCheck.name)) {
+          ram += specialKeyCheck.cost;
+          detailedCosts.push(specialKeyCheck);
+        }
+      })
 
       resolvedRefs.add(ref);
 
@@ -177,9 +174,20 @@ async function parseOnlyRamCalculate(
       } else {
         // An exact reference. Add all dependencies of this ref.
         for (const dep of dependencyMap[ref] || []) {
-          if (!resolvedRefs.has(dep)) unresolvedRefs.push(dep);
+          const findAnyApiNamespaceReference = Object.entries(dependencyMap)
+            .find((scripts) =>
+              apiRefs.find(apiRef =>
+                Array.from(scripts[1]).find(script => script.includes(apiRef)
+                )
+              )
+            )
+          const findNonApiReference = workerScript.env.vars[dep] !== undefined
+          console.log(ref)
+
+          if (!resolvedRefs.has(dep) && (findAnyApiNamespaceReference || findNonApiReference)) unresolvedRefs.push(dep);
         }
       }
+
 
       // Check if this identifier is a function in the workerScript environment.
       // If it is, then we need to get its RAM cost.
@@ -201,37 +209,12 @@ async function parseOnlyRamCalculate(
           workerScript.loadedFns[ref] = true;
         }
 
-        // This accounts for namespaces (Bladeburner, CodingCpntract, etc.)
-        let func;
-        let refDetail = 'n/a';
-        if (ref in workerScript.env.vars.bladeburner) {
-          func = workerScript.env.vars.bladeburner[ref];
-          refDetail = `bladeburner.${ref}`;
-        } else if (ref in workerScript.env.vars.codingcontract) {
-          func = workerScript.env.vars.codingcontract[ref];
-          refDetail = `codingcontract.${ref}`;
-        } else if (ref in workerScript.env.vars.stanek) {
-          func = workerScript.env.vars.stanek[ref];
-          refDetail = `stanek.${ref}`;
-        } else if (ref in workerScript.env.vars.gang) {
-          func = workerScript.env.vars.gang[ref];
-          refDetail = `gang.${ref}`;
-        } else if (ref in workerScript.env.vars.sleeve) {
-          func = workerScript.env.vars.sleeve[ref];
-          refDetail = `sleeve.${ref}`;
-        } else if (ref in workerScript.env.vars.stock) {
-          func = workerScript.env.vars.stock[ref];
-          refDetail = `stock.${ref}`;
-        } else if (ref in workerScript.env.vars.ui) {
-          func = workerScript.env.vars.ui[ref];
-          refDetail = `ui.${ref}`;
-        } else {
-          func = workerScript.env.vars[ref];
-          refDetail = `${ref}`;
-        }
+        // This accounts for namespaces (Bladeburner, CodingContract, etc.)
+        const { func, refDetail } = refChecker(workerScript.env.vars, ref)
+
         const fnRam = applyFuncRam(func);
         ram += fnRam;
-        detailedCosts.push({ type: 'fn', name: refDetail, cost: fnRam});
+        detailedCosts.push({ type: 'fn', name: refDetail, cost: fnRam });
       } catch (error) {
         continue;
       }
@@ -242,6 +225,45 @@ async function parseOnlyRamCalculate(
     // This is not unexpected. The user may be editing a script, and it may be in
     // a transitory invalid state.
     return { cost: RamCalculationErrorCode.SyntaxError };
+  }
+}
+
+const apiRefs = [
+  'bladeburner',
+  'codingcontract',
+  'stanek',
+  'gang',
+  'sleeve',
+  'stock',
+  'ui',
+]
+
+interface refCheckResult {
+  func: any;
+  refDetail: string;
+}
+
+const refChecker = (vars: IMap<any>, ref: string): refCheckResult => {
+  let func: any;
+  let refDetail = 'n/a';
+
+  apiRefs.forEach((apiRef) => {
+    if (func !== undefined)
+      return
+    if (ref in vars[apiRef]) {
+      func = vars[apiRef][ref];
+      refDetail = `${apiRef}.${ref}`;
+    }
+  })
+
+  // fallback if doesn't align with any existing namespaces
+  if (!func) {
+    func = vars[ref];
+    refDetail = `${ref}`;
+  }
+  return {
+    func,
+    refDetail
   }
 }
 
@@ -428,5 +450,4 @@ export async function calculateRamUsage(
     return { cost: RamCalculationErrorCode.SyntaxError };
   }
 
-  return { cost: RamCalculationErrorCode.SyntaxError };
 }
