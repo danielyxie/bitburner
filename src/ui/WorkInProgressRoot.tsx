@@ -34,6 +34,18 @@ export function WorkInProgressRoot(): React.ReactElement {
   const player = use.Player();
   const router = use.Router();
   const faction = Factions[player.currentWorkFactionName];
+  if (!faction) {
+    return (
+      <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
+        <Grid item>
+          <Typography>
+            Sorry, Something has gone wrong you cannot work for {player.currentWorkFactionName || "(Faction not found)"} at this time
+          </Typography>
+        </Grid>
+      </Grid>
+    )
+  }
+
   if (player.workType == CONSTANTS.WorkTypeFaction) {
     function cancel(): void {
       router.toFaction(faction);
