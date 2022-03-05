@@ -24,7 +24,7 @@ export function connect(
   for (let i = 0; i < server.serversOnNetwork.length; i++) {
     const other = getServerOnNetwork(server, i);
     if (other === null) throw new Error(`Server on network should not be null`);
-    if (other.hostname == hostname) {
+    if (other.hostname == hostname || other.ip == hostname) {
       terminal.connectToServer(player, hostname);
       return;
     }
