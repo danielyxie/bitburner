@@ -405,9 +405,7 @@ const Engine: {
               <ul>
                 <li>Your scripts generated{" "} <Money money={offlineHackingIncome} /></li>
                 <li>Your Hacknet Nodes generated {hacknetProdInfo}</li>
-                {offlineReputation != 0 &&
-                  <li>You gained{" "} <Reputation reputation={offlineReputation} /> reputation divided amongst your factions
-                  </li>}
+                <li>You gained{" "} <Reputation reputation={offlineReputation} /> reputation divided amongst your factions</li>
               </ul>
             </>,
           ),
