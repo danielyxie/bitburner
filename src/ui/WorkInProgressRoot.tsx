@@ -39,7 +39,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
         <Grid item>
           <Typography>
-            Sorry, Something has gone wrong you cannot work for {player.currentWorkFactionName || "(Faction not found)"} at this time
+            Something has gone wrong, you cannot work for {player.currentWorkFactionName || "(Faction not found)"} at this time.
           </Typography>
         </Grid>
       </Grid>
