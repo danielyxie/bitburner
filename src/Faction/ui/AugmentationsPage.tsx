@@ -7,7 +7,7 @@ import { PurchaseableAugmentation } from "./PurchaseableAugmentation";
 
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Faction } from "../../Faction/Faction";
+import { Faction } from "../Faction";
 import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
 import { hasAugmentationPrereqs } from "../FactionHelpers";

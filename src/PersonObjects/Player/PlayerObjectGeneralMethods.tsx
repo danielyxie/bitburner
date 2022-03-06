@@ -25,7 +25,7 @@ import { Cities } from "../../Locations/Cities";
 import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
-import { Sleeve } from "../../PersonObjects/Sleeve/Sleeve";
+import { Sleeve } from "../Sleeve/Sleeve";
 import {
   calculateSkill as calculateSkillF,
   calculateSkillProgress as calculateSkillProgressF,

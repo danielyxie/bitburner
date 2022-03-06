@@ -8,8 +8,8 @@
 import React, { useState } from "react";
 
 import { AugmentationAccordion } from "../../ui/React/AugmentationAccordion";
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Augmentations } from "../Augmentations";
+import { AugmentationNames } from "../data/AugmentationNames";
 
 import { Settings } from "../../Settings/Settings";
 import { use } from "../../ui/Context";
