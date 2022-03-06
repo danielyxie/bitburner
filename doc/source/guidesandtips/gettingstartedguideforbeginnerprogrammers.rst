@@ -62,7 +62,7 @@ To briefly summarize the information from the links above: Each server has a
 security level that affects how difficult it is to hack. Each server also has a
 certain amount of money, as well as a maximum amount of money it can hold. Hacking a
 server steals a percentage of that server's money. The :js:func:`hack` Netscript function
-is used to hack server. The :js:func:`grow` Netscript function is used to increase
+is used to hack a server. The :js:func:`grow` Netscript function is used to increase
 the amount of money available on a server. The :js:func:`weaken` Netscript function is
 used to decrease a server's security level.
 
