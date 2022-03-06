@@ -401,9 +401,14 @@ const Engine: {
         () =>
           AlertEvents.emit(
             <>
-              Offline for {timeOfflineString}. While you were offline, your scripts generated{" "}
-              <Money money={offlineHackingIncome} />, your Hacknet Nodes generated {hacknetProdInfo} and you gained{" "}
-              <Reputation reputation={offlineReputation} /> reputation divided amongst your factions.
+              Offline for {timeOfflineString}. While you were offline:
+              <ul>
+                <li>Your scripts generated{" "} <Money money={offlineHackingIncome} /></li>
+                <li>Your Hacknet Nodes generated {hacknetProdInfo}</li>
+                {offlineReputation != 0 &&
+                  <li>You gained{" "} <Reputation reputation={offlineReputation} /> reputation divided amongst your factions
+                  </li>}
+              </ul>
             </>,
           ),
         250,
