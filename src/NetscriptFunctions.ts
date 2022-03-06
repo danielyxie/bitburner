@@ -1655,7 +1655,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         }else{
           workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be a positive power of 2`);
         }
-        
+
         return "";
       }
 
