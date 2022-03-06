@@ -1,23 +1,25 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {describe, expect, jest} from "@jest/globals";
+import { describe, expect, jest } from "@jest/globals";
 
 // Player is needed for calculating costs like Singularity functions, that depend on acquired source files
-import {Player} from "../../../src/Player";
+import { Player } from "../../../src/Player";
 
-import {RamCostConstants} from "../../../src/Netscript/RamCostGenerator";
-import {calculateRamUsage} from "../../../src/Script/RamCalculations";
-import {Script} from "../../../src/Script/Script";
+import { RamCostConstants } from "../../../src/Netscript/RamCostGenerator";
+import { calculateRamUsage } from "../../../src/Script/RamCalculations";
+import { Script } from "../../../src/Script/Script";
 
 jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
   virtual: true,
 });
 
 const ScriptBaseCost = RamCostConstants.ScriptBaseRamCost;
-const HackCost = 0.1;
-const GrowCost = 0.15;
-const SleeveGetTaskCost = 4;
-const HacknetCost = 4;
-const CorpCost = 1024 - ScriptBaseCost;
+const HackCost = RamCostConstants.ScriptHackRamCost;
+const StanekGetCost = RamCostConstants.ScriptStanekFragmentAt;
+const StanekWidthCost = RamCostConstants.ScriptStanekWidth;
+const GrowCost = RamCostConstants.ScriptGrowRamCost;
+const SleeveGetTaskCost = RamCostConstants.ScriptSleeveBaseRamCost;
+const HacknetCost = RamCostConstants.ScriptHacknetNodesRamCost;
+const CorpCost = RamCostConstants.ScriptCorporationRamCost;
 
 describe("Parsing NetScript code to work out static RAM costs", function () {
   // Tests numeric equality, allowing for floating point imprecision - and includes script base cost
@@ -26,6 +28,92 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
     expect(val).toBeGreaterThanOrEqual(expectedWithBase - 100 * Number.EPSILON);
     expect(val).toBeLessThanOrEqual(expectedWithBase + 100 * Number.EPSILON);
   }
+
+  describe("Single files with import exported NS namespaces", function () {
+    it("Importing a function from a library that contains a class", async function () {
+      const libCode = `
+        export async function anExport(ns) { return ns.stanek }
+      `;
+      const lib = new Script(Player, "libTest.js", libCode, []);
+
+      const code = `
+        import {anExport} from "libTest";
+        export async function main(ns) {
+          await anExport(ns).get;
+        }
+      `;
+      const calculated = (await calculateRamUsage(Player, code, [lib])).cost;
+      expectCost(calculated, StanekGetCost);
+    });
+
+    it("Importing a function from a library that contains a class", async function () {
+      const libCode = `
+        export async function anExport(ns) { return ns.stanek.get }
+        export async function anotherExport(ns) { return ns.stanek.width }
+      `;
+      const lib = new Script(Player, "libTest.js", libCode, []);
+
+      const code = `
+        import {anExport, anotherExport} from "libTest";
+        export async function main(ns) {
+          await anExport(ns);
+          await anotherExport(ns);
+        }
+      `;
+      const calculated = (await calculateRamUsage(Player, code, [lib])).cost;
+      expectCost(calculated, StanekGetCost + StanekWidthCost);
+    });
+
+    it("Importing a function from a library that contains a class", async function () {
+      const libCode = `
+        export async function anExport(ns) { return ns.stanek.get }
+        export async function anotherExport(ns) { return ns.stanek.width }
+      `;
+      const lib = new Script(Player, "libTest.js", libCode, []);
+
+      const code = `
+        import {anExport} from "libTest";
+        export async function main(ns) {
+          await anExport(ns);
+        }
+      `;
+      const calculated = (await calculateRamUsage(Player, code, [lib])).cost;
+      expectCost(calculated, StanekGetCost);
+    });
+
+    it("Importing a function from a library that contains a class", async function () {
+      const libCode = `
+        export async function anExport(ns) { return ns.stanek.get }
+        export async function anotherExport(ns) { return ns.stanek.width }
+      `;
+      const lib = new Script(Player, "libTest.js", libCode, []);
+
+      const code = `
+        import libTest from "libTest";
+        export async function main(ns) {
+          await libTest.anExport(ns);
+        }
+      `;
+      const calculated = (await calculateRamUsage(Player, code, [lib])).cost;
+      expectCost(calculated, StanekGetCost + StanekWidthCost);
+    });
+
+    it("Importing a function from a library that contains a class", async function () {
+      const libCode = `
+        export async function anExport(ns) { return ns.stanek }
+      `;
+      const lib = new Script(Player, "libTest.js", libCode, []);
+
+      const code = `
+        import libTest from "libTest";
+        export async function main(ns) {
+          await libTest.anExport(ns).get;
+        }
+      `;
+      const calculated = (await calculateRamUsage(Player, code, [lib])).cost;
+      expectCost(calculated, StanekGetCost);
+    });
+  });
 
   describe("Single files with basic NS functions", function () {
     it("Empty main function", async function () {
@@ -187,6 +275,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       const code = `
         export async function main(ns) {
           ns.corporation.getCorporation();
+          ns.corporation.getOffice();
         }
       `;
       const calculated = (await calculateRamUsage(Player, code, [])).cost;
@@ -201,7 +290,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
         }
       `;
       const calculated = (await calculateRamUsage(Player, code, [])).cost;
-      expectCost(calculated, CorpCost+HacknetCost);
+      expectCost(calculated, CorpCost + HacknetCost);
     });
 
     it("Sleeve functions with an individual cost", async function () {
@@ -279,7 +368,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
         }
       `;
       const calculated = (await calculateRamUsage(Player, code, [lib])).cost;
-      expectCost(calculated, HackCost+GrowCost);
+      expectCost(calculated, HackCost + GrowCost);
     });
 
     it("Importing a function from a library that contains a class", async function () {
@@ -304,7 +393,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
     });
 
     it("Importing a function from a library that creates a class in a function", async function () {
-        const libCode = `
+      const libCode = `
           export function createClass() {
             class Grower {
               ns;
@@ -314,9 +403,9 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
             return Grower;
           }
         `;
-        const lib = new Script(Player, "libTest.js", libCode, []);
+      const lib = new Script(Player, "libTest.js", libCode, []);
 
-        const code = `
+      const code = `
           import { createClass } from "libTest";
 
           export async function main(ns) {
@@ -325,8 +414,8 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
             await growerInstance.doGrow();
           }
         `;
-        const calculated = (await calculateRamUsage(Player, code, [lib])).cost;
-        expectCost(calculated, GrowCost);
+      const calculated = (await calculateRamUsage(Player, code, [lib])).cost;
+      expectCost(calculated, GrowCost);
     });
 
   });
