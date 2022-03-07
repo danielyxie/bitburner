@@ -38,7 +38,7 @@ export function CorporationRoot(): React.ReactElement {
 
   return (
     <Context.Corporation.Provider value={corporation}>
-      <Tabs variant="fullWidth" value={divisionName} onChange={handleChange}>
+      <Tabs variant="fullWidth" value={divisionName} onChange={handleChange} sx={{ minWidth: 'fit-content', maxWidth: '65%' }}>
         <Tab label={corporation.name} value={"Overview"} />
         {corporation.divisions.map((div) => (
           <Tab key={div.name} label={div.name} value={div.name} />
