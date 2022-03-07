@@ -816,7 +816,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         `Examples:\n`,
         `"()())()" -> [()()(), (())()]\n`,
         `"(a)())()" -> [(a)()(), (a())()]\n`,
-        `")( -> [""]`,
+        `")(" -> [""]`,
       ].join(" ");
     },
     difficulty: 10,
