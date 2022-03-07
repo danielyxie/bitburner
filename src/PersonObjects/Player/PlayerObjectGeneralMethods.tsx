@@ -1708,7 +1708,7 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   if (!this.isQualified(company, pos)) {
     const reqText = getJobRequirementText(company, pos);
     if (!sing) {
-      dialogBoxCreate("Unforunately, you do not qualify for this position<br>" + reqText);
+      dialogBoxCreate("Unfortunately, you do not qualify for this position<br>" + reqText);
     }
     return false;
   }
@@ -1849,7 +1849,7 @@ export function applyForSecurityEngineerJob(this: IPlayer, sing = false): boolea
     return this.applyForJob(CompanyPositions[posNames.SecurityEngineerCompanyPositions[0]], sing);
   } else {
     if (!sing) {
-      dialogBoxCreate("Unforunately, you do not qualify for this position");
+      dialogBoxCreate("Unfortunately, you do not qualify for this position");
     }
     return false;
   }
@@ -1862,7 +1862,7 @@ export function applyForNetworkEngineerJob(this: IPlayer, sing = false): boolean
     return this.applyForJob(pos, sing);
   } else {
     if (!sing) {
-      dialogBoxCreate("Unforunately, you do not qualify for this position");
+      dialogBoxCreate("Unfortunately, you do not qualify for this position");
     }
     return false;
   }
@@ -1889,7 +1889,7 @@ export function applyForAgentJob(this: IPlayer, sing = false): boolean {
     return this.applyForJob(pos, sing);
   } else {
     if (!sing) {
-      dialogBoxCreate("Unforunately, you do not qualify for this position");
+      dialogBoxCreate("Unfortunately, you do not qualify for this position");
     }
     return false;
   }
@@ -1914,7 +1914,7 @@ export function applyForEmployeeJob(this: IPlayer, sing = false): boolean {
     return true;
   } else {
     if (!sing) {
-      dialogBoxCreate("Unforunately, you do not qualify for this position");
+      dialogBoxCreate("Unfortunately, you do not qualify for this position");
     }
 
     return false;
@@ -1939,7 +1939,7 @@ export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): boolea
     return true;
   } else {
     if (!sing) {
-      dialogBoxCreate("Unforunately, you do not qualify for this position");
+      dialogBoxCreate("Unfortunately, you do not qualify for this position");
     }
 
     return false;
@@ -1963,7 +1963,7 @@ export function applyForWaiterJob(this: IPlayer, sing = false): boolean {
     return true;
   } else {
     if (!sing) {
-      dialogBoxCreate("Unforunately, you do not qualify for this position");
+      dialogBoxCreate("Unfortunately, you do not qualify for this position");
     }
     return false;
   }
@@ -1986,7 +1986,7 @@ export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): boolean 
     return true;
   } else {
     if (!sing) {
-      dialogBoxCreate("Unforunately, you do not qualify for this position");
+      dialogBoxCreate("Unfortunately, you do not qualify for this position");
     }
     return false;
   }

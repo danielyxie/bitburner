@@ -273,22 +273,35 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v1.4.0 - 2022-01-18 Sharing is caring
-    -------------------------------------
+  v1.5.0 - Steam Cloud integration
+  --------------------------------
 
-    ** Computer sharing **
+  ** Misc. **
 
-    * A new mechanic has been added, it's is invoked by calling the new function 'share'.
-      This mechanic helps you farm reputation faster.
-
-    ** gang **
-
-    * Installing augs means losing a little bit of ascension multipliers.
-
-    ** There's more but I'm going to write it later. **
-
-    ** Misc. **
-
-    * Nerf noodle bar.
+  * The file API now allows GET and DELETE (@lordducky)
+  * Fix bug with async.
+  * Update documentation / typo (@lethern, @Meowdoleon, @JohnnyUrosevic, @JosephDavidTalbot,
+    @pd, @lethern, @lordducky, @zeddrak, @fearnlj01, @reasonablytall)
+  * Fix bug with corp API (@pigalot)
+  * background now matches game primary color (@nickofolas)
+  * page title contains version (@MartinFourier)
+  * Major text editor improvements (@nickofolas)
+  * Force achievement calculation on BN completion (@SagePtr)
+  * Cleanup in repository (@MartinFourier)
+  * Several improvements to the electron version (@MartinFourier)
+  * Add 'printf' ns function (@Ninetailed)
+  * Display bonus time on sleeve page (@MartinFourier)
+  * Several UI improvements (@nickofolas, @smolgumball)
+  * Fix bug with casino roulette (@jamie-mac)
+  * Remove blob caching.
+  * Fix formulas access check (@Ornedan)
+  * Fix bug in exp calculation (@qcorradi)
+  * Fix NaN comparison (@qcorradi)
+  * Terminal history persists in savefile (@MartinFourier)
+  * Fix travelToCity with bad argument (@SlyCedix)
+  * Fix aug display in alpha (@Dominik Winter)
+  * Add smart supply func to corp API (@pd)
+  * Fix tests (@jamie-mac)
+  * Nerf noodle bar.
 `,
 };

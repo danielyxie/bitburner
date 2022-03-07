@@ -1,13 +1,10 @@
 import { Player } from "./Player";
 import { Router } from "./ui/GameRoot";
-import { isScriptFilename } from "./Script/isScriptFilename";
-import { Script } from "./Script/Script";
 import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { Terminal } from "./Terminal";
 import { SnackbarEvents } from "./ui/React/Snackbar";
 import { IMap, IReturnStatus } from "./types";
 import { GetServer } from "./Server/AllServers";
-import { resolve } from "cypress/types/bluebird";
 import { ImportPlayerData, SaveData, saveObject } from "./SaveObject";
 import { Settings } from "./Settings/Settings";
 import { exportScripts } from "./Terminal/commands/download";

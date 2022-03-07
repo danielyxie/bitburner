@@ -14,7 +14,6 @@ export function NetscriptPort(): IPort {
   const data: any[] = [];
 
   return {
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     write: (value: any): any => {
       data.push(value);
       if (data.length > Settings.MaxPortCapacity) {
@@ -23,7 +22,6 @@ export function NetscriptPort(): IPort {
       return null;
     },
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     tryWrite: (value: any): boolean => {
       if (data.length >= Settings.MaxPortCapacity) {
         return false;

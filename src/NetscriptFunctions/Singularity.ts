@@ -1212,7 +1212,7 @@ export function NetscriptSingularity(
         );
         return false;
       }
-      const repNeededToDonate = Math.round(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
+      const repNeededToDonate = Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
       if (faction.favor < repNeededToDonate) {
         workerScript.log(
           "donateToFaction",

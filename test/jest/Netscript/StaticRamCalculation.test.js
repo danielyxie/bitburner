@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { jest, describe, expect } from "@jest/globals";
 
 import { Player } from "../../../src/Player";

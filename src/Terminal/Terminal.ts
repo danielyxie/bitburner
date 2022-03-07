@@ -314,7 +314,9 @@ export class Terminal implements ITerminal {
       this.print("Organization name: " + (!isHacknet ? org : "player"));
       const hasAdminRights = (!isHacknet && currServ.hasAdminRights) || isHacknet;
       this.print("Root Access: " + (hasAdminRights ? "YES" : "NO"));
-      this.print("Can run scripts on this host: " + (hasAdminRights ? "YES" : "NO"));
+      const canRunScripts = hasAdminRights && currServ.maxRam > 0;
+      this.print("Can run scripts on this host: " + (canRunScripts ? "YES" : "NO"));
+      this.print("RAM: " + numeralWrapper.formatRAM(currServ.maxRam));
       if (currServ instanceof Server) {
         this.print("Backdoor: " + (currServ.backdoorInstalled ? "YES" : "NO"));
         const hackingSkill = currServ.requiredHackingSkill;

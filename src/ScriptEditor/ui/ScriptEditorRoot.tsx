@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
@@ -754,7 +753,11 @@ export function Root(props: IProps): React.ReactElement {
   //  44px bottom tool bar + 16px margin
   //  + vim bar 34px
   const editorHeight = dimensions.height - (130 + (options.vim ? 34 : 0));
-
+  const tabsMaxWidth = 1640
+  const tabMargin = 5
+  const tabMaxWidth = openScripts.length ? (tabsMaxWidth / openScripts.length) - tabMargin : 0
+  const tabIconWidth = 25
+  const tabTextWidth = tabMaxWidth - (tabIconWidth * 2)
   return (
     <>
       <div style={{ display: currentScript !== null ? "block" : "none", height: "100%", width: "100%" }}>
@@ -762,7 +765,7 @@ export function Root(props: IProps): React.ReactElement {
           <Droppable droppableId="tabs" direction="horizontal">
             {(provided, snapshot) => (
               <Box
-                maxWidth="1640px"
+                maxWidth={`${tabsMaxWidth}px`}
                 display="flex"
                 flexDirection="row"
                 alignItems="center"
@@ -778,8 +781,8 @@ export function Root(props: IProps): React.ReactElement {
               >
                 {openScripts.map(({ fileName, hostname }, index) => {
                   const iconButtonStyle = {
-                    maxWidth: "25px",
-                    minWidth: "25px",
+                    maxWidth: `${tabIconWidth}px`,
+                    minWidth: `${tabIconWidth}px`,
                     minHeight: '38.5px',
                     maxHeight: '38.5px',
                     ...(currentScript?.fileName === openScripts[index].fileName ? {
@@ -792,6 +795,8 @@ export function Root(props: IProps): React.ReactElement {
                       color: Settings.theme.secondary
                     })
                   };
+
+                  const scriptTabText = `${hostname}:~/${fileName} ${dirty(index)}`
                   return (
                     <Draggable
                       key={fileName + hostname}
@@ -806,31 +811,39 @@ export function Root(props: IProps): React.ReactElement {
                           {...provided.dragHandleProps}
                           style={{
                             ...provided.draggableProps.style,
-                            marginRight: "5px",
+                            minWidth: '200px',
+                            maxWidth: `${tabMaxWidth}px`,
+                            marginRight: `${tabMargin}px`,
                             flexShrink: 0,
                             border: '1px solid ' + Settings.theme.well,
                           }}
                         >
-                          <Button
-                            onClick={() => onTabClick(index)}
-                            onMouseDown={e => {
-                              e.preventDefault();
-                              if (e.button === 1) onTabClose(index);
-                            }}
-                            style={{
-                              ...(currentScript?.fileName === openScripts[index].fileName ? {
-                                background: Settings.theme.button,
-                                borderColor: Settings.theme.button,
-                                color: Settings.theme.primary
-                              } : {
-                                background: Settings.theme.backgroundsecondary,
-                                borderColor: Settings.theme.backgroundsecondary,
-                                color: Settings.theme.secondary
-                              })
-                            }}
-                          >
-                            {hostname}:~/{fileName} {dirty(index)}
-                          </Button>
+                          <Tooltip title={scriptTabText}>
+                            <Button
+                              onClick={() => onTabClick(index)}
+                              onMouseDown={e => {
+                                e.preventDefault();
+                                if (e.button === 1) onTabClose(index);
+                              }}
+                              style={{
+                                maxWidth: `${tabTextWidth}px`,
+                                overflow: "hidden",
+                                ...(currentScript?.fileName === openScripts[index].fileName ? {
+                                  background: Settings.theme.button,
+                                  borderColor: Settings.theme.button,
+                                  color: Settings.theme.primary
+                                } : {
+                                  background: Settings.theme.backgroundsecondary,
+                                  borderColor: Settings.theme.backgroundsecondary,
+                                  color: Settings.theme.secondary
+                                })
+                              }}
+                            >
+                              <span style={{ overflow: 'hidden', direction: 'rtl', textOverflow: "ellipsis" }}>
+                                {scriptTabText}
+                              </span>
+                            </Button>
+                          </Tooltip>
                           <Tooltip title="Overwrite editor content with saved file content">
                             <Button onClick={() => onTabUpdate(index)} style={iconButtonStyle} >
                               <SyncIcon fontSize='small' />
