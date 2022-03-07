@@ -114,7 +114,6 @@ Reviver.constructors.TextFile = TextFile;
  * @param server The server object to look in
  * @returns The file object, or null if it couldn't find it.
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getTextFile(fn: string, server: BaseServer): TextFile | null {
   let filename: string = !fn.endsWith(".txt") ? `${fn}.txt` : fn;
 
@@ -138,7 +137,6 @@ export function getTextFile(fn: string, server: BaseServer): TextFile | null {
  * @param server The server that the file should be created on.
  * @returns The instance of the file.
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function createTextFile(fn: string, txt: string, server: BaseServer): TextFile | undefined {
   if (getTextFile(fn, server) !== null) {
     // This should probably be a `throw`...

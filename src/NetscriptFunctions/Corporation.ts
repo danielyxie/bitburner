@@ -198,6 +198,7 @@ export function NetscriptCorporation(
   function bribe(factionName: string, amountCash: number, amountShares: number): boolean {
     if (!player.factions.includes(factionName)) throw new Error("Invalid faction name");
     if (isNaN(amountCash) || amountCash < 0 || isNaN(amountShares) || amountShares < 0) throw new Error("Invalid value for amount field! Must be numeric, grater than 0.");
+
     const corporation = getCorporation();
     if (corporation.funds < amountCash) return false;
     if (corporation.numShares < amountShares) return false;
@@ -413,6 +414,8 @@ export function NetscriptCorporation(
       const cityName = helper.string("sellProduct", "cityName", acityName);
       const enabled = helper.boolean(aenabled);
       const warehouse = getWarehouse(divisionName, cityName);
+      if (!hasUnlockUpgrade("SmartSupply"))
+        throw helper.makeRuntimeErrorMsg(`corporation.setSmartSupply`, `You have not purchased the SmartSupply upgrade!`);
       SetSmartSupply(warehouse, enabled);
     },
     setSmartSupplyUseLeftovers: function (adivisionName: any, acityName: any, amaterialName: any, aenabled: any): void {
@@ -423,6 +426,8 @@ export function NetscriptCorporation(
       const enabled = helper.boolean(aenabled);
       const warehouse = getWarehouse(divisionName, cityName);
       const material = getMaterial(divisionName, cityName, materialName);
+      if (!hasUnlockUpgrade("SmartSupply"))
+        throw helper.makeRuntimeErrorMsg(`corporation.setSmartSupply`, `You have not purchased the SmartSupply upgrade!`);
       SetSmartSupplyUseLeftovers(warehouse, material, enabled);
     },
     buyMaterial: function (adivisionName: any, acityName: any, amaterialName: any, aamt: any): void {
@@ -431,7 +436,7 @@ export function NetscriptCorporation(
       const cityName = helper.string("buyMaterial", "cityName", acityName);
       const materialName = helper.string("buyMaterial", "materialName", amaterialName);
       const amt = helper.number("buyMaterial", "amt", aamt);
-      if (amt < 0) throw new Error("Invalid value for amount field! Must be numeric and grater than 0");
+      if (amt < 0) throw new Error("Invalid value for amount field! Must be numeric and greater than 0");
       const material = getMaterial(divisionName, cityName, materialName);
       BuyMaterial(material, amt);
     },
@@ -478,7 +483,7 @@ export function NetscriptCorporation(
       const targetCity = helper.string("exportMaterial", "targetCity", atargetCity);
       const materialName = helper.string("exportMaterial", "materialName", amaterialName);
       const amt = helper.string("exportMaterial", "amt", aamt);
-      ExportMaterial(targetDivision, targetCity, getMaterial(sourceDivision, sourceCity, materialName), amt + "");
+      ExportMaterial(targetDivision, targetCity, getMaterial(sourceDivision, sourceCity, materialName), amt + "", getDivision(targetDivision));
     },
     cancelExportMaterial: function (
       asourceDivision: any,
@@ -503,6 +508,8 @@ export function NetscriptCorporation(
       const cityName = helper.string("setMaterialMarketTA1", "cityName", acityName);
       const materialName = helper.string("setMaterialMarketTA1", "materialName", amaterialName);
       const on = helper.boolean(aon);
+      if (!getDivision(divisionName).hasResearch("Market-TA.I"))
+        throw helper.makeRuntimeErrorMsg(`corporation.setMaterialMarketTA1`, `You have not researched MarketTA.I for division: ${divisionName}`);
       SetMaterialMarketTA1(getMaterial(divisionName, cityName, materialName), on);
     },
     setMaterialMarketTA2: function (adivisionName: any, acityName: any, amaterialName: any, aon: any): void {
@@ -511,6 +518,8 @@ export function NetscriptCorporation(
       const cityName = helper.string("setMaterialMarketTA2", "cityName", acityName);
       const materialName = helper.string("setMaterialMarketTA2", "materialName", amaterialName);
       const on = helper.boolean(aon);
+      if (!getDivision(divisionName).hasResearch("Market-TA.II"))
+        throw helper.makeRuntimeErrorMsg(`corporation.setMaterialMarketTA2`, `You have not researched MarketTA.II for division: ${divisionName}`);
       SetMaterialMarketTA2(getMaterial(divisionName, cityName, materialName), on);
     },
     setProductMarketTA1: function (adivisionName: any, aproductName: any, aon: any): void {
@@ -518,6 +527,8 @@ export function NetscriptCorporation(
       const divisionName = helper.string("setProductMarketTA1", "divisionName", adivisionName);
       const productName = helper.string("setProductMarketTA1", "productName", aproductName);
       const on = helper.boolean(aon);
+      if (!getDivision(divisionName).hasResearch("Market-TA.I"))
+        throw helper.makeRuntimeErrorMsg(`corporation.setProductMarketTA1`, `You have not researched MarketTA.I for division: ${divisionName}`);
       SetProductMarketTA1(getProduct(divisionName, productName), on);
     },
     setProductMarketTA2: function (adivisionName: any, aproductName: any, aon: any): void {
@@ -525,6 +536,8 @@ export function NetscriptCorporation(
       const divisionName = helper.string("setProductMarketTA2", "divisionName", adivisionName);
       const productName = helper.string("setProductMarketTA2", "productName", aproductName);
       const on = helper.boolean(aon);
+      if (!getDivision(divisionName).hasResearch("Market-TA.II"))
+        throw helper.makeRuntimeErrorMsg(`corporation.setProductMarketTA2`, `You have not researched MarketTA.II for division: ${divisionName}`);
       SetProductMarketTA2(getProduct(divisionName, productName), on);
     },
   };
@@ -575,7 +588,7 @@ export function NetscriptCorporation(
       const divisionName = helper.string("getOfficeSizeUpgradeCost", "divisionName", adivisionName);
       const cityName = helper.string("getOfficeSizeUpgradeCost", "cityName", acityName);
       const size = helper.number("getOfficeSizeUpgradeCost", "size", asize);
-      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and grater than 0");
+      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
       const initialPriceMult = Math.round(office.size / CorporationConstants.OfficeInitialSize);
       const costMultiplier = 1.09;
@@ -608,7 +621,7 @@ export function NetscriptCorporation(
       const divisionName = helper.string("upgradeOfficeSize", "divisionName", adivisionName);
       const cityName = helper.string("upgradeOfficeSize", "cityName", acityName);
       const size = helper.number("upgradeOfficeSize", "size", asize);
-      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and grater than 0");
+      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
       const corporation = getCorporation();
       UpgradeOfficeSize(corporation, office, size);
@@ -618,7 +631,7 @@ export function NetscriptCorporation(
       const divisionName = helper.string("throwParty", "divisionName", adivisionName);
       const cityName = helper.string("throwParty", "cityName", acityName);
       const costPerEmployee = helper.number("throwParty", "costPerEmployee", acostPerEmployee);
-      if (costPerEmployee < 0) throw new Error("Invalid value for Cost Per Employee field! Must be numeric and grater than 0");
+      if (costPerEmployee < 0) throw new Error("Invalid value for Cost Per Employee field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
       const corporation = getCorporation();
       return netscriptDelay(
@@ -737,8 +750,10 @@ export function NetscriptCorporation(
     issueDividends: function (apercent: any): void {
       checkAccess("issueDividends");
       const percent = helper.number("issueDividends", "percent", apercent);
-      if (percent < 0 || percent > 100) throw new Error("Invalid value for percent field! Must be numeric, grater than 0, and less than 100");
+      if (percent < 0 || percent > 100) throw new Error("Invalid value for percent field! Must be numeric, greater than 0, and less than 100");
       const corporation = getCorporation();
+      if (!corporation.public)
+        throw helper.makeRuntimeErrorMsg(`corporation.issueDividends`, `Your company has not gone public!`);
       IssueDividends(corporation, percent);
     },
 

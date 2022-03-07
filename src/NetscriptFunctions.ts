@@ -703,7 +703,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     weakenAnalyze: function (threads: any, cores: any = 1): number {
       const coreBonus = 1 + (cores - 1) / 16;
-      return CONSTANTS.ServerWeakenAmount * threads * coreBonus;
+      return CONSTANTS.ServerWeakenAmount * threads * coreBonus * BitNodeMultipliers.ServerWeakenRate;
     },
     share: function (): Promise<void> {
       workerScript.log("share", () => "Sharing this computer.");
@@ -1121,7 +1121,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       // Invalid file name
       if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) && !scriptname.endsWith("txt")) {
-        throw makeRuntimeErrorMsg("scp", "Only works for .script, .lit, and .txt files");
+        throw makeRuntimeErrorMsg("scp", "Only works for scripts, .lit and .txt files");
       }
 
       let destServer: BaseServer | null;
@@ -2279,7 +2279,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (typeof f !== "function") {
         throw makeRuntimeErrorMsg("atExit", "argument should be function");
       }
-      workerScript.atExit = f;
+      workerScript.atExit = () => { f(); }; // Wrap the user function to prevent WorkerScript leaking as 'this'
     },
     mv: function (host: string, source: string, destination: string): void {
       updateDynamicRam("mv", getRamCost(Player, "mv"));

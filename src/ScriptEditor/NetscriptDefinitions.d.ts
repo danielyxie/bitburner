@@ -105,9 +105,11 @@ interface RunningScript {
   logs: string[];
   offlineExpGained: number;
   offlineMoneyMade: number;
+  /** Offline running time of the script, in seconds **/
   offlineRunningTime: number;
   onlineExpGained: number;
   onlineMoneyMade: number;
+  /** Online running time of the script, in seconds **/
   onlineRunningTime: number;
   pid: number;
   ramUsage: number;
@@ -898,42 +900,75 @@ export interface GangTerritory {
  * @public
  */
 export interface GangMemberInfo {
+  /** Name of the gang member */
   name: string;
-  task: string;
+  /** Currently assigned task */
+  task: string;  
   earnedRespect: number;
+  
+  /** Hack skill level */
   hack: number;
+  /** Strength skill level */
   str: number;
+  /** Defense skill level */
   def: number;
+  /** Dexterity skill level */
   dex: number;
+  /** Agility skill level */
   agi: number;
+  /** Charisma skill level */
   cha: number;
 
+  /** Current hack experience */
   hack_exp: number;
+  /** Current strength experience */
   str_exp: number;
+  /** Current defense experience */
   def_exp: number;
+  /** Current dexterity experience */
   dex_exp: number;
+  /** Current agility experience */
   agi_exp: number;
+  /** Current charisma experience */
   cha_exp: number;
 
+  /** Hack multiplier from equipment */
   hack_mult: number;
+  /** Strength multiplier from equipment */
   str_mult: number;
+  /** Defense multiplier from equipment */
   def_mult: number;
+  /** Dexterity multiplier from equipment */
   dex_mult: number;
+  /** Agility multiplier from equipment */
   agi_mult: number;
+  /** Charisma multiplier from equipment */
   cha_mult: number;
 
+  /** Hack multiplier from ascensions */
   hack_asc_mult: number;
+  /** Strength multiplier from ascensions */
   str_asc_mult: number;
+  /** Defense multiplier from ascensions */
   def_asc_mult: number;
+  /** Dexterity multiplier from ascensions */
   dex_asc_mult: number;
+  /** Agility multiplier from ascensions */
   agi_asc_mult: number;
+  /** Charisma multiplier from ascensions */
   cha_asc_mult: number;
 
+  /** Total earned hack experience */
   hack_asc_points: number;
+  /** Total earned strength experience */
   str_asc_points: number;
+  /** Total earned defense experience */
   def_asc_points: number;
+  /** Total earned dexterity experience */
   dex_asc_points: number;
+  /** Total earned agility experience */
   agi_asc_points: number;
+  /** Total earned charisma experience */
   cha_asc_points: number;
 
   upgrades: string[];
@@ -1601,9 +1636,10 @@ export interface Singularity {
    * The actions that can be stopped with this function are:
    *
    * * Studying at a university
+   * * Working out at a gym
    * * Working for a company/faction
    * * Creating a program
-   * * Committing a Crime
+   * * Committing a crime
    *
    * This function will return true if the player’s action was ended.
    * It will return false if the player was not performing an action when this function was called.
@@ -4098,7 +4134,7 @@ interface UserInterface {
  *  ns.getHostname();
  *  // Some related functions are gathered under a sub-property of the ns object
  *  ns.stock.getPrice();
- *  // Some functions need to be await ed
+ *  // Some functions need to be awaited
  *  await ns.hack('n00dles');
  * }
  * ```
@@ -4926,6 +4962,34 @@ export interface NS extends Singularity {
    * @returns True if the script is successfully killed, and false otherwise.
    */
   kill(script: number): boolean;
+
+  /**
+   * {@inheritDoc NS.(kill:1)}
+   * @example
+   * ```ts
+   * // NS1:
+   * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
+   * kill("foo.script", "foodnstuff");
+   *
+   * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
+   * kill("foo.script", getHostname());
+   *
+   * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
+   * kill("foo.script", getHostname(), 1, "foodnstuff");
+   * ```
+   * @example
+   * ```ts
+   * // NS2:
+   * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
+   * ns.kill("foo.script", "foodnstuff");
+   *
+   * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
+   * ns.kill("foo.script", getHostname());
+   *
+   * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
+   * ns.kill("foo.script", getHostname(), 1, "foodnstuff");
+   * ```
+   */
   kill(script: string, host: string, ...args: string[]): boolean;
 
   /**
@@ -4991,6 +5055,37 @@ export interface NS extends Singularity {
    * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
    */
   scp(files: string | string[], destination: string): Promise<boolean>;
+
+  /**
+   * {@inheritDoc NS.(scp:1)}
+   * @example
+   * ```ts
+   * // NS1:
+   * //Copies foo.lit from the helios server to the home computer:
+   * scp("foo.lit", "helios", "home");
+   *
+   * //Tries to copy three files from rothman-uni to home computer:
+   * files = ["foo1.lit", "foo2.script", "foo3.script"];
+   * scp(files, "rothman-uni", "home");
+   * ```
+   * @example
+   * ```ts
+   * // NS2:
+   * //Copies foo.lit from the helios server to the home computer:
+   * await ns.scp("foo.lit", "helios", "home");
+   *
+   * //Tries to copy three files from rothman-uni to home computer:
+   * files = ["foo1.lit", "foo2.script", "foo3.script"];
+   * await ns.scp(files, "rothman-uni", "home");
+   * ```
+   * @example
+   * ```ts
+   * //ns2, copies files from home to a target server
+   * const server = ns.args[0];
+   * const files = ["hack.js","weaken.js","grow.js"];
+   * await ns.scp(files, "home", server);
+   * ```
+   */
   scp(files: string | string[], source: string, destination: string): Promise<boolean>;
 
   /**
@@ -5017,8 +5112,8 @@ export interface NS extends Singularity {
    * @example
    * ```ts
    * // NS1:
-   * const scripts = ps("home");
-   * for (let i = 0; i < scripts.length; ++i) {
+   * var scripts = ps("home");
+   * for (var i = 0; i < scripts.length; ++i) {
    *     tprint(scripts[i].filename + ' ' + scripts[i].threads);
    *     tprint(scripts[i].args);
    * }
@@ -5027,8 +5122,8 @@ export interface NS extends Singularity {
    * ```ts
    * // NS2:
    * const ps = ns.ps("home");
-   * for (script of ps) {
-   *     ns.tprint(`${script.filename} ${ps[i].threads}`);
+   * for (let script of ps) {
+   *     ns.tprint(`${script.filename} ${script.threads}`);
    *     ns.tprint(script.args);
    * }
    * ```
@@ -5795,6 +5890,10 @@ export interface NS extends Singularity {
    * @returns Amount of income the specified script generates while online.
    */
   getScriptIncome(): [number, number];
+
+  /**
+   * {@inheritDoc NS.(getScriptIncome:1)}
+   */
   getScriptIncome(script: string, host: string, ...args: string[]): number;
 
   /**
@@ -5815,6 +5914,10 @@ export interface NS extends Singularity {
    * @returns Amount of hacking experience the specified script generates while online.
    */
   getScriptExpGain(): number;
+
+  /**
+   * {@inheritDoc NS.(getScriptExpGain:1)}
+   */
   getScriptExpGain(script: string, host: string, ...args: string[]): number;
 
   /**

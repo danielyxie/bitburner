@@ -3758,7 +3758,7 @@ export declare interface NS extends Singularity {
      * @remarks
      * RAM cost: 0.3 GB
      *
-     * Running with no args returns curent script.
+     * Running with no args returns current script.
      * If you use a PID as the first parameter, the hostname and args parameters are unnecessary.
      *
      * @param filename - Optional. Filename or PID of the script.
@@ -4817,7 +4817,7 @@ export declare interface Server {
     /** IP Address. Must be unique */
     ip: string;
 
-    /** Flag indicating whether player is curently connected to this server */
+    /** Flag indicating whether player is currently connected to this server */
     isConnectedTo: boolean;
 
     /** RAM (GB) available on this server */

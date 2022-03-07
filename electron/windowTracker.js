@@ -29,6 +29,11 @@ const windowTracker = (windowName) => {
   };
 
   const saveState = debounce(() => {
+    if (!window || window.isDestroyed()) {
+      log.silly(`Saving window state failed because window is not available`);
+      return;
+    }
+
     if (!windowState.isMaximized) {
       windowState = window.getBounds();
     }
@@ -41,7 +46,7 @@ const windowTracker = (windowName) => {
 
   const track = (win) => {
     window = win;
-    ['resize', 'move', 'close'].forEach((event) => {
+    ["resize", "move", "close"].forEach((event) => {
       win.on(event, saveState);
     });
   };
