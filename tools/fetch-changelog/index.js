@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { Octokit } from "@octokit/rest";
 import commandLineArgs from "command-line-args";
 
@@ -78,20 +79,19 @@ class MergeChangelog {
       searchResults.push(...entries);
     }
 
-    const pullRequestPromises = [];
+    const pulls = [];
     for (const entry of searchResults) {
-      pullRequestPromises.push(
-        this.octokit.rest.pulls.get({
-          owner, repo,
-          pull_number: entry.number,
-        }).then((response) => ({
-          ...entry,
-          merge_commit_sha: response.data.merge_commit_sha,
-          head_commit_sha: response.data.head.sha,
+      const r = await (this.octokit.rest.pulls.get({
+        owner, repo,
+        pull_number: entry.number,
+      }).then((response) => ({
+        ...entry,
+        merge_commit_sha: response.data.merge_commit_sha,
+        head_commit_sha: response.data.head.sha,
       })));
+      pulls.push(r);
+      await sleep(1000);
     }
-
-    const pulls = await Promise.all(pullRequestPromises);
     return pulls;
   }
 
@@ -128,8 +128,9 @@ class MergeChangelog {
     const pullQuery = `user:${owner} repo:${repo} is:pr is:merged merged:"${from.date.toISOString()}..${to.date.toISOString()}"`;
 
     const commits = await this.getCommitsSearchResults(commitQuery);
+    await sleep(5000)
     const pulls = await this.getPullsSearchResults(pullQuery);
-
+    await sleep(5000)
     // We only have the merge commit sha & the HEAD sha in this data, but it can exclude some entries
     const pullsCommitSha = pulls.
       map((p) => [p.merge_commit_sha, p.head_commit_sha]).
@@ -232,6 +233,12 @@ ${commitLines.join('\n')}
       `${commit.message} ([@${commit.user.login}](${commit.user.url}))`;
     }
   }
+}
+
+const sleep = async (wait) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, wait)
+  })
 }
 
 const api = new MergeChangelog({ auth: process.env.GITHUB_API_TOKEN });
