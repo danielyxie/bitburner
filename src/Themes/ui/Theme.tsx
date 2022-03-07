@@ -348,6 +348,19 @@ export function refreshTheme(): void {
         },
       },
       MuiTabs: {
+        styleOverrides: {
+          scrollButtons: {
+            backgroundColor: Settings.theme.backgroundsecondary,
+            color: Settings.theme.secondary,
+            margin: '3px',
+            opacity: 1,
+            width: 'fit-content',
+
+            "&.Mui-disabled": {
+              opacity: 0.5
+            }
+          }
+        },
         defaultProps: {
           TabIndicatorProps: {
             style: {
