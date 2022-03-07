@@ -264,6 +264,14 @@ export const RamCosts: IMap<any> = {
   isFocused: SF4Cost(0.1),
   setFocus: SF4Cost(0.1),
 
+  // this is to allows static ram to know whats up
+  document: {
+    aKey: RamCostConstants.ScriptDomRamCost
+  },
+  window: {
+    aKey: RamCostConstants.ScriptDomRamCost
+  },
+
   // Gang API
   gang: {
     createGang: RamCostConstants.ScriptGangApiBaseRamCost / 4,

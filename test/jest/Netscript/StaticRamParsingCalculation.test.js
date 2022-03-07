@@ -20,7 +20,7 @@ const GrowCost = RamCostConstants.ScriptGrowRamCost;
 const SleeveGetTaskCost = RamCostConstants.ScriptSleeveBaseRamCost;
 const HacknetCost = RamCostConstants.ScriptHacknetNodesRamCost;
 const CorpCost = RamCostConstants.ScriptCorporationRamCost;
-
+const DomCost = RamCostConstants.ScriptDomRamCost
 describe("Parsing NetScript code to work out static RAM costs", function () {
   // Tests numeric equality, allowing for floating point imprecision - and includes script base cost
   function expectCost(val, expected) {
@@ -29,15 +29,28 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
     expect(val).toBeLessThanOrEqual(expectedWithBase + 100 * Number.EPSILON);
   }
 
-  describe("Single files with import exported NS namespaces", function () {
-    it("Importing a function from a library that contains a class", async function () {
+  describe("special namespaces work", function () {
+    it("Exporting an api to be used in another file", async function () {
+      const code = `
+      export async function main(ns) {
+        window.blah
+      }
+    `;
+      const calculated = (await calculateRamUsage(Player, code)).cost;
+      expectCost(calculated, DomCost);
+    });
+  });
+
+
+  describe("Single files with import exported NS api namespaces", function () {
+    it("Exporting an api to be used in another file", async function () {
       const libCode = `
         export async function anExport(ns) { return ns.stanek }
       `;
       const lib = new Script(Player, "libTest.js", libCode, []);
 
       const code = `
-        import {anExport} from "libTest";
+        import {anExport} from "libTest.js";
         export async function main(ns) {
           await anExport(ns).get;
         }
@@ -46,7 +59,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       expectCost(calculated, StanekGetCost);
     });
 
-    it("Importing a function from a library that contains a class", async function () {
+    it("Exporting api methods to be used in another file", async function () {
       const libCode = `
         export async function anExport(ns) { return ns.stanek.get }
         export async function anotherExport(ns) { return ns.stanek.width }
@@ -54,7 +67,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       const lib = new Script(Player, "libTest.js", libCode, []);
 
       const code = `
-        import {anExport, anotherExport} from "libTest";
+        import {anExport, anotherExport} from "libTest.js";
         export async function main(ns) {
           await anExport(ns);
           await anotherExport(ns);
@@ -64,7 +77,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       expectCost(calculated, StanekGetCost + StanekWidthCost);
     });
 
-    it("Importing a function from a library that contains a class", async function () {
+    it("Exporting api methods selectively import in another file", async function () {
       const libCode = `
         export async function anExport(ns) { return ns.stanek.get }
         export async function anotherExport(ns) { return ns.stanek.width }
@@ -72,7 +85,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       const lib = new Script(Player, "libTest.js", libCode, []);
 
       const code = `
-        import {anExport} from "libTest";
+        import {anExport} from "libTest.js";
         export async function main(ns) {
           await anExport(ns);
         }
@@ -81,7 +94,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       expectCost(calculated, StanekGetCost);
     });
 
-    it("Importing a function from a library that contains a class", async function () {
+    it("Exporting all methods as a variable to be used in another file", async function () {
       const libCode = `
         export async function anExport(ns) { return ns.stanek.get }
         export async function anotherExport(ns) { return ns.stanek.width }
@@ -89,7 +102,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       const lib = new Script(Player, "libTest.js", libCode, []);
 
       const code = `
-        import libTest from "libTest";
+        import libTest from "libTest.js";
         export async function main(ns) {
           await libTest.anExport(ns);
         }
@@ -98,14 +111,14 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       expectCost(calculated, StanekGetCost + StanekWidthCost);
     });
 
-    it("Importing a function from a library that contains a class", async function () {
+    it("Exporting api import as variable another file", async function () {
       const libCode = `
         export async function anExport(ns) { return ns.stanek }
       `;
       const lib = new Script(Player, "libTest.js", libCode, []);
 
       const code = `
-        import libTest from "libTest";
+        import libTest from "libTest.js";
         export async function main(ns) {
           await libTest.anExport(ns).get;
         }
@@ -312,7 +325,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       const lib = new Script(Player, "libTest.js", libCode, []);
 
       const code = `
-        import { dummy } from "libTest";
+        import { dummy } from "libTest.js";
         export async function main(ns) {
           dummy();
         }
@@ -328,7 +341,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       const lib = new Script(Player, "libTest.js", libCode, []);
 
       const code = `
-        import { doHack } from "libTest";
+        import { doHack } from "libTest.js";
         export async function main(ns) {
           await doHack(ns);
         }
@@ -345,7 +358,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       const lib = new Script(Player, "libTest.js", libCode, []);
 
       const code = `
-        import { doHack } from "libTest";
+        import { doHack } from "libTest.js";
         export async function main(ns) {
           await doHack(ns);
         }
@@ -362,7 +375,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       const lib = new Script(Player, "libTest.js", libCode, []);
 
       const code = `
-        import * as test from "libTest";
+        import * as test from "libTest.js";
         export async function main(ns) {
           await test.doHack(ns);
         }
@@ -383,7 +396,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       const lib = new Script(Player, "libTest.js", libCode, []);
 
       const code = `
-        import * as test from "libTest";
+        import * as test from "libTest.js";
         export async function main(ns) {
           await test.doHack(ns);
         }
@@ -406,7 +419,7 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       const lib = new Script(Player, "libTest.js", libCode, []);
 
       const code = `
-          import { createClass } from "libTest";
+          import { createClass } from "libTest.js";
 
           export async function main(ns) {
             const grower = createClass();
