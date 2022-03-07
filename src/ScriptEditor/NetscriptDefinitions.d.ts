@@ -6383,6 +6383,14 @@ export interface WarehouseAPI {
    */
   buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
+  * Set material to bulk buy
+  * @param divisionName - Name of the division
+  * @param cityName - Name of the city
+  * @param materialName - Name of the material
+  * @param amt - Amount of material to buy
+  */
+  bulkPurchase(divisionName: string, cityName: string, materialName: string, amt: number): void;
+  /**
    * Get warehouse data
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
@@ -6622,6 +6630,18 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * @param percent - Percent of profit to issue as dividends.
    */
   issueDividends(percent: number): void;
+  /**
+   * Buyback Shares
+   * @param amount - Amount of shares to buy back.
+   *
+   */
+  buyBackShares(amount: number): void;
+  /**
+   * Sell Shares
+   * @param amount -  Amount of shares to sell.
+   *
+   */
+  sellShares(amount: number): void;
 }
 
 /**

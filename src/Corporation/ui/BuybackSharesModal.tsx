@@ -6,6 +6,8 @@ import { useCorporation } from "./Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { BuyBackShares } from '../Actions';
+import { dialogBoxCreate } from '../../ui/React/DialogBox';
 
 interface IProps {
   open: boolean;
@@ -36,20 +38,12 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
 
   function buy(): void {
     if (disabled) return;
-    if (shares === null) return;
-    corp.numShares += shares;
-    if (isNaN(corp.issuedShares)) {
-      console.warn("Corporation issuedShares is NaN: " + corp.issuedShares);
-      console.warn("Converting to number now");
-      const res = corp.issuedShares;
-      if (isNaN(res)) {
-        corp.issuedShares = 0;
-      } else {
-        corp.issuedShares = res;
-      }
+    try {
+      BuyBackShares(corp, player, shares)
     }
-    corp.issuedShares -= shares;
-    player.loseMoney(shares * buybackPrice, "corporation");
+    catch (err) {
+      dialogBoxCreate(err + "");
+    }
     props.onClose();
     props.rerender();
   }

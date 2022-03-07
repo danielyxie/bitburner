@@ -1,3 +1,5 @@
+import { IPlayer } from 'src/PersonObjects/IPlayer';
+import { MaterialSizes } from './MaterialSizes';
 import { ICorporation } from "./ICorporation";
 import { IIndustry } from "./IIndustry";
 import { IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
@@ -245,6 +247,57 @@ export function BuyMaterial(material: Material, amt: number): void {
   material.buy = amt;
 }
 
+export function BulkPurchase(corp: ICorporation, warehouse: Warehouse, material: Material, amt: number): void {
+  const matSize = MaterialSizes[material.name];
+  const maxAmount = (warehouse.size - warehouse.sizeUsed) / matSize;
+  if (isNaN(amt) || amt < 0) {
+    throw new Error(`Invalid input amount`);
+  }
+  if (amt * matSize > maxAmount) {
+    throw new Error(`You do not have enough warehouse size to fit this purchase`);
+  }
+  const cost = amt * material.bCost;
+  if (corp.funds >= cost) {
+    corp.funds = corp.funds - cost;
+    material.qty += amt;
+  } else {
+    throw new Error(`You cannot afford this purchase.`);
+  }
+}
+
+export function SellShares(corporation: ICorporation, player: IPlayer, numShares: number): number {
+  if (isNaN(numShares)) throw new Error("Invalid value for number of shares");
+  if (numShares < 0) throw new Error("Invalid value for number of shares");
+  if (numShares > corporation.numShares) throw new Error("You don't have that many shares to sell!");
+  if (!corporation.public) throw new Error("You haven't gone public!");
+  if (corporation.shareSaleCooldown) throw new Error("Share sale on cooldown!");
+  const stockSaleResults = corporation.calculateShareSale(numShares);
+  const profit = stockSaleResults[0];
+  const newSharePrice = stockSaleResults[1];
+  const newSharesUntilUpdate = stockSaleResults[2];
+
+  corporation.numShares -= numShares;
+  corporation.issuedShares += numShares;
+  corporation.sharePrice = newSharePrice;
+  corporation.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
+  corporation.shareSaleCooldown = CorporationConstants.SellSharesCooldown;
+  player.gainMoney(profit, "corporation");
+  return profit;
+}
+
+export function BuyBackShares(corporation: ICorporation, player: IPlayer, numShares: number): boolean {
+  if (isNaN(numShares)) throw new Error("Invalid value for number of shares");
+  if (numShares < 0) throw new Error("Invalid value for number of shares");
+  if (numShares > corporation.issuedShares) throw new Error("You don't have that many shares to buy!");
+  if (!corporation.public) throw new Error("You haven't gone public!");
+  const buybackPrice = corporation.sharePrice * 1.1;
+  if (corporation.funds < (numShares * buybackPrice)) throw new Error("You cant afford that many shares!");
+  corporation.numShares += numShares;
+  corporation.issuedShares -= numShares;
+  player.loseMoney(numShares * buybackPrice, "corporation");
+  return true;
+}
+
 export function AssignJob(employee: Employee, job: string): void {
   if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
   employee.pos = job;
@@ -334,6 +387,9 @@ export function MakeProduct(
   }
   if (productName == null || productName === "") {
     throw new Error("You must specify a name for your product!");
+  }
+  if (!division.makesProducts) {
+    throw new Error("You cannot create products for this industry!");
   }
   if (isNaN(designInvest)) {
     throw new Error("Invalid value for design investment");

@@ -49,6 +49,9 @@ import {
   SetMaterialMarketTA2,
   SetProductMarketTA1,
   SetProductMarketTA2,
+  BulkPurchase,
+  SellShares,
+  BuyBackShares,
   SetSmartSupplyUseLeftovers,
 } from "../Corporation/Actions";
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
@@ -177,6 +180,7 @@ export function NetscriptCorporation(
     corporation.addFunds(numShares * initialSharePrice);
     return true;
   }
+
 
   function getResearchCost(division: IIndustry, researchName: string): number {
     const researchTree = IndustryResearchTrees[division.type];
@@ -435,6 +439,18 @@ export function NetscriptCorporation(
       if (amt < 0) throw new Error("Invalid value for amount field! Must be numeric and greater than 0");
       const material = getMaterial(divisionName, cityName, materialName);
       BuyMaterial(material, amt);
+    },
+    bulkPurchase: function (adivisionName: any, acityName: any, amaterialName: any, aamt: any): void {
+      checkAccess("bulkPurchase", 7);
+      const divisionName = helper.string("bulkPurchase", "divisionName", adivisionName);
+      if (!hasResearched(getDivision(adivisionName), "Bulk Purchasing")) throw new Error(`You have not researched Bulk Purchasing in ${divisionName}`)
+      const corporation = getCorporation();
+      const cityName = helper.string("bulkPurchase", "cityName", acityName);
+      const materialName = helper.string("bulkPurchase", "materialName", amaterialName);
+      const amt = helper.number("bulkPurchase", "amt", aamt);
+      const warehouse = getWarehouse(divisionName, cityName)
+      const material = getMaterial(divisionName, cityName, materialName);
+      BulkPurchase(corporation, warehouse, material, amt);
     },
     makeProduct: function (
       adivisionName: any,
@@ -812,6 +828,16 @@ export function NetscriptCorporation(
       checkAccess("acceptInvestmentOffer");
       const numShares = helper.number("goPublic", "numShares", anumShares);
       return goPublic(numShares);
+    },
+    sellShares: function (anumShares: any): number {
+      checkAccess("acceptInvestmentOffer");
+      const numShares = helper.number("sellStock", "numShares", anumShares);
+      return SellShares(getCorporation(), player, numShares);
+    },
+    buyBackShares: function (anumShares: any): boolean {
+      checkAccess("acceptInvestmentOffer");
+      const numShares = helper.number("buyStock", "numShares", anumShares);
+      return BuyBackShares(getCorporation(), player, numShares);
     },
     bribe: function (afactionName: string, aamountCash: any, aamountShares: any): boolean {
       checkAccess("bribe");
