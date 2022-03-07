@@ -21,6 +21,7 @@ export const TerminalHelpText: string[] = [
   "    grow                                 Spoof money in a servers bank account, increasing the amount available.",
   "    hack                                 Hack the current machine",
   "    help [command]                       Display this help text, or the help text for a command",
+  "    history [-c]                         Display the terminal history",
   "    home                                 Connect to home computer",
   "    hostname                             Displays the hostname of the machine",
   "    kill [script/pid] [args...]          Stops the specified script on the current server ",
@@ -253,6 +254,12 @@ export const HelpTexts: IMap<string[]> = {
     "    help alias",
     " ",
     "    help scan-analyze",
+    " ",
+  ],
+  history: [
+    "Usage: history [-c]",
+    " ",
+    "Without arguments, displays the terminal command history. To clear the history, pass in the '-c' argument.",
     " ",
   ],
   home: [

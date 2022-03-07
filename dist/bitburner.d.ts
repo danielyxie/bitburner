@@ -958,6 +958,16 @@ export declare interface Corporation extends WarehouseAPI, OfficeAPI {
      * @param percent - Percent of profit to issue as dividends.
      */
     issueDividends(percent: number): void;
+    /**
+     * Buyback Shares
+     * @param amt - Number of shares to attempt to buyback.
+     */
+    buyBackShares(amt: number): void;
+    /**
+     * Sell Shares
+     * @param amt - Number of shares to attempt to sell.
+     */
+    sellShares(amt: number): void;
 }
 
 /**
@@ -3748,7 +3758,7 @@ export declare interface NS extends Singularity {
      * @remarks
      * RAM cost: 0.3 GB
      *
-     * Running with no args returns curent script.
+     * Running with no args returns current script.
      * If you use a PID as the first parameter, the hostname and args parameters are unnecessary.
      *
      * @param filename - Optional. Filename or PID of the script.
@@ -4807,7 +4817,7 @@ export declare interface Server {
     /** IP Address. Must be unique */
     ip: string;
 
-    /** Flag indicating whether player is curently connected to this server */
+    /** Flag indicating whether player is currently connected to this server */
     isConnectedTo: boolean;
 
     /** RAM (GB) available on this server */
@@ -6635,6 +6645,14 @@ export declare interface WarehouseAPI {
      * @param amt - Amount of material to buy
      */
     buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
+    /**
+     * Set material to bulk buy
+     * @param divisionName - Name of the division
+     * @param cityName - Name of the city
+     * @param materialName - Name of the material
+     * @param amt - Amount of material to buy
+     */
+    bulkPurchase(divisionName: string, cityName: string, materialName: string, amt: number): void;
     /**
      * Get warehouse data
      * @param divisionName - Name of the division

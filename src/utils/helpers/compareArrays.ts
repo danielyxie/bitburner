@@ -20,7 +20,8 @@ export function compareArrays<T>(a1: T[], a2: T[]): boolean {
       if (!compareArrays(elem1, elem2)) {
         return false;
       }
-    } else if (a1[i] !== a2[i]) {
+    } else if (a1[i] !== a2[i] && !(Number.isNaN(a1[i]) && Number.isNaN(a2[i]))) {
+      // strict (in)equality considers NaN not equal to itself
       return false;
     }
   }

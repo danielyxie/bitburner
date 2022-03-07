@@ -9,6 +9,7 @@ interface IProps {
   onClose: () => void;
   onConfirm: () => void;
   confirmationText: string | React.ReactNode;
+  additionalButton?: React.ReactNode;
 }
 
 export function ConfirmationModal(props: IProps): React.ReactElement {
@@ -23,6 +24,7 @@ export function ConfirmationModal(props: IProps): React.ReactElement {
         >
           Confirm
         </Button>
+        {props.additionalButton && <>{props.additionalButton}</>}
       </>
     </Modal>
   );

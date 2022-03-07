@@ -2,20 +2,27 @@
  * React Component for the popup that manages gang members upgrades
  */
 import React, { useState } from "react";
-import { formatNumber } from "../../utils/StringHelperFunctions";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { GangMemberUpgrades } from "../GangMemberUpgrades";
-import { GangMemberUpgrade } from "../GangMemberUpgrade";
-import { Money } from "../../ui/React/Money";
 import { useGang } from "./Context";
-import { GangMember } from "../GangMember";
-import { UpgradeType } from "../data/upgrades";
-import { use } from "../../ui/Context";
+import { generateTableRow } from "./GangMemberStats";
+
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { MenuItem, Table, TableBody, TextField } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { GangMemberUpgrades } from "../GangMemberUpgrades";
+import { GangMemberUpgrade } from "../GangMemberUpgrade";
+import { Money } from "../../ui/React/Money";
+import { GangMember } from "../GangMember";
+import { UpgradeType } from "../data/upgrades";
+import { use } from "../../ui/Context";
+import { Settings } from "../../Settings/Settings";
+import { characterOverviewStyles as useStyles } from "../../ui/React/CharacterOverview";
 
 interface INextRevealProps {
   upgrades: string[];
@@ -46,12 +53,10 @@ function NextReveal(props: INextRevealProps): React.ReactElement {
 function PurchasedUpgrade({ upgName }: { upgName: string }): React.ReactElement {
   const upg = GangMemberUpgrades[upgName];
   return (
-    <Paper sx={{ mx: 1, p: 1 }}>
-      <Box display="flex">
-        <Tooltip title={<Typography dangerouslySetInnerHTML={{ __html: upg.desc }} />}>
-          <Typography>{upg.name}</Typography>
-        </Tooltip>
-      </Box>
+    <Paper sx={{ p: 1 }}>
+      <Tooltip title={<Typography dangerouslySetInnerHTML={{ __html: upg.desc }} />}>
+        <Typography>{upg.name}</Typography>
+      </Tooltip>
     </Paper>
   );
 }
@@ -72,8 +77,8 @@ function UpgradeButton(props: IUpgradeButtonProps): React.ReactElement {
   return (
     <Tooltip title={<Typography dangerouslySetInnerHTML={{ __html: props.upg.desc }} />}>
       <span>
-        <Typography>{props.upg.name}</Typography>
-        <Button onClick={onClick}>
+        <Button onClick={onClick} sx={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
+          <Typography sx={{ display: 'block' }}>{props.upg.name}</Typography>
           <Money money={gang.getUpgradeCost(props.upg)} />
         </Button>
       </span>
@@ -86,12 +91,16 @@ interface IPanelProps {
 }
 
 function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
+  const classes = useStyles();
   const gang = useGang();
   const player = use.Player();
   const setRerender = useState(false)[1];
+  const [currentCategory, setCurrentCategory] = useState("Weapons");
+
   function rerender(): void {
     setRerender((old) => !old);
   }
+
   function filterUpgrades(list: string[], type: UpgradeType): GangMemberUpgrade[] {
     return Object.keys(GangMemberUpgrades)
       .filter((upgName: string) => {
@@ -103,11 +112,25 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
       })
       .map((upgName: string) => GangMemberUpgrades[upgName]);
   }
+
+  const onChange = (event: SelectChangeEvent<string>): void => {
+    setCurrentCategory(event.target.value);
+    rerender()
+  }
+
   const weaponUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Weapon);
   const armorUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Armor);
   const vehicleUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Vehicle);
   const rootkitUpgrades = filterUpgrades(props.member.upgrades, UpgradeType.Rootkit);
   const augUpgrades = filterUpgrades(props.member.augmentations, UpgradeType.Augmentation);
+
+  const categories: { [key: string]: (GangMemberUpgrade[] | UpgradeType)[] } = {
+    'Weapons': [weaponUpgrades, UpgradeType.Weapon],
+    'Armor': [armorUpgrades, UpgradeType.Armor],
+    'Vehicles': [vehicleUpgrades, UpgradeType.Vehicle],
+    'Rootkits': [rootkitUpgrades, UpgradeType.Rootkit],
+    'Augmentations': [augUpgrades, UpgradeType.Augmentation]
+  };
 
   const asc = {
     hack: props.member.calculateAscensionMult(props.member.hack_asc_points),
@@ -119,26 +142,89 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
   };
   return (
     <Paper>
-      <Typography variant="h5" color="primary">
-        {props.member.name} ({props.member.task})
-      </Typography>
-      <Typography>
-        Hack: {props.member.hack} (x
-        {formatNumber(props.member.hack_mult * asc.hack, 2)})<br />
-        Str: {props.member.str} (x
-        {formatNumber(props.member.str_mult * asc.str, 2)})<br />
-        Def: {props.member.def} (x
-        {formatNumber(props.member.def_mult * asc.def, 2)})<br />
-        Dex: {props.member.dex} (x
-        {formatNumber(props.member.dex_mult * asc.dex, 2)})<br />
-        Agi: {props.member.agi} (x
-        {formatNumber(props.member.agi_mult * asc.agi, 2)})<br />
-        Cha: {props.member.cha} (x
-        {formatNumber(props.member.cha_mult * asc.cha, 2)})
-      </Typography>
-      <Box display="flex" flexWrap="wrap">
-        <Typography>Purchased Upgrades: </Typography>
-        <br />
+      <Box display="grid" sx={{ gridTemplateColumns: '1fr 1fr', m: 1, gap: 1 }}>
+        <span>
+          <Typography variant="h5" color="primary">
+            {props.member.name} ({props.member.task})
+          </Typography>
+          <Tooltip
+            title={
+              <Typography>
+                Hk: x{numeralWrapper.formatMultiplier(props.member.hack_mult * asc.hack)}(x
+                {numeralWrapper.formatMultiplier(props.member.hack_mult)} Eq, x{numeralWrapper.formatMultiplier(asc.hack)}{" "}
+                Asc)
+                <br />
+                St: x{numeralWrapper.formatMultiplier(props.member.str_mult * asc.str)}
+                (x{numeralWrapper.formatMultiplier(props.member.str_mult)} Eq, x{numeralWrapper.formatMultiplier(asc.str)}{" "}
+                Asc)
+                <br />
+                Df: x{numeralWrapper.formatMultiplier(props.member.def_mult * asc.def)}
+                (x{numeralWrapper.formatMultiplier(props.member.def_mult)} Eq, x{numeralWrapper.formatMultiplier(asc.def)}{" "}
+                Asc)
+                <br />
+                Dx: x{numeralWrapper.formatMultiplier(props.member.dex_mult * asc.dex)}
+                (x{numeralWrapper.formatMultiplier(props.member.dex_mult)} Eq, x{numeralWrapper.formatMultiplier(asc.dex)}{" "}
+                Asc)
+                <br />
+                Ag: x{numeralWrapper.formatMultiplier(props.member.agi_mult * asc.agi)}
+                (x{numeralWrapper.formatMultiplier(props.member.agi_mult)} Eq, x{numeralWrapper.formatMultiplier(asc.agi)}{" "}
+                Asc)
+                <br />
+                Ch: x{numeralWrapper.formatMultiplier(props.member.cha_mult * asc.cha)}
+                (x{numeralWrapper.formatMultiplier(props.member.cha_mult)} Eq, x{numeralWrapper.formatMultiplier(asc.cha)}{" "}
+                Asc)
+              </Typography>
+            }
+          >
+            <Table>
+              <TableBody>
+                {generateTableRow("Hacking", props.member.hack, props.member.hack_exp, Settings.theme.hack, classes)}
+                {generateTableRow("Strength", props.member.str, props.member.str_exp, Settings.theme.combat, classes)}
+                {generateTableRow("Defense", props.member.def, props.member.def_exp, Settings.theme.combat, classes)}
+                {generateTableRow("Dexterity", props.member.dex, props.member.dex_exp, Settings.theme.combat, classes)}
+                {generateTableRow("Agility", props.member.agi, props.member.agi_exp, Settings.theme.combat, classes)}
+                {generateTableRow("Charisma", props.member.cha, props.member.cha_exp, Settings.theme.cha, classes)}
+              </TableBody>
+            </Table>
+          </Tooltip>
+
+        </span>
+
+        <span>
+          <Select onChange={onChange} value={currentCategory} sx={{ width: '100%', mb: 1 }}>
+            {Object.keys(categories).map((k, i) => (
+              <MenuItem key={i + 1} value={k}>
+                <Typography variant="h6">{k}</Typography>
+              </MenuItem>
+            ))}
+          </Select>
+
+          <Box sx={{ width: '100%' }}>
+            {(categories[currentCategory][0] as GangMemberUpgrade[]).length === 0 && (
+              <Typography>
+                All upgrades owned!
+              </Typography>
+            )}
+            <Box display="grid" sx={{ gridTemplateColumns: '1fr 1fr' }}>
+              {(categories[currentCategory][0] as GangMemberUpgrade[]).map((upg) => (
+                <UpgradeButton
+                  key={upg.name}
+                  rerender={rerender}
+                  member={props.member}
+                  upg={upg}
+                />
+              ))}
+            </Box>
+            <NextReveal
+              type={categories[currentCategory][1] as UpgradeType}
+              upgrades={props.member.upgrades}
+            />
+          </Box>
+        </span>
+      </Box>
+
+      <Typography sx={{ mx: 1 }}>Purchased Upgrades: </Typography>
+      <Box display="grid" sx={{ gridTemplateColumns: 'repeat(4, 1fr)', m: 1 }}>
         {props.member.upgrades.map((upg: string) => (
           <PurchasedUpgrade key={upg} upgName={upg} />
         ))}
@@ -146,59 +232,22 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
           <PurchasedUpgrade key={upg} upgName={upg} />
         ))}
       </Box>
-      <Box display="flex" justifyContent="space-around">
-        <Box>
-          <Typography variant="h6" color="primary">
-            Weapons
-          </Typography>
-          {weaponUpgrades.map((upg) => (
-            <UpgradeButton key={upg.name} rerender={rerender} member={props.member} upg={upg} />
-          ))}
-          <NextReveal type={UpgradeType.Weapon} upgrades={props.member.upgrades} />
-        </Box>
-        <Box>
-          <Typography variant="h6" color="primary">
-            Armor
-          </Typography>
-          {armorUpgrades.map((upg) => (
-            <UpgradeButton key={upg.name} rerender={rerender} member={props.member} upg={upg} />
-          ))}
-          <NextReveal type={UpgradeType.Armor} upgrades={props.member.upgrades} />
-        </Box>
-        <Box>
-          <Typography variant="h6" color="primary">
-            Vehicles
-          </Typography>
-          {vehicleUpgrades.map((upg) => (
-            <UpgradeButton key={upg.name} rerender={rerender} member={props.member} upg={upg} />
-          ))}
-          <NextReveal type={UpgradeType.Vehicle} upgrades={props.member.upgrades} />
-        </Box>
-        <Box>
-          <Typography variant="h6" color="primary">
-            Rootkits
-          </Typography>
-          {rootkitUpgrades.map((upg) => (
-            <UpgradeButton key={upg.name} rerender={rerender} member={props.member} upg={upg} />
-          ))}
-          <NextReveal type={UpgradeType.Rootkit} upgrades={props.member.upgrades} />
-        </Box>
-        <Box>
-          <Typography variant="h6" color="primary">
-            Augmentations
-          </Typography>
-          {augUpgrades.map((upg) => (
-            <UpgradeButton key={upg.name} rerender={rerender} member={props.member} upg={upg} />
-          ))}
-          <NextReveal type={UpgradeType.Augmentation} upgrades={props.member.upgrades} />
-        </Box>
-      </Box>
-    </Paper>
+    </Paper >
   );
 }
 
 export function EquipmentsSubpage(): React.ReactElement {
   const gang = useGang();
+  const [filter, setFilter] = useState("");
+
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setFilter(event.target.value.toLowerCase());
+  }
+
+  const members = gang.members
+    .filter((member) => member && member.name.toLowerCase().includes(filter));
+
   return (
     <>
       <Tooltip
@@ -209,11 +258,26 @@ export function EquipmentsSubpage(): React.ReactElement {
           </Typography>
         }
       >
-        <Typography>Discount: -{numeralWrapper.formatPercentage(1 - 1 / gang.getDiscount())}</Typography>
+        <Typography sx={{ m: 1 }}>Discount: -{numeralWrapper.formatPercentage(1 - 1 / gang.getDiscount())}</Typography>
       </Tooltip>
-      {gang.members.map((member: GangMember) => (
-        <GangMemberUpgradePanel key={member.name} member={member} />
-      ))}
+
+      <TextField
+        value={filter}
+        onChange={handleFilterChange}
+        autoFocus
+        InputProps={{
+          startAdornment: <SearchIcon />,
+          spellCheck: false
+        }}
+        placeholder="Filter by member name"
+        sx={{ m: 1, width: '15%' }}
+      />
+
+      <Box display="grid" sx={{ gridTemplateColumns: '1fr 1fr', width: 'fit-content' }}>
+        {members.map((member: GangMember) => (
+          <GangMemberUpgradePanel key={member.name} member={member} />
+        ))}
+      </Box>
     </>
   );
 }

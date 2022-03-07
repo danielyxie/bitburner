@@ -16,6 +16,7 @@ import { GameRoot } from "./GameRoot";
 import { CONSTANTS } from "../Constants";
 import { ActivateRecoveryMode } from "./React/RecoveryRoot";
 import { hash } from "../hash/hash";
+import { pushGameReady } from "../Electron";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,6 +57,7 @@ export function LoadingScreen(): React.ReactElement {
             throw err;
           }
 
+          pushGameReady();
           setLoaded(true);
         })
         .catch((reason) => {

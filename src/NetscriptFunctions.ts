@@ -524,7 +524,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (isNaN(hackAmount)) {
         throw makeRuntimeErrorMsg(
           "hackAnalyzeThreads",
-          `Invalid growth argument passed into hackAnalyzeThreads: ${hackAmount}. Must be numeric.`,
+          `Invalid hackAmount argument passed into hackAnalyzeThreads: ${hackAmount}. Must be numeric.`,
         );
       }
 
@@ -703,7 +703,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     weakenAnalyze: function (threads: any, cores: any = 1): number {
       const coreBonus = 1 + (cores - 1) / 16;
-      return CONSTANTS.ServerWeakenAmount * threads * coreBonus;
+      return CONSTANTS.ServerWeakenAmount * threads * coreBonus * BitNodeMultipliers.ServerWeakenRate;
     },
     share: function (): Promise<void> {
       workerScript.log("share", () => "Sharing this computer.");
@@ -721,6 +721,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("print", "Takes at least 1 argument.");
       }
       workerScript.print(argsToString(args));
+    },
+    printf: function (format: string, ...args: any[]): void {
+      if (typeof format !== "string") {
+        throw makeRuntimeErrorMsg("printf", "First argument must be string for the format.");
+      }
+      workerScript.print(vsprintf(format, args));
     },
     tprint: function (...args: any[]): void {
       if (args.length === 0) {
@@ -1115,7 +1121,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       // Invalid file name
       if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) && !scriptname.endsWith("txt")) {
-        throw makeRuntimeErrorMsg("scp", "Only works for .script, .lit, and .txt files");
+        throw makeRuntimeErrorMsg("scp", "Only works for scripts, .lit and .txt files");
       }
 
       let destServer: BaseServer | null;
@@ -1643,7 +1649,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       const cost = getPurchaseServerCost(ram);
       if (cost === Infinity) {
-        workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be a positive power of 2`);
+        if(ram > getPurchaseServerMaxRam()){
+          workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must not be greater than getPurchaseServerMaxRam`);
+        }else{
+          workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be a positive power of 2`);
+        }
+        
         return "";
       }
 
@@ -2268,7 +2279,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (typeof f !== "function") {
         throw makeRuntimeErrorMsg("atExit", "argument should be function");
       }
-      workerScript.atExit = f;
+      workerScript.atExit = () => { f(); }; // Wrap the user function to prevent WorkerScript leaking as 'this'
     },
     mv: function (host: string, source: string, destination: string): void {
       updateDynamicRam("mv", getRamCost(Player, "mv"));

@@ -110,7 +110,7 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
               <br />
               <br />
               It is recommended to install several Augmentations at once. Preferably everything from any faction of your
-              chosing.
+              choosing.
             </>
           }
         />

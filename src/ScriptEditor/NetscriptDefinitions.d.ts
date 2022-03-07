@@ -105,9 +105,11 @@ interface RunningScript {
   logs: string[];
   offlineExpGained: number;
   offlineMoneyMade: number;
+  /** Offline running time of the script, in seconds **/
   offlineRunningTime: number;
   onlineExpGained: number;
   onlineMoneyMade: number;
+  /** Online running time of the script, in seconds **/
   onlineRunningTime: number;
   pid: number;
   ramUsage: number;
@@ -129,7 +131,7 @@ export interface CrimeStats {
   /** How much money is given */
   money: number;
   /** Name of crime */
-  name: number;
+  name: string;
   /** Milliseconds it takes to attempt the crime */
   time: number;
   /** Description of the crime activity */
@@ -167,65 +169,65 @@ export interface CrimeStats {
  * @public
  */
 export interface AugmentationStats {
-  /** Multipler to hacking skill */
+  /** Multiplier to hacking skill */
   hacking_mult?: number;
-  /** Multipler to strength skill */
+  /** Multiplier to strength skill */
   strength_mult?: number;
-  /** Multipler to defense skill */
+  /** Multiplier to defense skill */
   defense_mult?: number;
-  /** Multipler to dexterity skill */
+  /** Multiplier to dexterity skill */
   dexterity_mult?: number;
-  /** Multipler to agility skill */
+  /** Multiplier to agility skill */
   agility_mult?: number;
-  /** Multipler to charisma skill */
+  /** Multiplier to charisma skill */
   charisma_mult?: number;
-  /** Multipler to hacking experience gain rate */
+  /** Multiplier to hacking experience gain rate */
   hacking_exp_mult?: number;
-  /** Multipler to strength experience gain rate */
+  /** Multiplier to strength experience gain rate */
   strength_exp_mult?: number;
-  /** Multipler to defense experience gain rate */
+  /** Multiplier to defense experience gain rate */
   defense_exp_mult?: number;
-  /** Multipler to dexterity experience gain rate */
+  /** Multiplier to dexterity experience gain rate */
   dexterity_exp_mult?: number;
-  /** Multipler to agility experience gain rate */
+  /** Multiplier to agility experience gain rate */
   agility_exp_mult?: number;
-  /** Multipler to charisma experience gain rate */
+  /** Multiplier to charisma experience gain rate */
   charisma_exp_mult?: number;
-  /** Multipler to chance of successfully performing a hack */
+  /** Multiplier to chance of successfully performing a hack */
   hacking_chance_mult?: number;
-  /** Multipler to hacking speed */
+  /** Multiplier to hacking speed */
   hacking_speed_mult?: number;
-  /** Multipler to amount of money the player gains from hacking */
+  /** Multiplier to amount of money the player gains from hacking */
   hacking_money_mult?: number;
-  /** Multipler to amount of money injected into servers using grow */
+  /** Multiplier to amount of money injected into servers using grow */
   hacking_grow_mult?: number;
-  /** Multipler to amount of reputation gained when working */
+  /** Multiplier to amount of reputation gained when working */
   company_rep_mult?: number;
-  /** Multipler to amount of reputation gained when working */
+  /** Multiplier to amount of reputation gained when working */
   faction_rep_mult?: number;
-  /** Multipler to amount of money gained from crimes */
+  /** Multiplier to amount of money gained from crimes */
   crime_money_mult?: number;
-  /** Multipler to crime success rate */
+  /** Multiplier to crime success rate */
   crime_success_mult?: number;
-  /** Multipler to amount of money gained from working */
+  /** Multiplier to amount of money gained from working */
   work_money_mult?: number;
-  /** Multipler to amount of money produced by Hacknet Nodes */
+  /** Multiplier to amount of money produced by Hacknet Nodes */
   hacknet_node_money_mult?: number;
-  /** Multipler to cost of purchasing a Hacknet Node */
+  /** Multiplier to cost of purchasing a Hacknet Node */
   hacknet_node_purchase_cost_mult?: number;
-  /** Multipler to cost of ram for a Hacknet Node */
+  /** Multiplier to cost of ram for a Hacknet Node */
   hacknet_node_ram_cost_mult?: number;
-  /** Multipler to cost of core for a Hacknet Node */
+  /** Multiplier to cost of core for a Hacknet Node */
   hacknet_node_core_cost_mult?: number;
-  /** Multipler to cost of leveling up a Hacknet Node */
+  /** Multiplier to cost of leveling up a Hacknet Node */
   hacknet_node_level_cost_mult?: number;
-  /** Multipler to Bladeburner max stamina */
+  /** Multiplier to Bladeburner max stamina */
   bladeburner_max_stamina_mult?: number;
-  /** Multipler to Bladeburner stamina gain rate */
+  /** Multiplier to Bladeburner stamina gain rate */
   bladeburner_stamina_gain_mult?: number;
-  /** Multipler to effectiveness in Bladeburner Field Analysis */
+  /** Multiplier to effectiveness in Bladeburner Field Analysis */
   bladeburner_analysis_mult?: number;
-  /** Multipler to success chance in Bladeburner contracts/operations */
+  /** Multiplier to success chance in Bladeburner contracts/operations */
   bladeburner_success_chance_mult?: number;
 }
 
@@ -444,7 +446,7 @@ export interface Server {
   /** IP Address. Must be unique */
   ip: string;
 
-  /** Flag indicating whether player is curently connected to this server */
+  /** Flag indicating whether player is currently connected to this server */
   isConnectedTo: boolean;
 
   /** RAM (GB) available on this server */
@@ -587,7 +589,7 @@ export interface BitNodeMultipliers {
   ScriptHackMoneyGain: number;
   /** Influences the growth percentage per cycle against a server. */
   ServerGrowthRate: number;
-  /** Influences the maxmimum money that a server can grow to. */
+  /** Influences the maximum money that a server can grow to. */
   ServerMaxMoney: number;
   /** Influences the initial money that a server starts with. */
   ServerStartingMoney: number;
@@ -647,7 +649,7 @@ export interface PlayerSkills {
   dexterity: number;
   /** Agility level */
   agility: number;
-  /** Chraisma level */
+  /** Charisma level */
   charisma: number;
   /** Intelligence level */
   intelligence: number;
@@ -847,7 +849,7 @@ export interface GangTaskStats {
   baseMoney: number;
   /** Hacking skill impact on task scaling */
   hackWeight: number;
-  /** Stength skill impact on task scaling */
+  /** Strength skill impact on task scaling */
   strWeight: number;
   /** Defense skill impact on task scaling */
   defWeight: number;
@@ -898,42 +900,75 @@ export interface GangTerritory {
  * @public
  */
 export interface GangMemberInfo {
+  /** Name of the gang member */
   name: string;
-  task: string;
+  /** Currently assigned task */
+  task: string;  
   earnedRespect: number;
+  
+  /** Hack skill level */
   hack: number;
+  /** Strength skill level */
   str: number;
+  /** Defense skill level */
   def: number;
+  /** Dexterity skill level */
   dex: number;
+  /** Agility skill level */
   agi: number;
+  /** Charisma skill level */
   cha: number;
 
+  /** Current hack experience */
   hack_exp: number;
+  /** Current strength experience */
   str_exp: number;
+  /** Current defense experience */
   def_exp: number;
+  /** Current dexterity experience */
   dex_exp: number;
+  /** Current agility experience */
   agi_exp: number;
+  /** Current charisma experience */
   cha_exp: number;
 
+  /** Hack multiplier from equipment */
   hack_mult: number;
+  /** Strength multiplier from equipment */
   str_mult: number;
+  /** Defense multiplier from equipment */
   def_mult: number;
+  /** Dexterity multiplier from equipment */
   dex_mult: number;
+  /** Agility multiplier from equipment */
   agi_mult: number;
+  /** Charisma multiplier from equipment */
   cha_mult: number;
 
+  /** Hack multiplier from ascensions */
   hack_asc_mult: number;
+  /** Strength multiplier from ascensions */
   str_asc_mult: number;
+  /** Defense multiplier from ascensions */
   def_asc_mult: number;
+  /** Dexterity multiplier from ascensions */
   dex_asc_mult: number;
+  /** Agility multiplier from ascensions */
   agi_asc_mult: number;
+  /** Charisma multiplier from ascensions */
   cha_asc_mult: number;
 
+  /** Total earned hack experience */
   hack_asc_points: number;
+  /** Total earned strength experience */
   str_asc_points: number;
+  /** Total earned defense experience */
   def_asc_points: number;
+  /** Total earned dexterity experience */
   dex_asc_points: number;
+  /** Total earned agility experience */
   agi_asc_points: number;
+  /** Total earned charisma experience */
   cha_asc_points: number;
 
   upgrades: string[];
@@ -1582,7 +1617,7 @@ export interface Singularity {
    *
    *
    * Returns a boolean indicating whether or not the player is currently performing an
-   * ‘action’. These actions include working for a company/faction, studying at a univeristy,
+   * ‘action’. These actions include working for a company/faction, studying at a university,
    * working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.
    *
    * @returns True if the player is currently performing an ‘action’, false otherwise.
@@ -1601,9 +1636,10 @@ export interface Singularity {
    * The actions that can be stopped with this function are:
    *
    * * Studying at a university
+   * * Working out at a gym
    * * Working for a company/faction
    * * Creating a program
-   * * Committing a Crime
+   * * Committing a crime
    *
    * This function will return true if the player’s action was ended.
    * It will return false if the player was not performing an action when this function was called.
@@ -2572,7 +2608,7 @@ export interface Hacknet {
   getHashUpgradeLevel(upgName: string): number;
 
   /**
-   * Get the multipler to study.
+   * Get the multiplier to study.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -2583,7 +2619,7 @@ export interface Hacknet {
   getStudyMult(): number;
 
   /**
-   * Get the multipler to training.
+   * Get the multiplier to training.
    * @remarks
    * RAM cost: 0 GB
    *
@@ -3077,7 +3113,7 @@ export interface Bladeburner {
  */
 export interface CodingContract {
   /**
-   * Attemps a coding contract.
+   * Attempts a coding contract.
    * @remarks
    * RAM cost: 10 GB
    *
@@ -3633,6 +3669,7 @@ interface SkillsFormulas {
 interface HackingFormulas {
   /**
    * Calculate hack chance.
+   * (Ex: 0.25 would indicate a 25% chance of success.)
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
    * @returns The calculated hack chance.
@@ -3649,6 +3686,7 @@ interface HackingFormulas {
   hackExp(server: Server, player: Player): number;
   /**
    * Calculate hack percent for one thread.
+   * (Ex: 0.25 would steal 25% of the server's current value.)
    * @remarks
    * Multiply by thread to get total percent hacked.
    * @param server - Server info from {@link NS.getServer | getServer}
@@ -3657,7 +3695,8 @@ interface HackingFormulas {
    */
   hackPercent(server: Server, player: Player): number;
   /**
-   * Calculate the percent a server would grow.
+   * Calculate the percent a server would grow to.
+   * (Ex: 3.0 would would grow the server to 300% of its current value.)
    * @param server - Server info from {@link NS.getServer | getServer}
    * @param threads - Amount of thread.
    * @param player - Player info from {@link NS.getPlayer | getPlayer}
@@ -4095,7 +4134,7 @@ interface UserInterface {
  *  ns.getHostname();
  *  // Some related functions are gathered under a sub-property of the ns object
  *  ns.stock.getPrice();
- *  // Some functions need to be await ed
+ *  // Some functions need to be awaited
  *  await ns.hack('n00dles');
  * }
  * ```
@@ -4197,13 +4236,11 @@ export interface NS extends Singularity {
    * ```ts
    * // NS1:
    * var earnedMoney = hack("foodnstuff");
-   * earnedMoney = earnedMoney + hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
    * ```
    * @example
    * ```ts
    * // NS2:
    * let earnedMoney = await ns.hack("foodnstuff");
-   * earnedMoney += await ns.hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
    * ```
    * @param host - Hostname of the target server to hack.
    * @param opts - Optional parameters for configuring function behavior.
@@ -4231,16 +4268,14 @@ export interface NS extends Singularity {
    * @example
    * ```ts
    * // NS1:
-   * var availableMoney = getServerMoneyAvailable("foodnstuff");
+   * var currentMoney = getServerMoneyAvailable("foodnstuff");
    * currentMoney = currentMoney * (1 + grow("foodnstuff"));
-   * currentMoney = currentMoney * (1 + grow("foodnstuff", { threads: 5 })); // Only use 5 threads to grow
    * ```
    * @example
    * ```ts
    * // NS2:
-   * let availableMoney = ns.getServerMoneyAvailable("foodnstuff");
+   * let currentMoney = ns.getServerMoneyAvailable("foodnstuff");
    * currentMoney *= (1 + await ns.grow("foodnstuff"));
-   * currentMoney *= (1 + await ns.grow("foodnstuff", { threads: 5 })); // Only use 5 threads to grow
    * ```
    * @param host - Hostname of the target server to grow.
    * @param opts - Optional parameters for configuring function behavior.
@@ -4266,14 +4301,12 @@ export interface NS extends Singularity {
    * // NS1:
    * var currentSecurity = getServerSecurityLevel("foodnstuff");
    * currentSecurity = currentSecurity - weaken("foodnstuff");
-   * currentSecurity = currentSecurity - weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
    * ```
    * @example
    * ```ts
    * // NS2:
    * let currentSecurity = ns.getServerSecurityLevel("foodnstuff");
    * currentSecurity -= await ns.weaken("foodnstuff");
-   * currentSecurity -= await ns.weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
    * ```
    * @param host - Hostname of the target server to weaken.
    * @param opts - Optional parameters for configuring function behavior.
@@ -4459,6 +4492,17 @@ export interface NS extends Singularity {
    * @param args - Value(s) to be printed.
    */
   print(...args: any[]): void;
+
+  /**
+   * Prints a formatted string to the script’s logs.
+   * @remarks
+   * RAM cost: 0 GB
+   *
+   * see: https://github.com/alexei/sprintf.js
+   * @param format - format of the message
+   * @param args - Value(s) to be printed.
+   */
+  printf(format: string, ...args: any[]): void;
 
   /**
    * Prints one or more values or variables to the Terminal.
@@ -4918,6 +4962,34 @@ export interface NS extends Singularity {
    * @returns True if the script is successfully killed, and false otherwise.
    */
   kill(script: number): boolean;
+
+  /**
+   * {@inheritDoc NS.(kill:1)}
+   * @example
+   * ```ts
+   * // NS1:
+   * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
+   * kill("foo.script", "foodnstuff");
+   *
+   * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
+   * kill("foo.script", getHostname());
+   *
+   * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
+   * kill("foo.script", getHostname(), 1, "foodnstuff");
+   * ```
+   * @example
+   * ```ts
+   * // NS2:
+   * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
+   * ns.kill("foo.script", "foodnstuff");
+   *
+   * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
+   * ns.kill("foo.script", getHostname());
+   *
+   * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
+   * ns.kill("foo.script", getHostname(), 1, "foodnstuff");
+   * ```
+   */
   kill(script: string, host: string, ...args: string[]): boolean;
 
   /**
@@ -4983,6 +5055,37 @@ export interface NS extends Singularity {
    * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
    */
   scp(files: string | string[], destination: string): Promise<boolean>;
+
+  /**
+   * {@inheritDoc NS.(scp:1)}
+   * @example
+   * ```ts
+   * // NS1:
+   * //Copies foo.lit from the helios server to the home computer:
+   * scp("foo.lit", "helios", "home");
+   *
+   * //Tries to copy three files from rothman-uni to home computer:
+   * files = ["foo1.lit", "foo2.script", "foo3.script"];
+   * scp(files, "rothman-uni", "home");
+   * ```
+   * @example
+   * ```ts
+   * // NS2:
+   * //Copies foo.lit from the helios server to the home computer:
+   * await ns.scp("foo.lit", "helios", "home");
+   *
+   * //Tries to copy three files from rothman-uni to home computer:
+   * files = ["foo1.lit", "foo2.script", "foo3.script"];
+   * await ns.scp(files, "rothman-uni", "home");
+   * ```
+   * @example
+   * ```ts
+   * //ns2, copies files from home to a target server
+   * const server = ns.args[0];
+   * const files = ["hack.js","weaken.js","grow.js"];
+   * await ns.scp(files, "home", server);
+   * ```
+   */
   scp(files: string | string[], source: string, destination: string): Promise<boolean>;
 
   /**
@@ -5009,8 +5112,8 @@ export interface NS extends Singularity {
    * @example
    * ```ts
    * // NS1:
-   * const scripts = ps("home");
-   * for (let i = 0; i < scripts.length; ++i) {
+   * var scripts = ps("home");
+   * for (var i = 0; i < scripts.length; ++i) {
    *     tprint(scripts[i].filename + ' ' + scripts[i].threads);
    *     tprint(scripts[i].args);
    * }
@@ -5019,8 +5122,8 @@ export interface NS extends Singularity {
    * ```ts
    * // NS2:
    * const ps = ns.ps("home");
-   * for (script of ps) {
-   *     ns.tprint(`${script.filename} ${ps[i].threads}`);
+   * for (let script of ps) {
+   *     ns.tprint(`${script.filename} ${script.threads}`);
    *     ns.tprint(script.args);
    * }
    * ```
@@ -5390,13 +5493,13 @@ export interface NS extends Singularity {
    * @remarks
    * RAM cost: 0.3 GB
    *
-   * Running with no args returns curent script.
+   * Running with no args returns current script.
    * If you use a PID as the first parameter, the hostname and args parameters are unnecessary.
    *
    * @param filename - Optional. Filename or PID of the script.
    * @param hostname - Optional. Name of host server the script is running on.
    * @param args  - Arguments to identify the script
-   * @returns info about a running script
+   * @returns The info about the running script if found, and null otherwise.
    */
   getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript;
 
@@ -5787,6 +5890,10 @@ export interface NS extends Singularity {
    * @returns Amount of income the specified script generates while online.
    */
   getScriptIncome(): [number, number];
+
+  /**
+   * {@inheritDoc NS.(getScriptIncome:1)}
+   */
   getScriptIncome(script: string, host: string, ...args: string[]): number;
 
   /**
@@ -5807,6 +5914,10 @@ export interface NS extends Singularity {
    * @returns Amount of hacking experience the specified script generates while online.
    */
   getScriptExpGain(): number;
+
+  /**
+   * {@inheritDoc NS.(getScriptExpGain:1)}
+   */
   getScriptExpGain(script: string, host: string, ...args: string[]): number;
 
   /**
@@ -6179,14 +6290,14 @@ export interface OfficeAPI {
   /**
    * Get the cost to unlock research
    * @param divisionName - Name of the division
-   * @param cityName - Name of the city
+   * @param researchName - Name of the research
    * @returns cost
    */
   getResearchCost(divisionName: string, researchName: string): number;
   /**
    * Gets if you have unlocked a research
    * @param divisionName - Name of the division
-   * @param cityName - Name of the city
+   * @param researchName - Name of the research
    * @returns true is unlocked, false if not
    */
   hasResearched(divisionName: string, researchName: string): boolean;
@@ -6256,6 +6367,14 @@ export interface WarehouseAPI {
    */
   setSmartSupply(divisionName: string, cityName: string, enabled: boolean): void;
   /**
+   * Set whether smart supply uses leftovers before buying
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param enabled - smart supply use leftovers enabled
+   */
+  setSmartSupplyUseLeftovers(divisionName: string, cityName: string, materialName: string, enabled: boolean): void;
+  /**
    * Set material buy data
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
@@ -6263,6 +6382,14 @@ export interface WarehouseAPI {
    * @param amt - Amount of material to buy
    */
   buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
+  /**
+  * Set material to bulk buy
+  * @param divisionName - Name of the division
+  * @param cityName - Name of the city
+  * @param materialName - Name of the material
+  * @param amt - Amount of material to buy
+  */
+  bulkPurchase(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
    * Get warehouse data
    * @param divisionName - Name of the division
@@ -6503,6 +6630,18 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * @param percent - Percent of profit to issue as dividends.
    */
   issueDividends(percent: number): void;
+  /**
+   * Buyback Shares
+   * @param amount - Amount of shares to buy back.
+   *
+   */
+  buyBackShares(amount: number): void;
+  /**
+   * Sell Shares
+   * @param amount -  Amount of shares to sell.
+   *
+   */
+  sellShares(amount: number): void;
 }
 
 /**
@@ -6665,7 +6804,7 @@ interface EmployeeJobs {
 interface Division {
   /** Name of the division */
   name: string;
-  /** Type of division, like Aggriculture */
+  /** Type of division, like Agriculture */
   type: string;
   /** Awareness of the division */
   awareness: number;

@@ -28,7 +28,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
     height: function (): number {
       return staneksGift.height();
     },
-    charge: function (arootX: any, arootY: any): Promise<void> {
+    charge: function (arootX: unknown, arootY: unknown): Promise<void> {
       const rootX = helper.number("stanek.charge", "rootX", arootX);
       const rootY = helper.number("stanek.charge", "rootY", arootY);
 
@@ -63,7 +63,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
       workerScript.log("stanek.clear", () => `Cleared Stanek's Gift.`);
       staneksGift.clear();
     },
-    canPlace: function (arootX: any, arootY: any, arotation: any, afragmentId: any): boolean {
+    canPlace: function (arootX: unknown, arootY: unknown, arotation: unknown, afragmentId: unknown): boolean {
       const rootX = helper.number("stanek.canPlace", "rootX", arootX);
       const rootY = helper.number("stanek.canPlace", "rootY", arootY);
       const rotation = helper.number("stanek.canPlace", "rotation", arotation);
@@ -75,7 +75,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
       const can = staneksGift.canPlace(rootX, rootY, rotation, fragment);
       return can;
     },
-    place: function (arootX: any, arootY: any, arotation: any, afragmentId: any): boolean {
+    place: function (arootX: unknown, arootY: unknown, arotation: unknown, afragmentId: unknown): boolean {
       const rootX = helper.number("stanek.place", "rootX", arootX);
       const rootY = helper.number("stanek.place", "rootY", arootY);
       const rotation = helper.number("stanek.place", "rotation", arotation);
@@ -86,7 +86,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
       if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.place", `Invalid fragment id: ${fragmentId}`);
       return staneksGift.place(rootX, rootY, rotation, fragment);
     },
-    get: function (arootX: any, arootY: any): IActiveFragment | undefined {
+    get: function (arootX: unknown, arootY: unknown): IActiveFragment | undefined {
       const rootX = helper.number("stanek.get", "rootX", arootX);
       const rootY = helper.number("stanek.get", "rootY", arootY);
       helper.updateDynamicRam("get", getRamCost(player, "stanek", "get"));
@@ -95,7 +95,7 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
       if (fragment !== undefined) return fragment.copy();
       return undefined;
     },
-    remove: function (arootX: any, arootY: any): boolean {
+    remove: function (arootX: unknown, arootY: unknown): boolean {
       const rootX = helper.number("stanek.remove", "rootX", arootX);
       const rootY = helper.number("stanek.remove", "rootY", arootY);
       helper.updateDynamicRam("remove", getRamCost(player, "stanek", "remove"));
