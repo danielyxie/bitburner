@@ -811,7 +811,6 @@ export function Root(props: IProps): React.ReactElement {
                           {...provided.dragHandleProps}
                           style={{
                             ...provided.draggableProps.style,
-                            minWidth: '200px',
                             maxWidth: `${tabMaxWidth}px`,
                             marginRight: `${tabMargin}px`,
                             flexShrink: 0,
