@@ -291,7 +291,7 @@ export function BuyBackShares(corporation: ICorporation, player: IPlayer, numSha
   if (numShares > corporation.issuedShares) throw new Error("You don't have that many shares to buy!");
   if (!corporation.public) throw new Error("You haven't gone public!");
   const buybackPrice = corporation.sharePrice * 1.1;
-  if (corporation.funds < (numShares * buybackPrice)) throw new Error("You cant afford that many shares!");
+  if (player.money < (numShares * buybackPrice)) throw new Error("You cant afford that many shares!");
   corporation.numShares += numShares;
   corporation.issuedShares -= numShares;
   player.loseMoney(numShares * buybackPrice, "corporation");
