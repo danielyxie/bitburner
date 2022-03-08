@@ -13,7 +13,7 @@ import { Option } from "./Option";
 import { CONSTANTS } from "../../Constants";
 
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { Faction } from "../../Faction/Faction";
+import { Faction } from "../Faction";
 
 import { use } from "../../ui/Context";
 import { CreateGangModal } from "./CreateGangModal";
