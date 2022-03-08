@@ -7,6 +7,7 @@ import { use } from "../../../ui/Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
+import { Box } from "@mui/material";
 
 export function SleeveRoot(): React.ReactElement {
   const player = use.Player();
@@ -41,9 +42,11 @@ export function SleeveRoot(): React.ReactElement {
       >
         <Typography> Documentation</Typography>
       </Link>
-      {player.sleeves.map((sleeve, i) => (
-        <SleeveElem key={i} rerender={rerender} sleeve={sleeve} />
-      ))}
+      <Box display="grid" sx={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+        {player.sleeves.map((sleeve, i) => (
+          <SleeveElem key={i} rerender={rerender} sleeve={sleeve} />
+        ))}
+      </Box>
       <FAQModal open={FAQOpen} onClose={() => setFAQOpen(false)} />
     </>
   );
