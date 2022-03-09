@@ -36,16 +36,16 @@ export function WorkInProgressRoot(): React.ReactElement {
   const router = use.Router();
 
   const faction = Factions[player.currentWorkFactionName];
-  if (!faction) {
-    return <>
-      <Typography variant="h4" color="primary">
-        Sorry, You have not joined the faction {faction} yet!
-      </Typography>
-      <Button onClick={() => router.toFactions()}>Back to Factions</Button>
-    </>
-  }
-
   if (player.workType == CONSTANTS.WorkTypeFaction) {
+    if (!faction) {
+      return <>
+        <Typography variant="h4" color="primary">
+          Sorry, You have not joined the faction {faction} yet!
+        </Typography>
+        <Button onClick={() => router.toFactions()}>Back to Factions</Button>
+      </>
+    }
+
     function cancel(): void {
       router.toFaction(faction);
       player.finishFactionWork(true);
@@ -135,7 +135,6 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
 
     function unfocus(): void {
-      router.toFaction(faction);
       router.toCity();
       player.stopFocusing();
     }
