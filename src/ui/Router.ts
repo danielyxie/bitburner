@@ -54,6 +54,7 @@ export interface IRouter {
   // toMission(): void;
   // toRedPill(): void;
   // toworkInProgress(): void;
+  isInitialized: boolean;
   page(): Page;
   allowRouting(value: boolean): void;
   toActiveScripts(): void;

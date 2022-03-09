@@ -111,6 +111,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export let Router: IRouter = {
+  isInitialized: false,
   page: () => {
     throw new Error("Router called before initialization");
   },
@@ -266,6 +267,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   }
 
   Router = {
+    isInitialized: true,
     page: () => page,
     allowRouting: (value: boolean) => setAllowRoutingCalls(value),
     toActiveScripts: () => setPage(Page.ActiveScripts),
