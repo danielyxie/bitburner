@@ -40,7 +40,7 @@ export function WorkInProgressRoot(): React.ReactElement {
     if (!faction) {
       return <>
         <Typography variant="h4" color="primary">
-          Sorry, You have not joined the faction {faction} yet!
+          You have not joined {faction} yet!
         </Typography>
         <Button onClick={() => router.toFactions()}>Back to Factions</Button>
       </>
