@@ -31,9 +31,20 @@ export function WorkInProgressRoot(): React.ReactElement {
     const id = setInterval(rerender, CONSTANTS.MilliPerCycle);
     return () => clearInterval(id);
   }, []);
+
   const player = use.Player();
   const router = use.Router();
+
   const faction = Factions[player.currentWorkFactionName];
+  if (!faction) {
+    return <>
+      <Typography variant="h4" color="primary">
+        Sorry, You have not joined the faction {faction} yet!
+      </Typography>
+      <Button onClick={() => router.toFactions()}>Back to Factions</Button>
+    </>
+  }
+
   if (player.workType == CONSTANTS.WorkTypeFaction) {
     function cancel(): void {
       router.toFaction(faction);
