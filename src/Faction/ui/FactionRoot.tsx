@@ -191,7 +191,7 @@ export function FactionRoot(props: IProps): React.ReactElement {
   if (player && !player.factions.includes(faction.name)) {
     return <>
       <Typography variant="h4" color="primary">
-        Sorry, You have not joined the faction {faction.name} yet!
+        You have not joined {faction.name} yet!
       </Typography>
       <Button onClick={() => router.toFactions()}>Back to Factions</Button>
     </>
