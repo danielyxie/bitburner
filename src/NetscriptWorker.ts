@@ -60,7 +60,7 @@ export function prestigeWorkerScripts(): void {
 // JS script promises need a little massaging to have the same guarantees as netscript
 // promises. This does said massaging and kicks the script off. It returns a promise
 // that resolves or rejects when the corresponding worker script is done.
-function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Promise<WorkerScript> {
+function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Promise<void> {
   workerScript.running = true;
 
   // The name of the currently running netscript function, to prevent concurrent
@@ -125,10 +125,10 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
 
   // Note: the environment that we pass to the JS script only needs to contain the functions visible
   // to that script, which env.vars does at this point.
-  return new Promise<WorkerScript>((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     executeJSScript(player, workerScript.getServer().scripts, workerScript)
       .then(() => {
-        resolve(workerScript);
+        resolve();
       })
       .catch((e) => reject(e));
   }).catch((e) => {
@@ -155,7 +155,7 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
   });
 }
 
-function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript> {
+function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   const code = workerScript.code;
   workerScript.running = true;
 
@@ -170,7 +170,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
     workerScript.env.stopFlag = true;
     workerScript.running = false;
     killWorkerScript(workerScript);
-    return Promise.resolve(workerScript);
+    return Promise.resolve();
   }
 
   const interpreterInitialization = function (int: any, scope: any): void {
@@ -277,7 +277,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
     workerScript.env.stopFlag = true;
     workerScript.running = false;
     killWorkerScript(workerScript);
-    return Promise.resolve(workerScript);
+    return Promise.resolve();
   }
 
   return new Promise(function (resolve, reject) {
@@ -297,7 +297,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
         if (more) {
           setTimeout(runInterpreter, Settings.CodeInstructionRunTime);
         } else {
-          resolve(workerScript);
+          resolve();
         }
       } catch (e: any) {
         e = e.toString();
@@ -550,7 +550,7 @@ function createAndAddWorkerScript(
   WorkerScriptStartStopEventEmitter.emit();
 
   // Start the script's execution
-  let scriptExecution: Promise<WorkerScript> | null = null; // Script's resulting promise
+  let scriptExecution: Promise<void> | null = null; // Script's resulting promise
   if (workerScript.name.endsWith(".js") || workerScript.name.endsWith(".ns")) {
     scriptExecution = startNetscript2Script(player, workerScript);
   } else {
@@ -562,8 +562,7 @@ function createAndAddWorkerScript(
 
   // Once the code finishes (either resolved or rejected, doesnt matter), set its
   // running status to false
-  scriptExecution.then(function (w: WorkerScript) {
-    if(w !== workerScript) console.error("!BUG! Wrong WorkerScript instance !BUG!")
+  scriptExecution.then(function () {
     workerScript.running = false;
     workerScript.env.stopFlag = true;
     // On natural death, the earnings are transfered to the parent if it still exists.
