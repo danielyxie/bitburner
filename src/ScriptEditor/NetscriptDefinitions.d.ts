@@ -535,6 +535,8 @@ export interface BitNodeMultipliers {
   CompanyWorkExpGain: number;
   /** Influences how much money the player earns when completing working their job. */
   CompanyWorkMoney: number;
+  /** Influences the money gain from dividends of corporations created by the player. */
+  CorporationSoftCap: number;
   /** Influences the valuation of corporations created by the player. */
   CorporationValuation: number;
   /** Influences the base experience gained for each ability when the player commits a crime. */
@@ -6383,6 +6385,14 @@ export interface WarehouseAPI {
    */
   buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
+  * Set material to bulk buy
+  * @param divisionName - Name of the division
+  * @param cityName - Name of the city
+  * @param materialName - Name of the material
+  * @param amt - Amount of material to buy
+  */
+  bulkPurchase(divisionName: string, cityName: string, materialName: string, amt: number): void;
+  /**
    * Get warehouse data
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
@@ -6622,6 +6632,18 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    * @param percent - Percent of profit to issue as dividends.
    */
   issueDividends(percent: number): void;
+  /**
+   * Buyback Shares
+   * @param amount - Amount of shares to buy back.
+   *
+   */
+  buyBackShares(amount: number): void;
+  /**
+   * Sell Shares
+   * @param amount -  Amount of shares to sell.
+   *
+   */
+  sellShares(amount: number): void;
 }
 
 /**
@@ -6881,4 +6903,15 @@ interface GameInfo {
   version: string;
   commit: string;
   platform: string;
+}
+
+/**
+ * Used for autocompletion
+ * @public
+ */
+interface AutocompleteData {
+  servers: string[];
+  scripts: string[];
+  txts: string[];
+  flags(schema: [string, string | number | boolean | string[]][]): any;
 }

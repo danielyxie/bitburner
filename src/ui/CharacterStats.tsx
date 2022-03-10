@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { numeralWrapper } from "../ui/numeralFormat";
+import { numeralWrapper } from "./numeralFormat";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { SourceFileFlags } from "../SourceFile/SourceFileFlags";

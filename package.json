@@ -1,7 +1,7 @@
 {
   "name": "bitburner",
   "license": "SEE LICENSE IN license.txt",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "main": "electron-main.js",
   "author": {
     "name": "Daniel Xie & Olivier Gagnon"
@@ -125,6 +125,6 @@
     "electron:packager-win": "electron-packager .package bitburner --platform win32 --arch x64 --out .build --overwrite --icon .package/icon.png",
     "electron:packager-mac": "electron-packager .package bitburner --platform darwin --arch x64 --out .build --overwrite --icon .package/icon.png",
     "electron:packager-linux": "electron-packager .package bitburner --platform linux --arch x64 --out .build --overwrite --icon .package/icon.png",
-    "allbuild": "npm run build && npm run electron && git add --all && git commit --amend --no-edit && git push -f -u origin dev"
+    "allbuild": "npm run build && npm run electron && git add --all && git commit -m 'allbuild commit `git rev-parse --short HEAD`' && git push -f -u origin dev"
   }
 }

@@ -1139,7 +1139,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       // Invalid file name
       if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) && !scriptname.endsWith("txt")) {
-        throw makeRuntimeErrorMsg("scp", "Only works for .script, .lit, and .txt files");
+        throw makeRuntimeErrorMsg("scp", "Only works for scripts, .lit and .txt files");
       }
 
       let destServer: BaseServer | null;
@@ -1646,7 +1646,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return cost;
     },
     purchaseServer: function (aname: any, aram: any): any {
-      updateDynamicRam("purchaseServer", getRamCost(Player, "purchaseServer"));
+      if (arguments.length !== 2) throw makeRuntimeErrorMsg("purchaseServer", "Takes 2 arguments");
       const name = helper.string("purchaseServer", "name", aname);
       const ram = helper.number("purchaseServer", "ram", aram);
       updateDynamicRam("purchaseServer", getRamCost(Player, "purchaseServer"));
