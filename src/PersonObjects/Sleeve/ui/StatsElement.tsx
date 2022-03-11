@@ -25,13 +25,14 @@ interface ITableRowData {
   exp?: number;
 }
 
-export const generateTableRow = (
-  name: string,
-  color: string,
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  classes: any,
-  data: ITableRowData
-): React.ReactElement => {
+interface IStatsRowProps {
+  name: string;
+  color: string;
+  classes: any;
+  data: ITableRowData;
+}
+
+export const SleeveStatsRow = ({ name, color, classes, data }: IStatsRowProps): React.ReactElement => {
   let content;
 
   if (data.content !== undefined) {
@@ -66,50 +67,44 @@ export function StatsElement(props: IProps): React.ReactElement {
   return (
     <Table sx={{ display: 'table', mb: 1, width: '100%' }}>
       <TableBody>
-        {generateTableRow("City", Settings.theme.primary, classes, {
-          content: props.sleeve.city
-        })}
-        {generateTableRow("HP", Settings.theme.hp, classes, {
-          content: `${numeralWrapper.formatHp(props.sleeve.hp)} / ${numeralWrapper.formatHp(props.sleeve.max_hp)}`
-        })}
-        {generateTableRow("Hacking", Settings.theme.hack, classes, {
-          level: props.sleeve.hacking,
-          exp: props.sleeve.hacking_exp
-        })}
-        {generateTableRow("Strength", Settings.theme.combat, classes, {
-          level: props.sleeve.strength,
-          exp: props.sleeve.strength_exp
-        })}
-        {generateTableRow("Defense", Settings.theme.combat, classes, {
-          level: props.sleeve.defense,
-          exp: props.sleeve.defense_exp
-        })}
-        {generateTableRow("Dexterity", Settings.theme.combat, classes, {
-          level: props.sleeve.dexterity,
-          exp: props.sleeve.dexterity_exp
-        })}
-        {generateTableRow("Agility", Settings.theme.combat, classes, {
-          level: props.sleeve.agility,
-          exp: props.sleeve.agility_exp
-        })}
-        {generateTableRow("Charisma", Settings.theme.cha, classes, {
-          level: props.sleeve.charisma,
-          exp: props.sleeve.charisma_exp
-        })}
+        <SleeveStatsRow name="City" color={Settings.theme.primary} classes={classes}
+          data={{ content: props.sleeve.city }}
+        />
+        <SleeveStatsRow name="HP" color={Settings.theme.hp} classes={classes}
+          data={{ content: `${numeralWrapper.formatHp(props.sleeve.hp)} / ${numeralWrapper.formatHp(props.sleeve.max_hp)}` }}
+        />
+        <SleeveStatsRow name="Hacking" color={Settings.theme.hack} classes={classes}
+          data={{ level: props.sleeve.hacking, exp: props.sleeve.hacking_exp }}
+        />
+        <SleeveStatsRow name="Strength" color={Settings.theme.combat} classes={classes}
+          data={{ level: props.sleeve.strength, exp: props.sleeve.strength_exp }}
+        />
+        <SleeveStatsRow name="Defense" color={Settings.theme.combat} classes={classes}
+          data={{ level: props.sleeve.defense, exp: props.sleeve.defense_exp }}
+        />
+        <SleeveStatsRow name="Dexterity" color={Settings.theme.combat} classes={classes}
+          data={{ level: props.sleeve.dexterity, exp: props.sleeve.dexterity_exp }}
+        />
+        <SleeveStatsRow name="Agility" color={Settings.theme.combat} classes={classes}
+          data={{ level: props.sleeve.agility, exp: props.sleeve.agility_exp }}
+        />
+        <SleeveStatsRow name="Charisma" color={Settings.theme.cha} classes={classes}
+          data={{ level: props.sleeve.charisma, exp: props.sleeve.charisma_exp }}
+        />
         <TableRow>
           <TableCell classes={{ root: classes.cellNone }}>
             <br />
           </TableCell>
         </TableRow>
-        {generateTableRow("Shock", Settings.theme.primary, classes, {
-          content: numeralWrapper.formatSleeveShock(100 - props.sleeve.shock)
-        })}
-        {generateTableRow("Sync", Settings.theme.primary, classes, {
-          content: numeralWrapper.formatSleeveSynchro(props.sleeve.sync)
-        })}
-        {generateTableRow("Memory", Settings.theme.primary, classes, {
-          content: numeralWrapper.formatSleeveMemory(props.sleeve.memory)
-        })}
+        <SleeveStatsRow name="Shock" color={Settings.theme.primary} classes={classes}
+          data={{ content: numeralWrapper.formatSleeveShock(100 - props.sleeve.shock) }}
+        />
+        <SleeveStatsRow name="Sync" color={Settings.theme.primary} classes={classes}
+          data={{ content: numeralWrapper.formatSleeveSynchro(props.sleeve.sync) }}
+        />
+        <SleeveStatsRow name="Memory" color={Settings.theme.primary} classes={classes}
+          data={{ content: numeralWrapper.formatSleeveMemory(props.sleeve.memory) }}
+        />
       </TableBody>
     </Table>
   )
