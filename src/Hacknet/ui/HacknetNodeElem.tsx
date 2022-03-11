@@ -172,7 +172,7 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
       <Table size="small">
         <TableBody>
           <TableRow>
-            <TableCell>
+            <TableCell colSpan={3}>
               <Typography>{node.name}</Typography>
             </TableCell>
           </TableRow>

@@ -14,7 +14,7 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { IMap } from "../types";
 import { EventEmitter } from "../utils/EventEmitter";
 
-import { numeralWrapper } from ".././ui/numeralFormat";
+import { numeralWrapper } from "../ui/numeralFormat";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver } from "../utils/JSONReviver";

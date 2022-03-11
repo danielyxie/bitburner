@@ -74,7 +74,7 @@ for (var i = 0; i < multKeys.length; ++i) {
     if (mult && mult !== 1) {
         mult = formatNumber(mult, 3);
         switch(multKeys[i]) {
-            
+
         }
     }
 }

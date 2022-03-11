@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { EventEmitter } from "../../utils/EventEmitter";
-import { Modal } from "../../ui/React/Modal";
+import { Modal } from "./Modal";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import {sha256} from "js-sha256";

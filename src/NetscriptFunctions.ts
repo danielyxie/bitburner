@@ -174,7 +174,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeRejectMsg(
         workerScript,
         `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-          `This is probably a bug. Please report to game developer`,
+        `This is probably a bug. Please report to game developer`,
       );
     }
 
@@ -692,8 +692,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log(
           "weaken",
           () =>
-            `'${server.hostname}' security level weakened to ${
-              server.hackDifficulty
+            `'${server.hostname}' security level weakened to ${server.hackDifficulty
             }. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)})`,
         );
         workerScript.scriptRef.onlineExpGained += expGain;
@@ -703,7 +702,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     weakenAnalyze: function (threads: any, cores: any = 1): number {
       const coreBonus = 1 + (cores - 1) / 16;
-      return CONSTANTS.ServerWeakenAmount * threads * coreBonus;
+      return CONSTANTS.ServerWeakenAmount * threads * coreBonus * BitNodeMultipliers.ServerWeakenRate;
     },
     share: function (): Promise<void> {
       workerScript.log("share", () => "Sharing this computer.");
@@ -807,7 +806,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (possibleLogs[fn] === undefined) {
         throw makeRuntimeErrorMsg("isLogEnabled", `Invalid argument: ${fn}.`);
       }
-      return workerScript.disableLogs[fn] ? false : true;
+      return !workerScript.disableLogs[fn];
     },
     getScriptLogs: function (fn: any, hostname: any, ...scriptArgs: any): any {
       const runningScriptObj = getRunningScript(fn, hostname, "getScriptLogs", scriptArgs);
@@ -1121,7 +1120,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       // Invalid file name
       if (!scriptname.endsWith(".lit") && !isScriptFilename(scriptname) && !scriptname.endsWith("txt")) {
-        throw makeRuntimeErrorMsg("scp", "Only works for .script, .lit, and .txt files");
+        throw makeRuntimeErrorMsg("scp", "Only works for scripts, .lit and .txt files");
       }
 
       let destServer: BaseServer | null;
@@ -1590,10 +1589,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         }
       }
       const txtFile = getTextFile(filename, server);
-      if (txtFile != null) {
-        return true;
-      }
-      return false;
+      return txtFile != null;
     },
     isRunning: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any): any {
       updateDynamicRam("isRunning", getRamCost(Player, "isRunning"));
@@ -1628,6 +1624,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return cost;
     },
     purchaseServer: function (aname: any, aram: any): any {
+      if (arguments.length !== 2) throw makeRuntimeErrorMsg("purchaseServer", "Takes 2 arguments");
       const name = helper.string("purchaseServer", "name", aname);
       const ram = helper.number("purchaseServer", "ram", aram);
       updateDynamicRam("purchaseServer", getRamCost(Player, "purchaseServer"));
@@ -1649,12 +1646,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       const cost = getPurchaseServerCost(ram);
       if (cost === Infinity) {
-        if(ram > getPurchaseServerMaxRam()){
+        if (ram > getPurchaseServerMaxRam()) {
           workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must not be greater than getPurchaseServerMaxRam`);
-        }else{
+        } else {
           workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be a positive power of 2`);
         }
-        
+
         return "";
       }
 
@@ -1836,6 +1833,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     tryWritePort: function (port: any, data: any = ""): any {
       updateDynamicRam("tryWritePort", getRamCost(Player, "tryWritePort"));
+      if (typeof data !== "string" && typeof data !== "number") {
+        throw makeRuntimeErrorMsg(
+          "tryWritePort",
+          `Trying to write invalid data to a port: only strings and numbers are valid.`,
+        );
+      }
       if (!isNaN(port)) {
         port = Math.round(port);
         if (port < 1 || port > CONSTANTS.NumNetscriptPorts) {
@@ -2279,7 +2282,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (typeof f !== "function") {
         throw makeRuntimeErrorMsg("atExit", "argument should be function");
       }
-      workerScript.atExit = f;
+      workerScript.atExit = () => { f(); }; // Wrap the user function to prevent WorkerScript leaking as 'this'
     },
     mv: function (host: string, source: string, destination: string): void {
       updateDynamicRam("mv", getRamCost(Player, "mv"));
