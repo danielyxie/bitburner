@@ -905,9 +905,9 @@ export interface GangMemberInfo {
   /** Name of the gang member */
   name: string;
   /** Currently assigned task */
-  task: string;  
+  task: string;
   earnedRespect: number;
-  
+
   /** Hack skill level */
   hack: number;
   /** Strength skill level */

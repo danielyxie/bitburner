@@ -26,7 +26,7 @@ async function initialize(win) {
       } else {
         log.log('Invalid authentication token');
         res.writeHead(401);
-       
+
         res.end(JSON.stringify({
           success: false,
           msg: 'Invalid authentication token'
@@ -71,7 +71,7 @@ async function initialize(win) {
 
           result = await window.webContents.executeJavaScript(`document.saveFile("${data.filename}", "${data.code}")`);
           break;
-        
+
         // Delete files
         case "DELETE":
           result = await window.webContents.executeJavaScript(`document.deleteFile("${data.filename}")`);

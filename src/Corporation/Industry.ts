@@ -1286,7 +1286,7 @@ export class Industry implements IIndustry {
         this.awareness = Math.min(awareness, Number.MAX_VALUE);
 
         const popularity = (this.popularity + (1 * advMult)) * ((1 + getRandomInt(1, 3) / 100) * advMult);
-        this.popularity = Math.min(popularity, Number.MAX_VALUE);       
+        this.popularity = Math.min(popularity, Number.MAX_VALUE);
         break;
       }
       default: {
