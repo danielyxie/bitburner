@@ -35,27 +35,29 @@ export function WorkInProgressRoot(): React.ReactElement {
   const player = use.Player();
   const router = use.Router();
 
-  const faction = Factions[player.currentWorkFactionName];
-  if (!faction) {
-    return (
-      <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
-        <Grid item>
-          <Typography>
-            Something has gone wrong, you cannot work for {player.currentWorkFactionName || "(Faction not found)"} at this time.
-          </Typography>
-        </Grid>
-      </Grid>
-    )
-  }
-
   if (player.workType == CONSTANTS.WorkTypeFaction) {
+    const faction = Factions[player.currentWorkFactionName];
     if (!faction) {
-      return <>
-        <Typography variant="h4" color="primary">
-          You have not joined {faction} yet!
-        </Typography>
-        <Button onClick={() => router.toFactions()}>Back to Factions</Button>
-      </>
+      return (
+        <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
+          <Grid item>
+            <Typography>
+              Something has gone wrong, you cannot work for {player.currentWorkFactionName || "(Faction not found)"} at
+              this time.
+            </Typography>
+          </Grid>
+        </Grid>
+      );
+    }
+    if (!faction) {
+      return (
+        <>
+          <Typography variant="h4" color="primary">
+            You have not joined {faction} yet!
+          </Typography>
+          <Button onClick={() => router.toFactions()}>Back to Factions</Button>
+        </>
+      );
     }
 
     function cancel(): void {
