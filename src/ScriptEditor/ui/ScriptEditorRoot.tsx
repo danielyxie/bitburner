@@ -890,8 +890,8 @@ export function Root(props: IProps): React.ReactElement {
             {ram}
           </Button>
           <Button onClick={save}>Save (Ctrl/Cmd + s)</Button>
-          <Button onClick={props.router.toTerminal}>Close (Ctrl/Cmd + b)</Button>
-          <Typography sx={{ mx: 1 }}>
+          <Button sx={{ mx: 1 }} onClick={props.router.toTerminal}>Terminal (Ctrl/Cmd + b)</Button>
+          <Typography>
             {" "}
             Documentation:{" "}
             <Link target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
