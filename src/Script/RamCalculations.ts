@@ -11,7 +11,7 @@ import acorn, { parse } from "acorn";
 import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
-import { Script } from "../Script/Script";
+import { Script } from "./Script";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { areImportsEquals } from "../Terminal/DirectoryHelpers";
 import { IPlayer } from "../PersonObjects/IPlayer";

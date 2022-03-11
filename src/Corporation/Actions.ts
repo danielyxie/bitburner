@@ -19,6 +19,9 @@ import { ResearchMap } from "./ResearchMap";
 import { isRelevantMaterial } from "./ui/Helpers";
 
 export function NewIndustry(corporation: ICorporation, industry: string, name: string): void {
+  if (corporation.divisions.find(({ type }) => industry == type))
+    throw new Error(`You have already expanded into the ${industry} industry!`);
+
   for (let i = 0; i < corporation.divisions.length; ++i) {
     if (corporation.divisions[i].name === name) {
       throw new Error("This division name is already in use!");
@@ -111,8 +114,8 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
   if (amt.includes("MAX") || amt.includes("PROD")) {
     let q = amt.replace(/\s+/g, "");
     q = q.replace(/[^-()\d/*+.MAXPROD]/g, "");
-    let tempQty = q.replace(/MAX/g, "1");
-    tempQty = tempQty.replace(/PROD/g, "1");
+    let tempQty = q.replace(/MAX/g, mat.maxsll.toString());
+    tempQty = tempQty.replace(/PROD/g, mat.prd.toString());
     try {
       tempQty = eval(tempQty);
     } catch (e) {
@@ -176,8 +179,8 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
     //Dynamically evaluated quantity. First test to make sure its valid
     let qty = amt.replace(/\s+/g, "");
     qty = qty.replace(/[^-()\d/*+.MAXPROD]/g, "");
-    let temp = qty.replace(/MAX/g, "1");
-    temp = temp.replace(/PROD/g, "1");
+    let temp = qty.replace(/MAX/g, product.maxsll.toString());
+    temp = temp.replace(/PROD/g, product.data[city][1].toString());
     try {
       temp = eval(temp);
     } catch (e) {
@@ -291,7 +294,7 @@ export function BuyBackShares(corporation: ICorporation, player: IPlayer, numSha
   if (numShares > corporation.issuedShares) throw new Error("You don't have that many shares to buy!");
   if (!corporation.public) throw new Error("You haven't gone public!");
   const buybackPrice = corporation.sharePrice * 1.1;
-  if (corporation.funds < (numShares * buybackPrice)) throw new Error("You cant afford that many shares!");
+  if (player.money < (numShares * buybackPrice)) throw new Error("You cant afford that many shares!");
   corporation.numShares += numShares;
   corporation.issuedShares -= numShares;
   player.loseMoney(numShares * buybackPrice, "corporation");

@@ -5,7 +5,7 @@ import { toString } from "lodash";
 import React from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../../Terminal/DirectoryHelpers";
+import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../DirectoryHelpers";
 import { IRouter } from "../../ui/Router";
 import { ITerminal } from "../ITerminal";
 

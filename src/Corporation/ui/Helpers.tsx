@@ -4,7 +4,7 @@ import { IIndustry } from "../IIndustry";
 // current industry.
 export function isRelevantMaterial(matName: string, division: IIndustry): boolean {
   // Materials that affect Production multiplier
-  const prodMultiplierMats = ["Hardware", "Robots", "AICores", "RealEstate"];
+  const prodMultiplierMats = ["Hardware", "Robots", "AICores", "RealEstate", "AI Cores", "Real Estate"];
 
   if (Object.keys(division.reqMats).includes(matName)) {
     return true;

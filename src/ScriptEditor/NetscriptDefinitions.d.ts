@@ -535,6 +535,8 @@ export interface BitNodeMultipliers {
   CompanyWorkExpGain: number;
   /** Influences how much money the player earns when completing working their job. */
   CompanyWorkMoney: number;
+  /** Influences the money gain from dividends of corporations created by the player. */
+  CorporationSoftCap: number;
   /** Influences the valuation of corporations created by the player. */
   CorporationValuation: number;
   /** Influences the base experience gained for each ability when the player commits a crime. */
@@ -903,9 +905,9 @@ export interface GangMemberInfo {
   /** Name of the gang member */
   name: string;
   /** Currently assigned task */
-  task: string;  
+  task: string;
   earnedRespect: number;
-  
+
   /** Hack skill level */
   hack: number;
   /** Strength skill level */
@@ -5650,7 +5652,7 @@ export interface NS extends Singularity {
    * @param data - Data to write.
    * @returns True if the data is successfully written to the port, and false otherwise.
    */
-  tryWritePort(port: number, data: string[] | number): Promise<boolean>;
+  tryWritePort(port: number, data: string | number): Promise<boolean>;
 
   /**
    * Read content of a file.
@@ -6901,4 +6903,15 @@ interface GameInfo {
   version: string;
   commit: string;
   platform: string;
+}
+
+/**
+ * Used for autocompletion
+ * @public
+ */
+interface AutocompleteData {
+  servers: string[];
+  scripts: string[];
+  txts: string[];
+  flags(schema: [string, string | number | boolean | string[]][]): any;
 }

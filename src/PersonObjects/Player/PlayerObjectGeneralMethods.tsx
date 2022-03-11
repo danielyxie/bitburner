@@ -25,7 +25,7 @@ import { Cities } from "../../Locations/Cities";
 import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
-import { Sleeve } from "../../PersonObjects/Sleeve/Sleeve";
+import { Sleeve } from "../Sleeve/Sleeve";
 import {
   calculateSkill as calculateSkillF,
   calculateSkillProgress as calculateSkillProgressF,
@@ -590,7 +590,7 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
   if (this.isWorking) {
     if (this.workType == CONSTANTS.WorkTypeFaction) {
       if (this.workForFaction(numCycles)) {
-        router.toFaction();
+        router.toFaction(Factions[this.currentWorkFactionName]);
       }
     } else if (this.workType == CONSTANTS.WorkTypeCreateProgram) {
       if (this.createProgramWork(numCycles)) {
@@ -932,6 +932,8 @@ export function startFactionSecurityWork(this: IPlayer, faction: Faction): void 
 
 export function workForFaction(this: IPlayer, numCycles: number): boolean {
   const faction = Factions[this.currentWorkFactionName];
+
+  if (!faction) { return false; }
 
   //Constantly update the rep gain rate
   switch (this.factionWorkType) {
@@ -2002,18 +2004,13 @@ export function isQualified(this: IPlayer, company: Company, position: CompanyPo
   const reqAgility = position.requiredDexterity > 0 ? position.requiredDexterity + offset : 0;
   const reqCharisma = position.requiredCharisma > 0 ? position.requiredCharisma + offset : 0;
 
-  if (
-    this.hacking >= reqHacking &&
+  return this.hacking >= reqHacking &&
     this.strength >= reqStrength &&
     this.defense >= reqDefense &&
     this.dexterity >= reqDexterity &&
     this.agility >= reqAgility &&
     this.charisma >= reqCharisma &&
-    company.playerReputation >= position.requiredReputation
-  ) {
-    return true;
-  }
-  return false;
+    company.playerReputation >= position.requiredReputation;
 }
 
 /********** Reapplying Augmentations and Source File ***********/
@@ -2571,7 +2568,7 @@ export function queueAugmentation(this: IPlayer, name: string): void {
 
 /************* Coding Contracts **************/
 export function gainCodingContractReward(this: IPlayer, reward: ICodingContractReward, difficulty = 1): string {
-  if (reward == null || reward.type == null || reward == null) {
+  if (reward == null || reward.type == null) {
     return `No reward for this contract`;
   }
 

@@ -41,6 +41,10 @@ export function FactionsRoot(props: IProps): React.ReactElement {
     props.router.toFaction(faction);
   }
 
+  function openFactionAugPage(faction: Faction): void {
+    props.router.toFaction(faction, true);
+  }
+
   function acceptInvitation(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, faction: string): void {
     if (!event.isTrusted) return;
     joinFaction(Factions[faction]);
@@ -61,7 +65,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
       </Typography>
       {(props.player.factions.length > 0 && (
         <Paper sx={{ my: 1, p: 1, pb: 0, display: "inline-block" }}>
-          <Table padding="none">
+          <Table padding="none" style={{ width: "fit-content" }}>
             <TableBody>
               {props.player.factions.map((faction: string) => (
                 <TableRow key={faction}>
@@ -73,6 +77,17 @@ export function FactionsRoot(props: IProps): React.ReactElement {
                   <TableCell align="right">
                     <Box ml={1} mb={1}>
                       <Button onClick={() => openFaction(Factions[faction])}>Details</Button>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Box ml={1} mb={1}>
+                      <Button sx={{ width: '100%' }} onClick={() => openFactionAugPage(Factions[faction])}>
+                        Augmentations Left: {Factions[faction]
+                          .augmentations
+                          .filter((augmentation: string) =>
+                            !props.player.hasAugmentation(augmentation))
+                          .length}
+                      </Button>
                     </Box>
                   </TableCell>
                 </TableRow>

@@ -32,6 +32,7 @@ import { CorruptableText } from "../../ui/React/CorruptableText";
 import { HacknetNode } from "../../Hacknet/HacknetNode";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer } from "../../Server/AllServers";
+import { ArcadeRoot } from "../../Arcade/ui/ArcadeRoot";
 
 type IProps = {
   loc: Location;
@@ -81,7 +82,12 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       return <></>;
     }
     const text = inBladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";
-    return <><br/><Button onClick={handleBladeburner}>{text}</Button></>;
+    return (
+      <>
+        <br />
+        <Button onClick={handleBladeburner}>{text}</Button>
+      </>
+    );
   }
 
   function renderNoodleBar(): React.ReactElement {
@@ -310,6 +316,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
     case LocationName.IshimaGlitch: {
       return renderGlitch();
+    }
+    case LocationName.NewTokyoArcade: {
+      return <ArcadeRoot />;
     }
     default:
       console.error(`Location ${props.loc.name} doesn't have any special properties`);
