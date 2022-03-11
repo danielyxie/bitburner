@@ -19,6 +19,9 @@ import { ResearchMap } from "./ResearchMap";
 import { isRelevantMaterial } from "./ui/Helpers";
 
 export function NewIndustry(corporation: ICorporation, industry: string, name: string): void {
+  if (corporation.divisions.find(({ type }) => industry == type))
+    throw new Error(`You have already expanded into the ${industry} industry!`);
+
   for (let i = 0; i < corporation.divisions.length; ++i) {
     if (corporation.divisions[i].name === name) {
       throw new Error("This division name is already in use!");
