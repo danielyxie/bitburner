@@ -1914,6 +1914,9 @@ export class Bladeburner implements IBladeburner {
   }
 
   process(router: IRouter, player: IPlayer): void {
+    // Edge race condition when the engine checks the processing counters and attempts to route before the router is initialized.
+    if (!router.isInitialized) return;
+
     // Edge case condition...if Operation Daedalus is complete trigger the BitNode
     if (router.page() !== Page.BitVerse && this.blackops.hasOwnProperty("Operation Daedalus")) {
       return router.toBitVerse(false, false);
@@ -2083,7 +2086,7 @@ export class Bladeburner implements IBladeburner {
       this.startAction(player, actionId);
       workerScript.log(
         "bladeburner.startAction",
-        () => `Starting bladeburner action with type '${type}' and name ${name}"`,
+        () => `Starting bladeburner action with type '${type}' and name '${name}'`,
       );
       return true;
     } catch (e: any) {

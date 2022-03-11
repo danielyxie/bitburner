@@ -16,7 +16,6 @@ import "numeral/locales/ru";
 
 import { Settings } from "../Settings/Settings";
 
-/* eslint-disable class-methods-use-this */
 
 const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
 const extraNotations = ["q", "Q", "s", "S", "o", "n"];

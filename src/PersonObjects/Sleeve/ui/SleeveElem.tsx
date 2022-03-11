@@ -17,10 +17,10 @@ import { Money } from "../../../ui/React/Money";
 import { MoneyRate } from "../../../ui/React/MoneyRate";
 import { use } from "../../../ui/Context";
 import { ReputationRate } from "../../../ui/React/ReputationRate";
-import { StatsElement } from "../ui/StatsElement";
+import { StatsElement } from "./StatsElement";
 import { MoreStatsModal } from "./MoreStatsModal";
-import { MoreEarningsModal } from "../ui/MoreEarningsModal";
-import { TaskSelector } from "../ui/TaskSelector";
+import { MoreEarningsModal } from "./MoreEarningsModal";
+import { TaskSelector } from "./TaskSelector";
 import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
 import { StatsTable } from "../../../ui/React/StatsTable";
 

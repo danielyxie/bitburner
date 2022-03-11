@@ -44,7 +44,7 @@ import { CorporationRoot } from "../Corporation/ui/CorporationRoot";
 import { InfiltrationRoot } from "../Infiltration/ui/InfiltrationRoot";
 import { ResleeveRoot } from "../PersonObjects/Resleeving/ui/ResleeveRoot";
 import { WorkInProgressRoot } from "./WorkInProgressRoot";
-import { GameOptionsRoot } from "../ui/React/GameOptionsRoot";
+import { GameOptionsRoot } from "./React/GameOptionsRoot";
 import { SleeveRoot } from "../PersonObjects/Sleeve/ui/SleeveRoot";
 import { HacknetRoot } from "../Hacknet/ui/HacknetRoot";
 import { GenericLocation } from "../Locations/ui/GenericLocation";
@@ -54,7 +54,7 @@ import { Root as ScriptEditorRoot } from "../ScriptEditor/ui/ScriptEditorRoot";
 import { MilestonesRoot } from "../Milestones/ui/MilestonesRoot";
 import { TerminalRoot } from "../Terminal/ui/TerminalRoot";
 import { TutorialRoot } from "../Tutorial/ui/TutorialRoot";
-import { ActiveScriptsRoot } from "../ui/ActiveScripts/ActiveScriptsRoot";
+import { ActiveScriptsRoot } from "./ActiveScripts/ActiveScriptsRoot";
 import { FactionsRoot } from "../Faction/ui/FactionsRoot";
 import { FactionRoot } from "../Faction/ui/FactionRoot";
 import { CharacterStats } from "./CharacterStats";
@@ -111,6 +111,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export let Router: IRouter = {
+  isInitialized: false,
   page: () => {
     throw new Error("Router called before initialization");
   },
@@ -223,6 +224,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   const [{ files, vim }, setEditorOptions] = useState({ files: {}, vim: false });
   const [page, setPage] = useState(determineStartPage(player));
   const setRerender = useState(0)[1];
+  const [augPage, setAugPage] = useState<boolean>(false);
   const [faction, setFaction] = useState<Faction>(
     player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : (undefined as unknown as Faction),
   );
@@ -266,6 +268,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   }
 
   Router = {
+    isInitialized: true,
     page: () => page,
     allowRouting: (value: boolean) => setAllowRoutingCalls(value),
     toActiveScripts: () => setPage(Page.ActiveScripts),
@@ -275,7 +278,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toCorporation: () => setPage(Page.Corporation),
     toCreateProgram: () => setPage(Page.CreateProgram),
     toDevMenu: () => setPage(Page.DevMenu),
-    toFaction: (faction?: Faction) => {
+    toFaction: (faction: Faction, augPage = false) => {
+      setAugPage(augPage);
       setPage(Page.Faction);
       if (faction) setFaction(faction);
     },
@@ -453,7 +457,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Faction: {
-      mainPage = <FactionRoot faction={faction} />;
+      mainPage = <FactionRoot faction={faction} augPage={augPage} />;
       break;
     }
     case Page.Milestones: {

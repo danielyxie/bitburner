@@ -2,7 +2,7 @@
 
 Augmentations
 =============
-Advances in science and medicine have lead to powerful new technologies
+Advances in science and medicine have led to powerful new technologies
 that allow people to augment themselves beyond normal human capabilities.
 There are many different types of Augmentations, ranging from cybernetic
 to genetic to biological. Acquiring these Augmentations enhances the

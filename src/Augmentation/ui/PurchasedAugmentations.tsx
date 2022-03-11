@@ -4,8 +4,8 @@
  */
 import * as React from "react";
 
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Augmentations } from "../Augmentations";
+import { AugmentationNames } from "../data/AugmentationNames";
 import { Player } from "../../Player";
 
 import { AugmentationAccordion } from "../../ui/React/AugmentationAccordion";

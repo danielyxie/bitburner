@@ -111,8 +111,8 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  VersionString: "1.4.0",
-  VersionNumber: 10,
+  VersionString: "1.5.0",
+  VersionNumber: 11,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -273,22 +273,64 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v1.4.0 - 2022-01-18 Sharing is caring
-    -------------------------------------
+  v1.5.0 - Steam Cloud integration
+  --------------------------------
 
-    ** Computer sharing **
+  ** Steam Cloud Saving **
 
-    * A new mechanic has been added, it's is invoked by calling the new function 'share'.
-      This mechanic helps you farm reputation faster.
+  * Added (@MartinFournier)
 
-    ** gang **
+  ** UI **
 
-    * Installing augs means losing a little bit of ascension multipliers.
+  * background now matches game primary color (@nickofolas)
+  * page title contains version (@MartinFourier)
+  * Major text editor improvements (@nickofolas)
+  * Display bonus time on sleeve page (@MartinFourier)
+  * Several UI improvements (@nickofolas, @smolgumball, @DrCuriosity, @phyzical)
+  * Fix aug display in alpha (@Dominik Winter)
+  * Fix display of corporation product equation (@SagePtr)
+  * Make Bitverse more accessible (@ChrissiQ)
+  * Make corporation warehouse more accessible (@ChrissiQ)
+  * Make tab style more consistent (@nikfolas)
 
-    ** There's more but I'm going to write it later. **
+  ** Netscript **
 
-    ** Misc. **
+  * Fix bug with async.
+  * Add 'printf' ns function (@Ninetailed)
+  * Remove blob caching.
+  * Fix formulas access check (@Ornedan)
+  * Fix bug in exp calculation (@qcorradi)
+  * Fix NaN comparison (@qcorradi)
+  * Fix travelToCity with bad argument (@SlyCedix)
+  * Fix bug where augs could not be purchased via sing (@reacocard)
+  * Fix rounding error in donateToFaction (@Risenafis)
+  * Fix bug with weakenAnalyze (@rhobes)
+  * Prevent exploit with atExit (@Ornedan)
+  * Double 'share' power
 
-    * Nerf noodle bar.
+  ** Corporations **
+
+  * Fix bugs with corp API (@pigalot)
+  * Add smart supply func to corp API (@pd)
+
+  ** Misc. **
+
+  * The file API now allows GET and DELETE (@lordducky)
+  * Force achievement calculation on BN completion (@SagePtr)
+  * Cleanup in repository (@MartinFourier)
+  * Several improvements to the electron version (@MartinFourier)
+  * Fix bug with casino roulette (@jamie-mac)
+  * Terminal history persists in savefile (@MartinFourier)
+  * Fix tests (@jamie-mac)
+  * Fix crash with electron windows tracker (@smolgumball)
+  * Fix BN6/7 passive reputation gain (@BrianLDev)
+  * Fix Sleeve not resetting on install (@waffleattack)
+  * Sort joined factions (@jjayeon)
+  * Update documentation / typo (@lethern, @Meowdoleon, @JohnnyUrosevic, @JosephDavidTalbot,
+    @pd, @lethern, @lordducky, @zeddrak, @fearnlj01, @reasonablytall, @MatthewTh0,
+    @SagePtr, @manniL, @Jedimaster4559, @loganville, @Arrow2thekn33, @wdpk, @fwolfst,
+    @fschoenfeldt, @Waladil, @AdamTReineke, @citrusmunch, @factubsio, @ashtongreen,
+    @ChrissiQ, @DJ-Laser, @waffleattack, @ApamNapat, @CrafterKolyan, @DSteve595)
+  * Nerf noodle bar.
 `,
 };

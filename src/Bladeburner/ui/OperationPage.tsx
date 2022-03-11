@@ -22,7 +22,7 @@ export function OperationPage(props: IProps): React.ReactElement {
         between different Operations.
         <br />
         <br />
-        For operations, you can use a team. You must first recruit team members. Having a larger team will improves your
+        For operations, you can use a team. You must first recruit team members. Having a larger team will improve your
         chances of success.
         <br />
         <br />

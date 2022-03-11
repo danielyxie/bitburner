@@ -12,7 +12,7 @@ export function scan(
   args: (string | number | boolean)[],
 ): void {
   if (args.length !== 0) {
-    terminal.error("Incorrect usage of netstat/scan command. Usage: netstat/scan");
+    terminal.error("Incorrect usage of scan command. Usage: scan");
     return;
   }
 
