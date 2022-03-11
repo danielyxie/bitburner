@@ -66,11 +66,10 @@ export function FactionsRoot(props: IProps): React.ReactElement {
       for (const augName of Object.keys(Augmentations)) {
         if (
           augName === AugmentationNames.NeuroFluxGovernor ||
-          augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2
+          augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2 ||
+          Augmentations[augName].isSpecial
         ) continue;
-        if (!Augmentations[augName].isSpecial) {
-          augs.push(augName)
-        }
+        augs.push(augName)
       }
     } else {
       augs = faction.augmentations.slice();
