@@ -24,6 +24,7 @@ import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPur
 
 type IProps = {
   faction: Faction;
+  augPage: boolean;
 };
 
 // Info text for all options on the UI
@@ -185,7 +186,7 @@ export function FactionRoot(props: IProps): React.ReactElement {
 
   const faction = props.faction;
 
-  const [purchasingAugs, setPurchasingAugs] = useState(false);
+  const [purchasingAugs, setPurchasingAugs] = useState(props.augPage);
 
   return purchasingAugs ? (
     <AugmentationsPage faction={faction} routeToMainPage={() => setPurchasingAugs(false)} />
