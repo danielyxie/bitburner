@@ -23,9 +23,13 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
 
   return {
     width: function (): number {
+      helper.updateDynamicRam("width", getRamCost(player, "stanek", "width"));
+      checkStanekAPIAccess("width");
       return staneksGift.width();
     },
     height: function (): number {
+      helper.updateDynamicRam("height", getRamCost(player, "stanek", "height"));
+      checkStanekAPIAccess("height");
       return staneksGift.height();
     },
     charge: function (arootX: unknown, arootY: unknown): Promise<void> {
