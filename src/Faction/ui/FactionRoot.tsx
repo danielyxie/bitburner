@@ -176,7 +176,7 @@ export function FactionRoot(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   const player = use.Player();
   const router = use.Router();
-  const [purchasingAugs, setPurchasingAugs] = useState(false);
+  const [purchasingAugs, setPurchasingAugs] = useState(props.augPage);
 
   function rerender(): void {
     setRerender((old) => !old);
