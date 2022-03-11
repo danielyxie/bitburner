@@ -1,23 +1,24 @@
-import { Sleeve } from "../Sleeve";
-import { numeralWrapper } from "../../../ui/numeralFormat";
 import React from "react";
-import Typography from "@mui/material/Typography";
+
 import {
+  Typography,
   Table,
   TableBody,
   TableCell,
   TableRow,
 } from "@mui/material";
 
+import { numeralWrapper } from "../../../ui/numeralFormat";
 import { Settings } from "../../../Settings/Settings";
 import { formatNumber } from "../../../utils/StringHelperFunctions";
 import { characterOverviewStyles as useStyles } from "../../../ui/React/CharacterOverview";
-
 import { Money } from "../../../ui/React/Money";
 import { MoneyRate } from "../../../ui/React/MoneyRate";
 import { ReputationRate } from "../../../ui/React/ReputationRate";
-import { SleeveTaskType } from "../SleeveTaskTypesEnum";
 import { use } from "../../../ui/Context";
+
+import { Sleeve } from "../Sleeve";
+import { SleeveTaskType } from "../SleeveTaskTypesEnum";
 
 interface ITableRowData {
   content?: string;

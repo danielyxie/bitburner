@@ -1,30 +1,29 @@
 import React, { useState } from "react";
 
+import {
+  Box,
+  Paper,
+  Typography,
+  Button,
+  Tooltip
+} from "@mui/material";
+
+import { CONSTANTS } from "../../../Constants";
+import { Crimes } from "../../../Crime/Crimes";
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
+import { use } from "../../../ui/Context";
+import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
+
 import { Sleeve } from "../Sleeve";
 import { SleeveTaskType } from "../SleeveTaskTypesEnum";
 
-import { CONSTANTS } from "../../../Constants";
-
-import { Crimes } from "../../../Crime/Crimes";
-
-import { numeralWrapper } from "../../../ui/numeralFormat";
-
-import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
-
 import { SleeveAugmentationsModal } from "./SleeveAugmentationsModal";
 import { TravelModal } from "./TravelModal";
-import { use } from "../../../ui/Context";
 import { StatsElement, EarningsElement } from "./StatsElement";
 import { MoreStatsModal } from "./MoreStatsModal";
 import { MoreEarningsModal } from "./MoreEarningsModal";
 import { TaskSelector } from "./TaskSelector";
-import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
-
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import { Box } from "@mui/material";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 
 interface IProps {
   sleeve: Sleeve;
