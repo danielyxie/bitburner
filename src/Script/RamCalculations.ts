@@ -427,6 +427,4 @@ export async function calculateRamUsage(
     console.error(e);
     return { cost: RamCalculationErrorCode.SyntaxError };
   }
-
-  return { cost: RamCalculationErrorCode.SyntaxError };
 }
