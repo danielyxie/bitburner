@@ -24,6 +24,7 @@ import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPur
 
 type IProps = {
   faction: Faction;
+  augPage: boolean;
 };
 
 // Info text for all options on the UI
@@ -188,6 +189,7 @@ export function FactionRoot(props: IProps): React.ReactElement {
 
   const faction = props.faction;
 
+  const [purchasingAugs, setPurchasingAugs] = useState(props.augPage);
   if (player && !player.factions.includes(faction.name)) {
     return <>
       <Typography variant="h4" color="primary">

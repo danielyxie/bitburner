@@ -65,7 +65,7 @@ export interface IRouter {
   toCorporation(): void;
   toCreateProgram(): void;
   toDevMenu(): void;
-  toFaction(faction?: Faction): void; // faction name
+  toFaction(faction: Faction, augPage?: boolean): void; // faction name
   toFactions(): void;
   toGameOptions(): void;
   toGang(): void;

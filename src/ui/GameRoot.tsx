@@ -223,6 +223,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
   const [{ files, vim }, setEditorOptions] = useState({ files: {}, vim: false });
   const [page, setPage] = useState(determineStartPage(player));
   const setRerender = useState(0)[1];
+  const [augPage, setAugPage] = useState<boolean>(false);
   const [faction, setFaction] = useState<Faction>(
     player.currentWorkFactionName ? Factions[player.currentWorkFactionName] : (undefined as unknown as Faction),
   );
@@ -275,7 +276,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toCorporation: () => setPage(Page.Corporation),
     toCreateProgram: () => setPage(Page.CreateProgram),
     toDevMenu: () => setPage(Page.DevMenu),
-    toFaction: (faction?: Faction) => {
+    toFaction: (faction: Faction, augPage = false) => {
+      setAugPage(augPage);
       setPage(Page.Faction);
       if (faction) setFaction(faction);
     },
@@ -453,7 +455,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.Faction: {
-      mainPage = <FactionRoot faction={faction} />;
+      mainPage = <FactionRoot faction={faction} augPage={augPage} />;
       break;
     }
     case Page.Milestones: {

@@ -590,7 +590,7 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
   if (this.isWorking) {
     if (this.workType == CONSTANTS.WorkTypeFaction) {
       if (this.workForFaction(numCycles)) {
-        router.toFaction();
+        router.toFaction(Factions[this.currentWorkFactionName]);
       }
     } else if (this.workType == CONSTANTS.WorkTypeCreateProgram) {
       if (this.createProgramWork(numCycles)) {
