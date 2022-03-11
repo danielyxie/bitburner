@@ -474,6 +474,7 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         foreground: "FFB86C",
         fontStyle: "italic",
       },
+
       {
         token: "netscriptfunction",
         foreground: "FF79C6",
