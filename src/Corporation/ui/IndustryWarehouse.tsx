@@ -95,8 +95,10 @@ function WarehouseRoot(props: IProps): React.ReactElement {
   const mats = [];
   for (const matName of Object.keys(props.warehouse.materials)) {
     if (!(props.warehouse.materials[matName] instanceof Material)) continue;
-    // Only create UI for materials that are relevant for the industry
-    if (!isRelevantMaterial(matName, division)) continue;
+    // Only create UI for materials that are relevant for the industry or in stock
+    const isInStock = props.warehouse.materials[matName].qty > 0;
+    const isRelevant = isRelevantMaterial(matName, division);
+    if (!isInStock && !isRelevant) continue;
     mats.push(
       <MaterialElem
         rerender={props.rerender}
