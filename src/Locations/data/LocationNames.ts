@@ -54,6 +54,7 @@ export enum LocationName {
   NewTokyoGlobalPharmaceuticals = "Global Pharmaceuticals",
   NewTokyoNoodleBar = "Noodle Bar",
   NewTokyoVitaLife = "VitaLife",
+  NewTokyoArcade = "Arcade",
 
   // Ishima
   IshimaNovaMedical = "Nova Medical",
