@@ -933,6 +933,8 @@ export function startFactionSecurityWork(this: IPlayer, faction: Faction): void 
 export function workForFaction(this: IPlayer, numCycles: number): boolean {
   const faction = Factions[this.currentWorkFactionName];
 
+  if (!faction) { return false; }
+
   //Constantly update the rep gain rate
   switch (this.factionWorkType) {
     case CONSTANTS.FactionWorkHacking:
