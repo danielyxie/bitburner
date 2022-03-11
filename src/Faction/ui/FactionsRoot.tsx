@@ -1,14 +1,21 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
+
+import {
+  Box,
+  Button,
+  Container,
+  Paper,
+  TableBody,
+  TableRow,
+  Typography
+} from "@mui/material";
+
+import { Augmentations } from "../../Augmentation/Augmentations";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Table, TableCell } from "../../ui/React/Table";
 import { IRouter } from "../../ui/Router";
+
 import { Faction } from "../Faction";
 import { joinFaction } from "../FactionHelpers";
 import { Factions } from "../Factions";
@@ -51,6 +58,29 @@ export function FactionsRoot(props: IProps): React.ReactElement {
     setRerender((x) => !x);
   }
 
+  const getAugsLeft = (faction: Faction, player: IPlayer): number => {
+    const isPlayersGang = player.inGang() && player.getGangName() === faction.name;
+    let augs: string[] = [];
+
+    if (isPlayersGang) {
+      for (const augName of Object.keys(Augmentations)) {
+        if (
+          augName === AugmentationNames.NeuroFluxGovernor ||
+          augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2
+        ) continue;
+        if (!Augmentations[augName].isSpecial) {
+          augs.push(augName)
+        }
+      }
+    } else {
+      augs = faction.augmentations.slice();
+    }
+
+    return augs.filter(
+      (augmentation: string) => !player.hasAugmentation(augmentation)
+    ).length;
+  }
+
   return (
     <Container disableGutters maxWidth="md" sx={{ mx: 0, mb: 10 }}>
       <Typography variant="h4">Factions</Typography>
@@ -82,11 +112,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
                   <TableCell align="right">
                     <Box ml={1} mb={1}>
                       <Button sx={{ width: '100%' }} onClick={() => openFactionAugPage(Factions[faction])}>
-                        Augmentations Left: {Factions[faction]
-                          .augmentations
-                          .filter((augmentation: string) =>
-                            !props.player.hasAugmentation(augmentation))
-                          .length}
+                        Augmentations Left: {getAugsLeft(Factions[faction], props.player)}
                       </Button>
                     </Box>
                   </TableCell>
