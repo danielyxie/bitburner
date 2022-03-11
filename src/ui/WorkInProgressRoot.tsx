@@ -31,10 +31,21 @@ export function WorkInProgressRoot(): React.ReactElement {
     const id = setInterval(rerender, CONSTANTS.MilliPerCycle);
     return () => clearInterval(id);
   }, []);
+
   const player = use.Player();
   const router = use.Router();
+
   const faction = Factions[player.currentWorkFactionName];
   if (player.workType == CONSTANTS.WorkTypeFaction) {
+    if (!faction) {
+      return <>
+        <Typography variant="h4" color="primary">
+          You have not joined {faction} yet!
+        </Typography>
+        <Button onClick={() => router.toFactions()}>Back to Factions</Button>
+      </>
+    }
+
     function cancel(): void {
       router.toFaction(faction);
       player.finishFactionWork(true);
@@ -124,7 +135,6 @@ export function WorkInProgressRoot(): React.ReactElement {
     }
 
     function unfocus(): void {
-      router.toFaction(faction);
       router.toCity();
       player.stopFocusing();
     }
