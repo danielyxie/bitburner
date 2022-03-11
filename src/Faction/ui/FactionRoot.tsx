@@ -70,7 +70,6 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
   const router = use.Router();
   const [sleevesOpen, setSleevesOpen] = useState(false);
   const [gangOpen, setGangOpen] = useState(false);
-  const p = player;
   const factionInfo = faction.getInfo();
 
   function manageGang(): void {
@@ -104,20 +103,20 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
 
   // We have a special flag for whether the player this faction is the player's
   // gang faction because if the player has a gang, they cannot do any other action
-  const isPlayersGang = p.inGang() && p.getGangName() === faction.name;
+  const isPlayersGang = player.inGang() && player.getGangName() === faction.name;
 
   // Flags for whether special options (gang, sleeve purchases, donate, etc.)
   // should be shown
   const favorToDonate = Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
   const canDonate = faction.favor >= favorToDonate;
 
-  const canPurchaseSleeves = faction.name === "The Covenant" && p.bitNodeN === 10;
+  const canPurchaseSleeves = faction.name === "The Covenant" && player.bitNodeN === 10;
 
-  let canAccessGang = p.canAccessGang() && GangNames.includes(faction.name);
-  if (p.inGang()) {
-    if (p.getGangName() !== faction.name) {
+  let canAccessGang = player.canAccessGang() && GangNames.includes(faction.name);
+  if (player.inGang()) {
+    if (player.getGangName() !== faction.name) {
       canAccessGang = false;
-    } else if (p.getGangName() === faction.name) {
+    } else if (player.getGangName() === faction.name) {
       canAccessGang = true;
     }
   }
@@ -174,6 +173,10 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
 
 export function FactionRoot(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
+  const player = use.Player();
+  const router = use.Router();
+  const [purchasingAugs, setPurchasingAugs] = useState(false);
+
   function rerender(): void {
     setRerender((old) => !old);
   }
@@ -185,7 +188,14 @@ export function FactionRoot(props: IProps): React.ReactElement {
 
   const faction = props.faction;
 
-  const [purchasingAugs, setPurchasingAugs] = useState(false);
+  if (player && !player.factions.includes(faction.name)) {
+    return <>
+      <Typography variant="h4" color="primary">
+        You have not joined {faction.name} yet!
+      </Typography>
+      <Button onClick={() => router.toFactions()}>Back to Factions</Button>
+    </>
+  }
 
   return purchasingAugs ? (
     <AugmentationsPage faction={faction} routeToMainPage={() => setPurchasingAugs(false)} />
