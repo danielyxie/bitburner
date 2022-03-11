@@ -608,11 +608,9 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
       if (this.workPartTime(numCycles)) {
         router.toCity();
       }
-    } else {
-      if (this.work(numCycles)) {
+    } else if (this.work(numCycles)) {
         router.toCity();
       }
-    }
   }
 }
 
@@ -2244,8 +2242,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   if (!(fulcrumSecretServer instanceof Server)) throw new Error("Fulcrum Secret Technologies should be normal server");
   if (fulcrumSecretServer == null) {
     console.error("Could not find Fulcrum Secret Technologies Server");
-  } else {
-    if (
+  } else if (
       !fulcrumsecrettechonologiesFac.isBanned &&
       !fulcrumsecrettechonologiesFac.isMember &&
       !fulcrumsecrettechonologiesFac.alreadyInvited &&
@@ -2254,7 +2251,6 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     ) {
       invitedFactions.push(fulcrumsecrettechonologiesFac);
     }
-  }
 
   //BitRunners
   const bitrunnersFac = Factions["BitRunners"];

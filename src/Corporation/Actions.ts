@@ -218,8 +218,7 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
         product.sllman[city][0] = false;
         product.sllman[city][1] = "";
       }
-    } else {
-      if (all) {
+    } else if (all) {
         for (let i = 0; i < cities.length; ++i) {
           const tempCity = cities[i];
           product.sllman[tempCity][0] = true;
@@ -229,7 +228,6 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
         product.sllman[city][0] = true;
         product.sllman[city][1] = qty;
       }
-    }
   }
 }
 

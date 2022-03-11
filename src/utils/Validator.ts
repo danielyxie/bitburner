@@ -17,8 +17,7 @@ export function validateObject<Type extends Record<string, unknown>, Key extends
     if (paramValidator !== undefined)  {
       if (typeof paramValidator === 'function') {
         paramValidator(obj, key);
-      } else {
-        if (paramValidator.func !== undefined) {
+      } else if (paramValidator.func !== undefined) {
           paramValidator.func(obj, validator, key);
         } else {
           if ((typeof obj[key]) !== (typeof paramValidator.default)) {
@@ -31,7 +30,6 @@ export function validateObject<Type extends Record<string, unknown>, Key extends
             if (obj[key] > paramValidator.max) obj[key] = paramValidator.max as Type[Key];
           }
         }
-      }
     }
   }
 }

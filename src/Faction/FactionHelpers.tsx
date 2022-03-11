@@ -166,8 +166,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
 
     if (sing) {
       return "You purchased " + aug.name;
-    } else {
-      if (!Settings.SuppressBuyAugmentationConfirmation) {
+    } else if (!Settings.SuppressBuyAugmentationConfirmation) {
         dialogBoxCreate(
           "You purchased " +
           aug.name +
@@ -177,7 +176,6 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
           "augmentations will now be more expensive.",
         );
       }
-    }
   } else {
     dialogBoxCreate(
       "Hmm, something went wrong when trying to purchase an Augmentation. " +
