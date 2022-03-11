@@ -2004,18 +2004,13 @@ export function isQualified(this: IPlayer, company: Company, position: CompanyPo
   const reqAgility = position.requiredDexterity > 0 ? position.requiredDexterity + offset : 0;
   const reqCharisma = position.requiredCharisma > 0 ? position.requiredCharisma + offset : 0;
 
-  if (
-    this.hacking >= reqHacking &&
+  return this.hacking >= reqHacking &&
     this.strength >= reqStrength &&
     this.defense >= reqDefense &&
     this.dexterity >= reqDexterity &&
     this.agility >= reqAgility &&
     this.charisma >= reqCharisma &&
-    company.playerReputation >= position.requiredReputation
-  ) {
-    return true;
-  }
-  return false;
+    company.playerReputation >= position.requiredReputation;
 }
 
 /********** Reapplying Augmentations and Source File ***********/
@@ -2573,7 +2568,7 @@ export function queueAugmentation(this: IPlayer, name: string): void {
 
 /************* Coding Contracts **************/
 export function gainCodingContractReward(this: IPlayer, reward: ICodingContractReward, difficulty = 1): string {
-  if (reward == null || reward.type == null || reward == null) {
+  if (reward == null || reward.type == null) {
     return `No reward for this contract`;
   }
 

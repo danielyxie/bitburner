@@ -132,7 +132,7 @@ export function BitverseRoot(props: IProps): React.ReactElement {
   const player = use.Player();
   const enter = enterBitNode;
   const destroyed = player.bitNodeN;
-  const [destroySequence, setDestroySequence] = useState(true && !props.quick);
+  const [destroySequence, setDestroySequence] = useState(!props.quick);
 
   // Update NextSourceFileFlags
   const nextSourceFileFlags = SourceFileFlags.slice();

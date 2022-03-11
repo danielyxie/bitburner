@@ -186,8 +186,7 @@ export class OfficeSpace {
         jobCount--;
       }
     }
-    if (jobCount !== amount) return false;
-    return true;
+    return jobCount === amount;
   }
 
   toJSON(): any {
