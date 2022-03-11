@@ -10,6 +10,7 @@ import { HelpTexts } from "./HelpText";
 import { isScriptFilename } from "../Script/isScriptFilename";
 import { compile } from "../NetscriptJSEvaluator";
 import { Flags } from "../NetscriptFunctions/Flags";
+import { AutocompleteData } from "../ScriptEditor/NetscriptDefinitions";
 import * as libarg from "arg";
 
 // An array of all Terminal commands
@@ -298,26 +299,27 @@ export async function determineAllPossibilitiesForTabCompletion(
       argv: command.slice(2),
     });
     const flagFunc = Flags(flags._);
+    const autocompleteData: AutocompleteData = {
+      servers: GetAllServers().map((server) => server.hostname),
+      scripts: currServ.scripts.map((script) => script.filename),
+      txts: currServ.textFiles.map((txt) => txt.fn),
+      flags: (schema: any) => {
+        pos2 = schema.map((f: any) => {
+          if (f[0].length === 1) return "-" + f[0];
+          return "--" + f[0];
+        });
+        try {
+          return flagFunc(schema);
+        } catch (err) {
+          return undefined;
+        }
+      },
+    }
     let pos: string[] = [];
     let pos2: string[] = [];
     pos = pos.concat(
       loadedModule.autocomplete(
-        {
-          servers: GetAllServers().map((server) => server.hostname),
-          scripts: currServ.scripts.map((script) => script.filename),
-          txts: currServ.textFiles.map((txt) => txt.fn),
-          flags: (schema: any) => {
-            pos2 = schema.map((f: any) => {
-              if (f[0].length === 1) return "-" + f[0];
-              return "--" + f[0];
-            });
-            try {
-              return flagFunc(schema);
-            } catch (err) {
-              return undefined;
-            }
-          },
-        },
+        autocompleteData,
         flags._,
       ),
     );

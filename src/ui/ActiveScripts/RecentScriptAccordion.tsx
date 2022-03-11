@@ -26,7 +26,7 @@ import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFuncti
 import { arrayToString } from "../../utils/helpers/arrayToString";
 import { Money } from "../React/Money";
 import { MoneyRate } from "../React/MoneyRate";
-import { RecentScript } from "../..//Netscript/RecentScripts";
+import { RecentScript } from "../../Netscript/RecentScripts";
 import { LogBoxEvents } from "../React/LogBoxManager";
 
 const useStyles = makeStyles({

@@ -6,8 +6,7 @@ export let LastExportBonus = 0;
 const bonusTimer = 24 * 60 * 60 * 1000; // 24h
 export function canGetBonus(): boolean {
   const now = new Date().getTime();
-  if (now - LastExportBonus > bonusTimer) return true;
-  return false;
+  return now - LastExportBonus > bonusTimer;
 }
 
 export function onExport(p: IPlayer): void {

@@ -2,7 +2,7 @@ import { CONSTANTS } from "../Constants";
 import { Player } from "../Player";
 import { BaseServer } from "../Server/BaseServer";
 import { Server } from "../Server/Server";
-import { RunningScript } from "../Script/RunningScript";
+import { RunningScript } from "./RunningScript";
 import { processSingleServerGrowth } from "../Server/ServerHelpers";
 import { GetServer } from "../Server/AllServers";
 

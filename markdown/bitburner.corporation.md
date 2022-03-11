@@ -19,6 +19,7 @@ export interface Corporation extends WarehouseAPI, OfficeAPI
 |  --- | --- |
 |  [acceptInvestmentOffer()](./bitburner.corporation.acceptinvestmentoffer.md) | Accept investment based on you companies current valuation |
 |  [bribe(factionName, amountCash, amountShares)](./bitburner.corporation.bribe.md) | Bribe a faction |
+|  [buyBackShares(amount)](./bitburner.corporation.buybackshares.md) | Buyback Shares |
 |  [createCorporation(corporationName, selfFund)](./bitburner.corporation.createcorporation.md) | Create a Corporation |
 |  [expandCity(divisionName, cityName)](./bitburner.corporation.expandcity.md) | Expand to a new city |
 |  [expandIndustry(industryType, divisionName)](./bitburner.corporation.expandindustry.md) | Expand to a new industry |
@@ -34,5 +35,6 @@ export interface Corporation extends WarehouseAPI, OfficeAPI
 |  [hasUnlockUpgrade(upgradeName)](./bitburner.corporation.hasunlockupgrade.md) | Check if you have a one time unlockable upgrade |
 |  [issueDividends(percent)](./bitburner.corporation.issuedividends.md) | Issue dividends |
 |  [levelUpgrade(upgradeName)](./bitburner.corporation.levelupgrade.md) | Level an upgrade. |
+|  [sellShares(amount)](./bitburner.corporation.sellshares.md) | Sell Shares |
 |  [unlockUpgrade(upgradeName)](./bitburner.corporation.unlockupgrade.md) | Unlock an upgrade |
 

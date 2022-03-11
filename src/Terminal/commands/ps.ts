@@ -36,7 +36,7 @@ export function ps(
       }
       terminal.print(res);
     }
-  } 
+  }
   if(args.length === 0){
     for (let i = 0; i < server.runningScripts.length; i++) {
       const rsObj = server.runningScripts[i];
