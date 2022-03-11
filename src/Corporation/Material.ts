@@ -62,6 +62,9 @@ export class Material {
   marketTa2 = false;
   marketTa2Price = 0;
 
+  // Determines the maximum amount of this material that can be sold in one market cycle
+  maxsll = 0;
+
   constructor(params: IConstructorParams = {}) {
     if (params.name) {
       this.name = params.name;

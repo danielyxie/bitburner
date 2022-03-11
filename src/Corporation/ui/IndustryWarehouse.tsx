@@ -27,6 +27,8 @@ import Tooltip from "@mui/material/Tooltip";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 
 interface IProps {
   corp: ICorporation;
@@ -36,6 +38,14 @@ interface IProps {
   player: IPlayer;
   rerender: () => void;
 }
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    retainHeight: {
+      minHeight: '3em',
+    },
+  })
+);
 
 function WarehouseRoot(props: IProps): React.ReactElement {
   const corp = useCorporation();
@@ -55,6 +65,8 @@ function WarehouseRoot(props: IProps): React.ReactElement {
     corp.funds = corp.funds - sizeUpgradeCost;
     props.rerender();
   }
+
+  const classes = useStyles();
 
   // Current State:
   let stateText;
@@ -83,8 +95,10 @@ function WarehouseRoot(props: IProps): React.ReactElement {
   const mats = [];
   for (const matName of Object.keys(props.warehouse.materials)) {
     if (!(props.warehouse.materials[matName] instanceof Material)) continue;
-    // Only create UI for materials that are relevant for the industry
-    if (!isRelevantMaterial(matName, division)) continue;
+    // Only create UI for materials that are relevant for the industry or in stock
+    const isInStock = props.warehouse.materials[matName].qty > 0;
+    const isRelevant = isRelevantMaterial(matName, division);
+    if (!isInStock && !isRelevant) continue;
     mats.push(
       <MaterialElem
         rerender={props.rerender}
@@ -158,7 +172,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
       </Typography>
       <br />
 
-      <Typography>{stateText}</Typography>
+      <Typography className={classes.retainHeight}>{stateText}</Typography>
 
       {corp.unlockUpgrades[1] && (
         <>

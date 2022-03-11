@@ -19,8 +19,16 @@ interface IProps {
 export function Corporation(props: IProps): React.ReactElement {
   function addTonsCorporationFunds(): void {
     if (props.player.corporation) {
-      props.player.corporation.funds = props.player.corporation.funds + 1e99;
+      props.player.corporation.funds = props.player.corporation.funds + bigNumber;
     }
+  }
+
+  function modifyCorporationFunds(modify: number): (x: number) => void {
+    return function (funds: number): void {
+      if (props.player.corporation) {
+        props.player.corporation.funds += funds * modify;
+      }
+    };
   }
 
   function resetCorporationFunds(): void {
@@ -77,8 +85,17 @@ export function Corporation(props: IProps): React.ReactElement {
           <tbody>
             <tr>
               <td>
-                <Button onClick={addTonsCorporationFunds}>Tons of funds</Button>
-                <Button onClick={resetCorporationFunds}>Reset funds</Button>
+                <Typography>Funds:</Typography>
+              </td>
+              <td>
+                <Adjuster
+                  label="set funds"
+                  placeholder="amt"
+                  tons={addTonsCorporationFunds}
+                  add={modifyCorporationFunds(1)}
+                  subtract={modifyCorporationFunds(-1)}
+                  reset={resetCorporationFunds}
+                />
               </td>
             </tr>
             <tr>

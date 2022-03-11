@@ -312,6 +312,16 @@ function getMenu(window) {
             }
           },
         },
+        {
+          label: "Reset Zoom",
+          enabled: utils.getZoomFactor() !== 1,
+          accelerator: "CommandOrControl+num0",
+          click: () => {
+            utils.setZoomFactor(window, 1);
+            refreshMenu(window);
+            log.log("Reset zoom");
+          },
+        },
       ],
     },
     {

@@ -174,37 +174,19 @@ export class OfficeSpace {
   }
 
   setEmployeeToJob(job: string, amount: number): boolean {
-    let unassignedCount = 0;
-    let jobCount = 0;
-    for (let i = 0; i < this.employees.length; ++i) {
-      if (this.employees[i].pos === EmployeePositions.Unassigned) {
-        unassignedCount++;
-      } else if (this.employees[i].pos === job) {
+    let jobCount = this.employees.reduce((acc, employee) => (employee.pos === job ? acc + 1 : acc), 0);
+
+    for (const employee of this.employees) {
+      if (jobCount == amount) return true
+      if (employee.pos === EmployeePositions.Unassigned && jobCount <= amount) {
+        employee.pos = job;
         jobCount++;
+      } else if (employee.pos === job && jobCount >= amount) {
+        employee.pos = EmployeePositions.Unassigned;
+        jobCount--;
       }
     }
-
-    if ((jobCount + unassignedCount) < amount) return false;
-
-    for (let i = 0; i < this.employees.length; ++i) {
-      if (this.employees[i].pos === EmployeePositions.Unassigned) {
-        if (jobCount <= amount) {
-          this.employees[i].pos = job;
-          jobCount++;
-          unassignedCount--;
-        }
-        if (jobCount === amount) break;
-      } else if (this.employees[i].pos === job) {
-        if (jobCount >= amount) {
-          this.employees[i].pos = EmployeePositions.Unassigned;
-          jobCount--;
-          unassignedCount++;
-        }
-        if (jobCount === amount) break;
-      }
-    }
-    if (jobCount !== amount) return false;
-    return true;
+    return jobCount === amount;
   }
 
   toJSON(): any {

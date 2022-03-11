@@ -307,15 +307,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         reach = Math.max(i + data[i], reach);
       }
       const solution: boolean = i === n;
-
-      if (ans === "1" && solution) {
-        return true;
-      }
-      if (ans === "0" && !solution) {
-        return true;
-      }
-
-      return false;
+      return (ans === "1" && solution) || (ans === "0" && !solution);
     },
   },
   {
@@ -816,7 +808,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         `Examples:\n`,
         `"()())()" -> [()()(), (())()]\n`,
         `"(a)())()" -> [(a)()(), (a())()]\n`,
-        `")( -> [""]`,
+        `")(" -> [""]`,
       ].join(" ");
     },
     difficulty: 10,
@@ -922,6 +914,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "The data provided by this problem is an array with two elements. The first element",
         "is the string of digits, while the second element is the target number:\n\n",
         `["${digits}", ${target}]\n\n`,
+        "NOTE: The order of evaluation expects script operator precedence",
         "NOTE: Numbers in the expression cannot have leading 0's. In other words,",
         `"1+01" is not a valid expression`,
         "Examples:\n\n",

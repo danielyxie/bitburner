@@ -2598,12 +2598,7 @@ function augmentationExists(name: string): boolean {
 
 export function isRepeatableAug(aug: Augmentation): boolean {
   const augName = aug instanceof Augmentation ? aug.name : aug;
-
-  if (augName === AugmentationNames.NeuroFluxGovernor) {
-    return true;
-  }
-
-  return false;
+  return augName === AugmentationNames.NeuroFluxGovernor;
 }
 
 export { installAugmentations, initAugmentations, applyAugmentation, augmentationExists };

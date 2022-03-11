@@ -13,12 +13,12 @@ export function IndustryProductEquation(props: IProps): React.ReactElement {
     if (reqAmt === undefined) continue;
     reqs.push(String.raw`${reqAmt}\text{ }${reqMat}`);
   }
-  const prod = props.division.prodMats.slice();
+  const prod = props.division.prodMats.map((p) => `1\\text{ }${p}`);
   if (props.division.makesProducts) {
-    prod.push(props.division.type);
+    prod.push("Products");
   }
 
   return (
-    <MathJaxWrapper>{"\\(" + reqs.join("+") + `\\Rightarrow` + prod.map((p) => `1 \\text{${p}}`).join("+") + "\\)"}</MathJaxWrapper>
+    <MathJaxWrapper>{"\\(" + reqs.join("+") + `\\Rightarrow ` + prod.join("+") + "\\)"}</MathJaxWrapper>
   );
 }

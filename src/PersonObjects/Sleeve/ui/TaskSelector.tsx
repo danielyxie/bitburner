@@ -75,7 +75,10 @@ function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
     }
   }
 
-  return factions;
+  return factions.filter(faction => {
+    const facInfo = Factions[faction].getInfo();
+    return facInfo.offerHackingWork || facInfo.offerFieldWork || facInfo.offerSecurityWork
+  });
 }
 
 const tasks: {
