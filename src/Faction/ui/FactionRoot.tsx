@@ -189,14 +189,15 @@ export function FactionRoot(props: IProps): React.ReactElement {
 
   const faction = props.faction;
 
-  const [purchasingAugs, setPurchasingAugs] = useState(props.augPage);
   if (player && !player.factions.includes(faction.name)) {
-    return <>
-      <Typography variant="h4" color="primary">
-        You have not joined {faction.name} yet!
-      </Typography>
-      <Button onClick={() => router.toFactions()}>Back to Factions</Button>
-    </>
+    return (
+      <>
+        <Typography variant="h4" color="primary">
+          You have not joined {faction.name} yet!
+        </Typography>
+        <Button onClick={() => router.toFactions()}>Back to Factions</Button>
+      </>
+    );
   }
 
   return purchasingAugs ? (
