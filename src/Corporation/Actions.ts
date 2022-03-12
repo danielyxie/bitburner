@@ -91,7 +91,7 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
   if (price === "") price = "0";
   if (amt === "") amt = "0";
   let cost = price.replace(/\s+/g, "");
-  cost = cost.replace(/[^-()\d/*+.MPe]/g, ""); //Sanitize cost
+  cost = cost.replace(/[^-()\d\/*+.MPe]/g, ""); //Sanitize cost
   let temp = cost.replace(/MP/g, mat.bCost + "");
   try {
     temp = eval(temp);
@@ -113,7 +113,7 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
   amt = amt.toUpperCase();
   if (amt.includes("MAX") || amt.includes("PROD")) {
     let q = amt.replace(/\s+/g, "");
-    q = q.replace(/[^-()\d/*+.MAXPROD]/g, "");
+    q = q.replace(/[^-()\d\/*+.MAXPROD]/g, "");
     let tempQty = q.replace(/MAX/g, mat.maxsll.toString());
     tempQty = tempQty.replace(/PROD/g, mat.prd.toString());
     try {
@@ -151,7 +151,7 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
     //Dynamically evaluated quantity. First test to make sure its valid
     //Sanitize input, then replace dynamic variables with arbitrary numbers
     price = price.replace(/\s+/g, "");
-    price = price.replace(/[^-()\d/*+.MP]/g, "");
+    price = price.replace(/[^-()\d\/*+.MP]/g, "");
     let temp = price.replace(/MP/g, "1");
     try {
       temp = eval(temp);
@@ -178,7 +178,7 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
   if (amt.includes("MAX") || amt.includes("PROD")) {
     //Dynamically evaluated quantity. First test to make sure its valid
     let qty = amt.replace(/\s+/g, "");
-    qty = qty.replace(/[^-()\d/*+.MAXPROD]/g, "");
+    qty = qty.replace(/[^-()\d\/*+.MAXPROD]/g, "");
     let temp = qty.replace(/MAX/g, product.maxsll.toString());
     temp = temp.replace(/PROD/g, product.data[city][1].toString());
     try {
@@ -447,7 +447,7 @@ export function Research(division: IIndustry, researchName: string): void {
 export function ExportMaterial(divisionName: string, cityName: string, material: Material, amt: string, division?: Industry): void {
   // Sanitize amt
   let sanitizedAmt = amt.replace(/\s+/g, "").toUpperCase();
-  sanitizedAmt = sanitizedAmt.replace(/[^-()\d/*+.MAX]/g, "");
+  sanitizedAmt = sanitizedAmt.replace(/[^-()\d\/*+.MAX]/g, "");
   let temp = sanitizedAmt.replace(/MAX/g, "1");
   try {
     temp = eval(temp);
