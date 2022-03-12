@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import _ from "lodash";
+import { find } from "lodash";
 
 import {
   Box,
@@ -57,7 +57,7 @@ export function ProgramsRoot(): React.ReactElement {
   }
 
   const getProgCompletion = (name: string): number => {
-    const programFile = _.find(player.getHomeComputer().programs, p => {
+    const programFile = find(player.getHomeComputer().programs, p => {
       return (p.startsWith(name) && p.endsWith("%-INC"));
     });
     if (!programFile) return -1;
