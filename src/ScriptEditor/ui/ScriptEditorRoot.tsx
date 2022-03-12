@@ -836,7 +836,7 @@ export function Root(props: IProps): React.ReactElement {
                   }
 
                   if (externalScript) {
-                    colorProps.color = Settings.theme.error
+                    colorProps.color = Settings.theme.info
                   }
 
                   const iconButtonStyle = {
