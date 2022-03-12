@@ -17,7 +17,7 @@ export function expr(
   const expr = args.join("");
 
   // Sanitize the math expression
-  const sanitizedExpr = expr.replace(/s+/g, "").replace(/[^-()\d/*+.%]/g, "");
+  const sanitizedExpr = expr.replace(/s+/g, "").replace(/[^-()\d\/*+.%]/g, "");
   let result;
   try {
     result = eval(sanitizedExpr);
