@@ -1703,7 +1703,7 @@ function initAugmentations(): void {
       "The left arm of a legendary BitRunner who ascended beyond this world. " +
       "It projects a light blue energy shield that protects the exposed inner parts. " +
       "Even though it contains no weapons, the advanced tungsten titanium " +
-      "alloy increases the users strength to unbelievable levels. The augmentation " +
+      "alloy increases the user's strength to unbelievable levels. The augmentation " +
       "gets more powerful over time for seemingly no reason.",
     strength_mult: 2.7,
   });
