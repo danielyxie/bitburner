@@ -335,7 +335,7 @@ Then to kill this script the same arguments would have to be used::
 
     $ kill foo.script 50e3 sigma-cosmetics
 
-If you are killing the script using its PID, then the PID argument must be numeric. 
+If you are killing the script using its PID, then the PID argument must be numeric.
 
 killall
 ^^^^^^^
@@ -541,28 +541,6 @@ it. So, if a script was ran with the following arguments::
 Then in order to check its logs with 'tail' the same arguments must be used::
 
     $ tail foo.script 10 50000
-
-theme
-^^^^^
-
-    $ theme [preset] | [#background #text #highlight]
-
-Change the color of the game's user interface
-
-This command can be called with a preset theme. Currently, the supported presets are:
-
-* default
-* muted
-* solarized
-
-However, you can also specify your own color scheme using hex values.
-To do so, you must specify three hex color values for the background
-color, the text color, and the highlight color. These hex values must
-be preceded by a pound sign (#) and must be either 3 or 6 digits. Example::
-
-    $ theme #ffffff #385 #235012
-
-A color picker such as Google's can be used to get your desired hex color values
 
 top
 ^^^
