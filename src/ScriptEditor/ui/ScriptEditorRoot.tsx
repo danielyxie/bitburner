@@ -17,6 +17,7 @@ import { calculateRamUsage, checkInfiniteLoop } from "../../Script/RamCalculatio
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import SearchIcon from "@mui/icons-material/Search";
 
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
@@ -42,7 +43,7 @@ import { PromptEvent } from "../../ui/React/PromptManager";
 import { Modal } from "../../ui/React/Modal";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
-import { Tooltip } from "@mui/material";
+import { TextField, Tooltip } from "@mui/material";
 
 interface IProps {
   // Map of filename -> code
@@ -53,7 +54,7 @@ interface IProps {
   vim: boolean;
 }
 
-// TODO: try to removve global symbols
+// TODO: try to remove global symbols
 let symbolsLoaded = false;
 let symbols: string[] = [];
 export function SetupTextEditor(): void {
@@ -113,6 +114,8 @@ export function Root(props: IProps): React.ReactElement {
   const vimStatusRef = useRef<HTMLElement>(null);
   const [vimEditor, setVimEditor] = useState<any>(null);
   const [editor, setEditor] = useState<IStandaloneCodeEditor | null>(null);
+  const [filter, setFilter] = useState("");
+  const [searchExpanded, setSearchExpanded] = useState(false);
 
   const [ram, setRAM] = useState("RAM: ???");
   const [ramEntries, setRamEntries] = useState<string[][]>([["???", ""]]);
@@ -232,7 +235,7 @@ export function Root(props: IProps): React.ReactElement {
           MonacoVim.VimMode.Vim.mapCommand("gT", "action", "prevTabs", {}, { context: "normal" });
           editor.focus();
         });
-      } catch {}
+      } catch { }
     } else if (!options.vim) {
       // Whem vim mode is disabled
       vimEditor?.dispose();
@@ -478,7 +481,7 @@ export function Root(props: IProps): React.ReactElement {
     }
     try {
       infLoop(newCode);
-    } catch (err) {}
+    } catch (err) { }
   }
 
   function saveScript(scriptToSave: OpenScript): void {
@@ -787,6 +790,16 @@ export function Root(props: IProps): React.ReactElement {
     const serverScript = server.scripts.find((s) => s.filename === openScript.fileName);
     return serverScript?.code ?? null;
   }
+  function handleFilterChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setFilter(event.target.value);
+  }
+  function handleExpandSearch(): void {
+    setFilter("")
+    setSearchExpanded(!searchExpanded)
+  }
+  const filteredOpenScripts = Object.values(openScripts).filter(
+    (script) => (script.hostname.includes(filter) || script.fileName.includes(filter))
+  );
 
   // Toolbars are roughly 112px:
   //  8px body margin top
@@ -797,7 +810,7 @@ export function Root(props: IProps): React.ReactElement {
   const editorHeight = dimensions.height - (130 + (options.vim ? 34 : 0));
   const tabsMaxWidth = 1640;
   const tabMargin = 5;
-  const tabMaxWidth = openScripts.length ? tabsMaxWidth / openScripts.length - tabMargin : 0;
+  const tabMaxWidth = filteredOpenScripts.length ? tabsMaxWidth / filteredOpenScripts.length - tabMargin : 0;
   const tabIconWidth = 25;
   const tabTextWidth = tabMaxWidth - tabIconWidth * 2;
   return (
@@ -821,23 +834,36 @@ export function Root(props: IProps): React.ReactElement {
                   overflowX: "scroll",
                 }}
               >
-                {openScripts.map(({ fileName, hostname }, index) => {
+                <Tooltip title={"Search Open Scripts"}>
+                  {searchExpanded ?
+                    <TextField
+                      value={filter}
+                      onChange={handleFilterChange}
+                      autoFocus
+                      InputProps={{
+                        startAdornment: <SearchIcon />,
+                        spellCheck: false,
+                        endAdornment: <CloseIcon onClick={handleExpandSearch} />
+                      }}
+                    /> : <Button onClick={handleExpandSearch} ><SearchIcon /></Button>}
+                </Tooltip>
+                {filteredOpenScripts.map(({ fileName, hostname }, index) => {
                   const iconButtonStyle = {
                     maxWidth: `${tabIconWidth}px`,
                     minWidth: `${tabIconWidth}px`,
                     minHeight: "38.5px",
                     maxHeight: "38.5px",
-                    ...(currentScript?.fileName === openScripts[index].fileName
+                    ...(currentScript?.fileName === filteredOpenScripts[index].fileName
                       ? {
-                          background: Settings.theme.button,
-                          borderColor: Settings.theme.button,
-                          color: Settings.theme.primary,
-                        }
+                        background: Settings.theme.button,
+                        borderColor: Settings.theme.button,
+                        color: Settings.theme.primary,
+                      }
                       : {
-                          background: Settings.theme.backgroundsecondary,
-                          borderColor: Settings.theme.backgroundsecondary,
-                          color: Settings.theme.secondary,
-                        }),
+                        background: Settings.theme.backgroundsecondary,
+                        borderColor: Settings.theme.backgroundsecondary,
+                        color: Settings.theme.secondary,
+                      }),
                   };
 
                   const scriptTabText = `${hostname}:~/${fileName} ${dirty(index)}`;
@@ -871,17 +897,17 @@ export function Root(props: IProps): React.ReactElement {
                               style={{
                                 maxWidth: `${tabTextWidth}px`,
                                 overflow: "hidden",
-                                ...(currentScript?.fileName === openScripts[index].fileName
+                                ...(currentScript?.fileName === filteredOpenScripts[index].fileName
                                   ? {
-                                      background: Settings.theme.button,
-                                      borderColor: Settings.theme.button,
-                                      color: Settings.theme.primary,
-                                    }
+                                    background: Settings.theme.button,
+                                    borderColor: Settings.theme.button,
+                                    color: Settings.theme.primary,
+                                  }
                                   : {
-                                      background: Settings.theme.backgroundsecondary,
-                                      borderColor: Settings.theme.backgroundsecondary,
-                                      color: Settings.theme.secondary,
-                                    }),
+                                    background: Settings.theme.backgroundsecondary,
+                                    borderColor: Settings.theme.backgroundsecondary,
+                                    color: Settings.theme.secondary,
+                                  }),
                               }}
                             >
                               <span style={{ overflow: "hidden", direction: "rtl", textOverflow: "ellipsis" }}>
