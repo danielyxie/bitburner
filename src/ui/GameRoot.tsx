@@ -110,107 +110,45 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+const uninitialized = (): any => {
+  throw new Error("Router called before initialization");
+};
+
 export let Router: IRouter = {
   isInitialized: false,
-  page: () => {
-    throw new Error("Router called before initialization");
-  },
-  allowRouting: () => {
-    throw new Error("Router called before initialization");
-  },
-  toActiveScripts: () => {
-    throw new Error("Router called before initialization");
-  },
-  toAugmentations: () => {
-    throw new Error("Router called before initialization");
-  },
-  toBitVerse: () => {
-    throw new Error("Router called before initialization");
-  },
-  toBladeburner: () => {
-    throw new Error("Router called before initialization");
-  },
-  toStats: () => {
-    throw new Error("Router called before initialization");
-  },
-  toCity: () => {
-    throw new Error("Router called before initialization");
-  },
-  toCorporation: () => {
-    throw new Error("Router called before initialization");
-  },
-  toCreateProgram: () => {
-    throw new Error("Router called before initialization");
-  },
-  toDevMenu: () => {
-    throw new Error("Router called before initialization");
-  },
-  toFaction: () => {
-    throw new Error("Router called before initialization");
-  },
-  toFactions: () => {
-    throw new Error("Router called before initialization");
-  },
-  toGameOptions: () => {
-    throw new Error("Router called before initialization");
-  },
-  toGang: () => {
-    throw new Error("Router called before initialization");
-  },
-  toHacknetNodes: () => {
-    throw new Error("Router called before initialization");
-  },
-  toInfiltration: () => {
-    throw new Error("Router called before initialization");
-  },
-  toJob: () => {
-    throw new Error("Router called before initialization");
-  },
-  toMilestones: () => {
-    throw new Error("Router called before initialization");
-  },
-  toResleeves: () => {
-    throw new Error("Router called before initialization");
-  },
-  toScriptEditor: () => {
-    throw new Error("Router called before initialization");
-  },
-  toSleeves: () => {
-    throw new Error("Router called before initialization");
-  },
-  toStockMarket: () => {
-    throw new Error("Router called before initialization");
-  },
-  toTerminal: () => {
-    throw new Error("Router called before initialization");
-  },
-  toTravel: () => {
-    throw new Error("Router called before initialization");
-  },
-  toTutorial: () => {
-    throw new Error("Router called before initialization");
-  },
-  toWork: () => {
-    throw new Error("Router called before initialization");
-  },
-  toBladeburnerCinematic: () => {
-    throw new Error("Router called before initialization");
-  },
-  toLocation: () => {
-    throw new Error("Router called before initialization");
-  },
-  toStaneksGift: () => {
-    throw new Error("Router called before initialization");
-  },
-  toAchievements: () => {
-    throw new Error("Router called before initialization");
-  },
-  toThemeBrowser: () => {
-    throw new Error("Router called before initialization");
-  },
-  toImportSave: () => {
-    throw new Error("Router called before initialization");
-  },
+  page: uninitialized,
+  allowRouting: uninitialized,
+  toActiveScripts: uninitialized,
+  toAugmentations: uninitialized,
+  toBitVerse: uninitialized,
+  toBladeburner: uninitialized,
+  toStats: uninitialized,
+  toCity: uninitialized,
+  toCorporation: uninitialized,
+  toCreateProgram: uninitialized,
+  toDevMenu: uninitialized,
+  toFaction: uninitialized,
+  toFactions: uninitialized,
+  toGameOptions: uninitialized,
+  toGang: uninitialized,
+  toHacknetNodes: uninitialized,
+  toInfiltration: uninitialized,
+  toJob: uninitialized,
+  toMilestones: uninitialized,
+  toResleeves: uninitialized,
+  toScriptEditor: uninitialized,
+  toSleeves: uninitialized,
+  toStockMarket: uninitialized,
+  toTerminal: uninitialized,
+  toTravel: uninitialized,
+  toTutorial: uninitialized,
+  toWork: uninitialized,
+  toBladeburnerCinematic: uninitialized,
+  toLocation: uninitialized,
+  toStaneksGift: uninitialized,
+  toAchievements: uninitialized,
+  toThemeBrowser: uninitialized,
+  toImportSave: uninitialized,
 };
 
 function determineStartPage(player: IPlayer): Page {
@@ -346,12 +284,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     },
   };
 
-
   useEffect(() => {
     // Wrap Router navigate functions to be able to disable the execution
-    _functions(Router).
-      filter((fnName) => fnName.startsWith('to')).
-      forEach((fnName) => {
+    _functions(Router)
+      .filter((fnName) => fnName.startsWith("to"))
+      .forEach((fnName) => {
         // @ts-ignore - tslint does not like this, couldn't find a way to make it cooperate
         Router[fnName] = _wrap(Router[fnName], (func, ...args) => {
           if (!allowRoutingCalls) {
@@ -360,7 +297,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
             return;
           }
 
-           // Call the function normally
+          // Call the function normally
           return func(...args);
         });
       });
@@ -568,13 +505,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.ImportSave: {
-      mainPage = (
-        <ImportSaveRoot
-          importString={importString}
-          automatic={importAutomatic}
-          router={Router}
-        />
-      );
+      mainPage = <ImportSaveRoot importString={importString} automatic={importAutomatic} router={Router} />;
       withSidebar = false;
       withPopups = false;
       bypassGame = true;

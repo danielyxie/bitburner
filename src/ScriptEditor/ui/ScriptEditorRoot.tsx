@@ -232,7 +232,7 @@ export function Root(props: IProps): React.ReactElement {
           MonacoVim.VimMode.Vim.mapCommand("gT", "action", "prevTabs", {}, { context: "normal" });
           editor.focus();
         });
-      } catch {}
+      } catch { }
     } else if (!options.vim) {
       // Whem vim mode is disabled
       vimEditor?.dispose();
@@ -478,7 +478,7 @@ export function Root(props: IProps): React.ReactElement {
     }
     try {
       infLoop(newCode);
-    } catch (err) {}
+    } catch (err) { }
   }
 
   function saveScript(scriptToSave: OpenScript): void {
@@ -877,6 +877,7 @@ export function Root(props: IProps): React.ReactElement {
                               }}
                               style={{
                                 maxWidth: `${tabTextWidth}px`,
+                                minHeight: '38.5px',
                                 overflow: "hidden",
                                 ...colorProps,
                               }}
