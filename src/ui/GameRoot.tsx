@@ -86,6 +86,7 @@ import { BypassWrapper } from "./React/BypassWrapper";
 
 import _wrap from "lodash/wrap";
 import _functions from "lodash/functions";
+import { highestBitNode } from "../BitNode/BitNode";
 
 const htmlLocation = location;
 
@@ -171,6 +172,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
 
   const [flume, setFlume] = useState<boolean>(false);
   const [quick, setQuick] = useState<boolean>(false);
+  const [nextBitVerse, setNextBitVerse] = useState<number>(0);
   const [location, setLocation] = useState<Location>(undefined as unknown as Location);
   if (location === undefined && (page === Page.Infiltration || page === Page.Location || page === Page.Job))
     throw new Error("Trying to go to a page without the proper setup");
@@ -249,9 +251,11 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       player.gotoLocation(LocationName.TravelAgency);
       setPage(Page.Travel);
     },
-    toBitVerse: (flume: boolean, quick: boolean) => {
+    toBitVerse: (flume: boolean, quick: boolean, nextBitVerse?: number) => {
       setFlume(flume);
       setQuick(quick);
+      nextBitVerse = (nextBitVerse && nextBitVerse > 0 && nextBitVerse <= highestBitNode) ? nextBitVerse : 0
+      setNextBitVerse(nextBitVerse);
       calculateAchievements();
       setPage(Page.BitVerse);
     },
@@ -327,7 +331,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       break;
     }
     case Page.BitVerse: {
-      mainPage = <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} />;
+      mainPage = <BitverseRoot flume={flume} enter={enterBitNode} quick={quick} nextBitVerse={nextBitVerse} />;
       withSidebar = false;
       withPopups = false;
       break;

@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import { Money } from "../../ui/React/Money";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
+import { TextField } from "@mui/material";
 
 interface IProps {
   player: IPlayer;
@@ -18,6 +19,7 @@ interface IProps {
 
 export function General(props: IProps): React.ReactElement {
   const [error, setError] = useState(false);
+  const [nextBitVerse, setNextBitVerse] = useState(0);
 
   function addMoney(n: number) {
     return function () {
@@ -27,6 +29,10 @@ export function General(props: IProps): React.ReactElement {
 
   function upgradeRam(): void {
     props.player.getHomeComputer().maxRam *= 2;
+  }
+
+  function changeBitVerse(): void {
+    props.router.toBitVerse(true, true, nextBitVerse);
   }
 
   function quickB1tFlum3(): void {
@@ -48,6 +54,14 @@ export function General(props: IProps): React.ReactElement {
   useEffect(() => {
     if (error) throw new ReferenceError('Manually thrown error');
   }, [error]);
+
+  function handleSetNextBitVerse(e: React.ChangeEvent<HTMLInputElement>): void {
+    let tempNextBitVerse = parseInt(e.target.value)
+    if (isNaN(tempNextBitVerse)) {
+      tempNextBitVerse = 0
+    }
+    setNextBitVerse(tempNextBitVerse)
+  }
 
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
@@ -83,6 +97,12 @@ export function General(props: IProps): React.ReactElement {
         <Button onClick={upgradeRam}>+ RAM</Button>
         <br />
 
+        <TextField value={nextBitVerse} onChange={handleSetNextBitVerse} />
+        <Button disabled={!nextBitVerse} onClick={changeBitVerse}>
+          Quick BitVerse Change
+        </Button>
+
+        <br />
         <Button onClick={quickB1tFlum3}>Quick b1t_flum3.exe</Button>
         <Button onClick={b1tflum3}>Run b1t_flum3.exe</Button>
         <Button onClick={quickHackW0r1dD43m0n}>Quick w0rld_d34m0n</Button>

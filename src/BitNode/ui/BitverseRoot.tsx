@@ -124,12 +124,14 @@ function BitNodePortal(props: IPortalProps): React.ReactElement {
 interface IProps {
   flume: boolean;
   quick: boolean;
+  nextBitVerse: number;
   enter: (router: IRouter, flume: boolean, destroyedBitNode: number, newBitNode: number) => void;
 }
 
 export function BitverseRoot(props: IProps): React.ReactElement {
   setRedPillFlag(true);
   const player = use.Player();
+  const router = use.Router();
   const enter = enterBitNode;
   const destroyed = player.bitNodeN;
   const [destroySequence, setDestroySequence] = useState(!props.quick);
@@ -138,6 +140,10 @@ export function BitverseRoot(props: IProps): React.ReactElement {
   const nextSourceFileFlags = SourceFileFlags.slice();
   if (!props.flume) {
     if (nextSourceFileFlags[destroyed] < 3) ++nextSourceFileFlags[destroyed];
+  }
+
+  if (props.nextBitVerse > 0) {
+    enter(router, props.flume, destroyed, props.nextBitVerse)
   }
 
   if (destroySequence) {

@@ -1243,7 +1243,7 @@ export class Bladeburner implements IBladeburner {
     }
   }
 
-  completeAction(router: IRouter, player: IPlayer): void {
+  completeAction(router: IRouter, player: IPlayer, nextBitVerse?: number): void {
     switch (this.action.type) {
       case ActionTypes["Contract"]:
       case ActionTypes["Operation"]: {
@@ -1377,7 +1377,7 @@ export class Bladeburner implements IBladeburner {
             // Operation Daedalus
             if (action.name === "Operation Daedalus") {
               this.resetAction();
-              return router.toBitVerse(false, false);
+              return router.toBitVerse(false, !!nextBitVerse, nextBitVerse);
             }
 
             if (this.logging.blackops) {

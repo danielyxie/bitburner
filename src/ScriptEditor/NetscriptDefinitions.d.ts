@@ -2251,10 +2251,10 @@ export interface Singularity {
    * @remarks
    * RAM cost: 2 GB * 16/4/1
    *
-   *
+   * @param nextBitVerse - Optional number for next bitVerse when you can speak to a daemon.
    * @returns Promise waiting for the installation to finish.
    */
-  installBackdoor(): Promise<void>;
+  installBackdoor(nextBitVerse?: number): Promise<void>;
 
   /**
    * Check if the player is focused.

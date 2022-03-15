@@ -604,7 +604,7 @@ export function NetscriptSingularity(
       const server = player.getCurrentServer();
       return helper.hack(server.hostname, true);
     },
-    installBackdoor: function (): any {
+    installBackdoor: function (nextBitVerse?: number): any {
       helper.updateDynamicRam("installBackdoor", getRamCost(player, "installBackdoor"));
       helper.checkSingularityAccess("installBackdoor");
       const baseserver = player.getCurrentServer();
@@ -632,7 +632,7 @@ export function NetscriptSingularity(
         server.backdoorInstalled = true;
 
         if (SpecialServers.WorldDaemon === server.hostname) {
-          Router.toBitVerse(false, false);
+          Router.toBitVerse(false, !!nextBitVerse, nextBitVerse);
         }
         return Promise.resolve();
       });

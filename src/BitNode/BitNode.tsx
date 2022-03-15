@@ -27,6 +27,7 @@ class BitNode {
   }
 }
 
+export const highestBitNode = 13;
 export const BitNodes: IMap<BitNode> = {};
 
 BitNodes["BitNode1"] = new BitNode(

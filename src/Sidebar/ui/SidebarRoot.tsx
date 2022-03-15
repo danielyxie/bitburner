@@ -57,6 +57,8 @@ import { KEY } from "../../utils/helpers/keyCodes";
 import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "../../Faction/ui/FactionsRoot";
 import { hash } from "../../hash/hash";
+import { BitNodes } from "../../BitNode/BitNode";
+import { use } from "../../ui/Context";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),
@@ -115,6 +117,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   function rerender(): void {
     setRerender((old) => !old);
   }
+  const player = use.Player();
 
   useEffect(() => {
     const id = setInterval(rerender, 200);
@@ -346,6 +349,23 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     props.onToggled(open);
   }, [open]);
 
+  function CurrentBitNode(): React.ReactElement {
+    if (player.sourceFiles.length > 0) {
+      const index = "BitNode" + player.bitNodeN;
+      const currentSourceFile = player.sourceFiles.find(sourceFile => sourceFile.n == player.bitNodeN)
+      const lvl = currentSourceFile ? currentSourceFile.lvl : 0
+      return (
+        <Tooltip title={BitNodes[index].info}>
+          <Typography>
+            BitNode {player.bitNodeN}.{lvl}
+          </Typography>
+        </Tooltip>
+      );
+    }
+
+    return <></>;
+  }
+
   return (
     <Drawer open={open} anchor="left" variant="permanent">
       <ListItem classes={{ root: classes.listitem }} button onClick={toggleDrawer}>
@@ -358,7 +378,11 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               <Typography>Bitburner v{CONSTANTS.VersionString}</Typography>
             </Tooltip>
           }
+          secondary={
+            CurrentBitNode()
+          }
         />
+
       </ListItem>
       <Divider />
       <List>

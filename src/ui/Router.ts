@@ -59,7 +59,7 @@ export interface IRouter {
   allowRouting(value: boolean): void;
   toActiveScripts(): void;
   toAugmentations(): void;
-  toBitVerse(flume: boolean, quick: boolean): void;
+  toBitVerse(flume: boolean, quick: boolean, nextBitVerse?: number): void;
   toBladeburner(): void;
   toStats(): void;
   toCity(): void; // travel ? city ?
