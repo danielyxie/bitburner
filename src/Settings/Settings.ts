@@ -79,6 +79,11 @@ interface IDefaultSettings {
   MaxTerminalCapacity: number;
 
   /**
+   * Limit the amount of recently active scripts.
+   */
+  RecentScriptLimit: number;
+  
+  /**
    * Save the game when you save any file.
    */
   SaveGameOnFileSave: boolean;
@@ -189,6 +194,7 @@ export const defaultSettings: IDefaultSettings = {
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
   MaxTerminalCapacity: 500,
+  RecentScriptLimit: 50,
   SaveGameOnFileSave: true,
   SuppressBuyAugmentationConfirmation: false,
   SuppressFactionInvites: false,
@@ -227,6 +233,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   MaxTerminalCapacity: defaultSettings.MaxTerminalCapacity,
   OwnedAugmentationsOrder: OwnedAugmentationsOrderSetting.AcquirementTime,
   PurchaseAugmentationsOrder: PurchaseAugmentationsOrderSetting.Default,
+  RecentScriptLimit: defaultSettings.RecentScriptLimit,
   SaveGameOnFileSave: defaultSettings.SaveGameOnFileSave,
   SuppressBuyAugmentationConfirmation: defaultSettings.SuppressBuyAugmentationConfirmation,
   SuppressFactionInvites: defaultSettings.SuppressFactionInvites,

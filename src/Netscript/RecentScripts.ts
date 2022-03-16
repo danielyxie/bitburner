@@ -1,5 +1,6 @@
 import { RunningScript } from "src/Script/RunningScript";
 import { WorkerScript } from "./WorkerScript";
+import { Settings } from "../Settings/Settings";
 
 export const recentScripts: RecentScript[] = [];
 
@@ -13,7 +14,7 @@ export function AddRecentScript(workerScript: WorkerScript): void {
 
     runningScript: workerScript.scriptRef,
   });
-  while (recentScripts.length > 50) {
+  while (recentScripts.length > Settings.RecentScriptLimit) {
     recentScripts.pop();
   }
 }

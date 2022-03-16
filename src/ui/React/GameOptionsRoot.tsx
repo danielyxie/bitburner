@@ -68,6 +68,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const [portSize, setPortSize] = useState(Settings.MaxPortCapacity);
   const [terminalSize, setTerminalSize] = useState(Settings.MaxTerminalCapacity);
   const [autosaveInterval, setAutosaveInterval] = useState(Settings.AutosaveInterval);
+  const [recentScriptLimit, setRecentScriptLimit] = useState(Settings.RecentScriptLimit);
   const [timestampFormat, setTimestampFormat] = useState(Settings.TimestampsFormat);
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
@@ -102,6 +103,11 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handleLocaleChange(event: SelectChangeEvent<string>): void {
     setLocale(event.target.value as string);
     Settings.Locale = event.target.value as string;
+  }
+
+  function handleRecentScriptLimitChange(event: any, newValue: number | number[]): void {
+    setRecentScriptLimit(newValue as number);
+    Settings.RecentScriptLimit = newValue as number;
   }
 
   function handleTimestampFormatChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -244,6 +250,22 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                   step={30}
                   min={0}
                   max={600}
+                  valueLabelDisplay="auto"
+                  marks
+                />
+                <Tooltip
+                  title={
+                    <Typography>The amount of recently active scripts to keep.</Typography>
+                  }
+                >
+                  <Typography>Recently active script limit</Typography>
+                </Tooltip>
+                <Slider
+                  value={recentScriptLimit}
+                  onChange={handleRecentScriptLimitChange}
+                  step={10}
+                  min={10}
+                  max={500}
                   valueLabelDisplay="auto"
                   marks
                 />
