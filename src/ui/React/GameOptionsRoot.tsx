@@ -255,10 +255,10 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 />
                 <Tooltip
                   title={
-                    <Typography>The amount of recently active scripts to keep.</Typography>
+                    <Typography>The amount of recently killed scripts to keep.</Typography>
                   }
                 >
-                  <Typography>Recently active script limit</Typography>
+                  <Typography>Recently killed script limit</Typography>
                 </Tooltip>
                 <Slider
                   value={recentScriptLimit}
