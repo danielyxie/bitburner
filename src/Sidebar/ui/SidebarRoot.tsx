@@ -143,11 +143,6 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   const augmentationCount = props.player.queuedAugmentations.length;
   const invitationsCount = props.player.factionInvitations.filter((f) => !InvitationsSeen.includes(f)).length;
   const programCount = getAvailableCreatePrograms(props.player).length - ProgramsSeen.length;
-  const canCreateProgram =
-    getAvailableCreatePrograms(props.player).length > 0 ||
-    props.player.augmentations.length > 0 ||
-    props.player.queuedAugmentations.length > 0 ||
-    props.player.sourceFiles.length > 0;
 
   const canOpenFactions =
     props.player.factionInvitations.length > 0 ||
@@ -439,29 +434,27 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 </Typography>
               </ListItemText>
             </ListItem>
-            {canCreateProgram && (
-              <ListItem
-                button
-                key={"Create Program"}
-                className={clsx({
-                  [classes.active]: props.page === Page.CreateProgram,
-                })}
-                onClick={clickCreateProgram}
-              >
-                <ListItemIcon>
-                  <Badge badgeContent={programCount > 0 ? programCount : undefined} color="error">
-                    <Tooltip title={!open ? "Create Program" : ""}>
-                      <BugReportIcon color={props.page !== Page.CreateProgram ? "secondary" : "primary"} />
-                    </Tooltip>
-                  </Badge>
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={props.page !== Page.CreateProgram ? "secondary" : "primary"}>
-                    Create Program
-                  </Typography>
-                </ListItemText>
-              </ListItem>
-            )}
+            <ListItem
+              button
+              key={"Create Program"}
+              className={clsx({
+                [classes.active]: props.page === Page.CreateProgram,
+              })}
+              onClick={clickCreateProgram}
+            >
+              <ListItemIcon>
+                <Badge badgeContent={programCount > 0 ? programCount : undefined} color="error">
+                  <Tooltip title={!open ? "Create Program" : ""}>
+                    <BugReportIcon color={props.page !== Page.CreateProgram ? "secondary" : "primary"} />
+                  </Tooltip>
+                </Badge>
+              </ListItemIcon>
+              <ListItemText>
+                <Typography color={props.page !== Page.CreateProgram ? "secondary" : "primary"}>
+                  Create Program
+                </Typography>
+              </ListItemText>
+            </ListItem>
             {canStaneksGift && (
               <ListItem
                 button
