@@ -337,23 +337,21 @@ async function restoreIfNewerExists(window) {
   let bestMatch;
   if (!steam.data && !disk.data) {
     log.info("No data to import");
-  } else {
+  } else if (!steam.data) {
     // We'll just compare using the lastSave field for now.
-    if (!steam.data) {
-      log.debug('Best potential save match: Disk');
-      bestMatch = disk;
-    } else if (!disk.data) {
-      log.debug('Best potential save match: Steam Cloud');
-      bestMatch = steam;
-    } else if ((steam.data.lastSave >= disk.data.lastSave)
-      || (steam.data.playtime + lowPlaytime > disk.data.playtime)) {
-      // We want to prioritze steam data if the playtime is very close
-      log.debug('Best potential save match: Steam Cloud');
-      bestMatch = steam;
-    } else {
-      log.debug('Best potential save match: disk');
-      bestMatch = disk;
-    }
+    log.debug('Best potential save match: Disk');
+    bestMatch = disk;
+  } else if (!disk.data) {
+    log.debug('Best potential save match: Steam Cloud');
+    bestMatch = steam;
+  } else if ((steam.data.lastSave >= disk.data.lastSave)
+    || (steam.data.playtime + lowPlaytime > disk.data.playtime)) {
+    // We want to prioritze steam data if the playtime is very close
+    log.debug('Best potential save match: Steam Cloud');
+    bestMatch = steam;
+  } else {
+    log.debug('Best potential save match: disk');
+    bestMatch = disk;
   }
   if (bestMatch) {
     if (bestMatch.data.lastSave > currentData.lastSave + 5000) {

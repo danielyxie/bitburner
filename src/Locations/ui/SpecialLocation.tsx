@@ -52,21 +52,19 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     if (p.inBladeburner()) {
       // Enter Bladeburner division
       router.toBladeburner();
-    } else {
+    } else if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
       // Apply for Bladeburner division
-      if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
-        p.startBladeburner({ new: true });
-        dialogBoxCreate("You have been accepted into the Bladeburner division!");
-        setRerender((old) => !old);
+      p.startBladeburner({new: true});
+      dialogBoxCreate("You have been accepted into the Bladeburner division!");
+      setRerender((old) => !old);
 
-        const worldHeader = document.getElementById("world-menu-header");
-        if (worldHeader instanceof HTMLElement) {
-          worldHeader.click();
-          worldHeader.click();
-        }
-      } else {
-        dialogBoxCreate("Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)");
+      const worldHeader = document.getElementById("world-menu-header");
+      if (worldHeader instanceof HTMLElement) {
+        worldHeader.click();
+        worldHeader.click();
       }
+    } else {
+      dialogBoxCreate("Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)");
     }
   }
 
