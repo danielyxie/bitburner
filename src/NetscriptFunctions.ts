@@ -435,6 +435,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         const x = parseFloat(v);
         if (!isNaN(x)) return x; // otherwise it wasn't even a string representing a number.
       } else if (typeof v === "number") {
+        if (isNaN(v)) throw makeRuntimeErrorMsg(funcName, `${argName} is NaN`);
         return v;
       }
       throw makeRuntimeErrorMsg(funcName, `${argName} should be a number`);
