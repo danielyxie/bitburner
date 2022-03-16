@@ -526,7 +526,7 @@ export function Root(props: IProps): React.ReactElement {
       const textFile = new TextFile(scriptToSave.fileName, scriptToSave.code);
       server.textFiles.push(textFile);
     } else {
-      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " + " or text file (.txt)");
+      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or a text file (.txt)");
       return;
     }
 
@@ -610,7 +610,7 @@ export function Root(props: IProps): React.ReactElement {
       const textFile = new TextFile(currentScript.fileName, currentScript.code);
       server.textFiles.push(textFile);
     } else {
-      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " + " or text file (.txt)");
+      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or a text file (.txt)");
       return;
     }
 

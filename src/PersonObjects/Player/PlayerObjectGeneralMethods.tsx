@@ -1313,9 +1313,7 @@ export function createProgramWork(this: IPlayer, numCycles: number): boolean {
 export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): string {
   const programName = this.createProgramName;
   if (cancelled === false) {
-    dialogBoxCreate(
-      "You've finished creating " + programName + "!<br>" + "The new program can be found on your home computer.",
-    );
+    dialogBoxCreate(`You've finished creating ${programName}!<br>The new program can be found on your home computer.`);
 
     this.getHomeComputer().programs.push(programName);
   } else {
