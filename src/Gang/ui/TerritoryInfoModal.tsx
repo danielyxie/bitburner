@@ -37,15 +37,15 @@ export const TerritoryInfoModal = ({ open, onClose }: IProps): React.ReactElemen
           and wanted level. It is very beneficial to have high territory control.
           <br />
           <br />
-          To increase your chances of winning territory assign gang members to "Territory Warfare", this will build your
-          gang power. Then enable "Engage in Territory Warfare" to start fighting over territory.
+          To increase your chances of winning territory, assign gang members to "Territory Warfare". This will build your
+          gang power. Then, enable "Engage in Territory Warfare" to start fighting over territory.
         </Typography>
         <br />
         <Typography variant='h4'>
           Territory Clash Chance
         </Typography>
         <Typography>
-          This percentage represents the chance you have of 'clashing' with with another gang. If you do not wish to
+          This percentage represents the chance you have of 'clashing' with another gang. If you do not wish to
           gain/lose territory, then keep this percentage at 0% by not engaging in territory warfare.
         </Typography>
       </>
