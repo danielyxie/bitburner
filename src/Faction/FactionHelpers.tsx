@@ -117,8 +117,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
   const factionInfo = fac.getInfo();
   const hasPrereqs = hasAugmentationPrereqs(aug);
   if (!hasPrereqs) {
-    const txt =
-      "You must first purchase or install " + aug.prereqs.join(",") + " before you can " + "purchase this one.";
+    const txt = `You must first purchase or install ${aug.prereqs.join(",")} before you can purchase this one.`;
     if (sing) {
       return txt;
     } else {

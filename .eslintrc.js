@@ -253,7 +253,7 @@ module.exports = {
     "no-use-before-define": ["off"],
     "no-useless-call": ["off"],
     "no-useless-computed-key": ["error"],
-    "no-useless-concat": ["off"],
+    "no-useless-concat": ["error"],
     "no-useless-constructor": ["error"],
     "no-useless-escape": ["off"],
     "no-useless-rename": [
