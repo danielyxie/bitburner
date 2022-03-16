@@ -608,11 +608,9 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
       if (this.workPartTime(numCycles)) {
         router.toCity();
       }
-    } else {
-      if (this.work(numCycles)) {
+    } else if (this.work(numCycles)) {
         router.toCity();
       }
-    }
   }
 }
 
@@ -1315,9 +1313,7 @@ export function createProgramWork(this: IPlayer, numCycles: number): boolean {
 export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): string {
   const programName = this.createProgramName;
   if (cancelled === false) {
-    dialogBoxCreate(
-      "You've finished creating " + programName + "!<br>" + "The new program can be found on your home computer.",
-    );
+    dialogBoxCreate(`You've finished creating ${programName}!<br>The new program can be found on your home computer.`);
 
     this.getHomeComputer().programs.push(programName);
   } else {
@@ -2244,8 +2240,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   if (!(fulcrumSecretServer instanceof Server)) throw new Error("Fulcrum Secret Technologies should be normal server");
   if (fulcrumSecretServer == null) {
     console.error("Could not find Fulcrum Secret Technologies Server");
-  } else {
-    if (
+  } else if (
       !fulcrumsecrettechonologiesFac.isBanned &&
       !fulcrumsecrettechonologiesFac.isMember &&
       !fulcrumsecrettechonologiesFac.alreadyInvited &&
@@ -2254,7 +2249,6 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     ) {
       invitedFactions.push(fulcrumsecrettechonologiesFac);
     }
-  }
 
   //BitRunners
   const bitrunnersFac = Factions["BitRunners"];

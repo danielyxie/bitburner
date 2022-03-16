@@ -179,13 +179,11 @@ export function ls(
       i--;
       if (!style) {
         terminal.print(row);
-      } else {
-        if (linked) {
+      } else if (linked) {
           terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
         } else {
           terminal.printRaw(<span style={style}>{row}</span>);
         }
-      }
     }
   }
 

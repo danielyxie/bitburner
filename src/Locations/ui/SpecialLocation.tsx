@@ -32,6 +32,7 @@ import { CorruptableText } from "../../ui/React/CorruptableText";
 import { HacknetNode } from "../../Hacknet/HacknetNode";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer } from "../../Server/AllServers";
+import { ArcadeRoot } from "../../Arcade/ui/ArcadeRoot";
 
 type IProps = {
   loc: Location;
@@ -51,21 +52,19 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     if (p.inBladeburner()) {
       // Enter Bladeburner division
       router.toBladeburner();
-    } else {
+    } else if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
       // Apply for Bladeburner division
-      if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
-        p.startBladeburner({ new: true });
-        dialogBoxCreate("You have been accepted into the Bladeburner division!");
-        setRerender((old) => !old);
+      p.startBladeburner({new: true});
+      dialogBoxCreate("You have been accepted into the Bladeburner division!");
+      setRerender((old) => !old);
 
-        const worldHeader = document.getElementById("world-menu-header");
-        if (worldHeader instanceof HTMLElement) {
-          worldHeader.click();
-          worldHeader.click();
-        }
-      } else {
-        dialogBoxCreate("Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)");
+      const worldHeader = document.getElementById("world-menu-header");
+      if (worldHeader instanceof HTMLElement) {
+        worldHeader.click();
+        worldHeader.click();
       }
+    } else {
+      dialogBoxCreate("Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)");
     }
   }
 
@@ -81,7 +80,12 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       return <></>;
     }
     const text = inBladeburner ? "Enter Bladeburner Headquarters" : "Apply to Bladeburner Division";
-    return <><br/><Button onClick={handleBladeburner}>{text}</Button></>;
+    return (
+      <>
+        <br />
+        <Button onClick={handleBladeburner}>{text}</Button>
+      </>
+    );
   }
 
   function renderNoodleBar(): React.ReactElement {
@@ -310,6 +314,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     }
     case LocationName.IshimaGlitch: {
       return renderGlitch();
+    }
+    case LocationName.NewTokyoArcade: {
+      return <ArcadeRoot />;
     }
     default:
       console.error(`Location ${props.loc.name} doesn't have any special properties`);

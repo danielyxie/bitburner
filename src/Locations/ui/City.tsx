@@ -34,9 +34,8 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "0px",
       cursor: "pointer",
     },
-  })
+  }),
 );
-
 
 function toLocation(router: IRouter, location: Location): void {
   if (location.name === LocationName.TravelAgency) {
@@ -132,12 +131,14 @@ function ASCIICity(props: IProps): React.ReactElement {
 
   const elems: JSX.Element[] = [];
   const lines = props.city.asciiArt.split("\n");
+  let i = 0;
   for (const line of lines) {
     elems.push(
-      <Typography key={line} sx={{ lineHeight: "1em", whiteSpace: "pre" }}>
+      <Typography key={i} sx={{ lineHeight: "1em", whiteSpace: "pre" }}>
         {lineElems(line)}
       </Typography>,
     );
+    i++;
   }
 
   return <>{elems}</>;

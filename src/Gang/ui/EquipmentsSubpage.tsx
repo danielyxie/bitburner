@@ -271,7 +271,7 @@ export function EquipmentsSubpage(): React.ReactElement {
         sx={{ m: 1, width: '15%' }}
       />
 
-      <Box display="grid" sx={{ gridTemplateColumns: '1fr 1fr', width: 'fit-content' }}>
+      <Box display="grid" sx={{ gridTemplateColumns: '1fr 1fr', width: '100%' }}>
         {members.map((member: GangMember) => (
           <GangMemberUpgradePanel key={member.name} member={member} />
         ))}

@@ -1,6 +1,7 @@
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Exploit } from "../Exploits/Exploit";
+import * as bcrypt from "bcryptjs";
 
 export interface INetscriptExtra {
   heart: {
@@ -9,6 +10,7 @@ export interface INetscriptExtra {
   exploit(): void;
   bypass(doc: Document): void;
   alterReality(): void;
+  rainbow(guess: string): void;
 }
 
 export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript): INetscriptExtra {
@@ -49,6 +51,18 @@ export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript): INe
         console.warn("Reality has been altered!");
         player.giveExploit(Exploit.RealityAlteration);
       }
+    },
+    rainbow: function (guess: unknown): void {
+      async function tryGuess(): Promise<void> {
+        const verified = await bcrypt.compare(
+          guess + "",
+          "$2a$10$aertxDEkgor8baVtQDZsLuMwwGYmkRM/ohcA6FjmmzIHQeTCsrCcO",
+        );
+        if (verified) {
+          player.giveExploit(Exploit.INeedARainbow);
+        }
+      }
+      tryGuess();
     },
   };
 }
