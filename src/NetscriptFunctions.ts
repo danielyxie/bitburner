@@ -174,7 +174,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeRejectMsg(
         workerScript,
         `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-        `This is probably a bug. Please report to game developer`,
+          `This is probably a bug. Please report to game developer`,
       );
     }
 
@@ -425,19 +425,21 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const helper = {
     updateDynamicRam: updateDynamicRam,
     makeRuntimeErrorMsg: makeRuntimeErrorMsg,
-    string: (funcName: string, argName: string, v: any): string => {
+    string: (funcName: string, argName: string, v: unknown): string => {
       if (typeof v === "string") return v;
       if (typeof v === "number") return v + ""; // cast to string;
       throw makeRuntimeErrorMsg(funcName, `${argName} should be a string`);
     },
-    number: (funcName: string, argName: string, v: any): number => {
-      if (!isNaN(v)) {
-        if (typeof v === "number") return v;
-        if (!isNaN(parseFloat(v))) return parseFloat(v);
+    number: (funcName: string, argName: string, v: unknown): number => {
+      if (typeof v === "string") {
+        const x = parseFloat(v);
+        if (!isNaN(x)) return x; // otherwise it wasn't even a string representing a number.
+      } else if (typeof v === "number") {
+        return v;
       }
       throw makeRuntimeErrorMsg(funcName, `${argName} should be a number`);
     },
-    boolean: (v: any): boolean => {
+    boolean: (v: unknown): boolean => {
       return !!v; // Just convert it to boolean.
     },
     getServer: safeGetServer,
@@ -467,7 +469,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
   const gang = NetscriptGang(Player, workerScript, helper);
   const sleeve = NetscriptSleeve(Player, workerScript, helper);
-  const extra = NetscriptExtra(Player, workerScript);
+  const extra = NetscriptExtra(Player, workerScript, helper);
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
   const stanek = NetscriptStanek(Player, workerScript, helper);
   const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
@@ -696,7 +698,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log(
           "weaken",
           () =>
-            `'${server.hostname}' security level weakened to ${server.hackDifficulty
+            `'${server.hostname}' security level weakened to ${
+              server.hackDifficulty
             }. Gained ${numeralWrapper.formatExp(expGain)} hacking exp (t=${numeralWrapper.formatThreads(threads)})`,
         );
         workerScript.scriptRef.onlineExpGained += expGain;
@@ -1665,7 +1668,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const cost = getPurchaseServerCost(ram);
       if (cost === Infinity) {
         if (ram > getPurchaseServerMaxRam()) {
-          workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must not be greater than getPurchaseServerMaxRam`);
+          workerScript.log(
+            "purchaseServer",
+            () => `Invalid argument: ram='${ram}' must not be greater than getPurchaseServerMaxRam`,
+          );
         } else {
           workerScript.log("purchaseServer", () => `Invalid argument: ram='${ram}' must be a positive power of 2`);
         }
@@ -2312,7 +2318,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (typeof f !== "function") {
         throw makeRuntimeErrorMsg("atExit", "argument should be function");
       }
-      workerScript.atExit = () => { f(); }; // Wrap the user function to prevent WorkerScript leaking as 'this'
+      workerScript.atExit = () => {
+        f();
+      }; // Wrap the user function to prevent WorkerScript leaking as 'this'
     },
     mv: function (host: string, source: string, destination: string): void {
       updateDynamicRam("mv", getRamCost(Player, "mv"));

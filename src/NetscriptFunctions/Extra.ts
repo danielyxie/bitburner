@@ -2,6 +2,7 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Exploit } from "../Exploits/Exploit";
 import * as bcrypt from "bcryptjs";
+import { INetscriptHelper } from "./INetscriptHelper";
 
 export interface INetscriptExtra {
   heart: {
@@ -13,7 +14,7 @@ export interface INetscriptExtra {
   rainbow(guess: string): void;
 }
 
-export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript): INetscriptExtra {
+export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): INetscriptExtra {
   return {
     heart: {
       // Easter egg function
@@ -24,17 +25,18 @@ export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript): INe
     exploit: function (): void {
       player.giveExploit(Exploit.UndocumentedFunctionCall);
     },
-    bypass: function (doc: any): void {
+    bypass: function (doc: unknown): void {
       // reset both fields first
-      doc.completely_unused_field = undefined;
+      const d = doc as any;
+      d.completely_unused_field = undefined;
       const real_document: any = document;
       real_document.completely_unused_field = undefined;
       // set one to true and check that it affected the other.
       real_document.completely_unused_field = true;
-      if (doc.completely_unused_field && workerScript.ramUsage === 1.6) {
+      if (d.completely_unused_field && workerScript.ramUsage === 1.6) {
         player.giveExploit(Exploit.Bypass);
       }
-      doc.completely_unused_field = undefined;
+      d.completely_unused_field = undefined;
       real_document.completely_unused_field = undefined;
     },
     alterReality: function (): void {
@@ -55,7 +57,7 @@ export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript): INe
     rainbow: function (guess: unknown): void {
       async function tryGuess(): Promise<void> {
         const verified = await bcrypt.compare(
-          guess + "",
+          helper.string("rainbow", "guess", guess),
           "$2a$10$aertxDEkgor8baVtQDZsLuMwwGYmkRM/ohcA6FjmmzIHQeTCsrCcO",
         );
         if (verified) {
