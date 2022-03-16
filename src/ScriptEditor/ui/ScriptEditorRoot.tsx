@@ -232,7 +232,7 @@ export function Root(props: IProps): React.ReactElement {
           MonacoVim.VimMode.Vim.mapCommand("gT", "action", "prevTabs", {}, { context: "normal" });
           editor.focus();
         });
-      } catch {}
+      } catch { }
     } else if (!options.vim) {
       // Whem vim mode is disabled
       vimEditor?.dispose();
@@ -478,7 +478,7 @@ export function Root(props: IProps): React.ReactElement {
     }
     try {
       infLoop(newCode);
-    } catch (err) {}
+    } catch (err) { }
   }
 
   function saveScript(scriptToSave: OpenScript): void {
@@ -829,15 +829,15 @@ export function Root(props: IProps): React.ReactElement {
                     maxHeight: "38.5px",
                     ...(currentScript?.fileName === openScripts[index].fileName
                       ? {
-                          background: Settings.theme.button,
-                          borderColor: Settings.theme.button,
-                          color: Settings.theme.primary,
-                        }
+                        background: Settings.theme.button,
+                        borderColor: Settings.theme.button,
+                        color: Settings.theme.primary,
+                      }
                       : {
-                          background: Settings.theme.backgroundsecondary,
-                          borderColor: Settings.theme.backgroundsecondary,
-                          color: Settings.theme.secondary,
-                        }),
+                        background: Settings.theme.backgroundsecondary,
+                        borderColor: Settings.theme.backgroundsecondary,
+                        color: Settings.theme.secondary,
+                      }),
                   };
 
                   const scriptTabText = `${hostname}:~/${fileName} ${dirty(index)}`;
@@ -870,18 +870,19 @@ export function Root(props: IProps): React.ReactElement {
                               }}
                               style={{
                                 maxWidth: `${tabTextWidth}px`,
+                                minHeight: '38.5px',
                                 overflow: "hidden",
                                 ...(currentScript?.fileName === openScripts[index].fileName
                                   ? {
-                                      background: Settings.theme.button,
-                                      borderColor: Settings.theme.button,
-                                      color: Settings.theme.primary,
-                                    }
+                                    background: Settings.theme.button,
+                                    borderColor: Settings.theme.button,
+                                    color: Settings.theme.primary,
+                                  }
                                   : {
-                                      background: Settings.theme.backgroundsecondary,
-                                      borderColor: Settings.theme.backgroundsecondary,
-                                      color: Settings.theme.secondary,
-                                    }),
+                                    background: Settings.theme.backgroundsecondary,
+                                    borderColor: Settings.theme.backgroundsecondary,
+                                    color: Settings.theme.secondary,
+                                  }),
                               }}
                             >
                               <span style={{ overflow: "hidden", direction: "rtl", textOverflow: "ellipsis" }}>
