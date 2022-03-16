@@ -18,6 +18,7 @@
     "@mui/material": "^5.0.3",
     "@mui/styles": "^5.0.1",
     "@types/bcrypt": "^5.0.0",
+    "@types/bcryptjs": "^2.4.2",
     "acorn": "^8.4.1",
     "acorn-walk": "^8.1.1",
     "arg": "^5.0.0",
