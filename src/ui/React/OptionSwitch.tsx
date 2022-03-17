@@ -1,25 +1,25 @@
-import { FormControlLabel, Switch, Tooltip, Typography } from "@mui/material";
+import { FormControlLabel, Switch, SwitchProps, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-interface IProps {
+interface IProps extends SwitchProps {
   checked: boolean;
-  onChange: (newValue: boolean, error?: string) => void;
+  onValueChanged: (newValue: boolean, error?: string) => void;
   text: React.ReactNode;
   tooltip: React.ReactNode;
 }
 
-export function OptionSwitch({ checked, onChange, text, tooltip }: IProps): React.ReactElement {
+export function OptionSwitch({ checked, onValueChanged, text, tooltip, ...otherProps }: IProps): React.ReactElement {
   const [value, setValue] = useState(checked);
 
   function handleSwitchChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setValue(event.target.checked);
   }
 
-  useEffect(() => onChange(value), [value]);
+  useEffect(() => onValueChanged(value), [value]);
 
   return (
     <FormControlLabel
-      control={<Switch checked={value} onChange={handleSwitchChange} />}
+      control={<Switch checked={value} onChange={handleSwitchChange} {...otherProps} />}
       label={
         <Tooltip title={<Typography>{tooltip}</Typography>}>
           <Typography>{text}</Typography>

@@ -45,7 +45,7 @@ export function GangMemberList(): React.ReactElement {
       />
       <OptionSwitch
         checked={ascendOnly}
-        onChange={(newValue) => setAscendOnly(newValue)}
+        onValueChanged={(newValue: boolean) => setAscendOnly(newValue)}
         text="Show only ascendable"
         tooltip={<>Filter the members list by whether or not the member can be ascended.</>}
       />

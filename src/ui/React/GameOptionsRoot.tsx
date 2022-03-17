@@ -213,7 +213,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.SuppressMessages}
-                onChange={(newValue) => (Settings.SuppressMessages = newValue)}
+                onValueChanged={(newValue) => (Settings.SuppressMessages = newValue)}
                 text="Suppress story messages"
                 tooltip={
                   <>
@@ -227,7 +227,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.SuppressFactionInvites}
-                onChange={(newValue) => (Settings.SuppressFactionInvites = newValue)}
+                onValueChanged={(newValue) => (Settings.SuppressFactionInvites = newValue)}
                 text="Suppress faction invites"
                 tooltip={
                   <>
@@ -240,7 +240,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.SuppressTravelConfirmation}
-                onChange={(newValue) => (Settings.SuppressTravelConfirmation = newValue)}
+                onValueChanged={(newValue) => (Settings.SuppressTravelConfirmation = newValue)}
                 text="Suppress travel confirmations"
                 tooltip={
                   <>
@@ -253,7 +253,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.SuppressBuyAugmentationConfirmation}
-                onChange={(newValue) => (Settings.SuppressBuyAugmentationConfirmation = newValue)}
+                onValueChanged={(newValue) => (Settings.SuppressBuyAugmentationConfirmation = newValue)}
                 text="Suppress augmentations confirmation"
                 tooltip={<>If this is set, the confirmation message before buying augmentation will not show up.</>}
               />
@@ -261,7 +261,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.SuppressTIXPopup}
-                onChange={(newValue) => (Settings.SuppressTIXPopup = newValue)}
+                onValueChanged={(newValue) => (Settings.SuppressTIXPopup = newValue)}
                 text="Suppress TIX messages"
                 tooltip={<>If this is set, the stock market will never create any popup.</>}
               />
@@ -270,7 +270,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
               <ListItem>
                 <OptionSwitch
                   checked={Settings.SuppressBladeburnerPopup}
-                  onChange={(newValue) => (Settings.SuppressBladeburnerPopup = newValue)}
+                  onValueChanged={(newValue) => (Settings.SuppressBladeburnerPopup = newValue)}
                   text="Suppress bladeburner popup"
                   tooltip={
                     <>
@@ -284,7 +284,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.SuppressSavedGameToast}
-                onChange={(newValue) => (Settings.SuppressSavedGameToast = newValue)}
+                onValueChanged={(newValue) => (Settings.SuppressSavedGameToast = newValue)}
                 text="Suppress Auto-Save Game Toast"
                 tooltip={<>If this is set, there will be no "Game Saved!" toast appearing after an auto-save.</>}
               />
@@ -292,7 +292,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.SuppressAutosaveDisabledWarnings}
-                onChange={(newValue) => (Settings.SuppressAutosaveDisabledWarnings = newValue)}
+                onValueChanged={(newValue) => (Settings.SuppressAutosaveDisabledWarnings = newValue)}
                 text="Suppress Auto-Save Disabled Warning"
                 tooltip={<>If this is set, there will be no warning triggered when auto-save is disabled (at 0).</>}
               />
@@ -300,7 +300,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.DisableHotkeys}
-                onChange={(newValue) => (Settings.DisableHotkeys = newValue)}
+                onValueChanged={(newValue) => (Settings.DisableHotkeys = newValue)}
                 text="Disable hotkeys"
                 tooltip={
                   <>
@@ -314,7 +314,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.DisableASCIIArt}
-                onChange={(newValue) => (Settings.DisableASCIIArt = newValue)}
+                onValueChanged={(newValue) => (Settings.DisableASCIIArt = newValue)}
                 text="Disable ascii art"
                 tooltip={<>If this is set all ASCII art will be disabled.</>}
               />
@@ -322,7 +322,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.DisableTextEffects}
-                onChange={(newValue) => (Settings.DisableTextEffects = newValue)}
+                onValueChanged={(newValue) => (Settings.DisableTextEffects = newValue)}
                 text="Disable text effects"
                 tooltip={
                   <>
@@ -335,7 +335,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.DisableOverviewProgressBars}
-                onChange={(newValue) => (Settings.DisableOverviewProgressBars = newValue)}
+                onValueChanged={(newValue) => (Settings.DisableOverviewProgressBars = newValue)}
                 text="Disable Overview Progress Bars"
                 tooltip={<>If this is set, the progress bars in the character overview will be hidden.</>}
               />
@@ -343,7 +343,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.EnableBashHotkeys}
-                onChange={(newValue) => (Settings.EnableBashHotkeys = newValue)}
+                onValueChanged={(newValue) => (Settings.EnableBashHotkeys = newValue)}
                 text="Enable bash hotkeys"
                 tooltip={
                   <>
@@ -357,7 +357,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.UseIEC60027_2}
-                onChange={(newValue) => (Settings.UseIEC60027_2 = newValue)}
+                onValueChanged={(newValue) => (Settings.UseIEC60027_2 = newValue)}
                 text="Use GiB instead of GB"
                 tooltip={
                   <>
@@ -369,7 +369,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.ExcludeRunningScriptsFromSave}
-                onChange={(newValue) => (Settings.ExcludeRunningScriptsFromSave = newValue)}
+                onValueChanged={(newValue) => (Settings.ExcludeRunningScriptsFromSave = newValue)}
                 text="Exclude Running Scripts from Save"
                 tooltip={
                   <>
@@ -414,7 +414,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             <ListItem>
               <OptionSwitch
                 checked={Settings.SaveGameOnFileSave}
-                onChange={(newValue) => (Settings.SaveGameOnFileSave = newValue)}
+                onValueChanged={(newValue) => (Settings.SaveGameOnFileSave = newValue)}
                 text="Save game on file save"
                 tooltip={<>Save your game any time a file is saved in the script editor.</>}
               />

@@ -101,7 +101,7 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
       <Paper sx={{ p: 1, my: 1 }}>
         <OptionSwitch
           checked={themeCopy.base === "vs"}
-          onChange={(val) => {
+          onValueChanged={(val) => {
             setThemeCopy(_.set(themeCopy, "base", val ? "vs" : "vs-dark"));
             rerender();
           }}
