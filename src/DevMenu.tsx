@@ -24,6 +24,7 @@ import { Stanek } from "./DevMenu/ui/Stanek";
 import { TimeSkip } from "./DevMenu/ui/TimeSkip";
 import { Achievements } from "./DevMenu/ui/Achievements";
 import { Entropy } from "./DevMenu/ui/Entropy";
+import { EventLogDev } from "./DevMenu/ui/EventLogDev";
 import Typography from "@mui/material/Typography";
 import { Exploit } from "./Exploits/Exploit";
 
@@ -65,6 +66,7 @@ export function DevMenuRoot(props: IProps): React.ReactElement {
       <TimeSkip player={props.player} engine={props.engine} />
       <Achievements player={props.player} engine={props.engine} />
       <Entropy player={props.player} engine={props.engine} />
+      <EventLogDev />
     </>
   );
 }
