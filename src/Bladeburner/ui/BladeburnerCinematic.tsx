@@ -1,5 +1,6 @@
 import React from "react";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { EventLog, LogCategories, LogTypes } from "../../EventLog/EventLog";
 import { use } from "../../ui/Context";
 import { CinematicText } from "../../ui/React/CinematicText";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
@@ -33,10 +34,11 @@ export function BladeburnerCinematic(): React.ReactElement {
       ]}
       onDone={() => {
         router.toTerminal();
-        dialogBoxCreate(
+        const message =
           `Visit the National Security Agency (NSA) to apply for their ${FactionNames.Bladeburners} ` +
-            "division! You will need 100 of each combat stat before doing this.",
-        );
+          "division! You will need 100 of each combat stat before doing this.";
+        dialogBoxCreate(message);
+        EventLog.addItem(message, { type: LogTypes.Info, category: LogCategories.Prestige });
       }}
     />
   );

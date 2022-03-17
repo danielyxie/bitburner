@@ -14,6 +14,7 @@ import { compareArrays } from "../utils/helpers/compareArrays";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { AddRecentScript } from "./RecentScripts";
 import { Player } from "../Player";
+import { EventLog, LogCategories, LogTypes } from "../EventLog/EventLog";
 
 export function killWorkerScript(runningScriptObj: RunningScript, hostname: string, rerenderUi?: boolean): boolean;
 export function killWorkerScript(workerScript: WorkerScript): boolean;
@@ -73,9 +74,14 @@ function stopAndCleanUpWorkerScript(workerScript: WorkerScript, rerenderUi = tru
     try {
       workerScript.atExit();
     } catch (e: any) {
-      dialogBoxCreate(
-        `Error trying to call atExit for script ${workerScript.name} on ${workerScript.hostname} ${workerScript.scriptRef.args} ${e}`,
-      );
+      const message = `Error trying to call atExit for script ${workerScript.name} on ${workerScript.hostname} ${workerScript.scriptRef.args} ${e}`;
+      dialogBoxCreate(message);
+
+      EventLog.addItem("Error calling atExit", {
+        type: LogTypes.Error,
+        category: LogCategories.ScriptError,
+        description: message,
+      });
     }
     workerScript.atExit = undefined;
   }

@@ -66,6 +66,7 @@ import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { calculateClassEarnings } from "../formulas/work";
 import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { EventLog, LogTypes, LogCategories } from "../../EventLog/EventLog";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -1318,7 +1319,11 @@ export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): stri
   if (!cancelled) {
     //Complete case
     this.gainIntelligenceExp((CONSTANTS.IntelligenceProgramBaseExpGain * this.timeWorked) / 1000);
-    dialogBoxCreate(`You've finished creating ${programName}!<br>The new program can be found on your home computer.`);
+
+    const message = `You've finished creating ${programName}!`;
+    const details = "The new program can be found on your home computer.";
+    dialogBoxCreate(`${message}<br>${details}`);
+    EventLog.addItem(message, { type: LogTypes.Info, category: LogCategories.Misc, description: details });
 
     if (!this.getHomeComputer().programs.includes(programName)) {
       this.getHomeComputer().programs.push(programName);
@@ -1824,7 +1829,13 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   this.companyName = this.location;
 
   if (!sing) {
-    dialogBoxCreate("Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.name + "!");
+    const message = "Congratulations! You were offered a new job at " + this.companyName + " as a " + pos.name + "!";
+    dialogBoxCreate(message);
+    EventLog.addItem(`Promotion to ${pos.name} at "${this.companyName}"`, {
+      type: LogTypes.Info,
+      category: LogCategories.Jobs,
+      description: message,
+    });
   }
   return true;
 }
@@ -2716,6 +2727,12 @@ export function giveAchievement(this: IPlayer, achievementId: string): void {
   if (!this.achievements.map((a) => a.ID).includes(achievementId)) {
     this.achievements.push({ ID: achievementId, unlockedOn: new Date().getTime() });
     SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, ToastVariant.SUCCESS, 2000);
+    EventLog.addItem(`Unlocked Achievement: "${achievement.Name}"`, {
+      type: LogTypes.Success,
+      category: LogCategories.Achievement,
+      description: achievement.Description,
+      linkIdentifier: achievement.ID,
+    });
   }
 }
 

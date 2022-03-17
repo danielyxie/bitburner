@@ -37,6 +37,7 @@ import { areFilesEqual } from "./Terminal/DirectoryHelpers";
 import { Player } from "./Player";
 import { Terminal } from "./Terminal";
 import { IPlayer } from "./PersonObjects/IPlayer";
+import { EventLog, LogCategories, LogTypes } from "./EventLog/EventLog";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];
@@ -177,7 +178,9 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
     codeWithImports = importProcessingRes.code;
     codeLineOffset = importProcessingRes.lineOffset;
   } catch (e: any) {
-    dialogBoxCreate("Error processing Imports in " + workerScript.name + ":<br>" + e);
+    const message = "Error processing Imports in " + workerScript.name + ":";
+    dialogBoxCreate(message + ":<br>" + e);
+    EventLog.addItem(message, { type: LogTypes.Error, category: LogCategories.ScriptError, description: e });
     workerScript.env.stopFlag = true;
     workerScript.running = false;
     killWorkerScript(workerScript);
@@ -286,7 +289,9 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<void> {
   try {
     interpreter = new Interpreter(codeWithImports, interpreterInitialization, codeLineOffset);
   } catch (e: any) {
-    dialogBoxCreate("Syntax ERROR in " + workerScript.name + ":<br>" + e);
+    const message = "Syntax ERROR in " + workerScript.name;
+    dialogBoxCreate(message + ":<br>" + e);
+    EventLog.addItem(message, { type: LogTypes.Error, category: LogCategories.ScriptError, description: e });
     workerScript.env.stopFlag = true;
     workerScript.running = false;
     killWorkerScript(workerScript);
@@ -522,6 +527,7 @@ function createAndAddWorkerScript(
   server: BaseServer,
   parent?: WorkerScript,
 ): boolean {
+  const contactGameDeveloper = "This is a bug, please contact game developer.";
   // Update server's ram usage
   let threads = 1;
   if (runningScriptObj.threads && !isNaN(runningScriptObj.threads)) {
@@ -533,12 +539,17 @@ function createAndAddWorkerScript(
   const ramUsage = roundToTwo(oneRamUsage * threads);
   const ramAvailable = server.maxRam - server.ramUsed;
   if (ramUsage > ramAvailable) {
-    dialogBoxCreate(
+    const message =
       `Not enough RAM to run script ${runningScriptObj.filename} with args ` +
-        `${arrayToString(runningScriptObj.args)}. This likely occurred because you re-loaded ` +
-        `the game and the script's RAM usage increased (either because of an update to the game or ` +
-        `your changes to the script.)`,
-    );
+      `${arrayToString(runningScriptObj.args)}. This likely occurred because you re-loaded ` +
+      `the game and the script's RAM usage increased (either because of an update to the game or ` +
+      `your changes to the script.)`;
+    dialogBoxCreate(message);
+    EventLog.addItem(`Not enough RAM to run ${runningScriptObj.filename}`, {
+      type: LogTypes.Error,
+      category: LogCategories.ScriptError,
+      description: message,
+    });
     return false;
   }
 
@@ -592,8 +603,15 @@ function createAndAddWorkerScript(
     })
     .catch(function (e) {
       if (e instanceof Error) {
-        dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-        console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + e.toString());
+        const message = "Script runtime unknown error.";
+        const errorMessage = "Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + e.toString();
+        dialogBoxCreate(`${message} ${contactGameDeveloper}`);
+        console.error(errorMessage);
+        EventLog.addItem(message, {
+          type: LogTypes.Error,
+          category: LogCategories.ScriptError,
+          description: `${message} ${contactGameDeveloper}<br />${errorMessage}`,
+        });
         return;
       } else if (e instanceof ScriptDeath) {
         if (isScriptErrorMessage(workerScript.errorMessage)) {
@@ -615,21 +633,38 @@ function createAndAddWorkerScript(
           msg += errorMsg;
 
           dialogBoxCreate(msg);
+          EventLog.addItem(`RUNTIME ERROR ${scriptName}@${hostname}`, {
+            type: LogTypes.Error,
+            category: LogCategories.ScriptError,
+            description: msg,
+          });
           workerScript.log("", () => "Script crashed with runtime error");
         } else {
           workerScript.log("", () => "Script killed");
           return; // Already killed, so stop here
         }
       } else if (isScriptErrorMessage(e)) {
-        dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-        console.error(
+        const message = "Script runtime unknown error.";
+        const errorMessage =
           "ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " +
-            e.toString(),
-        );
+          e.toString();
+        dialogBoxCreate(`${message} ${contactGameDeveloper}`);
+        console.error(errorMessage);
+        EventLog.addItem(message, {
+          type: LogTypes.Error,
+          category: LogCategories.ScriptError,
+          description: `${message} ${contactGameDeveloper}<br />${errorMessage}`,
+        });
         return;
       } else {
-        dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
+        const message = "An unknown script died for an unknown reason.";
+        dialogBoxCreate(`${message} ${contactGameDeveloper}`);
         console.error(e);
+        EventLog.addItem(message, {
+          type: LogTypes.Error,
+          category: LogCategories.ScriptError,
+          description: `${message} ${contactGameDeveloper}`,
+        });
       }
 
       killWorkerScript(workerScript);

@@ -26,6 +26,7 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { PowerMultiplier } from "./data/power";
 import { IGang } from "./IGang";
+import { EventLog, LogCategories, LogTypes } from "../EventLog/EventLog";
 
 export class Gang implements IGang {
   facName: string;
@@ -346,7 +347,10 @@ export class Gang implements IGang {
 
     // Notify of death
     if (this.notifyMemberDeath) {
-      dialogBoxCreate(`${member.name} was killed in a gang clash! You lost ${lostRespect} respect`);
+      const killed = `${member.name} was killed in a gang clash!`;
+      const loss = `You lost ${lostRespect} respect`;
+      dialogBoxCreate(`${killed} ${loss}`);
+      EventLog.addItem(killed, { type: LogTypes.Warning, category: LogCategories.Gangs, description: loss });
     }
   }
 

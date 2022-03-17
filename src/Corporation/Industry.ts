@@ -15,6 +15,7 @@ import { Warehouse } from "./Warehouse";
 import { ICorporation } from "./ICorporation";
 import { IIndustry } from "./IIndustry";
 import { IndustryUpgrade, IndustryUpgrades } from "./IndustryUpgrades";
+import { EventLog, LogCategories, LogTypes } from "../EventLog/EventLog";
 
 interface IParams {
   name?: string;
@@ -394,10 +395,12 @@ export class Industry implements IIndustry {
     //Then calculate salaries and processs the markets
     if (state === "START") {
       if (isNaN(this.thisCycleRevenue) || isNaN(this.thisCycleExpenses)) {
-        console.error("NaN in Corporation's computed revenue/expenses");
-        dialogBoxCreate(
-          "Something went wrong when compting Corporation's revenue/expenses. This is a bug. Please report to game developer",
-        );
+        const err = "NaN in Corporation's computed revenue/expenses";
+        console.error(err);
+        const message =
+          "Something went wrong when compting Corporation's revenue/expenses. This is a bug. Please report to game developer";
+        dialogBoxCreate(message);
+        EventLog.addItem(message, { type: LogTypes.Error, category: LogCategories.GameError, description: err });
         this.thisCycleRevenue = 0;
         this.thisCycleExpenses = 0;
       }

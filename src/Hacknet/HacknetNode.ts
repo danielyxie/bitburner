@@ -19,6 +19,7 @@ import { HacknetNodeConstants } from "./data/Constants";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { ObjectValidator, minMax } from "../utils/Validator";
+import { EventLog, LogCategories, LogTypes } from "../EventLog/EventLog";
 
 export class HacknetNode implements IHacknetNode {
   static validationData: ObjectValidator<HacknetNode> = {
@@ -116,7 +117,9 @@ export class HacknetNode implements IHacknetNode {
     this.moneyGainRatePerSecond = calculateMoneyGainRate(this.level, this.ram, this.cores, prodMult);
     if (isNaN(this.moneyGainRatePerSecond)) {
       this.moneyGainRatePerSecond = 0;
-      dialogBoxCreate("Error in calculating Hacknet Node production. Please report to game developer");
+      const message = "Error in calculating Hacknet Node production. Please report to game developer";
+      dialogBoxCreate(message);
+      EventLog.addItem(message, { type: LogTypes.Error, category: LogCategories.GameError });
     }
   }
 

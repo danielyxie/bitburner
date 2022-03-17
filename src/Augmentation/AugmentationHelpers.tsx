@@ -22,6 +22,7 @@ import {
   initUnstableCircadianModulator,
 } from "./AugmentationCreator";
 import { Router } from "../ui/GameRoot";
+import { EventLog, LogCategories, LogTypes } from "../EventLog/EventLog";
 
 export function AddToAugmentations(aug: Augmentation): void {
   const name = aug.name;
@@ -166,6 +167,7 @@ function installAugmentations(force?: boolean): boolean {
       break;
     }
   }
+  const nbAugmentations = Player.queuedAugmentations.length;
   for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
     const ownedAug = Player.queuedAugmentations[i];
     const aug = Augmentations[ownedAug.name];
@@ -185,12 +187,17 @@ function installAugmentations(force?: boolean): boolean {
   }
   Player.queuedAugmentations = [];
   if (!force) {
-    dialogBoxCreate(
+    const message =
       "You slowly drift to sleep as scientists put you under in order " +
-        "to install the following Augmentations:<br>" +
-        augmentationList +
-        "<br>You wake up in your home...you feel different...",
-    );
+      "to install the following Augmentations:<br>" +
+      augmentationList +
+      "<br>You wake up in your home...you feel different...";
+    dialogBoxCreate(message);
+    EventLog.addItem(`Installed ${nbAugmentations} augmentations.`, {
+      type: LogTypes.Success,
+      category: LogCategories.Prestige,
+      description: message,
+    });
   }
   prestigeAugmentation();
   Router.toTerminal();

@@ -2,6 +2,7 @@
  * Implementation for what happens when you destroy a BitNode
  */
 import React from "react";
+import { EventLog, LogCategories, LogTypes } from "./EventLog/EventLog";
 import { Player } from "./Player";
 import { prestigeSourceFile } from "./Prestige";
 import { PlayerOwnedSourceFile } from "./SourceFile/PlayerOwnedSourceFile";
@@ -32,18 +33,27 @@ function giveSourceFile(bitNodeNumber: number): void {
 
   if (alreadyOwned && ownedSourceFile) {
     if (ownedSourceFile.lvl >= 3 && ownedSourceFile.n !== 12) {
-      dialogBoxCreate(
-        `The Source-File for the BitNode you just destroyed, ${sourceFile.name}, is already at max level!`,
-      );
+      const message = `The Source-File for the BitNode you just destroyed, ${sourceFile.name}, is already at max level!`;
+      dialogBoxCreate(message);
+      EventLog.addItem(message, {
+        type: LogTypes.Warning,
+        category: LogCategories.Prestige,
+        linkIdentifier: sourceFileKey,
+      });
     } else {
       ++ownedSourceFile.lvl;
-      dialogBoxCreate(
+      const message =
         sourceFile.name +
-          " was upgraded to level " +
-          ownedSourceFile.lvl +
-          " for " +
-          "destroying its corresponding BitNode!",
-      );
+        " was upgraded to level " +
+        ownedSourceFile.lvl +
+        " for " +
+        "destroying its corresponding BitNode!";
+      dialogBoxCreate(message);
+      EventLog.addItem(`${sourceFile.name} was upgraded to level ${ownedSourceFile.lvl}`, {
+        type: LogTypes.Success,
+        category: LogCategories.Prestige,
+        linkIdentifier: sourceFileKey,
+      });
     }
   } else {
     const playerSrcFile = new PlayerOwnedSourceFile(bitNodeNumber, 1);
@@ -52,7 +62,7 @@ function giveSourceFile(bitNodeNumber: number): void {
       // Artificial Intelligence
       Player.intelligence = 1;
     }
-    dialogBoxCreate(
+    const message = (
       <>
         You received a Source-File for destroying a BitNode!
         <br />
@@ -61,8 +71,14 @@ function giveSourceFile(bitNodeNumber: number): void {
         <br />
         <br />
         {sourceFile.info}
-      </>,
+      </>
     );
+    dialogBoxCreate(message);
+    EventLog.addItem(`You received ${sourceFile.name} for destroying a BitNode!`, {
+      type: LogTypes.Success,
+      category: LogCategories.Prestige,
+      linkIdentifier: sourceFileKey,
+    });
   }
 }
 

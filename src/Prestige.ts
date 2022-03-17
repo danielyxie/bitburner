@@ -32,6 +32,7 @@ import { ProgramsSeen } from "./Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "./Faction/ui/FactionsRoot";
 import { CONSTANTS } from "./Constants";
 import { LogBoxClearEvents } from "./ui/React/LogBoxManager";
+import { EventLog, LogCategories, LogTypes } from "./EventLog/EventLog";
 
 const BitNode8StartingMoney = 250e6;
 
@@ -254,10 +255,15 @@ export function prestigeSourceFile(flume: boolean): void {
   // BitNode 3: Corporatocracy
   if (Player.bitNodeN === 3) {
     homeComp.messages.push(LiteratureNames.CorporationManagementHandbook);
-    dialogBoxCreate(
+    const message =
       "You received a copy of the Corporation Management Handbook on your home computer. " +
-        "Read it if you need help getting started with Corporations!",
-    );
+      "Read it if you need help getting started with Corporations!";
+    dialogBoxCreate(message);
+    EventLog.addItem("Corporation Management Handbook", {
+      type: LogTypes.Info,
+      category: LogCategories.Prestige,
+      description: message,
+    });
   }
 
   // BitNode 8: Ghost of Wall Street
@@ -271,11 +277,15 @@ export function prestigeSourceFile(flume: boolean): void {
 
   // Bit Node 10: Digital Carbon
   if (Player.bitNodeN === 10) {
-    dialogBoxCreate("Visit VitaLife in New Tokyo if you'd like to purchase a new sleeve!");
+    const message = "Visit VitaLife in New Tokyo if you'd like to purchase a new sleeve!";
+    dialogBoxCreate(message);
+    EventLog.addItem(message, { type: LogTypes.Info, category: LogCategories.Prestige });
   }
 
   if (Player.bitNodeN === 13) {
-    dialogBoxCreate(`Trouble is brewing in ${CityName.Chongqing}`);
+    const message = `Trouble is brewing in ${CityName.Chongqing}`;
+    dialogBoxCreate(message);
+    EventLog.addItem(message, { type: LogTypes.Info, category: LogCategories.Prestige });
   }
 
   // Reset Stock market, gang, and corporation

@@ -13,6 +13,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
 import { isString } from "../utils/helpers/isString";
+import { EventLog, LogCategories, LogTypes } from "../EventLog/EventLog";
 
 interface IParams {
   name?: string;
@@ -112,11 +113,16 @@ export class Corporation {
           (this.avgProfit * (CorporationConstants.AvgProfitLength - 1) + profit) / CorporationConstants.AvgProfitLength;
         const cycleProfit = profit * (marketCycles * CorporationConstants.SecsPerMarketCycle);
         if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
-          dialogBoxCreate(
+          const message =
             "There was an error calculating your Corporations funds and they got reset to 0. " +
-              "This is a bug. Please report to game developer.<br><br>" +
-              "(Your funds have been set to $150b for the inconvenience)",
-          );
+            "This is a bug. Please report to game developer.<br><br>" +
+            "(Your funds have been set to $150b for the inconvenience)";
+          dialogBoxCreate(message);
+          EventLog.addItem("Error calculating your Corporations funds", {
+            type: LogTypes.Error,
+            category: LogCategories.GameError,
+            description: `${message}`,
+          });
           this.funds = 150e9;
         }
 
