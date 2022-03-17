@@ -190,7 +190,7 @@ export const HelpTexts: IMap<string[]> = {
   connect: [
     "Usage: connect [hostname]",
     " ",
-    "Connect to a remote server. The hostname or IP address of the remote server must be given as the argument ",
+    "Connect to a remote server. The hostname of the remote server must be given as the argument ",
     "to this command. Note that only servers that are immediately adjacent to the current server in the network can be connected to. To ",
     "see which servers can be connected to, use the 'scan' command.",
     " ",
