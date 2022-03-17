@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
@@ -18,6 +17,7 @@ import { calculateRamUsage, checkInfiniteLoop } from "../../Script/RamCalculatio
 import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import SearchIcon from "@mui/icons-material/Search";
 
 import { NetscriptFunctions } from "../../NetscriptFunctions";
 import { WorkerScript } from "../../Netscript/WorkerScript";
@@ -33,8 +33,8 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import SettingsIcon from "@mui/icons-material/Settings";
-import SyncIcon from '@mui/icons-material/Sync';
-import CloseIcon from '@mui/icons-material/Close';
+import SyncIcon from "@mui/icons-material/Sync";
+import CloseIcon from "@mui/icons-material/Close";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
@@ -43,7 +43,7 @@ import { PromptEvent } from "../../ui/React/PromptManager";
 import { Modal } from "../../ui/React/Modal";
 
 import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
-import { Tooltip } from "@mui/material";
+import { TextField, Tooltip } from "@mui/material";
 
 interface IProps {
   // Map of filename -> code
@@ -54,7 +54,7 @@ interface IProps {
   vim: boolean;
 }
 
-// TODO: try to removve global symbols
+// TODO: try to remove global symbols
 let symbolsLoaded = false;
 let symbols: string[] = [];
 export function SetupTextEditor(): void {
@@ -114,6 +114,8 @@ export function Root(props: IProps): React.ReactElement {
   const vimStatusRef = useRef<HTMLElement>(null);
   const [vimEditor, setVimEditor] = useState<any>(null);
   const [editor, setEditor] = useState<IStandaloneCodeEditor | null>(null);
+  const [filter, setFilter] = useState("");
+  const [searchExpanded, setSearchExpanded] = useState(false);
 
   const [ram, setRAM] = useState("RAM: ???");
   const [ramEntries, setRamEntries] = useState<string[][]>([["???", ""]]);
@@ -134,12 +136,11 @@ export function Root(props: IProps): React.ReactElement {
   // Prevent Crash if script is open on deleted server
   openScripts = openScripts.filter((script) => {
     return GetServer(script.hostname) !== null;
-  })
-  if (currentScript && (GetServer(currentScript.hostname) === null)) {
+  });
+  if (currentScript && GetServer(currentScript.hostname) === null) {
     currentScript = openScripts[0];
     if (currentScript === undefined) currentScript = null;
   }
-
 
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
@@ -206,6 +207,32 @@ export function Root(props: IProps): React.ReactElement {
             save();
             props.router.toTerminal();
           });
+
+          // Setup "go to next tab" and "go to previous tab". This is a little more involved
+          // since these aren't Ex commands (they run in normal mode, not after typing `:`)
+          MonacoVim.VimMode.Vim.defineAction("nextTabs", function (_cm: any, args: { repeat?: number }) {
+            const nTabs = args.repeat ?? 1;
+            // Go to the next tab (to the right). Wraps around when at the rightmost tab
+            const currIndex = currentTabIndex();
+            if (currIndex !== undefined) {
+              const nextIndex = (currIndex + nTabs) % openScripts.length;
+              onTabClick(nextIndex);
+            }
+          });
+          MonacoVim.VimMode.Vim.defineAction("prevTabs", function (_cm: any, args: { repeat?: number }) {
+            const nTabs = args.repeat ?? 1;
+            // Go to the previous tab (to the left). Wraps around when at the leftmost tab
+            const currIndex = currentTabIndex();
+            if (currIndex !== undefined) {
+              let nextIndex = currIndex - nTabs;
+              while (nextIndex < 0) {
+                nextIndex += openScripts.length;
+              }
+              onTabClick(nextIndex);
+            }
+          });
+          MonacoVim.VimMode.Vim.mapCommand("gt", "action", "nextTabs", {}, { context: "normal" });
+          MonacoVim.VimMode.Vim.mapCommand("gT", "action", "prevTabs", {}, { context: "normal" });
           editor.focus();
         });
       } catch { }
@@ -317,13 +344,18 @@ export function Root(props: IProps): React.ReactElement {
         .loader();
       // replaced the bare tokens with regexes surrounded by \b, e.g. \b{token}\b which matches a word-break on either side
       // this prevents the highlighter from highlighting pieces of variables that start with a reserved token name
-      l.language.tokenizer.root.unshift([new RegExp('\\bns\\b'), { token: "ns" }]);
-      for (const symbol of symbols) l.language.tokenizer.root.unshift([new RegExp(`\\b${symbol}\\b`), { token: "netscriptfunction" }]);
+      l.language.tokenizer.root.unshift([new RegExp("\\bns\\b"), { token: "ns" }]);
+      for (const symbol of symbols)
+        l.language.tokenizer.root.unshift([new RegExp(`\\b${symbol}\\b`), { token: "netscriptfunction" }]);
       const otherKeywords = ["let", "const", "var", "function"];
       const otherKeyvars = ["true", "false", "null", "undefined"];
-      otherKeywords.forEach((k) => l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeywords" }]));
-      otherKeyvars.forEach((k) => l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeyvars" }]));
-      l.language.tokenizer.root.unshift([new RegExp('\\bthis\\b'), { token: "this" }]);
+      otherKeywords.forEach((k) =>
+        l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeywords" }]),
+      );
+      otherKeyvars.forEach((k) =>
+        l.language.tokenizer.root.unshift([new RegExp(`\\b${k}\\b`), { token: "otherkeyvars" }]),
+      );
+      l.language.tokenizer.root.unshift([new RegExp("\\bthis\\b"), { token: "this" }]);
     })();
 
     const source = (libSource + "").replace(/export /g, "");
@@ -494,7 +526,7 @@ export function Root(props: IProps): React.ReactElement {
       const textFile = new TextFile(scriptToSave.fileName, scriptToSave.code);
       server.textFiles.push(textFile);
     } else {
-      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " + " or text file (.txt)");
+      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or a text file (.txt)");
       return;
     }
 
@@ -578,7 +610,7 @@ export function Root(props: IProps): React.ReactElement {
       const textFile = new TextFile(currentScript.fileName, currentScript.code);
       server.textFiles.push(textFile);
     } else {
-      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or " + " or text file (.txt)");
+      dialogBoxCreate("Invalid filename. Must be either a script (.script, .js, or .ns) or a text file (.txt)");
       return;
     }
 
@@ -605,16 +637,26 @@ export function Root(props: IProps): React.ReactElement {
     openScripts = items;
   }
 
-  function onTabClick(index: number): void {
+  function currentTabIndex(): number | undefined {
     if (currentScript !== null) {
-      // Save currentScript to openScripts
-      const curIndex = openScripts.findIndex(
+      return openScripts.findIndex(
         (script) =>
           currentScript !== null &&
           script.fileName === currentScript.fileName &&
           script.hostname === currentScript.hostname,
       );
-      openScripts[curIndex] = currentScript;
+    }
+
+    return undefined;
+  }
+
+  function onTabClick(index: number): void {
+    if (currentScript !== null) {
+      // Save currentScript to openScripts
+      const curIndex = currentTabIndex();
+      if (curIndex !== undefined) {
+        openScripts[curIndex] = currentScript;
+      }
     }
 
     currentScript = { ...openScripts[index] };
@@ -702,15 +744,17 @@ export function Root(props: IProps): React.ReactElement {
 
     if (openScript.code !== serverScriptCode) {
       PromptEvent.emit({
-        txt: "Do you want to overwrite the current editor content with the contents of " +
-          openScript.fileName + " on the server? This cannot be undone.",
+        txt:
+          "Do you want to overwrite the current editor content with the contents of " +
+          openScript.fileName +
+          " on the server? This cannot be undone.",
         resolve: (result: boolean | string) => {
           if (result) {
             // Save changes
             openScript.code = serverScriptCode;
 
             // Switch to target tab
-            onTabClick(index)
+            onTabClick(index);
 
             if (editorRef.current !== null && openScript !== null) {
               if (openScript.model === undefined || openScript.model.isDisposed()) {
@@ -746,6 +790,16 @@ export function Root(props: IProps): React.ReactElement {
     const serverScript = server.scripts.find((s) => s.filename === openScript.fileName);
     return serverScript?.code ?? null;
   }
+  function handleFilterChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setFilter(event.target.value);
+  }
+  function handleExpandSearch(): void {
+    setFilter("")
+    setSearchExpanded(!searchExpanded)
+  }
+  const filteredOpenScripts = Object.values(openScripts).filter(
+    (script) => (script.hostname.includes(filter) || script.fileName.includes(filter))
+  );
 
   // Toolbars are roughly 112px:
   //  8px body margin top
@@ -754,7 +808,11 @@ export function Root(props: IProps): React.ReactElement {
   //  44px bottom tool bar + 16px margin
   //  + vim bar 34px
   const editorHeight = dimensions.height - (130 + (options.vim ? 34 : 0));
-
+  const tabsMaxWidth = 1640;
+  const tabMargin = 5;
+  const tabMaxWidth = filteredOpenScripts.length ? tabsMaxWidth / filteredOpenScripts.length - tabMargin : 0;
+  const tabIconWidth = 25;
+  const tabTextWidth = tabMaxWidth - tabIconWidth * 2;
   return (
     <>
       <div style={{ display: currentScript !== null ? "block" : "none", height: "100%", width: "100%" }}>
@@ -762,7 +820,7 @@ export function Root(props: IProps): React.ReactElement {
           <Droppable droppableId="tabs" direction="horizontal">
             {(provided, snapshot) => (
               <Box
-                maxWidth="1640px"
+                maxWidth={`${tabsMaxWidth}px`}
                 display="flex"
                 flexDirection="row"
                 alignItems="center"
@@ -776,22 +834,39 @@ export function Root(props: IProps): React.ReactElement {
                   overflowX: "scroll",
                 }}
               >
-                {openScripts.map(({ fileName, hostname }, index) => {
+                <Tooltip title={"Search Open Scripts"}>
+                  {searchExpanded ?
+                    <TextField
+                      value={filter}
+                      onChange={handleFilterChange}
+                      autoFocus
+                      InputProps={{
+                        startAdornment: <SearchIcon />,
+                        spellCheck: false,
+                        endAdornment: <CloseIcon onClick={handleExpandSearch} />
+                      }}
+                    /> : <Button onClick={handleExpandSearch} ><SearchIcon /></Button>}
+                </Tooltip>
+                {filteredOpenScripts.map(({ fileName, hostname }, index) => {
                   const iconButtonStyle = {
-                    maxWidth: "25px",
-                    minWidth: "25px",
-                    minHeight: '38.5px',
-                    maxHeight: '38.5px',
-                    ...(currentScript?.fileName === openScripts[index].fileName ? {
-                      background: Settings.theme.button,
-                      borderColor: Settings.theme.button,
-                      color: Settings.theme.primary
-                    } : {
-                      background: Settings.theme.backgroundsecondary,
-                      borderColor: Settings.theme.backgroundsecondary,
-                      color: Settings.theme.secondary
-                    })
+                    maxWidth: `${tabIconWidth}px`,
+                    minWidth: `${tabIconWidth}px`,
+                    minHeight: "38.5px",
+                    maxHeight: "38.5px",
+                    ...(currentScript?.fileName === filteredOpenScripts[index].fileName
+                      ? {
+                        background: Settings.theme.button,
+                        borderColor: Settings.theme.button,
+                        color: Settings.theme.primary,
+                      }
+                      : {
+                        background: Settings.theme.backgroundsecondary,
+                        borderColor: Settings.theme.backgroundsecondary,
+                        color: Settings.theme.secondary,
+                      }),
                   };
+
+                  const scriptTabText = `${hostname}:~/${fileName} ${dirty(index)}`;
                   return (
                     <Draggable
                       key={fileName + hostname}
@@ -806,43 +881,53 @@ export function Root(props: IProps): React.ReactElement {
                           {...provided.dragHandleProps}
                           style={{
                             ...provided.draggableProps.style,
-                            marginRight: "5px",
+                            maxWidth: `${tabMaxWidth}px`,
+                            marginRight: `${tabMargin}px`,
                             flexShrink: 0,
-                            border: '1px solid ' + Settings.theme.well,
+                            border: "1px solid " + Settings.theme.well,
                           }}
                         >
-                          <Button
-                            onClick={() => onTabClick(index)}
-                            onMouseDown={e => {
-                              e.preventDefault();
-                              if (e.button === 1) onTabClose(index);
-                            }}
-                            style={{
-                              ...(currentScript?.fileName === openScripts[index].fileName ? {
-                                background: Settings.theme.button,
-                                borderColor: Settings.theme.button,
-                                color: Settings.theme.primary
-                              } : {
-                                background: Settings.theme.backgroundsecondary,
-                                borderColor: Settings.theme.backgroundsecondary,
-                                color: Settings.theme.secondary
-                              })
-                            }}
-                          >
-                            {hostname}:~/{fileName} {dirty(index)}
-                          </Button>
+                          <Tooltip title={scriptTabText}>
+                            <Button
+                              onClick={() => onTabClick(index)}
+                              onMouseDown={(e) => {
+                                e.preventDefault();
+                                if (e.button === 1) onTabClose(index);
+                              }}
+                              style={{
+                                maxWidth: `${tabTextWidth}px`,
+                                minHeight: '38.5px',
+                                overflow: "hidden",
+                                ...(currentScript?.fileName === filteredOpenScripts[index].fileName
+                                  ? {
+                                    background: Settings.theme.button,
+                                    borderColor: Settings.theme.button,
+                                    color: Settings.theme.primary,
+                                  }
+                                  : {
+                                    background: Settings.theme.backgroundsecondary,
+                                    borderColor: Settings.theme.backgroundsecondary,
+                                    color: Settings.theme.secondary,
+                                  }),
+                              }}
+                            >
+                              <span style={{ overflow: "hidden", direction: "rtl", textOverflow: "ellipsis" }}>
+                                {scriptTabText}
+                              </span>
+                            </Button>
+                          </Tooltip>
                           <Tooltip title="Overwrite editor content with saved file content">
-                            <Button onClick={() => onTabUpdate(index)} style={iconButtonStyle} >
-                              <SyncIcon fontSize='small' />
+                            <Button onClick={() => onTabUpdate(index)} style={iconButtonStyle}>
+                              <SyncIcon fontSize="small" />
                             </Button>
                           </Tooltip>
                           <Button onClick={() => onTabClose(index)} style={iconButtonStyle}>
-                            <CloseIcon fontSize='small' />
+                            <CloseIcon fontSize="small" />
                           </Button>
                         </div>
                       )}
                     </Draggable>
-                  )
+                  );
                 })}
                 {provided.placeholder}
               </Box>
@@ -872,14 +957,24 @@ export function Root(props: IProps): React.ReactElement {
         ></Box>
 
         <Box display="flex" flexDirection="row" sx={{ m: 1 }} alignItems="center">
-          <Button startIcon={<SettingsIcon />} onClick={() => setOptionsOpen(true)} sx={{ mr: 1 }}>Options</Button>
+          <Button startIcon={<SettingsIcon />} onClick={() => setOptionsOpen(true)} sx={{ mr: 1 }}>
+            Options
+          </Button>
           <Button onClick={beautify}>Beautify</Button>
-          <Button color={updatingRam ? "secondary" : "primary"} sx={{ mx: 1 }} onClick={() => { setRamInfoOpen(true) }}>
+          <Button
+            color={updatingRam ? "secondary" : "primary"}
+            sx={{ mx: 1 }}
+            onClick={() => {
+              setRamInfoOpen(true);
+            }}
+          >
             {ram}
           </Button>
           <Button onClick={save}>Save (Ctrl/Cmd + s)</Button>
-          <Button onClick={props.router.toTerminal}>Close (Ctrl/Cmd + b)</Button>
-          <Typography sx={{ mx: 1 }}>
+          <Button sx={{ mx: 1 }} onClick={props.router.toTerminal}>
+            Terminal (Ctrl/Cmd + b)
+          </Button>
+          <Typography>
             {" "}
             Documentation:{" "}
             <Link target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
@@ -917,7 +1012,9 @@ export function Root(props: IProps): React.ReactElement {
                 <React.Fragment key={n + r}>
                   <TableRow>
                     <TableCell sx={{ color: Settings.theme.primary }}>{n}</TableCell>
-                    <TableCell align="right" sx={{ color: Settings.theme.primary }}>{r}</TableCell>
+                    <TableCell align="right" sx={{ color: Settings.theme.primary }}>
+                      {r}
+                    </TableCell>
                   </TableRow>
                 </React.Fragment>
               ))}

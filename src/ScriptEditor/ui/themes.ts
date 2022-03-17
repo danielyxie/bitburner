@@ -260,7 +260,7 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         token: "ns",
         foreground: "FFB86C",
         fontStyle: "italic",
-        
+
       },
       {
         token: "netscriptfunction",

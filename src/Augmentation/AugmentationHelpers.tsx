@@ -148,7 +148,7 @@ function initAugmentations(): void {
     name: AugmentationNames.HemoRecirculator,
     moneyCost: 4.5e7,
     repCost: 1e4,
-    info: "A heart implant that greatly increases the body's ability to effectively use and pump " + "blood.",
+    info: "A heart implant that greatly increases the body's ability to effectively use and pump blood.",
     strength_mult: 1.08,
     defense_mult: 1.08,
     agility_mult: 1.08,
@@ -430,7 +430,7 @@ function initAugmentations(): void {
     repCost: 1.125e6,
     moneyCost: 4.25e9,
     info:
-      "Graphene is grafted and fused into the skeletal structure, " + "enhancing bone density and tensile strength.",
+      "Graphene is grafted and fused into the skeletal structure, enhancing bone density and tensile strength.",
     strength_mult: 1.7,
     defense_mult: 1.7,
   });
@@ -1085,7 +1085,7 @@ function initAugmentations(): void {
     name: AugmentationNames.FocusWire,
     repCost: 7.5e4,
     moneyCost: 9e8,
-    info: "A cranial implant that stops procrastination by blocking specific neural pathways " + "in the brain.",
+    info: "A cranial implant that stops procrastination by blocking specific neural pathways in the brain.",
     hacking_exp_mult: 1.05,
     strength_exp_mult: 1.05,
     defense_exp_mult: 1.05,
@@ -1486,7 +1486,7 @@ function initAugmentations(): void {
     name: AugmentationNames.SmartSonar,
     repCost: 2.25e4,
     moneyCost: 7.5e7,
-    info: "A cochlear implant that helps the player detect and locate enemies " + "using sound propagation.",
+    info: "A cochlear implant that helps the player detect and locate enemies using sound propagation.",
     dexterity_mult: 1.1,
     dexterity_exp_mult: 1.15,
     crime_money_mult: 1.25,
@@ -1703,7 +1703,7 @@ function initAugmentations(): void {
       "The left arm of a legendary BitRunner who ascended beyond this world. " +
       "It projects a light blue energy shield that protects the exposed inner parts. " +
       "Even though it contains no weapons, the advanced tungsten titanium " +
-      "alloy increases the users strength to unbelievable levels. The augmentation " +
+      "alloy increases the user's strength to unbelievable levels. The augmentation " +
       "gets more powerful over time for seemingly no reason.",
     strength_mult: 2.7,
   });
@@ -2015,7 +2015,7 @@ function initAugmentations(): void {
     repCost: 6.25e4,
     moneyCost: 2.75e8,
     info:
-      "Cybernetic arms created from plasteel and carbon fibers that completely replace " + "the user's organic arms.",
+      "Cybernetic arms created from plasteel and carbon fibers that completely replace the user's organic arms.",
     strength_mult: 1.3,
     dexterity_mult: 1.3,
   });
@@ -2598,12 +2598,7 @@ function augmentationExists(name: string): boolean {
 
 export function isRepeatableAug(aug: Augmentation): boolean {
   const augName = aug instanceof Augmentation ? aug.name : aug;
-
-  if (augName === AugmentationNames.NeuroFluxGovernor) {
-    return true;
-  }
-
-  return false;
+  return augName === AugmentationNames.NeuroFluxGovernor;
 }
 
 export { installAugmentations, initAugmentations, applyAugmentation, augmentationExists };

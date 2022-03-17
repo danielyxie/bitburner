@@ -43,6 +43,8 @@ export function PortalModal(props: IProps): React.ReactElement {
       <br />
       <br />
       <Button
+        aria-label={`enter-bitnode-${bitNode.number.toString()}`}
+        autoFocus={true}
         onClick={() => {
           props.enter(router, props.flume, props.destroyedBitNode, props.n);
           props.onClose();

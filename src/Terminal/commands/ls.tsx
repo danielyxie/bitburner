@@ -5,7 +5,7 @@ import { toString } from "lodash";
 import React from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../../Terminal/DirectoryHelpers";
+import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../DirectoryHelpers";
 import { IRouter } from "../../ui/Router";
 import { ITerminal } from "../ITerminal";
 
@@ -167,7 +167,7 @@ export function ls(
 
   function postSegments(segments: string[], style?: any, linked?: boolean): void {
     const maxLength = Math.max(...segments.map((s) => s.length)) + 1;
-    const filesPerRow = Math.floor(80 / maxLength);
+    const filesPerRow = Math.ceil(80 / maxLength);
     for (let i = 0; i < segments.length; i++) {
       let row = "";
       for (let col = 0; col < filesPerRow; col++) {
@@ -179,13 +179,11 @@ export function ls(
       i--;
       if (!style) {
         terminal.print(row);
-      } else {
-        if (linked) {
+      } else if (linked) {
           terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
         } else {
           terminal.printRaw(<span style={style}>{row}</span>);
         }
-      }
     }
   }
 

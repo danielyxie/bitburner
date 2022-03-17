@@ -1,5 +1,5 @@
 import * as React from "react";
-import { numeralWrapper } from "../../ui/numeralFormat";
+import { numeralWrapper } from "../numeralFormat";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";

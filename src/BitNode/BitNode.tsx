@@ -202,8 +202,8 @@ BitNodes["BitNode5"] = new BitNode(
       Destroying this BitNode will give you Source-File 5, or if you already have this Source-File it will upgrade its
       level up to a maximum of 3. This Source-File grants you a special new stat called Intelligence. Intelligence is
       unique because it is permanent and persistent (it never gets reset back to 1). However gaining Intelligence
-      experience is much slower than other stats, and it is also hidden (you won't know when you gain experience and how
-      much). Higher Intelligence levels will boost your production for many actions in the game. <br />
+      experience is much slower than other stats. Higher Intelligence levels will boost your production for many actions
+      in the game. <br />
       <br />
       In addition, this Source-File will unlock the getBitNodeMultipliers() Netscript function and let you start with
       Formulas.exe, and will also raise all of your hacking-related multipliers by:
@@ -670,7 +670,6 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.InfiltrationMoney = 0.75;
       BitNodeMultipliers.CorporationValuation = 0.2;
       BitNodeMultipliers.HacknetNodeMoney = 0.2;
-      BitNodeMultipliers.FactionPassiveRepGain = 0;
       BitNodeMultipliers.HackExpGain = 0.25;
       BitNodeMultipliers.DaedalusAugsRequirement = 1.166; // Results in 35 Augs needed
       BitNodeMultipliers.PurchasedServerSoftcap = 2;
@@ -694,7 +693,6 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.InfiltrationMoney = 0.75;
       BitNodeMultipliers.CorporationValuation = 0.2;
       BitNodeMultipliers.HacknetNodeMoney = 0.2;
-      BitNodeMultipliers.FactionPassiveRepGain = 0;
       BitNodeMultipliers.HackExpGain = 0.25;
       BitNodeMultipliers.FourSigmaMarketDataCost = 2;
       BitNodeMultipliers.FourSigmaMarketDataApiCost = 2;
