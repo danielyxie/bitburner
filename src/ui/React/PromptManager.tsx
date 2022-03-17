@@ -43,8 +43,8 @@ export function PromptManager(): React.ReactElement {
   };
 
   let PromptContent = PromptMenuBoolean;
-  if (prompt?.options?.type) PromptContent = types[prompt?.options?.type];
-
+  if (prompt?.options?.type && ["text", "select"].includes(prompt?.options?.type))
+    PromptContent = types[prompt?.options?.type];
   const resolve = (value: boolean | string): void => {
     prompt.resolve(value);
     setPrompt(null);
