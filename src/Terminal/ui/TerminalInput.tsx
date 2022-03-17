@@ -6,7 +6,6 @@ import createStyles from "@mui/styles/createStyles";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 
-import { KEY } from "../../utils/helpers/keyCodes";
 import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -180,13 +179,13 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   useEffect(() => {
     function keyDown(this: Document, event: KeyboardEvent): void {
       if (terminal.contractOpen) return;
-      if (terminal.action !== null && event.keyCode === KEY.C && event.ctrlKey) {
+      if (terminal.action !== null && event.key === "c" && event.ctrlKey) {
         terminal.finishAction(router, player, true);
         return;
       }
       const ref = terminalInput.current;
       if (event.ctrlKey || event.metaKey) return;
-      if (event.keyCode === KEY.C && (event.ctrlKey || event.metaKey)) return; // trying to copy
+      if (event.key === "c" && (event.ctrlKey || event.metaKey)) return; // trying to copy
 
       if (ref) ref.focus();
     }
@@ -196,7 +195,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
 
   async function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): Promise<void> {
     // Run command.
-    if (event.keyCode === KEY.ENTER && value !== "") {
+    if (event.key === "Enter" && value !== "") {
       event.preventDefault();
       terminal.print(`[${player.getCurrentServer().hostname} ~${terminal.cwd()}]> ${value}`);
       terminal.executeCommands(router, player, value);
@@ -205,7 +204,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     }
 
     // Autocomplete
-    if (event.keyCode === KEY.TAB && value !== "") {
+    if (event.key === "Tab" && value !== "") {
       event.preventDefault();
 
       let copy = value;
@@ -256,13 +255,13 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     }
 
     // Clear screen.
-    if (event.keyCode === KEY.L && event.ctrlKey) {
+    if (event.key === "l" && event.ctrlKey) {
       event.preventDefault();
       terminal.clear();
     }
 
     // Select previous command.
-    if (event.keyCode === KEY.UPARROW || (Settings.EnableBashHotkeys && event.keyCode === KEY.P && event.ctrlKey)) {
+    if (event.key === "ArrowUp" || (Settings.EnableBashHotkeys && event.key === "p" && event.ctrlKey)) {
       if (Settings.EnableBashHotkeys) {
         event.preventDefault();
       }
@@ -290,7 +289,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     }
 
     // Select next command
-    if (event.keyCode === KEY.DOWNARROW || (Settings.EnableBashHotkeys && event.keyCode === KEY.M && event.ctrlKey)) {
+    if (event.key === "ArrowDown" || (Settings.EnableBashHotkeys && event.key === "m" && event.ctrlKey)) {
       if (Settings.EnableBashHotkeys) {
         event.preventDefault();
       }
@@ -317,57 +316,57 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
 
     // Extra Bash Emulation Hotkeys, must be enabled through options
     if (Settings.EnableBashHotkeys) {
-      if (event.keyCode === KEY.A && event.ctrlKey) {
+      if (event.key === "a" && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("home");
       }
 
-      if (event.keyCode === KEY.E && event.ctrlKey) {
+      if (event.key === "e" && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("end");
       }
 
-      if (event.keyCode === KEY.B && event.ctrlKey) {
+      if (event.key === "b" && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("prevchar");
       }
 
-      if (event.keyCode === KEY.B && event.altKey) {
+      if (event.key === "b" && event.altKey) {
         event.preventDefault();
         moveTextCursor("prevword");
       }
 
-      if (event.keyCode === KEY.F && event.ctrlKey) {
+      if (event.key === "f" && event.ctrlKey) {
         event.preventDefault();
         moveTextCursor("nextchar");
       }
 
-      if (event.keyCode === KEY.F && event.altKey) {
+      if (event.key === "f" && event.altKey) {
         event.preventDefault();
         moveTextCursor("nextword");
       }
 
-      if ((event.keyCode === KEY.H || event.keyCode === KEY.D) && event.ctrlKey) {
+      if ((event.key === "h" || event.key === "d") && event.ctrlKey) {
         modifyInput("backspace");
         event.preventDefault();
       }
 
-      if (event.keyCode === KEY.W && event.ctrlKey) {
+      if (event.key === "w" && event.ctrlKey) {
         event.preventDefault();
         modifyInput("deletewordbefore");
       }
 
-      if (event.keyCode === KEY.D && event.altKey) {
+      if (event.key === "d" && event.altKey) {
         event.preventDefault();
         modifyInput("deletewordafter");
       }
 
-      if (event.keyCode === KEY.U && event.ctrlKey) {
+      if (event.key === "u" && event.ctrlKey) {
         event.preventDefault();
         modifyInput("clearbefore");
       }
 
-      if (event.keyCode === KEY.K && event.ctrlKey) {
+      if (event.key === "k" && event.ctrlKey) {
         event.preventDefault();
         modifyInput("clearafter");
       }

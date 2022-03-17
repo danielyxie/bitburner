@@ -57,7 +57,7 @@ export function ThrowPartyModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) throwParty();
+    if (event.key === "Enter") throwParty();
   }
 
   return (

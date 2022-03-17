@@ -45,7 +45,7 @@ export function GoPublicModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) goPublic();
+    if (event.key === "Enter") goPublic();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {

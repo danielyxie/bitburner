@@ -68,7 +68,7 @@ function BulkPurchaseSection(props: IBPProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) bulkPurchase();
+    if (event.key === "Enter") bulkPurchase();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -123,7 +123,7 @@ export function PurchaseMaterialModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) purchaseMaterial();
+    if (event.key === "Enter") purchaseMaterial();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {

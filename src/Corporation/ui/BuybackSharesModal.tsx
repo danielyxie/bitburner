@@ -69,7 +69,7 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) buy();
+    if (event.key === "Enter") buy();
   }
 
   return (

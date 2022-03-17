@@ -37,7 +37,7 @@ export function CreateGangModal(props: IProps): React.ReactElement {
   }
 
   function onKeyUp(event: React.KeyboardEvent): void {
-    if (event.keyCode === 13) createGang();
+    if (event.key === "Enter") createGang();
   }
 
   return (

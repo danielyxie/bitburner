@@ -29,7 +29,7 @@ export function PurchaseServerModal(props: IProps): React.ReactElement {
   }
 
   function onKeyUp(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) tryToPurchaseServer();
+    if (event.key === "Enter") tryToPurchaseServer();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {

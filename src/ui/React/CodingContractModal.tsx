@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { KEY } from "../../utils/helpers/keyCodes";
 
 import { CodingContract, CodingContractTypes } from "../../CodingContracts";
 import { CopyableText } from "./CopyableText";
@@ -37,7 +36,7 @@ export function CodingContractModal(): React.ReactElement {
     // whatever ...
     const value = (event.target as any).value;
 
-    if (event.keyCode === KEY.ENTER && value !== "") {
+    if (event.key === "Enter" && value !== "") {
       event.preventDefault();
       props.onAttempt(answer);
       setAnswer("");

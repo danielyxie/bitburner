@@ -68,7 +68,7 @@ export function SellSharesModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) sell();
+    if (event.key === "Enter") sell();
   }
 
   return (

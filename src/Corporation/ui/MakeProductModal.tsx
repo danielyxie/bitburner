@@ -165,7 +165,7 @@ export function MakeProductModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) makeProduct();
+    if (event.key === "Enter") makeProduct();
   }
 
   return (

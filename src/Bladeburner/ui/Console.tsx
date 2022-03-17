@@ -76,7 +76,7 @@ export function Console(props: IProps): React.ReactElement {
   }, []);
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) {
+    if (event.key === "Enter") {
       event.preventDefault();
       if (command.length > 0) {
         props.bladeburner.postToConsole("> " + command);
@@ -88,7 +88,7 @@ export function Console(props: IProps): React.ReactElement {
 
     const consoleHistory = props.bladeburner.consoleHistory;
 
-    if (event.keyCode === 38) {
+    if (event.key === "s") {
       // up
       let i = consoleHistoryIndex;
       const len = consoleHistory.length;
@@ -108,7 +108,7 @@ export function Console(props: IProps): React.ReactElement {
       setCommand(prevCommand);
     }
 
-    if (event.keyCode === 40) {
+    if (event.key === "ArrowDown") {
       const i = consoleHistoryIndex;
       const len = consoleHistory.length;
 

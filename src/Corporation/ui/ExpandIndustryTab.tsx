@@ -53,7 +53,7 @@ export function ExpandIndustryTab(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) newIndustry();
+    if (event.key === "Enter") newIndustry();
   }
 
   function onIndustryChange(event: SelectChangeEvent<string>): void {

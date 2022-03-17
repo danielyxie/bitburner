@@ -93,7 +93,7 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) issueNewShares();
+    if (event.key === "Enter") issueNewShares();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {

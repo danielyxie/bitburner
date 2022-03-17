@@ -25,7 +25,7 @@ export function LimitProductProductionModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) limitProductProduction();
+    if (event.key === "Enter") limitProductProduction();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {

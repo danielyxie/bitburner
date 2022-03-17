@@ -32,7 +32,7 @@ export function IssueDividendsModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) issueDividends();
+    if (event.key === "Enter") issueDividends();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {

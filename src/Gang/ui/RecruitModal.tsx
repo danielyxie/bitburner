@@ -34,7 +34,7 @@ export function RecruitModal(props: IRecruitPopupProps): React.ReactElement {
   }
 
   function onKeyUp(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) recruit();
+    if (event.key === "Enter") recruit();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
