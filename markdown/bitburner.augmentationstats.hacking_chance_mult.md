@@ -4,7 +4,7 @@
 
 ## AugmentationStats.hacking\_chance\_mult property
 
-Multipler to chance of successfully performing a hack
+Multiplier to chance of successfully performing a hack
 
 <b>Signature:</b>
 

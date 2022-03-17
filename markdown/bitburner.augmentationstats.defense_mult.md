@@ -4,7 +4,7 @@
 
 ## AugmentationStats.defense\_mult property
 
-Multipler to defense skill
+Multiplier to defense skill
 
 <b>Signature:</b>
 
