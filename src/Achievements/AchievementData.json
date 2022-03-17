@@ -481,7 +481,16 @@
       "ID": "DEVMENU",
       "Name": "Exploit: you're not meant to access this",
       "Description": "Open the dev menu."
+    },
+    "RAINBOW": {
+      "ID": "RAINBOW",
+      "Name": "Exploit: rainbow",
+      "Description": "Make good use of the rainbow."
+    },
+    "TRUE_RECURSION": {
+      "ID": "TRUE_RECURSION",
+      "Name": "Exploit: true recursion",
+      "Description": "Beat BN1 in megabyteburner 2000."
     }
   }
 }
-

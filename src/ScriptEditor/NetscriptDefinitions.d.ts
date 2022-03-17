@@ -94,6 +94,7 @@ interface Player {
   factions: string[];
   tor: boolean;
   hasCorporation: boolean;
+  inBladeburner: boolean;
 }
 
 /**
@@ -2784,7 +2785,7 @@ export interface Bladeburner {
    *
    * Note that this is meant to be used for Contracts and Operations.
    * This function will return ‘Infinity’ for actions such as Training and Field Analysis.
-   * This function will return 1 for BlackOps not yet completed regardless of wether
+   * This function will return 1 for BlackOps not yet completed regardless of whether
    * the player has the required rank to attempt the mission or not.
    *
    * @param type - Type of action.
@@ -2824,7 +2825,7 @@ export interface Bladeburner {
   getActionCurrentLevel(type: string, name: string): number;
 
   /**
-   * Get wether an action is set to autolevel.
+   * Get whether an action is set to autolevel.
    * @remarks
    * RAM cost: 4 GB
    *
@@ -5983,19 +5984,25 @@ export interface NS extends Singularity {
   tFormat(milliseconds: number, milliPrecision?: boolean): string;
 
   /**
-   * Prompt the player with a Yes/No modal.
+   * Prompt the player with an input modal.
    * @remarks
    * RAM cost: 0 GB
    *
-   * Prompts the player with a dialog box with two options: “Yes” and “No”.
-   * This function will return true if the player click “Yes” and false if
-   * the player clicks “No”. The script’s execution is halted until the player
-   * selects one of the options.
+   * Prompts the player with a dialog box. If `options.type` is undefined or "boolean",
+   * the player is shown "Yes" and "No" prompts, which return true and false respectively.
+   * Passing a type of "text" will give the player a text field and a value of "select"
+   * will show a drop-down field. Choosing type "select" will require an array or object
+   * to be passed via the `options.choices` property.
+   * The script’s execution is halted until the player selects one of the options.
    *
    * @param txt - Text to appear in the prompt dialog box.
-   * @returns True if the player click “Yes” and false if the player clicks “No”.
+   * @param options - Options to modify the prompt the player is shown.
+   * @returns True if the player click “Yes”; false if the player clicks “No”; or the value entered by the player.
    */
-  prompt(txt: string): Promise<boolean>;
+  prompt(
+    txt: string,
+    options?: { type?: "boolean" | "text" | "select" | undefined; choices?: string[] },
+  ): Promise<boolean | string>;
 
   /**
    * Open up a message box.
@@ -6385,12 +6392,12 @@ export interface WarehouseAPI {
    */
   buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
-  * Set material to bulk buy
-  * @param divisionName - Name of the division
-  * @param cityName - Name of the city
-  * @param materialName - Name of the material
-  * @param amt - Amount of material to buy
-  */
+   * Set material to bulk buy
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param amt - Amount of material to buy
+   */
   bulkPurchase(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
    * Get warehouse data

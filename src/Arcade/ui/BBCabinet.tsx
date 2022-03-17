@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
+import { use } from "../../ui/Context";
+import { Exploit } from "../../Exploits/Exploit";
 
 const metaBB = "https://bitburner-official.github.io/bitburner-legacy/";
 
@@ -10,6 +12,14 @@ const style = {
 } as any;
 
 export function BBCabinetRoot(): React.ReactElement {
+  const player = use.Player();
+  useEffect(() => {
+    window.addEventListener("message", function (this: Window, ev: MessageEvent<boolean>) {
+      if (ev.isTrusted && ev.origin == "https://bitburner-official.github.io" && ev.data) {
+        player.giveExploit(Exploit.TrueRecursion);
+      }
+    });
+  });
   // prettier-ignore
   const joystick =
     <>
