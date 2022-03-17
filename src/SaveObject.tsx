@@ -24,6 +24,7 @@ import { LocationName } from "./Locations/data/LocationNames";
 import { SxProps } from "@mui/system";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { pushGameSaved } from "./Electron";
+import { EventLogObject as EventLog } from "./EventLog/EventLog";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -72,6 +73,8 @@ class BitburnerSaveObject {
   AllGangsSave = "";
   LastExportBonus = "";
   StaneksGiftSave = "";
+  EventLogSave = "";
+  SaveTimestamp = "";
 
   getSaveString(excludeRunningScripts = false): string {
     this.PlayerSave = JSON.stringify(Player);
@@ -86,6 +89,8 @@ class BitburnerSaveObject {
     this.VersionSave = JSON.stringify(CONSTANTS.VersionNumber);
     this.LastExportBonus = JSON.stringify(ExportBonus.LastExportBonus);
     this.StaneksGiftSave = JSON.stringify(staneksGift);
+    this.EventLogSave = JSON.stringify(EventLog);
+    this.SaveTimestamp = new Date().getTime().toString();
 
     if (Player.inGang()) {
       this.AllGangsSave = JSON.stringify(AllGangs);
@@ -473,6 +478,14 @@ function loadGame(saveString: string): boolean {
       loadAllGangs(saveObj.AllGangsSave);
     } catch (e) {
       console.error("ERROR: Failed to parse AllGangsSave: " + e);
+    }
+  }
+  if (saveObj.hasOwnProperty("EventLogSave")) {
+    try {
+      EventLog.load(saveObj.EventLogSave);
+    } catch (e) {
+      console.error("ERROR: Failed to parse Event Logs. Re-initing default values");
+      EventLog.init();
     }
   }
   if (saveObj.hasOwnProperty("VersionSave")) {

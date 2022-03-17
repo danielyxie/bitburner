@@ -39,6 +39,7 @@ export enum Page {
   Achievements,
   ThemeBrowser,
   ImportSave,
+  EventLog,
 }
 
 export interface ScriptEditorRouteOptions {
@@ -88,4 +89,5 @@ export interface IRouter {
   toAchievements(): void;
   toThemeBrowser(): void;
   toImportSave(base64Save: string, automatic?: boolean): void;
+  toEventLog(): void;
 }

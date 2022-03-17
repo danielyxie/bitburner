@@ -85,6 +85,11 @@ interface IDefaultSettings {
   MaxTerminalCapacity: number;
 
   /**
+   * Limit the number of event log entries kept in memory
+   */
+  MaxEventLogCapacity: number;
+
+  /**
    * Save the game when you save any file.
    */
   SaveGameOnFileSave: boolean;
@@ -206,6 +211,7 @@ export const defaultSettings: IDefaultSettings = {
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
   MaxTerminalCapacity: 500,
+  MaxEventLogCapacity: 100,
   SaveGameOnFileSave: true,
   SuppressBuyAugmentationConfirmation: false,
   SuppressFactionInvites: false,
@@ -246,6 +252,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   MaxLogCapacity: defaultSettings.MaxLogCapacity,
   MaxPortCapacity: defaultSettings.MaxPortCapacity,
   MaxTerminalCapacity: defaultSettings.MaxTerminalCapacity,
+  MaxEventLogCapacity: defaultSettings.MaxEventLogCapacity,
   OwnedAugmentationsOrder: OwnedAugmentationsOrderSetting.AcquirementTime,
   PurchaseAugmentationsOrder: PurchaseAugmentationsOrderSetting.Default,
   SaveGameOnFileSave: defaultSettings.SaveGameOnFileSave,

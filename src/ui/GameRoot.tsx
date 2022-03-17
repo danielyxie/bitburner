@@ -87,6 +87,7 @@ import { BypassWrapper } from "./React/BypassWrapper";
 import _wrap from "lodash/wrap";
 import _functions from "lodash/functions";
 import { Apr1 } from "./Apr1";
+import { EventLogRoot } from "../EventLog/EventLogRoot";
 
 const htmlLocation = location;
 
@@ -150,6 +151,7 @@ export let Router: IRouter = {
   toAchievements: uninitialized,
   toThemeBrowser: uninitialized,
   toImportSave: uninitialized,
+  toEventLog: uninitialized,
 };
 
 function determineStartPage(player: IPlayer): Page {
@@ -282,6 +284,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       setImportString(base64save);
       setImportAutomatic(automatic);
       setPage(Page.ImportSave);
+    },
+    toEventLog: () => {
+      setPage(Page.EventLog);
     },
   };
 
@@ -502,6 +507,9 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     }
     case Page.ThemeBrowser: {
       mainPage = <ThemeBrowser router={Router} />;
+    }
+    case Page.EventLog: {
+      mainPage = <EventLogRoot />;
       break;
     }
     case Page.ImportSave: {

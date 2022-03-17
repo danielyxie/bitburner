@@ -39,6 +39,7 @@ import HelpIcon from "@mui/icons-material/Help"; // Tutorial
 import SettingsIcon from "@mui/icons-material/Settings"; // options
 import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard"; // Dev
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents"; // Achievements
+import FeedIcon from "@mui/icons-material/Feed"; // Logs
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import PublicIcon from "@mui/icons-material/Public";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
@@ -55,6 +56,7 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "../../Faction/ui/FactionsRoot";
+import { EventLog } from "../../EventLog/EventLog";
 import { hash } from "../../hash/hash";
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -164,6 +166,8 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   const canBladeburner = !!(props.player.bladeburner as any);
   const canStaneksGift = props.player.augmentations.some((aug) => aug.name === AugmentationNames.StaneksGift1);
 
+  const unseenEvents = EventLog.getNumberUnseen();
+
   function clickTerminal(): void {
     props.router.toTerminal();
     if (flashTerminal) iTutorialNextStep();
@@ -255,6 +259,10 @@ export function SidebarRoot(props: IProps): React.ReactElement {
 
   function clickAchievements(): void {
     props.router.toAchievements();
+  }
+
+  function clickLogs(): void {
+    props.router.toEventLog();
   }
 
   useEffect(() => {
@@ -799,6 +807,26 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               <Typography color={flashTutorial ? "error" : props.page !== Page.Tutorial ? "secondary" : "primary"}>
                 Tutorial
               </Typography>
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            button
+            key={"Logs"}
+            className={clsx({
+              [classes.active]: props.page === Page.Achievements,
+            })}
+            onClick={clickLogs}
+          >
+            <ListItemIcon>
+              <Badge
+                badgeContent={unseenEvents !== 0 ? unseenEvents : undefined}
+                color={props.page !== Page.EventLog ? "primary" : "secondary"}
+              >
+                <FeedIcon color={props.page !== Page.EventLog ? "secondary" : "primary"} />
+              </Badge>
+            </ListItemIcon>
+            <ListItemText>
+              <Typography color={props.page !== Page.EventLog ? "secondary" : "primary"}>Event Log</Typography>
             </ListItemText>
           </ListItem>
           <ListItem

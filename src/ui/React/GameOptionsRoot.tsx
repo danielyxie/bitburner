@@ -199,6 +199,16 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                   }
                 />
                 <OptionSlider
+                  min={25}
+                  max={500}
+                  step={25}
+                  marks
+                  text="Events capacity"
+                  value={Settings.MaxEventLogCapacity}
+                  onValueChanged={(newValue) => (Settings.MaxEventLogCapacity = newValue)}
+                  tooltip={<>The maximum number of entries to save in the event log.</>}
+                />
+                <OptionSlider
                   min={0}
                   max={600}
                   step={30}
