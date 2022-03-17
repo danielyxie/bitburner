@@ -20,9 +20,9 @@ export function ls(
   let flags;
   try {
     flags = libarg({
+      '-l': Boolean,
       '--grep': String,
       '-g': '--grep',
-      '-l': Boolean,
     },
       { argv: args }
     )
@@ -35,7 +35,7 @@ export function ls(
 
   const numArgs = args.length;
   function incorrectUsage(): void {
-    terminal.error("Incorrect usage of ls command. Usage: ls [dir] [-g, --grep pattern]");
+    terminal.error("Incorrect usage of ls command. Usage: ls [dir] [-l] [-g, --grep pattern]");
   }
 
   if (numArgs > 4) {
