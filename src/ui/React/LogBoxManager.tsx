@@ -40,9 +40,7 @@ export function LogBoxManager(): React.ReactElement {
     () =>
       LogBoxEvents.subscribe((script: RunningScript) => {
         const id = script.server + "-" + script.filename + script.args.map((x: any): string => `${x}`).join("-");
-        const existingLog = logs.find((l) => l.id === id)
-        if (existingLog)
-          close(existingLog.id)
+        if (logs.find((l) => l.id === id)) return;
         logs.push({
           id: id,
           script: script,
@@ -125,6 +123,8 @@ function LogWindow(props: IProps): React.ReactElement {
   const classes = useStyles();
   const container = useRef<HTMLDivElement>(null);
   const setRerender = useState(false)[1];
+  const [poll, setPoll] = useState(false);
+
   const [minimized, setMinimized] = useState(false);
   function rerender(): void {
     setRerender((old) => !old);
@@ -139,6 +139,18 @@ function LogWindow(props: IProps): React.ReactElement {
   function kill(): void {
     killWorkerScript(script, script.server, true);
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      const server = GetServer(script.server);
+      if (server === null) return;
+      const s = findRunningScript(script.filename, script.args, server);
+      if (s !== null) {
+        setScript(s);
+      }
+      setPoll(!poll)
+    }, 1000)
+  }, [poll])
 
   function run(): void {
     const server = GetServer(script.server);
@@ -200,7 +212,7 @@ function LogWindow(props: IProps): React.ReactElement {
     const node = draggableRef?.current;
     if (!node) return;
 
-    if(!isOnScreen(node)) {
+    if (!isOnScreen(node)) {
       resetPosition();
     }
   }, 100);
@@ -209,25 +221,25 @@ function LogWindow(props: IProps): React.ReactElement {
     const bounds = node.getBoundingClientRect();
 
     return !(bounds.right < 0 ||
-            bounds.bottom < 0 ||
-            bounds.left > innerWidth ||
-            bounds.top > outerWidth);
+      bounds.bottom < 0 ||
+      bounds.left > innerWidth ||
+      bounds.top > outerWidth);
   }
 
   const resetPosition = (): void => {
     const node = rootRef?.current;
     if (!node) return;
-    const state = node.state as {x: number; y: number};
+    const state = node.state as { x: number; y: number };
     state.x = 0;
     state.y = 0;
     node.setState(state);
   }
 
   const boundToBody = (e: any): void | false => {
-    if(e.clientX < 0 ||
-       e.clientY < 0 ||
-       e.clientX > innerWidth ||
-       e.clientY > innerHeight) return false;
+    if (e.clientX < 0 ||
+      e.clientY < 0 ||
+      e.clientX > innerWidth ||
+      e.clientY > innerHeight) return false;
   }
 
   return (
