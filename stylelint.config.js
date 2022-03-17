@@ -1,4 +1,3 @@
-/* eslint-disable spaced-comment */
 module.exports = {
   plugins: [
     "stylelint-order" /*,

@@ -363,11 +363,11 @@ export class PlayerObject implements IPlayer {
     this.companyName = ""; // Name of Company. Must match a key value in Companies ma;
 
     // Servers
-    this.currentServer = ""; //IP address of Server currently being accessed through termina;
-    this.purchasedServers = []; //IP Addresses of purchased server;
+    this.currentServer = ""; //hostname of Server currently being accessed through termina;
+    this.purchasedServers = []; //hostnames of purchased server;
 
     // Hacknet Nodes/Servers
-    this.hacknetNodes = []; // Note= For Hacknet Servers, this array holds the IP addresses of the server;
+    this.hacknetNodes = []; // Note= For Hacknet Servers, this array holds the hostnames of the server;
     this.hashManager = new HashManager();
 
     //Factions
@@ -483,11 +483,11 @@ export class PlayerObject implements IPlayer {
     // Let's get a hash of some semi-random stuff so we have something unique.
     this.identifier = cyrb53(
       "I-" +
-        new Date().getTime() +
-        navigator.userAgent +
-        window.innerWidth +
-        window.innerHeight +
-        getRandomInt(100, 999),
+      new Date().getTime() +
+      navigator.userAgent +
+      window.innerWidth +
+      window.innerHeight +
+      getRandomInt(100, 999),
     );
 
     this.init = generalMethods.init;

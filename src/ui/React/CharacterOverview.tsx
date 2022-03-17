@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Theme, useTheme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
-import { numeralWrapper } from "../../ui/numeralFormat";
+import { numeralWrapper } from "../numeralFormat";
 import { Reputation } from "./Reputation";
 import { KillScriptsModal } from "./KillScriptsModal";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
@@ -33,23 +33,34 @@ interface IProps {
 }
 
 function Intelligence(): React.ReactElement {
+  const theme = useTheme();
   const player = use.Player();
   const classes = useStyles();
   if (player.intelligence === 0) return <></>;
+  const progress = player.calculateSkillProgress(player.intelligence_exp);
+
   return (
-    <TableRow>
-      <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
-        <Typography classes={{ root: classes.int }}>Int&nbsp;</Typography>
-      </TableCell>
-      <TableCell align="right" classes={{ root: classes.cell }}>
-        <Typography classes={{ root: classes.int }}>{numeralWrapper.formatSkill(player.intelligence)}</Typography>
-      </TableCell>
-      <TableCell align="right" classes={{ root: classes.cell }}>
-        <Typography id="overview-int-hook" classes={{ root: classes.int }}>
-          {/*Hook for player scripts*/}
-        </Typography>
-      </TableCell>
-    </TableRow>
+    <>
+      <TableRow>
+        <TableCell component="th" scope="row" classes={{ root: classes.cell }}>
+          <Typography classes={{ root: classes.int }}>Int&nbsp;</Typography>
+        </TableCell>
+        <TableCell align="right" classes={{ root: classes.cell }}>
+          <Typography classes={{ root: classes.int }}>{numeralWrapper.formatSkill(player.intelligence)}</Typography>
+        </TableCell>
+        <TableCell align="right" classes={{ root: classes.cell }}>
+          <Typography id="overview-int-hook" classes={{ root: classes.int }}>
+            {/*Hook for player scripts*/}
+          </Typography>
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        {!Settings.DisableOverviewProgressBars && (
+          <StatsProgressOverviewCell progress={progress} color={theme.colors.int} />
+        )}
+      </TableRow>
+    </>
   );
 }
 

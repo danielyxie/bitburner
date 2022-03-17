@@ -4,8 +4,8 @@
  */
 import React, { useState, useEffect } from "react";
 
-import { Faction } from "../../Faction/Faction";
-import { FactionInfo } from "../../Faction/FactionInfo";
+import { Faction } from "../Faction";
+import { FactionInfo } from "../FactionInfo";
 
 import { Reputation } from "../../ui/React/Reputation";
 import { Favor } from "../../ui/React/Favor";

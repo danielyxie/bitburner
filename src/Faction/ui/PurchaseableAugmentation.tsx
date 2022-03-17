@@ -9,7 +9,7 @@ import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Faction } from "../../Faction/Faction";
+import { Faction } from "../Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 import { Money } from "../../ui/React/Money";

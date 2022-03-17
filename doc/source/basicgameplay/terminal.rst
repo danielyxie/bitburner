@@ -239,7 +239,7 @@ connect
 
     $ connect [hostname/ip]
 
-Connect to a remote server. The hostname or IP address of the remote server must
+Connect to a remote server. The hostname of the remote server must
 be given as the argument to this command. Note that only servers that are immediately
 adjacent to the current server in the network can be connected to. To see which
 servers can be connected to, use the 'scan' command.
@@ -543,28 +543,6 @@ it. So, if a script was ran with the following arguments::
 Then in order to check its logs with 'tail' the same arguments must be used::
 
     $ tail foo.script 10 50000
-
-theme
-^^^^^
-
-    $ theme [preset] | [#background #text #highlight]
-
-Change the color of the game's user interface
-
-This command can be called with a preset theme. Currently, the supported presets are:
-
-* default
-* muted
-* solarized
-
-However, you can also specify your own color scheme using hex values.
-To do so, you must specify three hex color values for the background
-color, the text color, and the highlight color. These hex values must
-be preceded by a pound sign (#) and must be either 3 or 6 digits. Example::
-
-    $ theme #ffffff #385 #235012
-
-A color picker such as Google's can be used to get your desired hex color values
 
 top
 ^^^

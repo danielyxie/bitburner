@@ -1,14 +1,21 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
+
+import {
+  Box,
+  Button,
+  Container,
+  Paper,
+  TableBody,
+  TableRow,
+  Typography
+} from "@mui/material";
+
+import { Augmentations } from "../../Augmentation/Augmentations";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Table, TableCell } from "../../ui/React/Table";
 import { IRouter } from "../../ui/Router";
+
 import { Faction } from "../Faction";
 import { joinFaction } from "../FactionHelpers";
 import { Factions } from "../Factions";
@@ -41,10 +48,36 @@ export function FactionsRoot(props: IProps): React.ReactElement {
     props.router.toFaction(faction);
   }
 
+  function openFactionAugPage(faction: Faction): void {
+    props.router.toFaction(faction, true);
+  }
+
   function acceptInvitation(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, faction: string): void {
     if (!event.isTrusted) return;
     joinFaction(Factions[faction]);
     setRerender((x) => !x);
+  }
+
+  const getAugsLeft = (faction: Faction, player: IPlayer): number => {
+    const isPlayersGang = player.inGang() && player.getGangName() === faction.name;
+    let augs: string[] = [];
+
+    if (isPlayersGang) {
+      for (const augName of Object.keys(Augmentations)) {
+        if (
+          augName === AugmentationNames.NeuroFluxGovernor ||
+          augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2 ||
+          Augmentations[augName].isSpecial
+        ) continue;
+        augs.push(augName)
+      }
+    } else {
+      augs = faction.augmentations.slice();
+    }
+
+    return augs.filter(
+      (augmentation: string) => !player.hasAugmentation(augmentation)
+    ).length;
   }
 
   return (
@@ -61,7 +94,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
       </Typography>
       {(props.player.factions.length > 0 && (
         <Paper sx={{ my: 1, p: 1, pb: 0, display: "inline-block" }}>
-          <Table padding="none">
+          <Table padding="none" style={{ width: "fit-content" }}>
             <TableBody>
               {props.player.factions.map((faction: string) => (
                 <TableRow key={faction}>
@@ -73,6 +106,13 @@ export function FactionsRoot(props: IProps): React.ReactElement {
                   <TableCell align="right">
                     <Box ml={1} mb={1}>
                       <Button onClick={() => openFaction(Factions[faction])}>Details</Button>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Box ml={1} mb={1}>
+                      <Button sx={{ width: '100%' }} onClick={() => openFactionAugPage(Factions[faction])}>
+                        Augmentations Left: {getAugsLeft(Factions[faction], props.player)}
+                      </Button>
                     </Box>
                   </TableCell>
                 </TableRow>

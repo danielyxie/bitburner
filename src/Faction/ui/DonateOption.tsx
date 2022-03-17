@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 
 import { CONSTANTS } from "../../Constants";
-import { Faction } from "../../Faction/Faction";
+import { Faction } from "../Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { repFromDonation } from "../formulas/donation";
 import { Favor } from "../../ui/React/Favor";

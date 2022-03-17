@@ -157,7 +157,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     (
       <>
         MegaCorp does what no other dares to do. We imagine. We create. We invent. We create what others have never even
-        dreamed of. Our work fills the world's needs for food, water, power, and transportation on an unprecendented
+        dreamed of. Our work fills the world's needs for food, water, power, and transportation on an unprecedented
         scale, in ways that no other company can.
         <br />
         <br />
@@ -559,7 +559,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     {"        `..`                 "}<br /><br />
     Many cultures predict an end to humanity in the near future, a final
      Armageddon that will end the world; but we disagree.
-    <br /><br />Note that for this faction, reputation can 
+    <br /><br />Note that for this faction, reputation can
     only be gained by charging Stanek's gift.</>,
     [],
     false,

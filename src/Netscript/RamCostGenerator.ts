@@ -59,6 +59,8 @@ export const RamCostConstants: IMap<number> = {
 
   ScriptBladeburnerApiBaseRamCost: 4,
 
+  ScriptStanekWidth: 0.4,
+  ScriptStanekHeight: 0.4,
   ScriptStanekCharge: 0.4,
   ScriptStanekFragmentDefinitions: 0,
   ScriptStanekPlacedFragments: 5,
@@ -106,6 +108,7 @@ export const RamCosts: IMap<any> = {
   hackAnalyzeSecurity: RamCostConstants.ScriptHackAnalyzeRamCost,
   hackAnalyzeChance: RamCostConstants.ScriptHackAnalyzeRamCost,
   sleep: 0,
+  asleep: 0,
   share: 2.4,
   getSharePower: 0.2,
   grow: RamCostConstants.ScriptGrowRamCost,
@@ -354,6 +357,8 @@ export const RamCosts: IMap<any> = {
   },
 
   stanek: {
+    width: RamCostConstants.ScriptStanekWidth,
+    height: RamCostConstants.ScriptStanekHeight,
     charge: RamCostConstants.ScriptStanekCharge,
     fragmentDefinitions: RamCostConstants.ScriptStanekFragmentDefinitions,
     activeFragments: RamCostConstants.ScriptStanekPlacedFragments,
