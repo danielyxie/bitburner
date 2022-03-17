@@ -6,7 +6,6 @@ import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
 import Typography from "@mui/material/Typography";
-import Slider from "@mui/material/Slider";
 import Grid from "@mui/material/Grid";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -39,6 +38,7 @@ import { formatTime } from "../../utils/helpers/formatTime";
 import { OptionSwitch } from "./OptionSwitch";
 import { ImportData, saveObject } from "../../SaveObject";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import { OptionSlider } from "./OptionSlider";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -63,47 +63,11 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const classes = useStyles();
   const importInput = useRef<HTMLInputElement>(null);
 
-  const [execTime, setExecTime] = useState(Settings.CodeInstructionRunTime);
-  const [recentScriptsSize, setRecentScriptsSize] = useState(Settings.MaxRecentScriptsCapacity);
-  const [logSize, setLogSize] = useState(Settings.MaxLogCapacity);
-  const [portSize, setPortSize] = useState(Settings.MaxPortCapacity);
-  const [terminalSize, setTerminalSize] = useState(Settings.MaxTerminalCapacity);
-  const [autosaveInterval, setAutosaveInterval] = useState(Settings.AutosaveInterval);
   const [timestampFormat, setTimestampFormat] = useState(Settings.TimestampsFormat);
   const [locale, setLocale] = useState(Settings.Locale);
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [importSaveOpen, setImportSaveOpen] = useState(false);
   const [importData, setImportData] = useState<ImportData | null>(null);
-
-  function handleExecTimeChange(event: any, newValue: number | number[]): void {
-    setExecTime(newValue as number);
-    Settings.CodeInstructionRunTime = newValue as number;
-  }
-
-  function handleRecentScriptsSizeChange(event: any, newValue: number | number[]): void {
-    setRecentScriptsSize(newValue as number);
-    Settings.MaxRecentScriptsCapacity = newValue as number;
-  }
-
-  function handleLogSizeChange(event: any, newValue: number | number[]): void {
-    setLogSize(newValue as number);
-    Settings.MaxLogCapacity = newValue as number;
-  }
-
-  function handlePortSizeChange(event: any, newValue: number | number[]): void {
-    setPortSize(newValue as number);
-    Settings.MaxPortCapacity = newValue as number;
-  }
-
-  function handleTerminalSizeChange(event: any, newValue: number | number[]): void {
-    setTerminalSize(newValue as number);
-    Settings.MaxTerminalCapacity = newValue as number;
-  }
-
-  function handleAutosaveIntervalChange(event: any, newValue: number | number[]): void {
-    setAutosaveInterval(newValue as number);
-    Settings.AutosaveInterval = newValue as number;
-  }
 
   function handleLocaleChange(event: SelectChangeEvent<string>): void {
     setLocale(event.target.value as string);
@@ -164,112 +128,85 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
           <List>
             <ListItem>
               <Box display="grid" sx={{ width: "fit-content", gridTemplateColumns: "1fr 3.5fr", gap: 1 }}>
-                <Tooltip
-                  title={
-                    <Typography>
-                      The minimum number of milliseconds it takes to execute an operation in Netscript. Setting this too
-                      low can result in poor performance if you have many scripts running.
-                    </Typography>
-                  }
-                >
-                  <Typography>.script exec time (ms)</Typography>
-                </Tooltip>
-                <Slider
-                  value={execTime}
-                  onChange={handleExecTimeChange}
-                  step={1}
+                <OptionSlider
                   min={5}
                   max={100}
-                  valueLabelDisplay="auto"
-                />
-                <Tooltip
-                  title={
-                    <Typography>
-                      The maximum number of recently killed script entries being tracked. Setting this too high can
-                      cause the game to use a lot of memory.
-                    </Typography>
+                  text=".script exec time (ms)"
+                  value={Settings.CodeInstructionRunTime}
+                  onValueChanged={(newValue) => (Settings.CodeInstructionRunTime = newValue)}
+                  tooltip={
+                    <>
+                      The minimum number of milliseconds it takes to execute an operation in Netscript. Setting this too
+                      low can result in poor performance if you have many scripts running.
+                    </>
                   }
-                >
-                  <Typography>Recently killed scripts size</Typography>
-                </Tooltip>
-                <Slider
-                  value={recentScriptsSize}
-                  onChange={handleRecentScriptsSizeChange}
+                />
+                <OptionSlider
+                  value={Settings.MaxRecentScriptsCapacity}
+                  onValueChanged={(newValue) => (Settings.MaxRecentScriptsCapacity = newValue)}
                   step={25}
                   min={0}
                   max={500}
                   valueLabelDisplay="auto"
+                  text="Recently killed scripts size"
+                  tooltip={
+                    <>
+                      The maximum number of recently killed script entries being tracked. Setting this too high can
+                      cause the game to use a lot of memory.
+                    </>
+                  }
                 />
-                <Tooltip
-                  title={
-                    <Typography>
+                <OptionSlider
+                  min={20}
+                  max={500}
+                  step={20}
+                  text="Netscript log size"
+                  value={Settings.MaxLogCapacity}
+                  onValueChanged={(newValue) => (Settings.MaxLogCapacity = newValue)}
+                  tooltip={
+                    <>
                       The maximum number of lines a script's logs can hold. Setting this too high can cause the game to
                       use a lot of memory if you have many scripts running.
-                    </Typography>
+                    </>
                   }
-                >
-                  <Typography>Netscript log size</Typography>
-                </Tooltip>
-                <Slider
-                  value={logSize}
-                  onChange={handleLogSizeChange}
-                  step={20}
-                  min={20}
-                  max={500}
-                  valueLabelDisplay="auto"
                 />
-                <Tooltip
-                  title={
-                    <Typography>
-                      The maximum number of entries that can be written to a port using Netscript's write() function.
-                      Setting this too high can cause the game to use a lot of memory.
-                    </Typography>
-                  }
-                >
-                  <Typography>Netscript port size</Typography>
-                </Tooltip>
-                <Slider
-                  value={portSize}
-                  onChange={handlePortSizeChange}
-                  step={1}
+                <OptionSlider
                   min={20}
                   max={100}
-                  valueLabelDisplay="auto"
-                />
-                <Tooltip
-                  title={
-                    <Typography>
-                      The maximum number of entries that can be written to the terminal. Setting this too high can cause
-                      the game to use a lot of memory.
-                    </Typography>
+                  text="Netscript port size"
+                  value={Settings.MaxPortCapacity}
+                  onValueChanged={(newValue) => (Settings.MaxPortCapacity = newValue)}
+                  tooltip={
+                    <>
+                      The maximum number of entries that can be written to a port using Netscript's write() function.
+                      Setting this too high can cause the game to use a lot of memory.
+                    </>
                   }
-                >
-                  <Typography>Terminal capacity</Typography>
-                </Tooltip>
-                <Slider
-                  value={terminalSize}
-                  onChange={handleTerminalSizeChange}
-                  step={50}
+                />
+                <OptionSlider
                   min={50}
                   max={500}
-                  valueLabelDisplay="auto"
+                  step={50}
                   marks
-                />
-                <Tooltip
-                  title={
-                    <Typography>The time (in seconds) between each autosave. Set to 0 to disable autosave.</Typography>
+                  text="Terminal capacity"
+                  value={Settings.MaxTerminalCapacity}
+                  onValueChanged={(newValue) => (Settings.MaxTerminalCapacity = newValue)}
+                  tooltip={
+                    <>
+                      The maximum number of entries that can be written to the terminal. Setting this too high can cause
+                      the game to use a lot of memory.
+                    </>
                   }
-                >
-                  <Typography>Autosave interval (s)</Typography>
-                </Tooltip>
-                <Slider
-                  value={autosaveInterval}
-                  onChange={handleAutosaveIntervalChange}
-                  step={30}
+                />
+                <OptionSlider
                   min={0}
                   max={600}
-                  valueLabelDisplay="auto"
+                  step={30}
                   marks
+                  text="Autosave interval (s)"
+                  value={Settings.AutosaveInterval}
+                  onValueChanged={(newValue) => (Settings.AutosaveInterval = newValue)}
+                  tooltip={<>The time (in seconds) between each autosave. Set to 0 to disable autosave.</>}
                 />
               </Box>
             </ListItem>
