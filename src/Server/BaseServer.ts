@@ -76,7 +76,7 @@ export class BaseServer {
   // Script files on this Server
   scripts: Script[] = [];
 
-  // Contains the IP Addresses of all servers that are immediately
+  // Contains the hostnames of all servers that are immediately
   // reachable from this one
   serversOnNetwork: string[] = [];
 
