@@ -145,7 +145,7 @@ function LogWindow(props: IProps): React.ReactElement {
       const server = GetServer(script.server);
       if (server === null) return;
       const s = findRunningScript(script.filename, script.args, server);
-      if (s !== null) {
+      if (s !== null && script != s) {
         setScript(s);
       }
       setPoll(!poll)
