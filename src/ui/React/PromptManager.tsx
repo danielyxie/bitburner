@@ -1,136 +1,113 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
+import React, { useState, useEffect } from "react";
 import { EventEmitter } from "../../utils/EventEmitter";
 import { Modal } from "./Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import TextField from '@mui/material/TextField';
-import { KEY } from '../../utils/helpers/keyCodes';
-import MenuItem from '@mui/material/MenuItem';
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
 
 export const PromptEvent = new EventEmitter<[Prompt]>();
 
 interface Prompt {
   txt: string;
-  options?: { type?: string; choices?: string[] | { [key: string]: string | number } };
+  options?: { type?: string; choices?: string[] };
   resolve: (result: boolean | string) => void;
 }
 
 export function PromptManager(): React.ReactElement {
   const [prompt, setPrompt] = useState<Prompt | null>(null);
-  useEffect(
-    () =>
-      PromptEvent.subscribe((p: Prompt) => {
-        setPrompt(p);
-      }),
-    [],
-  );
+  useEffect(() => {
+    return PromptEvent.subscribe((p: Prompt) => {
+      setPrompt(p);
+    });
+  }, []);
 
-  const valueState = useState('')
+  if (prompt === null) {
+    return <></>;
+  }
 
   function close(): void {
     if (prompt === null) return;
-    prompt.resolve(false);
-    valueState[1]('')
+    if (["text", "select"].includes(prompt?.options?.type ?? "")) {
+      prompt.resolve("");
+    } else {
+      prompt.resolve(false);
+    }
     setPrompt(null);
   }
 
-  let promptRenderer;
-  switch (prompt?.options?.type) {
-    case 'text': {
-      promptRenderer = promptMenuText;
-      break;
-    }
+  const types: { [key: string]: any } = {
+    text: PromptMenuText,
+    select: PromptMenuSelect,
+  };
 
-    case 'select': {
-      promptRenderer = promptMenuSelect;
-      break;
-    }
+  let PromptContent = PromptMenuBoolean;
+  if (prompt?.options?.type) PromptContent = types[prompt?.options?.type];
 
-    default: {
-      promptRenderer = promptMenuBoolean;
-    }
-  }
+  const resolve = (value: boolean | string): void => {
+    prompt.resolve(value);
+    setPrompt(null);
+  };
 
   return (
-    <>
-      {prompt != null && (
-        <Modal open={true} onClose={close}>
-          <Typography>{prompt.txt}</Typography>
-          {promptRenderer(prompt, setPrompt, valueState)}
-        </Modal>
-      )}
-    </>
+    <Modal open={true} onClose={close}>
+      <Typography>{prompt.txt}</Typography>
+      <PromptContent prompt={prompt} resolve={resolve} />
+    </Modal>
   );
 }
 
-function promptMenuBoolean(prompt: Prompt | null, setPrompt: Dispatch<SetStateAction<Prompt | null>>): React.ReactElement {
-  const yes = (): void => {
-    if (prompt !== null) {
-      prompt.resolve(true);
-      setPrompt(null);
-    }
-  }
-  const no = (): void => {
-    if (prompt !== null) {
-      prompt.resolve(false);
-      setPrompt(null);
-    }
-  }
+interface IContentProps {
+  prompt: Prompt;
+  resolve: (value: boolean | string) => void;
+}
+
+function PromptMenuBoolean({ resolve }: IContentProps): React.ReactElement {
+  const yes = (): void => resolve(true);
+  const no = (): void => resolve(false);
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '10px' }}>
-        <Button style={{ marginRight: 'auto' }} onClick={yes}>Yes</Button>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", paddingTop: "10px" }}>
+        <Button style={{ marginRight: "auto" }} onClick={yes}>
+          Yes
+        </Button>
         <Button onClick={no}>No</Button>
       </div>
     </>
   );
 }
 
-function promptMenuText(prompt: Prompt | null, setPrompt: Dispatch<SetStateAction<Prompt | null>>, valueState: [string, Dispatch<SetStateAction<string>>]): React.ReactElement {
-  const [value, setValue] = valueState
+function PromptMenuText({ resolve }: IContentProps): React.ReactElement {
+  const [value, setValue] = useState("");
 
-  const submit = (): void => {
-    if (prompt !== null) {
-      prompt.resolve(value);
-      setValue('')
-      setPrompt(null);
-    }
-  }
+  const submit = (): void => resolve(value);
 
   const onInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(event.target.value);
-  }
+  };
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     event.stopPropagation();
 
-    if (prompt !== null && event.keyCode === KEY.ENTER) {
+    if (event.key === "Enter") {
       event.preventDefault();
       submit();
     }
-  }
+  };
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center', paddingTop: '10px' }}>
+      <div style={{ display: "flex", alignItems: "center", paddingTop: "10px" }}>
         <TextField
           autoFocus
           value={value}
           onInput={onInput}
           onKeyDown={onKeyDown}
-          style={{ flex: '1 0 auto' }}
+          style={{ flex: "1 0 auto" }}
           InputProps={{
-            endAdornment: (
-              <Button
-                onClick={() => {
-                  submit();
-                }}
-              >
-                Confirm
-              </Button>
-            ),
+            endAdornment: <Button onClick={submit}>Confirm</Button>,
           }}
         />
       </div>
@@ -138,37 +115,37 @@ function promptMenuText(prompt: Prompt | null, setPrompt: Dispatch<SetStateActio
   );
 }
 
-function promptMenuSelect(prompt: Prompt | null, setPrompt: Dispatch<SetStateAction<Prompt | null>>, valueState: [string, Dispatch<SetStateAction<string>>]): React.ReactElement {
-  const [value, setValue] = valueState
+function PromptMenuSelect({ prompt, resolve }: IContentProps): React.ReactElement {
+  const [value, setValue] = useState("");
 
-  const submit = (): void => {
-    if (prompt !== null) {
-      prompt.resolve(value);
-      setValue('');
-      setPrompt(null);
-    }
-  }
+  const submit = (): void => resolve(value);
 
   const onChange = (event: SelectChangeEvent<string>): void => {
     setValue(event.target.value);
-  }
+  };
 
-  const getItems = (choices: string[] | { [key: string]: string | number }) : React.ReactElement[] => {
+  const getItems = (choices: string[]): React.ReactElement[] => {
     const content = [];
-    for (const i in choices) {
+    for (const i of choices) {
       // @ts-ignore
-      content.push(<MenuItem value={i}>{choices[i]}</MenuItem>);
+      content.push(
+        <MenuItem key={i} value={i}>
+          {i}
+        </MenuItem>,
+      );
     }
     return content;
-  }
+  };
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center', paddingTop: '10px' }}>
-        <Select onChange={onChange} value={value} style={{ flex: '1 0 auto' }}>
+      <div style={{ display: "flex", alignItems: "center", paddingTop: "10px" }}>
+        <Select onChange={onChange} value={value} style={{ flex: "1 0 auto" }}>
           {getItems(prompt?.options?.choices || [])}
         </Select>
-        <Button onClick={submit}>Confirm</Button>
+        <Button onClick={submit} disabled={value === ""}>
+          Confirm
+        </Button>
       </div>
     </>
   );
