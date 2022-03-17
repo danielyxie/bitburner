@@ -167,7 +167,7 @@ export function ls(
 
   function postSegments(segments: string[], style?: any, linked?: boolean): void {
     const maxLength = Math.max(...segments.map((s) => s.length)) + 1;
-    const filesPerRow = Math.floor(80 / maxLength);
+    const filesPerRow = Math.ceil(80 / maxLength);
     for (let i = 0; i < segments.length; i++) {
       let row = "";
       for (let col = 0; col < filesPerRow; col++) {
