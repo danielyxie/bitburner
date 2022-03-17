@@ -52,24 +52,25 @@ class NumeralFormatter {
   }
 
   formatBigNumber(n: number): string {
-    return this.format(n, "0.000a");
+    return this.format(n, "0.[000]a");
   }
 
   // TODO: leverage numeral.js to do it. This function also implies you can
   // use this format in some text field but you can't. ( "1t" will parse but
   // "1s" will not)
   formatReallyBigNumber(n: number, decimalPlaces = 3): string {
+    const nAbs = Math.abs(n);
     if (n === Infinity) return "∞";
     for (let i = 0; i < extraFormats.length; i++) {
-      if (extraFormats[i] < n && n <= extraFormats[i] * 1000) {
+      if (extraFormats[i] < nAbs && nAbs <= extraFormats[i] * 1000) {
         return this.format(n / extraFormats[i], "0." + "0".repeat(decimalPlaces)) + extraNotations[i];
       }
     }
-    if (Math.abs(n) < 1000) {
-      return this.format(n, "0." + "0".repeat(decimalPlaces));
+    if (nAbs < 1000) {
+      return this.format(n, "0.[" + "0".repeat(decimalPlaces) + "]");
     }
-    const str = this.format(n, "0." + "0".repeat(decimalPlaces) + "a");
-    if (str === "NaNt") return this.format(n, "0." + " ".repeat(decimalPlaces) + "e+0");
+    const str = this.format(n, "0.[" + "0".repeat(decimalPlaces) + "]a");
+    if (str === "NaNt") return this.format(n, "0.[" + " ".repeat(decimalPlaces) + "]e+0");
     return str;
   }
 
@@ -187,19 +188,52 @@ class NumeralFormatter {
     return this.format(n, "0.00");
   }
 
+  parseCustomLargeNumber(str: string): number {
+    const numericRegExp = new RegExp('^(\-?\\d+\\.?\\d*)([' + extraNotations.join("") + ']?)$');
+    const match = str.match(numericRegExp);
+    if (match == null) {
+      return NaN;
+    }
+    const [, number, notation] = match;
+    const notationIndex = extraNotations.indexOf(notation);
+    if (notationIndex === -1) {
+      return NaN;
+    }
+    return parseFloat(number) * extraFormats[notationIndex];
+  }
+
+  furthestFrom0(n1: number, n2 = 0, n3 = 0): number {
+    const minValue = Math.min(n1, n2, n3);
+    if(minValue < 0) {
+      return minValue;
+    } else {
+      return Math.max(n1, n2, n3);
+    }
+  }
+
   parseMoney(s: string): number {
-    // numeral library does not handle formats like 1e10 well (returns 110),
-    // so if both return a valid number, return the biggest one
+    // numeral library does not handle formats like 1s (returns 1) and 1e10 (returns 110) well,
+    // so if more then 1 return a valid number, return the one farthest from 0
     const numeralValue = numeral(s).value();
     const parsed = parseFloat(s);
-    if (isNaN(parsed) && numeralValue === null) {
+    const selfParsed = this.parseCustomLargeNumber(s);
+    // Check for one or more NaN values
+    if (isNaN(parsed) && numeralValue === null && isNaN(selfParsed)) {    // 3x NaN
       return NaN;
-    } else if (isNaN(parsed)) {
+    } else if (isNaN(parsed) && isNaN(selfParsed)) {                      // 2x NaN
       return numeralValue;
-    } else if (numeralValue === null) {
+    } else if (numeralValue === null && isNaN(selfParsed)) {              // 2x NaN
       return parsed;
-    } else {
-      return Math.max(numeralValue, parsed);
+    } else if (isNaN(parsed) && numeralValue === null) {                  // 2x NaN
+      return selfParsed;
+    } else if (isNaN(parsed)) {                                           // 1x NaN
+      return this.furthestFrom0(numeralValue, selfParsed);
+    } else if (numeralValue === null) {                                   // 1x NaN
+      return this.furthestFrom0(parsed, selfParsed);
+    } else if (isNaN(selfParsed)) {                                       // 1x NaN
+      return this.furthestFrom0(numeralValue, parsed);
+    } else {                                                              // no NaN
+      return this.furthestFrom0(numeralValue, parsed, selfParsed);
     }
   }
 }
