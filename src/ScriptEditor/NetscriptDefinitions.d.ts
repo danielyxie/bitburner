@@ -2785,7 +2785,7 @@ export interface Bladeburner {
    *
    * Note that this is meant to be used for Contracts and Operations.
    * This function will return ‘Infinity’ for actions such as Training and Field Analysis.
-   * This function will return 1 for BlackOps not yet completed regardless of wether
+   * This function will return 1 for BlackOps not yet completed regardless of whether
    * the player has the required rank to attempt the mission or not.
    *
    * @param type - Type of action.
@@ -2825,7 +2825,7 @@ export interface Bladeburner {
   getActionCurrentLevel(type: string, name: string): number;
 
   /**
-   * Get wether an action is set to autolevel.
+   * Get whether an action is set to autolevel.
    * @remarks
    * RAM cost: 4 GB
    *
