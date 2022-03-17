@@ -139,12 +139,9 @@ export function ls(
       }),
     )();
 
-    console.log(row);
-
     const rowSplit = row.split("~");
     let rowSplitArray = rowSplit.map((x) => [x.trim(), x.replace(x.trim(), "")]);
-    console.log(rowSplitArray);
-    rowSplitArray = rowSplitArray.filter((x) => !!x);
+    rowSplitArray = rowSplitArray.filter((x) => !!x[0]);
 
     function onScriptLinkClick(filename: string): void {
       if (player.getCurrentServer().hostname !== hostname) {
