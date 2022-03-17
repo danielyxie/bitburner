@@ -94,9 +94,9 @@ export function v1APIBreak(): void {
 
       if (s.length === 0) continue;
 
-      txt += `// Detected change ${change[0]}, reason: ${change[1]}` + "\n";
+      txt += `// Detected change ${change[0]}, reason: ${change[1]}\n`;
       for (const fl of s) {
-        txt += `${fl.file}:${fl.line}` + "\n";
+        txt += `${fl.file}:${fl.line}\n`;
       }
     }
   }

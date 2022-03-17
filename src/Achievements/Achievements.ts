@@ -553,7 +553,8 @@ export const achievements: IMap<Achievement> = {
     ...achievementData["MAX_CACHE"],
     Icon: "HASHNETCAP",
     Visible: () => hasAccessToSF(Player, 9),
-    Condition: () => hasHacknetServers(Player) &&
+    Condition: () =>
+      hasHacknetServers(Player) &&
       Player.hashManager.hashes === Player.hashManager.capacity &&
       Player.hashManager.capacity > 0,
   },
@@ -728,6 +729,18 @@ export const achievements: IMap<Achievement> = {
     Icon: "SF-1",
     Secret: true,
     Condition: () => Player.exploits.includes(Exploit.YoureNotMeantToAccessThis),
+  },
+  RAINBOW: {
+    ...achievementData["RAINBOW"],
+    Icon: "SF-1",
+    Secret: true,
+    Condition: () => Player.exploits.includes(Exploit.INeedARainbow),
+  },
+  TRUE_RECURSION: {
+    ...achievementData["TRUE_RECURSION"],
+    Icon: "SF-1",
+    Secret: true,
+    Condition: () => Player.exploits.includes(Exploit.TrueRecursion),
   },
 };
 

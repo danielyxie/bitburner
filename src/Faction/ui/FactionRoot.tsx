@@ -28,7 +28,7 @@ type IProps = {
 };
 
 // Info text for all options on the UI
-const gangInfo = "Create and manage a gang for this Faction. Gangs will earn you money and " + "faction reputation";
+const gangInfo = "Create and manage a gang for this Faction. Gangs will earn you money and faction reputation";
 const hackingContractsInfo =
   "Complete hacking contracts for your faction. " +
   "Your effectiveness, which determines how much " +

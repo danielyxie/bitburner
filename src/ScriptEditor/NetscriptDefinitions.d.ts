@@ -94,6 +94,7 @@ interface Player {
   factions: string[];
   tor: boolean;
   hasCorporation: boolean;
+  inBladeburner: boolean;
 }
 
 /**

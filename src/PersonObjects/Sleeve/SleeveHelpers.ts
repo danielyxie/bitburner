@@ -34,7 +34,32 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
       return false;
     }
 
-    return true;
+    const validMults = [
+      "hacking_mult",
+      "strength_mult",
+      "defense_mult",
+      "dexterity_mult",
+      "agility_mult",
+      "charisma_mult",
+      "hacking_exp_mult",
+      "strength_exp_mult",
+      "defense_exp_mult",
+      "dexterity_exp_mult",
+      "agility_exp_mult",
+      "charisma_exp_mult",
+      "company_rep_mult",
+      "faction_rep_mult",
+      "crime_money_mult",
+      "crime_success_mult",
+      "work_money_mult",
+    ];
+    for (const mult of Object.keys(aug.mults)) {
+      if (validMults.includes(mult)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   // If player is in a gang, then we return all augs that the player

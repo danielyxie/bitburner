@@ -78,12 +78,11 @@ export function ipExists(ip: string): boolean {
 }
 
 export function createUniqueRandomIp(): string {
-  const ip = createRandomIp();
-
-  // If the Ip already exists, recurse to create a new one
-  if (ipExists(ip)) {
-    return createRandomIp();
-  }
+  let ip: string;
+  // Repeat generating ip, until unique one is found
+  do {
+    ip = createRandomIp();
+  } while (ipExists(ip));
 
   return ip;
 }

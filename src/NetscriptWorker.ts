@@ -375,7 +375,7 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
         });
 
         //Now we have to generate the code that would create the namespace
-        generatedCode += "var " + namespace + ";\n" + "(function (namespace) {\n";
+        generatedCode += `var ${namespace};\n(function (namespace) {\n`;
 
         //Add the function declarations
         fnDeclarations.forEach((fn: any) => {
@@ -390,7 +390,7 @@ function processNetscript1Imports(code: string, workerScript: WorkerScript): any
         });
 
         //Finish
-        generatedCode += "})(" + namespace + " || " + "(" + namespace + " = {}));\n";
+        generatedCode += `})(${namespace} || (" + namespace + " = {}));\n`;
       } else {
         //import {...} from script
 

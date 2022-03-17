@@ -66,28 +66,22 @@ export function tabCompletion(
     if (arg === "") {
       if (longestStartSubstr === command) {
         return allPossibilities;
-      } else {
-        if (semiColonIndex === -1) {
+      } else if (semiColonIndex === -1) {
           // No semicolon, so replace the whole command
           return longestStartSubstr;
         } else {
           // Replace only after the last semicolon
           return `${oldValue.slice(0, semiColonIndex + 1)} ${longestStartSubstr}`;
         }
-      }
-    } else {
-      if (longestStartSubstr === arg) {
+    } else if (longestStartSubstr === arg) {
         // List all possible options
         return allPossibilities;
-      } else {
-        if (semiColonIndex == -1) {
+      } else if (semiColonIndex == -1) {
           // No semicolon, so replace the whole command
           return `${command} ${longestStartSubstr}`;
         } else {
           // Replace only after the last semicolon
           return `${oldValue.slice(0, semiColonIndex + 1)} ${command} ${longestStartSubstr}`;
         }
-      }
-    }
   }
 }
