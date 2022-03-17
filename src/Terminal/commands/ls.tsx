@@ -139,10 +139,12 @@ export function ls(
       }),
     )();
 
-    const rowSplit = row
-      .split(" ")
-      .map((x) => x.trim())
-      .filter((x) => !!x);
+    console.log(row);
+
+    const rowSplit = row.split("~");
+    let rowSplitArray = rowSplit.map((x) => [x.trim(), x.replace(x.trim(), "")]);
+    console.log(rowSplitArray);
+    rowSplitArray = rowSplitArray.filter((x) => !!x);
 
     function onScriptLinkClick(filename: string): void {
       if (player.getCurrentServer().hostname !== hostname) {
@@ -156,9 +158,14 @@ export function ls(
 
     return (
       <span className={classes.scriptLinksWrap}>
-        {rowSplit.map((rowItem) => (
-          <span key={rowItem} className={classes.scriptLink} onClick={() => onScriptLinkClick(rowItem)}>
-            {rowItem}
+        {rowSplitArray.map((rowItem) => (
+          <span>
+            <span key={rowItem[0]} className={classes.scriptLink} onClick={() => onScriptLinkClick(rowItem[0])}>
+              {rowItem[0]}
+            </span>
+            <span key={'s'+rowItem[0]}>
+              {rowItem[1]}
+            </span>
           </span>
         ))}
       </span>
@@ -174,16 +181,19 @@ export function ls(
         if (!(i < segments.length)) break;
         row += segments[i];
         row += " ".repeat(maxLength * (col + 1) - row.length);
+        if(linked) {
+          row += "~";
+        }
         i++;
       }
       i--;
       if (!style) {
         terminal.print(row);
       } else if (linked) {
-          terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
-        } else {
-          terminal.printRaw(<span style={style}>{row}</span>);
-        }
+        terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
+      } else {
+        terminal.printRaw(<span style={style}>{row}</span>);
+      }
     }
   }
 
