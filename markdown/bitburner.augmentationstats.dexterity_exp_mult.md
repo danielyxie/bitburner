@@ -4,7 +4,7 @@
 
 ## AugmentationStats.dexterity\_exp\_mult property
 
-Multipler to dexterity experience gain rate
+Multiplier to dexterity experience gain rate
 
 <b>Signature:</b>
 

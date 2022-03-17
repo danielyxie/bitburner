@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.str property
 
+Strength skill level
+
 <b>Signature:</b>
 
 ```typescript

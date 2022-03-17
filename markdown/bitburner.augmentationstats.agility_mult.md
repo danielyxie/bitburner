@@ -4,7 +4,7 @@
 
 ## AugmentationStats.agility\_mult property
 
-Multipler to agility skill
+Multiplier to agility skill
 
 <b>Signature:</b>
 

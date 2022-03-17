@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.hack\_mult property
 
+Hack multiplier from equipment
+
 <b>Signature:</b>
 
 ```typescript

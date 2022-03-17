@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.agi\_asc\_points property
 
+Total earned agility experience
+
 <b>Signature:</b>
 
 ```typescript
