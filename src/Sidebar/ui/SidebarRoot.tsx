@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { KEY } from "../../utils/helpers/keyCodes";
 import clsx from "clsx";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
@@ -53,7 +54,6 @@ import { Settings } from "../../Settings/Settings";
 import { redPillFlag } from "../../RedPill";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
-import { KEY } from "../../utils/helpers/keyCodes";
 import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "../../Faction/ui/FactionsRoot";
 import { hash } from "../../hash/hash";
