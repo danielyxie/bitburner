@@ -4,7 +4,7 @@
 
 ## Division.type property
 
-Type of division, like Aggriculture
+Type of division, like Agriculture
 
 <b>Signature:</b>
 

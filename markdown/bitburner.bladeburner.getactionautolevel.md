@@ -4,7 +4,7 @@
 
 ## Bladeburner.getActionAutolevel() method
 
-Get wether an action is set to autolevel.
+Get whether an action is set to autolevel.
 
 <b>Signature:</b>
 

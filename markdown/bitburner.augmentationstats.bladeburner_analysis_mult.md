@@ -4,7 +4,7 @@
 
 ## AugmentationStats.bladeburner\_analysis\_mult property
 
-Multipler to effectiveness in Bladeburner Field Analysis
+Multiplier to effectiveness in Bladeburner Field Analysis
 
 <b>Signature:</b>
 

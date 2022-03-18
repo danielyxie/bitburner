@@ -9,5 +9,5 @@ Name of crime
 <b>Signature:</b>
 
 ```typescript
-name: number;
+name: string;
 ```

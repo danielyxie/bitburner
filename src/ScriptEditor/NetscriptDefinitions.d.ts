@@ -5999,7 +5999,10 @@ export interface NS extends Singularity {
    * @param options - Options to modify the prompt the player is shown.
    * @returns True if the player click “Yes”; false if the player clicks “No”; or the value entered by the player.
    */
-  prompt(txt: string, options?: { type?: "boolean"|"text"|"select"|undefined; choices?: string[] | { [key: string]: string | number } }): Promise<boolean | string>;
+  prompt(
+    txt: string,
+    options?: { type?: "boolean" | "text" | "select" | undefined; choices?: string[] },
+  ): Promise<boolean | string>;
 
   /**
    * Open up a message box.
@@ -6389,12 +6392,12 @@ export interface WarehouseAPI {
    */
   buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
-  * Set material to bulk buy
-  * @param divisionName - Name of the division
-  * @param cityName - Name of the city
-  * @param materialName - Name of the material
-  * @param amt - Amount of material to buy
-  */
+   * Set material to bulk buy
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param amt - Amount of material to buy
+   */
   bulkPurchase(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
    * Get warehouse data

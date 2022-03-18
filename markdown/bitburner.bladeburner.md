@@ -20,7 +20,7 @@ You have to be employed in the Bladeburner division and be in BitNode-7 or have 
 
 |  Method | Description |
 |  --- | --- |
-|  [getActionAutolevel(type, name)](./bitburner.bladeburner.getactionautolevel.md) | Get wether an action is set to autolevel. |
+|  [getActionAutolevel(type, name)](./bitburner.bladeburner.getactionautolevel.md) | Get whether an action is set to autolevel. |
 |  [getActionCountRemaining(type, name)](./bitburner.bladeburner.getactioncountremaining.md) | Get action count remaining. |
 |  [getActionCurrentLevel(type, name)](./bitburner.bladeburner.getactioncurrentlevel.md) | Get the current level of an action. |
 |  [getActionEstimatedSuccessChance(type, name)](./bitburner.bladeburner.getactionestimatedsuccesschance.md) | Get estimate success chance of an action. |

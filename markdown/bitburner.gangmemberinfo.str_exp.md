@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.str\_exp property
 
+Current strength experience
+
 <b>Signature:</b>
 
 ```typescript

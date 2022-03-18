@@ -4,7 +4,7 @@
 
 ## AugmentationStats.bladeburner\_stamina\_gain\_mult property
 
-Multipler to Bladeburner stamina gain rate
+Multiplier to Bladeburner stamina gain rate
 
 <b>Signature:</b>
 
