@@ -3,6 +3,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { Exploit } from "../Exploits/Exploit";
 import * as bcrypt from "bcryptjs";
 import { INetscriptHelper } from "./INetscriptHelper";
+import { Augmentations } from "../Augmentation/Augmentations";
 
 export interface INetscriptExtra {
   heart: {
