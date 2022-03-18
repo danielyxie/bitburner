@@ -202,12 +202,12 @@ class NumeralFormatter {
     return parseFloat(number) * extraFormats[notationIndex];
   }
 
-  furthestFrom0(n1: number, n2 = 0, n3 = 0): number {
+  largestAbsoluteNumber(n1: number, n2 = 0, n3 = 0): number {
     if(isNaN(n1)) n1=0;
     if(isNaN(n2)) n2=0;
     if(isNaN(n3)) n3=0;
-    const furthestAbsolute = Math.max(Math.abs(n1), Math.abs(n2), Math.abs(n3));
-    switch(furthestAbsolute) {
+    const largestAbsolute = Math.max(Math.abs(n1), Math.abs(n2), Math.abs(n3));
+    switch(largestAbsolute) {
       case Math.abs(n1): return n1;
       case Math.abs(n2): return n2;
       case Math.abs(n3): return n3;
@@ -231,13 +231,13 @@ class NumeralFormatter {
     } else if (isNaN(parsed) && numeralValue === null) {                  // 2x NaN
       return selfParsed;
     } else if (isNaN(parsed)) {                                           // 1x NaN
-      return this.furthestFrom0(numeralValue, selfParsed);
+      return this.largestAbsoluteNumber(numeralValue, selfParsed);
     } else if (numeralValue === null) {                                   // 1x NaN
-      return this.furthestFrom0(parsed, selfParsed);
+      return this.largestAbsoluteNumber(parsed, selfParsed);
     } else if (isNaN(selfParsed)) {                                       // 1x NaN
-      return this.furthestFrom0(numeralValue, parsed);
+      return this.largestAbsoluteNumber(numeralValue, parsed);
     } else {                                                              // no NaN
-      return this.furthestFrom0(numeralValue, parsed, selfParsed);
+      return this.largestAbsoluteNumber(numeralValue, parsed, selfParsed);
     }
   }
 }
