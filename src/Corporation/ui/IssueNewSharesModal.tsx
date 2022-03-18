@@ -8,7 +8,7 @@ import { useCorporation } from "./Context";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { KEY } from "src/utils/helpers/keyCodes";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 interface IEffectTextProps {
   shares: number | null;

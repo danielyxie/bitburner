@@ -10,7 +10,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Money } from "../../ui/React/Money";
 import { SellShares } from "../Actions";
-import { KEY } from "src/utils/helpers/keyCodes";
+import { KEY } from "../../utils/helpers/keyCodes";
 interface IProps {
   open: boolean;
   onClose: () => void;

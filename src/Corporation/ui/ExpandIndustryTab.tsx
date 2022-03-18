@@ -11,7 +11,7 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { KEY } from "src/utils/helpers/keyCodes";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 interface IProps {
   setDivisionName: (name: string) => void;

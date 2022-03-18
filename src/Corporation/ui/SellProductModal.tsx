@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import { KEY } from "src/utils/helpers/keyCodes";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 function initialPrice(product: Product): string {
   let val = product.sCost ? product.sCost + "" : "";
