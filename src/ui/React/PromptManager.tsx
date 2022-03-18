@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 export const PromptEvent = new EventEmitter<[Prompt]>();
 
@@ -91,7 +92,7 @@ function PromptMenuText({ resolve }: IContentProps): React.ReactElement {
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     event.stopPropagation();
 
-    if (event.key === "Enter") {
+    if (event.key === KEY.ENTER) {
       event.preventDefault();
       submit();
     }
