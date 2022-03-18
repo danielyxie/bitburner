@@ -215,6 +215,8 @@ export const RamCosts: IMap<any> = {
   getPlayer: RamCostConstants.ScriptSingularityFn1RamCost / 4,
   mv: 0,
   getOwnedSourceFiles: RamCostConstants.ScriptGetOwnedSourceFiles,
+  tail: 0,
+  toast: 0,
 
   // Singularity Functions
   universityCourse: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
