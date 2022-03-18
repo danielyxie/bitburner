@@ -203,12 +203,16 @@ class NumeralFormatter {
   }
 
   furthestFrom0(n1: number, n2 = 0, n3 = 0): number {
-    const minValue = Math.min(n1, n2, n3);
-    if(minValue < 0) {
-      return minValue;
-    } else {
-      return Math.max(n1, n2, n3);
+    if(isNaN(n1)) n1=0;
+    if(isNaN(n2)) n2=0;
+    if(isNaN(n3)) n3=0;
+    const furthestAbsolute = Math.max(Math.abs(n1), Math.abs(n2), Math.abs(n3));
+    switch(furthestAbsolute) {
+      case Math.abs(n1): return n1;
+      case Math.abs(n2): return n2;
+      case Math.abs(n3): return n3;
     }
+    return 0;
   }
 
   parseMoney(s: string): number {

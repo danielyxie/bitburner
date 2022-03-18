@@ -218,3 +218,31 @@ describe('Numeral formatting of scientific text', () => {
 		//expect(numeralWrapper.parseMoney('-123.456n')).toBeCloseTo(-123456000000000000000000000000000);
 	});
 });
+
+describe('Finding the number furthest away from 0', () => {
+	test('should work if all numbers are equal', () => {
+		expect(numeralWrapper.furthestFrom0(0, 0, 0)).toEqual(0);
+		expect(numeralWrapper.furthestFrom0(1, 1, 1)).toEqual(1);
+		expect(numeralWrapper.furthestFrom0(123, 123, 123)).toEqual(123);
+		expect(numeralWrapper.furthestFrom0(-1, -1, -1)).toEqual(-1);
+		expect(numeralWrapper.furthestFrom0(-123, -123, -123)).toEqual(-123);
+	});
+	test('should work for different positive numbers, and for the largest number in each spot', () => {
+		expect(numeralWrapper.furthestFrom0(1, 2, 3)).toEqual(3);
+		expect(numeralWrapper.furthestFrom0(456, 789, 123)).toEqual(789);
+		expect(numeralWrapper.furthestFrom0(789123, 123456, 456789)).toEqual(789123);
+	});
+	test('should work for different negative numbers, and for the smallest number in each spot', () => {
+		expect(numeralWrapper.furthestFrom0(-1, -2, -3)).toEqual(-3);
+		expect(numeralWrapper.furthestFrom0(-456, -789, -123)).toEqual(-789);
+		expect(numeralWrapper.furthestFrom0(-789123, -123456, -456789)).toEqual(-789123);
+	});
+	test('should work for combined positive and negative numbers', () => {
+		expect(numeralWrapper.furthestFrom0(1, -2, 3)).toEqual(3);
+		expect(numeralWrapper.furthestFrom0(-456, 789, -123)).toEqual(789);
+		expect(numeralWrapper.furthestFrom0(789123, -123456, -456789)).toEqual(789123);
+	});
+	test('Should return 0 for invalid input', () => {
+		expect(numeralWrapper.furthestFrom0('abc', undefined, null)).toEqual(0);
+	});
+});
