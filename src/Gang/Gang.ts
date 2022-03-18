@@ -191,7 +191,7 @@ export class Gang implements IGang {
     }
 
     // Then process territory
-    const gangs = GangConstants.Names.filter((g) => AllGangs[g].territory > 0);
+    const gangs = GangConstants.Names.filter((g) => AllGangs[g].territory > 0 || g === gangName);
     if (gangs.length > 1) {
       for (let i = 0; i < gangs.length; ++i) {
         const others = gangs.filter((e) => {
@@ -225,9 +225,9 @@ export class Gang implements IGang {
           if (AllGangs[otherGang].territory <= 0) return;
           const territoryGain = calculateTerritoryGain(thisGang, otherGang);
           AllGangs[thisGang].territory += territoryGain;
-          if (AllGangs[thisGang].territory > 1) AllGangs[thisGang].territory = 1;
+          if (AllGangs[thisGang].territory > 0.999) AllGangs[thisGang].territory = 1;
           AllGangs[otherGang].territory -= territoryGain;
-          if (AllGangs[thisGang].territory < 0) AllGangs[thisGang].territory = 0;
+          if (AllGangs[thisGang].territory < 0.001) AllGangs[thisGang].territory = 0;
           if (thisGang === gangName) {
             this.clash(true); // Player won
             AllGangs[otherGang].power *= 1 / 1.01;
@@ -240,9 +240,9 @@ export class Gang implements IGang {
           if (AllGangs[thisGang].territory <= 0) return;
           const territoryGain = calculateTerritoryGain(otherGang, thisGang);
           AllGangs[thisGang].territory -= territoryGain;
-          if (AllGangs[otherGang].territory < 0) AllGangs[otherGang].territory = 0;
+          if (AllGangs[otherGang].territory < 0.001) AllGangs[otherGang].territory = 0;
           AllGangs[otherGang].territory += territoryGain;
-          if (AllGangs[otherGang].territory > 1) AllGangs[otherGang].territory = 1;
+          if (AllGangs[otherGang].territory > 0.999) AllGangs[otherGang].territory = 1;
           if (thisGang === gangName) {
             this.clash(false); // Player lost
           } else if (otherGang === gangName) {
