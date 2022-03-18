@@ -10,6 +10,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Money } from "../../ui/React/Money";
 import { SellShares } from "../Actions";
+import { KEY } from "src/utils/helpers/keyCodes";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -68,7 +69,7 @@ export function SellSharesModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) sell();
+    if (event.key === KEY.ENTER) sell();
   }
 
   return (

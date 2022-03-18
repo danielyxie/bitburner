@@ -276,54 +276,54 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     function handleShortcuts(this: Document, event: KeyboardEvent): any {
       if (Settings.DisableHotkeys) return;
       if ((props.player.isWorking && props.player.focus) || redPillFlag) return;
-      if (event.keyCode == KEY.T && event.altKey) {
+      if (event.key === "t" && event.altKey) {
         event.preventDefault();
         clickTerminal();
-      } else if (event.keyCode === KEY.C && event.altKey) {
+      } else if (event.key === KEY.C && event.altKey) {
         event.preventDefault();
         clickStats();
-      } else if (event.keyCode === KEY.E && event.altKey) {
+      } else if (event.key === KEY.E && event.altKey) {
         event.preventDefault();
         clickScriptEditor();
-      } else if (event.keyCode === KEY.S && event.altKey) {
+      } else if (event.key === KEY.S && event.altKey) {
         event.preventDefault();
         clickActiveScripts();
-      } else if (event.keyCode === KEY.H && event.altKey) {
+      } else if (event.key === KEY.H && event.altKey) {
         event.preventDefault();
         clickHacknet();
-      } else if (event.keyCode === KEY.W && event.altKey) {
+      } else if (event.key === KEY.W && event.altKey) {
         event.preventDefault();
         clickCity();
-      } else if (event.keyCode === KEY.J && event.altKey && !event.ctrlKey && !event.metaKey && canJob) {
+      } else if (event.key === KEY.J && event.altKey && !event.ctrlKey && !event.metaKey && canJob) {
         // ctrl/cmd + alt + j is shortcut to open Chrome dev tools
         event.preventDefault();
         clickJob();
-      } else if (event.keyCode === KEY.R && event.altKey) {
+      } else if (event.key === KEY.R && event.altKey) {
         event.preventDefault();
         clickTravel();
-      } else if (event.keyCode === KEY.P && event.altKey) {
+      } else if (event.key === KEY.P && event.altKey) {
         event.preventDefault();
         clickCreateProgram();
-      } else if (event.keyCode === KEY.F && event.altKey) {
+      } else if (event.key === KEY.F && event.altKey) {
         if (props.page == Page.Terminal && Settings.EnableBashHotkeys) {
           return;
         }
         event.preventDefault();
         clickFactions();
-      } else if (event.keyCode === KEY.A && event.altKey) {
+      } else if (event.key === KEY.A && event.altKey) {
         event.preventDefault();
         clickAugmentations();
-      } else if (event.keyCode === KEY.U && event.altKey) {
+      } else if (event.key === KEY.U && event.altKey) {
         event.preventDefault();
         clickTutorial();
-      } else if (event.keyCode === KEY.B && event.altKey && props.player.bladeburner) {
+      } else if (event.key === KEY.B && event.altKey && props.player.bladeburner) {
         event.preventDefault();
         clickBladeburner();
-      } else if (event.keyCode === KEY.G && event.altKey && props.player.gang) {
+      } else if (event.key === KEY.G && event.altKey && props.player.gang) {
         event.preventDefault();
         clickGang();
       }
-      // if (event.keyCode === KEY.O && event.altKey) {
+      // if (event.key === KEY.O && event.altKey) {
       //   event.preventDefault();
       //   gameOptionsBoxOpen();
       // }

@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import { KEY } from "src/utils/helpers/keyCodes";
 
 interface IProps {
   open: boolean;
@@ -45,7 +46,7 @@ export function GoPublicModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) goPublic();
+    if (event.key === KEY.ENTER) goPublic();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {

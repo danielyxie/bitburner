@@ -11,6 +11,7 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { KEY } from "src/utils/helpers/keyCodes";
 
 interface IProps {
   setDivisionName: (name: string) => void;
@@ -53,7 +54,7 @@ export function ExpandIndustryTab(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) newIndustry();
+    if (event.key === KEY.ENTER) newIndustry();
   }
 
   function onIndustryChange(event: SelectChangeEvent<string>): void {

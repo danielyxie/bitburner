@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import { KEY } from "src/utils/helpers/keyCodes";
 
 interface IProps {
   open: boolean;
@@ -57,7 +58,7 @@ export function ThrowPartyModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) throwParty();
+    if (event.key === KEY.ENTER) throwParty();
   }
 
   return (

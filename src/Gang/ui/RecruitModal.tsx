@@ -8,6 +8,7 @@ import { useGang } from "./Context";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { KEY } from "src/utils/helpers/keyCodes";
 
 interface IRecruitPopupProps {
   open: boolean;
@@ -34,7 +35,7 @@ export function RecruitModal(props: IRecruitPopupProps): React.ReactElement {
   }
 
   function onKeyUp(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) recruit();
+    if (event.key === KEY.ENTER) recruit();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {

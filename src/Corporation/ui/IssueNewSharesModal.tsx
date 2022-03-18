@@ -8,6 +8,7 @@ import { useCorporation } from "./Context";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { KEY } from "src/utils/helpers/keyCodes";
 
 interface IEffectTextProps {
   shares: number | null;
@@ -93,7 +94,7 @@ export function IssueNewSharesModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) issueNewShares();
+    if (event.key === KEY.ENTER) issueNewShares();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {

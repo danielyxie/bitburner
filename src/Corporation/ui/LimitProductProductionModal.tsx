@@ -5,6 +5,7 @@ import { Modal } from "../../ui/React/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { KEY } from "src/utils/helpers/keyCodes";
 
 interface IProps {
   open: boolean;
@@ -25,7 +26,7 @@ export function LimitProductProductionModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) limitProductProduction();
+    if (event.key === KEY.ENTER) limitProductProduction();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
