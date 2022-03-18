@@ -38,9 +38,8 @@ Like hack, `grow` can be called on any server, regardless of where the script is
 
 ```ts
 // NS1:
-var availableMoney = getServerMoneyAvailable("foodnstuff");
+var currentMoney = getServerMoneyAvailable("foodnstuff");
 currentMoney = currentMoney * (1 + grow("foodnstuff"));
-currentMoney = currentMoney * (1 + grow("foodnstuff", { threads: 5 })); // Only use 5 threads to grow
 ```
 
 ## Example 2
@@ -48,8 +47,7 @@ currentMoney = currentMoney * (1 + grow("foodnstuff", { threads: 5 })); // Only 
 
 ```ts
 // NS2:
-let availableMoney = ns.getServerMoneyAvailable("foodnstuff");
+let currentMoney = ns.getServerMoneyAvailable("foodnstuff");
 currentMoney *= (1 + await ns.grow("foodnstuff"));
-currentMoney *= (1 + await ns.grow("foodnstuff", { threads: 5 })); // Only use 5 threads to grow
 ```
 

@@ -2152,7 +2152,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       message = argsToString([message]);
       SnackbarEvents.emit(message, variant, duration);
     },
-    prompt: function (txt: any): any {
+    prompt: function (txt: any, options?: { type?: string; options?: string[] }): any {
       updateDynamicRam("prompt", getRamCost(Player, "prompt"));
       if (!isString(txt)) {
         txt = JSON.stringify(txt);
@@ -2161,6 +2161,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return new Promise(function (resolve) {
         PromptEvent.emit({
           txt: txt,
+          options,
           resolve: resolve,
         });
       });

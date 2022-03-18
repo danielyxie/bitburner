@@ -18,6 +18,7 @@
 |  [ActiveFragment](./bitburner.activefragment.md) |  |
 |  [AugmentationStats](./bitburner.augmentationstats.md) | Data representing the internal values of an Augmentation. |
 |  [AugmentPair](./bitburner.augmentpair.md) | Return value of [getSleevePurchasableAugs](./bitburner.sleeve.getsleevepurchasableaugs.md) |
+|  [AutocompleteData](./bitburner.autocompletedata.md) | Used for autocompletion |
 |  [BasicHGWOptions](./bitburner.basichgwoptions.md) | Options to affect the behavior of [hack](./bitburner.ns.hack.md)<!-- -->, [grow](./bitburner.ns.grow.md)<!-- -->, and [weaken](./bitburner.ns.weaken.md)<!-- -->. |
 |  [BitNodeMultipliers](./bitburner.bitnodemultipliers.md) | All multipliers affecting the difficulty of the current challenge. |
 |  [Bladeburner](./bitburner.bladeburner.md) | Bladeburner API |

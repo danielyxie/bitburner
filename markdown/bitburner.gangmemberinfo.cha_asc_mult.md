@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.cha\_asc\_mult property
 
+Charisma multiplier from ascensions
+
 <b>Signature:</b>
 
 ```typescript

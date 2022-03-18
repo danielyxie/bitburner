@@ -4,7 +4,7 @@
 
 ## AugmentationStats.crime\_success\_mult property
 
-Multipler to crime success rate
+Multiplier to crime success rate
 
 <b>Signature:</b>
 

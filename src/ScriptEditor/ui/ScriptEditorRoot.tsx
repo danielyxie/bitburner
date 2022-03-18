@@ -691,7 +691,7 @@ export function Root(props: IProps): React.ReactElement {
     if (serverScriptIndex === -1 || savedScriptCode !== server.scripts[serverScriptIndex as number].code) {
       PromptEvent.emit({
         txt: "Do you want to save changes to " + closingScript.fileName + "?",
-        resolve: (result: boolean) => {
+        resolve: (result: boolean | string) => {
           if (result) {
             // Save changes
             closingScript.code = savedScriptCode;
@@ -748,7 +748,7 @@ export function Root(props: IProps): React.ReactElement {
           "Do you want to overwrite the current editor content with the contents of " +
           openScript.fileName +
           " on the server? This cannot be undone.",
-        resolve: (result: boolean) => {
+        resolve: (result: boolean | string) => {
           if (result) {
             // Save changes
             openScript.code = serverScriptCode;

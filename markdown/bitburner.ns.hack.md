@@ -41,7 +41,6 @@ A successful `hack()` on a server will raise that server’s security level by 0
 ```ts
 // NS1:
 var earnedMoney = hack("foodnstuff");
-earnedMoney = earnedMoney + hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
 ```
 
 ## Example 2
@@ -50,6 +49,5 @@ earnedMoney = earnedMoney + hack("foodnstuff", { threads: 5 }); // Only use 5 th
 ```ts
 // NS2:
 let earnedMoney = await ns.hack("foodnstuff");
-earnedMoney += await ns.hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
 ```
 
