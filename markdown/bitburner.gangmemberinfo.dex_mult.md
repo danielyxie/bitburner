@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.dex\_mult property
 
+Dexterity multiplier from equipment
+
 <b>Signature:</b>
 
 ```typescript

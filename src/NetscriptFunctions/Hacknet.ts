@@ -179,7 +179,8 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript, he
     },
     spendHashes: function (_upgName: unknown, _upgTarget: unknown): boolean {
       const upgName = helper.string("spendHashes", "upgName", _upgName);
-      const upgTarget = helper.string("spendHashes", "upgTarget", _upgTarget);
+      let upgTarget = "";
+      if (_upgTarget !== undefined) upgTarget = helper.string("spendHashes", "upgTarget", _upgTarget);
       if (!hasHacknetServers(player)) {
         return false;
       }

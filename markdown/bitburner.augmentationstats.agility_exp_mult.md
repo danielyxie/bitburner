@@ -4,7 +4,7 @@
 
 ## AugmentationStats.agility\_exp\_mult property
 
-Multipler to agility experience gain rate
+Multiplier to agility experience gain rate
 
 <b>Signature:</b>
 

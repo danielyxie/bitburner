@@ -68,6 +68,7 @@ interface Player
 |  [hasTixApiAccess](./bitburner.player.hastixapiaccess.md) | boolean |  |
 |  [hasWseAccount](./bitburner.player.haswseaccount.md) | boolean |  |
 |  [hp](./bitburner.player.hp.md) | number |  |
+|  [inBladeburner](./bitburner.player.inbladeburner.md) | boolean |  |
 |  [intelligence](./bitburner.player.intelligence.md) | number |  |
 |  [isWorking](./bitburner.player.isworking.md) | boolean |  |
 |  [jobs](./bitburner.player.jobs.md) | any |  |

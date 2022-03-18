@@ -24,11 +24,11 @@ getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string |
 
 [RunningScript](./bitburner.runningscript.md)
 
-info about a running script
+The info about the running script if found, and null otherwise.
 
 ## Remarks
 
 RAM cost: 0.3 GB
 
-Running with no args returns curent script. If you use a PID as the first parameter, the hostname and args parameters are unnecessary.
+Running with no args returns current script. If you use a PID as the first parameter, the hostname and args parameters are unnecessary.
 

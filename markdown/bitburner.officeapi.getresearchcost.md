@@ -17,7 +17,7 @@ getResearchCost(divisionName: string, researchName: string): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
-|  researchName | string |  |
+|  researchName | string | Name of the research |
 
 <b>Returns:</b>
 

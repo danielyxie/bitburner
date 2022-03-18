@@ -17,7 +17,7 @@ hasResearched(divisionName: string, researchName: string): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  divisionName | string | Name of the division |
-|  researchName | string |  |
+|  researchName | string | Name of the research |
 
 <b>Returns:</b>
 

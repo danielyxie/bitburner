@@ -4,7 +4,7 @@
 
 ## AugmentationStats.dexterity\_mult property
 
-Multipler to dexterity skill
+Multiplier to dexterity skill
 
 <b>Signature:</b>
 
