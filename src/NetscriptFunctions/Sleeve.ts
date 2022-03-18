@@ -289,7 +289,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       checkSleeveAPIAccess("purchaseSleeveAug");
       checkSleeveNumber("purchaseSleeveAug", sleeveNumber);
 
-      if (player.sleeves[sleeveNumber].shock){
+      if (player.sleeves[sleeveNumber].shock > 0){
         throw helper.makeRuntimeErrorMsg("sleeve.purchaseSleeveAug", `Sleeve shock too high: Sleeve ${sleeveNumber}`);
       }
 
