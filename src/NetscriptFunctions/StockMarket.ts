@@ -390,7 +390,6 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     },
     purchaseWseAccount: function (): boolean {
       helper.updateDynamicRam("PurchaseWseAccount", getRamCost(player, "stock", "purchaseWseAccount"));
-      checkTixApiAccess("purchaseWseAccount");
 
       if (player.hasWseAccount) {
         workerScript.log("stock.purchaseWseAccount", () => "Already purchased WSE Account");
@@ -412,7 +411,6 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     },
     purchaseTixApi: function (): boolean {
       helper.updateDynamicRam("PurchaseTixApi", getRamCost(player, "stock", "purchaseTixApi"));
-      checkTixApiAccess("purchaseTixApi");
       
       if (player.hasTixApiAccess) {
         workerScript.log("stock.purchaseTixApi", () => "Already purchased TIX API");
