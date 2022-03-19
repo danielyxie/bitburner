@@ -1372,7 +1372,7 @@ export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean
 export function finishCraftAugmentationWork(this: IPlayer, cancelled: boolean): string {
   const augName = this.craftAugmentationName;
   if (cancelled === false) {
-    dialogBoxCreate(`You've finished crafting ${augName}.<br>The augmentation has been grafted to you, but you feel slightly lightheaded.`)
+    dialogBoxCreate(`You've finished crafting ${augName}.<br>The augmentation has been grafted to your body, but you feel a bit off.`)
 
     applyAugmentation(Augmentations[augName]);
   } else {

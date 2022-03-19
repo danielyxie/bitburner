@@ -511,8 +511,7 @@ export function WorkInProgressRoot(): React.ReactElement {
             <br /><br />
             You have been working for {convertTimeMsToTimeElapsedString(player.timeWorked)}
             <br /><br />
-            The augumentation if {((player.timeWorkedCraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}
-            % complete. <br />
+            The augmentation will be done in {convertTimeMsToTimeElapsedString(player.timeNeededToCompleteWork - player.timeWorkedCraftAugmentation)}.<br />
             If you cancel, your work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned.
           </Typography>
         </Grid>
