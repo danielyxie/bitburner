@@ -169,6 +169,8 @@ export class PlayerObject implements IPlayer {
   workChaExpGainRate: number;
   workMoneyLossRate: number;
 
+  entropyStacks: number;
+
   // Methods
   work: (numCycles: number) => boolean;
   workPartTime: (numCycles: number) => boolean;
@@ -299,6 +301,7 @@ export class PlayerObject implements IPlayer {
   startCraftAugmentationWork: (augmentationName: string, time: number) => void;
   craftAugmentationWork: (numCycles: number) => boolean;
   finishCraftAugmentationWork: (cancelled: boolean) => string;
+  applyEntropy: (stacks?: number) => void;
 
   constructor() {
     //Skills and stats
@@ -467,6 +470,8 @@ export class PlayerObject implements IPlayer {
     //bitnode
     this.bitNodeN = 1;
 
+    this.entropyStacks = 0;
+
     //Used to store the last update time.
     this.lastUpdate = 0;
     this.lastSave = 0;
@@ -619,6 +624,8 @@ export class PlayerObject implements IPlayer {
 
     this.canAccessCotMG = generalMethods.canAccessCotMG;
     this.sourceFileLvl = generalMethods.sourceFileLvl;
+
+    this.applyEntropy = augmentationMethods.applyEntropy;
   }
 
   /**

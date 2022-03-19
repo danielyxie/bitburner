@@ -111,6 +111,7 @@ export const CONSTANTS: {
   CodingContractBaseMoneyGain: number;
   AugmentationCraftingCostMult: number;
   AugmentationCraftingTimeMult: number;
+  EntropyEffect: number;
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
@@ -276,7 +277,9 @@ export const CONSTANTS: {
   // Augmentation crafting multipliers
   // TODO: Get these right
   AugmentationCraftingCostMult: 1.2,
-  AugmentationCraftingTimeMult: 1,
+  AugmentationCraftingTimeMult: 0.01,
+
+  EntropyEffect: 0.99,
 
   // BitNode/Source-File related stuff
   TotalNumBitNodes: 24,

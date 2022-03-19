@@ -180,6 +180,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
 }
 
 export function prestigeSourceFile(this: IPlayer): void {
+  this.entropyStacks = 0;
   this.prestigeAugmentation();
   this.karma = 0;
   // Duplicate sleeves are reset to level 1 every Bit Node (but the number of sleeves you have persists)
@@ -1373,6 +1374,8 @@ export function finishCraftAugmentationWork(this: IPlayer, cancelled: boolean): 
     dialogBoxCreate(`You've finished crafting ${augName}.<br>The augmentation has been grafted to your body, but you feel a bit off.`)
 
     applyAugmentation(Augmentations[augName]);
+    this.entropyStacks += 1;
+    this.applyEntropy();
   } else {
     dialogBoxCreate(`You cancelled the crafting of ${augName}.<br>Your money was not returned to you.`)
   }
@@ -1561,20 +1564,20 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
             "SUCCESS: Crime successful! Gained " +
-              numeralWrapper.formatMoney(this.workMoneyGained) +
-              ", " +
-              numeralWrapper.formatExp(this.workHackExpGained) +
-              " hack exp, " +
-              numeralWrapper.formatExp(this.workStrExpGained) +
-              " str exp, " +
-              numeralWrapper.formatExp(this.workDefExpGained) +
-              " def exp, " +
-              numeralWrapper.formatExp(this.workDexExpGained) +
-              " dex exp, " +
-              numeralWrapper.formatExp(this.workAgiExpGained) +
-              " agi exp, " +
-              numeralWrapper.formatExp(this.workChaExpGained) +
-              " cha exp.",
+            numeralWrapper.formatMoney(this.workMoneyGained) +
+            ", " +
+            numeralWrapper.formatExp(this.workHackExpGained) +
+            " hack exp, " +
+            numeralWrapper.formatExp(this.workStrExpGained) +
+            " str exp, " +
+            numeralWrapper.formatExp(this.workDefExpGained) +
+            " def exp, " +
+            numeralWrapper.formatExp(this.workDexExpGained) +
+            " dex exp, " +
+            numeralWrapper.formatExp(this.workAgiExpGained) +
+            " agi exp, " +
+            numeralWrapper.formatExp(this.workChaExpGained) +
+            " cha exp.",
           );
         }
       } else {
@@ -1613,18 +1616,18 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
             "FAIL: Crime failed! Gained " +
-              numeralWrapper.formatExp(this.workHackExpGained) +
-              " hack exp, " +
-              numeralWrapper.formatExp(this.workStrExpGained) +
-              " str exp, " +
-              numeralWrapper.formatExp(this.workDefExpGained) +
-              " def exp, " +
-              numeralWrapper.formatExp(this.workDexExpGained) +
-              " dex exp, " +
-              numeralWrapper.formatExp(this.workAgiExpGained) +
-              " agi exp, " +
-              numeralWrapper.formatExp(this.workChaExpGained) +
-              " cha exp.",
+            numeralWrapper.formatExp(this.workHackExpGained) +
+            " hack exp, " +
+            numeralWrapper.formatExp(this.workStrExpGained) +
+            " str exp, " +
+            numeralWrapper.formatExp(this.workDefExpGained) +
+            " def exp, " +
+            numeralWrapper.formatExp(this.workDexExpGained) +
+            " dex exp, " +
+            numeralWrapper.formatExp(this.workAgiExpGained) +
+            " agi exp, " +
+            numeralWrapper.formatExp(this.workChaExpGained) +
+            " cha exp.",
           );
         }
       } else {

@@ -127,9 +127,10 @@ export const GraftingRoot = (): React.ReactElement => {
       </Box>
 
       <Box sx={{ my: 5 }}>
-        <Typography variant="h5">name tbd</Typography>
+        <Typography variant="h5">Entropy Accumulation</Typography>
         <Typography>
-          probably some info about the cumulative negative effects here
+          probably some info about the cumulative negative effects here<br />
+          {player.entropyStacks} accumulated entropy
         </Typography>
       </Box>
     </Container>

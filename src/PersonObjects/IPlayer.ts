@@ -160,6 +160,8 @@ export interface IPlayer {
   workChaExpGainRate: number;
   workMoneyLossRate: number;
 
+  entropyStacks: number;
+
   // Methods
   work(numCycles: number): boolean;
   workPartTime(numCycles: number): boolean;
@@ -289,4 +291,5 @@ export interface IPlayer {
   startCraftAugmentationWork(augmentationName: string, time: number): void;
   craftAugmentationWork(numCycles: number): boolean;
   finishCraftAugmentationWork(cancelled: boolean): string;
+  applyEntropy(stacks?: number): void;
 }

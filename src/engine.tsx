@@ -259,6 +259,9 @@ const Engine: {
         initSymbolToStockMap();
       }
 
+      // Apply penalty for entropy accumulation
+      Player.applyEntropy(Player.entropyStacks);
+
       // Calculate the number of cycles have elapsed while offline
       Engine._lastUpdate = new Date().getTime();
       const lastUpdate = Player.lastUpdate;
