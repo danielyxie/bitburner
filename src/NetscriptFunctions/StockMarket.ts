@@ -8,7 +8,7 @@ import { getBuyTransactionCost, getSellTransactionGain } from "../StockMarket/St
 import { OrderTypes } from "../StockMarket/data/OrderTypes";
 import { PositionTypes } from "../StockMarket/data/PositionTypes";
 import { StockSymbols } from "../StockMarket/data/StockSymbols";
-import { getStockMarket4SDataCost, getStockMarket4STixApiCost } from "../StockMarket/StockMarketCosts";
+import { getStockMarket4SDataCost, getStockMarket4STixApiCost, getStockMarketWseCost, getStockMarketTixApiCost } from "../StockMarket/StockMarketCosts";
 import { Stock } from "../StockMarket/Stock";
 import { TIX } from "../ScriptEditor/NetscriptDefinitions";
 
@@ -386,6 +386,48 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       player.has4SDataTixApi = true;
       player.loseMoney(getStockMarket4STixApiCost(), "stock");
       workerScript.log("stock.purchase4SMarketDataTixApi", () => "Purchased 4S Market Data TIX API");
+      return true;
+    },
+    purchaseWseAccount: function (): boolean {
+      helper.updateDynamicRam("PurchaseWseAccount", getRamCost(player, "stock", "purchaseWseAccount"));
+
+      if (player.hasWseAccount) {
+        workerScript.log("stock.purchaseWseAccount", () => "Already purchased WSE Account");
+        return true;
+      }
+
+      if (player.money < getStockMarketWseCost()) {
+        workerScript.log(
+          "stock.purchaseWseAccount",
+          () => "Not enough money to purchase WSE Account Access",
+        );
+        return false;
+      }
+
+      player.hasWseAccount = true;
+      player.loseMoney(getStockMarketWseCost(), "stock");
+      workerScript.log("stock.purchaseWseAccount", () => "Purchased WSE Account Access");
+      return true;
+    },
+    purchaseTixApi: function (): boolean {
+      helper.updateDynamicRam("purchaseTixApi", getRamCost(player, "stock", "purchaseTixApi"));
+
+      if (player.hasTixApiAccess) {
+        workerScript.log("stock.purchaseTixApi", () => "Already purchased TIX API");
+        return true;
+      }
+
+      if (player.money < getStockMarketTixApiCost()) {
+        workerScript.log(
+          "stock.purchaseTixApi",
+          () => "Not enough money to purchase TIX API Access",
+        );
+        return false;
+      }
+
+      player.hasTixApiAccess = true;
+      player.loseMoney(getStockMarketTixApiCost(), "stock");
+      workerScript.log("stock.purchaseTixApi", () => "Purchased TIX API");
       return true;
     },
   };

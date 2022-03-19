@@ -932,7 +932,9 @@ export function startFactionSecurityWork(this: IPlayer, faction: Faction): void 
 export function workForFaction(this: IPlayer, numCycles: number): boolean {
   const faction = Factions[this.currentWorkFactionName];
 
-  if (!faction) { return false; }
+  if (!faction) {
+    return false;
+  }
 
   //Constantly update the rep gain rate
   switch (this.factionWorkType) {
@@ -1252,12 +1254,7 @@ export function getWorkRepGain(this: IPlayer): number {
 // }
 
 /* Creating a Program */
-export function startCreateProgramWork(
-  this: IPlayer,
-  programName: string,
-  time: number,
-  reqLevel: number,
-): void {
+export function startCreateProgramWork(this: IPlayer, programName: string, time: number, reqLevel: number): void {
   this.resetWorkStatus();
   this.isWorking = true;
   this.workType = CONSTANTS.WorkTypeCreateProgram;
@@ -1510,20 +1507,20 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
             "SUCCESS: Crime successful! Gained " +
-            numeralWrapper.formatMoney(this.workMoneyGained) +
-            ", " +
-            numeralWrapper.formatExp(this.workHackExpGained) +
-            " hack exp, " +
-            numeralWrapper.formatExp(this.workStrExpGained) +
-            " str exp, " +
-            numeralWrapper.formatExp(this.workDefExpGained) +
-            " def exp, " +
-            numeralWrapper.formatExp(this.workDexExpGained) +
-            " dex exp, " +
-            numeralWrapper.formatExp(this.workAgiExpGained) +
-            " agi exp, " +
-            numeralWrapper.formatExp(this.workChaExpGained) +
-            " cha exp.",
+              numeralWrapper.formatMoney(this.workMoneyGained) +
+              ", " +
+              numeralWrapper.formatExp(this.workHackExpGained) +
+              " hack exp, " +
+              numeralWrapper.formatExp(this.workStrExpGained) +
+              " str exp, " +
+              numeralWrapper.formatExp(this.workDefExpGained) +
+              " def exp, " +
+              numeralWrapper.formatExp(this.workDexExpGained) +
+              " dex exp, " +
+              numeralWrapper.formatExp(this.workAgiExpGained) +
+              " agi exp, " +
+              numeralWrapper.formatExp(this.workChaExpGained) +
+              " cha exp.",
           );
         }
       } else {
@@ -1562,18 +1559,18 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
             "FAIL: Crime failed! Gained " +
-            numeralWrapper.formatExp(this.workHackExpGained) +
-            " hack exp, " +
-            numeralWrapper.formatExp(this.workStrExpGained) +
-            " str exp, " +
-            numeralWrapper.formatExp(this.workDefExpGained) +
-            " def exp, " +
-            numeralWrapper.formatExp(this.workDexExpGained) +
-            " dex exp, " +
-            numeralWrapper.formatExp(this.workAgiExpGained) +
-            " agi exp, " +
-            numeralWrapper.formatExp(this.workChaExpGained) +
-            " cha exp.",
+              numeralWrapper.formatExp(this.workHackExpGained) +
+              " hack exp, " +
+              numeralWrapper.formatExp(this.workStrExpGained) +
+              " str exp, " +
+              numeralWrapper.formatExp(this.workDefExpGained) +
+              " def exp, " +
+              numeralWrapper.formatExp(this.workDexExpGained) +
+              " dex exp, " +
+              numeralWrapper.formatExp(this.workAgiExpGained) +
+              " agi exp, " +
+              numeralWrapper.formatExp(this.workChaExpGained) +
+              " cha exp.",
           );
         }
       } else {
@@ -2000,13 +1997,15 @@ export function isQualified(this: IPlayer, company: Company, position: CompanyPo
   const reqAgility = position.requiredDexterity > 0 ? position.requiredDexterity + offset : 0;
   const reqCharisma = position.requiredCharisma > 0 ? position.requiredCharisma + offset : 0;
 
-  return this.hacking >= reqHacking &&
+  return (
+    this.hacking >= reqHacking &&
     this.strength >= reqStrength &&
     this.defense >= reqDefense &&
     this.dexterity >= reqDexterity &&
     this.agility >= reqAgility &&
     this.charisma >= reqCharisma &&
-    company.playerReputation >= position.requiredReputation;
+    company.playerReputation >= position.requiredReputation
+  );
 }
 
 /********** Reapplying Augmentations and Source File ***********/
@@ -2237,7 +2236,8 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   //Fulcrum Secret Technologies - If u've unlocked fulcrum secret technolgoies server and have a high rep with the company
   const fulcrumsecrettechonologiesFac = Factions[FactionNames.FulcrumSecretTechnologies];
   const fulcrumSecretServer = GetServer(SpecialServers.FulcrumSecretTechnologies);
-  if (!(fulcrumSecretServer instanceof Server)) throw new Error(`${FactionNames.FulcrumSecretTechnologies} should be normal server`);
+  if (!(fulcrumSecretServer instanceof Server))
+    throw new Error(`${FactionNames.FulcrumSecretTechnologies} should be normal server`);
   if (fulcrumSecretServer == null) {
     console.error(`Could not find ${FactionNames.FulcrumSecretTechnologies} Server`);
   } else if (
