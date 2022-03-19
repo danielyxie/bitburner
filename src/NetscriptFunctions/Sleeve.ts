@@ -288,11 +288,11 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       helper.updateDynamicRam("purchaseSleeveAug", getRamCost(player, "sleeve", "purchaseSleeveAug"));
       checkSleeveAPIAccess("purchaseSleeveAug");
       checkSleeveNumber("purchaseSleeveAug", sleeveNumber);
-      
+
       if (player.sleeves[sleeveNumber].shock > 0){
         throw helper.makeRuntimeErrorMsg("sleeve.purchaseSleeveAug", `Sleeve shock too high: Sleeve ${sleeveNumber}`);
       }
-      
+
       const aug = Augmentations[augName];
       if (!aug) {
         throw helper.makeRuntimeErrorMsg("sleeve.purchaseSleeveAug", `Invalid aug: ${augName}`);
