@@ -69,12 +69,13 @@ export const GraftingRoot = (): React.ReactElement => {
       </Button>
       <Typography variant="h4">Grafting Laboratory</Typography>
       <Typography>
-        blah blah blah exposition that isn't important right now <br />
-        Lorem ipsum dolor sit amet et et sed et et sanctus duo vero.
-        Stet amet iriure consetetur elit in magna et diam dolores invidunt ipsum gubergren nihil.
-        Diam et et ipsum consectetuer voluptua et clita lorem sit.
-        Et et lorem id no suscipit wisi.
-        Illum velit takimata et aliquyam takimata labore vel dolor dolores duo amet lorem elitr facer invidunt.
+        You find yourself in a secret laboratory, owned by a mysterious researcher.<br />
+        The scientist explains that they've been studying Augmentation grafting, the process
+        of applying Augmentations without requiring a body reset.
+        <br /><br />
+        Through legally questionable connections, the scientist has access to a vast array of
+        Augmentation blueprints, even private designs. They offer to build and graft
+        the Augmentations to you, in exchange for both a hefty sum of money, and being a lab rat.
       </Typography>
 
       <Box sx={{ my: 3 }}>
@@ -134,6 +135,7 @@ export const GraftingRoot = (): React.ReactElement => {
             <b>Accumulated Entropy:</b> {player.entropyStacks}
             <br />
             <b>All multipliers decreased by:</b> {formatNumber((1 - (CONSTANTS.EntropyEffect ** player.entropyStacks)) * 100, 3)}%
+            {" "}(multiplicative)
           </Typography>
         </Paper>
 
@@ -141,11 +143,11 @@ export const GraftingRoot = (): React.ReactElement => {
           Augmenting causes signficant physical and psychological changes to the affected
           individual, and the best way for the body to deal with these effects is to undergo
           a full shutdown process.
-          <br /><br />
+          <br />
           Grafting Augmentations to a semi-conscious host is extremely experimental and dangerous.
           <br /><br />
-          Scientists don't fully understand the consequences, but some have hypothesized that there's
-          a buildup of unknown irregularities that impair the user...
+          Scientists don't fully understand the consequences, but some have hypothesized
+          a buildup of irregularities that impair the user...
         </Typography>
 
       </Box>
