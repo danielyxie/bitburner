@@ -45,12 +45,16 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
     if (isPlayersGang) {
       const augs: string[] = [];
       for (const augName of Object.keys(Augmentations)) {
-        if (augName === AugmentationNames.NeuroFluxGovernor) continue;
-        if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
         const aug = Augmentations[augName];
-        if (!aug.isSpecial) {
-          augs.push(augName);
-        }
+        if (
+          augName === AugmentationNames.NeuroFluxGovernor ||
+          augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2 ||
+          // Special augs (i.e. Bladeburner augs)
+          aug.isSpecial ||
+          // Exclusive augs (i.e. QLink)
+          (aug.factions.length <= 1 && !props.faction.augmentations.includes(augName))
+        ) continue;
+        augs.push(augName);
       }
 
       return augs;

@@ -64,10 +64,14 @@ export function FactionsRoot(props: IProps): React.ReactElement {
 
     if (isPlayersGang) {
       for (const augName of Object.keys(Augmentations)) {
+        const aug = Augmentations[augName];
         if (
           augName === AugmentationNames.NeuroFluxGovernor ||
           augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2 ||
-          Augmentations[augName].isSpecial
+          // Special augs (i.e. Bladeburner augs)
+          aug.isSpecial ||
+          // Exclusive augs (i.e. QLink)
+          (aug.factions.length <= 1 && !faction.augmentations.includes(augName))
         ) continue;
         augs.push(augName)
       }
