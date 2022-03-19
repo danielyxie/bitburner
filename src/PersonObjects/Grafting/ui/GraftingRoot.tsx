@@ -39,6 +39,7 @@ const getAvailableAugs = (player: IPlayer): string[] => {
 
 export const GraftingRoot = (): React.ReactElement => {
   const player = use.Player();
+  const router = use.Router();
   const [selectedAug, setSelectedAug] = useState(getAvailableAugs(player)[0]);
 
   return <>
