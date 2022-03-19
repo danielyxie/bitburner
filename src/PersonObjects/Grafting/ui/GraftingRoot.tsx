@@ -20,6 +20,8 @@ import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames"
 import { Settings } from "../../../Settings/Settings";
 import { IMap } from "../../../types";
 import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
+import { LocationName } from "../../../Locations/data/LocationNames";
+import { Locations } from "../../../Locations/Locations";
 
 import { IPlayer } from "../../IPlayer";
 
@@ -58,6 +60,9 @@ export const GraftingRoot = (): React.ReactElement => {
 
   return <>
     <Container disableGutters maxWidth="lg" sx={{ mx: 0 }}>
+      <Button onClick={() => router.toLocation(Locations[LocationName.NewTokyoVitaLife])}>
+        Back
+      </Button>
       <Typography variant="h4">Grafting Laboratory</Typography>
       <Typography>
         blah blah blah exposition that isn't important right now <br />
