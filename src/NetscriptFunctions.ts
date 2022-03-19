@@ -144,7 +144,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const safeGetServer = function (hostname: string, callingFnName: string): BaseServer {
     const server = GetServer(hostname);
     if (server == null) {
-      throw makeRuntimeErrorMsg(callingFnName, `Invalid hostname or IP: ${hostname}`);
+      throw makeRuntimeErrorMsg(callingFnName, `Invalid hostname: ${hostname}`);
     }
     return server;
   };
