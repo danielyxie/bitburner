@@ -1517,7 +1517,7 @@ export interface TIX {
   /**
    * Purchase TIX API Access
    * @remarks RAM cost: 2.5 GB
-   * @returns True if you successfully purchased it or if you already have access, false otherwise. 
+   * @returns True if you successfully purchased it or if you already have access, false otherwise.
    */
   purchaseTixApi(): boolean;
 }

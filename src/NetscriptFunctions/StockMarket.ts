@@ -411,7 +411,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     },
     purchaseTixApi: function (): boolean {
       helper.updateDynamicRam("PurchaseTixApi", getRamCost(player, "stock", "purchaseTixApi"));
-      
+
       if (player.hasTixApiAccess) {
         workerScript.log("stock.purchaseTixApi", () => "Already purchased TIX API");
         return true;
