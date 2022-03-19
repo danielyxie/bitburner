@@ -65,6 +65,7 @@ import { serverMetadata } from "../../Server/data/servers";
 import { SnackbarEvents } from "../../ui/React/Snackbar";
 import { calculateClassEarnings } from "../formulas/work";
 import { achievements } from "../../Achievements/Achievements";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */
@@ -615,8 +616,8 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
         router.toGrafting();
       }
     } else if (this.work(numCycles)) {
-        router.toCity();
-      }
+      router.toCity();
+    }
   }
 }
 
@@ -1565,20 +1566,20 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
             "SUCCESS: Crime successful! Gained " +
-              numeralWrapper.formatMoney(this.workMoneyGained) +
-              ", " +
-              numeralWrapper.formatExp(this.workHackExpGained) +
-              " hack exp, " +
-              numeralWrapper.formatExp(this.workStrExpGained) +
-              " str exp, " +
-              numeralWrapper.formatExp(this.workDefExpGained) +
-              " def exp, " +
-              numeralWrapper.formatExp(this.workDexExpGained) +
-              " dex exp, " +
-              numeralWrapper.formatExp(this.workAgiExpGained) +
-              " agi exp, " +
-              numeralWrapper.formatExp(this.workChaExpGained) +
-              " cha exp.",
+            numeralWrapper.formatMoney(this.workMoneyGained) +
+            ", " +
+            numeralWrapper.formatExp(this.workHackExpGained) +
+            " hack exp, " +
+            numeralWrapper.formatExp(this.workStrExpGained) +
+            " str exp, " +
+            numeralWrapper.formatExp(this.workDefExpGained) +
+            " def exp, " +
+            numeralWrapper.formatExp(this.workDexExpGained) +
+            " dex exp, " +
+            numeralWrapper.formatExp(this.workAgiExpGained) +
+            " agi exp, " +
+            numeralWrapper.formatExp(this.workChaExpGained) +
+            " cha exp.",
           );
         }
       } else {
@@ -1617,18 +1618,18 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
             "FAIL: Crime failed! Gained " +
-              numeralWrapper.formatExp(this.workHackExpGained) +
-              " hack exp, " +
-              numeralWrapper.formatExp(this.workStrExpGained) +
-              " str exp, " +
-              numeralWrapper.formatExp(this.workDefExpGained) +
-              " def exp, " +
-              numeralWrapper.formatExp(this.workDexExpGained) +
-              " dex exp, " +
-              numeralWrapper.formatExp(this.workAgiExpGained) +
-              " agi exp, " +
-              numeralWrapper.formatExp(this.workChaExpGained) +
-              " cha exp.",
+            numeralWrapper.formatExp(this.workHackExpGained) +
+            " hack exp, " +
+            numeralWrapper.formatExp(this.workStrExpGained) +
+            " str exp, " +
+            numeralWrapper.formatExp(this.workDefExpGained) +
+            " def exp, " +
+            numeralWrapper.formatExp(this.workDexExpGained) +
+            " dex exp, " +
+            numeralWrapper.formatExp(this.workAgiExpGained) +
+            " agi exp, " +
+            numeralWrapper.formatExp(this.workChaExpGained) +
+            " cha exp.",
           );
         }
       } else {
@@ -1811,7 +1812,6 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
         }
         return false;
       }
-      return false; //Same job, do nothing
     }
   }
 
@@ -2144,7 +2144,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Illuminati
-  const illuminatiFac = Factions["Illuminati"];
+  const illuminatiFac = Factions[FactionNames.Illuminati];
   if (
     !illuminatiFac.isBanned &&
     !illuminatiFac.isMember &&
@@ -2161,7 +2161,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Daedalus
-  const daedalusFac = Factions["Daedalus"];
+  const daedalusFac = Factions[FactionNames.Daedalus];
   if (
     !daedalusFac.isBanned &&
     !daedalusFac.isMember &&
@@ -2175,7 +2175,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //The Covenant
-  const covenantFac = Factions["The Covenant"];
+  const covenantFac = Factions[FactionNames.TheCovenant];
   if (
     !covenantFac.isBanned &&
     !covenantFac.isMember &&
@@ -2192,7 +2192,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //ECorp
-  const ecorpFac = Factions["ECorp"];
+  const ecorpFac = Factions[FactionNames.ECorp];
   if (
     !ecorpFac.isBanned &&
     !ecorpFac.isMember &&
@@ -2203,7 +2203,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //MegaCorp
-  const megacorpFac = Factions["MegaCorp"];
+  const megacorpFac = Factions[FactionNames.MegaCorp];
   if (
     !megacorpFac.isBanned &&
     !megacorpFac.isMember &&
@@ -2214,7 +2214,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Bachman & Associates
-  const bachmanandassociatesFac = Factions["Bachman & Associates"];
+  const bachmanandassociatesFac = Factions[FactionNames.BachmanAssociates];
   if (
     !bachmanandassociatesFac.isBanned &&
     !bachmanandassociatesFac.isMember &&
@@ -2225,7 +2225,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Blade Industries
-  const bladeindustriesFac = Factions["Blade Industries"];
+  const bladeindustriesFac = Factions[FactionNames.BladeIndustries];
   if (
     !bladeindustriesFac.isBanned &&
     !bladeindustriesFac.isMember &&
@@ -2236,7 +2236,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //NWO
-  const nwoFac = Factions["NWO"];
+  const nwoFac = Factions[FactionNames.NWO];
   if (
     !nwoFac.isBanned &&
     !nwoFac.isMember &&
@@ -2247,7 +2247,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Clarke Incorporated
-  const clarkeincorporatedFac = Factions["Clarke Incorporated"];
+  const clarkeincorporatedFac = Factions[FactionNames.ClarkeIncorporated];
   if (
     !clarkeincorporatedFac.isBanned &&
     !clarkeincorporatedFac.isMember &&
@@ -2258,7 +2258,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //OmniTek Incorporated
-  const omnitekincorporatedFac = Factions["OmniTek Incorporated"];
+  const omnitekincorporatedFac = Factions[FactionNames.OmniTekIncorporated];
   if (
     !omnitekincorporatedFac.isBanned &&
     !omnitekincorporatedFac.isMember &&
@@ -2269,7 +2269,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Four Sigma
-  const foursigmaFac = Factions["Four Sigma"];
+  const foursigmaFac = Factions[FactionNames.FourSigma];
   if (
     !foursigmaFac.isBanned &&
     !foursigmaFac.isMember &&
@@ -2280,7 +2280,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //KuaiGong International
-  const kuaigonginternationalFac = Factions["KuaiGong International"];
+  const kuaigonginternationalFac = Factions[FactionNames.KuaiGongInternational];
   if (
     !kuaigonginternationalFac.isBanned &&
     !kuaigonginternationalFac.isMember &&
@@ -2291,27 +2291,27 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Fulcrum Secret Technologies - If u've unlocked fulcrum secret technolgoies server and have a high rep with the company
-  const fulcrumsecrettechonologiesFac = Factions["Fulcrum Secret Technologies"];
+  const fulcrumsecrettechonologiesFac = Factions[FactionNames.FulcrumSecretTechnologies];
   const fulcrumSecretServer = GetServer(SpecialServers.FulcrumSecretTechnologies);
-  if (!(fulcrumSecretServer instanceof Server)) throw new Error("Fulcrum Secret Technologies should be normal server");
+  if (!(fulcrumSecretServer instanceof Server)) throw new Error(`${FactionNames.FulcrumSecretTechnologies} should be normal server`);
   if (fulcrumSecretServer == null) {
-    console.error("Could not find Fulcrum Secret Technologies Server");
+    console.error(`Could not find ${FactionNames.FulcrumSecretTechnologies} Server`);
   } else if (
-      !fulcrumsecrettechonologiesFac.isBanned &&
-      !fulcrumsecrettechonologiesFac.isMember &&
-      !fulcrumsecrettechonologiesFac.alreadyInvited &&
-      fulcrumSecretServer.backdoorInstalled &&
-      checkMegacorpRequirements(LocationName.AevumFulcrumTechnologies, 250e3)
-    ) {
-      invitedFactions.push(fulcrumsecrettechonologiesFac);
-    }
+    !fulcrumsecrettechonologiesFac.isBanned &&
+    !fulcrumsecrettechonologiesFac.isMember &&
+    !fulcrumsecrettechonologiesFac.alreadyInvited &&
+    fulcrumSecretServer.backdoorInstalled &&
+    checkMegacorpRequirements(LocationName.AevumFulcrumTechnologies, 250e3)
+  ) {
+    invitedFactions.push(fulcrumsecrettechonologiesFac);
+  }
 
   //BitRunners
-  const bitrunnersFac = Factions["BitRunners"];
+  const bitrunnersFac = Factions[FactionNames.BitRunners];
   const bitrunnersServer = GetServer(SpecialServers.BitRunnersServer);
-  if (!(bitrunnersServer instanceof Server)) throw new Error("BitRunners should be normal server");
+  if (!(bitrunnersServer instanceof Server)) throw new Error(`${FactionNames.BitRunners} should be normal server`);
   if (bitrunnersServer == null) {
-    console.error("Could not find BitRunners Server");
+    console.error(`Could not find ${FactionNames.BitRunners} Server`);
   } else if (
     !bitrunnersFac.isBanned &&
     !bitrunnersFac.isMember &&
@@ -2323,11 +2323,11 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
 
   //The Black Hand
 
-  const theblackhandFac = Factions["The Black Hand"];
+  const theblackhandFac = Factions[FactionNames.TheBlackHand];
   const blackhandServer = GetServer(SpecialServers.TheBlackHandServer);
-  if (!(blackhandServer instanceof Server)) throw new Error("TheBlackHand should be normal server");
+  if (!(blackhandServer instanceof Server)) throw new Error(`${FactionNames.TheBlackHand} should be normal server`);
   if (blackhandServer == null) {
-    console.error("Could not find The Black Hand Server");
+    console.error(`Could not find ${FactionNames.TheBlackHand} Server`);
   } else if (
     !theblackhandFac.isBanned &&
     !theblackhandFac.isMember &&
@@ -2338,11 +2338,11 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //NiteSec
-  const nitesecFac = Factions["NiteSec"];
+  const nitesecFac = Factions[FactionNames.NiteSec];
   const nitesecServer = GetServer(SpecialServers.NiteSecServer);
-  if (!(nitesecServer instanceof Server)) throw new Error("NiteSec should be normal server");
+  if (!(nitesecServer instanceof Server)) throw new Error(`${FactionNames.NiteSec} should be normal server`);
   if (nitesecServer == null) {
-    console.error("Could not find NiteSec Server");
+    console.error(`Could not find ${FactionNames.NiteSec} Server`);
   } else if (
     !nitesecFac.isBanned &&
     !nitesecFac.isMember &&
@@ -2353,7 +2353,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Chongqing
-  const chongqingFac = Factions["Chongqing"];
+  const chongqingFac = Factions[FactionNames.Chongqing];
   if (
     !chongqingFac.isBanned &&
     !chongqingFac.isMember &&
@@ -2365,7 +2365,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Sector-12
-  const sector12Fac = Factions["Sector-12"];
+  const sector12Fac = Factions[FactionNames.Sector12];
   if (
     !sector12Fac.isBanned &&
     !sector12Fac.isMember &&
@@ -2377,7 +2377,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //New Tokyo
-  const newtokyoFac = Factions["New Tokyo"];
+  const newtokyoFac = Factions[FactionNames.NewTokyo];
   if (
     !newtokyoFac.isBanned &&
     !newtokyoFac.isMember &&
@@ -2389,7 +2389,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Aevum
-  const aevumFac = Factions["Aevum"];
+  const aevumFac = Factions[FactionNames.Aevum];
   if (
     !aevumFac.isBanned &&
     !aevumFac.isMember &&
@@ -2401,7 +2401,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Ishima
-  const ishimaFac = Factions["Ishima"];
+  const ishimaFac = Factions[FactionNames.Ishima];
   if (
     !ishimaFac.isBanned &&
     !ishimaFac.isMember &&
@@ -2413,7 +2413,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Volhaven
-  const volhavenFac = Factions["Volhaven"];
+  const volhavenFac = Factions[FactionNames.Volhaven];
   if (
     !volhavenFac.isBanned &&
     !volhavenFac.isMember &&
@@ -2425,7 +2425,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Speakers for the Dead
-  const speakersforthedeadFac = Factions["Speakers for the Dead"];
+  const speakersforthedeadFac = Factions[FactionNames.SpeakersForTheDead];
   if (
     !speakersforthedeadFac.isBanned &&
     !speakersforthedeadFac.isMember &&
@@ -2444,7 +2444,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //The Dark Army
-  const thedarkarmyFac = Factions["The Dark Army"];
+  const thedarkarmyFac = Factions[FactionNames.TheDarkArmy];
   if (
     !thedarkarmyFac.isBanned &&
     !thedarkarmyFac.isMember &&
@@ -2464,7 +2464,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //The Syndicate
-  const thesyndicateFac = Factions["The Syndicate"];
+  const thesyndicateFac = Factions[FactionNames.TheSyndicate];
   if (
     !thesyndicateFac.isBanned &&
     !thesyndicateFac.isMember &&
@@ -2484,7 +2484,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Silhouette
-  const silhouetteFac = Factions["Silhouette"];
+  const silhouetteFac = Factions[FactionNames.Silhouette];
   if (
     !silhouetteFac.isBanned &&
     !silhouetteFac.isMember &&
@@ -2499,7 +2499,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Tetrads
-  const tetradsFac = Factions["Tetrads"];
+  const tetradsFac = Factions[FactionNames.Tetrads];
   if (
     !tetradsFac.isBanned &&
     !tetradsFac.isMember &&
@@ -2515,7 +2515,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //SlumSnakes
-  const slumsnakesFac = Factions["Slum Snakes"];
+  const slumsnakesFac = Factions[FactionNames.SlumSnakes];
   if (
     !slumsnakesFac.isBanned &&
     !slumsnakesFac.isMember &&
@@ -2531,7 +2531,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Netburners
-  const netburnersFac = Factions["Netburners"];
+  const netburnersFac = Factions[FactionNames.Netburners];
   let totalHacknetRam = 0;
   let totalHacknetCores = 0;
   let totalHacknetLevels = 0;
@@ -2563,7 +2563,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //Tian Di Hui
-  const tiandihuiFac = Factions["Tian Di Hui"];
+  const tiandihuiFac = Factions[FactionNames.TianDiHui];
   if (
     !tiandihuiFac.isBanned &&
     !tiandihuiFac.isMember &&
@@ -2576,11 +2576,11 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
   }
 
   //CyberSec
-  const cybersecFac = Factions["CyberSec"];
+  const cybersecFac = Factions[FactionNames.CyberSec];
   const cybersecServer = GetServer(SpecialServers.CyberSecServer);
-  if (!(cybersecServer instanceof Server)) throw new Error("cybersec should be normal server");
+  if (!(cybersecServer instanceof Server)) throw new Error(`${FactionNames.CyberSec} should be normal server`);
   if (cybersecServer == null) {
-    console.error("Could not find CyberSec Server");
+    console.error(`Could not find ${FactionNames.CyberSec} Server`);
   } else if (
     !cybersecFac.isBanned &&
     !cybersecFac.isMember &&
@@ -2637,7 +2637,7 @@ export function gainCodingContractReward(this: IPlayer, reward: ICodingContractR
       const totalGain = CONSTANTS.CodingContractBaseFactionRepGain * difficulty;
 
       // Ignore Bladeburners and other special factions for this calculation
-      const specialFactions = ["Bladeburners"];
+      const specialFactions = [FactionNames.Bladeburners as string];
       const factions = this.factions.slice().filter((f) => {
         return !specialFactions.includes(f);
       });
@@ -2656,7 +2656,6 @@ export function gainCodingContractReward(this: IPlayer, reward: ICodingContractR
         Factions[facName].playerReputation += gainPerFaction;
       }
       return `Gained ${gainPerFaction} reputation for each of the following factions: ${factions.toString()}`;
-      break;
     case CodingContractRewardType.CompanyReputation: {
       if (reward.name == null || !(Companies[reward.name] instanceof Company)) {
         //If no/invalid company was designated, just give rewards to all factions

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 
-import { SleeveElem } from "./SleeveElem";
-import { FAQModal } from "./FAQModal";
+import {
+  Box,
+  Typography,
+  Button,
+  Container
+} from "@mui/material";
+
 import { use } from "../../../ui/Context";
 
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
+import { SleeveElem } from "./SleeveElem";
+import { FAQModal } from "./FAQModal";
 
 export function SleeveRoot(): React.ReactElement {
   const player = use.Player();
@@ -23,27 +27,29 @@ export function SleeveRoot(): React.ReactElement {
 
   return (
     <>
-      <Typography variant="h4">Sleeves</Typography>
-      <Typography>
-        Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your consciousness has been copied. In
-        other words, these Synthoids contain a perfect duplicate of your mind.
-        <br />
-        <br />
-        Sleeves can be used to perform different tasks synchronously.
-        <br />
-        <br />
-      </Typography>
+      <Container disableGutters maxWidth="md" sx={{ mx: 0 }}>
+        <Typography variant="h4">Sleeves</Typography>
+        <Typography>
+          Duplicate Sleeves are MK-V Synthoids (synthetic androids) into which your consciousness has been copied. In
+          other words, these Synthoids contain a perfect duplicate of your mind.
+          <br />
+          <br />
+          Sleeves can be used to perform different tasks synchronously.
+          <br />
+          <br />
+        </Typography>
+
+      </Container>
 
       <Button onClick={() => setFAQOpen(true)}>FAQ</Button>
-      <Link
-        target="_blank"
-        href="https://bitburner.readthedocs.io/en/latest/advancedgameplay/sleeves.html#duplicate-sleeves"
-      >
-        <Typography> Documentation</Typography>
-      </Link>
-      {player.sleeves.map((sleeve, i) => (
-        <SleeveElem key={i} rerender={rerender} sleeve={sleeve} />
-      ))}
+      <Button href="https://bitburner.readthedocs.io/en/latest/advancedgameplay/sleeves.html#duplicate-sleeves" target="_blank">
+        Wiki Documentation
+      </Button>
+      <Box display="grid" sx={{ gridTemplateColumns: 'repeat(2, 1fr)', mt: 1 }}>
+        {player.sleeves.map((sleeve, i) => (
+          <SleeveElem key={i} rerender={rerender} sleeve={sleeve} />
+        ))}
+      </Box>
       <FAQModal open={FAQOpen} onClose={() => setFAQOpen(false)} />
     </>
   );

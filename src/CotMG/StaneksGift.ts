@@ -1,3 +1,4 @@
+import { FactionNames } from '../Faction/data/FactionNames';
 import { Fragment } from "./Fragment";
 import { ActiveFragment } from "./ActiveFragment";
 import { FragmentType } from "./FragmentType";
@@ -32,7 +33,7 @@ export class StaneksGift implements IStaneksGift {
     af.avgCharge = (af.numCharge * af.avgCharge + threads) / (af.numCharge + 1);
     af.numCharge++;
 
-    const cotmg = Factions["Church of the Machine God"];
+    const cotmg = Factions[FactionNames.ChurchOfTheMachineGod];
     cotmg.playerReputation += (player.faction_rep_mult * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
   }
 

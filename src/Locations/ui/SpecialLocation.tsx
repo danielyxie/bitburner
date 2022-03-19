@@ -33,6 +33,7 @@ import { HacknetNode } from "../../Hacknet/HacknetNode";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer } from "../../Server/AllServers";
 import { ArcadeRoot } from "../../Arcade/ui/ArcadeRoot";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 type IProps = {
   loc: Location;
@@ -158,8 +159,8 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   }
 
   function handleCotMG(): void {
-    const faction = Factions["Church of the Machine God"];
-    if (!player.factions.includes("Church of the Machine God")) {
+    const faction = Factions[FactionNames.ChurchOfTheMachineGod];
+    if (!player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
       joinFaction(faction);
     }
     if (
@@ -231,7 +232,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
         </>
       );
     }
-    if (player.factions.includes("Church of the Machine God")) {
+    if (player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
       return (
         <>
           <Typography>
