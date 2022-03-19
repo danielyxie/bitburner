@@ -3,7 +3,6 @@
  * Used because at the time of implementation, the PlayerObject
  * cant be converted to TypeScript.
  */
-import { Resleeve } from "./Resleeving/Resleeve";
 import { Sleeve } from "./Sleeve/Sleeve";
 
 import { IMap } from "../types";
@@ -65,7 +64,6 @@ export interface IPlayer {
   playtimeSinceLastBitnode: number;
   purchasedServers: any[];
   queuedAugmentations: IPlayerOwnedAugmentation[];
-  resleeves: Resleeve[];
   scriptProdSinceLastAug: number;
   sleeves: Sleeve[];
   sleevesFromCovenant: number;

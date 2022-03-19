@@ -6,7 +6,6 @@ import * as generalMethods from "./PlayerObjectGeneralMethods";
 import * as serverMethods from "./PlayerObjectServerMethods";
 
 import { IMap } from "../../types";
-import { Resleeve } from "../Resleeving/Resleeve";
 import { Sleeve } from "../Sleeve/Sleeve";
 import { IPlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
 import { Exploit } from "../../Exploits/Exploit";
@@ -72,7 +71,6 @@ export class PlayerObject implements IPlayer {
   playtimeSinceLastBitnode: number;
   purchasedServers: any[];
   queuedAugmentations: IPlayerOwnedAugmentation[];
-  resleeves: Resleeve[];
   scriptProdSinceLastAug: number;
   sleeves: Sleeve[];
   sleevesFromCovenant: number;
@@ -465,7 +463,6 @@ export class PlayerObject implements IPlayer {
 
     // Sleeves & Re-sleeving
     this.sleeves = [];
-    this.resleeves = [];
     this.sleevesFromCovenant = 0; // # of Duplicate sleeves purchased from the covenan;
     //bitnode
     this.bitNodeN = 1;
