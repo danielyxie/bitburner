@@ -1,3 +1,4 @@
+import { CityName } from './../../Locations/data/CityNames';
 const CyclesPerMarketCycle = 50;
 const AllCorporationStates = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
 export const CorporationConstants: {
@@ -37,7 +38,7 @@ export const CorporationConstants: {
   CyclesPerIndustryStateCycle: CyclesPerMarketCycle / AllCorporationStates.length,
   SecsPerMarketCycle: CyclesPerMarketCycle / 5,
 
-  Cities: ["Aevum", "Chongqing", "Sector-12", "New Tokyo", "Ishima", "Volhaven"],
+  Cities: [CityName.Aevum, CityName.Chongqing, CityName.Sector12, CityName.NewTokyo, CityName.Ishima, CityName.Volhaven],
 
   WarehouseInitialCost: 5e9, //Initial purchase cost of warehouse
   WarehouseInitialSize: 100,

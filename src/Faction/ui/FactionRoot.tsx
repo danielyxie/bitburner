@@ -21,6 +21,8 @@ import { CreateGangModal } from "./CreateGangModal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPurchasesRoot";
+import { FactionNames } from "../data/FactionNames";
+import { GangConstants } from "../../Gang/data/Constants";
 
 type IProps = {
   faction: Faction;
@@ -49,16 +51,6 @@ const augmentationsInfo =
   "unlock Augmentations, which you can purchase to enhance " +
   "your abilities.";
 const sleevePurchasesInfo = "Purchase Duplicate Sleeves and upgrades. These are permanent!";
-
-const GangNames = [
-  "Slum Snakes",
-  "Tetrads",
-  "The Syndicate",
-  "The Dark Army",
-  "Speakers for the Dead",
-  "NiteSec",
-  "The Black Hand",
-];
 
 interface IMainProps {
   faction: Faction;
@@ -111,9 +103,9 @@ function MainPage({ faction, rerender, onAugmentations }: IMainProps): React.Rea
   const favorToDonate = Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
   const canDonate = faction.favor >= favorToDonate;
 
-  const canPurchaseSleeves = faction.name === "The Covenant" && player.bitNodeN === 10;
+  const canPurchaseSleeves = faction.name === FactionNames.TheCovenant && player.bitNodeN === 10;
 
-  let canAccessGang = player.canAccessGang() && GangNames.includes(faction.name);
+  let canAccessGang = player.canAccessGang() && GangConstants.Names.includes(faction.name);
   if (player.inGang()) {
     if (player.getGangName() !== faction.name) {
       canAccessGang = false;

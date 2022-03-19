@@ -33,6 +33,7 @@ import { HacknetNode } from "../../Hacknet/HacknetNode";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer } from "../../Server/AllServers";
 import { ArcadeRoot } from "../../Arcade/ui/ArcadeRoot";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 type IProps = {
   loc: Location;
@@ -54,7 +55,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       router.toBladeburner();
     } else if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
       // Apply for Bladeburner division
-      p.startBladeburner({new: true});
+      p.startBladeburner({ new: true });
       dialogBoxCreate("You have been accepted into the Bladeburner division!");
       setRerender((old) => !old);
 
@@ -158,8 +159,8 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   }
 
   function handleCotMG(): void {
-    const faction = Factions["Church of the Machine God"];
-    if (!player.factions.includes("Church of the Machine God")) {
+    const faction = Factions[FactionNames.ChurchOfTheMachineGod];
+    if (!player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
       joinFaction(faction);
     }
     if (
@@ -174,35 +175,35 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   function renderCotMG(): React.ReactElement {
     // prettier-ignore
-    const symbol = <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>
-        {"                 ``          "}<br />
-        {"             -odmmNmds:      "}<br />
-        {"           `hNmo:..-omNh.    "}<br />
-        {"           yMd`      `hNh    "}<br />
-        {"           mMd        oNm    "}<br />
-        {"           oMNo      .mM/    "}<br />
-        {"           `dMN+    -mM+     "}<br />
-        {"            -mMNo  -mN+      "}<br />
-        {"  .+-        :mMNo/mN/       "}<br />
-        {":yNMd.        :NMNNN/        "}<br />
-        {"-mMMMh.        /NMMh`        "}<br />
-        {" .dMMMd.       /NMMMy`       "}<br />
-        {"  `yMMMd.     /NNyNMMh`      "}<br />
-        {"   `sMMMd.   +Nm: +NMMh.     "}<br />
-        {"     oMMMm- oNm:   /NMMd.    "}<br />
-        {"      +NMMmsMm-     :mMMd.   "}<br />
-        {"       /NMMMm-       -mMMd.  "}<br />
-        {"        /MMMm-        -mMMd. "}<br />
-        {"       `sMNMMm-        .mMmo "}<br />
-        {"      `sMd:hMMm.        ./.  "}<br />
-        {"     `yMy` `yNMd`            "}<br />
-        {"    `hMs`    oMMy            "}<br />
-        {"   `hMh       sMN-           "}<br />
-        {"   /MM-       .NMo           "}<br />
-        {"   +MM:       :MM+           "}<br />
-        {"    sNNo-.`.-omNy`           "}<br />
-        {"     -smNNNNmdo-             "}<br />
-        {"        `..`                 "}</Typography>
+    const symbol = <Typography sx={{ lineHeight: '1em', whiteSpace: 'pre' }}>
+      {"                 ``          "}<br />
+      {"             -odmmNmds:      "}<br />
+      {"           `hNmo:..-omNh.    "}<br />
+      {"           yMd`      `hNh    "}<br />
+      {"           mMd        oNm    "}<br />
+      {"           oMNo      .mM/    "}<br />
+      {"           `dMN+    -mM+     "}<br />
+      {"            -mMNo  -mN+      "}<br />
+      {"  .+-        :mMNo/mN/       "}<br />
+      {":yNMd.        :NMNNN/        "}<br />
+      {"-mMMMh.        /NMMh`        "}<br />
+      {" .dMMMd.       /NMMMy`       "}<br />
+      {"  `yMMMd.     /NNyNMMh`      "}<br />
+      {"   `sMMMd.   +Nm: +NMMh.     "}<br />
+      {"     oMMMm- oNm:   /NMMd.    "}<br />
+      {"      +NMMmsMm-     :mMMd.   "}<br />
+      {"       /NMMMm-       -mMMd.  "}<br />
+      {"        /MMMm-        -mMMd. "}<br />
+      {"       `sMNMMm-        .mMmo "}<br />
+      {"      `sMd:hMMm.        ./.  "}<br />
+      {"     `yMy` `yNMd`            "}<br />
+      {"    `hMs`    oMMy            "}<br />
+      {"   `hMh       sMN-           "}<br />
+      {"   /MM-       .NMo           "}<br />
+      {"   +MM:       :MM+           "}<br />
+      {"    sNNo-.`.-omNy`           "}<br />
+      {"     -smNNNNmdo-             "}<br />
+      {"        `..`                 "}</Typography>
     if (player.hasAugmentation(AugmentationNames.StaneksGift3, true)) {
       return (
         <>
@@ -231,7 +232,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
         </>
       );
     }
-    if (player.factions.includes("Church of the Machine God")) {
+    if (player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
       return (
         <>
           <Typography>
