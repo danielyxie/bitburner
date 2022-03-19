@@ -2641,7 +2641,7 @@ export function gotoLocation(this: IPlayer, to: LocationName): boolean {
   return true;
 }
 
-export function canAccessResleeving(this: IPlayer): boolean {
+export function canAccessGrafting(this: IPlayer): boolean {
   return this.bitNodeN === 10 || SourceFileFlags[10] > 0;
 }
 

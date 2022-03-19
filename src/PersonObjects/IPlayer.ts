@@ -181,7 +181,7 @@ export interface IPlayer {
   canAccessBladeburner(): boolean;
   canAccessCorporation(): boolean;
   canAccessGang(): boolean;
-  canAccessResleeving(): boolean;
+  canAccessGrafting(): boolean;
   canAfford(cost: number): boolean;
   gainHackingExp(exp: number): void;
   gainStrengthExp(exp: number): void;

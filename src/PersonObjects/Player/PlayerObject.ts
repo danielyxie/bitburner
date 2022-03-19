@@ -190,7 +190,7 @@ export class PlayerObject implements IPlayer {
   canAccessBladeburner: () => boolean;
   canAccessCorporation: () => boolean;
   canAccessGang: () => boolean;
-  canAccessResleeving: () => boolean;
+  canAccessGrafting: () => boolean;
   canAfford: (cost: number) => boolean;
   gainHackingExp: (exp: number) => void;
   gainStrengthExp: (exp: number) => void;
@@ -577,7 +577,7 @@ export class PlayerObject implements IPlayer {
     this.gainCodingContractReward = generalMethods.gainCodingContractReward;
     this.travel = generalMethods.travel;
     this.gotoLocation = generalMethods.gotoLocation;
-    this.canAccessResleeving = generalMethods.canAccessResleeving;
+    this.canAccessGrafting = generalMethods.canAccessGrafting;
     this.giveExploit = generalMethods.giveExploit;
     this.giveAchievement = generalMethods.giveAchievement;
     this.getIntelligenceBonus = generalMethods.getIntelligenceBonus;
