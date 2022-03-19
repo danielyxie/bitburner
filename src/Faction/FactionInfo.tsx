@@ -654,11 +654,10 @@ export const FactionInfos: IMap<FactionInfo> = {
     {"`^,;liI''^I>!,'`;!!I:'`I!l;''`I!<,`',!lI`'`:!iI'.^:II,^'^ll!''`:l>[upBBBBB@B$$$$$$$$@@@@B%$@@@$@$%L!:`',!<I`''I!l;,`^lI:'^`'liI^''I!l:``':l!'^,;l!l,'^I>>:'`:l!I:'"}<br /><br />
     {".  ;<<;  'i>>^. .>~!'  I><I'`^><il:'I>~<,,,!<++;Il+--<l!>?]-ii!__(&B%%@@$8B@$$$$$$$$@@@8Jfk@%B@@8Wj<.  'iiI. .!><; ..>>>`..:<<> ` li>;  '><<.  ,<<i. .lii,.. ~<<' "}<br /><br />
     {"::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"}<br /><br />
-    Experts in getting in and out in plain sight
-    Some some speculate that the oceans movies are documentaries based on this group
-    some members are even rumored to be able to pick locks like the fonz, one hit and it will swing open ayeeeee
-    <br /><br />Note that for this faction, reputation can
-    only be gained by performing infiltration tasks</>,
+    Experts in getting in and out in plain sight<br /><br />
+    Some some speculate that the oceans movies are documentaries based on this group<br /><br />
+    Some members are even rumored to be able to pick locks like the fonz, one hit and it will swing open ayeeeee<br /><br />
+    Note that for this faction, reputation can only be gained by performing infiltration tasks</>,
     [],
     false,
     false,
