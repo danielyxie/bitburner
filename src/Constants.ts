@@ -109,6 +109,8 @@ export const CONSTANTS: {
   CodingContractBaseFactionRepGain: number;
   CodingContractBaseCompanyRepGain: number;
   CodingContractBaseMoneyGain: number;
+  AugmentationCraftingCostMult: number;
+  AugmentationCraftingTimeMult: number;
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
@@ -270,6 +272,11 @@ export const CONSTANTS: {
   CodingContractBaseFactionRepGain: 2500,
   CodingContractBaseCompanyRepGain: 4000,
   CodingContractBaseMoneyGain: 75e6,
+
+  // Augmentation crafting multipliers
+  // TODO: Get these right
+  AugmentationCraftingCostMult: 1.2,
+  AugmentationCraftingTimeMult: 1,
 
   // BitNode/Source-File related stuff
   TotalNumBitNodes: 24,

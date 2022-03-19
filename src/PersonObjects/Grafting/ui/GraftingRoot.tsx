@@ -14,12 +14,18 @@ import {
 } from "@mui/icons-material";
 
 import { use } from "../../../ui/Context";
+import { Money } from "../../../ui/React/Money";
 import { Augmentations } from "../../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames"
 import { Settings } from "../../../Settings/Settings";
-import { CONSTANTS } from "../../../Constants";
+import { IMap } from "../../../types";
+import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
 
 import { IPlayer } from "../../IPlayer";
+
+import { CraftableAugmentation } from "../CraftableAugmentation";
+
+const CraftableAugmentations: IMap<CraftableAugmentation> = {}
 
 const getAvailableAugs = (player: IPlayer): string[] => {
   const augs: string[] = [];
@@ -41,6 +47,13 @@ const getAvailableAugs = (player: IPlayer): string[] => {
 export const GraftingRoot = (): React.ReactElement => {
   const player = use.Player();
   const router = use.Router();
+
+  for (const aug of Object.values(Augmentations)) {
+    const name = aug.name;
+    const craftableAug = new CraftableAugmentation(aug);
+    CraftableAugmentations[name] = craftableAug;
+  }
+
   const [selectedAug, setSelectedAug] = useState(getAvailableAugs(player)[0]);
 
   return <>
@@ -78,16 +91,22 @@ export const GraftingRoot = (): React.ReactElement => {
             <Button
               onClick={event => {
                 if (!event.isTrusted) return;
-                player.startCraftAugmentationWork(selectedAug, 15000);
+                const craftableAug = CraftableAugmentations[selectedAug];
+                player.loseMoney(craftableAug.cost, "augmentations");
+                player.startCraftAugmentationWork(selectedAug, craftableAug.time);
                 player.startFocusing();
                 router.toWork();
               }}
               sx={{ width: '100%' }}
+              disabled={player.money < CraftableAugmentations[selectedAug].cost}
             >
-              Craft Augmentation (<Typography color={Settings.theme.money}>$foo</Typography>)
+              Craft Augmentation (
+              <Typography color={Settings.theme.money}>
+                <Money money={CraftableAugmentations[selectedAug].cost} player={player} />
+              </Typography>)
             </Button>
             <Typography color={Settings.theme.info}>
-              <b>Time to Craft:</b> bar
+              <b>Time to Craft:</b> {convertTimeMsToTimeElapsedString(CraftableAugmentations[selectedAug].time)}
             </Typography>
             <Typography sx={{ maxHeight: 305, overflowY: 'scroll' }}>
               {(() => {
