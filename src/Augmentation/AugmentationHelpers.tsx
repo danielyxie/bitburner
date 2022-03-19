@@ -17,6 +17,7 @@ import { clearObject } from "../utils/helpers/clearObject";
 import { WHRNG } from "../Casino/RNG";
 
 import React from "react";
+import { FactionNames } from "../Faction/data/FactionNames";
 
 function AddToAugmentations(aug: Augmentation): void {
   const name = aug.name;
@@ -131,17 +132,13 @@ function initAugmentations(): void {
     info:
       "An experimental nanobot injection. Its unstable nature leads to " +
       "unpredictable results based on your circadian rhythm.",
+    factions: [FactionNames.SpeakersForTheDead],
   };
   Object.keys(randomBonuses.bonuses).forEach(
     (key) => ((UnstableCircadianModulatorParams as any)[key] = randomBonuses.bonuses[key]),
   );
   const UnstableCircadianModulator = new Augmentation(UnstableCircadianModulatorParams);
-
-  UnstableCircadianModulator.addToFactions(["Speakers for the Dead"]);
-  if (augmentationExists(AugmentationNames.UnstableCircadianModulator)) {
-    delete Augmentations[AugmentationNames.UnstableCircadianModulator];
-  }
-  AddToAugmentations(UnstableCircadianModulator);
+  resetAugmentation(UnstableCircadianModulator);
 
   //Combat stat augmentations
   const HemoRecirculator = new Augmentation({
@@ -153,12 +150,13 @@ function initAugmentations(): void {
     defense_mult: 1.08,
     agility_mult: 1.08,
     dexterity_mult: 1.08,
+    factions: [
+      FactionNames.Tetrads,
+      FactionNames.TheDarkArmy,
+      FactionNames.TheSyndicate,
+    ],
   });
-  HemoRecirculator.addToFactions(["Tetrads", "The Dark Army", "The Syndicate"]);
-  if (augmentationExists(AugmentationNames.HemoRecirculator)) {
-    delete Augmentations[AugmentationNames.HemoRecirculator];
-  }
-  AddToAugmentations(HemoRecirculator);
+  resetAugmentation(HemoRecirculator);
 
   const Targeting1 = new Augmentation({
     name: AugmentationNames.Targeting1,
@@ -168,21 +166,18 @@ function initAugmentations(): void {
       "A cranial implant that is embedded within the inner ear structures and optic nerves. It regulates " +
       "and enhances balance and hand-eye coordination.",
     dexterity_mult: 1.1,
+    factions: [
+      FactionNames.SlumSnakes,
+      FactionNames.TheDarkArmy,
+      FactionNames.TheSyndicate,
+      FactionNames.Sector12,
+      FactionNames.Ishima,
+      FactionNames.OmniTekIncorporated,
+      FactionNames.KuaiGongInternational,
+      FactionNames.BladeIndustries,
+    ],
   });
-  Targeting1.addToFactions([
-    "Slum Snakes",
-    "The Dark Army",
-    "The Syndicate",
-    "Sector-12",
-    "Ishima",
-    "OmniTek Incorporated",
-    "KuaiGong International",
-    "Blade Industries",
-  ]);
-  if (augmentationExists(AugmentationNames.Targeting1)) {
-    delete Augmentations[AugmentationNames.Targeting1];
-  }
-  AddToAugmentations(Targeting1);
+  resetAugmentation(Targeting1);
 
   const Targeting2 = new Augmentation({
     name: AugmentationNames.Targeting2,
@@ -193,19 +188,16 @@ function initAugmentations(): void {
       "reality by digitally displaying weaknesses and vital signs of threats.",
     prereqs: [AugmentationNames.Targeting1],
     dexterity_mult: 1.2,
+    factions: [
+      FactionNames.TheDarkArmy,
+      FactionNames.TheSyndicate,
+      FactionNames.Sector12,
+      FactionNames.OmniTekIncorporated,
+      FactionNames.KuaiGongInternational,
+      FactionNames.BladeIndustries,
+    ],
   });
-  Targeting2.addToFactions([
-    "The Dark Army",
-    "The Syndicate",
-    "Sector-12",
-    "OmniTek Incorporated",
-    "KuaiGong International",
-    "Blade Industries",
-  ]);
-  if (augmentationExists(AugmentationNames.Targeting2)) {
-    delete Augmentations[AugmentationNames.Targeting2];
-  }
-  AddToAugmentations(Targeting2);
+  resetAugmentation(Targeting2);
 
   const Targeting3 = new Augmentation({
     name: AugmentationNames.Targeting3,
@@ -214,19 +206,16 @@ function initAugmentations(): void {
     info: "The latest version of the 'Augmented Targeting' implant adds the ability to lock-on and track threats.",
     prereqs: [AugmentationNames.Targeting2],
     dexterity_mult: 1.3,
+    factions: [
+      FactionNames.TheDarkArmy,
+      FactionNames.TheSyndicate,
+      FactionNames.OmniTekIncorporated,
+      FactionNames.KuaiGongInternational,
+      FactionNames.BladeIndustries,
+      FactionNames.TheCovenant,
+    ],
   });
-  Targeting3.addToFactions([
-    "The Dark Army",
-    "The Syndicate",
-    "OmniTek Incorporated",
-    "KuaiGong International",
-    "Blade Industries",
-    "The Covenant",
-  ]);
-  if (augmentationExists(AugmentationNames.Targeting3)) {
-    delete Augmentations[AugmentationNames.Targeting3];
-  }
-  AddToAugmentations(Targeting3);
+  resetAugmentation(Targeting3);
 
   const SyntheticHeart = new Augmentation({
     name: AugmentationNames.SyntheticHeart,
@@ -237,20 +226,17 @@ function initAugmentations(): void {
       "more efficiently than an organic heart.",
     agility_mult: 1.5,
     strength_mult: 1.5,
+    factions: [
+      FactionNames.KuaiGongInternational,
+      FactionNames.FulcrumSecretTechnologies,
+      FactionNames.SpeakersForTheDead,
+      FactionNames.NWO,
+      FactionNames.TheCovenant,
+      FactionNames.Daedalus,
+      FactionNames.Illuminati,
+    ],
   });
-  SyntheticHeart.addToFactions([
-    "KuaiGong International",
-    "Fulcrum Secret Technologies",
-    "Speakers for the Dead",
-    "NWO",
-    "The Covenant",
-    "Daedalus",
-    "Illuminati",
-  ]);
-  if (augmentationExists(AugmentationNames.SyntheticHeart)) {
-    delete Augmentations[AugmentationNames.SyntheticHeart];
-  }
-  AddToAugmentations(SyntheticHeart);
+  resetAugmentation(SyntheticHeart);
 
   const SynfibrilMuscle = new Augmentation({
     name: AugmentationNames.SynfibrilMuscle,
@@ -262,21 +248,18 @@ function initAugmentations(): void {
       "Scientists have named these artificially enhanced units 'synfibrils'.",
     strength_mult: 1.3,
     defense_mult: 1.3,
+    factions: [
+      FactionNames.KuaiGongInternational,
+      FactionNames.FulcrumSecretTechnologies,
+      FactionNames.SpeakersForTheDead,
+      FactionNames.NWO,
+      FactionNames.TheCovenant,
+      FactionNames.Daedalus,
+      FactionNames.Illuminati,
+      FactionNames.BladeIndustries,
+    ],
   });
-  SynfibrilMuscle.addToFactions([
-    "KuaiGong International",
-    "Fulcrum Secret Technologies",
-    "Speakers for the Dead",
-    "NWO",
-    "The Covenant",
-    "Daedalus",
-    "Illuminati",
-    "Blade Industries",
-  ]);
-  if (augmentationExists(AugmentationNames.SynfibrilMuscle)) {
-    delete Augmentations[AugmentationNames.SynfibrilMuscle];
-  }
-  AddToAugmentations(SynfibrilMuscle);
+  resetAugmentation(SynfibrilMuscle);
 
   const CombatRib1 = new Augmentation({
     name: AugmentationNames.CombatRib1,
@@ -287,21 +270,18 @@ function initAugmentations(): void {
       "which increase the oxygen-carrying capacity of blood.",
     strength_mult: 1.1,
     defense_mult: 1.1,
+    factions: [
+      FactionNames.SlumSnakes,
+      FactionNames.TheDarkArmy,
+      FactionNames.TheSyndicate,
+      FactionNames.Volhaven,
+      FactionNames.Ishima,
+      FactionNames.OmniTekIncorporated,
+      FactionNames.KuaiGongInternational,
+      FactionNames.BladeIndustries,
+    ],
   });
-  CombatRib1.addToFactions([
-    "Slum Snakes",
-    "The Dark Army",
-    "The Syndicate",
-    "Volhaven",
-    "Ishima",
-    "OmniTek Incorporated",
-    "KuaiGong International",
-    "Blade Industries",
-  ]);
-  if (augmentationExists(AugmentationNames.CombatRib1)) {
-    delete Augmentations[AugmentationNames.CombatRib1];
-  }
-  AddToAugmentations(CombatRib1);
+  resetAugmentation(CombatRib1);
 
   const CombatRib2 = new Augmentation({
     name: AugmentationNames.CombatRib2,
@@ -313,19 +293,16 @@ function initAugmentations(): void {
     prereqs: [AugmentationNames.CombatRib1],
     strength_mult: 1.14,
     defense_mult: 1.14,
+    factions: [
+      FactionNames.TheDarkArmy,
+      FactionNames.TheSyndicate,
+      FactionNames.Volhaven,
+      FactionNames.OmniTekIncorporated,
+      FactionNames.KuaiGongInternational,
+      FactionNames.BladeIndustries,
+    ],
   });
-  CombatRib2.addToFactions([
-    "The Dark Army",
-    "The Syndicate",
-    "Volhaven",
-    "OmniTek Incorporated",
-    "KuaiGong International",
-    "Blade Industries",
-  ]);
-  if (augmentationExists(AugmentationNames.CombatRib2)) {
-    delete Augmentations[AugmentationNames.CombatRib2];
-  }
-  AddToAugmentations(CombatRib2);
+  resetAugmentation(CombatRib2);
 
   const CombatRib3 = new Augmentation({
     name: AugmentationNames.CombatRib3,
@@ -337,19 +314,16 @@ function initAugmentations(): void {
     prereqs: [AugmentationNames.CombatRib2],
     strength_mult: 1.18,
     defense_mult: 1.18,
+    factions: [
+      FactionNames.TheDarkArmy,
+      FactionNames.TheSyndicate,
+      FactionNames.OmniTekIncorporated,
+      FactionNames.KuaiGongInternational,
+      FactionNames.BladeIndustries,
+      FactionNames.TheCovenant,
+    ],
   });
-  CombatRib3.addToFactions([
-    "The Dark Army",
-    "The Syndicate",
-    "OmniTek Incorporated",
-    "KuaiGong International",
-    "Blade Industries",
-    "The Covenant",
-  ]);
-  if (augmentationExists(AugmentationNames.CombatRib3)) {
-    delete Augmentations[AugmentationNames.CombatRib3];
-  }
-  AddToAugmentations(CombatRib3);
+  resetAugmentation(CombatRib3);
 
   const NanofiberWeave = new Augmentation({
     name: AugmentationNames.NanofiberWeave,
@@ -360,20 +334,17 @@ function initAugmentations(): void {
       "which improves its regenerative and extracellular homeostasis abilities.",
     strength_mult: 1.2,
     defense_mult: 1.2,
+    factions: [
+      FactionNames.TheDarkArmy,
+      FactionNames.TheSyndicate,
+      FactionNames.OmniTekIncorporated,
+      FactionNames.BladeIndustries,
+      FactionNames.TianDiHui,
+      FactionNames.SpeakersForTheDead,
+      FactionNames.FulcrumSecretTechnologies,
+    ],
   });
-  NanofiberWeave.addToFactions([
-    "Tian Di Hui",
-    "The Syndicate",
-    "The Dark Army",
-    "Speakers for the Dead",
-    "Blade Industries",
-    "Fulcrum Secret Technologies",
-    "OmniTek Incorporated",
-  ]);
-  if (augmentationExists(AugmentationNames.NanofiberWeave)) {
-    delete Augmentations[AugmentationNames.NanofiberWeave];
-  }
-  AddToAugmentations(NanofiberWeave);
+  resetAugmentation(NanofiberWeave);
 
   const SubdermalArmor = new Augmentation({
     name: AugmentationNames.SubdermalArmor,
@@ -386,18 +357,15 @@ function initAugmentations(): void {
       "at stopping piercing blows and reducing blunt trauma. The properties of graphene allow the plating to " +
       "mitigate damage from any fire or electrical traumas.",
     defense_mult: 2.2,
+    factions: [
+      FactionNames.TheSyndicate,
+      FactionNames.FulcrumSecretTechnologies,
+      FactionNames.Illuminati,
+      FactionNames.Daedalus,
+      FactionNames.TheCovenant,
+    ],
   });
-  SubdermalArmor.addToFactions([
-    "The Syndicate",
-    "Fulcrum Secret Technologies",
-    "Illuminati",
-    "Daedalus",
-    "The Covenant",
-  ]);
-  if (augmentationExists(AugmentationNames.SubdermalArmor)) {
-    delete Augmentations[AugmentationNames.SubdermalArmor];
-  }
-  AddToAugmentations(SubdermalArmor);
+  resetAugmentation(SubdermalArmor);
 
   const WiredReflexes = new Augmentation({
     name: AugmentationNames.WiredReflexes,
@@ -408,37 +376,30 @@ function initAugmentations(): void {
       "supercharging the spread of neural signals and increasing reflex speed.",
     agility_mult: 1.05,
     dexterity_mult: 1.05,
+    factions: [
+      FactionNames.TianDiHui,
+      FactionNames.SlumSnakes,
+      FactionNames.Sector12,
+      FactionNames.Volhaven,
+      FactionNames.Aevum,
+      FactionNames.Ishima,
+      FactionNames.TheSyndicate,
+      FactionNames.TheDarkArmy,
+      FactionNames.SpeakersForTheDead,
+    ],
   });
-  WiredReflexes.addToFactions([
-    "Tian Di Hui",
-    "Slum Snakes",
-    "Sector-12",
-    "Volhaven",
-    "Aevum",
-    "Ishima",
-    "The Syndicate",
-    "The Dark Army",
-    "Speakers for the Dead",
-  ]);
-  if (augmentationExists(AugmentationNames.WiredReflexes)) {
-    delete Augmentations[AugmentationNames.WiredReflexes];
-  }
-  AddToAugmentations(WiredReflexes);
+  resetAugmentation(WiredReflexes);
 
   const GrapheneBoneLacings = new Augmentation({
     name: AugmentationNames.GrapheneBoneLacings,
     repCost: 1.125e6,
     moneyCost: 4.25e9,
-    info:
-      "Graphene is grafted and fused into the skeletal structure, enhancing bone density and tensile strength.",
+    info: "Graphene is grafted and fused into the skeletal structure, enhancing bone density and tensile strength.",
     strength_mult: 1.7,
     defense_mult: 1.7,
+    factions: [FactionNames.FulcrumSecretTechnologies, FactionNames.TheCovenant],
   });
-  GrapheneBoneLacings.addToFactions(["Fulcrum Secret Technologies", "The Covenant"]);
-  if (augmentationExists(AugmentationNames.GrapheneBoneLacings)) {
-    delete Augmentations[AugmentationNames.GrapheneBoneLacings];
-  }
-  AddToAugmentations(GrapheneBoneLacings);
+  resetAugmentation(GrapheneBoneLacings);
 
   const BionicSpine = new Augmentation({
     name: AugmentationNames.BionicSpine,
@@ -453,18 +414,15 @@ function initAugmentations(): void {
     defense_mult: 1.15,
     agility_mult: 1.15,
     dexterity_mult: 1.15,
+    factions: [
+      FactionNames.SpeakersForTheDead,
+      FactionNames.TheSyndicate,
+      FactionNames.KuaiGongInternational,
+      FactionNames.OmniTekIncorporated,
+      FactionNames.BladeIndustries,
+    ],
   });
-  BionicSpine.addToFactions([
-    "Speakers for the Dead",
-    "The Syndicate",
-    "KuaiGong International",
-    "OmniTek Incorporated",
-    "Blade Industries",
-  ]);
-  if (augmentationExists(AugmentationNames.BionicSpine)) {
-    delete Augmentations[AugmentationNames.BionicSpine];
-  }
-  AddToAugmentations(BionicSpine);
+  resetAugmentation(BionicSpine);
 
   const GrapheneBionicSpine = new Augmentation({
     name: AugmentationNames.GrapheneBionicSpine,
@@ -478,12 +436,9 @@ function initAugmentations(): void {
     defense_mult: 1.6,
     agility_mult: 1.6,
     dexterity_mult: 1.6,
+    factions: [FactionNames.FulcrumSecretTechnologies, FactionNames.ECorp],
   });
-  GrapheneBionicSpine.addToFactions(["Fulcrum Secret Technologies", "ECorp"]);
-  if (augmentationExists(AugmentationNames.GrapheneBionicSpine)) {
-    delete Augmentations[AugmentationNames.GrapheneBionicSpine];
-  }
-  AddToAugmentations(GrapheneBionicSpine);
+  resetAugmentation(GrapheneBionicSpine);
 
   const BionicLegs = new Augmentation({
     name: AugmentationNames.BionicLegs,
@@ -491,18 +446,15 @@ function initAugmentations(): void {
     moneyCost: 3.75e8,
     info: "Cybernetic legs, created from plasteel and carbon fibers, enhance running speed.",
     agility_mult: 1.6,
+    factions: [
+      FactionNames.SpeakersForTheDead,
+      FactionNames.TheSyndicate,
+      FactionNames.KuaiGongInternational,
+      FactionNames.OmniTekIncorporated,
+      FactionNames.BladeIndustries,
+    ],
   });
-  BionicLegs.addToFactions([
-    "Speakers for the Dead",
-    "The Syndicate",
-    "KuaiGong International",
-    "OmniTek Incorporated",
-    "Blade Industries",
-  ]);
-  if (augmentationExists(AugmentationNames.BionicLegs)) {
-    delete Augmentations[AugmentationNames.BionicLegs];
-  }
-  AddToAugmentations(BionicLegs);
+  resetAugmentation(BionicLegs);
 
   const GrapheneBionicLegs = new Augmentation({
     name: AugmentationNames.GrapheneBionicLegs,
@@ -513,12 +465,9 @@ function initAugmentations(): void {
       "with graphene, greatly enhancing jumping ability.",
     prereqs: [AugmentationNames.BionicLegs],
     agility_mult: 2.5,
+    factions: [FactionNames.MegaCorp, FactionNames.ECorp, FactionNames.FulcrumSecretTechnologies],
   });
-  GrapheneBionicLegs.addToFactions(["MegaCorp", "ECorp", "Fulcrum Secret Technologies"]);
-  if (augmentationExists(AugmentationNames.GrapheneBionicLegs)) {
-    delete Augmentations[AugmentationNames.GrapheneBionicLegs];
-  }
-  AddToAugmentations(GrapheneBionicLegs);
+  resetAugmentation(GrapheneBionicLegs);
 
   // Work stat augmentations
   const SpeechProcessor = new Augmentation({
@@ -530,21 +479,18 @@ function initAugmentations(): void {
       "The embedded computer processes characteristics of incoming speech, such as tone " +
       "and inflection, to pick up on subtle cues and aid in social interactions.",
     charisma_mult: 1.2,
+    factions: [
+      FactionNames.TianDiHui,
+      FactionNames.Chongqing,
+      FactionNames.Sector12,
+      FactionNames.NewTokyo,
+      FactionNames.Aevum,
+      FactionNames.Ishima,
+      FactionNames.Volhaven,
+      FactionNames.Silhouette,
+    ],
   });
-  SpeechProcessor.addToFactions([
-    "Tian Di Hui",
-    "Chongqing",
-    "Sector-12",
-    "New Tokyo",
-    "Aevum",
-    "Ishima",
-    "Volhaven",
-    "Silhouette",
-  ]);
-  if (augmentationExists(AugmentationNames.SpeechProcessor)) {
-    delete Augmentations[AugmentationNames.SpeechProcessor];
-  }
-  AddToAugmentations(SpeechProcessor);
+  resetAugmentation(SpeechProcessor);
 
   const TITN41Injection = new Augmentation({
     name: AugmentationNames.TITN41Injection,
@@ -556,12 +502,9 @@ function initAugmentations(): void {
       "outgoing and socialable.",
     charisma_mult: 1.15,
     charisma_exp_mult: 1.15,
+    factions: [FactionNames.Silhouette],
   });
-  TITN41Injection.addToFactions(["Silhouette"]);
-  if (augmentationExists(AugmentationNames.TITN41Injection)) {
-    delete Augmentations[AugmentationNames.TITN41Injection];
-  }
-  AddToAugmentations(TITN41Injection);
+  resetAugmentation(TITN41Injection);
 
   const EnhancedSocialInteractionImplant = new Augmentation({
     name: AugmentationNames.EnhancedSocialInteractionImplant,
@@ -575,18 +518,15 @@ function initAugmentations(): void {
       "patterns and how to best respond.",
     charisma_mult: 1.6,
     charisma_exp_mult: 1.6,
+    factions: [
+      FactionNames.BachmanAssociates,
+      FactionNames.NWO,
+      FactionNames.ClarkeIncorporated,
+      FactionNames.OmniTekIncorporated,
+      FactionNames.FourSigma,
+    ],
   });
-  EnhancedSocialInteractionImplant.addToFactions([
-    "Bachman & Associates",
-    "NWO",
-    "Clarke Incorporated",
-    "OmniTek Incorporated",
-    "Four Sigma",
-  ]);
-  if (augmentationExists(AugmentationNames.EnhancedSocialInteractionImplant)) {
-    delete Augmentations[AugmentationNames.EnhancedSocialInteractionImplant];
-  }
-  AddToAugmentations(EnhancedSocialInteractionImplant);
+  resetAugmentation(EnhancedSocialInteractionImplant);
 
   // Hacking augmentations
   const BitWire = new Augmentation({
@@ -597,12 +537,9 @@ function initAugmentations(): void {
       "A small brain implant embedded in the cerebrum. This regulates and improves the brain's computing " +
       "capabilities.",
     hacking_mult: 1.05,
+    factions: [FactionNames.CyberSec, FactionNames.NiteSec],
   });
-  BitWire.addToFactions(["CyberSec", "NiteSec"]);
-  if (augmentationExists(AugmentationNames.BitWire)) {
-    delete Augmentations[AugmentationNames.BitWire];
-  }
-  AddToAugmentations(BitWire);
+  resetAugmentation(BitWire);
 
   const ArtificialBioNeuralNetwork = new Augmentation({
     name: AugmentationNames.ArtificialBioNeuralNetwork,
@@ -617,12 +554,9 @@ function initAugmentations(): void {
     hacking_speed_mult: 1.03,
     hacking_money_mult: 1.15,
     hacking_mult: 1.12,
+    factions: [FactionNames.BitRunners, FactionNames.FulcrumSecretTechnologies],
   });
-  ArtificialBioNeuralNetwork.addToFactions(["BitRunners", "Fulcrum Secret Technologies"]);
-  if (augmentationExists(AugmentationNames.ArtificialBioNeuralNetwork)) {
-    delete Augmentations[AugmentationNames.ArtificialBioNeuralNetwork];
-  }
-  AddToAugmentations(ArtificialBioNeuralNetwork);
+  resetAugmentation(ArtificialBioNeuralNetwork);
 
   const ArtificialSynapticPotentiation = new Augmentation({
     name: AugmentationNames.ArtificialSynapticPotentiation,
@@ -634,12 +568,9 @@ function initAugmentations(): void {
     hacking_speed_mult: 1.02,
     hacking_chance_mult: 1.05,
     hacking_exp_mult: 1.05,
+    factions: [FactionNames.TheBlackHand, FactionNames.NiteSec],
   });
-  ArtificialSynapticPotentiation.addToFactions(["The Black Hand", "NiteSec"]);
-  if (augmentationExists(AugmentationNames.ArtificialSynapticPotentiation)) {
-    delete Augmentations[AugmentationNames.ArtificialSynapticPotentiation];
-  }
-  AddToAugmentations(ArtificialSynapticPotentiation);
+  resetAugmentation(ArtificialSynapticPotentiation);
 
   const EnhancedMyelinSheathing = new Augmentation({
     name: AugmentationNames.EnhancedMyelinSheathing,
@@ -653,12 +584,9 @@ function initAugmentations(): void {
     hacking_speed_mult: 1.03,
     hacking_exp_mult: 1.1,
     hacking_mult: 1.08,
+    factions: [FactionNames.FulcrumSecretTechnologies, FactionNames.BitRunners, FactionNames.TheBlackHand],
   });
-  EnhancedMyelinSheathing.addToFactions(["Fulcrum Secret Technologies", "BitRunners", "The Black Hand"]);
-  if (augmentationExists(AugmentationNames.EnhancedMyelinSheathing)) {
-    delete Augmentations[AugmentationNames.EnhancedMyelinSheathing];
-  }
-  AddToAugmentations(EnhancedMyelinSheathing);
+  resetAugmentation(EnhancedMyelinSheathing);
 
   const SynapticEnhancement = new Augmentation({
     name: AugmentationNames.SynapticEnhancement,
@@ -668,12 +596,9 @@ function initAugmentations(): void {
       "A small cranial implant that continuously uses weak electrical signals to stimulate the brain and " +
       "induce stronger synaptic activity. This improves the user's cognitive abilities.",
     hacking_speed_mult: 1.03,
+    factions: [FactionNames.CyberSec, FactionNames.Aevum],
   });
-  SynapticEnhancement.addToFactions(["CyberSec", "Aevum"]);
-  if (augmentationExists(AugmentationNames.SynapticEnhancement)) {
-    delete Augmentations[AugmentationNames.SynapticEnhancement];
-  }
-  AddToAugmentations(SynapticEnhancement);
+  resetAugmentation(SynapticEnhancement);
 
   const NeuralRetentionEnhancement = new Augmentation({
     name: AugmentationNames.NeuralRetentionEnhancement,
@@ -683,12 +608,9 @@ function initAugmentations(): void {
       "Chemical injections are used to permanently alter and strengthen the brain's neuronal " +
       "circuits, strengthening the ability to retain information.",
     hacking_exp_mult: 1.25,
+    factions: [FactionNames.NiteSec],
   });
-  NeuralRetentionEnhancement.addToFactions(["NiteSec"]);
-  if (augmentationExists(AugmentationNames.NeuralRetentionEnhancement)) {
-    delete Augmentations[AugmentationNames.NeuralRetentionEnhancement];
-  }
-  AddToAugmentations(NeuralRetentionEnhancement);
+  resetAugmentation(NeuralRetentionEnhancement);
 
   const DataJack = new Augmentation({
     name: AugmentationNames.DataJack,
@@ -699,12 +621,9 @@ function initAugmentations(): void {
       "memory and the mind. This implant allows the user to not only access a computer's memory, but also alter " +
       "and delete it.",
     hacking_money_mult: 1.25,
+    factions: [FactionNames.BitRunners, FactionNames.TheBlackHand, FactionNames.NiteSec, FactionNames.Chongqing, FactionNames.NewTokyo],
   });
-  DataJack.addToFactions(["BitRunners", "The Black Hand", "NiteSec", "Chongqing", "New Tokyo"]);
-  if (augmentationExists(AugmentationNames.DataJack)) {
-    delete Augmentations[AugmentationNames.DataJack];
-  }
-  AddToAugmentations(DataJack);
+  resetAugmentation(DataJack);
 
   const ENM = new Augmentation({
     name: AugmentationNames.ENM,
@@ -717,21 +636,18 @@ function initAugmentations(): void {
       "not do much, but a variety of very powerful upgrades can be installed that allow you to fully " +
       "control the traffic on a network.",
     hacking_mult: 1.08,
+    factions: [
+      FactionNames.BitRunners,
+      FactionNames.TheBlackHand,
+      FactionNames.NiteSec,
+      FactionNames.ECorp,
+      FactionNames.MegaCorp,
+      FactionNames.FulcrumSecretTechnologies,
+      FactionNames.NWO,
+      FactionNames.BladeIndustries,
+    ],
   });
-  ENM.addToFactions([
-    "BitRunners",
-    "The Black Hand",
-    "NiteSec",
-    "ECorp",
-    "MegaCorp",
-    "Fulcrum Secret Technologies",
-    "NWO",
-    "Blade Industries",
-  ]);
-  if (augmentationExists(AugmentationNames.ENM)) {
-    delete Augmentations[AugmentationNames.ENM];
-  }
-  AddToAugmentations(ENM);
+  resetAugmentation(ENM);
 
   const ENMCore = new Augmentation({
     name: AugmentationNames.ENMCore,
@@ -746,20 +662,17 @@ function initAugmentations(): void {
     hacking_chance_mult: 1.03,
     hacking_exp_mult: 1.07,
     hacking_mult: 1.07,
+    factions: [
+      FactionNames.BitRunners,
+      FactionNames.TheBlackHand,
+      FactionNames.ECorp,
+      FactionNames.MegaCorp,
+      FactionNames.FulcrumSecretTechnologies,
+      FactionNames.NWO,
+      FactionNames.BladeIndustries,
+    ],
   });
-  ENMCore.addToFactions([
-    "BitRunners",
-    "The Black Hand",
-    "ECorp",
-    "MegaCorp",
-    "Fulcrum Secret Technologies",
-    "NWO",
-    "Blade Industries",
-  ]);
-  if (augmentationExists(AugmentationNames.ENMCore)) {
-    delete Augmentations[AugmentationNames.ENMCore];
-  }
-  AddToAugmentations(ENMCore);
+  resetAugmentation(ENMCore);
 
   const ENMCoreV2 = new Augmentation({
     name: AugmentationNames.ENMCoreV2,
@@ -776,21 +689,18 @@ function initAugmentations(): void {
     hacking_chance_mult: 1.05,
     hacking_exp_mult: 1.15,
     hacking_mult: 1.08,
+    factions: [
+      FactionNames.BitRunners,
+      FactionNames.ECorp,
+      FactionNames.MegaCorp,
+      FactionNames.FulcrumSecretTechnologies,
+      FactionNames.NWO,
+      FactionNames.BladeIndustries,
+      FactionNames.OmniTekIncorporated,
+      FactionNames.KuaiGongInternational,
+    ],
   });
-  ENMCoreV2.addToFactions([
-    "BitRunners",
-    "ECorp",
-    "MegaCorp",
-    "Fulcrum Secret Technologies",
-    "NWO",
-    "Blade Industries",
-    "OmniTek Incorporated",
-    "KuaiGong International",
-  ]);
-  if (augmentationExists(AugmentationNames.ENMCoreV2)) {
-    delete Augmentations[AugmentationNames.ENMCoreV2];
-  }
-  AddToAugmentations(ENMCoreV2);
+  resetAugmentation(ENMCoreV2);
 
   const ENMCoreV3 = new Augmentation({
     name: AugmentationNames.ENMCoreV3,
@@ -806,20 +716,17 @@ function initAugmentations(): void {
     hacking_chance_mult: 1.1,
     hacking_exp_mult: 1.25,
     hacking_mult: 1.1,
+    factions: [
+      FactionNames.ECorp,
+      FactionNames.MegaCorp,
+      FactionNames.FulcrumSecretTechnologies,
+      FactionNames.NWO,
+      FactionNames.Daedalus,
+      FactionNames.TheCovenant,
+      FactionNames.Illuminati,
+    ],
   });
-  ENMCoreV3.addToFactions([
-    "ECorp",
-    "MegaCorp",
-    "Fulcrum Secret Technologies",
-    "NWO",
-    "Daedalus",
-    "The Covenant",
-    "Illuminati",
-  ]);
-  if (augmentationExists(AugmentationNames.ENMCoreV3)) {
-    delete Augmentations[AugmentationNames.ENMCoreV3];
-  }
-  AddToAugmentations(ENMCoreV3);
+  resetAugmentation(ENMCoreV3);
 
   const ENMAnalyzeEngine = new Augmentation({
     name: AugmentationNames.ENMAnalyzeEngine,
@@ -830,20 +737,17 @@ function initAugmentations(): void {
       "that vastly outperforms the Netburner Module's native single-core processor.",
     prereqs: [AugmentationNames.ENM],
     hacking_speed_mult: 1.1,
+    factions: [
+      FactionNames.ECorp,
+      FactionNames.MegaCorp,
+      FactionNames.FulcrumSecretTechnologies,
+      FactionNames.NWO,
+      FactionNames.Daedalus,
+      FactionNames.TheCovenant,
+      FactionNames.Illuminati,
+    ],
   });
-  ENMAnalyzeEngine.addToFactions([
-    "ECorp",
-    "MegaCorp",
-    "Fulcrum Secret Technologies",
-    "NWO",
-    "Daedalus",
-    "The Covenant",
-    "Illuminati",
-  ]);
-  if (augmentationExists(AugmentationNames.ENMAnalyzeEngine)) {
-    delete Augmentations[AugmentationNames.ENMAnalyzeEngine];
-  }
-  AddToAugmentations(ENMAnalyzeEngine);
+  resetAugmentation(ENMAnalyzeEngine);
 
   const ENMDMA = new Augmentation({
     name: AugmentationNames.ENMDMA,
@@ -856,20 +760,17 @@ function initAugmentations(): void {
     prereqs: [AugmentationNames.ENM],
     hacking_money_mult: 1.4,
     hacking_chance_mult: 1.2,
+    factions: [
+      FactionNames.ECorp,
+      FactionNames.MegaCorp,
+      FactionNames.FulcrumSecretTechnologies,
+      FactionNames.NWO,
+      FactionNames.Daedalus,
+      FactionNames.TheCovenant,
+      FactionNames.Illuminati,
+    ],
   });
-  ENMDMA.addToFactions([
-    "ECorp",
-    "MegaCorp",
-    "Fulcrum Secret Technologies",
-    "NWO",
-    "Daedalus",
-    "The Covenant",
-    "Illuminati",
-  ]);
-  if (augmentationExists(AugmentationNames.ENMDMA)) {
-    delete Augmentations[AugmentationNames.ENMDMA];
-  }
-  AddToAugmentations(ENMDMA);
+  resetAugmentation(ENMDMA);
 
   const Neuralstimulator = new Augmentation({
     name: AugmentationNames.Neuralstimulator,
@@ -881,23 +782,20 @@ function initAugmentations(): void {
     hacking_speed_mult: 1.02,
     hacking_chance_mult: 1.1,
     hacking_exp_mult: 1.12,
+    factions: [
+      FactionNames.TheBlackHand,
+      FactionNames.Chongqing,
+      FactionNames.Sector12,
+      FactionNames.NewTokyo,
+      FactionNames.Aevum,
+      FactionNames.Ishima,
+      FactionNames.Volhaven,
+      FactionNames.BachmanAssociates,
+      FactionNames.ClarkeIncorporated,
+      FactionNames.FourSigma,
+    ],
   });
-  Neuralstimulator.addToFactions([
-    "The Black Hand",
-    "Chongqing",
-    "Sector-12",
-    "New Tokyo",
-    "Aevum",
-    "Ishima",
-    "Volhaven",
-    "Bachman & Associates",
-    "Clarke Incorporated",
-    "Four Sigma",
-  ]);
-  if (augmentationExists(AugmentationNames.Neuralstimulator)) {
-    delete Augmentations[AugmentationNames.Neuralstimulator];
-  }
-  AddToAugmentations(Neuralstimulator);
+  resetAugmentation(Neuralstimulator);
 
   const NeuralAccelerator = new Augmentation({
     name: AugmentationNames.NeuralAccelerator,
@@ -909,12 +807,9 @@ function initAugmentations(): void {
     hacking_mult: 1.1,
     hacking_exp_mult: 1.15,
     hacking_money_mult: 1.2,
+    factions: [FactionNames.BitRunners],
   });
-  NeuralAccelerator.addToFactions(["BitRunners"]);
-  if (augmentationExists(AugmentationNames.NeuralAccelerator)) {
-    delete Augmentations[AugmentationNames.NeuralAccelerator];
-  }
-  AddToAugmentations(NeuralAccelerator);
+  resetAugmentation(NeuralAccelerator);
 
   const CranialSignalProcessorsG1 = new Augmentation({
     name: AugmentationNames.CranialSignalProcessorsG1,
@@ -927,12 +822,9 @@ function initAugmentations(): void {
       "so that the brain doesn't have to.",
     hacking_speed_mult: 1.01,
     hacking_mult: 1.05,
+    factions: [FactionNames.CyberSec],
   });
-  CranialSignalProcessorsG1.addToFactions(["CyberSec"]);
-  if (augmentationExists(AugmentationNames.CranialSignalProcessorsG1)) {
-    delete Augmentations[AugmentationNames.CranialSignalProcessorsG1];
-  }
-  AddToAugmentations(CranialSignalProcessorsG1);
+  resetAugmentation(CranialSignalProcessorsG1);
 
   const CranialSignalProcessorsG2 = new Augmentation({
     name: AugmentationNames.CranialSignalProcessorsG2,
@@ -947,12 +839,9 @@ function initAugmentations(): void {
     hacking_speed_mult: 1.02,
     hacking_chance_mult: 1.05,
     hacking_mult: 1.07,
+    factions: [FactionNames.CyberSec, FactionNames.NiteSec],
   });
-  CranialSignalProcessorsG2.addToFactions(["CyberSec", "NiteSec"]);
-  if (augmentationExists(AugmentationNames.CranialSignalProcessorsG2)) {
-    delete Augmentations[AugmentationNames.CranialSignalProcessorsG2];
-  }
-  AddToAugmentations(CranialSignalProcessorsG2);
+  resetAugmentation(CranialSignalProcessorsG2);
 
   const CranialSignalProcessorsG3 = new Augmentation({
     name: AugmentationNames.CranialSignalProcessorsG3,
@@ -967,12 +856,9 @@ function initAugmentations(): void {
     hacking_speed_mult: 1.02,
     hacking_money_mult: 1.15,
     hacking_mult: 1.09,
+    factions: [FactionNames.NiteSec, FactionNames.TheBlackHand, FactionNames.BitRunners],
   });
-  CranialSignalProcessorsG3.addToFactions(["NiteSec", "The Black Hand", "BitRunners"]);
-  if (augmentationExists(AugmentationNames.CranialSignalProcessorsG3)) {
-    delete Augmentations[AugmentationNames.CranialSignalProcessorsG3];
-  }
-  AddToAugmentations(CranialSignalProcessorsG3);
+  resetAugmentation(CranialSignalProcessorsG3);
 
   const CranialSignalProcessorsG4 = new Augmentation({
     name: AugmentationNames.CranialSignalProcessorsG4,
@@ -987,12 +873,9 @@ function initAugmentations(): void {
     hacking_speed_mult: 1.02,
     hacking_money_mult: 1.2,
     hacking_grow_mult: 1.25,
+    factions: [FactionNames.TheBlackHand, FactionNames.BitRunners],
   });
-  CranialSignalProcessorsG4.addToFactions(["The Black Hand", "BitRunners"]);
-  if (augmentationExists(AugmentationNames.CranialSignalProcessorsG4)) {
-    delete Augmentations[AugmentationNames.CranialSignalProcessorsG4];
-  }
-  AddToAugmentations(CranialSignalProcessorsG4);
+  resetAugmentation(CranialSignalProcessorsG4);
 
   const CranialSignalProcessorsG5 = new Augmentation({
     name: AugmentationNames.CranialSignalProcessorsG5,
@@ -1007,12 +890,9 @@ function initAugmentations(): void {
     hacking_mult: 1.3,
     hacking_money_mult: 1.25,
     hacking_grow_mult: 1.75,
+    factions: [FactionNames.BitRunners],
   });
-  CranialSignalProcessorsG5.addToFactions(["BitRunners"]);
-  if (augmentationExists(AugmentationNames.CranialSignalProcessorsG5)) {
-    delete Augmentations[AugmentationNames.CranialSignalProcessorsG5];
-  }
-  AddToAugmentations(CranialSignalProcessorsG5);
+  resetAugmentation(CranialSignalProcessorsG5);
 
   const NeuronalDensification = new Augmentation({
     name: AugmentationNames.NeuronalDensification,
@@ -1025,12 +905,9 @@ function initAugmentations(): void {
     hacking_mult: 1.15,
     hacking_exp_mult: 1.1,
     hacking_speed_mult: 1.03,
+    factions: [FactionNames.ClarkeIncorporated],
   });
-  NeuronalDensification.addToFactions(["Clarke Incorporated"]);
-  if (augmentationExists(AugmentationNames.NeuronalDensification)) {
-    delete Augmentations[AugmentationNames.NeuronalDensification];
-  }
-  AddToAugmentations(NeuronalDensification);
+  resetAugmentation(NeuronalDensification);
 
   // Work Augmentations
   const NuoptimalInjectorImplant = new Augmentation({
@@ -1042,20 +919,17 @@ function initAugmentations(): void {
       "the bloodstream to improve memory, increase focus, and provide other " +
       "cognitive enhancements.",
     company_rep_mult: 1.2,
+    factions: [
+      FactionNames.TianDiHui,
+      FactionNames.Volhaven,
+      FactionNames.NewTokyo,
+      FactionNames.Chongqing,
+      FactionNames.ClarkeIncorporated,
+      FactionNames.FourSigma,
+      FactionNames.BachmanAssociates,
+    ],
   });
-  NuoptimalInjectorImplant.addToFactions([
-    "Tian Di Hui",
-    "Volhaven",
-    "New Tokyo",
-    "Chongqing",
-    "Clarke Incorporated",
-    "Four Sigma",
-    "Bachman & Associates",
-  ]);
-  if (augmentationExists(AugmentationNames.NuoptimalInjectorImplant)) {
-    delete Augmentations[AugmentationNames.NuoptimalInjectorImplant];
-  }
-  AddToAugmentations(NuoptimalInjectorImplant);
+  resetAugmentation(NuoptimalInjectorImplant);
 
   const SpeechEnhancement = new Augmentation({
     name: AugmentationNames.SpeechEnhancement,
@@ -1067,19 +941,16 @@ function initAugmentations(): void {
       "social interactions.",
     company_rep_mult: 1.1,
     charisma_mult: 1.1,
+    factions: [
+      FactionNames.TianDiHui,
+      FactionNames.SpeakersForTheDead,
+      FactionNames.FourSigma,
+      FactionNames.KuaiGongInternational,
+      FactionNames.ClarkeIncorporated,
+      FactionNames.BachmanAssociates,
+    ],
   });
-  SpeechEnhancement.addToFactions([
-    "Tian Di Hui",
-    "Speakers for the Dead",
-    "Four Sigma",
-    "KuaiGong International",
-    "Clarke Incorporated",
-    "Bachman & Associates",
-  ]);
-  if (augmentationExists(AugmentationNames.SpeechEnhancement)) {
-    delete Augmentations[AugmentationNames.SpeechEnhancement];
-  }
-  AddToAugmentations(SpeechEnhancement);
+  resetAugmentation(SpeechEnhancement);
 
   const FocusWire = new Augmentation({
     name: AugmentationNames.FocusWire,
@@ -1094,12 +965,9 @@ function initAugmentations(): void {
     charisma_exp_mult: 1.05,
     company_rep_mult: 1.1,
     work_money_mult: 1.2,
+    factions: [FactionNames.BachmanAssociates, FactionNames.ClarkeIncorporated, FactionNames.FourSigma, FactionNames.KuaiGongInternational],
   });
-  FocusWire.addToFactions(["Bachman & Associates", "Clarke Incorporated", "Four Sigma", "KuaiGong International"]);
-  if (augmentationExists(AugmentationNames.FocusWire)) {
-    delete Augmentations[AugmentationNames.FocusWire];
-  }
-  AddToAugmentations(FocusWire);
+  resetAugmentation(FocusWire);
 
   const PCDNI = new Augmentation({
     name: AugmentationNames.PCDNI,
@@ -1111,12 +979,9 @@ function initAugmentations(): void {
       "it using the brain's electrochemical signals.",
     company_rep_mult: 1.3,
     hacking_mult: 1.08,
+    factions: [FactionNames.FourSigma, FactionNames.OmniTekIncorporated, FactionNames.ECorp, FactionNames.BladeIndustries],
   });
-  PCDNI.addToFactions(["Four Sigma", "OmniTek Incorporated", "ECorp", "Blade Industries"]);
-  if (augmentationExists(AugmentationNames.PCDNI)) {
-    delete Augmentations[AugmentationNames.PCDNI];
-  }
-  AddToAugmentations(PCDNI);
+  resetAugmentation(PCDNI);
 
   const PCDNIOptimizer = new Augmentation({
     name: AugmentationNames.PCDNIOptimizer,
@@ -1129,12 +994,9 @@ function initAugmentations(): void {
     prereqs: [AugmentationNames.PCDNI],
     company_rep_mult: 1.75,
     hacking_mult: 1.1,
+    factions: [FactionNames.FulcrumSecretTechnologies, FactionNames.ECorp, FactionNames.BladeIndustries],
   });
-  PCDNIOptimizer.addToFactions(["Fulcrum Secret Technologies", "ECorp", "Blade Industries"]);
-  if (augmentationExists(AugmentationNames.PCDNIOptimizer)) {
-    delete Augmentations[AugmentationNames.PCDNIOptimizer];
-  }
-  AddToAugmentations(PCDNIOptimizer);
+  resetAugmentation(PCDNIOptimizer);
 
   const PCDNINeuralNetwork = new Augmentation({
     name: AugmentationNames.PCDNINeuralNetwork,
@@ -1149,12 +1011,9 @@ function initAugmentations(): void {
     company_rep_mult: 2,
     hacking_mult: 1.1,
     hacking_speed_mult: 1.05,
+    factions: [FactionNames.FulcrumSecretTechnologies],
   });
-  PCDNINeuralNetwork.addToFactions(["Fulcrum Secret Technologies"]);
-  if (augmentationExists(AugmentationNames.PCDNINeuralNetwork)) {
-    delete Augmentations[AugmentationNames.PCDNINeuralNetwork];
-  }
-  AddToAugmentations(PCDNINeuralNetwork);
+  resetAugmentation(PCDNINeuralNetwork);
 
   const ADRPheromone1 = new Augmentation({
     name: AugmentationNames.ADRPheromone1,
@@ -1166,12 +1025,9 @@ function initAugmentations(): void {
       "triggers feelings of admiration and approval in other people.",
     company_rep_mult: 1.1,
     faction_rep_mult: 1.1,
+    factions: [FactionNames.TianDiHui, FactionNames.TheSyndicate, FactionNames.NWO, FactionNames.MegaCorp, FactionNames.FourSigma],
   });
-  ADRPheromone1.addToFactions(["Tian Di Hui", "The Syndicate", "NWO", "MegaCorp", "Four Sigma"]);
-  if (augmentationExists(AugmentationNames.ADRPheromone1)) {
-    delete Augmentations[AugmentationNames.ADRPheromone1];
-  }
-  AddToAugmentations(ADRPheromone1);
+  resetAugmentation(ADRPheromone1);
 
   const ADRPheromone2 = new Augmentation({
     name: AugmentationNames.ADRPheromone2,
@@ -1183,12 +1039,9 @@ function initAugmentations(): void {
       "triggers feelings of admiration, approval, and respect in others.",
     company_rep_mult: 1.2,
     faction_rep_mult: 1.2,
+    factions: [FactionNames.Silhouette, FactionNames.FourSigma, FactionNames.BachmanAssociates, FactionNames.ClarkeIncorporated],
   });
-  ADRPheromone2.addToFactions(["Silhouette", "Four Sigma", "Bachman & Associates", "Clarke Incorporated"]);
-  if (augmentationExists(AugmentationNames.ADRPheromone2)) {
-    delete Augmentations[AugmentationNames.ADRPheromone2];
-  }
-  AddToAugmentations(ADRPheromone2);
+  resetAugmentation(ADRPheromone2);
 
   const ShadowsSimulacrum = new Augmentation({
     name: AugmentationNames.ShadowsSimulacrum,
@@ -1202,12 +1055,13 @@ function initAugmentations(): void {
       "espionage and surveillance work.",
     company_rep_mult: 1.15,
     faction_rep_mult: 1.15,
+    factions: [
+      FactionNames.TheSyndicate,
+      FactionNames.TheDarkArmy,
+      FactionNames.SpeakersForTheDead
+    ],
   });
-  ShadowsSimulacrum.addToFactions(["The Syndicate", "The Dark Army", "Speakers for the Dead"]);
-  if (augmentationExists(AugmentationNames.ShadowsSimulacrum)) {
-    delete Augmentations[AugmentationNames.ShadowsSimulacrum];
-  }
-  AddToAugmentations(ShadowsSimulacrum);
+  resetAugmentation(ShadowsSimulacrum);
 
   // HacknetNode Augmentations
   const HacknetNodeCPUUpload = new Augmentation({
@@ -1220,12 +1074,9 @@ function initAugmentations(): void {
       "for the Hacknet Node that provides better performance.",
     hacknet_node_money_mult: 1.15,
     hacknet_node_purchase_cost_mult: 0.85,
+    factions: [FactionNames.Netburners],
   });
-  HacknetNodeCPUUpload.addToFactions(["Netburners"]);
-  if (augmentationExists(AugmentationNames.HacknetNodeCPUUpload)) {
-    delete Augmentations[AugmentationNames.HacknetNodeCPUUpload];
-  }
-  AddToAugmentations(HacknetNodeCPUUpload);
+  resetAugmentation(HacknetNodeCPUUpload);
 
   const HacknetNodeCacheUpload = new Augmentation({
     name: AugmentationNames.HacknetNodeCacheUpload,
@@ -1237,12 +1088,9 @@ function initAugmentations(): void {
       "Hacknet Node that offers better performance.",
     hacknet_node_money_mult: 1.1,
     hacknet_node_level_cost_mult: 0.85,
+    factions: [FactionNames.Netburners],
   });
-  HacknetNodeCacheUpload.addToFactions(["Netburners"]);
-  if (augmentationExists(AugmentationNames.HacknetNodeCacheUpload)) {
-    delete Augmentations[AugmentationNames.HacknetNodeCacheUpload];
-  }
-  AddToAugmentations(HacknetNodeCacheUpload);
+  resetAugmentation(HacknetNodeCacheUpload);
 
   const HacknetNodeNICUpload = new Augmentation({
     name: AugmentationNames.HacknetNodeNICUpload,
@@ -1254,12 +1102,9 @@ function initAugmentations(): void {
       "offers better performance.",
     hacknet_node_money_mult: 1.1,
     hacknet_node_purchase_cost_mult: 0.9,
+    factions: [FactionNames.Netburners],
   });
-  HacknetNodeNICUpload.addToFactions(["Netburners"]);
-  if (augmentationExists(AugmentationNames.HacknetNodeNICUpload)) {
-    delete Augmentations[AugmentationNames.HacknetNodeNICUpload];
-  }
-  AddToAugmentations(HacknetNodeNICUpload);
+  resetAugmentation(HacknetNodeNICUpload);
 
   const HacknetNodeKernelDNI = new Augmentation({
     name: AugmentationNames.HacknetNodeKernelDNI,
@@ -1270,12 +1115,9 @@ function initAugmentations(): void {
       "Hacknet Node. This lets the user access and manipulate the Node's kernel using " +
       "electrochemical signals.",
     hacknet_node_money_mult: 1.25,
+    factions: [FactionNames.Netburners],
   });
-  HacknetNodeKernelDNI.addToFactions(["Netburners"]);
-  if (augmentationExists(AugmentationNames.HacknetNodeKernelDNI)) {
-    delete Augmentations[AugmentationNames.HacknetNodeKernelDNI];
-  }
-  AddToAugmentations(HacknetNodeKernelDNI);
+  resetAugmentation(HacknetNodeKernelDNI);
 
   const HacknetNodeCoreDNI = new Augmentation({
     name: AugmentationNames.HacknetNodeCoreDNI,
@@ -1286,12 +1128,9 @@ function initAugmentations(): void {
       "to a Hacknet Node. This lets the user access and manipulate the Node's processing logic using " +
       "electrochemical signals.",
     hacknet_node_money_mult: 1.45,
+    factions: [FactionNames.Netburners],
   });
-  HacknetNodeCoreDNI.addToFactions(["Netburners"]);
-  if (augmentationExists(AugmentationNames.HacknetNodeCoreDNI)) {
-    delete Augmentations[AugmentationNames.HacknetNodeCoreDNI];
-  }
-  AddToAugmentations(HacknetNodeCoreDNI);
+  resetAugmentation(HacknetNodeCoreDNI);
 
   //Misc/Hybrid augmentations
   const NeuroFluxGovernor = new Augmentation({
@@ -1335,6 +1174,7 @@ function initAugmentations(): void {
     hacknet_node_core_cost_mult: 0.99,
     hacknet_node_level_cost_mult: 0.99,
     work_money_mult: 1.01,
+    factions: [],
   });
 
   // Set the Augmentation's level to the currently-installed level
@@ -1378,12 +1218,9 @@ function initAugmentations(): void {
     dexterity_exp_mult: 1.1,
     agility_exp_mult: 1.1,
     charisma_exp_mult: 1.1,
+    factions: [FactionNames.CyberSec, FactionNames.Aevum],
   });
-  Neurotrainer1.addToFactions(["CyberSec", "Aevum"]);
-  if (augmentationExists(AugmentationNames.Neurotrainer1)) {
-    delete Augmentations[AugmentationNames.Neurotrainer1];
-  }
-  AddToAugmentations(Neurotrainer1);
+  resetAugmentation(Neurotrainer1);
 
   const Neurotrainer2 = new Augmentation({
     name: AugmentationNames.Neurotrainer2,
@@ -1399,12 +1236,9 @@ function initAugmentations(): void {
     dexterity_exp_mult: 1.15,
     agility_exp_mult: 1.15,
     charisma_exp_mult: 1.15,
+    factions: [FactionNames.BitRunners, FactionNames.NiteSec],
   });
-  Neurotrainer2.addToFactions(["BitRunners", "NiteSec"]);
-  if (augmentationExists(AugmentationNames.Neurotrainer2)) {
-    delete Augmentations[AugmentationNames.Neurotrainer2];
-  }
-  AddToAugmentations(Neurotrainer2);
+  resetAugmentation(Neurotrainer2);
 
   const Neurotrainer3 = new Augmentation({
     name: AugmentationNames.Neurotrainer3,
@@ -1420,12 +1254,9 @@ function initAugmentations(): void {
     dexterity_exp_mult: 1.2,
     agility_exp_mult: 1.2,
     charisma_exp_mult: 1.2,
+    factions: [FactionNames.NWO, FactionNames.FourSigma],
   });
-  Neurotrainer3.addToFactions(["NWO", "Four Sigma"]);
-  if (augmentationExists(AugmentationNames.Neurotrainer3)) {
-    delete Augmentations[AugmentationNames.Neurotrainer3];
-  }
-  AddToAugmentations(Neurotrainer3);
+  resetAugmentation(Neurotrainer3);
 
   const Hypersight = new Augmentation({
     name: AugmentationNames.Hypersight,
@@ -1438,12 +1269,9 @@ function initAugmentations(): void {
     dexterity_mult: 1.4,
     hacking_speed_mult: 1.03,
     hacking_money_mult: 1.1,
+    factions: [FactionNames.BladeIndustries, FactionNames.KuaiGongInternational],
   });
-  Hypersight.addToFactions(["Blade Industries", "KuaiGong International"]);
-  if (augmentationExists(AugmentationNames.Hypersight)) {
-    delete Augmentations[AugmentationNames.Hypersight];
-  }
-  AddToAugmentations(Hypersight);
+  resetAugmentation(Hypersight);
 
   const LuminCloaking1 = new Augmentation({
     name: AugmentationNames.LuminCloaking1,
@@ -1455,12 +1283,9 @@ function initAugmentations(): void {
       "around the skin, making the user much harder to see to the naked eye.",
     agility_mult: 1.05,
     crime_money_mult: 1.1,
+    factions: [FactionNames.SlumSnakes, FactionNames.Tetrads],
   });
-  LuminCloaking1.addToFactions(["Slum Snakes", "Tetrads"]);
-  if (augmentationExists(AugmentationNames.LuminCloaking1)) {
-    delete Augmentations[AugmentationNames.LuminCloaking1];
-  }
-  AddToAugmentations(LuminCloaking1);
+  resetAugmentation(LuminCloaking1);
 
   const LuminCloaking2 = new Augmentation({
     name: AugmentationNames.LuminCloaking2,
@@ -1475,12 +1300,9 @@ function initAugmentations(): void {
     agility_mult: 1.1,
     defense_mult: 1.1,
     crime_money_mult: 1.25,
+    factions: [FactionNames.SlumSnakes, FactionNames.Tetrads],
   });
-  LuminCloaking2.addToFactions(["Slum Snakes", "Tetrads"]);
-  if (augmentationExists(AugmentationNames.LuminCloaking2)) {
-    delete Augmentations[AugmentationNames.LuminCloaking2];
-  }
-  AddToAugmentations(LuminCloaking2);
+  resetAugmentation(LuminCloaking2);
 
   const SmartSonar = new Augmentation({
     name: AugmentationNames.SmartSonar,
@@ -1490,12 +1312,9 @@ function initAugmentations(): void {
     dexterity_mult: 1.1,
     dexterity_exp_mult: 1.15,
     crime_money_mult: 1.25,
+    factions: [FactionNames.SlumSnakes],
   });
-  SmartSonar.addToFactions(["Slum Snakes"]);
-  if (augmentationExists(AugmentationNames.SmartSonar)) {
-    delete Augmentations[AugmentationNames.SmartSonar];
-  }
-  AddToAugmentations(SmartSonar);
+  resetAugmentation(SmartSonar);
 
   const PowerRecirculator = new Augmentation({
     name: AugmentationNames.PowerRecirculator,
@@ -1517,12 +1336,9 @@ function initAugmentations(): void {
     dexterity_exp_mult: 1.1,
     agility_exp_mult: 1.1,
     charisma_exp_mult: 1.1,
+    factions: [FactionNames.Tetrads, FactionNames.TheDarkArmy, FactionNames.TheSyndicate, FactionNames.NWO],
   });
-  PowerRecirculator.addToFactions(["Tetrads", "The Dark Army", "The Syndicate", "NWO"]);
-  if (augmentationExists(AugmentationNames.PowerRecirculator)) {
-    delete Augmentations[AugmentationNames.PowerRecirculator];
-  }
-  AddToAugmentations(PowerRecirculator);
+  resetAugmentation(PowerRecirculator);
 
   // Unique AUGS (Each Faction gets one unique augmentation)
   // Factions that already have unique augs up to this point:
@@ -1535,19 +1351,16 @@ function initAugmentations(): void {
     repCost: 1.875e6,
     moneyCost: 2.5e13,
     info:
-      "A brain implant that wirelessly connects you to the Illuminati's " +
+      `A brain implant that wirelessly connects you to the ${FactionNames.Illuminati}'s ` +
       "quantum supercomputer, allowing you to access and use its incredible " +
       "computing power.",
     hacking_mult: 1.75,
     hacking_speed_mult: 2,
     hacking_chance_mult: 2.5,
     hacking_money_mult: 4,
+    factions: [FactionNames.Illuminati],
   });
-  QLink.addToFactions(["Illuminati"]);
-  if (augmentationExists(AugmentationNames.QLink)) {
-    delete Augmentations[AugmentationNames.QLink];
-  }
-  AddToAugmentations(QLink);
+  resetAugmentation(QLink);
 
   // Daedalus
   const RedPill = new Augmentation({
@@ -1556,12 +1369,9 @@ function initAugmentations(): void {
     moneyCost: 0,
     info: "It's time to leave the cave.",
     stats: null,
+    factions: [FactionNames.Daedalus],
   });
-  RedPill.addToFactions(["Daedalus"]);
-  if (augmentationExists(AugmentationNames.TheRedPill)) {
-    delete Augmentations[AugmentationNames.TheRedPill];
-  }
-  AddToAugmentations(RedPill);
+  resetAugmentation(RedPill);
 
   // Covenant
   const SPTN97 = new Augmentation({
@@ -1578,12 +1388,9 @@ function initAugmentations(): void {
     dexterity_mult: 1.75,
     agility_mult: 1.75,
     hacking_mult: 1.15,
+    factions: [FactionNames.TheCovenant],
   });
-  SPTN97.addToFactions(["The Covenant"]);
-  if (augmentationExists(AugmentationNames.SPTN97)) {
-    delete Augmentations[AugmentationNames.SPTN97];
-  }
-  AddToAugmentations(SPTN97);
+  resetAugmentation(SPTN97);
 
   // ECorp
   const HiveMind = new Augmentation({
@@ -1591,17 +1398,14 @@ function initAugmentations(): void {
     repCost: 1.5e6,
     moneyCost: 5.5e9,
     info:
-      "A brain implant developed by ECorp. They do not reveal what " +
+      `A brain implant developed by ${FactionNames.ECorp}. They do not reveal what ` +
       "exactly the implant does, but they promise that it will greatly " +
       "enhance your abilities.",
     hacking_grow_mult: 3,
     stats: null,
+    factions: [FactionNames.ECorp],
   });
-  HiveMind.addToFactions(["ECorp"]);
-  if (augmentationExists(AugmentationNames.HiveMind)) {
-    delete Augmentations[AugmentationNames.HiveMind];
-  }
-  AddToAugmentations(HiveMind);
+  resetAugmentation(HiveMind);
 
   // MegaCorp
   const CordiARCReactor = new Augmentation({
@@ -1621,12 +1425,9 @@ function initAugmentations(): void {
     defense_exp_mult: 1.35,
     dexterity_exp_mult: 1.35,
     agility_exp_mult: 1.35,
+    factions: [FactionNames.MegaCorp],
   });
-  CordiARCReactor.addToFactions(["MegaCorp"]);
-  if (augmentationExists(AugmentationNames.CordiARCReactor)) {
-    delete Augmentations[AugmentationNames.CordiARCReactor];
-  }
-  AddToAugmentations(CordiARCReactor);
+  resetAugmentation(CordiARCReactor);
 
   // BachmanAndAssociates
   const SmartJaw = new Augmentation({
@@ -1641,12 +1442,9 @@ function initAugmentations(): void {
     charisma_exp_mult: 1.5,
     company_rep_mult: 1.25,
     faction_rep_mult: 1.25,
+    factions: [FactionNames.BachmanAssociates],
   });
-  SmartJaw.addToFactions(["Bachman & Associates"]);
-  if (augmentationExists(AugmentationNames.SmartJaw)) {
-    delete Augmentations[AugmentationNames.SmartJaw];
-  }
-  AddToAugmentations(SmartJaw);
+  resetAugmentation(SmartJaw);
 
   // BladeIndustries
   const Neotra = new Augmentation({
@@ -1660,12 +1458,9 @@ function initAugmentations(): void {
       "and restructure themselves.",
     strength_mult: 1.55,
     defense_mult: 1.55,
+    factions: [FactionNames.BladeIndustries],
   });
-  Neotra.addToFactions(["Blade Industries"]);
-  if (augmentationExists(AugmentationNames.Neotra)) {
-    delete Augmentations[AugmentationNames.Neotra];
-  }
-  AddToAugmentations(Neotra);
+  resetAugmentation(Neotra);
 
   // NWO
   const Xanipher = new Augmentation({
@@ -1688,12 +1483,9 @@ function initAugmentations(): void {
     dexterity_exp_mult: 1.15,
     agility_exp_mult: 1.15,
     charisma_exp_mult: 1.15,
+    factions: [FactionNames.NWO],
   });
-  Xanipher.addToFactions(["NWO"]);
-  if (augmentationExists(AugmentationNames.Xanipher)) {
-    delete Augmentations[AugmentationNames.Xanipher];
-  }
-  AddToAugmentations(Xanipher);
+  resetAugmentation(Xanipher);
 
   const HydroflameLeftArm = new Augmentation({
     name: AugmentationNames.HydroflameLeftArm,
@@ -1706,12 +1498,9 @@ function initAugmentations(): void {
       "alloy increases the user's strength to unbelievable levels. The augmentation " +
       "gets more powerful over time for seemingly no reason.",
     strength_mult: 2.7,
+    factions: [FactionNames.NWO],
   });
-  HydroflameLeftArm.addToFactions(["NWO"]);
-  if (augmentationExists(AugmentationNames.HydroflameLeftArm)) {
-    delete Augmentations[AugmentationNames.HydroflameLeftArm];
-  }
-  AddToAugmentations(HydroflameLeftArm);
+  resetAugmentation(HydroflameLeftArm);
 
   // ClarkeIncorporated
   const nextSENS = new Augmentation({
@@ -1728,12 +1517,9 @@ function initAugmentations(): void {
     dexterity_mult: 1.2,
     agility_mult: 1.2,
     charisma_mult: 1.2,
+    factions: [FactionNames.ClarkeIncorporated],
   });
-  nextSENS.addToFactions(["Clarke Incorporated"]);
-  if (augmentationExists(AugmentationNames.nextSENS)) {
-    delete Augmentations[AugmentationNames.nextSENS];
-  }
-  AddToAugmentations(nextSENS);
+  resetAugmentation(nextSENS);
 
   // OmniTekIncorporated
   const OmniTekInfoLoad = new Augmentation({
@@ -1746,12 +1532,9 @@ function initAugmentations(): void {
       "hacking abilities.",
     hacking_mult: 1.2,
     hacking_exp_mult: 1.25,
+    factions: [FactionNames.OmniTekIncorporated],
   });
-  OmniTekInfoLoad.addToFactions(["OmniTek Incorporated"]);
-  if (augmentationExists(AugmentationNames.OmniTekInfoLoad)) {
-    delete Augmentations[AugmentationNames.OmniTekInfoLoad];
-  }
-  AddToAugmentations(OmniTekInfoLoad);
+  resetAugmentation(OmniTekInfoLoad);
 
   // FourSigma
   // TODO Later when Intelligence is added in . Some aug that greatly increases int
@@ -1769,12 +1552,9 @@ function initAugmentations(): void {
     strength_mult: 1.4,
     defense_mult: 1.4,
     agility_mult: 1.4,
+    factions: [FactionNames.KuaiGongInternational],
   });
-  PhotosyntheticCells.addToFactions(["KuaiGong International"]);
-  if (augmentationExists(AugmentationNames.PhotosyntheticCells)) {
-    delete Augmentations[AugmentationNames.PhotosyntheticCells];
-  }
-  AddToAugmentations(PhotosyntheticCells);
+  resetAugmentation(PhotosyntheticCells);
 
   // BitRunners
   const Neurolink = new Augmentation({
@@ -1783,19 +1563,16 @@ function initAugmentations(): void {
     moneyCost: 4.375e9,
     info:
       "A brain implant that provides a high-bandwidth, direct neural link between your " +
-      "mind and the BitRunners' data servers, which reportedly contain " +
+      `mind and the ${FactionNames.BitRunners}' data servers, which reportedly contain ` +
       "the largest database of hacking tools and information in the world.",
     hacking_mult: 1.15,
     hacking_exp_mult: 1.2,
     hacking_chance_mult: 1.1,
     hacking_speed_mult: 1.05,
     programs: [Programs.FTPCrackProgram.name, Programs.RelaySMTPProgram.name],
+    factions: [FactionNames.BitRunners],
   });
-  Neurolink.addToFactions(["BitRunners"]);
-  if (augmentationExists(AugmentationNames.Neurolink)) {
-    delete Augmentations[AugmentationNames.Neurolink];
-  }
-  AddToAugmentations(Neurolink);
+  resetAugmentation(Neurolink);
 
   // BlackHand
   const TheBlackHand = new Augmentation({
@@ -1812,12 +1589,9 @@ function initAugmentations(): void {
     hacking_mult: 1.1,
     hacking_speed_mult: 1.02,
     hacking_money_mult: 1.1,
+    factions: [FactionNames.TheBlackHand],
   });
-  TheBlackHand.addToFactions(["The Black Hand"]);
-  if (augmentationExists(AugmentationNames.TheBlackHand)) {
-    delete Augmentations[AugmentationNames.TheBlackHand];
-  }
-  AddToAugmentations(TheBlackHand);
+  resetAugmentation(TheBlackHand);
 
   // NiteSec
   const CRTX42AA = new Augmentation({
@@ -1830,12 +1604,9 @@ function initAugmentations(): void {
       "cortex and improves cognitive abilities.",
     hacking_mult: 1.08,
     hacking_exp_mult: 1.15,
+    factions: [FactionNames.NiteSec],
   });
-  CRTX42AA.addToFactions(["NiteSec"]);
-  if (augmentationExists(AugmentationNames.CRTX42AA)) {
-    delete Augmentations[AugmentationNames.CRTX42AA];
-  }
-  AddToAugmentations(CRTX42AA);
+  resetAugmentation(CRTX42AA);
 
   // Chongqing
   const Neuregen = new Augmentation({
@@ -1847,12 +1618,9 @@ function initAugmentations(): void {
       "resulting in neurons that never die, continuously " +
       "regenerate, and strengthen themselves.",
     hacking_exp_mult: 1.4,
+    factions: [FactionNames.Chongqing],
   });
-  Neuregen.addToFactions(["Chongqing"]);
-  if (augmentationExists(AugmentationNames.Neuregen)) {
-    delete Augmentations[AugmentationNames.Neuregen];
-  }
-  AddToAugmentations(Neuregen);
+  resetAugmentation(Neuregen);
 
   // Sector12
   const CashRoot = new Augmentation({
@@ -1867,12 +1635,9 @@ function initAugmentations(): void {
     ),
     startingMoney: 1e6,
     programs: [Programs.BruteSSHProgram.name],
+    factions: [FactionNames.Sector12],
   });
-  CashRoot.addToFactions(["Sector-12"]);
-  if (augmentationExists(AugmentationNames.CashRoot)) {
-    delete Augmentations[AugmentationNames.CashRoot];
-  }
-  AddToAugmentations(CashRoot);
+  resetAugmentation(CashRoot);
 
   // NewTokyo
   const NutriGen = new Augmentation({
@@ -1888,12 +1653,9 @@ function initAugmentations(): void {
     defense_exp_mult: 1.2,
     dexterity_exp_mult: 1.2,
     agility_exp_mult: 1.2,
+    factions: [FactionNames.NewTokyo],
   });
-  NutriGen.addToFactions(["New Tokyo"]);
-  if (augmentationExists(AugmentationNames.NutriGen)) {
-    delete Augmentations[AugmentationNames.NutriGen];
-  }
-  AddToAugmentations(NutriGen);
+  resetAugmentation(NutriGen);
 
   // Aevum
   const PCMatrix = new Augmentation({
@@ -1912,12 +1674,9 @@ function initAugmentations(): void {
     crime_success_mult: 1.0777,
     crime_money_mult: 1.0777,
     programs: [Programs.DeepscanV1.name, Programs.AutoLink.name],
+    factions: [FactionNames.Aevum],
   });
-  PCMatrix.addToFactions(["Aevum"]);
-  if (augmentationExists(AugmentationNames.PCMatrix)) {
-    delete Augmentations[AugmentationNames.PCMatrix];
-  }
-  AddToAugmentations(PCMatrix);
+  resetAugmentation(PCMatrix);
 
   // Ishima
   const INFRARet = new Augmentation({
@@ -1928,12 +1687,9 @@ function initAugmentations(): void {
     crime_success_mult: 1.25,
     crime_money_mult: 1.1,
     dexterity_mult: 1.1,
+    factions: [FactionNames.Ishima],
   });
-  INFRARet.addToFactions(["Ishima"]);
-  if (augmentationExists(AugmentationNames.INFRARet)) {
-    delete Augmentations[AugmentationNames.INFRARet];
-  }
-  AddToAugmentations(INFRARet);
+  resetAugmentation(INFRARet);
 
   // Volhaven
   const DermaForce = new Augmentation({
@@ -1945,12 +1701,9 @@ function initAugmentations(): void {
       "millions of nanobots capable of projecting high-density muon beams, " +
       "creating an energy barrier around the user.",
     defense_mult: 1.4,
+    factions: [FactionNames.Volhaven],
   });
-  DermaForce.addToFactions(["Volhaven"]);
-  if (augmentationExists(AugmentationNames.DermaForce)) {
-    delete Augmentations[AugmentationNames.DermaForce];
-  }
-  AddToAugmentations(DermaForce);
+  resetAugmentation(DermaForce);
 
   // SpeakersForTheDead
   const GrapheneBrachiBlades = new Augmentation({
@@ -1966,12 +1719,9 @@ function initAugmentations(): void {
     defense_mult: 1.4,
     crime_success_mult: 1.1,
     crime_money_mult: 1.3,
+    factions: [FactionNames.SpeakersForTheDead],
   });
-  GrapheneBrachiBlades.addToFactions(["Speakers for the Dead"]);
-  if (augmentationExists(AugmentationNames.GrapheneBrachiBlades)) {
-    delete Augmentations[AugmentationNames.GrapheneBrachiBlades];
-  }
-  AddToAugmentations(GrapheneBrachiBlades);
+  resetAugmentation(GrapheneBrachiBlades);
 
   // DarkArmy
   const GrapheneBionicArms = new Augmentation({
@@ -1985,12 +1735,9 @@ function initAugmentations(): void {
     prereqs: [AugmentationNames.BionicArms],
     strength_mult: 1.85,
     dexterity_mult: 1.85,
+    factions: [FactionNames.TheDarkArmy],
   });
-  GrapheneBionicArms.addToFactions(["The Dark Army"]);
-  if (augmentationExists(AugmentationNames.GrapheneBionicArms)) {
-    delete Augmentations[AugmentationNames.GrapheneBionicArms];
-  }
-  AddToAugmentations(GrapheneBionicArms);
+  resetAugmentation(GrapheneBionicArms);
 
   // TheSyndicate
   const BrachiBlades = new Augmentation({
@@ -2002,28 +1749,21 @@ function initAugmentations(): void {
     defense_mult: 1.15,
     crime_success_mult: 1.1,
     crime_money_mult: 1.15,
+    factions: [FactionNames.TheSyndicate],
   });
-  BrachiBlades.addToFactions(["The Syndicate"]);
-  if (augmentationExists(AugmentationNames.BrachiBlades)) {
-    delete Augmentations[AugmentationNames.BrachiBlades];
-  }
-  AddToAugmentations(BrachiBlades);
+  resetAugmentation(BrachiBlades);
 
   // Tetrads
   const BionicArms = new Augmentation({
     name: AugmentationNames.BionicArms,
     repCost: 6.25e4,
     moneyCost: 2.75e8,
-    info:
-      "Cybernetic arms created from plasteel and carbon fibers that completely replace the user's organic arms.",
+    info: "Cybernetic arms created from plasteel and carbon fibers that completely replace the user's organic arms.",
     strength_mult: 1.3,
     dexterity_mult: 1.3,
+    factions: [FactionNames.Tetrads],
   });
-  BionicArms.addToFactions(["Tetrads"]);
-  if (augmentationExists(AugmentationNames.BionicArms)) {
-    delete Augmentations[AugmentationNames.BionicArms];
-  }
-  AddToAugmentations(BionicArms);
+  resetAugmentation(BionicArms);
 
   // TianDiHui
   const SNA = new Augmentation({
@@ -2036,12 +1776,9 @@ function initAugmentations(): void {
     work_money_mult: 1.1,
     company_rep_mult: 1.15,
     faction_rep_mult: 1.15,
+    factions: [FactionNames.TianDiHui],
   });
-  SNA.addToFactions(["Tian Di Hui"]);
-  if (augmentationExists(AugmentationNames.SNA)) {
-    delete Augmentations[AugmentationNames.SNA];
-  }
-  AddToAugmentations(SNA);
+  resetAugmentation(SNA);
 
   const NeuroreceptorManager = new Augmentation({
     name: AugmentationNames.NeuroreceptorManager,
@@ -2058,15 +1795,12 @@ function initAugmentations(): void {
         faction.
       </>
     ),
+    factions: [FactionNames.TianDiHui],
   });
-  NeuroreceptorManager.addToFactions(["Tian Di Hui"]);
-  if (augmentationExists(AugmentationNames.NeuroreceptorManager)) {
-    delete Augmentations[AugmentationNames.NeuroreceptorManager];
-  }
-  AddToAugmentations(NeuroreceptorManager);
+  resetAugmentation(NeuroreceptorManager);
 
   // Special Bladeburner Augmentations
-  const BladeburnersFactionName = "Bladeburners";
+  const BladeburnersFactionName = FactionNames.Bladeburners;
   if (factionExists(BladeburnersFactionName)) {
     const EsperEyewear = new Augmentation({
       name: AugmentationNames.EsperEyewear,
@@ -2084,8 +1818,8 @@ function initAugmentations(): void {
       bladeburner_success_chance_mult: 1.03,
       dexterity_mult: 1.05,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    EsperEyewear.addToFactions([BladeburnersFactionName]);
     resetAugmentation(EsperEyewear);
 
     const EMS4Recombination = new Augmentation({
@@ -2101,8 +1835,8 @@ function initAugmentations(): void {
       bladeburner_analysis_mult: 1.05,
       bladeburner_stamina_gain_mult: 1.02,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    EMS4Recombination.addToFactions([BladeburnersFactionName]);
     resetAugmentation(EMS4Recombination);
 
     const OrionShoulder = new Augmentation({
@@ -2119,8 +1853,8 @@ function initAugmentations(): void {
       dexterity_mult: 1.05,
       bladeburner_success_chance_mult: 1.04,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    OrionShoulder.addToFactions([BladeburnersFactionName]);
     resetAugmentation(OrionShoulder);
 
     const HyperionV1 = new Augmentation({
@@ -2136,8 +1870,8 @@ function initAugmentations(): void {
         "and concussive force.",
       bladeburner_success_chance_mult: 1.06,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    HyperionV1.addToFactions([BladeburnersFactionName]);
     resetAugmentation(HyperionV1);
 
     const HyperionV2 = new Augmentation({
@@ -2152,8 +1886,8 @@ function initAugmentations(): void {
       prereqs: [AugmentationNames.HyperionV1],
       bladeburner_success_chance_mult: 1.08,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    HyperionV2.addToFactions([BladeburnersFactionName]);
     resetAugmentation(HyperionV2);
 
     const GolemSerum = new Augmentation({
@@ -2171,8 +1905,8 @@ function initAugmentations(): void {
       agility_mult: 1.07,
       bladeburner_stamina_gain_mult: 1.05,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    GolemSerum.addToFactions([BladeburnersFactionName]);
     resetAugmentation(GolemSerum);
 
     const VangelisVirus = new Augmentation({
@@ -2186,8 +1920,8 @@ function initAugmentations(): void {
       bladeburner_analysis_mult: 1.1,
       bladeburner_success_chance_mult: 1.04,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    VangelisVirus.addToFactions([BladeburnersFactionName]);
     resetAugmentation(VangelisVirus);
 
     const VangelisVirus3 = new Augmentation({
@@ -2205,8 +1939,8 @@ function initAugmentations(): void {
       bladeburner_analysis_mult: 1.15,
       bladeburner_success_chance_mult: 1.05,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    VangelisVirus3.addToFactions([BladeburnersFactionName]);
     resetAugmentation(VangelisVirus3);
 
     const INTERLINKED = new Augmentation({
@@ -2224,8 +1958,8 @@ function initAugmentations(): void {
       agility_exp_mult: 1.05,
       bladeburner_max_stamina_mult: 1.1,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    INTERLINKED.addToFactions([BladeburnersFactionName]);
     resetAugmentation(INTERLINKED);
 
     const BladeRunner = new Augmentation({
@@ -2233,7 +1967,7 @@ function initAugmentations(): void {
       repCost: 2e4,
       moneyCost: 8.25e9,
       info:
-        "A cybernetic foot augmentation that was specifically created for Bladeburners " +
+        `A cybernetic foot augmentation that was specifically created for ${BladeburnersFactionName} ` +
         "during the Synthoid Uprising. The organic musculature of the human foot " +
         "is enhanced with flexible carbon nanotube matrices that are controlled by " +
         "intelligent servo-motors.",
@@ -2241,8 +1975,8 @@ function initAugmentations(): void {
       bladeburner_max_stamina_mult: 1.05,
       bladeburner_stamina_gain_mult: 1.05,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    BladeRunner.addToFactions([BladeburnersFactionName]);
     resetAugmentation(BladeRunner);
 
     const BladeArmor = new Augmentation({
@@ -2250,7 +1984,7 @@ function initAugmentations(): void {
       repCost: 1.25e4,
       moneyCost: 1.375e9,
       info:
-        "A powered exoskeleton suit designed as armor for Bladeburner units. This " +
+        `A powered exoskeleton suit designed as armor for ${BladeburnersFactionName} units. This ` +
         "exoskeleton is incredibly adaptable and can protect the wearer from blunt, piercing, " +
         "concussive, thermal, chemical, and electric trauma. It also enhances the user's " +
         "physical abilities.",
@@ -2261,8 +1995,8 @@ function initAugmentations(): void {
       bladeburner_stamina_gain_mult: 1.02,
       bladeburner_success_chance_mult: 1.03,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    BladeArmor.addToFactions([BladeburnersFactionName]);
     resetAugmentation(BladeArmor);
 
     const BladeArmorPowerCells = new Augmentation({
@@ -2277,8 +2011,8 @@ function initAugmentations(): void {
       bladeburner_stamina_gain_mult: 1.02,
       bladeburner_max_stamina_mult: 1.05,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    BladeArmorPowerCells.addToFactions([BladeburnersFactionName]);
     resetAugmentation(BladeArmorPowerCells);
 
     const BladeArmorEnergyShielding = new Augmentation({
@@ -2292,8 +2026,8 @@ function initAugmentations(): void {
       defense_mult: 1.05,
       bladeburner_success_chance_mult: 1.06,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    BladeArmorEnergyShielding.addToFactions([BladeburnersFactionName]);
     resetAugmentation(BladeArmorEnergyShielding);
 
     const BladeArmorUnibeam = new Augmentation({
@@ -2307,8 +2041,8 @@ function initAugmentations(): void {
       prereqs: [AugmentationNames.BladeArmor],
       bladeburner_success_chance_mult: 1.08,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    BladeArmorUnibeam.addToFactions([BladeburnersFactionName]);
     resetAugmentation(BladeArmorUnibeam);
 
     const BladeArmorOmnibeam = new Augmentation({
@@ -2323,8 +2057,8 @@ function initAugmentations(): void {
       prereqs: [AugmentationNames.BladeArmorUnibeam],
       bladeburner_success_chance_mult: 1.1,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    BladeArmorOmnibeam.addToFactions([BladeburnersFactionName]);
     resetAugmentation(BladeArmorOmnibeam);
 
     const BladeArmorIPU = new Augmentation({
@@ -2339,8 +2073,8 @@ function initAugmentations(): void {
       bladeburner_analysis_mult: 1.15,
       bladeburner_success_chance_mult: 1.02,
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    BladeArmorIPU.addToFactions([BladeburnersFactionName]);
     resetAugmentation(BladeArmorIPU);
 
     const BladesSimulacrum = new Augmentation({
@@ -2360,13 +2094,13 @@ function initAugmentations(): void {
         </>
       ),
       isSpecial: true,
+      factions: [BladeburnersFactionName],
     });
-    BladesSimulacrum.addToFactions([BladeburnersFactionName]);
     resetAugmentation(BladesSimulacrum);
   }
 
   // Special CotMG Augmentations
-  const ChurchOfTheMachineGodFactionName = "Church of the Machine God";
+  const ChurchOfTheMachineGodFactionName = FactionNames.ChurchOfTheMachineGod;
   if (factionExists(ChurchOfTheMachineGodFactionName)) {
     const StaneksGift1 = new Augmentation({
       name: AugmentationNames.StaneksGift1,
@@ -2405,8 +2139,8 @@ function initAugmentations(): void {
       hacknet_node_level_cost_mult: 1.1,
       work_money_mult: 0.9,
       stats: <>Its unstable nature decreases all your stats by 10%</>,
+      factions: [ChurchOfTheMachineGodFactionName],
     });
-    StaneksGift1.addToFactions([ChurchOfTheMachineGodFactionName]);
     resetAugmentation(StaneksGift1);
 
     const StaneksGift2 = new Augmentation({
@@ -2446,8 +2180,8 @@ function initAugmentations(): void {
       hacknet_node_level_cost_mult: 1.05 / 1.1,
       work_money_mult: 0.95 / 0.9,
       stats: <>The penalty for the gift is reduced to 5%</>,
+      factions: [ChurchOfTheMachineGodFactionName],
     });
-    StaneksGift2.addToFactions([ChurchOfTheMachineGodFactionName]);
     resetAugmentation(StaneksGift2);
 
     const StaneksGift3 = new Augmentation({
@@ -2488,8 +2222,8 @@ function initAugmentations(): void {
       hacknet_node_level_cost_mult: 1 / 1.05,
       work_money_mult: 1 / 0.95,
       stats: <>Staneks Gift has no penalty.</>,
+      factions: [ChurchOfTheMachineGodFactionName],
     });
-    StaneksGift3.addToFactions([ChurchOfTheMachineGodFactionName]);
     resetAugmentation(StaneksGift3);
   }
 
@@ -2508,15 +2242,13 @@ function initAugmentations(): void {
 }
 
 //Resets an Augmentation during (re-initizliation)
-function resetAugmentation(newAugObject: Augmentation): void {
-  if (!(newAugObject instanceof Augmentation)) {
-    throw new Error("Invalid argument 'newAugObject' passed into resetAugmentation");
-  }
-  const name = newAugObject.name;
+function resetAugmentation(aug: Augmentation): void {
+  aug.addToFactions(aug.factions);
+  const name = aug.name;
   if (augmentationExists(name)) {
     delete Augmentations[name];
   }
-  AddToAugmentations(newAugObject);
+  AddToAugmentations(aug);
 }
 
 function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void {
@@ -2584,9 +2316,9 @@ function installAugmentations(): boolean {
   Player.queuedAugmentations = [];
   dialogBoxCreate(
     "You slowly drift to sleep as scientists put you under in order " +
-      "to install the following Augmentations:<br>" +
-      augmentationList +
-      "<br>You wake up in your home...you feel different...",
+    "to install the following Augmentations:<br>" +
+    augmentationList +
+    "<br>You wake up in your home...you feel different...",
   );
   prestigeAugmentation();
   return true;

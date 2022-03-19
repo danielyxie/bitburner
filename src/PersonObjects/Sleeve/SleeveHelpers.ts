@@ -1,3 +1,4 @@
+import { FactionNames } from '../../Faction/data/FactionNames';
 import { Sleeve } from "./Sleeve";
 
 import { IPlayer } from "../IPlayer";
@@ -80,10 +81,10 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
   }
 
   for (const facName of p.factions) {
-    if (facName === "Bladeburners") {
+    if (facName === FactionNames.Bladeburners) {
       continue;
     }
-    if (facName === "Netburners") {
+    if (facName === FactionNames.Netburners) {
       continue;
     }
     const fac: Faction | null = Factions[facName];
