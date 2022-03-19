@@ -10,16 +10,16 @@ import { WorkerScript } from "./WorkerScript";
  * script is killed. Which grants the player access to the class and the ability
  * to construct new instances with arbitrary data.
  */
-export class ScriptDeath {  
+export class ScriptDeath {
   /** Process ID number. */
   pid: number;
-  
+
   /** Filename of the script. */
   name: string;
-  
+
   /** IP Address on which the script was running */
   hostname: string;
-  
+
   /** Status message in case of script error. */
   errorMessage = "";
 
