@@ -494,6 +494,38 @@ export function WorkInProgressRoot(): React.ReactElement {
     );
   }
 
+  if (player.craftAugmentationName !== "") {
+    function cancel(): void {
+      player.finishCraftAugmentationWork(true);
+      router.toTerminal();
+    }
+    function unfocus(): void {
+      router.toTerminal();
+      player.stopFocusing();
+    }
+    return (
+      <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
+        <Grid item>
+          <Typography>
+            You are currently working on crafting {player.craftAugmentationName}.
+            <br /><br />
+            You have been working for {convertTimeMsToTimeElapsedString(player.timeWorked)}
+            <br /><br />
+            The augumentation if {((player.timeWorkedCraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}
+            % complete. <br />
+            If you cancel, your work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned.
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button sx={{ mx: 2 }} onClick={cancel}>
+            Cancel work on creating program
+          </Button>
+          <Button onClick={unfocus}>Do something else simultaneously</Button>
+        </Grid>
+      </Grid>
+    )
+  }
+
   if (!player.workType) router.toTerminal();
 
   return <></>;

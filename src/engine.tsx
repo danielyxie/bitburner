@@ -298,6 +298,8 @@ const Engine: {
           Player.commitCrime(numCyclesOffline);
         } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
           Player.workPartTime(numCyclesOffline);
+        } else if (Player.workType === CONSTANTS.WorkTypeCraftAugmentation) {
+          Player.craftAugmentationWork(numCyclesOffline);
         } else {
           Player.work(numCyclesOffline);
         }

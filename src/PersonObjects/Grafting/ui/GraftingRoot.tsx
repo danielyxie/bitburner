@@ -17,6 +17,7 @@ import { use } from "../../../ui/Context";
 import { Augmentations } from "../../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames"
 import { Settings } from "../../../Settings/Settings";
+import { CONSTANTS } from "../../../Constants";
 
 import { IPlayer } from "../../IPlayer";
 
@@ -74,7 +75,15 @@ export const GraftingRoot = (): React.ReactElement => {
             <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
               <Construction sx={{ mr: 1 }} /> {selectedAug}
             </Typography>
-            <Button sx={{ width: '100%' }}>
+            <Button
+              onClick={event => {
+                if (!event.isTrusted) return;
+                player.startCraftAugmentationWork(selectedAug, 15000);
+                player.startFocusing();
+                router.toWork();
+              }}
+              sx={{ width: '100%' }}
+            >
               Craft Augmentation (<Typography color={Settings.theme.money}>$foo</Typography>)
             </Button>
             <Typography color={Settings.theme.info}>

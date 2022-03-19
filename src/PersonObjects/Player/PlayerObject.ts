@@ -139,6 +139,8 @@ export class PlayerObject implements IPlayer {
   factionWorkType: string;
   createProgramName: string;
   timeWorkedCreateProgram: number;
+  craftAugmentationName: string;
+  timeWorkedCraftAugmentation: number;
   crimeType: string;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
@@ -296,6 +298,9 @@ export class PlayerObject implements IPlayer {
   setMult: (name: string, mult: number) => void;
   canAccessCotMG: () => boolean;
   sourceFileLvl: (n: number) => number;
+  startCraftAugmentationWork: (augmentationName: string, time: number) => void;
+  craftAugmentationWork: (numCycles: number) => boolean;
+  finishCraftAugmentationWork: (cancelled: boolean) => string;
 
   constructor() {
     //Skills and stats
@@ -419,6 +424,9 @@ export class PlayerObject implements IPlayer {
     this.createProgramName = "";
     this.createProgramReqLvl = 0;
 
+    this.craftAugmentationName = "";
+    this.timeWorkedCraftAugmentation = 0;
+
     this.className = "";
 
     this.crimeType = "";
@@ -541,6 +549,9 @@ export class PlayerObject implements IPlayer {
     this.startCreateProgramWork = generalMethods.startCreateProgramWork;
     this.createProgramWork = generalMethods.createProgramWork;
     this.finishCreateProgramWork = generalMethods.finishCreateProgramWork;
+    this.startCraftAugmentationWork = generalMethods.startCraftAugmentationWork;
+    this.craftAugmentationWork = generalMethods.craftAugmentationWork;
+    this.finishCraftAugmentationWork = generalMethods.finishCraftAugmentationWork;
     this.startClass = generalMethods.startClass;
     this.takeClass = generalMethods.takeClass;
     this.finishClass = generalMethods.finishClass;

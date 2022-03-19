@@ -130,6 +130,8 @@ export interface IPlayer {
   factionWorkType: string;
   createProgramName: string;
   timeWorkedCreateProgram: number;
+  craftAugmentationName: string;
+  timeWorkedCraftAugmentation: number;
   crimeType: string;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
@@ -286,4 +288,7 @@ export interface IPlayer {
   setMult(name: string, mult: number): void;
   canAccessCotMG(): boolean;
   sourceFileLvl(n: number): number;
+  startCraftAugmentationWork(augmentationName: string, time: number): void;
+  craftAugmentationWork(numCycles: number): boolean;
+  finishCraftAugmentationWork(cancelled: boolean): string;
 }

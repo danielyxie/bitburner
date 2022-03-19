@@ -528,10 +528,12 @@ export function resetWorkStatus(this: IPlayer, generalType?: string, group?: str
 
   this.timeWorked = 0;
   this.timeWorkedCreateProgram = 0;
+  this.timeWorkedCraftAugmentation = 0;
 
   this.currentWorkFactionName = "";
   this.currentWorkFactionDescription = "";
   this.createProgramName = "";
+  this.craftAugmentationName = "";
   this.className = "";
   this.workType = "";
 }
@@ -607,6 +609,10 @@ export function process(this: IPlayer, router: IRouter, numCycles = 1): void {
     } else if (this.workType == CONSTANTS.WorkTypeCompanyPartTime) {
       if (this.workPartTime(numCycles)) {
         router.toCity();
+      }
+    } else if (this.workType === CONSTANTS.WorkTypeCraftAugmentation) {
+      if (this.craftAugmentationWork(numCycles)) {
+        router.toGrafting();
       }
     } else if (this.work(numCycles)) {
         router.toCity();
@@ -1331,6 +1337,56 @@ export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): stri
   this.resetWorkStatus();
   return "You've finished creating " + programName + "! The new program can be found on your home computer.";
 }
+
+export function startCraftAugmentationWork(
+  this: IPlayer,
+  augmentationName: string,
+  time: number,
+): void {
+  this.resetWorkStatus()
+  this.isWorking = true;
+  this.workType = CONSTANTS.WorkTypeCraftAugmentation;
+
+  this.timeNeededToCompleteWork = time;
+  this.craftAugmentationName = augmentationName;
+}
+
+export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean {
+  let focusBonus = 1;
+  if (!this.hasAugmentation(AugmentationNames.NeuroreceptorManager)) {
+    focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
+  }
+
+  // TODO: formula logic here (focus bonus and stuff)
+  let skillMult = 1;
+  skillMult *= focusBonus;
+
+  this.timeWorked += CONSTANTS._idleSpeed * numCycles;
+  this.timeWorkedCraftAugmentation += CONSTANTS._idleSpeed * numCycles * skillMult;
+
+  if (this.timeWorkedCraftAugmentation >= this.timeNeededToCompleteWork) {
+    this.finishCraftAugmentationWork(false);
+    return true;
+  }
+  return false;
+}
+
+export function finishCraftAugmentationWork(this: IPlayer, cancelled: boolean): string {
+  const augName = this.craftAugmentationName;
+  if (cancelled === false) {
+    dialogBoxCreate(`You've finished crafting ${augName}.<br>The augmentation has been grafted to you, but you feel slightly lightheaded.`)
+
+    applyAugmentation(Augmentations[augName]);
+  } else {
+    dialogBoxCreate(`You cancelled the crafting of ${augName}.<br>Your money was not returned to you.`)
+  }
+
+  // TODO: intelligence EXP stuff here later
+  this.isWorking = false;
+  this.resetWorkStatus();
+  return `Crafting of ${augName} has ended.`
+}
+
 /* Studying/Taking Classes */
 export function startClass(this: IPlayer, costMult: number, expMult: number, className: string): void {
   this.resetWorkStatus();

@@ -71,6 +71,7 @@ export const CONSTANTS: {
   WorkTypeCreateProgram: string;
   WorkTypeStudyClass: string;
   WorkTypeCrime: string;
+  WorkTypeCraftAugmentation: string;
   ClassStudyComputerScience: string;
   ClassDataStructures: string;
   ClassNetworks: string;
@@ -224,6 +225,7 @@ export const CONSTANTS: {
   WorkTypeCreateProgram: "Working on Create a Program",
   WorkTypeStudyClass: "Studying or Taking a class at university",
   WorkTypeCrime: "Committing a crime",
+  WorkTypeCraftAugmentation: "Crafting an Augmentation",
 
   ClassStudyComputerScience: "studying Computer Science",
   ClassDataStructures: "taking a Data Structures course",
