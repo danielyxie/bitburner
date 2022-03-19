@@ -9,6 +9,7 @@ import { Factions } from "../../../Faction/Factions";
 import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { FactionNames } from "../../../Faction/data/FactionNames";
 
 const universitySelectorOptions: string[] = [
   "Study Computer Science",
@@ -55,7 +56,7 @@ function possibleJobs(player: IPlayer, sleeve: Sleeve): string[] {
 
 function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
   // Array of all factions that other sleeves are working for
-  const forbiddenFactions = ["Bladeburners"];
+  const forbiddenFactions = [FactionNames.Bladeburners as string];
   if (player.gang) {
     forbiddenFactions.push(player.gang.facName);
   }

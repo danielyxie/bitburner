@@ -1,3 +1,5 @@
+import { FactionNames } from "../../Faction/data/FactionNames";
+
 export const GangConstants: {
   GangRespectToReputationRatio: number;
   MaximumGangMembers: number;
@@ -13,12 +15,12 @@ export const GangConstants: {
   AscensionMultiplierRatio: 0.15,
   // Names of possible Gangs
   Names: [
-    "Slum Snakes",
-    "Tetrads",
-    "The Syndicate",
-    "The Dark Army",
-    "Speakers for the Dead",
-    "NiteSec",
-    "The Black Hand",
+    FactionNames.SlumSnakes,
+    FactionNames.Tetrads,
+    FactionNames.TheSyndicate,
+    FactionNames.TheDarkArmy,
+    FactionNames.SpeakersForTheDead,
+    FactionNames.NiteSec,
+    FactionNames.TheBlackHand,
   ],
 };
