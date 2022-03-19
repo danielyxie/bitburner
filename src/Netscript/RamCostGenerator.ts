@@ -208,6 +208,7 @@ export const RamCosts: IMap<any> = {
   getScriptExpGain: RamCostConstants.ScriptGetScriptRamCost,
   getRunningScript: RamCostConstants.ScriptGetRunningScriptRamCost,
   nFormat: 0,
+  tFormat: 0,
   getTimeSinceLastAug: RamCostConstants.ScriptGetHackTimeRamCost,
   prompt: 0,
   wget: 0,
