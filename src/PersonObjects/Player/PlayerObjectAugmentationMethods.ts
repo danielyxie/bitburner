@@ -28,6 +28,10 @@ export function hasAugmentation(this: IPlayer, aug: string | Augmentation, insta
 }
 
 export function applyEntropy(this: IPlayer, stacks = 1): void {
+  // Re-apply all multipliers
+  this.reapplyAllAugmentations();
+  this.reapplyAllSourceFiles();
+
   const newMultipliers = calculateEntropy(this, stacks);
   for (const [mult, val] of Object.entries(newMultipliers)) {
     this.setMult(mult, val);

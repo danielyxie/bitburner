@@ -19,9 +19,13 @@ import { Augmentations } from "../../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames"
 import { Settings } from "../../../Settings/Settings";
 import { IMap } from "../../../types";
-import { convertTimeMsToTimeElapsedString } from "../../../utils/StringHelperFunctions";
+import {
+  convertTimeMsToTimeElapsedString,
+  formatNumber
+} from "../../../utils/StringHelperFunctions";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { Locations } from "../../../Locations/Locations";
+import { CONSTANTS } from "../../../Constants";
 
 import { IPlayer } from "../../IPlayer";
 
@@ -73,12 +77,8 @@ export const GraftingRoot = (): React.ReactElement => {
         Illum velit takimata et aliquyam takimata labore vel dolor dolores duo amet lorem elitr facer invidunt.
       </Typography>
 
-      <Box sx={{ my: 5 }}>
+      <Box sx={{ my: 3 }}>
         <Typography variant="h5">Craft Augmentations</Typography>
-        <Typography>
-          here goes a list with available augmentations with a purchase button (with price shown) to the side of it <br />
-          getAvailableAugs function to the rescue
-        </Typography>
         <Paper sx={{ my: 1, width: 'fit-content', display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
           <List sx={{ maxHeight: 400, overflowY: 'scroll', borderRight: `1px solid ${Settings.theme.welllight}` }}>
             {getAvailableAugs(player).map((k, i) => (
@@ -126,12 +126,28 @@ export const GraftingRoot = (): React.ReactElement => {
         </Paper>
       </Box>
 
-      <Box sx={{ my: 5 }}>
+      <Box sx={{ my: 3 }}>
         <Typography variant="h5">Entropy Accumulation</Typography>
+
+        <Paper sx={{ my: 1, p: 1, width: 'fit-content' }}>
+          <Typography>
+            <b>Accumulated Entropy:</b> {player.entropyStacks}
+            <br />
+            <b>All multipliers decreased by:</b> {formatNumber((1 - (CONSTANTS.EntropyEffect ** player.entropyStacks)) * 100, 3)}%
+          </Typography>
+        </Paper>
+
         <Typography>
-          probably some info about the cumulative negative effects here<br />
-          {player.entropyStacks} accumulated entropy
+          Augmenting causes signficant physical and psychological changes to the affected
+          individual, and the best way for the body to deal with these effects is to undergo
+          a full shutdown process.
+          <br /><br />
+          Grafting Augmentations to a semi-conscious host is extremely experimental and dangerous.
+          <br /><br />
+          Scientists don't fully understand the consequences, but some have hypothesized that there's
+          a buildup of unknown irregularities that impair the user...
         </Typography>
+
       </Box>
     </Container>
   </>
