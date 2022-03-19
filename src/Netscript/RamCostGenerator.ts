@@ -181,6 +181,8 @@ export const RamCosts: IMap<any> = {
     getForecast: RamCostConstants.ScriptBuySellStockRamCost,
     purchase4SMarketData: RamCostConstants.ScriptBuySellStockRamCost,
     purchase4SMarketDataTixApi: RamCostConstants.ScriptBuySellStockRamCost,
+    purchaseWseAccount: RamCostConstants.ScriptBuySellStockRamCost,
+    purchaseTixApi: RamCostConstants.ScriptBuySellStockRamCost,
   },
   getPurchasedServerLimit: RamCostConstants.ScriptGetPurchasedServerLimit,
   getPurchasedServerMaxRam: RamCostConstants.ScriptGetPurchasedServerMaxRam,
