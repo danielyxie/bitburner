@@ -121,14 +121,6 @@ function initAugmentations(): void {
   //Reset Augmentations
   clearObject(Augmentations);
 
-  const process = (aug: Augmentation): void => {
-    aug.addToFactions(aug.factions);
-    if (augmentationExists(aug.name)) {
-      delete Augmentations[aug.name];
-    }
-    AddToAugmentations(aug);
-  };
-
   //Time-Based Augment Test
   const randomBonuses = getRandomBonus();
 
