@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { jest, describe, expect, test } from "@jest/globals";
+import { jest, describe, expect } from "@jest/globals";
 
 import { Player } from "../../../src/Player";
 import { NetscriptFunctions } from "../../../src/NetscriptFunctions";
