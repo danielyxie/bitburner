@@ -460,10 +460,12 @@ export const achievements: IMap<Achievement> = {
     Condition: (): boolean => {
       if (Player.corporation === null) return false;
       for (const d of Player.corporation.divisions) {
+        let employeeCount = 0;
         for (const o of Object.values(d.offices)) {
           if (o === 0) continue;
-          if (o.employees.length >= 3000) return true;
+          employeeCount += o.employees.length;
         }
+        if (employeeCount >= 3000) return true;
       }
       return false;
     },
