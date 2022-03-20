@@ -846,5 +846,9 @@ export function NetscriptCorporation(
       const amountShares = helper.number("bribe", "amountShares", aamountShares);
       return bribe(factionName, amountCash, amountShares);
     },
+    getBonusTime: function (): number {
+      checkAccess("getBonusTime");
+      return Math.round(getCorporation().storedCycles / 5) * 1000;
+    }
   };
 }
