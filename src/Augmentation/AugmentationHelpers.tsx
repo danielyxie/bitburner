@@ -1582,6 +1582,123 @@ function initAugmentations(): void {
       ),
       factions: [FactionNames.TianDiHui],
     }),
+    new Augmentation({
+      name: AugmentationNames.BagOfSand,
+      repCost: 100,
+      moneyCost: 1e9,
+      info:
+        "You watched a youtube video about sword fighting, " +
+        "it suggested the best way to win a sword fight was to play dirty " +
+        "so you filled a bag full of sand from outside your house.",
+      stats: (
+        <>
+          This augmentation autocompletes the Slash minigame.
+        </>
+      ),
+      factions: [FactionNames.Infiltrators],
+    }),
+    new Augmentation({
+      name: AugmentationNames.IntellisenseModule,
+      repCost: 100,
+      moneyCost: 1e9,
+      info:
+        "A brain implant with AI power that focuses in auto linting and intelisense, which " +
+        "provides the ability to perform code completion better than any exisiting " +
+        "IDE envronment on the market to date.",
+      stats: (
+        <>
+          This augmentation autocompletes the Bracket minigame.
+        </>
+      ),
+      factions: [FactionNames.Infiltrators],
+    }),
+    new Augmentation({
+      name: AugmentationNames.ReverseDictionary,
+      repCost: 100,
+      moneyCost: 1e9,
+      info:
+        "An ancient dictionary with a thick layer of dust it looks like a differnet language, " +
+        "as you examine it further you relise that its actually just a normal dictonary but the words are " +
+        "written backwards if only you could take the book home, you think it would become like a second language.",
+      stats: (
+        <>
+          This augmentation autocompletes the Backward minigame.
+        </>
+      ),
+      factions: [FactionNames.Infiltrators],
+    }),
+    new Augmentation({
+      name: AugmentationNames.AmuletOfPersuasian,
+      repCost: 100,
+      moneyCost: 1e9,
+      info:
+        "A fancy looking amulet that looks like something an Egyptian goddess would wear, " +
+        "you hear faint whispers that are trying to convince you to do things you wouldnt normaly do, " +
+        "apon touching it the voices stop how strange.",
+      stats: (
+        <>
+          This augmentation autocompletes the Bribe minigame.
+        </>
+      ),
+      factions: [FactionNames.Infiltrators],
+    }),
+    new Augmentation({
+      name: AugmentationNames.GameSharkRepository,
+      repCost: 100,
+      moneyCost: 1e9,
+      info:
+        "You stumble accross an old opensource repository for a weird defunct version of gameshark, " +
+        "apon studing the source code it seems to just have a bunch of arrow key cheat codes. ",
+      stats: (
+        <>
+          This augmentation autocompletes the Cheat Code minigame.
+        </>
+      ),
+      factions: [FactionNames.Infiltrators],
+    }),
+    new Augmentation({
+      name: AugmentationNames.CyberDecoder,
+      repCost: 100,
+      moneyCost: 1e9,
+      info:
+        "A cool looking do hickey that odly resembles Keanu Reeves face, " +
+        "it has a usb cable that looks like it plugs into something.",
+      stats: (
+        <>
+          This augmentation autocompletes the Cyberpunk2077 minigame.
+        </>
+      ),
+      factions: [FactionNames.Infiltrators],
+    }),
+    new Augmentation({
+      name: AugmentationNames.MineDetector,
+      repCost: 100,
+      moneyCost: 1e9,
+      info:
+        "You stumble across an old mine detector at an army surplus store, " +
+        "on the side is inscribed 'X(' i wonder what happend to the orginal owner, " +
+        "its a bit beaten up but looks like it should still do the job.",
+      stats: (
+        <>
+          This augmentation autocompletes the Minesweeper minigame.
+        </>
+      ),
+      factions: [FactionNames.Infiltrators],
+    }),
+    new Augmentation({
+      name: AugmentationNames.WireCuttingManual,
+      repCost: 100,
+      moneyCost: 1e9,
+      info:
+        "You found an old wire cutting for dummys book in the local library, " +
+        "how hard can it be to cut wires, right?",
+      stats: (
+        <>
+          This augmentation autocompletes the Wire Cutting minigame.
+        </>
+      ),
+      factions: [FactionNames.Infiltrators],
+    }),
   ]
 
   // Special Bladeburner Augmentations

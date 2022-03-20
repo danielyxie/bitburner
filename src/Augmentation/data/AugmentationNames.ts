@@ -111,6 +111,14 @@ export const AugmentationNames: {
   StaneksGift1: string;
   StaneksGift2: string;
   StaneksGift3: string;
+  BagOfSand: string;
+  IntellisenseModule: string;
+  ReverseDictionary: string;
+  AmuletOfPersuasian: string;
+  GameSharkRepository: string;
+  CyberDecoder: string;
+  MineDetector: string;
+  WireCuttingManual: string;
 } = {
   Targeting1: "Augmented Targeting I",
   Targeting2: "Augmented Targeting II",
@@ -225,6 +233,15 @@ export const AugmentationNames: {
   StaneksGift1: "Stanek's Gift - Genesis",
   StaneksGift2: "Stanek's Gift - Awakening",
   StaneksGift3: "Stanek's Gift - Serenity",
+
+  BagOfSand: "A Bag of Sand",
+  IntellisenseModule: "Intellisense Module",
+  ReverseDictionary: "Reverse Dictionary",
+  AmuletOfPersuasian: "Amulet of Persuasian",
+  GameSharkRepository: "Game Shark Repository",
+  CyberDecoder: "CyberDecoder",
+  MineDetector: "MineDetector",
+  WireCuttingManual: "WireCuttingManual",
 
   //Wasteland Augs
   //PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System
