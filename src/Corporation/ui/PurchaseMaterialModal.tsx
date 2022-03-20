@@ -10,6 +10,7 @@ import { useCorporation, useDivision } from "./Context";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 interface IBulkPurchaseTextProps {
   warehouse: Warehouse;
@@ -68,7 +69,7 @@ function BulkPurchaseSection(props: IBPProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) bulkPurchase();
+    if (event.key === KEY.ENTER) bulkPurchase();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -123,7 +124,7 @@ export function PurchaseMaterialModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) purchaseMaterial();
+    if (event.key === KEY.ENTER) purchaseMaterial();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
