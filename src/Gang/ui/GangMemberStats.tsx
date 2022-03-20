@@ -41,6 +41,7 @@ export function GangMemberStats(props: IProps): React.ReactElement {
 
   const gang = useGang();
   const data = [
+    [`Current Task:`, `${props.member.task}`],
     [`Money:`, <MoneyRate money={5 * props.member.calculateMoneyGain(gang)} />],
     [`Respect:`, `${numeralWrapper.formatRespect(5 * props.member.calculateRespectGain(gang))} / sec`],
     [`Wanted Level:`, `${numeralWrapper.formatWanted(5 * props.member.calculateWantedLevelGain(gang))} / sec`],
