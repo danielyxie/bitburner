@@ -291,7 +291,7 @@ export function NetscriptCorporation(
       lastCycleExpenses: division.lastCycleExpenses,
       thisCycleRevenue: division.thisCycleRevenue,
       thisCycleExpenses: division.thisCycleExpenses,
-      upgrades: division.upgrades,
+      upgrades: division.upgrades.slice(),
       cities: cities,
       products: division.products === undefined ? [] : Object.keys(division.products),
     };
