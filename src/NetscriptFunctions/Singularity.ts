@@ -42,6 +42,7 @@ import { Terminal } from "../Terminal";
 import { calculateHackingTime } from "../Hacking";
 import { Server } from "../Server/Server";
 import { netscriptCanHack } from "../Hacking/netscriptCanHack";
+import { FactionNames } from "../Faction/data/FactionNames";
 
 export function NetscriptSingularity(
   player: IPlayer,
@@ -282,7 +283,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Aevum) {
             workerScript.log(
               "universityCourse",
-              () => "You cannot study at 'Summit University' because you are not in 'Aevum'.",
+              () => `You cannot study at 'Summit University' because you are not in '${CityName.Aevum}'.`,
             );
             return false;
           }
@@ -294,7 +295,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Sector12) {
             workerScript.log(
               "universityCourse",
-              () => "You cannot study at 'Rothman University' because you are not in 'Sector-12'.",
+              () => `You cannot study at 'Rothman University' because you are not in '${CityName.Sector12}'.`,
             );
             return false;
           }
@@ -306,7 +307,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Volhaven) {
             workerScript.log(
               "universityCourse",
-              () => "You cannot study at 'ZB Institute of Technology' because you are not in 'Volhaven'.",
+              () => `You cannot study at 'ZB Institute of Technology' because you are not in '${CityName.Volhaven}'.`,
             );
             return false;
           }
@@ -369,7 +370,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Aevum) {
             workerScript.log(
               "gymWorkout",
-              () => "You cannot workout at 'Crush Fitness' because you are not in 'Aevum'.",
+              () => `You cannot workout at '${LocationName.AevumCrushFitnessGym}' because you are not in '${CityName.Aevum}'.`,
             );
             return false;
           }
@@ -381,7 +382,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Aevum) {
             workerScript.log(
               "gymWorkout",
-              () => "You cannot workout at 'Snap Fitness' because you are not in 'Aevum'.",
+              () => `You cannot workout at '${LocationName.AevumSnapFitnessGym}' because you are not in '${CityName.Aevum}'.`,
             );
             return false;
           }
@@ -393,7 +394,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Sector12) {
             workerScript.log(
               "gymWorkout",
-              () => "You cannot workout at 'Iron Gym' because you are not in 'Sector-12'.",
+              () => `You cannot workout at '${LocationName.Sector12IronGym}' because you are not in '${CityName.Sector12}'.`,
             );
             return false;
           }
@@ -405,7 +406,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Sector12) {
             workerScript.log(
               "gymWorkout",
-              () => "You cannot workout at 'Powerhouse Gym' because you are not in 'Sector-12'.",
+              () => `You cannot workout at '${LocationName.Sector12PowerhouseGym}' because you are not in '${CityName.Sector12}'.`,
             );
             return false;
           }
@@ -417,7 +418,7 @@ export function NetscriptSingularity(
           if (player.city != CityName.Volhaven) {
             workerScript.log(
               "gymWorkout",
-              () => "You cannot workout at 'Millenium Fitness Gym' because you are not in 'Volhaven'.",
+              () => `You cannot workout at '${LocationName.VolhavenMilleniumFitnessGym}' because you are not in '${CityName.Volhaven}'.`,
             );
             return false;
           }
@@ -1033,85 +1034,85 @@ export function NetscriptSingularity(
       const fac = Factions[name];
       // Arrays listing factions that allow each time of work
       const hackAvailable = [
-        "Illuminati",
-        "Daedalus",
-        "The Covenant",
-        "ECorp",
-        "MegaCorp",
-        "Bachman & Associates",
-        "Blade Industries",
-        "NWO",
-        "Clarke Incorporated",
-        "OmniTek Incorporated",
-        "Four Sigma",
-        "KuaiGong International",
-        "Fulcrum Secret Technologies",
-        "BitRunners",
-        "The Black Hand",
-        "NiteSec",
-        "Chongqing",
-        "Sector-12",
-        "New Tokyo",
-        "Aevum",
-        "Ishima",
-        "Volhaven",
-        "Speakers for the Dead",
-        "The Dark Army",
-        "The Syndicate",
-        "Silhouette",
-        "Netburners",
-        "Tian Di Hui",
-        "CyberSec",
+        FactionNames.Illuminati as string,
+        FactionNames.Daedalus as string,
+        FactionNames.TheCovenant as string,
+        FactionNames.ECorp as string,
+        FactionNames.MegaCorp as string,
+        FactionNames.BachmanAssociates as string,
+        FactionNames.Bladeburners as string,
+        FactionNames.NWO as string,
+        FactionNames.ClarkeIncorporated as string,
+        FactionNames.OmniTekIncorporated as string,
+        FactionNames.FourSigma as string,
+        FactionNames.KuaiGongInternational as string,
+        FactionNames.FulcrumSecretTechnologies as string,
+        FactionNames.BitRunners as string,
+        FactionNames.TheBlackHand as string,
+        FactionNames.NiteSec as string,
+        FactionNames.Chongqing as string,
+        FactionNames.Sector12 as string,
+        FactionNames.NewTokyo as string,
+        FactionNames.Aevum as string,
+        FactionNames.Ishima as string,
+        FactionNames.Volhaven as string,
+        FactionNames.SpeakersForTheDead as string,
+        FactionNames.TheDarkArmy as string,
+        FactionNames.TheSyndicate as string,
+        FactionNames.Silhouette as string,
+        FactionNames.Netburners as string,
+        FactionNames.TianDiHui as string,
+        FactionNames.CyberSec as string,
       ];
       const fdWkAvailable = [
-        "Illuminati",
-        "Daedalus",
-        "The Covenant",
-        "ECorp",
-        "MegaCorp",
-        "Bachman & Associates",
-        "Blade Industries",
-        "NWO",
-        "Clarke Incorporated",
-        "OmniTek Incorporated",
-        "Four Sigma",
-        "KuaiGong International",
-        "The Black Hand",
-        "Chongqing",
-        "Sector-12",
-        "New Tokyo",
-        "Aevum",
-        "Ishima",
-        "Volhaven",
-        "Speakers for the Dead",
-        "The Dark Army",
-        "The Syndicate",
-        "Silhouette",
-        "Tetrads",
-        "Slum Snakes",
+        FactionNames.Illuminati as string,
+        FactionNames.Daedalus as string,
+        FactionNames.TheCovenant as string,
+        FactionNames.ECorp as string,
+        FactionNames.MegaCorp as string,
+        FactionNames.BachmanAssociates as string,
+        FactionNames.Bladeburners as string,
+        FactionNames.NWO as string,
+        FactionNames.ClarkeIncorporated as string,
+        FactionNames.OmniTekIncorporated as string,
+        FactionNames.FourSigma as string,
+        FactionNames.KuaiGongInternational as string,
+        FactionNames.TheBlackHand as string,
+        FactionNames.Chongqing as string,
+        FactionNames.Sector12 as string,
+        FactionNames.NewTokyo as string,
+        FactionNames.Aevum as string,
+        FactionNames.Ishima as string,
+        FactionNames.Volhaven as string,
+        FactionNames.SpeakersForTheDead as string,
+        FactionNames.TheDarkArmy as string,
+        FactionNames.TheSyndicate as string,
+        FactionNames.Silhouette as string,
+        FactionNames.Tetrads as string,
+        FactionNames.SlumSnakes as string,
       ];
       const scWkAvailable = [
-        "ECorp",
-        "MegaCorp",
-        "Bachman & Associates",
-        "Blade Industries",
-        "NWO",
-        "Clarke Incorporated",
-        "OmniTek Incorporated",
-        "Four Sigma",
-        "KuaiGong International",
-        "Fulcrum Secret Technologies",
-        "Chongqing",
-        "Sector-12",
-        "New Tokyo",
-        "Aevum",
-        "Ishima",
-        "Volhaven",
-        "Speakers for the Dead",
-        "The Syndicate",
-        "Tetrads",
-        "Slum Snakes",
-        "Tian Di Hui",
+        FactionNames.ECorp as string,
+        FactionNames.MegaCorp as string,
+        FactionNames.BachmanAssociates as string,
+        FactionNames.Bladeburners as string,
+        FactionNames.NWO as string,
+        FactionNames.ClarkeIncorporated as string,
+        FactionNames.OmniTekIncorporated as string,
+        FactionNames.FourSigma as string,
+        FactionNames.KuaiGongInternational as string,
+        FactionNames.FulcrumSecretTechnologies as string,
+        FactionNames.Chongqing as string,
+        FactionNames.Sector12 as string,
+        FactionNames.NewTokyo as string,
+        FactionNames.Aevum as string,
+        FactionNames.Ishima as string,
+        FactionNames.Volhaven as string,
+        FactionNames.SpeakersForTheDead as string,
+        FactionNames.TheSyndicate as string,
+        FactionNames.Tetrads as string,
+        FactionNames.SlumSnakes as string,
+        FactionNames.TianDiHui as string,
       ];
 
       switch (type.toLowerCase()) {

@@ -1,3 +1,5 @@
+import { FactionNames } from '../Faction/data/FactionNames';
+import { GangConstants } from '../Gang/data/Constants';
 import { INetscriptHelper } from "./INetscriptHelper";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { getRamCost } from "../Netscript/RamCostGenerator";
@@ -49,20 +51,12 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
     createGang: function (faction: string): boolean {
       helper.updateDynamicRam("createGang", getRamCost(player, "gang", "createGang"));
       // this list is copied from Faction/ui/Root.tsx
-      const GangNames = [
-        "Slum Snakes",
-        "Tetrads",
-        "The Syndicate",
-        "The Dark Army",
-        "Speakers for the Dead",
-        "NiteSec",
-        "The Black Hand",
-      ];
-      if (!player.canAccessGang() || !GangNames.includes(faction)) return false;
+
+      if (!player.canAccessGang() || !GangConstants.Names.includes(faction)) return false;
       if (player.inGang()) return false;
       if (!player.factions.includes(faction)) return false;
 
-      const isHacking = faction === "NiteSec" || faction === "The Black Hand";
+      const isHacking = faction === FactionNames.NiteSec || faction === FactionNames.TheBlackHand;
       player.startGang(faction, isHacking);
       return true;
     },

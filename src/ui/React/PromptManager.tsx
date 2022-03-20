@@ -53,7 +53,9 @@ export function PromptManager(): React.ReactElement {
 
   return (
     <Modal open={true} onClose={close}>
-      <Typography>{prompt.txt}</Typography>
+      <pre>
+        <Typography>{prompt.txt}</Typography>
+      </pre>
       <PromptContent prompt={prompt} resolve={resolve} />
     </Modal>
   );

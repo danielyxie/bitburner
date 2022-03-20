@@ -181,6 +181,8 @@ export const RamCosts: IMap<any> = {
     getForecast: RamCostConstants.ScriptBuySellStockRamCost,
     purchase4SMarketData: RamCostConstants.ScriptBuySellStockRamCost,
     purchase4SMarketDataTixApi: RamCostConstants.ScriptBuySellStockRamCost,
+    purchaseWseAccount: RamCostConstants.ScriptBuySellStockRamCost,
+    purchaseTixApi: RamCostConstants.ScriptBuySellStockRamCost,
   },
   getPurchasedServerLimit: RamCostConstants.ScriptGetPurchasedServerLimit,
   getPurchasedServerMaxRam: RamCostConstants.ScriptGetPurchasedServerMaxRam,
@@ -208,6 +210,7 @@ export const RamCosts: IMap<any> = {
   getScriptExpGain: RamCostConstants.ScriptGetScriptRamCost,
   getRunningScript: RamCostConstants.ScriptGetRunningScriptRamCost,
   nFormat: 0,
+  tFormat: 0,
   getTimeSinceLastAug: RamCostConstants.ScriptGetHackTimeRamCost,
   prompt: 0,
   wget: 0,
@@ -215,6 +218,8 @@ export const RamCosts: IMap<any> = {
   getPlayer: RamCostConstants.ScriptSingularityFn1RamCost / 4,
   mv: 0,
   getOwnedSourceFiles: RamCostConstants.ScriptGetOwnedSourceFiles,
+  tail: 0,
+  toast: 0,
 
   // Singularity Functions
   universityCourse: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),

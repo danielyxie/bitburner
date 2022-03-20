@@ -1506,6 +1506,20 @@ export interface TIX {
    * @returns True if you successfully purchased it or if you already have access, false otherwise.
    */
   purchase4SMarketDataTixApi(): boolean;
+
+  /**
+   * Purchase WSE Account.
+   * @remarks RAM cost: 2.5 GB
+   * @returns True if you successfully purchased it or if you already have access, false otherwise.
+   */
+  purchaseWseAccount(): boolean;
+
+  /**
+   * Purchase TIX API Access
+   * @remarks RAM cost: 2.5 GB
+   * @returns True if you successfully purchased it or if you already have access, false otherwise.
+   */
+  purchaseTixApi(): boolean;
 }
 
 /**
@@ -6651,6 +6665,17 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    *
    */
   sellShares(amount: number): void;
+  /**
+   * Get bonus time.
+   * 
+   * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
+   *
+   * “Bonus time” makes the game progress faster.
+   *
+   * @returns Bonus time for the Corporation mechanic in milliseconds.
+   */
+   getBonusTime(): number;
+  
 }
 
 /**
