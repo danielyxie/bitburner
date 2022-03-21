@@ -6,6 +6,7 @@ import { Modal } from "../../ui/React/Modal";
 import { use } from "../../ui/Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { KEY } from "../../utils/helpers/keyCodes";
 import { FactionNames } from "../data/FactionNames";
 
 interface IProps {
@@ -38,7 +39,7 @@ export function CreateGangModal(props: IProps): React.ReactElement {
   }
 
   function onKeyUp(event: React.KeyboardEvent): void {
-    if (event.keyCode === 13) createGang();
+    if (event.key === KEY.ENTER) createGang();
   }
 
   return (

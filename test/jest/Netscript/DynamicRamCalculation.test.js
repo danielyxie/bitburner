@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { jest, describe, expect, test } from "@jest/globals";
+import { jest, describe, expect } from "@jest/globals";
 
 import { Player } from "../../../src/Player";
 import { NetscriptFunctions } from "../../../src/NetscriptFunctions";
@@ -701,6 +700,16 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     it("getStats()", async function () {
       const f = ["getStats"];
+      await testNonzeroDynamicRamCost(f);
+    });
+
+    it("getDarkwebProgramCost()", async function () {
+      const f = ["getDarkwebProgramCost"];
+      await testNonzeroDynamicRamCost(f);
+    });
+
+    it("getDarkwebPrograms()", async function () {
+      const f = ["getDarkwebPrograms"];
       await testNonzeroDynamicRamCost(f);
     });
 

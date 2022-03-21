@@ -178,7 +178,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
       const entry = ns[name];
       if (typeof entry === "function") {
         //Async functions need to be wrapped. See JS-Interpreter documentation
-        if (["hack", "grow", "weaken", "sleep", "prompt", "manualHack", "scp", "write", "share"].includes(name)) {
+        if (["hack", "grow", "weaken", "sleep", "prompt", "manualHack", "scp", "write", "share", "wget"].includes(name)) {
           const tempWrapper = function (...args: any[]): void {
             const fnArgs = [];
 
@@ -199,7 +199,21 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
               })
               .catch(function (err: any) {
                 // workerscript is when you cancel a delay
-                if (!(err instanceof WorkerScript)) console.error(err);
+                if (!(err instanceof WorkerScript)) {
+                  console.error(err);
+                  const errorTextArray = err.split("|DELIMITER|");
+                  const hostname = errorTextArray[1];
+                  const scriptName = errorTextArray[2];
+                  const errorMsg = errorTextArray[3];
+                  let msg = `${scriptName}@${hostname}<br>`;
+                  msg += "<br>";
+                  msg += errorMsg;
+                  dialogBoxCreate(msg);
+                  workerScript.env.stopFlag = true;
+                  workerScript.running = false;
+                  killWorkerScript(workerScript);
+                  return Promise.resolve(workerScript);
+                }
               });
           };
           int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
@@ -725,19 +739,17 @@ export function runScriptFromScript(
           `Cannot run script '${scriptname}' (t=${threads}) on '${server.hostname}' because there is not enough available RAM!`,
       );
       return 0;
-    } else {
-      // Able to run script
-      workerScript.log(
-        caller,
-        () => `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
-      );
-      const runningScriptObj = new RunningScript(script, args);
-      runningScriptObj.threads = threads;
-      runningScriptObj.server = server.hostname;
-
-      return startWorkerScript(player, runningScriptObj, server, workerScript);
     }
-    break;
+    // Able to run script
+    workerScript.log(
+      caller,
+      () => `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
+    );
+    const runningScriptObj = new RunningScript(script, args);
+    runningScriptObj.threads = threads;
+    runningScriptObj.server = server.hostname;
+
+    return startWorkerScript(player, runningScriptObj, server, workerScript);
   }
 
   workerScript.log(caller, () => `Could not find script '${scriptname}' on '${server.hostname}'`);

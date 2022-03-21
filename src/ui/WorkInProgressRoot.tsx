@@ -39,21 +39,10 @@ export function WorkInProgressRoot(): React.ReactElement {
     const faction = Factions[player.currentWorkFactionName];
     if (!faction) {
       return (
-        <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
-          <Grid item>
-            <Typography>
-              Something has gone wrong, you cannot work for {player.currentWorkFactionName || "(Faction not found)"} at
-              this time.
-            </Typography>
-          </Grid>
-        </Grid>
-      );
-    }
-    if (!faction) {
-      return (
         <>
           <Typography variant="h4" color="primary">
-            You have not joined {faction} yet!
+            You have not joined {player.currentWorkFactionName || "(Faction not found)"} yet or cannot work at this time,
+            please try again if you think this should have worked
           </Typography>
           <Button onClick={() => router.toFactions()}>Back to Factions</Button>
         </>

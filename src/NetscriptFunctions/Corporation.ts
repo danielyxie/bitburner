@@ -291,7 +291,7 @@ export function NetscriptCorporation(
       lastCycleExpenses: division.lastCycleExpenses,
       thisCycleRevenue: division.thisCycleRevenue,
       thisCycleExpenses: division.thisCycleExpenses,
-      upgrades: division.upgrades,
+      upgrades: division.upgrades.slice(),
       cities: cities,
       products: division.products === undefined ? [] : Object.keys(division.products),
     };
@@ -846,5 +846,9 @@ export function NetscriptCorporation(
       const amountShares = helper.number("bribe", "amountShares", aamountShares);
       return bribe(factionName, amountCash, amountShares);
     },
+    getBonusTime: function (): number {
+      checkAccess("getBonusTime");
+      return Math.round(getCorporation().storedCycles / 5) * 1000;
+    }
   };
 }
