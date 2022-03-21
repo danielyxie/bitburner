@@ -58,7 +58,9 @@ function bitNodeFinishedState(): boolean {
   const wd = GetServer(SpecialServers.WorldDaemon);
   if (!(wd instanceof Server)) return false;
   if (wd.backdoorInstalled) return true;
-  return Player.bladeburner !== null && Player.bladeburner.blackops.hasOwnProperty(BlackOperationNames.OperationDaedalus);
+  return (
+    Player.bladeburner !== null && Player.bladeburner.blackops.hasOwnProperty(BlackOperationNames.OperationDaedalus)
+  );
 }
 
 function hasAccessToSF(player: PlayerObject, bn: number): boolean {
@@ -564,7 +566,7 @@ export const achievements: IMap<Achievement> = {
     ...achievementData["SLEEVE_8"],
     Icon: "SLEEVE8",
     Visible: () => hasAccessToSF(Player, 10),
-    Condition: () => Player.sleeves.length === 8,
+    Condition: () => Player.sleeves.length === 8 && Player.sourceFileLvl(10) === 3,
   },
   INDECISIVE: {
     ...achievementData["INDECISIVE"],

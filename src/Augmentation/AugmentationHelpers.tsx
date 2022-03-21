@@ -138,7 +138,6 @@ function initAugmentations(): void {
     (key) => ((UnstableCircadianModulatorParams as any)[key] = randomBonuses.bonuses[key]),
   );
 
-
   //Misc/Hybrid augmentations
   const NeuroFluxGovernor = new Augmentation({
     name: AugmentationNames.NeuroFluxGovernor,
@@ -221,11 +220,7 @@ function initAugmentations(): void {
       defense_mult: 1.08,
       agility_mult: 1.08,
       dexterity_mult: 1.08,
-      factions: [
-        FactionNames.Tetrads,
-        FactionNames.TheDarkArmy,
-        FactionNames.TheSyndicate,
-      ],
+      factions: [FactionNames.Tetrads, FactionNames.TheDarkArmy, FactionNames.TheSyndicate],
     }),
     new Augmentation({
       name: AugmentationNames.Targeting1,
@@ -638,7 +633,13 @@ function initAugmentations(): void {
         "memory and the mind. This implant allows the user to not only access a computer's memory, but also alter " +
         "and delete it.",
       hacking_money_mult: 1.25,
-      factions: [FactionNames.BitRunners, FactionNames.TheBlackHand, FactionNames.NiteSec, FactionNames.Chongqing, FactionNames.NewTokyo],
+      factions: [
+        FactionNames.BitRunners,
+        FactionNames.TheBlackHand,
+        FactionNames.NiteSec,
+        FactionNames.Chongqing,
+        FactionNames.NewTokyo,
+      ],
     }),
     new Augmentation({
       name: AugmentationNames.ENM,
@@ -947,7 +948,12 @@ function initAugmentations(): void {
       charisma_exp_mult: 1.05,
       company_rep_mult: 1.1,
       work_money_mult: 1.2,
-      factions: [FactionNames.BachmanAssociates, FactionNames.ClarkeIncorporated, FactionNames.FourSigma, FactionNames.KuaiGongInternational],
+      factions: [
+        FactionNames.BachmanAssociates,
+        FactionNames.ClarkeIncorporated,
+        FactionNames.FourSigma,
+        FactionNames.KuaiGongInternational,
+      ],
     }),
     new Augmentation({
       name: AugmentationNames.PCDNI,
@@ -959,7 +965,12 @@ function initAugmentations(): void {
         "it using the brain's electrochemical signals.",
       company_rep_mult: 1.3,
       hacking_mult: 1.08,
-      factions: [FactionNames.FourSigma, FactionNames.OmniTekIncorporated, FactionNames.ECorp, FactionNames.BladeIndustries],
+      factions: [
+        FactionNames.FourSigma,
+        FactionNames.OmniTekIncorporated,
+        FactionNames.ECorp,
+        FactionNames.BladeIndustries,
+      ],
     }),
     new Augmentation({
       name: AugmentationNames.PCDNIOptimizer,
@@ -999,7 +1010,13 @@ function initAugmentations(): void {
         "triggers feelings of admiration and approval in other people.",
       company_rep_mult: 1.1,
       faction_rep_mult: 1.1,
-      factions: [FactionNames.TianDiHui, FactionNames.TheSyndicate, FactionNames.NWO, FactionNames.MegaCorp, FactionNames.FourSigma],
+      factions: [
+        FactionNames.TianDiHui,
+        FactionNames.TheSyndicate,
+        FactionNames.NWO,
+        FactionNames.MegaCorp,
+        FactionNames.FourSigma,
+      ],
     }),
     new Augmentation({
       name: AugmentationNames.ADRPheromone2,
@@ -1011,7 +1028,12 @@ function initAugmentations(): void {
         "triggers feelings of admiration, approval, and respect in others.",
       company_rep_mult: 1.2,
       faction_rep_mult: 1.2,
-      factions: [FactionNames.Silhouette, FactionNames.FourSigma, FactionNames.BachmanAssociates, FactionNames.ClarkeIncorporated],
+      factions: [
+        FactionNames.Silhouette,
+        FactionNames.FourSigma,
+        FactionNames.BachmanAssociates,
+        FactionNames.ClarkeIncorporated,
+      ],
     }),
     new Augmentation({
       name: AugmentationNames.ShadowsSimulacrum,
@@ -1025,11 +1047,7 @@ function initAugmentations(): void {
         "espionage and surveillance work.",
       company_rep_mult: 1.15,
       faction_rep_mult: 1.15,
-      factions: [
-        FactionNames.TheSyndicate,
-        FactionNames.TheDarkArmy,
-        FactionNames.SpeakersForTheDead
-      ],
+      factions: [FactionNames.TheSyndicate, FactionNames.TheDarkArmy, FactionNames.SpeakersForTheDead],
     }),
     new Augmentation({
       name: AugmentationNames.HacknetNodeCPUUpload,
@@ -1443,8 +1461,8 @@ function initAugmentations(): void {
       moneyCost: 1.25e8,
       info: (
         <>
-          A collection of digital assets saved on a small chip. The chip is implanted into your wrist. A small jack in the
-          chip allows you to connect it to a computer and upload the assets.
+          A collection of digital assets saved on a small chip. The chip is implanted into your wrist. A small jack in
+          the chip allows you to connect it to a computer and upload the assets.
         </>
       ),
       startingMoney: 1e6,
@@ -1699,12 +1717,12 @@ function initAugmentations(): void {
       ),
       factions: [FactionNames.Infiltrators],
     }),
-  ]
+  ];
 
   // Special Bladeburner Augmentations
   const BladeburnersFactionName = FactionNames.Bladeburners;
   if (factionExists(BladeburnersFactionName)) {
-    augmentations.concat([
+    augmentations.push(
       new Augmentation({
         name: AugmentationNames.EsperEyewear,
         repCost: 1.25e3,
@@ -1967,13 +1985,13 @@ function initAugmentations(): void {
         isSpecial: true,
         factions: [BladeburnersFactionName],
       }),
-    ])
+    );
   }
 
   // Special CotMG Augmentations
   const ChurchOfTheMachineGodFactionName = FactionNames.ChurchOfTheMachineGod;
   if (factionExists(ChurchOfTheMachineGodFactionName)) {
-    augmentations.concat([
+    augmentations.push(
       new Augmentation({
         name: AugmentationNames.StaneksGift1,
         repCost: 0,
@@ -2092,10 +2110,10 @@ function initAugmentations(): void {
         stats: <>Staneks Gift has no penalty.</>,
         factions: [ChurchOfTheMachineGodFactionName],
       }),
-    ])
+    );
   }
 
-  augmentations.map(resetAugmentation)
+  augmentations.map(resetAugmentation);
 
   // Update costs based on how many have been purchased
   mult = Math.pow(

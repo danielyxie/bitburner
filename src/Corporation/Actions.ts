@@ -64,6 +64,9 @@ export function UnlockUpgrade(corporation: ICorporation, upgrade: CorporationUnl
   if (corporation.funds < upgrade[1]) {
     throw new Error("Insufficient funds");
   }
+  if(corporation.unlockUpgrades[upgrade[0]] === 1){
+    throw new Error(`You have already unlocked the ${upgrade[2]} upgrade!`);
+  }
   corporation.unlock(upgrade);
 }
 

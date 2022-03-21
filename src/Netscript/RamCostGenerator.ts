@@ -232,6 +232,8 @@ export const RamCosts: IMap<any> = {
   connect: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   manualHack: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   installBackdoor: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  getDarkwebProgramCost: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
+  getDarkwebPrograms: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   getStats: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   getCharacterInformation: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   hospitalize: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),

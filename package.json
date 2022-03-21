@@ -108,6 +108,7 @@
     "cy:run": "cypress run",
     "doc": "npx api-extractor run && npx api-documenter markdown && rm input/bitburner.api.json && rm -r input",
     "format": "prettier --write .",
+    "format:report": "prettier -c .",
     "start": "http-server -p 8000",
     "start:dev": "webpack-dev-server --progress --env.devServer --mode development",
     "start:dev-fast": "webpack-dev-server --progress --env.devServer --mode development --fast true",

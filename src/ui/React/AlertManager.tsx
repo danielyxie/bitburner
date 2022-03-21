@@ -3,7 +3,7 @@ import { EventEmitter } from "../../utils/EventEmitter";
 import { Modal } from "./Modal";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import {sha256} from "js-sha256";
+import { sha256 } from "js-sha256";
 
 export const AlertEvents = new EventEmitter<[string | JSX.Element]>();
 
@@ -23,8 +23,8 @@ export function AlertManager(): React.ReactElement {
         i++;
         setAlerts((old) => {
           const hash = getMessageHash(text);
-          if (old.some(a => a.hash === hash)) {
-            console.log('Duplicate message');
+          if (old.some((a) => a.hash === hash)) {
+            console.log("Duplicate message");
             return old;
           }
           return [
@@ -51,7 +51,7 @@ export function AlertManager(): React.ReactElement {
   }, []);
 
   function getMessageHash(text: string | JSX.Element): string {
-    if (typeof text === 'string') return sha256(text);
+    if (typeof text === "string") return sha256(text);
     return sha256(JSON.stringify(text.props));
   }
 
