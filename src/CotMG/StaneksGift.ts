@@ -19,7 +19,7 @@ export class StaneksGift implements IStaneksGift {
   fragments: ActiveFragment[] = [];
 
   baseSize(): number {
-    return StanekConstants.BaseSize + BitNodeMultipliers.StaneksGiftExtraSize + Player.sourceFileLvl(13);
+    return Math.min(StanekConstants.BaseSize + BitNodeMultipliers.StaneksGiftExtraSize + Player.sourceFileLvl(13), StanekConstants.MaxSize);
   }
 
   width(): number {
