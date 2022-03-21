@@ -45,6 +45,8 @@ export class Corporation {
   upgrades: number[];
   upgradeMultipliers: number[];
 
+  profitHistory: number[] = [];
+
   state = new CorporationState();
 
   constructor(params: IParams = {}) {
@@ -106,6 +108,10 @@ export class Corporation {
           this.expenses = this.expenses + ind.lastCycleExpenses;
         });
         const profit = this.revenue - this.expenses;
+
+        this.profitHistory.push(profit);
+        if (this.profitHistory.length > 60) this.profitHistory.shift();
+
         const cycleProfit = profit * (marketCycles * CorporationConstants.SecsPerMarketCycle);
         if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
           dialogBoxCreate(
@@ -159,8 +165,18 @@ export class Corporation {
   }
 
   determineValuation(): number {
-    let val,
-      profit = this.revenue - this.expenses;
+    let val;
+
+    // take the average over the last 60 cycles (10 min)
+    const avgProfit = this.profitHistory.reduce((sum, val) => sum+val, 0) / this.profitHistory.length;
+
+    // // filter out any "anomalies" ;-)
+    // const filtered = this.profitHistory.filter((val) => val < avgProfit * 1.3);
+
+    // // profit is the average of what is left
+    // let profit = filtered.reduce((sum, val) => sum+val, 0) / filtered.length;
+    let profit = avgProfit;
+
     if (this.public) {
       // Account for dividends
       if (this.dividendPercentage > 0) {
