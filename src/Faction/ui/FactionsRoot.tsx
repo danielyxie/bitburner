@@ -82,7 +82,8 @@ export function FactionsRoot(props: IProps): React.ReactElement {
   }
 
   const allFactions = Object.values(FactionNames).map(faction => faction as string)
-  const allJoinedFactions = props.player.factions.sort((a, b) =>
+  const allJoinedFactions = props.player.factions.slice(0);
+  allJoinedFactions.sort((a, b) =>
     allFactions.indexOf(a) - allFactions.indexOf(b));
 
   return (
