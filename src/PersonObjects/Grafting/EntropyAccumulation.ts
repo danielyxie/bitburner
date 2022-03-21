@@ -42,11 +42,11 @@ export const calculateEntropy = (player: IPlayer, stacks = 1): IMap<number> => {
     bladeburner_stamina_gain_mult: player.bladeburner_stamina_gain_mult,
     bladeburner_analysis_mult: player.bladeburner_analysis_mult,
     bladeburner_success_chance_mult: player.bladeburner_success_chance_mult,
-  }
+  };
 
   for (const [mult, val] of Object.entries(multipliers)) {
-    multipliers[mult] = val * (CONSTANTS.EntropyEffect ** stacks);
+    multipliers[mult] = val * CONSTANTS.EntropyEffect ** stacks;
   }
 
   return multipliers;
-}
+};
