@@ -110,7 +110,9 @@ export class Corporation {
         const profit = this.revenue - this.expenses;
 
         this.profitHistory.push(profit);
-        if (this.profitHistory.length > 60) this.profitHistory.shift();
+        if (this.profitHistory.length > CorporationConstants.ValuationProfitHistoryCycles) {
+          this.profitHistory.shift();
+        }
 
         const cycleProfit = profit * (marketCycles * CorporationConstants.SecsPerMarketCycle);
         if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
@@ -167,15 +169,8 @@ export class Corporation {
   determineValuation(): number {
     let val;
 
-    // take the average over the last 60 cycles (10 min)
-    const avgProfit = this.profitHistory.reduce((sum, val) => sum+val, 0) / this.profitHistory.length;
-
-    // // filter out any "anomalies" ;-)
-    // const filtered = this.profitHistory.filter((val) => val < avgProfit * 1.3);
-
-    // // profit is the average of what is left
-    // let profit = filtered.reduce((sum, val) => sum+val, 0) / filtered.length;
-    let profit = avgProfit;
+    // take the average over the last ValuationProfitHistoryCycles
+    let profit = this.profitHistory.reduce((sum, val) => sum+val, 0) / this.profitHistory.length;
 
     if (this.public) {
       // Account for dividends

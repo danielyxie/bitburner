@@ -1,4 +1,4 @@
-import { CityName } from './../../Locations/data/CityNames';
+import { CityName } from "./../../Locations/data/CityNames";
 const CyclesPerMarketCycle = 50;
 const AllCorporationStates = ["START", "PURCHASE", "PRODUCTION", "SALE", "EXPORT"];
 export const CorporationConstants: {
@@ -18,6 +18,7 @@ export const CorporationConstants: {
   OfficeUpgradeBaseCost: number;
   BribeThreshold: number;
   BribeToRepRatio: number;
+  ValuationProfitHistoryCycles: number;
   ProductProductionCostRatio: number;
   DividendMaxPercentage: number;
   EmployeeSalaryMultiplier: number;
@@ -38,7 +39,14 @@ export const CorporationConstants: {
   CyclesPerIndustryStateCycle: CyclesPerMarketCycle / AllCorporationStates.length,
   SecsPerMarketCycle: CyclesPerMarketCycle / 5,
 
-  Cities: [CityName.Aevum, CityName.Chongqing, CityName.Sector12, CityName.NewTokyo, CityName.Ishima, CityName.Volhaven],
+  Cities: [
+    CityName.Aevum,
+    CityName.Chongqing,
+    CityName.Sector12,
+    CityName.NewTokyo,
+    CityName.Ishima,
+    CityName.Volhaven,
+  ],
 
   WarehouseInitialCost: 5e9, //Initial purchase cost of warehouse
   WarehouseInitialSize: 100,
@@ -50,6 +58,8 @@ export const CorporationConstants: {
 
   BribeThreshold: 100e12, //Money needed to be able to bribe for faction rep
   BribeToRepRatio: 1e9, //Bribe Value divided by this = rep gain
+
+  ValuationProfitHistoryCycles: 10, //Number of cycles of profit history to consider in valuations
 
   ProductProductionCostRatio: 5, //Ratio of material cost of a product to its production cost
 
@@ -74,16 +84,6 @@ export const CorporationConstants: {
     "AI Cores",
     "Real Estate",
   ],
-  FundingRoundShares: [
-    0.1,
-    0.35,
-    0.25,
-    0.2
-  ],
-  FundingRoundMultiplier: [
-    4,
-    3,
-    3,
-    2.5
-  ],
+  FundingRoundShares: [0.1, 0.35, 0.25, 0.2],
+  FundingRoundMultiplier: [4, 3, 3, 2.5],
 };
