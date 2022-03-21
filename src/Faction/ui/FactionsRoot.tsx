@@ -79,6 +79,9 @@ export function FactionsRoot(props: IProps): React.ReactElement {
       (augmentation: string) => !player.hasAugmentation(augmentation)
     ).length;
   }
+  let allJoinedFactions = props.player.factions
+  allJoinedFactions = allJoinedFactions.sort((a, b) =>
+    allJoinedFactions.indexOf(a) - allJoinedFactions.indexOf(b));
 
   return (
     <Container disableGutters maxWidth="md" sx={{ mx: 0, mb: 10 }}>
@@ -92,11 +95,11 @@ export function FactionsRoot(props: IProps): React.ReactElement {
       <Typography variant="h5" color="primary" mt={2} mb={1}>
         Factions you have joined:
       </Typography>
-      {(props.player.factions.length > 0 && (
+      {(allJoinedFactions.length > 0 && (
         <Paper sx={{ my: 1, p: 1, pb: 0, display: "inline-block" }}>
           <Table padding="none" style={{ width: "fit-content" }}>
             <TableBody>
-              {props.player.factions.map((faction: string) => (
+              {allJoinedFactions.map((faction: string) => (
                 <TableRow key={faction}>
                   <TableCell>
                     <Typography noWrap mb={1}>
