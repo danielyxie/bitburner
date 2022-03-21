@@ -141,7 +141,7 @@ function LogWindow(props: IProps): React.ReactElement {
             setScript(exisitingScript)
           }
           rerender();
-        }, 1000)
+        }, 100)
       }),
     [],
   );
