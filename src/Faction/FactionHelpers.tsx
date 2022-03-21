@@ -123,6 +123,30 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
       }
     }
 
+    //todo make this exportable also bladburner and the other one
+    const infiltrationAugs = [
+      AugmentationNames.BagOfSand,
+      AugmentationNames.IntellisenseModule,
+      AugmentationNames.ReverseDictionary,
+      AugmentationNames.AmuletOfPersuasian,
+      AugmentationNames.GameSharkRepository,
+      AugmentationNames.CyberDecoder,
+      AugmentationNames.MineDetector,
+      AugmentationNames.WireCuttingManual
+    ]
+
+    // If you just purchased an infiltrator aug, recalculate cost
+    if (infiltrationAugs.includes(aug.name)) {
+      const unpurchasedInfiltrationAugs = infiltrationAugs.filter(augName => Player.hasAugmentation(augName, false))
+      const purchasedInfiltrationAugsCount = infiltrationAugs.length - unpurchasedInfiltrationAugs.length
+      unpurchasedInfiltrationAugs
+        .map(augName => {
+          const aug = getAug(augName)
+          aug.baseRepRequirement = augTrueBaseRepCost * purchasedInfiltrationAugsCount
+          aug.baseCost = augTrueBaseCost ^ purchasedInfiltrationAugsCount
+        })
+    }
+
     for (const name of Object.keys(Augmentations)) {
       if (Augmentations.hasOwnProperty(name)) {
         Augmentations[name].baseCost *= CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
