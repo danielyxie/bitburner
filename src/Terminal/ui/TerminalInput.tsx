@@ -48,7 +48,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   const terminalInput = useRef<HTMLInputElement>(null);
 
   const [value, setValue] = useState(command);
-  const [postUpdateValue, setPostUpdateValue] = useState<{postUpdate: () => void} | null>()
+  const [postUpdateValue, setPostUpdateValue] = useState<{ postUpdate: () => void } | null>();
   const [possibilities, setPossibilities] = useState<string[]>([]);
   const classes = useStyles();
 
@@ -65,14 +65,14 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
       postUpdateValue.postUpdate();
       setPostUpdateValue(null);
     }
-  }, [postUpdateValue])
+  }, [postUpdateValue]);
 
   function saveValue(newValue: string, postUpdate?: () => void): void {
     command = newValue;
     setValue(newValue);
 
     if (postUpdate) {
-      setPostUpdateValue({postUpdate});
+      setPostUpdateValue({ postUpdate });
     }
   }
 
@@ -102,7 +102,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
               // Move cursor to correct location
               // foo bar |baz bum --> foo |baz bum
               const ref = terminalInput.current;
-              ref?.setSelectionRange(delStart+1, delStart+1);
+              ref?.setSelectionRange(delStart + 1, delStart + 1);
             });
             return;
           }
@@ -115,7 +115,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
               // Move cursor to correct location
               // foo bar |baz bum --> foo bar |bum
               const ref = terminalInput.current;
-              ref?.setSelectionRange(start, start)
+              ref?.setSelectionRange(start, start);
             });
             return;
           }
@@ -180,7 +180,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
   useEffect(() => {
     function keyDown(this: Document, event: KeyboardEvent): void {
       if (terminal.contractOpen) return;
-      if (terminal.action !== null && event.key === KEY.c && event.ctrlKey) {
+      if (terminal.action !== null && event.key === KEY.C && event.ctrlKey) {
         terminal.finishAction(router, player, true);
         return;
       }
@@ -205,7 +205,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     }
 
     // Autocomplete
-    if (event.key === KEY.Tab && value !== "") {
+    if (event.key === KEY.TAB && value !== "") {
       event.preventDefault();
 
       let copy = value;
