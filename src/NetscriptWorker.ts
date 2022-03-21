@@ -178,7 +178,7 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
       const entry = ns[name];
       if (typeof entry === "function") {
         //Async functions need to be wrapped. See JS-Interpreter documentation
-        if (["hack", "grow", "weaken", "sleep", "prompt", "manualHack", "scp", "write", "share"].includes(name)) {
+        if (["hack", "grow", "weaken", "sleep", "prompt", "manualHack", "scp", "write", "share", "wget"].includes(name)) {
           const tempWrapper = function (...args: any[]): void {
             const fnArgs = [];
 
@@ -199,7 +199,21 @@ function startNetscript1Script(workerScript: WorkerScript): Promise<WorkerScript
               })
               .catch(function (err: any) {
                 // workerscript is when you cancel a delay
-                if (!(err instanceof WorkerScript)) console.error(err);
+                if (!(err instanceof WorkerScript)) {
+                  console.error(err);
+                  const errorTextArray = err.split("|DELIMITER|");
+                  const hostname = errorTextArray[1];
+                  const scriptName = errorTextArray[2];
+                  const errorMsg = errorTextArray[3];
+                  let msg = `${scriptName}@${hostname}<br>`;
+                  msg += "<br>";
+                  msg += errorMsg;
+                  dialogBoxCreate(msg);
+                  workerScript.env.stopFlag = true;
+                  workerScript.running = false;
+                  killWorkerScript(workerScript);
+                  return Promise.resolve(workerScript);
+                }
               });
           };
           int.setProperty(scope, name, int.createAsyncFunction(tempWrapper));
