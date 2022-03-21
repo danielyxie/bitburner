@@ -5,6 +5,7 @@ import { Construction } from "@mui/icons-material";
 
 import { use } from "../../../ui/Context";
 import { Money } from "../../../ui/React/Money";
+import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
 import { Augmentations } from "../../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames";
 import { Settings } from "../../../Settings/Settings";
@@ -43,6 +44,7 @@ export const GraftingRoot = (): React.ReactElement => {
   }
 
   const [selectedAug, setSelectedAug] = useState(getAvailableAugs(player)[0]);
+  const [craftOpen, setCraftOpen] = useState(false);
 
   return (
     <Container disableGutters maxWidth="lg" sx={{ mx: 0 }}>
@@ -75,14 +77,7 @@ export const GraftingRoot = (): React.ReactElement => {
               <Construction sx={{ mr: 1 }} /> {selectedAug}
             </Typography>
             <Button
-              onClick={(event) => {
-                if (!event.isTrusted) return;
-                const craftableAug = CraftableAugmentations[selectedAug];
-                player.loseMoney(craftableAug.cost, "augmentations");
-                player.startCraftAugmentationWork(selectedAug, craftableAug.time);
-                player.startFocusing();
-                router.toWork();
-              }}
+              onClick={() => setCraftOpen(true)}
               sx={{ width: "100%" }}
               disabled={player.money < CraftableAugmentations[selectedAug].cost}
             >
@@ -92,6 +87,26 @@ export const GraftingRoot = (): React.ReactElement => {
               </Typography>
               )
             </Button>
+            <ConfirmationModal
+              open={craftOpen}
+              onClose={() => setCraftOpen(false)}
+              onConfirm={() => {
+                const craftableAug = CraftableAugmentations[selectedAug];
+                player.loseMoney(craftableAug.cost, "augmentations");
+                player.startCraftAugmentationWork(selectedAug, craftableAug.time);
+                player.startFocusing();
+                router.toWork();
+              }}
+              confirmationText={
+                <>
+                  Cancelling crafting will <b>not</b> save crafting progress, and the money you spend will <b>not</b> be
+                  returned.
+                  <br />
+                  <br />
+                  Additionally, grafting an Augmentation will increase the potency of the Entropy virus.
+                </>
+              }
+            />
             <Typography color={Settings.theme.info}>
               <b>Time to Craft:</b> {convertTimeMsToTimeElapsedString(CraftableAugmentations[selectedAug].time)}
             </Typography>
