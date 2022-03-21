@@ -1,8 +1,7 @@
 node_modules
 package.json
 dist
-doc/build/
-doc/source
+doc/
 .build
 .package
 
