@@ -216,7 +216,7 @@ ${commitLines.join("\n")}
 
   getPullMarkdown(pr, detailedOutput) {
     if (!detailedOutput) {
-      return `* ` + `${pr.title} (by @${pr.user.login})` + ` #[${pr.number}](${pr.url})`;
+      return `* ${pr.title} (by @${pr.user.login}) #[${pr.number}](${pr.url})`;
     } else {
       return (
         `* [${pr.merge_commit_sha.slice(0, 7)}](${basePath}/commit/${pr.merge_commit_sha}) | ` +
@@ -228,7 +228,7 @@ ${commitLines.join("\n")}
 
   getCommitMarkdown(commit, detailedOutput) {
     if (!detailedOutput) {
-      return `* ` + `${commit.message} (by @${commit.user.login})` + ` - [${commit.sha.slice(0, 7)}](${commit.url})`;
+      return `* ${commit.message} (by @${commit.user.login}) - [${commit.sha.slice(0, 7)}](${commit.url})`;
     } else {
       return (
         `* [${commit.sha.slice(0, 7)}](${commit.url}) | ` +
