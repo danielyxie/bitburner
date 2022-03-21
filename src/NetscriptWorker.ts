@@ -739,19 +739,17 @@ export function runScriptFromScript(
           `Cannot run script '${scriptname}' (t=${threads}) on '${server.hostname}' because there is not enough available RAM!`,
       );
       return 0;
-    } else {
-      // Able to run script
-      workerScript.log(
-        caller,
-        () => `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
-      );
-      const runningScriptObj = new RunningScript(script, args);
-      runningScriptObj.threads = threads;
-      runningScriptObj.server = server.hostname;
-
-      return startWorkerScript(player, runningScriptObj, server, workerScript);
     }
-    break;
+    // Able to run script
+    workerScript.log(
+      caller,
+      () => `'${scriptname}' on '${server.hostname}' with ${threads} threads and args: ${arrayToString(args)}.`,
+    );
+    const runningScriptObj = new RunningScript(script, args);
+    runningScriptObj.threads = threads;
+    runningScriptObj.server = server.hostname;
+
+    return startWorkerScript(player, runningScriptObj, server, workerScript);
   }
 
   workerScript.log(caller, () => `Could not find script '${scriptname}' on '${server.hostname}'`);
