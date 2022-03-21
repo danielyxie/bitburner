@@ -170,7 +170,10 @@ export class Corporation {
     let val;
 
     // take the average over the last ValuationProfitHistoryCycles
-    let profit = this.profitHistory.reduce((sum, val) => sum+val, 0) / this.profitHistory.length;
+    let profit = 0;
+    if (this.profitHistory.length > 0) {
+      profit = this.profitHistory.reduce((sum, val) => sum+val, 0) / this.profitHistory.length;
+    }
 
     if (this.public) {
       // Account for dividends
