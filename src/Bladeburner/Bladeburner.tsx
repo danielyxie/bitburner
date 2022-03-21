@@ -667,15 +667,15 @@ export class Bladeburner implements IBladeburner {
         this.postToConsole("Automation: " + (this.automateEnabled ? "enabled" : "disabled"));
         this.postToConsole(
           "When your stamina drops to " +
-          formatNumber(this.automateThreshLow, 0) +
-          ", you will automatically switch to " +
-          this.automateActionLow.name +
-          ". When your stamina recovers to " +
-          formatNumber(this.automateThreshHigh, 0) +
-          ", you will automatically " +
-          "switch to " +
-          this.automateActionHigh.name +
-          ".",
+            formatNumber(this.automateThreshLow, 0) +
+            ", you will automatically switch to " +
+            this.automateActionLow.name +
+            ". When your stamina recovers to " +
+            formatNumber(this.automateThreshHigh, 0) +
+            ", you will automatically " +
+            "switch to " +
+            this.automateActionHigh.name +
+            ".",
         );
       } else if (flag.toLowerCase().includes("en")) {
         if (
@@ -970,8 +970,8 @@ export class Bladeburner implements IBladeburner {
       if (this.logging.events) {
         this.log(
           "Intelligence indicates that a large number of Synthoids migrated from " +
-          sourceCityName +
-          " to some other city",
+            sourceCityName +
+            " to some other city",
         );
       }
     } else if (chance <= 0.7) {
@@ -1286,10 +1286,10 @@ export class Bladeburner implements IBladeburner {
               } else if (!isOperation && this.logging.contracts) {
                 this.log(
                   action.name +
-                  " contract successfully completed! Gained " +
-                  formatNumber(gain, 3) +
-                  " rank and " +
-                  numeralWrapper.formatMoney(moneyGain),
+                    " contract successfully completed! Gained " +
+                    formatNumber(gain, 3) +
+                    " rank and " +
+                    numeralWrapper.formatMoney(moneyGain),
                 );
               }
             }
@@ -1400,11 +1400,11 @@ export class Bladeburner implements IBladeburner {
             if (this.logging.blackops) {
               this.log(
                 action.name +
-                " failed! Lost " +
-                formatNumber(rankLoss, 1) +
-                " rank and took " +
-                formatNumber(damage, 0) +
-                " damage",
+                  " failed! Lost " +
+                  formatNumber(rankLoss, 1) +
+                  " rank and took " +
+                  formatNumber(damage, 0) +
+                  " damage",
               );
             }
           }
@@ -1440,16 +1440,16 @@ export class Bladeburner implements IBladeburner {
         if (this.logging.general) {
           this.log(
             "Training completed. Gained: " +
-            formatNumber(strExpGain, 1) +
-            " str exp, " +
-            formatNumber(defExpGain, 1) +
-            " def exp, " +
-            formatNumber(dexExpGain, 1) +
-            " dex exp, " +
-            formatNumber(agiExpGain, 1) +
-            " agi exp, " +
-            formatNumber(staminaGain, 3) +
-            " max stamina",
+              formatNumber(strExpGain, 1) +
+              " str exp, " +
+              formatNumber(defExpGain, 1) +
+              " def exp, " +
+              formatNumber(dexExpGain, 1) +
+              " dex exp, " +
+              formatNumber(agiExpGain, 1) +
+              " agi exp, " +
+              formatNumber(staminaGain, 3) +
+              " max stamina",
           );
         }
         this.startAction(player, this.action); // Repeat action
@@ -1476,10 +1476,10 @@ export class Bladeburner implements IBladeburner {
         if (this.logging.general) {
           this.log(
             "Field analysis completed. Gained 0.1 rank, " +
-            formatNumber(hackingExpGain, 1) +
-            " hacking exp, and " +
-            formatNumber(charismaExpGain, 1) +
-            " charisma exp",
+              formatNumber(hackingExpGain, 1) +
+              " hacking exp, and " +
+              formatNumber(charismaExpGain, 1) +
+              " charisma exp",
           );
         }
         this.startAction(player, this.action); // Repeat action
@@ -1526,7 +1526,8 @@ export class Bladeburner implements IBladeburner {
         this.startAction(player, this.action);
         if (this.logging.general) {
           this.log(
-            `Rested in Hyperbolic Regeneration Chamber. Restored ${BladeburnerConstants.HrcHpGain
+            `Rested in Hyperbolic Regeneration Chamber. Restored ${
+              BladeburnerConstants.HrcHpGain
             } HP and gained ${numeralWrapper.formatStamina(staminaGain)} stamina`,
           );
         }
@@ -1575,7 +1576,9 @@ export class Bladeburner implements IBladeburner {
     if (factionExists(bladeburnersFactionName)) {
       const bladeburnerFac = Factions[bladeburnersFactionName];
       if (!(bladeburnerFac instanceof Faction)) {
-        throw new Error(`Could not properly get ${FactionNames.Bladeburners} Faction object in ${FactionNames.Bladeburners} UI Overview Faction button`);
+        throw new Error(
+          `Could not properly get ${FactionNames.Bladeburners} Faction object in ${FactionNames.Bladeburners} UI Overview Faction button`,
+        );
       }
       if (bladeburnerFac.isMember) {
         const favorBonus = 1 + bladeburnerFac.favor / 100;
