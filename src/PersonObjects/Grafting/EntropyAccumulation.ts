@@ -3,7 +3,7 @@ import { CONSTANTS } from "../../Constants";
 
 import { IPlayer } from "../IPlayer";
 
-export const applyEntropy = (player: IPlayer, stacks = 1): IMap<number> => {
+export const calculateEntropy = (player: IPlayer, stacks = 1): IMap<number> => {
   const multipliers: IMap<number> = {
     hacking_chance_mult: player.hacking_chance_mult,
     hacking_speed_mult: player.hacking_speed_mult,

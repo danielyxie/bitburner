@@ -1375,7 +1375,7 @@ export function finishCraftAugmentationWork(this: IPlayer, cancelled: boolean): 
 
     applyAugmentation(Augmentations[augName]);
     this.entropyStacks += 1;
-    this.applyEntropy();
+    this.applyEntropy(this.entropyStacks);
   } else {
     dialogBoxCreate(`You cancelled the crafting of ${augName}.<br>Your money was not returned to you.`)
   }

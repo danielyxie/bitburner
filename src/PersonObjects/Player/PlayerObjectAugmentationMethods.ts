@@ -5,7 +5,7 @@ import { IPlayer } from "../IPlayer";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 
-import { applyEntropy as calculateEntropy } from "../Grafting/EntropyAccumulation";
+import { calculateEntropy } from "../Grafting/EntropyAccumulation";
 
 export function hasAugmentation(this: IPlayer, aug: string | Augmentation, installed = false): boolean {
   const augName: string = aug instanceof Augmentation ? aug.name : aug;
