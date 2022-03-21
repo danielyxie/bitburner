@@ -115,7 +115,7 @@ export const AugmentationNames: {
   IntellisenseModule: string;
   ReverseDictionary: string;
   AmuletOfPersuasian: string;
-  GameSharkRepository: string;
+  LameSharkRepository: string;
   CyberDecoder: string;
   MineDetector: string;
   WireCuttingManual: string;
@@ -238,7 +238,7 @@ export const AugmentationNames: {
   IntellisenseModule: "Intellisense Module",
   ReverseDictionary: "Reverse Dictionary",
   AmuletOfPersuasian: "Amulet of Persuasian",
-  GameSharkRepository: "Game Shark Repository",
+  LameSharkRepository: "Lame Shark Repository",
   CyberDecoder: "CyberDecoder",
   MineDetector: "MineDetector",
   WireCuttingManual: "WireCuttingManual",

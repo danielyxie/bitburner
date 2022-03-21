@@ -394,6 +394,9 @@ export class Augmentation {
   // Initial cost. Doesn't change when you purchase multiple Augmentation
   startingCost = 0;
 
+  // Initial rep requirement. Doesn't change when you purchase multiple Augmentation
+  startingRepRequirement = 0
+
   // Factions that offer this aug.
   factions: string[] = [];
 
@@ -413,6 +416,7 @@ export class Augmentation {
     this.baseRepRequirement = params.repCost * BitNodeMultipliers.AugmentationRepCost;
     this.baseCost = params.moneyCost * BitNodeMultipliers.AugmentationMoneyCost;
     this.startingCost = this.baseCost;
+    this.startingRepRequirement = this.baseRepRequirement;
     this.factions = params.factions;
 
     if (params.isSpecial) {
