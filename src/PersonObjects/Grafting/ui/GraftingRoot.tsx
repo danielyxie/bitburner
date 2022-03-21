@@ -62,7 +62,7 @@ export const GraftingRoot = (): React.ReactElement => {
 
   const [selectedAug, setSelectedAug] = useState(getAvailableAugs(player)[0]);
 
-  return <>
+  return (
     <Container disableGutters maxWidth="lg" sx={{ mx: 0 }}>
       <Button onClick={() => router.toLocation(Locations[LocationName.NewTokyoVitaLife])}>
         Back
@@ -140,7 +140,7 @@ export const GraftingRoot = (): React.ReactElement => {
         </Paper>
 
         <Typography>
-          Augmenting causes signficant physical and psychological changes to the affected
+          Augmenting causes significant physical and psychological changes to the affected
           individual, and the best way for the body to deal with these effects is to undergo
           a full shutdown process.
           <br />
@@ -152,5 +152,5 @@ export const GraftingRoot = (): React.ReactElement => {
 
       </Box>
     </Container>
-  </>
+  )
 }
