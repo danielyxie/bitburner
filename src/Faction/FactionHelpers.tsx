@@ -19,6 +19,7 @@ import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";
 import { FactionNames } from "./data/FactionNames";
+import { infiltratorsAugmentations } from "../Augmentation/AugmentationHelpers";
 
 export function inviteToFaction(faction: Faction): void {
   Player.receiveInvite(faction.name);
@@ -123,27 +124,14 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
       }
     }
 
-    //todo make this exportable also bladburner and the other one
-    const infiltrationAugs = [
-      AugmentationNames.BagOfSand,
-      AugmentationNames.IntellisenseModule,
-      AugmentationNames.ReverseDictionary,
-      AugmentationNames.AmuletOfPersuasian,
-      AugmentationNames.GameSharkRepository,
-      AugmentationNames.CyberDecoder,
-      AugmentationNames.MineDetector,
-      AugmentationNames.WireCuttingManual
-    ]
-
     // If you just purchased an infiltrator aug, recalculate cost
-    if (infiltrationAugs.includes(aug.name)) {
-      const unpurchasedInfiltrationAugs = infiltrationAugs.filter(augName => Player.hasAugmentation(augName, false))
-      const purchasedInfiltrationAugsCount = infiltrationAugs.length - unpurchasedInfiltrationAugs.length
+    if (infiltratorsAugmentations.map(augmentation => augmentation.name).includes(aug.name)) {
+      const unpurchasedInfiltrationAugs = infiltratorsAugmentations.filter(augmentation => Player.hasAugmentation(augmentation.name, false))
+      const purchasedInfiltrationAugsCount = infiltratorsAugmentations.length - unpurchasedInfiltrationAugs.length
       unpurchasedInfiltrationAugs
-        .map(augName => {
-          const aug = getAug(augName)
-          aug.baseRepRequirement = augTrueBaseRepCost * purchasedInfiltrationAugsCount
-          aug.baseCost = augTrueBaseCost ^ purchasedInfiltrationAugsCount
+        .map(augmentation => {
+          augmentation.baseRepRequirement = augmentation.startingCost * purchasedInfiltrationAugsCount
+          augmentation.baseCost = augmentation.startingRepRequirement ^ purchasedInfiltrationAugsCount
         })
     }
 
