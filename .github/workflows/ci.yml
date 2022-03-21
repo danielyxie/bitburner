@@ -40,7 +40,7 @@ jobs:
       - name: Run linter
         run: npm run lint:report
   prettier:
-    name: Lint
+    name: Prettier
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
