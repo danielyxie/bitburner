@@ -18,6 +18,7 @@ import { Theme } from "@mui/material";
 import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
 import { debounce } from "lodash";
+import { WorkerScriptStartStopEventEmitter } from "../../Netscript/WorkerScriptStartStopEventEmitter";
 
 let layerCounter = 0;
 
@@ -128,6 +129,23 @@ function LogWindow(props: IProps): React.ReactElement {
     setRerender((old) => !old);
   }
 
+  useEffect(
+    () =>
+      WorkerScriptStartStopEventEmitter.subscribe(() => {
+        setTimeout(() => {
+          const server = GetServer(script.server);
+          if (server === null) return;
+          const exisitingScript = findRunningScript(script.filename, script.args, server);
+          if (exisitingScript) {
+            exisitingScript.logs = script.logs.concat(exisitingScript.logs)
+            setScript(exisitingScript)
+          }
+          rerender();
+        }, 1000)
+      }),
+    [],
+  );
+
   useEffect(() => {
     updateLayer();
     const id = setInterval(rerender, 1000);
@@ -198,7 +216,7 @@ function LogWindow(props: IProps): React.ReactElement {
     const node = draggableRef?.current;
     if (!node) return;
 
-    if(!isOnScreen(node)) {
+    if (!isOnScreen(node)) {
       resetPosition();
     }
   }, 100);
@@ -207,25 +225,25 @@ function LogWindow(props: IProps): React.ReactElement {
     const bounds = node.getBoundingClientRect();
 
     return !(bounds.right < 0 ||
-            bounds.bottom < 0 ||
-            bounds.left > innerWidth ||
-            bounds.top > outerWidth);
+      bounds.bottom < 0 ||
+      bounds.left > innerWidth ||
+      bounds.top > outerWidth);
   }
 
   const resetPosition = (): void => {
     const node = rootRef?.current;
     if (!node) return;
-    const state = node.state as {x: number; y: number};
+    const state = node.state as { x: number; y: number };
     state.x = 0;
     state.y = 0;
     node.setState(state);
   }
 
   const boundToBody = (e: any): void | false => {
-    if(e.clientX < 0 ||
-       e.clientY < 0 ||
-       e.clientX > innerWidth ||
-       e.clientY > innerHeight) return false;
+    if (e.clientX < 0 ||
+      e.clientY < 0 ||
+      e.clientX > innerWidth ||
+      e.clientY > innerHeight) return false;
   }
 
   return (
