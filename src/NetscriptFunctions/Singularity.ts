@@ -43,6 +43,7 @@ import { calculateHackingTime } from "../Hacking";
 import { Server } from "../Server/Server";
 import { netscriptCanHack } from "../Hacking/netscriptCanHack";
 import { FactionNames } from "../Faction/data/FactionNames";
+import { FactionInfos } from "../Faction/FactionInfo";
 
 export function NetscriptSingularity(
   player: IPlayer,
@@ -1038,93 +1039,12 @@ export function NetscriptSingularity(
 
       const fac = Factions[name];
       // Arrays listing factions that allow each time of work
-      const hackAvailable = [
-        FactionNames.Illuminati as string,
-        FactionNames.Daedalus as string,
-        FactionNames.TheCovenant as string,
-        FactionNames.ECorp as string,
-        FactionNames.MegaCorp as string,
-        FactionNames.BachmanAssociates as string,
-        FactionNames.Bladeburners as string,
-        FactionNames.NWO as string,
-        FactionNames.ClarkeIncorporated as string,
-        FactionNames.OmniTekIncorporated as string,
-        FactionNames.FourSigma as string,
-        FactionNames.KuaiGongInternational as string,
-        FactionNames.FulcrumSecretTechnologies as string,
-        FactionNames.BitRunners as string,
-        FactionNames.TheBlackHand as string,
-        FactionNames.NiteSec as string,
-        FactionNames.Chongqing as string,
-        FactionNames.Sector12 as string,
-        FactionNames.NewTokyo as string,
-        FactionNames.Aevum as string,
-        FactionNames.Ishima as string,
-        FactionNames.Volhaven as string,
-        FactionNames.SpeakersForTheDead as string,
-        FactionNames.TheDarkArmy as string,
-        FactionNames.TheSyndicate as string,
-        FactionNames.Silhouette as string,
-        FactionNames.Netburners as string,
-        FactionNames.TianDiHui as string,
-        FactionNames.CyberSec as string,
-      ];
-      const fdWkAvailable = [
-        FactionNames.Illuminati as string,
-        FactionNames.Daedalus as string,
-        FactionNames.TheCovenant as string,
-        FactionNames.ECorp as string,
-        FactionNames.MegaCorp as string,
-        FactionNames.BachmanAssociates as string,
-        FactionNames.Bladeburners as string,
-        FactionNames.NWO as string,
-        FactionNames.ClarkeIncorporated as string,
-        FactionNames.OmniTekIncorporated as string,
-        FactionNames.FourSigma as string,
-        FactionNames.KuaiGongInternational as string,
-        FactionNames.TheBlackHand as string,
-        FactionNames.Chongqing as string,
-        FactionNames.Sector12 as string,
-        FactionNames.NewTokyo as string,
-        FactionNames.Aevum as string,
-        FactionNames.Ishima as string,
-        FactionNames.Volhaven as string,
-        FactionNames.SpeakersForTheDead as string,
-        FactionNames.TheDarkArmy as string,
-        FactionNames.TheSyndicate as string,
-        FactionNames.Silhouette as string,
-        FactionNames.Tetrads as string,
-        FactionNames.SlumSnakes as string,
-      ];
-      const scWkAvailable = [
-        FactionNames.ECorp as string,
-        FactionNames.MegaCorp as string,
-        FactionNames.BachmanAssociates as string,
-        FactionNames.Bladeburners as string,
-        FactionNames.NWO as string,
-        FactionNames.ClarkeIncorporated as string,
-        FactionNames.OmniTekIncorporated as string,
-        FactionNames.FourSigma as string,
-        FactionNames.KuaiGongInternational as string,
-        FactionNames.FulcrumSecretTechnologies as string,
-        FactionNames.Chongqing as string,
-        FactionNames.Sector12 as string,
-        FactionNames.NewTokyo as string,
-        FactionNames.Aevum as string,
-        FactionNames.Ishima as string,
-        FactionNames.Volhaven as string,
-        FactionNames.SpeakersForTheDead as string,
-        FactionNames.TheSyndicate as string,
-        FactionNames.Tetrads as string,
-        FactionNames.SlumSnakes as string,
-        FactionNames.TianDiHui as string,
-      ];
 
       switch (type.toLowerCase()) {
         case "hacking":
         case "hacking contracts":
         case "hackingcontracts":
-          if (!hackAvailable.includes(fac.name)) {
+          if (!FactionInfos[fac.name].offerHackingWork) {
             workerScript.log("workForFaction", () => `Faction '${fac.name}' do not need help with hacking contracts.`);
             return false;
           }
@@ -1141,7 +1061,7 @@ export function NetscriptSingularity(
         case "field":
         case "fieldwork":
         case "field work":
-          if (!fdWkAvailable.includes(fac.name)) {
+          if (!FactionInfos[fac.name].offerFieldWork) {
             workerScript.log("workForFaction", () => `Faction '${fac.name}' do not need help with field missions.`);
             return false;
           }
@@ -1158,7 +1078,7 @@ export function NetscriptSingularity(
         case "security":
         case "securitywork":
         case "security work":
-          if (!scWkAvailable.includes(fac.name)) {
+          if (!FactionInfos[fac.name].offerSecurityWork) {
             workerScript.log("workForFaction", () => `Faction '${fac.name}' do not need help with security work.`);
             return false;
           }
