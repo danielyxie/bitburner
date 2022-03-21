@@ -41,8 +41,8 @@ export function WorkInProgressRoot(): React.ReactElement {
       return (
         <>
           <Typography variant="h4" color="primary">
-            You have not joined {player.currentWorkFactionName || "(Faction not found)"} yet or cannot work at this time,
-            please try again if you think this should have worked
+            You have not joined {player.currentWorkFactionName || "(Faction not found)"} yet or cannot work at this
+            time, please try again if you think this should have worked
           </Typography>
           <Button onClick={() => router.toFactions()}>Back to Factions</Button>
         </>

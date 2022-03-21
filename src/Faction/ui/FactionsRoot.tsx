@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import {
-  Box,
-  Button,
-  Container,
-  Paper,
-  TableBody,
-  TableRow,
-  Typography
-} from "@mui/material";
+import { Box, Button, Container, Paper, TableBody, TableRow, Typography } from "@mui/material";
 
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
@@ -66,19 +58,18 @@ export function FactionsRoot(props: IProps): React.ReactElement {
       for (const augName of Object.keys(Augmentations)) {
         if (
           augName === AugmentationNames.NeuroFluxGovernor ||
-          augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2 ||
+          (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) ||
           Augmentations[augName].isSpecial
-        ) continue;
-        augs.push(augName)
+        )
+          continue;
+        augs.push(augName);
       }
     } else {
       augs = faction.augmentations.slice();
     }
 
-    return augs.filter(
-      (augmentation: string) => !player.hasAugmentation(augmentation)
-    ).length;
-  }
+    return augs.filter((augmentation: string) => !player.hasAugmentation(augmentation)).length;
+  };
 
   return (
     <Container disableGutters maxWidth="md" sx={{ mx: 0, mb: 10 }}>
@@ -110,7 +101,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
                   </TableCell>
                   <TableCell align="right">
                     <Box ml={1} mb={1}>
-                      <Button sx={{ width: '100%' }} onClick={() => openFactionAugPage(Factions[faction])}>
+                      <Button sx={{ width: "100%" }} onClick={() => openFactionAugPage(Factions[faction])}>
                         Augmentations Left: {getAugsLeft(Factions[faction], props.player)}
                       </Button>
                     </Box>

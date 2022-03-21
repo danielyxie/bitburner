@@ -1,4 +1,4 @@
-import { FactionNames } from '../Faction/data/FactionNames';
+import { FactionNames } from "../Faction/data/FactionNames";
 import { Fragment } from "./Fragment";
 import { ActiveFragment } from "./ActiveFragment";
 import { FragmentType } from "./FragmentType";

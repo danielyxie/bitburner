@@ -42,7 +42,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       agility: sl.agility,
       charisma: sl.charisma,
     };
-  }
+  };
 
   return {
     getNumSleeves: function (): number {
@@ -164,7 +164,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       helper.updateDynamicRam("getSleeveStats", getRamCost(player, "sleeve", "getSleeveStats"));
       checkSleeveAPIAccess("getSleeveStats");
       checkSleeveNumber("getSleeveStats", sleeveNumber);
-      return getSleeveStats(sleeveNumber)
+      return getSleeveStats(sleeveNumber);
     },
     getTask: function (asleeveNumber: any = 0): {
       task: string;

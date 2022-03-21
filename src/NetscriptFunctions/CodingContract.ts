@@ -53,7 +53,10 @@ export function NetscriptCodingContract(
       const serv = helper.getServer(hostname, "codingcontract.attempt");
       if (contract.isSolution(answer)) {
         const reward = player.gainCodingContractReward(creward, contract.getDifficulty());
-        workerScript.log("codingcontract.attempt", () => `Successfully completed Coding Contract '${filename}'. Reward: ${reward}`);
+        workerScript.log(
+          "codingcontract.attempt",
+          () => `Successfully completed Coding Contract '${filename}'. Reward: ${reward}`,
+        );
         serv.removeContract(filename);
         return returnReward ? reward : true;
       } else {
@@ -68,7 +71,8 @@ export function NetscriptCodingContract(
           workerScript.log(
             "codingcontract.attempt",
             () =>
-              `Coding Contract attempt '${filename}' failed. ${contract.getMaxNumTries() - contract.tries
+              `Coding Contract attempt '${filename}' failed. ${
+                contract.getMaxNumTries() - contract.tries
               } attempts remaining.`,
           );
         }

@@ -69,10 +69,10 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
           continue;
         }
       } else if (inQuote === ``) {
-          inQuote = `"`;
-        } else if (inQuote === `"`) {
-          inQuote = ``;
-        }
+        inQuote = `"`;
+      } else if (inQuote === `"`) {
+        inQuote = ``;
+      }
     } else if (c === "'") {
       // Single quotes, same thing as above
       if (!escaped && prevChar === " ") {
@@ -87,10 +87,10 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
           continue;
         }
       } else if (inQuote === ``) {
-          inQuote = `'`;
-        } else if (inQuote === `'`) {
-          inQuote = ``;
-        }
+        inQuote = `'`;
+      } else if (inQuote === `'`) {
+        inQuote = ``;
+      }
     } else if (c === " " && inQuote === ``) {
       const arg = command.substr(start, i - start);
 

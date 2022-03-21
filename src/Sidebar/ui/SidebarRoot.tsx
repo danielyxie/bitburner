@@ -522,7 +522,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               <ListItemIcon>
                 <Badge badgeContent={invitationsCount !== 0 ? invitationsCount : undefined} color="error">
                   <Tooltip title={!open ? "Factions" : ""}>
-                    <ContactsIcon color={![Page.Factions, Page.Faction].includes(props.page) ? "secondary" : "primary"} />
+                    <ContactsIcon
+                      color={![Page.Factions, Page.Faction].includes(props.page) ? "secondary" : "primary"}
+                    />
                   </Tooltip>
                 </Badge>
               </ListItemIcon>
@@ -570,7 +572,9 @@ export function SidebarRoot(props: IProps): React.ReactElement {
           >
             <ListItemIcon>
               <Tooltip title={!open ? "Hacknet" : ""}>
-                <AccountTreeIcon color={flashHacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"} />
+                <AccountTreeIcon
+                  color={flashHacknet ? "error" : props.page !== Page.Hacknet ? "secondary" : "primary"}
+                />
               </Tooltip>
             </ListItemIcon>
             <ListItemText>

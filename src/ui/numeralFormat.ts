@@ -16,7 +16,6 @@ import "numeral/locales/ru";
 
 import { Settings } from "../Settings/Settings";
 
-
 const extraFormats = [1e15, 1e18, 1e21, 1e24, 1e27, 1e30];
 const extraNotations = ["q", "Q", "s", "S", "o", "n"];
 const gigaMultiplier = { standard: 1e9, iec60027_2: 2 ** 30 };
@@ -113,8 +112,7 @@ class NumeralFormatter {
   }
 
   formatRAM(n: number): string {
-    if(Settings.UseIEC60027_2)
-    {
+    if (Settings.UseIEC60027_2) {
       return this.format(n * gigaMultiplier.iec60027_2, "0.00ib");
     }
     return this.format(n * gigaMultiplier.standard, "0.00b");
@@ -189,7 +187,7 @@ class NumeralFormatter {
   }
 
   parseCustomLargeNumber(str: string): number {
-    const numericRegExp = new RegExp('^(\-?\\d+\\.?\\d*)([' + extraNotations.join("") + ']?)$');
+    const numericRegExp = new RegExp("^(-?\\d+\\.?\\d*)([" + extraNotations.join("") + "]?)$");
     const match = str.match(numericRegExp);
     if (match == null) {
       return NaN;
@@ -203,14 +201,17 @@ class NumeralFormatter {
   }
 
   largestAbsoluteNumber(n1: number, n2 = 0, n3 = 0): number {
-    if(isNaN(n1)) n1=0;
-    if(isNaN(n2)) n2=0;
-    if(isNaN(n3)) n3=0;
+    if (isNaN(n1)) n1 = 0;
+    if (isNaN(n2)) n2 = 0;
+    if (isNaN(n3)) n3 = 0;
     const largestAbsolute = Math.max(Math.abs(n1), Math.abs(n2), Math.abs(n3));
-    switch(largestAbsolute) {
-      case Math.abs(n1): return n1;
-      case Math.abs(n2): return n2;
-      case Math.abs(n3): return n3;
+    switch (largestAbsolute) {
+      case Math.abs(n1):
+        return n1;
+      case Math.abs(n2):
+        return n2;
+      case Math.abs(n3):
+        return n3;
     }
     return 0;
   }
@@ -222,21 +223,29 @@ class NumeralFormatter {
     const parsed = parseFloat(s);
     const selfParsed = this.parseCustomLargeNumber(s);
     // Check for one or more NaN values
-    if (isNaN(parsed) && numeralValue === null && isNaN(selfParsed)) {    // 3x NaN
+    if (isNaN(parsed) && numeralValue === null && isNaN(selfParsed)) {
+      // 3x NaN
       return NaN;
-    } else if (isNaN(parsed) && isNaN(selfParsed)) {                      // 2x NaN
+    } else if (isNaN(parsed) && isNaN(selfParsed)) {
+      // 2x NaN
       return numeralValue;
-    } else if (numeralValue === null && isNaN(selfParsed)) {              // 2x NaN
+    } else if (numeralValue === null && isNaN(selfParsed)) {
+      // 2x NaN
       return parsed;
-    } else if (isNaN(parsed) && numeralValue === null) {                  // 2x NaN
+    } else if (isNaN(parsed) && numeralValue === null) {
+      // 2x NaN
       return selfParsed;
-    } else if (isNaN(parsed)) {                                           // 1x NaN
+    } else if (isNaN(parsed)) {
+      // 1x NaN
       return this.largestAbsoluteNumber(numeralValue, selfParsed);
-    } else if (numeralValue === null) {                                   // 1x NaN
+    } else if (numeralValue === null) {
+      // 1x NaN
       return this.largestAbsoluteNumber(parsed, selfParsed);
-    } else if (isNaN(selfParsed)) {                                       // 1x NaN
+    } else if (isNaN(selfParsed)) {
+      // 1x NaN
       return this.largestAbsoluteNumber(numeralValue, parsed);
-    } else {                                                              // no NaN
+    } else {
+      // no NaN
       return this.largestAbsoluteNumber(numeralValue, parsed, selfParsed);
     }
   }

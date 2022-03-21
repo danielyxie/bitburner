@@ -32,9 +32,8 @@ export function joinFaction(faction: Faction): void {
   if (faction.isMember) return;
   faction.isMember = true;
   Player.factions.push(faction.name);
-  const allFactions = Object.values(FactionNames).map(faction => faction as string)
-  Player.factions.sort((a, b) =>
-    allFactions.indexOf(a) - allFactions.indexOf(b));
+  const allFactions = Object.values(FactionNames).map((faction) => faction as string);
+  Player.factions.sort((a, b) => allFactions.indexOf(a) - allFactions.indexOf(b));
   const factionInfo = faction.getInfo();
 
   //Determine what factions you are banned from now that you have joined this faction
@@ -134,18 +133,18 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
     } else if (!Settings.SuppressBuyAugmentationConfirmation) {
       dialogBoxCreate(
         "You purchased " +
-        aug.name +
-        ". Its enhancements will not take " +
-        "effect until they are installed. To install your augmentations, go to the " +
-        "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
-        "augmentations will now be more expensive.",
+          aug.name +
+          ". Its enhancements will not take " +
+          "effect until they are installed. To install your augmentations, go to the " +
+          "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
+          "augmentations will now be more expensive.",
       );
     }
   } else {
     dialogBoxCreate(
       "Hmm, something went wrong when trying to purchase an Augmentation. " +
-      "Please report this to the game developer with an explanation of how to " +
-      "reproduce this.",
+        "Please report this to the game developer with an explanation of how to " +
+        "reproduce this.",
     );
   }
   return "";

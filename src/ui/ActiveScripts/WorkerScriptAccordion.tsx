@@ -67,7 +67,13 @@ export function WorkerScriptAccordion(props: IProps): React.ReactElement {
   return (
     <>
       <ListItemButton onClick={() => setOpen((old) => !old)} component={Paper}>
-        <ListItemText primary={<Typography>└ {props.workerScript.name} {JSON.stringify(props.workerScript.args)}</Typography>} />
+        <ListItemText
+          primary={
+            <Typography>
+              └ {props.workerScript.name} {JSON.stringify(props.workerScript.args)}
+            </Typography>
+          }
+        />
         {open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
       </ListItemButton>
       <Collapse in={open} timeout={0} unmountOnExit>

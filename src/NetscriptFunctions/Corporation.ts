@@ -21,7 +21,7 @@ import {
   Division as NSDivision,
   WarehouseAPI,
   OfficeAPI,
-  InvestmentOffer
+  InvestmentOffer,
 } from "../ScriptEditor/NetscriptDefinitions";
 
 import {
@@ -135,11 +135,15 @@ export function NetscriptCorporation(
 
   function getInvestmentOffer(): InvestmentOffer {
     const corporation = getCorporation();
-    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length || corporation.public)
+    if (
+      corporation.fundingRound >= CorporationConstants.FundingRoundShares.length ||
+      corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length ||
+      corporation.public
+    )
       return {
         funds: 0,
         shares: 0,
-        round: corporation.fundingRound + 1 // Make more readable
+        round: corporation.fundingRound + 1, // Make more readable
       }; // Don't throw an error here, no reason to have a second function to check if you can get investment.
     const val = corporation.determineValuation();
     const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
@@ -149,13 +153,18 @@ export function NetscriptCorporation(
     return {
       funds: funding,
       shares: investShares,
-      round: corporation.fundingRound + 1 // Make more readable
+      round: corporation.fundingRound + 1, // Make more readable
     };
   }
 
   function acceptInvestmentOffer(): boolean {
     const corporation = getCorporation();
-    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length || corporation.public) return false;
+    if (
+      corporation.fundingRound >= CorporationConstants.FundingRoundShares.length ||
+      corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length ||
+      corporation.public
+    )
+      return false;
     const val = corporation.determineValuation();
     const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
     const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
@@ -181,7 +190,6 @@ export function NetscriptCorporation(
     return true;
   }
 
-
   function getResearchCost(division: IIndustry, researchName: string): number {
     const researchTree = IndustryResearchTrees[division.type];
     if (researchTree === undefined) throw new Error(`No research tree for industry '${division.type}'`);
@@ -192,17 +200,18 @@ export function NetscriptCorporation(
   }
 
   function hasResearched(division: IIndustry, researchName: string): boolean {
-    return division.researched[researchName] === undefined ? false : division.researched[researchName] as boolean;
+    return division.researched[researchName] === undefined ? false : (division.researched[researchName] as boolean);
   }
 
   function bribe(factionName: string, amountCash: number, amountShares: number): boolean {
     if (!player.factions.includes(factionName)) throw new Error("Invalid faction name");
-    if (isNaN(amountCash) || amountCash < 0 || isNaN(amountShares) || amountShares < 0) throw new Error("Invalid value for amount field! Must be numeric, grater than 0.");
+    if (isNaN(amountCash) || amountCash < 0 || isNaN(amountShares) || amountShares < 0)
+      throw new Error("Invalid value for amount field! Must be numeric, grater than 0.");
 
     const corporation = getCorporation();
     if (corporation.funds < amountCash) return false;
     if (corporation.numShares < amountShares) return false;
-    const faction = Factions[factionName]
+    const faction = Factions[factionName];
     const info = faction.getInfo();
     if (!info.offersWork()) return false;
     if (player.hasGangWith(factionName)) return false;
@@ -328,7 +337,7 @@ export function NetscriptCorporation(
         loc: warehouse.loc,
         size: warehouse.size,
         sizeUsed: warehouse.sizeUsed,
-        smartSupplyEnabled: warehouse.smartSupplyEnabled
+        smartSupplyEnabled: warehouse.smartSupplyEnabled,
       };
     },
     getMaterial: function (adivisionName: any, acityName: any, amaterialName: any): NSMaterial {
@@ -415,7 +424,10 @@ export function NetscriptCorporation(
       const enabled = helper.boolean(aenabled);
       const warehouse = getWarehouse(divisionName, cityName);
       if (!hasUnlockUpgrade("Smart Supply"))
-        throw helper.makeRuntimeErrorMsg(`corporation.setSmartSupply`, `You have not purchased the Smart Supply upgrade!`);
+        throw helper.makeRuntimeErrorMsg(
+          `corporation.setSmartSupply`,
+          `You have not purchased the Smart Supply upgrade!`,
+        );
       SetSmartSupply(warehouse, enabled);
     },
     setSmartSupplyUseLeftovers: function (adivisionName: any, acityName: any, amaterialName: any, aenabled: any): void {
@@ -427,7 +439,10 @@ export function NetscriptCorporation(
       const warehouse = getWarehouse(divisionName, cityName);
       const material = getMaterial(divisionName, cityName, materialName);
       if (!hasUnlockUpgrade("Smart Supply"))
-        throw helper.makeRuntimeErrorMsg(`corporation.setSmartSupply`, `You have not purchased the Smart Supply upgrade!`);
+        throw helper.makeRuntimeErrorMsg(
+          `corporation.setSmartSupply`,
+          `You have not purchased the Smart Supply upgrade!`,
+        );
       SetSmartSupplyUseLeftovers(warehouse, material, enabled);
     },
     buyMaterial: function (adivisionName: any, acityName: any, amaterialName: any, aamt: any): void {
@@ -443,12 +458,13 @@ export function NetscriptCorporation(
     bulkPurchase: function (adivisionName: any, acityName: any, amaterialName: any, aamt: any): void {
       checkAccess("bulkPurchase", 7);
       const divisionName = helper.string("bulkPurchase", "divisionName", adivisionName);
-      if (!hasResearched(getDivision(adivisionName), "Bulk Purchasing")) throw new Error(`You have not researched Bulk Purchasing in ${divisionName}`)
+      if (!hasResearched(getDivision(adivisionName), "Bulk Purchasing"))
+        throw new Error(`You have not researched Bulk Purchasing in ${divisionName}`);
       const corporation = getCorporation();
       const cityName = helper.string("bulkPurchase", "cityName", acityName);
       const materialName = helper.string("bulkPurchase", "materialName", amaterialName);
       const amt = helper.number("bulkPurchase", "amt", aamt);
-      const warehouse = getWarehouse(divisionName, cityName)
+      const warehouse = getWarehouse(divisionName, cityName);
       const material = getMaterial(divisionName, cityName, materialName);
       BulkPurchase(corporation, warehouse, material, amt);
     },
@@ -483,7 +499,13 @@ export function NetscriptCorporation(
       const targetCity = helper.string("exportMaterial", "targetCity", atargetCity);
       const materialName = helper.string("exportMaterial", "materialName", amaterialName);
       const amt = helper.string("exportMaterial", "amt", aamt);
-      ExportMaterial(targetDivision, targetCity, getMaterial(sourceDivision, sourceCity, materialName), amt + "", getDivision(targetDivision));
+      ExportMaterial(
+        targetDivision,
+        targetCity,
+        getMaterial(sourceDivision, sourceCity, materialName),
+        amt + "",
+        getDivision(targetDivision),
+      );
     },
     cancelExportMaterial: function (
       asourceDivision: any,
@@ -509,7 +531,10 @@ export function NetscriptCorporation(
       const materialName = helper.string("setMaterialMarketTA1", "materialName", amaterialName);
       const on = helper.boolean(aon);
       if (!getDivision(divisionName).hasResearch("Market-TA.I"))
-        throw helper.makeRuntimeErrorMsg(`corporation.setMaterialMarketTA1`, `You have not researched MarketTA.I for division: ${divisionName}`);
+        throw helper.makeRuntimeErrorMsg(
+          `corporation.setMaterialMarketTA1`,
+          `You have not researched MarketTA.I for division: ${divisionName}`,
+        );
       SetMaterialMarketTA1(getMaterial(divisionName, cityName, materialName), on);
     },
     setMaterialMarketTA2: function (adivisionName: any, acityName: any, amaterialName: any, aon: any): void {
@@ -519,7 +544,10 @@ export function NetscriptCorporation(
       const materialName = helper.string("setMaterialMarketTA2", "materialName", amaterialName);
       const on = helper.boolean(aon);
       if (!getDivision(divisionName).hasResearch("Market-TA.II"))
-        throw helper.makeRuntimeErrorMsg(`corporation.setMaterialMarketTA2`, `You have not researched MarketTA.II for division: ${divisionName}`);
+        throw helper.makeRuntimeErrorMsg(
+          `corporation.setMaterialMarketTA2`,
+          `You have not researched MarketTA.II for division: ${divisionName}`,
+        );
       SetMaterialMarketTA2(getMaterial(divisionName, cityName, materialName), on);
     },
     setProductMarketTA1: function (adivisionName: any, aproductName: any, aon: any): void {
@@ -528,7 +556,10 @@ export function NetscriptCorporation(
       const productName = helper.string("setProductMarketTA1", "productName", aproductName);
       const on = helper.boolean(aon);
       if (!getDivision(divisionName).hasResearch("Market-TA.I"))
-        throw helper.makeRuntimeErrorMsg(`corporation.setProductMarketTA1`, `You have not researched MarketTA.I for division: ${divisionName}`);
+        throw helper.makeRuntimeErrorMsg(
+          `corporation.setProductMarketTA1`,
+          `You have not researched MarketTA.I for division: ${divisionName}`,
+        );
       SetProductMarketTA1(getProduct(divisionName, productName), on);
     },
     setProductMarketTA2: function (adivisionName: any, aproductName: any, aon: any): void {
@@ -537,7 +568,10 @@ export function NetscriptCorporation(
       const productName = helper.string("setProductMarketTA2", "productName", aproductName);
       const on = helper.boolean(aon);
       if (!getDivision(divisionName).hasResearch("Market-TA.II"))
-        throw helper.makeRuntimeErrorMsg(`corporation.setProductMarketTA2`, `You have not researched MarketTA.II for division: ${divisionName}`);
+        throw helper.makeRuntimeErrorMsg(
+          `corporation.setProductMarketTA2`,
+          `You have not researched MarketTA.II for division: ${divisionName}`,
+        );
       SetProductMarketTA2(getProduct(divisionName, productName), on);
     },
   };
@@ -554,7 +588,7 @@ export function NetscriptCorporation(
       checkAccess("getHireAdVertCount", 8);
       const divisionName = helper.string("getHireAdVertCount", "divisionName", adivisionName);
       const division = getDivision(divisionName);
-      return division.upgrades[1]
+      return division.upgrades[1];
     },
     getResearchCost: function (adivisionName: any, aresearchName: any): number {
       checkAccess("getResearchCost", 8);
@@ -631,7 +665,8 @@ export function NetscriptCorporation(
       const divisionName = helper.string("throwParty", "divisionName", adivisionName);
       const cityName = helper.string("throwParty", "cityName", acityName);
       const costPerEmployee = helper.number("throwParty", "costPerEmployee", acostPerEmployee);
-      if (costPerEmployee < 0) throw new Error("Invalid value for Cost Per Employee field! Must be numeric and greater than 0");
+      if (costPerEmployee < 0)
+        throw new Error("Invalid value for Cost Per Employee field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
       const corporation = getCorporation();
       return netscriptDelay(
@@ -750,7 +785,8 @@ export function NetscriptCorporation(
     issueDividends: function (apercent: any): void {
       checkAccess("issueDividends");
       const percent = helper.number("issueDividends", "percent", apercent);
-      if (percent < 0 || percent > 100) throw new Error("Invalid value for percent field! Must be numeric, greater than 0, and less than 100");
+      if (percent < 0 || percent > 100)
+        throw new Error("Invalid value for percent field! Must be numeric, greater than 0, and less than 100");
       const corporation = getCorporation();
       if (!corporation.public)
         throw helper.makeRuntimeErrorMsg(`corporation.issueDividends`, `Your company has not gone public!`);
@@ -849,6 +885,6 @@ export function NetscriptCorporation(
     getBonusTime: function (): number {
       checkAccess("getBonusTime");
       return Math.round(getCorporation().storedCycles / 5) * 1000;
-    }
+    },
   };
 }

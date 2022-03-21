@@ -1,5 +1,5 @@
-import { FactionNames } from '../Faction/data/FactionNames';
-import { GangConstants } from '../Gang/data/Constants';
+import { FactionNames } from "../Faction/data/FactionNames";
+import { GangConstants } from "../Gang/data/Constants";
 import { INetscriptHelper } from "./INetscriptHelper";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { getRamCost } from "../Netscript/RamCostGenerator";
@@ -193,9 +193,10 @@ export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helpe
       if (!gang.getAllTaskNames().includes(taskName)) {
         workerScript.log(
           "gang.setMemberTask",
-          () => `Failed to assign Gang Member '${memberName}' to Invalid task '${taskName}'. '${memberName}' is now Unassigned`,
+          () =>
+            `Failed to assign Gang Member '${memberName}' to Invalid task '${taskName}'. '${memberName}' is now Unassigned`,
         );
-        return member.assignToTask('Unassigned');
+        return member.assignToTask("Unassigned");
       }
       const success = member.assignToTask(taskName);
       if (success) {

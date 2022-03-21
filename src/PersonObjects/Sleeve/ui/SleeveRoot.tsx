@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import {
-  Box,
-  Typography,
-  Button,
-  Container
-} from "@mui/material";
+import { Box, Typography, Button, Container } from "@mui/material";
 
 import { use } from "../../../ui/Context";
 
@@ -38,14 +33,16 @@ export function SleeveRoot(): React.ReactElement {
           <br />
           <br />
         </Typography>
-
       </Container>
 
       <Button onClick={() => setFAQOpen(true)}>FAQ</Button>
-      <Button href="https://bitburner.readthedocs.io/en/latest/advancedgameplay/sleeves.html#duplicate-sleeves" target="_blank">
+      <Button
+        href="https://bitburner.readthedocs.io/en/latest/advancedgameplay/sleeves.html#duplicate-sleeves"
+        target="_blank"
+      >
         Wiki Documentation
       </Button>
-      <Box display="grid" sx={{ gridTemplateColumns: 'repeat(2, 1fr)', mt: 1 }}>
+      <Box display="grid" sx={{ gridTemplateColumns: "repeat(2, 1fr)", mt: 1 }}>
         {player.sleeves.map((sleeve, i) => (
           <SleeveElem key={i} rerender={rerender} sleeve={sleeve} />
         ))}

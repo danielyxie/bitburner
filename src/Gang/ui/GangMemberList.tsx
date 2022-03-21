@@ -20,7 +20,7 @@ export function GangMemberList(): React.ReactElement {
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setFilter(event.target.value.toLowerCase());
-  }
+  };
 
   const members = gang.members
     .filter((member) => member && member.name.toLowerCase().includes(filter))
@@ -38,23 +38,18 @@ export function GangMemberList(): React.ReactElement {
         autoFocus
         InputProps={{
           startAdornment: <SearchIcon />,
-          spellCheck: false
+          spellCheck: false,
         }}
         placeholder="Filter by member name"
-        sx={{ m: 1, width: '15%' }}
+        sx={{ m: 1, width: "15%" }}
       />
       <OptionSwitch
         checked={ascendOnly}
-        onChange={(newValue) => (setAscendOnly(newValue))}
+        onChange={(newValue) => setAscendOnly(newValue)}
         text="Show only ascendable"
-        tooltip={
-          <>
-            Filter the members list by whether or not the member
-            can be ascended.
-          </>
-        }
+        tooltip={<>Filter the members list by whether or not the member can be ascended.</>}
       />
-      <Box display="grid" sx={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+      <Box display="grid" sx={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
         {members.map((member: GangMember) => (
           <GangMemberCard key={member.name} member={member} />
         ))}

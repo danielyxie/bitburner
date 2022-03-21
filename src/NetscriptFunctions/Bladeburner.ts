@@ -365,7 +365,7 @@ export function NetscriptBladeburner(
       checkBladeburnerAccess("getBonusTime");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-      return (Math.round(bladeburner.storedCycles / 5))*1000;
+      return Math.round(bladeburner.storedCycles / 5) * 1000;
     },
   };
 }

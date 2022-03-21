@@ -4,28 +4,28 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version (format: x.y.z)'
+        description: "Version (format: x.y.z)"
         required: true
       versionNumber:
-        description: 'Version Number (for saves migration)'
+        description: "Version Number (for saves migration)"
         required: true
       changelog:
-        description: 'Changelog (url that points to RAW markdown)'
-        default: ''
+        description: "Changelog (url that points to RAW markdown)"
+        default: ""
       buildApp:
-        description: 'Include Application Build'
+        description: "Include Application Build"
         type: boolean
-        default: 'true'
+        default: "true"
         required: true
       buildDoc:
-        description: 'Include Documentation Build'
+        description: "Include Documentation Build"
         type: boolean
-        default: 'true'
+        default: "true"
         required: true
       prepareRelease:
-        description: 'Prepare Draft Release'
+        description: "Prepare Draft Release"
         type: boolean
-        default: 'true'
+        default: "true"
         required: true
 
 jobs:
@@ -46,7 +46,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16.13.1
-          cache: 'npm'
+          cache: "npm"
       - name: Install NPM dependencies for version updater
         working-directory: ./tools/bump-version
         run: npm ci
