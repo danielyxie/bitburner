@@ -620,7 +620,6 @@ export class Terminal implements ITerminal {
       const n00dlesServ = GetServer("n00dles");
       if (n00dlesServ == null) {
         throw new Error("Could not get n00dles server");
-        return;
       }
       switch (ITutorial.currStep) {
         case iTutorialSteps.TerminalHelp:

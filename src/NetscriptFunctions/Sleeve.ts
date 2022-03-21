@@ -30,6 +30,20 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     }
   };
 
+  const getSleeveStats = function (sleeveNumber: any): any {
+    const sl = player.sleeves[sleeveNumber];
+    return {
+      shock: 100 - sl.shock,
+      sync: sl.sync,
+      hacking: sl.hacking,
+      strength: sl.strength,
+      defense: sl.defense,
+      dexterity: sl.dexterity,
+      agility: sl.agility,
+      charisma: sl.charisma,
+    };
+  }
+
   return {
     getNumSleeves: function (): number {
       helper.updateDynamicRam("getNumSleeves", getRamCost(player, "sleeve", "getNumSleeves"));
@@ -150,18 +164,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       helper.updateDynamicRam("getSleeveStats", getRamCost(player, "sleeve", "getSleeveStats"));
       checkSleeveAPIAccess("getSleeveStats");
       checkSleeveNumber("getSleeveStats", sleeveNumber);
-
-      const sl = player.sleeves[sleeveNumber];
-      return {
-        shock: 100 - sl.shock,
-        sync: sl.sync,
-        hacking: sl.hacking,
-        strength: sl.strength,
-        defense: sl.defense,
-        dexterity: sl.dexterity,
-        agility: sl.agility,
-        charisma: sl.charisma,
-      };
+      return getSleeveStats(sleeveNumber)
     },
     getTask: function (asleeveNumber: any = 0): {
       task: string;
@@ -289,7 +292,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       checkSleeveAPIAccess("purchaseSleeveAug");
       checkSleeveNumber("purchaseSleeveAug", sleeveNumber);
 
-      if (player.sleeves[sleeveNumber].shock > 0){
+      if (getSleeveStats(sleeveNumber).shock > 0) {
         throw helper.makeRuntimeErrorMsg("sleeve.purchaseSleeveAug", `Sleeve shock too high: Sleeve ${sleeveNumber}`);
       }
 

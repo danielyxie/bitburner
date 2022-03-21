@@ -144,7 +144,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const safeGetServer = function (hostname: string, callingFnName: string): BaseServer {
     const server = GetServer(hostname);
     if (server == null) {
-      throw makeRuntimeErrorMsg(callingFnName, `Invalid hostname or IP: ${hostname}`);
+      throw makeRuntimeErrorMsg(callingFnName, `Invalid hostname: ${hostname}`);
     }
     return server;
   };
@@ -538,6 +538,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
 
       const percentHacked = calculatePercentMoneyHacked(server, Player);
+
+      if (percentHacked === 0 || server.moneyAvailable === 0) {
+        return 0; // To prevent returning infinity below
+      }
 
       return hackAmount / Math.floor(server.moneyAvailable * percentHacked);
     },
