@@ -140,14 +140,13 @@ export const GraftingRoot = (): React.ReactElement => {
         </Paper>
 
         <Typography>
-          Augmenting causes significant physical and psychological changes to the affected
-          individual, and the best way for the body to deal with these effects is to undergo
-          a full shutdown process.
-          <br />
-          Grafting Augmentations to a semi-conscious host is extremely experimental and dangerous.
+          When installed on an unconscious individual, Augmentations are scanned by the body
+          on awakening, eliminating hidden malware. However, grafted Augmentations do not
+          provide this security measure.
           <br /><br />
-          Scientists don't fully understand the consequences, but some have hypothesized
-          a buildup of irregularities that impair the user...
+          Individuals who tested Augmentation grafting have reported symptoms of an unknown
+          virus, which they've dubbed "Entropy". This virus seems to grow more potent with
+          each grafted Augmentation...
         </Typography>
 
       </Box>
