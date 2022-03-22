@@ -84,6 +84,12 @@ export function buyDarkwebItem(itemName: string): void {
   // Add the newly bought, full .exe
   Player.getHomeComputer().programs.push(item.program);
 
+  // Cancel if the program is in progress of writing
+  if (Player.createProgramName === item.program) {
+    Player.isWorking = false;
+    Player.resetWorkStatus();
+  }
+
   Terminal.print(
     "You have purchased the " + item.program + " program. The new program can be found on your home computer.",
   );
