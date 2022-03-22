@@ -199,8 +199,8 @@ function Work(): React.ReactElement {
       header = <>Crafting an Augmentation</>;
       innerText = (
         <>
-          <strong>{convertTimeMsToTimeElapsedString(player.timeNeededToCompleteWork - player.timeWorkedCraftAugmentation)}</strong>
-          {" "}remaining
+          <strong>{((player.timeWorkedCraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}%</strong>
+          {" "}done
         </>
       );
   }

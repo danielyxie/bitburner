@@ -41,6 +41,7 @@ export const CONSTANTS: {
   IntelligenceInfiltrationWeight: number;
   IntelligenceCrimeBaseExpGain: number;
   IntelligenceProgramBaseExpGain: number;
+  IntelligenceCraftBaseExpGain: number;
   IntelligenceTerminalHackBaseExpGain: number;
   IntelligenceSingFnBaseExpGain: number;
   IntelligenceClassBaseExpGain: number;
@@ -110,7 +111,7 @@ export const CONSTANTS: {
   CodingContractBaseCompanyRepGain: number;
   CodingContractBaseMoneyGain: number;
   AugmentationCraftingCostMult: number;
-  AugmentationCraftingTimeMult: number;
+  AugmentationCraftingTimeBase: number;
   EntropyEffect: number;
   TotalNumBitNodes: number;
   LatestUpdate: string;
@@ -184,6 +185,7 @@ export const CONSTANTS: {
   IntelligenceInfiltrationWeight: 0.1, // Weight for how much int affects infiltration success rates
   IntelligenceCrimeBaseExpGain: 0.05,
   IntelligenceProgramBaseExpGain: 0.1, // Program required hack level divided by this to determine int exp gain
+  IntelligenceCraftBaseExpGain: 0.05,
   IntelligenceTerminalHackBaseExpGain: 200, // Hacking exp divided by this to determine int exp gain
   IntelligenceSingFnBaseExpGain: 1.5,
   IntelligenceClassBaseExpGain: 0.01,
@@ -277,7 +279,7 @@ export const CONSTANTS: {
   // Augmentation crafting multipliers
   // TODO: Get these right
   AugmentationCraftingCostMult: 1.2,
-  AugmentationCraftingTimeMult: 0.01,
+  AugmentationCraftingTimeBase: 3600000,
 
   EntropyEffect: 0.99,
 

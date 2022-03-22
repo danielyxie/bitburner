@@ -1,3 +1,5 @@
+import { sum } from "lodash";
+
 import { Augmentation } from "../../Augmentation/Augmentation";
 import { CONSTANTS } from "../../Constants";
 
@@ -20,7 +22,10 @@ export class CraftableAugmentation {
   }
 
   get time(): number {
-    // CONSTANTS.AugmentationCraftingTimeMult
-    return 15000;
+    // Time = 1 hour * log_2(sum(aug multipliers) || 1) + 30 minutes
+    const antiLog = Math.max(sum(Object.values(this.augmentation.mults)), 1);
+
+    const mult = Math.log2(antiLog);
+    return CONSTANTS.AugmentationCraftingTimeBase * mult + CONSTANTS.MillisecondsPerHalfHour;
   }
 }

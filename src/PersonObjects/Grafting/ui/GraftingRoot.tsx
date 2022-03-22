@@ -108,7 +108,11 @@ export const GraftingRoot = (): React.ReactElement => {
               }
             />
             <Typography color={Settings.theme.info}>
-              <b>Time to Craft:</b> {convertTimeMsToTimeElapsedString(CraftableAugmentations[selectedAug].time)}
+              <b>Time to Craft:</b>{" "}
+              {convertTimeMsToTimeElapsedString(
+                CraftableAugmentations[selectedAug].time / (1 + (player.getIntelligenceBonus(3) - 1) / 3),
+              )}
+              {/* Use formula so the displayed creation time is accurate to player bonus */}
             </Typography>
             <Typography sx={{ maxHeight: 305, overflowY: "scroll" }}>
               {(() => {

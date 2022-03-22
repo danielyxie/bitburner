@@ -1354,8 +1354,7 @@ export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean
     focusBonus = this.focus ? 1 : CONSTANTS.BaseFocusBonus;
   }
 
-  // TODO: formula logic here (focus bonus and stuff)
-  let skillMult = 1;
+  let skillMult = 1 + (this.getIntelligenceBonus(3) - 1) / 3;
   skillMult *= focusBonus;
 
   this.timeWorked += CONSTANTS._idleSpeed * numCycles;
@@ -1380,7 +1379,11 @@ export function finishCraftAugmentationWork(this: IPlayer, cancelled: boolean): 
     dialogBoxCreate(`You cancelled the crafting of ${augName}.<br>Your money was not returned to you.`)
   }
 
-  // TODO: intelligence EXP stuff here later
+  // Intelligence gain
+  if (!cancelled) {
+    this.gainIntelligenceExp((CONSTANTS.IntelligenceCraftBaseExpGain * this.timeWorked) / 10000);
+  }
+
   this.isWorking = false;
   this.resetWorkStatus();
   return `Crafting of ${augName} has ended.`
