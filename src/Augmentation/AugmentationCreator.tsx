@@ -97,8 +97,8 @@ function getRandomBonus(): any {
 export const infiltratorsAugmentations = [
   new Augmentation({
     name: AugmentationNames.BagOfSand,
-    repCost: 100,
-    moneyCost: 1e9,
+    repCost: 1e2,
+    moneyCost: 1e6,
     info:
       "You watched a bittube video about sword fighting, " +
       "it suggested the best way to win a sword fight was to play dirty " +
@@ -110,8 +110,8 @@ export const infiltratorsAugmentations = [
   }),
   new Augmentation({
     name: AugmentationNames.IntellisenseModule,
-    repCost: 100,
-    moneyCost: 1e9,
+    repCost: 1e2,
+    moneyCost: 1e6,
     info:
       "A brain implant with AI power that focuses in auto linting and intellisense, which " +
       "provides the ability to perform code completion better than any existing " +
@@ -121,8 +121,8 @@ export const infiltratorsAugmentations = [
   }),
   new Augmentation({
     name: AugmentationNames.ReverseDictionary,
-    repCost: 100,
-    moneyCost: 1e9,
+    repCost: 1e2,
+    moneyCost: 1e6,
     info:
       "An ancient dictionary with a thick layer of dust it looks like a different language, " +
       "as you examine it further you realise that its actually just a normal dictionary but the words are " +
@@ -132,8 +132,8 @@ export const infiltratorsAugmentations = [
   }),
   new Augmentation({
     name: AugmentationNames.AmuletOfPersuasian,
-    repCost: 100,
-    moneyCost: 1e9,
+    repCost: 1e2,
+    moneyCost: 1e6,
     info:
       "A fancy looking amulet that looks like something an Egyptian goddess would wear, " +
       "you hear faint whispers that are trying to convince you to do things you wouldn't normally do, " +
@@ -143,8 +143,8 @@ export const infiltratorsAugmentations = [
   }),
   new Augmentation({
     name: AugmentationNames.LameSharkRepository,
-    repCost: 100,
-    moneyCost: 1e9,
+    repCost: 1e2,
+    moneyCost: 1e6,
     info:
       "You stumble across an old opensource repository for a weird defunct version of LameShark, " +
       "upon studying the source code it seems to just have a bunch of arrow key cheat codes. ",
@@ -153,8 +153,8 @@ export const infiltratorsAugmentations = [
   }),
   new Augmentation({
     name: AugmentationNames.CyberDecoder,
-    repCost: 100,
-    moneyCost: 1e9,
+    repCost: 1e2,
+    moneyCost: 1e6,
     info:
       "A cool looking do hickey that oddly resembles Keanu Reeves face, " +
       "it has a usb cable that looks like it plugs into something.",
@@ -163,8 +163,8 @@ export const infiltratorsAugmentations = [
   }),
   new Augmentation({
     name: AugmentationNames.MineDetector,
-    repCost: 100,
-    moneyCost: 1e9,
+    repCost: 1e2,
+    moneyCost: 1e6,
     info:
       "You stumble across an old mine detector at an army surplus store, " +
       "on the side is inscribed 'X(' i wonder what happened to the original owner, " +
@@ -179,8 +179,8 @@ export const infiltratorsAugmentations = [
   }),
   new Augmentation({
     name: AugmentationNames.WireCuttingManual,
-    repCost: 100,
-    moneyCost: 1e9,
+    repCost: 1e2,
+    moneyCost: 1e6,
     info:
       "You found an old wire cutting for dummies book in the local library, " +
       "how hard can it be to cut wires, right?",

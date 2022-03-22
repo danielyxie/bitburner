@@ -55,10 +55,14 @@ function initAugmentations(): void {
   Player.reapplyAllAugmentations();
 }
 
+function getBaseAugmentationPriceMultiplier(): number {
+  return CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
+}
+export function getGenericAugmentationPriceMultiplier(): number {
+  return Math.pow(getBaseAugmentationPriceMultiplier(), Player.queuedAugmentations.length);
+}
+
 export function updateAugmentationCosts(): void {
-  const purchasedOrQueuedInfiltratorAugmentationCount = infiltratorsAugmentations.filter((augmentation) =>
-    Player.hasAugmentation(augmentation.name),
-  ).length;
   for (const name of Object.keys(Augmentations)) {
     if (Augmentations.hasOwnProperty(name)) {
       const augmentationToUpdate = Augmentations[name];
@@ -70,19 +74,15 @@ export function updateAugmentationCosts(): void {
         augmentationToUpdate.baseCost *= multiplier * BitNodeMultipliers.AugmentationMoneyCost;
 
         for (let i = 0; i < Player.queuedAugmentations.length - 1; ++i) {
-          augmentationToUpdate.baseCost *= CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
+          augmentationToUpdate.baseCost *= getBaseAugmentationPriceMultiplier();
         }
       } else if (augmentationToUpdate.factions.includes(FactionNames.Infiltrators)) {
-        augmentationToUpdate.baseCost = Math.pow(
-          augmentationToUpdate.baseCost,
-          purchasedOrQueuedInfiltratorAugmentationCount,
-        );
-        augmentationToUpdate.baseRepRequirement *= purchasedOrQueuedInfiltratorAugmentationCount;
+        const infiltratorMultiplier =
+          infiltratorsAugmentations.filter((augmentation) => Player.hasAugmentation(augmentation.name)).length + 1;
+        augmentationToUpdate.baseCost = Math.pow(augmentationToUpdate.baseCost * 1000, infiltratorMultiplier);
+        augmentationToUpdate.baseRepRequirement *= infiltratorMultiplier;
       } else {
-        augmentationToUpdate.baseCost *= Math.pow(
-          CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]],
-          Player.queuedAugmentations.length,
-        );
+        augmentationToUpdate.baseCost *= getGenericAugmentationPriceMultiplier();
       }
     }
   }

@@ -239,9 +239,9 @@ export const AugmentationNames: {
   ReverseDictionary: "Reverse Dictionary",
   AmuletOfPersuasian: "Amulet of Persuasian",
   LameSharkRepository: "Lame Shark Repository",
-  CyberDecoder: "CyberDecoder",
-  MineDetector: "MineDetector",
-  WireCuttingManual: "WireCuttingManual",
+  CyberDecoder: "Cyber Decoder",
+  MineDetector: "Mine Detector",
+  WireCuttingManual: "Wire Cutting Manual",
 
   //Wasteland Augs
   //PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System

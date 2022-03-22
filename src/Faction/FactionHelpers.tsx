@@ -111,19 +111,6 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
 
     Player.loseMoney(aug.baseCost * factionInfo.augmentationPriceMult, "augmentations");
 
-    // If you just purchased Neuroflux Governor, recalculate the cost
-    if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-      let nextLevel = getNextNeuroFluxLevel();
-      --nextLevel;
-      const mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-      aug.baseRepRequirement = 500 * mult * BitNodeMultipliers.AugmentationRepCost;
-      aug.baseCost = 750e3 * mult * BitNodeMultipliers.AugmentationMoneyCost;
-
-      for (let i = 0; i < Player.queuedAugmentations.length - 1; ++i) {
-        aug.baseCost *= CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
-      }
-    }
-
     updateAugmentationCosts();
 
     if (sing) {
