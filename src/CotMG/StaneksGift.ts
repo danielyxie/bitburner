@@ -19,14 +19,14 @@ export class StaneksGift implements IStaneksGift {
   fragments: ActiveFragment[] = [];
 
   baseSize(): number {
-    return Math.min(StanekConstants.BaseSize + BitNodeMultipliers.StaneksGiftExtraSize + Player.sourceFileLvl(13), StanekConstants.MaxSize);
+    return StanekConstants.BaseSize + BitNodeMultipliers.StaneksGiftExtraSize + Player.sourceFileLvl(13)
   }
 
   width(): number {
-    return Math.floor(this.baseSize() / 2 + 1);
+    return Math.min(Math.floor(this.baseSize() / 2 + 1),StanekConstants.MaxSize);
   }
   height(): number {
-    return Math.floor(this.baseSize() / 2 + 0.6);
+    return Math.min(Math.floor(this.baseSize() / 2 + 0.6),StanekConstants.MaxSize);
   }
 
   charge(player: IPlayer, af: ActiveFragment, threads: number): void {
