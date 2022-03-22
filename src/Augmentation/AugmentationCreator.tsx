@@ -1,17 +1,10 @@
 import { Augmentation, IConstructorParams } from "./Augmentation";
-import { Augmentations } from "./Augmentations";
 import { AugmentationNames } from "./data/AugmentationNames";
-
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { CONSTANTS } from "../Constants";
 import { Player } from "../Player";
 import { Programs } from "../Programs/Programs";
-
 import { WHRNG } from "../Casino/RNG";
-
 import React from "react";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { augmentationExists } from "./AugmentationHelpers";
 
 function getRandomBonus(): any {
   const bonuses = [
