@@ -4,7 +4,7 @@
  */
 import React, { useState } from "react";
 
-import { getNextNeurofluxLevel, hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
+import { hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
 import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
 import { Augmentations } from "../../Augmentation/Augmentations";
@@ -22,6 +22,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 import { TableCell } from "../../ui/React/Table";
 import TableRow from "@mui/material/TableRow";
+import { getNextNeuroFluxLevel } from "../../Augmentation/AugmentationCreator";
 
 interface IReqProps {
   augName: string;
@@ -96,7 +97,7 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
   // Determine button txt
   let btnTxt = aug.name;
   if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-    btnTxt += ` - Level ${getNextNeurofluxLevel()}`;
+    btnTxt += ` - Level ${getNextNeuroFluxLevel()}`;
   }
 
   let tooltip = <></>;

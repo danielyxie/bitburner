@@ -19,7 +19,8 @@ import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";
 import { FactionNames } from "./data/FactionNames";
-import { infiltratorsAugmentations } from "../Augmentation/AugmentationHelpers";
+import { updateAugmentationCosts } from "../Augmentation/AugmentationHelpers";
+import { getNextNeuroFluxLevel } from "../Augmentation/AugmentationCreator";
 
 export function inviteToFaction(faction: Faction): void {
   Player.receiveInvite(faction.name);
@@ -33,9 +34,8 @@ export function joinFaction(faction: Faction): void {
   if (faction.isMember) return;
   faction.isMember = true;
   Player.factions.push(faction.name);
-  const allFactions = Object.values(FactionNames).map(faction => faction as string)
-  Player.factions.sort((a, b) =>
-    allFactions.indexOf(a) - allFactions.indexOf(b));
+  const allFactions = Object.values(FactionNames).map((faction) => faction as string);
+  Player.factions.sort((a, b) => allFactions.indexOf(a) - allFactions.indexOf(b));
   const factionInfo = faction.getInfo();
 
   //Determine what factions you are banned from now that you have joined this faction
@@ -105,7 +105,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
   } else if (aug.baseCost === 0 || Player.money >= aug.baseCost * factionInfo.augmentationPriceMult) {
     const queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-      queuedAugmentation.level = getNextNeurofluxLevel();
+      queuedAugmentation.level = getNextNeuroFluxLevel();
     }
     Player.queuedAugmentations.push(queuedAugmentation);
 
@@ -113,7 +113,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
 
     // If you just purchased Neuroflux Governor, recalculate the cost
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-      let nextLevel = getNextNeurofluxLevel();
+      let nextLevel = getNextNeuroFluxLevel();
       --nextLevel;
       const mult = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
       aug.baseRepRequirement = 500 * mult * BitNodeMultipliers.AugmentationRepCost;
@@ -124,61 +124,28 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
       }
     }
 
-    // If you just purchased an infiltrator aug, recalculate cost
-    if (infiltratorsAugmentations.map(augmentation => augmentation.name).includes(aug.name)) {
-      const unpurchasedInfiltrationAugs = infiltratorsAugmentations.filter(augmentation => Player.hasAugmentation(augmentation.name, false))
-      const purchasedInfiltrationAugsCount = infiltratorsAugmentations.length - unpurchasedInfiltrationAugs.length
-      unpurchasedInfiltrationAugs
-        .map(augmentation => {
-          augmentation.baseRepRequirement = augmentation.startingCost * purchasedInfiltrationAugsCount
-          augmentation.baseCost = augmentation.startingRepRequirement ^ purchasedInfiltrationAugsCount
-        })
-    }
-
-    for (const name of Object.keys(Augmentations)) {
-      if (Augmentations.hasOwnProperty(name)) {
-        Augmentations[name].baseCost *= CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
-      }
-    }
+    updateAugmentationCosts();
 
     if (sing) {
       return "You purchased " + aug.name;
     } else if (!Settings.SuppressBuyAugmentationConfirmation) {
       dialogBoxCreate(
         "You purchased " +
-        aug.name +
-        ". Its enhancements will not take " +
-        "effect until they are installed. To install your augmentations, go to the " +
-        "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
-        "augmentations will now be more expensive.",
+          aug.name +
+          ". Its enhancements will not take " +
+          "effect until they are installed. To install your augmentations, go to the " +
+          "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
+          "augmentations will now be more expensive.",
       );
     }
   } else {
     dialogBoxCreate(
       "Hmm, something went wrong when trying to purchase an Augmentation. " +
-      "Please report this to the game developer with an explanation of how to " +
-      "reproduce this.",
+        "Please report this to the game developer with an explanation of how to " +
+        "reproduce this.",
     );
   }
   return "";
-}
-
-export function getNextNeurofluxLevel(): number {
-  // Get current Neuroflux level based on Player's augmentations
-  let currLevel = 0;
-  for (let i = 0; i < Player.augmentations.length; ++i) {
-    if (Player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
-      currLevel = Player.augmentations[i].level;
-    }
-  }
-
-  // Account for purchased but uninstalled Augmentations
-  for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
-    if (Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
-      ++currLevel;
-    }
-  }
-  return currLevel + 1;
 }
 
 export function processPassiveFactionRepGain(numCycles: number): void {
