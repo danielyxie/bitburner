@@ -4,7 +4,6 @@ import { BladeburnerConstants } from "../data/Constants";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { IBladeburner } from "../IBladeburner";
 import Typography from "@mui/material/Typography";
-import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 interface IProps {
   bladeburner: IBladeburner;
 }
