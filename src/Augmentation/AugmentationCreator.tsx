@@ -103,7 +103,9 @@ export const infiltratorsAugmentations = [
       "You watched a bittube video about sword fighting, " +
       "it suggested the best way to win a sword fight was to play dirty " +
       "so you filled a bag full of sand from outside your house.",
-    stats: <>This augmentation makes the Slash minigame easier buy extending the time you can slash.</>,
+    stats: (
+      <>This augmentation makes the Slash minigame easier by showing you via an indictor when the slash in coming.</>
+    ),
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
@@ -111,10 +113,10 @@ export const infiltratorsAugmentations = [
     repCost: 100,
     moneyCost: 1e9,
     info:
-      "A brain implant with AI power that focuses in auto linting and intelisense, which " +
-      "provides the ability to perform code completion better than any exisiting " +
-      "IDE envronment on the market to date.",
-    stats: <>This augmentation makes the Bracket minigame easier buy letting you get a few incorrect guesses.</>,
+      "A brain implant with AI power that focuses in auto linting and intellisense, which " +
+      "provides the ability to perform code completion better than any existing " +
+      "IDE environment on the market to date.",
+    stats: <>This augmentation makes the Bracket minigame easier by removing all '[' ']'.</>,
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
@@ -122,8 +124,8 @@ export const infiltratorsAugmentations = [
     repCost: 100,
     moneyCost: 1e9,
     info:
-      "An ancient dictionary with a thick layer of dust it looks like a differnet language, " +
-      "as you examine it further you relise that its actually just a normal dictonary but the words are " +
+      "An ancient dictionary with a thick layer of dust it looks like a different language, " +
+      "as you examine it further you realise that its actually just a normal dictionary but the words are " +
       "written backwards if only you could take the book home, you think it would become like a second language.",
     stats: <>This augmentation makes the Backwards minigame easier by making the words no longer backwards.</>,
     factions: [FactionNames.Infiltrators],
@@ -134,9 +136,9 @@ export const infiltratorsAugmentations = [
     moneyCost: 1e9,
     info:
       "A fancy looking amulet that looks like something an Egyptian goddess would wear, " +
-      "you hear faint whispers that are trying to convince you to do things you wouldnt normaly do, " +
-      "apon touching it the voices stop how strange.",
-    stats: <>This augmentation makes the Bribe minigame easier by TODO.</>,
+      "you hear faint whispers that are trying to convince you to do things you wouldn't normally do, " +
+      "upon touching it the voices stop how strange.",
+    stats: <>This augmentation makes the Bribe minigame easier by indicating the incorrect paths.</>,
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
@@ -144,13 +146,9 @@ export const infiltratorsAugmentations = [
     repCost: 100,
     moneyCost: 1e9,
     info:
-      "You stumble accross an old opensource repository for a weird defunct version of LameShark, " +
-      "apon studing the source code it seems to just have a bunch of arrow key cheat codes. ",
-    stats: (
-      <>
-        This augmentation makes the Cheat Code minigame easier by letting you see the full sequence before entering it.
-      </>
-    ),
+      "You stumble across an old opensource repository for a weird defunct version of LameShark, " +
+      "upon studying the source code it seems to just have a bunch of arrow key cheat codes. ",
+    stats: <>This augmentation makes the Cheat Code minigame easier by allowing the opposite character.</>,
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
@@ -158,9 +156,9 @@ export const infiltratorsAugmentations = [
     repCost: 100,
     moneyCost: 1e9,
     info:
-      "A cool looking do hickey that odly resembles Keanu Reeves face, " +
+      "A cool looking do hickey that oddly resembles Keanu Reeves face, " +
       "it has a usb cable that looks like it plugs into something.",
-    stats: <>This augmentation makes the Symbol matching minigame easier by TODO.</>,
+    stats: <>This augmentation makes the Symbol matching minigame easier by indicating the correct choice.</>,
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
@@ -169,9 +167,14 @@ export const infiltratorsAugmentations = [
     moneyCost: 1e9,
     info:
       "You stumble across an old mine detector at an army surplus store, " +
-      "on the side is inscribed 'X(' i wonder what happend to the orginal owner, " +
+      "on the side is inscribed 'X(' i wonder what happened to the original owner, " +
       "its a bit beaten up but looks like it should still do the job.",
-    stats: <>This augmentation makes the Minesweeper minigame easier by showing the location of all mines.</>,
+    stats: (
+      <>
+        This augmentation makes the Minesweeper minigame easier by showing the location of all mines and keeping their
+        position.
+      </>
+    ),
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
@@ -179,9 +182,9 @@ export const infiltratorsAugmentations = [
     repCost: 100,
     moneyCost: 1e9,
     info:
-      "You found an old wire cutting for dummys book in the local library, " +
+      "You found an old wire cutting for dummies book in the local library, " +
       "how hard can it be to cut wires, right?",
-    stats: <>This augmentation makes the Wire Cutting minigame easier by highlighting the correct wires to cut.</>,
+    stats: <>This augmentation makes the Wire Cutting minigame easier by indicating the incorrect wires.</>,
     factions: [FactionNames.Infiltrators],
   }),
 ];
