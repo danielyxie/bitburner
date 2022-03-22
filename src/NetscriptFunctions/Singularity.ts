@@ -555,6 +555,16 @@ export function NetscriptSingularity(
         return true;
       }
 
+      const programsRef = player.getHomeComputer().programs;
+      // Remove partially created program if there is one
+      const existingPartialExeIndex = programsRef.findIndex(
+        (program) => item?.program && program.startsWith(item?.program),
+      );
+      // findIndex returns -1 if there is no match, we only want to splice on a match
+      if (existingPartialExeIndex > -1) {
+        programsRef.splice(existingPartialExeIndex, 1);
+      }
+
       // Cancel if the program is in progress of writing
       if (player.createProgramName === item.program) {
         player.isWorking = false;
