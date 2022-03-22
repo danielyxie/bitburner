@@ -23,8 +23,7 @@ export function SkillPage(props: IProps): React.ReactElement {
         <strong>Skill Points: {formatNumber(props.bladeburner.skillPoints, 0)}</strong>
       </Typography>
       <Typography>
-        You will gain one skill point every{" "}
-        {BladeburnerConstants.RanksPerSkillPoint * BitNodeMultipliers.BladeburnerSkillCost} ranks.
+        You will gain one skill point every {BladeburnerConstants.RanksPerSkillPoint} ranks.
         <br />
         Note that when upgrading a skill, the benefit for that skill is additive. However, the effects of different
         skills with each other is multiplicative.
