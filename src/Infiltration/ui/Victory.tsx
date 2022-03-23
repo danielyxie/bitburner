@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 interface IProps {
   StartingDifficulty: number;
@@ -23,6 +24,7 @@ export function Victory(props: IProps): React.ReactElement {
   const [faction, setFaction] = useState("none");
 
   function quitInfiltration(): void {
+    handleInfiltrators();
     router.toCity();
   }
 
@@ -35,6 +37,11 @@ export function Victory(props: IProps): React.ReactElement {
     levelBonus *
     BitNodeMultipliers.InfiltrationRep;
 
+  // TODO: add two augmentations to infiltrators to increase this by 5 and * 2
+  const infiltratorsRepGain = 5;
+  const infiltratorFaction = Factions[FactionNames.Infiltrators];
+  const isMemberOfInfiltrators = infiltratorFaction && infiltratorFaction.isMember;
+
   const moneyGain =
     Math.pow(props.Reward + 1, 2) *
     Math.pow(props.StartingDifficulty, 3) *
@@ -43,11 +50,13 @@ export function Victory(props: IProps): React.ReactElement {
     BitNodeMultipliers.InfiltrationMoney;
 
   function sell(): void {
+    handleInfiltrators();
     player.gainMoney(moneyGain, "infiltration");
     quitInfiltration();
   }
 
   function trade(): void {
+    handleInfiltrators();
     if (faction === "none") return;
     Factions[faction].playerReputation += repGain;
     quitInfiltration();
@@ -55,6 +64,13 @@ export function Victory(props: IProps): React.ReactElement {
 
   function changeDropdown(event: SelectChangeEvent<string>): void {
     setFaction(event.target.value);
+  }
+
+  function handleInfiltrators(): void {
+    player.hasCompletedAnInfiltration = true;
+    if (isMemberOfInfiltrators) {
+      infiltratorFaction.playerReputation += infiltratorsRepGain;
+    }
   }
 
   return (
@@ -65,7 +81,15 @@ export function Victory(props: IProps): React.ReactElement {
         </Grid>
         <Grid item xs={10}>
           <Typography variant="h5" color="primary">
-            You can trade the confidential information you found for money or reputation.
+            You{" "}
+            {isMemberOfInfiltrators ? (
+              <>
+                have gained {infiltratorsRepGain} rep for {FactionNames.Infiltrators} and
+              </>
+            ) : (
+              <></>
+            )}
+            can trade the confidential information you found for money or reputation.
           </Typography>
           <Select value={faction} onChange={changeDropdown}>
             <MenuItem key={"none"} value={"none"}>

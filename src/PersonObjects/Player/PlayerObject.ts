@@ -84,6 +84,7 @@ export class PlayerObject implements IPlayer {
   lastUpdate: number;
   lastSave: number;
   totalPlaytime: number;
+  hasCompletedAnInfiltration: boolean;
 
   // Stats
   hacking: number;
@@ -466,6 +467,7 @@ export class PlayerObject implements IPlayer {
     this.lastUpdate = 0;
     this.lastSave = 0;
     this.totalPlaytime = 0;
+    this.hasCompletedAnInfiltration = true;
 
     this.playtimeSinceLastAug = 0;
     this.playtimeSinceLastBitnode = 0;
@@ -483,11 +485,11 @@ export class PlayerObject implements IPlayer {
     // Let's get a hash of some semi-random stuff so we have something unique.
     this.identifier = cyrb53(
       "I-" +
-      new Date().getTime() +
-      navigator.userAgent +
-      window.innerWidth +
-      window.innerHeight +
-      getRandomInt(100, 999),
+        new Date().getTime() +
+        navigator.userAgent +
+        window.innerWidth +
+        window.innerHeight +
+        getRandomInt(100, 999),
     );
 
     this.init = generalMethods.init;

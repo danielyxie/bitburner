@@ -75,6 +75,7 @@ export interface IPlayer {
   terminalCommandHistory: string[];
   lastUpdate: number;
   totalPlaytime: number;
+  hasCompletedAnInfiltration: boolean;
 
   // Stats
   hacking: number;

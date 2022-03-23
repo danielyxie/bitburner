@@ -2086,6 +2086,12 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     return allCompanies.includes(companyName) && getCompanyRep(companyName) > repNeeded;
   }
 
+  //Infiltrators
+  const InfiltratorsFac = Factions[FactionNames.Infiltrators];
+  if (this.hasCompletedAnInfiltration && !InfiltratorsFac.isMember && !InfiltratorsFac.alreadyInvited) {
+    invitedFactions.push(InfiltratorsFac);
+  }
+
   //Illuminati
   const illuminatiFac = Factions[FactionNames.Illuminati];
   if (
