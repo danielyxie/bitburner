@@ -12,7 +12,7 @@ import { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IGrafting {
   const checkGraftingAPIAccess = (func: any): void => {
-    if (player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+    if (!player.canAccessGrafting()) {
       throw helper.makeRuntimeErrorMsg(
         `grafting.${func}`,
         "You do not currently have access to the Grafting API. This is either because you are not in BitNode 10 or because you do not have Source-File 10",
