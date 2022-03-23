@@ -14,8 +14,8 @@ export function checkIfConnectedToDarkweb(): void {
   if (server !== null && SpecialServers.DarkWeb == server.hostname) {
     Terminal.print(
       "You are now connected to the dark web. From the dark web you can purchase illegal items. " +
-        "Use the 'buy -l' command to display a list of all the items you can buy. Use 'buy [item-name]' " +
-        "to purchase an item. Use 'buy -a' to purchase all unowned items.",
+      "Use the 'buy -l' command to display a list of all the items you can buy. Use 'buy [item-name]' " +
+      "to purchase an item. Use 'buy -a' to purchase all unowned items.",
     );
   }
 }
@@ -72,6 +72,12 @@ export function buyDarkwebItem(itemName: string): void {
   // buy and push
   Player.loseMoney(item.price, "other");
 
+  // Cancel if the program is in progress of writing
+  if (Player.createProgramName === item.program) {
+    Player.isWorking = false;
+    Player.resetWorkStatus();
+  }
+
   const programsRef = Player.getHomeComputer().programs;
   // Remove partially created program if there is one
   const existingPartialExeIndex = programsRef.findIndex(
@@ -83,12 +89,6 @@ export function buyDarkwebItem(itemName: string): void {
   }
   // Add the newly bought, full .exe
   Player.getHomeComputer().programs.push(item.program);
-
-  // Cancel if the program is in progress of writing
-  if (Player.createProgramName === item.program) {
-    Player.isWorking = false;
-    Player.resetWorkStatus();
-  }
 
   Terminal.print(
     "You have purchased the " + item.program + " program. The new program can be found on your home computer.",

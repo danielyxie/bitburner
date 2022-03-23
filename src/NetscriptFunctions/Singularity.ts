@@ -555,6 +555,12 @@ export function NetscriptSingularity(
         return true;
       }
 
+      // Cancel if the program is in progress of writing
+      if (player.createProgramName === item.program) {
+        player.isWorking = false;
+        player.resetWorkStatus();
+      }
+
       const programsRef = player.getHomeComputer().programs;
       // Remove partially created program if there is one
       const existingPartialExeIndex = programsRef.findIndex(
@@ -563,12 +569,6 @@ export function NetscriptSingularity(
       // findIndex returns -1 if there is no match, we only want to splice on a match
       if (existingPartialExeIndex > -1) {
         programsRef.splice(existingPartialExeIndex, 1);
-      }
-
-      // Cancel if the program is in progress of writing
-      if (player.createProgramName === item.program) {
-        player.isWorking = false;
-        player.resetWorkStatus();
       }
 
       player.loseMoney(item.price, "other");
@@ -1299,7 +1299,7 @@ export function NetscriptSingularity(
         throw helper.makeRuntimeErrorMsg(
           "getDarkwebProgramCost",
           `No such exploit ('${programName}') found on the darkweb! ` +
-            `\nThis function is not case-sensitive. Did you perhaps forget .exe at the end?`,
+          `\nThis function is not case-sensitive. Did you perhaps forget .exe at the end?`,
         );
       }
 
