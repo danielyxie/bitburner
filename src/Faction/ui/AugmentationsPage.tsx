@@ -48,12 +48,13 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         const aug = Augmentations[augName];
         if (
           augName === AugmentationNames.NeuroFluxGovernor ||
-          augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2 ||
+          (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) ||
           // Special augs (i.e. Bladeburner augs)
           aug.isSpecial ||
           // Exclusive augs (i.e. QLink)
-          (aug.factions.length <= 1 && !props.faction.augmentations.includes(augName))
-        ) continue;
+          (aug.factions.length <= 1 && !props.faction.augmentations.includes(augName) && player.bitNodeN !== 2)
+        )
+          continue;
         augs.push(augName);
       }
 
