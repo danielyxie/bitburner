@@ -7,6 +7,9 @@ import { random } from "../utils";
 import { interpolate } from "./Difficulty";
 import { BlinkingCursor } from "./BlinkingCursor";
 import Typography from "@mui/material/Typography";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { Player } from "../../Player";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 interface Difficulty {
   [key: string]: number;
@@ -33,14 +36,24 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
   const timer = difficulty.timer;
   const [answer] = useState(makeAnswer(difficulty));
   const [guess, setGuess] = useState("");
+  const hasAugment = Player.hasAugmentation(AugmentationNames.ReverseDictionary, true);
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
-    if (event.key === "Backspace") return;
+    if (event.key === KEY.BACKSPACE) return;
     const nextGuess = guess + event.key.toUpperCase();
     if (!answer.startsWith(nextGuess)) props.onFailure();
     else if (answer === nextGuess) props.onSuccess();
     else setGuess(nextGuess);
+  }
+
+  interface AnswerStyle {
+    transform?: string;
+  }
+
+  const answerStyle: AnswerStyle = { transform: "scaleX(-1)" };
+  if (hasAugment) {
+    delete answerStyle.transform;
   }
 
   return (
@@ -51,7 +64,7 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
       </Grid>
       <Grid item xs={6}>
-        <Typography style={{ transform: "scaleX(-1)" }}>{answer}</Typography>
+        <Typography style={answerStyle}>{answer}</Typography>
       </Grid>
       <Grid item xs={6}>
         <Typography>

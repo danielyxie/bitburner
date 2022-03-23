@@ -6,6 +6,10 @@ import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { random } from "../utils";
 import { interpolate } from "./Difficulty";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
+import { Settings } from "../../Settings/Settings";
 
 interface Difficulty {
   [key: string]: number;
@@ -27,7 +31,7 @@ const difficulties: {
   Impossible: { timer: 4000, wiresmin: 9, wiresmax: 9, rules: 4 },
 };
 
-const types = ["|", ".", "/", "-", "█", "#"];
+const types = [KEY.PIPE, KEY.DOT, KEY.FORWARD_SLASH, KEY.HYPHEN, "█", KEY.HASH];
 
 const colors = ["red", "#FFC107", "blue", "white"];
 
@@ -56,10 +60,15 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
     rules: 0,
   };
   interpolate(difficulties, props.difficulty, difficulty);
-  const timer = difficulty.timer;
+  const timer = 99999;
   const [wires] = useState(generateWires(difficulty));
   const [cutWires, setCutWires] = useState(new Array(wires.length).fill(false));
   const [questions] = useState(generateQuestion(wires, difficulty));
+  const hasAugment = Player.hasAugmentation(AugmentationNames.WireCuttingManual, true);
+
+  function checkWire(wireNum: number): boolean {
+    return questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1));
+  }
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
@@ -69,7 +78,7 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
     setCutWires((old) => {
       const next = [...old];
       next[wireNum - 1] = true;
-      if (!questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1))) {
+      if (!checkWire(wireNum)) {
         props.onFailure();
       }
 
@@ -107,10 +116,14 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
           <div key={i}>
             <Typography>
               {wires.map((wire, j) => {
-                if ((i === 3 || i === 4) && cutWires[j])
+                if ((i === 3 || i === 4) && cutWires[j]) {
                   return <span key={j}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>;
+                }
+                const isCorrectWire = checkWire(j);
+                const wireColor =
+                  hasAugment && !isCorrectWire ? Settings.theme.disabled : wire.colors[i % wire.colors.length];
                 return (
-                  <span key={j} style={{ color: wire.colors[i % wire.colors.length] }}>
+                  <span key={j} style={{ color: wireColor }}>
                     |{wire.tpe}|&nbsp;&nbsp;&nbsp;
                   </span>
                 );

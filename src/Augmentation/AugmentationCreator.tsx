@@ -131,7 +131,7 @@ export const infiltratorsAugmentations = [
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
-    name: AugmentationNames.AmuletOfPersuasian,
+    name: AugmentationNames.AmuletOfPersuasion,
     repCost: 1e2,
     moneyCost: 1e6,
     info:

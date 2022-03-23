@@ -42,7 +42,6 @@ export function InfiltrationRoot(props: IProps): React.ReactElement {
   const startingDifficulty = props.location.infiltrationData.startingSecurityLevel;
   const difficulty = calcDifficulty(player, startingDifficulty);
   const reward = calcReward(player, startingDifficulty);
-  console.log(`${difficulty} ${reward}`);
 
   function cancel(): void {
     router.toCity();

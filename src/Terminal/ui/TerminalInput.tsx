@@ -262,7 +262,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     }
 
     // Select previous command.
-    if (event.key === KEY.UPARROW || (Settings.EnableBashHotkeys && event.key === "p" && event.ctrlKey)) {
+    if (event.key === KEY.UP_ARROW || (Settings.EnableBashHotkeys && event.key === KEY.P && event.ctrlKey)) {
       if (Settings.EnableBashHotkeys) {
         event.preventDefault();
       }
@@ -290,7 +290,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
     }
 
     // Select next command
-    if (event.key === KEY.DOWNARROW || (Settings.EnableBashHotkeys && event.key === "m" && event.ctrlKey)) {
+    if (event.key === KEY.DOWN_ARROW || (Settings.EnableBashHotkeys && event.key === KEY.M && event.ctrlKey)) {
       if (Settings.EnableBashHotkeys) {
         event.preventDefault();
       }

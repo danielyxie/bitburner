@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { interpolate } from "./Difficulty";
 import Typography from "@mui/material/Typography";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
+import { Settings } from "../../Settings/Settings";
+import { downArrowSymbol, upArrowSymbol } from "../utils";
 
 interface Difficulty {
   [key: string]: number;
@@ -29,20 +34,40 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
   interpolate(difficulties, props.difficulty, difficulty);
   const timer = difficulty.timer;
   const [choices] = useState(makeChoices(difficulty));
+  const [correctIndex, setCorrectIndex] = useState(0);
   const [index, setIndex] = useState(0);
+  const currentChoice = choices[index];
+
+  useEffect(() => {
+    setCorrectIndex(choices.findIndex((choice) => positive.includes(choice)));
+  }, [choices]);
+
+  const defaultColor = Settings.theme.primary;
+  const disabledColor = Settings.theme.disabled;
+  let upColor = defaultColor;
+  let downColor = defaultColor;
+  let choiceColor = defaultColor;
+  const hasAugment = Player.hasAugmentation(AugmentationNames.AmuletOfPersuasion, true);
+
+  if (hasAugment) {
+    upColor = correctIndex < index ? upColor : disabledColor;
+    downColor = correctIndex > index ? upColor : disabledColor;
+    choiceColor = correctIndex == index ? Settings.theme.success : disabledColor;
+  }
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
+
     const k = event.key;
-    if (k === " ") {
-      if (positive.includes(choices[index])) props.onSuccess();
+    if (k === KEY.SPACE) {
+      if (positive.includes(currentChoice)) props.onSuccess();
       else props.onFailure();
       return;
     }
 
     let newIndex = index;
-    if (["ArrowUp", "w", "ArrowRight", "d"].includes(k)) newIndex++;
-    if (["ArrowDown", "s", "ArrowLeft", "a"].includes(k)) newIndex--;
+    if ([KEY.UP_ARROW, KEY.W, KEY.RIGHT_ARROW, KEY.D].map((k) => k as string).includes(k)) newIndex++;
+    if ([KEY.DOWN_ARROW, KEY.S, KEY.LEFT_ARROW, KEY.A].map((k) => k as string).includes(k)) newIndex--;
     while (newIndex < 0) newIndex += choices.length;
     while (newIndex > choices.length - 1) newIndex -= choices.length;
     setIndex(newIndex);
@@ -56,14 +81,14 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
       </Grid>
       <Grid item xs={6}>
-        <Typography variant="h5" color="primary">
-          ↑
+        <Typography variant="h5" color={upColor}>
+          {upArrowSymbol}
         </Typography>
-        <Typography variant="h5" color="primary">
-          {choices[index]}
+        <Typography variant="h5" color={choiceColor}>
+          {currentChoice}
         </Typography>
-        <Typography variant="h5" color="primary">
-          ↓
+        <Typography variant="h5" color={downColor}>
+          {downArrowSymbol}
         </Typography>
       </Grid>
     </Grid>

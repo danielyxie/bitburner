@@ -4,8 +4,12 @@ import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { interpolate } from "./Difficulty";
-import { getArrow } from "../utils";
+import { downArrowSymbol, getArrow, leftArrowSymbol, rightArrowSymbol, upArrowSymbol } from "../utils";
 import Typography from "@mui/material/Typography";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { Settings } from "../../Settings/Settings";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
 
 interface Difficulty {
   [key: string]: number;
@@ -32,25 +36,26 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
   interpolate(difficulties, props.difficulty, difficulty);
   const timer = difficulty.timer;
   const [grid] = useState(generatePuzzle(difficulty));
-  const [answer] = useState(generateAnswer(grid, difficulty));
-  const [index, setIndex] = useState(0);
+  const [answers] = useState(generateAnswers(grid, difficulty));
+  const [currentAnswerIndex, setCurrentAnswerIndex] = useState(0);
   const [pos, setPos] = useState([0, 0]);
 
+  const hasAugment = Player.hasAugmentation(AugmentationNames.CyberDecoder, true);
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     const move = [0, 0];
     const arrow = getArrow(event);
     switch (arrow) {
-      case "↑":
+      case upArrowSymbol:
         move[1]--;
         break;
-      case "←":
+      case leftArrowSymbol:
         move[0]--;
         break;
-      case "↓":
+      case downArrowSymbol:
         move[1]++;
         break;
-      case "→":
+      case rightArrowSymbol:
         move[0]++;
         break;
     }
@@ -59,15 +64,15 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
     next[1] = (next[1] + grid.length) % grid.length;
     setPos(next);
 
-    if (event.key === " ") {
+    if (event.key === KEY.SPACE) {
       const selected = grid[pos[1]][pos[0]];
-      const expected = answer[index];
+      const expected = answers[currentAnswerIndex];
       if (selected !== expected) {
         props.onFailure();
         return;
       }
-      setIndex(index + 1);
-      if (answer.length === index + 1) props.onSuccess();
+      setCurrentAnswerIndex(currentAnswerIndex + 1);
+      if (answers.length === currentAnswerIndex + 1) props.onSuccess();
     }
   }
 
@@ -77,17 +82,17 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
       <GameTimer millis={timer} onExpire={props.onFailure} />
       <Grid item xs={12}>
         <Typography variant="h4">Match the symbols!</Typography>
-        <Typography variant="h5" color="primary">
+        <Typography variant="h5" color={Settings.theme.primary}>
           Targets:{" "}
-          {answer.map((a, i) => {
-            if (i == index)
+          {answers.map((a, i) => {
+            if (i == currentAnswerIndex)
               return (
                 <span key={`${i}`} style={{ fontSize: "1em", color: "blue" }}>
                   {a}&nbsp;
                 </span>
               );
             return (
-              <span key={`${i}`} style={{ fontSize: "1em" }}>
+              <span key={`${i}`} style={{ fontSize: "1em", color: Settings.theme.primary }}>
                 {a}&nbsp;
               </span>
             );
@@ -98,14 +103,20 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
           <div key={y}>
             <Typography>
               {line.map((cell, x) => {
-                if (x == pos[0] && y == pos[1])
+                const isCorrectAnswer = cell === answers[currentAnswerIndex];
+
+                if (x == pos[0] && y == pos[1]) {
+                  const selectOptionColor = hasAugment && isCorrectAnswer ? Settings.theme.success : "blue";
                   return (
-                    <span key={`${x}${y}`} style={{ fontSize: fontSize, color: "blue" }}>
+                    <span key={`${x}${y}`} style={{ fontSize: fontSize, color: selectOptionColor }}>
                       {cell}&nbsp;
                     </span>
                   );
+                }
+
+                const optionColor = hasAugment && isCorrectAnswer ? Settings.theme.success : Settings.theme.primary;
                 return (
-                  <span key={`${x}${y}`} style={{ fontSize: fontSize }}>
+                  <span key={`${x}${y}`} style={{ fontSize: fontSize, color: optionColor }}>
                     {cell}&nbsp;
                   </span>
                 );
@@ -120,12 +131,12 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
   );
 }
 
-function generateAnswer(grid: string[][], difficulty: Difficulty): string[] {
-  const answer = [];
+function generateAnswers(grid: string[][], difficulty: Difficulty): string[] {
+  const answers = [];
   for (let i = 0; i < Math.round(difficulty.symbols); i++) {
-    answer.push(grid[Math.floor(Math.random() * grid.length)][Math.floor(Math.random() * grid[0].length)]);
+    answers.push(grid[Math.floor(Math.random() * grid.length)][Math.floor(Math.random() * grid[0].length)]);
   }
-  return answer;
+  return answers;
 }
 
 function randChar(): string {

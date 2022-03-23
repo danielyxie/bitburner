@@ -4,8 +4,11 @@ import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { interpolate } from "./Difficulty";
-import { getArrow } from "../utils";
+import { downArrowSymbol, getArrow, leftArrowSymbol, rightArrowSymbol, upArrowSymbol } from "../utils";
 import Typography from "@mui/material/Typography";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { Player } from "../../Player";
 
 interface Difficulty {
   [key: string]: number;
@@ -35,23 +38,23 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
   const [answer, setAnswer] = useState(generateEmptyField(difficulty));
   const [pos, setPos] = useState([0, 0]);
   const [memoryPhase, setMemoryPhase] = useState(true);
-
+  const hasAugment = Player.hasAugmentation(AugmentationNames.MineDetector, true);
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     if (memoryPhase) return;
     const move = [0, 0];
     const arrow = getArrow(event);
     switch (arrow) {
-      case "↑":
+      case upArrowSymbol:
         move[1]--;
         break;
-      case "←":
+      case leftArrowSymbol:
         move[0]--;
         break;
-      case "↓":
+      case downArrowSymbol:
         move[1]++;
         break;
-      case "→":
+      case rightArrowSymbol:
         move[0]++;
         break;
     }
@@ -60,7 +63,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
     next[1] = (next[1] + minefield.length) % minefield.length;
     setPos(next);
 
-    if (event.key == " ") {
+    if (event.key == KEY.SPACE) {
       if (!minefield[pos[1]][pos[0]]) {
         props.onFailure();
         return;
@@ -93,6 +96,7 @@ export function MinesweeperGame(props: IMinigameProps): React.ReactElement {
                 } else {
                   if (x == pos[0] && y == pos[1]) return <span key={x}>[X]&nbsp;</span>;
                   if (answer[y][x]) return <span key={x}>[.]&nbsp;</span>;
+                  if (hasAugment && minefield[y][x]) return <span key={x}>[?]&nbsp;</span>;
                   return <span key={x}>[&nbsp;]&nbsp;</span>;
                 }
               })}

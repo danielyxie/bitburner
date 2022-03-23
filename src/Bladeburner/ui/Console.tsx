@@ -109,7 +109,7 @@ export function Console(props: IProps): React.ReactElement {
       setCommand(prevCommand);
     }
 
-    if (event.key === KEY.DOWNARROW) {
+    if (event.key === KEY.DOWN_ARROW) {
       const i = consoleHistoryIndex;
       const len = consoleHistory.length;
 
@@ -140,14 +140,16 @@ export function Console(props: IProps): React.ReactElement {
 
   return (
     <Paper sx={{ p: 1 }}>
-      <Box sx={{
-        height: '60vh',
-        paddingBottom: '8px',
-        display: 'flex',
-        alignItems: 'stretch',
-        whiteSpace: 'pre-wrap',
-      }}
-        onClick={handleClick}>
+      <Box
+        sx={{
+          height: "60vh",
+          paddingBottom: "8px",
+          display: "flex",
+          alignItems: "stretch",
+          whiteSpace: "pre-wrap",
+        }}
+        onClick={handleClick}
+      >
         <Box>
           <Logs entries={[...props.bladeburner.consoleLogs]} />
         </Box>
@@ -195,9 +197,7 @@ function Logs({ entries }: ILogProps): React.ReactElement {
 
   return (
     <List sx={{ height: "100%", overflow: "auto", p: 1 }} ref={scrollHook}>
-      {entries && entries.map((log: any, i: number) => (
-        <Line key={i} content={log} />
-      ))}
+      {entries && entries.map((log: any, i: number) => <Line key={i} content={log} />)}
     </List>
   );
 }

@@ -114,7 +114,7 @@ export const AugmentationNames: {
   BagOfSand: string;
   IntellisenseModule: string;
   ReverseDictionary: string;
-  AmuletOfPersuasian: string;
+  AmuletOfPersuasion: string;
   LameSharkRepository: string;
   CyberDecoder: string;
   MineDetector: string;
@@ -237,7 +237,7 @@ export const AugmentationNames: {
   BagOfSand: "A Bag of Sand",
   IntellisenseModule: "Intellisense Module",
   ReverseDictionary: "Reverse Dictionary",
-  AmuletOfPersuasian: "Amulet of Persuasian",
+  AmuletOfPersuasion: "Amulet of Persuasian",
   LameSharkRepository: "Lame Shark Repository",
   CyberDecoder: "Cyber Decoder",
   MineDetector: "Mine Detector",
