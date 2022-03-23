@@ -19,6 +19,7 @@ import { IRouter } from "../../ui/Router";
 import { Faction } from "../Faction";
 import { joinFaction } from "../FactionHelpers";
 import { Factions } from "../Factions";
+import { FactionNames } from "../data/FactionNames";
 
 export const InvitationsSeen: string[] = [];
 
@@ -84,6 +85,11 @@ export function FactionsRoot(props: IProps): React.ReactElement {
     ).length;
   }
 
+  const allFactions = Object.values(FactionNames).map(faction => faction as string)
+  const allJoinedFactions = props.player.factions.slice(0);
+  allJoinedFactions.sort((a, b) =>
+    allFactions.indexOf(a) - allFactions.indexOf(b));
+
   return (
     <Container disableGutters maxWidth="md" sx={{ mx: 0, mb: 10 }}>
       <Typography variant="h4">Factions</Typography>
@@ -96,11 +102,11 @@ export function FactionsRoot(props: IProps): React.ReactElement {
       <Typography variant="h5" color="primary" mt={2} mb={1}>
         Factions you have joined:
       </Typography>
-      {(props.player.factions.length > 0 && (
+      {(allJoinedFactions.length > 0 && (
         <Paper sx={{ my: 1, p: 1, pb: 0, display: "inline-block" }}>
           <Table padding="none" style={{ width: "fit-content" }}>
             <TableBody>
-              {props.player.factions.map((faction: string) => (
+              {allJoinedFactions.map((faction: string) => (
                 <TableRow key={faction}>
                   <TableCell>
                     <Typography noWrap mb={1}>
