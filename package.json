@@ -123,7 +123,7 @@
     "test:watch": "jest --watch",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development",
-    "electron": "sh ./package.sh",
+    "electron": "sh ./tools/package-electron.sh",
     "electron:packager": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png --no-prune",
     "electron:packager-all": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png",
     "electron:packager-win": "electron-packager .package bitburner --platform win32 --arch x64 --out .build --overwrite --icon .package/icon.png",
