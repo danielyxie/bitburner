@@ -746,6 +746,16 @@ export const achievements: IMap<Achievement> = {
     Secret: true,
     Condition: () => Player.exploits.includes(Exploit.TrueRecursion),
   },
+  DEADBEEF: {
+    // Replace the ID, Name & Description by the line below once the achievement is added to Steam.
+    // ...achievementData["DEADBEEF"],
+    ID: "DEADBEEF",
+    Name: "Exploit: 0xDEADBEEF",
+    Description: "Overpowered the obfuscated.",
+    Icon: "SF-1",
+    Secret: true,
+    Condition: () => Player.exploits.includes(Exploit.DEADBEEF),
+  },
 };
 
 // Steam has a limit of 100 achievement. So these were planned but commented for now.

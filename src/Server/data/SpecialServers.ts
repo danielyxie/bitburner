@@ -12,6 +12,7 @@ export const SpecialServers: {
   DaedalusServer: string;
   WorldDaemon: string;
   DarkWeb: string;
+  ExploitServer: string;
 } = {
   Home: "home",
   FulcrumSecretTechnologies: "fulcrumassets",
@@ -23,4 +24,5 @@ export const SpecialServers: {
   DaedalusServer: "The-Cave",
   WorldDaemon: "w0r1d_d43m0n",
   DarkWeb: "darkweb",
+  ExploitServer: "0xDEADBEEF",
 };

@@ -71,7 +71,9 @@ import { unalias } from "./commands/unalias";
 import { vim } from "./commands/vim";
 import { weaken } from "./commands/weaken";
 import { wget } from "./commands/wget";
+import { unlock } from "./commands/unlock";
 import { hash } from "../hash/hash";
+import { Exploit } from "../Exploits/Exploit";
 
 export class Terminal implements ITerminal {
   // Flags to determine whether the player is currently running a hack or an analyze
@@ -301,6 +303,9 @@ export class Terminal implements ITerminal {
         }
         router.toBitVerse(false, false);
         return;
+      } else if (server.hidden && server.hostname.startsWith(SpecialServers.ExploitServer)) {
+        // We want to compare with .startsWith in case a player already created that server name, in that case there will be a -0 suffixed.
+        player.giveExploit(Exploit.DEADBEEF);
       }
       this.print(`Backdoor on '${server.hostname}' successful!`);
     }
@@ -812,6 +817,7 @@ export class Terminal implements ITerminal {
       vim: vim,
       weaken: weaken,
       wget: wget,
+      unlock: unlock,
     };
 
     const f = commands[commandName.toLowerCase()];

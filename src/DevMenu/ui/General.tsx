@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import { Money } from "../../ui/React/Money";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
+import { getExploitServerPassphrase } from "../../Server/SecretServer";
 
 interface IProps {
   player: IPlayer;
@@ -18,6 +19,8 @@ interface IProps {
 
 export function General(props: IProps): React.ReactElement {
   const [error, setError] = useState(false);
+
+  const exploitPassphrase = getExploitServerPassphrase(props.player);
 
   function addMoney(n: number) {
     return function () {
@@ -88,6 +91,11 @@ export function General(props: IProps): React.ReactElement {
         <Button onClick={quickHackW0r1dD43m0n}>Quick w0rld_d34m0n</Button>
         <Button onClick={hackW0r1dD43m0n}>Hack w0rld_d34m0n</Button>
         <Button onClick={() => setError(true)}>Throw Error</Button>
+
+        <br />
+        <Typography sx={{ mt: 2 }}>
+          Exploit Passphrase: <strong>{exploitPassphrase}</strong>
+        </Typography>
       </AccordionDetails>
     </Accordion>
   );
