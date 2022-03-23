@@ -92,18 +92,19 @@ and above, and is only available after defeating BitNode-10 at least once.
 Memory is a persistent stat, meaning it never gets reset back to 1.
 The maximum possible value for a sleeve's memory is 100.
 
-Re-sleeving
-^^^^^^^^^^^
-Re-sleeving is the process of digitizing and transferring your consciousness into a
-new human body, or "sleeve". When you re-sleeve into a new body, your stat experience
-and Augmentations get replaced with those of the new body.
+Grafting
+^^^^^^^^
+Grafting is an experimental process through which you can obtain the benefits of
+Augmentations, without needing to install them.
 
-In order to re-sleeve, you must purchase new bodies. This can be done at VitaLife in
-New Tokyo. Once you purchase a body to re-sleeve into, the effects will take
-place immediately.
+In order to graft, you must first purchase a blueprint for and craft the Augmentation.
+This can be done at VitaLife in New Tokyo, where you'll find a shady researcher with
+questionable connections. Once you purchase a blueprint, you will start crafting the
+Augmentation, and it will be grafted to your body once complete.
 
-Note that resleeving **REMOVES** all of your currently-installed Augmentations,
-and replaces them with the ones provided by the purchased sleeve. However,
-Augmentations that are purchased but not installed will **not** be removed. If you have purchased
-an Augmentation and then re-sleeve into a body which already has that Augmentation,
-it will be removed since you cannot have duplicate Augmentations.
+Be warned, some who have tested grafting have reported an unidentified malware. Dubbed
+"Entropy", this virus seems to grow in potency as more Augmentations are grafted,
+causing unpredictable affects to the victim.
+
+Note that when crafting an Augmentation, cancelling will **not** save your progress,
+and the money spent will **not** be returned.
