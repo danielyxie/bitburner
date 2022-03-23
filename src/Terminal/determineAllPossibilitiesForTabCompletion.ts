@@ -243,6 +243,8 @@ export async function determineAllPossibilitiesForTabCompletion(
       const serv = GetServer(currServ.serversOnNetwork[i]);
       if (serv == null) {
         continue;
+      } else if (serv.hidden) {
+        continue;
       }
       allPos.push(serv.hostname);
     }

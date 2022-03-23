@@ -25,17 +25,20 @@ export function scan(
       hostname: server.hostname,
       ip: server.ip,
       hasRoot: server.hasAdminRights ? "Y" : "N",
+      hidden: server.hidden,
     };
   });
   servers.unshift({
     hostname: "Hostname",
     ip: "IP",
     hasRoot: "Root Access",
+    hidden: false,
   });
   const maxHostname = Math.max(...servers.map((s) => s.hostname.length));
   const maxIP = Math.max(...servers.map((s) => s.ip.length));
   for (const server of servers) {
     if (!server) continue;
+    if (server.hidden) continue;
     let entry = server.hostname;
     entry += " ".repeat(maxHostname - server.hostname.length + 1);
     entry += server.ip;

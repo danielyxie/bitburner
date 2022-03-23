@@ -516,6 +516,8 @@ export class Terminal implements ITerminal {
         continue; // Already visited or out-of-depth
       } else if (!all && isHacknet) {
         continue; // Hacknet Server
+      } else if (s.hidden) {
+        continue; // Hidden server that we don't want to expose
       } else {
         visited[s.hostname] = 1;
       }

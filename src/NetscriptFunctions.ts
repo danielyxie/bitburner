@@ -504,6 +504,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       for (let i = 0; i < server.serversOnNetwork.length; i++) {
         const s = getServerOnNetwork(server, i);
         if (s === null) continue;
+        if (s.hidden) continue;
         const entry = s.hostname;
         if (entry === null) continue;
         out.push(entry);

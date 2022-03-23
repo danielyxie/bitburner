@@ -20,6 +20,7 @@ export interface IConstructorParams {
   purchasedByPlayer?: boolean;
   requiredHackingSkill?: number;
   serverGrowth?: number;
+  hidden?: boolean;
 }
 
 export class Server extends BaseServer {
@@ -55,6 +56,9 @@ export class Server extends BaseServer {
   // be increased using the grow() Netscript function
   serverGrowth = 1;
 
+  // Flag indicating whether this server should be hidden from scans
+  hidden = false;
+
   constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {
     super(params);
 
@@ -83,6 +87,8 @@ export class Server extends BaseServer {
 
     //Port information, required for porthacking servers to get admin rights
     this.numOpenPortsRequired = params.numOpenPortsRequired != null ? params.numOpenPortsRequired : 5;
+
+    this.hidden = params.hidden ?? false;
   }
 
   /**

@@ -23,6 +23,11 @@ interface IServerMetadata {
   hostname: string;
 
   /**
+   * If true, the server won't show in the scans
+   */
+  hidden?: boolean;
+
+  /**
    * When populated, the files will be added to the server when created.
    */
   literature?: string[];

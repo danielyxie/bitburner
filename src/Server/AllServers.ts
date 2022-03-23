@@ -111,6 +111,7 @@ interface IServerParams {
   organizationName: string;
   requiredHackingSkill?: number;
   serverGrowth?: number;
+  hidden?: boolean;
 
   [key: string]: any;
 }
@@ -148,6 +149,7 @@ export function initForeignServers(homeComputer: Server): void {
       ip: createUniqueRandomIp(),
       numOpenPortsRequired: metadata.numOpenPortsRequired,
       organizationName: metadata.organizationName,
+      hidden: metadata.hidden,
     };
 
     if (metadata.maxRamExponent !== undefined) {

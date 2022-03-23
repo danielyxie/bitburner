@@ -95,6 +95,9 @@ export class BaseServer {
   // Flag indicating wehther this is a purchased server
   purchasedByPlayer = false;
 
+  // Flag indicating whether this server should be hidden from scans
+  hidden = false;
+
   constructor(params: IConstructorParams = { hostname: "", ip: createRandomIp() }) {
     this.ip = params.ip ? params.ip : createRandomIp();
 
