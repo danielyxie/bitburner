@@ -95,6 +95,7 @@ interface Player {
   tor: boolean;
   hasCorporation: boolean;
   inBladeburner: boolean;
+  entropyStacks: number;
 }
 
 /**
@@ -3719,6 +3720,39 @@ export interface Sleeve {
   purchaseSleeveAug(sleeveNumber: number, augName: string): boolean;
 }
 
+export interface Grafting {
+  /**
+   * Retrieve the crafting cost of an aug.
+   * @remarks
+   * RAM cost: TODO
+   *
+   * @param augName - Name of the aug to check the price of. Must be an exact match.
+   * @returns The cost required to craft the named augmentation.
+   */
+  getAugmentationCraftPrice(augName: string): number;
+
+  /**
+   * Retrieves the time required to craft an aug.
+   * @remarks
+   * RAM cost: TODO
+   *
+   * @param augName - Name of the aug to check the crafting time of. Must be an exact match.
+   * @returns The time required, in millis, to craft the named augmentation.
+   */
+  getAugmentationCraftTime(augName: string): number;
+
+  /**
+   * Begins crafting the named aug. You must be in New Tokyo to use this.
+   * @remarks
+   * RAM cost: TODO
+   *
+   * @param augName - The name of the aug to begin crafting. Must be an exact match.
+   * @param focus - Acquire player focus on this Augmentation crafting. Optional. Defaults to true.
+   * @returns True if the aug successfully began crafting, false otherwise.
+   */
+  craftAugmentation(augName: string, focus?: boolean): boolean;
+}
+
 /**
  * Skills formulas
  * @public
@@ -4279,6 +4313,13 @@ export interface NS extends Singularity {
    * RAM cost: 0 GB
    */
   readonly ui: UserInterface;
+
+  /**
+   * Namespace for grafting functions.
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  readonly grafting: Grafting;
 
   /**
    * Arguments passed into the script.

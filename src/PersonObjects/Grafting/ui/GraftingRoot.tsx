@@ -21,7 +21,7 @@ import { CraftableAugmentation } from "../CraftableAugmentation";
 
 const CraftableAugmentations: IMap<CraftableAugmentation> = {};
 
-const getAvailableAugs = (player: IPlayer): string[] => {
+export const getAvailableAugs = (player: IPlayer): string[] => {
   const augs: string[] = [];
 
   for (const [augName, aug] of Object.entries(Augmentations)) {
