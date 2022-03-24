@@ -41,8 +41,8 @@ export function WorkInProgressRoot(): React.ReactElement {
       return (
         <>
           <Typography variant="h4" color="primary">
-            You have not joined {player.currentWorkFactionName || "(Faction not found)"} yet or cannot work at this time,
-            please try again if you think this should have worked
+            You have not joined {player.currentWorkFactionName || "(Faction not found)"} yet or cannot work at this
+            time, please try again if you think this should have worked
           </Typography>
           <Button onClick={() => router.toFactions()}>Back to Factions</Button>
         </>
@@ -217,11 +217,19 @@ export function WorkInProgressRoot(): React.ReactElement {
 
   if (player.workType == CONSTANTS.WorkTypeCompany) {
     const comp = Companies[player.companyName];
-    let companyRep = 0;
     if (comp == null || !(comp instanceof Company)) {
-      throw new Error(`Could not find Company: ${player.companyName}`);
+      return (
+        <>
+          <Typography variant="h4" color="primary">
+            You cannot work for {player.companyName || "(Company not found)"} at this time, please try again if you
+            think this should have worked
+          </Typography>
+          <Button onClick={() => router.toFactions()}>Back to Factions</Button>
+        </>
+      );
     }
-    companyRep = comp.playerReputation;
+
+    const companyRep = comp.playerReputation;
 
     function cancel(): void {
       player.finishWork(true);
