@@ -112,7 +112,8 @@ export function generateResleeves(): Resleeve[] {
         AugmentationNames.StaneksGift1,
         AugmentationNames.StaneksGift2,
         AugmentationNames.StaneksGift3,
-      ].map((faction) => faction as string);
+        ...infiltratorsMiniGameAugmentations,
+      ].map((augmentation) => augmentation as string);
       if (forbidden.includes(randKey)) {
         continue;
       }
