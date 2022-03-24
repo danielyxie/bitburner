@@ -127,9 +127,9 @@ export function Factions(props: IProps): React.ReactElement {
                       </>
                     }
                   >
-                    {Object.values(FactionNames).map((faction) => (
-                      <MenuItem key={faction} value={faction}>
-                        {faction}
+                    {Object.values(AllFaction).map((faction) => (
+                      <MenuItem key={faction.name} value={faction.name}>
+                        {faction.name}
                       </MenuItem>
                     ))}
                   </Select>
