@@ -884,14 +884,17 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
 
       dfs(0, 0, left, right, data, "", res);
 
-      const sanitizedPlayerAns = removeBracketsFromArrayString(ans).replace(/\s/g, "");
-
-      const playerAnsArray: string[] = sanitizedPlayerAns.split(",");
-      if (playerAnsArray.length !== res.length) {
+      const sanitizedPlayerAns: string = removeBracketsFromArrayString(ans);
+      const sanitizedPlayerAnsArr: string[] = sanitizedPlayerAns.split(",");
+      for (let i = 0; i < sanitizedPlayerAnsArr.length; ++i) {
+        sanitizedPlayerAnsArr[i] = removeQuotesFromString(sanitizedPlayerAnsArr[i]).replace(/\s/g, "");
+      }
+      
+      if (sanitizedPlayerAnsArr.length !== res.length) {
         return false;
       }
       for (const resultInAnswer of res) {
-        if (!playerAnsArray.includes(resultInAnswer)) {
+        if (!sanitizedPlayerAnsArr.includes(resultInAnswer)) {
           return false;
         }
       }
