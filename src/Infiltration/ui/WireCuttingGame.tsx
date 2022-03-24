@@ -60,7 +60,7 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
     rules: 0,
   };
   interpolate(difficulties, props.difficulty, difficulty);
-  const timer = 99999;
+  const timer = difficulty.timer;
   const [wires] = useState(generateWires(difficulty));
   const [cutWires, setCutWires] = useState(new Array(wires.length).fill(false));
   const [questions] = useState(generateQuestion(wires, difficulty));
