@@ -224,7 +224,7 @@ export function WorkInProgressRoot(): React.ReactElement {
             You cannot work for {player.companyName || "(Company not found)"} at this time, please try again if you
             think this should have worked
           </Typography>
-          <Button onClick={() => router.toFactions()}>Back to Factions</Button>
+          <Button onClick={() => router.toTerminal()}>Back to Terminal</Button>
         </>
       );
     }
