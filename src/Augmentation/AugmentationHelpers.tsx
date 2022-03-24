@@ -17,7 +17,8 @@ import {
   churchOfTheMachineGodAugmentations,
   generalAugmentations,
   getNextNeuroFluxLevel,
-  infiltratorsAugmentations,
+  infiltratorsMiniGameAugmentations,
+  infiltratorsOtherAugmentations,
   initNeuroFluxGovernor,
   initUnstableCircadianModulator,
 } from "./AugmentationCreator";
@@ -33,7 +34,8 @@ function createAugmentations(): void {
     initNeuroFluxGovernor(),
     initUnstableCircadianModulator(),
     ...generalAugmentations,
-    ...infiltratorsAugmentations,
+    ...infiltratorsMiniGameAugmentations,
+    ...infiltratorsOtherAugmentations,
     ...(factionExists(FactionNames.Bladeburners) ? bladeburnerAugmentations : []),
     ...(factionExists(FactionNames.ChurchOfTheMachineGod) ? churchOfTheMachineGodAugmentations : []),
   ].map(resetAugmentation);
@@ -62,25 +64,35 @@ export function getGenericAugmentationPriceMultiplier(): number {
   return Math.pow(getBaseAugmentationPriceMultiplier(), Player.queuedAugmentations.length);
 }
 
+function updateNeuroFluxGovernorCosts(neuroFluxGovernorAugmentation: Augmentation): void {
+  let nextLevel = getNextNeuroFluxLevel();
+  --nextLevel;
+  const multiplier = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
+  neuroFluxGovernorAugmentation.baseRepRequirement *= multiplier * BitNodeMultipliers.AugmentationRepCost;
+  neuroFluxGovernorAugmentation.baseCost *= multiplier * BitNodeMultipliers.AugmentationMoneyCost;
+
+  for (let i = 0; i < Player.queuedAugmentations.length - 1; ++i) {
+    neuroFluxGovernorAugmentation.baseCost *= getBaseAugmentationPriceMultiplier();
+  }
+}
+
+function updateInfiltratorCosts(infiltratorAugmentation: Augmentation): void {
+  const infiltratorMultiplier =
+    infiltratorsMiniGameAugmentations.filter((augmentation) => Player.hasAugmentation(augmentation.name)).length + 1;
+  infiltratorAugmentation.baseCost = Math.pow(infiltratorAugmentation.baseCost * 1000, infiltratorMultiplier);
+  if (infiltratorsMiniGameAugmentations.find((augmentation) => augmentation.name === infiltratorAugmentation.name)) {
+    infiltratorAugmentation.baseRepRequirement *= infiltratorMultiplier;
+  }
+}
+
 export function updateAugmentationCosts(): void {
   for (const name of Object.keys(Augmentations)) {
     if (Augmentations.hasOwnProperty(name)) {
       const augmentationToUpdate = Augmentations[name];
       if (augmentationToUpdate.name === AugmentationNames.NeuroFluxGovernor) {
-        let nextLevel = getNextNeuroFluxLevel();
-        --nextLevel;
-        const multiplier = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-        augmentationToUpdate.baseRepRequirement *= multiplier * BitNodeMultipliers.AugmentationRepCost;
-        augmentationToUpdate.baseCost *= multiplier * BitNodeMultipliers.AugmentationMoneyCost;
-
-        for (let i = 0; i < Player.queuedAugmentations.length - 1; ++i) {
-          augmentationToUpdate.baseCost *= getBaseAugmentationPriceMultiplier();
-        }
+        updateNeuroFluxGovernorCosts(augmentationToUpdate);
       } else if (augmentationToUpdate.factions.includes(FactionNames.Infiltrators)) {
-        const infiltratorMultiplier =
-          infiltratorsAugmentations.filter((augmentation) => Player.hasAugmentation(augmentation.name)).length + 1;
-        augmentationToUpdate.baseCost = Math.pow(augmentationToUpdate.baseCost * 1000, infiltratorMultiplier);
-        augmentationToUpdate.baseRepRequirement *= infiltratorMultiplier;
+        updateInfiltratorCosts(augmentationToUpdate);
       } else {
         augmentationToUpdate.baseCost *= getGenericAugmentationPriceMultiplier();
       }

@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 interface IProps {
   StartingDifficulty: number;
@@ -37,8 +38,14 @@ export function Victory(props: IProps): React.ReactElement {
     levelBonus *
     BitNodeMultipliers.InfiltrationRep;
 
-  // TODO: add two augmentations to infiltrators to increase this by 5 and * 2
-  const infiltratorsRepGain = 5;
+  const bionicFingersRepGain = player.hasAugmentation(AugmentationNames.BionicFingers, true) ? 5 : 0;
+  const CorporationManagementImplantRepMultiplier = player.hasAugmentation(
+    AugmentationNames.CorporationManagementImplant,
+    true,
+  )
+    ? 2.5
+    : 1;
+  const infiltratorsRepGain = (5 + bionicFingersRepGain) * CorporationManagementImplantRepMultiplier;
   const infiltratorFaction = Factions[FactionNames.Infiltrators];
   const isMemberOfInfiltrators = infiltratorFaction && infiltratorFaction.isMember;
 

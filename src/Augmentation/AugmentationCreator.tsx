@@ -94,7 +94,33 @@ function getRandomBonus(): any {
   return bonuses[Math.floor(bonuses.length * randomNumber.random())];
 }
 
-export const infiltratorsAugmentations = [
+export const infiltratorsOtherAugmentations = [
+  new Augmentation({
+    name: AugmentationNames.BionicFingers,
+    repCost: 15e1,
+    moneyCost: 1e6,
+    info:
+      "This state of the art augmentation removes the need for bones and tendons in your fingers, " +
+      "with this you will have the dexterity equal to the best rubik's cube player in the world. ",
+    stats: <>This augmentation increases the rep reward to {FactionNames.Infiltrators} by 5 per infiltration.</>,
+    factions: [FactionNames.Infiltrators],
+  }),
+  new Augmentation({
+    name: AugmentationNames.CorporationManagementImplant,
+    repCost: 25e1,
+    moneyCost: 1e6,
+    info:
+      "As time went on corporations realized that managers were redundant if they could be replaced by AI chips " +
+      "implanted directly in the brain, and so the this implant was developed which could analyse the users brain " +
+      "to find the perfect tone and sounding voice to increase productivity of the user to maximum profits.",
+    stats: (
+      <>This augmentation multiplies the rep reward to {FactionNames.Infiltrators} by 2.5 per infiltration.</>
+    ),
+    factions: [FactionNames.Infiltrators],
+  }),
+];
+
+export const infiltratorsMiniGameAugmentations = [
   new Augmentation({
     name: AugmentationNames.BagOfSand,
     repCost: 1e2,
