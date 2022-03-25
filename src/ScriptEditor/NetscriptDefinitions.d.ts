@@ -3795,7 +3795,6 @@ interface HackingFormulas {
    * @returns The calculated hack time.
    */
   hackTime(server: Server, player: Player, hackOverride?: number): number;
-<<<<<<< HEAD
   /**
    * Calculate hack level to hit a specific hack time for a server.
    * @param server - Server info from {@link NS.getServer | getServer}
@@ -3804,8 +3803,6 @@ interface HackingFormulas {
    * @returns The calculated hack level.
    */
   hackLevelForTime(server: Server, player: Player, ms: number): number;
-=======
->>>>>>> ee51332e (Added support for hackOverride and exposed numCycleForGrowth)
   /**
    * Calculate hack level to hit a specific hack time for a server.
    * @param server - Server info from {@link NS.getServer | getServer}

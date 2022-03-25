@@ -28,7 +28,7 @@ import {
   calculateGrowTime,
   calculateGrowLevelForTime,
   calculateWeakenTime,
-  calculateWeakenLevelForTime
+  calculateWeakenLevelForTime,
 } from "../Hacking";
 import { numCycleForGrowth } from "../Server/ServerHelpers";
 import { Programs } from "../Programs/Programs";
@@ -94,7 +94,7 @@ export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, h
         checkFormulasAccess("hacking.growTime");
         return calculateGrowTime(server, player, hackOverride) * 1000;
       },
-			growLevelForTime: function (server: any, player: any, ms: number): number {
+      growLevelForTime: function (server: any, player: any, ms: number): number {
         checkFormulasAccess("hacking.growLevelForTime");
         return calculateGrowLevelForTime(server, player, ms);
       },
@@ -102,14 +102,14 @@ export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, h
         checkFormulasAccess("hacking.weakenTime");
         return calculateWeakenTime(server, player, hackOverride) * 1000;
       },
-			weakenLevelForTime: function (server: any, player: any, ms: number): number {
+      weakenLevelForTime: function (server: any, player: any, ms: number): number {
         checkFormulasAccess("hacking.weakenLevelForTime");
         return calculateWeakenLevelForTime(server, player, ms);
       },
       numCycleForGrowth(server: any, growth: number, player: any, cores = 1): number {
         checkFormulasAccess("hacking.numCycleForGrowth");
         return numCycleForGrowth(server, growth, player, cores);
-      }
+      },
     },
     hacknetNodes: {
       moneyGainRate: function (_level: unknown, _ram: unknown, _cores: unknown, _mult: unknown = 1): number {
