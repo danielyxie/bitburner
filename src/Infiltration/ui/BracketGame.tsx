@@ -38,7 +38,7 @@ function generateLeftSide(difficulty: Difficulty): string {
   }
   const length = random(difficulty.min, difficulty.max);
   for (let i = 0; i < length; i++) {
-    str += options[Math.floor(Math.random() * 4)];
+    str += options[Math.floor(Math.random() * options.length)];
   }
 
   return str;

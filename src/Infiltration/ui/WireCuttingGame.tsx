@@ -119,7 +119,7 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
                 if ((i === 3 || i === 4) && cutWires[j]) {
                   return <span key={j}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>;
                 }
-                const isCorrectWire = checkWire(j);
+                const isCorrectWire = checkWire(j + 1);
                 const wireColor =
                   hasAugment && !isCorrectWire ? Settings.theme.disabled : wire.colors[i % wire.colors.length];
                 return (

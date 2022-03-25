@@ -11,6 +11,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FactionNames } from "../../Faction/data/FactionNames";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { LocationsMetadata } from "../../Locations/data/LocationsMetadata";
+import { formatNumber } from "../../utils/StringHelperFunctions";
 
 interface IProps {
   StartingDifficulty: number;
@@ -38,14 +40,6 @@ export function Victory(props: IProps): React.ReactElement {
     levelBonus *
     BitNodeMultipliers.InfiltrationRep;
 
-  const bionicFingersRepGain = player.hasAugmentation(AugmentationNames.BionicFingers, true) ? 5 : 0;
-  const CorporationManagementImplantRepMultiplier = player.hasAugmentation(
-    AugmentationNames.CorporationManagementImplant,
-    true,
-  )
-    ? 2.5
-    : 1;
-  const infiltratorsRepGain = (5 + bionicFingersRepGain) * CorporationManagementImplantRepMultiplier;
   const infiltratorFaction = Factions[FactionNames.Infiltrators];
   const isMemberOfInfiltrators = infiltratorFaction && infiltratorFaction.isMember;
 
@@ -55,6 +49,23 @@ export function Victory(props: IProps): React.ReactElement {
     3e3 *
     levelBonus *
     BitNodeMultipliers.InfiltrationMoney;
+
+  function calculateInfiltratorsRepReward(): number {
+    const bionicFingersRepGain = player.hasAugmentation(AugmentationNames.BionicFingers, true) ? 5 : 0;
+    const CorporationManagementImplantRepMultiplier = player.hasAugmentation(
+      AugmentationNames.CorporationManagementImplant,
+      true,
+    )
+      ? 2.5
+      : 1;
+    const maxStartingSecurityLevel = LocationsMetadata.reduce((acc, data): number => {
+      const startingSecurityLevel = data.infiltrationData?.startingSecurityLevel || 0;
+      return acc > startingSecurityLevel ? acc : startingSecurityLevel;
+    }, 0);
+    const baseRepGain = (props.StartingDifficulty / maxStartingSecurityLevel) * 10;
+
+    return (baseRepGain + bionicFingersRepGain) * CorporationManagementImplantRepMultiplier;
+  }
 
   function sell(): void {
     handleInfiltrators();
@@ -76,7 +87,7 @@ export function Victory(props: IProps): React.ReactElement {
   function handleInfiltrators(): void {
     player.hasCompletedAnInfiltration = true;
     if (isMemberOfInfiltrators) {
-      infiltratorFaction.playerReputation += infiltratorsRepGain;
+      infiltratorFaction.playerReputation += calculateInfiltratorsRepReward();
     }
   }
 
@@ -91,7 +102,7 @@ export function Victory(props: IProps): React.ReactElement {
             You{" "}
             {isMemberOfInfiltrators ? (
               <>
-                have gained {infiltratorsRepGain} rep for {FactionNames.Infiltrators} and
+                have gained {formatNumber(calculateInfiltratorsRepReward(), 2)} rep for {FactionNames.Infiltrators} and{" "}
               </>
             ) : (
               <></>

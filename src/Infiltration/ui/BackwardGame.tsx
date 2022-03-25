@@ -47,24 +47,17 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
     else setGuess(nextGuess);
   }
 
-  interface AnswerStyle {
-    transform?: string;
-  }
-
-  const answerStyle: AnswerStyle = { transform: "scaleX(-1)" };
-  if (hasAugment) {
-    delete answerStyle.transform;
-  }
-
   return (
     <Grid container spacing={3}>
       <GameTimer millis={timer} onExpire={props.onFailure} />
       <Grid item xs={12}>
-        <Typography variant="h4">Type it backward</Typography>
+        <Typography variant="h4">Type it{!hasAugment ? " backward" : ""}</Typography>
         <KeyHandler onKeyDown={press} onFailure={props.onFailure} />
       </Grid>
       <Grid item xs={6}>
-        <Typography style={answerStyle}>{answer}</Typography>
+        <Typography style={{ transform: hasAugment ? "none" : "scaleX(-1)", marginLeft: hasAugment ? "50%" : "none" }}>
+          {answer}
+        </Typography>
       </Grid>
       <Grid item xs={6}>
         <Typography>

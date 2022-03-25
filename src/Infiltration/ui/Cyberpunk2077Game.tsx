@@ -106,15 +106,14 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
                 const isCorrectAnswer = cell === answers[currentAnswerIndex];
 
                 if (x == pos[0] && y == pos[1]) {
-                  const selectOptionColor = hasAugment && isCorrectAnswer ? Settings.theme.success : "blue";
                   return (
-                    <span key={`${x}${y}`} style={{ fontSize: fontSize, color: selectOptionColor }}>
+                    <span key={`${x}${y}`} style={{ fontSize: fontSize, color: "blue" }}>
                       {cell}&nbsp;
                     </span>
                   );
                 }
 
-                const optionColor = hasAugment && isCorrectAnswer ? Settings.theme.success : Settings.theme.primary;
+                const optionColor = hasAugment && !isCorrectAnswer ? Settings.theme.disabled : Settings.theme.primary;
                 return (
                   <span key={`${x}${y}`} style={{ fontSize: fontSize, color: optionColor }}>
                     {cell}&nbsp;

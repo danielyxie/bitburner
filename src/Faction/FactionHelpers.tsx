@@ -3,7 +3,6 @@ import { Augmentation } from "../Augmentation/Augmentation";
 import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { CONSTANTS } from "../Constants";
 
 import { Faction } from "./Faction";
 import { Factions } from "./Factions";
@@ -14,7 +13,6 @@ import {
   getFactionSecurityWorkRepGain,
   getFactionFieldWorkRepGain,
 } from "../PersonObjects/formulas/reputation";
-import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";

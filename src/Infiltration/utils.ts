@@ -5,9 +5,9 @@ export function random(min: number, max: number): number {
 }
 
 export const upArrowSymbol = "↑";
-export const downArrowSymbol = "↑";
-export const leftArrowSymbol = "↑";
-export const rightArrowSymbol = "↑";
+export const downArrowSymbol = "↓";
+export const leftArrowSymbol = "←";
+export const rightArrowSymbol = "→";
 
 export function getArrow(event: KeyboardEvent): string {
   switch (event.key) {
