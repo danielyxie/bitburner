@@ -499,7 +499,7 @@ export function NetscriptSingularity(
 
       if (player.hasTorRouter()) {
         workerScript.log("purchaseTor", () => "You already have a TOR router!");
-        return false;
+        return true;
       }
 
       if (player.money < CONSTANTS.TorRouterCost) {
