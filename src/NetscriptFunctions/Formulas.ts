@@ -42,44 +42,6 @@ import {
   calculateAscensionPointsGain,
 } from "../Gang/formulas/formulas";
 
-export interface INetscriptFormulas {
-  skills: {
-    calculateSkill(exp: any, mult?: any): any;
-    calculateExp(skill: any, mult?: any): any;
-  };
-  hacking: {
-    hackChance(server: any, player: any): any;
-    hackExp(server: any, player: any): any;
-    hackPercent(server: any, player: any, hackOverride?: any): any;
-    growPercent(server: any, threads: any, player: any, cores?: any): any;
-    hackTime(server: any, player: any, hackOverride?: any): any;
-    hackLevelForTime(server: any, player: any, ms: any): any;
-    growTime(server: any, player: any, hackOverride?: any): any;
-    growLevelForTime(server: any, player: any, ms: any): any;
-    weakenTime(server: any, player: any, hackOverride?: any): any;
-    weakenLevelForTime(server: any, player: any, ms: any): any;
-    numCycleForGrowth(server: any, growth: any, player: any, cores: any): any;
-  };
-  hacknetNodes: {
-    moneyGainRate(level: any, ram: any, cores: any, mult?: any): any;
-    levelUpgradeCost(startingLevel: any, extraLevels?: any, costMult?: any): any;
-    ramUpgradeCost(startingRam: any, extraLevels?: any, costMult?: any): any;
-    coreUpgradeCost(startingCore: any, extraCores?: any, costMult?: any): any;
-    hacknetNodeCost(n: any, mult: any): any;
-    constants(): any;
-  };
-  hacknetServers: {
-    hashGainRate(level: any, ramUsed: any, maxRam: any, cores: any, mult?: any): any;
-    levelUpgradeCost(startingLevel: any, extraLevels?: any, costMult?: any): any;
-    ramUpgradeCost(startingRam: any, extraLevels?: any, costMult?: any): any;
-    coreUpgradeCost(startingCore: any, extraCores?: any, costMult?: any): any;
-    cacheUpgradeCost(startingCache: any, extraCache?: any): any;
-    hashUpgradeCost(upgName: any, level: any): any;
-    hacknetServerCost(n: any, mult: any): any;
-    constants(): any;
-  };
-}
-
 export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IFormulas {
   const checkFormulasAccess = function (func: string): void {
     if (!player.hasProgram(Programs.Formulas.name)) {
