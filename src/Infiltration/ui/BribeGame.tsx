@@ -50,9 +50,23 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
   const hasAugment = Player.hasAugmentation(AugmentationNames.AmuletOfPersuasion, true);
 
   if (hasAugment) {
-    upColor = correctIndex < index ? upColor : disabledColor;
-    downColor = correctIndex > index ? upColor : disabledColor;
-    choiceColor = correctIndex == index ? Settings.theme.success : disabledColor;
+    const upIndex = index + 1 >= choices.length ? 0 : index + 1;
+    let upDistance = correctIndex - upIndex;
+    if (upIndex > correctIndex) {
+      upDistance = choices.length - 1 - upIndex + correctIndex;
+    }
+
+    const downIndex = index - 1 < 0 ? choices.length - 1 : index - 1;
+    let downDistance = downIndex - correctIndex;
+    if (downIndex < correctIndex) {
+      downDistance = downIndex + choices.length - 1 - correctIndex;
+    }
+
+    const onCorrectIndex = correctIndex == index;
+
+    upColor = upDistance <= downDistance && !onCorrectIndex ? upColor : disabledColor;
+    downColor = upDistance >= downDistance && !onCorrectIndex ? downColor : disabledColor;
+    choiceColor = onCorrectIndex ? defaultColor : disabledColor;
   }
 
   function press(this: Document, event: KeyboardEvent): void {

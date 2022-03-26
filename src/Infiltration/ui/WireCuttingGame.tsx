@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { IMinigameProps } from "./IMinigameProps";
@@ -70,6 +70,21 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
     return questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1));
   }
 
+  useEffect(() => {
+    // check if we won
+    const wiresToBeCut = [];
+    for (let j = 0; j < wires.length; j++) {
+      let shouldBeCut = false;
+      for (let i = 0; i < questions.length; i++) {
+        shouldBeCut = shouldBeCut || questions[i].shouldCut(wires[j], j);
+      }
+      wiresToBeCut.push(shouldBeCut);
+    }
+    if (wiresToBeCut.every((b, i) => b === cutWires[i])) {
+      props.onSuccess();
+    }
+  }, [cutWires]);
+
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     const wireNum = parseInt(event.key);
@@ -80,19 +95,6 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
       next[wireNum - 1] = true;
       if (!checkWire(wireNum)) {
         props.onFailure();
-      }
-
-      // check if we won
-      const wiresToBeCut = [];
-      for (let j = 0; j < wires.length; j++) {
-        let shouldBeCut = false;
-        for (let i = 0; i < questions.length; i++) {
-          shouldBeCut = shouldBeCut || questions[i].shouldCut(wires[j], j);
-        }
-        wiresToBeCut.push(shouldBeCut);
-      }
-      if (wiresToBeCut.every((b, i) => b === next[i])) {
-        props.onSuccess();
       }
 
       return next;
