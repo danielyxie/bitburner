@@ -89,7 +89,7 @@ export function Console(props: IProps): React.ReactElement {
 
     const consoleHistory = props.bladeburner.consoleHistory;
 
-    if (event.key === KEY.S) {
+    if (event.key === KEY.UP_ARROW) {
       // up
       let i = consoleHistoryIndex;
       const len = consoleHistory.length;
