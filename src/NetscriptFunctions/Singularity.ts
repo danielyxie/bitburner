@@ -42,7 +42,6 @@ import { Terminal } from "../Terminal";
 import { calculateHackingTime } from "../Hacking";
 import { Server } from "../Server/Server";
 import { netscriptCanHack } from "../Hacking/netscriptCanHack";
-import { FactionNames } from "../Faction/data/FactionNames";
 import { FactionInfos } from "../Faction/FactionInfo";
 
 export function NetscriptSingularity(
