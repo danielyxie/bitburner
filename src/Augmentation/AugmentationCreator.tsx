@@ -5,7 +5,7 @@ import { Programs } from "../Programs/Programs";
 import { WHRNG } from "../Casino/RNG";
 import React from "react";
 import { FactionNames } from "../Faction/data/FactionNames";
-import { CityName } from "src/Locations/data/CityNames";
+import { CityName } from "../Locations/data/CityNames";
 
 function getRandomBonus(): any {
   const bonuses = [

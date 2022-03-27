@@ -69,6 +69,11 @@ export const RamCostConstants: IMap<number> = {
   ScriptStanekPlace: 5,
   ScriptStanekFragmentAt: 2,
   ScriptStanekDeleteAt: 0.15,
+
+  ScriptInfiltrationCalculateDifficulty: 2.5,
+  ScriptInfiltrationCalculateRewards: 2.5,
+  ScriptInfiltrationGetLocations: 5,
+  ScriptInfiltrationGetInfiltrations: 15,
 };
 
 function SF4Cost(cost: number): (player: IPlayer) => number {
@@ -374,6 +379,13 @@ export const RamCosts: IMap<any> = {
     place: RamCostConstants.ScriptStanekPlace,
     get: RamCostConstants.ScriptStanekFragmentAt,
     remove: RamCostConstants.ScriptStanekDeleteAt,
+  },
+
+  infiltration: {
+    calculateDifficulty: RamCostConstants.ScriptInfiltrationCalculateDifficulty,
+    calculateRewards: RamCostConstants.ScriptInfiltrationCalculateRewards,
+    calculateGetLocations: RamCostConstants.ScriptInfiltrationGetLocations,
+    calculateGetInfiltrations: RamCostConstants.ScriptInfiltrationGetInfiltrations,
   },
 
   ui: {

@@ -10,8 +10,12 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FactionNames } from "../../Faction/data/FactionNames";
-import { LocationsMetadata } from "../../Locations/data/LocationsMetadata";
 import { formatNumber } from "../../utils/StringHelperFunctions";
+import {
+  calculateInfiltratorsRepReward,
+  calculateSellInformationCashReward,
+  calculateTradeInformationRepReward,
+} from "../formulas/victory";
 
 interface IProps {
   StartingDifficulty: number;
@@ -30,36 +34,12 @@ export function Victory(props: IProps): React.ReactElement {
     router.toCity();
   }
 
-  const levelBonus = props.MaxLevel * Math.pow(1.01, props.MaxLevel);
-
-  const repGain =
-    Math.pow(props.Reward + 1, 1.1) *
-    Math.pow(props.StartingDifficulty, 1.2) *
-    30 *
-    levelBonus *
-    player.infiltration_trade_mult *
-    BitNodeMultipliers.InfiltrationRep;
+  const repGain = calculateTradeInformationRepReward(player, props.Reward, props.MaxLevel, props.StartingDifficulty);
+  const moneyGain = calculateSellInformationCashReward(player, props.Reward, props.MaxLevel, props.StartingDifficulty);
+  const infiltrationRepGain = calculateInfiltratorsRepReward(player, props.StartingDifficulty);
 
   const infiltratorFaction = Factions[FactionNames.Infiltrators];
   const isMemberOfInfiltrators = infiltratorFaction && infiltratorFaction.isMember;
-
-  const moneyGain =
-    Math.pow(props.Reward + 1, 2) *
-    Math.pow(props.StartingDifficulty, 3) *
-    3e3 *
-    levelBonus *
-    player.infiltration_sell_mult *
-    BitNodeMultipliers.InfiltrationMoney;
-
-  function calculateInfiltratorsRepReward(): number {
-    const maxStartingSecurityLevel = LocationsMetadata.reduce((acc, data): number => {
-      const startingSecurityLevel = data.infiltrationData?.startingSecurityLevel || 0;
-      return acc > startingSecurityLevel ? acc : startingSecurityLevel;
-    }, 0);
-    const baseRepGain = (props.StartingDifficulty / maxStartingSecurityLevel) * 10;
-
-    return (baseRepGain + player.infiltration_base_rep_increase) * player.infiltration_rep_mult;
-  }
 
   function sell(): void {
     handleInfiltrators();
@@ -81,7 +61,7 @@ export function Victory(props: IProps): React.ReactElement {
   function handleInfiltrators(): void {
     player.hasCompletedAnInfiltration = true;
     if (isMemberOfInfiltrators) {
-      infiltratorFaction.playerReputation += calculateInfiltratorsRepReward();
+      infiltratorFaction.playerReputation += infiltrationRepGain;
     }
   }
 
@@ -96,7 +76,7 @@ export function Victory(props: IProps): React.ReactElement {
             You{" "}
             {isMemberOfInfiltrators ? (
               <>
-                have gained {formatNumber(calculateInfiltratorsRepReward(), 2)} rep for {FactionNames.Infiltrators} and{" "}
+                have gained {formatNumber(infiltrationRepGain, 2)} rep for {FactionNames.Infiltrators} and{" "}
               </>
             ) : (
               <></>

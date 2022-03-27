@@ -64,6 +64,7 @@ import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
 import { NetscriptExtra } from "./NetscriptFunctions/Extra";
 import { NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
 import { NetscriptStanek } from "./NetscriptFunctions/Stanek";
+import { NetscriptInfiltration } from "./NetscriptFunctions/Infiltration";
 import { NetscriptUserInterface } from "./NetscriptFunctions/UserInterface";
 import { NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
 import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
@@ -78,6 +79,7 @@ import {
   Gang as IGang,
   Bladeburner as IBladeburner,
   Stanek as IStanek,
+  Infiltration as IInfiltration,
   SourceFileLvl,
 } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
@@ -96,6 +98,7 @@ interface NS extends INS {
   gang: IGang;
   bladeburner: IBladeburner;
   stanek: IStanek;
+  infiltration: IInfiltration;
 }
 
 export function NetscriptFunctions(workerScript: WorkerScript): NS {
@@ -473,6 +476,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const extra = NetscriptExtra(Player, workerScript, helper);
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
   const stanek = NetscriptStanek(Player, workerScript, helper);
+  const infiltration = NetscriptInfiltration(Player, workerScript, helper);
   const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
   const codingcontract = NetscriptCodingContract(Player, workerScript, helper);
   const corporation = NetscriptCorporation(Player, workerScript, helper);
@@ -490,6 +494,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     sleeve: sleeve,
     corporation: corporation,
     stanek: stanek,
+    infiltration: infiltration,
     ui: ui,
     formulas: formulas,
     stock: stockmarket,

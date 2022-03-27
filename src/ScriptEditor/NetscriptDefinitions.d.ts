@@ -1,3 +1,5 @@
+import { Location } from "src/Locations/Location";
+
 /**
  * @public
  */
@@ -4119,6 +4121,59 @@ interface Stanek {
   remove(rootX: number, rootY: number): boolean;
 }
 
+export interface InfiltrationReward {
+  tradeRep: number;
+  sellCash: number;
+  infiltratorRep: number;
+}
+
+export interface InfiltrationLocation {
+  location: Location;
+  reward: InfiltrationReward;
+  difficulty: number;
+}
+
+/**
+ * Infiltration API.
+ * @public
+ */
+interface Infiltration {
+  /**
+   * Calculate the difficulty of performing an infiltration.
+   * @remarks
+   * RAM cost: 2.5 GB
+   *
+   * @param locationName - name of the location to check.
+   * @returns the difficulty.
+   */
+  calculateDifficulty(locationName: string): number;
+  /**
+   * Calculate the rewards for trading and selling information for completing an infiltration.
+   * @remarks
+   * RAM cost: 2.5 GB
+   *
+   * @param locationName - name of the location to check.
+   * @returns the trade reputation, sell cash and infiltrators rep reward.
+   */
+  calculateRewards(locationName: string): InfiltrationReward;
+  /**
+   * Get all locations that can be infiltrated.
+   * @remarks
+   * RAM cost: 5 GB
+   *
+   * @returns all locations that can be infiltrated.
+   */
+  getLocations(): Location[];
+  /**
+   * Get all infiltrations with difficulty, location and rewards.
+   * @remarks
+   * RAM cost: 15 GB
+   *
+   * @returns all infiltrations with difficulty, location and rewards.
+   */
+  getInfiltrations(): InfiltrationLocation[];
+}
+
 /**
  * User Interface API.
  * @public
@@ -4268,6 +4323,11 @@ export interface NS extends Singularity {
    * RAM cost: 0 GB
    */
   readonly stanek: Stanek;
+  /**
+   * Namespace for infiltration functions.
+   * RAM cost: 0 GB
+   */
+  readonly infiltration: Infiltration;
   /**
    * Namespace for corporation functions.
    * RAM cost: 0 GB
