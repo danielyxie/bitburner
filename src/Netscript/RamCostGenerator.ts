@@ -386,6 +386,12 @@ export const RamCosts: IMap<any> = {
     getGameInfo: 0,
   },
 
+  grafting: {
+    getAugmentationCraftPrice: 3.75,
+    getAugmentationCraftTime: 3.75,
+    craftAugmentation: 7.5,
+  },
+
   heart: {
     // Easter egg function
     break: 0,

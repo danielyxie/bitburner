@@ -3724,7 +3724,7 @@ export interface Grafting {
   /**
    * Retrieve the crafting cost of an aug.
    * @remarks
-   * RAM cost: TODO
+   * RAM cost: 3.75 GB
    *
    * @param augName - Name of the aug to check the price of. Must be an exact match.
    * @returns The cost required to craft the named augmentation.
@@ -3734,7 +3734,7 @@ export interface Grafting {
   /**
    * Retrieves the time required to craft an aug.
    * @remarks
-   * RAM cost: TODO
+   * RAM cost: 3.75 GB
    *
    * @param augName - Name of the aug to check the crafting time of. Must be an exact match.
    * @returns The time required, in millis, to craft the named augmentation.
@@ -3744,11 +3744,13 @@ export interface Grafting {
   /**
    * Begins crafting the named aug. You must be in New Tokyo to use this.
    * @remarks
-   * RAM cost: TODO
+   * RAM cost: 7.5 GB
    *
    * @param augName - The name of the aug to begin crafting. Must be an exact match.
    * @param focus - Acquire player focus on this Augmentation crafting. Optional. Defaults to true.
-   * @returns True if the aug successfully began crafting, false otherwise.
+   * @returns True if the aug successfully began crafting, false otherwise (e.g. not enough money, or
+   * invalid Augmentation name provided).
+   * @throws Will error if called while you are not in New Tokyo.
    */
   craftAugmentation(augName: string, focus?: boolean): boolean;
 }
