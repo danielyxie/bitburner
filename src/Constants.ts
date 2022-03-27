@@ -277,10 +277,10 @@ export const CONSTANTS: {
   CodingContractBaseMoneyGain: 75e6,
 
   // Augmentation crafting multipliers
-  // TODO: Get these right
   AugmentationCraftingCostMult: 1.2,
   AugmentationCraftingTimeBase: 3600000,
 
+  // Value raised to the number of entropy stacks, then multiplied to player multipliers
   EntropyEffect: 0.99,
 
   // BitNode/Source-File related stuff
