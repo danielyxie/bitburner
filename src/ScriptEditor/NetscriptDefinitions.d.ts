@@ -3728,6 +3728,7 @@ export interface Grafting {
    *
    * @param augName - Name of the aug to check the price of. Must be an exact match.
    * @returns The cost required to craft the named augmentation.
+   * @throws Will error if an invalid Augmentation name is provided.
    */
   getAugmentationCraftPrice(augName: string): number;
 
@@ -3738,6 +3739,7 @@ export interface Grafting {
    *
    * @param augName - Name of the aug to check the crafting time of. Must be an exact match.
    * @returns The time required, in millis, to craft the named augmentation.
+   * @throws Will error if an invalid Augmentation name is provided.
    */
   getAugmentationCraftTime(augName: string): number;
 
