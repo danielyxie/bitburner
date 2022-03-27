@@ -511,7 +511,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         </Grid>
         <Grid item>
           <Button sx={{ mx: 2 }} onClick={cancel}>
-            Cancel work on creating program
+            Cancel work on crafting Augmentation
           </Button>
           <Button onClick={unfocus}>Do something else simultaneously</Button>
         </Grid>
