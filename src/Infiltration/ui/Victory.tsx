@@ -10,7 +10,6 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FactionNames } from "../../Faction/data/FactionNames";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { LocationsMetadata } from "../../Locations/data/LocationsMetadata";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 
@@ -38,6 +37,7 @@ export function Victory(props: IProps): React.ReactElement {
     Math.pow(props.StartingDifficulty, 1.2) *
     30 *
     levelBonus *
+    player.infiltration_trade_mult *
     BitNodeMultipliers.InfiltrationRep;
 
   const infiltratorFaction = Factions[FactionNames.Infiltrators];
@@ -48,23 +48,17 @@ export function Victory(props: IProps): React.ReactElement {
     Math.pow(props.StartingDifficulty, 3) *
     3e3 *
     levelBonus *
+    player.infiltration_sell_mult *
     BitNodeMultipliers.InfiltrationMoney;
 
   function calculateInfiltratorsRepReward(): number {
-    const bionicFingersRepGain = player.hasAugmentation(AugmentationNames.BionicFingers, true) ? 5 : 0;
-    const CorporationManagementImplantRepMultiplier = player.hasAugmentation(
-      AugmentationNames.CorporationManagementImplant,
-      true,
-    )
-      ? 2.5
-      : 1;
     const maxStartingSecurityLevel = LocationsMetadata.reduce((acc, data): number => {
       const startingSecurityLevel = data.infiltrationData?.startingSecurityLevel || 0;
       return acc > startingSecurityLevel ? acc : startingSecurityLevel;
     }, 0);
     const baseRepGain = (props.StartingDifficulty / maxStartingSecurityLevel) * 10;
 
-    return (baseRepGain + bionicFingersRepGain) * CorporationManagementImplantRepMultiplier;
+    return (baseRepGain + player.infiltration_base_rep_increase) * player.infiltration_rep_mult;
   }
 
   function sell(): void {

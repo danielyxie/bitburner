@@ -135,6 +135,12 @@ export class PlayerObject implements IPlayer {
   bladeburner_stamina_gain_mult: number;
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
+  infiltration_base_rep_increase: number;
+  infiltration_rep_mult: number;
+  infiltration_trade_mult: number;
+  infiltration_sell_mult: number;
+  infiltration_timer_mult: number;
+  infiltration_health_reduction_mult: number;
 
   createProgramReqLvl: number;
   factionWorkType: string;
@@ -455,6 +461,13 @@ export class PlayerObject implements IPlayer {
     this.bladeburner_stamina_gain_mult = 1;
     this.bladeburner_analysis_mult = 1; //Field Analysis Onl;
     this.bladeburner_success_chance_mult = 1;
+
+    this.infiltration_base_rep_increase = 0;
+    this.infiltration_rep_mult = 1;
+    this.infiltration_trade_mult = 1;
+    this.infiltration_sell_mult = 1;
+    this.infiltration_timer_mult = 1;
+    this.infiltration_health_reduction_mult = 1;
 
     // Sleeves & Re-sleeving
     this.sleeves = [];

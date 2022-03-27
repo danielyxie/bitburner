@@ -115,6 +115,48 @@ export function PlayerMultipliers(): React.ReactElement {
     );
   }
 
+  function InfiltrationMults(): React.ReactElement {
+    return (
+      <>
+        <MultiplierTable
+          rows={[
+            [
+              "Infiltrator Rep reward multiplier",
+              Player.infiltration_rep_mult,
+              Player.infiltration_rep_mult * mults.infiltration_rep_mult,
+              1,
+            ],
+            [
+              "Infiltration sell multiplier",
+              Player.infiltration_sell_mult,
+              Player.infiltration_sell_mult * mults.infiltration_sell_mult,
+              1,
+            ],
+            [
+              "Infiltration trade multiplier",
+              Player.infiltration_trade_mult,
+              Player.infiltration_trade_mult * mults.infiltration_trade_mult,
+              1,
+            ],
+            [
+              "Infiltration minigame timer multiplier",
+              Player.infiltration_timer_mult,
+              Player.infiltration_timer_mult * mults.infiltration_timer_mult,
+              1,
+            ],
+            [
+              "Infiltration minigame health reduction multiplier",
+              Player.infiltration_health_reduction_mult,
+              Player.infiltration_health_reduction_mult * mults.infiltration_health_reduction_mult,
+              1,
+            ],
+          ]}
+        />
+        <br />
+      </>
+    );
+  }
+
   return (
     <>
       <Typography variant="h4">Multipliers</Typography>
@@ -286,6 +328,7 @@ export function PlayerMultipliers(): React.ReactElement {
         <br />
 
         <BladeburnerMults />
+        <InfiltrationMults />
       </Box>
     </>
   );

@@ -45,6 +45,12 @@ export function Info(props: IProps): React.ReactElement {
   const classes = useStyles();
 
   const favorGain = props.faction.getFavorGain();
+  const offersWork =
+    props.factionInfo.offerHackingMission ||
+    props.factionInfo.offerFieldWork ||
+    props.factionInfo.offerSecurityWork ||
+    props.factionInfo.offerHackingWork;
+
   return (
     <>
       <Typography classes={{ root: classes.noformat }}>{props.factionInfo.infoText}</Typography>
@@ -59,9 +65,7 @@ export function Info(props: IProps): React.ReactElement {
               </Typography>
               <MathJaxWrapper>{"\\(\\huge{r = \\text{total faction reputation}}\\)"}</MathJaxWrapper>
               <MathJaxWrapper>
-                {
-                  "\\(\\huge{favor=1+\\left\\lfloor\\log_{1.02}\\left(\\frac{r+25000}{25500}\\right)\\right\\rfloor}\\)"
-                }
+                {"\\(\\huge{favor=1+\\left\\lfloor\\log_{1.02}\\left(\\frac{r+25000}{25500}\\right)\\right\\rfloor}\\)"}
               </MathJaxWrapper>
             </>
           }
@@ -86,7 +90,6 @@ export function Info(props: IProps): React.ReactElement {
 
               <MathJaxWrapper>{"\\(\\huge{r = reputation}\\)"}</MathJaxWrapper>
               <MathJaxWrapper>{"\\(\\huge{\\Delta r = \\Delta r \\times \\frac{100+favor}{100}}\\)"}</MathJaxWrapper>
-
             </>
           }
         >
@@ -98,10 +101,16 @@ export function Info(props: IProps): React.ReactElement {
 
       <Typography>-------------------------</Typography>
       <Typography>
-        Perform work/carry out assignments for your faction to help further its cause! By doing so you will earn
-        reputation for your faction. You will also gain reputation passively over time, although at a very slow rate.
-        Earning reputation will allow you to purchase Augmentations through this faction, which are powerful upgrades
-        that enhance your abilities.
+        {offersWork ? (
+          <>
+            Perform work/carry out assignments for your faction to help further its cause! By doing so you will earn
+            reputation for your faction.{" "}
+          </>
+        ) : (
+          <></>
+        )}
+        You will also gain reputation passively over time, although at a very slow rate. Earning reputation will allow
+        you to purchase Augmentations through this faction, which are powerful upgrades that enhance your abilities.
       </Typography>
     </>
   );

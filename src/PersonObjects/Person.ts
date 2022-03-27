@@ -97,6 +97,13 @@ export abstract class Person {
   bladeburner_analysis_mult = 1;
   bladeburner_success_chance_mult = 1;
 
+  infiltration_base_rep_increase = 0;
+  infiltration_rep_mult = 1;
+  infiltration_trade_mult = 1;
+  infiltration_sell_mult = 1;
+  infiltration_timer_mult = 1;
+  infiltration_health_reduction_mult = 1;
+
   /**
    * Augmentations
    */
@@ -195,6 +202,24 @@ export abstract class Person {
     this.crime_success_mult = 1;
 
     this.work_money_mult = 1;
+
+    this.hacknet_node_money_mult = 1;
+    this.hacknet_node_purchase_cost_mult = 1;
+    this.hacknet_node_ram_cost_mult = 1;
+    this.hacknet_node_core_cost_mult = 1;
+    this.hacknet_node_level_cost_mult = 1;
+
+    this.bladeburner_max_stamina_mult = 1;
+    this.bladeburner_stamina_gain_mult = 1;
+    this.bladeburner_analysis_mult = 1;
+    this.bladeburner_success_chance_mult = 1;
+
+    this.infiltration_base_rep_increase = 0;
+    this.infiltration_rep_mult = 1;
+    this.infiltration_trade_mult = 1;
+    this.infiltration_sell_mult = 1;
+    this.infiltration_timer_mult = 1;
+    this.infiltration_health_reduction_mult = 1;
   }
 
   /**

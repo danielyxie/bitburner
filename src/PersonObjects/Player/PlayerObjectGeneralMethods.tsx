@@ -314,6 +314,13 @@ export function resetMultipliers(this: IPlayer): void {
   this.bladeburner_stamina_gain_mult = 1;
   this.bladeburner_analysis_mult = 1;
   this.bladeburner_success_chance_mult = 1;
+
+  this.infiltration_base_rep_increase = 0;
+  this.infiltration_rep_mult = 1;
+  this.infiltration_trade_mult = 1;
+  this.infiltration_sell_mult = 1;
+  this.infiltration_timer_mult = 1;
+  this.infiltration_health_reduction_mult = 1;
 }
 
 export function hasProgram(this: IPlayer, programName: string): boolean {

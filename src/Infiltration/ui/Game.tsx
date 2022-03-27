@@ -91,7 +91,9 @@ export function Game(props: IProps): React.ReactElement {
     pushResult(false);
     // Kill the player immediately if they use automation, so
     // it's clear they're not meant to
-    const damage = options?.automated ? player.hp : props.StartingDifficulty * 3;
+    const damage = options?.automated
+      ? player.hp
+      : props.StartingDifficulty * 3 * player.infiltration_health_reduction_mult;
     if (player.takeDamage(damage)) {
       router.toCity();
       return;

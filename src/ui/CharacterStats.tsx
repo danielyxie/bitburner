@@ -142,6 +142,25 @@ function BladeburnerMults(): React.ReactElement {
   );
 }
 
+function InfiltrationMults(): React.ReactElement {
+  const player = use.Player();
+  return (
+    <>
+      <MultiplierTable
+        rows={[
+          ["Infiltrator Base Rep increase", player.infiltration_rep_mult],
+          ["Infiltrator Rep reward multiplier", player.infiltration_rep_mult],
+          ["Infiltration sell multiplier", player.infiltration_sell_mult],
+          ["Infiltration trade multiplier", player.infiltration_trade_mult],
+          ["Infiltration minigame timer multiplier", player.infiltration_timer_mult],
+          ["Infiltration minigame health reduction multiplier", player.infiltration_health_reduction_mult],
+        ]}
+      />
+      <br />
+    </>
+  );
+}
+
 function CurrentBitNode(): React.ReactElement {
   const player = use.Player();
   if (player.sourceFiles.length > 0) {
@@ -483,6 +502,7 @@ export function CharacterStats(): React.ReactElement {
         />
         <br />
         <BladeburnerMults />
+        <InfiltrationMults />
       </Box>
       <br />
 

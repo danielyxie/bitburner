@@ -5,6 +5,7 @@ import { Programs } from "../Programs/Programs";
 import { WHRNG } from "../Casino/RNG";
 import React from "react";
 import { FactionNames } from "../Faction/data/FactionNames";
+import { CityName } from "src/Locations/data/CityNames";
 
 function getRandomBonus(): any {
   const bonuses = [
@@ -99,23 +100,63 @@ export const infiltratorsOtherAugmentations = [
     name: AugmentationNames.BionicFingers,
     repCost: 15e1,
     moneyCost: 1e6,
+    infiltration_base_rep_increase: 5,
     info:
       "This state of the art augmentation removes the need for bones and tendons in your fingers, " +
       "with this you will have the dexterity equal to the best rubik's cube player in the world. ",
-    stats: <>This augmentation increases the rep reward to {FactionNames.Infiltrators} by 5 per infiltration.</>,
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
     name: AugmentationNames.CorporationManagementImplant,
     repCost: 25e1,
     moneyCost: 1e6,
+    infiltration_rep_mult: 2.5,
     info:
       "As time went on corporations realized that managers were redundant if they could be replaced by AI chips " +
       "implanted directly in the brain, and so the this implant was developed which could analyse the users brain " +
       "to find the perfect tone and sounding voice to increase productivity of the user to maximum profits.",
-    stats: (
-      <>This augmentation multiplies the rep reward to {FactionNames.Infiltrators} by 2.5 per infiltration.</>
-    ),
+    factions: [FactionNames.Infiltrators],
+  }),
+  new Augmentation({
+    name: AugmentationNames.TranslationCircuit,
+    repCost: 5e2,
+    moneyCost: 1e6,
+    infiltration_trade_mult: 1.5,
+    info:
+      "A state of the art circuit module that manipulates the users voice to suit the needs of the situation, " +
+      "allowing the people listening to feel more persuaded by whats said due to the voice being auto translated " +
+      "to the listeners accent and language.",
+    factions: [FactionNames.Infiltrators],
+  }),
+  new Augmentation({
+    name: AugmentationNames.GoldenSuiteCase,
+    repCost: 5e2,
+    moneyCost: 1e6,
+    infiltration_sell_mult: 1.5,
+    info:
+      "Some say too much money is a curse, those people clearly have never owned a golden suitcase. it might be " +
+      "a bit heavier but it sure does make anything inside it look a lot more valuable.",
+    factions: [FactionNames.Infiltrators],
+  }),
+  new Augmentation({
+    name: AugmentationNames.TimeDilationInjection,
+    repCost: 5e2,
+    moneyCost: 1e6,
+    infiltration_timer_mult: 1.3,
+    info:
+      "Injected directly into the user eyes, as the serum seeps into the brain via the optic nerves perception " +
+      "of time begins to slow down allowing you to take more time to do things than the average person",
+    factions: [FactionNames.Infiltrators],
+  }),
+  new Augmentation({
+    name: AugmentationNames.BitaniumArmorAlloy,
+    repCost: 5e2,
+    moneyCost: 1e6,
+    infiltration_health_reduction_mult: 0.7,
+    info:
+      `Deep in the mines of ${CityName.Ishima} miners found a strange new material, now known as bitanium after ` +
+      "many iterations of experimenting it was found to be exceptional at increasing ones amour at absorbing " +
+      "blunt damage when used as an alloy with almost any other metal you can think of.",
     factions: [FactionNames.Infiltrators],
   }),
 ];

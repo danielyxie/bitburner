@@ -113,6 +113,7 @@ export enum AugmentationNames {
   StaneksGift2 = "Stanek's Gift - Awakening",
   StaneksGift3 = "Stanek's Gift - Serenity",
 
+  // Infiltrators MiniGames
   BagOfSand = "A Bag of Sand",
   IntellisenseModule = "Intellisense Module",
   ReverseDictionary = "Reverse Dictionary",
@@ -121,9 +122,13 @@ export enum AugmentationNames {
   CyberDecoder = "Cyber Decoder",
   MineDetector = "Mine Detector",
   WireCuttingManual = "Wire Cutting Manual",
-
+  // Infiltrators general
   BionicFingers = "Bionic Fingers",
   CorporationManagementImplant = "Corporation Management Implant",
+  TranslationCircuit = "Translation Circuit",
+  GoldenSuiteCase = "Golden Suite Case",
+  TimeDilationInjection = "Time Dilation Injection",
+  BitaniumArmorAlloy = "Bitanium Armor Alloy",
 
   //Wasteland Augs
   //PepBoy:                             "P.E.P-Boy", Plasma Energy Projection System
