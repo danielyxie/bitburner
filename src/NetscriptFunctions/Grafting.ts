@@ -64,6 +64,7 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
       const craftableAug = new CraftableAugmentation(Augmentations[augName]);
       if (player.money < craftableAug.cost) {
         workerScript.log("grafting.craftAugmentation", () => `You don't have enough money to craft ${augName}`);
+        return false;
       }
 
       player.loseMoney(craftableAug.cost, "augmentations");
