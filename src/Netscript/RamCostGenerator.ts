@@ -136,6 +136,7 @@ export const RamCosts: IMap<any> = {
   kill: RamCostConstants.ScriptKillRamCost,
   killall: RamCostConstants.ScriptKillRamCost,
   exit: 0,
+  atExit: 0,
   scp: RamCostConstants.ScriptScpRamCost,
   ls: RamCostConstants.ScriptScanRamCost,
   ps: RamCostConstants.ScriptScanRamCost,
@@ -364,16 +365,16 @@ export const RamCosts: IMap<any> = {
   },
 
   stanek: {
-    width: RamCostConstants.ScriptStanekWidth,
-    height: RamCostConstants.ScriptStanekHeight,
-    charge: RamCostConstants.ScriptStanekCharge,
+    giftWidth: RamCostConstants.ScriptStanekWidth,
+    giftHeight: RamCostConstants.ScriptStanekHeight,
+    chargeFragment: RamCostConstants.ScriptStanekCharge,
     fragmentDefinitions: RamCostConstants.ScriptStanekFragmentDefinitions,
     activeFragments: RamCostConstants.ScriptStanekPlacedFragments,
-    clear: RamCostConstants.ScriptStanekClear,
-    canPlace: RamCostConstants.ScriptStanekCanPlace,
-    place: RamCostConstants.ScriptStanekPlace,
-    get: RamCostConstants.ScriptStanekFragmentAt,
-    remove: RamCostConstants.ScriptStanekDeleteAt,
+    clearGift: RamCostConstants.ScriptStanekClear,
+    canPlaceFragment: RamCostConstants.ScriptStanekCanPlace,
+    placeFragment: RamCostConstants.ScriptStanekPlace,
+    getFragment: RamCostConstants.ScriptStanekFragmentAt,
+    removeFragment: RamCostConstants.ScriptStanekDeleteAt,
   },
 
   ui: {
@@ -387,8 +388,8 @@ export const RamCosts: IMap<any> = {
   },
 
   grafting: {
-    getAugmentationCraftPrice: 3.75,
-    getAugmentationCraftTime: 3.75,
+    getAugmentationGraftPrice: 3.75,
+    getAugmentationGraftTime: 3.75,
     graftAugmentation: 7.5,
   },
 
