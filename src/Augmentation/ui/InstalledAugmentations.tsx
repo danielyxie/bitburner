@@ -69,7 +69,7 @@ export function InstalledAugmentations(): React.ReactElement {
                   <ListItemText
                     primary={
                       <Typography color={Settings.theme.hp} style={{ whiteSpace: "pre-wrap" }}>
-                        Entropy virus - Level {player.entropy}
+                        Entropy Virus - Level {player.entropy}
                       </Typography>
                     }
                   />

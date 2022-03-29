@@ -135,7 +135,7 @@ export const GraftingRoot = (): React.ReactElement => {
       </Box>
 
       <Box sx={{ my: 3 }}>
-        <Typography variant="h5">Entropy virus</Typography>
+        <Typography variant="h5">Entropy Virus</Typography>
 
         <Paper sx={{ my: 1, p: 1, width: "fit-content" }}>
           <Typography>
