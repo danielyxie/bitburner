@@ -200,6 +200,7 @@ export const RamCosts: IMap<any> = {
   readPort: 0,
   getPortHandle: 0,
   rm: RamCostConstants.ScriptReadWriteRamCost,
+  mv: RamCostConstants.ScriptReadWriteRamCost,
   scriptRunning: RamCostConstants.ScriptArbScriptRamCost,
   scriptKill: RamCostConstants.ScriptArbScriptRamCost,
   getScriptName: 0,
