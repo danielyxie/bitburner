@@ -115,16 +115,16 @@ export function NetscriptSingularity(
       if (player.hasGangWith(facname)) {
         let augs = Object.values(Augmentations);
 
-        // Remove blacklisted augs.
-        const blacklist = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.TheRedPill];
-        augs = augs.filter((a) => !blacklist.includes(a.name));
-
         // Remove special augs.
         augs = augs.filter((a) => !a.isSpecial);
 
-        // Remove faction-unique augs outside BN2. (But keep the one for this faction.)
         if (player.bitNodeN !== 2) {
+          // Remove faction-unique augs outside BN2. (But keep the one for this faction.)
           augs = augs.filter((a) => a.factions.length > 1 || Factions[facname].augmentations.includes(a.name));
+
+          // Remove blacklisted augs.
+          const blacklist = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.TheRedPill];
+          augs = augs.filter((a) => !blacklist.includes(a.name));
         }
 
         return augs.map((a) => a.name);

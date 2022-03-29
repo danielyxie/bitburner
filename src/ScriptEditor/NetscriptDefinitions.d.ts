@@ -4325,6 +4325,12 @@ export interface NS extends Singularity {
   readonly ui: UserInterface;
 
   /**
+   * Namespace for singularity functions.
+   * RAM cost: 0 GB
+   */
+  readonly singularity: Singularity;
+
+  /**
    * Namespace for grafting functions.
    * @remarks
    * RAM cost: 0 GB

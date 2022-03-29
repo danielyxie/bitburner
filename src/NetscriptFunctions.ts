@@ -486,6 +486,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const base: INS = {
     ...singularity,
 
+    singularity: singularity,
     gang: gang,
     bladeburner: bladeburner,
     codingcontract: codingcontract,
