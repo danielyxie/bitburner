@@ -4066,14 +4066,14 @@ interface Stanek {
    * RAM cost: 0.4 GB
    * @returns The width of the gift.
    */
-  width(): number;
+  giftWidth(): number;
   /**
    * Stanek's Gift height.
    * @remarks
    * RAM cost: 0.4 GB
    * @returns The height of the gift.
    */
-  height(): number;
+  giftHeight(): number;
 
   /**
    * Charge a fragment, increasing its power.
@@ -4083,7 +4083,7 @@ interface Stanek {
    * @param rootY - rootY Root Y against which to align the top left of the fragment.
    * @returns Promise that lasts until the charge action is over.
    */
-  charge(rootX: number, rootY: number): Promise<void>;
+  chargeFragment(rootX: number, rootY: number): Promise<void>;
 
   /**
    * List possible fragments.
@@ -4108,7 +4108,7 @@ interface Stanek {
    * @remarks
    * RAM cost: 0 GB
    */
-  clear(): void;
+  clearGift(): void;
 
   /**
    * Check if fragment can be placed at specified location.
@@ -4121,7 +4121,7 @@ interface Stanek {
    * @param fragmentId - fragmentId ID of the fragment to place.
    * @returns true if the fragment can be placed at that position. false otherwise.
    */
-  canPlace(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+  canPlaceFragment(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
   /**
    * Place fragment on Stanek's Gift.
    * @remarks
@@ -4133,7 +4133,7 @@ interface Stanek {
    * @param fragmentId - ID of the fragment to place.
    * @returns true if the fragment can be placed at that position. false otherwise.
    */
-  place(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+  placeFragment(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
   /**
    * Get placed fragment at location.
    * @remarks
@@ -4143,7 +4143,7 @@ interface Stanek {
    * @param rootY - Y against which to align the top left of the fragment.
    * @returns The fragment at [rootX, rootY], if any.
    */
-  get(rootX: number, rootY: number): ActiveFragment | undefined;
+  getFragment(rootX: number, rootY: number): ActiveFragment | undefined;
 
   /**
    * Remove fragment at location.
@@ -4154,7 +4154,7 @@ interface Stanek {
    * @param rootY - Y against which to align the top left of the fragment.
    * @returns The fragment at [rootX, rootY], if any.
    */
-  remove(rootX: number, rootY: number): boolean;
+  removeFragment(rootX: number, rootY: number): boolean;
 }
 
 /**
