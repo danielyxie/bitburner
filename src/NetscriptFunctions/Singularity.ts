@@ -113,17 +113,21 @@ export function NetscriptSingularity(
 
       // If player has a gang with this faction, return all augmentations.
       if (player.hasGangWith(facname)) {
-        const res = [];
-        for (const augName of Object.keys(Augmentations)) {
-          if (augName === AugmentationNames.NeuroFluxGovernor) continue;
-          if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
-          const aug = Augmentations[augName];
-          if (!aug.isSpecial) {
-            res.push(augName);
-          }
+        let augs = Object.values(Augmentations);
+
+        // Remove blacklisted augs.
+        const blacklist = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.TheRedPill];
+        augs = augs.filter((a) => !blacklist.includes(a.name));
+
+        // Remove special augs.
+        augs = augs.filter((a) => !a.isSpecial);
+
+        // Remove faction-unique augs outside BN2. (But keep the one for this faction.)
+        if (player.bitNodeN !== 2) {
+          augs = augs.filter((a) => a.factions.length > 1 || Factions[facname].augmentations.includes(a.name));
         }
 
-        return res;
+        return augs.map((a) => a.name);
       }
 
       return faction.augmentations.slice();

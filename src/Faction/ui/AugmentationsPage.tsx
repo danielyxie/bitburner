@@ -43,22 +43,21 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
 
   function getAugs(): string[] {
     if (isPlayersGang) {
-      const augs: string[] = [];
-      for (const augName of Object.keys(Augmentations)) {
-        const aug = Augmentations[augName];
-        if (
-          augName === AugmentationNames.NeuroFluxGovernor ||
-          (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) ||
-          // Special augs (i.e. Bladeburner augs)
-          aug.isSpecial ||
-          // Exclusive augs (i.e. QLink)
-          (aug.factions.length <= 1 && !props.faction.augmentations.includes(augName) && player.bitNodeN !== 2)
-        )
-          continue;
-        augs.push(augName);
+      let augs = Object.values(Augmentations);
+
+      // Remove blacklisted augs.
+      const blacklist = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.TheRedPill];
+      augs = augs.filter((a) => !blacklist.includes(a.name));
+
+      // Remove special augs.
+      augs = augs.filter((a) => !a.isSpecial);
+
+      // Remove faction-unique augs outside BN2. (But keep the one for this faction.)
+      if (player.bitNodeN !== 2) {
+        augs = augs.filter((a) => a.factions.length > 1 || props.faction.augmentations.includes(a.name));
       }
 
-      return augs;
+      return augs.map((a) => a.name);
     } else {
       return props.faction.augmentations.slice();
     }
