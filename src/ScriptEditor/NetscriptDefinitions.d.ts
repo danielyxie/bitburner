@@ -707,10 +707,10 @@ export interface CharacterInfo {
   factions: string[];
   /** Current health points */
   hp: number;
-  /** Array of all companies at which you have jobs */
-  company: string[];
+  /** Array of all jobs */
+  jobs: string[];
   /** Array of job positions for all companies you are employed at. Same order as 'jobs' */
-  jobTitle: string[];
+  jobTitles: string[];
   /** Maximum health points */
   maxHp: number;
   /** Boolean indicating whether or not you have a tor router */
@@ -735,6 +735,18 @@ export interface CharacterInfo {
   workRepGain: number;
   /** Money earned so far from work, if applicable */
   workMoneyGain: number;
+  /** total hacking exp */
+  hackingExp: number;
+  /** total strength exp */
+  strengthExp: number;
+  /** total defense exp */
+  defenseExp: number;
+  /** total dexterity exp */
+  dexterityExp: number;
+  /** total agility exp */
+  agilityExp: number;
+  /** total charisma exp */
+  charismaExp: number;
 }
 
 /**
@@ -2199,11 +2211,8 @@ export interface Singularity {
    * Hospitalize the player.
    * @remarks
    * RAM cost: 0.25 GB * 16/4/1
-   *
-   *
-   * @returns The cost of the hospitalization.
    */
-  hospitalize(): number;
+  hospitalize(): void;
 
   /**
    * Soft reset the game.
