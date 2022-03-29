@@ -17,9 +17,9 @@ import { CONSTANTS } from "../../../Constants";
 
 import { IPlayer } from "../../IPlayer";
 
-import { CraftableAugmentation } from "../CraftableAugmentation";
+import { GraftableAugmentation } from "../GraftableAugmentation";
 
-const CraftableAugmentations: IMap<CraftableAugmentation> = {};
+const GraftableAugmentations: IMap<GraftableAugmentation> = {};
 
 export const getAvailableAugs = (player: IPlayer): string[] => {
   const augs: string[] = [];
@@ -39,12 +39,12 @@ export const GraftingRoot = (): React.ReactElement => {
 
   for (const aug of Object.values(Augmentations)) {
     const name = aug.name;
-    const craftableAug = new CraftableAugmentation(aug);
-    CraftableAugmentations[name] = craftableAug;
+    const graftableAug = new GraftableAugmentation(aug);
+    GraftableAugmentations[name] = graftableAug;
   }
 
   const [selectedAug, setSelectedAug] = useState(getAvailableAugs(player)[0]);
-  const [craftOpen, setCraftOpen] = useState(false);
+  const [graftOpen, setGraftOpen] = useState(false);
 
   return (
     <Container disableGutters maxWidth="lg" sx={{ mx: 0 }}>
@@ -63,7 +63,7 @@ export const GraftingRoot = (): React.ReactElement => {
       </Typography>
 
       <Box sx={{ my: 3 }}>
-        <Typography variant="h5">Craft Augmentations</Typography>
+        <Typography variant="h5">Graft Augmentations</Typography>
         <Paper sx={{ my: 1, width: "fit-content", display: "grid", gridTemplateColumns: "1fr 3fr" }}>
           <List sx={{ maxHeight: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
             {getAvailableAugs(player).map((k, i) => (
@@ -77,29 +77,29 @@ export const GraftingRoot = (): React.ReactElement => {
               <Construction sx={{ mr: 1 }} /> {selectedAug}
             </Typography>
             <Button
-              onClick={() => setCraftOpen(true)}
+              onClick={() => setGraftOpen(true)}
               sx={{ width: "100%" }}
-              disabled={player.money < CraftableAugmentations[selectedAug].cost}
+              disabled={player.money < GraftableAugmentations[selectedAug].cost}
             >
-              Craft Augmentation (
-              <Typography color={Settings.theme.money}>
-                <Money money={CraftableAugmentations[selectedAug].cost} player={player} />
+              Graft Augmentation (
+              <Typography>
+                <Money money={GraftableAugmentations[selectedAug].cost} player={player} />
               </Typography>
               )
             </Button>
             <ConfirmationModal
-              open={craftOpen}
-              onClose={() => setCraftOpen(false)}
+              open={graftOpen}
+              onClose={() => setGraftOpen(false)}
               onConfirm={() => {
-                const craftableAug = CraftableAugmentations[selectedAug];
-                player.loseMoney(craftableAug.cost, "augmentations");
-                player.startCraftAugmentationWork(selectedAug, craftableAug.time);
+                const graftableAug = GraftableAugmentations[selectedAug];
+                player.loseMoney(graftableAug.cost, "augmentations");
+                player.startGraftAugmentationWork(selectedAug, graftableAug.time);
                 player.startFocusing();
                 router.toWork();
               }}
               confirmationText={
                 <>
-                  Cancelling crafting will <b>not</b> save crafting progress, and the money you spend will <b>not</b> be
+                  Cancelling grafting will <b>not</b> save grafting progress, and the money you spend will <b>not</b> be
                   returned.
                   <br />
                   <br />
@@ -108,9 +108,9 @@ export const GraftingRoot = (): React.ReactElement => {
               }
             />
             <Typography color={Settings.theme.info}>
-              <b>Time to Craft:</b>{" "}
+              <b>Time to Graft:</b>{" "}
               {convertTimeMsToTimeElapsedString(
-                CraftableAugmentations[selectedAug].time / (1 + (player.getIntelligenceBonus(3) - 1) / 3),
+                GraftableAugmentations[selectedAug].time / (1 + (player.getIntelligenceBonus(3) - 1) / 3),
               )}
               {/* Use formula so the displayed creation time is accurate to player bonus */}
             </Typography>
@@ -135,14 +135,14 @@ export const GraftingRoot = (): React.ReactElement => {
       </Box>
 
       <Box sx={{ my: 3 }}>
-        <Typography variant="h5">Entropy Accumulation</Typography>
+        <Typography variant="h5">Entropy virus</Typography>
 
         <Paper sx={{ my: 1, p: 1, width: "fit-content" }}>
           <Typography>
-            <b>Accumulated Entropy:</b> {player.entropyStacks}
+            <b>Entropy strength:</b> {player.entropy}
             <br />
             <b>All multipliers decreased by:</b>{" "}
-            {formatNumber((1 - CONSTANTS.EntropyEffect ** player.entropyStacks) * 100, 3)}% (multiplicative)
+            {formatNumber((1 - CONSTANTS.EntropyEffect ** player.entropy) * 100, 3)}% (multiplicative)
           </Typography>
         </Paper>
 

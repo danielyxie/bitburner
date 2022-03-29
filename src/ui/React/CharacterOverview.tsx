@@ -194,13 +194,13 @@ function Work(): React.ReactElement {
         </>
       );
       break;
-    case CONSTANTS.WorkTypeCraftAugmentation:
-      details = <>Crafting {player.craftAugmentationName}</>;
-      header = <>Crafting an Augmentation</>;
+    case CONSTANTS.WorkTypeGraftAugmentation:
+      details = <>Grafting {player.graftAugmentationName}</>;
+      header = <>Grafting an Augmentation</>;
       innerText = (
         <>
-          <strong>{((player.timeWorkedCraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}%</strong>
-          {" "}done
+          <strong>{((player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}%</strong>{" "}
+          done
         </>
       );
   }

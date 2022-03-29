@@ -389,7 +389,7 @@ export const RamCosts: IMap<any> = {
   grafting: {
     getAugmentationCraftPrice: 3.75,
     getAugmentationCraftTime: 3.75,
-    craftAugmentation: 7.5,
+    graftAugmentation: 7.5,
   },
 
   heart: {

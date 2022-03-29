@@ -41,7 +41,7 @@ export const CONSTANTS: {
   IntelligenceInfiltrationWeight: number;
   IntelligenceCrimeBaseExpGain: number;
   IntelligenceProgramBaseExpGain: number;
-  IntelligenceCraftBaseExpGain: number;
+  IntelligenceGraftBaseExpGain: number;
   IntelligenceTerminalHackBaseExpGain: number;
   IntelligenceSingFnBaseExpGain: number;
   IntelligenceClassBaseExpGain: number;
@@ -72,7 +72,7 @@ export const CONSTANTS: {
   WorkTypeCreateProgram: string;
   WorkTypeStudyClass: string;
   WorkTypeCrime: string;
-  WorkTypeCraftAugmentation: string;
+  WorkTypeGraftAugmentation: string;
   ClassStudyComputerScience: string;
   ClassDataStructures: string;
   ClassNetworks: string;
@@ -110,8 +110,8 @@ export const CONSTANTS: {
   CodingContractBaseFactionRepGain: number;
   CodingContractBaseCompanyRepGain: number;
   CodingContractBaseMoneyGain: number;
-  AugmentationCraftingCostMult: number;
-  AugmentationCraftingTimeBase: number;
+  AugmentationGraftingCostMult: number;
+  AugmentationGraftingTimeBase: number;
   EntropyEffect: number;
   TotalNumBitNodes: number;
   LatestUpdate: string;
@@ -185,7 +185,7 @@ export const CONSTANTS: {
   IntelligenceInfiltrationWeight: 0.1, // Weight for how much int affects infiltration success rates
   IntelligenceCrimeBaseExpGain: 0.05,
   IntelligenceProgramBaseExpGain: 0.1, // Program required hack level divided by this to determine int exp gain
-  IntelligenceCraftBaseExpGain: 0.05,
+  IntelligenceGraftBaseExpGain: 0.05,
   IntelligenceTerminalHackBaseExpGain: 200, // Hacking exp divided by this to determine int exp gain
   IntelligenceSingFnBaseExpGain: 1.5,
   IntelligenceClassBaseExpGain: 0.01,
@@ -230,7 +230,7 @@ export const CONSTANTS: {
   WorkTypeCreateProgram: "Working on Create a Program",
   WorkTypeStudyClass: "Studying or Taking a class at university",
   WorkTypeCrime: "Committing a crime",
-  WorkTypeCraftAugmentation: "Crafting an Augmentation",
+  WorkTypeGraftAugmentation: "Grafting an Augmentation",
 
   ClassStudyComputerScience: "studying Computer Science",
   ClassDataStructures: "taking a Data Structures course",
@@ -277,11 +277,11 @@ export const CONSTANTS: {
   CodingContractBaseMoneyGain: 75e6,
 
   // Augmentation crafting multipliers
-  AugmentationCraftingCostMult: 1.2,
-  AugmentationCraftingTimeBase: 3600000,
+  AugmentationGraftingCostMult: 3,
+  AugmentationGraftingTimeBase: 3600000,
 
   // Value raised to the number of entropy stacks, then multiplied to player multipliers
-  EntropyEffect: 0.99,
+  EntropyEffect: 0.98,
 
   // BitNode/Source-File related stuff
   TotalNumBitNodes: 24,

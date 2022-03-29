@@ -128,8 +128,8 @@ export interface IPlayer {
   factionWorkType: string;
   createProgramName: string;
   timeWorkedCreateProgram: number;
-  craftAugmentationName: string;
-  timeWorkedCraftAugmentation: number;
+  graftAugmentationName: string;
+  timeWorkedGraftAugmentation: number;
   crimeType: string;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
@@ -160,7 +160,7 @@ export interface IPlayer {
   workChaExpGainRate: number;
   workMoneyLossRate: number;
 
-  entropyStacks: number;
+  entropy: number;
 
   // Methods
   work(numCycles: number): boolean;
@@ -288,8 +288,8 @@ export interface IPlayer {
   setMult(name: string, mult: number): void;
   canAccessCotMG(): boolean;
   sourceFileLvl(n: number): number;
-  startCraftAugmentationWork(augmentationName: string, time: number): void;
-  craftAugmentationWork(numCycles: number): boolean;
-  finishCraftAugmentationWork(cancelled: boolean): string;
+  startGraftAugmentationWork(augmentationName: string, time: number): void;
+  graftAugmentationWork(numCycles: number): boolean;
+  finishGraftAugmentationWork(cancelled: boolean): string;
   applyEntropy(stacks?: number): void;
 }

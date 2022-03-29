@@ -59,7 +59,7 @@ export function InstalledAugmentations(): React.ReactElement {
         </Button>
       </Tooltip>
       <List dense>
-        {player.entropyStacks > 0 &&
+        {player.entropy > 0 &&
           (() => {
             const [open, setOpen] = useState(false);
 
@@ -69,7 +69,7 @@ export function InstalledAugmentations(): React.ReactElement {
                   <ListItemText
                     primary={
                       <Typography color={Settings.theme.hp} style={{ whiteSpace: "pre-wrap" }}>
-                        Entropy ({player.entropyStacks} accumulated)
+                        Entropy virus - Level {player.entropy}
                       </Typography>
                     }
                   />
@@ -83,7 +83,7 @@ export function InstalledAugmentations(): React.ReactElement {
                   <Box m={4}>
                     <Typography color={Settings.theme.hp}>
                       <b>All multipliers decreased by:</b>{" "}
-                      {formatNumber((1 - CONSTANTS.EntropyEffect ** player.entropyStacks) * 100, 3)}% (multiplicative)
+                      {formatNumber((1 - CONSTANTS.EntropyEffect ** player.entropy) * 100, 3)}% (multiplicative)
                     </Typography>
                   </Box>
                 </Collapse>

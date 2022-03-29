@@ -2,16 +2,15 @@ import { CityName } from "../Locations/data/CityNames";
 import { Augmentations } from "../Augmentation/Augmentations";
 import { getRamCost } from "../Netscript/RamCostGenerator";
 import { WorkerScript } from "../Netscript/WorkerScript";
-import { CraftableAugmentation } from "../PersonObjects/Grafting/CraftableAugmentation";
+import { GraftableAugmentation } from "../PersonObjects/Grafting/GraftableAugmentation";
 import { getAvailableAugs } from "../PersonObjects/Grafting/ui/GraftingRoot";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { Grafting as IGrafting } from "../ScriptEditor/NetscriptDefinitions";
-import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { Router } from "../ui/GameRoot";
 import { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IGrafting {
-  const checkGraftingAPIAccess = (func: any): void => {
+  const checkGraftingAPIAccess = (func: string): void => {
     if (!player.canAccessGrafting()) {
       throw helper.makeRuntimeErrorMsg(
         `grafting.${func}`,
@@ -21,54 +20,58 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
   };
 
   return {
-    getAugmentationCraftPrice: (augName: string): number => {
-      helper.updateDynamicRam("getAugmentationCraftPrice", getRamCost(player, "grafting", "getAugmentationCraftPrice"));
-      checkGraftingAPIAccess("getAugmentationCraftPrice");
+    getAugmentationGraftPrice: (_augName: unknown): number => {
+      const augName = helper.string("getAugmentationGraftPrice", "augName", _augName);
+      helper.updateDynamicRam("getAugmentationGraftPrice", getRamCost(player, "grafting", "getAugmentationGraftPrice"));
+      checkGraftingAPIAccess("getAugmentationGraftPrice");
       if (!Augmentations.hasOwnProperty(augName)) {
-        throw helper.makeRuntimeErrorMsg("grafting.getAugmentationCraftPrice", `Invalid aug: ${augName}`);
+        throw helper.makeRuntimeErrorMsg("grafting.getAugmentationGraftPrice", `Invalid aug: ${augName}`);
       }
-      const craftableAug = new CraftableAugmentation(Augmentations[augName]);
+      const craftableAug = new GraftableAugmentation(Augmentations[augName]);
       return craftableAug.cost;
     },
 
-    getAugmentationCraftTime: (augName: string): number => {
-      helper.updateDynamicRam("getAugmentationCraftTime", getRamCost(player, "grafting", "getAugmentationCraftTime"));
-      checkGraftingAPIAccess("getAugmentationCraftTime");
+    getAugmentationGraftTime: (_augName: string): number => {
+      const augName = helper.string("getAugmentationGraftTime", "augName", _augName);
+      helper.updateDynamicRam("getAugmentationGraftTime", getRamCost(player, "grafting", "getAugmentationGraftTime"));
+      checkGraftingAPIAccess("getAugmentationGraftTime");
       if (!Augmentations.hasOwnProperty(augName)) {
-        throw helper.makeRuntimeErrorMsg("grafting.getAugmentationCraftTime", `Invalid aug: ${augName}`);
+        throw helper.makeRuntimeErrorMsg("grafting.getAugmentationGraftTime", `Invalid aug: ${augName}`);
       }
-      const craftableAug = new CraftableAugmentation(Augmentations[augName]);
+      const craftableAug = new GraftableAugmentation(Augmentations[augName]);
       return craftableAug.time;
     },
 
-    craftAugmentation: (augName: string, focus = true): boolean => {
-      helper.updateDynamicRam("craftAugmentation", getRamCost(player, "grafting", "craftAugmentation"));
-      checkGraftingAPIAccess("craftAugmentation");
+    graftAugmentation: (_augName: string, _focus: unknown = true): boolean => {
+      const augName = helper.string("graftAugmentation", "augName", _augName);
+      const focus = helper.boolean(_focus);
+      helper.updateDynamicRam("graftAugmentation", getRamCost(player, "grafting", "graftAugmentation"));
+      checkGraftingAPIAccess("graftAugmentation");
       if (player.city !== CityName.NewTokyo) {
         throw helper.makeRuntimeErrorMsg(
-          "grafting.craftAugmentation",
+          "grafting.graftAugmentation",
           "You must be in New Tokyo to begin crafting an Augmentation.",
         );
       }
       if (!getAvailableAugs(player).includes(augName)) {
-        workerScript.log("grafting.craftAugmentation", () => `Invalid aug: ${augName}`);
+        workerScript.log("grafting.graftAugmentation", () => `Invalid aug: ${augName}`);
         return false;
       }
 
       const wasFocusing = player.focus;
       if (player.isWorking) {
         const txt = player.singularityStopWork();
-        workerScript.log("craftAugmentation", () => txt);
+        workerScript.log("graftAugmentation", () => txt);
       }
 
-      const craftableAug = new CraftableAugmentation(Augmentations[augName]);
+      const craftableAug = new GraftableAugmentation(Augmentations[augName]);
       if (player.money < craftableAug.cost) {
-        workerScript.log("grafting.craftAugmentation", () => `You don't have enough money to craft ${augName}`);
+        workerScript.log("grafting.graftAugmentation", () => `You don't have enough money to craft ${augName}`);
         return false;
       }
 
       player.loseMoney(craftableAug.cost, "augmentations");
-      player.startCraftAugmentationWork(augName, craftableAug.time);
+      player.startGraftAugmentationWork(augName, craftableAug.time);
 
       if (focus) {
         player.startFocusing();
@@ -78,7 +81,7 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
         Router.toTerminal();
       }
 
-      workerScript.log("grafting.craftAugmentation", () => `Began crafting Augmentation ${augName}.`);
+      workerScript.log("grafting.graftAugmentation", () => `Began crafting Augmentation ${augName}.`);
       return true;
     },
   };

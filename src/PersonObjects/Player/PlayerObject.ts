@@ -137,8 +137,8 @@ export class PlayerObject implements IPlayer {
   factionWorkType: string;
   createProgramName: string;
   timeWorkedCreateProgram: number;
-  craftAugmentationName: string;
-  timeWorkedCraftAugmentation: number;
+  graftAugmentationName: string;
+  timeWorkedGraftAugmentation: number;
   crimeType: string;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
@@ -169,7 +169,7 @@ export class PlayerObject implements IPlayer {
   workChaExpGainRate: number;
   workMoneyLossRate: number;
 
-  entropyStacks: number;
+  entropy: number;
 
   // Methods
   work: (numCycles: number) => boolean;
@@ -298,9 +298,9 @@ export class PlayerObject implements IPlayer {
   setMult: (name: string, mult: number) => void;
   canAccessCotMG: () => boolean;
   sourceFileLvl: (n: number) => number;
-  startCraftAugmentationWork: (augmentationName: string, time: number) => void;
-  craftAugmentationWork: (numCycles: number) => boolean;
-  finishCraftAugmentationWork: (cancelled: boolean) => string;
+  startGraftAugmentationWork: (augmentationName: string, time: number) => void;
+  graftAugmentationWork: (numCycles: number) => boolean;
+  finishGraftAugmentationWork: (cancelled: boolean) => string;
   applyEntropy: (stacks?: number) => void;
 
   constructor() {
@@ -425,8 +425,8 @@ export class PlayerObject implements IPlayer {
     this.createProgramName = "";
     this.createProgramReqLvl = 0;
 
-    this.craftAugmentationName = "";
-    this.timeWorkedCraftAugmentation = 0;
+    this.graftAugmentationName = "";
+    this.timeWorkedGraftAugmentation = 0;
 
     this.className = "";
 
@@ -470,7 +470,7 @@ export class PlayerObject implements IPlayer {
     //bitnode
     this.bitNodeN = 1;
 
-    this.entropyStacks = 0;
+    this.entropy = 0;
 
     //Used to store the last update time.
     this.lastUpdate = 0;
@@ -493,11 +493,11 @@ export class PlayerObject implements IPlayer {
     // Let's get a hash of some semi-random stuff so we have something unique.
     this.identifier = cyrb53(
       "I-" +
-      new Date().getTime() +
-      navigator.userAgent +
-      window.innerWidth +
-      window.innerHeight +
-      getRandomInt(100, 999),
+        new Date().getTime() +
+        navigator.userAgent +
+        window.innerWidth +
+        window.innerHeight +
+        getRandomInt(100, 999),
     );
 
     this.init = generalMethods.init;
@@ -551,9 +551,9 @@ export class PlayerObject implements IPlayer {
     this.startCreateProgramWork = generalMethods.startCreateProgramWork;
     this.createProgramWork = generalMethods.createProgramWork;
     this.finishCreateProgramWork = generalMethods.finishCreateProgramWork;
-    this.startCraftAugmentationWork = generalMethods.startCraftAugmentationWork;
-    this.craftAugmentationWork = generalMethods.craftAugmentationWork;
-    this.finishCraftAugmentationWork = generalMethods.finishCraftAugmentationWork;
+    this.startGraftAugmentationWork = generalMethods.startGraftAugmentationWork;
+    this.graftAugmentationWork = generalMethods.craftAugmentationWork;
+    this.finishGraftAugmentationWork = generalMethods.finishGraftAugmentationWork;
     this.startClass = generalMethods.startClass;
     this.takeClass = generalMethods.takeClass;
     this.finishClass = generalMethods.finishClass;

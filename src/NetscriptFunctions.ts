@@ -2318,7 +2318,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         tor: Player.hasTorRouter(),
         inBladeburner: Player.inBladeburner(),
         hasCorporation: Player.hasCorporation(),
-        entropyStacks: Player.entropyStacks,
+        entropy: Player.entropy,
       };
       Object.assign(data.jobs, Player.jobs);
       return data;

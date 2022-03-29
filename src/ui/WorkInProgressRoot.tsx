@@ -483,9 +483,9 @@ export function WorkInProgressRoot(): React.ReactElement {
     );
   }
 
-  if (player.craftAugmentationName !== "") {
+  if (player.graftAugmentationName !== "") {
     function cancel(): void {
-      player.finishCraftAugmentationWork(true);
+      player.finishGraftAugmentationWork(true);
       router.toTerminal();
     }
     function unfocus(): void {
@@ -496,14 +496,14 @@ export function WorkInProgressRoot(): React.ReactElement {
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
         <Grid item>
           <Typography>
-            You are currently working on crafting {player.craftAugmentationName}.
+            You are currently working on crafting {player.graftAugmentationName}.
             <br />
             <br />
             You have been working for {convertTimeMsToTimeElapsedString(player.timeWorked)}
             <br />
             <br />
             The augmentation is{" "}
-            {((player.timeWorkedCraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}% done being
+            {((player.timeWorkedGraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}% done being
             crafted.
             <br />
             If you cancel, your work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned.

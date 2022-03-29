@@ -9,7 +9,7 @@ export interface IConstructorParams {
   readonly time: number;
 }
 
-export class CraftableAugmentation {
+export class GraftableAugmentation {
   // The augmentation that this craftable corresponds to
   augmentation: Augmentation;
 
@@ -18,7 +18,7 @@ export class CraftableAugmentation {
   }
 
   get cost(): number {
-    return this.augmentation.startingCost * CONSTANTS.AugmentationCraftingCostMult;
+    return this.augmentation.startingCost * CONSTANTS.AugmentationGraftingCostMult;
   }
 
   get time(): number {
@@ -26,6 +26,6 @@ export class CraftableAugmentation {
     const antiLog = Math.max(sum(Object.values(this.augmentation.mults)), 1);
 
     const mult = Math.log2(antiLog);
-    return CONSTANTS.AugmentationCraftingTimeBase * mult + CONSTANTS.MillisecondsPerHalfHour;
+    return CONSTANTS.AugmentationGraftingTimeBase * mult + CONSTANTS.MillisecondsPerHalfHour;
   }
 }

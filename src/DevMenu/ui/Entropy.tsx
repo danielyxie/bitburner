@@ -27,21 +27,21 @@ export function Entropy(props: IProps): React.ReactElement {
         <Adjuster
           label="Set entropy"
           placeholder="entropy"
-          add={num => {
-            props.player.entropyStacks += num;
-            props.player.applyEntropy(props.player.entropyStacks);
+          add={(num) => {
+            props.player.entropy += num;
+            props.player.applyEntropy(props.player.entropy);
           }}
-          subtract={num => {
-            props.player.entropyStacks -= num;
-            props.player.applyEntropy(props.player.entropyStacks);
+          subtract={(num) => {
+            props.player.entropy -= num;
+            props.player.applyEntropy(props.player.entropy);
           }}
           tons={() => {
-            props.player.entropyStacks += 1e12;
-            props.player.applyEntropy(props.player.entropyStacks);
+            props.player.entropy += 1e12;
+            props.player.applyEntropy(props.player.entropy);
           }}
           reset={() => {
-            props.player.entropyStacks = 0;
-            props.player.applyEntropy(props.player.entropyStacks);
+            props.player.entropy = 0;
+            props.player.applyEntropy(props.player.entropy);
           }}
         />
       </AccordionDetails>

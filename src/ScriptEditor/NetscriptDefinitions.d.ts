@@ -95,7 +95,7 @@ interface Player {
   tor: boolean;
   hasCorporation: boolean;
   inBladeburner: boolean;
-  entropyStacks: number;
+  entropy: number;
 }
 
 /**
@@ -3722,39 +3722,39 @@ export interface Sleeve {
 
 export interface Grafting {
   /**
-   * Retrieve the crafting cost of an aug.
+   * Retrieve the grafting cost of an aug.
    * @remarks
    * RAM cost: 3.75 GB
    *
    * @param augName - Name of the aug to check the price of. Must be an exact match.
-   * @returns The cost required to craft the named augmentation.
+   * @returns The cost required to graft the named augmentation.
    * @throws Will error if an invalid Augmentation name is provided.
    */
-  getAugmentationCraftPrice(augName: string): number;
+  getAugmentationGraftPrice(augName: string): number;
 
   /**
-   * Retrieves the time required to craft an aug.
+   * Retrieves the time required to graft an aug.
    * @remarks
    * RAM cost: 3.75 GB
    *
-   * @param augName - Name of the aug to check the crafting time of. Must be an exact match.
-   * @returns The time required, in millis, to craft the named augmentation.
+   * @param augName - Name of the aug to check the grafting time of. Must be an exact match.
+   * @returns The time required, in millis, to graft the named augmentation.
    * @throws Will error if an invalid Augmentation name is provided.
    */
-  getAugmentationCraftTime(augName: string): number;
+  getAugmentationGraftTime(augName: string): number;
 
   /**
-   * Begins crafting the named aug. You must be in New Tokyo to use this.
+   * Begins grafting the named aug. You must be in New Tokyo to use this.
    * @remarks
    * RAM cost: 7.5 GB
    *
-   * @param augName - The name of the aug to begin crafting. Must be an exact match.
-   * @param focus - Acquire player focus on this Augmentation crafting. Optional. Defaults to true.
-   * @returns True if the aug successfully began crafting, false otherwise (e.g. not enough money, or
+   * @param augName - The name of the aug to begin grafting. Must be an exact match.
+   * @param focus - Acquire player focus on this Augmentation grafting. Optional. Defaults to true.
+   * @returns True if the aug successfully began grafting, false otherwise (e.g. not enough money, or
    * invalid Augmentation name provided).
    * @throws Will error if called while you are not in New Tokyo.
    */
-  craftAugmentation(augName: string, focus?: boolean): boolean;
+  graftAugmentation(augName: string, focus?: boolean): boolean;
 }
 
 /**
