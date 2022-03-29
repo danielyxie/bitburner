@@ -1597,7 +1597,7 @@ export interface Singularity {
    * purchasing a TOR router using this function is the same as if you were to
    * manually purchase one.
    *
-   * @returns True if actions is successful, false otherwise.
+   * @returns True if actions is successful or you already own TOR router, false otherwise.
    */
   purchaseTor(): boolean;
 
