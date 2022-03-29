@@ -465,7 +465,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
       <Box sx={{ display: "flex", borderTop: `1px solid ${Settings.theme.welllight}` }}>
         <Box sx={{ display: "flex", flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
           <IconButton aria-label="save game" onClick={save}>
-            <Tooltip title="Save game">
+            <Tooltip title={Settings.AutosaveInterval !== 0 ? "Save game" : "Save game (auto-saves are disabled!)"}>
               <SaveIcon color={Settings.AutosaveInterval !== 0 ? "primary" : "error"} />
             </Tooltip>
           </IconButton>

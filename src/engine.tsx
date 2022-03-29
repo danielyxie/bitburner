@@ -15,6 +15,7 @@ import { Factions, initFactions } from "./Faction/Factions";
 import { staneksGift } from "./CotMG/Helper";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { Router } from "./ui/GameRoot";
+import { Page } from "./ui/Router";
 import { SetupTextEditor } from "./ScriptEditor/ui/ScriptEditorRoot";
 
 import {
@@ -48,7 +49,8 @@ import { calculateAchievements } from "./Achievements/Achievements";
 
 import React from "react";
 import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import { SnackbarEvents } from "./ui/React/Snackbar";
 
 const Engine: {
   _lastUpdate: number;
@@ -187,7 +189,8 @@ const Engine: {
         Settings.AutosaveInterval = 60;
       }
       if (Settings.AutosaveInterval === 0) {
-        Engine.Counters.autoSaveCounter = Infinity;
+        warnAutosaveDisabled();
+        Engine.Counters.autoSaveCounter = 60 * 5; // Let's check back in a bit
       } else {
         Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
         saveObject.saveGame(!Settings.SuppressSavedGameToast);
@@ -458,5 +461,36 @@ const Engine: {
     window.requestAnimationFrame(Engine.start);
   },
 };
+
+/**
+ * Shows a toast warning that lets the player know that auto-saves are disabled, with an button to re-enable them.
+ */
+function warnAutosaveDisabled(): void {
+  // If the player has suppressed those warnings let's just exit right away.
+  if (Settings.SuppressAutosaveDisabledWarnings) return;
+
+  // We don't want this warning to show up on certain pages.
+  // When in recovery or importing we want to keep autosave disabled.
+  const ignoredPages = [Page.Recovery, Page.ImportSave];
+  if (ignoredPages.includes(Router.page())) return;
+
+  const warningToast = (
+    <>
+      Auto-saves are <strong>disabled</strong>!
+      <Button
+        sx={{ ml: 1 }}
+        color="warning"
+        size="small"
+        onClick={() => {
+          // We reset the value to a default
+          Settings.AutosaveInterval = 60;
+        }}
+      >
+        Enable
+      </Button>
+    </>
+  );
+  SnackbarEvents.emit(warningToast, "warning", 5000);
+}
 
 export { Engine };
