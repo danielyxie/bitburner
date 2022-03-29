@@ -364,16 +364,16 @@ export const RamCosts: IMap<any> = {
   },
 
   stanek: {
-    width: RamCostConstants.ScriptStanekWidth,
-    height: RamCostConstants.ScriptStanekHeight,
-    charge: RamCostConstants.ScriptStanekCharge,
+    giftWidth: RamCostConstants.ScriptStanekWidth,
+    giftHeight: RamCostConstants.ScriptStanekHeight,
+    chargeFragment: RamCostConstants.ScriptStanekCharge,
     fragmentDefinitions: RamCostConstants.ScriptStanekFragmentDefinitions,
     activeFragments: RamCostConstants.ScriptStanekPlacedFragments,
-    clear: RamCostConstants.ScriptStanekClear,
-    canPlace: RamCostConstants.ScriptStanekCanPlace,
-    place: RamCostConstants.ScriptStanekPlace,
-    get: RamCostConstants.ScriptStanekFragmentAt,
-    remove: RamCostConstants.ScriptStanekDeleteAt,
+    clearGift: RamCostConstants.ScriptStanekClear,
+    canPlaceFragment: RamCostConstants.ScriptStanekCanPlace,
+    placeFragment: RamCostConstants.ScriptStanekPlace,
+    getFragment: RamCostConstants.ScriptStanekFragmentAt,
+    removeFragment: RamCostConstants.ScriptStanekDeleteAt,
   },
 
   ui: {
