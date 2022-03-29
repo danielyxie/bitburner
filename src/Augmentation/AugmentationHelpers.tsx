@@ -17,8 +17,7 @@ import {
   churchOfTheMachineGodAugmentations,
   generalAugmentations,
   getNextNeuroFluxLevel,
-  infiltratorsMiniGameAugmentations,
-  infiltratorsOtherAugmentations,
+  infiltratorsAugmentations,
   initNeuroFluxGovernor,
   initUnstableCircadianModulator,
 } from "./AugmentationCreator";
@@ -34,8 +33,7 @@ function createAugmentations(): void {
     initNeuroFluxGovernor(),
     initUnstableCircadianModulator(),
     ...generalAugmentations,
-    ...infiltratorsMiniGameAugmentations,
-    ...infiltratorsOtherAugmentations,
+    ...infiltratorsAugmentations,
     ...(factionExists(FactionNames.Bladeburners) ? bladeburnerAugmentations : []),
     ...(factionExists(FactionNames.ChurchOfTheMachineGod) ? churchOfTheMachineGodAugmentations : []),
   ].map(resetAugmentation);
@@ -78,10 +76,10 @@ function updateNeuroFluxGovernorCosts(neuroFluxGovernorAugmentation: Augmentatio
 
 function updateInfiltratorCosts(infiltratorAugmentation: Augmentation): void {
   const infiltratorMultiplier =
-    infiltratorsMiniGameAugmentations.filter((augmentation) => Player.hasAugmentation(augmentation.name)).length + 1;
-  infiltratorAugmentation.baseCost = Math.pow(infiltratorAugmentation.baseCost * 1000, infiltratorMultiplier);
-  if (infiltratorsMiniGameAugmentations.find((augmentation) => augmentation.name === infiltratorAugmentation.name)) {
-    infiltratorAugmentation.baseRepRequirement *= infiltratorMultiplier;
+    infiltratorsAugmentations.filter((augmentation) => Player.hasAugmentation(augmentation.name)).length + 1;
+  infiltratorAugmentation.baseCost = Math.pow(infiltratorAugmentation.startingCost * 1000, infiltratorMultiplier);
+  if (infiltratorsAugmentations.find((augmentation) => augmentation.name === infiltratorAugmentation.name)) {
+    infiltratorAugmentation.baseRepRequirement = infiltratorAugmentation.startingRepRequirement * infiltratorMultiplier;
   }
 }
 

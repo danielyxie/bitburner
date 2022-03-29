@@ -19,7 +19,7 @@ import { IPlayerOwnedAugmentation, PlayerOwnedAugmentation } from "../../Augment
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
-import { infiltratorsMiniGameAugmentations } from "../../Augmentation/AugmentationCreator";
+import { infiltratorsAugmentations } from "../../Augmentation/AugmentationCreator";
 
 // Executes the actual re-sleeve when one is purchased
 export function purchaseResleeve(r: Resleeve, p: IPlayer): boolean {
@@ -112,7 +112,7 @@ export function generateResleeves(): Resleeve[] {
         AugmentationNames.StaneksGift1,
         AugmentationNames.StaneksGift2,
         AugmentationNames.StaneksGift3,
-        ...infiltratorsMiniGameAugmentations,
+        ...infiltratorsAugmentations,
       ].map((augmentation) => augmentation as string);
       if (forbidden.includes(randKey)) {
         continue;

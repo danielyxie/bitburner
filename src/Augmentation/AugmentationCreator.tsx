@@ -95,7 +95,7 @@ function getRandomBonus(): any {
   return bonuses[Math.floor(bonuses.length * randomNumber.random())];
 }
 
-export const infiltratorsOtherAugmentations = [
+export const infiltratorsAugmentations = [
   new Augmentation({
     name: AugmentationNames.BionicFingers,
     repCost: 15e1,
@@ -159,9 +159,6 @@ export const infiltratorsOtherAugmentations = [
       "blunt damage when used as an alloy with almost any other metal you can think of.",
     factions: [FactionNames.Infiltrators],
   }),
-];
-
-export const infiltratorsMiniGameAugmentations = [
   new Augmentation({
     name: AugmentationNames.PythiasBrainStem,
     repCost: 1e2,
