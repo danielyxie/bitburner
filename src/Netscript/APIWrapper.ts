@@ -6,15 +6,18 @@ import { makeRuntimeRejectMsg } from "../NetscriptEvaluator";
 import { Player } from "../Player";
 
 
-// type TargetFn<T> = (...args: [T, ...any[]]) => Promise<any>;
-// type WrappedFn<F> = F extends (a: infer A1, ...args: infer U) => Promise<infer R> ? (a: A1|A1[], ...args: U) => Promise<R> : unknown;
-// Need to think more about how to get these types to work
-type InternalNetscriptFunction = (ctx: NetscriptContext, ...args: unknown[]) => unknown;
-type WrappedNetscriptFunction = (...args: unknown[]) => unknown;
-export type InternalNetscriptAPI = {
-  [string: string]: InternalNetscriptAPI | InternalNetscriptFunction;
+type ExternalFunction = (...args: any[]) => any;
+type ExternalAPI = {
+  [string: string]: ExternalAPI | ExternalFunction;
 }
-export type WrappedNetscriptAPI = {
+
+type InternalFunction<F extends (...args: unknown[]) => unknown> = (ctx: NetscriptContext, ...args: unknown[]) => ReturnType<F>;
+export type InternalAPI<API> = {
+  [Property in keyof API]: API[Property] extends ExternalFunction ? InternalFunction<API[Property]> : API[Property] extends ExternalAPI ? InternalAPI<API[Property]> : never;
+}
+
+type WrappedNetscriptFunction = (...args: unknown[]) => unknown;
+type WrappedNetscriptAPI = {
   [string: string]: WrappedNetscriptAPI | WrappedNetscriptFunction;
 }
 
@@ -84,7 +87,7 @@ function wrapFunction<T>(helpers: NetscriptHelpers, wrappedAPI: any, workerScrip
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function wrapAPI(helpers: NetscriptHelpers, wrappedAPI: any, workerScript: WorkerScript, namespace: any, ...tree: string[]): WrappedNetscriptAPI {
+export function wrapAPI(helpers: NetscriptHelpers, wrappedAPI: ExternalAPI, workerScript: WorkerScript, namespace: any, ...tree: string[]): WrappedNetscriptAPI {
   if (typeof namespace !== 'object') throw new Error('Invalid namespace?');
   for (const property of Object.getOwnPropertyNames(namespace)) {
     switch (typeof namespace[property]) {

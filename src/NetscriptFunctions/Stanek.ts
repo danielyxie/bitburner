@@ -9,11 +9,12 @@ import { Fragments, FragmentById } from "../CotMG/Fragment";
 import {
   Fragment as IFragment,
   ActiveFragment as IActiveFragment,
+  Stanek as IStanek
 } from "../ScriptEditor/NetscriptDefinitions";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
-import { NetscriptContext, InternalNetscriptAPI } from "src/Netscript/APIWrapper";
+import { NetscriptContext, InternalAPI } from "src/Netscript/APIWrapper";
 
-export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): InternalNetscriptAPI {
+export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): InternalAPI<IStanek> {
   function checkStanekAPIAccess(func: string): void {
     if (!player.hasAugmentation(AugmentationNames.StaneksGift1, true)) {
       helper.makeRuntimeErrorMsg(func, "Requires Stanek's Gift installed.");
