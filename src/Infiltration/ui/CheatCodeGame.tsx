@@ -42,7 +42,7 @@ export function CheatCodeGame(props: IMinigameProps): React.ReactElement {
   const timer = difficulty.timer;
   const [code] = useState(generateCode(difficulty));
   const [index, setIndex] = useState(0);
-  const hasAugment = Player.hasAugmentation(AugmentationNames.LameSharkRepository, true);
+  const hasAugment = Player.hasAugmentation(AugmentationNames.DyslexiaModule, true);
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();

@@ -36,7 +36,7 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
   const timer = difficulty.timer;
   const [answer] = useState(makeAnswer(difficulty));
   const [guess, setGuess] = useState("");
-  const hasAugment = Player.hasAugmentation(AugmentationNames.ReverseDictionary, true);
+  const hasAugment = Player.hasAugmentation(AugmentationNames.RearViewMirrorShoulderAttachment, true);
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();

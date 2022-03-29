@@ -21,6 +21,7 @@ import { Modal } from "./React/Modal";
 import TableBody from "@mui/material/TableBody";
 import { Table, TableCell } from "./React/Table";
 import TableRow from "@mui/material/TableRow";
+import { FactionNames } from "../Faction/data/FactionNames";
 
 function LastEmployer(): React.ReactElement {
   const player = use.Player();
@@ -144,16 +145,16 @@ function BladeburnerMults(): React.ReactElement {
 
 function InfiltrationMults(): React.ReactElement {
   const player = use.Player();
+  if (!player.factions.includes(FactionNames.Infiltrators)) return <></>;
   return (
     <>
       <MultiplierTable
         rows={[
-          ["Infiltrator Base Rep increase", player.infiltration_rep_mult],
-          ["Infiltrator Rep reward multiplier", player.infiltration_rep_mult],
-          ["Infiltration sell multiplier", player.infiltration_sell_mult],
-          ["Infiltration trade multiplier", player.infiltration_trade_mult],
-          ["Infiltration minigame timer multiplier", player.infiltration_timer_mult],
-          ["Infiltration minigame health reduction multiplier", player.infiltration_health_reduction_mult],
+          ["Infiltrator Rep reward", player.infiltration_rep_mult],
+          ["Infiltration sell", player.infiltration_sell_mult],
+          ["Infiltration trade", player.infiltration_trade_mult],
+          ["Infiltration minigame timer", player.infiltration_timer_mult],
+          ["Infiltration minigame health reduction", -1 * (1 - player.infiltration_health_reduction_mult)],
         ]}
       />
       <br />

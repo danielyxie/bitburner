@@ -349,42 +349,44 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
     desc = (
       <>
         {desc}
-        <br />+{f(mults.infiltration_base_rep_increase)} Infiltration {FactionNames.Infiltrators} Reputation base reward
+        <br />+{f(mults.infiltration_base_rep_increase - 1)} Infiltration {FactionNames.Infiltrators} Reputation base
+        reward
       </>
     );
   if (mults.infiltration_rep_mult)
     desc = (
       <>
         {desc}
-        <br />+{f((mults.infiltration_rep_mult - 1) * 100)}% Infiltration {FactionNames.Infiltrators} Reputation reward
+        <br />+{f(mults.infiltration_rep_mult - 1)} Infiltration {FactionNames.Infiltrators} Reputation reward
       </>
     );
   if (mults.infiltration_trade_mult)
     desc = (
       <>
         {desc}
-        <br />+{f((mults.infiltration_trade_mult - 1) * 100)}% Infiltration Reputation for trading information
+        <br />+{f(mults.infiltration_trade_mult - 1)} Infiltration Reputation for trading information
       </>
     );
   if (mults.infiltration_sell_mult)
     desc = (
       <>
         {desc}
-        <br />+{f((mults.infiltration_sell_mult - 1) * 100)}% Infiltration cash reward for selling information
+        <br />+{f(mults.infiltration_sell_mult - 1)} Infiltration cash reward for selling information
       </>
     );
   if (mults.infiltration_timer_mult)
     desc = (
       <>
         {desc}
-        <br />+{f((mults.infiltration_timer_mult - 1) * 100)}% Infiltration time per minigame
+        <br />+{f(mults.infiltration_timer_mult - 1)} Infiltration time per minigame
       </>
     );
   if (mults.infiltration_health_reduction_mult)
     desc = (
       <>
         {desc}
-        <br />-{f((mults.infiltration_health_reduction_mult - 1) * 100)}% Infiltration health lost per failed minigame
+        <br />
+        {f(mults.infiltration_health_reduction_mult - 1)} Infiltration health lost per failed minigame
       </>
     );
 

@@ -163,13 +163,13 @@ export const infiltratorsOtherAugmentations = [
 
 export const infiltratorsMiniGameAugmentations = [
   new Augmentation({
-    name: AugmentationNames.BagOfSand,
+    name: AugmentationNames.PythiasBrainStem,
     repCost: 1e2,
     moneyCost: 1e6,
     info:
-      "You watched a bittube video about sword fighting, " +
-      "it suggested the best way to win a sword fight was to play dirty " +
-      "so you filled a bag full of sand from outside your house.",
+      "You found an old jar apparently containing the brain stem of one of the most famous " +
+      "fortune tellers in the world, installing this augmentation will apparently connect the synapses reactivating " +
+      "the magic this man once shared with the world ",
     stats: (
       <>This augmentation makes the Slash minigame easier by showing you via an indictor when the slash in coming.</>
     ),
@@ -187,34 +187,32 @@ export const infiltratorsMiniGameAugmentations = [
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
-    name: AugmentationNames.ReverseDictionary,
+    name: AugmentationNames.RearViewMirrorShoulderAttachment,
     repCost: 1e2,
     moneyCost: 1e6,
-    info:
-      "An ancient dictionary with a thick layer of dust it looks like a different language, " +
-      "as you examine it further you realise that its actually just a normal dictionary but the words are " +
-      "written backwards if only you could take the book home, you think it would become like a second language.",
+    info: "Never again will you need to turn your head to see whats behind you.",
     stats: <>This augmentation makes the Backwards minigame easier by making the words no longer backwards.</>,
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
-    name: AugmentationNames.AmuletOfPersuasion,
+    name: AugmentationNames.KyberCrystalInjection,
     repCost: 1e2,
     moneyCost: 1e6,
     info:
-      "A fancy looking amulet that looks like something an Egyptian goddess would wear, " +
-      "you hear faint whispers that are trying to convince you to do things you wouldn't normally do, " +
-      "upon touching it the voices stop how strange.",
+      "A weird looking shiny crystal which is crushed down and turned into a thick syrup, " +
+      "most people think its all homeopathic but there are a few that believe when injected people will " +
+      "believe what you say with one wave of the hand ",
     stats: <>This augmentation makes the Bribe minigame easier by indicating the incorrect paths.</>,
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
-    name: AugmentationNames.LameSharkRepository,
+    name: AugmentationNames.DyslexiaModule,
     repCost: 1e2,
     moneyCost: 1e6,
     info:
-      "You stumble across an old opensource repository for a weird defunct version of LameShark, " +
-      "upon studying the source code it seems to just have a bunch of arrow key cheat codes. ",
+      "A module initially developed to reverse the disability of dyslexia, But during human trials it was found " +
+      "to actually cause dyslexia, despite the fact scientists decided to sell it anyway. Who would want " +
+      "to install something like that... i guess it has the added benefit of qualifying for a disability card",
     stats: <>This augmentation makes the Cheat Code minigame easier by allowing the opposite character.</>,
     factions: [FactionNames.Infiltrators],
   }),
@@ -229,11 +227,11 @@ export const infiltratorsMiniGameAugmentations = [
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
-    name: AugmentationNames.MineDetector,
+    name: AugmentationNames.MineDetectionArmAttachment,
     repCost: 1e2,
     moneyCost: 1e6,
     info:
-      "You stumble across an old mine detector at an army surplus store, " +
+      "You stumble across an old mine detection arm attachment at an army surplus store, " +
       "on the side is inscribed 'X(' i wonder what happened to the original owner, " +
       "its a bit beaten up but looks like it should still do the job.",
     stats: (
@@ -245,12 +243,12 @@ export const infiltratorsMiniGameAugmentations = [
     factions: [FactionNames.Infiltrators],
   }),
   new Augmentation({
-    name: AugmentationNames.WireCuttingManual,
+    name: AugmentationNames.SecurityWireContacts,
     repCost: 1e2,
     moneyCost: 1e6,
     info:
-      "You found an old wire cutting for dummies book in the local library, " +
-      "how hard can it be to cut wires, right?",
+      "This augment is a set of contacts for your eyes when installed allows for the user to see which" +
+      "wires are conducting security related information",
     stats: <>This augmentation makes the Wire Cutting minigame easier by indicating the incorrect wires.</>,
     factions: [FactionNames.Infiltrators],
   }),

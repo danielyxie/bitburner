@@ -114,14 +114,14 @@ export enum AugmentationNames {
   StaneksGift3 = "Stanek's Gift - Serenity",
 
   // Infiltrators MiniGames
-  BagOfSand = "A Bag of Sand",
+  PythiasBrainStem = "Pythia's Brain Stem",
   IntellisenseModule = "Intellisense Module",
-  ReverseDictionary = "Reverse Dictionary",
-  AmuletOfPersuasion = "Amulet of Persuasian",
-  LameSharkRepository = "Lame Shark Repository",
+  DyslexiaModule = "Dyslexia Module",
+  KyberCrystalInjection = "Kyber Crystal Injection",
+  RearViewMirrorShoulderAttachment = "Rear View Mirror Shoulder Attachment",
   CyberDecoder = "Cyber Decoder",
-  MineDetector = "Mine Detector",
-  WireCuttingManual = "Wire Cutting Manual",
+  MineDetectionArmAttachment = "Mine Detection Arm Attachment",
+  SecurityWireContacts = "Security Wire Contacts",
   // Infiltrators general
   BionicFingers = "Bionic Fingers",
   CorporationManagementImplant = "Corporation Management Implant",

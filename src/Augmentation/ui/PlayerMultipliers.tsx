@@ -121,33 +121,33 @@ export function PlayerMultipliers(): React.ReactElement {
         <MultiplierTable
           rows={[
             [
-              "Infiltrator Rep reward multiplier",
+              "Infiltrator Rep reward",
               Player.infiltration_rep_mult,
               Player.infiltration_rep_mult * mults.infiltration_rep_mult,
               1,
             ],
             [
-              "Infiltration sell multiplier",
+              "Infiltration sell",
               Player.infiltration_sell_mult,
               Player.infiltration_sell_mult * mults.infiltration_sell_mult,
               1,
             ],
             [
-              "Infiltration trade multiplier",
+              "Infiltration trade",
               Player.infiltration_trade_mult,
               Player.infiltration_trade_mult * mults.infiltration_trade_mult,
               1,
             ],
             [
-              "Infiltration minigame timer multiplier",
+              "Infiltration minigame timer",
               Player.infiltration_timer_mult,
               Player.infiltration_timer_mult * mults.infiltration_timer_mult,
               1,
             ],
             [
-              "Infiltration minigame health reduction multiplier",
+              "Infiltration minigame health reduction",
               Player.infiltration_health_reduction_mult,
-              Player.infiltration_health_reduction_mult * mults.infiltration_health_reduction_mult,
+              -1 * (1 - Player.infiltration_health_reduction_mult * mults.infiltration_health_reduction_mult),
               1,
             ],
           ]}

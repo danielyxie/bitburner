@@ -47,7 +47,7 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
   let upColor = defaultColor;
   let downColor = defaultColor;
   let choiceColor = defaultColor;
-  const hasAugment = Player.hasAugmentation(AugmentationNames.AmuletOfPersuasion, true);
+  const hasAugment = Player.hasAugmentation(AugmentationNames.KyberCrystalInjection, true);
 
   if (hasAugment) {
     const upIndex = index + 1 >= choices.length ? 0 : index + 1;

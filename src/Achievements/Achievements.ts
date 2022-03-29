@@ -776,7 +776,7 @@ export const achievements: IMap<Achievement> = {
 // { ID: FactionNames.Bladeburners.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.Bladeburners) },
 // { ID: "DEEPSCANV1.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.DeepscanV1.name) },
 // { ID: "DEEPSCANV2.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.DeepscanV2.name) },
-// { ID: "INFILTRATORS", Condition: () => Player.factions.includes(FactionNames.Infiltators) },
+// { ID: "INFILTRATORS", Condition: () => Player.factions.includes(FactionNames.Infiltrators) },
 // {
 //   ID: "SERVERPROFILER.EXE",
 //   Condition: () => Player.getHomeComputer().programs.includes(Programs.ServerProfiler.name),

@@ -480,7 +480,7 @@ export class PlayerObject implements IPlayer {
     this.lastUpdate = 0;
     this.lastSave = 0;
     this.totalPlaytime = 0;
-    this.hasCompletedAnInfiltration = true;
+    this.hasCompletedAnInfiltration = false;
 
     this.playtimeSinceLastAug = 0;
     this.playtimeSinceLastBitnode = 0;

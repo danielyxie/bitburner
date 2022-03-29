@@ -163,6 +163,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.workChaExpGained = 0;
   this.workRepGained = 0;
   this.workMoneyGained = 0;
+  this.hasCompletedAnInfiltration = false;
 
   this.timeWorked = 0;
 
