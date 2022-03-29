@@ -293,7 +293,7 @@ export const CONSTANTS: {
   ** Vitalife secret lab **
 
   * A new mechanic called Augmentation Grafting has been added. Resleeving has been removed.
-  * Credit to @nikfolas for his incredible work.
+  * Credit to @nickofolas for his incredible work.
 
   ** Stanek **
 
@@ -301,7 +301,7 @@ export const CONSTANTS: {
 
   ** UI **
 
-  * Major update to Sleeve, Gang UI, and Create Program (@nikfolas)
+  * Major update to Sleeve, Gang UI, and Create Program (@nickofolas)
   * re-add pre tags to support slash n in prompt (@jacktose)
   * Tabelize linked output of 'ls' (@Master-Guy)
   * Add the ability to filter open scripts (@phyzical)

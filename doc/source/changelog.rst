@@ -9,7 +9,7 @@ v1.6.0 - 2022-03-29 Grafting
 ** Vitalife secret lab **
 
 * A new mechanic called Augmentation Grafting has been added. Resleeving has been removed.
-* Credit to @nikfolas for his incredible work.
+* Credit to @nickofolas for his incredible work.
 
 ** Stanek **
 
@@ -17,7 +17,7 @@ v1.6.0 - 2022-03-29 Grafting
 
 ** UI **
 
-* Major update to Sleeve, Gang UI, and Create Program (@nikfolas)
+* Major update to Sleeve, Gang UI, and Create Program (@nickofolas)
 * re-add pre tags to support slash n in prompt (@jacktose)
 * Tabelize linked output of 'ls' (@Master-Guy)
 * Add the ability to filter open scripts (@phyzical)
@@ -123,7 +123,7 @@ v1.5.0 - Steam Cloud integration
 * Fix display of corporation product equation (@SagePtr)
 * Make Bitverse more accessible (@ChrissiQ)
 * Make corporation warehouse more accessible (@ChrissiQ)
-* Make tab style more consistent (@nikfolas)
+* Make tab style more consistent (@nickofolas)
 
 ** Netscript **
 

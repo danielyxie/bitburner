@@ -3720,6 +3720,12 @@ export interface Sleeve {
   purchaseSleeveAug(sleeveNumber: number, augName: string): boolean;
 }
 
+/**
+ * Grafting API
+ * @remarks
+ * This API requires Source-File 10 to use.
+ * @public
+ */
 export interface Grafting {
   /**
    * Retrieve the grafting cost of an aug.

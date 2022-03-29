@@ -23,6 +23,7 @@ export interface Corporation extends WarehouseAPI, OfficeAPI
 |  [createCorporation(corporationName, selfFund)](./bitburner.corporation.createcorporation.md) | Create a Corporation |
 |  [expandCity(divisionName, cityName)](./bitburner.corporation.expandcity.md) | Expand to a new city |
 |  [expandIndustry(industryType, divisionName)](./bitburner.corporation.expandindustry.md) | Expand to a new industry |
+|  [getBonusTime()](./bitburner.corporation.getbonustime.md) | Get bonus time.<!-- -->“Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.<!-- -->“Bonus time” makes the game progress faster. |
 |  [getCorporation()](./bitburner.corporation.getcorporation.md) | Get corporation data |
 |  [getDivision(divisionName)](./bitburner.corporation.getdivision.md) | Get division data |
 |  [getExpandCityCost()](./bitburner.corporation.getexpandcitycost.md) | Gets the cost to expand into a new city |
