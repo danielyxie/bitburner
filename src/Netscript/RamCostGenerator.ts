@@ -136,6 +136,7 @@ export const RamCosts: IMap<any> = {
   kill: RamCostConstants.ScriptKillRamCost,
   killall: RamCostConstants.ScriptKillRamCost,
   exit: 0,
+  atExit: 0,
   scp: RamCostConstants.ScriptScpRamCost,
   ls: RamCostConstants.ScriptScanRamCost,
   ps: RamCostConstants.ScriptScanRamCost,
