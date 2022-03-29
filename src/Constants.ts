@@ -41,6 +41,7 @@ export const CONSTANTS: {
   IntelligenceInfiltrationWeight: number;
   IntelligenceCrimeBaseExpGain: number;
   IntelligenceProgramBaseExpGain: number;
+  IntelligenceCraftBaseExpGain: number;
   IntelligenceTerminalHackBaseExpGain: number;
   IntelligenceSingFnBaseExpGain: number;
   IntelligenceClassBaseExpGain: number;
@@ -71,6 +72,7 @@ export const CONSTANTS: {
   WorkTypeCreateProgram: string;
   WorkTypeStudyClass: string;
   WorkTypeCrime: string;
+  WorkTypeCraftAugmentation: string;
   ClassStudyComputerScience: string;
   ClassDataStructures: string;
   ClassNetworks: string;
@@ -108,6 +110,9 @@ export const CONSTANTS: {
   CodingContractBaseFactionRepGain: number;
   CodingContractBaseCompanyRepGain: number;
   CodingContractBaseMoneyGain: number;
+  AugmentationCraftingCostMult: number;
+  AugmentationCraftingTimeBase: number;
+  EntropyEffect: number;
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
@@ -180,6 +185,7 @@ export const CONSTANTS: {
   IntelligenceInfiltrationWeight: 0.1, // Weight for how much int affects infiltration success rates
   IntelligenceCrimeBaseExpGain: 0.05,
   IntelligenceProgramBaseExpGain: 0.1, // Program required hack level divided by this to determine int exp gain
+  IntelligenceCraftBaseExpGain: 0.05,
   IntelligenceTerminalHackBaseExpGain: 200, // Hacking exp divided by this to determine int exp gain
   IntelligenceSingFnBaseExpGain: 1.5,
   IntelligenceClassBaseExpGain: 0.01,
@@ -224,6 +230,7 @@ export const CONSTANTS: {
   WorkTypeCreateProgram: "Working on Create a Program",
   WorkTypeStudyClass: "Studying or Taking a class at university",
   WorkTypeCrime: "Committing a crime",
+  WorkTypeCraftAugmentation: "Crafting an Augmentation",
 
   ClassStudyComputerScience: "studying Computer Science",
   ClassDataStructures: "taking a Data Structures course",
@@ -268,6 +275,13 @@ export const CONSTANTS: {
   CodingContractBaseFactionRepGain: 2500,
   CodingContractBaseCompanyRepGain: 4000,
   CodingContractBaseMoneyGain: 75e6,
+
+  // Augmentation crafting multipliers
+  AugmentationCraftingCostMult: 1.2,
+  AugmentationCraftingTimeBase: 3600000,
+
+  // Value raised to the number of entropy stacks, then multiplied to player multipliers
+  EntropyEffect: 0.99,
 
   // BitNode/Source-File related stuff
   TotalNumBitNodes: 24,

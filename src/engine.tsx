@@ -263,6 +263,9 @@ const Engine: {
         initSymbolToStockMap();
       }
 
+      // Apply penalty for entropy accumulation
+      Player.applyEntropy(Player.entropyStacks);
+
       // Calculate the number of cycles have elapsed while offline
       Engine._lastUpdate = new Date().getTime();
       const lastUpdate = Player.lastUpdate;
@@ -302,6 +305,8 @@ const Engine: {
           Player.commitCrime(numCyclesOffline);
         } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
           Player.workPartTime(numCyclesOffline);
+        } else if (Player.workType === CONSTANTS.WorkTypeCraftAugmentation) {
+          Player.craftAugmentationWork(numCyclesOffline);
         } else {
           Player.work(numCyclesOffline);
         }

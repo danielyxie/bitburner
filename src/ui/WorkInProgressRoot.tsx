@@ -41,8 +41,8 @@ export function WorkInProgressRoot(): React.ReactElement {
       return (
         <>
           <Typography variant="h4" color="primary">
-            You have not joined {player.currentWorkFactionName || "(Faction not found)"} yet or cannot work at this time,
-            please try again if you think this should have worked
+            You have not joined {player.currentWorkFactionName || "(Faction not found)"} yet or cannot work at this
+            time, please try again if you think this should have worked
           </Typography>
           <Button onClick={() => router.toFactions()}>Back to Factions</Button>
         </>
@@ -476,6 +476,42 @@ export function WorkInProgressRoot(): React.ReactElement {
         <Grid item>
           <Button sx={{ mx: 2 }} onClick={cancel}>
             Cancel work on creating program
+          </Button>
+          <Button onClick={unfocus}>Do something else simultaneously</Button>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  if (player.craftAugmentationName !== "") {
+    function cancel(): void {
+      player.finishCraftAugmentationWork(true);
+      router.toTerminal();
+    }
+    function unfocus(): void {
+      router.toTerminal();
+      player.stopFocusing();
+    }
+    return (
+      <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
+        <Grid item>
+          <Typography>
+            You are currently working on crafting {player.craftAugmentationName}.
+            <br />
+            <br />
+            You have been working for {convertTimeMsToTimeElapsedString(player.timeWorked)}
+            <br />
+            <br />
+            The augmentation is{" "}
+            {((player.timeWorkedCraftAugmentation / player.timeNeededToCompleteWork) * 100).toFixed(2)}% done being
+            crafted.
+            <br />
+            If you cancel, your work will <b>not</b> be saved, and the money you spent will <b>not</b> be returned.
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Button sx={{ mx: 2 }} onClick={cancel}>
+            Cancel work on crafting Augmentation
           </Button>
           <Button onClick={unfocus}>Do something else simultaneously</Button>
         </Grid>

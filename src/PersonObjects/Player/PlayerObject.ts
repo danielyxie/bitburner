@@ -6,7 +6,6 @@ import * as generalMethods from "./PlayerObjectGeneralMethods";
 import * as serverMethods from "./PlayerObjectServerMethods";
 
 import { IMap } from "../../types";
-import { Resleeve } from "../Resleeving/Resleeve";
 import { Sleeve } from "../Sleeve/Sleeve";
 import { IPlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
 import { Exploit } from "../../Exploits/Exploit";
@@ -72,7 +71,6 @@ export class PlayerObject implements IPlayer {
   playtimeSinceLastBitnode: number;
   purchasedServers: any[];
   queuedAugmentations: IPlayerOwnedAugmentation[];
-  resleeves: Resleeve[];
   scriptProdSinceLastAug: number;
   sleeves: Sleeve[];
   sleevesFromCovenant: number;
@@ -139,6 +137,8 @@ export class PlayerObject implements IPlayer {
   factionWorkType: string;
   createProgramName: string;
   timeWorkedCreateProgram: number;
+  craftAugmentationName: string;
+  timeWorkedCraftAugmentation: number;
   crimeType: string;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
@@ -169,6 +169,8 @@ export class PlayerObject implements IPlayer {
   workChaExpGainRate: number;
   workMoneyLossRate: number;
 
+  entropyStacks: number;
+
   // Methods
   work: (numCycles: number) => boolean;
   workPartTime: (numCycles: number) => boolean;
@@ -190,7 +192,7 @@ export class PlayerObject implements IPlayer {
   canAccessBladeburner: () => boolean;
   canAccessCorporation: () => boolean;
   canAccessGang: () => boolean;
-  canAccessResleeving: () => boolean;
+  canAccessGrafting: () => boolean;
   canAfford: (cost: number) => boolean;
   gainHackingExp: (exp: number) => void;
   gainStrengthExp: (exp: number) => void;
@@ -296,6 +298,10 @@ export class PlayerObject implements IPlayer {
   setMult: (name: string, mult: number) => void;
   canAccessCotMG: () => boolean;
   sourceFileLvl: (n: number) => number;
+  startCraftAugmentationWork: (augmentationName: string, time: number) => void;
+  craftAugmentationWork: (numCycles: number) => boolean;
+  finishCraftAugmentationWork: (cancelled: boolean) => string;
+  applyEntropy: (stacks?: number) => void;
 
   constructor() {
     //Skills and stats
@@ -419,6 +425,9 @@ export class PlayerObject implements IPlayer {
     this.createProgramName = "";
     this.createProgramReqLvl = 0;
 
+    this.craftAugmentationName = "";
+    this.timeWorkedCraftAugmentation = 0;
+
     this.className = "";
 
     this.crimeType = "";
@@ -457,10 +466,11 @@ export class PlayerObject implements IPlayer {
 
     // Sleeves & Re-sleeving
     this.sleeves = [];
-    this.resleeves = [];
     this.sleevesFromCovenant = 0; // # of Duplicate sleeves purchased from the covenan;
     //bitnode
     this.bitNodeN = 1;
+
+    this.entropyStacks = 0;
 
     //Used to store the last update time.
     this.lastUpdate = 0;
@@ -541,6 +551,9 @@ export class PlayerObject implements IPlayer {
     this.startCreateProgramWork = generalMethods.startCreateProgramWork;
     this.createProgramWork = generalMethods.createProgramWork;
     this.finishCreateProgramWork = generalMethods.finishCreateProgramWork;
+    this.startCraftAugmentationWork = generalMethods.startCraftAugmentationWork;
+    this.craftAugmentationWork = generalMethods.craftAugmentationWork;
+    this.finishCraftAugmentationWork = generalMethods.finishCraftAugmentationWork;
     this.startClass = generalMethods.startClass;
     this.takeClass = generalMethods.takeClass;
     this.finishClass = generalMethods.finishClass;
@@ -577,7 +590,7 @@ export class PlayerObject implements IPlayer {
     this.gainCodingContractReward = generalMethods.gainCodingContractReward;
     this.travel = generalMethods.travel;
     this.gotoLocation = generalMethods.gotoLocation;
-    this.canAccessResleeving = generalMethods.canAccessResleeving;
+    this.canAccessGrafting = generalMethods.canAccessGrafting;
     this.giveExploit = generalMethods.giveExploit;
     this.giveAchievement = generalMethods.giveAchievement;
     this.getIntelligenceBonus = generalMethods.getIntelligenceBonus;
@@ -611,6 +624,8 @@ export class PlayerObject implements IPlayer {
 
     this.canAccessCotMG = generalMethods.canAccessCotMG;
     this.sourceFileLvl = generalMethods.sourceFileLvl;
+
+    this.applyEntropy = augmentationMethods.applyEntropy;
   }
 
   /**

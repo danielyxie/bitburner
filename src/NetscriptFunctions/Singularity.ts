@@ -167,12 +167,17 @@ export function NetscriptSingularity(
       let augs = [];
       if (player.hasGangWith(faction)) {
         for (const augName of Object.keys(Augmentations)) {
-          if (augName === AugmentationNames.NeuroFluxGovernor) continue;
-          if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
-          const tempAug = Augmentations[augName];
-          if (!tempAug.isSpecial) {
-            augs.push(augName);
-          }
+          const aug = Augmentations[augName];
+          if (
+            augName === AugmentationNames.NeuroFluxGovernor ||
+            (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) ||
+            // Special augs (i.e. Bladeburner augs)
+            aug.isSpecial ||
+            // Exclusive augs (i.e. QLink)
+            (aug.factions.length <= 1 && !fac.augmentations.includes(augName) && player.bitNodeN !== 2)
+          )
+            continue;
+          augs.push(augName);
         }
       } else {
         augs = fac.augmentations;

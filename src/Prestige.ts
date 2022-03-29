@@ -108,6 +108,9 @@ export function prestigeAugmentation(): void {
   // Messages
   initMessages();
 
+  // Apply entropy from grafting
+  Player.applyEntropy(Player.entropyStacks);
+
   // Gang
   const gang = Player.gang;
   if (Player.inGang() && gang !== null) {
