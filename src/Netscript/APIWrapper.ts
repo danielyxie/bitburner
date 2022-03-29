@@ -19,11 +19,11 @@ export type WrappedNetscriptAPI = {
 }
 
 export type NetscriptContext = {
-  workerScript: WorkerScript;
-  function: string;
   makeRuntimeErrorMsg: (message: string) => string;
   log: (message: () => string) => void;
-  updateDynamicRam: () => void;
+  workerScript: WorkerScript;
+  function: string;
+  helper: WrappedNetscriptHelpers;
 };
 
 type NetscriptHelpers = {
@@ -38,21 +38,42 @@ type NetscriptHelpers = {
   getValidPort: (funcName: string, port: any) => IPort;
 }
 
+type WrappedNetscriptHelpers = {
+  updateDynamicRam: (ramCost: number) => void;
+  makeRuntimeErrorMsg: (msg: string) => string;
+  string: (argName: string, v: unknown) => string;
+  number: (argName: string, v: unknown) => number;
+  boolean: (v: unknown) => boolean;
+  getServer: (hostname: string)=> BaseServer;
+  checkSingularityAccess: () => void;
+  hack: (hostname: any, manual: any, { threads: requestedThreads, stock }?: any) => Promise<number>;
+  getValidPort: (port: any) => IPort;
+}
+
 function wrapFunction<T>(helpers: NetscriptHelpers, wrappedAPI: any, workerScript: WorkerScript, func: (ctx: NetscriptContext, ...args: unknown[]) => T, ...tree: string[]): void {
   const functionName = tree.pop();
   if (typeof functionName !== 'string') {
     throw makeRuntimeRejectMsg(workerScript, 'Failure occured while wrapping netscript api');
   }
   const ctx = {
-    workerScript,
-    function: functionName,
     makeRuntimeErrorMsg: (message: string) => { return helpers.makeRuntimeErrorMsg(functionName, message); },
     log: (message: () => string) => { workerScript.log(functionName, message); },
-    updateDynamicRam: () => {
-      helpers.updateDynamicRam(functionName, getRamCost(Player, ...tree, functionName));
+    workerScript,
+    function: functionName,
+    helper: {
+      updateDynamicRam: (ramCost: number) => helpers.updateDynamicRam(functionName, ramCost),
+      makeRuntimeErrorMsg: (msg: string) => helpers.makeRuntimeErrorMsg(functionName, msg),
+      string: (argName: string, v: unknown) => helpers.string(functionName, argName, v),
+      number: (argName: string, v: unknown) => helpers.number(functionName, argName, v),
+      boolean: helpers.boolean,
+      getServer: (hostname: string) => helpers.getServer(hostname, functionName),
+      checkSingularityAccess: () => helpers.checkSingularityAccess(functionName),
+      hack: helpers.hack,
+      getValidPort: (port: any) => helpers.getValidPort(functionName, port)
     }
   };
   function wrappedFunction(...args: unknown[]): T {
+    helpers.updateDynamicRam(ctx.function, getRamCost(Player, ...tree, ctx.function));
     return func(ctx, ...args);
   }
   const parent = getNestedProperty(wrappedAPI, ...tree);
