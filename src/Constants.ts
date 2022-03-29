@@ -41,6 +41,7 @@ export const CONSTANTS: {
   IntelligenceInfiltrationWeight: number;
   IntelligenceCrimeBaseExpGain: number;
   IntelligenceProgramBaseExpGain: number;
+  IntelligenceGraftBaseExpGain: number;
   IntelligenceTerminalHackBaseExpGain: number;
   IntelligenceSingFnBaseExpGain: number;
   IntelligenceClassBaseExpGain: number;
@@ -71,6 +72,7 @@ export const CONSTANTS: {
   WorkTypeCreateProgram: string;
   WorkTypeStudyClass: string;
   WorkTypeCrime: string;
+  WorkTypeGraftAugmentation: string;
   ClassStudyComputerScience: string;
   ClassDataStructures: string;
   ClassNetworks: string;
@@ -108,11 +110,14 @@ export const CONSTANTS: {
   CodingContractBaseFactionRepGain: number;
   CodingContractBaseCompanyRepGain: number;
   CodingContractBaseMoneyGain: number;
+  AugmentationGraftingCostMult: number;
+  AugmentationGraftingTimeBase: number;
+  EntropyEffect: number;
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  VersionString: "1.5.0",
-  VersionNumber: 11,
+  VersionString: "1.6.0",
+  VersionNumber: 12,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -180,6 +185,7 @@ export const CONSTANTS: {
   IntelligenceInfiltrationWeight: 0.1, // Weight for how much int affects infiltration success rates
   IntelligenceCrimeBaseExpGain: 0.05,
   IntelligenceProgramBaseExpGain: 0.1, // Program required hack level divided by this to determine int exp gain
+  IntelligenceGraftBaseExpGain: 0.05,
   IntelligenceTerminalHackBaseExpGain: 200, // Hacking exp divided by this to determine int exp gain
   IntelligenceSingFnBaseExpGain: 1.5,
   IntelligenceClassBaseExpGain: 0.01,
@@ -224,6 +230,7 @@ export const CONSTANTS: {
   WorkTypeCreateProgram: "Working on Create a Program",
   WorkTypeStudyClass: "Studying or Taking a class at university",
   WorkTypeCrime: "Committing a crime",
+  WorkTypeGraftAugmentation: "Grafting an Augmentation",
 
   ClassStudyComputerScience: "studying Computer Science",
   ClassDataStructures: "taking a Data Structures course",
@@ -269,68 +276,116 @@ export const CONSTANTS: {
   CodingContractBaseCompanyRepGain: 4000,
   CodingContractBaseMoneyGain: 75e6,
 
+  // Augmentation crafting multipliers
+  AugmentationGraftingCostMult: 3,
+  AugmentationGraftingTimeBase: 3600000,
+
+  // Value raised to the number of entropy stacks, then multiplied to player multipliers
+  EntropyEffect: 0.98,
+
   // BitNode/Source-File related stuff
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-  v1.5.0 - Steam Cloud integration
-  --------------------------------
+  v1.6.0 - 2022-03-29 Grafting
+  ----------------------------
 
-  ** Steam Cloud Saving **
+  ** Vitalife secret lab **
 
-  * Added (@MartinFournier)
+  * A new mechanic called Augmentation Grafting has been added. Resleeving has been removed.
+  * Credit to @nikfolas for his incredible work.
+
+  ** Stanek **
+
+  * BREAKING: Many functions in the stanek API were renamed in order to avoid name collision with things like Map.prototype.get
 
   ** UI **
 
-  * background now matches game primary color (@nickofolas)
-  * page title contains version (@MartinFourier)
-  * Major text editor improvements (@nickofolas)
-  * Display bonus time on sleeve page (@MartinFourier)
-  * Several UI improvements (@nickofolas, @smolgumball, @DrCuriosity, @phyzical)
-  * Fix aug display in alpha (@Dominik Winter)
-  * Fix display of corporation product equation (@SagePtr)
-  * Make Bitverse more accessible (@ChrissiQ)
-  * Make corporation warehouse more accessible (@ChrissiQ)
-  * Make tab style more consistent (@nikfolas)
+  * Major update to Sleeve, Gang UI, and Create Program (@nikfolas)
+  * re-add pre tags to support slash n in prompt (@jacktose)
+  * Tabelize linked output of 'ls' (@Master-Guy)
+  * Add the ability to filter open scripts (@phyzical)
+  * Add minHeight to editor tabs (@nickofolas)
+  * Properly expand gang equipment cards to fill entire screen (@nickofolas)
+  * Add shortcut to Faction augmentations page from FactionsRoot (@nickofolas)
+  * Fix extra space on editor tabs (@nickofolas)
+  * Present offline message as list (@DSteve595)
+  * add box showing remaining augments per faction (@jjayeon)
+  * Add tab switching support to vim mode (@JParisFerrer)
+  * Show current task on gang management screen (@zeddrak)
+  * Fix for ui of gang members current task when set via api (@phyzical)
+  * Don't hide irrelevant materials if their stock is not empty and hide irrelevant divisions from Export (@SagePtr)
+  * Fix regex to enable alpha transparency hex codes (8 digits) (@surdaft)
 
-  ** Netscript **
+  ** API **
 
-  * Fix bug with async.
-  * Add 'printf' ns function (@Ninetailed)
-  * Remove blob caching.
-  * Fix formulas access check (@Ornedan)
-  * Fix bug in exp calculation (@qcorradi)
-  * Fix NaN comparison (@qcorradi)
-  * Fix travelToCity with bad argument (@SlyCedix)
-  * Fix bug where augs could not be purchased via sing (@reacocard)
-  * Fix rounding error in donateToFaction (@Risenafis)
-  * Fix bug with weakenAnalyze (@rhobes)
-  * Prevent exploit with atExit (@Ornedan)
-  * Double 'share' power
+  * Added dark web functions to ns api
+  * BREAKING: purchaseTor() should returns true if player already has Tor. (@DavidGrinberg, @waffleattack)
+  * Implement getBonusTime in Corporation API (@t-wolfeadam)
+  * Added functions to purchase TIX and WSI (@incubusnb)
+  * purchaseSleeveAug checks shock value (@incubusnb)
+  * Fix bug with hacknet api
+  * Fix spendHashes bug
+  * Added 0 cost of asleep() (@Master-Guy)
+  * Fix some misleading corporation errors (@TheRealMaxion)
+  * expose the inBladeburner on the player object (@phyzical)
+  * added ram charge for stanek width and height (@phyzical)
+  * Fix sufficient player money check to buy back shares. (@ChrissiQ)
+  * Fix Static Ram Circumventing for some NS functions (@CrafterKolyan)
+  * added CorporationSoftCap to NetscriptDefinitions (@phyzical)
+  * Added definition of autocomplete() 'data' argument. (@tigercat2000)
+  * Adding support for text/select options in Prompt command (@PhilipArmstead)
+  * Added the ability to exportGame via api (@phyzical)
 
-  ** Corporations **
+  ** Arcade **
 
-  * Fix bugs with corp API (@pigalot)
-  * Add smart supply func to corp API (@pd)
+  * Added an arcade to New Tokyo where you can play a 4 year old version of bitburner.
 
   ** Misc. **
 
-  * The file API now allows GET and DELETE (@lordducky)
-  * Force achievement calculation on BN completion (@SagePtr)
-  * Cleanup in repository (@MartinFourier)
-  * Several improvements to the electron version (@MartinFourier)
-  * Fix bug with casino roulette (@jamie-mac)
-  * Terminal history persists in savefile (@MartinFourier)
-  * Fix tests (@jamie-mac)
-  * Fix crash with electron windows tracker (@smolgumball)
-  * Fix BN6/7 passive reputation gain (@BrianLDev)
-  * Fix Sleeve not resetting on install (@waffleattack)
-  * Sort joined factions (@jjayeon)
-  * Update documentation / typo (@lethern, @Meowdoleon, @JohnnyUrosevic, @JosephDavidTalbot,
-    @pd, @lethern, @lordducky, @zeddrak, @fearnlj01, @reasonablytall, @MatthewTh0,
-    @SagePtr, @manniL, @Jedimaster4559, @loganville, @Arrow2thekn33, @wdpk, @fwolfst,
-    @fschoenfeldt, @Waladil, @AdamTReineke, @citrusmunch, @factubsio, @ashtongreen,
-    @ChrissiQ, @DJ-Laser, @waffleattack, @ApamNapat, @CrafterKolyan, @DSteve595)
+  * Add a warning triggered while auto-saves are off. (@MartinFournier)
+  * Log info for field analysis now displays actual rank gained. (@ApamNapat)
+  * Removed BladeburnerSkillCost from skill point cost description. (@ApamNapat)
+  * Fix handling for UpArrow in bladeburner console. (@dowinter)
+  * Add GitHub action to check PRs for generated files. (@MartinFournier)
+  * Cap Staneks gift at 25x25 to prevent crashes. (@waffleattack)
+  * Remove old & unused files from repository. (@MartinFournier)
+  * Factions on the factions screens are sorted by story progress / type. (@phyzical)
+  * Fix log manager not picking up new runs of scripts. (@phyzical)
+  * Added prettier to cicd.
+  * UI improvements (@phyzical)
+  * Documentation / Typos (@nanogyth, @Master-Guy, @incubusnb, @ApamNapat, @phyzical, @SagePtr)
+  * Give player code a copy of Division.upgrades instead of the live object (@Ornedan)
+  * Fix bug with small town achievement.
+  * Fix bug with purchaseSleeveAug (@phyzical)
+  * Check before unlocking corp upgrade (@gianfun)
+  * General codebase improvements. (@phyzical, @Master-Guy, @ApamNapat)
+  * Waiting on promises in NS1 no longer freezes the script. (@Master-Guy)
+  * Fix bug with missing ramcost for tFormat (@TheMas3212)
+  * Fix crash with new prompt
+  * Quick fix to prevent division by 0 in terminal (@Master-Guy)
+  * removed ip references (@phyzical, @Master-Guy)
+  * Terminal now supports 'ls -l'
+  * Fix negative number formatting (@Master-Guy)
+  * Fix unique ip generation (@InDieTasten)
+  * remove terminal command theme from docs (@phyzical)
+  * Fix 'Augmentations Left' with gang factions (@nickofolas)
+  * Attempt to fix 'bladeburner.process()' early routing issue (@MartinFournier)
+  * work in progress augment fix (@phyzical)
+  * Fixes missing space in Smart Supply (@TheRealMaxion)
+  * Change license to Apache 2 with Commons Clause
+  * updated regex sanitization (@mbrannen)
+  * Sleeve fix for when faction isnt found (@phyzical)
+  * Fix editor "close" naming (@phyzical)
+  * Fix bug with sleeves where some factions would be listed as workable. (@phyzical)
+  * Fix research tree of product industries post-prestige (@pd)
+  * Added a check for exisiting industry type before expanding (@phyzical)
+  * fix hackAnalyzeThreads returning infinity (@chrisrabe)
+  * Make growthAnalyze more accurate (@dwRchyngqxs)
+  * Add 'Zoom -> Reset Zoom' command to Steam (@smolgumball)
+  * Add hasOwnProperty check to GetServer (@SagePtr)
+  * Speed up employee productivity calculation (@pd)
+  * Field Work and Security Work benefit from 'share' (@SagePtr)
   * Nerf noodle bar.
 `,
 };

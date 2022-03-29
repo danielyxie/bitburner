@@ -66,7 +66,7 @@ export function AlertManager(): React.ReactElement {
       {alerts.length > 0 && (
         <Modal open={true} onClose={close}>
           <Box overflow="scroll" sx={{ overflowWrap: "break-word", whiteSpace: "pre-line" }}>
-            <Typography>{alerts[0].text}</Typography>
+            <Typography component={'span'}>{alerts[0].text}</Typography>
           </Box>
         </Modal>
       )}

@@ -1466,20 +1466,19 @@ export class Bladeburner implements IBladeburner {
         if (isNaN(eff) || eff < 0) {
           throw new Error("Field Analysis Effectiveness calculated to be NaN or negative");
         }
-        const hackingExpGain = 20 * player.hacking_exp_mult,
-          charismaExpGain = 20 * player.charisma_exp_mult;
+        const hackingExpGain = 20 * player.hacking_exp_mult;
+        const charismaExpGain = 20 * player.charisma_exp_mult;
+        const rankGain = 0.1 * BitNodeMultipliers.BladeburnerRank;
         player.gainHackingExp(hackingExpGain);
         player.gainIntelligenceExp(BladeburnerConstants.BaseIntGain);
         player.gainCharismaExp(charismaExpGain);
-        this.changeRank(player, 0.1 * BitNodeMultipliers.BladeburnerRank);
+        this.changeRank(player, rankGain);
         this.getCurrentCity().improvePopulationEstimateByPercentage(eff * this.skillMultipliers.successChanceEstimate);
         if (this.logging.general) {
           this.log(
-            "Field analysis completed. Gained 0.1 rank, " +
-              formatNumber(hackingExpGain, 1) +
-              " hacking exp, and " +
-              formatNumber(charismaExpGain, 1) +
-              " charisma exp",
+            `Field analysis completed. Gained ${formatNumber(rankGain, 2)} rank, ` +
+              `${formatNumber(hackingExpGain, 1)} hacking exp, and ` +
+              `${formatNumber(charismaExpGain, 1)} charisma exp`,
           );
         }
         this.startAction(player, this.action); // Repeat action

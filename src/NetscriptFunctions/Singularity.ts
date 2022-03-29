@@ -42,7 +42,6 @@ import { Terminal } from "../Terminal";
 import { calculateHackingTime } from "../Hacking";
 import { Server } from "../Server/Server";
 import { netscriptCanHack } from "../Hacking/netscriptCanHack";
-import { FactionNames } from "../Faction/data/FactionNames";
 import { FactionInfos } from "../Faction/FactionInfo";
 
 export function NetscriptSingularity(
@@ -114,17 +113,21 @@ export function NetscriptSingularity(
 
       // If player has a gang with this faction, return all augmentations.
       if (player.hasGangWith(facname)) {
-        const res = [];
-        for (const augName of Object.keys(Augmentations)) {
-          if (augName === AugmentationNames.NeuroFluxGovernor) continue;
-          if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
-          const aug = Augmentations[augName];
-          if (!aug.isSpecial) {
-            res.push(augName);
-          }
+        let augs = Object.values(Augmentations);
+
+        // Remove blacklisted augs.
+        const blacklist = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.TheRedPill];
+        augs = augs.filter((a) => !blacklist.includes(a.name));
+
+        // Remove special augs.
+        augs = augs.filter((a) => !a.isSpecial);
+
+        // Remove faction-unique augs outside BN2. (But keep the one for this faction.)
+        if (player.bitNodeN !== 2) {
+          augs = augs.filter((a) => a.factions.length > 1 || Factions[facname].augmentations.includes(a.name));
         }
 
-        return res;
+        return augs.map((a) => a.name);
       }
 
       return faction.augmentations.slice();
@@ -168,12 +171,17 @@ export function NetscriptSingularity(
       let augs = [];
       if (player.hasGangWith(faction)) {
         for (const augName of Object.keys(Augmentations)) {
-          if (augName === AugmentationNames.NeuroFluxGovernor) continue;
-          if (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) continue;
-          const tempAug = Augmentations[augName];
-          if (!tempAug.isSpecial) {
-            augs.push(augName);
-          }
+          const aug = Augmentations[augName];
+          if (
+            augName === AugmentationNames.NeuroFluxGovernor ||
+            (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) ||
+            // Special augs (i.e. Bladeburner augs)
+            aug.isSpecial ||
+            // Exclusive augs (i.e. QLink)
+            (aug.factions.length <= 1 && !fac.augmentations.includes(augName) && player.bitNodeN !== 2)
+          )
+            continue;
+          augs.push(augName);
         }
       } else {
         augs = fac.augmentations;
@@ -500,7 +508,7 @@ export function NetscriptSingularity(
 
       if (player.hasTorRouter()) {
         workerScript.log("purchaseTor", () => "You already have a TOR router!");
-        return false;
+        return true;
       }
 
       if (player.money < CONSTANTS.TorRouterCost) {
