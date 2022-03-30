@@ -2263,10 +2263,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("alert", getRamCost(Player, "alert"));
       dialogBoxCreate(message);
     },
-    toast: function (_message: unknown, _variant: unknown = "success", _duration: unknown = 2000): void {
+    toast: function (_message: unknown, _variant: unknown = "success", duration: any = 2000): void {
       const message = helper.string("toast", "message", _message);
       const variant = helper.string("toast", "variant", _variant);
-      const duration = helper.number("toast", "duration", _duration);
       updateDynamicRam("toast", getRamCost(Player, "toast"));
       if (!["success", "info", "warning", "error"].includes(variant))
         throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
