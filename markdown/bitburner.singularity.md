@@ -39,6 +39,8 @@ This API requires Source-File 4 to use. The RAM cost of all these functions is m
 |  [getCrimeChance(crime)](./bitburner.singularity.getcrimechance.md) | Get chance to successfully commit a crime. |
 |  [getCrimeStats(crime)](./bitburner.singularity.getcrimestats.md) | Get stats related to a crime. |
 |  [getCurrentServer()](./bitburner.singularity.getcurrentserver.md) | Get the current server. |
+|  [getDarkwebProgramCost(programName)](./bitburner.singularity.getdarkwebprogramcost.md) | Check the price of an exploit on the dark web |
+|  [getDarkwebPrograms()](./bitburner.singularity.getdarkwebprograms.md) | Get a list of programs offered on the dark web. |
 |  [getFactionFavor(faction)](./bitburner.singularity.getfactionfavor.md) | Get faction favor. |
 |  [getFactionFavorGain(faction)](./bitburner.singularity.getfactionfavorgain.md) | Get faction favor gain. |
 |  [getFactionRep(faction)](./bitburner.singularity.getfactionrep.md) | Get faction reputation. |

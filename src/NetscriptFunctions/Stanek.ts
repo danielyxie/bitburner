@@ -22,28 +22,29 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
   }
 
   return {
-    width: function (): number {
-      helper.updateDynamicRam("width", getRamCost(player, "stanek", "width"));
-      checkStanekAPIAccess("width");
+    giftWidth: function (): number {
+      helper.updateDynamicRam("giftWidth", getRamCost(player, "stanek", "giftWidth"));
+      checkStanekAPIAccess("giftWidth");
       return staneksGift.width();
     },
-    height: function (): number {
-      helper.updateDynamicRam("height", getRamCost(player, "stanek", "height"));
-      checkStanekAPIAccess("height");
+    giftHeight: function (): number {
+      helper.updateDynamicRam("giftHeight", getRamCost(player, "stanek", "giftHeight"));
+      checkStanekAPIAccess("giftHeight");
       return staneksGift.height();
     },
-    charge: function (_rootX: unknown, _rootY: unknown): Promise<void> {
-      const rootX = helper.number("stanek.charge", "rootX", _rootX);
-      const rootY = helper.number("stanek.charge", "rootY", _rootY);
+    chargeFragment: function (_rootX: unknown, _rootY: unknown): Promise<void> {
+      const rootX = helper.number("stanek.chargeFragment", "rootX", _rootX);
+      const rootY = helper.number("stanek.chargeFragment", "rootY", _rootY);
 
-      helper.updateDynamicRam("charge", getRamCost(player, "stanek", "charge"));
-      checkStanekAPIAccess("charge");
+      helper.updateDynamicRam("chargeFragment", getRamCost(player, "stanek", "chargeFragment"));
+      checkStanekAPIAccess("chargeFragment");
       const fragment = staneksGift.findFragment(rootX, rootY);
-      if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.charge", `No fragment with root (${rootX}, ${rootY}).`);
+      if (!fragment)
+        throw helper.makeRuntimeErrorMsg("stanek.chargeFragment", `No fragment with root (${rootX}, ${rootY}).`);
       const time = staneksGift.inBonus() ? 200 : 1000;
       return netscriptDelay(time, workerScript).then(function () {
         const charge = staneksGift.charge(player, fragment, workerScript.scriptRef.threads);
-        workerScript.log("stanek.charge", () => `Charged fragment for ${charge} charge.`);
+        workerScript.log("stanek.chargeFragment", () => `Charged fragment for ${charge} charge.`);
         return Promise.resolve();
       });
     },
@@ -61,49 +62,49 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
         return { ...af.copy(), ...af.fragment().copy() };
       });
     },
-    clear: function (): void {
-      helper.updateDynamicRam("clear", getRamCost(player, "stanek", "clear"));
-      checkStanekAPIAccess("clear");
-      workerScript.log("stanek.clear", () => `Cleared Stanek's Gift.`);
+    clearGift: function (): void {
+      helper.updateDynamicRam("clearGift", getRamCost(player, "stanek", "clearGift"));
+      checkStanekAPIAccess("clearGift");
+      workerScript.log("stanek.clearGift", () => `Cleared Stanek's Gift.`);
       staneksGift.clear();
     },
-    canPlace: function (_rootX: unknown, _rootY: unknown, _rotation: unknown, _fragmentId: unknown): boolean {
-      const rootX = helper.number("stanek.canPlace", "rootX", _rootX);
-      const rootY = helper.number("stanek.canPlace", "rootY", _rootY);
-      const rotation = helper.number("stanek.canPlace", "rotation", _rotation);
-      const fragmentId = helper.number("stanek.canPlace", "fragmentId", _fragmentId);
-      helper.updateDynamicRam("canPlace", getRamCost(player, "stanek", "canPlace"));
-      checkStanekAPIAccess("canPlace");
+    canPlaceFragment: function (_rootX: unknown, _rootY: unknown, _rotation: unknown, _fragmentId: unknown): boolean {
+      const rootX = helper.number("stanek.canPlaceFragment", "rootX", _rootX);
+      const rootY = helper.number("stanek.canPlaceFragment", "rootY", _rootY);
+      const rotation = helper.number("stanek.canPlaceFragment", "rotation", _rotation);
+      const fragmentId = helper.number("stanek.canPlaceFragment", "fragmentId", _fragmentId);
+      helper.updateDynamicRam("canPlaceFragment", getRamCost(player, "stanek", "canPlaceFragment"));
+      checkStanekAPIAccess("canPlaceFragment");
       const fragment = FragmentById(fragmentId);
-      if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.canPlace", `Invalid fragment id: ${fragmentId}`);
+      if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.canPlaceFragment", `Invalid fragment id: ${fragmentId}`);
       const can = staneksGift.canPlace(rootX, rootY, rotation, fragment);
       return can;
     },
-    place: function (_rootX: unknown, _rootY: unknown, _rotation: unknown, _fragmentId: unknown): boolean {
-      const rootX = helper.number("stanek.place", "rootX", _rootX);
-      const rootY = helper.number("stanek.place", "rootY", _rootY);
-      const rotation = helper.number("stanek.place", "rotation", _rotation);
-      const fragmentId = helper.number("stanek.place", "fragmentId", _fragmentId);
-      helper.updateDynamicRam("place", getRamCost(player, "stanek", "place"));
-      checkStanekAPIAccess("place");
+    placeFragment: function (_rootX: unknown, _rootY: unknown, _rotation: unknown, _fragmentId: unknown): boolean {
+      const rootX = helper.number("stanek.placeFragment", "rootX", _rootX);
+      const rootY = helper.number("stanek.placeFragment", "rootY", _rootY);
+      const rotation = helper.number("stanek.placeFragment", "rotation", _rotation);
+      const fragmentId = helper.number("stanek.placeFragment", "fragmentId", _fragmentId);
+      helper.updateDynamicRam("placeFragment", getRamCost(player, "stanek", "placeFragment"));
+      checkStanekAPIAccess("placeFragment");
       const fragment = FragmentById(fragmentId);
-      if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.place", `Invalid fragment id: ${fragmentId}`);
+      if (!fragment) throw helper.makeRuntimeErrorMsg("stanek.placeFragment", `Invalid fragment id: ${fragmentId}`);
       return staneksGift.place(rootX, rootY, rotation, fragment);
     },
-    get: function (_rootX: unknown, _rootY: unknown): IActiveFragment | undefined {
-      const rootX = helper.number("stanek.get", "rootX", _rootX);
-      const rootY = helper.number("stanek.get", "rootY", _rootY);
-      helper.updateDynamicRam("get", getRamCost(player, "stanek", "get"));
-      checkStanekAPIAccess("get");
+    getFragment: function (_rootX: unknown, _rootY: unknown): IActiveFragment | undefined {
+      const rootX = helper.number("stanek.getFragment", "rootX", _rootX);
+      const rootY = helper.number("stanek.getFragment", "rootY", _rootY);
+      helper.updateDynamicRam("getFragment", getRamCost(player, "stanek", "getFragment"));
+      checkStanekAPIAccess("getFragment");
       const fragment = staneksGift.findFragment(rootX, rootY);
       if (fragment !== undefined) return fragment.copy();
       return undefined;
     },
-    remove: function (_rootX: unknown, _rootY: unknown): boolean {
-      const rootX = helper.number("stanek.remove", "rootX", _rootX);
-      const rootY = helper.number("stanek.remove", "rootY", _rootY);
-      helper.updateDynamicRam("remove", getRamCost(player, "stanek", "remove"));
-      checkStanekAPIAccess("remove");
+    removeFragment: function (_rootX: unknown, _rootY: unknown): boolean {
+      const rootX = helper.number("stanek.removeFragment", "rootX", _rootX);
+      const rootY = helper.number("stanek.removeFragment", "rootY", _rootY);
+      helper.updateDynamicRam("removeFragment", getRamCost(player, "stanek", "removeFragment"));
+      checkStanekAPIAccess("removeFragment");
       return staneksGift.delete(rootX, rootY);
     },
   };

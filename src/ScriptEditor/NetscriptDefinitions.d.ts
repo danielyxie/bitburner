@@ -95,6 +95,7 @@ interface Player {
   tor: boolean;
   hasCorporation: boolean;
   inBladeburner: boolean;
+  entropy: number;
 }
 
 /**
@@ -666,6 +667,10 @@ export interface CharacterMult {
   agility: number;
   /** Agility exp */
   agilityExp: number;
+  /** Charisma stat */
+  charisma: number;
+  /** Charisma exp */
+  charismaExp: number;
   /** Company reputation */
   companyRep: number;
   /** Money earned from crimes */
@@ -706,10 +711,10 @@ export interface CharacterInfo {
   factions: string[];
   /** Current health points */
   hp: number;
-  /** Array of all companies at which you have jobs */
-  company: string[];
+  /** Array of all jobs */
+  jobs: string[];
   /** Array of job positions for all companies you are employed at. Same order as 'jobs' */
-  jobTitle: string[];
+  jobTitles: string[];
   /** Maximum health points */
   maxHp: number;
   /** Boolean indicating whether or not you have a tor router */
@@ -734,6 +739,18 @@ export interface CharacterInfo {
   workRepGain: number;
   /** Money earned so far from work, if applicable */
   workMoneyGain: number;
+  /** total hacking exp */
+  hackingExp: number;
+  /** total strength exp */
+  strengthExp: number;
+  /** total defense exp */
+  defenseExp: number;
+  /** total dexterity exp */
+  dexterityExp: number;
+  /** total agility exp */
+  agilityExp: number;
+  /** total charisma exp */
+  charismaExp: number;
 }
 
 /**
@@ -1597,7 +1614,7 @@ export interface Singularity {
    * purchasing a TOR router using this function is the same as if you were to
    * manually purchase one.
    *
-   * @returns True if actions is successful, false otherwise.
+   * @returns True if actions is successful or you already own TOR router, false otherwise.
    */
   purchaseTor(): boolean;
 
@@ -2198,11 +2215,8 @@ export interface Singularity {
    * Hospitalize the player.
    * @remarks
    * RAM cost: 0.25 GB * 16/4/1
-   *
-   *
-   * @returns The cost of the hospitalization.
    */
-  hospitalize(): number;
+  hospitalize(): void;
 
   /**
    * Soft reset the game.
@@ -3720,6 +3734,49 @@ export interface Sleeve {
 }
 
 /**
+ * Grafting API
+ * @remarks
+ * This API requires Source-File 10 to use.
+ * @public
+ */
+export interface Grafting {
+  /**
+   * Retrieve the grafting cost of an aug.
+   * @remarks
+   * RAM cost: 3.75 GB
+   *
+   * @param augName - Name of the aug to check the price of. Must be an exact match.
+   * @returns The cost required to graft the named augmentation.
+   * @throws Will error if an invalid Augmentation name is provided.
+   */
+  getAugmentationGraftPrice(augName: string): number;
+
+  /**
+   * Retrieves the time required to graft an aug.
+   * @remarks
+   * RAM cost: 3.75 GB
+   *
+   * @param augName - Name of the aug to check the grafting time of. Must be an exact match.
+   * @returns The time required, in millis, to graft the named augmentation.
+   * @throws Will error if an invalid Augmentation name is provided.
+   */
+  getAugmentationGraftTime(augName: string): number;
+
+  /**
+   * Begins grafting the named aug. You must be in New Tokyo to use this.
+   * @remarks
+   * RAM cost: 7.5 GB
+   *
+   * @param augName - The name of the aug to begin grafting. Must be an exact match.
+   * @param focus - Acquire player focus on this Augmentation grafting. Optional. Defaults to true.
+   * @returns True if the aug successfully began grafting, false otherwise (e.g. not enough money, or
+   * invalid Augmentation name provided).
+   * @throws Will error if called while you are not in New Tokyo.
+   */
+  graftAugmentation(augName: string, focus?: boolean): boolean;
+}
+
+/**
  * Skills formulas
  * @public
  */
@@ -4028,14 +4085,14 @@ interface Stanek {
    * RAM cost: 0.4 GB
    * @returns The width of the gift.
    */
-  width(): number;
+  giftWidth(): number;
   /**
    * Stanek's Gift height.
    * @remarks
    * RAM cost: 0.4 GB
    * @returns The height of the gift.
    */
-  height(): number;
+  giftHeight(): number;
 
   /**
    * Charge a fragment, increasing its power.
@@ -4045,7 +4102,7 @@ interface Stanek {
    * @param rootY - rootY Root Y against which to align the top left of the fragment.
    * @returns Promise that lasts until the charge action is over.
    */
-  charge(rootX: number, rootY: number): Promise<void>;
+  chargeFragment(rootX: number, rootY: number): Promise<void>;
 
   /**
    * List possible fragments.
@@ -4070,7 +4127,7 @@ interface Stanek {
    * @remarks
    * RAM cost: 0 GB
    */
-  clear(): void;
+  clearGift(): void;
 
   /**
    * Check if fragment can be placed at specified location.
@@ -4083,7 +4140,7 @@ interface Stanek {
    * @param fragmentId - fragmentId ID of the fragment to place.
    * @returns true if the fragment can be placed at that position. false otherwise.
    */
-  canPlace(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+  canPlaceFragment(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
   /**
    * Place fragment on Stanek's Gift.
    * @remarks
@@ -4095,7 +4152,7 @@ interface Stanek {
    * @param fragmentId - ID of the fragment to place.
    * @returns true if the fragment can be placed at that position. false otherwise.
    */
-  place(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+  placeFragment(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
   /**
    * Get placed fragment at location.
    * @remarks
@@ -4105,7 +4162,7 @@ interface Stanek {
    * @param rootY - Y against which to align the top left of the fragment.
    * @returns The fragment at [rootX, rootY], if any.
    */
-  get(rootX: number, rootY: number): ActiveFragment | undefined;
+  getFragment(rootX: number, rootY: number): ActiveFragment | undefined;
 
   /**
    * Remove fragment at location.
@@ -4116,7 +4173,7 @@ interface Stanek {
    * @param rootY - Y against which to align the top left of the fragment.
    * @returns The fragment at [rootX, rootY], if any.
    */
-  remove(rootX: number, rootY: number): boolean;
+  removeFragment(rootX: number, rootY: number): boolean;
 }
 
 /**
@@ -4279,6 +4336,19 @@ export interface NS extends Singularity {
    * RAM cost: 0 GB
    */
   readonly ui: UserInterface;
+
+  /**
+   * Namespace for singularity functions.
+   * RAM cost: 0 GB
+   */
+  readonly singularity: Singularity;
+
+  /**
+   * Namespace for grafting functions.
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  readonly grafting: Grafting;
 
   /**
    * Arguments passed into the script.

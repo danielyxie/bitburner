@@ -72,8 +72,8 @@ export function SpecialLocation(props: IProps): React.ReactElement {
   /**
    * Click handler for Resleeving button at New Tokyo VitaLife
    */
-  function handleResleeving(): void {
-    router.toResleeves();
+  function handleGrafting(): void {
+    router.toGrafting();
   }
 
   function renderBladeburner(): React.ReactElement {
@@ -151,11 +151,11 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     );
   }
 
-  function renderResleeving(): React.ReactElement {
-    if (!player.canAccessResleeving()) {
+  function renderGrafting(): React.ReactElement {
+    if (!player.canAccessGrafting()) {
       return <></>;
     }
-    return <Button onClick={handleResleeving}>Re-Sleeve</Button>;
+    return <Button onClick={handleGrafting} sx={{ my: 5 }}>Enter the secret lab</Button>;
   }
 
   function handleCotMG(): void {
@@ -299,7 +299,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   switch (props.loc.name) {
     case LocationName.NewTokyoVitaLife: {
-      return renderResleeving();
+      return renderGrafting();
     }
     case LocationName.Sector12CityHall: {
       return <CreateCorporation />;

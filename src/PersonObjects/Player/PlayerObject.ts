@@ -6,7 +6,6 @@ import * as generalMethods from "./PlayerObjectGeneralMethods";
 import * as serverMethods from "./PlayerObjectServerMethods";
 
 import { IMap } from "../../types";
-import { Resleeve } from "../Resleeving/Resleeve";
 import { Sleeve } from "../Sleeve/Sleeve";
 import { IPlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
 import { Exploit } from "../../Exploits/Exploit";
@@ -72,7 +71,6 @@ export class PlayerObject implements IPlayer {
   playtimeSinceLastBitnode: number;
   purchasedServers: any[];
   queuedAugmentations: IPlayerOwnedAugmentation[];
-  resleeves: Resleeve[];
   scriptProdSinceLastAug: number;
   sleeves: Sleeve[];
   sleevesFromCovenant: number;
@@ -139,6 +137,8 @@ export class PlayerObject implements IPlayer {
   factionWorkType: string;
   createProgramName: string;
   timeWorkedCreateProgram: number;
+  graftAugmentationName: string;
+  timeWorkedGraftAugmentation: number;
   crimeType: string;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
@@ -169,6 +169,8 @@ export class PlayerObject implements IPlayer {
   workChaExpGainRate: number;
   workMoneyLossRate: number;
 
+  entropy: number;
+
   // Methods
   work: (numCycles: number) => boolean;
   workPartTime: (numCycles: number) => boolean;
@@ -190,7 +192,7 @@ export class PlayerObject implements IPlayer {
   canAccessBladeburner: () => boolean;
   canAccessCorporation: () => boolean;
   canAccessGang: () => boolean;
-  canAccessResleeving: () => boolean;
+  canAccessGrafting: () => boolean;
   canAfford: (cost: number) => boolean;
   gainHackingExp: (exp: number) => void;
   gainStrengthExp: (exp: number) => void;
@@ -296,6 +298,10 @@ export class PlayerObject implements IPlayer {
   setMult: (name: string, mult: number) => void;
   canAccessCotMG: () => boolean;
   sourceFileLvl: (n: number) => number;
+  startGraftAugmentationWork: (augmentationName: string, time: number) => void;
+  graftAugmentationWork: (numCycles: number) => boolean;
+  finishGraftAugmentationWork: (cancelled: boolean) => string;
+  applyEntropy: (stacks?: number) => void;
 
   constructor() {
     //Skills and stats
@@ -419,6 +425,9 @@ export class PlayerObject implements IPlayer {
     this.createProgramName = "";
     this.createProgramReqLvl = 0;
 
+    this.graftAugmentationName = "";
+    this.timeWorkedGraftAugmentation = 0;
+
     this.className = "";
 
     this.crimeType = "";
@@ -457,10 +466,11 @@ export class PlayerObject implements IPlayer {
 
     // Sleeves & Re-sleeving
     this.sleeves = [];
-    this.resleeves = [];
     this.sleevesFromCovenant = 0; // # of Duplicate sleeves purchased from the covenan;
     //bitnode
     this.bitNodeN = 1;
+
+    this.entropy = 0;
 
     //Used to store the last update time.
     this.lastUpdate = 0;
@@ -483,11 +493,11 @@ export class PlayerObject implements IPlayer {
     // Let's get a hash of some semi-random stuff so we have something unique.
     this.identifier = cyrb53(
       "I-" +
-      new Date().getTime() +
-      navigator.userAgent +
-      window.innerWidth +
-      window.innerHeight +
-      getRandomInt(100, 999),
+        new Date().getTime() +
+        navigator.userAgent +
+        window.innerWidth +
+        window.innerHeight +
+        getRandomInt(100, 999),
     );
 
     this.init = generalMethods.init;
@@ -541,6 +551,9 @@ export class PlayerObject implements IPlayer {
     this.startCreateProgramWork = generalMethods.startCreateProgramWork;
     this.createProgramWork = generalMethods.createProgramWork;
     this.finishCreateProgramWork = generalMethods.finishCreateProgramWork;
+    this.startGraftAugmentationWork = generalMethods.startGraftAugmentationWork;
+    this.graftAugmentationWork = generalMethods.craftAugmentationWork;
+    this.finishGraftAugmentationWork = generalMethods.finishGraftAugmentationWork;
     this.startClass = generalMethods.startClass;
     this.takeClass = generalMethods.takeClass;
     this.finishClass = generalMethods.finishClass;
@@ -577,7 +590,7 @@ export class PlayerObject implements IPlayer {
     this.gainCodingContractReward = generalMethods.gainCodingContractReward;
     this.travel = generalMethods.travel;
     this.gotoLocation = generalMethods.gotoLocation;
-    this.canAccessResleeving = generalMethods.canAccessResleeving;
+    this.canAccessGrafting = generalMethods.canAccessGrafting;
     this.giveExploit = generalMethods.giveExploit;
     this.giveAchievement = generalMethods.giveAchievement;
     this.getIntelligenceBonus = generalMethods.getIntelligenceBonus;
@@ -611,6 +624,8 @@ export class PlayerObject implements IPlayer {
 
     this.canAccessCotMG = generalMethods.canAccessCotMG;
     this.sourceFileLvl = generalMethods.sourceFileLvl;
+
+    this.applyEntropy = augmentationMethods.applyEntropy;
   }
 
   /**

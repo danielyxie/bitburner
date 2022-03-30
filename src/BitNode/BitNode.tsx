@@ -425,7 +425,7 @@ BitNodes["BitNode10"] = new BitNode(
       This BitNode unlocks Sleeve technology. Sleeve technology allows you to:
       <br />
       <br />
-      1. Re-sleeve: Purchase and transfer your consciousness into a new body
+      1. Grafting: Visit VitaLife in New Tokyo to be able to obtain Augmentations without needing to install
       <br />
       2. Duplicate Sleeves: Duplicate your consciousness into Synthoids, allowing you to perform different tasks
       synchronously
