@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import {
-  Box,
-  Button,
-  Container,
-  Paper,
-  TableBody,
-  TableRow,
-  Typography
-} from "@mui/material";
+import { Box, Button, Container, Paper, TableBody, TableRow, Typography } from "@mui/material";
 
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
@@ -65,26 +57,28 @@ export function FactionsRoot(props: IProps): React.ReactElement {
 
     if (isPlayersGang) {
       for (const augName of Object.keys(Augmentations)) {
+        const aug = Augmentations[augName];
         if (
           augName === AugmentationNames.NeuroFluxGovernor ||
-          augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2 ||
-          Augmentations[augName].isSpecial
-        ) continue;
-        augs.push(augName)
+          (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) ||
+          // Special augs (i.e. Bladeburner augs)
+          aug.isSpecial ||
+          // Exclusive augs (i.e. QLink)
+          (aug.factions.length <= 1 && !faction.augmentations.includes(augName) && player.bitNodeN !== 2)
+        )
+          continue;
+        augs.push(augName);
       }
     } else {
       augs = faction.augmentations.slice();
     }
 
-    return augs.filter(
-      (augmentation: string) => !player.hasAugmentation(augmentation)
-    ).length;
-  }
+    return augs.filter((augmentation: string) => !player.hasAugmentation(augmentation)).length;
+  };
 
-  const allFactions = Object.values(FactionNames).map(faction => faction as string)
+  const allFactions = Object.values(FactionNames).map((faction) => faction as string);
   const allJoinedFactions = props.player.factions.slice(0);
-  allJoinedFactions.sort((a, b) =>
-    allFactions.indexOf(a) - allFactions.indexOf(b));
+  allJoinedFactions.sort((a, b) => allFactions.indexOf(a) - allFactions.indexOf(b));
 
   return (
     <Container disableGutters maxWidth="md" sx={{ mx: 0, mb: 10 }}>
@@ -116,7 +110,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
                   </TableCell>
                   <TableCell align="right">
                     <Box ml={1} mb={1}>
-                      <Button sx={{ width: '100%' }} onClick={() => openFactionAugPage(Factions[faction])}>
+                      <Button sx={{ width: "100%" }} onClick={() => openFactionAugPage(Factions[faction])}>
                         Augmentations Left: {getAugsLeft(Factions[faction], props.player)}
                       </Button>
                     </Box>

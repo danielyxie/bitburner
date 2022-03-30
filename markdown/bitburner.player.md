@@ -47,6 +47,7 @@ interface Player
 |  [dexterity\_exp](./bitburner.player.dexterity_exp.md) | number |  |
 |  [dexterity\_mult](./bitburner.player.dexterity_mult.md) | number |  |
 |  [dexterity](./bitburner.player.dexterity.md) | number |  |
+|  [entropy](./bitburner.player.entropy.md) | number |  |
 |  [faction\_rep\_mult](./bitburner.player.faction_rep_mult.md) | number |  |
 |  [factions](./bitburner.player.factions.md) | string\[\] |  |
 |  [hacking\_chance\_mult](./bitburner.player.hacking_chance_mult.md) | number |  |

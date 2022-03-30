@@ -983,6 +983,16 @@ export declare interface Corporation extends WarehouseAPI, OfficeAPI {
      *
      */
     sellShares(amount: number): void;
+    /**
+     * Get bonus time.
+     *
+     * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
+     *
+     * “Bonus time” makes the game progress faster.
+     *
+     * @returns Bonus time for the Corporation mechanic in milliseconds.
+     */
+    getBonusTime(): number;
 }
 
 /**
@@ -1714,6 +1724,49 @@ export declare interface GangTerritory {
     respect: number;
     /** Wanted gain impact on task scaling */
     wanted: number;
+}
+
+/**
+ * Grafting API
+ * @remarks
+ * This API requires Source-File 10 to use.
+ * @public
+ */
+export declare interface Grafting {
+    /**
+     * Retrieve the grafting cost of an aug.
+     * @remarks
+     * RAM cost: 3.75 GB
+     *
+     * @param augName - Name of the aug to check the price of. Must be an exact match.
+     * @returns The cost required to graft the named augmentation.
+     * @throws Will error if an invalid Augmentation name is provided.
+     */
+    getAugmentationGraftPrice(augName: string): number;
+
+    /**
+     * Retrieves the time required to graft an aug.
+     * @remarks
+     * RAM cost: 3.75 GB
+     *
+     * @param augName - Name of the aug to check the grafting time of. Must be an exact match.
+     * @returns The time required, in millis, to graft the named augmentation.
+     * @throws Will error if an invalid Augmentation name is provided.
+     */
+    getAugmentationGraftTime(augName: string): number;
+
+    /**
+     * Begins grafting the named aug. You must be in New Tokyo to use this.
+     * @remarks
+     * RAM cost: 7.5 GB
+     *
+     * @param augName - The name of the aug to begin grafting. Must be an exact match.
+     * @param focus - Acquire player focus on this Augmentation grafting. Optional. Defaults to true.
+     * @returns True if the aug successfully began grafting, false otherwise (e.g. not enough money, or
+     * invalid Augmentation name provided).
+     * @throws Will error if called while you are not in New Tokyo.
+     */
+    graftAugmentation(augName: string, focus?: boolean): boolean;
 }
 
 /**
@@ -2581,6 +2634,13 @@ export declare interface NS extends Singularity {
      * RAM cost: 0 GB
      */
     readonly ui: UserInterface;
+
+    /**
+     * Namespace for grafting functions.
+     * @remarks
+     * RAM cost: 0 GB
+     */
+    readonly grafting: Grafting;
 
     /**
      * Arguments passed into the script.
@@ -4833,6 +4893,7 @@ export declare interface Player {
     tor: boolean;
     hasCorporation: boolean;
     inBladeburner: boolean;
+    entropy: number;
 }
 
 /**
@@ -5088,7 +5149,7 @@ export declare interface Singularity {
      * purchasing a TOR router using this function is the same as if you were to
      * manually purchase one.
      *
-     * @returns True if actions is successful, false otherwise.
+     * @returns True if actions is successful or you already own TOR router, false otherwise.
      */
     purchaseTor(): boolean;
 
@@ -5780,6 +5841,67 @@ export declare interface Singularity {
      * @returns True if the focus was changed.
      */
     setFocus(focus: boolean): boolean;
+
+    /**
+     * Get a list of programs offered on the dark web.
+     * @remarks
+     * RAM cost: 1 GB * 16/4/1
+     *
+     *
+     * This function allows the player to get a list of programs available for purchase
+     * on the dark web. Players MUST have purchased Tor to get the list of programs
+     * available. If Tor has not been purchased yet, this function will return an
+     * empty list.
+     *
+     * @example
+     * ```ts
+     * // NS1
+     * getDarkwebProgramsAvailable();
+     * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
+     * ```
+     * @example
+     * ```ts
+     * // NS2
+     * ns.getDarkwebProgramsAvailable();
+     * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
+     * ```
+     * @returns - a list of programs available for purchase on the dark web, or [] if Tor has not
+     * been purchased
+     */
+    getDarkwebPrograms(): string[];
+
+    /**
+     * Check the price of an exploit on the dark web
+     * @remarks
+     * RAM cost: 0.5 GB * 16/4/1
+     *
+     *
+     * This function allows you to check the price of a darkweb exploit/program.
+     * You MUST have a TOR router in order to use this function. The price returned
+     * by this function is the same price you would see with buy -l from the terminal.
+     * Returns the cost of the program if it has not been purchased yet, 0 if it
+     * has already been purchased, or -1 if Tor has not been purchased (and thus
+     * the program/exploit is not available for purchase).
+     *
+     * If the program does not exist, an error is thrown.
+     *
+     *
+     * @example
+     * ```ts
+     * // NS1
+     * getDarkwebProgramCost("brutessh.exe");
+     * ```
+     * @example
+     * ```ts
+     * // NS2
+     * ns.getDarkwebProgramCost("brutessh.exe");
+     * ```
+     * @param programName - Name of program to check the price of
+     * @returns Price of the specified darkweb program
+     * (if not yet purchased), 0 if it has already been purchased, or -1 if Tor has not been
+     * purchased. Throws an error if the specified program/exploit does not exist
+     */
+    getDarkwebProgramCost(programName: string): number;
 }
 
 /**
@@ -6114,14 +6236,14 @@ export declare interface Stanek {
      * RAM cost: 0.4 GB
      * @returns The width of the gift.
      */
-    width(): number;
+    giftWidth(): number;
     /**
      * Stanek's Gift height.
      * @remarks
      * RAM cost: 0.4 GB
      * @returns The height of the gift.
      */
-    height(): number;
+    giftHeight(): number;
 
     /**
      * Charge a fragment, increasing its power.
@@ -6131,7 +6253,7 @@ export declare interface Stanek {
      * @param rootY - rootY Root Y against which to align the top left of the fragment.
      * @returns Promise that lasts until the charge action is over.
      */
-    charge(rootX: number, rootY: number): Promise<void>;
+    chargeFragment(rootX: number, rootY: number): Promise<void>;
 
     /**
      * List possible fragments.
@@ -6156,7 +6278,7 @@ export declare interface Stanek {
      * @remarks
      * RAM cost: 0 GB
      */
-    clear(): void;
+    clearGift(): void;
 
     /**
      * Check if fragment can be placed at specified location.
@@ -6169,7 +6291,7 @@ export declare interface Stanek {
      * @param fragmentId - fragmentId ID of the fragment to place.
      * @returns true if the fragment can be placed at that position. false otherwise.
      */
-    canPlace(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+    canPlaceFragment(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
     /**
      * Place fragment on Stanek's Gift.
      * @remarks
@@ -6181,7 +6303,7 @@ export declare interface Stanek {
      * @param fragmentId - ID of the fragment to place.
      * @returns true if the fragment can be placed at that position. false otherwise.
      */
-    place(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+    placeFragment(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
     /**
      * Get placed fragment at location.
      * @remarks
@@ -6191,7 +6313,7 @@ export declare interface Stanek {
      * @param rootY - Y against which to align the top left of the fragment.
      * @returns The fragment at [rootX, rootY], if any.
      */
-    get(rootX: number, rootY: number): ActiveFragment | undefined;
+    getFragment(rootX: number, rootY: number): ActiveFragment | undefined;
 
     /**
      * Remove fragment at location.
@@ -6202,7 +6324,7 @@ export declare interface Stanek {
      * @param rootY - Y against which to align the top left of the fragment.
      * @returns The fragment at [rootX, rootY], if any.
      */
-    remove(rootX: number, rootY: number): boolean;
+    removeFragment(rootX: number, rootY: number): boolean;
 }
 
 /**
@@ -6591,6 +6713,20 @@ export declare interface TIX {
      * @returns True if you successfully purchased it or if you already have access, false otherwise.
      */
     purchase4SMarketDataTixApi(): boolean;
+
+    /**
+     * Purchase WSE Account.
+     * @remarks RAM cost: 2.5 GB
+     * @returns True if you successfully purchased it or if you already have access, false otherwise.
+     */
+    purchaseWseAccount(): boolean;
+
+    /**
+     * Purchase TIX API Access
+     * @remarks RAM cost: 2.5 GB
+     * @returns True if you successfully purchased it or if you already have access, false otherwise.
+     */
+    purchaseTixApi(): boolean;
 }
 
 /**

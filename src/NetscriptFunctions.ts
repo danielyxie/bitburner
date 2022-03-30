@@ -71,6 +71,7 @@ import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
 import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
 import { NetscriptFormulas } from "./NetscriptFunctions/Formulas";
 import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
+import { NetscriptGrafting } from "./NetscriptFunctions/Grafting";
 import { IPort } from "./NetscriptPort";
 
 import {
@@ -484,10 +485,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const singularity = NetscriptSingularity(Player, workerScript, helper);
   const stockmarket = NetscriptStockMarket(Player, workerScript, helper);
   const ui = NetscriptUserInterface(Player, workerScript, helper);
+  const grafting = NetscriptGrafting(Player, workerScript, helper);
 
   const base: INS = {
     ...singularity,
 
+    singularity: singularity,
     gang: gang,
     bladeburner: bladeburner,
     codingcontract: codingcontract,
@@ -498,6 +501,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     ui: ui,
     formulas: formulas,
     stock: stockmarket,
+    grafting: grafting,
     args: workerScript.args,
     hacknet: hacknet,
     sprintf: sprintf,
@@ -2326,6 +2330,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         tor: Player.hasTorRouter(),
         inBladeburner: Player.inBladeburner(),
         hasCorporation: Player.hasCorporation(),
+        entropy: Player.entropy,
       };
       Object.assign(data.jobs, Player.jobs);
       return data;
