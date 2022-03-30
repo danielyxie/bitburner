@@ -1709,9 +1709,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const txtFile = getTextFile(filename, server);
       return txtFile != null;
     },
-    isRunning: function (_fn: unknown, _hostname: unknown = workerScript.hostname, ...scriptArgs: any[]): boolean {
-      const fn = helper.string("isRunning", "fn", _fn);
-      const hostname = helper.string("isRunning", "hostname", _hostname);
+    isRunning: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any[]): boolean {
       updateDynamicRam("isRunning", getRamCost(Player, "isRunning"));
       if (fn === undefined || hostname === undefined) {
         throw makeRuntimeErrorMsg("isRunning", "Usage: isRunning(scriptname, server, [arg1], [arg2]...)");
