@@ -23,7 +23,7 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
-import { CONSTANTS } from "../../Constants";
+import { getGenericAugmentationPriceMultiplier } from "../../Augmentation/AugmentationHelpers";
 
 type IProps = {
   faction: Faction;
@@ -43,6 +43,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
 
   function getAugs(): string[] {
     if (isPlayersGang) {
+      // TODO: this code is duplicated in getAugmentationsFromFaction DRY
       let augs = Object.values(Augmentations);
 
       // Remove special augs.
@@ -53,7 +54,9 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         augs = augs.filter((a) => a.factions.length > 1 || props.faction.augmentations.includes(a.name));
 
         // Remove blacklisted augs.
-        const blacklist = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.TheRedPill];
+        const blacklist = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.TheRedPill].map(
+          (augmentation) => augmentation as string,
+        );
         augs = augs.filter((a) => !blacklist.includes(a.name));
       }
 
@@ -184,10 +187,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       </>
     );
   }
-  const mult = Math.pow(
-    CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][player.sourceFileLvl(11)],
-    player.queuedAugmentations.length,
-  );
+
   return (
     <>
       <Button onClick={props.routeToMainPage}>Back</Button>
@@ -208,7 +208,9 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
             </Typography>
           }
         >
-          <Typography>Price multiplier: x {numeralWrapper.formatMultiplier(mult)}</Typography>
+          <Typography>
+            Price multiplier: x {numeralWrapper.formatMultiplier(getGenericAugmentationPriceMultiplier())}
+          </Typography>
         </Tooltip>
       </Box>
       <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)}>Sort by Cost</Button>

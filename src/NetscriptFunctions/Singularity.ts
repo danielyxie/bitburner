@@ -130,7 +130,9 @@ export function NetscriptSingularity(
           augs = augs.filter((a) => a.factions.length > 1 || Factions[facName].augmentations.includes(a.name));
 
           // Remove blacklisted augs.
-          const blacklist = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.TheRedPill];
+          const blacklist = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.TheRedPill].map(
+            (augmentation) => augmentation as string,
+          );
           augs = augs.filter((a) => !blacklist.includes(a.name));
         }
 
