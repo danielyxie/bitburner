@@ -1867,7 +1867,7 @@ export const churchOfTheMachineGodAugmentations = [
     hacknet_node_core_cost_mult: 1 / 1.05,
     hacknet_node_level_cost_mult: 1 / 1.05,
     work_money_mult: 1 / 0.95,
-    stats: <>Staneks Gift has no penalty.</>,
+    stats: <>Stanek's Gift has no penalty.</>,
     factions: [FactionNames.ChurchOfTheMachineGod],
   }),
 ];
