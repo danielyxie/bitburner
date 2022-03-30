@@ -91,13 +91,15 @@ function updateNeuroFluxGovernorCosts(neuroFluxGovernorAugmentation: Augmentatio
 }
 
 export function updateAugmentationCosts(): void {
+  console.log(Player.queuedAugmentations);
   for (const name of Object.keys(Augmentations)) {
     if (Augmentations.hasOwnProperty(name)) {
       const augmentationToUpdate = Augmentations[name];
       if (augmentationToUpdate.name === AugmentationNames.NeuroFluxGovernor) {
         updateNeuroFluxGovernorCosts(augmentationToUpdate);
       } else {
-        augmentationToUpdate.baseCost *= getGenericAugmentationPriceMultiplier();
+        console.log(augmentationToUpdate.baseCost);
+        augmentationToUpdate.baseCost = augmentationToUpdate.startingCost * getGenericAugmentationPriceMultiplier();
       }
     }
   }

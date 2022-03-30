@@ -1,5 +1,5 @@
-import { FactionNames } from './Faction/data/FactionNames';
-import { CityName } from './Locations/data/CityNames';
+import { FactionNames } from "./Faction/data/FactionNames";
+import { CityName } from "./Locations/data/CityNames";
 import { Augmentations } from "./Augmentation/Augmentations";
 import { augmentationExists, initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
@@ -263,7 +263,7 @@ export function prestigeSourceFile(flume: boolean): void {
     homeComp.messages.push(LiteratureNames.CorporationManagementHandbook);
     dialogBoxCreate(
       "You received a copy of the Corporation Management Handbook on your home computer. " +
-      "Read it if you need help getting started with Corporations!",
+        "Read it if you need help getting started with Corporations!",
     );
   }
 
