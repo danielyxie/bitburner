@@ -899,9 +899,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return runningScriptObj.logs.slice();
     },
-    tail: function (_fn: unknown, _hostname: unknown = workerScript.hostname, ...scriptArgs: any[]): void {
-      const fn = helper.string("tail", "fn", _fn);
-      const hostname = helper.string("tail", "hostname", _hostname);
+    tail: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any[]): void {
       updateDynamicRam("tail", getRamCost(Player, "tail"));
       let runningScriptObj;
       if (arguments.length === 0) {
