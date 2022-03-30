@@ -2062,9 +2062,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const iport = helper.getValidPort("getPortHandle", port);
       return iport;
     },
-    rm: function (_fn: unknown, _hostname: unknown): boolean {
+    rm: function (_fn: unknown, hostname: any): boolean {
       const fn = helper.string("rm", "fn", _fn);
-      let hostname = helper.string("rm", "hostname", _hostname);
       updateDynamicRam("rm", getRamCost(Player, "rm"));
 
       if (hostname == null || hostname === "") {
