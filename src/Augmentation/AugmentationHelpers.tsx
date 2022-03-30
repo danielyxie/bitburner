@@ -89,7 +89,7 @@ function updateNeuroFluxGovernorCosts(neuroFluxGovernorAugmentation: Augmentatio
   neuroFluxGovernorAugmentation.baseCost =
     neuroFluxGovernorAugmentation.startingCost * multiplier * BitNodeMultipliers.AugmentationMoneyCost;
 
-  for (let i = 0; i < Player.queuedAugmentations.length - 1; ++i) {
+  for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
     neuroFluxGovernorAugmentation.baseCost *= getBaseAugmentationPriceMultiplier();
   }
 }
