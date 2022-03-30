@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.def\_asc\_points property
 
+Total earned defense experience
+
 <b>Signature:</b>
 
 ```typescript

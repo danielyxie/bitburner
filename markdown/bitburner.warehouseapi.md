@@ -20,6 +20,7 @@ Requires the Warehouse API upgrade from your corporation.
 
 |  Method | Description |
 |  --- | --- |
+|  [bulkPurchase(divisionName, cityName, materialName, amt)](./bitburner.warehouseapi.bulkpurchase.md) | Set material to bulk buy |
 |  [buyMaterial(divisionName, cityName, materialName, amt)](./bitburner.warehouseapi.buymaterial.md) | Set material buy data |
 |  [cancelExportMaterial(sourceDivision, sourceCity, targetDivision, targetCity, materialName, amt)](./bitburner.warehouseapi.cancelexportmaterial.md) | Cancel material export |
 |  [discontinueProduct(divisionName, productName)](./bitburner.warehouseapi.discontinueproduct.md) | Discontinue a product. |
@@ -39,5 +40,6 @@ Requires the Warehouse API upgrade from your corporation.
 |  [setProductMarketTA1(divisionName, productName, on)](./bitburner.warehouseapi.setproductmarketta1.md) | Set market TA 1 for a product. |
 |  [setProductMarketTA2(divisionName, productName, on)](./bitburner.warehouseapi.setproductmarketta2.md) | Set market TA 2 for a product. |
 |  [setSmartSupply(divisionName, cityName, enabled)](./bitburner.warehouseapi.setsmartsupply.md) | Set smart supply |
+|  [setSmartSupplyUseLeftovers(divisionName, cityName, materialName, enabled)](./bitburner.warehouseapi.setsmartsupplyuseleftovers.md) | Set whether smart supply uses leftovers before buying |
 |  [upgradeWarehouse(divisionName, cityName)](./bitburner.warehouseapi.upgradewarehouse.md) | Upgrade warehouse |
 

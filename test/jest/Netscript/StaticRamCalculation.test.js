@@ -656,6 +656,16 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
       await expectNonZeroRamCost(f);
     });
 
+    it("getDarkwebPrograms()", async function () {
+      const f = ["getDarkwebPrograms"];
+      await expectNonZeroRamCost(f);
+    });
+
+    it("getDarkwebProgramCost()", async function () {
+      const f = ["getDarkwebProgramCost"];
+      await expectNonZeroRamCost(f);
+    });
+
     it("upgradeHomeRam()", async function () {
       const f = ["upgradeHomeRam"];
       await expectNonZeroRamCost(f);

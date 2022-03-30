@@ -4,7 +4,7 @@
 
 ## AugmentationStats.hacknet\_node\_ram\_cost\_mult property
 
-Multipler to cost of ram for a Hacknet Node
+Multiplier to cost of ram for a Hacknet Node
 
 <b>Signature:</b>
 

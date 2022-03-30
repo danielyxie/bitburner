@@ -29,6 +29,6 @@ export interface GangTaskStats
 |  [isCombat](./bitburner.gangtaskstats.iscombat.md) | boolean | Is a task of a combat gang |
 |  [isHacking](./bitburner.gangtaskstats.ishacking.md) | boolean | Is a task of a hacking gang |
 |  [name](./bitburner.gangtaskstats.name.md) | string | Task name |
-|  [strWeight](./bitburner.gangtaskstats.strweight.md) | number | Stength skill impact on task scaling |
+|  [strWeight](./bitburner.gangtaskstats.strweight.md) | number | Strength skill impact on task scaling |
 |  [territory](./bitburner.gangtaskstats.territory.md) | [GangTerritory](./bitburner.gangterritory.md) | Territory impact on task scaling |
 

@@ -18,6 +18,7 @@ import { Theme } from "@mui/material";
 import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
 import { debounce } from "lodash";
+import { WorkerScriptStartStopEventEmitter } from "../../Netscript/WorkerScriptStartStopEventEmitter";
 
 let layerCounter = 0;
 
@@ -118,7 +119,7 @@ export const logBoxBaseZIndex = 1500;
 
 function LogWindow(props: IProps): React.ReactElement {
   const draggableRef = useRef<HTMLDivElement>(null);
-  const rootRef = useRef<Draggable>(null)
+  const rootRef = useRef<Draggable>(null);
   const [script, setScript] = useState(props.script);
   const classes = useStyles();
   const container = useRef<HTMLDivElement>(null);
@@ -127,6 +128,23 @@ function LogWindow(props: IProps): React.ReactElement {
   function rerender(): void {
     setRerender((old) => !old);
   }
+
+  // useEffect(
+  //   () =>
+  //     WorkerScriptStartStopEventEmitter.subscribe(() => {
+  //       setTimeout(() => {
+  //         const server = GetServer(script.server);
+  //         if (server === null) return;
+  //         const exisitingScript = findRunningScript(script.filename, script.args, server);
+  //         if (exisitingScript) {
+  //           exisitingScript.logs = script.logs.concat(exisitingScript.logs)
+  //           setScript(exisitingScript)
+  //         }
+  //         rerender();
+  //       }, 100)
+  //     }),
+  //   [],
+  // );
 
   useEffect(() => {
     updateLayer();
@@ -198,7 +216,7 @@ function LogWindow(props: IProps): React.ReactElement {
     const node = draggableRef?.current;
     if (!node) return;
 
-    if(!isOnScreen(node)) {
+    if (!isOnScreen(node)) {
       resetPosition();
     }
   }, 100);
@@ -206,27 +224,21 @@ function LogWindow(props: IProps): React.ReactElement {
   const isOnScreen = (node: HTMLDivElement): boolean => {
     const bounds = node.getBoundingClientRect();
 
-    return !(bounds.right < 0 ||
-            bounds.bottom < 0 ||
-            bounds.left > innerWidth ||
-            bounds.top > outerWidth);
-  }
+    return !(bounds.right < 0 || bounds.bottom < 0 || bounds.left > innerWidth || bounds.top > outerWidth);
+  };
 
   const resetPosition = (): void => {
     const node = rootRef?.current;
     if (!node) return;
-    const state = node.state as {x: number; y: number};
+    const state = node.state as { x: number; y: number };
     state.x = 0;
     state.y = 0;
     node.setState(state);
-  }
+  };
 
   const boundToBody = (e: any): void | false => {
-    if(e.clientX < 0 ||
-       e.clientY < 0 ||
-       e.clientX > innerWidth ||
-       e.clientY > innerHeight) return false;
-  }
+    if (e.clientX < 0 || e.clientY < 0 || e.clientX > innerWidth || e.clientY > innerHeight) return false;
+  };
 
   return (
     <Draggable handle=".drag" onDrag={boundToBody} ref={rootRef}>

@@ -4,7 +4,7 @@
 
 ## AugmentationStats.bladeburner\_success\_chance\_mult property
 
-Multipler to success chance in Bladeburner contracts/operations
+Multiplier to success chance in Bladeburner contracts/operations
 
 <b>Signature:</b>
 

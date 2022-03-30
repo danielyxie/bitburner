@@ -76,7 +76,7 @@ export class BaseServer {
   // Script files on this Server
   scripts: Script[] = [];
 
-  // Contains the IP Addresses of all servers that are immediately
+  // Contains the hostnames of all servers that are immediately
   // reachable from this one
   serversOnNetwork: string[] = [];
 
@@ -163,7 +163,7 @@ export class BaseServer {
     return false;
   }
 
-  removeContract(contract: CodingContract): void {
+  removeContract(contract: CodingContract | string): void {
     if (contract instanceof CodingContract) {
       this.contracts = this.contracts.filter((c) => {
         return c.fn !== contract.fn;

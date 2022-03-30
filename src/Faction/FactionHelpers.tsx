@@ -18,42 +18,7 @@ import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";
-
-const factionOrder = [
-  "CyberSec",
-  "Tian Di Hui",
-  "Netburners",
-  "Sector-12",
-  "Chongqing",
-  "New Tokyo",
-  "Ishima",
-  "Aevum",
-  "Volhaven",
-  "NiteSec",
-  "The Black Hand",
-  "BitRunners",
-  "ECorp",
-  "MegaCorp",
-  "KuaiGong International",
-  "Four Sigma",
-  "NWO",
-  "Blade Industries",
-  "OmniTek Incorporated",
-  "Bachman & Associates",
-  "Clarke Incorporated",
-  "Fulcrum Secret Technologies",
-  "Slum Snakes",
-  "Tetrads",
-  "Silhouette",
-  "Speakers for the Dead",
-  "The Dark Army",
-  "The Syndicate",
-  "The Covenant",
-  "Daedalus",
-  "Illuminati",
-  "Bladeburners",
-  "Church of the Machine God",
-]
+import { FactionNames } from "./data/FactionNames";
 
 export function inviteToFaction(faction: Faction): void {
   Player.receiveInvite(faction.name);
@@ -67,8 +32,9 @@ export function joinFaction(faction: Faction): void {
   if (faction.isMember) return;
   faction.isMember = true;
   Player.factions.push(faction.name);
+  const allFactions = Object.values(FactionNames).map(faction => faction as string)
   Player.factions.sort((a, b) =>
-    factionOrder.indexOf(a) - factionOrder.indexOf(b));
+    allFactions.indexOf(a) - allFactions.indexOf(b));
   const factionInfo = faction.getInfo();
 
   //Determine what factions you are banned from now that you have joined this faction
@@ -117,8 +83,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
   const factionInfo = fac.getInfo();
   const hasPrereqs = hasAugmentationPrereqs(aug);
   if (!hasPrereqs) {
-    const txt =
-      "You must first purchase or install " + aug.prereqs.join(",") + " before you can " + "purchase this one.";
+    const txt = `You must first purchase or install ${aug.prereqs.join(",")} before you can purchase this one.`;
     if (sing) {
       return txt;
     } else {
@@ -166,17 +131,15 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
 
     if (sing) {
       return "You purchased " + aug.name;
-    } else {
-      if (!Settings.SuppressBuyAugmentationConfirmation) {
-        dialogBoxCreate(
-          "You purchased " +
-          aug.name +
-          ". Its enhancements will not take " +
-          "effect until they are installed. To install your augmentations, go to the " +
-          "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
-          "augmentations will now be more expensive.",
-        );
-      }
+    } else if (!Settings.SuppressBuyAugmentationConfirmation) {
+      dialogBoxCreate(
+        "You purchased " +
+        aug.name +
+        ". Its enhancements will not take " +
+        "effect until they are installed. To install your augmentations, go to the " +
+        "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
+        "augmentations will now be more expensive.",
+      );
     }
   } else {
     dialogBoxCreate(

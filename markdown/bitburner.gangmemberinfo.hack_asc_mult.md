@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.hack\_asc\_mult property
 
+Hack multiplier from ascensions
+
 <b>Signature:</b>
 
 ```typescript

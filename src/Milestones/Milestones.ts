@@ -3,6 +3,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { Factions } from "../Faction/Factions";
 import { Faction } from "../Faction/Faction";
 import { GetServer } from "../Server/AllServers";
+import { FactionNames } from "../Faction/data/FactionNames";
 
 function allFactionAugs(p: IPlayer, f: Faction): boolean {
   const factionAugs = f.augmentations.slice().filter((aug) => aug !== "NeuroFlux Governor");
@@ -37,60 +38,60 @@ export const Milestones: Milestone[] = [
   {
     title: "Join the faction hinted at in csec-test.msg",
     fulfilled: (p: IPlayer): boolean => {
-      return p.factions.includes("CyberSec");
+      return p.factions.includes(FactionNames.CyberSec);
     },
   },
   {
-    title: "Install all the Augmentations from CyberSec",
+    title: `Install all the Augmentations from ${FactionNames.CyberSec}`,
     fulfilled: (p: IPlayer): boolean => {
-      return allFactionAugs(p, Factions["CyberSec"]);
+      return allFactionAugs(p, Factions[FactionNames.CyberSec]);
     },
   },
   {
     title: "Join the faction hinted at in nitesec-test.msg",
     fulfilled: (p: IPlayer): boolean => {
-      return p.factions.includes("NiteSec");
+      return p.factions.includes(FactionNames.NiteSec);
     },
   },
   {
-    title: "Install all the Augmentations from NiteSec",
+    title: `Install all the Augmentations from ${FactionNames.NiteSec}`,
     fulfilled: (p: IPlayer): boolean => {
-      return allFactionAugs(p, Factions["NiteSec"]);
+      return allFactionAugs(p, Factions[FactionNames.NiteSec]);
     },
   },
   {
     title: "Join the faction hinted at in j3.msg",
     fulfilled: (p: IPlayer): boolean => {
-      return p.factions.includes("The Black Hand");
+      return p.factions.includes(FactionNames.TheBlackHand);
     },
   },
   {
-    title: "Install all the Augmentations from The Black Hand",
+    title: `Install all the Augmentations from ${FactionNames.TheBlackHand}`,
     fulfilled: (p: IPlayer): boolean => {
-      return allFactionAugs(p, Factions["The Black Hand"]);
+      return allFactionAugs(p, Factions[FactionNames.TheBlackHand]);
     },
   },
   {
     title: "Join the faction hinted at in 19dfj3l1nd.msg",
     fulfilled: (p: IPlayer): boolean => {
-      return p.factions.includes("BitRunners");
+      return p.factions.includes(FactionNames.BitRunners);
     },
   },
   {
-    title: "Install all the Augmentations from BitRunners",
+    title: `Install all the Augmentations from ${FactionNames.BitRunners}`,
     fulfilled: (p: IPlayer): boolean => {
-      return allFactionAugs(p, Factions["BitRunners"]);
+      return allFactionAugs(p, Factions[FactionNames.BitRunners]);
     },
   },
   {
     title: "Complete fl1ght.exe",
     fulfilled: (p: IPlayer): boolean => {
       // technically wrong but whatever
-      return p.factions.includes("Daedalus");
+      return p.factions.includes(FactionNames.Daedalus);
     },
   },
   {
-    title: "Install the special Augmentation from Daedalus",
+    title: `Install the special Augmentation from ${FactionNames.Daedalus}`,
     fulfilled: (p: IPlayer): boolean => {
       return p.augmentations.some((aug) => aug.name == "The Red Pill");
     },

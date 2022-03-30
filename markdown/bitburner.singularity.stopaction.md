@@ -25,7 +25,7 @@ This function is used to end whatever ‘action’ the player is currently perfo
 
 The actions that can be stopped with this function are:
 
-\* Studying at a university \* Working for a company/faction \* Creating a program \* Committing a Crime
+\* Studying at a university \* Working out at a gym \* Working for a company/faction \* Creating a program \* Committing a crime
 
 This function will return true if the player’s action was ended. It will return false if the player was not performing an action when this function was called.
 

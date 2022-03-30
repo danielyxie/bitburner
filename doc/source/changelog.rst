@@ -3,6 +3,108 @@
 Changelog
 =========
 
+v1.6.0 - 2022-03-29 Grafting
+----------------------------
+
+** Vitalife secret lab **
+
+* A new mechanic called Augmentation Grafting has been added. Resleeving has been removed.
+* Credit to @nickofolas for his incredible work.
+
+** Stanek **
+
+* BREAKING: Many functions in the stanek API were renamed in order to avoid name collision with things like Map.prototype.get
+
+** UI **
+
+* Major update to Sleeve, Gang UI, and Create Program (@nickofolas)
+* re-add pre tags to support slash n in prompt (@jacktose)
+* Tabelize linked output of 'ls' (@Master-Guy)
+* Add the ability to filter open scripts (@phyzical)
+* Add minHeight to editor tabs (@nickofolas)
+* Properly expand gang equipment cards to fill entire screen (@nickofolas)
+* Add shortcut to Faction augmentations page from FactionsRoot (@nickofolas)
+* Fix extra space on editor tabs (@nickofolas)
+* Present offline message as list (@DSteve595)
+* add box showing remaining augments per faction (@jjayeon)
+* Add tab switching support to vim mode (@JParisFerrer)
+* Show current task on gang management screen (@zeddrak)
+* Fix for ui of gang members current task when set via api (@phyzical)
+* Don't hide irrelevant materials if their stock is not empty and hide irrelevant divisions from Export (@SagePtr)
+* Fix regex to enable alpha transparency hex codes (8 digits) (@surdaft)
+
+** API **
+
+* Added dark web functions to ns api
+* BREAKING: purchaseTor() should returns true if player already has Tor. (@DavidGrinberg, @waffleattack)
+* Implement getBonusTime in Corporation API (@t-wolfeadam)
+* Added functions to purchase TIX and WSI (@incubusnb)
+* purchaseSleeveAug checks shock value (@incubusnb)
+* Fix bug with hacknet api
+* Fix spendHashes bug
+* Added 0 cost of asleep() (@Master-Guy)
+* Fix some misleading corporation errors (@TheRealMaxion)
+* expose the inBladeburner on the player object (@phyzical)
+* added ram charge for stanek width and height (@phyzical)
+* Fix sufficient player money check to buy back shares. (@ChrissiQ)
+* Fix Static Ram Circumventing for some NS functions (@CrafterKolyan)
+* added CorporationSoftCap to NetscriptDefinitions (@phyzical)
+* Added definition of autocomplete() 'data' argument. (@tigercat2000)
+* Adding support for text/select options in Prompt command (@PhilipArmstead)
+* Added the ability to exportGame via api (@phyzical)
+
+** Arcade **
+
+* Added an arcade to New Tokyo where you can play a 4 year old version of bitburner.
+
+** Misc. **
+
+* Add a warning triggered while auto-saves are off. (@MartinFournier)
+* Log info for field analysis now displays actual rank gained. (@ApamNapat)
+* Removed BladeburnerSkillCost from skill point cost description. (@ApamNapat)
+* Fix handling for UpArrow in bladeburner console. (@dowinter)
+* Add GitHub action to check PRs for generated files. (@MartinFournier)
+* Cap Staneks gift at 25x25 to prevent crashes. (@waffleattack)
+* Remove old & unused files from repository. (@MartinFournier)
+* Factions on the factions screens are sorted by story progress / type. (@phyzical)
+* Fix log manager not picking up new runs of scripts. (@phyzical)
+* Added prettier to cicd.
+* UI improvements (@phyzical)
+* Documentation / Typos (@nanogyth, @Master-Guy, @incubusnb, @ApamNapat, @phyzical, @SagePtr)
+* Give player code a copy of Division.upgrades instead of the live object (@Ornedan)
+* Fix bug with small town achievement.
+* Fix bug with purchaseSleeveAug (@phyzical)
+* Check before unlocking corp upgrade (@gianfun)
+* General codebase improvements. (@phyzical, @Master-Guy, @ApamNapat)
+* Waiting on promises in NS1 no longer freezes the script. (@Master-Guy)
+* Fix bug with missing ramcost for tFormat (@TheMas3212)
+* Fix crash with new prompt
+* Quick fix to prevent division by 0 in terminal (@Master-Guy)
+* removed ip references (@phyzical, @Master-Guy)
+* Terminal now supports 'ls -l'
+* Fix negative number formatting (@Master-Guy)
+* Fix unique ip generation (@InDieTasten)
+* remove terminal command theme from docs (@phyzical)
+* Fix 'Augmentations Left' with gang factions (@nickofolas)
+* Attempt to fix 'bladeburner.process()' early routing issue (@MartinFournier)
+* work in progress augment fix (@phyzical)
+* Fixes missing space in Smart Supply (@TheRealMaxion)
+* Change license to Apache 2 with Commons Clause
+* updated regex sanitization (@mbrannen)
+* Sleeve fix for when faction isnt found (@phyzical)
+* Fix editor "close" naming (@phyzical)
+* Fix bug with sleeves where some factions would be listed as workable. (@phyzical)
+* Fix research tree of product industries post-prestige (@pd)
+* Added a check for exisiting industry type before expanding (@phyzical)
+* fix hackAnalyzeThreads returning infinity (@chrisrabe)
+* Make growthAnalyze more accurate (@dwRchyngqxs)
+* Add 'Zoom -> Reset Zoom' command to Steam (@smolgumball)
+* Add hasOwnProperty check to GetServer (@SagePtr)
+* Speed up employee productivity calculation (@pd)
+* Field Work and Security Work benefit from 'share' (@SagePtr)
+* Nerf noodle bar.
+
+
 v1.5.0 - Steam Cloud integration
 --------------------------------
 
@@ -21,7 +123,7 @@ v1.5.0 - Steam Cloud integration
 * Fix display of corporation product equation (@SagePtr)
 * Make Bitverse more accessible (@ChrissiQ)
 * Make corporation warehouse more accessible (@ChrissiQ)
-* Make tab style more consistent (@nikfolas)
+* Make tab style more consistent (@nickofolas)
 
 ** Netscript **
 

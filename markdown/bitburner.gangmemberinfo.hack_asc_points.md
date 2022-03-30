@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.hack\_asc\_points property
 
+Total earned hack experience
+
 <b>Signature:</b>
 
 ```typescript

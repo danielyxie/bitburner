@@ -8,3 +8,11 @@ export function getStockMarket4SDataCost(): number {
 export function getStockMarket4STixApiCost(): number {
   return CONSTANTS.MarketDataTixApi4SCost * BitNodeMultipliers.FourSigmaMarketDataApiCost;
 }
+
+export function getStockMarketWseCost(): number {
+  return CONSTANTS.WSEAccountCost;
+}
+
+export function getStockMarketTixApiCost(): number {
+  return CONSTANTS.TIXAPICost;
+}

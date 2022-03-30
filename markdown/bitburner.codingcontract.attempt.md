@@ -4,7 +4,7 @@
 
 ## CodingContract.attempt() method
 
-Attemps a coding contract.
+Attempts a coding contract.
 
 <b>Signature:</b>
 

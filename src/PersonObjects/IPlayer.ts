@@ -3,7 +3,6 @@
  * Used because at the time of implementation, the PlayerObject
  * cant be converted to TypeScript.
  */
-import { Resleeve } from "./Resleeving/Resleeve";
 import { Sleeve } from "./Sleeve/Sleeve";
 
 import { IMap, IApplyForJob } from '../types';
@@ -65,7 +64,6 @@ export interface IPlayer {
   playtimeSinceLastBitnode: number;
   purchasedServers: any[];
   queuedAugmentations: IPlayerOwnedAugmentation[];
-  resleeves: Resleeve[];
   scriptProdSinceLastAug: number;
   sleeves: Sleeve[];
   sleevesFromCovenant: number;
@@ -130,6 +128,8 @@ export interface IPlayer {
   factionWorkType: string;
   createProgramName: string;
   timeWorkedCreateProgram: number;
+  graftAugmentationName: string;
+  timeWorkedGraftAugmentation: number;
   crimeType: string;
   committingCrimeThruSingFn: boolean;
   singFnCrimeWorkerScript: WorkerScript | null;
@@ -160,6 +160,8 @@ export interface IPlayer {
   workChaExpGainRate: number;
   workMoneyLossRate: number;
 
+  entropy: number;
+
   // Methods
   work(numCycles: number): boolean;
   workPartTime(numCycles: number): boolean;
@@ -182,7 +184,7 @@ export interface IPlayer {
   canAccessBladeburner(): boolean;
   canAccessCorporation(): boolean;
   canAccessGang(): boolean;
-  canAccessResleeving(): boolean;
+  canAccessGrafting(): boolean;
   canAfford(cost: number): boolean;
   gainHackingExp(exp: number): void;
   gainStrengthExp(exp: number): void;
@@ -287,4 +289,8 @@ export interface IPlayer {
   setMult(name: string, mult: number): void;
   canAccessCotMG(): boolean;
   sourceFileLvl(n: number): number;
+  startGraftAugmentationWork(augmentationName: string, time: number): void;
+  graftAugmentationWork(numCycles: number): boolean;
+  finishGraftAugmentationWork(cancelled: boolean): string;
+  applyEntropy(stacks?: number): void;
 }

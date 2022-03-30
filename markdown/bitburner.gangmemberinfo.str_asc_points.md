@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.str\_asc\_points property
 
+Total earned strength experience
+
 <b>Signature:</b>
 
 ```typescript

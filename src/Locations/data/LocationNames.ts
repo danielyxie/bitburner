@@ -2,14 +2,6 @@
  * Names of all locations
  */
 export enum LocationName {
-  // Cities
-  Aevum = "Aevum",
-  Chongqing = "Chongqing",
-  Ishima = "Ishima",
-  NewTokyo = "New Tokyo",
-  Sector12 = "Sector-12",
-  Volhaven = "Volhaven",
-
   // Aevum Locations
   AevumAeroCorp = "AeroCorp",
   AevumBachmanAndAssociates = "Bachman & Associates",
@@ -54,6 +46,7 @@ export enum LocationName {
   NewTokyoGlobalPharmaceuticals = "Global Pharmaceuticals",
   NewTokyoNoodleBar = "Noodle Bar",
   NewTokyoVitaLife = "VitaLife",
+  NewTokyoArcade = "Arcade",
 
   // Ishima
   IshimaNovaMedical = "Nova Medical",

@@ -8,6 +8,7 @@ import { GetServer } from "../Server/AllServers";
 import { Settings } from "../Settings/Settings";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver } from "../utils/JSONReviver";
+import { FactionNames } from "../Faction/data/FactionNames";
 
 //Sends message to player, including a pop up
 function sendMessage(msg: Message, forced = false): void {
@@ -128,48 +129,48 @@ function initMessages(): void {
     new Message(
       MessageFilenames.Jumper0,
       "I know you can sense it. I know you're searching for it. " +
-        "It's why you spend night after " +
-        "night at your computer. <br><br>It's real, I've seen it. And I can " +
-        "help you find it. But not right now. You're not ready yet.<br><br>" +
-        "Use this program to track your progress<br><br>" +
-        "The fl1ght.exe program was added to your home computer<br><br>" +
-        "-jump3R",
+      "It's why you spend night after " +
+      "night at your computer. <br><br>It's real, I've seen it. And I can " +
+      "help you find it. But not right now. You're not ready yet.<br><br>" +
+      "Use this program to track your progress<br><br>" +
+      "The fl1ght.exe program was added to your home computer<br><br>" +
+      "-jump3R",
     ),
   );
   AddToAllMessages(
     new Message(
       MessageFilenames.Jumper1,
-      "Soon you will be contacted by a hacking group known as CyberSec. " +
-        "They can help you with your search. <br><br>" +
-        "You should join them, garner their favor, and " +
-        "exploit them for their Augmentations. But do not trust them. " +
-        "They are not what they seem. No one is.<br><br>" +
-        "-jump3R",
+      `Soon you will be contacted by a hacking group known as ${FactionNames.NiteSec}. ` +
+      "They can help you with your search. <br><br>" +
+      "You should join them, garner their favor, and " +
+      "exploit them for their Augmentations. But do not trust them. " +
+      "They are not what they seem. No one is.<br><br>" +
+      "-jump3R",
     ),
   );
   AddToAllMessages(
     new Message(
       MessageFilenames.Jumper2,
       "Do not try to save the world. There is no world to save. If " +
-        "you want to find the truth, worry only about yourself. Ethics and " +
-        "morals will get you killed. <br><br>Watch out for a hacking group known as NiteSec." +
-        "<br><br>-jump3R",
+      "you want to find the truth, worry only about yourself. Ethics and " +
+      `morals will get you killed. <br><br>Watch out for a hacking group known as ${FactionNames.NiteSec}.` +
+      "<br><br>-jump3R",
     ),
   );
   AddToAllMessages(
     new Message(
       MessageFilenames.Jumper3,
       "You must learn to walk before you can run. And you must " +
-        "run before you can fly. Look for the black hand. <br><br>" +
-        "I.I.I.I <br><br>-jump3R",
+      `run before you can fly. Look for ${FactionNames.TheBlackHand}. <br><br>` +
+      "I.I.I.I <br><br>-jump3R",
     ),
   );
   AddToAllMessages(
     new Message(
       MessageFilenames.Jumper4,
       "To find what you are searching for, you must understand the bits. " +
-        "The bits are all around us. The runners will help you.<br><br>" +
-        "-jump3R",
+      "The bits are all around us. The runners will help you.<br><br>" +
+      "-jump3R",
     ),
   );
 
@@ -178,31 +179,31 @@ function initMessages(): void {
     new Message(
       MessageFilenames.CyberSecTest,
       "We've been watching you. Your skills are very impressive. But you're wasting " +
-        "your talents. If you join us, you can put your skills to good use and change " +
-        "the world for the better. If you join us, we can unlock your full potential. <br><br>" +
-        "But first, you must pass our test. Find and install the backdoor on our server. <br><br>" +
-        "-CyberSec",
+      "your talents. If you join us, you can put your skills to good use and change " +
+      "the world for the better. If you join us, we can unlock your full potential. <br><br>" +
+      "But first, you must pass our test. Find and install the backdoor on our server. <br><br>" +
+      `-${FactionNames.CyberSec}`,
     ),
   );
   AddToAllMessages(
     new Message(
       MessageFilenames.NiteSecTest,
       "People say that the corrupted governments and corporations rule the world. " +
-        "Yes, maybe they do. But do you know who everyone really fears? People " +
-        "like us. Because they can't hide from us. Because they can't fight shadows " +
-        "and ideas with bullets. <br><br>" +
-        "Join us, and people will fear you, too. <br><br>" +
-        "Find and install the backdoor on our server. Then, we will contact you again." +
-        "<br><br>-NiteSec",
+      "Yes, maybe they do. But do you know who everyone really fears? People " +
+      "like us. Because they can't hide from us. Because they can't fight shadows " +
+      "and ideas with bullets. <br><br>" +
+      "Join us, and people will fear you, too. <br><br>" +
+      "Find and install the backdoor on our server. Then, we will contact you again." +
+      `<br><br>-${FactionNames.NiteSec}`,
     ),
   );
   AddToAllMessages(
     new Message(
       MessageFilenames.BitRunnersTest,
       "We know what you are doing. We know what drives you. We know " +
-        "what you are looking for. <br><br> " +
-        "We can help you find the answers.<br><br>" +
-        "run4theh111z",
+      "what you are looking for. <br><br> " +
+      "We can help you find the answers.<br><br>" +
+      "run4theh111z",
     ),
   );
 
@@ -210,9 +211,9 @@ function initMessages(): void {
     new Message(
       MessageFilenames.RedPill,
       "@)(#V%*N)@(#*)*C)@#%*)*V)@#(*%V@)(#VN%*)@#(*%<br>" +
-        ")@B(*#%)@)M#B*%V)____FIND___#$@)#%(B*)@#(*%B)<br>" +
-        "@_#(%_@#M(BDSPOMB__THE-CAVE_#)$(*@#$)@#BNBEGB<br>" +
-        "DFLSMFVMV)#@($*)@#*$MV)@#(*$V)M#(*$)M@(#*VM$)",
+      ")@B(*#%)@)M#B*%V)____FIND___#$@)#%(B*)@#(*%B)<br>" +
+      "@_#(%_@#M(BDSPOMB__THE-CAVE_#)$(*@#$)@#BNBEGB<br>" +
+      "DFLSMFVMV)#@($*)@#*$MV)@#(*$V)M#(*$)M@(#*VM$)",
     ),
   );
 }

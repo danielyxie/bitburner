@@ -4,7 +4,7 @@
 
 ## AugmentationStats.hacking\_speed\_mult property
 
-Multipler to hacking speed
+Multiplier to hacking speed
 
 <b>Signature:</b>
 
