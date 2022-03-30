@@ -22,6 +22,7 @@ import {
   initUnstableCircadianModulator,
 } from "./AugmentationCreator";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { update } from "lodash";
 
 export function AddToAugmentations(aug: Augmentation): void {
   const name = aug.name;
@@ -103,6 +104,12 @@ function updateInfiltratorCosts(infiltratorAugmentation: Augmentation): void {
   }
 }
 
+function updateGeneralAugmentationPrice(augmentation: Augmentation): void {
+  for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
+    augmentation.baseCost = augmentation.startingCost * getGenericAugmentationPriceMultiplier();
+  }
+}
+
 export function updateAugmentationCosts(): void {
   for (const name of Object.keys(Augmentations)) {
     if (Augmentations.hasOwnProperty(name)) {
@@ -112,7 +119,7 @@ export function updateAugmentationCosts(): void {
       } else if (augmentationToUpdate.factions.includes(FactionNames.Infiltrators)) {
         updateInfiltratorCosts(augmentationToUpdate);
       } else {
-        augmentationToUpdate.baseCost *= getGenericAugmentationPriceMultiplier();
+        updateGeneralAugmentationPrice(augmentationToUpdate);
       }
     }
   }
