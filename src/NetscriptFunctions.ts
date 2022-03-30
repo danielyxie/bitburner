@@ -2124,9 +2124,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return 0;
     },
-    getRunningScript: function (_fn: unknown, _hostname: unknown, ...args: any[]): IRunningScriptDef | null {
-      const fn = helper.string("getRunningScript", "fn", _fn);
-      const hostname = helper.string("getRunningScript", "hostname", _hostname);
+    getRunningScript: function (fn: any, hostname: any, ...args: any[]): IRunningScriptDef | null {
       updateDynamicRam("getRunningScript", getRamCost(Player, "getRunningScript"));
 
       let runningScript;
