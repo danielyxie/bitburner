@@ -86,6 +86,7 @@ import {
   HacknetMultipliers,
   BitNodeMultipliers as IBNMults,
   Server as IServerDef,
+  RunningScript as IRunningScriptDef,
 } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 
@@ -1888,7 +1889,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       });
       return res;
     },
-    writePort: function (port: any, data: any = ""): any {
+    writePort: function (_port: unknown, data: any = ""): Promise<any> {
+      const port = helper.number("writePort", "port", _port);
       updateDynamicRam("writePort", getRamCost(Player, "writePort"));
       if (typeof data !== "string" && typeof data !== "number") {
         throw makeRuntimeErrorMsg(
@@ -1899,7 +1901,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const iport = helper.getValidPort("writePort", port);
       return Promise.resolve(iport.write(data));
     },
-    write: function (port: any, data: any = "", mode: any = "a"): any {
+    write: function (_port: unknown, data: any = "", _mode: unknown = "a"): Promise<void> {
+      const port = helper.string("write", "port", _port);
+      const mode = helper.string("write", "mode", _mode);
       updateDynamicRam("write", getRamCost(Player, "write"));
       if (isString(port)) {
         // Write to script or text file
@@ -1952,7 +1956,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("write", `Invalid argument: ${port}`);
       }
     },
-    tryWritePort: function (port: any, data: any = ""): any {
+    tryWritePort: function (_port: unknown, data: any = ""): Promise<any> {
+      let port = helper.number("tryWritePort", "port", _port);
       updateDynamicRam("tryWritePort", getRamCost(Player, "tryWritePort"));
       if (typeof data !== "string" && typeof data !== "number") {
         throw makeRuntimeErrorMsg(
@@ -1977,14 +1982,16 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("tryWritePort", `Invalid argument: ${port}`);
       }
     },
-    readPort: function (port: any): any {
+    readPort: function (_port: unknown): any {
+      const port = helper.number("readPort", "port", _port);
       updateDynamicRam("readPort", getRamCost(Player, "readPort"));
       // Read from port
       const iport = helper.getValidPort("readPort", port);
       const x = iport.read();
       return x;
     },
-    read: function (port: any): any {
+    read: function (_port: unknown): string {
+      const port = helper.string("read", "port", _port);
       updateDynamicRam("read", getRamCost(Player, "read"));
       if (isString(port)) {
         // Read from script or text file
@@ -2013,13 +2020,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         throw makeRuntimeErrorMsg("read", `Invalid argument: ${port}`);
       }
     },
-    peek: function (port: any): any {
+    peek: function (_port: unknown): any {
+      const port = helper.number("peek", "port", _port);
       updateDynamicRam("peek", getRamCost(Player, "peek"));
       const iport = helper.getValidPort("peek", port);
       const x = iport.peek();
       return x;
     },
-    clear: function (file: any): any {
+    clear: function (_file: unknown): void {
+      const file = helper.string("peek", "file", _file);
       updateDynamicRam("clear", getRamCost(Player, "clear"));
       if (isString(file)) {
         // Clear text file
@@ -2035,20 +2044,23 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       } else {
         throw makeRuntimeErrorMsg("clear", `Invalid argument: ${file}`);
       }
-      return 0;
     },
-    clearPort: function (port: any): any {
+    clearPort: function (_port: unknown): void {
+      const port = helper.number("clearPort", "port", _port);
       updateDynamicRam("clearPort", getRamCost(Player, "clearPort"));
       // Clear port
       const iport = helper.getValidPort("clearPort", port);
-      return iport.clear();
+      iport.clear();
     },
-    getPortHandle: function (port: any): IPort {
+    getPortHandle: function (_port: unknown): IPort {
+      const port = helper.number("getPortHandle", "port", _port);
       updateDynamicRam("getPortHandle", getRamCost(Player, "getPortHandle"));
       const iport = helper.getValidPort("getPortHandle", port);
       return iport;
     },
-    rm: function (fn: any, hostname: any): any {
+    rm: function (_fn: unknown, _hostname: unknown): boolean {
+      const fn = helper.string("rm", "fn", _fn);
+      let hostname = helper.string("rm", "hostname", _hostname);
       updateDynamicRam("rm", getRamCost(Player, "rm"));
 
       if (hostname == null || hostname === "") {
@@ -2063,7 +2075,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return status.res;
     },
-    scriptRunning: function (scriptname: any, hostname: any): any {
+    scriptRunning: function (_scriptname: unknown, _hostname: unknown): boolean {
+      const scriptname = helper.string("scriptRunning", "scriptname", _scriptname);
+      const hostname = helper.string("scriptRunning", "hostname", _hostname);
       updateDynamicRam("scriptRunning", getRamCost(Player, "scriptRunning"));
       const server = safeGetServer(hostname, "scriptRunning");
       for (let i = 0; i < server.runningScripts.length; ++i) {
@@ -2073,7 +2087,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return false;
     },
-    scriptKill: function (scriptname: any, hostname: any): any {
+    scriptKill: function (_scriptname: unknown, _hostname: unknown): boolean {
+      const scriptname = helper.string("scriptKill", "scriptname", _scriptname);
+      const hostname = helper.string("scriptKill", "hostname", _hostname);
       updateDynamicRam("scriptKill", getRamCost(Player, "scriptKill"));
       const server = safeGetServer(hostname, "scriptKill");
       let suc = false;
@@ -2086,11 +2102,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return suc;
     },
-    getScriptName: function (): any {
+    getScriptName: function (): string {
       updateDynamicRam("getScriptName", getRamCost(Player, "getScriptName"));
       return workerScript.name;
     },
-    getScriptRam: function (scriptname: any, hostname: any = workerScript.hostname): any {
+    getScriptRam: function (_scriptname: unknown, _hostname: unknown = workerScript.hostname): number {
+      const scriptname = helper.string("getScriptRam", "scriptname", _scriptname);
+      const hostname = helper.string("getScriptRam", "hostname", _hostname);
       updateDynamicRam("getScriptRam", getRamCost(Player, "getScriptRam"));
       const server = safeGetServer(hostname, "getScriptRam");
       for (let i = 0; i < server.scripts.length; ++i) {
@@ -2100,7 +2118,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return 0;
     },
-    getRunningScript: function (fn: any, hostname: any, ...args: any[]): any {
+    getRunningScript: function (_fn: unknown, _hostname: unknown, ...args: any[]): IRunningScriptDef | null {
+      const fn = helper.string("getRunningScript", "fn", _fn);
+      const hostname = helper.string("getRunningScript", "hostname", _hostname);
       updateDynamicRam("getRunningScript", getRamCost(Player, "getRunningScript"));
 
       let runningScript;
@@ -2128,7 +2148,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         threads: runningScript.threads,
       };
     },
-    getHackTime: function (hostname: any): any {
+    getHackTime: function (_hostname: unknown = workerScript.hostname): number {
+      const hostname = helper.string("getHackTime", "hostname", _hostname);
       updateDynamicRam("getHackTime", getRamCost(Player, "getHackTime"));
       const server = safeGetServer(hostname, "getHackTime");
       if (!(server instanceof Server)) {
@@ -2141,7 +2162,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculateHackingTime(server, Player) * 1000;
     },
-    getGrowTime: function (hostname: any): any {
+    getGrowTime: function (_hostname: unknown = workerScript.hostname): number {
+      const hostname = helper.string("getGrowTime", "hostname", _hostname);
       updateDynamicRam("getGrowTime", getRamCost(Player, "getGrowTime"));
       const server = safeGetServer(hostname, "getGrowTime");
       if (!(server instanceof Server)) {
@@ -2154,7 +2176,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculateGrowTime(server, Player) * 1000;
     },
-    getWeakenTime: function (hostname: any = workerScript.hostname): any {
+    getWeakenTime: function (_hostname: unknown = workerScript.hostname): number {
+      const hostname = helper.string("getWeakenTime", "hostname", _hostname);
       updateDynamicRam("getWeakenTime", getRamCost(Player, "getWeakenTime"));
       const server = safeGetServer(hostname, "getWeakenTime");
       if (!(server instanceof Server)) {
@@ -2196,7 +2219,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         return runningScriptObj.onlineMoneyMade / runningScriptObj.onlineRunningTime;
       }
     },
-    getScriptExpGain: function (scriptname?: any, hostname?: any, ...args: any[]): any {
+    getScriptExpGain: function (scriptname?: any, hostname?: any, ...args: any[]): number {
       updateDynamicRam("getScriptExpGain", getRamCost(Player, "getScriptExpGain"));
       if (arguments.length === 0) {
         let total = 0;
@@ -2218,40 +2241,43 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         return runningScriptObj.onlineExpGained / runningScriptObj.onlineRunningTime;
       }
     },
-    nFormat: function (n: any, format: any): any {
+    nFormat: function (_n: unknown, _format: unknown): string {
+      const n = helper.number("nFormat", "n", _n);
+      const format = helper.string("nFormat", "format", _format);
       updateDynamicRam("nFormat", getRamCost(Player, "nFormat"));
-      if (isNaN(n) || isNaN(parseFloat(n)) || typeof format !== "string") {
+      if (isNaN(n)) {
         return "";
       }
 
-      return numeralWrapper.format(parseFloat(n), format);
+      return numeralWrapper.format(n, format);
     },
-    tFormat: function (milliseconds: any, milliPrecision: any = false): any {
+    tFormat: function (_milliseconds: unknown, _milliPrecision: unknown = false): string {
+      const milliseconds = helper.number("tFormat", "milliseconds", _milliseconds);
+      const milliPrecision = helper.boolean(_milliPrecision);
       updateDynamicRam("tFormat", getRamCost(Player, "tFormat"));
       return convertTimeMsToTimeElapsedString(milliseconds, milliPrecision);
     },
-    getTimeSinceLastAug: function (): any {
+    getTimeSinceLastAug: function (): number {
       updateDynamicRam("getTimeSinceLastAug", getRamCost(Player, "getTimeSinceLastAug"));
       return Player.playtimeSinceLastAug;
     },
-    alert: function (message: any): void {
+    alert: function (_message: unknown): void {
+      const message = helper.string("alert", "message", _message);
       updateDynamicRam("alert", getRamCost(Player, "alert"));
-      message = argsToString([message]);
       dialogBoxCreate(message);
     },
-    toast: function (message: any, variant: any = "success", duration: any = 2000): void {
+    toast: function (_message: unknown, _variant: unknown = "success", _duration: unknown = 2000): void {
+      const message = helper.string("toast", "message", _message);
+      const variant = helper.string("toast", "variant", _variant);
+      const duration = helper.number("toast", "duration", _duration);
       updateDynamicRam("toast", getRamCost(Player, "toast"));
       if (!["success", "info", "warning", "error"].includes(variant))
         throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
-
-      message = argsToString([message]);
-      SnackbarEvents.emit(message, variant, duration);
+      SnackbarEvents.emit(message, variant as any, duration);
     },
-    prompt: function (txt: any, options?: { type?: string; options?: string[] }): any {
+    prompt: function (_txt: unknown, options?: { type?: string; options?: string[] }): Promise<boolean | string> {
+      const txt = helper.string("toast", "txt", _txt);
       updateDynamicRam("prompt", getRamCost(Player, "prompt"));
-      if (!isString(txt)) {
-        txt = JSON.stringify(txt);
-      }
 
       return new Promise(function (resolve) {
         PromptEvent.emit({
@@ -2261,7 +2287,14 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         });
       });
     },
-    wget: async function (url: any, target: any, hostname: any = workerScript.hostname): Promise<boolean> {
+    wget: async function (
+      _url: unknown,
+      _target: unknown,
+      _hostname: unknown = workerScript.hostname,
+    ): Promise<boolean> {
+      const url = helper.string("wget", "url", _url);
+      const target = helper.string("wget", "target", _target);
+      const hostname = helper.string("wget", "hostname", _hostname);
       updateDynamicRam("wget", getRamCost(Player, "wget"));
       if (!isScriptFilename(target) && !target.endsWith(".txt")) {
         workerScript.log("wget", () => `Invalid target file: '${target}'. Must be a script or text file.`);
@@ -2299,7 +2332,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         });
       });
     },
-    getFavorToDonate: function (): any {
+    getFavorToDonate: function (): number {
       updateDynamicRam("getFavorToDonate", getRamCost(Player, "getFavorToDonate"));
       return Math.floor(CONSTANTS.BaseFavorToDonate * BitNodeMultipliers.RepToDonateToFaction);
     },
@@ -2420,10 +2453,11 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         f();
       }; // Wrap the user function to prevent WorkerScript leaking as 'this'
     },
-    mv: function (host: string, source: string, destination: string): void {
+    mv: function (_host: unknown, _source: unknown, _destination: unknown): void {
+      const host = helper.string("mv", "host", _host);
+      const source = helper.string("mv", "source", _source);
+      const destination = helper.string("mv", "destination", _destination);
       updateDynamicRam("mv", getRamCost(Player, "mv"));
-
-      if (arguments.length != 3) throw makeRuntimeErrorMsg("mv", "Takes 3 argument.");
 
       if (!isValidFilePath(source)) throw makeRuntimeErrorMsg("mv", `Invalid filename: '${source}'`);
       if (!isValidFilePath(destination)) throw makeRuntimeErrorMsg("mv", `Invalid filename: '${destination}'`);
