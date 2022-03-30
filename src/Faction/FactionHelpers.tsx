@@ -17,8 +17,7 @@ import {
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";
 import { FactionNames } from "./data/FactionNames";
-import { updateAugmentationCosts } from "../Augmentation/AugmentationHelpers";
-import { getNextNeuroFluxLevel } from "../Augmentation/AugmentationCreator";
+import { updateAugmentationCosts, getNextNeuroFluxLevel } from "../Augmentation/AugmentationHelpers";
 
 export function inviteToFaction(faction: Faction): void {
   Player.receiveInvite(faction.name);

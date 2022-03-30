@@ -22,7 +22,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 import { TableCell } from "../../ui/React/Table";
 import TableRow from "@mui/material/TableRow";
-import { getNextNeuroFluxLevel } from "../../Augmentation/AugmentationCreator";
+import { getNextNeuroFluxLevel } from "../../Augmentation/AugmentationHelpers";
 
 interface IReqProps {
   augName: string;
