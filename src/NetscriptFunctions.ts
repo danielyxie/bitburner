@@ -1117,9 +1117,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("spawn", () => "Exiting...");
       }
     },
-    kill: function (_filename: unknown, _hostname?: unknown, ...scriptArgs: any[]): boolean {
-      const filename = helper.string("kill", "filename", _filename);
-      const hostname = helper.string("kill", "hostname", _hostname);
+    kill: function (filename: any, hostname?: any, ...scriptArgs: any[]): boolean {
       updateDynamicRam("kill", getRamCost(Player, "kill"));
 
       let res;
