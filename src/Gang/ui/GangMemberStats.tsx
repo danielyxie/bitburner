@@ -7,44 +7,17 @@ import { useGang } from "./Context";
 
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@mui/material";
+import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { GangMember } from "../GangMember";
 import { Settings } from "../../Settings/Settings";
-import { formatNumber } from "../../utils/StringHelperFunctions";
 import { MoneyRate } from "../../ui/React/MoneyRate";
+import { StatsRow } from "../../ui/React/StatsRow";
 import { characterOverviewStyles as useStyles } from "../../ui/React/CharacterOverview";
 
 interface IProps {
   member: GangMember;
-}
-
-export const generateTableRow = (
-  name: string,
-  level: number,
-  exp: number,
-  color: string,
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  classes: any
-): React.ReactElement => {
-  return (
-    <TableRow>
-      <TableCell classes={{ root: classes.cellNone }}>
-        <Typography style={{ color: color }}>{name}</Typography>
-      </TableCell>
-      <TableCell align="right" classes={{ root: classes.cellNone }}>
-        <Typography style={{ color: color }}>
-          {formatNumber(level, 0)} ({numeralWrapper.formatExp(exp)} exp)
-        </Typography>
-      </TableCell>
-    </TableRow>
-  )
 }
 
 export function GangMemberStats(props: IProps): React.ReactElement {
@@ -58,8 +31,6 @@ export function GangMemberStats(props: IProps): React.ReactElement {
     agi: props.member.calculateAscensionMult(props.member.agi_asc_points),
     cha: props.member.calculateAscensionMult(props.member.cha_asc_points),
   };
-
-
 
   const gang = useGang();
   const data = [
@@ -100,14 +71,38 @@ export function GangMemberStats(props: IProps): React.ReactElement {
           </Typography>
         }
       >
-        <Table sx={{ display: 'table', mb: 1, width: '100%' }}>
+        <Table sx={{ display: "table", mb: 1, width: "100%" }}>
           <TableBody>
-            {generateTableRow("Hacking", props.member.hack, props.member.hack_exp, Settings.theme.hack, classes)}
-            {generateTableRow("Strength", props.member.str, props.member.str_exp, Settings.theme.combat, classes)}
-            {generateTableRow("Defense", props.member.def, props.member.def_exp, Settings.theme.combat, classes)}
-            {generateTableRow("Dexterity", props.member.dex, props.member.dex_exp, Settings.theme.combat, classes)}
-            {generateTableRow("Agility", props.member.agi, props.member.agi_exp, Settings.theme.combat, classes)}
-            {generateTableRow("Charisma", props.member.cha, props.member.cha_exp, Settings.theme.cha, classes)}
+            <StatsRow
+              name="Hacking"
+              color={Settings.theme.hack}
+              data={{ level: props.member.hack, exp: props.member.hack_exp }}
+            />
+            <StatsRow
+              name="Strength"
+              color={Settings.theme.combat}
+              data={{ level: props.member.str, exp: props.member.str_exp }}
+            />
+            <StatsRow
+              name="Defense"
+              color={Settings.theme.combat}
+              data={{ level: props.member.def, exp: props.member.def_exp }}
+            />
+            <StatsRow
+              name="Dexterity"
+              color={Settings.theme.combat}
+              data={{ level: props.member.dex, exp: props.member.dex_exp }}
+            />
+            <StatsRow
+              name="Agility"
+              color={Settings.theme.combat}
+              data={{ level: props.member.agi, exp: props.member.agi_exp }}
+            />
+            <StatsRow
+              name="Charisma"
+              color={Settings.theme.cha}
+              data={{ level: props.member.cha, exp: props.member.cha_exp }}
+            />
             <TableRow>
               <TableCell classes={{ root: classes.cellNone }}>
                 <br />

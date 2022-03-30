@@ -18,6 +18,7 @@ import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";
+import { FactionNames } from "./data/FactionNames";
 
 export function inviteToFaction(faction: Faction): void {
   Player.receiveInvite(faction.name);
@@ -31,6 +32,9 @@ export function joinFaction(faction: Faction): void {
   if (faction.isMember) return;
   faction.isMember = true;
   Player.factions.push(faction.name);
+  const allFactions = Object.values(FactionNames).map(faction => faction as string)
+  Player.factions.sort((a, b) =>
+    allFactions.indexOf(a) - allFactions.indexOf(b));
   const factionInfo = faction.getInfo();
 
   //Determine what factions you are banned from now that you have joined this faction
@@ -79,8 +83,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
   const factionInfo = fac.getInfo();
   const hasPrereqs = hasAugmentationPrereqs(aug);
   if (!hasPrereqs) {
-    const txt =
-      "You must first purchase or install " + aug.prereqs.join(",") + " before you can " + "purchase this one.";
+    const txt = `You must first purchase or install ${aug.prereqs.join(",")} before you can purchase this one.`;
     if (sing) {
       return txt;
     } else {
@@ -128,23 +131,21 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
 
     if (sing) {
       return "You purchased " + aug.name;
-    } else {
-      if (!Settings.SuppressBuyAugmentationConfirmation) {
-        dialogBoxCreate(
-          "You purchased " +
-            aug.name +
-            ". Its enhancements will not take " +
-            "effect until they are installed. To install your augmentations, go to the " +
-            "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
-            "augmentations will now be more expensive.",
-        );
-      }
+    } else if (!Settings.SuppressBuyAugmentationConfirmation) {
+      dialogBoxCreate(
+        "You purchased " +
+        aug.name +
+        ". Its enhancements will not take " +
+        "effect until they are installed. To install your augmentations, go to the " +
+        "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
+        "augmentations will now be more expensive.",
+      );
     }
   } else {
     dialogBoxCreate(
       "Hmm, something went wrong when trying to purchase an Augmentation. " +
-        "Please report this to the game developer with an explanation of how to " +
-        "reproduce this.",
+      "Please report this to the game developer with an explanation of how to " +
+      "reproduce this.",
     );
   }
   return "";

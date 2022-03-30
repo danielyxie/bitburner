@@ -11,7 +11,7 @@ import acorn, { parse } from "acorn";
 import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
 
 import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
-import { Script } from "../Script/Script";
+import { Script } from "./Script";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { areImportsEquals } from "../Terminal/DirectoryHelpers";
 import { IPlayer } from "../PersonObjects/IPlayer";
@@ -225,6 +225,9 @@ async function parseOnlyRamCalculate(
         } else if (ref in workerScript.env.vars.ui) {
           func = workerScript.env.vars.ui[ref];
           refDetail = `ui.${ref}`;
+        } else if (ref in workerScript.env.vars.grafting) {
+          func = workerScript.env.vars.grafting[ref];
+          refDetail = `grafting.${ref}`;
         } else {
           func = workerScript.env.vars[ref];
           refDetail = `${ref}`;
@@ -427,6 +430,4 @@ export async function calculateRamUsage(
     console.error(e);
     return { cost: RamCalculationErrorCode.SyntaxError };
   }
-
-  return { cost: RamCalculationErrorCode.SyntaxError };
 }

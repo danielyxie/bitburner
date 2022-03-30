@@ -4,7 +4,7 @@
 
 ## AugmentationStats.hacking\_money\_mult property
 
-Multipler to amount of money the player gains from hacking
+Multiplier to amount of money the player gains from hacking
 
 <b>Signature:</b>
 

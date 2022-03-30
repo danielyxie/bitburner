@@ -161,7 +161,7 @@ class BitburnerSaveObject {
           return reject(new Error("Error importing file"));
         }
         const result = target.result;
-        if (typeof result !== "string" || result === null) {
+        if (typeof result !== "string") {
           return reject(new Error("FileReader event was not type string"));
         }
         const contents = result;
@@ -391,6 +391,11 @@ function evaluateVersionCompatibility(ver: string | number): void {
             augmentation.name = "Graphene BrachiBlades Upgrade";
           }
         }
+      }
+    }
+    if (ver < 12) {
+      if (anyPlayer.resleeves !== undefined) {
+        delete anyPlayer.resleeves;
       }
     }
   }

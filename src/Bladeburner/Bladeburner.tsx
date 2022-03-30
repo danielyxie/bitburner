@@ -33,6 +33,8 @@ import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { getTimestamp } from "../utils/helpers/getTimestamp";
 import { joinFaction } from "../Faction/FactionHelpers";
 import { WorkerScript } from "../Netscript/WorkerScript";
+import { FactionNames } from "../Faction/data/FactionNames";
+import { BlackOperationNames } from "./data/BlackOperationNames";
 
 interface BlackOpsAttempt {
   error?: string;
@@ -229,7 +231,6 @@ export class Bladeburner implements IBladeburner {
         break;
       default:
         throw new Error("Invalid Action Type in startAction(Bladeburner,player, ): " + actionId.type);
-        break;
     }
   }
 
@@ -291,7 +292,7 @@ export class Bladeburner implements IBladeburner {
 
   prestige(): void {
     this.resetAction();
-    const bladeburnerFac = Factions["Bladeburners"];
+    const bladeburnerFac = Factions[FactionNames.Bladeburners];
     if (this.rank >= BladeburnerConstants.RankNeededForFaction) {
       joinFaction(bladeburnerFac);
     }
@@ -317,10 +318,8 @@ export class Bladeburner implements IBladeburner {
         if (this.contracts.hasOwnProperty(name)) {
           action.name = name;
           return action;
-        } else {
-          return null;
         }
-        break;
+        return null;
       case "operation":
       case "operations":
       case "op":
@@ -329,10 +328,8 @@ export class Bladeburner implements IBladeburner {
         if (this.operations.hasOwnProperty(name)) {
           action.name = name;
           return action;
-        } else {
-          return null;
         }
-        break;
+        return null;
       case "blackoperation":
       case "black operation":
       case "black operations":
@@ -344,10 +341,8 @@ export class Bladeburner implements IBladeburner {
         if (BlackOperations.hasOwnProperty(name)) {
           action.name = name;
           return action;
-        } else {
-          return null;
         }
-        break;
+        return null;
       case "general":
       case "general action":
       case "gen":
@@ -1375,7 +1370,7 @@ export class Bladeburner implements IBladeburner {
             teamLossMax = Math.ceil(teamCount / 2);
 
             // Operation Daedalus
-            if (action.name === "Operation Daedalus") {
+            if (action.name === BlackOperationNames.OperationDaedalus) {
               this.resetAction();
               return router.toBitVerse(false, false);
             }
@@ -1471,20 +1466,19 @@ export class Bladeburner implements IBladeburner {
         if (isNaN(eff) || eff < 0) {
           throw new Error("Field Analysis Effectiveness calculated to be NaN or negative");
         }
-        const hackingExpGain = 20 * player.hacking_exp_mult,
-          charismaExpGain = 20 * player.charisma_exp_mult;
+        const hackingExpGain = 20 * player.hacking_exp_mult;
+        const charismaExpGain = 20 * player.charisma_exp_mult;
+        const rankGain = 0.1 * BitNodeMultipliers.BladeburnerRank;
         player.gainHackingExp(hackingExpGain);
         player.gainIntelligenceExp(BladeburnerConstants.BaseIntGain);
         player.gainCharismaExp(charismaExpGain);
-        this.changeRank(player, 0.1 * BitNodeMultipliers.BladeburnerRank);
+        this.changeRank(player, rankGain);
         this.getCurrentCity().improvePopulationEstimateByPercentage(eff * this.skillMultipliers.successChanceEstimate);
         if (this.logging.general) {
           this.log(
-            "Field analysis completed. Gained 0.1 rank, " +
-              formatNumber(hackingExpGain, 1) +
-              " hacking exp, and " +
-              formatNumber(charismaExpGain, 1) +
-              " charisma exp",
+            `Field analysis completed. Gained ${formatNumber(rankGain, 2)} rank, ` +
+              `${formatNumber(hackingExpGain, 1)} hacking exp, and ` +
+              `${formatNumber(charismaExpGain, 1)} charisma exp`,
           );
         }
         this.startAction(player, this.action); // Repeat action
@@ -1577,11 +1571,13 @@ export class Bladeburner implements IBladeburner {
     }
     this.maxRank = Math.max(this.rank, this.maxRank);
 
-    const bladeburnersFactionName = "Bladeburners";
+    const bladeburnersFactionName = FactionNames.Bladeburners;
     if (factionExists(bladeburnersFactionName)) {
       const bladeburnerFac = Factions[bladeburnersFactionName];
       if (!(bladeburnerFac instanceof Faction)) {
-        throw new Error("Could not properly get Bladeburner Faction object in Bladeburner UI Overview Faction button");
+        throw new Error(
+          `Could not properly get ${FactionNames.Bladeburners} Faction object in ${FactionNames.Bladeburners} UI Overview Faction button`,
+        );
       }
       if (bladeburnerFac.isMember) {
         const favorBonus = 1 + bladeburnerFac.favor / 100;
@@ -1914,8 +1910,11 @@ export class Bladeburner implements IBladeburner {
   }
 
   process(router: IRouter, player: IPlayer): void {
+    // Edge race condition when the engine checks the processing counters and attempts to route before the router is initialized.
+    if (!router.isInitialized) return;
+
     // Edge case condition...if Operation Daedalus is complete trigger the BitNode
-    if (router.page() !== Page.BitVerse && this.blackops.hasOwnProperty("Operation Daedalus")) {
+    if (router.page() !== Page.BitVerse && this.blackops.hasOwnProperty(BlackOperationNames.OperationDaedalus)) {
       return router.toBitVerse(false, false);
     }
 
@@ -2083,7 +2082,7 @@ export class Bladeburner implements IBladeburner {
       this.startAction(player, actionId);
       workerScript.log(
         "bladeburner.startAction",
-        () => `Starting bladeburner action with type '${type}' and name ${name}"`,
+        () => `Starting bladeburner action with type '${type}' and name '${name}'`,
       );
       return true;
     } catch (e: any) {
@@ -2337,12 +2336,12 @@ export class Bladeburner implements IBladeburner {
   }
 
   joinBladeburnerFactionNetscriptFn(workerScript: WorkerScript): boolean {
-    const bladeburnerFac = Factions["Bladeburners"];
+    const bladeburnerFac = Factions[FactionNames.Bladeburners];
     if (bladeburnerFac.isMember) {
       return true;
     } else if (this.rank >= BladeburnerConstants.RankNeededForFaction) {
       joinFaction(bladeburnerFac);
-      workerScript.log("bladeburner.joinBladeburnerFaction", () => "Joined Bladeburners faction.");
+      workerScript.log("bladeburner.joinBladeburnerFaction", () => `Joined ${FactionNames.Bladeburners} faction.`);
       return true;
     } else {
       workerScript.log(

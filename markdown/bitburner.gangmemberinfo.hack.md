@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.hack property
 
+Hack skill level
+
 <b>Signature:</b>
 
 ```typescript

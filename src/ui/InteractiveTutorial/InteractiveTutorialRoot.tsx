@@ -212,7 +212,7 @@ export function InteractiveTutorialRoot(): React.ReactElement {
 
           <Typography>
             {" "}
-            we can see that the n00dles server is only one node away. Let's connect so it now using:
+            we can see that the n00dles server is only one node away. Let's connect to it now using:
           </Typography>
 
           <Typography classes={{ root: classes.textfield }}>{"[home ~/]> connect n00dles"}</Typography>

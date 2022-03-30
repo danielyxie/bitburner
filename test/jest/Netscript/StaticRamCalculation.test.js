@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { jest, describe, expect } from "@jest/globals";
 
 import { Player } from "../../../src/Player";
@@ -654,6 +653,16 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
 
     it("stopAction()", async function () {
       const f = ["stopAction"];
+      await expectNonZeroRamCost(f);
+    });
+
+    it("getDarkwebPrograms()", async function () {
+      const f = ["getDarkwebPrograms"];
+      await expectNonZeroRamCost(f);
+    });
+
+    it("getDarkwebProgramCost()", async function () {
+      const f = ["getDarkwebProgramCost"];
       await expectNonZeroRamCost(f);
     });
 

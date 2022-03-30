@@ -3,6 +3,284 @@
 Changelog
 =========
 
+v1.6.0 - 2022-03-29 Grafting
+----------------------------
+
+** Vitalife secret lab **
+
+* A new mechanic called Augmentation Grafting has been added. Resleeving has been removed.
+* Credit to @nickofolas for his incredible work.
+
+** Stanek **
+
+* BREAKING: Many functions in the stanek API were renamed in order to avoid name collision with things like Map.prototype.get
+
+** UI **
+
+* Major update to Sleeve, Gang UI, and Create Program (@nickofolas)
+* re-add pre tags to support slash n in prompt (@jacktose)
+* Tabelize linked output of 'ls' (@Master-Guy)
+* Add the ability to filter open scripts (@phyzical)
+* Add minHeight to editor tabs (@nickofolas)
+* Properly expand gang equipment cards to fill entire screen (@nickofolas)
+* Add shortcut to Faction augmentations page from FactionsRoot (@nickofolas)
+* Fix extra space on editor tabs (@nickofolas)
+* Present offline message as list (@DSteve595)
+* add box showing remaining augments per faction (@jjayeon)
+* Add tab switching support to vim mode (@JParisFerrer)
+* Show current task on gang management screen (@zeddrak)
+* Fix for ui of gang members current task when set via api (@phyzical)
+* Don't hide irrelevant materials if their stock is not empty and hide irrelevant divisions from Export (@SagePtr)
+* Fix regex to enable alpha transparency hex codes (8 digits) (@surdaft)
+
+** API **
+
+* Added dark web functions to ns api
+* BREAKING: purchaseTor() should returns true if player already has Tor. (@DavidGrinberg, @waffleattack)
+* Implement getBonusTime in Corporation API (@t-wolfeadam)
+* Added functions to purchase TIX and WSI (@incubusnb)
+* purchaseSleeveAug checks shock value (@incubusnb)
+* Fix bug with hacknet api
+* Fix spendHashes bug
+* Added 0 cost of asleep() (@Master-Guy)
+* Fix some misleading corporation errors (@TheRealMaxion)
+* expose the inBladeburner on the player object (@phyzical)
+* added ram charge for stanek width and height (@phyzical)
+* Fix sufficient player money check to buy back shares. (@ChrissiQ)
+* Fix Static Ram Circumventing for some NS functions (@CrafterKolyan)
+* added CorporationSoftCap to NetscriptDefinitions (@phyzical)
+* Added definition of autocomplete() 'data' argument. (@tigercat2000)
+* Adding support for text/select options in Prompt command (@PhilipArmstead)
+* Added the ability to exportGame via api (@phyzical)
+
+** Arcade **
+
+* Added an arcade to New Tokyo where you can play a 4 year old version of bitburner.
+
+** Misc. **
+
+* Add a warning triggered while auto-saves are off. (@MartinFournier)
+* Log info for field analysis now displays actual rank gained. (@ApamNapat)
+* Removed BladeburnerSkillCost from skill point cost description. (@ApamNapat)
+* Fix handling for UpArrow in bladeburner console. (@dowinter)
+* Add GitHub action to check PRs for generated files. (@MartinFournier)
+* Cap Staneks gift at 25x25 to prevent crashes. (@waffleattack)
+* Remove old & unused files from repository. (@MartinFournier)
+* Factions on the factions screens are sorted by story progress / type. (@phyzical)
+* Fix log manager not picking up new runs of scripts. (@phyzical)
+* Added prettier to cicd.
+* UI improvements (@phyzical)
+* Documentation / Typos (@nanogyth, @Master-Guy, @incubusnb, @ApamNapat, @phyzical, @SagePtr)
+* Give player code a copy of Division.upgrades instead of the live object (@Ornedan)
+* Fix bug with small town achievement.
+* Fix bug with purchaseSleeveAug (@phyzical)
+* Check before unlocking corp upgrade (@gianfun)
+* General codebase improvements. (@phyzical, @Master-Guy, @ApamNapat)
+* Waiting on promises in NS1 no longer freezes the script. (@Master-Guy)
+* Fix bug with missing ramcost for tFormat (@TheMas3212)
+* Fix crash with new prompt
+* Quick fix to prevent division by 0 in terminal (@Master-Guy)
+* removed ip references (@phyzical, @Master-Guy)
+* Terminal now supports 'ls -l'
+* Fix negative number formatting (@Master-Guy)
+* Fix unique ip generation (@InDieTasten)
+* remove terminal command theme from docs (@phyzical)
+* Fix 'Augmentations Left' with gang factions (@nickofolas)
+* Attempt to fix 'bladeburner.process()' early routing issue (@MartinFournier)
+* work in progress augment fix (@phyzical)
+* Fixes missing space in Smart Supply (@TheRealMaxion)
+* Change license to Apache 2 with Commons Clause
+* updated regex sanitization (@mbrannen)
+* Sleeve fix for when faction isnt found (@phyzical)
+* Fix editor "close" naming (@phyzical)
+* Fix bug with sleeves where some factions would be listed as workable. (@phyzical)
+* Fix research tree of product industries post-prestige (@pd)
+* Added a check for exisiting industry type before expanding (@phyzical)
+* fix hackAnalyzeThreads returning infinity (@chrisrabe)
+* Make growthAnalyze more accurate (@dwRchyngqxs)
+* Add 'Zoom -> Reset Zoom' command to Steam (@smolgumball)
+* Add hasOwnProperty check to GetServer (@SagePtr)
+* Speed up employee productivity calculation (@pd)
+* Field Work and Security Work benefit from 'share' (@SagePtr)
+* Nerf noodle bar.
+
+
+v1.5.0 - Steam Cloud integration
+--------------------------------
+
+** Steam Cloud Saving **
+
+* Added support for steam cloud saving (@MartinFournier)
+
+** UI **
+
+* background now matches game primary color (@nickofolas)
+* page title contains version (@MartinFourier)
+* Major text editor improvements (@nickofolas)
+* Display bonus time on sleeve page (@MartinFourier)
+* Several UI improvements (@nickofolas, @smolgumball, @DrCuriosity, @phyzical)
+* Fix aug display in alpha (@Dominik Winter)
+* Fix display of corporation product equation (@SagePtr)
+* Make Bitverse more accessible (@ChrissiQ)
+* Make corporation warehouse more accessible (@ChrissiQ)
+* Make tab style more consistent (@nickofolas)
+
+** Netscript **
+
+* Fix bug with async.
+* Add 'printf' ns function (@Ninetailed)
+* Remove blob caching.
+* Fix formulas access check (@Ornedan)
+* Fix bug in exp calculation (@qcorradi)
+* Fix NaN comparison (@qcorradi)
+* Fix travelToCity with bad argument (@SlyCedix)
+* Fix bug where augs could not be purchased via sing (@reacocard)
+* Fix rounding error in donateToFaction (@Risenafis)
+* Fix bug with weakenAnalyze (@rhobes)
+* Prevent exploit with atExit (@Ornedan)
+* Double 'share' power
+
+** Corporations **
+
+* Fix bugs with corp API (@pigalot)
+* Add smart supply func to corp API (@pd)
+
+** Misc. **
+
+* The file API now allows GET and DELETE (@lordducky)
+* Force achievement calculation on BN completion (@SagePtr)
+* Cleanup in repository (@MartinFourier)
+* Several improvements to the electron version (@MartinFourier)
+* Fix bug with casino roulette (@jamie-mac)
+* Terminal history persists in savefile (@MartinFourier)
+* Fix tests (@jamie-mac)
+* Fix crash with electron windows tracker (@smolgumball)
+* Fix BN6/7 passive reputation gain (@BrianLDev)
+* Fix Sleeve not resetting on install (@waffleattack)
+* Sort joined factions (@jjayeon)
+* Update documentation / typo (@lethern, @Meowdoleon, @JohnnyUrosevic, @JosephDavidTalbot,
+  @pd, @lethern, @lordducky, @zeddrak, @fearnlj01, @reasonablytall, @MatthewTh0,
+  @SagePtr, @manniL, @Jedimaster4559, @loganville, @Arrow2thekn33, @wdpk, @fwolfst,
+  @fschoenfeldt, @Waladil, @AdamTReineke, @citrusmunch, @factubsio, @ashtongreen,
+  @ChrissiQ, @DJ-Laser, @waffleattack, @ApamNapat, @CrafterKolyan, @DSteve595)
+* Nerf noodle bar.
+
+v1.4.0 - 2022-01-18 Sharing is caring
+-------------------------------------
+
+** Computer sharing **
+
+* A new mechanic has been added, it's is invoked by calling the new function 'share'.
+  This mechanic helps you farm reputation faster.
+
+** gang **
+
+* Installing augs means losing a little bit of ascension multipliers.
+
+** Misc. **
+
+* Prevent gang API from performing actions for the type of gang they are not. (@TheMas3212)
+* Fix donation to gang faction. (@TheMas3212)
+* Fix gang check crashing the game. (@TheMas3212)
+* Make time compression more robust.
+* Fix bug with scp.
+* Add zoom to steam version. (@MartinFourier)
+* Fix donateToFaction accepts donation of NaN. (@woody-lam-cwl)
+* Show correct hash capacity gain on cache level upgrade tooltip. (@woody-lam-cwl)
+* Fix tests (@woody-lam-cwl)
+* Fix cache tooltip (@woody-lam-cwl)
+* Added script to prettify save file for debugging (@MartinFourier)
+* Update documentation / typos (@theit8514, @thadguidry, @tigercat2000, @SlyCedix, @Spacejoker, @KenJohansson,
+  @Ornedan, @JustAnOkapi, @nickofolas, @philarmstead, @TheMas3212, @dcragusa, @XxKingsxX-Pinu,
+  @paiv, @smolgumball, @zeddrak, @stinky-lizard, @nickofolas, @Feodoric, @daanflore,
+  @markusariliu, @mstruebing, @erplsf, @waffleattack, @Dexalt142, @AIT-OLPE, @deathly809, @BuckAMayzing,
+  @MartinFourier, @pigalot, @lethern)
+* Fix BN3+ achievement (@SagePtr)
+* Fix reputation carry over bug (@TheMas3212)
+* Add button to exit infiltrations (@TheMas3212)
+* Add dev menu achievement check (@TheMas3212)
+* Add 'host' config for electron server (@MartinFourier)
+* Suppress save toast only works for autosave (@MartinFourier)
+* Fix some achievements not triggering with 'backdoor' (@SagePtr)
+* Update Neuroflux Governor description.
+* Fix bug with electron server.
+* Fix bug with corporation employee assignment function (@Ornedan)
+* Add detailed information to terminal 'mem' command (@MartinFourier)
+* Add savestamp to savefile (@MartinFourier)
+* Dev menu can apply export bonus (@MartinFourier)
+* Icarus message no longer applies on top of itself (@Feodoric)
+* purchase augment via API can no longer buy Neuroflux when it shouldn't (@Feodoric)
+* Syntax highlighter should be smarter (@neuralsim)
+* Fix some miscalculation when calculating money stolen (@zeddrak)
+* Fix max cache achievement working with 0 cache (@MartinFourier)
+* Add achievements in the game, not just steam (@MartinFourier)
+* Overflow hash converts to money automatically (@MartinFourier)
+* Make mathjax load locally (@MartinFourier)
+* Make favor calculation more efficient (@kittycat2002)
+* Fix some scripts crashing the game on startup (@MartinFourier)
+* Toasts will appear above tail window (@MartinFourier)
+* Fix issue that can cause terminal actions to start on one server and end on another (@MartinFourier)
+* Fix 'fileExists' not correctly matching file names (@TheMas3212)
+* Refactor some code to be more efficient (@TheMas3212)
+* Fix exp gain for terminal grow and weaken (@nickofolas)
+* Refactor script death code to reject waiting promises instead of resolving (@Ornedan)
+* HP recalculates on defense exp gain (@TheMas3212)
+* Fix log for ascendMember (@TheMas3212)
+* Netscript ports clear on reset (@TheMas3212)
+* Fix bug related to company (@TheMas3212)
+* Fix bug where corporation handbook would not be correctly added (@TheMas3212)
+* Servers in hash upgrades are sorted alpha (@MartinFourier)
+* Fix very old save not properly migrating augmentation renamed in 0.56 (@MartinFourier)
+* Add font height and line height in theme settings (@MartinFourier)
+* Fix crash when quitting job (@MartinFourier)
+* Added save file validation system (@TheMas3212)
+* React and ReactDOM are now global objects (@pigalot)
+* 'nano' supports globs (@smolgumball)
+* Character overview can be dragged (@MartinFourier)
+* Job page updates in real time (@nickofolas)
+* Company favor gain uses the same calculation as faction, this is just performance
+  the value didn't change (@nickofolas)
+* ns2 files work with more import options (@theit8514)
+* Allow autocomplete for partial executables (@nickofolas)
+* Add support for contract completion (@nickofolas)
+* 'ls' link are clickable (@smolgumball)
+* Prevent steam from opening external LOCAL files (@MartinFourier)
+* Fix a bug with autocomplete (@Feodoric)
+* Optimise achievement checks (@Feodoric)
+* Hacknet server achievements grant associated hacknet node achievement (@Feodoric)
+* Fix display bug with hacknet (@Feodoric)
+* 'analyze' now says if the server is backdoored (@deathly809)
+* Add option to exclude running script from save (@MartinFourier)
+* Game now catches more errors and redirects to recovery page (@MartinFourier)
+* Fix bug with autocomplete (@nickofolas)
+* Add tooltip to unfocus work (@nickofolas)
+* Add detailst overview (@MartinFourier)
+* Fix focus bug (@deathly809)
+* Fix some NaN handling (@deathly809)
+* Added 'mv' ns function (@deathly809)
+* Add focus argument to some singularity functions (@nickofolas)
+* Fix some functions not disabling log correctly (@deathly809)
+* General UI improvements (@nickofolas)
+* Handle steamworks errors gravefully (@MartinFourier)
+* Fix some react component not unmounting correctly (@MartinFourier)
+* 'help' autocompletes (@nickofolas)
+* No longer push all achievements to steam (@Ornedan)
+* Recovery page has more information (@MartinFourier)
+* Added 'getGameInfo' ns function (@MartinFourier)
+* SF3.3 unlocks all corp API (@pigalot)
+* Major improvements to corp API (@pigalot)
+* Prevent seed money outside BN3 (@pigalot)
+* Fix bug where using keyboard shortcuts would crash if the feature is not available (@MartinFourier)\
+* Sidebar remains opened/closed on save (@MartinFourier)
+* Added tooltip to sidebar when closed (@MartinFourier)
+* Fix bug where Formulas.exe is not available when starting BN5 (@TheMas3212)
+* Fix CI (@tvanderpol)
+* Change shortcuts to match sidebar (@MartinFourier)
+* Format gang respect (@attrib)
+* Add modal to text editor with ram details (@nickofolas)
+* Fix several bugs with singularity focus (@nickofolas)
+* Nerf noodle bar.
+
 v1.3.0 - 2022-01-04 Cleaning up
 -------------------------------
 

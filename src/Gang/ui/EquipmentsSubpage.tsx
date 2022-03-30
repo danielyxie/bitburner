@@ -3,7 +3,6 @@
  */
 import React, { useState } from "react";
 import { useGang } from "./Context";
-import { generateTableRow } from "./GangMemberStats";
 
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -22,7 +21,7 @@ import { GangMember } from "../GangMember";
 import { UpgradeType } from "../data/upgrades";
 import { use } from "../../ui/Context";
 import { Settings } from "../../Settings/Settings";
-import { characterOverviewStyles as useStyles } from "../../ui/React/CharacterOverview";
+import { StatsRow } from "../../ui/React/StatsRow";
 
 interface INextRevealProps {
   upgrades: string[];
@@ -91,7 +90,6 @@ interface IPanelProps {
 }
 
 function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
-  const classes = useStyles();
   const gang = useGang();
   const player = use.Player();
   const setRerender = useState(false)[1];
@@ -178,12 +176,12 @@ function GangMemberUpgradePanel(props: IPanelProps): React.ReactElement {
           >
             <Table>
               <TableBody>
-                {generateTableRow("Hacking", props.member.hack, props.member.hack_exp, Settings.theme.hack, classes)}
-                {generateTableRow("Strength", props.member.str, props.member.str_exp, Settings.theme.combat, classes)}
-                {generateTableRow("Defense", props.member.def, props.member.def_exp, Settings.theme.combat, classes)}
-                {generateTableRow("Dexterity", props.member.dex, props.member.dex_exp, Settings.theme.combat, classes)}
-                {generateTableRow("Agility", props.member.agi, props.member.agi_exp, Settings.theme.combat, classes)}
-                {generateTableRow("Charisma", props.member.cha, props.member.cha_exp, Settings.theme.cha, classes)}
+                <StatsRow name="Hacking" color={Settings.theme.hack} data={{ level: props.member.hack, exp: props.member.hack_exp }} />
+                <StatsRow name="Strength" color={Settings.theme.combat} data={{ level: props.member.str, exp: props.member.str_exp }} />
+                <StatsRow name="Defense" color={Settings.theme.combat} data={{ level: props.member.def, exp: props.member.def_exp }} />
+                <StatsRow name="Dexterity" color={Settings.theme.combat} data={{ level: props.member.dex, exp: props.member.dex_exp }} />
+                <StatsRow name="Agility" color={Settings.theme.combat} data={{ level: props.member.agi, exp: props.member.agi_exp }} />
+                <StatsRow name="Charisma" color={Settings.theme.cha} data={{ level: props.member.cha, exp: props.member.cha_exp }} />
               </TableBody>
             </Table>
           </Tooltip>
@@ -273,7 +271,7 @@ export function EquipmentsSubpage(): React.ReactElement {
         sx={{ m: 1, width: '15%' }}
       />
 
-      <Box display="grid" sx={{ gridTemplateColumns: '1fr 1fr', width: 'fit-content' }}>
+      <Box display="grid" sx={{ gridTemplateColumns: '1fr 1fr', width: '100%' }}>
         {members.map((member: GangMember) => (
           <GangMemberUpgradePanel key={member.name} member={member} />
         ))}

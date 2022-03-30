@@ -59,7 +59,7 @@ async function main(version, versionNumber, changelog) {
       join('\n').replaceAll('`', '\\`');
 
     modifiedConstants = modifiedConstants.
-      replace(/(^\s*?LatestUpdate:\s`\n)(.*)`,$/ms, `$1${paddedChangelog}\n` + "`,");
+      replace(/(^\s*?LatestUpdate:\s`\n)(.*)`,$/ms, `$1${paddedChangelog}\n\`,`);
   }
   await fs.writeFile(appPaths.constants, modifiedConstants);
   console.log(`Modified ${appPaths.constants}`);

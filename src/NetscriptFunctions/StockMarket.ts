@@ -8,7 +8,12 @@ import { getBuyTransactionCost, getSellTransactionGain } from "../StockMarket/St
 import { OrderTypes } from "../StockMarket/data/OrderTypes";
 import { PositionTypes } from "../StockMarket/data/PositionTypes";
 import { StockSymbols } from "../StockMarket/data/StockSymbols";
-import { getStockMarket4SDataCost, getStockMarket4STixApiCost } from "../StockMarket/StockMarketCosts";
+import {
+  getStockMarket4SDataCost,
+  getStockMarket4STixApiCost,
+  getStockMarketWseCost,
+  getStockMarketTixApiCost,
+} from "../StockMarket/StockMarketCosts";
 import { Stock } from "../StockMarket/Stock";
 import { TIX } from "../ScriptEditor/NetscriptDefinitions";
 
@@ -34,34 +39,38 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     return stock;
   };
   return {
-    getSymbols: function (): any {
+    getSymbols: function (): string[] {
       helper.updateDynamicRam("getSymbols", getRamCost(player, "stock", "getSymbols"));
       checkTixApiAccess("getSymbols");
       return Object.values(StockSymbols);
     },
-    getPrice: function (symbol: any): any {
+    getPrice: function (_symbol: unknown): number {
       helper.updateDynamicRam("getPrice", getRamCost(player, "stock", "getPrice"));
+      const symbol = helper.string("getPrice", "symbol", _symbol);
       checkTixApiAccess("getPrice");
       const stock = getStockFromSymbol(symbol, "getPrice");
 
       return stock.price;
     },
-    getAskPrice: function (symbol: any): any {
+    getAskPrice: function (_symbol: unknown): number {
       helper.updateDynamicRam("getAskPrice", getRamCost(player, "stock", "getAskPrice"));
+      const symbol = helper.string("getAskPrice", "symbol", _symbol);
       checkTixApiAccess("getAskPrice");
       const stock = getStockFromSymbol(symbol, "getAskPrice");
 
       return stock.getAskPrice();
     },
-    getBidPrice: function (symbol: any): any {
+    getBidPrice: function (_symbol: unknown): number {
       helper.updateDynamicRam("getBidPrice", getRamCost(player, "stock", "getBidPrice"));
+      const symbol = helper.string("getBidPrice", "symbol", _symbol);
       checkTixApiAccess("getBidPrice");
       const stock = getStockFromSymbol(symbol, "getBidPrice");
 
       return stock.getBidPrice();
     },
-    getPosition: function (symbol: any): any {
+    getPosition: function (_symbol: unknown): [number, number, number, number] {
       helper.updateDynamicRam("getPosition", getRamCost(player, "stock", "getPosition"));
+      const symbol = helper.string("getPosition", "symbol", _symbol);
       checkTixApiAccess("getPosition");
       const stock = SymbolToStockMap[symbol];
       if (stock == null) {
@@ -69,15 +78,19 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       }
       return [stock.playerShares, stock.playerAvgPx, stock.playerShortShares, stock.playerAvgShortPx];
     },
-    getMaxShares: function (symbol: any): any {
+    getMaxShares: function (_symbol: unknown): number {
       helper.updateDynamicRam("getMaxShares", getRamCost(player, "stock", "getMaxShares"));
+      const symbol = helper.string("getMaxShares", "symbol", _symbol);
       checkTixApiAccess("getMaxShares");
       const stock = getStockFromSymbol(symbol, "getMaxShares");
 
       return stock.maxShares;
     },
-    getPurchaseCost: function (symbol: any, shares: any, posType: any): any {
+    getPurchaseCost: function (_symbol: unknown, _shares: unknown, _posType: unknown): number {
       helper.updateDynamicRam("getPurchaseCost", getRamCost(player, "stock", "getPurchaseCost"));
+      const symbol = helper.string("getPurchaseCost", "symbol", _symbol);
+      let shares = helper.number("getPurchaseCost", "shares", _shares);
+      const posType = helper.string("getPurchaseCost", "posType", _posType);
       checkTixApiAccess("getPurchaseCost");
       const stock = getStockFromSymbol(symbol, "getPurchaseCost");
       shares = Math.round(shares);
@@ -99,8 +112,11 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
 
       return res;
     },
-    getSaleGain: function (symbol: any, shares: any, posType: any): any {
+    getSaleGain: function (_symbol: unknown, _shares: unknown, _posType: unknown): number {
       helper.updateDynamicRam("getSaleGain", getRamCost(player, "stock", "getSaleGain"));
+      const symbol = helper.string("getSaleGain", "symbol", _symbol);
+      let shares = helper.number("getSaleGain", "shares", _shares);
+      const posType = helper.string("getSaleGain", "posType", _posType);
       checkTixApiAccess("getSaleGain");
       const stock = getStockFromSymbol(symbol, "getSaleGain");
       shares = Math.round(shares);
@@ -122,23 +138,29 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
 
       return res;
     },
-    buy: function (symbol: any, shares: any): any {
+    buy: function (_symbol: unknown, _shares: unknown): number {
       helper.updateDynamicRam("buy", getRamCost(player, "stock", "buy"));
+      const symbol = helper.string("buy", "symbol", _symbol);
+      const shares = helper.number("buy", "shares", _shares);
       checkTixApiAccess("buy");
       const stock = getStockFromSymbol(symbol, "buy");
       const res = buyStock(stock, shares, workerScript, {});
       return res ? stock.getAskPrice() : 0;
     },
-    sell: function (symbol: any, shares: any): any {
+    sell: function (_symbol: unknown, _shares: unknown): number {
       helper.updateDynamicRam("sell", getRamCost(player, "stock", "sell"));
+      const symbol = helper.string("sell", "symbol", _symbol);
+      const shares = helper.number("sell", "shares", _shares);
       checkTixApiAccess("sell");
       const stock = getStockFromSymbol(symbol, "sell");
       const res = sellStock(stock, shares, workerScript, {});
 
       return res ? stock.getBidPrice() : 0;
     },
-    short: function (symbol: any, shares: any): any {
+    short: function (_symbol: unknown, _shares: unknown): number {
       helper.updateDynamicRam("short", getRamCost(player, "stock", "short"));
+      const symbol = helper.string("short", "symbol", _symbol);
+      const shares = helper.number("short", "shares", _shares);
       checkTixApiAccess("short");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 1) {
@@ -153,8 +175,10 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
 
       return res ? stock.getBidPrice() : 0;
     },
-    sellShort: function (symbol: any, shares: any): any {
+    sellShort: function (_symbol: unknown, _shares: unknown): number {
       helper.updateDynamicRam("sellShort", getRamCost(player, "stock", "sellShort"));
+      const symbol = helper.string("sellShort", "symbol", _symbol);
+      const shares = helper.number("sellShort", "shares", _shares);
       checkTixApiAccess("sellShort");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 1) {
@@ -169,8 +193,13 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
 
       return res ? stock.getAskPrice() : 0;
     },
-    placeOrder: function (symbol: any, shares: any, price: any, type: any, pos: any): any {
+    placeOrder: function (_symbol: unknown, _shares: unknown, _price: unknown, _type: unknown, _pos: unknown): boolean {
       helper.updateDynamicRam("placeOrder", getRamCost(player, "stock", "placeOrder"));
+      const symbol = helper.string("placeOrder", "symbol", _symbol);
+      const shares = helper.number("placeOrder", "shares", _shares);
+      const price = helper.number("placeOrder", "price", _price);
+      const type = helper.string("placeOrder", "type", _type);
+      const pos = helper.string("placeOrder", "pos", _pos);
       checkTixApiAccess("placeOrder");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 2) {
@@ -208,8 +237,19 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
 
       return placeOrder(stock, shares, price, orderType, orderPos, workerScript);
     },
-    cancelOrder: function (symbol: any, shares: any, price: any, type: any, pos: any): any {
+    cancelOrder: function (
+      _symbol: unknown,
+      _shares: unknown,
+      _price: unknown,
+      _type: unknown,
+      _pos: unknown,
+    ): boolean {
       helper.updateDynamicRam("cancelOrder", getRamCost(player, "stock", "cancelOrder"));
+      const symbol = helper.string("cancelOrder", "symbol", _symbol);
+      const shares = helper.number("cancelOrder", "shares", _shares);
+      const price = helper.number("cancelOrder", "price", _price);
+      const type = helper.string("cancelOrder", "type", _type);
+      const pos = helper.string("cancelOrder", "pos", _pos);
       checkTixApiAccess("cancelOrder");
       if (player.bitNodeN !== 8) {
         if (player.sourceFileLvl(8) <= 2) {
@@ -290,8 +330,9 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
 
       return orders;
     },
-    getVolatility: function (symbol: any): any {
+    getVolatility: function (_symbol: unknown): number {
       helper.updateDynamicRam("getVolatility", getRamCost(player, "stock", "getVolatility"));
+      const symbol = helper.string("getVolatility", "symbol", _symbol);
       if (!player.has4SDataTixApi) {
         throw helper.makeRuntimeErrorMsg("getVolatility", "You don't have 4S Market Data TIX API Access!");
       }
@@ -299,8 +340,9 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
 
       return stock.mv / 100; // Convert from percentage to decimal
     },
-    getForecast: function (symbol: any): any {
+    getForecast: function (_symbol: unknown): number {
       helper.updateDynamicRam("getForecast", getRamCost(player, "stock", "getForecast"));
+      const symbol = helper.string("getForecast", "symbol", _symbol);
       if (!player.has4SDataTixApi) {
         throw helper.makeRuntimeErrorMsg("getForecast", "You don't have 4S Market Data TIX API Access!");
       }
@@ -310,7 +352,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       stock.b ? (forecast += stock.otlkMag) : (forecast -= stock.otlkMag);
       return forecast / 100; // Convert from percentage to decimal
     },
-    purchase4SMarketData: function () {
+    purchase4SMarketData: function (): boolean {
       helper.updateDynamicRam("purchase4SMarketData", getRamCost(player, "stock", "purchase4SMarketData"));
       checkTixApiAccess("purchase4SMarketData");
 
@@ -329,7 +371,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       workerScript.log("stock.purchase4SMarketData", () => "Purchased 4S Market Data");
       return true;
     },
-    purchase4SMarketDataTixApi: function () {
+    purchase4SMarketDataTixApi: function (): boolean {
       helper.updateDynamicRam("purchase4SMarketDataTixApi", getRamCost(player, "stock", "purchase4SMarketDataTixApi"));
       checkTixApiAccess("purchase4SMarketDataTixApi");
 
@@ -349,6 +391,42 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       player.has4SDataTixApi = true;
       player.loseMoney(getStockMarket4STixApiCost(), "stock");
       workerScript.log("stock.purchase4SMarketDataTixApi", () => "Purchased 4S Market Data TIX API");
+      return true;
+    },
+    purchaseWseAccount: function (): boolean {
+      helper.updateDynamicRam("PurchaseWseAccount", getRamCost(player, "stock", "purchaseWseAccount"));
+
+      if (player.hasWseAccount) {
+        workerScript.log("stock.purchaseWseAccount", () => "Already purchased WSE Account");
+        return true;
+      }
+
+      if (player.money < getStockMarketWseCost()) {
+        workerScript.log("stock.purchaseWseAccount", () => "Not enough money to purchase WSE Account Access");
+        return false;
+      }
+
+      player.hasWseAccount = true;
+      player.loseMoney(getStockMarketWseCost(), "stock");
+      workerScript.log("stock.purchaseWseAccount", () => "Purchased WSE Account Access");
+      return true;
+    },
+    purchaseTixApi: function (): boolean {
+      helper.updateDynamicRam("purchaseTixApi", getRamCost(player, "stock", "purchaseTixApi"));
+
+      if (player.hasTixApiAccess) {
+        workerScript.log("stock.purchaseTixApi", () => "Already purchased TIX API");
+        return true;
+      }
+
+      if (player.money < getStockMarketTixApiCost()) {
+        workerScript.log("stock.purchaseTixApi", () => "Not enough money to purchase TIX API Access");
+        return false;
+      }
+
+      player.hasTixApiAccess = true;
+      player.loseMoney(getStockMarketTixApiCost(), "stock");
+      workerScript.log("stock.purchaseTixApi", () => "Purchased TIX API");
       return true;
     },
   };

@@ -4,12 +4,13 @@ import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { Modal } from "../../ui/React/Modal";
 import { use } from "../../ui/Context";
 import { useCorporation } from "./Context";
-import { CorporationConstants } from "../data/Constants";
 import { ICorporation } from "../ICorporation";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Money } from "../../ui/React/Money";
+import { SellShares } from "../Actions";
+import { KEY } from "../../utils/helpers/keyCodes";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -48,42 +49,27 @@ export function SellSharesModal(props: IProps): React.ReactElement {
   }
 
   function sell(): void {
-    if (shares === null) return;
     if (disabled) return;
-    const stockSaleResults = corp.calculateShareSale(shares);
-    const profit = stockSaleResults[0];
-    const newSharePrice = stockSaleResults[1];
-    const newSharesUntilUpdate = stockSaleResults[2];
+    try {
+      const profit = SellShares(corp, player, shares)
+      props.onClose();
+      dialogBoxCreate(
+        <>
+          Sold {numeralWrapper.formatMoney(shares)} shares for
+          <Money money={profit} />. The corporation's stock price fell to&nbsp; <Money money={corp.sharePrice} />
+          as a result of dilution.
+        </>,
+      );
 
-    corp.numShares -= shares;
-    if (isNaN(corp.issuedShares)) {
-      console.error(`Corporation issuedShares is NaN: ${corp.issuedShares}`);
-      const res = corp.issuedShares;
-      if (isNaN(res)) {
-        corp.issuedShares = 0;
-      } else {
-        corp.issuedShares = res;
-      }
+      props.rerender();
+    } catch (err) {
+      dialogBoxCreate(err + "");
     }
-    corp.issuedShares += shares;
-    corp.sharePrice = newSharePrice;
-    corp.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
-    corp.shareSaleCooldown = CorporationConstants.SellSharesCooldown;
-    player.gainMoney(profit, "corporation");
-    props.onClose();
-    dialogBoxCreate(
-      <>
-        Sold {numeralWrapper.formatMoney(shares)} shares for
-        <Money money={profit} />. The corporation's stock price fell to&nbsp; <Money money={corp.sharePrice} />
-        as a result of dilution.
-      </>,
-    );
 
-    props.rerender();
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) sell();
+    if (event.key === KEY.ENTER) sell();
   }
 
   return (

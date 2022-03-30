@@ -40,7 +40,6 @@ Like hack and grow, `weaken` can be called on any server, regardless of where th
 // NS1:
 var currentSecurity = getServerSecurityLevel("foodnstuff");
 currentSecurity = currentSecurity - weaken("foodnstuff");
-currentSecurity = currentSecurity - weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
 ```
 
 ## Example 2
@@ -50,6 +49,5 @@ currentSecurity = currentSecurity - weaken("foodnstuff", { threads: 5 }); // Onl
 // NS2:
 let currentSecurity = ns.getServerSecurityLevel("foodnstuff");
 currentSecurity -= await ns.weaken("foodnstuff");
-currentSecurity -= await ns.weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
 ```
 

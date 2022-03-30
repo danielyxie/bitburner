@@ -165,8 +165,7 @@ function executeOrder(order: Order, refs: IProcessOrderRefs): void {
 
     console.error("Could not find the following Order in Order Book: ");
     console.error(order);
-  } else {
-    if (isBuy) {
+  } else if (isBuy) {
       dialogBoxCreate(
         <>
           Failed to execute {order.type} for {stock.symbol} @ <Money money={order.price} /> ({pos}). This is most likely
@@ -174,5 +173,4 @@ function executeOrder(order: Order, refs: IProcessOrderRefs): void {
         </>,
       );
     }
-  }
 }

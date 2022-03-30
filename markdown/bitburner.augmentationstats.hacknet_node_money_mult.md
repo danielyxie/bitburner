@@ -4,7 +4,7 @@
 
 ## AugmentationStats.hacknet\_node\_money\_mult property
 
-Multipler to amount of money produced by Hacknet Nodes
+Multiplier to amount of money produced by Hacknet Nodes
 
 <b>Signature:</b>
 

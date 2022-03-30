@@ -1,3 +1,5 @@
+import { IPlayer } from 'src/PersonObjects/IPlayer';
+import { MaterialSizes } from './MaterialSizes';
 import { ICorporation } from "./ICorporation";
 import { IIndustry } from "./IIndustry";
 import { IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
@@ -14,12 +16,15 @@ import { EmployeePositions } from "./EmployeePositions";
 import { Employee } from "./Employee";
 import { IndustryUpgrades } from "./IndustryUpgrades";
 import { ResearchMap } from "./ResearchMap";
+import { isRelevantMaterial } from "./ui/Helpers";
 
 export function NewIndustry(corporation: ICorporation, industry: string, name: string): void {
+  if (corporation.divisions.find(({ type }) => industry == type))
+    throw new Error(`You have already expanded into the ${industry} industry!`);
+
   for (let i = 0; i < corporation.divisions.length; ++i) {
     if (corporation.divisions[i].name === name) {
       throw new Error("This division name is already in use!");
-      return;
     }
   }
 
@@ -58,6 +63,9 @@ export function NewCity(corporation: ICorporation, division: IIndustry, city: st
 export function UnlockUpgrade(corporation: ICorporation, upgrade: CorporationUnlockUpgrade): void {
   if (corporation.funds < upgrade[1]) {
     throw new Error("Insufficient funds");
+  }
+  if(corporation.unlockUpgrades[upgrade[0]] === 1){
+    throw new Error(`You have already unlocked the ${upgrade[2]} upgrade!`);
   }
   corporation.unlock(upgrade);
 }
@@ -109,22 +117,22 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
   if (amt.includes("MAX") || amt.includes("PROD")) {
     let q = amt.replace(/\s+/g, "");
     q = q.replace(/[^-()\d/*+.MAXPROD]/g, "");
-    let tempQty = q.replace(/MAX/g, "1");
-    tempQty = tempQty.replace(/PROD/g, "1");
+    let tempQty = q.replace(/MAX/g, mat.maxsll.toString());
+    tempQty = tempQty.replace(/PROD/g, mat.prd.toString());
     try {
       tempQty = eval(tempQty);
     } catch (e) {
-      throw new Error("Invalid value or expression for sell price field: " + e);
+      throw new Error("Invalid value or expression for sell quantity field: " + e);
     }
 
     if (tempQty == null || isNaN(parseFloat(tempQty)) || parseFloat(tempQty) < 0) {
-      throw new Error("Invalid value or expression for sell price field");
+      throw new Error("Invalid value or expression for sell quantity field");
     }
 
     mat.sllman[0] = true;
     mat.sllman[1] = q; //Use sanitized input
   } else if (isNaN(parseFloat(amt)) || parseFloat(amt) < 0) {
-    throw new Error("Invalid value for sell quantity field! Must be numeric or 'MAX'");
+    throw new Error("Invalid value for sell quantity field! Must be numeric or 'PROD' or 'MAX'");
   } else {
     let q = parseFloat(amt);
     if (isNaN(q)) {
@@ -151,10 +159,10 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
     try {
       temp = eval(temp);
     } catch (e) {
-      throw new Error("Invalid value or expression for sell quantity field: " + e);
+      throw new Error("Invalid value or expression for sell price field: " + e);
     }
     if (temp == null || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
-      throw new Error("Invalid value or expression for sell quantity field.");
+      throw new Error("Invalid value or expression for sell price field.");
     }
     product.sCost = price; //Use sanitized price
   } else {
@@ -174,16 +182,16 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
     //Dynamically evaluated quantity. First test to make sure its valid
     let qty = amt.replace(/\s+/g, "");
     qty = qty.replace(/[^-()\d/*+.MAXPROD]/g, "");
-    let temp = qty.replace(/MAX/g, "1");
-    temp = temp.replace(/PROD/g, "1");
+    let temp = qty.replace(/MAX/g, product.maxsll.toString());
+    temp = temp.replace(/PROD/g, product.data[city][1].toString());
     try {
       temp = eval(temp);
     } catch (e) {
-      throw new Error("Invalid value or expression for sell price field: " + e);
+      throw new Error("Invalid value or expression for sell quantity field: " + e);
     }
 
     if (temp == null || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
-      throw new Error("Invalid value or expression for sell price field");
+      throw new Error("Invalid value or expression for sell quantity field");
     }
     if (all) {
       for (let i = 0; i < cities.length; ++i) {
@@ -196,7 +204,7 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
       product.sllman[city][1] = qty; //Use sanitized input
     }
   } else if (isNaN(parseFloat(amt)) || parseFloat(amt) < 0) {
-    throw new Error("Invalid value for sell quantity field! Must be numeric");
+    throw new Error("Invalid value for sell quantity field! Must be numeric or 'PROD' or 'MAX'");
   } else {
     let qty = parseFloat(amt);
     if (isNaN(qty)) {
@@ -213,8 +221,7 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
         product.sllman[city][0] = false;
         product.sllman[city][1] = "";
       }
-    } else {
-      if (all) {
+    } else if (all) {
         for (let i = 0; i < cities.length; ++i) {
           const tempCity = cities[i];
           product.sllman[tempCity][0] = true;
@@ -224,7 +231,6 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
         product.sllman[city][0] = true;
         product.sllman[city][1] = qty;
       }
-    }
   }
 }
 
@@ -243,6 +249,57 @@ export function BuyMaterial(material: Material, amt: number): void {
     throw new Error(`Invalid amount '${amt}' to buy material '${material.name}'`);
   }
   material.buy = amt;
+}
+
+export function BulkPurchase(corp: ICorporation, warehouse: Warehouse, material: Material, amt: number): void {
+  const matSize = MaterialSizes[material.name];
+  const maxAmount = (warehouse.size - warehouse.sizeUsed) / matSize;
+  if (isNaN(amt) || amt < 0) {
+    throw new Error(`Invalid input amount`);
+  }
+  if (amt * matSize > maxAmount) {
+    throw new Error(`You do not have enough warehouse size to fit this purchase`);
+  }
+  const cost = amt * material.bCost;
+  if (corp.funds >= cost) {
+    corp.funds = corp.funds - cost;
+    material.qty += amt;
+  } else {
+    throw new Error(`You cannot afford this purchase.`);
+  }
+}
+
+export function SellShares(corporation: ICorporation, player: IPlayer, numShares: number): number {
+  if (isNaN(numShares)) throw new Error("Invalid value for number of shares");
+  if (numShares < 0) throw new Error("Invalid value for number of shares");
+  if (numShares > corporation.numShares) throw new Error("You don't have that many shares to sell!");
+  if (!corporation.public) throw new Error("You haven't gone public!");
+  if (corporation.shareSaleCooldown) throw new Error("Share sale on cooldown!");
+  const stockSaleResults = corporation.calculateShareSale(numShares);
+  const profit = stockSaleResults[0];
+  const newSharePrice = stockSaleResults[1];
+  const newSharesUntilUpdate = stockSaleResults[2];
+
+  corporation.numShares -= numShares;
+  corporation.issuedShares += numShares;
+  corporation.sharePrice = newSharePrice;
+  corporation.shareSalesUntilPriceUpdate = newSharesUntilUpdate;
+  corporation.shareSaleCooldown = CorporationConstants.SellSharesCooldown;
+  player.gainMoney(profit, "corporation");
+  return profit;
+}
+
+export function BuyBackShares(corporation: ICorporation, player: IPlayer, numShares: number): boolean {
+  if (isNaN(numShares)) throw new Error("Invalid value for number of shares");
+  if (numShares < 0) throw new Error("Invalid value for number of shares");
+  if (numShares > corporation.issuedShares) throw new Error("You don't have that many shares to buy!");
+  if (!corporation.public) throw new Error("You haven't gone public!");
+  const buybackPrice = corporation.sharePrice * 1.1;
+  if (player.money < (numShares * buybackPrice)) throw new Error("You cant afford that many shares!");
+  corporation.numShares += numShares;
+  corporation.issuedShares -= numShares;
+  player.loseMoney(numShares * buybackPrice, "corporation");
+  return true;
 }
 
 export function AssignJob(employee: Employee, job: string): void {
@@ -290,6 +347,7 @@ export function PurchaseWarehouse(corp: ICorporation, division: IIndustry, city:
 
 export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, warehouse: Warehouse): void {
   const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
+  if (corp.funds < sizeUpgradeCost) return;
   ++warehouse.level;
   warehouse.updateSize(corp, division);
   corp.funds = corp.funds - sizeUpgradeCost;
@@ -334,6 +392,9 @@ export function MakeProduct(
   if (productName == null || productName === "") {
     throw new Error("You must specify a name for your product!");
   }
+  if (!division.makesProducts) {
+    throw new Error("You cannot create products for this industry!");
+  }
   if (isNaN(designInvest)) {
     throw new Error("Invalid value for design investment");
   }
@@ -343,17 +404,29 @@ export function MakeProduct(
   if (corp.funds < designInvest + marketingInvest) {
     throw new Error("You don't have enough company funds to make this large of an investment");
   }
+  let maxProducts = 3
+  if (division.hasResearch("uPgrade: Capacity.II")) {
+    maxProducts = 5
+  } else if (division.hasResearch("uPgrade: Capacity.I")) {
+    maxProducts = 4
+  }
+  const products = division.products
+  if (Object.keys(products).length >= maxProducts) {
+    throw new Error(`You are already at the max products (${maxProducts}) for division: ${division.name}!`);
+  }
+
   const product = new Product({
     name: productName.replace(/[<>]/g, ""), //Sanitize for HTMl elements
     createCity: city,
     designCost: designInvest,
     advCost: marketingInvest,
   });
-  if (division.products[product.name] instanceof Product) {
+  if (products[product.name] instanceof Product) {
     throw new Error(`You already have a product with this name!`);
   }
+
   corp.funds = corp.funds - (designInvest + marketingInvest);
-  division.products[product.name] = product;
+  products[product.name] = product;
 }
 
 export function Research(division: IIndustry, researchName: string): void {
@@ -372,7 +445,7 @@ export function Research(division: IIndustry, researchName: string): void {
   division.researched[researchName] = true;
 }
 
-export function ExportMaterial(divisionName: string, cityName: string, material: Material, amt: string): void {
+export function ExportMaterial(divisionName: string, cityName: string, material: Material, amt: string, division?: Industry): void {
   // Sanitize amt
   let sanitizedAmt = amt.replace(/\s+/g, "").toUpperCase();
   sanitizedAmt = sanitizedAmt.replace(/[^-()\d/*+.MAX]/g, "");
@@ -388,6 +461,11 @@ export function ExportMaterial(divisionName: string, cityName: string, material:
   if (n == null || isNaN(n) || n < 0) {
     throw new Error("Invalid amount entered for export");
   }
+
+  if (!division || !isRelevantMaterial(material.name, division)) {
+    throw new Error(`You cannot export material: ${material.name} to division: ${divisionName}!`);
+  }
+
   const exportObj = { ind: divisionName, city: cityName, amt: sanitizedAmt };
   material.exp.push(exportObj);
 }

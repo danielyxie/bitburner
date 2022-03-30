@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.cha\_mult property
 
+Charisma multiplier from equipment
+
 <b>Signature:</b>
 
 ```typescript

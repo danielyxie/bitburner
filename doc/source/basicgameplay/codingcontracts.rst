@@ -215,6 +215,7 @@ The list contains the name of (i.e. the value returned by
 |                                    | | The answer should be provided as an array of strings containing the valid expressions. |
 |                                    | |                                                                                        |
 |                                    | | NOTE: Numbers in an expression cannot have leading 0's                                 |
+|                                    | | NOTE: The order of evaluation expects script operator precedence                       |
 |                                    | |                                                                                        |
 |                                    | | Examples:                                                                              |
 |                                    | |  Input: digits = "123", target = 6                                                     |

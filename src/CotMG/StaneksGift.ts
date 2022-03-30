@@ -1,3 +1,4 @@
+import { FactionNames } from '../Faction/data/FactionNames';
 import { Fragment } from "./Fragment";
 import { ActiveFragment } from "./ActiveFragment";
 import { FragmentType } from "./FragmentType";
@@ -18,21 +19,21 @@ export class StaneksGift implements IStaneksGift {
   fragments: ActiveFragment[] = [];
 
   baseSize(): number {
-    return StanekConstants.BaseSize + BitNodeMultipliers.StaneksGiftExtraSize + Player.sourceFileLvl(13);
+    return StanekConstants.BaseSize + BitNodeMultipliers.StaneksGiftExtraSize + Player.sourceFileLvl(13)
   }
 
   width(): number {
-    return Math.floor(this.baseSize() / 2 + 1);
+    return Math.min(Math.floor(this.baseSize() / 2 + 1),StanekConstants.MaxSize);
   }
   height(): number {
-    return Math.floor(this.baseSize() / 2 + 0.6);
+    return Math.min(Math.floor(this.baseSize() / 2 + 0.6),StanekConstants.MaxSize);
   }
 
   charge(player: IPlayer, af: ActiveFragment, threads: number): void {
     af.avgCharge = (af.numCharge * af.avgCharge + threads) / (af.numCharge + 1);
     af.numCharge++;
 
-    const cotmg = Factions["Church of the Machine God"];
+    const cotmg = Factions[FactionNames.ChurchOfTheMachineGod];
     cotmg.playerReputation += (player.faction_rep_mult * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
   }
 
