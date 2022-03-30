@@ -108,6 +108,7 @@ export const RamCosts: IMap<any> = {
   hackAnalyzeSecurity: RamCostConstants.ScriptHackAnalyzeRamCost,
   hackAnalyzeChance: RamCostConstants.ScriptHackAnalyzeRamCost,
   sleep: 0,
+  asleep: 0,
   share: 2.4,
   getSharePower: 0.2,
   grow: RamCostConstants.ScriptGrowRamCost,
@@ -135,6 +136,7 @@ export const RamCosts: IMap<any> = {
   kill: RamCostConstants.ScriptKillRamCost,
   killall: RamCostConstants.ScriptKillRamCost,
   exit: 0,
+  atExit: 0,
   scp: RamCostConstants.ScriptScpRamCost,
   ls: RamCostConstants.ScriptScanRamCost,
   ps: RamCostConstants.ScriptScanRamCost,
@@ -180,6 +182,8 @@ export const RamCosts: IMap<any> = {
     getForecast: RamCostConstants.ScriptBuySellStockRamCost,
     purchase4SMarketData: RamCostConstants.ScriptBuySellStockRamCost,
     purchase4SMarketDataTixApi: RamCostConstants.ScriptBuySellStockRamCost,
+    purchaseWseAccount: RamCostConstants.ScriptBuySellStockRamCost,
+    purchaseTixApi: RamCostConstants.ScriptBuySellStockRamCost,
   },
   getPurchasedServerLimit: RamCostConstants.ScriptGetPurchasedServerLimit,
   getPurchasedServerMaxRam: RamCostConstants.ScriptGetPurchasedServerMaxRam,
@@ -207,6 +211,7 @@ export const RamCosts: IMap<any> = {
   getScriptExpGain: RamCostConstants.ScriptGetScriptRamCost,
   getRunningScript: RamCostConstants.ScriptGetRunningScriptRamCost,
   nFormat: 0,
+  tFormat: 0,
   getTimeSinceLastAug: RamCostConstants.ScriptGetHackTimeRamCost,
   prompt: 0,
   wget: 0,
@@ -214,6 +219,8 @@ export const RamCosts: IMap<any> = {
   getPlayer: RamCostConstants.ScriptSingularityFn1RamCost / 4,
   mv: 0,
   getOwnedSourceFiles: RamCostConstants.ScriptGetOwnedSourceFiles,
+  tail: 0,
+  toast: 0,
 
   // Singularity Functions
   universityCourse: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
@@ -226,6 +233,8 @@ export const RamCosts: IMap<any> = {
   connect: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   manualHack: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   installBackdoor: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  getDarkwebProgramCost: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
+  getDarkwebPrograms: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   getStats: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   getCharacterInformation: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
   hospitalize: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost / 4),
@@ -356,16 +365,16 @@ export const RamCosts: IMap<any> = {
   },
 
   stanek: {
-    width: RamCostConstants.ScriptStanekWidth,
-    height: RamCostConstants.ScriptStanekHeight,
-    charge: RamCostConstants.ScriptStanekCharge,
+    giftWidth: RamCostConstants.ScriptStanekWidth,
+    giftHeight: RamCostConstants.ScriptStanekHeight,
+    chargeFragment: RamCostConstants.ScriptStanekCharge,
     fragmentDefinitions: RamCostConstants.ScriptStanekFragmentDefinitions,
     activeFragments: RamCostConstants.ScriptStanekPlacedFragments,
-    clear: RamCostConstants.ScriptStanekClear,
-    canPlace: RamCostConstants.ScriptStanekCanPlace,
-    place: RamCostConstants.ScriptStanekPlace,
-    get: RamCostConstants.ScriptStanekFragmentAt,
-    remove: RamCostConstants.ScriptStanekDeleteAt,
+    clearGift: RamCostConstants.ScriptStanekClear,
+    canPlaceFragment: RamCostConstants.ScriptStanekCanPlace,
+    placeFragment: RamCostConstants.ScriptStanekPlace,
+    getFragment: RamCostConstants.ScriptStanekFragmentAt,
+    removeFragment: RamCostConstants.ScriptStanekDeleteAt,
   },
 
   ui: {
@@ -376,6 +385,12 @@ export const RamCosts: IMap<any> = {
     setStyles: 0,
     resetStyles: 0,
     getGameInfo: 0,
+  },
+
+  grafting: {
+    getAugmentationGraftPrice: 3.75,
+    getAugmentationGraftTime: 3.75,
+    graftAugmentation: 7.5,
   },
 
   heart: {

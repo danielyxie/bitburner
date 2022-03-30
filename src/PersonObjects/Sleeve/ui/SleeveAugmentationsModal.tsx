@@ -50,74 +50,62 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <>
-        <Typography>
-          You can purchase Augmentations for your Duplicate Sleeves. These Augmentations have the same effect as they
-          would for you. You can only purchase Augmentations that you have unlocked through Factions.
-          <br />
-          <br />
-          When purchasing an Augmentation for a Duplicate Sleeve, they are immediately installed. This means that the
-          Duplicate Sleeve will immediately lose all of its stat experience.
-        </Typography>
-        <Table size="small" padding="none">
-          <TableBody>
-            {availableAugs.map((aug) => {
-              return (
-                <TableRow key={aug.name}>
-                  <TableCell>
-                    <Button onClick={() => purchaseAugmentation(aug)} disabled={player.money < aug.startingCost}>
-                      Buy
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                    <Box display="flex">
-                      <Tooltip title={aug.stats || ""}>
-                        <Typography>{aug.name}</Typography>
-                      </Tooltip>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    <Money money={aug.startingCost} player={player} />
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        <Box sx={{ mx: 1 }}>
+          <Typography>
+            You can purchase Augmentations for your Duplicate Sleeves. These Augmentations have the same effect as they
+            would for you. You can only purchase Augmentations that you have unlocked through Factions.
+            <br />
+            <br />
+            When purchasing an Augmentation for a Duplicate Sleeve, they are immediately installed. This means that the
+            Duplicate Sleeve will immediately lose all of its stat experience.
+          </Typography>
+          <Box component={Paper} sx={{ my: 1, p: 1 }}>
+            <Table size="small" padding="none">
+              <TableBody>
+                {availableAugs.map((aug) => {
+                  return (
+                    <TableRow key={aug.name}>
+                      <TableCell>
+                        <Button onClick={() => purchaseAugmentation(aug)} disabled={player.money < aug.startingCost}>
+                          Buy
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Box display="flex">
+                          <Tooltip title={aug.stats || ""}>
+                            <Typography>{aug.name}</Typography>
+                          </Tooltip>
+                        </Box>
+                      </TableCell>
+                      <TableCell>
+                        <Money money={aug.startingCost} player={player} />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </Box>
+        </Box>
 
         {ownedAugNames.length > 0 && (
           <>
-            <Typography>Owned Augmentations:</Typography>
-            {ownedAugNames.map((augName) => {
-              const aug = Augmentations[augName];
-              let tooltip = <></>;
-              if (typeof aug.info === "string") {
-                tooltip = (
-                  <>
-                    <span>{aug.info}</span>
-                    <br />
-                    <br />
-                    {aug.stats}
-                  </>
-                );
-              } else {
-                tooltip = (
-                  <>
-                    {aug.info}
-                    <br />
-                    <br />
-                    {aug.stats}
-                  </>
-                );
-              }
+            <Typography sx={{ mx: 1 }}>Owned Augmentations:</Typography>
+            <Box display="grid" sx={{ gridTemplateColumns: 'repeat(5, 1fr)', m: 1 }}>
+              {ownedAugNames.map((augName) => {
+                const aug = Augmentations[augName];
+                const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info
+                const tooltip = (<>{info}<br /><br />{aug.stats}</>);
 
-              return (
-                <Tooltip key={augName} title={<Typography>{tooltip}</Typography>}>
-                  <Paper>
-                    <Typography>{augName}</Typography>
-                  </Paper>
-                </Tooltip>
-              );
-            })}
+                return (
+                  <Tooltip key={augName} title={<Typography>{tooltip}</Typography>}>
+                    <Paper sx={{ p: 1 }}>
+                      <Typography>{augName}</Typography>
+                    </Paper>
+                  </Tooltip>
+                );
+              })}
+            </Box>
           </>
         )}
       </>

@@ -102,7 +102,7 @@ export class WorkerScript {
   scriptRef: RunningScript;
 
   /**
-   * IP Address on which this script is running
+   * hostname on which this script is running
    */
   hostname: string;
 

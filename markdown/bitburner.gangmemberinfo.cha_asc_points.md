@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.cha\_asc\_points property
 
+Total earned charisma experience
+
 <b>Signature:</b>
 
 ```typescript

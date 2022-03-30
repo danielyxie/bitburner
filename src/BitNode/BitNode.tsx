@@ -2,6 +2,8 @@ import React from "react";
 import { BitNodeMultipliers } from "./BitNodeMultipliers";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IMap } from "../types";
+import { FactionNames } from "../Faction/data/FactionNames";
+import { CityName } from "../Locations/data/CityNames";
 
 class BitNode {
   // A short description, or tagline, about the BitNode
@@ -80,8 +82,7 @@ BitNodes["BitNode2"] = new BitNode(
       <br />
       The amount of money gained from crimes and Infiltration is tripled
       <br />
-      Certain Factions (Slum Snakes, Tetrads, The Syndicate, The Dark Army, Speakers for the Dead, NiteSec, The Black
-      Hand) give the player the ability to form and manage their own gangs. These gangs will earn the player money and
+      Certain Factions ({FactionNames.SlumSnakes}, {FactionNames.Tetrads}, {FactionNames.TheSyndicate}, {FactionNames.TheDarkArmy}, {FactionNames.SpeakersForTheDead}, {FactionNames.NiteSec}, {FactionNames.TheBlackHand}) give the player the ability to form and manage their own gangs. These gangs will earn the player money and
       reputation with the corresponding Faction
       <br />
       Every Augmentation in the game will be available through the Factions listed above
@@ -202,8 +203,8 @@ BitNodes["BitNode5"] = new BitNode(
       Destroying this BitNode will give you Source-File 5, or if you already have this Source-File it will upgrade its
       level up to a maximum of 3. This Source-File grants you a special new stat called Intelligence. Intelligence is
       unique because it is permanent and persistent (it never gets reset back to 1). However gaining Intelligence
-      experience is much slower than other stats, and it is also hidden (you won't know when you gain experience and how
-      much). Higher Intelligence levels will boost your production for many actions in the game. <br />
+      experience is much slower than other stats. Higher Intelligence levels will boost your production for many actions
+      in the game. <br />
       <br />
       In addition, this Source-File will unlock the getBitNodeMultipliers() Netscript function and let you start with
       Formulas.exe, and will also raise all of your hacking-related multipliers by:
@@ -220,18 +221,18 @@ BitNodes["BitNode5"] = new BitNode(
 BitNodes["BitNode6"] = new BitNode(
   6,
   1,
-  "Bladeburners",
+  FactionNames.Bladeburners,
   "Like Tears in Rain",
   (
     <>
-      In the middle of the 21st century, OmniTek Incorporated began designing and manufacturing advanced synthetic
+      In the middle of the 21st century, {FactionNames.OmniTekIncorporated} began designing and manufacturing advanced synthetic
       androids, or Synthoids for short. They achieved a major technological breakthrough in the sixth generation of
       their Synthoid design, called MK-VI, by developing a hyperintelligent AI. Many argue that this was the first
       sentient AI ever created. This resulted in Synthoid models that were stronger, faster, and more intelligent than
       the humans that had created them.
       <br />
       <br />
-      In this BitNode you will be able to access the Bladeburner Division at the NSA, which provides a new mechanic for
+      In this BitNode you will be able to access the {FactionNames.Bladeburners} Division at the NSA, which provides a new mechanic for
       progression. Furthermore:
       <br />
       <br />
@@ -249,7 +250,7 @@ BitNodes["BitNode6"] = new BitNode(
       <br />
       <br />
       Destroying this BitNode will give you Source-File 6, or if you already have this Source-File it will upgrade its
-      level up to a maximum of 3. This Source-File allows you to access the NSA's Bladeburner Division in other
+      level up to a maximum of 3. This Source-File allows you to access the NSA's {FactionNames.Bladeburners} Division in other
       BitNodes. In addition, this Source-File will raise both the level and experience gain rate of all your combat
       stats by:
       <br />
@@ -265,23 +266,23 @@ BitNodes["BitNode6"] = new BitNode(
 BitNodes["BitNode7"] = new BitNode(
   7,
   2,
-  "Bladeburners 2079",
+  `${FactionNames.Bladeburners} 2079`,
   "More human than humans",
   (
     <>
-      In the middle of the 21st century, you were doing cutting-edge work at OmniTek Incorporated as part of the AI
+      In the middle of the 21st century, you were doing cutting-edge work at {FactionNames.OmniTekIncorporated} as part of the AI
       design team for advanced synthetic androids, or Synthoids for short. You helped achieve a major technological
       breakthrough in the sixth generation of the company's Synthoid design, called MK-VI, by developing a
       hyperintelligent AI. Many argue that this was the first sentient AI ever created. This resulted in Synthoid models
       that were stronger, faster, and more intelligent than the humans that had created them.
       <br />
       <br />
-      In this BitNode you will be able to access the Bladeburner API, which allows you to access Bladeburner
+      In this BitNode you will be able to access the {FactionNames.Bladeburners} API, which allows you to access {FactionNames.Bladeburners}
       functionality through Netscript. Furthermore: <br />
       <br />
-      The rank you gain from Bladeburner contracts/operations is reduced by 40%
+      The rank you gain from {FactionNames.Bladeburners} contracts/operations is reduced by 40%
       <br />
-      Bladeburner skills cost twice as many skill points
+      {FactionNames.Bladeburners} skills cost twice as many skill points
       <br />
       Augmentations are 3x more expensive
       <br />
@@ -299,8 +300,8 @@ BitNodes["BitNode7"] = new BitNode(
       <br />
       <br />
       Destroying this BitNode will give you Source-File 7, or if you already have this Source-File it will upgrade its
-      level up to a maximum of 3. This Source-File allows you to access the Bladeburner Netscript API in other BitNodes.
-      In addition, this Source-File will increase all of your Bladeburner multipliers by:
+      level up to a maximum of 3. This Source-File allows you to access the {FactionNames.Bladeburners} Netscript API in other BitNodes.
+      In addition, this Source-File will increase all of your {FactionNames.Bladeburners} multipliers by:
       <br />
       <br />
       Level 1: 8%
@@ -363,9 +364,9 @@ BitNodes["BitNode9"] = new BitNode(
   "Hacknet Unleashed",
   (
     <>
-      When Fulcrum Technologies released their open-source Linux distro Chapeau, it quickly became the OS of choice for
+      When {FactionNames.FulcrumSecretTechnologies} released their open-source Linux distro Chapeau, it quickly became the OS of choice for
       the underground hacking community. Chapeau became especially notorious for powering the Hacknet, a global,
-      decentralized network used for nefarious purposes. Fulcrum quickly abandoned the project and dissociated
+      decentralized network used for nefarious purposes. {FactionNames.FulcrumSecretTechnologies} quickly abandoned the project and dissociated
       themselves from it.
       <br />
       <br />
@@ -424,7 +425,7 @@ BitNodes["BitNode10"] = new BitNode(
       This BitNode unlocks Sleeve technology. Sleeve technology allows you to:
       <br />
       <br />
-      1. Re-sleeve: Purchase and transfer your consciousness into a new body
+      1. Grafting: Visit VitaLife in New Tokyo to be able to obtain Augmentations without needing to install
       <br />
       2. Duplicate Sleeves: Duplicate your consciousness into Synthoids, allowing you to perform different tasks
       synchronously
@@ -537,12 +538,12 @@ BitNodes["BitNode13"] = new BitNode(
   "1 step back, 2 steps forward",
   (
     <>
-      With the invention of Augmentations in the 2040s a religious group known as the Church of the Machine God has
+      With the invention of Augmentations in the 2040s a religious group known as the {FactionNames.ChurchOfTheMachineGod} has
       rallied far more support than anyone would have hoped.
       <br />
       <br />
       Their leader, Allison "Mother" Stanek is said to have created her own Augmentation whose power goes beyond any
-      other. Find her in Chongqing and gain her trust.
+      other. Find her in {CityName.Chongqing} and gain her trust.
       <br />
       <br />
       In this BitNode:
@@ -554,7 +555,7 @@ BitNodes["BitNode13"] = new BitNode(
       <br />
       <br />
       Destroying this BitNode will give you Source-File 13, or if you already have this Source-File it will upgrade its
-      level up to a maximum of 3. This Source-File lets the Church of the Machine God appear in other BitNodes.
+      level up to a maximum of 3. This Source-File lets the {FactionNames.ChurchOfTheMachineGod} appear in other BitNodes.
       <br />
       <br />
       Each level of this Source-File increases the size of Stanek's Gift.

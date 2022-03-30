@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 interface IProps {
   open: boolean;
@@ -33,8 +34,7 @@ export function ThrowPartyModal(props: IProps): React.ReactElement {
   function throwParty(): void {
     if (cost === null || isNaN(cost) || cost < 0) {
       dialogBoxCreate("Invalid value entered");
-    } else {
-      if (!canParty) {
+    } else if (!canParty) {
         dialogBoxCreate("You don't have enough company funds to throw a party!");
       } else {
         const mult = ThrowParty(corp, props.office, cost);
@@ -46,7 +46,6 @@ export function ThrowPartyModal(props: IProps): React.ReactElement {
         props.rerender();
         props.onClose();
       }
-    }
   }
 
   function EffectText(): React.ReactElement {
@@ -59,7 +58,7 @@ export function ThrowPartyModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) throwParty();
+    if (event.key === KEY.ENTER) throwParty();
   }
 
   return (

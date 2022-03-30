@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.agi\_asc\_mult property
 
+Agility multiplier from ascensions
+
 <b>Signature:</b>
 
 ```typescript

@@ -6,6 +6,8 @@ import { Modal } from "../../ui/React/Modal";
 import { use } from "../../ui/Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { FactionNames } from "../data/FactionNames";
 
 interface IProps {
   open: boolean;
@@ -27,7 +29,7 @@ export function CreateGangModal(props: IProps): React.ReactElement {
     "is not as important.";
 
   function isHacking(): boolean {
-    return ["NiteSec", "The Black Hand"].includes(props.facName);
+    return [FactionNames.NiteSec as string, FactionNames.TheBlackHand as string].includes(props.facName);
   }
 
   function createGang(): void {
@@ -37,7 +39,7 @@ export function CreateGangModal(props: IProps): React.ReactElement {
   }
 
   function onKeyUp(event: React.KeyboardEvent): void {
-    if (event.keyCode === 13) createGang();
+    if (event.key === KEY.ENTER) createGang();
   }
 
   return (

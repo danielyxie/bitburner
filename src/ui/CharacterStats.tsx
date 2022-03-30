@@ -86,6 +86,9 @@ function Intelligence(): React.ReactElement {
         <TableCell align="right">
           <Typography>{numeralWrapper.formatSkill(player.intelligence)}&nbsp;</Typography>
         </TableCell>
+        <TableCell align="right">
+          <Typography noWrap>({numeralWrapper.formatExp(player.intelligence_exp)} exp)</Typography>
+        </TableCell>
       </TableRow>
     );
   }

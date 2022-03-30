@@ -9,6 +9,7 @@ import { Factions } from "../../../Faction/Factions";
 import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { FactionNames } from "../../../Faction/data/FactionNames";
 
 const universitySelectorOptions: string[] = [
   "Study Computer Science",
@@ -55,7 +56,7 @@ function possibleJobs(player: IPlayer, sleeve: Sleeve): string[] {
 
 function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
   // Array of all factions that other sleeves are working for
-  const forbiddenFactions = ["Bladeburners"];
+  const forbiddenFactions = [FactionNames.Bladeburners as string];
   if (player.gang) {
     forbiddenFactions.push(player.gang.facName);
   }
@@ -284,7 +285,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
 
   return (
     <>
-      <Select onChange={onS0Change} value={s0}>
+      <Select onChange={onS0Change} value={s0} sx={{ width: '100%' }}>
         {validActions.map((task) => (
           <MenuItem key={task} value={task}>
             {task}
@@ -293,8 +294,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
       </Select>
       {!(details.first.length === 1 && details.first[0] === "------") && (
         <>
-          <br />
-          <Select onChange={onS1Change} value={s1}>
+          <Select onChange={onS1Change} value={s1} sx={{ width: '100%' }}>
             {details.first.map((detail) => (
               <MenuItem key={detail} value={detail}>
                 {detail}
@@ -305,8 +305,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
       )}
       {!(details2.length === 1 && details2[0] === "------") && (
         <>
-          <br />
-          <Select onChange={onS2Change} value={s2}>
+          <Select onChange={onS2Change} value={s2} sx={{ width: '100%' }}>
             {details2.map((detail) => (
               <MenuItem key={detail} value={detail}>
                 {detail}

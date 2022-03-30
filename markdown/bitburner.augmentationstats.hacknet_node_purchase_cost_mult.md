@@ -4,7 +4,7 @@
 
 ## AugmentationStats.hacknet\_node\_purchase\_cost\_mult property
 
-Multipler to cost of purchasing a Hacknet Node
+Multiplier to cost of purchasing a Hacknet Node
 
 <b>Signature:</b>
 

@@ -4,7 +4,7 @@
 
 ## PlayerSkills.charisma property
 
-Chraisma level
+Charisma level
 
 <b>Signature:</b>
 
