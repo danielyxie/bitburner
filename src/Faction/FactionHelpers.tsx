@@ -202,7 +202,7 @@ export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Factio
     // Remove special augs
     augs = augs.filter((a) => !a.isSpecial);
 
-    const blacklist = [AugmentationNames.NeuroFluxGovernor];
+    const blacklist: string[] = [AugmentationNames.NeuroFluxGovernor];
 
     if (player.bitNodeN !== 2) {
       // Remove faction-unique augs that don't belong to this faction
