@@ -84,8 +84,10 @@ function updateNeuroFluxGovernorCosts(neuroFluxGovernorAugmentation: Augmentatio
   let nextLevel = getNextNeuroFluxLevel();
   --nextLevel;
   const multiplier = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-  neuroFluxGovernorAugmentation.baseRepRequirement *= multiplier * BitNodeMultipliers.AugmentationRepCost;
-  neuroFluxGovernorAugmentation.baseCost *= multiplier * BitNodeMultipliers.AugmentationMoneyCost;
+  neuroFluxGovernorAugmentation.baseRepRequirement =
+    neuroFluxGovernorAugmentation.startingRepRequirement * multiplier * BitNodeMultipliers.AugmentationRepCost;
+  neuroFluxGovernorAugmentation.baseCost =
+    neuroFluxGovernorAugmentation.startingCost * multiplier * BitNodeMultipliers.AugmentationMoneyCost;
 
   for (let i = 0; i < Player.queuedAugmentations.length - 1; ++i) {
     neuroFluxGovernorAugmentation.baseCost *= getBaseAugmentationPriceMultiplier();
