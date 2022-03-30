@@ -15,6 +15,8 @@ export enum KEY {
   LEFT_ARROW = "ArrowLeft",
   RIGHT_ARROW = "ArrowRight",
 
+  QUOTE = "'",
+  DOUBLE_QUOTE = '"',
   OPEN_BRACKET = "[",
   CLOSE_BRACKET = "]",
   LESS_THAN = "<",

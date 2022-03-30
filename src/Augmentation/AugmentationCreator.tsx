@@ -2024,28 +2024,10 @@ export const churchOfTheMachineGodAugmentations = [
     hacknet_node_core_cost_mult: 1 / 1.05,
     hacknet_node_level_cost_mult: 1 / 1.05,
     work_money_mult: 1 / 0.95,
-    stats: <>Staneks Gift has no penalty.</>,
+    stats: <>Stanek's Gift has no penalty.</>,
     factions: [FactionNames.ChurchOfTheMachineGod],
   }),
 ];
-
-export function getNextNeuroFluxLevel(): number {
-  // Get current Neuroflux level based on Player's augmentations
-  let currLevel = 0;
-  for (let i = 0; i < Player.augmentations.length; ++i) {
-    if (Player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
-      currLevel = Player.augmentations[i].level;
-    }
-  }
-
-  // Account for purchased but uninstalled Augmentations
-  for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
-    if (Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
-      ++currLevel;
-    }
-  }
-  return currLevel + 1;
-}
 
 export function initNeuroFluxGovernor(): Augmentation {
   return new Augmentation({

@@ -97,7 +97,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         break;
       case "deletewordbefore": // Delete rest of word before the cursor
         for (let delStart = start - 1; delStart > -2; --delStart) {
-          if ((inputText.charAt(delStart) === " " || delStart === -1) && delStart !== start - 1) {
+          if ((inputText.charAt(delStart) === KEY.SPACE || delStart === -1) && delStart !== start - 1) {
             saveValue(inputText.substr(0, delStart + 1) + inputText.substr(start), () => {
               // Move cursor to correct location
               // foo bar |baz bum --> foo |baz bum
@@ -110,7 +110,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         break;
       case "deletewordafter": // Delete rest of word after the cursor, including trailing space
         for (let delStart = start + 1; delStart <= value.length + 1; ++delStart) {
-          if (inputText.charAt(delStart) === " " || delStart === value.length + 1) {
+          if (inputText.charAt(delStart) === KEY.SPACE || delStart === value.length + 1) {
             saveValue(inputText.substr(0, start) + inputText.substr(delStart + 1), () => {
               // Move cursor to correct location
               // foo bar |baz bum --> foo bar |bum
@@ -151,7 +151,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         break;
       case "prevword":
         for (let i = start - 2; i >= 0; --i) {
-          if (ref.value.charAt(i) === " ") {
+          if (ref.value.charAt(i) === KEY.SPACE) {
             ref.setSelectionRange(i + 1, i + 1);
             return;
           }
@@ -163,7 +163,7 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
         break;
       case "nextword":
         for (let i = start + 1; i <= inputLength; ++i) {
-          if (ref.value.charAt(i) === " ") {
+          if (ref.value.charAt(i) === KEY.SPACE) {
             ref.setSelectionRange(i, i);
             return;
           }

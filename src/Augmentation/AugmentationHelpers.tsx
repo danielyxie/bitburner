@@ -11,17 +11,35 @@ import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { clearObject } from "../utils/helpers/clearObject";
+
 import { FactionNames } from "../Faction/data/FactionNames";
 import {
   bladeburnerAugmentations,
   churchOfTheMachineGodAugmentations,
   generalAugmentations,
-  getNextNeuroFluxLevel,
   infiltratorsAugmentations,
   initNeuroFluxGovernor,
   initUnstableCircadianModulator,
 } from "./AugmentationCreator";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+
+export function getNextNeuroFluxLevel(): number {
+  // Get current Neuroflux level based on Player's augmentations
+  let currLevel = 0;
+  for (let i = 0; i < Player.augmentations.length; ++i) {
+    if (Player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
+      currLevel = Player.augmentations[i].level;
+    }
+  }
+
+  // Account for purchased but uninstalled Augmentations
+  for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
+    if (Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+      ++currLevel;
+    }
+  }
+  return currLevel + 1;
+}
 
 export function AddToAugmentations(aug: Augmentation): void {
   const name = aug.name;
