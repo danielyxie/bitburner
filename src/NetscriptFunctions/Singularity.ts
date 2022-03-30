@@ -742,6 +742,8 @@ export function NetscriptSingularity(
         mult: {
           agility: player.agility_mult,
           agilityExp: player.agility_exp_mult,
+          charisma: player.charisma,
+          charismaExp: player.charisma_exp,
           companyRep: player.company_rep_mult,
           crimeMoney: player.crime_money_mult,
           crimeSuccess: player.crime_success_mult,
@@ -1211,7 +1213,7 @@ export function NetscriptSingularity(
       );
       return true;
     },
-    createProgram: function (_programName: any, _focus: unknown = true): boolean {
+    createProgram: function (_programName: unknown, _focus: unknown = true): boolean {
       const programName = helper.string("createProgram", "programName", _programName).toLowerCase();
       const focus = helper.boolean(_focus);
       helper.updateDynamicRam("createProgram", getRamCost(player, "createProgram"));

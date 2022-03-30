@@ -667,6 +667,10 @@ export interface CharacterMult {
   agility: number;
   /** Agility exp */
   agilityExp: number;
+  /** Charisma stat */
+  charisma: number;
+  /** Charisma exp */
+  charismaExp: number;
   /** Company reputation */
   companyRep: number;
   /** Money earned from crimes */
