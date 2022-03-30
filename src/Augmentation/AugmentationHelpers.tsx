@@ -23,6 +23,11 @@ import {
 } from "./AugmentationCreator";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
+export function AddToAugmentations(aug: Augmentation): void {
+  const name = aug.name;
+  Augmentations[name] = aug;
+}
+
 export function getNextNeuroFluxLevel(): number {
   // Get current Neuroflux level based on Player's augmentations
   let currLevel = 0;
@@ -39,11 +44,6 @@ export function getNextNeuroFluxLevel(): number {
     }
   }
   return currLevel + 1;
-}
-
-export function AddToAugmentations(aug: Augmentation): void {
-  const name = aug.name;
-  Augmentations[name] = aug;
 }
 
 function createAugmentations(): void {
