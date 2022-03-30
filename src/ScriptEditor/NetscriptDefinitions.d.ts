@@ -584,7 +584,7 @@ export interface BitNodeMultipliers {
   /** Influences the maximum allowed RAM for a purchased server */
   PurchasedServerMaxRam: number;
   /** Influences cost of any purchased server at or above 128GB */
-  PurchasedServerSoftCap: number;
+  PurchasedServerSoftcap: number;
   /** Influences the minimum favor the player must have with a faction before they can donate to gain rep. */
   RepToDonateToFaction: number;
   /** Influences how much the money on a server can be reduced when a script performs a hack against it. */

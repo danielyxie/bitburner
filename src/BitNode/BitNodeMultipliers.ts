@@ -232,6 +232,11 @@ interface IBitNodeMultipliers {
    */
   WorldDaemonDifficulty: number;
 
+  /**
+   * Influences corporation dividends.
+   */
+  CorporationSoftCap: number;
+
   // Index signature
   [key: string]: number;
 }
