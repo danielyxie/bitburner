@@ -35,6 +35,7 @@ import { joinFaction } from "../Faction/FactionHelpers";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { BlackOperationNames } from "./data/BlackOperationNames";
+import { KEY } from "../utils/helpers/keyCodes";
 
 interface BlackOpsAttempt {
   error?: string;
@@ -793,7 +794,7 @@ export class Bladeburner implements IBladeburner {
       if (c === '"') {
         // Double quotes
         const endQuote = command.indexOf('"', i + 1);
-        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === " ")) {
+        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === KEY.SPACE)) {
           args.push(command.substr(i + 1, endQuote - i - 1));
           if (endQuote === command.length - 1) {
             start = i = endQuote + 1;
@@ -805,7 +806,7 @@ export class Bladeburner implements IBladeburner {
       } else if (c === "'") {
         // Single quotes, same thing as above
         const endQuote = command.indexOf("'", i + 1);
-        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === " ")) {
+        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === KEY.SPACE)) {
           args.push(command.substr(i + 1, endQuote - i - 1));
           if (endQuote === command.length - 1) {
             start = i = endQuote + 1;
@@ -814,7 +815,7 @@ export class Bladeburner implements IBladeburner {
           }
           continue;
         }
-      } else if (c === " ") {
+      } else if (c === KEY.SPACE) {
         args.push(command.substr(start, i - start));
         start = i + 1;
       }

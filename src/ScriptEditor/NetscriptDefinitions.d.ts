@@ -584,7 +584,7 @@ export interface BitNodeMultipliers {
   /** Influences the maximum allowed RAM for a purchased server */
   PurchasedServerMaxRam: number;
   /** Influences cost of any purchased server at or above 128GB */
-  PurchasedServerSoftCap: number;
+  PurchasedServerSoftcap: number;
   /** Influences the minimum favor the player must have with a faction before they can donate to gain rep. */
   RepToDonateToFaction: number;
   /** Influences how much the money on a server can be reduced when a script performs a hack against it. */
@@ -667,6 +667,10 @@ export interface CharacterMult {
   agility: number;
   /** Agility exp */
   agilityExp: number;
+  /** Charisma stat */
+  charisma: number;
+  /** Charisma exp */
+  charismaExp: number;
   /** Company reputation */
   companyRep: number;
   /** Money earned from crimes */
@@ -707,10 +711,10 @@ export interface CharacterInfo {
   factions: string[];
   /** Current health points */
   hp: number;
-  /** Array of all companies at which you have jobs */
-  company: string[];
+  /** Array of all jobs */
+  jobs: string[];
   /** Array of job positions for all companies you are employed at. Same order as 'jobs' */
-  jobTitle: string[];
+  jobTitles: string[];
   /** Maximum health points */
   maxHp: number;
   /** Boolean indicating whether or not you have a tor router */
@@ -735,6 +739,18 @@ export interface CharacterInfo {
   workRepGain: number;
   /** Money earned so far from work, if applicable */
   workMoneyGain: number;
+  /** total hacking exp */
+  hackingExp: number;
+  /** total strength exp */
+  strengthExp: number;
+  /** total defense exp */
+  defenseExp: number;
+  /** total dexterity exp */
+  dexterityExp: number;
+  /** total agility exp */
+  agilityExp: number;
+  /** total charisma exp */
+  charismaExp: number;
 }
 
 /**
@@ -2199,11 +2215,8 @@ export interface Singularity {
    * Hospitalize the player.
    * @remarks
    * RAM cost: 0.25 GB * 16/4/1
-   *
-   *
-   * @returns The cost of the hospitalization.
    */
-  hospitalize(): number;
+  hospitalize(): void;
 
   /**
    * Soft reset the game.
@@ -5636,7 +5649,7 @@ export interface NS extends Singularity {
    * @param args  - Arguments to identify the script
    * @returns The info about the running script if found, and null otherwise.
    */
-  getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript;
+  getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript | null;
 
   /**
    * Get cost of purchasing a server.
