@@ -1,7 +1,7 @@
 import { INetscriptHelper } from "./INetscriptHelper";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { purchaseAugmentation, joinFaction } from "../Faction/FactionHelpers";
+import { purchaseAugmentation, joinFaction, getFactionAugmentationsFiltered } from "../Faction/FactionHelpers";
 import { startWorkerScript } from "../NetscriptWorker";
 import { Augmentation } from "../Augmentation/Augmentation";
 import { Augmentations } from "../Augmentation/Augmentations";
@@ -118,26 +118,7 @@ export function NetscriptSingularity(
       helper.checkSingularityAccess("getAugmentationsFromFaction");
       const faction = getFaction("getAugmentationsFromFaction", facName);
 
-      // If player has a gang with this faction, return all augmentations.
-      if (player.hasGangWith(facName)) {
-        let augs = Object.values(Augmentations);
-
-        // Remove special augs.
-        augs = augs.filter((a) => !a.isSpecial);
-
-        if (player.bitNodeN !== 2) {
-          // Remove faction-unique augs outside BN2. (But keep the one for this faction.)
-          augs = augs.filter((a) => a.factions.length > 1 || Factions[facName].augmentations.includes(a.name));
-
-          // Remove blacklisted augs.
-          const blacklist = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.TheRedPill];
-          augs = augs.filter((a) => !blacklist.includes(a.name));
-        }
-
-        return augs.map((a) => a.name);
-      }
-
-      return faction.augmentations.slice();
+      return getFactionAugmentationsFiltered(player, faction);
     },
     getAugmentationCost: function (_augName: unknown): [number, number] {
       const augName = helper.string("getAugmentationCost", "augName", _augName);
@@ -182,24 +163,7 @@ export function NetscriptSingularity(
       const fac = getFaction("purchaseAugmentation", facName);
       const aug = getAugmentation("purchaseAugmentation", augName);
 
-      let augs = [];
-      if (player.hasGangWith(facName)) {
-        for (const augName of Object.keys(Augmentations)) {
-          const aug = Augmentations[augName];
-          if (
-            augName === AugmentationNames.NeuroFluxGovernor ||
-            (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) ||
-            // Special augs (i.e. Bladeburner augs)
-            aug.isSpecial ||
-            // Exclusive augs (i.e. QLink)
-            (aug.factions.length <= 1 && !fac.augmentations.includes(augName) && player.bitNodeN !== 2)
-          )
-            continue;
-          augs.push(augName);
-        }
-      } else {
-        augs = fac.augmentations;
-      }
+      const augs = getFactionAugmentationsFiltered(player, fac);
 
       if (!augs.includes(augName)) {
         workerScript.log(
