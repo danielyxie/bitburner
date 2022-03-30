@@ -887,9 +887,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return !workerScript.disableLogs[fn];
     },
-    getScriptLogs: function (_fn: unknown, _hostname: unknown, ...scriptArgs: any[]): string[] {
-      const fn = helper.string("getScriptLogs", "fn", _fn);
-      const hostname = helper.string("getScriptLogs", "hostname", _hostname);
+    getScriptLogs: function (fn: any, hostname: any, ...scriptArgs: any[]): string[] {
       updateDynamicRam("getScriptLogs", getRamCost(Player, "getScriptLogs"));
       const runningScriptObj = getRunningScript(fn, hostname, "getScriptLogs", scriptArgs);
       if (runningScriptObj == null) {
