@@ -466,7 +466,7 @@ export function NetscriptSingularity(
     },
 
     travelToCity: function (_cityName: unknown): boolean {
-      const cityName = helper.string("travelToCity", "cityName", _cityName);
+      const cityName = helper.city("travelToCity", "cityName", _cityName);
       helper.updateDynamicRam("travelToCity", getRamCost(player, "travelToCity"));
       helper.checkSingularityAccess("travelToCity");
 

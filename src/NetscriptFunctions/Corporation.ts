@@ -230,14 +230,14 @@ export function NetscriptCorporation(
     return corporation;
   }
 
-  function getDivision(divisionName: any): IIndustry {
+  function getDivision(divisionName: string): IIndustry {
     const corporation = getCorporation();
     const division = corporation.divisions.find((div) => div.name === divisionName);
     if (division === undefined) throw new Error(`No division named '${divisionName}'`);
     return division;
   }
 
-  function getOffice(divisionName: any, cityName: any): OfficeSpace {
+  function getOffice(divisionName: string, cityName: string): OfficeSpace {
     const division = getDivision(divisionName);
     if (!(cityName in division.offices)) throw new Error(`Invalid city name '${cityName}'`);
     const office = division.offices[cityName];
@@ -245,7 +245,7 @@ export function NetscriptCorporation(
     return office;
   }
 
-  function getWarehouse(divisionName: any, cityName: any): Warehouse {
+  function getWarehouse(divisionName: string, cityName: string): Warehouse {
     const division = getDivision(divisionName);
     if (!(cityName in division.warehouses)) throw new Error(`Invalid city name '${cityName}'`);
     const warehouse = division.warehouses[cityName];
@@ -253,7 +253,7 @@ export function NetscriptCorporation(
     return warehouse;
   }
 
-  function getMaterial(divisionName: any, cityName: any, materialName: any): Material {
+  function getMaterial(divisionName: string, cityName: string, materialName: string): Material {
     const warehouse = getWarehouse(divisionName, cityName);
     const matName = (materialName as string).replace(/ /g, "");
     const material = warehouse.materials[matName];
@@ -261,14 +261,14 @@ export function NetscriptCorporation(
     return material;
   }
 
-  function getProduct(divisionName: any, productName: any): Product {
+  function getProduct(divisionName: string, productName: string): Product {
     const division = getDivision(divisionName);
     const product = division.products[productName];
     if (product === undefined) throw new Error(`Invalid product name: '${productName}'`);
     return product;
   }
 
-  function getEmployee(divisionName: any, cityName: any, employeeName: any): Employee {
+  function getEmployee(divisionName: string, cityName: string, employeeName: string): Employee {
     const office = getOffice(divisionName, cityName);
     const employee = office.employees.find((e) => e.name === employeeName);
     if (employee === undefined) throw new Error(`Invalid employee name: '${employeeName}'`);
@@ -314,14 +314,14 @@ export function NetscriptCorporation(
     getUpgradeWarehouseCost: function (_divisionName: unknown, _cityName: unknown): number {
       checkAccess("upgradeWarehouse", 7);
       const divisionName = helper.string("getUpgradeWarehouseCost", "divisionName", _divisionName);
-      const cityName = helper.string("getUpgradeWarehouseCost", "cityName", _cityName);
+      const cityName = helper.city("getUpgradeWarehouseCost", "cityName", _cityName);
       const warehouse = getWarehouse(divisionName, cityName);
       return CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
     },
     hasWarehouse: function (_divisionName: unknown, _cityName: unknown): boolean {
       checkAccess("hasWarehouse", 7);
       const divisionName = helper.string("getWarehouse", "divisionName", _divisionName);
-      const cityName = helper.string("getWarehouse", "cityName", _cityName);
+      const cityName = helper.city("getWarehouse", "cityName", _cityName);
       const division = getDivision(divisionName);
       if (!(cityName in division.warehouses)) throw new Error(`Invalid city name '${cityName}'`);
       const warehouse = division.warehouses[cityName];
@@ -330,7 +330,7 @@ export function NetscriptCorporation(
     getWarehouse: function (_divisionName: unknown, _cityName: unknown): NSWarehouse {
       checkAccess("getWarehouse", 7);
       const divisionName = helper.string("getWarehouse", "divisionName", _divisionName);
-      const cityName = helper.string("getWarehouse", "cityName", _cityName);
+      const cityName = helper.city("getWarehouse", "cityName", _cityName);
       const warehouse = getWarehouse(divisionName, cityName);
       return {
         level: warehouse.level,
@@ -343,7 +343,7 @@ export function NetscriptCorporation(
     getMaterial: function (_divisionName: unknown, _cityName: unknown, _materialName: unknown): NSMaterial {
       checkAccess("getMaterial", 7);
       const divisionName = helper.string("getMaterial", "divisionName", _divisionName);
-      const cityName = helper.string("getMaterial", "cityName", _cityName);
+      const cityName = helper.city("getMaterial", "cityName", _cityName);
       const materialName = helper.string("getMaterial", "materialName", _materialName);
       const material = getMaterial(divisionName, cityName, materialName);
       return {
@@ -372,14 +372,14 @@ export function NetscriptCorporation(
     purchaseWarehouse: function (_divisionName: unknown, _cityName: unknown): void {
       checkAccess("purchaseWarehouse", 7);
       const divisionName = helper.string("purchaseWarehouse", "divisionName", _divisionName);
-      const cityName = helper.string("purchaseWarehouse", "cityName", _cityName);
+      const cityName = helper.city("purchaseWarehouse", "cityName", _cityName);
       const corporation = getCorporation();
       PurchaseWarehouse(corporation, getDivision(divisionName), cityName);
     },
     upgradeWarehouse: function (_divisionName: unknown, _cityName: unknown): void {
       checkAccess("upgradeWarehouse", 7);
       const divisionName = helper.string("upgradeWarehouse", "divisionName", _divisionName);
-      const cityName = helper.string("upgradeWarehouse", "cityName", _cityName);
+      const cityName = helper.city("upgradeWarehouse", "cityName", _cityName);
       const corporation = getCorporation();
       UpgradeWarehouse(corporation, getDivision(divisionName), getWarehouse(divisionName, cityName));
     },
@@ -392,7 +392,7 @@ export function NetscriptCorporation(
     ): void {
       checkAccess("sellMaterial", 7);
       const divisionName = helper.string("sellMaterial", "divisionName", _divisionName);
-      const cityName = helper.string("sellMaterial", "cityName", _cityName);
+      const cityName = helper.city("sellMaterial", "cityName", _cityName);
       const materialName = helper.string("sellMaterial", "materialName", _materialName);
       const amt = helper.string("sellMaterial", "amt", _amt);
       const price = helper.string("sellMaterial", "price", _price);
@@ -409,7 +409,7 @@ export function NetscriptCorporation(
     ): void {
       checkAccess("sellProduct", 7);
       const divisionName = helper.string("sellProduct", "divisionName", _divisionName);
-      const cityName = helper.string("sellProduct", "cityName", _cityName);
+      const cityName = helper.city("sellProduct", "cityName", _cityName);
       const productName = helper.string("sellProduct", "productName", _productName);
       const amt = helper.string("sellProduct", "amt", _amt);
       const price = helper.string("sellProduct", "price", _price);
@@ -426,7 +426,7 @@ export function NetscriptCorporation(
     setSmartSupply: function (_divisionName: unknown, _cityName: unknown, _enabled: unknown): void {
       checkAccess("setSmartSupply", 7);
       const divisionName = helper.string("setSmartSupply", "divisionName", _divisionName);
-      const cityName = helper.string("sellProduct", "cityName", _cityName);
+      const cityName = helper.city("sellProduct", "cityName", _cityName);
       const enabled = helper.boolean(_enabled);
       const warehouse = getWarehouse(divisionName, cityName);
       if (!hasUnlockUpgrade("Smart Supply"))
@@ -444,7 +444,7 @@ export function NetscriptCorporation(
     ): void {
       checkAccess("setSmartSupplyUseLeftovers", 7);
       const divisionName = helper.string("setSmartSupply", "divisionName", _divisionName);
-      const cityName = helper.string("sellProduct", "cityName", _cityName);
+      const cityName = helper.city("sellProduct", "cityName", _cityName);
       const materialName = helper.string("sellProduct", "materialName", _materialName);
       const enabled = helper.boolean(_enabled);
       const warehouse = getWarehouse(divisionName, cityName);
@@ -459,7 +459,7 @@ export function NetscriptCorporation(
     buyMaterial: function (_divisionName: unknown, _cityName: unknown, _materialName: unknown, _amt: unknown): void {
       checkAccess("buyMaterial", 7);
       const divisionName = helper.string("buyMaterial", "divisionName", _divisionName);
-      const cityName = helper.string("buyMaterial", "cityName", _cityName);
+      const cityName = helper.city("buyMaterial", "cityName", _cityName);
       const materialName = helper.string("buyMaterial", "materialName", _materialName);
       const amt = helper.number("buyMaterial", "amt", _amt);
       if (amt < 0) throw new Error("Invalid value for amount field! Must be numeric and greater than 0");
@@ -469,10 +469,10 @@ export function NetscriptCorporation(
     bulkPurchase: function (_divisionName: unknown, _cityName: unknown, _materialName: unknown, _amt: unknown): void {
       checkAccess("bulkPurchase", 7);
       const divisionName = helper.string("bulkPurchase", "divisionName", _divisionName);
-      if (!hasResearched(getDivision(_divisionName), "Bulk Purchasing"))
+      if (!hasResearched(getDivision(divisionName), "Bulk Purchasing"))
         throw new Error(`You have not researched Bulk Purchasing in ${divisionName}`);
       const corporation = getCorporation();
-      const cityName = helper.string("bulkPurchase", "cityName", _cityName);
+      const cityName = helper.city("bulkPurchase", "cityName", _cityName);
       const materialName = helper.string("bulkPurchase", "materialName", _materialName);
       const amt = helper.number("bulkPurchase", "amt", _amt);
       const warehouse = getWarehouse(divisionName, cityName);
@@ -488,7 +488,7 @@ export function NetscriptCorporation(
     ): void {
       checkAccess("makeProduct", 7);
       const divisionName = helper.string("makeProduct", "divisionName", _divisionName);
-      const cityName = helper.string("makeProduct", "cityName", _cityName);
+      const cityName = helper.city("makeProduct", "cityName", _cityName);
       const productName = helper.string("makeProduct", "productName", _productName);
       const designInvest = helper.number("makeProduct", "designInvest", _designInvest);
       const marketingInvest = helper.number("makeProduct", "marketingInvest", _marketingInvest);
@@ -543,7 +543,7 @@ export function NetscriptCorporation(
     ): void {
       checkAccess("setMaterialMarketTA1", 7);
       const divisionName = helper.string("setMaterialMarketTA1", "divisionName", _divisionName);
-      const cityName = helper.string("setMaterialMarketTA1", "cityName", _cityName);
+      const cityName = helper.city("setMaterialMarketTA1", "cityName", _cityName);
       const materialName = helper.string("setMaterialMarketTA1", "materialName", _materialName);
       const on = helper.boolean(_on);
       if (!getDivision(divisionName).hasResearch("Market-TA.I"))
@@ -561,7 +561,7 @@ export function NetscriptCorporation(
     ): void {
       checkAccess("setMaterialMarketTA2", 7);
       const divisionName = helper.string("setMaterialMarketTA2", "divisionName", _divisionName);
-      const cityName = helper.string("setMaterialMarketTA2", "cityName", _cityName);
+      const cityName = helper.city("setMaterialMarketTA2", "cityName", _cityName);
       const materialName = helper.string("setMaterialMarketTA2", "materialName", _materialName);
       const on = helper.boolean(_on);
       if (!getDivision(divisionName).hasResearch("Market-TA.II"))
@@ -631,7 +631,7 @@ export function NetscriptCorporation(
     ): Promise<boolean> {
       checkAccess("setAutoJobAssignment", 8);
       const divisionName = helper.string("setAutoJobAssignment", "divisionName", _divisionName);
-      const cityName = helper.string("setAutoJobAssignment", "cityName", _cityName);
+      const cityName = helper.city("setAutoJobAssignment", "cityName", _cityName);
       const amount = helper.number("setAutoJobAssignment", "amount", _amount);
       const job = helper.string("setAutoJobAssignment", "job", _job);
       const office = getOffice(divisionName, cityName);
@@ -646,7 +646,7 @@ export function NetscriptCorporation(
     getOfficeSizeUpgradeCost: function (_divisionName: unknown, _cityName: unknown, _size: unknown): number {
       checkAccess("getOfficeSizeUpgradeCost", 8);
       const divisionName = helper.string("getOfficeSizeUpgradeCost", "divisionName", _divisionName);
-      const cityName = helper.string("getOfficeSizeUpgradeCost", "cityName", _cityName);
+      const cityName = helper.city("getOfficeSizeUpgradeCost", "cityName", _cityName);
       const size = helper.number("getOfficeSizeUpgradeCost", "size", _size);
       if (size < 0) throw new Error("Invalid value for size field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
@@ -666,7 +666,7 @@ export function NetscriptCorporation(
     ): Promise<void> {
       checkAccess("assignJob", 8);
       const divisionName = helper.string("assignJob", "divisionName", _divisionName);
-      const cityName = helper.string("assignJob", "cityName", _cityName);
+      const cityName = helper.city("assignJob", "cityName", _cityName);
       const employeeName = helper.string("assignJob", "employeeName", _employeeName);
       const job = helper.string("assignJob", "job", _job);
       const employee = getEmployee(divisionName, cityName, employeeName);
@@ -677,14 +677,14 @@ export function NetscriptCorporation(
     hireEmployee: function (_divisionName: unknown, _cityName: unknown): any {
       checkAccess("hireEmployee", 8);
       const divisionName = helper.string("hireEmployee", "divisionName", _divisionName);
-      const cityName = helper.string("hireEmployee", "cityName", _cityName);
+      const cityName = helper.city("hireEmployee", "cityName", _cityName);
       const office = getOffice(divisionName, cityName);
       return office.hireRandomEmployee();
     },
     upgradeOfficeSize: function (_divisionName: unknown, _cityName: unknown, _size: unknown): void {
       checkAccess("upgradeOfficeSize", 8);
       const divisionName = helper.string("upgradeOfficeSize", "divisionName", _divisionName);
-      const cityName = helper.string("upgradeOfficeSize", "cityName", _cityName);
+      const cityName = helper.city("upgradeOfficeSize", "cityName", _cityName);
       const size = helper.number("upgradeOfficeSize", "size", _size);
       if (size < 0) throw new Error("Invalid value for size field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
@@ -694,7 +694,7 @@ export function NetscriptCorporation(
     throwParty: function (_divisionName: unknown, _cityName: unknown, _costPerEmployee: unknown): Promise<number> {
       checkAccess("throwParty", 8);
       const divisionName = helper.string("throwParty", "divisionName", _divisionName);
-      const cityName = helper.string("throwParty", "cityName", _cityName);
+      const cityName = helper.city("throwParty", "cityName", _cityName);
       const costPerEmployee = helper.number("throwParty", "costPerEmployee", _costPerEmployee);
       if (costPerEmployee < 0)
         throw new Error("Invalid value for Cost Per Employee field! Must be numeric and greater than 0");
@@ -710,7 +710,7 @@ export function NetscriptCorporation(
     buyCoffee: function (_divisionName: unknown, _cityName: unknown): Promise<void> {
       checkAccess("buyCoffee", 8);
       const divisionName = helper.string("buyCoffee", "divisionName", _divisionName);
-      const cityName = helper.string("buyCoffee", "cityName", _cityName);
+      const cityName = helper.city("buyCoffee", "cityName", _cityName);
       const corporation = getCorporation();
       return netscriptDelay(
         (60 * 1000) / (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1)),
@@ -734,7 +734,7 @@ export function NetscriptCorporation(
     getOffice: function (_divisionName: unknown, _cityName: unknown): any {
       checkAccess("getOffice", 8);
       const divisionName = helper.string("getOffice", "divisionName", _divisionName);
-      const cityName = helper.string("getOffice", "cityName", _cityName);
+      const cityName = helper.city("getOffice", "cityName", _cityName);
       const office = getOffice(divisionName, cityName);
       return {
         loc: office.loc,
@@ -758,7 +758,7 @@ export function NetscriptCorporation(
     getEmployee: function (_divisionName: unknown, _cityName: unknown, _employeeName: unknown): NSEmployee {
       checkAccess("getEmployee", 8);
       const divisionName = helper.string("getEmployee", "divisionName", _divisionName);
-      const cityName = helper.string("getEmployee", "cityName", _cityName);
+      const cityName = helper.city("getEmployee", "cityName", _cityName);
       const employeeName = helper.string("getEmployee", "employeeName", _employeeName);
       const employee = getEmployee(divisionName, cityName, employeeName);
       return {
@@ -791,7 +791,7 @@ export function NetscriptCorporation(
     expandCity: function (_divisionName: unknown, _cityName: unknown): void {
       checkAccess("expandCity");
       const divisionName = helper.string("expandCity", "divisionName", _divisionName);
-      const cityName = helper.string("expandCity", "cityName", _cityName);
+      const cityName = helper.city("expandCity", "cityName", _cityName);
       if (!CorporationConstants.Cities.includes(cityName)) throw new Error("Invalid city name");
       const corporation = getCorporation();
       const division = getDivision(divisionName);

@@ -20,7 +20,7 @@ function isNs2(filename: string): boolean {
   return filename.endsWith(".ns") || filename.endsWith(".js");
 }
 
-const newNs2Template = `/** @param {NS} ns **/
+const newNs2Template = `/** @param {NS} ns */
 export async function main(ns) {
 
 }`;

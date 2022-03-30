@@ -7,6 +7,7 @@ import { random } from "../utils";
 import { interpolate } from "./Difficulty";
 import { BlinkingCursor } from "./BlinkingCursor";
 import Typography from "@mui/material/Typography";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 interface Difficulty {
   [key: string]: number;
@@ -29,28 +30,29 @@ const difficulties: {
 
 function generateLeftSide(difficulty: Difficulty): string {
   let str = "";
+  const options = [KEY.OPEN_BRACKET, KEY.LESS_THAN, KEY.OPEN_PARENTHESIS, KEY.OPEN_BRACE];
   const length = random(difficulty.min, difficulty.max);
   for (let i = 0; i < length; i++) {
-    str += ["[", "<", "(", "{"][Math.floor(Math.random() * 4)];
+    str += options[Math.floor(Math.random() * 4)];
   }
 
   return str;
 }
 
 function getChar(event: KeyboardEvent): string {
-  if (event.key === ")") return ")";
-  if (event.key === "]") return "]";
-  if (event.key === "}") return "}";
-  if (event.key === ">") return ">";
+  if (event.key === KEY.CLOSE_PARENTHESIS) return KEY.CLOSE_PARENTHESIS;
+  if (event.key === KEY.CLOSE_BRACKET) return KEY.CLOSE_BRACKET;
+  if (event.key === KEY.CLOSE_BRACE) return KEY.CLOSE_BRACE;
+  if (event.key === KEY.GREATER_THAN) return KEY.GREATER_THAN;
   return "";
 }
 
 function match(left: string, right: string): boolean {
   return (
-    (left === "[" && right === "]") ||
-    (left === "<" && right === ">") ||
-    (left === "(" && right === ")") ||
-    (left === "{" && right === "}")
+    (left === KEY.OPEN_BRACKET && right === KEY.CLOSE_BRACKET) ||
+    (left === KEY.LESS_THAN && right === KEY.GREATER_THAN) ||
+    (left === KEY.OPEN_PARENTHESIS && right === KEY.CLOSE_PARENTHESIS) ||
+    (left === KEY.OPEN_BRACE && right === KEY.CLOSE_BRACE)
   );
 }
 
