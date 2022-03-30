@@ -1,5 +1,3 @@
-import { Location } from "src/Locations/Location";
-
 /**
  * @public
  */
@@ -4185,7 +4183,7 @@ export interface InfiltrationReward {
 }
 
 export interface InfiltrationLocation {
-  location: Location;
+  location: any;
   reward: InfiltrationReward;
   difficulty: number;
 }
@@ -4220,7 +4218,7 @@ interface Infiltration {
    *
    * @returns all locations that can be infiltrated.
    */
-  getLocations(): Location[];
+  getLocations(): any[];
   /**
    * Get all infiltrations with difficulty, location and rewards.
    * @remarks
