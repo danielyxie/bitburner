@@ -899,9 +899,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return runningScriptObj.logs.slice();
     },
-    tail: function (_fn: unknown, _hostname: unknown = workerScript.hostname, ...scriptArgs: any[]): void {
-      const fn = helper.string("tail", "fn", _fn);
-      const hostname = helper.string("tail", "hostname", _hostname);
+    tail: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any[]): void {
       updateDynamicRam("tail", getRamCost(Player, "tail"));
       let runningScriptObj;
       if (arguments.length === 0) {
@@ -2064,9 +2062,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const iport = helper.getValidPort("getPortHandle", port);
       return iport;
     },
-    rm: function (_fn: unknown, _hostname: unknown): boolean {
+    rm: function (_fn: unknown, hostname: any): boolean {
       const fn = helper.string("rm", "fn", _fn);
-      let hostname = helper.string("rm", "hostname", _hostname);
       updateDynamicRam("rm", getRamCost(Player, "rm"));
 
       if (hostname == null || hostname === "") {
