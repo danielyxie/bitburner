@@ -98,6 +98,7 @@ import { SnackbarEvents } from "./ui/React/Snackbar";
 import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
+import { CityName } from "./Locations/data/CityNames";
 
 interface NS extends INS {
   [key: string]: any;
@@ -440,20 +441,27 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     string: (funcName: string, argName: string, v: unknown): string => {
       if (typeof v === "string") return v;
       if (typeof v === "number") return v + ""; // cast to string;
-      throw makeRuntimeErrorMsg(funcName, `${argName} should be a string`);
+      throw makeRuntimeErrorMsg(funcName, `${argName} should be a string.`);
     },
     number: (funcName: string, argName: string, v: unknown): number => {
       if (typeof v === "string") {
         const x = parseFloat(v);
         if (!isNaN(x)) return x; // otherwise it wasn't even a string representing a number.
       } else if (typeof v === "number") {
-        if (isNaN(v)) throw makeRuntimeErrorMsg(funcName, `${argName} is NaN`);
+        if (isNaN(v)) throw makeRuntimeErrorMsg(funcName, `${argName} is NaN.`);
         return v;
       }
-      throw makeRuntimeErrorMsg(funcName, `${argName} should be a number`);
+      throw makeRuntimeErrorMsg(funcName, `${argName} should be a number.`);
     },
     boolean: (v: unknown): boolean => {
       return !!v; // Just convert it to boolean.
+    },
+    city: (funcName: string, argName: string, v: unknown): CityName => {
+      if (typeof v !== "string") throw makeRuntimeErrorMsg(funcName, `${argName} should be a city name.`);
+      const s = v as CityName;
+      if (!Object.values(CityName).includes(s))
+        throw makeRuntimeErrorMsg(funcName, `${argName} should be a city name.`);
+      return s;
     },
     getServer: safeGetServer,
     checkSingularityAccess: checkSingularityAccess,
