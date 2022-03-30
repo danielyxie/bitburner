@@ -21,6 +21,13 @@ export function TaskSelector(props: IProps): React.ReactElement {
   const gang = useGang();
   const [currentTask, setCurrentTask] = useState(props.member.task);
 
+  const contextMember = gang.members.find(member => member.name == props.member.name)
+  if (contextMember &&
+    contextMember.task != currentTask
+  ) {
+    setCurrentTask(contextMember.task)
+  }
+
   function onChange(event: SelectChangeEvent<string>): void {
     const task = event.target.value;
     props.member.assignToTask(task);

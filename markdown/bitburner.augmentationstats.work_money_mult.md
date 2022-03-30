@@ -4,7 +4,7 @@
 
 ## AugmentationStats.work\_money\_mult property
 
-Multipler to amount of money gained from working
+Multiplier to amount of money gained from working
 
 <b>Signature:</b>
 

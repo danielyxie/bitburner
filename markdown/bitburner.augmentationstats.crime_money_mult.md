@@ -4,7 +4,7 @@
 
 ## AugmentationStats.crime\_money\_mult property
 
-Multipler to amount of money gained from crimes
+Multiplier to amount of money gained from crimes
 
 <b>Signature:</b>
 

@@ -33,6 +33,7 @@ import { HacknetNode } from "../../Hacknet/HacknetNode";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer } from "../../Server/AllServers";
 import { ArcadeRoot } from "../../Arcade/ui/ArcadeRoot";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 type IProps = {
   loc: Location;
@@ -52,29 +53,27 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     if (p.inBladeburner()) {
       // Enter Bladeburner division
       router.toBladeburner();
-    } else {
+    } else if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
       // Apply for Bladeburner division
-      if (p.strength >= 100 && p.defense >= 100 && p.dexterity >= 100 && p.agility >= 100) {
-        p.startBladeburner({ new: true });
-        dialogBoxCreate("You have been accepted into the Bladeburner division!");
-        setRerender((old) => !old);
+      p.startBladeburner({ new: true });
+      dialogBoxCreate("You have been accepted into the Bladeburner division!");
+      setRerender((old) => !old);
 
-        const worldHeader = document.getElementById("world-menu-header");
-        if (worldHeader instanceof HTMLElement) {
-          worldHeader.click();
-          worldHeader.click();
-        }
-      } else {
-        dialogBoxCreate("Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)");
+      const worldHeader = document.getElementById("world-menu-header");
+      if (worldHeader instanceof HTMLElement) {
+        worldHeader.click();
+        worldHeader.click();
       }
+    } else {
+      dialogBoxCreate("Rejected! Please apply again when you have 100 of each combat stat (str, def, dex, agi)");
     }
   }
 
   /**
    * Click handler for Resleeving button at New Tokyo VitaLife
    */
-  function handleResleeving(): void {
-    router.toResleeves();
+  function handleGrafting(): void {
+    router.toGrafting();
   }
 
   function renderBladeburner(): React.ReactElement {
@@ -152,16 +151,16 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     );
   }
 
-  function renderResleeving(): React.ReactElement {
-    if (!player.canAccessResleeving()) {
+  function renderGrafting(): React.ReactElement {
+    if (!player.canAccessGrafting()) {
       return <></>;
     }
-    return <Button onClick={handleResleeving}>Re-Sleeve</Button>;
+    return <Button onClick={handleGrafting} sx={{ my: 5 }}>Enter the secret lab</Button>;
   }
 
   function handleCotMG(): void {
-    const faction = Factions["Church of the Machine God"];
-    if (!player.factions.includes("Church of the Machine God")) {
+    const faction = Factions[FactionNames.ChurchOfTheMachineGod];
+    if (!player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
       joinFaction(faction);
     }
     if (
@@ -176,35 +175,35 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   function renderCotMG(): React.ReactElement {
     // prettier-ignore
-    const symbol = <Typography sx={{lineHeight: '1em',whiteSpace: 'pre'}}>
-        {"                 ``          "}<br />
-        {"             -odmmNmds:      "}<br />
-        {"           `hNmo:..-omNh.    "}<br />
-        {"           yMd`      `hNh    "}<br />
-        {"           mMd        oNm    "}<br />
-        {"           oMNo      .mM/    "}<br />
-        {"           `dMN+    -mM+     "}<br />
-        {"            -mMNo  -mN+      "}<br />
-        {"  .+-        :mMNo/mN/       "}<br />
-        {":yNMd.        :NMNNN/        "}<br />
-        {"-mMMMh.        /NMMh`        "}<br />
-        {" .dMMMd.       /NMMMy`       "}<br />
-        {"  `yMMMd.     /NNyNMMh`      "}<br />
-        {"   `sMMMd.   +Nm: +NMMh.     "}<br />
-        {"     oMMMm- oNm:   /NMMd.    "}<br />
-        {"      +NMMmsMm-     :mMMd.   "}<br />
-        {"       /NMMMm-       -mMMd.  "}<br />
-        {"        /MMMm-        -mMMd. "}<br />
-        {"       `sMNMMm-        .mMmo "}<br />
-        {"      `sMd:hMMm.        ./.  "}<br />
-        {"     `yMy` `yNMd`            "}<br />
-        {"    `hMs`    oMMy            "}<br />
-        {"   `hMh       sMN-           "}<br />
-        {"   /MM-       .NMo           "}<br />
-        {"   +MM:       :MM+           "}<br />
-        {"    sNNo-.`.-omNy`           "}<br />
-        {"     -smNNNNmdo-             "}<br />
-        {"        `..`                 "}</Typography>
+    const symbol = <Typography sx={{ lineHeight: '1em', whiteSpace: 'pre' }}>
+      {"                 ``          "}<br />
+      {"             -odmmNmds:      "}<br />
+      {"           `hNmo:..-omNh.    "}<br />
+      {"           yMd`      `hNh    "}<br />
+      {"           mMd        oNm    "}<br />
+      {"           oMNo      .mM/    "}<br />
+      {"           `dMN+    -mM+     "}<br />
+      {"            -mMNo  -mN+      "}<br />
+      {"  .+-        :mMNo/mN/       "}<br />
+      {":yNMd.        :NMNNN/        "}<br />
+      {"-mMMMh.        /NMMh`        "}<br />
+      {" .dMMMd.       /NMMMy`       "}<br />
+      {"  `yMMMd.     /NNyNMMh`      "}<br />
+      {"   `sMMMd.   +Nm: +NMMh.     "}<br />
+      {"     oMMMm- oNm:   /NMMd.    "}<br />
+      {"      +NMMmsMm-     :mMMd.   "}<br />
+      {"       /NMMMm-       -mMMd.  "}<br />
+      {"        /MMMm-        -mMMd. "}<br />
+      {"       `sMNMMm-        .mMmo "}<br />
+      {"      `sMd:hMMm.        ./.  "}<br />
+      {"     `yMy` `yNMd`            "}<br />
+      {"    `hMs`    oMMy            "}<br />
+      {"   `hMh       sMN-           "}<br />
+      {"   /MM-       .NMo           "}<br />
+      {"   +MM:       :MM+           "}<br />
+      {"    sNNo-.`.-omNy`           "}<br />
+      {"     -smNNNNmdo-             "}<br />
+      {"        `..`                 "}</Typography>
     if (player.hasAugmentation(AugmentationNames.StaneksGift3, true)) {
       return (
         <>
@@ -233,7 +232,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
         </>
       );
     }
-    if (player.factions.includes("Church of the Machine God")) {
+    if (player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
       return (
         <>
           <Typography>
@@ -300,7 +299,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   switch (props.loc.name) {
     case LocationName.NewTokyoVitaLife: {
-      return renderResleeving();
+      return renderGrafting();
     }
     case LocationName.Sector12CityHall: {
       return <CreateCorporation />;

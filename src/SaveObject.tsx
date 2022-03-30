@@ -393,6 +393,11 @@ function evaluateVersionCompatibility(ver: string | number): void {
         }
       }
     }
+    if (ver < 12) {
+      if (anyPlayer.resleeves !== undefined) {
+        delete anyPlayer.resleeves;
+      }
+    }
   }
 }
 

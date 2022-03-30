@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { IBladeburner } from "../IBladeburner";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import Paper from "@mui/material/Paper";
@@ -76,7 +77,7 @@ export function Console(props: IProps): React.ReactElement {
   }, []);
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) {
+    if (event.key === KEY.ENTER) {
       event.preventDefault();
       if (command.length > 0) {
         props.bladeburner.postToConsole("> " + command);
@@ -88,7 +89,7 @@ export function Console(props: IProps): React.ReactElement {
 
     const consoleHistory = props.bladeburner.consoleHistory;
 
-    if (event.keyCode === 38) {
+    if (event.key === KEY.UPARROW) {
       // up
       let i = consoleHistoryIndex;
       const len = consoleHistory.length;
@@ -108,7 +109,7 @@ export function Console(props: IProps): React.ReactElement {
       setCommand(prevCommand);
     }
 
-    if (event.keyCode === 40) {
+    if (event.key === KEY.DOWNARROW) {
       const i = consoleHistoryIndex;
       const len = consoleHistory.length;
 

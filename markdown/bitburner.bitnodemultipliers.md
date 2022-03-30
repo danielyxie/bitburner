@@ -26,6 +26,7 @@ export interface BitNodeMultipliers
 |  [CodingContractMoney](./bitburner.bitnodemultipliers.codingcontractmoney.md) | number | Influences the amount of money gained from completing Coding Contracts |
 |  [CompanyWorkExpGain](./bitburner.bitnodemultipliers.companyworkexpgain.md) | number | Influences the experience gained for each ability when the player completes working their job. |
 |  [CompanyWorkMoney](./bitburner.bitnodemultipliers.companyworkmoney.md) | number | Influences how much money the player earns when completing working their job. |
+|  [CorporationSoftCap](./bitburner.bitnodemultipliers.corporationsoftcap.md) | number | Influences the money gain from dividends of corporations created by the player. |
 |  [CorporationValuation](./bitburner.bitnodemultipliers.corporationvaluation.md) | number | Influences the valuation of corporations created by the player. |
 |  [CrimeExpGain](./bitburner.bitnodemultipliers.crimeexpgain.md) | number | Influences the base experience gained for each ability when the player commits a crime. |
 |  [CrimeMoney](./bitburner.bitnodemultipliers.crimemoney.md) | number | Influences the base money gained when the player commits a crime. |
@@ -53,7 +54,7 @@ export interface BitNodeMultipliers
 |  [ScriptHackMoney](./bitburner.bitnodemultipliers.scripthackmoney.md) | number | Influences how much the money on a server can be reduced when a script performs a hack against it. |
 |  [ScriptHackMoneyGain](./bitburner.bitnodemultipliers.scripthackmoneygain.md) | number | Influences how much of the money stolen by a scripted hack will be added to the player's money. |
 |  [ServerGrowthRate](./bitburner.bitnodemultipliers.servergrowthrate.md) | number | Influences the growth percentage per cycle against a server. |
-|  [ServerMaxMoney](./bitburner.bitnodemultipliers.servermaxmoney.md) | number | Influences the maxmimum money that a server can grow to. |
+|  [ServerMaxMoney](./bitburner.bitnodemultipliers.servermaxmoney.md) | number | Influences the maximum money that a server can grow to. |
 |  [ServerStartingMoney](./bitburner.bitnodemultipliers.serverstartingmoney.md) | number | Influences the initial money that a server starts with. |
 |  [ServerStartingSecurity](./bitburner.bitnodemultipliers.serverstartingsecurity.md) | number | Influences the initial security level (hackDifficulty) of a server. |
 |  [ServerWeakenRate](./bitburner.bitnodemultipliers.serverweakenrate.md) | number | Influences the weaken amount per invocation against a server. |

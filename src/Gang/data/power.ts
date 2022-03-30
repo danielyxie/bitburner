@@ -1,11 +1,12 @@
+import { FactionNames } from '../../Faction/data/FactionNames';
 export const PowerMultiplier: {
   [key: string]: number | undefined;
 } = {
-  "Slum Snakes": 1,
-  Tetrads: 2,
-  "The Syndicate": 2,
-  "The Dark Army": 2,
-  "Speakers for the Dead": 5,
-  NiteSec: 2,
-  "The Black Hand": 5,
+  [FactionNames.SlumSnakes]: 1,
+  [FactionNames.Tetrads]: 2,
+  [FactionNames.TheSyndicate]: 2,
+  [FactionNames.TheDarkArmy]: 2,
+  [FactionNames.SpeakersForTheDead]: 5,
+  [FactionNames.NiteSec]: 2,
+  [FactionNames.TheBlackHand]: 5,
 };

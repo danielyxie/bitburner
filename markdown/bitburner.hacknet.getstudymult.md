@@ -4,7 +4,7 @@
 
 ## Hacknet.getStudyMult() method
 
-Get the multipler to study.
+Get the multiplier to study.
 
 <b>Signature:</b>
 

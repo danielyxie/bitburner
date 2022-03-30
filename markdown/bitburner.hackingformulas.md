@@ -16,11 +16,11 @@ interface HackingFormulas
 
 |  Method | Description |
 |  --- | --- |
-|  [growPercent(server, threads, player, cores)](./bitburner.hackingformulas.growpercent.md) | Calculate the percent a server would grow. |
+|  [growPercent(server, threads, player, cores)](./bitburner.hackingformulas.growpercent.md) | Calculate the percent a server would grow to. (Ex: 3.0 would would grow the server to 300% of its current value.) |
 |  [growTime(server, player)](./bitburner.hackingformulas.growtime.md) | Calculate grow time. |
-|  [hackChance(server, player)](./bitburner.hackingformulas.hackchance.md) | Calculate hack chance. |
+|  [hackChance(server, player)](./bitburner.hackingformulas.hackchance.md) | Calculate hack chance. (Ex: 0.25 would indicate a 25% chance of success.) |
 |  [hackExp(server, player)](./bitburner.hackingformulas.hackexp.md) | Calculate hack exp for one thread. |
-|  [hackPercent(server, player)](./bitburner.hackingformulas.hackpercent.md) | Calculate hack percent for one thread. |
+|  [hackPercent(server, player)](./bitburner.hackingformulas.hackpercent.md) | Calculate hack percent for one thread. (Ex: 0.25 would steal 25% of the server's current value.) |
 |  [hackTime(server, player)](./bitburner.hackingformulas.hacktime.md) | Calculate hack time. |
 |  [weakenTime(server, player)](./bitburner.hackingformulas.weakentime.md) | Calculate weaken time. |
 

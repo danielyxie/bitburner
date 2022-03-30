@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { KEY } from "../../utils/helpers/keyCodes";
 import clsx from "clsx";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
@@ -53,7 +54,6 @@ import { Settings } from "../../Settings/Settings";
 import { redPillFlag } from "../../RedPill";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
-import { KEY } from "../../utils/helpers/keyCodes";
 import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
 import { InvitationsSeen } from "../../Faction/ui/FactionsRoot";
 import { hash } from "../../hash/hash";
@@ -143,11 +143,6 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   const augmentationCount = props.player.queuedAugmentations.length;
   const invitationsCount = props.player.factionInvitations.filter((f) => !InvitationsSeen.includes(f)).length;
   const programCount = getAvailableCreatePrograms(props.player).length - ProgramsSeen.length;
-  const canCreateProgram =
-    getAvailableCreatePrograms(props.player).length > 0 ||
-    props.player.augmentations.length > 0 ||
-    props.player.queuedAugmentations.length > 0 ||
-    props.player.sourceFiles.length > 0;
 
   const canOpenFactions =
     props.player.factionInvitations.length > 0 ||
@@ -281,54 +276,54 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     function handleShortcuts(this: Document, event: KeyboardEvent): any {
       if (Settings.DisableHotkeys) return;
       if ((props.player.isWorking && props.player.focus) || redPillFlag) return;
-      if (event.keyCode == KEY.T && event.altKey) {
+      if (event.key === "t" && event.altKey) {
         event.preventDefault();
         clickTerminal();
-      } else if (event.keyCode === KEY.C && event.altKey) {
+      } else if (event.key === KEY.C && event.altKey) {
         event.preventDefault();
         clickStats();
-      } else if (event.keyCode === KEY.E && event.altKey) {
+      } else if (event.key === KEY.E && event.altKey) {
         event.preventDefault();
         clickScriptEditor();
-      } else if (event.keyCode === KEY.S && event.altKey) {
+      } else if (event.key === KEY.S && event.altKey) {
         event.preventDefault();
         clickActiveScripts();
-      } else if (event.keyCode === KEY.H && event.altKey) {
+      } else if (event.key === KEY.H && event.altKey) {
         event.preventDefault();
         clickHacknet();
-      } else if (event.keyCode === KEY.W && event.altKey) {
+      } else if (event.key === KEY.W && event.altKey) {
         event.preventDefault();
         clickCity();
-      } else if (event.keyCode === KEY.J && event.altKey && !event.ctrlKey && !event.metaKey && canJob) {
+      } else if (event.key === KEY.J && event.altKey && !event.ctrlKey && !event.metaKey && canJob) {
         // ctrl/cmd + alt + j is shortcut to open Chrome dev tools
         event.preventDefault();
         clickJob();
-      } else if (event.keyCode === KEY.R && event.altKey) {
+      } else if (event.key === KEY.R && event.altKey) {
         event.preventDefault();
         clickTravel();
-      } else if (event.keyCode === KEY.P && event.altKey) {
+      } else if (event.key === KEY.P && event.altKey) {
         event.preventDefault();
         clickCreateProgram();
-      } else if (event.keyCode === KEY.F && event.altKey) {
+      } else if (event.key === KEY.F && event.altKey) {
         if (props.page == Page.Terminal && Settings.EnableBashHotkeys) {
           return;
         }
         event.preventDefault();
         clickFactions();
-      } else if (event.keyCode === KEY.A && event.altKey) {
+      } else if (event.key === KEY.A && event.altKey) {
         event.preventDefault();
         clickAugmentations();
-      } else if (event.keyCode === KEY.U && event.altKey) {
+      } else if (event.key === KEY.U && event.altKey) {
         event.preventDefault();
         clickTutorial();
-      } else if (event.keyCode === KEY.B && event.altKey && props.player.bladeburner) {
+      } else if (event.key === KEY.B && event.altKey && props.player.bladeburner) {
         event.preventDefault();
         clickBladeburner();
-      } else if (event.keyCode === KEY.G && event.altKey && props.player.gang) {
+      } else if (event.key === KEY.G && event.altKey && props.player.gang) {
         event.preventDefault();
         clickGang();
       }
-      // if (event.keyCode === KEY.O && event.altKey) {
+      // if (event.key === KEY.O && event.altKey) {
       //   event.preventDefault();
       //   gameOptionsBoxOpen();
       // }
@@ -439,29 +434,27 @@ export function SidebarRoot(props: IProps): React.ReactElement {
                 </Typography>
               </ListItemText>
             </ListItem>
-            {canCreateProgram && (
-              <ListItem
-                button
-                key={"Create Program"}
-                className={clsx({
-                  [classes.active]: props.page === Page.CreateProgram,
-                })}
-                onClick={clickCreateProgram}
-              >
-                <ListItemIcon>
-                  <Badge badgeContent={programCount > 0 ? programCount : undefined} color="error">
-                    <Tooltip title={!open ? "Create Program" : ""}>
-                      <BugReportIcon color={props.page !== Page.CreateProgram ? "secondary" : "primary"} />
-                    </Tooltip>
-                  </Badge>
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography color={props.page !== Page.CreateProgram ? "secondary" : "primary"}>
-                    Create Program
-                  </Typography>
-                </ListItemText>
-              </ListItem>
-            )}
+            <ListItem
+              button
+              key={"Create Program"}
+              className={clsx({
+                [classes.active]: props.page === Page.CreateProgram,
+              })}
+              onClick={clickCreateProgram}
+            >
+              <ListItemIcon>
+                <Badge badgeContent={programCount > 0 ? programCount : undefined} color="error">
+                  <Tooltip title={!open ? "Create Program" : ""}>
+                    <BugReportIcon color={props.page !== Page.CreateProgram ? "secondary" : "primary"} />
+                  </Tooltip>
+                </Badge>
+              </ListItemIcon>
+              <ListItemText>
+                <Typography color={props.page !== Page.CreateProgram ? "secondary" : "primary"}>
+                  Create Program
+                </Typography>
+              </ListItemText>
+            </ListItem>
             {canStaneksGift && (
               <ListItem
                 button
@@ -624,7 +617,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
             key={"City"}
             className={clsx({
               [classes.active]:
-                props.page === Page.City || props.page === Page.Resleeves || props.page === Page.Location,
+                props.page === Page.City || props.page === Page.Grafting || props.page === Page.Location,
             })}
             onClick={clickCity}
           >

@@ -4,7 +4,7 @@
 
 ## AugmentationStats.hacking\_mult property
 
-Multipler to hacking skill
+Multiplier to hacking skill
 
 <b>Signature:</b>
 

@@ -64,6 +64,9 @@ export function UnlockUpgrade(corporation: ICorporation, upgrade: CorporationUnl
   if (corporation.funds < upgrade[1]) {
     throw new Error("Insufficient funds");
   }
+  if(corporation.unlockUpgrades[upgrade[0]] === 1){
+    throw new Error(`You have already unlocked the ${upgrade[2]} upgrade!`);
+  }
   corporation.unlock(upgrade);
 }
 
@@ -119,17 +122,17 @@ export function SellMaterial(mat: Material, amt: string, price: string): void {
     try {
       tempQty = eval(tempQty);
     } catch (e) {
-      throw new Error("Invalid value or expression for sell price field: " + e);
+      throw new Error("Invalid value or expression for sell quantity field: " + e);
     }
 
     if (tempQty == null || isNaN(parseFloat(tempQty)) || parseFloat(tempQty) < 0) {
-      throw new Error("Invalid value or expression for sell price field");
+      throw new Error("Invalid value or expression for sell quantity field");
     }
 
     mat.sllman[0] = true;
     mat.sllman[1] = q; //Use sanitized input
   } else if (isNaN(parseFloat(amt)) || parseFloat(amt) < 0) {
-    throw new Error("Invalid value for sell quantity field! Must be numeric or 'MAX'");
+    throw new Error("Invalid value for sell quantity field! Must be numeric or 'PROD' or 'MAX'");
   } else {
     let q = parseFloat(amt);
     if (isNaN(q)) {
@@ -156,10 +159,10 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
     try {
       temp = eval(temp);
     } catch (e) {
-      throw new Error("Invalid value or expression for sell quantity field: " + e);
+      throw new Error("Invalid value or expression for sell price field: " + e);
     }
     if (temp == null || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
-      throw new Error("Invalid value or expression for sell quantity field.");
+      throw new Error("Invalid value or expression for sell price field.");
     }
     product.sCost = price; //Use sanitized price
   } else {
@@ -184,11 +187,11 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
     try {
       temp = eval(temp);
     } catch (e) {
-      throw new Error("Invalid value or expression for sell price field: " + e);
+      throw new Error("Invalid value or expression for sell quantity field: " + e);
     }
 
     if (temp == null || isNaN(parseFloat(temp)) || parseFloat(temp) < 0) {
-      throw new Error("Invalid value or expression for sell price field");
+      throw new Error("Invalid value or expression for sell quantity field");
     }
     if (all) {
       for (let i = 0; i < cities.length; ++i) {
@@ -201,7 +204,7 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
       product.sllman[city][1] = qty; //Use sanitized input
     }
   } else if (isNaN(parseFloat(amt)) || parseFloat(amt) < 0) {
-    throw new Error("Invalid value for sell quantity field! Must be numeric");
+    throw new Error("Invalid value for sell quantity field! Must be numeric or 'PROD' or 'MAX'");
   } else {
     let qty = parseFloat(amt);
     if (isNaN(qty)) {
@@ -218,8 +221,7 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
         product.sllman[city][0] = false;
         product.sllman[city][1] = "";
       }
-    } else {
-      if (all) {
+    } else if (all) {
         for (let i = 0; i < cities.length; ++i) {
           const tempCity = cities[i];
           product.sllman[tempCity][0] = true;
@@ -229,7 +231,6 @@ export function SellProduct(product: Product, city: string, amt: string, price: 
         product.sllman[city][0] = true;
         product.sllman[city][1] = qty;
       }
-    }
   }
 }
 

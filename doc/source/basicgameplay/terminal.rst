@@ -239,7 +239,7 @@ connect
 
     $ connect [hostname/ip]
 
-Connect to a remote server. The hostname or IP address of the remote server must
+Connect to a remote server. The hostname of the remote server must
 be given as the argument to this command. Note that only servers that are immediately
 adjacent to the current server in the network can be connected to. To see which
 servers can be connected to, use the 'scan' command.
@@ -347,7 +347,7 @@ Kills all scripts on the current server.
 ls
 ^^
 
-    $ ls [dir] [| grep pattern]
+    $ ls [dir] [--grep pattern]
 
 Prints files and directories on the current server to the Terminal screen.
 
@@ -358,19 +358,21 @@ followed by the files (also in alphabetical order).
 The :code:`dir` optional parameter allows you to specify the directory for which to display
 files.
 
-The :code:`| grep pattern` optional parameter allows you to only display files and directories
+The :code:`--grep pattern` optional parameter allows you to only display files and directories
 with a certain pattern in their names.
+
+The :code:`-l` optional parameter allows you to force each item onto a single line.
 
 Examples::
 
     // List files/directories with the '.script' extension in the current directory
-    $ ls | grep .script
+    $ ls -l --grep .script
 
     // List files/directories with the '.js' extension in the root directory
-    $ ls / | grep .js
+    $ ls / -l --grep .js
 
     // List files/directories with the word 'purchase' in the name, in the :code:`scripts` directory
-    $ ls scripts | grep purchase
+    $ ls scripts -l --grep purchase
 
 
 lscpu

@@ -35,8 +35,8 @@ Returns an array with general information about all scripts running on the speci
 
 ```ts
 // NS1:
-const scripts = ps("home");
-for (let i = 0; i < scripts.length; ++i) {
+var scripts = ps("home");
+for (var i = 0; i < scripts.length; ++i) {
     tprint(scripts[i].filename + ' ' + scripts[i].threads);
     tprint(scripts[i].args);
 }
@@ -49,7 +49,7 @@ for (let i = 0; i < scripts.length; ++i) {
 // NS2:
 const ps = ns.ps("home");
 for (let script of ps) {
-    ns.tprint(`${script.filename} ${ps[i].threads}`);
+    ns.tprint(`${script.filename} ${script.threads}`);
     ns.tprint(script.args);
 }
 ```
