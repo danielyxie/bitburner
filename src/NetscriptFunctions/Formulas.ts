@@ -37,6 +37,10 @@ import {
   calculateAscensionMult,
   calculateAscensionPointsGain,
 } from "../Gang/formulas/formulas";
+import { 
+  favorToRep as calculateFavorToRep, 
+  repToFavor as calculateRepToFavor,
+} from "../Faction/formulas/favor";
 
 export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IFormulas {
   const checkFormulasAccess = function (func: string): void {
@@ -45,6 +49,18 @@ export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, h
     }
   };
   return {
+   factions: {
+      calculateFavorToRep: function (_favor: unknown): number {
+        const favor = helper.number("calculateFavorToRep", "favor", _favor);
+        checkFormulasAccess("factions.calculateFavorToRep");
+        return calculateFavorToRep(favor);
+      },
+      calculateRepToFavor: function (_rep: unknown): number {
+        const rep = helper.number("calculateRepToFavor", "rep", _rep);
+        checkFormulasAccess("factions.calculateRepToFavor");
+        return calculateRepToFavor(rep);
+      },
+    },
     skills: {
       calculateSkill: function (_exp: unknown, _mult: unknown = 1): number {
         const exp = helper.number("calculateSkill", "exp", _exp);
