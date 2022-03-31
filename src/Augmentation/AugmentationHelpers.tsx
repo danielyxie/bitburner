@@ -110,7 +110,6 @@ function updateGeneralAugmentationPrice(augmentation: Augmentation): void {
 }
 
 export function updateAugmentationCosts(): void {
-  console.log(Player.queuedAugmentations);
   for (const name of Object.keys(Augmentations)) {
     if (Augmentations.hasOwnProperty(name)) {
       const augmentationToUpdate = Augmentations[name];

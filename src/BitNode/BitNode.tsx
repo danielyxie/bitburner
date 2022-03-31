@@ -82,7 +82,9 @@ BitNodes["BitNode2"] = new BitNode(
       <br />
       The amount of money gained from crimes and Infiltration is tripled
       <br />
-      Certain Factions ({FactionNames.SlumSnakes}, {FactionNames.Tetrads}, {FactionNames.TheSyndicate}, {FactionNames.TheDarkArmy}, {FactionNames.SpeakersForTheDead}, {FactionNames.NiteSec}, {FactionNames.TheBlackHand}) give the player the ability to form and manage their own gangs. These gangs will earn the player money and
+      Certain Factions ({FactionNames.SlumSnakes}, {FactionNames.Tetrads}, {FactionNames.TheSyndicate},{" "}
+      {FactionNames.TheDarkArmy}, {FactionNames.SpeakersForTheDead}, {FactionNames.NiteSec}, {FactionNames.TheBlackHand}
+      ) give the player the ability to form and manage their own gangs. These gangs will earn the player money and
       reputation with the corresponding Faction
       <br />
       Every Augmentation in the game will be available through the Factions listed above
@@ -225,15 +227,15 @@ BitNodes["BitNode6"] = new BitNode(
   "Like Tears in Rain",
   (
     <>
-      In the middle of the 21st century, {FactionNames.OmniTekIncorporated} began designing and manufacturing advanced synthetic
-      androids, or Synthoids for short. They achieved a major technological breakthrough in the sixth generation of
-      their Synthoid design, called MK-VI, by developing a hyperintelligent AI. Many argue that this was the first
-      sentient AI ever created. This resulted in Synthoid models that were stronger, faster, and more intelligent than
-      the humans that had created them.
+      In the middle of the 21st century, {FactionNames.OmniTekIncorporated} began designing and manufacturing advanced
+      synthetic androids, or Synthoids for short. They achieved a major technological breakthrough in the sixth
+      generation of their Synthoid design, called MK-VI, by developing a hyperintelligent AI. Many argue that this was
+      the first sentient AI ever created. This resulted in Synthoid models that were stronger, faster, and more
+      intelligent than the humans that had created them.
       <br />
       <br />
-      In this BitNode you will be able to access the {FactionNames.Bladeburners} Division at the NSA, which provides a new mechanic for
-      progression. Furthermore:
+      In this BitNode you will be able to access the {FactionNames.Bladeburners} Division at the NSA, which provides a
+      new mechanic for progression. Furthermore:
       <br />
       <br />
       Hacking and Hacknet Nodes will be less profitable
@@ -250,9 +252,9 @@ BitNodes["BitNode6"] = new BitNode(
       <br />
       <br />
       Destroying this BitNode will give you Source-File 6, or if you already have this Source-File it will upgrade its
-      level up to a maximum of 3. This Source-File allows you to access the NSA's {FactionNames.Bladeburners} Division in other
-      BitNodes. In addition, this Source-File will raise both the level and experience gain rate of all your combat
-      stats by:
+      level up to a maximum of 3. This Source-File allows you to access the NSA's {FactionNames.Bladeburners} Division
+      in other BitNodes. In addition, this Source-File will raise both the level and experience gain rate of all your
+      combat stats by:
       <br />
       <br />
       Level 1: 8%
@@ -270,14 +272,15 @@ BitNodes["BitNode7"] = new BitNode(
   "More human than humans",
   (
     <>
-      In the middle of the 21st century, you were doing cutting-edge work at {FactionNames.OmniTekIncorporated} as part of the AI
-      design team for advanced synthetic androids, or Synthoids for short. You helped achieve a major technological
-      breakthrough in the sixth generation of the company's Synthoid design, called MK-VI, by developing a
+      In the middle of the 21st century, you were doing cutting-edge work at {FactionNames.OmniTekIncorporated} as part
+      of the AI design team for advanced synthetic androids, or Synthoids for short. You helped achieve a major
+      technological breakthrough in the sixth generation of the company's Synthoid design, called MK-VI, by developing a
       hyperintelligent AI. Many argue that this was the first sentient AI ever created. This resulted in Synthoid models
       that were stronger, faster, and more intelligent than the humans that had created them.
       <br />
       <br />
-      In this BitNode you will be able to access the {FactionNames.Bladeburners} API, which allows you to access {FactionNames.Bladeburners}
+      In this BitNode you will be able to access the {FactionNames.Bladeburners} API, which allows you to access{" "}
+      {FactionNames.Bladeburners}
       functionality through Netscript. Furthermore: <br />
       <br />
       The rank you gain from {FactionNames.Bladeburners} contracts/operations is reduced by 40%
@@ -300,8 +303,9 @@ BitNodes["BitNode7"] = new BitNode(
       <br />
       <br />
       Destroying this BitNode will give you Source-File 7, or if you already have this Source-File it will upgrade its
-      level up to a maximum of 3. This Source-File allows you to access the {FactionNames.Bladeburners} Netscript API in other BitNodes.
-      In addition, this Source-File will increase all of your {FactionNames.Bladeburners} multipliers by:
+      level up to a maximum of 3. This Source-File allows you to access the {FactionNames.Bladeburners} Netscript API in
+      other BitNodes. In addition, this Source-File will increase all of your {FactionNames.Bladeburners} multipliers
+      by:
       <br />
       <br />
       Level 1: 8%
@@ -364,10 +368,10 @@ BitNodes["BitNode9"] = new BitNode(
   "Hacknet Unleashed",
   (
     <>
-      When {FactionNames.FulcrumSecretTechnologies} released their open-source Linux distro Chapeau, it quickly became the OS of choice for
-      the underground hacking community. Chapeau became especially notorious for powering the Hacknet, a global,
-      decentralized network used for nefarious purposes. {FactionNames.FulcrumSecretTechnologies} quickly abandoned the project and dissociated
-      themselves from it.
+      When {FactionNames.FulcrumSecretTechnologies} released their open-source Linux distro Chapeau, it quickly became
+      the OS of choice for the underground hacking community. Chapeau became especially notorious for powering the
+      Hacknet, a global, decentralized network used for nefarious purposes. {FactionNames.FulcrumSecretTechnologies}{" "}
+      quickly abandoned the project and dissociated themselves from it.
       <br />
       <br />
       This BitNode unlocks the Hacknet Server, an upgraded version of the Hacknet Node. Hacknet Servers generate hashes,
@@ -538,8 +542,8 @@ BitNodes["BitNode13"] = new BitNode(
   "1 step back, 2 steps forward",
   (
     <>
-      With the invention of Augmentations in the 2040s a religious group known as the {FactionNames.ChurchOfTheMachineGod} has
-      rallied far more support than anyone would have hoped.
+      With the invention of Augmentations in the 2040s a religious group known as the{" "}
+      {FactionNames.ChurchOfTheMachineGod} has rallied far more support than anyone would have hoped.
       <br />
       <br />
       Their leader, Allison "Mother" Stanek is said to have created her own Augmentation whose power goes beyond any
@@ -555,7 +559,8 @@ BitNodes["BitNode13"] = new BitNode(
       <br />
       <br />
       Destroying this BitNode will give you Source-File 13, or if you already have this Source-File it will upgrade its
-      level up to a maximum of 3. This Source-File lets the {FactionNames.ChurchOfTheMachineGod} appear in other BitNodes.
+      level up to a maximum of 3. This Source-File lets the {FactionNames.ChurchOfTheMachineGod} appear in other
+      BitNodes.
       <br />
       <br />
       Each level of this Source-File increases the size of Stanek's Gift.
@@ -624,6 +629,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.PurchasedServerSoftcap = 1.3;
       BitNodeMultipliers.GangSoftcap = 0.9;
       BitNodeMultipliers.WorldDaemonDifficulty = 2;
+      BitNodeMultipliers.GangUniqueAugs = 0.5;
       break;
     case 4: // The Singularity
       BitNodeMultipliers.ServerMaxMoney = 0.15;
@@ -642,6 +648,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.StaneksGiftExtraSize = 0;
       BitNodeMultipliers.PurchasedServerSoftcap = 1.2;
       BitNodeMultipliers.WorldDaemonDifficulty = 3;
+      BitNodeMultipliers.GangUniqueAugs = 0.5;
       break;
     case 5: // Artificial intelligence
       BitNodeMultipliers.ServerMaxMoney = 2;
@@ -659,6 +666,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.StaneksGiftExtraSize = 0;
       BitNodeMultipliers.PurchasedServerSoftcap = 1.2;
       BitNodeMultipliers.WorldDaemonDifficulty = 1.5;
+      BitNodeMultipliers.GangUniqueAugs = 0.5;
       break;
     case 6: // Bladeburner
       BitNodeMultipliers.HackingLevelMultiplier = 0.35;
@@ -679,6 +687,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.GangSoftcap = 0.7;
       BitNodeMultipliers.CorporationSoftCap = 0.9;
       BitNodeMultipliers.WorldDaemonDifficulty = 2;
+      BitNodeMultipliers.GangUniqueAugs = 0.2;
       break;
     case 7: // Bladeburner 2079
       BitNodeMultipliers.BladeburnerRank = 0.6;
@@ -704,6 +713,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.GangSoftcap = 0.7;
       BitNodeMultipliers.CorporationSoftCap = 0.9;
       BitNodeMultipliers.WorldDaemonDifficulty = 2;
+      BitNodeMultipliers.GangUniqueAugs = 0.2;
       break;
     case 8: // Ghost of Wall Street
       BitNodeMultipliers.ScriptHackMoney = 0.3;
@@ -720,6 +730,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.PurchasedServerSoftcap = 4;
       BitNodeMultipliers.GangSoftcap = 0;
       BitNodeMultipliers.CorporationSoftCap = 0;
+      BitNodeMultipliers.GangUniqueAugs = 0;
       break;
     case 9: // Hacktocracy
       BitNodeMultipliers.HackingLevelMultiplier = 0.5;
@@ -746,6 +757,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.GangSoftcap = 0.8;
       BitNodeMultipliers.CorporationSoftCap = 0.7;
       BitNodeMultipliers.WorldDaemonDifficulty = 2;
+      BitNodeMultipliers.GangUniqueAugs = 0.25;
       break;
     case 10: // Digital Carbon
       BitNodeMultipliers.HackingLevelMultiplier = 0.35;
@@ -775,6 +787,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.GangSoftcap = 0.9;
       BitNodeMultipliers.CorporationSoftCap = 0.9;
       BitNodeMultipliers.WorldDaemonDifficulty = 2;
+      BitNodeMultipliers.GangUniqueAugs = 0.25;
       break;
     case 11: //The Big Crash
       BitNodeMultipliers.HackingLevelMultiplier = 0.6;
@@ -796,6 +809,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.PurchasedServerSoftcap = 2;
       BitNodeMultipliers.CorporationSoftCap = 0.9;
       BitNodeMultipliers.WorldDaemonDifficulty = 1.5;
+      BitNodeMultipliers.GangUniqueAugs = 0.75;
       break;
     case 12: {
       //The Recursion
@@ -870,6 +884,8 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.GangSoftcap = 0.8;
       BitNodeMultipliers.CorporationSoftCap = 0.8;
       BitNodeMultipliers.WorldDaemonDifficulty = inc;
+
+      BitNodeMultipliers.GangUniqueAugs = dec;
       break;
     }
     case 13: {
@@ -912,6 +928,7 @@ export function initBitNodeMultipliers(p: IPlayer): void {
       BitNodeMultipliers.GangSoftcap = 0.3;
       BitNodeMultipliers.CorporationSoftCap = 0.3;
       BitNodeMultipliers.WorldDaemonDifficulty = 3;
+      BitNodeMultipliers.GangUniqueAugs = 0.1;
       break;
     }
     default:

@@ -1,5 +1,6 @@
-import { CityName } from "../Locations/data/CityNames";
 import { Augmentations } from "../Augmentation/Augmentations";
+import { hasAugmentationPrereqs } from "../Faction/FactionHelpers";
+import { CityName } from "../Locations/data/CityNames";
 import { getRamCost } from "../Netscript/RamCostGenerator";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { GraftableAugmentation } from "../PersonObjects/Grafting/GraftableAugmentation";
@@ -67,6 +68,11 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
       const craftableAug = new GraftableAugmentation(Augmentations[augName]);
       if (player.money < craftableAug.cost) {
         workerScript.log("grafting.graftAugmentation", () => `You don't have enough money to craft ${augName}`);
+        return false;
+      }
+
+      if (!hasAugmentationPrereqs(craftableAug.augmentation)) {
+        workerScript.log("grafting.graftAugmentation", () => `You don't have the pre-requisites for ${augName}`);
         return false;
       }
 
