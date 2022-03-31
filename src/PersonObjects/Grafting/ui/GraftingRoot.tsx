@@ -1,22 +1,20 @@
+import { Construction, CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
+import { Box, Button, Container, List, ListItemButton, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-
-import { Typography, Container, Box, Paper, List, ListItemButton, Button } from "@mui/material";
-import { Construction } from "@mui/icons-material";
-
-import { use } from "../../../ui/Context";
-import { Money } from "../../../ui/React/Money";
-import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
+import { Augmentation } from "../../../Augmentation/Augmentation";
 import { Augmentations } from "../../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames";
-import { Settings } from "../../../Settings/Settings";
-import { IMap } from "../../../types";
-import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
+import { CONSTANTS } from "../../../Constants";
+import { hasAugmentationPrereqs } from "../../../Faction/FactionHelpers";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { Locations } from "../../../Locations/Locations";
-import { CONSTANTS } from "../../../Constants";
-
+import { Settings } from "../../../Settings/Settings";
+import { IMap } from "../../../types";
+import { use } from "../../../ui/Context";
+import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
+import { Money } from "../../../ui/React/Money";
+import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
 import { IPlayer } from "../../IPlayer";
-
 import { GraftableAugmentation } from "../GraftableAugmentation";
 
 const GraftableAugmentations: IMap<GraftableAugmentation> = {};
@@ -31,6 +29,36 @@ export const getAvailableAugs = (player: IPlayer): string[] => {
   }
 
   return augs.filter((augmentation: string) => !player.hasAugmentation(augmentation));
+};
+
+const canGraft = (player: IPlayer, aug: GraftableAugmentation): boolean => {
+  if (player.money < aug.cost) {
+    return false;
+  }
+  return hasAugmentationPrereqs(aug.augmentation);
+};
+
+interface IProps {
+  player: IPlayer;
+  aug: Augmentation;
+}
+
+const AugPreReqsChecklist = (props: IProps): React.ReactElement => {
+  const aug = props.aug,
+    player = props.player;
+
+  return (
+    <Typography color={Settings.theme.money}>
+      <b>Pre-Requisites:</b>
+      <br />
+      {aug.prereqs.map((preAug) => (
+        <span style={{ display: "flex", alignItems: "center" }}>
+          {player.hasAugmentation(preAug) ? <CheckBox sx={{ mr: 1 }} /> : <CheckBoxOutlineBlank sx={{ mr: 1 }} />}
+          {preAug}
+        </span>
+      ))}
+    </Typography>
+  );
 };
 
 export const GraftingRoot = (): React.ReactElement => {
@@ -80,7 +108,7 @@ export const GraftingRoot = (): React.ReactElement => {
               <Button
                 onClick={() => setGraftOpen(true)}
                 sx={{ width: "100%" }}
-                disabled={player.money < GraftableAugmentations[selectedAug].cost}
+                disabled={!canGraft(player, GraftableAugmentations[selectedAug])}
               >
                 Graft Augmentation (
                 <Typography>
@@ -115,6 +143,11 @@ export const GraftingRoot = (): React.ReactElement => {
                 )}
                 {/* Use formula so the displayed creation time is accurate to player bonus */}
               </Typography>
+              {Augmentations[selectedAug].prereqs.length > 0 && (
+                <AugPreReqsChecklist player={player} aug={Augmentations[selectedAug]} />
+              )}
+
+              <br />
               <Typography sx={{ maxHeight: 305, overflowY: "scroll" }}>
                 {(() => {
                   const aug = Augmentations[selectedAug];
