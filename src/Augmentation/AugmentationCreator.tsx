@@ -706,7 +706,7 @@ export const generalAugmentations = [
       "so that the brain doesn't have to.",
     hacking_speed_mult: 1.01,
     hacking_mult: 1.05,
-    factions: [FactionNames.CyberSec],
+    factions: [FactionNames.CyberSec, FactionNames.NiteSec],
   }),
   new Augmentation({
     name: AugmentationNames.CranialSignalProcessorsG2,

@@ -63,7 +63,7 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
   const [questions] = useState(generateQuestion(wires, difficulty));
 
   function checkWire(wireNum: number): boolean {
-    return questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1));
+    return !questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1));
   }
 
   function press(this: Document, event: KeyboardEvent): void {
