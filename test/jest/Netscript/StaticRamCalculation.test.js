@@ -51,7 +51,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
    * @param {string[]} fnDesc - describes the name of the function being tested,
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    */
-   async function expectZeroRamCost(fnDesc) {
+  async function expectZeroRamCost(fnDesc) {
     if (!Array.isArray(fnDesc)) {
       expect.fail("Non-array passed to expectZeroRamCost()");
     }
