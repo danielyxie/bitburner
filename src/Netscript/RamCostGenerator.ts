@@ -226,7 +226,7 @@ export const RamCosts: IMap<any> = {
   universityCourse: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   gymWorkout: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   travelToCity: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
-  goToLocation: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
+  goToLocation: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   purchaseTor: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   purchaseProgram: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
   getCurrentServer: SF4Cost(RamCostConstants.ScriptSingularityFn1RamCost),
