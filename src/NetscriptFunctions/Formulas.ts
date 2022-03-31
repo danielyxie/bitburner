@@ -37,8 +37,8 @@ import {
   calculateAscensionMult,
   calculateAscensionPointsGain,
 } from "../Gang/formulas/formulas";
-import { 
-  favorToRep as calculateFavorToRep, 
+import {
+  favorToRep as calculateFavorToRep,
   repToFavor as calculateRepToFavor,
 } from "../Faction/formulas/favor";
 
