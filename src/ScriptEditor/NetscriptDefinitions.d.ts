@@ -3798,23 +3798,23 @@ interface SkillsFormulas {
 }
 
 /**
- * Factions formulas
+ * Reputation formulas
  * @public
  */
- interface FactionsFormulas {
+interface ReputationFormulas {
   /**
    * Calculate the total required amount of faction reputation to reach a target favor.
    * @param favor - target faction favor.
    * @returns The calculated faction reputation required.
    */
-   calculateFavorToRep(favor: number): number;
+  calculateFavorToRep(favor: number): number;
   /**
    * Calculate the resulting faction favor of a total amount of reputation.
    * (Faction favor is gained whenever you install an Augmentation.)
    * @param rep - amount of reputation.
    * @returns The calculated faction favor.
    */
-   calculateRepToFavor(rep: number): number;
+  calculateRepToFavor(rep: number): number;
 }
 
 /**
@@ -4059,8 +4059,8 @@ interface GangFormulas {
  * @public
  */
 export interface Formulas {
-  /** Factions formulas */
-  factions: FactionsFormulas;
+  /** Reputation formulas */
+  reputation: ReputationFormulas;
   /** Skills formulas */
   skills: SkillsFormulas;
   /** Hacking formulas */
