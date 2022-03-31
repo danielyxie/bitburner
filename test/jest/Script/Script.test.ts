@@ -8,7 +8,7 @@ jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
     virtual: true,
 });
 
-const code = `/** @param {NS} ns **/
+const code = `/** @param {NS} ns */
 export async function main(ns) {
 	ns.print(ns.getWeakenTime('n00dles'));
 }`;

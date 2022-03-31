@@ -67,7 +67,7 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
   const hasAugment = Player.hasAugmentation(AugmentationNames.SecurityWireContacts, true);
 
   function checkWire(wireNum: number): boolean {
-    return questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1));
+    return !questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1));
   }
 
   useEffect(() => {
