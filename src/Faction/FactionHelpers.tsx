@@ -20,6 +20,7 @@ import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";
 import { FactionNames } from "./data/FactionNames";
+import { SFC32RNG } from "../Casino/RNG";
 
 export function inviteToFaction(faction: Faction): void {
   Player.receiveInvite(faction.name);
@@ -194,7 +195,7 @@ export function processPassiveFactionRepGain(numCycles: number): void {
   }
 }
 
-export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Faction) => {
+export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Faction): string[] => {
   // If player has a gang with this faction, return (almost) all augmentations
   if (player.hasGangWith(faction.name)) {
     let augs = Object.values(Augmentations);
@@ -205,12 +206,25 @@ export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Factio
     const blacklist: string[] = [AugmentationNames.NeuroFluxGovernor];
 
     if (player.bitNodeN !== 2) {
-      // Remove faction-unique augs that don't belong to this faction
-      augs = augs.filter((a) => a.factions.length > 1 || faction.augmentations.includes(a.name));
-
       // TRP is not available outside of BN2 for Gangs
       blacklist.push(AugmentationNames.TheRedPill);
     }
+
+    const rng = SFC32RNG(`BN${player.bitNodeN}.${player.sourceFileLvl(player.bitNodeN)}`);
+    // Remove faction-unique augs that don't belong to this faction
+    const uniqueFilter = (a: Augmentation): boolean => {
+      // Keep all the non-unique one
+      if (a.factions.length > 1) {
+        return true;
+      }
+      // Keep all the ones that this faction has anyway.
+      if (faction.augmentations.includes(a.name)) {
+        return true;
+      }
+
+      return rng() >= 1 - BitNodeMultipliers.GangUniqueAugs;
+    };
+    augs = augs.filter(uniqueFilter);
 
     // Remove blacklisted augs
     augs = augs.filter((a) => !blacklist.includes(a.name));
