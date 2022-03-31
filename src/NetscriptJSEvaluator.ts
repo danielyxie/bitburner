@@ -30,6 +30,7 @@ export async function compile(player: IPlayer, script: Script, scripts: Script[]
   const uurls = _getScriptUrls(script, scripts, []);
   const url = uurls[uurls.length - 1].url;
   if (script.url && script.url !== url) {
+    URL.revokeObjectURL(script.url);
     // Thoughts: Should we be revoking any URLs here?
     // If a script is modified repeatedly between two states,
     // we could reuse the blob at a later time.
