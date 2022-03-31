@@ -26,6 +26,6 @@ export class GraftableAugmentation {
     const antiLog = Math.max(sum(Object.values(this.augmentation.mults)), 1);
 
     const mult = Math.log2(antiLog);
-    return CONSTANTS.AugmentationGraftingTimeBase * mult + CONSTANTS.MillisecondsPerHalfHour;
+    return (CONSTANTS.AugmentationGraftingTimeBase * mult + CONSTANTS.MillisecondsPerHalfHour) / 2;
   }
 }

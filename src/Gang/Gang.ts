@@ -227,7 +227,6 @@ export class Gang implements IGang {
           AllGangs[thisGang].territory += territoryGain;
           if (AllGangs[thisGang].territory > 0.999) AllGangs[thisGang].territory = 1;
           AllGangs[otherGang].territory -= territoryGain;
-          if (AllGangs[thisGang].territory) AllGangs[thisGang].territory = 0;
           if (thisGang === gangName) {
             this.clash(true); // Player won
             AllGangs[otherGang].power *= 1 / 1.01;

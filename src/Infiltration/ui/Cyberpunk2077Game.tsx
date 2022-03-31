@@ -4,8 +4,9 @@ import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { interpolate } from "./Difficulty";
-import { getArrow } from "../utils";
+import { downArrowSymbol, getArrow, leftArrowSymbol, rightArrowSymbol, upArrowSymbol } from "../utils";
 import Typography from "@mui/material/Typography";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 interface Difficulty {
   [key: string]: number;
@@ -41,16 +42,16 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
     const move = [0, 0];
     const arrow = getArrow(event);
     switch (arrow) {
-      case "↑":
+      case upArrowSymbol:
         move[1]--;
         break;
-      case "←":
+      case leftArrowSymbol:
         move[0]--;
         break;
-      case "↓":
+      case downArrowSymbol:
         move[1]++;
         break;
-      case "→":
+      case rightArrowSymbol:
         move[0]++;
         break;
     }
@@ -59,7 +60,7 @@ export function Cyberpunk2077Game(props: IMinigameProps): React.ReactElement {
     next[1] = (next[1] + grid.length) % grid.length;
     setPos(next);
 
-    if (event.key === " ") {
+    if (event.key === KEY.SPACE) {
       const selected = grid[pos[1]][pos[0]];
       const expected = answer[index];
       if (selected !== expected) {

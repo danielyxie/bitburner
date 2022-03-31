@@ -10,7 +10,7 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Faction } from "../Faction";
 import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
-import { hasAugmentationPrereqs } from "../FactionHelpers";
+import { hasAugmentationPrereqs, getFactionAugmentationsFiltered } from "../FactionHelpers";
 
 import { use } from "../../ui/Context";
 import { Reputation } from "../../ui/React/Reputation";
@@ -23,7 +23,7 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
-import { CONSTANTS } from "../../Constants";
+import { getGenericAugmentationPriceMultiplier } from "../../Augmentation/AugmentationHelpers";
 
 type IProps = {
   faction: Faction;
@@ -42,25 +42,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   }
 
   function getAugs(): string[] {
-    if (isPlayersGang) {
-      let augs = Object.values(Augmentations);
-
-      // Remove blacklisted augs.
-      const blacklist = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.TheRedPill];
-      augs = augs.filter((a) => !blacklist.includes(a.name));
-
-      // Remove special augs.
-      augs = augs.filter((a) => !a.isSpecial);
-
-      // Remove faction-unique augs outside BN2. (But keep the one for this faction.)
-      if (player.bitNodeN !== 2) {
-        augs = augs.filter((a) => a.factions.length > 1 || props.faction.augmentations.includes(a.name));
-      }
-
-      return augs.map((a) => a.name);
-    } else {
-      return props.faction.augmentations.slice();
-    }
+    return getFactionAugmentationsFiltered(player, props.faction);
   }
 
   function getAugsSorted(): string[] {
@@ -184,10 +166,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       </>
     );
   }
-  const mult = Math.pow(
-    CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][player.sourceFileLvl(11)],
-    player.queuedAugmentations.length,
-  );
+
   return (
     <>
       <Button onClick={props.routeToMainPage}>Back</Button>
@@ -208,7 +187,9 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
             </Typography>
           }
         >
-          <Typography>Price multiplier: x {numeralWrapper.formatMultiplier(mult)}</Typography>
+          <Typography>
+            Price multiplier: x {numeralWrapper.formatMultiplier(getGenericAugmentationPriceMultiplier())}
+          </Typography>
         </Tooltip>
       </Box>
       <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)}>Sort by Cost</Button>

@@ -163,7 +163,7 @@ export class BaseServer {
     return false;
   }
 
-  removeContract(contract: CodingContract): void {
+  removeContract(contract: CodingContract | string): void {
     if (contract instanceof CodingContract) {
       this.contracts = this.contracts.filter((c) => {
         return c.fn !== contract.fn;
