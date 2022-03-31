@@ -103,12 +103,6 @@ function updateInfiltratorCosts(infiltratorAugmentation: Augmentation): void {
   }
 }
 
-function updateGeneralAugmentationPrice(augmentation: Augmentation): void {
-  for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
-    augmentation.baseCost = augmentation.startingCost * getGenericAugmentationPriceMultiplier();
-  }
-}
-
 export function updateAugmentationCosts(): void {
   for (const name of Object.keys(Augmentations)) {
     if (Augmentations.hasOwnProperty(name)) {
@@ -118,7 +112,7 @@ export function updateAugmentationCosts(): void {
       } else if (augmentationToUpdate.factions.includes(FactionNames.Infiltrators)) {
         updateInfiltratorCosts(augmentationToUpdate);
       } else {
-        updateGeneralAugmentationPrice(augmentationToUpdate);
+        augmentationToUpdate.baseCost = augmentationToUpdate.startingCost * getGenericAugmentationPriceMultiplier();
       }
     }
   }
