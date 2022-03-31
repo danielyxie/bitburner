@@ -100,6 +100,7 @@ import { SnackbarEvents } from "./ui/React/Snackbar";
 import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
+import { CityName } from "./Locations/data/CityNames";
 
 interface NS extends INS {
   [key: string]: any;
@@ -443,20 +444,27 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     string: (funcName: string, argName: string, v: unknown): string => {
       if (typeof v === "string") return v;
       if (typeof v === "number") return v + ""; // cast to string;
-      throw makeRuntimeErrorMsg(funcName, `${argName} should be a string`);
+      throw makeRuntimeErrorMsg(funcName, `${argName} should be a string.`);
     },
     number: (funcName: string, argName: string, v: unknown): number => {
       if (typeof v === "string") {
         const x = parseFloat(v);
         if (!isNaN(x)) return x; // otherwise it wasn't even a string representing a number.
       } else if (typeof v === "number") {
-        if (isNaN(v)) throw makeRuntimeErrorMsg(funcName, `${argName} is NaN`);
+        if (isNaN(v)) throw makeRuntimeErrorMsg(funcName, `${argName} is NaN.`);
         return v;
       }
-      throw makeRuntimeErrorMsg(funcName, `${argName} should be a number`);
+      throw makeRuntimeErrorMsg(funcName, `${argName} should be a number.`);
     },
     boolean: (v: unknown): boolean => {
       return !!v; // Just convert it to boolean.
+    },
+    city: (funcName: string, argName: string, v: unknown): CityName => {
+      if (typeof v !== "string") throw makeRuntimeErrorMsg(funcName, `${argName} should be a city name.`);
+      const s = v as CityName;
+      if (!Object.values(CityName).includes(s))
+        throw makeRuntimeErrorMsg(funcName, `${argName} should be a city name.`);
+      return s;
     },
     getServer: safeGetServer,
     checkSingularityAccess: checkSingularityAccess,
@@ -884,9 +892,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return !workerScript.disableLogs[fn];
     },
-    getScriptLogs: function (_fn: unknown, _hostname: unknown, ...scriptArgs: any[]): string[] {
-      const fn = helper.string("getScriptLogs", "fn", _fn);
-      const hostname = helper.string("getScriptLogs", "hostname", _hostname);
+    getScriptLogs: function (fn: any, hostname: any, ...scriptArgs: any[]): string[] {
       updateDynamicRam("getScriptLogs", getRamCost(Player, "getScriptLogs"));
       const runningScriptObj = getRunningScript(fn, hostname, "getScriptLogs", scriptArgs);
       if (runningScriptObj == null) {
@@ -896,9 +902,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return runningScriptObj.logs.slice();
     },
-    tail: function (_fn: unknown, _hostname: unknown = workerScript.hostname, ...scriptArgs: any[]): void {
-      const fn = helper.string("tail", "fn", _fn);
-      const hostname = helper.string("tail", "hostname", _hostname);
+    tail: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any[]): void {
       updateDynamicRam("tail", getRamCost(Player, "tail"));
       let runningScriptObj;
       if (arguments.length === 0) {
@@ -1114,9 +1118,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         workerScript.log("spawn", () => "Exiting...");
       }
     },
-    kill: function (_filename: unknown, _hostname?: unknown, ...scriptArgs: any[]): boolean {
-      const filename = helper.string("kill", "filename", _filename);
-      const hostname = helper.string("kill", "hostname", _hostname);
+    kill: function (filename: any, hostname?: any, ...scriptArgs: any[]): boolean {
       updateDynamicRam("kill", getRamCost(Player, "kill"));
 
       let res;
@@ -1710,9 +1712,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const txtFile = getTextFile(filename, server);
       return txtFile != null;
     },
-    isRunning: function (_fn: unknown, _hostname: unknown = workerScript.hostname, ...scriptArgs: any[]): boolean {
-      const fn = helper.string("isRunning", "fn", _fn);
-      const hostname = helper.string("isRunning", "hostname", _hostname);
+    isRunning: function (fn: any, hostname: any = workerScript.hostname, ...scriptArgs: any[]): boolean {
       updateDynamicRam("isRunning", getRamCost(Player, "isRunning"));
       if (fn === undefined || hostname === undefined) {
         throw makeRuntimeErrorMsg("isRunning", "Usage: isRunning(scriptname, server, [arg1], [arg2]...)");
@@ -2063,9 +2063,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const iport = helper.getValidPort("getPortHandle", port);
       return iport;
     },
-    rm: function (_fn: unknown, _hostname: unknown): boolean {
+    rm: function (_fn: unknown, hostname: any): boolean {
       const fn = helper.string("rm", "fn", _fn);
-      let hostname = helper.string("rm", "hostname", _hostname);
       updateDynamicRam("rm", getRamCost(Player, "rm"));
 
       if (hostname == null || hostname === "") {
@@ -2123,9 +2122,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       return 0;
     },
-    getRunningScript: function (_fn: unknown, _hostname: unknown, ...args: any[]): IRunningScriptDef | null {
-      const fn = helper.string("getRunningScript", "fn", _fn);
-      const hostname = helper.string("getRunningScript", "hostname", _hostname);
+    getRunningScript: function (fn: any, hostname: any, ...args: any[]): IRunningScriptDef | null {
       updateDynamicRam("getRunningScript", getRamCost(Player, "getRunningScript"));
 
       let runningScript;
@@ -2271,10 +2268,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       updateDynamicRam("alert", getRamCost(Player, "alert"));
       dialogBoxCreate(message);
     },
-    toast: function (_message: unknown, _variant: unknown = "success", _duration: unknown = 2000): void {
+    toast: function (_message: unknown, _variant: unknown = "success", duration: any = 2000): void {
       const message = helper.string("toast", "message", _message);
       const variant = helper.string("toast", "variant", _variant);
-      const duration = helper.number("toast", "duration", _duration);
       updateDynamicRam("toast", getRamCost(Player, "toast"));
       if (!["success", "info", "warning", "error"].includes(variant))
         throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
