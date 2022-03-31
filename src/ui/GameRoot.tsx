@@ -86,6 +86,7 @@ import { BypassWrapper } from "./React/BypassWrapper";
 
 import _wrap from "lodash/wrap";
 import _functions from "lodash/functions";
+import { Apr1 } from "./Apr1";
 
 const htmlLocation = location;
 
@@ -552,6 +553,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                   <Snackbar />
                 </>
               )}
+              <Apr1 />
             </SnackbarProvider>
           </BypassWrapper>
         </ErrorBoundary>
