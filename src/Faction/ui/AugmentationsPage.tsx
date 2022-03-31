@@ -10,7 +10,7 @@ import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Faction } from "../Faction";
 import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
-import { hasAugmentationPrereqs } from "../FactionHelpers";
+import { hasAugmentationPrereqs, getFactionAugmentationsFiltered } from "../FactionHelpers";
 
 import { use } from "../../ui/Context";
 import { Reputation } from "../../ui/React/Reputation";
@@ -42,28 +42,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   }
 
   function getAugs(): string[] {
-    if (isPlayersGang) {
-      // TODO: this code is duplicated in getAugmentationsFromFaction DRY
-      let augs = Object.values(Augmentations);
-
-      // Remove special augs.
-      augs = augs.filter((a) => !a.isSpecial);
-
-      if (player.bitNodeN !== 2) {
-        // Remove faction-unique augs outside BN2. (But keep the one for this faction.)
-        augs = augs.filter((a) => a.factions.length > 1 || props.faction.augmentations.includes(a.name));
-
-        // Remove blacklisted augs.
-        const blacklist = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.TheRedPill].map(
-          (augmentation) => augmentation as string,
-        );
-        augs = augs.filter((a) => !blacklist.includes(a.name));
-      }
-
-      return augs.map((a) => a.name);
-    } else {
-      return props.faction.augmentations.slice();
-    }
+    return getFactionAugmentationsFiltered(player, props.faction);
   }
 
   function getAugsSorted(): string[] {

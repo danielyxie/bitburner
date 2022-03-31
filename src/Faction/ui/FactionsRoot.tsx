@@ -9,7 +9,7 @@ import { Table, TableCell } from "../../ui/React/Table";
 import { IRouter } from "../../ui/Router";
 
 import { Faction } from "../Faction";
-import { joinFaction } from "../FactionHelpers";
+import { joinFaction, getFactionAugmentationsFiltered } from "../FactionHelpers";
 import { Factions } from "../Factions";
 import { FactionNames } from "../data/FactionNames";
 
@@ -52,26 +52,7 @@ export function FactionsRoot(props: IProps): React.ReactElement {
   }
 
   const getAugsLeft = (faction: Faction, player: IPlayer): number => {
-    const isPlayersGang = player.inGang() && player.getGangName() === faction.name;
-    let augs: string[] = [];
-
-    if (isPlayersGang) {
-      for (const augName of Object.keys(Augmentations)) {
-        const aug = Augmentations[augName];
-        if (
-          augName === AugmentationNames.NeuroFluxGovernor ||
-          (augName === AugmentationNames.TheRedPill && player.bitNodeN !== 2) ||
-          // Special augs (i.e. Bladeburner augs)
-          aug.isSpecial ||
-          // Exclusive augs (i.e. QLink)
-          (aug.factions.length <= 1 && !faction.augmentations.includes(augName) && player.bitNodeN !== 2)
-        )
-          continue;
-        augs.push(augName);
-      }
-    } else {
-      augs = faction.augmentations.slice();
-    }
+    const augs = getFactionAugmentationsFiltered(player, faction);
 
     return augs.filter((augmentation: string) => !player.hasAugmentation(augmentation)).length;
   };

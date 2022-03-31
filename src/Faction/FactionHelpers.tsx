@@ -8,6 +8,7 @@ import { CONSTANTS } from "../Constants";
 import { Faction } from "./Faction";
 import { Factions } from "./Factions";
 import { Player } from "../Player";
+import { IPlayer } from "../PersonObjects/IPlayer";
 import { Settings } from "../Settings/Settings";
 import {
   getHackingWorkRepGain,
@@ -32,9 +33,8 @@ export function joinFaction(faction: Faction): void {
   if (faction.isMember) return;
   faction.isMember = true;
   Player.factions.push(faction.name);
-  const allFactions = Object.values(FactionNames).map(faction => faction as string)
-  Player.factions.sort((a, b) =>
-    allFactions.indexOf(a) - allFactions.indexOf(b));
+  const allFactions = Object.values(FactionNames).map((faction) => faction as string);
+  Player.factions.sort((a, b) => allFactions.indexOf(a) - allFactions.indexOf(b));
   const factionInfo = faction.getInfo();
 
   //Determine what factions you are banned from now that you have joined this faction
@@ -134,18 +134,18 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
     } else if (!Settings.SuppressBuyAugmentationConfirmation) {
       dialogBoxCreate(
         "You purchased " +
-        aug.name +
-        ". Its enhancements will not take " +
-        "effect until they are installed. To install your augmentations, go to the " +
-        "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
-        "augmentations will now be more expensive.",
+          aug.name +
+          ". Its enhancements will not take " +
+          "effect until they are installed. To install your augmentations, go to the " +
+          "'Augmentations' tab on the left-hand navigation menu. Purchasing additional " +
+          "augmentations will now be more expensive.",
       );
     }
   } else {
     dialogBoxCreate(
       "Hmm, something went wrong when trying to purchase an Augmentation. " +
-      "Please report this to the game developer with an explanation of how to " +
-      "reproduce this.",
+        "Please report this to the game developer with an explanation of how to " +
+        "reproduce this.",
     );
   }
   return "";
@@ -193,3 +193,30 @@ export function processPassiveFactionRepGain(numCycles: number): void {
     faction.playerReputation += rate * numCycles * Player.faction_rep_mult * BitNodeMultipliers.FactionPassiveRepGain;
   }
 }
+
+export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Faction) => {
+  // If player has a gang with this faction, return (almost) all augmentations
+  if (player.hasGangWith(faction.name)) {
+    let augs = Object.values(Augmentations);
+
+    // Remove special augs
+    augs = augs.filter((a) => !a.isSpecial);
+
+    const blacklist: string[] = [AugmentationNames.NeuroFluxGovernor];
+
+    if (player.bitNodeN !== 2) {
+      // Remove faction-unique augs that don't belong to this faction
+      augs = augs.filter((a) => a.factions.length > 1 || faction.augmentations.includes(a.name));
+
+      // TRP is not available outside of BN2 for Gangs
+      blacklist.push(AugmentationNames.TheRedPill);
+    }
+
+    // Remove blacklisted augs
+    augs = augs.filter((a) => !blacklist.includes(a.name));
+
+    return augs.map((a) => a.name);
+  }
+
+  return faction.augmentations.slice();
+};
