@@ -43,8 +43,9 @@ export async function compile(player: IPlayer, script: Script, scripts: Script[]
     //   });
     // }
   }
-  script.url = url;
-  script.module = new Promise((resolve) => resolve(eval("import(url)")));
+  if (script.dependencies.length > 0) script.dependencies.forEach((dep) => URL.revokeObjectURL(dep.url));
+  script.url = uurls[uurls.length - 1].url;
+  script.module = new Promise((resolve) => resolve(eval("import(uurls[uurls.length - 1].url)")));
   script.dependencies = uurls;
 }
 
