@@ -20,9 +20,8 @@ import {
   infiltratorsAugmentations,
   initNeuroFluxGovernor,
   initUnstableCircadianModulator,
-} from "./AugmentationCreator";
+} from "./data/AugmentationCreator";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { update } from "lodash";
 
 export function AddToAugmentations(aug: Augmentation): void {
   const name = aug.name;

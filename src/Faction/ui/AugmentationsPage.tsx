@@ -24,6 +24,7 @@ import Tooltip from "@mui/material/Tooltip";
 import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
 import { getGenericAugmentationPriceMultiplier } from "../../Augmentation/AugmentationHelpers";
+import { FactionNames } from "../data/FactionNames";
 
 type IProps = {
   faction: Faction;
@@ -187,6 +188,14 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       </>
     );
   }
+  const multiplierComponent =
+    props.faction.name !== FactionNames.Infiltrators ? (
+      <Typography>
+        Price multiplier: x {numeralWrapper.formatMultiplier(getGenericAugmentationPriceMultiplier())}
+      </Typography>
+    ) : (
+      <></>
+    );
 
   return (
     <>
@@ -208,9 +217,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
             </Typography>
           }
         >
-          <Typography>
-            Price multiplier: x {numeralWrapper.formatMultiplier(getGenericAugmentationPriceMultiplier())}
-          </Typography>
+          {multiplierComponent}
         </Tooltip>
       </Box>
       <Button onClick={() => switchSortOrder(PurchaseAugmentationsOrderSetting.Cost)}>Sort by Cost</Button>
