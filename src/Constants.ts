@@ -287,7 +287,7 @@ export const CONSTANTS: {
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-  v1.6.0 - 2022-03-29 Grafting
+  v1.6.1 - 2022-03-29 Grafting
   ----------------------------
 
   ** Vitalife secret lab **

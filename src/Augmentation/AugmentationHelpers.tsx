@@ -97,7 +97,10 @@ export function updateAugmentationCosts(): void {
       if (augmentationToUpdate.name === AugmentationNames.NeuroFluxGovernor) {
         updateNeuroFluxGovernorCosts(augmentationToUpdate);
       } else {
-        augmentationToUpdate.baseCost = augmentationToUpdate.startingCost * getGenericAugmentationPriceMultiplier();
+        augmentationToUpdate.baseCost =
+          augmentationToUpdate.startingCost *
+          getGenericAugmentationPriceMultiplier() *
+          BitNodeMultipliers.AugmentationMoneyCost;
       }
     }
   }
