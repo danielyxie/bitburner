@@ -4089,7 +4089,7 @@ export interface Fragment {
  */
 export interface ActiveFragment {
   id: number;
-  avgCharge: number;
+  highestCharge: number;
   numCharge: number;
   rotation: number;
   x: number;
