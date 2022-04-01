@@ -760,6 +760,7 @@ export function NetscriptCorporation(
           Management: office.employeeJobs[EmployeePositions.Management],
           "Research & Development": office.employeeJobs[EmployeePositions.RandD],
           Training: office.employeeJobs[EmployeePositions.Training],
+          Unassigned: office.employeeJobs[EmployeePositions.Unassigned],
         },
       };
     },

@@ -35,6 +35,8 @@ export class OfficeSpace {
     [EmployeePositions.Business]: 0,
     [EmployeePositions.Management]: 0,
     [EmployeePositions.RandD]: 0,
+    [EmployeePositions.Training]: 0,
+    [EmployeePositions.Unassigned]: 0,
     total: 0,
   };
 
