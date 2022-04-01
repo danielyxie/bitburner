@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import { Money } from "../../ui/React/Money";
-import { Modal } from "../../ui/React/Modal";
-import { use } from "../../ui/Context";
+import { Money } from "../../../ui/React/Money";
+import { Modal } from "../../../ui/React/Modal";
+import { use } from "../../../ui/Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -56,9 +56,11 @@ export function CreateCorporationModal(props: IProps): React.ReactElement {
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Typography>
-        Would you like to start a corporation? This will require $150b for registration and initial funding. {player.bitNodeN === 3 && (`This $150b
+        Would you like to start a corporation? This will require $150b for registration and initial funding.{" "}
+        {player.bitNodeN === 3 &&
+          `This $150b
         can either be self-funded, or you can obtain the seed money from the government in exchange for 500 million
-        shares`)}
+        shares`}
         <br />
         <br />
         If you would like to start one, please enter a name for your corporation below:

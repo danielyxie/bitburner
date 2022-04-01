@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
-import { CreateCorporationModal } from "../../Corporation/ui/CreateCorporationModal";
+import { CreateCorporationModal } from "../../Corporation/ui/modals/CreateCorporationModal";
 import { LocationName } from "../data/LocationNames";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Factions } from "../../Faction/Factions";

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { MaterialSizes } from "../MaterialSizes";
-import { Warehouse } from "../Warehouse";
-import { Material } from "../Material";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { BulkPurchase, BuyMaterial } from "../Actions";
-import { Modal } from "../../ui/React/Modal";
-import { useCorporation, useDivision } from "./Context";
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
+import { MaterialSizes } from "../../MaterialSizes";
+import { Warehouse } from "../../Warehouse";
+import { Material } from "../../Material";
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { BulkPurchase, BuyMaterial } from "../../Actions";
+import { Modal } from "../../../ui/React/Modal";
+import { useCorporation, useDivision } from "../Context";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { KEY } from "../../utils/helpers/keyCodes";
+import { KEY } from "../../../utils/helpers/keyCodes";
 
 interface IBulkPurchaseTextProps {
   warehouse: Warehouse;

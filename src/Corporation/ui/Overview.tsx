@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import { LevelableUpgrade } from "./LevelableUpgrade";
 import { UnlockUpgrade } from "./UnlockUpgrade";
-import { BribeFactionModal } from "./BribeFactionModal";
-import { SellSharesModal } from "./SellSharesModal";
-import { BuybackSharesModal } from "./BuybackSharesModal";
-import { IssueDividendsModal } from "./IssueDividendsModal";
-import { IssueNewSharesModal } from "./IssueNewSharesModal";
-import { FindInvestorsModal } from "./FindInvestorsModal";
-import { GoPublicModal } from "./GoPublicModal";
+import { BribeFactionModal } from "./modals/BribeFactionModal";
+import { SellSharesModal } from "./modals/SellSharesModal";
+import { BuybackSharesModal } from "./modals/BuybackSharesModal";
+import { IssueDividendsModal } from "./modals/IssueDividendsModal";
+import { IssueNewSharesModal } from "./modals/IssueNewSharesModal";
+import { FindInvestorsModal } from "./modals/FindInvestorsModal";
+import { GoPublicModal } from "./modals/GoPublicModal";
 import { Factions } from "../../Faction/Factions";
 
 import { CorporationConstants } from "../data/Constants";
@@ -89,7 +89,7 @@ export function Overview({ rerender }: IProps): React.ReactElement {
       <StatsTable rows={multRows} />
       <br />
       <BonusTime />
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', width: 'fit-content' }}>
+      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", width: "fit-content" }}>
         <Tooltip
           title={
             <Typography>
@@ -200,8 +200,8 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
   const sellSharesTooltip = sellSharesOnCd
     ? "Cannot sell shares for " + corp.convertCooldownToString(corp.shareSaleCooldown)
     : "Sell your shares in the company. The money earned from selling your " +
-    "shares goes into your personal account, not the Corporation's. " +
-    "This is one of the only ways to profit from your business venture.";
+      "shares goes into your personal account, not the Corporation's. " +
+      "This is one of the only ways to profit from your business venture.";
 
   const issueNewSharesOnCd = corp.issueNewSharesCooldown > 0;
   const issueNewSharesTooltip = issueNewSharesOnCd

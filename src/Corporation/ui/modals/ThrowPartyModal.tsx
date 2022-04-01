@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { OfficeSpace } from "../OfficeSpace";
-import { ThrowParty } from "../Actions";
-import { Money } from "../../ui/React/Money";
-import { Modal } from "../../ui/React/Modal";
-import { useCorporation } from "./Context";
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
+import { OfficeSpace } from "../../OfficeSpace";
+import { ThrowParty } from "../../Actions";
+import { Money } from "../../../ui/React/Money";
+import { Modal } from "../../../ui/React/Modal";
+import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { KEY } from "../../utils/helpers/keyCodes";
+import { KEY } from "../../../utils/helpers/keyCodes";
 
 interface IProps {
   open: boolean;
@@ -35,17 +35,17 @@ export function ThrowPartyModal(props: IProps): React.ReactElement {
     if (cost === null || isNaN(cost) || cost < 0) {
       dialogBoxCreate("Invalid value entered");
     } else if (!canParty) {
-        dialogBoxCreate("You don't have enough company funds to throw a party!");
-      } else {
-        const mult = ThrowParty(corp, props.office, cost);
-        dialogBoxCreate(
-          "You threw a party for the office! The morale and happiness " +
-            "of each employee increased by " +
-            numeralWrapper.formatPercentage(mult - 1),
-        );
-        props.rerender();
-        props.onClose();
-      }
+      dialogBoxCreate("You don't have enough company funds to throw a party!");
+    } else {
+      const mult = ThrowParty(corp, props.office, cost);
+      dialogBoxCreate(
+        "You threw a party for the office! The morale and happiness " +
+          "of each employee increased by " +
+          numeralWrapper.formatPercentage(mult - 1),
+      );
+      props.rerender();
+      props.onClose();
+    }
   }
 
   function EffectText(): React.ReactElement {

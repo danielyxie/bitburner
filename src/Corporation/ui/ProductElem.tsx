@@ -2,10 +2,10 @@ import React, { useState } from "react";
 
 import { CorporationConstants } from "../data/Constants";
 import { Product } from "../Product";
-import { DiscontinueProductModal } from "./DiscontinueProductModal";
-import { LimitProductProductionModal } from "./LimitProductProductionModal";
-import { SellProductModal } from "./SellProductModal";
-import { ProductMarketTaModal } from "./ProductMarketTaModal";
+import { DiscontinueProductModal } from "./modals/DiscontinueProductModal";
+import { LimitProductProductionModal } from "./modals/LimitProductProductionModal";
+import { SellProductModal } from "./modals/SellProductModal";
+import { ProductMarketTaModal } from "./modals/ProductMarketTaModal";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
