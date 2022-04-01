@@ -10,6 +10,10 @@ import Button from "@mui/material/Button";
 import { Money } from "../../ui/React/Money";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
+import { MenuItem, SelectChangeEvent, TextField, Select } from "@mui/material";
+import { Bladeburner } from "../../Bladeburner/Bladeburner";
+import { GangConstants } from "../../Gang/data/Constants";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 interface IProps {
   player: IPlayer;
@@ -18,6 +22,8 @@ interface IProps {
 
 export function General(props: IProps): React.ReactElement {
   const [error, setError] = useState(false);
+  const [corporationName, setCorporationName] = useState("");
+  const [gangFaction, setGangFaction] = useState("");
 
   function addMoney(n: number) {
     return function () {
@@ -45,8 +51,25 @@ export function General(props: IProps): React.ReactElement {
     props.router.toBitVerse(false, false);
   }
 
+  function createCorporation(): void {
+    props.player.startCorporation(corporationName);
+  }
+
+  function joinBladeburner(): void {
+    props.player.bladeburner = new Bladeburner(props.player);
+  }
+
+  function startGang(): void {
+    const isHacking = gangFaction === FactionNames.NiteSec || gangFaction === FactionNames.TheBlackHand;
+    props.player.startGang(gangFaction, isHacking);
+  }
+
+  function setGangFactionDropdown(event: SelectChangeEvent<string>): void {
+    setGangFaction(event.target.value);
+  }
+
   useEffect(() => {
-    if (error) throw new ReferenceError('Manually thrown error');
+    if (error) throw new ReferenceError("Manually thrown error");
   }, [error]);
 
   return (
@@ -81,6 +104,22 @@ export function General(props: IProps): React.ReactElement {
           </pre>
         </Button>
         <Button onClick={upgradeRam}>+ RAM</Button>
+        <br />
+        <Typography>Corporation Name:</Typography>
+        <TextField value={corporationName} onChange={(x) => setCorporationName(x.target.value)} />
+        <Button onClick={createCorporation}>Create Corporation</Button>
+        <br />
+        <Typography>Gang Faction:</Typography>
+        <Select value={gangFaction} onChange={setGangFactionDropdown}>
+          {GangConstants.Names.map((factionName) => (
+            <MenuItem key={factionName} value={factionName}>
+              {factionName}
+            </MenuItem>
+          ))}
+        </Select>
+        <Button onClick={startGang}>Start Gang</Button>
+        <br />
+        <Button onClick={joinBladeburner}>Join BladeBurner</Button>
         <br />
 
         <Button onClick={quickB1tFlum3}>Quick b1t_flum3.exe</Button>
