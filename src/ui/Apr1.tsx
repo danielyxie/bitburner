@@ -38,25 +38,14 @@ function isApr1(): boolean {
 }
 
 export function Apr1(): React.ReactElement {
-  // var colour = '#00ff00';
-  // async function play() {
-  //     var frames = n.length;
-  //     for (var i = 0; i < frames; i++) {
-  //         document.getElementById("output").innerHTML = "";
-  //         await new Promise(r => setTimeout(r, 100));
-  //     }
-  //     play();
-  // }
-  // play();
   const [open, setOpen] = useState(isApr1());
   const [n, setN] = useState(0);
-
-  if (!open) return <></>;
 
   useEffect(() => {
     const id = setInterval(() => setN((n) => (n + 1) % frames.length), 100);
     return () => clearInterval(id);
   }, []);
+  if (!open) return <></>;
 
   return (
     <Modal open={open} onClose={() => setOpen(false)}>
