@@ -352,6 +352,7 @@ export function NetscriptCorporation(
       const materialName = helper.string("getMaterial", "materialName", _materialName);
       const material = getMaterial(divisionName, cityName, materialName);
       return {
+        cost: material.bCost,
         name: material.name,
         qty: material.qty,
         qlt: material.qlt,

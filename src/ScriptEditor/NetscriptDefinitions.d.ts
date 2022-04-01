@@ -6915,10 +6915,12 @@ interface Material {
   qty: number;
   /** Quality of the material */
   qlt: number;
-  /** Amount of material produced  */
+  /** Amount of material produced */
   prod: number;
-  /** Amount of material sold  */
+  /** Amount of material sold */
   sell: number;
+  /** cost to buy material */
+  cost: number;
 }
 
 /**
