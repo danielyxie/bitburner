@@ -498,6 +498,7 @@ export function CancelExportMaterial(divisionName: string, cityName: string, mat
 export function LimitProductProduction(product: Product, cityName: string, qty: number): void {
   if (qty < 0 || isNaN(qty)) {
     product.prdman[cityName][0] = false;
+    product.prdman[cityName][1] = 0;
   } else {
     product.prdman[cityName][0] = true;
     product.prdman[cityName][1] = qty;
@@ -507,6 +508,7 @@ export function LimitProductProduction(product: Product, cityName: string, qty: 
 export function LimitMaterialProduction(material: Material, qty: number): void {
   if (qty < 0 || isNaN(qty)) {
     material.prdman[0] = false;
+    material.prdman[1] = 0;
   } else {
     material.prdman[0] = true;
     material.prdman[1] = qty;
