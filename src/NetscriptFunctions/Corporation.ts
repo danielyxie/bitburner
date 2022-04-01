@@ -64,6 +64,7 @@ import { CorporationConstants } from "../Corporation/data/Constants";
 import { IndustryUpgrades } from "../Corporation/IndustryUpgrades";
 import { ResearchMap } from "../Corporation/ResearchMap";
 import { Factions } from "../Faction/Factions";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 export function NetscriptCorporation(
   player: IPlayer,
@@ -74,6 +75,8 @@ export function NetscriptCorporation(
     if (!player.canAccessCorporation() || player.hasCorporation()) return false;
     if (!corporationName) return false;
     if (player.bitNodeN !== 3 && !selfFund) throw new Error("cannot use seed funds outside of BitNode 3");
+    if (BitNodeMultipliers.CorporationSoftCap < 0.15)
+      throw new Error(`You cannot create a corporation for Bitnode ${player.bitNodeN}`);
 
     if (selfFund) {
       if (!player.canAfford(150e9)) return false;

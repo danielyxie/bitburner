@@ -34,6 +34,7 @@ import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer } from "../../Server/AllServers";
 import { ArcadeRoot } from "../../Arcade/ui/ArcadeRoot";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 type IProps = {
   loc: Location;
@@ -155,7 +156,11 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     if (!player.canAccessGrafting()) {
       return <></>;
     }
-    return <Button onClick={handleGrafting} sx={{ my: 5 }}>Enter the secret lab</Button>;
+    return (
+      <Button onClick={handleGrafting} sx={{ my: 5 }}>
+        Enter the secret lab
+      </Button>
+    );
   }
 
   function handleCotMG(): void {
@@ -302,7 +307,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       return renderGrafting();
     }
     case LocationName.Sector12CityHall: {
-      return <CreateCorporation />;
+      return (BitNodeMultipliers.CorporationSoftCap >= 0.15 && <></>) || <CreateCorporation />;
     }
     case LocationName.Sector12NSA: {
       return renderBladeburner();
