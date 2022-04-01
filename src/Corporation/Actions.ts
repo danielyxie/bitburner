@@ -419,7 +419,7 @@ export function MakeProduct(
   }
 
   const product = new Product({
-    name: productName.replace(/[<>]/g, ""), //Sanitize for HTMl elements
+    name: productName.replace(/[<>]/g, "").trim(), //Sanitize for HTMl elements
     createCity: city,
     designCost: designInvest,
     advCost: marketingInvest,
