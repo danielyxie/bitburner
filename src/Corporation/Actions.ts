@@ -52,13 +52,15 @@ export function NewIndustry(corporation: ICorporation, industry: string, name: s
 export function NewCity(corporation: ICorporation, division: IIndustry, city: string): void {
   if (corporation.funds < CorporationConstants.OfficeInitialCost) {
     throw new Error("You don't have enough company funds to open a new office!");
-  } else {
-    corporation.funds = corporation.funds - CorporationConstants.OfficeInitialCost;
-    division.offices[city] = new OfficeSpace({
-      loc: city,
-      size: CorporationConstants.OfficeInitialSize,
-    });
   }
+  if (division.offices[city]) {
+    throw new Error(`You have already expanded into ${city} for ${division.name}`);
+  }
+  corporation.funds = corporation.funds - CorporationConstants.OfficeInitialCost;
+  division.offices[city] = new OfficeSpace({
+    loc: city,
+    size: CorporationConstants.OfficeInitialSize,
+  });
 }
 
 export function UnlockUpgrade(corporation: ICorporation, upgrade: CorporationUnlockUpgrade): void {
