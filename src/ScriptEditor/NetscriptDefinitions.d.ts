@@ -6657,6 +6657,22 @@ export interface WarehouseAPI {
     marketingInvest: number,
   ): void;
   /**
+   * Limit Material Production.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param qty - Amount to limit to
+   */
+  limitMaterialProduction(divisionName: string, cityName: string, materialName: string, qty: number): void;
+  /**
+   * Limit Product Production.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param productName - Name of the product
+   * @param qty - Amount to limit to
+   */
+  limitProductProduction(divisionName: string, cityName: string, productName: string, qty: number): void;
+  /**
    * Gets the cost to purchase a warehouse
    * @returns cost
    */

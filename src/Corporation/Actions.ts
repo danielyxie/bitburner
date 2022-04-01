@@ -497,6 +497,15 @@ export function LimitProductProduction(product: Product, cityName: string, qty: 
   }
 }
 
+export function LimitMaterialProduction(material: Material, qty: number): void {
+  if (qty < 0 || isNaN(qty)) {
+    material.prdman[0] = false;
+  } else {
+    material.prdman[0] = true;
+    material.prdman[1] = qty;
+  }
+}
+
 export function SetMaterialMarketTA1(material: Material, on: boolean): void {
   material.marketTa1 = on;
 }

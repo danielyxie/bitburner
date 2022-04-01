@@ -21,6 +21,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { LimitMaterialProductionModal } from "./modals/LimitMaterialProductionModal";
 
 interface IMaterialProps {
   warehouse: Warehouse;
@@ -112,6 +113,12 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
     sellButtonText = <>Sell (0.000/0.000)</>;
   }
 
+  // Limit Production button
+  let limitMaterialButtonText = "Limit Material";
+  if (mat.prdman[0]) {
+    limitMaterialButtonText += " (" + numeralWrapper.format(mat.prdman[1], nf) + ")";
+  }
+
   return (
     <Paper>
       <Box sx={{ display: "grid", gridTemplateColumns: "2fr 1fr", m: "5px" }}>
@@ -196,6 +203,14 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
               />
             </>
           )}
+          <Button color={tutorial ? "error" : "primary"} onClick={() => setLimitProductionOpen(true)}>
+            {limitMaterialButtonText}
+          </Button>
+          <LimitMaterialProductionModal
+            material={mat}
+            open={limitProductionOpen}
+            onClose={() => setLimitProductionOpen(false)}
+          />
         </Box>
       </Box>
     </Paper>

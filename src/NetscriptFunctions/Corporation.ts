@@ -53,6 +53,8 @@ import {
   SellShares,
   BuyBackShares,
   SetSmartSupplyUseLeftovers,
+  LimitMaterialProduction,
+  LimitProductProduction,
 } from "../Corporation/Actions";
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
@@ -498,6 +500,19 @@ export function NetscriptCorporation(
       const corporation = getCorporation();
       MakeProduct(corporation, getDivision(divisionName), cityName, productName, designInvest, marketingInvest);
     },
+    limitProductProduction: function (
+      _divisionName: unknown,
+      _productName: unknown,
+      _cityName: unknown,
+      _qty: unknown,
+    ) {
+      checkAccess("limitProductProduction", 7);
+      const divisionName = helper.string("limitProductProduction", "divisionName", _divisionName);
+      const cityName = helper.city("limitMaterialProduction", "cityName", _cityName);
+      const productName = helper.string("limitProductProduction", "productName", _productName);
+      const qty = helper.number("limitMaterialProduction", "qty", _qty);
+      LimitProductProduction(getProduct(divisionName, productName), cityName, qty);
+    },
     exportMaterial: function (
       _sourceDivision: unknown,
       _sourceCity: unknown,
@@ -537,6 +552,19 @@ export function NetscriptCorporation(
       const materialName = helper.string("cancelExportMaterial", "materialName", _materialName);
       const amt = helper.string("cancelExportMaterial", "amt", _amt);
       CancelExportMaterial(targetDivision, targetCity, getMaterial(sourceDivision, sourceCity, materialName), amt + "");
+    },
+    limitMaterialProduction: function (
+      _divisionName: unknown,
+      _cityName: unknown,
+      _materialName: unknown,
+      _qty: unknown,
+    ) {
+      checkAccess("limitMaterialProduction", 7);
+      const divisionName = helper.string("limitMaterialProduction", "divisionName", _divisionName);
+      const cityName = helper.city("limitMaterialProduction", "cityName", _cityName);
+      const materialName = helper.string("limitMaterialProduction", "materialName", _materialName);
+      const qty = helper.number("limitMaterialProduction", "qty", _qty);
+      LimitMaterialProduction(getMaterial(divisionName, cityName, materialName), qty);
     },
     setMaterialMarketTA1: function (
       _divisionName: unknown,
