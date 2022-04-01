@@ -34,16 +34,18 @@ export function SellSharesModal(props: IProps): React.ReactElement {
   function ProfitIndicator(props: { shares: number | null; corp: ICorporation }): React.ReactElement {
     if (props.shares === null) return <></>;
     if (isNaN(props.shares) || props.shares <= 0) {
-      return <>ERROR: Invalid value entered for number of shares to sell</>;
+      return <Typography>ERROR: Invalid value entered for number of shares to sell </Typography>;
     } else if (props.shares > corp.numShares) {
-      return <>You don't have this many shares to sell!</>;
+      return <Typography>You don't have this many shares to sell! </Typography>;
     } else {
       const stockSaleResults = corp.calculateShareSale(props.shares);
       const profit = stockSaleResults[0];
       return (
-        <>
-          Sell {props.shares} shares for a total of {numeralWrapper.formatMoney(profit)}
-        </>
+        <Typography>
+          <small>
+            Sell {props.shares} shares for a total of {numeralWrapper.formatMoney(profit)}
+          </small>
+        </Typography>
       );
     }
   }
