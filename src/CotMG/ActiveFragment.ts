@@ -28,9 +28,9 @@ export class ActiveFragment {
       this.id = -1;
       this.x = -1;
       this.y = -1;
-      this.highestCharge = -1;
-      this.numCharge = -1;
-      this.rotation = -1;
+      this.highestCharge = 0;
+      this.numCharge = 0;
+      this.rotation = 0;
     }
   }
 
