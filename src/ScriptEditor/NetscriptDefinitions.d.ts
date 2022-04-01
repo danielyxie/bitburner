@@ -6639,8 +6639,9 @@ export interface WarehouseAPI {
    * Upgrade warehouse
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
+   * @param amt - amount of upgrades defaults to 1
    */
-  upgradeWarehouse(divisionName: string, cityName: string): void;
+  upgradeWarehouse(divisionName: string, cityName: string, amt: number): void;
   /**
    * Create a new product
    * @param divisionName - Name of the division
@@ -6679,9 +6680,12 @@ export interface WarehouseAPI {
   getPurchaseWarehouseCost(): number;
   /**
    * Gets the cost to upgrade a warehouse to the next level
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param amt - amount of upgrades defaults to 1
    * @returns cost to upgrade
    */
-  getUpgradeWarehouseCost(adivisionName: any, acityName: any): number;
+  getUpgradeWarehouseCost(adivisionName: any, acityName: any, amt: number): number;
   /**
    * Check if you have a warehouse in city
    * @returns true if warehouse is present, false if not

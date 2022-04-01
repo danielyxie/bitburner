@@ -55,6 +55,7 @@ import {
   SetSmartSupplyUseLeftovers,
   LimitMaterialProduction,
   LimitProductProduction,
+  UpgradeWarehouseCost,
 } from "../Corporation/Actions";
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
@@ -316,12 +317,13 @@ export function NetscriptCorporation(
       checkAccess("getPurchaseWarehouseCost", 7);
       return CorporationConstants.WarehouseInitialCost;
     },
-    getUpgradeWarehouseCost: function (_divisionName: unknown, _cityName: unknown): number {
+    getUpgradeWarehouseCost: function (_divisionName: unknown, _cityName: unknown, _amt: unknown = 1): number {
       checkAccess("upgradeWarehouse", 7);
       const divisionName = helper.string("getUpgradeWarehouseCost", "divisionName", _divisionName);
       const cityName = helper.city("getUpgradeWarehouseCost", "cityName", _cityName);
+      const amt = helper.number("getUpgradeWarehouseCost", "amount", _amt);
       const warehouse = getWarehouse(divisionName, cityName);
-      return CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
+      return UpgradeWarehouseCost(warehouse, amt);
     },
     hasWarehouse: function (_divisionName: unknown, _cityName: unknown): boolean {
       checkAccess("hasWarehouse", 7);
@@ -382,12 +384,13 @@ export function NetscriptCorporation(
       const corporation = getCorporation();
       PurchaseWarehouse(corporation, getDivision(divisionName), cityName);
     },
-    upgradeWarehouse: function (_divisionName: unknown, _cityName: unknown): void {
+    upgradeWarehouse: function (_divisionName: unknown, _cityName: unknown, _amt: unknown): void {
       checkAccess("upgradeWarehouse", 7);
       const divisionName = helper.string("upgradeWarehouse", "divisionName", _divisionName);
       const cityName = helper.city("upgradeWarehouse", "cityName", _cityName);
+      const amt = helper.number("upgradeWarehouse", "amount", _amt);
       const corporation = getCorporation();
-      UpgradeWarehouse(corporation, getDivision(divisionName), getWarehouse(divisionName, cityName));
+      UpgradeWarehouse(corporation, getDivision(divisionName), getWarehouse(divisionName, cityName), amt);
     },
     sellMaterial: function (
       _divisionName: unknown,

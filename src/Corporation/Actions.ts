@@ -348,10 +348,17 @@ export function PurchaseWarehouse(corp: ICorporation, division: IIndustry, city:
   corp.funds = corp.funds - CorporationConstants.WarehouseInitialCost;
 }
 
-export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, warehouse: Warehouse): void {
-  const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
+export function UpgradeWarehouseCost(warehouse: Warehouse, amt: number): number {
+  return Array.from(Array(amt).keys()).reduce(
+    (acc, index) => acc + CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1 + index),
+    0,
+  );
+}
+
+export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, warehouse: Warehouse, amt = 1): void {
+  const sizeUpgradeCost = UpgradeWarehouseCost(warehouse, amt);
   if (corp.funds < sizeUpgradeCost) return;
-  ++warehouse.level;
+  warehouse.level += amt;
   warehouse.updateSize(corp, division);
   corp.funds = corp.funds - sizeUpgradeCost;
 }
