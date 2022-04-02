@@ -33,21 +33,22 @@ export function SellSharesModal(props: IProps): React.ReactElement {
 
   function ProfitIndicator(props: { shares: number | null; corp: ICorporation }): React.ReactElement {
     if (props.shares === null) return <></>;
+    let text = "";
     if (isNaN(props.shares) || props.shares <= 0) {
-      return <Typography>ERROR: Invalid value entered for number of shares to sell </Typography>;
+      text = `ERROR: Invalid value entered for number of shares to sell`;
     } else if (props.shares > corp.numShares) {
-      return <Typography>You don't have this many shares to sell! </Typography>;
+      text = `You don't have this many shares to sell!`;
     } else {
       const stockSaleResults = corp.calculateShareSale(props.shares);
       const profit = stockSaleResults[0];
-      return (
-        <Typography>
-          <small>
-            Sell {props.shares} shares for a total of {numeralWrapper.formatMoney(profit)}
-          </small>
-        </Typography>
-      );
+      text = `Sell ${props.shares} shares for a total of ${numeralWrapper.formatMoney(profit)}`;
     }
+
+    return (
+      <Typography>
+        <small>{text}</small>
+      </Typography>
+    );
   }
 
   function sell(): void {
@@ -86,7 +87,6 @@ export function SellSharesModal(props: IProps): React.ReactElement {
         <br />
         The current price of your company's stock is {numeralWrapper.formatMoney(corp.sharePrice)}
       </Typography>
-      <ProfitIndicator shares={shares} corp={corp} />
       <br />
       <TextField
         variant="standard"
@@ -99,6 +99,7 @@ export function SellSharesModal(props: IProps): React.ReactElement {
       <Button disabled={disabled} onClick={sell} sx={{ mx: 1 }}>
         Sell shares
       </Button>
+      <ProfitIndicator shares={shares} corp={corp} />
     </Modal>
   );
 }
