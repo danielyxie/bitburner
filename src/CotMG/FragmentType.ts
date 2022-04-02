@@ -61,7 +61,7 @@ export function Effect(tpe: FragmentType): string {
       return "+x% hacknet production";
     }
     case FragmentType.HacknetCost: {
-      return "x% cheaper hacknet cost";
+      return "-x% cheaper hacknet cost";
     }
     case FragmentType.Rep: {
       return "+x% reputation from factions and companies";

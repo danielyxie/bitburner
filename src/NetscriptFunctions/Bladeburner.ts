@@ -353,7 +353,8 @@ export function NetscriptBladeburner(
       checkBladeburnerCity("switchCity", cityName);
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
-      return bladeburner.city === cityName;
+      bladeburner.city = cityName;
+      return true;
     },
     getStamina: function (): [number, number] {
       helper.updateDynamicRam("getStamina", getRamCost(player, "bladeburner", "getStamina"));

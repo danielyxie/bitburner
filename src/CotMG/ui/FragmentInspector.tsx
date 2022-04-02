@@ -48,16 +48,18 @@ export function FragmentInspector(props: IProps): React.ReactElement {
   }
   const f = props.fragment.fragment();
 
-  let charge = `${numeralWrapper.formatStaneksGiftCharge(props.fragment.avgCharge)} avg. * ${
-    props.fragment.numCharge
-  } times`;
+  let charge = numeralWrapper.formatStaneksGiftCharge(props.fragment.highestCharge * props.fragment.numCharge);
   let effect = "N/A";
   // Boosters and cooling don't deal with heat.
   if ([FragmentType.Booster, FragmentType.None, FragmentType.Delete].includes(f.type)) {
     charge = "N/A";
     effect = `${f.power}x adjacent fragment power`;
-  } else {
+  } else if (Effect(f.type).includes("+x%")) {
     effect = Effect(f.type).replace(/-*x%/, numeralWrapper.formatPercentage(props.gift.effect(props.fragment) - 1));
+  } else if (Effect(f.type).includes("-x%")) {
+    const effectAmt = props.gift.effect(props.fragment);
+    const perc = numeralWrapper.formatPercentage(1 - 1 / effectAmt);
+    effect = Effect(f.type).replace(/-x%/, perc);
   }
 
   return (
