@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LimitMaterialProduction } from "../../Actions";
 import { Modal } from "../../../ui/React/Modal";
 import Typography from "@mui/material/Typography";
@@ -16,6 +16,13 @@ interface IProps {
 // Create a popup that lets the player limit the production of a product
 export function LimitMaterialProductionModal(props: IProps): React.ReactElement {
   const [limit, setLimit] = useState<number | null>(null);
+
+  // reset modal internal state on modal close
+  useEffect(() => {
+    if (!props.open) {
+      setLimit(null);
+    }
+  }, [props.open]);
 
   function limitMaterialProduction(): void {
     let qty = limit;
