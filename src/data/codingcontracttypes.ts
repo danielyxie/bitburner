@@ -864,12 +864,12 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         //prev[y] = new Array(width).fill(undefined) as [undefined];
       }
 
-      function validPosition(y: number, x: number) {
+      function validPosition(y: number, x: number): boolean {
         return y >= 0 && y < height && x >= 0 && x < width && data[y][x] == 0;
       }
 
       // List in-bounds and passable neighbors
-      function* neighbors(y: number, x: number) {
+      function* neighbors(y: number, x: number): Generator<[number, number]> {
         if(validPosition(y - 1, x)) yield [y - 1, x]; // Up
         if(validPosition(y + 1, x)) yield [y + 1, x]; // Down
         if(validPosition(y, x - 1)) yield [y, x - 1]; // Left
