@@ -838,9 +838,10 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
           if(y == 0 && x == 0) continue; // Don't block start
           if(y == dstY && x == dstX) continue; // Don't block destination
 
-          // Generate more obstacles the farther a position is from start and destination,
-          // with minimum obstacle chance of 15%
-          const distanceFactor = Math.min(y + x, dstY - y + dstX - x) / minPathLength;
+          // Generate more obstacles the farther a position is from start and destination.
+          // Raw distance factor peaks at 50% at half-way mark. Rescale to 40% max.
+          // Obstacle chance range of [15%, 40%] produces ~78% solvable puzzles
+          const distanceFactor = Math.min(y + x, dstY - y + dstX - x) / minPathLength * 0.8;
           if (Math.random() < Math.max(0.15, distanceFactor))
             grid[y][x] = 1;
         }
