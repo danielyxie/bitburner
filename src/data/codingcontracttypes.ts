@@ -820,8 +820,8 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "Answer: ''\n\n",
       ].join(" ");
     },
-    difficulty: 5, // TODO: higher, but probably not much more?
-    numTries: 10, // TODO: probably OK?
+    difficulty: 7,
+    numTries: 10,
     gen: (): number[][] => {
       const height = getRandomInt(6, 12);
       const width = getRandomInt(6, 12);
