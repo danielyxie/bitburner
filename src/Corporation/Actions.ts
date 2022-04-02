@@ -260,7 +260,7 @@ export function BulkPurchase(corp: ICorporation, warehouse: Warehouse, material:
   if (isNaN(amt) || amt < 0) {
     throw new Error(`Invalid input amount`);
   }
-  if (amt >= maxAmount) {
+  if (amt > maxAmount) {
     throw new Error(`You do not have enough warehouse size to fit this purchase`);
   }
   const cost = amt * material.bCost;

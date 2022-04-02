@@ -36,7 +36,7 @@ function BulkPurchaseSection(props: IBPProps): React.ReactElement {
     const matSize = MaterialSizes[props.mat.name];
     const maxAmount = (props.warehouse.size - props.warehouse.sizeUsed) / matSize;
 
-    if (parsedAmt * matSize > maxAmount) {
+    if (parsedAmt > maxAmount) {
       setDisabled(true);
       return (
         <>
