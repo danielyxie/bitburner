@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { EventEmitter } from "../utils/EventEmitter";
 import { Modal } from "./React/Modal";
 
 const frames = [
@@ -37,6 +38,8 @@ function isApr1(): boolean {
   return d.getMonth() === 3 && d.getDate() === 1;
 }
 
+export const Apr1Events = new EventEmitter();
+
 export function Apr1(): React.ReactElement {
   const [open, setOpen] = useState(isApr1());
   const [n, setN] = useState(0);
@@ -45,6 +48,15 @@ export function Apr1(): React.ReactElement {
     const id = setInterval(() => setN((n) => (n + 1) % frames.length), 100);
     return () => clearInterval(id);
   }, []);
+
+  useEffect(
+    () =>
+      Apr1Events.subscribe(() => {
+        setOpen(true);
+      }),
+    [],
+  );
+
   if (!open) return <></>;
 
   return (
