@@ -1,4 +1,5 @@
 import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { MinHeap } from "../utils/Heap";
 
 /* tslint:disable:completed-docs no-magic-numbers arrow-return-shorthand */
 
@@ -792,6 +793,134 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       }
 
       return obstacleGrid[obstacleGrid.length - 1][obstacleGrid[0].length - 1] === parseInt(ans);
+    },
+  },
+  {
+    name: "Shortest Path in a Grid",
+    desc: (data: number[][]): string => {
+      return [
+        "You are located in the top-left corner of the following grid:\n\n",
+        `&nbsp;&nbsp;[${data.map(line => "[" + line + "]").join(",\n&nbsp;&nbsp;&nbsp;")}]\n\n`,
+        "You are trying to find the shortest path to the bottom-right corner of the grid,",
+        "but there are obstacles on the grid that you cannot move onto.",
+        "These obstacles are denoted by '1', while empty spaces are denoted by 0.\n\n",
+        "Determine the shortest path from start to finish, if one exists.",
+        "The answer should be given as a string of UDLR characters, indicating the moves along the path\n\n",
+        "NOTE: If there are multiple equally short paths, any of them is accepted as answer.",
+        "If there is no path, the answer should be an empty string.\n",
+        "NOTE: The data returned for this contract is an 2D array of numbers representing the grid.\n\n",
+        "Examples:\n\n",
+        "&nbsp;&nbsp;&nbsp;&nbsp;[[0,1,0,0,0],\n",
+        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0,0,0,1,0]]\n",
+        "\n",
+        "Answer: 'DRRURRD'\n\n",
+        "&nbsp;&nbsp;&nbsp;&nbsp;[[0,1],\n",
+        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1,0]]\n",
+        "\n",
+        "Answer: ''\n\n",
+      ].join(" ");
+    },
+    difficulty: 5, // TODO: higher, but probably not much more?
+    numTries: 10, // TODO: probably OK?
+    gen: (): number[][] => {
+      const height = getRandomInt(6, 12);
+      const width = getRandomInt(6, 12);
+      const dstY = height - 1;
+      const dstX = width - 1;
+      const minPathLength = dstY + dstX; // Math.abs(dstY - srcY) + Math.abs(dstX - srcX)
+
+      const grid: number[][] = new Array(height);
+      for(let y = 0; y < height; y++)
+        grid[y] = new Array(width).fill(0);
+
+      for(let y = 0; y < height; y++) {
+        for(let x = 0; x < width; x++) {
+          if(y == 0 && x == 0) continue; // Don't block start
+          if(y == dstY && x == dstX) continue; // Don't block destination
+
+          // Generate more obstacles the farther a position is from start and destination,
+          // with minimum obstacle chance of 15%
+          const distanceFactor = Math.min(y + x, dstY - y + dstX - x) / minPathLength;
+          if (Math.random() < Math.max(0.15, distanceFactor))
+            grid[y][x] = 1;
+        }
+      }
+
+      return grid;
+    },
+    solver: (data: number[][], ans: string): boolean => {
+      const width = data[0].length;
+      const height = data.length;
+      const dstY = height - 1;
+      const dstX = width - 1;
+
+      const distance: [number][] = new Array(height);
+      //const prev: [[number, number] | undefined][] = new Array(height);
+      const queue = new MinHeap<[number, number]>();
+
+      for(let y = 0; y < height; y++) {
+        distance[y] = new Array(width).fill(Infinity) as [number];
+        //prev[y] = new Array(width).fill(undefined) as [undefined];
+      }
+
+      function validPosition(y: number, x: number) {
+        return y >= 0 && y < height && x >= 0 && x < width && data[y][x] == 0;
+      }
+
+      // List in-bounds and passable neighbors
+      function* neighbors(y: number, x: number) {
+        if(validPosition(y - 1, x)) yield [y - 1, x]; // Up
+        if(validPosition(y + 1, x)) yield [y + 1, x]; // Down
+        if(validPosition(y, x - 1)) yield [y, x - 1]; // Left
+        if(validPosition(y, x + 1)) yield [y, x + 1]; // Right
+      }
+
+      // Prepare starting point
+      distance[0][0] = 0;
+      queue.push([0, 0], 0);
+
+      // Take next-nearest position and expand potential paths from there
+      while(queue.size > 0) {
+        const [y, x] = queue.pop() as [number, number];
+        for(const [yN, xN] of neighbors(y, x)) {
+          const d = distance[y][x] + 1;
+          if(d < distance[yN][xN]) {
+            if(distance[yN][xN] == Infinity) // Not reached previously
+              queue.push([yN, xN], d);
+            else // Found a shorter path
+              queue.changeWeight(([yQ, xQ]) => yQ == yN && xQ == xN, d);
+            //prev[yN][xN] = [y, x];
+            distance[yN][xN] = d;
+          }
+        }
+      }
+
+      // No path at all?
+      if(distance[dstY][dstX] == Infinity)
+        return ans == "";
+
+      // There is a solution, require that the answer path is as short as the shortest
+      // path we found
+      if(ans.length > distance[dstY][dstX])
+        return false;
+
+      // Further verify that the answer path is a valid path
+      let ansX = 0;
+      let ansY = 0;
+      for(const direction of ans) {
+        switch(direction) {
+          case "U": ansY -= 1; break;
+          case "D": ansY += 1; break;
+          case "L": ansX -= 1; break;
+          case "R": ansX += 1; break;
+          default: return false; // Invalid character
+        }
+        if(!validPosition(ansY, ansX))
+          return false;
+      }
+
+      // Path was valid, finally verify that the answer path brought us to the end coordinates
+      return ansY == dstY && ansX == dstX;
     },
   },
   {
