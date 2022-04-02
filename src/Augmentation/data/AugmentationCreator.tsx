@@ -2071,7 +2071,12 @@ export function initNeuroFluxGovernor(): Augmentation {
     hacknet_node_core_cost_mult: 0.99,
     hacknet_node_level_cost_mult: 0.99,
     work_money_mult: 1.01,
-    factions: Object.values(FactionNames),
+    factions: Object.values(FactionNames).filter(
+      (factionName) =>
+        ![FactionNames.Infiltrators, FactionNames.Bladeburners, FactionNames.ChurchOfTheMachineGod].includes(
+          factionName,
+        ),
+    ),
   });
 }
 
