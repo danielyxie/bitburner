@@ -25,7 +25,7 @@ process.on('uncaughtException', function () {
 
 // We want to fail gracefully if we cannot connect to Steam
 try {
-  if (greenworks.init()) {
+  if (greenworks && greenworks.init()) {
     log.info("Steam API has been initialized.");
   } else {
     const error = "Steam API has failed to initialize.";
@@ -149,7 +149,7 @@ function setStopProcessHandler(app, window, enabled) {
     }
 
     const { save, ...other } = arg;
-    log.silly("Received game saved info", {...other, save: `${save.length} bytes`});
+    log.silly("Received game saved info", { ...other, save: `${save.length} bytes` });
 
     if (storage.isAutosaveEnabled()) {
       saveToDisk(save, arg.fileName);
@@ -159,7 +159,7 @@ function setStopProcessHandler(app, window, enabled) {
       const playtime = window.gameInfo.player.playtime;
       log.silly(window.gameInfo);
       if (playtime > minimumPlaytime) {
-      saveToCloud(save);
+        saveToCloud(save);
       } else {
         log.debug(`Auto-save to cloud disabled for save game under ${minimumPlaytime}ms (${playtime}ms)`);
       }
