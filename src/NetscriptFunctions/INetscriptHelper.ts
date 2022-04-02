@@ -3,7 +3,7 @@ import { BaseServer } from "../Server/BaseServer";
 
 export interface INetscriptHelper {
   updateDynamicRam(functionName: string, ram: number): void;
-  makeRuntimeErrorMsg(functionName: string, message: string): void;
+  makeRuntimeErrorMsg(functionName: string, message: string): string;
   string(funcName: string, argName: string, v: unknown): string;
   number(funcName: string, argName: string, v: unknown): number;
   city(funcName: string, argName: string, v: unknown): CityName;
