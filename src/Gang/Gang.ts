@@ -223,7 +223,7 @@ export class Gang implements IGang {
 
         if (Math.random() < thisChance) {
           if (AllGangs[otherGang].territory <= 0) return;
-          const territoryGain = calculateTerritoryGain(thisGang, otherGang);
+          let territoryGain = calculateTerritoryGain(thisGang, otherGang);
           AllGangs[otherGang].territory -= territoryGain;
           if (AllGangs[otherGang].territory < 0.001) {
             if (AllGangs[otherGang].territory > 0) territoryGain += AllGangs[otherGang].territory;
@@ -241,7 +241,7 @@ export class Gang implements IGang {
           }
         } else {
           if (AllGangs[thisGang].territory <= 0) return;
-          const territoryGain = calculateTerritoryGain(otherGang, thisGang);
+          let territoryGain = calculateTerritoryGain(otherGang, thisGang);
           AllGangs[thisGang].territory -= territoryGain;
           if (AllGangs[thisGang].territory < 0.001) {
             if (AllGangs[thisGang].territory > 0) territoryGain += AllGangs[thisGang].territory;
