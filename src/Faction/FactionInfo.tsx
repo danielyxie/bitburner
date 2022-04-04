@@ -517,8 +517,8 @@ export const FactionInfos: IMap<FactionInfo> = {
         It's too bad they won't live. But then again, who does?
         <br />
         <br />
-        Note that for this faction, reputation can only be gained through {FactionNames.Bladeburners} actions. Completing {FactionNames.Bladeburners}
-        contracts/operations will increase your reputation.
+        Note that for this faction, reputation can only be gained through {FactionNames.Bladeburners} actions.{" "}
+        Completing {FactionNames.Bladeburners} contracts/operations will increase your reputation.
       </>
     ),
     [],
