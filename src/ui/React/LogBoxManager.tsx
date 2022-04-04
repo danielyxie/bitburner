@@ -40,7 +40,7 @@ export function LogBoxManager(): React.ReactElement {
   useEffect(
     () =>
       LogBoxEvents.subscribe((script: RunningScript) => {
-        const id = script.server + "-" + script.filename + script.args.map((x: any): string => `${x}`).join("-");
+        const id = [script.server, script.filename, ...script.args.map((x: any): string => `${x}`)].join("-");
         if (logs.find((l) => l.id === id)) return;
         logs.push({
           id: id,
@@ -177,7 +177,7 @@ function LogWindow(props: IProps): React.ReactElement {
 
   function title(full = false): string {
     const maxLength = 30;
-    const t = `${script.filename} ${script.args.map((x: any): string => `${x}`).join(" ")}`;
+    const t = [ script.filename, ...script.args.map((x: any): string => `${x}`) ].join(" ");
     if (full || t.length <= maxLength) {
       return t;
     }
@@ -241,7 +241,7 @@ function LogWindow(props: IProps): React.ReactElement {
   };
 
   return (
-    <Draggable handle=".drag" onDrag={boundToBody} ref={rootRef}>
+    <Draggable id={props.id} handle=".drag" onDrag={boundToBody} ref={rootRef}>
       <Paper
         style={{
           display: "flex",
@@ -284,7 +284,7 @@ function LogWindow(props: IProps): React.ReactElement {
                 </span>
               }
             >
-              <Box>
+              <Box id={props.id + "-logs"}>
                 {script.logs.map(
                   (line: string, i: number): JSX.Element => (
                     <Typography key={i} className={lineClass(line)}>
