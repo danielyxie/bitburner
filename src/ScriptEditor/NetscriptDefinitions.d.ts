@@ -3637,9 +3637,9 @@ export interface Sleeve {
    * @param sleeveNumber - Index of the sleeve to work for the faction.
    * @param factionName - Name of the faction to work for.
    * @param factionWorkType - Name of the action to perform for this faction.
-   * @returns True if the sleeve started working on this faction, false otherwise.
+   * @returns True if the sleeve started working on this faction, false otherwise, can also throw on errors
    */
-  setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean;
+  setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean | undefined;
 
   /**
    * Set a sleeve to work for a company.
