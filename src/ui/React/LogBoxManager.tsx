@@ -18,7 +18,6 @@ import { Theme } from "@mui/material";
 import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
 import { debounce } from "lodash";
-import { WorkerScriptStartStopEventEmitter } from "../../Netscript/WorkerScriptStartStopEventEmitter";
 
 let layerCounter = 0;
 
