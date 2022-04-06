@@ -34,7 +34,7 @@ export function CasinoLocation(props: IProps): React.ReactElement {
   return (
     <>
       {game === GameType.None && (
-        <Box sx={{ display: 'grid', width: 'fit-content' }}>
+        <Box sx={{ display: "grid", width: "fit-content" }}>
           <Button onClick={() => updateGame(GameType.Coin)}>Play coin flip</Button>
           <Button onClick={() => updateGame(GameType.Slots)}>Play slots</Button>
           <Button onClick={() => updateGame(GameType.Roulette)}>Play roulette</Button>

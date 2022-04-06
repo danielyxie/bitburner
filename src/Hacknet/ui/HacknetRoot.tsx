@@ -137,7 +137,7 @@ export function HacknetRoot(props: IProps): React.ReactElement {
 
       {hasHacknetServers(props.player) && <Button onClick={() => setOpen(true)}>Spend Hashes on Upgrades</Button>}
 
-      <Box sx={{ display: 'grid', width: 'fit-content', gridTemplateColumns: 'repeat(3, 1fr)' }}>{nodes}</Box>
+      <Box sx={{ display: "grid", width: "fit-content", gridTemplateColumns: "repeat(3, 1fr)" }}>{nodes}</Box>
       <HashUpgradeModal open={open} onClose={() => setOpen(false)} />
     </>
   );

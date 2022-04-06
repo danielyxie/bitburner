@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Box } from "@mui/material";
 
 import { Achievement } from "./Achievements";
-import { Settings } from "../Settings/Settings"
+import { Settings } from "../Settings/Settings";
 
 interface IProps {
   achievement: Achievement;
@@ -16,20 +16,23 @@ export function AchievementIcon({ achievement, unlocked, colorFilters, size }: I
   const [imgLoaded, setImgLoaded] = useState(false);
   const mainColor = unlocked ? Settings.theme.primarydark : Settings.theme.secondarydark;
 
-  if (!achievement.Icon) return (<></>);
+  if (!achievement.Icon) return <></>;
   return (
     <Box
       sx={{
         border: `1px solid ${mainColor}`,
-        width: size, height: size,
+        width: size,
+        height: size,
         m: 1,
-        visibility: imgLoaded ? 'visible' : 'hidden'
+        visibility: imgLoaded ? "visible" : "hidden",
       }}
     >
-      <img src={`dist/icons/achievements/${encodeURI(achievement.Icon)}.svg`}
+      <img
+        src={`dist/icons/achievements/${encodeURI(achievement.Icon)}.svg`}
         style={{ filter: colorFilters, width: size, height: size }}
         onLoad={() => setImgLoaded(true)}
-        alt={achievement.Name} />
+        alt={achievement.Name}
+      />
     </Box>
   );
 }

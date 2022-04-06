@@ -3,16 +3,7 @@
  */
 import React, { useState } from "react";
 
-import {
-  Container,
-  Button,
-  Paper,
-  Box,
-  Tooltip,
-  Switch,
-  FormControlLabel,
-  Typography
-} from "@mui/material";
+import { Container, Button, Paper, Box, Tooltip, Switch, FormControlLabel, Typography } from "@mui/material";
 import { Help } from "@mui/icons-material";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -41,35 +32,51 @@ export function TerritorySubpage(): React.ReactElement {
       </Button>
 
       <Box component={Paper} sx={{ p: 1, mb: 1 }}>
-        <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+        <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
           {gang.facName} (Your gang)
         </Typography>
 
         <FormControlLabel
-          control={<Switch
-            checked={gang.territoryWarfareEngaged}
-            onChange={(event) => (gang.territoryWarfareEngaged = event.target.checked)}
-          />}
-          label={<Tooltip
-            title={<Typography>
-              Engaging in Territory Warfare sets your clash chance to 100%. Disengaging will cause your clash chance
-              to gradually decrease until it reaches 0%.
-            </Typography>}>
-            <Typography>Engage in Territory Warfare</Typography>
-          </Tooltip>} />
+          control={
+            <Switch
+              checked={gang.territoryWarfareEngaged}
+              onChange={(event) => (gang.territoryWarfareEngaged = event.target.checked)}
+            />
+          }
+          label={
+            <Tooltip
+              title={
+                <Typography>
+                  Engaging in Territory Warfare sets your clash chance to 100%. Disengaging will cause your clash chance
+                  to gradually decrease until it reaches 0%.
+                </Typography>
+              }
+            >
+              <Typography>Engage in Territory Warfare</Typography>
+            </Tooltip>
+          }
+        />
         <br />
         <FormControlLabel
-          control={<Switch
-            checked={gang.notifyMemberDeath}
-            onChange={(event) => (gang.notifyMemberDeath = event.target.checked)}
-          />}
-          label={<Tooltip
-            title={<Typography>
-              If this is enabled, then you will receive a pop-up notifying you whenever one of your Gang Members dies
-              in a territory clash.
-            </Typography>}>
-            <Typography>Notify about Gang Member Deaths</Typography>
-          </Tooltip>} />
+          control={
+            <Switch
+              checked={gang.notifyMemberDeath}
+              onChange={(event) => (gang.notifyMemberDeath = event.target.checked)}
+            />
+          }
+          label={
+            <Tooltip
+              title={
+                <Typography>
+                  If this is enabled, then you will receive a pop-up notifying you whenever one of your Gang Members
+                  dies in a territory clash.
+                </Typography>
+              }
+            >
+              <Typography>Notify about Gang Member Deaths</Typography>
+            </Tooltip>
+          }
+        />
 
         <Typography>
           <b>Territory Clash Chance:</b> {numeralWrapper.formatPercentage(gang.territoryClashChance, 3)} <br />
@@ -77,13 +84,13 @@ export function TerritorySubpage(): React.ReactElement {
           <b>Territory:</b> {formatTerritory(AllGangs[gang.facName].territory)}% <br />
         </Typography>
       </Box>
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
+      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
         {gangNames.map((name) => (
           <OtherGangTerritory key={name} name={name} />
         ))}
       </Box>
       <TerritoryInfoModal open={infoOpen} onClose={() => setInfoOpen(false)} />
-    </Container >
+    </Container>
   );
 }
 function formatTerritory(n: number): string {
@@ -109,7 +116,7 @@ function OtherGangTerritory(props: ITerritoryProps): React.ReactElement {
   const clashVictoryChance = playerPower / (power + playerPower);
   return (
     <Box component={Paper} sx={{ p: 1 }}>
-      <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+      <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
         {props.name}
       </Typography>
       <Typography>

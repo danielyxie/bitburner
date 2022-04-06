@@ -228,9 +228,9 @@ export function CompanyLocation(props: IProps): React.ReactElement {
           <br />
         </>
       )}
-      <Box sx={{ display: 'grid', width: 'fit-content' }}>
+      <Box sx={{ display: "grid", width: "fit-content" }}>
         {isEmployedHere && (
-          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
             <Button onClick={work}>Work</Button>
             <Button onClick={() => setQuitOpen(true)}>Quit</Button>
             <QuitJobModal
@@ -241,9 +241,7 @@ export function CompanyLocation(props: IProps): React.ReactElement {
               onClose={() => setQuitOpen(false)}
             />
           </Box>
-        )
-
-        }
+        )}
         {company.hasAgentPositions() && (
           <ApplyToJobButton
             company={company}

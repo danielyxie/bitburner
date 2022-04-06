@@ -101,7 +101,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
     return () => {
       debounced.cancel();
       unsubscribe();
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
     return () => {
       debounced.cancel();
       unsubscribe();
-    }
+    };
   }, []);
 
   function doScroll(): number | undefined {
@@ -130,7 +130,7 @@ export function TerminalRoot({ terminal, router, player }: IProps): React.ReactE
     return () => {
       clearTimeout(id);
       clearTimeout(scrollId);
-    }
+    };
   }, []);
 
   function lineClass(s: string): string {

@@ -91,7 +91,8 @@ export function FAQModal({ open, onClose }: IProps): React.ReactElement {
         <Typography variant="h4">Why can't I buy the X Augmentation for my sleeve?</Typography>
         <br />
         <Typography>
-          Certain Augmentations, like {FactionNames.Bladeburners}-specific ones and NeuroFlux Governor, are not available for sleeves.
+          Certain Augmentations, like {FactionNames.Bladeburners}-specific ones and NeuroFlux Governor, are not
+          available for sleeves.
         </Typography>
         <br />
         <br />
@@ -110,8 +111,8 @@ export function FAQModal({ open, onClose }: IProps): React.ReactElement {
         <br />
         <br />
         <Typography>
-          Memory can only be increased by purchasing upgrades from {FactionNames.TheCovenant}. It is a persistent stat, meaning it
-          never gets resets back to 1. The maximum possible value for a sleeve's memory is 100.
+          Memory can only be increased by purchasing upgrades from {FactionNames.TheCovenant}. It is a persistent stat,
+          meaning it never gets resets back to 1. The maximum possible value for a sleeve's memory is 100.
         </Typography>
       </>
     </Modal>
