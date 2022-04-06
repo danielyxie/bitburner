@@ -66,6 +66,39 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
     expect(multipleCallsCalculated).toEqual(ScriptBaseCost);
   }
 
+  // simplyfied version from RamCostGenerator.ts
+  function SF4Cost(player, cost) {
+    if (player.bitNodeN === 4) return cost;
+    const sf4 = player.sourceFileLvl(4);
+    if (sf4 <= 1) return cost * 16;
+    if (sf4 === 2) return cost * 4;
+    return cost;
+  }
+
+  /**
+   * Tests that:
+   *      1. A function has a specific RAM cost
+   *      2. The calculator and the generator result in equal values
+   *      3. Running multiple calls of the function does not result in additional RAM cost
+   * @param {string[]} fnDesc - describes the name of the function being tested,
+   *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
+   * @param {number} cost     - expected cost
+   */
+   async function expectSpecificRamCost(fnDesc, cost) {
+    if (!Array.isArray(fnDesc)) {
+      expect.fail("Non-array passed to expectZeroRamCost()");
+    }
+    const expected = getRamCost(Player, ...fnDesc);
+    expect(expected).toEqual(SF4Cost(Player, cost));
+
+    const code = fnDesc.join(".") + "(); ";
+    const calculated = (await calculateRamUsage(Player, code, [])).cost;
+    testEquality(calculated, ScriptBaseCost+SF4Cost(Player, cost));
+
+    const multipleCallsCalculated = (await calculateRamUsage(Player, code, [])).cost;
+    expect(multipleCallsCalculated).toEqual(ScriptBaseCost+SF4Cost(Player, cost));
+  }
+
   describe("Basic Functions", function () {
     it("hack()", async function () {
       const f = ["hack"];
@@ -465,6 +498,11 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
     it("getFavorToDonate()", async function () {
       const f = ["getFavorToDonate"];
       await expectNonZeroRamCost(f);
+    });
+
+    it("goToLocation()", async function () {
+      const f = ["goToLocation"];
+      await expectSpecificRamCost(f, RamCostConstants.ScriptSingularityFn3RamCost);
     });
   });
 
