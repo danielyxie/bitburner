@@ -194,7 +194,8 @@ export function InfoAndPurchases(props: IProps): React.ReactElement {
         {FactionNames.FourSigma} (4S) Market Data Feed
       </Typography>
       <Typography>
-        {FactionNames.FourSigma}'s (4S) Market Data Feed provides information about stocks that will help your trading strategies.
+        {FactionNames.FourSigma}'s (4S) Market Data Feed provides information about stocks that will help your trading
+        strategies.
         <IconButton onClick={() => setHelpOpen(true)}>
           <HelpIcon />
         </IconButton>

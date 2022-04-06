@@ -33,9 +33,11 @@ export function CorruptableText(props: IProps): JSX.Element {
       const index = Math.random() * content.length;
       const letter = content.charAt(index);
       setContent((content) => replace(content, index, randomize(letter)));
-      timers.push(window.setTimeout(() => {
-        setContent((content) => replace(content, index, letter));
-      }, 500));
+      timers.push(
+        window.setTimeout(() => {
+          setContent((content) => replace(content, index, letter));
+        }, 500),
+      );
     }, 20);
 
     return () => {

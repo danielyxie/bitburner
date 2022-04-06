@@ -84,7 +84,7 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
    *                            including the namespace(s). e.g. ["gang", "getMemberNames"]
    * @param {number} cost     - expected cost
    */
-   async function expectSpecificRamCost(fnDesc, cost) {
+  async function expectSpecificRamCost(fnDesc, cost) {
     if (!Array.isArray(fnDesc)) {
       expect.fail("Non-array passed to expectZeroRamCost()");
     }
@@ -93,10 +93,10 @@ describe("Netscript Static RAM Calculation/Generation Tests", function () {
 
     const code = fnDesc.join(".") + "(); ";
     const calculated = (await calculateRamUsage(Player, code, [])).cost;
-    testEquality(calculated, ScriptBaseCost+SF4Cost(Player, cost));
+    testEquality(calculated, ScriptBaseCost + SF4Cost(Player, cost));
 
     const multipleCallsCalculated = (await calculateRamUsage(Player, code, [])).cost;
-    expect(multipleCallsCalculated).toEqual(ScriptBaseCost+SF4Cost(Player, cost));
+    expect(multipleCallsCalculated).toEqual(ScriptBaseCost + SF4Cost(Player, cost));
   }
 
   describe("Basic Functions", function () {

@@ -51,7 +51,7 @@ export function AscensionModal(props: IProps): React.ReactElement {
         <br />
         Charisma: x{numeralWrapper.format(res.cha, "0.000")}
         <br />
-      </>
+      </>,
     );
     props.onClose();
   }

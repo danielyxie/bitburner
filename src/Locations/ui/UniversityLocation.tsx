@@ -75,7 +75,7 @@ export function UniversityLocation(props: IProps): React.ReactElement {
   const earnCharismaExpTooltip = `Gain charisma experience!`;
 
   return (
-    <Box sx={{ display: 'grid', width: 'fit-content' }}>
+    <Box sx={{ display: "grid", width: "fit-content" }}>
       <Tooltip title={earnHackingExpTooltip}>
         <Button onClick={study}>Study Computer Science (free)</Button>
       </Tooltip>

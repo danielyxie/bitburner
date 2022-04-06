@@ -107,7 +107,9 @@ export function buyAllDarkwebItems(): void {
   }
 
   if (cost > Player.money) {
-    Terminal.error("Not enough money to purchase remaining programs, " + numeralWrapper.formatMoney(cost) + " required");
+    Terminal.error(
+      "Not enough money to purchase remaining programs, " + numeralWrapper.formatMoney(cost) + " required",
+    );
     return;
   }
 

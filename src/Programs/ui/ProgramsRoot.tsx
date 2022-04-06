@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { find } from "lodash";
 
-import {
-  Box,
-  Typography,
-  Button,
-  Container,
-  Paper
-} from "@mui/material";
+import { Box, Typography, Button, Container, Paper } from "@mui/material";
 import { Check, Lock, Create } from "@mui/icons-material";
 
 import { use } from "../../ui/Context";
@@ -26,7 +20,7 @@ export function ProgramsRoot(): React.ReactElement {
   }
 
   const programs = [...Object.values(Programs)]
-    .filter(prog => {
+    .filter((prog) => {
       const create = prog.create;
       if (create === null) return false;
       if (prog.name === "b1t_flum3.exe") {
@@ -38,7 +32,7 @@ export function ProgramsRoot(): React.ReactElement {
       if (player.hasProgram(a.name)) return 1;
       if (player.hasProgram(b.name)) return -1;
       return (a.create?.level ?? 0) - (b.create?.level ?? 0);
-    })
+    });
 
   useEffect(() => {
     programs.forEach((p) => {
@@ -54,11 +48,11 @@ export function ProgramsRoot(): React.ReactElement {
 
   const getHackingLevelRemaining = (lvl: number): number => {
     return Math.ceil(Math.max(lvl - (player.hacking + player.intelligence / 2), 0));
-  }
+  };
 
   const getProgCompletion = (name: string): number => {
-    const programFile = find(player.getHomeComputer().programs, p => {
-      return (p.startsWith(name) && p.endsWith("%-INC"));
+    const programFile = find(player.getHomeComputer().programs, (p) => {
+      return p.startsWith(name) && p.endsWith("%-INC");
     });
     if (!programFile) return -1;
 
@@ -69,7 +63,7 @@ export function ProgramsRoot(): React.ReactElement {
       return -1;
     }
     return percComplete;
-  }
+  };
 
   return (
     <Container disableGutters maxWidth="lg" sx={{ mx: 0, mb: 10 }}>
@@ -80,41 +74,47 @@ export function ProgramsRoot(): React.ReactElement {
         time. Your progress will be saved and you can continue later.
       </Typography>
 
-      <Box sx={{ display: 'grid', gridTemplateColumns: "repeat(3, 1fr)", my: 1 }}>
+      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", my: 1 }}>
         {programs.map((program) => {
           const create = program.create;
           if (create === null) return <></>;
           const curCompletion = getProgCompletion(program.name);
 
           return (
-            <Box component={Paper} sx={{ p: 1, opacity: player.hasProgram(program.name) ? 0.75 : 1 }} key={program.name}>
-              <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                {player.hasProgram(program.name) && <Check sx={{ mr: 1 }} /> ||
-                  (create.req(player) && <Create sx={{ mr: 1 }} /> || <Lock sx={{ mr: 1 }} />)}
+            <Box
+              component={Paper}
+              sx={{ p: 1, opacity: player.hasProgram(program.name) ? 0.75 : 1 }}
+              key={program.name}
+            >
+              <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
+                {(player.hasProgram(program.name) && <Check sx={{ mr: 1 }} />) ||
+                  (create.req(player) && <Create sx={{ mr: 1 }} />) || <Lock sx={{ mr: 1 }} />}
                 {program.name}
               </Typography>
-              {(!player.hasProgram(program.name) && create.req(player)) && <Button
-                sx={{ my: 1, width: '100%' }}
-                onClick={(event) => {
-                  if (!event.isTrusted) return;
-                  player.startCreateProgramWork(program.name, create.time, create.level);
-                  player.startFocusing();
-                  router.toWork();
-                }}
-              >
-                Create program
-              </Button>}
-              {(player.hasProgram(program.name) || getHackingLevelRemaining(create.level) === 0) ||
+              {!player.hasProgram(program.name) && create.req(player) && (
+                <Button
+                  sx={{ my: 1, width: "100%" }}
+                  onClick={(event) => {
+                    if (!event.isTrusted) return;
+                    player.startCreateProgramWork(program.name, create.time, create.level);
+                    player.startFocusing();
+                    router.toWork();
+                  }}
+                >
+                  Create program
+                </Button>
+              )}
+              {player.hasProgram(program.name) || getHackingLevelRemaining(create.level) === 0 || (
                 <Typography color={Settings.theme.hack}>
                   <b>Unlocks in:</b> {getHackingLevelRemaining(create.level)} hacking levels
-                </Typography>}
-              {(curCompletion !== -1) &&
+                </Typography>
+              )}
+              {curCompletion !== -1 && (
                 <Typography color={Settings.theme.infolight}>
                   <b>Current completion:</b> {curCompletion}%
-                </Typography>}
-              <Typography>
-                {create.tooltip}
-              </Typography>
+                </Typography>
+              )}
+              <Typography>{create.tooltip}</Typography>
             </Box>
           );
         })}

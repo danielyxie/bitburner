@@ -35,7 +35,7 @@ export function BladeburnerCinematic(): React.ReactElement {
         router.toTerminal();
         dialogBoxCreate(
           `Visit the National Security Agency (NSA) to apply for their ${FactionNames.Bladeburners} ` +
-          "division! You will need 100 of each combat stat before doing this.",
+            "division! You will need 100 of each combat stat before doing this.",
         );
       }}
     />

@@ -155,7 +155,11 @@ export function SpecialLocation(props: IProps): React.ReactElement {
     if (!player.canAccessGrafting()) {
       return <></>;
     }
-    return <Button onClick={handleGrafting} sx={{ my: 5 }}>Enter the secret lab</Button>;
+    return (
+      <Button onClick={handleGrafting} sx={{ my: 5 }}>
+        Enter the secret lab
+      </Button>
+    );
   }
 
   function handleCotMG(): void {

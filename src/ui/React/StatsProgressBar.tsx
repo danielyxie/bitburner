@@ -19,9 +19,16 @@ interface IStatsOverviewCellProps {
   color?: React.CSSProperties["color"];
 }
 
-export function StatsProgressBar({ min, max, current, remaining, progress, color }: IProgressProps): React.ReactElement {
+export function StatsProgressBar({
+  min,
+  max,
+  current,
+  remaining,
+  progress,
+  color,
+}: IProgressProps): React.ReactElement {
   const tooltip = (
-    <Typography sx={{ textAlign: 'right' }}>
+    <Typography sx={{ textAlign: "right" }}>
       <strong>Progress:</strong>&nbsp;
       {numeralWrapper.formatExp(current)} / {numeralWrapper.formatExp(max - min)}
       <br />

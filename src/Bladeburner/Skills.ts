@@ -7,8 +7,7 @@ export const Skills: IMap<Skill> = {};
 (function () {
   Skills[SkillNames.BladesIntuition] = new Skill({
     name: SkillNames.BladesIntuition,
-    desc:
-      "Each level of this skill increases your success chance for all Contracts, Operations, and BlackOps by 3%",
+    desc: "Each level of this skill increases your success chance for all Contracts, Operations, and BlackOps by 3%",
     baseCost: 3,
     costInc: 2.1,
     successChanceAll: 3,
