@@ -94,7 +94,7 @@ function getRandomBonus(): any {
   return bonuses[Math.floor(bonuses.length * randomNumber.random())];
 }
 
-export const generalAugmentations = [
+export const initGeneralAugmentations = (): Augmentation[] => [
   new Augmentation({
     name: AugmentationNames.HemoRecirculator,
     moneyCost: 4.5e7,
@@ -1486,7 +1486,7 @@ export const generalAugmentations = [
   }),
 ];
 
-export const bladeburnerAugmentations = [
+export const initBladeburnerAugmentations = (): Augmentation[] => [
   new Augmentation({
     name: AugmentationNames.EsperEyewear,
     repCost: 1.25e3,
@@ -1751,7 +1751,7 @@ export const bladeburnerAugmentations = [
   }),
 ];
 
-export const churchOfTheMachineGodAugmentations = [
+export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
   new Augmentation({
     name: AugmentationNames.StaneksGift1,
     repCost: 0,

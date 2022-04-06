@@ -15,6 +15,7 @@ const debug = process.argv.includes("--debug");
 
 async function createWindow(killall) {
   const setStopProcessHandler = global.app_handlers.stopProcess;
+  app.setAppUserModelId("Bitburner")
 
   let icon;
   if (process.platform == 'linux') {

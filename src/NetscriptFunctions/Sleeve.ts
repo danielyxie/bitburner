@@ -122,7 +122,11 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
 
       return player.sleeves[sleeveNumber].workForCompany(player, companyName);
     },
-    setToFactionWork: function (_sleeveNumber: unknown, _factionName: unknown, _workType: unknown): boolean {
+    setToFactionWork: function (
+      _sleeveNumber: unknown,
+      _factionName: unknown,
+      _workType: unknown,
+    ): boolean | undefined {
       const sleeveNumber = helper.number("setToFactionWork", "sleeveNumber", _sleeveNumber);
       const factionName = helper.string("setToUniversityCourse", "factionName", _factionName);
       const workType = helper.string("setToUniversityCourse", "workType", _workType);
@@ -142,6 +146,13 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
             `Sleeve ${sleeveNumber} cannot work for faction ${factionName} because Sleeve ${i} is already working for them.`,
           );
         }
+      }
+
+      if (player.gang && player.gang.facName == factionName) {
+        throw helper.makeRuntimeErrorMsg(
+          "sleeve.setToFactionWork",
+          `Sleeve ${sleeveNumber} cannot work for faction ${factionName} because you have started a gang with them.`,
+        );
       }
 
       return player.sleeves[sleeveNumber].workForFaction(player, factionName, workType);
