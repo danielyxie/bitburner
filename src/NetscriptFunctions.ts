@@ -601,7 +601,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculateHackingChance(server, Player);
     },
-    sleep: async function (_time: unknown = 0): Promise<void> {
+    sleep: async function (_time: unknown = 0): Promise<true> {
       const time = helper.number("sleep", "time", _time);
       updateDynamicRam("sleep", getRamCost(Player, "sleep"));
       if (time === undefined) {
@@ -609,17 +609,17 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
       workerScript.log("sleep", () => `Sleeping for ${time} milliseconds`);
       return netscriptDelay(time, workerScript).then(function () {
-        return Promise.resolve();
+        return Promise.resolve(true);
       });
     },
-    asleep: function (_time: unknown = 0): Promise<void> {
+    asleep: function (_time: unknown = 0): Promise<true> {
       const time = helper.number("asleep", "time", _time);
       updateDynamicRam("asleep", getRamCost(Player, "asleep"));
       if (time === undefined) {
         throw makeRuntimeErrorMsg("asleep", "Takes 1 argument.");
       }
       workerScript.log("asleep", () => `Sleeping for ${time} milliseconds`);
-      return new Promise((resolve) => setTimeout(resolve, time));
+      return new Promise((resolve) => setTimeout(() => resolve(true), time));
     },
     grow: async function (
       _hostname: unknown,
