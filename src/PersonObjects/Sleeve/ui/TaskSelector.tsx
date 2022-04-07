@@ -130,8 +130,7 @@ const tasks: {
   },
   "Take University Course": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
     let universities: string[] = [];
-    if (player.money <= 0)
-      return { first: ["Not Enough Money"], second: () => ["------"] };
+    if (player.money <= 0) return { first: ["Not Enough Money"], second: () => ["------"] };
 
     switch (sleeve.city) {
       case CityName.Aevum:
@@ -152,8 +151,7 @@ const tasks: {
   },
   "Workout at Gym": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
     let gyms: string[] = [];
-    if (player.money <= 0)
-      return { first: ["Not Enough Money"], second: () => ["------"] };
+    if (player.money <= 0) return { first: ["Not Enough Money"], second: () => ["------"] };
 
     switch (sleeve.city) {
       case CityName.Aevum:

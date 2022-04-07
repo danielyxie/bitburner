@@ -268,7 +268,6 @@ export function NetscriptSingularity(
       const focus = helper.boolean(_focus);
       helper.checkSingularityAccess("universityCourse");
 
-
       if (player.money <= 0) {
         workerScript.log("universityCourse", () => `You do not have enough money!`);
         return false;

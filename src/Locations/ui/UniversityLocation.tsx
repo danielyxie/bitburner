@@ -73,7 +73,7 @@ export function UniversityLocation(props: IProps): React.ReactElement {
 
   const earnHackingExpTooltip = `Gain hacking experience!`;
   const earnCharismaExpTooltip = `Gain charisma experience!`;
-  const hasCash = player.money > 0
+  const hasCash = player.money > 0;
 
   return (
     <Box sx={{ display: "grid", width: "fit-content" }}>
