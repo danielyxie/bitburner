@@ -1,3 +1,4 @@
+import { FactionNames } from "../Faction/data/FactionNames";
 import { Fragment } from "./Fragment";
 import { ActiveFragment } from "./ActiveFragment";
 import { FragmentType } from "./FragmentType";
@@ -22,17 +23,21 @@ export class StaneksGift implements IStaneksGift {
   }
 
   width(): number {
-    return Math.floor(this.baseSize() / 2 + 1);
+    return Math.max(2, Math.min(Math.floor(this.baseSize() / 2 + 1), StanekConstants.MaxSize));
   }
   height(): number {
-    return Math.floor(this.baseSize() / 2 + 0.6);
+    return Math.max(3, Math.min(Math.floor(this.baseSize() / 2 + 0.6), StanekConstants.MaxSize));
   }
 
   charge(player: IPlayer, af: ActiveFragment, threads: number): void {
-    af.avgCharge = (af.numCharge * af.avgCharge + threads) / (af.numCharge + 1);
-    af.numCharge++;
+    if (threads > af.highestCharge) {
+      af.numCharge = (af.highestCharge * af.numCharge) / threads + 1;
+      af.highestCharge = threads;
+    } else {
+      af.numCharge += threads / af.highestCharge;
+    }
 
-    const cotmg = Factions["Church of the Machine God"];
+    const cotmg = Factions[FactionNames.ChurchOfTheMachineGod];
     cotmg.playerReputation += (player.faction_rep_mult * (Math.pow(threads, 0.95) * (cotmg.favor + 100))) / 1000;
   }
 
@@ -65,7 +70,7 @@ export class StaneksGift implements IStaneksGift {
     for (const neighboor of neighboors) {
       boost *= neighboor.fragment().power;
     }
-    return CalculateEffect(fragment.avgCharge, fragment.numCharge, fragment.fragment().power, boost);
+    return CalculateEffect(fragment.highestCharge, fragment.numCharge, fragment.fragment().power, boost);
   }
 
   canPlace(rootX: number, rootY: number, rotation: number, fragment: Fragment): boolean {
@@ -125,7 +130,7 @@ export class StaneksGift implements IStaneksGift {
 
   clearCharge(): void {
     this.fragments.forEach((f) => {
-      f.avgCharge = 0;
+      f.highestCharge = 0;
       f.numCharge = 0;
     });
   }

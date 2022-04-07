@@ -1,3 +1,4 @@
+import { FactionNames } from "../Faction/data/FactionNames";
 import { Reviver } from "../utils/JSONReviver";
 
 interface GangTerritory {
@@ -8,31 +9,31 @@ interface GangTerritory {
 export let AllGangs: {
   [key: string]: GangTerritory;
 } = {
-  "Slum Snakes": {
+  [FactionNames.SlumSnakes]: {
     power: 1,
     territory: 1 / 7,
   },
-  Tetrads: {
+  [FactionNames.Tetrads]: {
     power: 1,
     territory: 1 / 7,
   },
-  "The Syndicate": {
+  [FactionNames.TheSyndicate]: {
     power: 1,
     territory: 1 / 7,
   },
-  "The Dark Army": {
+  [FactionNames.TheDarkArmy]: {
     power: 1,
     territory: 1 / 7,
   },
-  "Speakers for the Dead": {
+  [FactionNames.SpeakersForTheDead]: {
     power: 1,
     territory: 1 / 7,
   },
-  NiteSec: {
+  [FactionNames.NiteSec]: {
     power: 1,
     territory: 1 / 7,
   },
-  "The Black Hand": {
+  [FactionNames.TheBlackHand]: {
     power: 1,
     territory: 1 / 7,
   },
@@ -40,31 +41,31 @@ export let AllGangs: {
 
 export function resetGangs(): void {
   AllGangs = {
-    "Slum Snakes": {
+    [FactionNames.SlumSnakes]: {
       power: 1,
       territory: 1 / 7,
     },
-    Tetrads: {
+    [FactionNames.Tetrads]: {
       power: 1,
       territory: 1 / 7,
     },
-    "The Syndicate": {
+    [FactionNames.TheSyndicate]: {
       power: 1,
       territory: 1 / 7,
     },
-    "The Dark Army": {
+    [FactionNames.TheDarkArmy]: {
       power: 1,
       territory: 1 / 7,
     },
-    "Speakers for the Dead": {
+    [FactionNames.SpeakersForTheDead]: {
       power: 1,
       territory: 1 / 7,
     },
-    NiteSec: {
+    [FactionNames.NiteSec]: {
       power: 1,
       territory: 1 / 7,
     },
-    "The Black Hand": {
+    [FactionNames.TheBlackHand]: {
       power: 1,
       territory: 1 / 7,
     },

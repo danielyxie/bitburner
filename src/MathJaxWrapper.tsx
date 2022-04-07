@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 
 interface IProps {
@@ -10,5 +10,5 @@ export function MathJaxWrapper({ children }: IProps): React.ReactElement {
     <MathJaxContext version={3} src={"dist/ext/MathJax-3.2.0/es5/tex-chtml.js"}>
       <MathJax>{children}</MathJax>
     </MathJaxContext>
-  )
+  );
 }

@@ -1,5 +1,5 @@
 import { ITerminal } from "../../ITerminal";
-import { removeLeadingSlash, removeTrailingSlash } from '../../DirectoryHelpers'
+import { removeLeadingSlash, removeTrailingSlash } from "../../DirectoryHelpers";
 import { IRouter, ScriptEditorRouteOptions } from "../../../ui/Router";
 import { IPlayer } from "../../../PersonObjects/IPlayer";
 import { BaseServer } from "../../../Server/BaseServer";
@@ -20,7 +20,7 @@ function isNs2(filename: string): boolean {
   return filename.endsWith(".ns") || filename.endsWith(".js");
 }
 
-const newNs2Template = `/** @param {NS} ns **/
+const newNs2Template = `/** @param {NS} ns */
 export async function main(ns) {
 
 }`;
@@ -76,19 +76,19 @@ function parseSimpleScriptGlob(globString: string, globDatabase: Script[], termi
   parsedGlob.preGlob = removeLeadingSlash(parsedGlob.preGlob);
 
   // Add CWD to preGlob path
-  const cwd = removeTrailingSlash(terminal.cwd())
-  parsedGlob.preGlob = `${cwd}/${parsedGlob.preGlob}`
+  const cwd = removeTrailingSlash(terminal.cwd());
+  parsedGlob.preGlob = `${cwd}/${parsedGlob.preGlob}`;
 
   // For every script on the current server, filter matched scripts per glob values & persist
   globDatabase.forEach((script) => {
-    const filename = script.filename.startsWith('/') ? script.filename : `/${script.filename}`
+    const filename = script.filename.startsWith("/") ? script.filename : `/${script.filename}`;
     if (filename.startsWith(parsedGlob.preGlob) && filename.endsWith(parsedGlob.postGlob)) {
       parsedGlob.globMatches.push(filename);
     }
   });
 
   // Rebuild glob for potential error reporting
-  parsedGlob.glob = `${parsedGlob.preGlob}*${parsedGlob.postGlob}`
+  parsedGlob.glob = `${parsedGlob.preGlob}*${parsedGlob.postGlob}`;
 
   return parsedGlob;
 }
@@ -142,7 +142,7 @@ export function commonEditor(
     });
 
     if (globSearch && files.length === 0) {
-      throw new Error(`Could not find any valid files to open with ${command} using glob: \`${globSearch.glob}\``)
+      throw new Error(`Could not find any valid files to open with ${command} using glob: \`${globSearch.glob}\``);
     }
 
     router.toScriptEditor(Object.fromEntries(files), scriptEditorRouteOptions);

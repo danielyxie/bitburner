@@ -42,7 +42,7 @@ import { BladeburnerRoot } from "../Bladeburner/ui/BladeburnerRoot";
 import { GangRoot } from "../Gang/ui/GangRoot";
 import { CorporationRoot } from "../Corporation/ui/CorporationRoot";
 import { InfiltrationRoot } from "../Infiltration/ui/InfiltrationRoot";
-import { ResleeveRoot } from "../PersonObjects/Resleeving/ui/ResleeveRoot";
+import { GraftingRoot } from "../PersonObjects/Grafting/ui/GraftingRoot";
 import { WorkInProgressRoot } from "./WorkInProgressRoot";
 import { GameOptionsRoot } from "./React/GameOptionsRoot";
 import { SleeveRoot } from "../PersonObjects/Sleeve/ui/SleeveRoot";
@@ -87,6 +87,7 @@ import { BypassWrapper } from "./React/BypassWrapper";
 import _wrap from "lodash/wrap";
 import _functions from "lodash/functions";
 import { highestBitNode } from "../BitNode/BitNode";
+import { Apr1 } from "./Apr1";
 
 const htmlLocation = location;
 
@@ -136,7 +137,7 @@ export let Router: IRouter = {
   toInfiltration: uninitialized,
   toJob: uninitialized,
   toMilestones: uninitialized,
-  toResleeves: uninitialized,
+  toGrafting: uninitialized,
   toScriptEditor: uninitialized,
   toSleeves: uninitialized,
   toStockMarket: uninitialized,
@@ -228,7 +229,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toGang: () => setPage(Page.Gang),
     toHacknetNodes: () => setPage(Page.Hacknet),
     toMilestones: () => setPage(Page.Milestones),
-    toResleeves: () => setPage(Page.Resleeves),
+    toGrafting: () => setPage(Page.Grafting),
     toScriptEditor: (files: Record<string, string>, options?: ScriptEditorRouteOptions) => {
       setEditorOptions({
         files,
@@ -433,8 +434,8 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
       mainPage = <BladeburnerRoot />;
       break;
     }
-    case Page.Resleeves: {
-      mainPage = <ResleeveRoot />;
+    case Page.Grafting: {
+      mainPage = <GraftingRoot />;
       break;
     }
     case Page.Travel: {
@@ -556,6 +557,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
                   <Snackbar />
                 </>
               )}
+              <Apr1 />
             </SnackbarProvider>
           </BypassWrapper>
         </ErrorBoundary>

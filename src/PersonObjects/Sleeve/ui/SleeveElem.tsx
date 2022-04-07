@@ -1,34 +1,23 @@
 import React, { useState } from "react";
 
+import { Box, Paper, Typography, Button, Tooltip } from "@mui/material";
+
+import { CONSTANTS } from "../../../Constants";
+import { Crimes } from "../../../Crime/Crimes";
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
+import { use } from "../../../ui/Context";
+import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
+
 import { Sleeve } from "../Sleeve";
 import { SleeveTaskType } from "../SleeveTaskTypesEnum";
 
-import { CONSTANTS } from "../../../Constants";
-
-import { Crimes } from "../../../Crime/Crimes";
-
-import { numeralWrapper } from "../../../ui/numeralFormat";
-
-import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
-
 import { SleeveAugmentationsModal } from "./SleeveAugmentationsModal";
 import { TravelModal } from "./TravelModal";
-import { Money } from "../../../ui/React/Money";
-import { MoneyRate } from "../../../ui/React/MoneyRate";
-import { use } from "../../../ui/Context";
-import { ReputationRate } from "../../../ui/React/ReputationRate";
-import { StatsElement } from "./StatsElement";
+import { StatsElement, EarningsElement } from "./StatsElement";
 import { MoreStatsModal } from "./MoreStatsModal";
 import { MoreEarningsModal } from "./MoreEarningsModal";
 import { TaskSelector } from "./TaskSelector";
-import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
-import { StatsTable } from "../../../ui/React/StatsTable";
-
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 
 interface IProps {
   sleeve: Sleeve;
@@ -141,86 +130,75 @@ export function SleeveElem(props: IProps): React.ReactElement {
       console.error(`Invalid/Unrecognized taskValue in updateSleeveTaskDescription(): ${abc[0]}`);
   }
 
-  let data: any[][] = [];
-  if (props.sleeve.currentTask === SleeveTaskType.Crime) {
-    data = [
-      [`Money`, <Money money={parseFloat(props.sleeve.currentTaskLocation)} />, `(on success)`],
-      [`Hacking Exp`, numeralWrapper.formatExp(props.sleeve.gainRatesForTask.hack), `(2x on success)`],
-      [`Strength Exp`, numeralWrapper.formatExp(props.sleeve.gainRatesForTask.str), `(2x on success)`],
-      [`Defense Exp`, numeralWrapper.formatExp(props.sleeve.gainRatesForTask.def), `(2x on success)`],
-      [`Dexterity Exp`, numeralWrapper.formatExp(props.sleeve.gainRatesForTask.dex), `(2x on success)`],
-      [`Agility Exp`, numeralWrapper.formatExp(props.sleeve.gainRatesForTask.agi), `(2x on success)`],
-      [`Charisma Exp`, numeralWrapper.formatExp(props.sleeve.gainRatesForTask.cha), `(2x on success)`],
-    ];
-  } else {
-    data = [
-      [`Money:`, <MoneyRate money={5 * props.sleeve.gainRatesForTask.money} />],
-      [`Hacking Exp:`, `${numeralWrapper.formatExp(5 * props.sleeve.gainRatesForTask.hack)} / s`],
-      [`Strength Exp:`, `${numeralWrapper.formatExp(5 * props.sleeve.gainRatesForTask.str)} / s`],
-      [`Defense Exp:`, `${numeralWrapper.formatExp(5 * props.sleeve.gainRatesForTask.def)} / s`],
-      [`Dexterity Exp:`, `${numeralWrapper.formatExp(5 * props.sleeve.gainRatesForTask.dex)} / s`],
-      [`Agility Exp:`, `${numeralWrapper.formatExp(5 * props.sleeve.gainRatesForTask.agi)} / s`],
-      [`Charisma Exp:`, `${numeralWrapper.formatExp(5 * props.sleeve.gainRatesForTask.cha)} / s`],
-    ];
-    if (props.sleeve.currentTask === SleeveTaskType.Company || props.sleeve.currentTask === SleeveTaskType.Faction) {
-      const repGain: number = props.sleeve.getRepGain(player);
-      data.push([`Reputation:`, <ReputationRate reputation={5 * repGain} />]);
-    }
-  }
-
   return (
-    <>
-      <Grid container component={Paper}>
-        <Grid item xs={3}>
-          <StatsElement sleeve={props.sleeve} />
-          <Button onClick={() => setStatsOpen(true)}>More Stats</Button>
-          <Tooltip title={player.money < CONSTANTS.TravelCost ? <Typography>Insufficient funds</Typography> : ""}>
-            <span>
-              <Button onClick={() => setTravelOpen(true)} disabled={player.money < CONSTANTS.TravelCost}>
-                Travel
+    <Box component={Paper} sx={{ width: "auto" }}>
+      <Box sx={{ m: 1 }}>
+        <Box display="grid" sx={{ gridTemplateColumns: "1fr 1fr", width: "100%", gap: 1 }}>
+          <Box>
+            <StatsElement sleeve={props.sleeve} />
+            <Box display="grid" sx={{ gridTemplateColumns: "1fr 1fr", width: "100%" }}>
+              <Button onClick={() => setStatsOpen(true)}>More Stats</Button>
+              <Button onClick={() => setEarningsOpen(true)}>More Earnings Info</Button>
+              <Tooltip title={player.money < CONSTANTS.TravelCost ? <Typography>Insufficient funds</Typography> : ""}>
+                <span>
+                  <Button
+                    onClick={() => setTravelOpen(true)}
+                    disabled={player.money < CONSTANTS.TravelCost}
+                    sx={{ width: "100%", height: "100%" }}
+                  >
+                    Travel
+                  </Button>
+                </span>
+              </Tooltip>
+              <Tooltip
+                title={
+                  props.sleeve.shock < 100 ? <Typography>Unlocked when sleeve has fully recovered</Typography> : ""
+                }
+              >
+                <span>
+                  <Button
+                    onClick={() => setAugmentationsOpen(true)}
+                    disabled={props.sleeve.shock < 100}
+                    sx={{ width: "100%", height: "100%" }}
+                  >
+                    Manage Augmentations
+                  </Button>
+                </span>
+              </Tooltip>
+            </Box>
+          </Box>
+          <Box>
+            <EarningsElement sleeve={props.sleeve} />
+            <Box>
+              <TaskSelector player={player} sleeve={props.sleeve} setABC={setABC} />
+              <Button onClick={setTask} sx={{ width: "100%" }}>
+                Set Task
               </Button>
-            </span>
-          </Tooltip>
-          <Tooltip
-            title={props.sleeve.shock < 100 ? <Typography>Unlocked when sleeve has fully recovered</Typography> : ""}
-          >
-            <span>
-              <Button onClick={() => setAugmentationsOpen(true)} disabled={props.sleeve.shock < 100}>
-                Manage Augmentations
-              </Button>
-            </span>
-          </Tooltip>
-        </Grid>
-        <Grid item xs={5}>
-          <TaskSelector player={player} sleeve={props.sleeve} setABC={setABC} />
-          <Typography>{desc}</Typography>
-          <Typography>
-            {props.sleeve.currentTask === SleeveTaskType.Crime &&
-              createProgressBarText({
-                progress: props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime,
-                totalTicks: 25,
-              })}
-          </Typography>
-          <Button onClick={setTask}>Set Task</Button>
-        </Grid>
-        <Grid item xs={4}>
-          <StatsTable title="Earnings (Pre-Synchronization)" rows={data} />
-          <Button onClick={() => setEarningsOpen(true)}>More Earnings Info</Button>
-        </Grid>
-      </Grid>
-      <MoreStatsModal open={statsOpen} onClose={() => setStatsOpen(false)} sleeve={props.sleeve} />
-      <MoreEarningsModal open={earningsOpen} onClose={() => setEarningsOpen(false)} sleeve={props.sleeve} />
-      <TravelModal
-        open={travelOpen}
-        onClose={() => setTravelOpen(false)}
-        sleeve={props.sleeve}
-        rerender={props.rerender}
-      />
-      <SleeveAugmentationsModal
-        open={augmentationsOpen}
-        onClose={() => setAugmentationsOpen(false)}
-        sleeve={props.sleeve}
-      />
-    </>
+              <Typography>{desc}</Typography>
+              <Typography>
+                {props.sleeve.currentTask === SleeveTaskType.Crime &&
+                  createProgressBarText({
+                    progress: props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime,
+                    totalTicks: 25,
+                  })}
+              </Typography>
+            </Box>
+          </Box>
+          <MoreStatsModal open={statsOpen} onClose={() => setStatsOpen(false)} sleeve={props.sleeve} />
+          <MoreEarningsModal open={earningsOpen} onClose={() => setEarningsOpen(false)} sleeve={props.sleeve} />
+          <TravelModal
+            open={travelOpen}
+            onClose={() => setTravelOpen(false)}
+            sleeve={props.sleeve}
+            rerender={props.rerender}
+          />
+          <SleeveAugmentationsModal
+            open={augmentationsOpen}
+            onClose={() => setAugmentationsOpen(false)}
+            sleeve={props.sleeve}
+          />
+        </Box>
+      </Box>
+    </Box>
   );
 }

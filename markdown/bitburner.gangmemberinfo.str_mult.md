@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.str\_mult property
 
+Strength multiplier from equipment
+
 <b>Signature:</b>
 
 ```typescript

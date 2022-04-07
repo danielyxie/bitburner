@@ -37,7 +37,7 @@ function getMenu(window) {
               log.error(error);
               utils.writeToast(window, "Could not load last save from disk", "error", 5000);
             }
-          }
+          },
         },
         {
           label: "Load From File",
@@ -51,9 +51,7 @@ function getMenu(window) {
                 { name: "Game Saves", extensions: ["json", "json.gz", "txt"] },
                 { name: "All", extensions: ["*"] },
               ],
-              properties: [
-                "openFile", "dontAddToRecent",
-              ]
+              properties: ["openFile", "dontAddToRecent"],
             });
             if (result.canceled) return;
             const file = result.filePaths[0];
@@ -65,7 +63,7 @@ function getMenu(window) {
               log.error(error);
               utils.writeToast(window, "Could not load save from disk", "error", 5000);
             }
-          }
+          },
         },
         {
           label: "Load From Steam Cloud",
@@ -78,7 +76,7 @@ function getMenu(window) {
               log.error(error);
               utils.writeToast(window, "Could not load from Steam Cloud", "error", 5000);
             }
-          }
+          },
         },
         {
           type: "separator",
@@ -89,8 +87,7 @@ function getMenu(window) {
           checked: storage.isSaveCompressionEnabled(),
           click: (menuItem) => {
             storage.setSaveCompressionConfig(menuItem.checked);
-            utils.writeToast(window,
-              `${menuItem.checked ? "Enabled" : "Disabled"} Save Compression`, "info", 5000);
+            utils.writeToast(window, `${menuItem.checked ? "Enabled" : "Disabled"} Save Compression`, "info", 5000);
             refreshMenu(window);
           },
         },
@@ -100,8 +97,7 @@ function getMenu(window) {
           checked: storage.isAutosaveEnabled(),
           click: (menuItem) => {
             storage.setAutosaveConfig(menuItem.checked);
-            utils.writeToast(window,
-              `${menuItem.checked ? "Enabled" : "Disabled"} Auto-Save to Disk`, "info", 5000);
+            utils.writeToast(window, `${menuItem.checked ? "Enabled" : "Disabled"} Auto-Save to Disk`, "info", 5000);
             refreshMenu(window);
           },
         },
@@ -112,8 +108,12 @@ function getMenu(window) {
           checked: storage.isCloudEnabled(),
           click: (menuItem) => {
             storage.setCloudEnabledConfig(menuItem.checked);
-            utils.writeToast(window,
-              `${menuItem.checked ? "Enabled" : "Disabled"} Auto-Save to Steam Cloud`, "info", 5000);
+            utils.writeToast(
+              window,
+              `${menuItem.checked ? "Enabled" : "Disabled"} Auto-Save to Steam Cloud`,
+              "info",
+              5000,
+            );
             refreshMenu(window);
           },
         },
@@ -123,8 +123,12 @@ function getMenu(window) {
           checked: config.get("onload-restore-newest", true),
           click: (menuItem) => {
             config.set("onload-restore-newest", menuItem.checked);
-            utils.writeToast(window,
-              `${menuItem.checked ? "Enabled" : "Disabled"} Restore Newest on Load`, "info", 5000);
+            utils.writeToast(
+              window,
+              `${menuItem.checked ? "Enabled" : "Disabled"} Restore Newest on Load`,
+              "info",
+              5000,
+            );
             refreshMenu(window);
           },
         },
@@ -153,7 +157,7 @@ function getMenu(window) {
               label: "Open Data Directory",
               click: () => shell.openPath(app.getPath("userData")),
             },
-          ]
+          ],
         },
         {
           type: "separator",
@@ -162,7 +166,7 @@ function getMenu(window) {
           label: "Quit",
           click: () => app.quit(),
         },
-      ]
+      ],
     },
     {
       label: "Edit",
@@ -210,29 +214,29 @@ function getMenu(window) {
       label: "API Server",
       submenu: [
         {
-          label: api.isListening() ? 'Disable Server' : 'Enable Server',
-          click: (async () => {
+          label: api.isListening() ? "Disable Server" : "Enable Server",
+          click: async () => {
             let success = false;
             try {
               await api.toggleServer();
               success = true;
             } catch (error) {
               log.error(error);
-              utils.showErrorBox('Error Toggling Server', error);
+              utils.showErrorBox("Error Toggling Server", error);
             }
             if (success && api.isListening()) {
               utils.writeToast(window, "Started API Server", "success");
             } else if (success && !api.isListening()) {
               utils.writeToast(window, "Stopped API Server", "success");
             } else {
-              utils.writeToast(window, 'Error Toggling Server', "error");
+              utils.writeToast(window, "Error Toggling Server", "error");
             }
             refreshMenu(window);
-          })
+          },
         },
         {
-          label: api.isAutostart() ? 'Disable Autostart' : 'Enable Autostart',
-          click: (async () => {
+          label: api.isAutostart() ? "Disable Autostart" : "Enable Autostart",
+          click: async () => {
             api.toggleAutostart();
             if (api.isAutostart()) {
               utils.writeToast(window, "Enabled API Server Autostart", "success");
@@ -240,42 +244,45 @@ function getMenu(window) {
               utils.writeToast(window, "Disabled API Server Autostart", "success");
             }
             refreshMenu(window);
-          })
+          },
         },
         {
-          label: 'Copy Auth Token',
-          click: (async () => {
+          label: "Copy Auth Token",
+          click: async () => {
             const token = api.getAuthenticationToken();
-            log.log('Wrote authentication token to clipboard');
+            log.log("Wrote authentication token to clipboard");
             clipboard.writeText(token);
             utils.writeToast(window, "Copied Authentication Token to Clipboard", "info");
-          })
+          },
         },
         {
-          type: 'separator',
+          type: "separator",
         },
         {
-          label: 'Information',
+          label: "Information",
           click: () => {
-            dialog.showMessageBox({
-              type: 'info',
-              title: 'Bitburner > API Server Information',
-              message: 'The API Server is used to write script files to your in-game home.',
-              detail: 'There is an official Visual Studio Code extension that makes use of that feature.\n\n' +
-                'It allows you to write your script file in an external IDE and have them pushed over to the game automatically.\n' +
-                'If you want more information, head over to: https://github.com/bitburner-official/bitburner-vscode.',
-                buttons: ['Dismiss', 'Open Extension Link (GitHub)'],
+            dialog
+              .showMessageBox({
+                type: "info",
+                title: "Bitburner > API Server Information",
+                message: "The API Server is used to write script files to your in-game home.",
+                detail:
+                  "There is an official Visual Studio Code extension that makes use of that feature.\n\n" +
+                  "It allows you to write your script file in an external IDE and have them pushed over to the game automatically.\n" +
+                  "If you want more information, head over to: https://github.com/bitburner-official/bitburner-vscode.",
+                buttons: ["Dismiss", "Open Extension Link (GitHub)"],
                 defaultId: 0,
                 cancelId: 0,
                 noLink: true,
-            }).then(({response}) => {
-              if (response === 1) {
-                utils.openExternal('https://github.com/bitburner-official/bitburner-vscode');
-              }
-            });
-          }
-        }
-      ]
+              })
+              .then(({ response }) => {
+                if (response === 1) {
+                  utils.openExternal("https://github.com/bitburner-official/bitburner-vscode");
+                }
+              });
+          },
+        },
+      ],
     },
     {
       label: "Zoom",
@@ -291,7 +298,7 @@ function getMenu(window) {
               utils.setZoomFactor(window, newZoom);
               refreshMenu(window);
             } else {
-              log.log('Max zoom out')
+              log.log("Max zoom out");
               utils.writeToast(window, "Cannot zoom in anymore", "warning");
             }
           },
@@ -307,7 +314,7 @@ function getMenu(window) {
               utils.setZoomFactor(window, newZoom);
               refreshMenu(window);
             } else {
-              log.log('Max zoom in')
+              log.log("Max zoom in");
               utils.writeToast(window, "Cannot zoom out anymore", "warning");
             }
           },
@@ -340,8 +347,8 @@ function getMenu(window) {
             } catch (error) {
               log.error(error);
             }
-          }
-        }
+          },
+        },
       ],
     },
   ]);
@@ -352,5 +359,6 @@ function refreshMenu(window) {
 }
 
 module.exports = {
-  getMenu, refreshMenu,
-}
+  getMenu,
+  refreshMenu,
+};

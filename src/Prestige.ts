@@ -1,3 +1,5 @@
+import { FactionNames } from "./Faction/data/FactionNames";
+import { CityName } from "./Locations/data/CityNames";
 import { Augmentations } from "./Augmentation/Augmentations";
 import { augmentationExists, initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
@@ -106,6 +108,9 @@ export function prestigeAugmentation(): void {
   // Messages
   initMessages();
 
+  // Apply entropy from grafting
+  Player.applyEntropy(Player.entropy);
+
   // Gang
   const gang = Player.gang;
   if (Player.inGang() && gang !== null) {
@@ -160,9 +165,7 @@ export function prestigeAugmentation(): void {
   }
 
   if (augmentationExists(AugmentationNames.StaneksGift1) && Augmentations[AugmentationNames.StaneksGift1].owned) {
-    // TODO(hydroflame): refactor faction names so we don't have to hard
-    // code strings.
-    joinFaction(Factions["Church of the Machine God"]);
+    joinFaction(Factions[FactionNames.ChurchOfTheMachineGod]);
   }
 
   staneksGift.prestigeAugmentation();
@@ -279,7 +282,7 @@ export function prestigeSourceFile(flume: boolean): void {
   }
 
   if (Player.bitNodeN === 13) {
-    dialogBoxCreate("Trouble is brewing in Chongqing");
+    dialogBoxCreate(`Trouble is brewing in ${CityName.Chongqing}`);
   }
 
   // Reset Stock market, gang, and corporation

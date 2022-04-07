@@ -31,11 +31,7 @@ export function CoresButton(props: IProps): React.ReactElement {
   }
 
   return (
-    <Tooltip
-      title={
-        <MathJaxWrapper>{`\\(\\large{cost = 10^9 \\cdot 7.5 ^{\\text{cores}}}\\)`}</MathJaxWrapper>
-      }
-    >
+    <Tooltip title={<MathJaxWrapper>{`\\(\\large{cost = 10^9 \\cdot 7.5 ^{\\text{cores}}}\\)`}</MathJaxWrapper>}>
       <span>
         <br />
         <Typography>

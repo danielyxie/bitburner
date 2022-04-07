@@ -15,6 +15,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 interface IProps {
   bladeburner: IBladeburner;
@@ -34,7 +35,7 @@ export function Stats(props: IProps): React.ReactElement {
 
   function openFaction(): void {
     if (!inFaction) return;
-    const faction = Factions["Bladeburners"];
+    const faction = Factions[FactionNames.Bladeburners];
     if (!faction.isMember) {
       joinFaction(faction);
     }
@@ -43,13 +44,15 @@ export function Stats(props: IProps): React.ReactElement {
   }
 
   return (
-    <Paper sx={{ p: 1, overflowY: 'auto', overflowX: 'hidden', wordBreak: 'break-all' }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, maxHeight: '60vh' }}>
-        <Box sx={{ alignSelf: 'flex-start', width: '100%' }}>
-          <Button onClick={() => setTravelOpen(true)} sx={{ width: '50%' }}>Travel</Button>
+    <Paper sx={{ p: 1, overflowY: "auto", overflowX: "hidden", wordBreak: "break-all" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1, maxHeight: "60vh" }}>
+        <Box sx={{ alignSelf: "flex-start", width: "100%" }}>
+          <Button onClick={() => setTravelOpen(true)} sx={{ width: "50%" }}>
+            Travel
+          </Button>
           <Tooltip title={!inFaction ? <Typography>Rank 25 required.</Typography> : ""}>
             <span>
-              <Button disabled={!inFaction} onClick={openFaction} sx={{ width: '50%' }}>
+              <Button disabled={!inFaction} onClick={openFaction} sx={{ width: "50%" }}>
                 Faction
               </Button>
             </span>
@@ -109,8 +112,8 @@ export function Stats(props: IProps): React.ReactElement {
           <Tooltip
             title={
               <Typography>
-                This is your Bladeburner division's estimate of how many Synthoids exist in your current city. An accurate
-                population count increases success rate estimates.
+                This is your Bladeburner division's estimate of how many Synthoids exist in your current city. An
+                accurate population count increases success rate estimates.
               </Typography>
             }
           >

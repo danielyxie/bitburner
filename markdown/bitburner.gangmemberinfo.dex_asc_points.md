@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.dex\_asc\_points property
 
+Total earned dexterity experience
+
 <b>Signature:</b>
 
 ```typescript

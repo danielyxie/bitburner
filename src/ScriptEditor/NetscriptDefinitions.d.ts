@@ -94,6 +94,8 @@ interface Player {
   factions: string[];
   tor: boolean;
   hasCorporation: boolean;
+  inBladeburner: boolean;
+  entropy: number;
 }
 
 /**
@@ -582,7 +584,7 @@ export interface BitNodeMultipliers {
   /** Influences the maximum allowed RAM for a purchased server */
   PurchasedServerMaxRam: number;
   /** Influences cost of any purchased server at or above 128GB */
-  PurchasedServerSoftCap: number;
+  PurchasedServerSoftcap: number;
   /** Influences the minimum favor the player must have with a faction before they can donate to gain rep. */
   RepToDonateToFaction: number;
   /** Influences how much the money on a server can be reduced when a script performs a hack against it. */
@@ -665,6 +667,10 @@ export interface CharacterMult {
   agility: number;
   /** Agility exp */
   agilityExp: number;
+  /** Charisma stat */
+  charisma: number;
+  /** Charisma exp */
+  charismaExp: number;
   /** Company reputation */
   companyRep: number;
   /** Money earned from crimes */
@@ -705,10 +711,10 @@ export interface CharacterInfo {
   factions: string[];
   /** Current health points */
   hp: number;
-  /** Array of all companies at which you have jobs */
-  company: string[];
+  /** Array of all jobs */
+  jobs: string[];
   /** Array of job positions for all companies you are employed at. Same order as 'jobs' */
-  jobTitle: string[];
+  jobTitles: string[];
   /** Maximum health points */
   maxHp: number;
   /** Boolean indicating whether or not you have a tor router */
@@ -733,6 +739,18 @@ export interface CharacterInfo {
   workRepGain: number;
   /** Money earned so far from work, if applicable */
   workMoneyGain: number;
+  /** total hacking exp */
+  hackingExp: number;
+  /** total strength exp */
+  strengthExp: number;
+  /** total defense exp */
+  defenseExp: number;
+  /** total dexterity exp */
+  dexterityExp: number;
+  /** total agility exp */
+  agilityExp: number;
+  /** total charisma exp */
+  charismaExp: number;
 }
 
 /**
@@ -1505,6 +1523,20 @@ export interface TIX {
    * @returns True if you successfully purchased it or if you already have access, false otherwise.
    */
   purchase4SMarketDataTixApi(): boolean;
+
+  /**
+   * Purchase WSE Account.
+   * @remarks RAM cost: 2.5 GB
+   * @returns True if you successfully purchased it or if you already have access, false otherwise.
+   */
+  purchaseWseAccount(): boolean;
+
+  /**
+   * Purchase TIX API Access
+   * @remarks RAM cost: 2.5 GB
+   * @returns True if you successfully purchased it or if you already have access, false otherwise.
+   */
+  purchaseTixApi(): boolean;
 }
 
 /**
@@ -1582,7 +1614,7 @@ export interface Singularity {
    * purchasing a TOR router using this function is the same as if you were to
    * manually purchase one.
    *
-   * @returns True if actions is successful, false otherwise.
+   * @returns True if actions is successful or you already own TOR router, false otherwise.
    */
   purchaseTor(): boolean;
 
@@ -2183,11 +2215,8 @@ export interface Singularity {
    * Hospitalize the player.
    * @remarks
    * RAM cost: 0.25 GB * 16/4/1
-   *
-   *
-   * @returns The cost of the hospitalization.
    */
-  hospitalize(): number;
+  hospitalize(): void;
 
   /**
    * Soft reset the game.
@@ -2274,6 +2303,67 @@ export interface Singularity {
    * @returns True if the focus was changed.
    */
   setFocus(focus: boolean): boolean;
+
+  /**
+   * Get a list of programs offered on the dark web.
+   * @remarks
+   * RAM cost: 1 GB * 16/4/1
+   *
+   *
+   * This function allows the player to get a list of programs available for purchase
+   * on the dark web. Players MUST have purchased Tor to get the list of programs
+   * available. If Tor has not been purchased yet, this function will return an
+   * empty list.
+   *
+   * @example
+   * ```ts
+   * // NS1
+   * getDarkwebProgramsAvailable();
+   * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
+   * ```
+   * @example
+   * ```ts
+   * // NS2
+   * ns.getDarkwebProgramsAvailable();
+   * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
+   * ```
+   * @returns - a list of programs available for purchase on the dark web, or [] if Tor has not
+   * been purchased
+   */
+  getDarkwebPrograms(): string[];
+
+  /**
+   * Check the price of an exploit on the dark web
+   * @remarks
+   * RAM cost: 0.5 GB * 16/4/1
+   *
+   *
+   * This function allows you to check the price of a darkweb exploit/program.
+   * You MUST have a TOR router in order to use this function. The price returned
+   * by this function is the same price you would see with buy -l from the terminal.
+   * Returns the cost of the program if it has not been purchased yet, 0 if it
+   * has already been purchased, or -1 if Tor has not been purchased (and thus
+   * the program/exploit is not available for purchase).
+   *
+   * If the program does not exist, an error is thrown.
+   *
+   *
+   * @example
+   * ```ts
+   * // NS1
+   * getDarkwebProgramCost("brutessh.exe");
+   * ```
+   * @example
+   * ```ts
+   * // NS2
+   * ns.getDarkwebProgramCost("brutessh.exe");
+   * ```
+   * @param programName - Name of program to check the price of
+   * @returns Price of the specified darkweb program
+   * (if not yet purchased), 0 if it has already been purchased, or -1 if Tor has not been
+   * purchased. Throws an error if the specified program/exploit does not exist
+   */
+  getDarkwebProgramCost(programName: string): number;
 }
 
 /**
@@ -2784,7 +2874,7 @@ export interface Bladeburner {
    *
    * Note that this is meant to be used for Contracts and Operations.
    * This function will return ‘Infinity’ for actions such as Training and Field Analysis.
-   * This function will return 1 for BlackOps not yet completed regardless of wether
+   * This function will return 1 for BlackOps not yet completed regardless of whether
    * the player has the required rank to attempt the mission or not.
    *
    * @param type - Type of action.
@@ -2824,7 +2914,7 @@ export interface Bladeburner {
   getActionCurrentLevel(type: string, name: string): number;
 
   /**
-   * Get wether an action is set to autolevel.
+   * Get whether an action is set to autolevel.
    * @remarks
    * RAM cost: 4 GB
    *
@@ -3547,9 +3637,9 @@ export interface Sleeve {
    * @param sleeveNumber - Index of the sleeve to work for the faction.
    * @param factionName - Name of the faction to work for.
    * @param factionWorkType - Name of the action to perform for this faction.
-   * @returns True if the sleeve started working on this faction, false otherwise.
+   * @returns True if the sleeve started working on this faction, false otherwise, can also throw on errors
    */
-  setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean;
+  setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean | undefined;
 
   /**
    * Set a sleeve to work for a company.
@@ -3644,6 +3734,49 @@ export interface Sleeve {
 }
 
 /**
+ * Grafting API
+ * @remarks
+ * This API requires Source-File 10 to use.
+ * @public
+ */
+export interface Grafting {
+  /**
+   * Retrieve the grafting cost of an aug.
+   * @remarks
+   * RAM cost: 3.75 GB
+   *
+   * @param augName - Name of the aug to check the price of. Must be an exact match.
+   * @returns The cost required to graft the named augmentation.
+   * @throws Will error if an invalid Augmentation name is provided.
+   */
+  getAugmentationGraftPrice(augName: string): number;
+
+  /**
+   * Retrieves the time required to graft an aug.
+   * @remarks
+   * RAM cost: 3.75 GB
+   *
+   * @param augName - Name of the aug to check the grafting time of. Must be an exact match.
+   * @returns The time required, in millis, to graft the named augmentation.
+   * @throws Will error if an invalid Augmentation name is provided.
+   */
+  getAugmentationGraftTime(augName: string): number;
+
+  /**
+   * Begins grafting the named aug. You must be in New Tokyo to use this.
+   * @remarks
+   * RAM cost: 7.5 GB
+   *
+   * @param augName - The name of the aug to begin grafting. Must be an exact match.
+   * @param focus - Acquire player focus on this Augmentation grafting. Optional. Defaults to true.
+   * @returns True if the aug successfully began grafting, false otherwise (e.g. not enough money, or
+   * invalid Augmentation name provided).
+   * @throws Will error if called while you are not in New Tokyo.
+   */
+  graftAugmentation(augName: string, focus?: boolean): boolean;
+}
+
+/**
  * Skills formulas
  * @public
  */
@@ -3662,6 +3795,26 @@ interface SkillsFormulas {
    * @returns The calculated exp required.
    */
   calculateExp(skill: number, skillMult?: number): number;
+}
+
+/**
+ * Reputation formulas
+ * @public
+ */
+interface ReputationFormulas {
+  /**
+   * Calculate the total required amount of faction reputation to reach a target favor.
+   * @param favor - target faction favor.
+   * @returns The calculated faction reputation required.
+   */
+  calculateFavorToRep(favor: number): number;
+  /**
+   * Calculate the resulting faction favor of a total amount of reputation.
+   * (Faction favor is gained whenever you install an Augmentation.)
+   * @param rep - amount of reputation.
+   * @returns The calculated faction favor.
+   */
+  calculateRepToFavor(rep: number): number;
 }
 
 /**
@@ -3906,6 +4059,8 @@ interface GangFormulas {
  * @public
  */
 export interface Formulas {
+  /** Reputation formulas */
+  reputation: ReputationFormulas;
   /** Skills formulas */
   skills: SkillsFormulas;
   /** Hacking formulas */
@@ -3934,7 +4089,7 @@ export interface Fragment {
  */
 export interface ActiveFragment {
   id: number;
-  avgCharge: number;
+  highestCharge: number;
   numCharge: number;
   rotation: number;
   x: number;
@@ -3952,14 +4107,14 @@ interface Stanek {
    * RAM cost: 0.4 GB
    * @returns The width of the gift.
    */
-  width(): number;
+  giftWidth(): number;
   /**
    * Stanek's Gift height.
    * @remarks
    * RAM cost: 0.4 GB
    * @returns The height of the gift.
    */
-  height(): number;
+  giftHeight(): number;
 
   /**
    * Charge a fragment, increasing its power.
@@ -3969,7 +4124,7 @@ interface Stanek {
    * @param rootY - rootY Root Y against which to align the top left of the fragment.
    * @returns Promise that lasts until the charge action is over.
    */
-  charge(rootX: number, rootY: number): Promise<void>;
+  chargeFragment(rootX: number, rootY: number): Promise<void>;
 
   /**
    * List possible fragments.
@@ -3994,7 +4149,7 @@ interface Stanek {
    * @remarks
    * RAM cost: 0 GB
    */
-  clear(): void;
+  clearGift(): void;
 
   /**
    * Check if fragment can be placed at specified location.
@@ -4007,7 +4162,7 @@ interface Stanek {
    * @param fragmentId - fragmentId ID of the fragment to place.
    * @returns true if the fragment can be placed at that position. false otherwise.
    */
-  canPlace(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+  canPlaceFragment(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
   /**
    * Place fragment on Stanek's Gift.
    * @remarks
@@ -4019,7 +4174,7 @@ interface Stanek {
    * @param fragmentId - ID of the fragment to place.
    * @returns true if the fragment can be placed at that position. false otherwise.
    */
-  place(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+  placeFragment(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
   /**
    * Get placed fragment at location.
    * @remarks
@@ -4029,7 +4184,7 @@ interface Stanek {
    * @param rootY - Y against which to align the top left of the fragment.
    * @returns The fragment at [rootX, rootY], if any.
    */
-  get(rootX: number, rootY: number): ActiveFragment | undefined;
+  getFragment(rootX: number, rootY: number): ActiveFragment | undefined;
 
   /**
    * Remove fragment at location.
@@ -4040,7 +4195,7 @@ interface Stanek {
    * @param rootY - Y against which to align the top left of the fragment.
    * @returns The fragment at [rootX, rootY], if any.
    */
-  remove(rootX: number, rootY: number): boolean;
+  removeFragment(rootX: number, rootY: number): boolean;
 }
 
 /**
@@ -4203,6 +4358,19 @@ export interface NS extends Singularity {
    * RAM cost: 0 GB
    */
   readonly ui: UserInterface;
+
+  /**
+   * Namespace for singularity functions.
+   * RAM cost: 0 GB
+   */
+  readonly singularity: Singularity;
+
+  /**
+   * Namespace for grafting functions.
+   * @remarks
+   * RAM cost: 0 GB
+   */
+  readonly grafting: Grafting;
 
   /**
    * Arguments passed into the script.
@@ -4474,7 +4642,7 @@ export interface NS extends Singularity {
    * ```
    * @returns
    */
-  sleep(millis: number): Promise<void>;
+  sleep(millis: number): Promise<true>;
 
   /**
    * Suspends the script for n milliseconds. Doesn't block with concurrent calls.
@@ -4484,7 +4652,7 @@ export interface NS extends Singularity {
    * @param millis - Number of milliseconds to sleep.
    * @returns
    */
-  asleep(millis: number): Promise<void>;
+  asleep(millis: number): Promise<true>;
 
   /**
    * Prints one or move values or variables to the script’s logs.
@@ -5503,7 +5671,7 @@ export interface NS extends Singularity {
    * @param args  - Arguments to identify the script
    * @returns The info about the running script if found, and null otherwise.
    */
-  getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript;
+  getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript | null;
 
   /**
    * Get cost of purchasing a server.
@@ -5983,19 +6151,25 @@ export interface NS extends Singularity {
   tFormat(milliseconds: number, milliPrecision?: boolean): string;
 
   /**
-   * Prompt the player with a Yes/No modal.
+   * Prompt the player with an input modal.
    * @remarks
    * RAM cost: 0 GB
    *
-   * Prompts the player with a dialog box with two options: “Yes” and “No”.
-   * This function will return true if the player click “Yes” and false if
-   * the player clicks “No”. The script’s execution is halted until the player
-   * selects one of the options.
+   * Prompts the player with a dialog box. If `options.type` is undefined or "boolean",
+   * the player is shown "Yes" and "No" prompts, which return true and false respectively.
+   * Passing a type of "text" will give the player a text field and a value of "select"
+   * will show a drop-down field. Choosing type "select" will require an array or object
+   * to be passed via the `options.choices` property.
+   * The script’s execution is halted until the player selects one of the options.
    *
    * @param txt - Text to appear in the prompt dialog box.
-   * @returns True if the player click “Yes” and false if the player clicks “No”.
+   * @param options - Options to modify the prompt the player is shown.
+   * @returns True if the player click “Yes”; false if the player clicks “No”; or the value entered by the player.
    */
-  prompt(txt: string): Promise<boolean>;
+  prompt(
+    txt: string,
+    options?: { type?: "boolean" | "text" | "select" | undefined; choices?: string[] },
+  ): Promise<boolean | string>;
 
   /**
    * Open up a message box.
@@ -6385,12 +6559,12 @@ export interface WarehouseAPI {
    */
   buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
-  * Set material to bulk buy
-  * @param divisionName - Name of the division
-  * @param cityName - Name of the city
-  * @param materialName - Name of the material
-  * @param amt - Amount of material to buy
-  */
+   * Set material to bulk buy
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param amt - Amount of material to buy
+   */
   bulkPurchase(divisionName: string, cityName: string, materialName: string, amt: number): void;
   /**
    * Get warehouse data
@@ -6644,6 +6818,16 @@ export interface Corporation extends WarehouseAPI, OfficeAPI {
    *
    */
   sellShares(amount: number): void;
+  /**
+   * Get bonus time.
+   *
+   * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
+   *
+   * “Bonus time” makes the game progress faster.
+   *
+   * @returns Bonus time for the Corporation mechanic in milliseconds.
+   */
+  getBonusTime(): number;
 }
 
 /**

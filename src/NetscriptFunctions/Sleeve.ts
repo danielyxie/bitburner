@@ -10,10 +10,16 @@ import { Augmentations } from "../Augmentation/Augmentations";
 import { CityName } from "../Locations/data/CityNames";
 import { findCrime } from "../Crime/CrimeHelpers";
 
-import { Sleeve as ISleeve } from "../ScriptEditor/NetscriptDefinitions";
+import {
+  AugmentPair,
+  Sleeve as ISleeve,
+  SleeveInformation,
+  SleeveSkills,
+  SleeveTask,
+} from "../ScriptEditor/NetscriptDefinitions";
 
 export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): ISleeve {
-  const checkSleeveAPIAccess = function (func: any): void {
+  const checkSleeveAPIAccess = function (func: string): void {
     if (player.bitNodeN !== 10 && !SourceFileFlags[10]) {
       throw helper.makeRuntimeErrorMsg(
         `sleeve.${func}`,
@@ -22,7 +28,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     }
   };
 
-  const checkSleeveNumber = function (func: any, sleeveNumber: any): void {
+  const checkSleeveNumber = function (func: string, sleeveNumber: number): void {
     if (sleeveNumber >= player.sleeves.length || sleeveNumber < 0) {
       const msg = `Invalid sleeve number: ${sleeveNumber}`;
       workerScript.log(func, () => msg);
@@ -30,30 +36,47 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     }
   };
 
+  const getSleeveStats = function (sleeveNumber: number): SleeveSkills {
+    const sl = player.sleeves[sleeveNumber];
+    return {
+      shock: 100 - sl.shock,
+      sync: sl.sync,
+      hacking: sl.hacking,
+      strength: sl.strength,
+      defense: sl.defense,
+      dexterity: sl.dexterity,
+      agility: sl.agility,
+      charisma: sl.charisma,
+    };
+  };
+
+  const updateRam = (funcName: string): void =>
+    helper.updateDynamicRam(funcName, getRamCost(player, "sleeve", funcName));
+
   return {
     getNumSleeves: function (): number {
-      helper.updateDynamicRam("getNumSleeves", getRamCost(player, "sleeve", "getNumSleeves"));
+      updateRam("getNumSleeves");
       checkSleeveAPIAccess("getNumSleeves");
       return player.sleeves.length;
     },
-    setToShockRecovery: function (asleeveNumber: any = 0): boolean {
-      const sleeveNumber = helper.number("setToShockRecovery", "sleeveNumber", asleeveNumber);
-      helper.updateDynamicRam("setToShockRecovery", getRamCost(player, "sleeve", "setToShockRecovery"));
+    setToShockRecovery: function (_sleeveNumber: unknown): boolean {
+      updateRam("setToShockRecovery");
+      const sleeveNumber = helper.number("setToShockRecovery", "sleeveNumber", _sleeveNumber);
       checkSleeveAPIAccess("setToShockRecovery");
       checkSleeveNumber("setToShockRecovery", sleeveNumber);
       return player.sleeves[sleeveNumber].shockRecovery(player);
     },
-    setToSynchronize: function (asleeveNumber: any = 0): boolean {
-      const sleeveNumber = helper.number("setToSynchronize", "sleeveNumber", asleeveNumber);
-      helper.updateDynamicRam("setToSynchronize", getRamCost(player, "sleeve", "setToSynchronize"));
+    setToSynchronize: function (_sleeveNumber: unknown): boolean {
+      updateRam("setToSynchronize");
+      const sleeveNumber = helper.number("setToSynchronize", "sleeveNumber", _sleeveNumber);
       checkSleeveAPIAccess("setToSynchronize");
       checkSleeveNumber("setToSynchronize", sleeveNumber);
       return player.sleeves[sleeveNumber].synchronize(player);
     },
-    setToCommitCrime: function (asleeveNumber: any = 0, aCrimeRoughName: any = ""): boolean {
-      const sleeveNumber = helper.number("setToCommitCrime", "sleeveNumber", asleeveNumber);
-      const crimeRoughName = helper.string("setToCommitCrime", "crimeName", aCrimeRoughName);
-      helper.updateDynamicRam("setToCommitCrime", getRamCost(player, "sleeve", "setToCommitCrime"));
+    setToCommitCrime: function (_sleeveNumber: unknown, _crimeRoughName: unknown): boolean {
+      updateRam("setToCommitCrime");
+      const sleeveNumber = helper.number("setToCommitCrime", "sleeveNumber", _sleeveNumber);
+      const crimeRoughName = helper.string("setToCommitCrime", "crimeName", _crimeRoughName);
       checkSleeveAPIAccess("setToCommitCrime");
       checkSleeveNumber("setToCommitCrime", sleeveNumber);
       const crime = findCrime(crimeRoughName);
@@ -62,27 +85,27 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       }
       return player.sleeves[sleeveNumber].commitCrime(player, crime.name);
     },
-    setToUniversityCourse: function (asleeveNumber: any = 0, auniversityName: any = "", aclassName: any = ""): boolean {
-      const sleeveNumber = helper.number("setToUniversityCourse", "sleeveNumber", asleeveNumber);
-      const universityName = helper.string("setToUniversityCourse", "universityName", auniversityName);
-      const className = helper.string("setToUniversityCourse", "className", aclassName);
-      helper.updateDynamicRam("setToUniversityCourse", getRamCost(player, "sleeve", "setToUniversityCourse"));
+    setToUniversityCourse: function (_sleeveNumber: unknown, _universityName: unknown, _className: unknown): boolean {
+      updateRam("setToUniversityCourse");
+      const sleeveNumber = helper.number("setToUniversityCourse", "sleeveNumber", _sleeveNumber);
+      const universityName = helper.string("setToUniversityCourse", "universityName", _universityName);
+      const className = helper.string("setToUniversityCourse", "className", _className);
       checkSleeveAPIAccess("setToUniversityCourse");
       checkSleeveNumber("setToUniversityCourse", sleeveNumber);
       return player.sleeves[sleeveNumber].takeUniversityCourse(player, universityName, className);
     },
-    travel: function (asleeveNumber: any = 0, acityName: any = ""): boolean {
-      const sleeveNumber = helper.number("travel", "sleeveNumber", asleeveNumber);
-      const cityName = helper.string("setToUniversityCourse", "cityName", acityName);
-      helper.updateDynamicRam("travel", getRamCost(player, "sleeve", "travel"));
+    travel: function (_sleeveNumber: unknown, _cityName: unknown): boolean {
+      updateRam("travel");
+      const sleeveNumber = helper.number("travel", "sleeveNumber", _sleeveNumber);
+      const cityName = helper.string("setToUniversityCourse", "cityName", _cityName);
       checkSleeveAPIAccess("travel");
       checkSleeveNumber("travel", sleeveNumber);
       return player.sleeves[sleeveNumber].travel(player, cityName as CityName);
     },
-    setToCompanyWork: function (asleeveNumber: any = 0, acompanyName: any = ""): boolean {
-      const sleeveNumber = helper.number("setToCompanyWork", "sleeveNumber", asleeveNumber);
+    setToCompanyWork: function (_sleeveNumber: unknown, acompanyName: unknown): boolean {
+      updateRam("setToCompanyWork");
+      const sleeveNumber = helper.number("setToCompanyWork", "sleeveNumber", _sleeveNumber);
       const companyName = helper.string("setToUniversityCourse", "companyName", acompanyName);
-      helper.updateDynamicRam("setToCompanyWork", getRamCost(player, "sleeve", "setToCompanyWork"));
       checkSleeveAPIAccess("setToCompanyWork");
       checkSleeveNumber("setToCompanyWork", sleeveNumber);
 
@@ -102,11 +125,15 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
 
       return player.sleeves[sleeveNumber].workForCompany(player, companyName);
     },
-    setToFactionWork: function (asleeveNumber: any = 0, afactionName: any = "", aworkType: any = ""): boolean {
-      const sleeveNumber = helper.number("setToFactionWork", "sleeveNumber", asleeveNumber);
-      const factionName = helper.string("setToUniversityCourse", "factionName", afactionName);
-      const workType = helper.string("setToUniversityCourse", "workType", aworkType);
-      helper.updateDynamicRam("setToFactionWork", getRamCost(player, "sleeve", "setToFactionWork"));
+    setToFactionWork: function (
+      _sleeveNumber: unknown,
+      _factionName: unknown,
+      _workType: unknown,
+    ): boolean | undefined {
+      updateRam("setToFactionWork");
+      const sleeveNumber = helper.number("setToFactionWork", "sleeveNumber", _sleeveNumber);
+      const factionName = helper.string("setToUniversityCourse", "factionName", _factionName);
+      const workType = helper.string("setToUniversityCourse", "workType", _workType);
       checkSleeveAPIAccess("setToFactionWork");
       checkSleeveNumber("setToFactionWork", sleeveNumber);
 
@@ -124,54 +151,35 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
         }
       }
 
+      if (player.gang && player.gang.facName == factionName) {
+        throw helper.makeRuntimeErrorMsg(
+          "sleeve.setToFactionWork",
+          `Sleeve ${sleeveNumber} cannot work for faction ${factionName} because you have started a gang with them.`,
+        );
+      }
+
       return player.sleeves[sleeveNumber].workForFaction(player, factionName, workType);
     },
-    setToGymWorkout: function (asleeveNumber: any = 0, agymName: any = "", astat: any = ""): boolean {
-      const sleeveNumber = helper.number("setToGymWorkout", "sleeveNumber", asleeveNumber);
-      const gymName = helper.string("setToUniversityCourse", "gymName", agymName);
-      const stat = helper.string("setToUniversityCourse", "stat", astat);
-      helper.updateDynamicRam("setToGymWorkout", getRamCost(player, "sleeve", "setToGymWorkout"));
+    setToGymWorkout: function (_sleeveNumber: unknown, _gymName: unknown, _stat: unknown): boolean {
+      updateRam("setToGymWorkout");
+      const sleeveNumber = helper.number("setToGymWorkout", "sleeveNumber", _sleeveNumber);
+      const gymName = helper.string("setToUniversityCourse", "gymName", _gymName);
+      const stat = helper.string("setToUniversityCourse", "stat", _stat);
       checkSleeveAPIAccess("setToGymWorkout");
       checkSleeveNumber("setToGymWorkout", sleeveNumber);
 
       return player.sleeves[sleeveNumber].workoutAtGym(player, gymName, stat);
     },
-    getSleeveStats: function (asleeveNumber: any = 0): {
-      shock: number;
-      sync: number;
-      hacking: number;
-      strength: number;
-      defense: number;
-      dexterity: number;
-      agility: number;
-      charisma: number;
-    } {
-      const sleeveNumber = helper.number("getSleeveStats", "sleeveNumber", asleeveNumber);
-      helper.updateDynamicRam("getSleeveStats", getRamCost(player, "sleeve", "getSleeveStats"));
+    getSleeveStats: function (_sleeveNumber: unknown): SleeveSkills {
+      updateRam("getSleeveStats");
+      const sleeveNumber = helper.number("getSleeveStats", "sleeveNumber", _sleeveNumber);
       checkSleeveAPIAccess("getSleeveStats");
       checkSleeveNumber("getSleeveStats", sleeveNumber);
-
-      const sl = player.sleeves[sleeveNumber];
-      return {
-        shock: 100 - sl.shock,
-        sync: sl.sync,
-        hacking: sl.hacking,
-        strength: sl.strength,
-        defense: sl.defense,
-        dexterity: sl.dexterity,
-        agility: sl.agility,
-        charisma: sl.charisma,
-      };
+      return getSleeveStats(sleeveNumber);
     },
-    getTask: function (asleeveNumber: any = 0): {
-      task: string;
-      crime: string;
-      location: string;
-      gymStatType: string;
-      factionWorkType: string;
-    } {
-      const sleeveNumber = helper.number("getTask", "sleeveNumber", asleeveNumber);
-      helper.updateDynamicRam("getTask", getRamCost(player, "sleeve", "getTask"));
+    getTask: function (_sleeveNumber: unknown): SleeveTask {
+      updateRam("getTask");
+      const sleeveNumber = helper.number("getTask", "sleeveNumber", _sleeveNumber);
       checkSleeveAPIAccess("getTask");
       checkSleeveNumber("getTask", sleeveNumber);
 
@@ -184,14 +192,15 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
         factionWorkType: FactionWorkType[sl.factionWorkType],
       };
     },
-    getInformation: function (asleeveNumber: any = 0): any {
-      const sleeveNumber = helper.number("getInformation", "sleeveNumber", asleeveNumber);
-      helper.updateDynamicRam("getInformation", getRamCost(player, "sleeve", "getInformation"));
+    getInformation: function (_sleeveNumber: unknown): SleeveInformation {
+      updateRam("getInformation");
+      const sleeveNumber = helper.number("getInformation", "sleeveNumber", _sleeveNumber);
       checkSleeveAPIAccess("getInformation");
       checkSleeveNumber("getInformation", sleeveNumber);
 
       const sl = player.sleeves[sleeveNumber];
       return {
+        tor: false,
         city: sl.city,
         hp: sl.hp,
         jobs: Object.keys(player.jobs), // technically sleeves have the same jobs as the player.
@@ -249,9 +258,9 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
         workRepGain: sl.getRepGain(player),
       };
     },
-    getSleeveAugmentations: function (asleeveNumber: any = 0): string[] {
-      const sleeveNumber = helper.number("getSleeveAugmentations", "sleeveNumber", asleeveNumber);
-      helper.updateDynamicRam("getSleeveAugmentations", getRamCost(player, "sleeve", "getSleeveAugmentations"));
+    getSleeveAugmentations: function (_sleeveNumber: unknown): string[] {
+      updateRam("getSleeveAugmentations");
+      const sleeveNumber = helper.number("getSleeveAugmentations", "sleeveNumber", _sleeveNumber);
       checkSleeveAPIAccess("getSleeveAugmentations");
       checkSleeveNumber("getSleeveAugmentations", sleeveNumber);
 
@@ -261,12 +270,9 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       }
       return augs;
     },
-    getSleevePurchasableAugs: function (asleeveNumber: any = 0): {
-      name: string;
-      cost: number;
-    }[] {
-      const sleeveNumber = helper.number("getSleevePurchasableAugs", "sleeveNumber", asleeveNumber);
-      helper.updateDynamicRam("getSleevePurchasableAugs", getRamCost(player, "sleeve", "getSleevePurchasableAugs"));
+    getSleevePurchasableAugs: function (_sleeveNumber: unknown): AugmentPair[] {
+      updateRam("getSleevePurchasableAugs");
+      const sleeveNumber = helper.number("getSleevePurchasableAugs", "sleeveNumber", _sleeveNumber);
       checkSleeveAPIAccess("getSleevePurchasableAugs");
       checkSleeveNumber("getSleevePurchasableAugs", sleeveNumber);
 
@@ -282,12 +288,16 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
 
       return augs;
     },
-    purchaseSleeveAug: function (asleeveNumber: any = 0, aaugName: any = ""): boolean {
-      const sleeveNumber = helper.number("purchaseSleeveAug", "sleeveNumber", asleeveNumber);
-      const augName = helper.string("purchaseSleeveAug", "augName", aaugName);
-      helper.updateDynamicRam("purchaseSleeveAug", getRamCost(player, "sleeve", "purchaseSleeveAug"));
+    purchaseSleeveAug: function (_sleeveNumber: unknown, _augName: unknown): boolean {
+      updateRam("purchaseSleeveAug");
+      const sleeveNumber = helper.number("purchaseSleeveAug", "sleeveNumber", _sleeveNumber);
+      const augName = helper.string("purchaseSleeveAug", "augName", _augName);
       checkSleeveAPIAccess("purchaseSleeveAug");
       checkSleeveNumber("purchaseSleeveAug", sleeveNumber);
+
+      if (getSleeveStats(sleeveNumber).shock > 0) {
+        throw helper.makeRuntimeErrorMsg("sleeve.purchaseSleeveAug", `Sleeve shock too high: Sleeve ${sleeveNumber}`);
+      }
 
       const aug = Augmentations[augName];
       if (!aug) {

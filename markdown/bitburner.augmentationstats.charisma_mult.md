@@ -4,7 +4,7 @@
 
 ## AugmentationStats.charisma\_mult property
 
-Multipler to charisma skill
+Multiplier to charisma skill
 
 <b>Signature:</b>
 

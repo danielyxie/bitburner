@@ -41,7 +41,9 @@ export function runScript(
 
   // Check if this script is already running
   if (findRunningScript(scriptName, args, server) != null) {
-    terminal.error("This script is already running with the same args. Cannot run multiple instances with the same args");
+    terminal.error(
+      "This script is already running with the same args. Cannot run multiple instances with the same args",
+    );
     return;
   }
 

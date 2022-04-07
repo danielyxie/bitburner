@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.def\_mult property
 
+Defense multiplier from equipment
+
 <b>Signature:</b>
 
 ```typescript

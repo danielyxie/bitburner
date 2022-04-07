@@ -4,7 +4,7 @@
 
 ## HackingFormulas.growPercent() method
 
-Calculate the percent a server would grow.
+Calculate the percent a server would grow to. (Ex: 3.0 would would grow the server to 300% of its current value.)
 
 <b>Signature:</b>
 

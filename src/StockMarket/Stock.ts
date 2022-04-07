@@ -213,13 +213,11 @@ export class Stock {
       } else {
         this.otlkMag -= changeAmt;
       }
-    } else {
+    } else if (this.b) {
       // Forecast decreases
-      if (this.b) {
-        this.otlkMag -= changeAmt;
-      } else {
-        this.otlkMag += changeAmt;
-      }
+      this.otlkMag -= changeAmt;
+    } else {
+      this.otlkMag += changeAmt;
     }
 
     this.otlkMag = Math.min(this.otlkMag, 50);

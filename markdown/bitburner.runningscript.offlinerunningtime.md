@@ -4,6 +4,8 @@
 
 ## RunningScript.offlineRunningTime property
 
+Offline running time of the script, in seconds \*
+
 <b>Signature:</b>
 
 ```typescript

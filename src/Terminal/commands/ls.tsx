@@ -8,6 +8,7 @@ import { BaseServer } from "../../Server/BaseServer";
 import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../DirectoryHelpers";
 import { IRouter } from "../../ui/Router";
 import { ITerminal } from "../ITerminal";
+import * as libarg from "arg";
 
 export function ls(
   terminal: ITerminal,
@@ -16,17 +17,31 @@ export function ls(
   server: BaseServer,
   args: (string | number | boolean)[],
 ): void {
+  let flags;
+  try {
+    flags = libarg(
+      {
+        "-l": Boolean,
+        "--grep": String,
+        "-g": "--grep",
+      },
+      { argv: args },
+    );
+  } catch (e) {
+    // catch passing only -g / --grep with no string to use as the search
+    incorrectUsage();
+    return;
+  }
+  const filter = flags["--grep"];
+
   const numArgs = args.length;
   function incorrectUsage(): void {
-    terminal.error("Incorrect usage of ls command. Usage: ls [dir] [| grep pattern]");
+    terminal.error("Incorrect usage of ls command. Usage: ls [dir] [-l] [-g, --grep pattern]");
   }
 
-  if (numArgs > 4 || numArgs === 2) {
+  if (numArgs > 4) {
     return incorrectUsage();
   }
-
-  // Grep
-  let filter = ""; // Grep
 
   // Directory path
   let prefix = terminal.cwd();
@@ -34,26 +49,15 @@ export function ls(
     prefix += "/";
   }
 
-  // If there are 3+ arguments, then the last 3 must be for grep
-  if (numArgs >= 3) {
-    if (args[numArgs - 2] !== "grep" || args[numArgs - 3] !== "|") {
-      return incorrectUsage();
-    }
-    filter = args[numArgs - 1] + "";
+  // If first arg doesn't contain a - it must be the file/folder
+  const dir = args[0] && typeof args[0] == "string" && !args[0].startsWith("-") ? args[0] : "";
+  const newPath = evaluateDirectoryPath(dir + "", terminal.cwd());
+  prefix = newPath || "";
+  if (!prefix.endsWith("/")) {
+    prefix += "/";
   }
-
-  // If the second argument is not a pipe, then it must be for listing a directory
-  if (numArgs >= 1 && args[0] !== "|") {
-    const newPath = evaluateDirectoryPath(args[0] + "", terminal.cwd());
-    prefix = newPath ? newPath : "";
-    if (prefix != null) {
-      if (!prefix.endsWith("/")) {
-        prefix += "/";
-      }
-      if (!isValidDirectoryPath(prefix)) {
-        return incorrectUsage();
-      }
-    }
+  if (!isValidDirectoryPath(prefix)) {
+    return incorrectUsage();
   }
 
   // Root directory, which is the same as no 'prefix' at all
@@ -139,10 +143,9 @@ export function ls(
       }),
     )();
 
-    const rowSplit = row
-      .split(" ")
-      .map((x) => x.trim())
-      .filter((x) => !!x);
+    const rowSplit = row.split("~");
+    let rowSplitArray = rowSplit.map((x) => [x.trim(), x.replace(x.trim(), "")]);
+    rowSplitArray = rowSplitArray.filter((x) => !!x[0]);
 
     function onScriptLinkClick(filename: string): void {
       if (player.getCurrentServer().hostname !== hostname) {
@@ -156,35 +159,39 @@ export function ls(
 
     return (
       <span className={classes.scriptLinksWrap}>
-        {rowSplit.map((rowItem) => (
-          <span key={rowItem} className={classes.scriptLink} onClick={() => onScriptLinkClick(rowItem)}>
-            {rowItem}
+        {rowSplitArray.map((rowItem) => (
+          <span>
+            <span key={rowItem[0]} className={classes.scriptLink} onClick={() => onScriptLinkClick(rowItem[0])}>
+              {rowItem[0]}
+            </span>
+            <span key={"s" + rowItem[0]}>{rowItem[1]}</span>
           </span>
         ))}
       </span>
     );
   }
 
-  function postSegments(segments: string[], style?: any, linked?: boolean): void {
+  function postSegments(segments: string[], flags: any, style?: any, linked?: boolean): void {
     const maxLength = Math.max(...segments.map((s) => s.length)) + 1;
-    const filesPerRow = Math.floor(80 / maxLength);
+    const filesPerRow = flags["-l"] === true ? 1 : Math.ceil(80 / maxLength);
     for (let i = 0; i < segments.length; i++) {
       let row = "";
       for (let col = 0; col < filesPerRow; col++) {
         if (!(i < segments.length)) break;
         row += segments[i];
         row += " ".repeat(maxLength * (col + 1) - row.length);
+        if (linked) {
+          row += "~";
+        }
         i++;
       }
       i--;
       if (!style) {
         terminal.print(row);
+      } else if (linked) {
+        terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
       } else {
-        if (linked) {
-          terminal.printRaw(<ClickableScriptRow row={row} prefix={prefix} hostname={server.hostname} />);
-        } else {
-          terminal.printRaw(<span style={style}>{row}</span>);
-        }
+        terminal.printRaw(<span style={style}>{row}</span>);
       }
     }
   }
@@ -198,6 +205,6 @@ export function ls(
     { segments: allScripts, style: { color: "yellow", fontStyle: "bold" }, linked: true },
   ].filter((g) => g.segments.length > 0);
   for (let i = 0; i < groups.length; i++) {
-    postSegments(groups[i].segments, groups[i].style, groups[i].linked);
+    postSegments(groups[i].segments, flags, groups[i].style, groups[i].linked);
   }
 }

@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.cha property
 
+Charisma skill level
+
 <b>Signature:</b>
 
 ```typescript

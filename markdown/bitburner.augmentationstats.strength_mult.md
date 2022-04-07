@@ -4,7 +4,7 @@
 
 ## AugmentationStats.strength\_mult property
 
-Multipler to strength skill
+Multiplier to strength skill
 
 <b>Signature:</b>
 

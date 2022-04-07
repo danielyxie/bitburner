@@ -4,7 +4,7 @@
 
 ## AugmentationStats.faction\_rep\_mult property
 
-Multipler to amount of reputation gained when working
+Multiplier to amount of reputation gained when working
 
 <b>Signature:</b>
 

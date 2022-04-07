@@ -23,7 +23,7 @@ export enum Page {
   Job,
   Milestones,
   Options,
-  Resleeves,
+  Grafting,
   Sleeves,
   Stats,
   StockMarket,
@@ -74,7 +74,7 @@ export interface IRouter {
   toInfiltration(location: Location): void;
   toJob(): void;
   toMilestones(): void;
-  toResleeves(): void;
+  toGrafting(): void;
   toScriptEditor(files?: Record<string, string>, options?: ScriptEditorRouteOptions): void;
   toSleeves(): void;
   toStockMarket(): void;

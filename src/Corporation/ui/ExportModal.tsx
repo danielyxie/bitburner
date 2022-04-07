@@ -23,7 +23,9 @@ interface IProps {
 // Create a popup that lets the player manage exports
 export function ExportModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
-  const possibleDivisions = corp.divisions.filter((division: IIndustry) => isRelevantMaterial(props.mat.name, division));
+  const possibleDivisions = corp.divisions.filter((division: IIndustry) =>
+    isRelevantMaterial(props.mat.name, division),
+  );
   if (possibleDivisions.length === 0) throw new Error("Export popup created with no divisions.");
   const defaultDivision = possibleDivisions[0];
   if (Object.keys(defaultDivision.warehouses).length === 0)
@@ -93,7 +95,7 @@ export function ExportModal(props: IProps): React.ReactElement {
             <MenuItem key={division.name} value={division.name}>
               {division.name}
             </MenuItem>
-        ))}
+          ))}
       </Select>
       <Select onChange={onCityChange} value={city}>
         {possibleCities.map((cityName: string) => {

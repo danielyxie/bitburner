@@ -10,6 +10,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Money } from "../../ui/React/Money";
 import { SellShares } from "../Actions";
+import { KEY } from "../../utils/helpers/keyCodes";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -50,7 +51,7 @@ export function SellSharesModal(props: IProps): React.ReactElement {
   function sell(): void {
     if (disabled) return;
     try {
-      const profit = SellShares(corp, player, shares)
+      const profit = SellShares(corp, player, shares);
       props.onClose();
       dialogBoxCreate(
         <>
@@ -64,11 +65,10 @@ export function SellSharesModal(props: IProps): React.ReactElement {
     } catch (err) {
       dialogBoxCreate(err + "");
     }
-
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) sell();
+    if (event.key === KEY.ENTER) sell();
   }
 
   return (
