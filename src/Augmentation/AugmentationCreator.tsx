@@ -1489,7 +1489,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
   new Augmentation({
     name: AugmentationNames.CongruityImplant,
     repCost: 0,
-    moneyCost: 150e12,
+    moneyCost: 50e12,
     info:
       "Developed by a pioneer in Grafting research, this implant " +
       "generates pulses of stability which seem to have a nullifying " +
