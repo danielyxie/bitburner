@@ -19,22 +19,27 @@ import { Money } from "./React/Money";
 import { StatsRow } from "./React/StatsRow";
 import { StatsTable } from "./React/StatsTable";
 
-function Employers(): React.ReactElement {
-  const player = use.Player();
-  if (player.jobs && Object.keys(player.jobs).length !== 0)
-    return (
-      <>
-        <Typography>All Employers:</Typography>
 
+interface EmployersModalProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+const EmployersModal = ({ open, onClose }: EmployersModalProps): React.ReactElement => {
+  const player = use.Player();
+  return (
+    <Modal open={open} onClose={onClose}>
+      <>
+        <Typography variant="h6">All Employers</Typography>
         <ul>
           {Object.keys(player.jobs).map((j) => (
-            <Typography key={j}> * {j}</Typography>
+            <Typography key={j}>* {j}</Typography>
           ))}
         </ul>
       </>
-    );
-  return <></>;
-}
+    </Modal>
+  );
+};
 
 interface MultTableProps {
   rows: (string | number)[][];
@@ -213,6 +218,7 @@ function MoneyModal({ open, onClose }: IMoneyModalProps): React.ReactElement {
 export function CharacterStats(): React.ReactElement {
   const player = use.Player();
   const [moneyOpen, setMoneyOpen] = useState(false);
+  const [employersOpen, setEmployersOpen] = useState(false);
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
@@ -261,6 +267,16 @@ export function CharacterStats(): React.ReactElement {
                   />
                 </>
               )}
+              {player.jobs && Object.keys(player.jobs).length !== 0 && (
+                <StatsRow name="All Employers" color={Settings.theme.primary} data={{}}>
+                  <>
+                    <span style={{ color: Settings.theme.primary }}>{Object.keys(player.jobs).length} total</span>
+                    <IconButton onClick={() => setEmployersOpen(true)} sx={{ p: 0 }}>
+                      <MoreHorizIcon color="info" />
+                    </IconButton>
+                  </>
+                </StatsRow>
+              )}
               <StatsRow
                 name="Servers Owned"
                 color={Settings.theme.primary}
@@ -282,7 +298,6 @@ export function CharacterStats(): React.ReactElement {
               />
             </TableBody>
           </Table>
-          <Employers />
         </Paper>
         <Paper sx={{ p: 1 }}>
           <Typography variant="h6">Skills</Typography>
@@ -496,6 +511,7 @@ export function CharacterStats(): React.ReactElement {
       </Box>
       <CurrentBitNode />
       <MoneyModal open={moneyOpen} onClose={() => setMoneyOpen(false)} />
+      <EmployersModal open={employersOpen} onClose={() => setEmployersOpen(false)} />
     </>
   );
 }
