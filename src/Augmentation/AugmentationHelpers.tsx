@@ -112,7 +112,10 @@ export function updateAugmentationCosts(): void {
       } else if (augmentationToUpdate.factions.includes(FactionNames.Infiltrators)) {
         updateInfiltratorCosts(augmentationToUpdate);
       } else {
-        augmentationToUpdate.baseCost = augmentationToUpdate.startingCost * getGenericAugmentationPriceMultiplier();
+        augmentationToUpdate.baseCost =
+          augmentationToUpdate.startingCost *
+          getGenericAugmentationPriceMultiplier() *
+          BitNodeMultipliers.AugmentationMoneyCost;
       }
     }
   }

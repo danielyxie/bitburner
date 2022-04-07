@@ -23,10 +23,11 @@ Yes, just export the save file from the options menu & import it in the other pl
 ## Game is stuck after running scripts!
 
 You may have created an infinite loop with no sleep. You'll have to restart the game by killing all scripts.
-* On Browser: Stick `?noScript` at the end of the URL
-* On Steam:
-  * In the menu, "Reloads" -> "Reload & Kill All Scripts".
-  * If this does not work, when launching the game, use the kill all script options.
+
+- On Browser: Stick `?noScript` at the end of the URL
+- On Steam:
+  - In the menu, "Reloads" -> "Reload & Kill All Scripts".
+  - If this does not work, when launching the game, use the kill all script options.
 
 ---
 
@@ -51,11 +52,13 @@ You can navigate to the game files by right-clicking the game in your library an
 ## Steam: Game won't launch
 
 ### **On Windows**
+
 If the game is installed on a network drive, it will fail to start due to a [limitation in Chromium](https://github.com/electron/electron/issues/27356).
 
 If you cannot move the game to another drive, you'll have to add the `--no-sandbox` launch option. In your Steam Library, Right click the game and hit "Properties". You'll see the launch option section in the "General" window.
 
 ### **On Linux**
+
 The game is built natively, do not use Proton unless native does not work.
 
 When launching the game, you will be prompted with three options. If the standard launch does not work, you may attempt the `--disable-seccomp-filter-sandbox` or `--no-sandbox` launch option. If this still does not work, the game should be able to start by launching it directly or through the terminal. See [How do I get to the game files?](#game-files).
@@ -68,17 +71,17 @@ When launching the game, you will be prompted with three options. If the standar
 
 You may want access the logs to get information about crashes or such.
 
-  * on Linux: `~/.config/bitburner/logs/main.log`
-  * on macOS: `~/Library/Logs/bitburner/main.log`
-  * on Windows: `%USERPROFILE%\AppData\Roaming\bitburner\logs\main.log`
+- on Linux: `~/.config/bitburner/logs/main.log`
+- on macOS: `~/Library/Logs/bitburner/main.log`
+- on Windows: `%USERPROFILE%\AppData\Roaming\bitburner\logs\main.log`
 
 ### Config (using [electron-store](https://github.com/sindresorhus/electron-store#readme))
 
 Configuration file will be written to disk in the application data directory.
 
-  * on Linux: `~/.config/bitburner/config.json`
-  * on macOS: `~/Library/Application\ Support/bitburner/config.json`
-  * on Windows: `%USERPROFILE%\AppData\Roaming\bitburner\config.json`
+- on Linux: `~/.config/bitburner/config.json`
+- on macOS: `~/Library/Application\ Support/bitburner/config.json`
+- on Windows: `%USERPROFILE%\AppData\Roaming\bitburner\config.json`
 
 ---
 
