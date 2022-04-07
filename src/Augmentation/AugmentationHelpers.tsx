@@ -141,6 +141,11 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
     }
   }
 
+  // Special logic for Congruity Implant
+  if (aug.name === AugmentationNames.CongruityImplant) {
+    Player.entropy = 0;
+  }
+
   // Push onto Player's Augmentation list
   if (!reapply) {
     const ownedAug = new PlayerOwnedAugmentation(aug.name);

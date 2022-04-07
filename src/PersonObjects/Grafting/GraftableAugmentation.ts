@@ -1,6 +1,7 @@
 import { sum } from "lodash";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../../Constants";
 
 export interface IConstructorParams {
@@ -18,6 +19,11 @@ export class GraftableAugmentation {
   }
 
   get cost(): number {
+    // Sell the Grafting-exclusive Aug at its starting price only
+    if (this.augmentation.name === AugmentationNames.CongruityImplant) {
+      return this.augmentation.startingCost;
+    }
+
     return this.augmentation.startingCost * CONSTANTS.AugmentationGraftingCostMult;
   }
 
