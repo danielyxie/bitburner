@@ -15,9 +15,9 @@ import { clearObject } from "../utils/helpers/clearObject";
 
 import { FactionNames } from "../Faction/data/FactionNames";
 import {
-  bladeburnerAugmentations,
-  churchOfTheMachineGodAugmentations,
-  generalAugmentations,
+  initBladeburnerAugmentations,
+  initChurchOfTheMachineGodAugmentations,
+  initGeneralAugmentations,
   initNeuroFluxGovernor,
   initUnstableCircadianModulator,
 } from "./AugmentationCreator";
@@ -49,9 +49,9 @@ function createAugmentations(): void {
   [
     initNeuroFluxGovernor(),
     initUnstableCircadianModulator(),
-    ...generalAugmentations,
-    ...(factionExists(FactionNames.Bladeburners) ? bladeburnerAugmentations : []),
-    ...(factionExists(FactionNames.ChurchOfTheMachineGod) ? churchOfTheMachineGodAugmentations : []),
+    ...initGeneralAugmentations(),
+    ...(factionExists(FactionNames.Bladeburners) ? initBladeburnerAugmentations() : []),
+    ...(factionExists(FactionNames.ChurchOfTheMachineGod) ? initChurchOfTheMachineGodAugmentations() : []),
   ].map(resetAugmentation);
 }
 

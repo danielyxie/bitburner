@@ -26,15 +26,17 @@ export function GangMemberCardContent(props: IProps): React.ReactElement {
   return (
     <>
       {props.member.canAscend() && (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 1 }}>
-          <Button onClick={() => setAscendOpen(true)} style={{ flexGrow: 1, borderRightWidth: 0 }}>Ascend</Button>
+        <Box sx={{ display: "flex", justifyContent: "space-between", my: 1 }}>
+          <Button onClick={() => setAscendOpen(true)} style={{ flexGrow: 1, borderRightWidth: 0 }}>
+            Ascend
+          </Button>
           <AscensionModal
             open={ascendOpen}
             onClose={() => setAscendOpen(false)}
             member={props.member}
             onAscend={() => setRerender((old) => !old)}
           />
-          <Button onClick={() => setHelpOpen(true)} style={{ width: 'fit-content', borderLeftWidth: 0 }}>
+          <Button onClick={() => setHelpOpen(true)} style={{ width: "fit-content", borderLeftWidth: 0 }}>
             <HelpIcon />
           </Button>
           <StaticModal open={helpOpen} onClose={() => setHelpOpen(false)}>
@@ -53,7 +55,7 @@ export function GangMemberCardContent(props: IProps): React.ReactElement {
           </StaticModal>
         </Box>
       )}
-      <Box display="grid" sx={{ gridTemplateColumns: '1fr 1fr', width: '100%', gap: 1 }}>
+      <Box display="grid" sx={{ gridTemplateColumns: "1fr 1fr", width: "100%", gap: 1 }}>
         <GangMemberStats member={props.member} />
         <TaskSelector onTaskChange={() => setRerender((old) => !old)} member={props.member} />
       </Box>

@@ -115,7 +115,6 @@ Fork and clone the repo
   - Regularly rebase your branch against `dev` to make sure you have the latest updates pulled.
   - When merging, always merge your branch into `dev`. When releasing a new update, then merge `dev` into `master`
 
-
 ## Running locally.
 
 Install
@@ -130,7 +129,6 @@ Inside the root of the repo run
 
 After that you can open any browser and navigate to `localhost:8000` and play the game.
 Saving a file will reload the game automatically.
-
 
 ### How to build the electron app
 

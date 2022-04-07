@@ -32,8 +32,6 @@ type IProps = {
 
 export function AugmentationsPage(props: IProps): React.ReactElement {
   const player = use.Player();
-  // Flag for whether the player has a gang with this faction
-  const isPlayersGang = player.inGang() && player.getGangName() === props.faction.name;
 
   const setRerender = useState(false)[1];
 

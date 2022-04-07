@@ -16,22 +16,29 @@ const useStyles = makeStyles(() => ({
     zIndex: `${logBoxBaseZIndex + 1000} !important` as any,
 
     "& .MuiAlert-icon": {
-      alignSelf: 'center',
+      alignSelf: "center",
     },
-  }
+  },
 }));
 
 export function SnackbarProvider(props: IProps): React.ReactElement {
   const classes = useStyles();
   return (
-    <SB dense maxSnack={9} anchorOrigin={{ horizontal: "right", vertical: "bottom" }} autoHideDuration={2000}
-      classes={{ containerRoot: classes.snackbar }}>
+    <SB
+      dense
+      maxSnack={9}
+      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      autoHideDuration={2000}
+      classes={{ containerRoot: classes.snackbar }}
+    >
       {props.children}
     </SB>
   );
 }
 
-export const SnackbarEvents = new EventEmitter<[string | React.ReactNode, "success" | "warning" | "error" | "info", number]>();
+export const SnackbarEvents = new EventEmitter<
+  [string | React.ReactNode, "success" | "warning" | "error" | "info", number]
+>();
 
 export function Snackbar(): React.ReactElement {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -43,7 +50,7 @@ export function Snackbar(): React.ReactElement {
         variant: variant,
         autoHideDuration: duration,
         onClick: () => closeSnackbar(id),
-      })
+      });
     }),
   );
   return <></>;
