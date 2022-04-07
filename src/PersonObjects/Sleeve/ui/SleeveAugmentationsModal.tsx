@@ -91,11 +91,18 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
         {ownedAugNames.length > 0 && (
           <>
             <Typography sx={{ mx: 1 }}>Owned Augmentations:</Typography>
-            <Box display="grid" sx={{ gridTemplateColumns: 'repeat(5, 1fr)', m: 1 }}>
+            <Box display="grid" sx={{ gridTemplateColumns: "repeat(5, 1fr)", m: 1 }}>
               {ownedAugNames.map((augName) => {
                 const aug = Augmentations[augName];
-                const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info
-                const tooltip = (<>{info}<br /><br />{aug.stats}</>);
+                const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
+                const tooltip = (
+                  <>
+                    {info}
+                    <br />
+                    <br />
+                    {aug.stats}
+                  </>
+                );
 
                 return (
                   <Tooltip key={augName} title={<Typography>{tooltip}</Typography>}>

@@ -1,4 +1,4 @@
-import { CityName } from './../Locations/data/CityNames';
+import { CityName } from "./../Locations/data/CityNames";
 import { Literature } from "./Literature";
 import { LiteratureNames } from "./data/LiteratureNames";
 import { IMap } from "../types";

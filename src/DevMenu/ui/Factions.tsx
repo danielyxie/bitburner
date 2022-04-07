@@ -37,7 +37,7 @@ export function Factions(props: IProps): React.ReactElement {
   }
 
   function receiveAllInvites(): void {
-    Object.values(FactionNames).forEach(faction => props.player.receiveInvite(faction))
+    Object.values(FactionNames).forEach((faction) => props.player.receiveInvite(faction));
   }
 
   function modifyFactionRep(modifier: number): (x: number) => void {

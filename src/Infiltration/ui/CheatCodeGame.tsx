@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import { IMinigameProps } from "./IMinigameProps";
 import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
-import { random, getArrow } from "../utils";
+import { random, getArrow, rightArrowSymbol, leftArrowSymbol, upArrowSymbol, downArrowSymbol } from "../utils";
 import { interpolate } from "./Difficulty";
 import Typography from "@mui/material/Typography";
 
@@ -56,7 +56,7 @@ export function CheatCodeGame(props: IMinigameProps): React.ReactElement {
 }
 
 function generateCode(difficulty: Difficulty): string {
-  const arrows = ["←", "→", "↑", "↓"];
+  const arrows = [leftArrowSymbol, rightArrowSymbol, upArrowSymbol, downArrowSymbol];
   let code = "";
   for (let i = 0; i < random(difficulty.min, difficulty.max); i++) {
     let arrow = arrows[Math.floor(4 * Math.random())];

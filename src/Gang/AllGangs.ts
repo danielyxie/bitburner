@@ -1,4 +1,4 @@
-import { FactionNames } from '../Faction/data/FactionNames';
+import { FactionNames } from "../Faction/data/FactionNames";
 import { Reviver } from "../utils/JSONReviver";
 
 interface GangTerritory {

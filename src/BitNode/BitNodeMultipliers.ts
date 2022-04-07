@@ -115,6 +115,11 @@ interface IBitNodeMultipliers {
   GangSoftcap: number;
 
   /**
+   * Percentage of unique augs that the gang has.
+   */
+  GangUniqueAugs: number;
+
+  /**
    * Influences the experienced gained when hacking a server.
    */
   HackExpGain: number;
@@ -232,6 +237,11 @@ interface IBitNodeMultipliers {
    */
   WorldDaemonDifficulty: number;
 
+  /**
+   * Influences corporation dividends.
+   */
+  CorporationSoftCap: number;
+
   // Index signature
   [key: string]: number;
 }
@@ -295,6 +305,7 @@ export const BitNodeMultipliers: IBitNodeMultipliers = {
   BladeburnerSkillCost: 1,
 
   GangSoftcap: 1,
+  GangUniqueAugs: 1,
 
   DaedalusAugsRequirement: 1,
 
