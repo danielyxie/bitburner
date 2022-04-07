@@ -207,7 +207,9 @@ function Work(): React.ReactElement {
     case CONSTANTS.WorkTypeCrime:
       details = <>{player.workType}</>;
       header = <>You are attempting to {player.crimeType}</>;
-      innerText = <>{convertTimeMsToTimeElapsedString(player.timeNeededToCompleteWork - player.timeWorked)} remaining</>;
+      innerText = (
+        <>{convertTimeMsToTimeElapsedString(player.timeNeededToCompleteWork - player.timeWorked)} remaining</>
+      );
       break;
   }
 

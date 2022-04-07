@@ -446,9 +446,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         </Grid>
 
         <Grid item sx={{ my: 2 }}>
-          <Typography>
-            {progressBar}
-          </Typography>
+          <Typography>{progressBar}</Typography>
         </Grid>
 
         <Grid item sx={{ my: 2 }}>
