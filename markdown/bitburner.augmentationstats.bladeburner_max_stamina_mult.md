@@ -4,7 +4,7 @@
 
 ## AugmentationStats.bladeburner\_max\_stamina\_mult property
 
-Multipler to Bladeburner max stamina
+Multiplier to Bladeburner max stamina
 
 <b>Signature:</b>
 

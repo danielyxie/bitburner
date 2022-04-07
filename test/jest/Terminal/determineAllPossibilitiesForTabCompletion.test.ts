@@ -1,3 +1,4 @@
+import { CityName } from "./../../../src/Locations/data/CityNames";
 /* eslint-disable no-await-in-loop */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { jest, describe, expect, test } from "@jest/globals";
@@ -37,7 +38,7 @@ describe("determineAllPossibilitiesForTabCompletion", function () {
       hackDifficulty: 1,
       moneyAvailable: 70000,
       numOpenPortsRequired: 0,
-      organizationName: LocationName.Aevum,
+      organizationName: CityName.Aevum,
       requiredHackingSkill: 1,
       serverGrowth: 3000,
     });

@@ -72,6 +72,7 @@ import { vim } from "./commands/vim";
 import { weaken } from "./commands/weaken";
 import { wget } from "./commands/wget";
 import { hash } from "../hash/hash";
+import { apr1 } from "./commands/apr1";
 
 export class Terminal implements ITerminal {
   // Flags to determine whether the player is currently running a hack or an analyze
@@ -314,7 +315,9 @@ export class Terminal implements ITerminal {
       this.print("Organization name: " + (!isHacknet ? org : "player"));
       const hasAdminRights = (!isHacknet && currServ.hasAdminRights) || isHacknet;
       this.print("Root Access: " + (hasAdminRights ? "YES" : "NO"));
-      this.print("Can run scripts on this host: " + (hasAdminRights ? "YES" : "NO"));
+      const canRunScripts = hasAdminRights && currServ.maxRam > 0;
+      this.print("Can run scripts on this host: " + (canRunScripts ? "YES" : "NO"));
+      this.print("RAM: " + numeralWrapper.formatRAM(currServ.maxRam));
       if (currServ instanceof Server) {
         this.print("Backdoor: " + (currServ.backdoorInstalled ? "YES" : "NO"));
         const hackingSkill = currServ.requiredHackingSkill;
@@ -618,7 +621,6 @@ export class Terminal implements ITerminal {
       const n00dlesServ = GetServer("n00dles");
       if (n00dlesServ == null) {
         throw new Error("Could not get n00dles server");
-        return;
       }
       switch (ITutorial.currStep) {
         case iTutorialSteps.TerminalHelp:
@@ -804,6 +806,7 @@ export class Terminal implements ITerminal {
       scp: scp,
       sudov: sudov,
       tail: tail,
+      apr1: apr1,
       top: top,
       unalias: unalias,
       vim: vim,

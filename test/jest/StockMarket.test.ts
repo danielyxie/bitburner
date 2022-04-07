@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { jest, describe, expect, test } from '@jest/globals'
+import { jest, describe, expect, test } from "@jest/globals";
 
 import { CONSTANTS } from "../../src/Constants";
 import { Player } from "../../src/Player";
@@ -39,7 +39,7 @@ import {
 import { OrderTypes } from "../../src/StockMarket/data/OrderTypes";
 import { PositionTypes } from "../../src/StockMarket/data/PositionTypes";
 
-jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => '', {
+jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
   virtual: true,
 });
 
@@ -429,7 +429,7 @@ describe("Stock Market Tests", function () {
         expect(StockMarket).toHaveProperty("lastUpdate");
         expect(StockMarket["lastUpdate"]).toEqual(0);
         expect(StockMarket).toHaveProperty("ticksUntilCycle");
-        expect(typeof StockMarket["ticksUntilCycle"]).toBe('number');
+        expect(typeof StockMarket["ticksUntilCycle"]).toBe("number");
       });
     });
 

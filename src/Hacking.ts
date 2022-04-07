@@ -49,7 +49,8 @@ export function calculatePercentMoneyHacked(server: Server, player: IPlayer): nu
 
   const difficultyMult = (100 - server.hackDifficulty) / 100;
   const skillMult = (player.hacking - (server.requiredHackingSkill - 1)) / player.hacking;
-  const percentMoneyHacked = (difficultyMult * skillMult * player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney) / balanceFactor;
+  const percentMoneyHacked =
+    (difficultyMult * skillMult * player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney) / balanceFactor;
   if (percentMoneyHacked < 0) {
     return 0;
   }

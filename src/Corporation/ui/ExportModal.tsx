@@ -6,6 +6,7 @@ import { IIndustry } from "../IIndustry";
 import { ExportMaterial } from "../Actions";
 import { Modal } from "../../ui/React/Modal";
 import { useCorporation } from "./Context";
+import { isRelevantMaterial } from "./Helpers";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -22,11 +23,15 @@ interface IProps {
 // Create a popup that lets the player manage exports
 export function ExportModal(props: IProps): React.ReactElement {
   const corp = useCorporation();
-  if (corp.divisions.length === 0) throw new Error("Export popup created with no divisions.");
-  if (Object.keys(corp.divisions[0].warehouses).length === 0)
+  const possibleDivisions = corp.divisions.filter((division: IIndustry) =>
+    isRelevantMaterial(props.mat.name, division),
+  );
+  if (possibleDivisions.length === 0) throw new Error("Export popup created with no divisions.");
+  const defaultDivision = possibleDivisions[0];
+  if (Object.keys(defaultDivision.warehouses).length === 0)
     throw new Error("Export popup created in a division with no warehouses.");
-  const [industry, setIndustry] = useState<string>(corp.divisions[0].name);
-  const [city, setCity] = useState<string>(Object.keys(corp.divisions[0].warehouses)[0]);
+  const [industry, setIndustry] = useState<string>(defaultDivision.name);
+  const [city, setCity] = useState<string>(Object.keys(defaultDivision.warehouses)[0]);
   const [amt, setAmt] = useState("");
   const setRerender = useState(false)[1];
 
@@ -50,7 +55,7 @@ export function ExportModal(props: IProps): React.ReactElement {
 
   function exportMaterial(): void {
     try {
-      ExportMaterial(industry, city, props.mat, amt);
+      ExportMaterial(industry, city, props.mat, amt, currentDivision);
     } catch (err) {
       dialogBoxCreate(err + "");
     }
@@ -84,11 +89,13 @@ export function ExportModal(props: IProps): React.ReactElement {
         second. You can set the export amount to 'MAX' to export all of the materials in this warehouse.
       </Typography>
       <Select onChange={onIndustryChange} value={industry}>
-        {corp.divisions.map((division: IIndustry) => (
-          <MenuItem key={division.name} value={division.name}>
-            {division.name}
-          </MenuItem>
-        ))}
+        {corp.divisions
+          .filter((division: IIndustry) => isRelevantMaterial(props.mat.name, division))
+          .map((division: IIndustry) => (
+            <MenuItem key={division.name} value={division.name}>
+              {division.name}
+            </MenuItem>
+          ))}
       </Select>
       <Select onChange={onCityChange} value={city}>
         {possibleCities.map((cityName: string) => {

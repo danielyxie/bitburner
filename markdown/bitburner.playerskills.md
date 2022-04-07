@@ -17,7 +17,7 @@ export interface PlayerSkills
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [agility](./bitburner.playerskills.agility.md) | number | Agility level |
-|  [charisma](./bitburner.playerskills.charisma.md) | number | Chraisma level |
+|  [charisma](./bitburner.playerskills.charisma.md) | number | Charisma level |
 |  [defense](./bitburner.playerskills.defense.md) | number | Defense level |
 |  [dexterity](./bitburner.playerskills.dexterity.md) | number | Dexterity level |
 |  [hacking](./bitburner.playerskills.hacking.md) | number | Hacking level |

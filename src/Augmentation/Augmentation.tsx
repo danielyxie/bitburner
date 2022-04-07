@@ -18,6 +18,7 @@ export interface IConstructorParams {
   name: string;
   prereqs?: string[];
   repCost: number;
+  factions: string[];
 
   hacking_mult?: number;
   strength_mult?: number;
@@ -393,12 +394,16 @@ export class Augmentation {
   // Initial cost. Doesn't change when you purchase multiple Augmentation
   startingCost = 0;
 
+  // Factions that offer this aug.
+  factions: string[] = [];
+
   constructor(
     params: IConstructorParams = {
       info: "",
       moneyCost: 0,
       name: "",
       repCost: 0,
+      factions: [],
     },
   ) {
     this.name = params.name;
@@ -408,6 +413,7 @@ export class Augmentation {
     this.baseRepRequirement = params.repCost * BitNodeMultipliers.AugmentationRepCost;
     this.baseCost = params.moneyCost * BitNodeMultipliers.AugmentationMoneyCost;
     this.startingCost = this.baseCost;
+    this.factions = params.factions;
 
     if (params.isSpecial) {
       this.isSpecial = true;

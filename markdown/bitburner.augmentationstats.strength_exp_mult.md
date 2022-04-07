@@ -4,7 +4,7 @@
 
 ## AugmentationStats.strength\_exp\_mult property
 
-Multipler to strength experience gain rate
+Multiplier to strength experience gain rate
 
 <b>Signature:</b>
 

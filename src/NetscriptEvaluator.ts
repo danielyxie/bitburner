@@ -60,8 +60,5 @@ export function isScriptErrorMessage(msg: string): boolean {
     return false;
   }
   const splitMsg = msg.split("|DELIMITER|");
-  if (splitMsg.length != 4) {
-    return false;
-  }
-  return true;
+  return splitMsg.length == 4;
 }

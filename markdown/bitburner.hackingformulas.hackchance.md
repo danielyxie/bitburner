@@ -4,7 +4,7 @@
 
 ## HackingFormulas.hackChance() method
 
-Calculate hack chance.
+Calculate hack chance. (Ex: 0.25 would indicate a 25% chance of success.)
 
 <b>Signature:</b>
 

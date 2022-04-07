@@ -8,6 +8,7 @@ import { GetServer } from "../Server/AllServers";
 import { Settings } from "../Settings/Settings";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Reviver } from "../utils/JSONReviver";
+import { FactionNames } from "../Faction/data/FactionNames";
 
 //Sends message to player, including a pop up
 function sendMessage(msg: Message, forced = false): void {
@@ -139,7 +140,7 @@ function initMessages(): void {
   AddToAllMessages(
     new Message(
       MessageFilenames.Jumper1,
-      "Soon you will be contacted by a hacking group known as CyberSec. " +
+      `Soon you will be contacted by a hacking group known as ${FactionNames.NiteSec}. ` +
         "They can help you with your search. <br><br>" +
         "You should join them, garner their favor, and " +
         "exploit them for their Augmentations. But do not trust them. " +
@@ -152,7 +153,7 @@ function initMessages(): void {
       MessageFilenames.Jumper2,
       "Do not try to save the world. There is no world to save. If " +
         "you want to find the truth, worry only about yourself. Ethics and " +
-        "morals will get you killed. <br><br>Watch out for a hacking group known as NiteSec." +
+        `morals will get you killed. <br><br>Watch out for a hacking group known as ${FactionNames.NiteSec}.` +
         "<br><br>-jump3R",
     ),
   );
@@ -160,7 +161,7 @@ function initMessages(): void {
     new Message(
       MessageFilenames.Jumper3,
       "You must learn to walk before you can run. And you must " +
-        "run before you can fly. Look for the black hand. <br><br>" +
+        `run before you can fly. Look for ${FactionNames.TheBlackHand}. <br><br>` +
         "I.I.I.I <br><br>-jump3R",
     ),
   );
@@ -181,7 +182,7 @@ function initMessages(): void {
         "your talents. If you join us, you can put your skills to good use and change " +
         "the world for the better. If you join us, we can unlock your full potential. <br><br>" +
         "But first, you must pass our test. Find and install the backdoor on our server. <br><br>" +
-        "-CyberSec",
+        `-${FactionNames.CyberSec}`,
     ),
   );
   AddToAllMessages(
@@ -193,7 +194,7 @@ function initMessages(): void {
         "and ideas with bullets. <br><br>" +
         "Join us, and people will fear you, too. <br><br>" +
         "Find and install the backdoor on our server. Then, we will contact you again." +
-        "<br><br>-NiteSec",
+        `<br><br>-${FactionNames.NiteSec}`,
     ),
   );
   AddToAllMessages(

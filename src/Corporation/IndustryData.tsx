@@ -227,13 +227,13 @@ export function resetIndustryResearchTrees(): void {
   IndustryResearchTrees.Agriculture = getBaseResearchTreeCopy();
   IndustryResearchTrees.Fishing = getBaseResearchTreeCopy();
   IndustryResearchTrees.Mining = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Food = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Tobacco = getBaseResearchTreeCopy();
+  IndustryResearchTrees.Food = getProductIndustryResearchTreeCopy();
+  IndustryResearchTrees.Tobacco = getProductIndustryResearchTreeCopy();
   IndustryResearchTrees.Chemical = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Pharmaceutical = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Computer = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Robotics = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Software = getBaseResearchTreeCopy();
-  IndustryResearchTrees.Healthcare = getBaseResearchTreeCopy();
-  IndustryResearchTrees.RealEstate = getBaseResearchTreeCopy();
+  IndustryResearchTrees.Pharmaceutical = getProductIndustryResearchTreeCopy();
+  IndustryResearchTrees.Computer = getProductIndustryResearchTreeCopy();
+  IndustryResearchTrees.Robotics = getProductIndustryResearchTreeCopy();
+  IndustryResearchTrees.Software = getProductIndustryResearchTreeCopy();
+  IndustryResearchTrees.Healthcare = getProductIndustryResearchTreeCopy();
+  IndustryResearchTrees.RealEstate = getProductIndustryResearchTreeCopy();
 }

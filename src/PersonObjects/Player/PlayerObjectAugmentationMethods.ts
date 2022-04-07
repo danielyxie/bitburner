@@ -5,6 +5,8 @@ import { IPlayer } from "../IPlayer";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
 
+import { calculateEntropy } from "../Grafting/EntropyAccumulation";
+
 export function hasAugmentation(this: IPlayer, aug: string | Augmentation, installed = false): boolean {
   const augName: string = aug instanceof Augmentation ? aug.name : aug;
 
@@ -23,4 +25,15 @@ export function hasAugmentation(this: IPlayer, aug: string | Augmentation, insta
   }
 
   return false;
+}
+
+export function applyEntropy(this: IPlayer, stacks = 1): void {
+  // Re-apply all multipliers
+  this.reapplyAllAugmentations();
+  this.reapplyAllSourceFiles();
+
+  const newMultipliers = calculateEntropy(this, stacks);
+  for (const [mult, val] of Object.entries(newMultipliers)) {
+    this.setMult(mult, val);
+  }
 }

@@ -19,9 +19,11 @@ export interface Corporation extends WarehouseAPI, OfficeAPI
 |  --- | --- |
 |  [acceptInvestmentOffer()](./bitburner.corporation.acceptinvestmentoffer.md) | Accept investment based on you companies current valuation |
 |  [bribe(factionName, amountCash, amountShares)](./bitburner.corporation.bribe.md) | Bribe a faction |
+|  [buyBackShares(amount)](./bitburner.corporation.buybackshares.md) | Buyback Shares |
 |  [createCorporation(corporationName, selfFund)](./bitburner.corporation.createcorporation.md) | Create a Corporation |
 |  [expandCity(divisionName, cityName)](./bitburner.corporation.expandcity.md) | Expand to a new city |
 |  [expandIndustry(industryType, divisionName)](./bitburner.corporation.expandindustry.md) | Expand to a new industry |
+|  [getBonusTime()](./bitburner.corporation.getbonustime.md) | Get bonus time.<!-- -->“Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.<!-- -->“Bonus time” makes the game progress faster. |
 |  [getCorporation()](./bitburner.corporation.getcorporation.md) | Get corporation data |
 |  [getDivision(divisionName)](./bitburner.corporation.getdivision.md) | Get division data |
 |  [getExpandCityCost()](./bitburner.corporation.getexpandcitycost.md) | Gets the cost to expand into a new city |
@@ -34,5 +36,6 @@ export interface Corporation extends WarehouseAPI, OfficeAPI
 |  [hasUnlockUpgrade(upgradeName)](./bitburner.corporation.hasunlockupgrade.md) | Check if you have a one time unlockable upgrade |
 |  [issueDividends(percent)](./bitburner.corporation.issuedividends.md) | Issue dividends |
 |  [levelUpgrade(upgradeName)](./bitburner.corporation.levelupgrade.md) | Level an upgrade. |
+|  [sellShares(amount)](./bitburner.corporation.sellshares.md) | Sell Shares |
 |  [unlockUpgrade(upgradeName)](./bitburner.corporation.unlockupgrade.md) | Unlock an upgrade |
 

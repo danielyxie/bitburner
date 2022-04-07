@@ -4,6 +4,8 @@
 
 ## GangMemberInfo.def\_exp property
 
+Current defense experience
+
 <b>Signature:</b>
 
 ```typescript

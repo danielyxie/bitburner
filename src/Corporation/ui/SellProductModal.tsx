@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 function initialPrice(product: Product): string {
   let val = product.sCost ? product.sCost + "" : "";
@@ -58,7 +59,7 @@ export function SellProductModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) sellProduct();
+    if (event.key === KEY.ENTER) sellProduct();
   }
 
   return (

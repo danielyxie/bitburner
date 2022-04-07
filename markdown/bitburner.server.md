@@ -25,7 +25,7 @@ export interface Server
 |  [hostname](./bitburner.server.hostname.md) | string | Hostname. Must be unique |
 |  [httpPortOpen](./bitburner.server.httpportopen.md) | boolean | Flag indicating whether HTTP Port is open |
 |  [ip](./bitburner.server.ip.md) | string | IP Address. Must be unique |
-|  [isConnectedTo](./bitburner.server.isconnectedto.md) | boolean | Flag indicating whether player is curently connected to this server |
+|  [isConnectedTo](./bitburner.server.isconnectedto.md) | boolean | Flag indicating whether player is currently connected to this server |
 |  [maxRam](./bitburner.server.maxram.md) | number | RAM (GB) available on this server |
 |  [minDifficulty](./bitburner.server.mindifficulty.md) | number | Minimum server security level that this server can be weakened to |
 |  [moneyAvailable](./bitburner.server.moneyavailable.md) | number | How much money currently resides on the server and can be hacked |

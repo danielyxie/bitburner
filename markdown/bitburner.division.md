@@ -27,6 +27,6 @@ interface Division
 |  [research](./bitburner.division.research.md) | number | Amount of research in that division |
 |  [thisCycleExpenses](./bitburner.division.thiscycleexpenses.md) | number | Expenses this cycle |
 |  [thisCycleRevenue](./bitburner.division.thiscyclerevenue.md) | number | Revenue this cycle |
-|  [type](./bitburner.division.type.md) | string | Type of division, like Aggriculture |
+|  [type](./bitburner.division.type.md) | string | Type of division, like Agriculture |
 |  [upgrades](./bitburner.division.upgrades.md) | number\[\] | All research bought |
 

@@ -12,25 +12,27 @@ async function initialize(win) {
   window = win;
   server = http.createServer(async function (req, res) {
     let body = "";
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Type", "application/json");
 
     req.on("data", (chunk) => {
       body += chunk.toString(); // convert Buffer to string
     });
 
     req.on("end", async () => {
-      const providedToken = req.headers?.authorization?.replace('Bearer ', '') ?? '';
+      const providedToken = req.headers?.authorization?.replace("Bearer ", "") ?? "";
       const isValid = providedToken === getAuthenticationToken();
       if (isValid) {
-        log.debug('Valid authentication token');
+        log.debug("Valid authentication token");
       } else {
-        log.log('Invalid authentication token');
+        log.log("Invalid authentication token");
         res.writeHead(401);
-       
-        res.end(JSON.stringify({
-          success: false,
-          msg: 'Invalid authentication token'
-        }));
+
+        res.end(
+          JSON.stringify({
+            success: false,
+            msg: "Invalid authentication token",
+          }),
+        );
         return;
       }
 
@@ -40,16 +42,18 @@ async function initialize(win) {
       } catch (error) {
         log.warn(`Invalid body data`);
         res.writeHead(400);
-        res.end(JSON.stringify({
-          success: false,
-          msg: 'Invalid body data'
-        }));
+        res.end(
+          JSON.stringify({
+            success: false,
+            msg: "Invalid body data",
+          }),
+        );
 
         return;
       }
 
       let result;
-      switch(req.method) {
+      switch (req.method) {
         // Request files
         case "GET":
           result = await window.webContents.executeJavaScript(`document.getFiles()`);
@@ -62,16 +66,18 @@ async function initialize(win) {
           if (!data) {
             log.warn(`Invalid script update request - No data`);
             res.writeHead(400);
-            res.end(JSON.stringify({
-              success: false,
-              msg: 'Invalid script update request - No data'
-            }));
+            res.end(
+              JSON.stringify({
+                success: false,
+                msg: "Invalid script update request - No data",
+              }),
+            );
             return;
           }
 
           result = await window.webContents.executeJavaScript(`document.saveFile("${data.filename}", "${data.code}")`);
           break;
-        
+
         // Delete files
         case "DELETE":
           result = await window.webContents.executeJavaScript(`document.deleteFile("${data.filename}")`);
@@ -84,19 +90,20 @@ async function initialize(win) {
         log.warn(`Api Server Error`, result.msg);
       }
 
-      res.end(JSON.stringify({
-        success: result.res,
-        msg: result.msg,
-        data: result.data
-      }));
-
+      res.end(
+        JSON.stringify({
+          success: result.res,
+          msg: result.msg,
+          data: result.data,
+        }),
+      );
     });
   });
 
-  const autostart = config.get('autostart', false);
+  const autostart = config.get("autostart", false);
   if (autostart) {
     try {
-      await enable()
+      await enable();
     } catch (error) {
       return Promise.reject(error);
     }
@@ -105,15 +112,14 @@ async function initialize(win) {
   return Promise.resolve();
 }
 
-
 function enable() {
   if (isListening()) {
-    log.warn('API server already listening');
+    log.warn("API server already listening");
     return Promise.resolve();
   }
 
-  const port = config.get('port', 9990);
-  const host = config.get('host', '127.0.0.1');
+  const port = config.get("port", 9990);
+  const host = config.get("host", "127.0.0.1");
   log.log(`Starting http server on port ${port} - listening on ${host}`);
 
   // https://stackoverflow.com/a/62289870
@@ -125,13 +131,10 @@ function enable() {
         resolve();
       }
     });
-    server.once('error', (err) => {
+    server.once("error", (err) => {
       if (!startFinished) {
         startFinished = true;
-        console.log(
-          'There was an error starting the server in the error listener:',
-          err
-        );
+        console.log("There was an error starting the server in the error listener:", err);
         reject(err);
       }
     });
@@ -140,11 +143,11 @@ function enable() {
 
 function disable() {
   if (!isListening()) {
-    log.warn('API server not listening');
+    log.warn("API server not listening");
     return Promise.resolve();
   }
 
-  log.log('Stopping http server');
+  log.log("Stopping http server");
   return server.close();
 }
 
@@ -162,31 +165,35 @@ function isListening() {
 
 function toggleAutostart() {
   const newValue = !isAutostart();
-  config.set('autostart', newValue);
+  config.set("autostart", newValue);
   log.log(`New autostart value is '${newValue}'`);
 }
 
 function isAutostart() {
-  return config.get('autostart');
+  return config.get("autostart");
 }
 
 function getAuthenticationToken() {
-  const token = config.get('token');
+  const token = config.get("token");
   if (token) return token;
 
   const newToken = generateToken();
-  config.set('token', newToken);
+  config.set("token", newToken);
   return newToken;
 }
 
 function generateToken() {
   const buffer = crypto.randomBytes(48);
-  return buffer.toString('base64')
+  return buffer.toString("base64");
 }
 
 module.exports = {
   initialize,
-  enable, disable, toggleServer,
-  toggleAutostart, isAutostart,
-  getAuthenticationToken, isListening,
-}
+  enable,
+  disable,
+  toggleServer,
+  toggleAutostart,
+  isAutostart,
+  getAuthenticationToken,
+  isListening,
+};

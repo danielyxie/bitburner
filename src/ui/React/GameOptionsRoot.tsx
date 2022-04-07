@@ -22,7 +22,7 @@ import TextField from "@mui/material/TextField";
 import DownloadIcon from "@mui/icons-material/Download";
 import UploadIcon from "@mui/icons-material/Upload";
 import SaveIcon from "@mui/icons-material/Save";
-import PaletteIcon from '@mui/icons-material/Palette';
+import PaletteIcon from "@mui/icons-material/Palette";
 
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { ConfirmationModal } from "./ConfirmationModal";
@@ -157,7 +157,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
         <Grid item xs={12} sm={6}>
           <List>
             <ListItem>
-              <Box display="grid" sx={{ width: 'fit-content', gridTemplateColumns: '1fr 3.5fr', gap: 1 }}>
+              <Box display="grid" sx={{ width: "fit-content", gridTemplateColumns: "1fr 3.5fr", gap: 1 }}>
                 <Tooltip
                   title={
                     <Typography>
@@ -326,6 +326,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                 onChange={(newValue) => (Settings.SuppressSavedGameToast = newValue)}
                 text="Suppress Auto-Save Game Toast"
                 tooltip={<>If this is set, there will be no "Game Saved!" toast appearing after an auto-save.</>}
+              />
+            </ListItem>
+            <ListItem>
+              <OptionSwitch
+                checked={Settings.SuppressAutosaveDisabledWarnings}
+                onChange={(newValue) => (Settings.SuppressAutosaveDisabledWarnings = newValue)}
+                text="Suppress Auto-Save Disabled Warning"
+                tooltip={<>If this is set, there will be no warning triggered when auto-save is disabled (at 0).</>}
               />
             </ListItem>
             <ListItem>

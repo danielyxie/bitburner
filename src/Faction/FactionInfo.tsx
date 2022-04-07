@@ -1,5 +1,6 @@
 import React from "react";
 import { IMap } from "../types";
+import { FactionNames } from "./data/FactionNames";
 
 /**
  * Contains the "information" property for all the Factions, which is just a description of each faction
@@ -90,7 +91,7 @@ export class FactionInfo {
 // tslint:disable-next-line:variable-name
 export const FactionInfos: IMap<FactionInfo> = {
   // Endgame
-  Illuminati: new FactionInfo(
+  [FactionNames.Illuminati]: new FactionInfo(
     (
       <>
         Humanity never changes. No matter how civilized society becomes, it will eventually fall back into chaos. And
@@ -106,7 +107,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
   ),
 
-  Daedalus: new FactionInfo(
+  [FactionNames.Daedalus]: new FactionInfo(
     <>Yesterday we obeyed kings and bent our necks to emperors. Today we kneel only to truth.</>,
     [],
     true,
@@ -117,7 +118,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
   ),
 
-  "The Covenant": new FactionInfo(
+  [FactionNames.TheCovenant]: new FactionInfo(
     (
       <>
         Surrender yourself. Give up your empty individuality to become part of something great, something eternal.
@@ -137,11 +138,12 @@ export const FactionInfos: IMap<FactionInfo> = {
   ),
 
   // Megacorporations, each forms its own faction
-  ECorp: new FactionInfo(
+  [FactionNames.ECorp]: new FactionInfo(
     (
       <>
-        ECorp's mission is simple: to connect the world of today with the technology of tomorrow. With our wide range of
-        Internet-related software and commercial hardware, ECorp makes the world's information universally accessible.
+        {FactionNames.ECorp}'s mission is simple: to connect the world of today with the technology of tomorrow. With
+        our wide range of Internet-related software and commercial hardware, {FactionNames.ECorp} makes the world's
+        information universally accessible.
       </>
     ),
     [],
@@ -153,15 +155,16 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
   ),
 
-  MegaCorp: new FactionInfo(
+  [FactionNames.MegaCorp]: new FactionInfo(
     (
       <>
-        MegaCorp does what no other dares to do. We imagine. We create. We invent. We create what others have never even
-        dreamed of. Our work fills the world's needs for food, water, power, and transportation on an unprecendented
-        scale, in ways that no other company can.
+        {FactionNames.MegaCorp} does what no other dares to do. We imagine. We create. We invent. We create what others
+        have never even dreamed of. Our work fills the world's needs for food, water, power, and transportation on an
+        unprecedented scale, in ways that no other company can.
         <br />
         <br />
-        In our labs and factories and on the ground with customers, MegaCorp is ushering in a new era for the world.
+        In our labs and factories and on the ground with customers, {FactionNames.MegaCorp} is ushering in a new era for
+        the world.
       </>
     ),
     [],
@@ -173,7 +176,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
   ),
 
-  "Bachman & Associates": new FactionInfo(
+  [FactionNames.BachmanAssociates]: new FactionInfo(
     (
       <>
         Where Law and Business meet - thats where we are.
@@ -191,9 +194,18 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
   ),
 
-  "Blade Industries": new FactionInfo(<>Augmentation is Salvation.</>, [], true, true, true, true, false, true),
+  [FactionNames.BladeIndustries]: new FactionInfo(
+    <>Augmentation is Salvation.</>,
+    [],
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+  ),
 
-  NWO: new FactionInfo(
+  [FactionNames.NWO]: new FactionInfo(
     (
       <>
         Humans don't truly desire freedom. They want to be observed, understood, and judged. They want to be given
@@ -210,7 +222,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
   ),
 
-  "Clarke Incorporated": new FactionInfo(
+  [FactionNames.ClarkeIncorporated]: new FactionInfo(
     <>The Power of the Genome - Unlocked.</>,
     [],
     true,
@@ -221,7 +233,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
   ),
 
-  "OmniTek Incorporated": new FactionInfo(
+  [FactionNames.OmniTekIncorporated]: new FactionInfo(
     <>Simply put, our mission is to design and build robots that make a difference.</>,
     [],
     true,
@@ -232,11 +244,11 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
   ),
 
-  "Four Sigma": new FactionInfo(
+  [FactionNames.FourSigma]: new FactionInfo(
     (
       <>
         The scientific method is the best way to approach investing. Big strategies backed up with big data. Driven by
-        deep learning and innovative ideas. And improved by iteration. That's Four Sigma.
+        deep learning and innovative ideas. And improved by iteration. That's {FactionNames.FourSigma}.
       </>
     ),
     [],
@@ -248,7 +260,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
   ),
 
-  "KuaiGong International": new FactionInfo(
+  [FactionNames.KuaiGongInternational]: new FactionInfo(
     <>Dream big. Work hard. Make history.</>,
     [],
     true,
@@ -260,7 +272,7 @@ export const FactionInfos: IMap<FactionInfo> = {
   ),
 
   // Other Corporations
-  "Fulcrum Secret Technologies": new FactionInfo(
+  [FactionNames.FulcrumSecretTechnologies]: new FactionInfo(
     (
       <>
         The human organism has an innate desire to worship. That is why they created gods. If there were no gods, it
@@ -277,7 +289,7 @@ export const FactionInfos: IMap<FactionInfo> = {
   ),
 
   // Hacker groups
-  BitRunners: new FactionInfo(
+  [FactionNames.BitRunners]: new FactionInfo(
     (
       <>
         Our entire lives are controlled by bits. All of our actions, our thoughts, our personal information. It's all
@@ -299,7 +311,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
   ),
 
-  "The Black Hand": new FactionInfo(
+  [FactionNames.TheBlackHand]: new FactionInfo(
     (
       <>
         The world, so afraid of strong government, now has no government. Only power - Digital power. Financial power.
@@ -320,42 +332,42 @@ export const FactionInfos: IMap<FactionInfo> = {
   ),
 
   // prettier-ignore
-  NiteSec: new FactionInfo(<>
-{"                  __..__               "}<br />
-{"                _.nITESECNIt.            "}<br />
-{"             .-'NITESECNITESEc.          "}<br />
-{"           .'    NITESECNITESECn         "}<br />
-{"          /       NITESECNITESEC;        "}<br />
-{"         :        :NITESECNITESEC;       "}<br />
-{"         ;       $ NITESECNITESECN       "}<br />
-{"        :    _,   ,N'ITESECNITESEC       "}<br />
-{"        : .+^^`,  :    `NITESECNIT       "}<br />
-{"         ) /),     `-,-=,NITESECNI       "}<br />
-{"        /  ^         ,-;|NITESECN;       "}<br />
-{"       /     _.'     '-';NITESECN        "}<br />
-{"      (  ,           ,-''`^NITE'         "}<br />
-{"       )`            :`.    .'           "}<br />
-{"       )--           ;  `- /             "}<br />
-{"       '        _.-'     :              "}<br />
-{"       (     _.-'   .                  "}<br />
-{"        ------.                       "}<br />
-{"                .                     "}<br />
-{"                         _.nIt          "}<br />
-{"                    _.nITESECNi         "}<br />
-{"                   nITESECNIT^'         "}<br />
-{"                   NITE^' ___           "}<br />
-{"                  /    .gP''''Tp.       "}<br />
-{"                 :    d'     .  `b      "}<br />
-{"                 ;   d'       o  `b ;    "}<br />
-{"                /   d;            `b|    "}<br />
-{"               /,   $;          @  `:    "}<br />
-{"              /'    $/               ;   "}<br />
-{"            .'      $/b          o   |   "}<br />
-{"          .'       d$/$;             :   "}<br />
-{"         /       .d/$/$;          ,   ;  "}<br />
-{"        d      .dNITESEC          $   |  "}<br />
-{"       :bp.__.gNITESEC/$         :$   ;  "}<br />
-{"       NITESECNITESECNIT         /$b :   "}<br /></>,
+  [FactionNames.NiteSec]: new FactionInfo(<>
+    {"                  __..__               "}<br />
+    {"                _.nITESECNIt.            "}<br />
+    {"             .-'NITESECNITESEc.          "}<br />
+    {"           .'    NITESECNITESECn         "}<br />
+    {"          /       NITESECNITESEC;        "}<br />
+    {"         :        :NITESECNITESEC;       "}<br />
+    {"         ;       $ NITESECNITESECN       "}<br />
+    {"        :    _,   ,N'ITESECNITESEC       "}<br />
+    {"        : .+^^`,  :    `NITESECNIT       "}<br />
+    {"         ) /),     `-,-=,NITESECNI       "}<br />
+    {"        /  ^         ,-;|NITESECN;       "}<br />
+    {"       /     _.'     '-';NITESECN        "}<br />
+    {"      (  ,           ,-''`^NITE'         "}<br />
+    {"       )`            :`.    .'           "}<br />
+    {"       )--           ;  `- /             "}<br />
+    {"       '        _.-'     :              "}<br />
+    {"       (     _.-'   .                  "}<br />
+    {"        ------.                       "}<br />
+    {"                .                     "}<br />
+    {"                         _.nIt          "}<br />
+    {"                    _.nITESECNi         "}<br />
+    {"                   nITESECNIT^'         "}<br />
+    {"                   NITE^' ___           "}<br />
+    {"                  /    .gP''''Tp.       "}<br />
+    {"                 :    d'     .  `b      "}<br />
+    {"                 ;   d'       o  `b ;    "}<br />
+    {"                /   d;            `b|    "}<br />
+    {"               /,   $;          @  `:    "}<br />
+    {"              /'    $/               ;   "}<br />
+    {"            .'      $/b          o   |   "}<br />
+    {"          .'       d$/$;             :   "}<br />
+    {"         /       .d/$/$;          ,   ;  "}<br />
+    {"        d      .dNITESEC          $   |  "}<br />
+    {"       :bp.__.gNITESEC/$         :$   ;  "}<br />
+    {"       NITESECNITESECNIT         /$b :   "}<br /></>,
     [],
     true,
     true,
@@ -366,9 +378,9 @@ export const FactionInfos: IMap<FactionInfo> = {
   ),
 
   // City factions, essentially governments
-  Aevum: new FactionInfo(
+  [FactionNames.Aevum]: new FactionInfo(
     <>The Silicon City.</>,
-    ["Chongqing", "New Tokyo", "Ishima", "Volhaven"],
+    [FactionNames.Chongqing, FactionNames.NewTokyo, FactionNames.Ishima, FactionNames.Volhaven],
     true,
     true,
     true,
@@ -376,9 +388,9 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
     false,
   ),
-  Chongqing: new FactionInfo(
+  [FactionNames.Chongqing]: new FactionInfo(
     <>Serve the People.</>,
-    ["Sector-12", "Aevum", "Volhaven"],
+    [FactionNames.Sector12, FactionNames.Aevum, FactionNames.Volhaven],
     true,
     true,
     true,
@@ -386,9 +398,9 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
     false,
   ),
-  Ishima: new FactionInfo(
+  [FactionNames.Ishima]: new FactionInfo(
     <>The East Asian Order of the Future.</>,
-    ["Sector-12", "Aevum", "Volhaven"],
+    [FactionNames.Sector12, FactionNames.Aevum, FactionNames.Volhaven],
     true,
     true,
     true,
@@ -396,9 +408,9 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
     false,
   ),
-  "New Tokyo": new FactionInfo(
+  [FactionNames.NewTokyo]: new FactionInfo(
     <>Asia's World City.</>,
-    ["Sector-12", "Aevum", "Volhaven"],
+    [FactionNames.Sector12, FactionNames.Aevum, FactionNames.Volhaven],
     true,
     true,
     true,
@@ -406,9 +418,9 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
     false,
   ),
-  "Sector-12": new FactionInfo(
+  [FactionNames.Sector12]: new FactionInfo(
     <>The City of the Future.</>,
-    ["Chongqing", "New Tokyo", "Ishima", "Volhaven"],
+    [FactionNames.Chongqing, FactionNames.NewTokyo, FactionNames.Ishima, FactionNames.Volhaven],
     true,
     true,
     true,
@@ -416,9 +428,9 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
     false,
   ),
-  Volhaven: new FactionInfo(
+  [FactionNames.Volhaven]: new FactionInfo(
     <>Benefit, Honor, and Glory.</>,
-    ["Chongqing", "Sector-12", "New Tokyo", "Aevum", "Ishima"],
+    [FactionNames.Chongqing, FactionNames.Sector12, FactionNames.NewTokyo, FactionNames.Aevum, FactionNames.Ishima],
     true,
     true,
     true,
@@ -428,7 +440,7 @@ export const FactionInfos: IMap<FactionInfo> = {
   ),
 
   // Criminal Organizations/Gangs
-  "Speakers for the Dead": new FactionInfo(
+  [FactionNames.SpeakersForTheDead]: new FactionInfo(
     <>It is better to reign in Hell than to serve in Heaven.</>,
     [],
     true,
@@ -439,7 +451,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
   ),
 
-  "The Dark Army": new FactionInfo(
+  [FactionNames.TheDarkArmy]: new FactionInfo(
     <>The World doesn't care about right or wrong. It only cares about power.</>,
     [],
     true,
@@ -450,9 +462,9 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
   ),
 
-  "The Syndicate": new FactionInfo(<>Honor holds you back.</>, [], true, true, true, true, false, false),
+  [FactionNames.TheSyndicate]: new FactionInfo(<>Honor holds you back.</>, [], true, true, true, true, false, false),
 
-  Silhouette: new FactionInfo(
+  [FactionNames.Silhouette]: new FactionInfo(
     (
       <>
         Corporations have filled the void of power left behind by the collapse of Western government. The issue is
@@ -472,7 +484,7 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
   ),
 
-  Tetrads: new FactionInfo(
+  [FactionNames.Tetrads]: new FactionInfo(
     <>Following the mandate of Heaven and carrying out the way.</>,
     [],
     false,
@@ -483,14 +495,41 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
   ),
 
-  "Slum Snakes": new FactionInfo(<>Slum Snakes rule!</>, [], false, false, true, true, false, false),
+  [FactionNames.SlumSnakes]: new FactionInfo(
+    <>{FactionNames.SlumSnakes} rule!</>,
+    [],
+    false,
+    false,
+    true,
+    true,
+    false,
+    false,
+  ),
 
   // Earlygame factions - factions the player will prestige with early on that don't belong in other categories.
-  Netburners: new FactionInfo(<>{"~~//*>H4CK||3T 8URN3R5**>?>\\~~"}</>, [], true, true, false, false, false, false),
+  [FactionNames.Netburners]: new FactionInfo(
+    <>{"~~//*>H4CK||3T 8URN3R5**>?>\\~~"}</>,
+    [],
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+  ),
 
-  "Tian Di Hui": new FactionInfo(<>Obey Heaven and work righteously.</>, [], true, true, false, true, false, false),
+  [FactionNames.TianDiHui]: new FactionInfo(
+    <>Obey Heaven and work righteously.</>,
+    [],
+    true,
+    true,
+    false,
+    true,
+    false,
+    false,
+  ),
 
-  CyberSec: new FactionInfo(
+  [FactionNames.CyberSec]: new FactionInfo(
     (
       <>
         The Internet is the first thing that was built that we don't fully understand, the largest experiment in anarchy
@@ -508,13 +547,14 @@ export const FactionInfos: IMap<FactionInfo> = {
   ),
 
   // Special Factions
-  Bladeburners: new FactionInfo(
+  [FactionNames.Bladeburners]: new FactionInfo(
     (
       <>
         It's too bad they won't live. But then again, who does?
         <br />
         <br />
-        Note that for this faction, reputation can only be gained through Bladeburner actions. Completing Bladeburner
+        Note that for this faction, reputation can only be gained through {FactionNames.Bladeburners} actions.
+        Completing {FactionNames.Bladeburners}
         contracts/operations will increase your reputation.
       </>
     ),
@@ -528,7 +568,7 @@ export const FactionInfos: IMap<FactionInfo> = {
   ),
 
   // prettier-ignore
-  "Church of the Machine God": new FactionInfo(<>
+  [FactionNames.ChurchOfTheMachineGod]: new FactionInfo(<>
     {"                 ``          "}<br />
     {"             -odmmNmds:      "}<br />
     {"           `hNmo:..-omNh.    "}<br />
@@ -558,8 +598,8 @@ export const FactionInfos: IMap<FactionInfo> = {
     {"     -smNNNNmdo-             "}<br />
     {"        `..`                 "}<br /><br />
     Many cultures predict an end to humanity in the near future, a final
-     Armageddon that will end the world; but we disagree.
-    <br /><br />Note that for this faction, reputation can 
+    Armageddon that will end the world; but we disagree.
+    <br /><br />Note that for this faction, reputation can
     only be gained by charging Stanek's gift.</>,
     [],
     false,

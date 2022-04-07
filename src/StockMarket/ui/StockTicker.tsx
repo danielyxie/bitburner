@@ -113,10 +113,8 @@ export function StockTicker(props: IProps): React.ReactElement {
       if (qty > stock.playerShares) {
         return <>You do not have this many shares in the Long position</>;
       }
-    } else {
-      if (qty > stock.playerShortShares) {
-        return <>You do not have this many shares in the Short position</>;
-      }
+    } else if (qty > stock.playerShortShares) {
+      return <>You do not have this many shares in the Short position</>;
     }
 
     const cost = getSellTransactionGain(stock, qty, position);

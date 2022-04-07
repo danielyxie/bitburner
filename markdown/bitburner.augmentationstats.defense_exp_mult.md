@@ -4,7 +4,7 @@
 
 ## AugmentationStats.defense\_exp\_mult property
 
-Multipler to defense experience gain rate
+Multiplier to defense experience gain rate
 
 <b>Signature:</b>
 

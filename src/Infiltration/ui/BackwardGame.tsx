@@ -7,6 +7,7 @@ import { random } from "../utils";
 import { interpolate } from "./Difficulty";
 import { BlinkingCursor } from "./BlinkingCursor";
 import Typography from "@mui/material/Typography";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 interface Difficulty {
   [key: string]: number;
@@ -36,7 +37,7 @@ export function BackwardGame(props: IMinigameProps): React.ReactElement {
 
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
-    if (event.key === "Backspace") return;
+    if (event.key === KEY.BACKSPACE) return;
     const nextGuess = guess + event.key.toUpperCase();
     if (!answer.startsWith(nextGuess)) props.onFailure();
     else if (answer === nextGuess) props.onSuccess();

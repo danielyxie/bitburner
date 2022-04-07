@@ -216,6 +216,11 @@ export const LocationsMetadata: IConstructorParams[] = [
     types: [LocationType.Company, LocationType.Special],
   },
   {
+    city: CityName.NewTokyo,
+    name: LocationName.NewTokyoArcade,
+    types: [LocationType.Special],
+  },
+  {
     city: CityName.Sector12,
     infiltrationData: {
       maxClearanceLevel: 10,

@@ -4,7 +4,7 @@
 
 ## AugmentationStats.hacking\_exp\_mult property
 
-Multipler to hacking experience gain rate
+Multiplier to hacking experience gain rate
 
 <b>Signature:</b>
 

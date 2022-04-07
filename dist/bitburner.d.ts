@@ -15,65 +15,65 @@ export declare interface ActiveFragment {
  * @public
  */
 export declare interface AugmentationStats {
-    /** Multipler to hacking skill */
+    /** Multiplier to hacking skill */
     hacking_mult?: number;
-    /** Multipler to strength skill */
+    /** Multiplier to strength skill */
     strength_mult?: number;
-    /** Multipler to defense skill */
+    /** Multiplier to defense skill */
     defense_mult?: number;
-    /** Multipler to dexterity skill */
+    /** Multiplier to dexterity skill */
     dexterity_mult?: number;
-    /** Multipler to agility skill */
+    /** Multiplier to agility skill */
     agility_mult?: number;
-    /** Multipler to charisma skill */
+    /** Multiplier to charisma skill */
     charisma_mult?: number;
-    /** Multipler to hacking experience gain rate */
+    /** Multiplier to hacking experience gain rate */
     hacking_exp_mult?: number;
-    /** Multipler to strength experience gain rate */
+    /** Multiplier to strength experience gain rate */
     strength_exp_mult?: number;
-    /** Multipler to defense experience gain rate */
+    /** Multiplier to defense experience gain rate */
     defense_exp_mult?: number;
-    /** Multipler to dexterity experience gain rate */
+    /** Multiplier to dexterity experience gain rate */
     dexterity_exp_mult?: number;
-    /** Multipler to agility experience gain rate */
+    /** Multiplier to agility experience gain rate */
     agility_exp_mult?: number;
-    /** Multipler to charisma experience gain rate */
+    /** Multiplier to charisma experience gain rate */
     charisma_exp_mult?: number;
-    /** Multipler to chance of successfully performing a hack */
+    /** Multiplier to chance of successfully performing a hack */
     hacking_chance_mult?: number;
-    /** Multipler to hacking speed */
+    /** Multiplier to hacking speed */
     hacking_speed_mult?: number;
-    /** Multipler to amount of money the player gains from hacking */
+    /** Multiplier to amount of money the player gains from hacking */
     hacking_money_mult?: number;
-    /** Multipler to amount of money injected into servers using grow */
+    /** Multiplier to amount of money injected into servers using grow */
     hacking_grow_mult?: number;
-    /** Multipler to amount of reputation gained when working */
+    /** Multiplier to amount of reputation gained when working */
     company_rep_mult?: number;
-    /** Multipler to amount of reputation gained when working */
+    /** Multiplier to amount of reputation gained when working */
     faction_rep_mult?: number;
-    /** Multipler to amount of money gained from crimes */
+    /** Multiplier to amount of money gained from crimes */
     crime_money_mult?: number;
-    /** Multipler to crime success rate */
+    /** Multiplier to crime success rate */
     crime_success_mult?: number;
-    /** Multipler to amount of money gained from working */
+    /** Multiplier to amount of money gained from working */
     work_money_mult?: number;
-    /** Multipler to amount of money produced by Hacknet Nodes */
+    /** Multiplier to amount of money produced by Hacknet Nodes */
     hacknet_node_money_mult?: number;
-    /** Multipler to cost of purchasing a Hacknet Node */
+    /** Multiplier to cost of purchasing a Hacknet Node */
     hacknet_node_purchase_cost_mult?: number;
-    /** Multipler to cost of ram for a Hacknet Node */
+    /** Multiplier to cost of ram for a Hacknet Node */
     hacknet_node_ram_cost_mult?: number;
-    /** Multipler to cost of core for a Hacknet Node */
+    /** Multiplier to cost of core for a Hacknet Node */
     hacknet_node_core_cost_mult?: number;
-    /** Multipler to cost of leveling up a Hacknet Node */
+    /** Multiplier to cost of leveling up a Hacknet Node */
     hacknet_node_level_cost_mult?: number;
-    /** Multipler to Bladeburner max stamina */
+    /** Multiplier to Bladeburner max stamina */
     bladeburner_max_stamina_mult?: number;
-    /** Multipler to Bladeburner stamina gain rate */
+    /** Multiplier to Bladeburner stamina gain rate */
     bladeburner_stamina_gain_mult?: number;
-    /** Multipler to effectiveness in Bladeburner Field Analysis */
+    /** Multiplier to effectiveness in Bladeburner Field Analysis */
     bladeburner_analysis_mult?: number;
-    /** Multipler to success chance in Bladeburner contracts/operations */
+    /** Multiplier to success chance in Bladeburner contracts/operations */
     bladeburner_success_chance_mult?: number;
 }
 
@@ -86,6 +86,17 @@ export declare interface AugmentPair {
     name: string;
     /** augmentation cost */
     cost: number;
+}
+
+/**
+ * Used for autocompletion
+ * @public
+ */
+export declare interface AutocompleteData {
+    servers: string[];
+    scripts: string[];
+    txts: string[];
+    flags(schema: [string, string | number | boolean | string[]][]): any;
 }
 
 /**
@@ -124,6 +135,8 @@ export declare interface BitNodeMultipliers {
     CompanyWorkExpGain: number;
     /** Influences how much money the player earns when completing working their job. */
     CompanyWorkMoney: number;
+    /** Influences the money gain from dividends of corporations created by the player. */
+    CorporationSoftCap: number;
     /** Influences the valuation of corporations created by the player. */
     CorporationValuation: number;
     /** Influences the base experience gained for each ability when the player commits a crime. */
@@ -178,7 +191,7 @@ export declare interface BitNodeMultipliers {
     ScriptHackMoneyGain: number;
     /** Influences the growth percentage per cycle against a server. */
     ServerGrowthRate: number;
-    /** Influences the maxmimum money that a server can grow to. */
+    /** Influences the maximum money that a server can grow to. */
     ServerMaxMoney: number;
     /** Influences the initial money that a server starts with. */
     ServerStartingMoney: number;
@@ -348,7 +361,7 @@ export declare interface Bladeburner {
      *
      * Note that this is meant to be used for Contracts and Operations.
      * This function will return ‘Infinity’ for actions such as Training and Field Analysis.
-     * This function will return 1 for BlackOps not yet completed regardless of wether
+     * This function will return 1 for BlackOps not yet completed regardless of whether
      * the player has the required rank to attempt the mission or not.
      *
      * @param type - Type of action.
@@ -388,7 +401,7 @@ export declare interface Bladeburner {
     getActionCurrentLevel(type: string, name: string): number;
 
     /**
-     * Get wether an action is set to autolevel.
+     * Get whether an action is set to autolevel.
      * @remarks
      * RAM cost: 4 GB
      *
@@ -777,7 +790,7 @@ export declare interface CodingAttemptOptions {
  */
 export declare interface CodingContract {
     /**
-     * Attemps a coding contract.
+     * Attempts a coding contract.
      * @remarks
      * RAM cost: 10 GB
      *
@@ -958,6 +971,28 @@ export declare interface Corporation extends WarehouseAPI, OfficeAPI {
      * @param percent - Percent of profit to issue as dividends.
      */
     issueDividends(percent: number): void;
+    /**
+     * Buyback Shares
+     * @param amount - Amount of shares to buy back.
+     *
+     */
+    buyBackShares(amount: number): void;
+    /**
+     * Sell Shares
+     * @param amount -  Amount of shares to sell.
+     *
+     */
+    sellShares(amount: number): void;
+    /**
+     * Get bonus time.
+     *
+     * “Bonus time” is accumulated when the game is offline or if the game is inactive in the browser.
+     *
+     * “Bonus time” makes the game progress faster.
+     *
+     * @returns Bonus time for the Corporation mechanic in milliseconds.
+     */
+    getBonusTime(): number;
 }
 
 /**
@@ -1005,7 +1040,7 @@ export declare interface CrimeStats {
     /** How much money is given */
     money: number;
     /** Name of crime */
-    name: number;
+    name: string;
     /** Milliseconds it takes to attempt the crime */
     time: number;
     /** Description of the crime activity */
@@ -1045,7 +1080,7 @@ export declare interface CrimeStats {
 export declare interface Division {
     /** Name of the division */
     name: string;
-    /** Type of division, like Aggriculture */
+    /** Type of division, like Agriculture */
     type: string;
     /** Awareness of the division */
     awareness: number;
@@ -1540,42 +1575,75 @@ export declare interface GangMemberAscension {
  * @public
  */
 export declare interface GangMemberInfo {
+    /** Name of the gang member */
     name: string;
+    /** Currently assigned task */
     task: string;
     earnedRespect: number;
+
+    /** Hack skill level */
     hack: number;
+    /** Strength skill level */
     str: number;
+    /** Defense skill level */
     def: number;
+    /** Dexterity skill level */
     dex: number;
+    /** Agility skill level */
     agi: number;
+    /** Charisma skill level */
     cha: number;
 
+    /** Current hack experience */
     hack_exp: number;
+    /** Current strength experience */
     str_exp: number;
+    /** Current defense experience */
     def_exp: number;
+    /** Current dexterity experience */
     dex_exp: number;
+    /** Current agility experience */
     agi_exp: number;
+    /** Current charisma experience */
     cha_exp: number;
 
+    /** Hack multiplier from equipment */
     hack_mult: number;
+    /** Strength multiplier from equipment */
     str_mult: number;
+    /** Defense multiplier from equipment */
     def_mult: number;
+    /** Dexterity multiplier from equipment */
     dex_mult: number;
+    /** Agility multiplier from equipment */
     agi_mult: number;
+    /** Charisma multiplier from equipment */
     cha_mult: number;
 
+    /** Hack multiplier from ascensions */
     hack_asc_mult: number;
+    /** Strength multiplier from ascensions */
     str_asc_mult: number;
+    /** Defense multiplier from ascensions */
     def_asc_mult: number;
+    /** Dexterity multiplier from ascensions */
     dex_asc_mult: number;
+    /** Agility multiplier from ascensions */
     agi_asc_mult: number;
+    /** Charisma multiplier from ascensions */
     cha_asc_mult: number;
 
+    /** Total earned hack experience */
     hack_asc_points: number;
+    /** Total earned strength experience */
     str_asc_points: number;
+    /** Total earned defense experience */
     def_asc_points: number;
+    /** Total earned dexterity experience */
     dex_asc_points: number;
+    /** Total earned agility experience */
     agi_asc_points: number;
+    /** Total earned charisma experience */
     cha_asc_points: number;
 
     upgrades: string[];
@@ -1630,7 +1698,7 @@ export declare interface GangTaskStats {
     baseMoney: number;
     /** Hacking skill impact on task scaling */
     hackWeight: number;
-    /** Stength skill impact on task scaling */
+    /** Strength skill impact on task scaling */
     strWeight: number;
     /** Defense skill impact on task scaling */
     defWeight: number;
@@ -1659,12 +1727,56 @@ export declare interface GangTerritory {
 }
 
 /**
+ * Grafting API
+ * @remarks
+ * This API requires Source-File 10 to use.
+ * @public
+ */
+export declare interface Grafting {
+    /**
+     * Retrieve the grafting cost of an aug.
+     * @remarks
+     * RAM cost: 3.75 GB
+     *
+     * @param augName - Name of the aug to check the price of. Must be an exact match.
+     * @returns The cost required to graft the named augmentation.
+     * @throws Will error if an invalid Augmentation name is provided.
+     */
+    getAugmentationGraftPrice(augName: string): number;
+
+    /**
+     * Retrieves the time required to graft an aug.
+     * @remarks
+     * RAM cost: 3.75 GB
+     *
+     * @param augName - Name of the aug to check the grafting time of. Must be an exact match.
+     * @returns The time required, in millis, to graft the named augmentation.
+     * @throws Will error if an invalid Augmentation name is provided.
+     */
+    getAugmentationGraftTime(augName: string): number;
+
+    /**
+     * Begins grafting the named aug. You must be in New Tokyo to use this.
+     * @remarks
+     * RAM cost: 7.5 GB
+     *
+     * @param augName - The name of the aug to begin grafting. Must be an exact match.
+     * @param focus - Acquire player focus on this Augmentation grafting. Optional. Defaults to true.
+     * @returns True if the aug successfully began grafting, false otherwise (e.g. not enough money, or
+     * invalid Augmentation name provided).
+     * @throws Will error if called while you are not in New Tokyo.
+     */
+    graftAugmentation(augName: string, focus?: boolean): boolean;
+}
+
+/**
  * Hacking formulas
  * @public
  */
 export declare interface HackingFormulas {
     /**
      * Calculate hack chance.
+     * (Ex: 0.25 would indicate a 25% chance of success.)
      * @param server - Server info from {@link NS.getServer | getServer}
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
      * @returns The calculated hack chance.
@@ -1681,6 +1793,7 @@ export declare interface HackingFormulas {
     hackExp(server: Server, player: Player): number;
     /**
      * Calculate hack percent for one thread.
+     * (Ex: 0.25 would steal 25% of the server's current value.)
      * @remarks
      * Multiply by thread to get total percent hacked.
      * @param server - Server info from {@link NS.getServer | getServer}
@@ -1689,7 +1802,8 @@ export declare interface HackingFormulas {
      */
     hackPercent(server: Server, player: Player): number;
     /**
-     * Calculate the percent a server would grow.
+     * Calculate the percent a server would grow to.
+     * (Ex: 3.0 would would grow the server to 300% of its current value.)
      * @param server - Server info from {@link NS.getServer | getServer}
      * @param threads - Amount of thread.
      * @param player - Player info from {@link NS.getPlayer | getPlayer}
@@ -2069,7 +2183,7 @@ export declare interface Hacknet {
     getHashUpgradeLevel(upgName: string): number;
 
     /**
-     * Get the multipler to study.
+     * Get the multiplier to study.
      * @remarks
      * RAM cost: 0 GB
      *
@@ -2080,7 +2194,7 @@ export declare interface Hacknet {
     getStudyMult(): number;
 
     /**
-     * Get the multipler to training.
+     * Get the multiplier to training.
      * @remarks
      * RAM cost: 0 GB
      *
@@ -2453,7 +2567,7 @@ export declare interface NodeStats {
  *  ns.getHostname();
  *  // Some related functions are gathered under a sub-property of the ns object
  *  ns.stock.getPrice();
- *  // Some functions need to be await ed
+ *  // Some functions need to be awaited
  *  await ns.hack('n00dles');
  * }
  * ```
@@ -2522,6 +2636,13 @@ export declare interface NS extends Singularity {
     readonly ui: UserInterface;
 
     /**
+     * Namespace for grafting functions.
+     * @remarks
+     * RAM cost: 0 GB
+     */
+    readonly grafting: Grafting;
+
+    /**
      * Arguments passed into the script.
      *
      * @remarks
@@ -2555,13 +2676,11 @@ export declare interface NS extends Singularity {
      * ```ts
      * // NS1:
      * var earnedMoney = hack("foodnstuff");
-     * earnedMoney = earnedMoney + hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
      * ```
      * @example
      * ```ts
      * // NS2:
      * let earnedMoney = await ns.hack("foodnstuff");
-     * earnedMoney += await ns.hack("foodnstuff", { threads: 5 }); // Only use 5 threads to hack
      * ```
      * @param host - Hostname of the target server to hack.
      * @param opts - Optional parameters for configuring function behavior.
@@ -2589,16 +2708,14 @@ export declare interface NS extends Singularity {
      * @example
      * ```ts
      * // NS1:
-     * var availableMoney = getServerMoneyAvailable("foodnstuff");
+     * var currentMoney = getServerMoneyAvailable("foodnstuff");
      * currentMoney = currentMoney * (1 + grow("foodnstuff"));
-     * currentMoney = currentMoney * (1 + grow("foodnstuff", { threads: 5 })); // Only use 5 threads to grow
      * ```
      * @example
      * ```ts
      * // NS2:
-     * let availableMoney = ns.getServerMoneyAvailable("foodnstuff");
+     * let currentMoney = ns.getServerMoneyAvailable("foodnstuff");
      * currentMoney *= (1 + await ns.grow("foodnstuff"));
-     * currentMoney *= (1 + await ns.grow("foodnstuff", { threads: 5 })); // Only use 5 threads to grow
      * ```
      * @param host - Hostname of the target server to grow.
      * @param opts - Optional parameters for configuring function behavior.
@@ -2624,14 +2741,12 @@ export declare interface NS extends Singularity {
      * // NS1:
      * var currentSecurity = getServerSecurityLevel("foodnstuff");
      * currentSecurity = currentSecurity - weaken("foodnstuff");
-     * currentSecurity = currentSecurity - weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
      * ```
      * @example
      * ```ts
      * // NS2:
      * let currentSecurity = ns.getServerSecurityLevel("foodnstuff");
      * currentSecurity -= await ns.weaken("foodnstuff");
-     * currentSecurity -= await ns.weaken("foodnstuff", { threads: 5 }); // Only use 5 threads to weaken
      * ```
      * @param host - Hostname of the target server to weaken.
      * @param opts - Optional parameters for configuring function behavior.
@@ -2817,6 +2932,17 @@ export declare interface NS extends Singularity {
      * @param args - Value(s) to be printed.
      */
     print(...args: any[]): void;
+
+    /**
+     * Prints a formatted string to the script’s logs.
+     * @remarks
+     * RAM cost: 0 GB
+     *
+     * see: https://github.com/alexei/sprintf.js
+     * @param format - format of the message
+     * @param args - Value(s) to be printed.
+     */
+    printf(format: string, ...args: any[]): void;
 
     /**
      * Prints one or more values or variables to the Terminal.
@@ -3276,6 +3402,34 @@ export declare interface NS extends Singularity {
      * @returns True if the script is successfully killed, and false otherwise.
      */
     kill(script: number): boolean;
+
+    /**
+     * {@inheritDoc NS.(kill:1)}
+     * @example
+     * ```ts
+     * // NS1:
+     * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
+     * kill("foo.script", "foodnstuff");
+     *
+     * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
+     * kill("foo.script", getHostname());
+     *
+     * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
+     * kill("foo.script", getHostname(), 1, "foodnstuff");
+     * ```
+     * @example
+     * ```ts
+     * // NS2:
+     * //The following example will try to kill a script named foo.script on the foodnstuff server that was ran with no arguments:
+     * ns.kill("foo.script", "foodnstuff");
+     *
+     * //The following will try to kill a script named foo.script on the current server that was ran with no arguments:
+     * ns.kill("foo.script", getHostname());
+     *
+     * //The following will try to kill a script named foo.script on the current server that was ran with the arguments 1 and “foodnstuff”:
+     * ns.kill("foo.script", getHostname(), 1, "foodnstuff");
+     * ```
+     */
     kill(script: string, host: string, ...args: string[]): boolean;
 
     /**
@@ -3341,6 +3495,37 @@ export declare interface NS extends Singularity {
      * @returns True if the script/literature file is successfully copied over and false otherwise. If the files argument is an array then this function will return true if at least one of the files in the array is successfully copied.
      */
     scp(files: string | string[], destination: string): Promise<boolean>;
+
+    /**
+     * {@inheritDoc NS.(scp:1)}
+     * @example
+     * ```ts
+     * // NS1:
+     * //Copies foo.lit from the helios server to the home computer:
+     * scp("foo.lit", "helios", "home");
+     *
+     * //Tries to copy three files from rothman-uni to home computer:
+     * files = ["foo1.lit", "foo2.script", "foo3.script"];
+     * scp(files, "rothman-uni", "home");
+     * ```
+     * @example
+     * ```ts
+     * // NS2:
+     * //Copies foo.lit from the helios server to the home computer:
+     * await ns.scp("foo.lit", "helios", "home");
+     *
+     * //Tries to copy three files from rothman-uni to home computer:
+     * files = ["foo1.lit", "foo2.script", "foo3.script"];
+     * await ns.scp(files, "rothman-uni", "home");
+     * ```
+     * @example
+     * ```ts
+     * //ns2, copies files from home to a target server
+     * const server = ns.args[0];
+     * const files = ["hack.js","weaken.js","grow.js"];
+     * await ns.scp(files, "home", server);
+     * ```
+     */
     scp(files: string | string[], source: string, destination: string): Promise<boolean>;
 
     /**
@@ -3367,8 +3552,8 @@ export declare interface NS extends Singularity {
      * @example
      * ```ts
      * // NS1:
-     * const scripts = ps("home");
-     * for (let i = 0; i < scripts.length; ++i) {
+     * var scripts = ps("home");
+     * for (var i = 0; i < scripts.length; ++i) {
      *     tprint(scripts[i].filename + ' ' + scripts[i].threads);
      *     tprint(scripts[i].args);
      * }
@@ -3377,8 +3562,8 @@ export declare interface NS extends Singularity {
      * ```ts
      * // NS2:
      * const ps = ns.ps("home");
-     * for (script of ps) {
-     *     ns.tprint(`${script.filename} ${ps[i].threads}`);
+     * for (let script of ps) {
+     *     ns.tprint(`${script.filename} ${script.threads}`);
      *     ns.tprint(script.args);
      * }
      * ```
@@ -3748,13 +3933,13 @@ export declare interface NS extends Singularity {
      * @remarks
      * RAM cost: 0.3 GB
      *
-     * Running with no args returns curent script.
+     * Running with no args returns current script.
      * If you use a PID as the first parameter, the hostname and args parameters are unnecessary.
      *
      * @param filename - Optional. Filename or PID of the script.
      * @param hostname - Optional. Name of host server the script is running on.
      * @param args  - Arguments to identify the script
-     * @returns info about a running script
+     * @returns The info about the running script if found, and null otherwise.
      */
     getRunningScript(filename?: FilenameOrPID, hostname?: string, ...args: (string | number)[]): RunningScript;
 
@@ -3905,7 +4090,7 @@ export declare interface NS extends Singularity {
      * @param data - Data to write.
      * @returns True if the data is successfully written to the port, and false otherwise.
      */
-    tryWritePort(port: number, data: string[] | number): Promise<boolean>;
+    tryWritePort(port: number, data: string | number): Promise<boolean>;
 
     /**
      * Read content of a file.
@@ -4145,6 +4330,10 @@ export declare interface NS extends Singularity {
      * @returns Amount of income the specified script generates while online.
      */
     getScriptIncome(): [number, number];
+
+    /**
+     * {@inheritDoc NS.(getScriptIncome:1)}
+     */
     getScriptIncome(script: string, host: string, ...args: string[]): number;
 
     /**
@@ -4165,6 +4354,10 @@ export declare interface NS extends Singularity {
      * @returns Amount of hacking experience the specified script generates while online.
      */
     getScriptExpGain(): number;
+
+    /**
+     * {@inheritDoc NS.(getScriptExpGain:1)}
+     */
     getScriptExpGain(script: string, host: string, ...args: string[]): number;
 
     /**
@@ -4228,19 +4421,25 @@ export declare interface NS extends Singularity {
     tFormat(milliseconds: number, milliPrecision?: boolean): string;
 
     /**
-     * Prompt the player with a Yes/No modal.
+     * Prompt the player with an input modal.
      * @remarks
      * RAM cost: 0 GB
      *
-     * Prompts the player with a dialog box with two options: “Yes” and “No”.
-     * This function will return true if the player click “Yes” and false if
-     * the player clicks “No”. The script’s execution is halted until the player
-     * selects one of the options.
+     * Prompts the player with a dialog box. If `options.type` is undefined or "boolean",
+     * the player is shown "Yes" and "No" prompts, which return true and false respectively.
+     * Passing a type of "text" will give the player a text field and a value of "select"
+     * will show a drop-down field. Choosing type "select" will require an array or object
+     * to be passed via the `options.choices` property.
+     * The script’s execution is halted until the player selects one of the options.
      *
      * @param txt - Text to appear in the prompt dialog box.
-     * @returns True if the player click “Yes” and false if the player clicks “No”.
+     * @param options - Options to modify the prompt the player is shown.
+     * @returns True if the player click “Yes”; false if the player clicks “No”; or the value entered by the player.
      */
-    prompt(txt: string): Promise<boolean>;
+    prompt(
+    txt: string,
+    options?: { type?: "boolean" | "text" | "select" | undefined; choices?: string[] },
+    ): Promise<boolean | string>;
 
     /**
      * Open up a message box.
@@ -4562,14 +4761,14 @@ export declare interface OfficeAPI {
     /**
      * Get the cost to unlock research
      * @param divisionName - Name of the division
-     * @param cityName - Name of the city
+     * @param researchName - Name of the research
      * @returns cost
      */
     getResearchCost(divisionName: string, researchName: string): number;
     /**
      * Gets if you have unlocked a research
      * @param divisionName - Name of the division
-     * @param cityName - Name of the city
+     * @param researchName - Name of the research
      * @returns true is unlocked, false if not
      */
     hasResearched(divisionName: string, researchName: string): boolean;
@@ -4693,6 +4892,8 @@ export declare interface Player {
     factions: string[];
     tor: boolean;
     hasCorporation: boolean;
+    inBladeburner: boolean;
+    entropy: number;
 }
 
 /**
@@ -4710,7 +4911,7 @@ export declare interface PlayerSkills {
     dexterity: number;
     /** Agility level */
     agility: number;
-    /** Chraisma level */
+    /** Charisma level */
     charisma: number;
     /** Intelligence level */
     intelligence: number;
@@ -4771,9 +4972,11 @@ export declare interface RunningScript {
     logs: string[];
     offlineExpGained: number;
     offlineMoneyMade: number;
+    /** Offline running time of the script, in seconds **/
     offlineRunningTime: number;
     onlineExpGained: number;
     onlineMoneyMade: number;
+    /** Online running time of the script, in seconds **/
     onlineRunningTime: number;
     pid: number;
     ramUsage: number;
@@ -4807,7 +5010,7 @@ export declare interface Server {
     /** IP Address. Must be unique */
     ip: string;
 
-    /** Flag indicating whether player is curently connected to this server */
+    /** Flag indicating whether player is currently connected to this server */
     isConnectedTo: boolean;
 
     /** RAM (GB) available on this server */
@@ -4946,7 +5149,7 @@ export declare interface Singularity {
      * purchasing a TOR router using this function is the same as if you were to
      * manually purchase one.
      *
-     * @returns True if actions is successful, false otherwise.
+     * @returns True if actions is successful or you already own TOR router, false otherwise.
      */
     purchaseTor(): boolean;
 
@@ -4983,7 +5186,7 @@ export declare interface Singularity {
      *
      *
      * Returns a boolean indicating whether or not the player is currently performing an
-     * ‘action’. These actions include working for a company/faction, studying at a univeristy,
+     * ‘action’. These actions include working for a company/faction, studying at a university,
      * working out at a gym, creating a program, committing a crime, or carrying out a Hacking Mission.
      *
      * @returns True if the player is currently performing an ‘action’, false otherwise.
@@ -5002,9 +5205,10 @@ export declare interface Singularity {
      * The actions that can be stopped with this function are:
      *
      * * Studying at a university
+     * * Working out at a gym
      * * Working for a company/faction
      * * Creating a program
-     * * Committing a Crime
+     * * Committing a crime
      *
      * This function will return true if the player’s action was ended.
      * It will return false if the player was not performing an action when this function was called.
@@ -5637,6 +5841,67 @@ export declare interface Singularity {
      * @returns True if the focus was changed.
      */
     setFocus(focus: boolean): boolean;
+
+    /**
+     * Get a list of programs offered on the dark web.
+     * @remarks
+     * RAM cost: 1 GB * 16/4/1
+     *
+     *
+     * This function allows the player to get a list of programs available for purchase
+     * on the dark web. Players MUST have purchased Tor to get the list of programs
+     * available. If Tor has not been purchased yet, this function will return an
+     * empty list.
+     *
+     * @example
+     * ```ts
+     * // NS1
+     * getDarkwebProgramsAvailable();
+     * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
+     * ```
+     * @example
+     * ```ts
+     * // NS2
+     * ns.getDarkwebProgramsAvailable();
+     * // returns ['BruteSSH.exe', 'FTPCrack.exe'...etc]
+     * ```
+     * @returns - a list of programs available for purchase on the dark web, or [] if Tor has not
+     * been purchased
+     */
+    getDarkwebPrograms(): string[];
+
+    /**
+     * Check the price of an exploit on the dark web
+     * @remarks
+     * RAM cost: 0.5 GB * 16/4/1
+     *
+     *
+     * This function allows you to check the price of a darkweb exploit/program.
+     * You MUST have a TOR router in order to use this function. The price returned
+     * by this function is the same price you would see with buy -l from the terminal.
+     * Returns the cost of the program if it has not been purchased yet, 0 if it
+     * has already been purchased, or -1 if Tor has not been purchased (and thus
+     * the program/exploit is not available for purchase).
+     *
+     * If the program does not exist, an error is thrown.
+     *
+     *
+     * @example
+     * ```ts
+     * // NS1
+     * getDarkwebProgramCost("brutessh.exe");
+     * ```
+     * @example
+     * ```ts
+     * // NS2
+     * ns.getDarkwebProgramCost("brutessh.exe");
+     * ```
+     * @param programName - Name of program to check the price of
+     * @returns Price of the specified darkweb program
+     * (if not yet purchased), 0 if it has already been purchased, or -1 if Tor has not been
+     * purchased. Throws an error if the specified program/exploit does not exist
+     */
+    getDarkwebProgramCost(programName: string): number;
 }
 
 /**
@@ -5971,14 +6236,14 @@ export declare interface Stanek {
      * RAM cost: 0.4 GB
      * @returns The width of the gift.
      */
-    width(): number;
+    giftWidth(): number;
     /**
      * Stanek's Gift height.
      * @remarks
      * RAM cost: 0.4 GB
      * @returns The height of the gift.
      */
-    height(): number;
+    giftHeight(): number;
 
     /**
      * Charge a fragment, increasing its power.
@@ -5988,7 +6253,7 @@ export declare interface Stanek {
      * @param rootY - rootY Root Y against which to align the top left of the fragment.
      * @returns Promise that lasts until the charge action is over.
      */
-    charge(rootX: number, rootY: number): Promise<void>;
+    chargeFragment(rootX: number, rootY: number): Promise<void>;
 
     /**
      * List possible fragments.
@@ -6013,7 +6278,7 @@ export declare interface Stanek {
      * @remarks
      * RAM cost: 0 GB
      */
-    clear(): void;
+    clearGift(): void;
 
     /**
      * Check if fragment can be placed at specified location.
@@ -6026,7 +6291,7 @@ export declare interface Stanek {
      * @param fragmentId - fragmentId ID of the fragment to place.
      * @returns true if the fragment can be placed at that position. false otherwise.
      */
-    canPlace(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+    canPlaceFragment(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
     /**
      * Place fragment on Stanek's Gift.
      * @remarks
@@ -6038,7 +6303,7 @@ export declare interface Stanek {
      * @param fragmentId - ID of the fragment to place.
      * @returns true if the fragment can be placed at that position. false otherwise.
      */
-    place(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
+    placeFragment(rootX: number, rootY: number, rotation: number, fragmentId: number): boolean;
     /**
      * Get placed fragment at location.
      * @remarks
@@ -6048,7 +6313,7 @@ export declare interface Stanek {
      * @param rootY - Y against which to align the top left of the fragment.
      * @returns The fragment at [rootX, rootY], if any.
      */
-    get(rootX: number, rootY: number): ActiveFragment | undefined;
+    getFragment(rootX: number, rootY: number): ActiveFragment | undefined;
 
     /**
      * Remove fragment at location.
@@ -6059,7 +6324,7 @@ export declare interface Stanek {
      * @param rootY - Y against which to align the top left of the fragment.
      * @returns The fragment at [rootX, rootY], if any.
      */
-    remove(rootX: number, rootY: number): boolean;
+    removeFragment(rootX: number, rootY: number): boolean;
 }
 
 /**
@@ -6448,6 +6713,20 @@ export declare interface TIX {
      * @returns True if you successfully purchased it or if you already have access, false otherwise.
      */
     purchase4SMarketDataTixApi(): boolean;
+
+    /**
+     * Purchase WSE Account.
+     * @remarks RAM cost: 2.5 GB
+     * @returns True if you successfully purchased it or if you already have access, false otherwise.
+     */
+    purchaseWseAccount(): boolean;
+
+    /**
+     * Purchase TIX API Access
+     * @remarks RAM cost: 2.5 GB
+     * @returns True if you successfully purchased it or if you already have access, false otherwise.
+     */
+    purchaseTixApi(): boolean;
 }
 
 /**
@@ -6628,6 +6907,14 @@ export declare interface WarehouseAPI {
      */
     setSmartSupply(divisionName: string, cityName: string, enabled: boolean): void;
     /**
+     * Set whether smart supply uses leftovers before buying
+     * @param divisionName - Name of the division
+     * @param cityName - Name of the city
+     * @param materialName - Name of the material
+     * @param enabled - smart supply use leftovers enabled
+     */
+    setSmartSupplyUseLeftovers(divisionName: string, cityName: string, materialName: string, enabled: boolean): void;
+    /**
      * Set material buy data
      * @param divisionName - Name of the division
      * @param cityName - Name of the city
@@ -6635,6 +6922,14 @@ export declare interface WarehouseAPI {
      * @param amt - Amount of material to buy
      */
     buyMaterial(divisionName: string, cityName: string, materialName: string, amt: number): void;
+    /**
+     * Set material to bulk buy
+     * @param divisionName - Name of the division
+     * @param cityName - Name of the city
+     * @param materialName - Name of the material
+     * @param amt - Amount of material to buy
+     */
+    bulkPurchase(divisionName: string, cityName: string, materialName: string, amt: number): void;
     /**
      * Get warehouse data
      * @param divisionName - Name of the division

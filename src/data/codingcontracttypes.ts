@@ -307,15 +307,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         reach = Math.max(i + data[i], reach);
       }
       const solution: boolean = i === n;
-
-      if (ans === "1" && solution) {
-        return true;
-      }
-      if (ans === "0" && !solution) {
-        return true;
-      }
-
-      return false;
+      return (ans === "1" && solution) || (ans === "0" && !solution);
     },
   },
   {
@@ -648,7 +640,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "of the path, you may only move to adjacent numbers in the row below.",
         "The triangle is represented as a 2D array of numbers:\n\n",
         `${triangle}\n\n`,
-        "Example: If you are given the following triangle:\n\n" + "[\n",
+        "Example: If you are given the following triangle:\n\n[\n",
         "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2],\n",
         "&nbsp;&nbsp;&nbsp;&nbsp;[3,4],\n",
         "&nbsp;&nbsp;&nbsp;[6,5,7],\n",
@@ -816,7 +808,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         `Examples:\n`,
         `"()())()" -> [()()(), (())()]\n`,
         `"(a)())()" -> [(a)()(), (a())()]\n`,
-        `")( -> [""]`,
+        `")(" -> [""]`,
       ].join(" ");
     },
     difficulty: 10,
@@ -922,6 +914,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "The data provided by this problem is an array with two elements. The first element",
         "is the string of digits, while the second element is the target number:\n\n",
         `["${digits}", ${target}]\n\n`,
+        "NOTE: The order of evaluation expects script operator precedence",
         "NOTE: Numbers in the expression cannot have leading 0's. In other words,",
         `"1+01" is not a valid expression`,
         "Examples:\n\n",

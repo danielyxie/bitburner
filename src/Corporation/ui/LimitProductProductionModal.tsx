@@ -5,6 +5,7 @@ import { Modal } from "../../ui/React/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 interface IProps {
   open: boolean;
@@ -25,7 +26,7 @@ export function LimitProductProductionModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) limitProductProduction();
+    if (event.key === KEY.ENTER) limitProductProduction();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -36,7 +37,7 @@ export function LimitProductProductionModal(props: IProps): React.ReactElement {
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Typography>
-        Enter a limit to the amount of this product you would like to product per second. Leave the box empty to set no
+        Enter a limit to the amount of this product you would like to produce per second. Leave the box empty to set no
         limit.
       </Typography>
       <TextField autoFocus={true} placeholder="Limit" type="number" onChange={onChange} onKeyDown={onKeyDown} />

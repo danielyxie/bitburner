@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 interface IProps {
   open: boolean;
@@ -165,7 +166,7 @@ export function MakeProductModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) makeProduct();
+    if (event.key === KEY.ENTER) makeProduct();
   }
 
   return (

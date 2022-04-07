@@ -163,11 +163,11 @@ export function refreshTheme(): void {
       MuiButtonGroup: {
         styleOverrides: {
           root: {
-            '& .MuiButton-root:not(:last-of-type)': {
-              marginRight: '1px',
-            }
-          }
-        }
+            "& .MuiButton-root:not(:last-of-type)": {
+              marginRight: "1px",
+            },
+          },
+        },
       },
 
       MuiButton: {
@@ -206,8 +206,8 @@ export function refreshTheme(): void {
         styleOverrides: {
           root: {
             lineHeight: Settings.styles.lineHeight,
-          }
-        }
+          },
+        },
       },
       MuiMenu: {
         styleOverrides: {
@@ -334,6 +334,37 @@ export function refreshTheme(): void {
             color: Settings.theme.secondary,
             "&.Mui-selected": {
               color: Settings.theme.primary,
+            },
+          },
+          root: {
+            backgroundColor: Settings.theme.backgroundsecondary,
+            border: "1px solid " + Settings.theme.well,
+            margin: "3px",
+
+            "&.Mui-selected": {
+              backgroundColor: Settings.theme.button,
+            },
+          },
+        },
+      },
+      MuiTabs: {
+        styleOverrides: {
+          scrollButtons: {
+            backgroundColor: Settings.theme.backgroundsecondary,
+            color: Settings.theme.secondary,
+            margin: "3px",
+            opacity: 1,
+            width: "fit-content",
+
+            "&.Mui-disabled": {
+              opacity: 0.5,
+            },
+          },
+        },
+        defaultProps: {
+          TabIndicatorProps: {
+            style: {
+              display: "none",
             },
           },
         },

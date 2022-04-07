@@ -6,6 +6,7 @@ import { Modal } from "../../ui/React/Modal";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 function initialPrice(mat: Material): string {
   let val = mat.sCost ? mat.sCost + "" : "";
@@ -46,7 +47,7 @@ export function SellMaterialModal(props: IProps): React.ReactElement {
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) sellMaterial();
+    if (event.key === KEY.ENTER) sellMaterial();
   }
 
   return (
