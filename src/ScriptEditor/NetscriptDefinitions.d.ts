@@ -4642,7 +4642,7 @@ export interface NS extends Singularity {
    * ```
    * @returns
    */
-  sleep(millis: number): Promise<void>;
+  sleep(millis: number): Promise<true>;
 
   /**
    * Suspends the script for n milliseconds. Doesn't block with concurrent calls.
@@ -4652,7 +4652,7 @@ export interface NS extends Singularity {
    * @param millis - Number of milliseconds to sleep.
    * @returns
    */
-  asleep(millis: number): Promise<void>;
+  asleep(millis: number): Promise<true>;
 
   /**
    * Prints one or move values or variables to the script’s logs.

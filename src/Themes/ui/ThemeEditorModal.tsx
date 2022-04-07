@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import ReplyIcon from "@mui/icons-material/Reply";
 import PaletteSharpIcon from "@mui/icons-material/PaletteSharp";
-import HistoryIcon from '@mui/icons-material/History';
+import HistoryIcon from "@mui/icons-material/History";
 import { Color, ColorPicker } from "material-ui-color";
 import { ThemeEvents } from "./Theme";
 import { Settings, defaultSettings } from "../../Settings/Settings";
@@ -110,22 +110,40 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
   return (
     <Modal open={props.open} onClose={props.onClose}>
       <Paper sx={{ px: 1, py: 1, my: 1 }}>
-          <Tooltip open={true} placement={"top"} title={<Typography>Example tooltip</Typography>}>
-            <Button color="primary" size="small">primary button</Button>
-          </Tooltip>
-          <Button color="secondary" size="small">secondary button</Button>
-          <Button color="warning" size="small">warning button</Button>
-          <Button color="info" size="small">info button</Button>
-          <Button color="error" size="small">error button</Button>
-          <Button disabled size="small">disabled button</Button>
-
-          <br />
-          <Typography color="primary" variant="caption">text with primary color</Typography>&nbsp;
-          <Typography color="secondary" variant="caption">text with secondary color</Typography>&nbsp;
-          <Typography color="error" variant="caption">text with error color</Typography>
-
-          <br />
-          <TextField value={"Text field"} size="small" />
+        <Tooltip open={true} placement={"top"} title={<Typography>Example tooltip</Typography>}>
+          <Button color="primary" size="small">
+            primary button
+          </Button>
+        </Tooltip>
+        <Button color="secondary" size="small">
+          secondary button
+        </Button>
+        <Button color="warning" size="small">
+          warning button
+        </Button>
+        <Button color="info" size="small">
+          info button
+        </Button>
+        <Button color="error" size="small">
+          error button
+        </Button>
+        <Button disabled size="small">
+          disabled button
+        </Button>
+        <br />
+        <Typography color="primary" variant="caption">
+          text with primary color
+        </Typography>
+        &nbsp;
+        <Typography color="secondary" variant="caption">
+          text with secondary color
+        </Typography>
+        &nbsp;
+        <Typography color="error" variant="caption">
+          text with error color
+        </Typography>
+        <br />
+        <TextField value={"Text field"} size="small" />
       </Paper>
 
       <Paper sx={{ py: 1, my: 1 }}>
@@ -353,21 +371,22 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           value={JSON.stringify(customTheme)}
           onChange={onThemeChange}
         />
-          <>
-            <Typography sx={{ my: 1 }}>Backup your theme or share it with others by copying the string above.</Typography>
-            <ThemeCollaborate />
-            <ButtonGroup>
-              <Tooltip title="Reverts all modification back to the default theme. This is permanent.">
-                <Button onClick={() => setTemplateTheme(defaultTheme)}
-                  startIcon={<HistoryIcon />}>
-                    Revert to Default
-                </Button>
-              </Tooltip>
-              <Tooltip title="Move over to the theme browser's page to use one of our predefined themes.">
-                <Button startIcon={<PaletteSharpIcon />} onClick={() => props.router.toThemeBrowser()}>See more themes</Button>
-              </Tooltip>
-            </ButtonGroup>
-          </>
+        <>
+          <Typography sx={{ my: 1 }}>Backup your theme or share it with others by copying the string above.</Typography>
+          <ThemeCollaborate />
+          <ButtonGroup>
+            <Tooltip title="Reverts all modification back to the default theme. This is permanent.">
+              <Button onClick={() => setTemplateTheme(defaultTheme)} startIcon={<HistoryIcon />}>
+                Revert to Default
+              </Button>
+            </Tooltip>
+            <Tooltip title="Move over to the theme browser's page to use one of our predefined themes.">
+              <Button startIcon={<PaletteSharpIcon />} onClick={() => props.router.toThemeBrowser()}>
+                See more themes
+              </Button>
+            </Tooltip>
+          </ButtonGroup>
+        </>
       </Paper>
     </Modal>
   );

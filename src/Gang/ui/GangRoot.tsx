@@ -32,7 +32,7 @@ export function GangRoot(): React.ReactElement {
 
   return (
     <Context.Gang.Provider value={gang}>
-      <Tabs variant="fullWidth" value={value} onChange={handleChange} sx={{ minWidth: 'fit-content', maxWidth: '45%' }}>
+      <Tabs variant="fullWidth" value={value} onChange={handleChange} sx={{ minWidth: "fit-content", maxWidth: "45%" }}>
         <Tab label="Management" />
         <Tab label="Equipment" />
         <Tab label="Territory" />

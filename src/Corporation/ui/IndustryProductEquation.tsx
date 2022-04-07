@@ -18,7 +18,5 @@ export function IndustryProductEquation(props: IProps): React.ReactElement {
     prod.push("Products");
   }
 
-  return (
-    <MathJaxWrapper>{"\\(" + reqs.join("+") + `\\Rightarrow ` + prod.join("+") + "\\)"}</MathJaxWrapper>
-  );
+  return <MathJaxWrapper>{"\\(" + reqs.join("+") + `\\Rightarrow ` + prod.join("+") + "\\)"}</MathJaxWrapper>;
 }

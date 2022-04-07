@@ -16,7 +16,7 @@ import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import ExpandLess from "@mui/icons-material/ExpandLess";
-import CheckIcon from '@mui/icons-material/Check';
+import CheckIcon from "@mui/icons-material/Check";
 
 interface INodeProps {
   n: Node | null;
@@ -43,8 +43,8 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
 
     dialogBoxCreate(
       `Researched ${n.text}. It may take a market cycle ` +
-      `(~${CorporationConstants.SecsPerMarketCycle} seconds) before the effects of ` +
-      `the Research apply.`,
+        `(~${CorporationConstants.SecsPerMarketCycle} seconds) before the effects of ` +
+        `the Research apply.`,
     );
   }
 
@@ -66,19 +66,23 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
       >
         {ele}
       </Tooltip>
-    )
-  }
+    );
+  };
 
   const but = (
     <Box>
       {wrapInTooltip(
         <span>
-          <Button color={color} disabled={disabled && !n.researched} onClick={research}
-            style={{ width: '100%', textAlign: 'left', justifyContent: 'unset' }}
+          <Button
+            color={color}
+            disabled={disabled && !n.researched}
+            onClick={research}
+            style={{ width: "100%", textAlign: "left", justifyContent: "unset" }}
           >
-            {n.researched && (<CheckIcon sx={{ mr: 1 }} />)}{n.text}
+            {n.researched && <CheckIcon sx={{ mr: 1 }} />}
+            {n.text}
           </Button>
-        </span>
+        </span>,
       )}
     </Box>
   );
@@ -87,20 +91,29 @@ function Upgrade({ n, division }: INodeProps): React.ReactElement {
 
   return (
     <Box>
-      <Box display="flex" sx={{ border: '1px solid ' + Settings.theme.well }}>
+      <Box display="flex" sx={{ border: "1px solid " + Settings.theme.well }}>
         {wrapInTooltip(
-          <span style={{ width: '100%' }}>
-            <Button color={color} disabled={disabled && !n.researched} onClick={research} sx={{
-              width: '100%',
-              textAlign: 'left',
-              justifyContent: 'unset',
-              borderColor: Settings.theme.button
-            }}>
-              {n.researched && (<CheckIcon sx={{ mr: 1 }} />)}{n.text}
+          <span style={{ width: "100%" }}>
+            <Button
+              color={color}
+              disabled={disabled && !n.researched}
+              onClick={research}
+              sx={{
+                width: "100%",
+                textAlign: "left",
+                justifyContent: "unset",
+                borderColor: Settings.theme.button,
+              }}
+            >
+              {n.researched && <CheckIcon sx={{ mr: 1 }} />}
+              {n.text}
             </Button>
-          </span>
+          </span>,
         )}
-        <Button onClick={() => setOpen((old) => !old)} sx={{ borderColor: Settings.theme.button, minWidth: 'fit-content' }}>
+        <Button
+          onClick={() => setOpen((old) => !old)}
+          sx={{ borderColor: Settings.theme.button, minWidth: "fit-content" }}
+        >
           {open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
         </Button>
       </Box>

@@ -112,7 +112,7 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
 
   return (
     <Paper>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr', m: '5px' }}>
+      <Box sx={{ display: "grid", gridTemplateColumns: "2fr 1fr", m: "5px" }}>
         <Box>
           <Tooltip
             title={
@@ -149,17 +149,17 @@ export function MaterialElem(props: IMaterialProps): React.ReactElement {
           </Tooltip>
         </Box>
 
-        <Box sx={{ "& button": { width: '100%' } }}>
+        <Box sx={{ "& button": { width: "100%" } }}>
           <Tooltip
             title={tutorial ? <Typography>Purchase your required materials to get production started!</Typography> : ""}
           >
-              <Button
-                color={tutorial ? "error" : "primary"}
-                onClick={() => setPurchaseMaterialOpen(true)}
-                disabled={props.warehouse.smartSupplyEnabled && Object.keys(division.reqMats).includes(props.mat.name)}
-              >
-                {purchaseButtonText}
-              </Button>
+            <Button
+              color={tutorial ? "error" : "primary"}
+              onClick={() => setPurchaseMaterialOpen(true)}
+              disabled={props.warehouse.smartSupplyEnabled && Object.keys(division.reqMats).includes(props.mat.name)}
+            >
+              {purchaseButtonText}
+            </Button>
           </Tooltip>
           <PurchaseMaterialModal
             mat={mat}
