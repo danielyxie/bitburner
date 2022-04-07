@@ -95,10 +95,11 @@ function updateNeuroFluxGovernorCosts(neuroFluxGovernorAugmentation: Augmentatio
 }
 
 function updateInfiltratorCosts(infiltratorAugmentation: Augmentation): void {
+  const infiltratorAugmentationNames = initInfiltratorsAugmentations().map((augmentation) => augmentation.name);
   const infiltratorMultiplier =
-    infiltratorsAugmentations.filter((augmentation) => Player.hasAugmentation(augmentation.name)).length + 1;
+    infiltratorAugmentationNames.filter((augmentationName) => Player.hasAugmentation(augmentationName)).length + 1;
   infiltratorAugmentation.baseCost = Math.pow(infiltratorAugmentation.startingCost * 1000, infiltratorMultiplier);
-  if (infiltratorsAugmentations.find((augmentation) => augmentation.name === infiltratorAugmentation.name)) {
+  if (infiltratorAugmentationNames.find((augmentationName) => augmentationName === infiltratorAugmentation.name)) {
     infiltratorAugmentation.baseRepRequirement = infiltratorAugmentation.startingRepRequirement * infiltratorMultiplier;
   }
 }
