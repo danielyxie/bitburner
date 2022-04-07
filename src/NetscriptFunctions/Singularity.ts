@@ -1247,7 +1247,7 @@ export function NetscriptSingularity(
         throw helper.makeRuntimeErrorMsg("commitCrime", `Invalid crime: '${crimeRoughName}'`);
       }
       workerScript.log("commitCrime", () => `Attempting to commit ${crime.name}...`);
-      crime.commit(Router, player, 1, workerScript);
+      const crimeRes = crime.commit(Router, player, 1, workerScript);
       if (focus) {
         player.startFocusing();
         Router.toWork();
@@ -1255,7 +1255,7 @@ export function NetscriptSingularity(
         player.stopFocusing();
         Router.toTerminal();
       }
-      return true;
+      return crimeRes;
     },
     getCrimeChance: function (_crimeRoughName: unknown): number {
       updateRam("getCrimeChance");
