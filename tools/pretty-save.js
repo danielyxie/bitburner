@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require('fs').promises;
-const path = require('path');
+const fs = require("fs").promises;
+const path = require("path");
 
 async function getSave(file) {
-  const data = await fs.readFile(file, 'utf8');
+  const data = await fs.readFile(file, "utf8");
 
   const save = JSON.parse(decodeURIComponent(escape(atob(data))));
   const saveData = save.data;
@@ -19,8 +19,8 @@ async function getSave(file) {
     VersionSave: JSON.parse(saveData.VersionSave),
     LastExportBonus: JSON.parse(saveData.LastExportBonus),
     StaneksGiftSave: JSON.parse(saveData.StaneksGiftSave),
-    SaveTimestamp: new Date(parseInt(saveData.SaveTimestamp ?? '0', 10)).toLocaleString(),
-  }
+    SaveTimestamp: new Date(parseInt(saveData.SaveTimestamp ?? "0", 10)).toLocaleString(),
+  };
 
   const serverStrings = JSON.parse(saveData.AllServersSave);
   const servers = {};
@@ -38,9 +38,9 @@ async function getSave(file) {
 }
 
 async function main(input, output) {
-  const result = await getSave(input)
+  const result = await getSave(input);
   await fs.writeFile(output, JSON.stringify(result, null, 2));
-  return result
+  return result;
 }
 
 const input = path.resolve(process.argv[2]);
@@ -50,5 +50,5 @@ console.log(`Input: ${input}`);
 console.log(`Output: ${output}`);
 
 main(input, output).then(() => {
-  console.log('Done!');
-})
+  console.log("Done!");
+});

@@ -59,9 +59,7 @@ export function Info(props: IProps): React.ReactElement {
               </Typography>
               <MathJaxWrapper>{"\\(\\huge{r = \\text{total faction reputation}}\\)"}</MathJaxWrapper>
               <MathJaxWrapper>
-                {
-                  "\\(\\huge{favor=1+\\left\\lfloor\\log_{1.02}\\left(\\frac{r+25000}{25500}\\right)\\right\\rfloor}\\)"
-                }
+                {"\\(\\huge{favor=1+\\left\\lfloor\\log_{1.02}\\left(\\frac{r+25000}{25500}\\right)\\right\\rfloor}\\)"}
               </MathJaxWrapper>
             </>
           }
@@ -86,7 +84,6 @@ export function Info(props: IProps): React.ReactElement {
 
               <MathJaxWrapper>{"\\(\\huge{r = reputation}\\)"}</MathJaxWrapper>
               <MathJaxWrapper>{"\\(\\huge{\\Delta r = \\Delta r \\times \\frac{100+favor}{100}}\\)"}</MathJaxWrapper>
-
             </>
           }
         >

@@ -19,7 +19,14 @@ export function cat(
   }
   const relative_filename = args[0] + "";
   const filename = terminal.getFilepath(relative_filename);
-  if (!filename.endsWith(".msg") && !filename.endsWith(".lit") && !filename.endsWith(".txt") && !filename.endsWith(".script") && !filename.endsWith(".js") && !filename.endsWith(".ns")) {
+  if (
+    !filename.endsWith(".msg") &&
+    !filename.endsWith(".lit") &&
+    !filename.endsWith(".txt") &&
+    !filename.endsWith(".script") &&
+    !filename.endsWith(".js") &&
+    !filename.endsWith(".ns")
+  ) {
     terminal.error(
       "Only .msg, .txt, .lit, .script, .js, and .ns files are viewable with cat (filename must end with .msg, .txt, .lit, .script, .js, or .ns)",
     );

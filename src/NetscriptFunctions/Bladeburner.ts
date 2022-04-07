@@ -56,53 +56,56 @@ export function NetscriptBladeburner(
     return actionObj;
   };
 
+  const updateRam = (funcName: string): void =>
+    helper.updateDynamicRam(funcName, getRamCost(player, "bladeburner", funcName));
+
   return {
     getContractNames: function (): string[] {
-      helper.updateDynamicRam("getContractNames", getRamCost(player, "bladeburner", "getContractNames"));
+      updateRam("getContractNames");
       checkBladeburnerAccess("getContractNames");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.getContractNamesNetscriptFn();
     },
     getOperationNames: function (): string[] {
-      helper.updateDynamicRam("getOperationNames", getRamCost(player, "bladeburner", "getOperationNames"));
+      updateRam("getOperationNames");
       checkBladeburnerAccess("getOperationNames");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.getOperationNamesNetscriptFn();
     },
     getBlackOpNames: function (): string[] {
-      helper.updateDynamicRam("getBlackOpNames", getRamCost(player, "bladeburner", "getBlackOpNames"));
+      updateRam("getBlackOpNames");
       checkBladeburnerAccess("getBlackOpNames");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.getBlackOpNamesNetscriptFn();
     },
     getBlackOpRank: function (_blackOpName: unknown): number {
+      updateRam("getBlackOpRank");
       const blackOpName = helper.string("getBlackOpRank", "blackOpName", _blackOpName);
-      helper.updateDynamicRam("getBlackOpRank", getRamCost(player, "bladeburner", "getBlackOpRank"));
       checkBladeburnerAccess("getBlackOpRank");
       const action: any = getBladeburnerActionObject("getBlackOpRank", "blackops", blackOpName);
       return action.reqdRank;
     },
     getGeneralActionNames: function (): string[] {
-      helper.updateDynamicRam("getGeneralActionNames", getRamCost(player, "bladeburner", "getGeneralActionNames"));
+      updateRam("getGeneralActionNames");
       checkBladeburnerAccess("getGeneralActionNames");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.getGeneralActionNamesNetscriptFn();
     },
     getSkillNames: function (): string[] {
-      helper.updateDynamicRam("getSkillNames", getRamCost(player, "bladeburner", "getSkillNames"));
+      updateRam("getSkillNames");
       checkBladeburnerAccess("getSkillNames");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.getSkillNamesNetscriptFn();
     },
     startAction: function (_type: unknown, _name: unknown): boolean {
+      updateRam("startAction");
       const type = helper.string("startAction", "type", _type);
       const name = helper.string("startAction", "name", _name);
-      helper.updateDynamicRam("startAction", getRamCost(player, "bladeburner", "startAction"));
       checkBladeburnerAccess("startAction");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
@@ -113,23 +116,23 @@ export function NetscriptBladeburner(
       }
     },
     stopBladeburnerAction: function (): void {
-      helper.updateDynamicRam("stopBladeburnerAction", getRamCost(player, "bladeburner", "stopBladeburnerAction"));
+      updateRam("stopBladeburnerAction");
       checkBladeburnerAccess("stopBladeburnerAction");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.resetAction();
     },
     getCurrentAction: function (): BladeburnerCurAction {
-      helper.updateDynamicRam("getCurrentAction", getRamCost(player, "bladeburner", "getCurrentAction"));
+      updateRam("getCurrentAction");
       checkBladeburnerAccess("getCurrentAction");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.getTypeAndNameFromActionId(bladeburner.action);
     },
     getActionTime: function (_type: unknown, _name: unknown): number {
+      updateRam("getActionTime");
       const type = helper.string("getActionTime", "type", _type);
       const name = helper.string("getActionTime", "name", _name);
-      helper.updateDynamicRam("getActionTime", getRamCost(player, "bladeburner", "getActionTime"));
       checkBladeburnerAccess("getActionTime");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
@@ -140,12 +143,9 @@ export function NetscriptBladeburner(
       }
     },
     getActionEstimatedSuccessChance: function (_type: unknown, _name: unknown): [number, number] {
+      updateRam("getActionEstimatedSuccessChance");
       const type = helper.string("getActionEstimatedSuccessChance", "type", _type);
       const name = helper.string("getActionEstimatedSuccessChance", "name", _name);
-      helper.updateDynamicRam(
-        "getActionEstimatedSuccessChance",
-        getRamCost(player, "bladeburner", "getActionEstimatedSuccessChance"),
-      );
       checkBladeburnerAccess("getActionEstimatedSuccessChance");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
@@ -156,10 +156,10 @@ export function NetscriptBladeburner(
       }
     },
     getActionRepGain: function (_type: unknown, _name: unknown, _level: unknown): number {
+      updateRam("getActionRepGain");
       const type = helper.string("getActionRepGain", "type", _type);
       const name = helper.string("getActionRepGain", "name", _name);
       const level = helper.number("getActionRepGain", "level", _level);
-      helper.updateDynamicRam("getActionRepGain", getRamCost(player, "bladeburner", "getActionRepGain"));
       checkBladeburnerAccess("getActionRepGain");
       const action = getBladeburnerActionObject("getActionRepGain", type, name);
       let rewardMultiplier;
@@ -172,9 +172,9 @@ export function NetscriptBladeburner(
       return action.rankGain * rewardMultiplier * BitNodeMultipliers.BladeburnerRank;
     },
     getActionCountRemaining: function (_type: unknown, _name: unknown): number {
+      updateRam("getActionCountRemaining");
       const type = helper.string("getActionCountRemaining", "type", _type);
       const name = helper.string("getActionCountRemaining", "name", _name);
-      helper.updateDynamicRam("getActionCountRemaining", getRamCost(player, "bladeburner", "getActionCountRemaining"));
       checkBladeburnerAccess("getActionCountRemaining");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
@@ -185,43 +185,43 @@ export function NetscriptBladeburner(
       }
     },
     getActionMaxLevel: function (_type: unknown, _name: unknown): number {
+      updateRam("getActionMaxLevel");
       const type = helper.string("getActionMaxLevel", "type", _type);
       const name = helper.string("getActionMaxLevel", "name", _name);
-      helper.updateDynamicRam("getActionMaxLevel", getRamCost(player, "bladeburner", "getActionMaxLevel"));
       checkBladeburnerAccess("getActionMaxLevel");
       const action = getBladeburnerActionObject("getActionMaxLevel", type, name);
       return action.maxLevel;
     },
     getActionCurrentLevel: function (_type: unknown, _name: unknown): number {
+      updateRam("getActionCurrentLevel");
       const type = helper.string("getActionCurrentLevel", "type", _type);
       const name = helper.string("getActionCurrentLevel", "name", _name);
-      helper.updateDynamicRam("getActionCurrentLevel", getRamCost(player, "bladeburner", "getActionCurrentLevel"));
       checkBladeburnerAccess("getActionCurrentLevel");
       const action = getBladeburnerActionObject("getActionCurrentLevel", type, name);
       return action.level;
     },
     getActionAutolevel: function (_type: unknown, _name: unknown): boolean {
+      updateRam("getActionAutolevel");
       const type = helper.string("getActionAutolevel", "type", _type);
       const name = helper.string("getActionAutolevel", "name", _name);
-      helper.updateDynamicRam("getActionAutolevel", getRamCost(player, "bladeburner", "getActionAutolevel"));
       checkBladeburnerAccess("getActionAutolevel");
       const action = getBladeburnerActionObject("getActionCurrentLevel", type, name);
       return action.autoLevel;
     },
     setActionAutolevel: function (_type: unknown, _name: unknown, _autoLevel: unknown = true): void {
+      updateRam("setActionAutolevel");
       const type = helper.string("setActionAutolevel", "type", _type);
       const name = helper.string("setActionAutolevel", "name", _name);
       const autoLevel = helper.boolean(_autoLevel);
-      helper.updateDynamicRam("setActionAutolevel", getRamCost(player, "bladeburner", "setActionAutolevel"));
       checkBladeburnerAccess("setActionAutolevel");
       const action = getBladeburnerActionObject("setActionAutolevel", type, name);
       action.autoLevel = autoLevel;
     },
     setActionLevel: function (_type: unknown, _name: unknown, _level: unknown = 1): void {
+      updateRam("setActionLevel");
       const type = helper.string("setActionLevel", "type", _type);
       const name = helper.string("setActionLevel", "name", _name);
       const level = helper.number("setActionLevel", "level", _level);
-      helper.updateDynamicRam("setActionLevel", getRamCost(player, "bladeburner", "setActionLevel"));
       checkBladeburnerAccess("setActionLevel");
       const action = getBladeburnerActionObject("setActionLevel", type, name);
       if (level < 1 || level > action.maxLevel) {
@@ -233,22 +233,22 @@ export function NetscriptBladeburner(
       action.level = level;
     },
     getRank: function (): number {
-      helper.updateDynamicRam("getRank", getRamCost(player, "bladeburner", "getRank"));
+      updateRam("getRank");
       checkBladeburnerAccess("getRank");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.rank;
     },
     getSkillPoints: function (): number {
-      helper.updateDynamicRam("getSkillPoints", getRamCost(player, "bladeburner", "getSkillPoints"));
+      updateRam("getSkillPoints");
       checkBladeburnerAccess("getSkillPoints");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.skillPoints;
     },
     getSkillLevel: function (_skillName: unknown): number {
+      updateRam("getSkillLevel");
       const skillName = helper.string("getSkillLevel", "skillName", _skillName);
-      helper.updateDynamicRam("getSkillLevel", getRamCost(player, "bladeburner", "getSkillLevel"));
       checkBladeburnerAccess("getSkillLevel");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
@@ -259,8 +259,8 @@ export function NetscriptBladeburner(
       }
     },
     getSkillUpgradeCost: function (_skillName: unknown): number {
+      updateRam("getSkillUpgradeCost");
       const skillName = helper.string("getSkillUpgradeCost", "skillName", _skillName);
-      helper.updateDynamicRam("getSkillUpgradeCost", getRamCost(player, "bladeburner", "getSkillUpgradeCost"));
       checkBladeburnerAccess("getSkillUpgradeCost");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
@@ -271,8 +271,8 @@ export function NetscriptBladeburner(
       }
     },
     upgradeSkill: function (_skillName: unknown): boolean {
+      updateRam("upgradeSkill");
       const skillName = helper.string("upgradeSkill", "skillName", _skillName);
-      helper.updateDynamicRam("upgradeSkill", getRamCost(player, "bladeburner", "upgradeSkill"));
       checkBladeburnerAccess("upgradeSkill");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
@@ -283,9 +283,9 @@ export function NetscriptBladeburner(
       }
     },
     getTeamSize: function (_type: unknown, _name: unknown): number {
+      updateRam("getTeamSize");
       const type = helper.string("getTeamSize", "type", _type);
       const name = helper.string("getTeamSize", "name", _name);
-      helper.updateDynamicRam("getTeamSize", getRamCost(player, "bladeburner", "getTeamSize"));
       checkBladeburnerAccess("getTeamSize");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
@@ -296,10 +296,10 @@ export function NetscriptBladeburner(
       }
     },
     setTeamSize: function (_type: unknown, _name: unknown, _size: unknown): number {
+      updateRam("setTeamSize");
       const type = helper.string("setTeamSize", "type", _type);
       const name = helper.string("setTeamSize", "name", _name);
       const size = helper.number("setTeamSize", "size", _size);
-      helper.updateDynamicRam("setTeamSize", getRamCost(player, "bladeburner", "setTeamSize"));
       checkBladeburnerAccess("setTeamSize");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
@@ -310,11 +310,8 @@ export function NetscriptBladeburner(
       }
     },
     getCityEstimatedPopulation: function (_cityName: unknown): number {
+      updateRam("getCityEstimatedPopulation");
       const cityName = helper.string("getCityEstimatedPopulation", "cityName", _cityName);
-      helper.updateDynamicRam(
-        "getCityEstimatedPopulation",
-        getRamCost(player, "bladeburner", "getCityEstimatedPopulation"),
-      );
       checkBladeburnerAccess("getCityEstimatedPopulation");
       checkBladeburnerCity("getCityEstimatedPopulation", cityName);
       const bladeburner = player.bladeburner;
@@ -322,8 +319,8 @@ export function NetscriptBladeburner(
       return bladeburner.cities[cityName].popEst;
     },
     getCityCommunities: function (_cityName: unknown): number {
+      updateRam("getCityCommunities");
       const cityName = helper.string("getCityCommunities", "cityName", _cityName);
-      helper.updateDynamicRam("getCityCommunities", getRamCost(player, "bladeburner", "getCityCommunities"));
       checkBladeburnerAccess("getCityCommunities");
       checkBladeburnerCity("getCityCommunities", cityName);
       const bladeburner = player.bladeburner;
@@ -331,8 +328,8 @@ export function NetscriptBladeburner(
       return bladeburner.cities[cityName].comms;
     },
     getCityChaos: function (_cityName: unknown): number {
+      updateRam("getCityChaos");
       const cityName = helper.string("getCityChaos", "cityName", _cityName);
-      helper.updateDynamicRam("getCityChaos", getRamCost(player, "bladeburner", "getCityChaos"));
       checkBladeburnerAccess("getCityChaos");
       checkBladeburnerCity("getCityChaos", cityName);
       const bladeburner = player.bladeburner;
@@ -340,15 +337,15 @@ export function NetscriptBladeburner(
       return bladeburner.cities[cityName].chaos;
     },
     getCity: function (): string {
-      helper.updateDynamicRam("getCity", getRamCost(player, "bladeburner", "getCity"));
+      updateRam("getCity");
       checkBladeburnerAccess("getCityChaos");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.city;
     },
     switchCity: function (_cityName: unknown): boolean {
+      updateRam("switchCity");
       const cityName = helper.string("switchCity", "cityName", _cityName);
-      helper.updateDynamicRam("switchCity", getRamCost(player, "bladeburner", "switchCity"));
       checkBladeburnerAccess("switchCity");
       checkBladeburnerCity("switchCity", cityName);
       const bladeburner = player.bladeburner;
@@ -357,21 +354,21 @@ export function NetscriptBladeburner(
       return true;
     },
     getStamina: function (): [number, number] {
-      helper.updateDynamicRam("getStamina", getRamCost(player, "bladeburner", "getStamina"));
+      updateRam("getStamina");
       checkBladeburnerAccess("getStamina");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return [bladeburner.stamina, bladeburner.maxStamina];
     },
     joinBladeburnerFaction: function (): boolean {
-      helper.updateDynamicRam("joinBladeburnerFaction", getRamCost(player, "bladeburner", "joinBladeburnerFaction"));
+      updateRam("joinBladeburnerFaction");
       checkBladeburnerAccess("joinBladeburnerFaction", true);
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       return bladeburner.joinBladeburnerFactionNetscriptFn(workerScript);
     },
     joinBladeburnerDivision: function (): boolean {
-      helper.updateDynamicRam("joinBladeburnerDivision", getRamCost(player, "bladeburner", "joinBladeburnerDivision"));
+      updateRam("joinBladeburnerDivision");
       if (player.bitNodeN === 7 || player.sourceFileLvl(7) > 0) {
         if (player.bitNodeN === 8) {
           return false;
@@ -399,7 +396,7 @@ export function NetscriptBladeburner(
       return false;
     },
     getBonusTime: function (): number {
-      helper.updateDynamicRam("getBonusTime", getRamCost(player, "bladeburner", "getBonusTime"));
+      updateRam("getBonusTime");
       checkBladeburnerAccess("getBonusTime");
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");

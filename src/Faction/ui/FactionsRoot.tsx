@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import { Box, Button, Container, Paper, TableBody, TableRow, Typography } from "@mui/material";
 
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Table, TableCell } from "../../ui/React/Table";
 import { IRouter } from "../../ui/Router";

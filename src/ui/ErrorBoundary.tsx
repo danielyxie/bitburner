@@ -17,7 +17,7 @@ interface IState {
 }
 
 export class ErrorBoundary extends React.Component<IProps, IState> {
-  state: IState
+  state: IState;
 
   constructor(props: IProps) {
     super(props);
@@ -25,7 +25,7 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
   }
 
   reset(): void {
-    this.setState( { hasError: false } as IState);
+    this.setState({ hasError: false } as IState);
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
@@ -47,12 +47,18 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
         }
       }
 
-      return <RecoveryRoot router={this.props.router} softReset={this.props.softReset}
-        errorData={errorData} resetError={() => this.reset()} />;
+      return (
+        <RecoveryRoot
+          router={this.props.router}
+          softReset={this.props.softReset}
+          errorData={errorData}
+          resetError={() => this.reset()}
+        />
+      );
     }
     return this.props.children;
   }
   static getDerivedStateFromError(error: Error): IState {
-    return { hasError: true, error};
+    return { hasError: true, error };
   }
 }

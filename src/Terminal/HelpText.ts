@@ -65,10 +65,10 @@ const TemplatedHelpTexts: IMap<(command: string) => string[]> = {
       ` `,
       `    ${command} test.*`,
       `    ${command} /my-dir/*.js`,
-      ` `
-    ]
-  }
-}
+      ` `,
+    ];
+  },
+};
 
 export const HelpTexts: IMap<string[]> = {
   alias: [
@@ -263,7 +263,10 @@ export const HelpTexts: IMap<string[]> = {
     " ",
   ],
   home: [
-    "Usage: home", " ", "Connect to your home computer. This will work no matter what server you are currently connected to.", " ",
+    "Usage: home",
+    " ",
+    "Connect to your home computer. This will work no matter what server you are currently connected to.",
+    " ",
   ],
   hostname: ["Usage: hostname", " ", "Prints the hostname of the current server", " "],
   kill: [
@@ -354,7 +357,7 @@ export const HelpTexts: IMap<string[]> = {
     "    mv myScript.js myOldScript.js",
     " ",
   ],
-  nano: TemplatedHelpTexts.scriptEditor('nano'),
+  nano: TemplatedHelpTexts.scriptEditor("nano"),
   ps: ["Usage: ps", " ", "Prints all scripts that are running on the current server", " "],
   rm: [
     "Usage: rm [file]",
@@ -457,7 +460,7 @@ export const HelpTexts: IMap<string[]> = {
     "It is not necessary to differentiate between global and non-global aliases when using 'unalias'",
     " ",
   ],
-  vim: TemplatedHelpTexts.scriptEditor('vim'),
+  vim: TemplatedHelpTexts.scriptEditor("vim"),
   weaken: [
     "Usage: weaken",
     " ",
