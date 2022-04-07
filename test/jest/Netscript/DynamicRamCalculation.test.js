@@ -94,7 +94,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
         runPotentiallyAsyncFunction(curr, ...args);
         runPotentiallyAsyncFunction(curr, ...args);
         runPotentiallyAsyncFunction(curr, ...args);
-      } catch (e) { }
+      } catch (e) {}
     } else {
       throw new Error(`Invalid function specified: [${fnDesc}]`);
     }
@@ -160,7 +160,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
         runPotentiallyAsyncFunction(curr);
         runPotentiallyAsyncFunction(curr);
         runPotentiallyAsyncFunction(curr);
-      } catch (e) { }
+      } catch (e) {}
     } else {
       throw new Error(`Invalid function specified: [${fnDesc}]`);
     }
@@ -293,7 +293,7 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
 
     it("exec()", async function () {
       const f = ["exec"];
-      jest.spyOn(console, "log").mockImplementation(() => { }); // eslint-disable-line
+      jest.spyOn(console, "log").mockImplementation(() => {}); // eslint-disable-line
       await testNonzeroDynamicRamCost(f);
     });
 

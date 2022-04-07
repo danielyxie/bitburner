@@ -132,8 +132,6 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
     });
   });
 
-
-
   describe("Functions that can be confused with NS functions", function () {
     it("Function 'get' that can be confused with Stanek.get", async function () {
       const code = `
@@ -170,8 +168,6 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       expectCost(calculated, 0);
     });
   });
-
-
 
   describe("Single files with non-core NS functions", function () {
     it("Hacknet NS function with a cost from namespace", async function () {
@@ -330,7 +326,5 @@ describe("Parsing NetScript code to work out static RAM costs", function () {
       const calculated = (await calculateRamUsage(Player, code, [lib])).cost;
       expectCost(calculated, GrowCost);
     });
-
   });
-
 });
