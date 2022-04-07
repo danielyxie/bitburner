@@ -6,6 +6,7 @@ import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { random } from "../utils";
 import { interpolate } from "./Difficulty";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 interface Difficulty {
   [key: string]: number;
@@ -27,7 +28,7 @@ const difficulties: {
   Impossible: { timer: 4000, wiresmin: 9, wiresmax: 9, rules: 4 },
 };
 
-const types = ["|", ".", "/", "-", "█", "#"];
+const types = [KEY.PIPE, KEY.DOT, KEY.FORWARD_SLASH, KEY.HYPHEN, "█", KEY.HASH];
 
 const colors = ["red", "#FFC107", "blue", "white"];
 
@@ -61,6 +62,10 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
   const [cutWires, setCutWires] = useState(new Array(wires.length).fill(false));
   const [questions] = useState(generateQuestion(wires, difficulty));
 
+  function checkWire(wireNum: number): boolean {
+    return !questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1));
+  }
+
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     const wireNum = parseInt(event.key);
@@ -69,7 +74,7 @@ export function WireCuttingGame(props: IMinigameProps): React.ReactElement {
     setCutWires((old) => {
       const next = [...old];
       next[wireNum - 1] = true;
-      if (!questions.some((q) => q.shouldCut(wires[wireNum - 1], wireNum - 1))) {
+      if (checkWire(wireNum)) {
         props.onFailure();
       }
 

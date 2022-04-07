@@ -1,4 +1,4 @@
-import { FactionNames } from '../../Faction/data/FactionNames';
+import { FactionNames } from "../../Faction/data/FactionNames";
 export const PowerMultiplier: {
   [key: string]: number | undefined;
 } = {

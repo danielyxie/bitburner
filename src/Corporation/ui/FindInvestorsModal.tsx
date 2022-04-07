@@ -17,7 +17,11 @@ interface IProps {
 export function FindInvestorsModal(props: IProps): React.ReactElement {
   const corporation = useCorporation();
   const val = corporation.determineValuation();
-  if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length) return <></>;
+  if (
+    corporation.fundingRound >= CorporationConstants.FundingRoundShares.length ||
+    corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length
+  )
+    return <></>;
   const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
   const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
   const funding = val * percShares * roundMultiplier;

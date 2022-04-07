@@ -15,19 +15,20 @@ const debug = process.argv.includes("--debug");
 
 async function createWindow(killall) {
   const setStopProcessHandler = global.app_handlers.stopProcess;
+  app.setAppUserModelId("Bitburner");
 
   let icon;
-  if (process.platform == 'linux') {
-    icon = path.join(__dirname, 'icon.png');
+  if (process.platform == "linux") {
+    icon = path.join(__dirname, "icon.png");
   }
 
-  const tracker = windowTracker('main');
+  const tracker = windowTracker("main");
   const window = new BrowserWindow({
     icon,
     show: false,
     backgroundThrottling: false,
     backgroundColor: "#000000",
-    title: 'Bitburner',
+    title: "Bitburner",
     x: tracker.state.x,
     y: tracker.state.y,
     width: tracker.state.width,
@@ -36,7 +37,7 @@ async function createWindow(killall) {
     minHeight: 400,
     webPreferences: {
       nativeWindowOpen: true,
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, "preload.js"),
     },
   });
 
@@ -51,12 +52,12 @@ async function createWindow(killall) {
 
   window.webContents.on("new-window", async function (e, url) {
     // Let's make sure sure we have a proper url
-    let parsedUrl
+    let parsedUrl;
     try {
       parsedUrl = new URL(url);
     } catch (_) {
       // This is an invalid url, let's just do nothing
-      log.warn(`Invalid url found: ${url}`)
+      log.warn(`Invalid url found: ${url}`);
       e.preventDefault();
       return;
     }
@@ -73,11 +74,13 @@ async function createWindow(killall) {
 
       if (!isChild) {
         // If we're not relative to our app's path let's abort
-        log.warn(`Requested path ${filePath.dir}${path.sep}${filePath.base} is not relative to the app: ${appPath.dir}${path.sep}${appPath.base}`)
+        log.warn(
+          `Requested path ${filePath.dir}${path.sep}${filePath.base} is not relative to the app: ${appPath.dir}${path.sep}${appPath.base}`,
+        );
         e.preventDefault();
       } else if (!fileExists) {
         // If the file does not exist let's abort
-        log.warn(`Requested path ${filePath.dir}${path.sep}${filePath.base} does not exist`)
+        log.warn(`Requested path ${filePath.dir}${path.sep}${filePath.base} does not exist`);
         e.preventDefault();
       }
 
@@ -89,7 +92,7 @@ async function createWindow(killall) {
       let urlToOpen = parsedUrl.toString();
       if (parsedUrl.search) {
         log.log(`Cannot open a path with parameters: ${parsedUrl.search}`);
-        urlToOpen = urlToOpen.replace(parsedUrl.search, '');
+        urlToOpen = urlToOpen.replace(parsedUrl.search, "");
         // It would be possible to launch an URL with parameter using this, but it would mess up the process again...
         // const escapedUri = parsedUrl.href.replace('&', '^&');
         // cp.spawn("cmd.exe", ["/c", "start", escapedUri], { detached: true, stdio: "ignore" });

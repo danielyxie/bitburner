@@ -235,7 +235,7 @@ export function Root(props: IProps): React.ReactElement {
           MonacoVim.VimMode.Vim.mapCommand("gT", "action", "prevTabs", {}, { context: "normal" });
           editor.focus();
         });
-      } catch { }
+      } catch {}
     } else if (!options.vim) {
       // Whem vim mode is disabled
       vimEditor?.dispose();
@@ -481,7 +481,7 @@ export function Root(props: IProps): React.ReactElement {
     }
     try {
       infLoop(newCode);
-    } catch (err) { }
+    } catch (err) {}
   }
 
   function saveScript(scriptToSave: OpenScript): void {
@@ -794,11 +794,11 @@ export function Root(props: IProps): React.ReactElement {
     setFilter(event.target.value);
   }
   function handleExpandSearch(): void {
-    setFilter("")
-    setSearchExpanded(!searchExpanded)
+    setFilter("");
+    setSearchExpanded(!searchExpanded);
   }
   const filteredOpenScripts = Object.values(openScripts).filter(
-    (script) => (script.hostname.includes(filter) || script.fileName.includes(filter))
+    (script) => script.hostname.includes(filter) || script.fileName.includes(filter),
   );
 
   // Toolbars are roughly 112px:
@@ -835,7 +835,7 @@ export function Root(props: IProps): React.ReactElement {
                 }}
               >
                 <Tooltip title={"Search Open Scripts"}>
-                  {searchExpanded ?
+                  {searchExpanded ? (
                     <TextField
                       value={filter}
                       onChange={handleFilterChange}
@@ -843,33 +843,41 @@ export function Root(props: IProps): React.ReactElement {
                       InputProps={{
                         startAdornment: <SearchIcon />,
                         spellCheck: false,
-                        endAdornment: <CloseIcon onClick={handleExpandSearch} />
+                        endAdornment: <CloseIcon onClick={handleExpandSearch} />,
                       }}
-                    /> : <Button onClick={handleExpandSearch} ><SearchIcon /></Button>}
+                    />
+                  ) : (
+                    <Button onClick={handleExpandSearch}>
+                      <SearchIcon />
+                    </Button>
+                  )}
                 </Tooltip>
                 {filteredOpenScripts.map(({ fileName, hostname }, index) => {
-                  const editingCurrentScript = currentScript?.fileName === openScripts[index].fileName &&
-                    currentScript?.hostname === openScripts[index].hostname
-                  const externalScript = hostname !== 'home'
-                  const colorProps = editingCurrentScript ? {
-                    background: Settings.theme.button,
-                    borderColor: Settings.theme.button,
-                    color: Settings.theme.primary
-                  } : {
-                    background: Settings.theme.backgroundsecondary,
-                    borderColor: Settings.theme.backgroundsecondary,
-                    color: Settings.theme.secondary
-                  }
+                  const editingCurrentScript =
+                    currentScript?.fileName === filteredOpenScripts[index].fileName &&
+                    currentScript?.hostname === filteredOpenScripts[index].hostname;
+                  const externalScript = hostname !== "home";
+                  const colorProps = editingCurrentScript
+                    ? {
+                        background: Settings.theme.button,
+                        borderColor: Settings.theme.button,
+                        color: Settings.theme.primary,
+                      }
+                    : {
+                        background: Settings.theme.backgroundsecondary,
+                        borderColor: Settings.theme.backgroundsecondary,
+                        color: Settings.theme.secondary,
+                      };
 
                   if (externalScript) {
-                    colorProps.color = Settings.theme.info
+                    colorProps.color = Settings.theme.info;
                   }
                   const iconButtonStyle = {
                     maxWidth: `${tabIconWidth}px`,
                     minWidth: `${tabIconWidth}px`,
                     minHeight: "38.5px",
                     maxHeight: "38.5px",
-                    ...colorProps
+                    ...colorProps,
                   };
 
                   const scriptTabText = `${hostname}:~/${fileName} ${dirty(index)}`;
@@ -902,7 +910,7 @@ export function Root(props: IProps): React.ReactElement {
                               }}
                               style={{
                                 maxWidth: `${tabTextWidth}px`,
-                                minHeight: '38.5px',
+                                minHeight: "38.5px",
                                 overflow: "hidden",
                                 ...colorProps,
                               }}

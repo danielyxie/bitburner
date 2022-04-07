@@ -1,12 +1,6 @@
 import React from "react";
 
-import {
-  Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@mui/material";
+import { Typography, Table, TableBody, TableCell, TableRow } from "@mui/material";
 
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { Settings } from "../../../Settings/Settings";
@@ -28,29 +22,69 @@ export function StatsElement(props: IProps): React.ReactElement {
   const classes = useStyles();
 
   return (
-    <Table sx={{ display: 'table', mb: 1, width: '100%' }}>
+    <Table sx={{ display: "table", mb: 1, width: "100%" }}>
       <TableBody>
         <StatsRow name="City" color={Settings.theme.primary} data={{ content: props.sleeve.city }} />
-        <StatsRow name="HP" color={Settings.theme.hp}
-          data={{ content: `${numeralWrapper.formatHp(props.sleeve.hp)} / ${numeralWrapper.formatHp(props.sleeve.max_hp)}` }}
+        <StatsRow
+          name="HP"
+          color={Settings.theme.hp}
+          data={{
+            content: `${numeralWrapper.formatHp(props.sleeve.hp)} / ${numeralWrapper.formatHp(props.sleeve.max_hp)}`,
+          }}
         />
-        <StatsRow name="Hacking" color={Settings.theme.hack} data={{ level: props.sleeve.hacking, exp: props.sleeve.hacking_exp }} />
-        <StatsRow name="Strength" color={Settings.theme.combat} data={{ level: props.sleeve.strength, exp: props.sleeve.strength_exp }} />
-        <StatsRow name="Defense" color={Settings.theme.combat} data={{ level: props.sleeve.defense, exp: props.sleeve.defense_exp }} />
-        <StatsRow name="Dexterity" color={Settings.theme.combat} data={{ level: props.sleeve.dexterity, exp: props.sleeve.dexterity_exp }} />
-        <StatsRow name="Agility" color={Settings.theme.combat} data={{ level: props.sleeve.agility, exp: props.sleeve.agility_exp }} />
-        <StatsRow name="Charisma" color={Settings.theme.cha} data={{ level: props.sleeve.charisma, exp: props.sleeve.charisma_exp }} />
+        <StatsRow
+          name="Hacking"
+          color={Settings.theme.hack}
+          data={{ level: props.sleeve.hacking, exp: props.sleeve.hacking_exp }}
+        />
+        <StatsRow
+          name="Strength"
+          color={Settings.theme.combat}
+          data={{ level: props.sleeve.strength, exp: props.sleeve.strength_exp }}
+        />
+        <StatsRow
+          name="Defense"
+          color={Settings.theme.combat}
+          data={{ level: props.sleeve.defense, exp: props.sleeve.defense_exp }}
+        />
+        <StatsRow
+          name="Dexterity"
+          color={Settings.theme.combat}
+          data={{ level: props.sleeve.dexterity, exp: props.sleeve.dexterity_exp }}
+        />
+        <StatsRow
+          name="Agility"
+          color={Settings.theme.combat}
+          data={{ level: props.sleeve.agility, exp: props.sleeve.agility_exp }}
+        />
+        <StatsRow
+          name="Charisma"
+          color={Settings.theme.cha}
+          data={{ level: props.sleeve.charisma, exp: props.sleeve.charisma_exp }}
+        />
         <TableRow>
           <TableCell classes={{ root: classes.cellNone }}>
             <br />
           </TableCell>
         </TableRow>
-        <StatsRow name="Shock" color={Settings.theme.primary} data={{ content: numeralWrapper.formatSleeveShock(100 - props.sleeve.shock) }} />
-        <StatsRow name="Sync" color={Settings.theme.primary} data={{ content: numeralWrapper.formatSleeveSynchro(props.sleeve.sync) }} />
-        <StatsRow name="Memory" color={Settings.theme.primary} data={{ content: numeralWrapper.formatSleeveMemory(props.sleeve.memory) }} />
+        <StatsRow
+          name="Shock"
+          color={Settings.theme.primary}
+          data={{ content: numeralWrapper.formatSleeveShock(100 - props.sleeve.shock) }}
+        />
+        <StatsRow
+          name="Sync"
+          color={Settings.theme.primary}
+          data={{ content: numeralWrapper.formatSleeveSynchro(props.sleeve.sync) }}
+        />
+        <StatsRow
+          name="Memory"
+          color={Settings.theme.primary}
+          data={{ content: numeralWrapper.formatSleeveMemory(props.sleeve.memory) }}
+        />
       </TableBody>
     </Table>
-  )
+  );
 }
 
 export function EarningsElement(props: IProps): React.ReactElement {
@@ -60,7 +94,12 @@ export function EarningsElement(props: IProps): React.ReactElement {
   let data: any[][] = [];
   if (props.sleeve.currentTask === SleeveTaskType.Crime) {
     data = [
-      [`Money`, <><Money money={parseFloat(props.sleeve.currentTaskLocation)} /> (on success)</>],
+      [
+        `Money`,
+        <>
+          <Money money={parseFloat(props.sleeve.currentTaskLocation)} /> (on success)
+        </>,
+      ],
       [`Hacking Exp`, `${numeralWrapper.formatExp(props.sleeve.gainRatesForTask.hack)} (2x on success)`],
       [`Strength Exp`, `${numeralWrapper.formatExp(props.sleeve.gainRatesForTask.str)} (2x on success)`],
       [`Defense Exp`, `${numeralWrapper.formatExp(props.sleeve.gainRatesForTask.def)} (2x on success)`],
@@ -85,13 +124,11 @@ export function EarningsElement(props: IProps): React.ReactElement {
   }
 
   return (
-    <Table sx={{ display: 'table', mb: 1, width: '100%', lineHeight: 0 }}>
+    <Table sx={{ display: "table", mb: 1, width: "100%", lineHeight: 0 }}>
       <TableBody>
         <TableRow>
           <TableCell classes={{ root: classes.cellNone }}>
-            <Typography variant='h6'>
-              Earnings
-            </Typography>
+            <Typography variant="h6">Earnings</Typography>
           </TableCell>
         </TableRow>
         {data.map(([a, b]) => (
@@ -106,5 +143,5 @@ export function EarningsElement(props: IProps): React.ReactElement {
         ))}
       </TableBody>
     </Table>
-  )
+  );
 }

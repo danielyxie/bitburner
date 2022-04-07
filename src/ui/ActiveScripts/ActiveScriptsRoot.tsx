@@ -31,7 +31,7 @@ export function ActiveScriptsRoot(props: IProps): React.ReactElement {
   }
   return (
     <>
-      <Tabs variant="fullWidth" value={tab} onChange={handleChange} sx={{ minWidth: 'fit-content', maxWidth: '25%' }}>
+      <Tabs variant="fullWidth" value={tab} onChange={handleChange} sx={{ minWidth: "fit-content", maxWidth: "25%" }}>
         <Tab label={"Active"} value={"active"} />
         <Tab label={"Recently Killed"} value={"recent"} />
       </Tabs>
