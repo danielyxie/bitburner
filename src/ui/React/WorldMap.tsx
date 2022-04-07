@@ -14,13 +14,13 @@ interface ICityProps {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-      travel: {
-        color: theme.colors.white,
-        lineHeight: "1em",
-        whiteSpace: "pre",
-        cursor: "pointer"
-      },
-    })
+    travel: {
+      color: theme.colors.white,
+      lineHeight: "1em",
+      whiteSpace: "pre",
+      cursor: "pointer",
+    },
+  }),
 );
 
 function City(props: ICityProps): React.ReactElement {
@@ -28,10 +28,7 @@ function City(props: ICityProps): React.ReactElement {
   if (props.city !== props.currentCity) {
     return (
       <Tooltip title={<Typography>{props.city}</Typography>}>
-        <span
-          onClick={() => props.onTravel(props.city)}
-          className={classes.travel}
-        >
+        <span onClick={() => props.onTravel(props.city)} className={classes.travel}>
           {props.city[0]}
         </span>
       </Tooltip>

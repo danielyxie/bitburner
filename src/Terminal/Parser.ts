@@ -1,3 +1,4 @@
+import { KEY } from "../utils/helpers/keyCodes";
 import { substituteAliases } from "../Alias";
 // Helper function that checks if an argument (which is a string) is a valid number
 function isNumber(str: string): boolean {
@@ -55,11 +56,11 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
     }
 
     const c = command.charAt(i);
-    if (c === '"') {
+    if (c === KEY.DOUBLE_QUOTE) {
       // Double quotes
-      if (!escaped && prevChar === " ") {
-        const endQuote = command.indexOf('"', i + 1);
-        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === " ")) {
+      if (!escaped && prevChar === KEY.SPACE) {
+        const endQuote = command.indexOf(KEY.DOUBLE_QUOTE, i + 1);
+        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === KEY.SPACE)) {
           args.push(command.substr(i + 1, endQuote - i - 1));
           if (endQuote === command.length - 1) {
             start = i = endQuote + 1;
@@ -69,15 +70,15 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
           continue;
         }
       } else if (inQuote === ``) {
-          inQuote = `"`;
-        } else if (inQuote === `"`) {
-          inQuote = ``;
-        }
-    } else if (c === "'") {
+        inQuote = KEY.DOUBLE_QUOTE;
+      } else if (inQuote === KEY.DOUBLE_QUOTE) {
+        inQuote = ``;
+      }
+    } else if (c === KEY.QUOTE) {
       // Single quotes, same thing as above
-      if (!escaped && prevChar === " ") {
-        const endQuote = command.indexOf("'", i + 1);
-        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === " ")) {
+      if (!escaped && prevChar === KEY.SPACE) {
+        const endQuote = command.indexOf(KEY.QUOTE, i + 1);
+        if (endQuote !== -1 && (endQuote === command.length - 1 || command.charAt(endQuote + 1) === KEY.SPACE)) {
           args.push(command.substr(i + 1, endQuote - i - 1));
           if (endQuote === command.length - 1) {
             start = i = endQuote + 1;
@@ -87,11 +88,11 @@ export function ParseCommand(command: string): (string | number | boolean)[] {
           continue;
         }
       } else if (inQuote === ``) {
-          inQuote = `'`;
-        } else if (inQuote === `'`) {
-          inQuote = ``;
-        }
-    } else if (c === " " && inQuote === ``) {
+        inQuote = KEY.QUOTE;
+      } else if (inQuote === KEY.QUOTE) {
+        inQuote = ``;
+      }
+    } else if (c === KEY.SPACE && inQuote === ``) {
       const arg = command.substr(start, i - start);
 
       // If this is a number, convert it from a string to number

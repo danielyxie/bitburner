@@ -21,11 +21,9 @@ export function TaskSelector(props: IProps): React.ReactElement {
   const gang = useGang();
   const [currentTask, setCurrentTask] = useState(props.member.task);
 
-  const contextMember = gang.members.find(member => member.name == props.member.name)
-  if (contextMember &&
-    contextMember.task != currentTask
-  ) {
-    setCurrentTask(contextMember.task)
+  const contextMember = gang.members.find((member) => member.name == props.member.name);
+  if (contextMember && contextMember.task != currentTask) {
+    setCurrentTask(contextMember.task);
   }
 
   function onChange(event: SelectChangeEvent<string>): void {
@@ -39,7 +37,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
 
   return (
     <Box>
-      <Select onChange={onChange} value={currentTask} sx={{ width: '100%' }}>
+      <Select onChange={onChange} value={currentTask} sx={{ width: "100%" }}>
         <MenuItem key={0} value={"Unassigned"}>
           Unassigned
         </MenuItem>

@@ -1,10 +1,6 @@
 import React from "react";
 
-import {
-  Typography,
-  TableCell,
-  TableRow,
-} from "@mui/material";
+import { Typography, TableCell, TableRow } from "@mui/material";
 
 import { numeralWrapper } from "../numeralFormat";
 import { formatNumber } from "../../utils/StringHelperFunctions";
@@ -40,10 +36,8 @@ export const StatsRow = ({ name, color, classes = useStyles(), data }: IProps): 
         <Typography style={{ color: color }}>{name}</Typography>
       </TableCell>
       <TableCell align="right" classes={{ root: classes.cellNone }}>
-        <Typography style={{ color: color }}>
-          {content}
-        </Typography>
+        <Typography style={{ color: color }}>{content}</Typography>
       </TableCell>
     </TableRow>
-  )
-}
+  );
+};

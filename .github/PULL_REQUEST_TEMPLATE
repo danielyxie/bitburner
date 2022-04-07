@@ -9,3 +9,6 @@
 
 - Include how it was tested
 - Include screenshot / gif (if possible)
+
+
+Make sure you run `npm run format` and `npm run lint` before pushing.

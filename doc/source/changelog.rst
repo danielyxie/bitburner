@@ -3,6 +3,21 @@
 Changelog
 =========
 
+v1.6.3 - 2022-04-01 Few stanek fixes
+------------------------------------
+
+  Stanek Gift 
+
+* Has a minimum size of 2x3
+* Active Fragment property 'avgCharge' renamed to 'highestCharge'
+* Formula for fragment effect updated to make 561% more sense. 
+  Now you can charge to your heart content.
+* Logs for the 'chargeFragment' function updated.
+
+  Misc. 
+
+* Nerf noodle bar.
+
 v1.6.0 - 2022-03-29 Grafting
 ----------------------------
 

@@ -25,10 +25,10 @@ export function RecruitButton(props: IProps): React.ReactElement {
     const respect = gang.getRespectNeededToRecruitMember();
     return (
       <Box display="flex" alignItems="center" sx={{ mx: 1 }}>
-        <Button disabled>
-          Recruit Gang Member
-        </Button>
-        <Typography sx={{ ml: 1 }}>{numeralWrapper.formatRespect(respect)} respect needed to recruit next member</Typography>
+        <Button disabled>Recruit Gang Member</Button>
+        <Typography sx={{ ml: 1 }}>
+          {numeralWrapper.formatRespect(respect)} respect needed to recruit next member
+        </Typography>
       </Box>
     );
   }
