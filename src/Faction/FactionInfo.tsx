@@ -85,8 +85,6 @@ export class FactionInfo {
   }
 }
 
-
-
 /**
  * A map of all factions and associated info to them.
  */
@@ -143,8 +141,9 @@ export const FactionInfos: IMap<FactionInfo> = {
   [FactionNames.ECorp]: new FactionInfo(
     (
       <>
-        {FactionNames.ECorp}'s mission is simple: to connect the world of today with the technology of tomorrow. With our wide range of
-        Internet-related software and commercial hardware, {FactionNames.ECorp} makes the world's information universally accessible.
+        {FactionNames.ECorp}'s mission is simple: to connect the world of today with the technology of tomorrow. With
+        our wide range of Internet-related software and commercial hardware, {FactionNames.ECorp} makes the world's
+        information universally accessible.
       </>
     ),
     [],
@@ -159,12 +158,13 @@ export const FactionInfos: IMap<FactionInfo> = {
   [FactionNames.MegaCorp]: new FactionInfo(
     (
       <>
-        {FactionNames.MegaCorp} does what no other dares to do. We imagine. We create. We invent. We create what others have never even
-        dreamed of. Our work fills the world's needs for food, water, power, and transportation on an unprecedented
-        scale, in ways that no other company can.
+        {FactionNames.MegaCorp} does what no other dares to do. We imagine. We create. We invent. We create what others
+        have never even dreamed of. Our work fills the world's needs for food, water, power, and transportation on an
+        unprecedented scale, in ways that no other company can.
         <br />
         <br />
-        In our labs and factories and on the ground with customers, {FactionNames.MegaCorp} is ushering in a new era for the world.
+        In our labs and factories and on the ground with customers, {FactionNames.MegaCorp} is ushering in a new era for
+        the world.
       </>
     ),
     [],
@@ -194,7 +194,16 @@ export const FactionInfos: IMap<FactionInfo> = {
     true,
   ),
 
-  [FactionNames.BladeIndustries]: new FactionInfo(<>Augmentation is Salvation.</>, [], true, true, true, true, false, true),
+  [FactionNames.BladeIndustries]: new FactionInfo(
+    <>Augmentation is Salvation.</>,
+    [],
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+  ),
 
   [FactionNames.NWO]: new FactionInfo(
     (
@@ -486,12 +495,39 @@ export const FactionInfos: IMap<FactionInfo> = {
     false,
   ),
 
-  [FactionNames.SlumSnakes]: new FactionInfo(<>{FactionNames.SlumSnakes} rule!</>, [], false, false, true, true, false, false),
+  [FactionNames.SlumSnakes]: new FactionInfo(
+    <>{FactionNames.SlumSnakes} rule!</>,
+    [],
+    false,
+    false,
+    true,
+    true,
+    false,
+    false,
+  ),
 
   // Earlygame factions - factions the player will prestige with early on that don't belong in other categories.
-  [FactionNames.Netburners]: new FactionInfo(<>{"~~//*>H4CK||3T 8URN3R5**>?>\\~~"}</>, [], true, true, false, false, false, false),
+  [FactionNames.Netburners]: new FactionInfo(
+    <>{"~~//*>H4CK||3T 8URN3R5**>?>\\~~"}</>,
+    [],
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+  ),
 
-  [FactionNames.TianDiHui]: new FactionInfo(<>Obey Heaven and work righteously.</>, [], true, true, false, true, false, false),
+  [FactionNames.TianDiHui]: new FactionInfo(
+    <>Obey Heaven and work righteously.</>,
+    [],
+    true,
+    true,
+    false,
+    true,
+    false,
+    false,
+  ),
 
   [FactionNames.CyberSec]: new FactionInfo(
     (
@@ -517,7 +553,8 @@ export const FactionInfos: IMap<FactionInfo> = {
         It's too bad they won't live. But then again, who does?
         <br />
         <br />
-        Note that for this faction, reputation can only be gained through {FactionNames.Bladeburners} actions. Completing {FactionNames.Bladeburners}
+        Note that for this faction, reputation can only be gained through {FactionNames.Bladeburners} actions.
+        Completing {FactionNames.Bladeburners}
         contracts/operations will increase your reputation.
       </>
     ),

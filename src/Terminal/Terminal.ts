@@ -72,6 +72,7 @@ import { vim } from "./commands/vim";
 import { weaken } from "./commands/weaken";
 import { wget } from "./commands/wget";
 import { hash } from "../hash/hash";
+import { apr1 } from "./commands/apr1";
 
 export class Terminal implements ITerminal {
   // Flags to determine whether the player is currently running a hack or an analyze
@@ -805,6 +806,7 @@ export class Terminal implements ITerminal {
       scp: scp,
       sudov: sudov,
       tail: tail,
+      apr1: apr1,
       top: top,
       unalias: unalias,
       vim: vim,

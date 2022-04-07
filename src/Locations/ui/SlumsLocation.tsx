@@ -114,7 +114,7 @@ export function SlumsLocation(): React.ReactElement {
   const heistChance = Crimes.Heist.successRate(player);
 
   return (
-    <Box sx={{ display: 'grid', width: 'fit-content' }}>
+    <Box sx={{ display: "grid", width: "fit-content" }}>
       <Tooltip title={<>Attempt to shoplift from a low-end retailer</>}>
         <Button onClick={shoplift}>
           Shoplift ({numeralWrapper.formatPercentage(shopliftChance)} chance of success)

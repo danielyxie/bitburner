@@ -167,8 +167,8 @@ SourceFiles["SourceFile10"] = new SourceFile(
   10,
   (
     <>
-      This Source-File unlocks Sleeve technology, and the Grafting API in other BitNodes.
-      Each level of this Source-File also grants you a Duplicate Sleeve
+      This Source-File unlocks Sleeve technology, and the Grafting API in other BitNodes. Each level of this Source-File
+      also grants you a Duplicate Sleeve
     </>
   ),
 );

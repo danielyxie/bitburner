@@ -1,4 +1,4 @@
-import { CityName } from './../../../src/Locations/data/CityNames';
+import { CityName } from "./../../../src/Locations/data/CityNames";
 /* eslint-disable no-await-in-loop */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { jest, describe, expect, test } from "@jest/globals";
