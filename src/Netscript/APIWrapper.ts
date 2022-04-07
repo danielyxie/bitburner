@@ -5,21 +5,27 @@ import type { WorkerScript } from "./WorkerScript";
 import { makeRuntimeRejectMsg } from "../NetscriptEvaluator";
 import { Player } from "../Player";
 
-
 type ExternalFunction = (...args: any[]) => any;
 type ExternalAPI = {
   [string: string]: ExternalAPI | ExternalFunction;
-}
+};
 
-type InternalFunction<F extends (...args: unknown[]) => unknown> = (ctx: NetscriptContext, ...args: unknown[]) => ReturnType<F>;
+type InternalFunction<F extends (...args: unknown[]) => unknown> = (
+  ctx: NetscriptContext,
+  ...args: unknown[]
+) => ReturnType<F>;
 export type InternalAPI<API> = {
-  [Property in keyof API]: API[Property] extends ExternalFunction ? InternalFunction<API[Property]> : API[Property] extends ExternalAPI ? InternalAPI<API[Property]> : never;
-}
+  [Property in keyof API]: API[Property] extends ExternalFunction
+    ? InternalFunction<API[Property]>
+    : API[Property] extends ExternalAPI
+    ? InternalAPI<API[Property]>
+    : never;
+};
 
 type WrappedNetscriptFunction = (...args: unknown[]) => unknown;
 type WrappedNetscriptAPI = {
   [string: string]: WrappedNetscriptAPI | WrappedNetscriptFunction;
-}
+};
 
 export type NetscriptContext = {
   makeRuntimeErrorMsg: (message: string) => string;
@@ -39,7 +45,7 @@ type NetscriptHelpers = {
   checkSingularityAccess: (func: string) => void;
   hack: (hostname: any, manual: any, { threads: requestedThreads, stock }?: any) => Promise<number>;
   getValidPort: (funcName: string, port: any) => IPort;
-}
+};
 
 type WrappedNetscriptHelpers = {
   updateDynamicRam: (ramCost: number) => void;
@@ -47,20 +53,30 @@ type WrappedNetscriptHelpers = {
   string: (argName: string, v: unknown) => string;
   number: (argName: string, v: unknown) => number;
   boolean: (v: unknown) => boolean;
-  getServer: (hostname: string)=> BaseServer;
+  getServer: (hostname: string) => BaseServer;
   checkSingularityAccess: () => void;
   hack: (hostname: any, manual: any, { threads: requestedThreads, stock }?: any) => Promise<number>;
   getValidPort: (port: any) => IPort;
-}
+};
 
-function wrapFunction<T>(helpers: NetscriptHelpers, wrappedAPI: any, workerScript: WorkerScript, func: (ctx: NetscriptContext, ...args: unknown[]) => T, ...tree: string[]): void {
+function wrapFunction<T>(
+  helpers: NetscriptHelpers,
+  wrappedAPI: any,
+  workerScript: WorkerScript,
+  func: (ctx: NetscriptContext, ...args: unknown[]) => T,
+  ...tree: string[]
+): void {
   const functionName = tree.pop();
-  if (typeof functionName !== 'string') {
-    throw makeRuntimeRejectMsg(workerScript, 'Failure occured while wrapping netscript api');
+  if (typeof functionName !== "string") {
+    throw makeRuntimeRejectMsg(workerScript, "Failure occured while wrapping netscript api");
   }
   const ctx = {
-    makeRuntimeErrorMsg: (message: string) => { return helpers.makeRuntimeErrorMsg(functionName, message); },
-    log: (message: () => string) => { workerScript.log(functionName, message); },
+    makeRuntimeErrorMsg: (message: string) => {
+      return helpers.makeRuntimeErrorMsg(functionName, message);
+    },
+    log: (message: () => string) => {
+      workerScript.log(functionName, message);
+    },
     workerScript,
     function: functionName,
     helper: {
@@ -72,8 +88,8 @@ function wrapFunction<T>(helpers: NetscriptHelpers, wrappedAPI: any, workerScrip
       getServer: (hostname: string) => helpers.getServer(hostname, functionName),
       checkSingularityAccess: () => helpers.checkSingularityAccess(functionName),
       hack: helpers.hack,
-      getValidPort: (port: any) => helpers.getValidPort(functionName, port)
-    }
+      getValidPort: (port: any) => helpers.getValidPort(functionName, port),
+    },
   };
   function wrappedFunction(...args: unknown[]): T {
     helpers.updateDynamicRam(ctx.function, getRamCost(Player, ...tree, ctx.function));
@@ -82,20 +98,26 @@ function wrapFunction<T>(helpers: NetscriptHelpers, wrappedAPI: any, workerScrip
   const parent = getNestedProperty(wrappedAPI, ...tree);
   Object.defineProperty(parent, functionName, {
     value: wrappedFunction,
-    writable: true
+    writable: true,
   });
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function wrapAPI(helpers: NetscriptHelpers, wrappedAPI: ExternalAPI, workerScript: WorkerScript, namespace: any, ...tree: string[]): WrappedNetscriptAPI {
-  if (typeof namespace !== 'object') throw new Error('Invalid namespace?');
+export function wrapAPI(
+  helpers: NetscriptHelpers,
+  wrappedAPI: ExternalAPI,
+  workerScript: WorkerScript,
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  namespace: any,
+  ...tree: string[]
+): WrappedNetscriptAPI {
+  if (typeof namespace !== "object") throw new Error("Invalid namespace?");
   for (const property of Object.getOwnPropertyNames(namespace)) {
     switch (typeof namespace[property]) {
-      case 'function': {
+      case "function": {
         wrapFunction(helpers, wrappedAPI, workerScript, namespace[property], ...tree, property);
         break;
       }
-      case 'object': {
+      case "object": {
         wrapAPI(helpers, wrappedAPI, workerScript, namespace[property], ...tree, property);
         break;
       }
@@ -110,8 +132,8 @@ export function wrapAPI(helpers: NetscriptHelpers, wrappedAPI: ExternalAPI, work
 function setNestedProperty(root: any, value: any, ...tree: string[]): any {
   let target = root;
   const key = tree.pop();
-  if (typeof key !== 'string') {
-    throw new Error('Failure occured while wrapping netscript api (setNestedProperty)')
+  if (typeof key !== "string") {
+    throw new Error("Failure occured while wrapping netscript api (setNestedProperty)");
   }
   for (const branch of tree) {
     if (target[branch] === undefined) {

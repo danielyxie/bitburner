@@ -492,7 +492,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const sleeve = NetscriptSleeve(Player, workerScript, helper);
   const extra = NetscriptExtra(Player, workerScript, helper);
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
-  const stanek = wrapAPI(helper, {}, workerScript, NetscriptStanek(Player, workerScript, helper), 'stanek').stanek as unknown as IStanek;
+  const stanek = wrapAPI(helper, {}, workerScript, NetscriptStanek(Player, workerScript, helper), "stanek")
+    .stanek as unknown as IStanek;
   const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
   const codingcontract = NetscriptCodingContract(Player, workerScript, helper);
   const corporation = NetscriptCorporation(Player, workerScript, helper);

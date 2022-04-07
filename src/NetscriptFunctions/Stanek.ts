@@ -9,12 +9,16 @@ import { Fragments, FragmentById } from "../CotMG/Fragment";
 import {
   Fragment as IFragment,
   ActiveFragment as IActiveFragment,
-  Stanek as IStanek
+  Stanek as IStanek,
 } from "../ScriptEditor/NetscriptDefinitions";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { NetscriptContext, InternalAPI } from "src/Netscript/APIWrapper";
 
-export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): InternalAPI<IStanek> {
+export function NetscriptStanek(
+  player: IPlayer,
+  workerScript: WorkerScript,
+  helper: INetscriptHelper,
+): InternalAPI<IStanek> {
   function checkStanekAPIAccess(func: string): void {
     if (!player.hasAugmentation(AugmentationNames.StaneksGift1, true)) {
       helper.makeRuntimeErrorMsg(func, "Requires Stanek's Gift installed.");
@@ -60,7 +64,13 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
       ctx.log(() => `Cleared Stanek's Gift.`);
       staneksGift.clear();
     },
-    canPlaceFragment: function (ctx: NetscriptContext, _rootX: unknown, _rootY: unknown, _rotation: unknown, _fragmentId: unknown): boolean {
+    canPlaceFragment: function (
+      ctx: NetscriptContext,
+      _rootX: unknown,
+      _rootY: unknown,
+      _rotation: unknown,
+      _fragmentId: unknown,
+    ): boolean {
       const rootX = ctx.helper.number("rootX", _rootX);
       const rootY = ctx.helper.number("rootY", _rootY);
       const rotation = ctx.helper.number("rotation", _rotation);
@@ -71,7 +81,13 @@ export function NetscriptStanek(player: IPlayer, workerScript: WorkerScript, hel
       const can = staneksGift.canPlace(rootX, rootY, rotation, fragment);
       return can;
     },
-    placeFragment: function (ctx: NetscriptContext, _rootX: unknown, _rootY: unknown, _rotation: unknown, _fragmentId: unknown): boolean {
+    placeFragment: function (
+      ctx: NetscriptContext,
+      _rootX: unknown,
+      _rootY: unknown,
+      _rotation: unknown,
+      _fragmentId: unknown,
+    ): boolean {
       const rootX = ctx.helper.number("rootX", _rootX);
       const rootY = ctx.helper.number("rootY", _rootY);
       const rotation = ctx.helper.number("rotation", _rotation);
