@@ -144,7 +144,7 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
   // Special logic for Congruity Implant
   if (aug.name === AugmentationNames.CongruityImplant && !reapply) {
     Player.entropy = 0;
-    Player.applyEntropy(Player.entropy)
+    Player.applyEntropy(Player.entropy);
   }
 
   // Push onto Player's Augmentation list
