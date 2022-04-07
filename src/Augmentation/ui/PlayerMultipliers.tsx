@@ -1,17 +1,14 @@
 /**
  * React component for displaying the player's multipliers on the Augmentation UI page
  */
+import { Box, Typography, List, ListItemText, ListItem, Paper } from "@mui/material";
 import * as React from "react";
-
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Player } from "../../Player";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Augmentations } from "../Augmentations";
-import { Table, TableCell } from "../../ui/React/Table";
-import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { DoubleArrow } from "@mui/icons-material";
+import { Settings } from "../../Settings/Settings";
 
 function calculateAugmentedStats(): any {
   const augP: any = {};
@@ -25,53 +22,63 @@ function calculateAugmentedStats(): any {
   return augP;
 }
 
-function Improvements({ r, m }: { r: number; m: number }): React.ReactElement {
-  if (r) {
-    return (
-      <>
-        <TableCell key="2">
-          <Typography>&nbsp;{"=>"}&nbsp;</Typography>
-        </TableCell>
-        <TableCell key="3">
-          <Typography>
-            {numeralWrapper.formatPercentage(r)} <BN5Stat base={r} mult={m} />
-          </Typography>
-        </TableCell>
-      </>
-    );
-  }
-  return <></>;
-}
-
-interface IBN5StatsProps {
+interface BitNodeModifiedStatsProps {
   base: number;
   mult: number;
+  color: string;
 }
 
-function BN5Stat(props: IBN5StatsProps): React.ReactElement {
-  if (props.mult === 1) return <></>;
-  return <>({numeralWrapper.formatPercentage(props.base * props.mult)})</>;
-}
+function BitNodeModifiedStats(props: BitNodeModifiedStatsProps): React.ReactElement {
+  if (props.mult === 1)
+    return <Typography color={props.color}>{numeralWrapper.formatPercentage(props.base)}</Typography>;
 
-function MultiplierTable({ rows }: { rows: [string, number, number, number][] }): React.ReactElement {
   return (
-    <Table size="small" padding="none">
-      <TableBody>
-        {rows.map((r: any) => (
-          <TableRow key={r[0]}>
-            <TableCell key="0">
-              <Typography noWrap>{r[0]} multiplier:&nbsp;</Typography>
-            </TableCell>
-            <TableCell key="1" style={{ textAlign: "right" }}>
-              <Typography noWrap>
-                {numeralWrapper.formatPercentage(r[1])} <BN5Stat base={r[1]} mult={r[3]} />
-              </Typography>
-            </TableCell>
-            <Improvements r={r[2]} m={r[3]} />
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <Typography color={props.color}>
+      <span style={{ opacity: 0.5 }}>{numeralWrapper.formatPercentage(props.base)}</span>{" "}
+      {numeralWrapper.formatPercentage(props.base * props.mult)}
+    </Typography>
+  );
+}
+
+interface MultListProps {
+  rows: (string | number)[][];
+  color: string;
+}
+
+function MultiplierList(props: MultListProps): React.ReactElement {
+  return (
+    <List disablePadding>
+      {props.rows.map((data) => {
+        const mult = data[0] as string,
+          value = data[1] as number,
+          improved = data[2] as number | null,
+          bnMult = data[3] as number;
+
+        if (improved) {
+          return (
+            <ListItem key={mult} disableGutters sx={{ py: 0 }}>
+              <ListItemText
+                sx={{ my: 0.1 }}
+                primary={
+                  <Typography color={props.color}>
+                    <b>{mult}</b>
+                  </Typography>
+                }
+                secondary={
+                  <span style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
+                    <BitNodeModifiedStats base={value} mult={bnMult} color={props.color} />
+                    <DoubleArrow fontSize="small" color="success" sx={{ mb: 1, mx: 1 }} />
+                    <BitNodeModifiedStats base={improved} mult={bnMult} color={Settings.theme.success} />
+                  </span>
+                }
+                disableTypography
+              />
+            </ListItem>
+          );
+        }
+        return <></>;
+      })}
+    </List>
   );
 }
 
@@ -82,7 +89,7 @@ export function PlayerMultipliers(): React.ReactElement {
     if (!Player.canAccessBladeburner()) return <></>;
     return (
       <>
-        <MultiplierTable
+        <MultiplierList
           rows={[
             [
               "Bladeburner Success Chance",
@@ -109,6 +116,7 @@ export function PlayerMultipliers(): React.ReactElement {
               1,
             ],
           ]}
+          color={Settings.theme.primary}
         />
         <br />
       </>
@@ -116,20 +124,21 @@ export function PlayerMultipliers(): React.ReactElement {
   }
 
   return (
-    <>
-      <Typography variant="h4">Multipliers</Typography>
-      <Box mx={2}>
-        <MultiplierTable
+    <Paper sx={{ p: 1, maxHeight: 400, overflowY: "scroll" }}>
+      <Typography variant="h6">Multipliers</Typography>
+      <Box>
+        <MultiplierList
           rows={[
             ["Hacking Chance ", Player.hacking_chance_mult, Player.hacking_chance_mult * mults.hacking_chance_mult, 1],
             ["Hacking Speed ", Player.hacking_speed_mult, Player.hacking_speed_mult * mults.hacking_speed_mult, 1],
             ["Hacking Money ", Player.hacking_money_mult, Player.hacking_money_mult * mults.hacking_money_mult, 1],
             ["Hacking Growth ", Player.hacking_grow_mult, Player.hacking_grow_mult * mults.hacking_grow_mult, 1],
           ]}
+          color={Settings.theme.hack}
         />
         <br />
 
-        <MultiplierTable
+        <MultiplierList
           rows={[
             [
               "Hacking Level ",
@@ -144,10 +153,11 @@ export function PlayerMultipliers(): React.ReactElement {
               BitNodeMultipliers.HackExpGain,
             ],
           ]}
+          color={Settings.theme.hack}
         />
         <br />
 
-        <MultiplierTable
+        <MultiplierList
           rows={[
             [
               "Strength Level ",
@@ -157,10 +167,11 @@ export function PlayerMultipliers(): React.ReactElement {
             ],
             ["Strength Experience ", Player.strength_exp_mult, Player.strength_exp_mult * mults.strength_exp_mult, 1],
           ]}
+          color={Settings.theme.combat}
         />
         <br />
 
-        <MultiplierTable
+        <MultiplierList
           rows={[
             [
               "Defense Level ",
@@ -170,10 +181,11 @@ export function PlayerMultipliers(): React.ReactElement {
             ],
             ["Defense Experience ", Player.defense_exp_mult, Player.defense_exp_mult * mults.defense_exp_mult, 1],
           ]}
+          color={Settings.theme.combat}
         />
         <br />
 
-        <MultiplierTable
+        <MultiplierList
           rows={[
             [
               "Dexterity Level ",
@@ -188,10 +200,11 @@ export function PlayerMultipliers(): React.ReactElement {
               1,
             ],
           ]}
+          color={Settings.theme.combat}
         />
         <br />
 
-        <MultiplierTable
+        <MultiplierList
           rows={[
             [
               "Agility Level ",
@@ -201,10 +214,11 @@ export function PlayerMultipliers(): React.ReactElement {
             ],
             ["Agility Experience ", Player.agility_exp_mult, Player.agility_exp_mult * mults.agility_exp_mult, 1],
           ]}
+          color={Settings.theme.combat}
         />
         <br />
 
-        <MultiplierTable
+        <MultiplierList
           rows={[
             [
               "Charisma Level ",
@@ -214,10 +228,11 @@ export function PlayerMultipliers(): React.ReactElement {
             ],
             ["Charisma Experience ", Player.charisma_exp_mult, Player.charisma_exp_mult * mults.charisma_exp_mult, 1],
           ]}
+          color={Settings.theme.cha}
         />
         <br />
 
-        <MultiplierTable
+        <MultiplierList
           rows={[
             [
               "Hacknet Node production ",
@@ -250,10 +265,11 @@ export function PlayerMultipliers(): React.ReactElement {
               1,
             ],
           ]}
+          color={Settings.theme.primary}
         />
         <br />
 
-        <MultiplierTable
+        <MultiplierList
           rows={[
             ["Company reputation gain ", Player.company_rep_mult, Player.company_rep_mult * mults.company_rep_mult, 1],
             [
@@ -269,10 +285,11 @@ export function PlayerMultipliers(): React.ReactElement {
               BitNodeMultipliers.CompanyWorkMoney,
             ],
           ]}
+          color={Settings.theme.primary}
         />
         <br />
 
-        <MultiplierTable
+        <MultiplierList
           rows={[
             ["Crime success ", Player.crime_success_mult, Player.crime_success_mult * mults.crime_success_mult, 1],
             [
@@ -282,11 +299,12 @@ export function PlayerMultipliers(): React.ReactElement {
               BitNodeMultipliers.CrimeMoney,
             ],
           ]}
+          color={Settings.theme.combat}
         />
         <br />
 
         <BladeburnerMults />
       </Box>
-    </>
+    </Paper>
   );
 }

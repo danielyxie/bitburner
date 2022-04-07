@@ -9,7 +9,7 @@ import { AugmentationNames } from "../data/AugmentationNames";
 import { Player } from "../../Player";
 
 import { AugmentationAccordion } from "../../ui/React/AugmentationAccordion";
-import List from "@mui/material/List";
+import { List, Paper } from "@mui/material";
 
 export function PurchasedAugmentations(): React.ReactElement {
   const augs: React.ReactElement[] = [];
@@ -32,5 +32,9 @@ export function PurchasedAugmentations(): React.ReactElement {
     augs.push(<AugmentationAccordion key={aug.name} aug={aug} level={level} />);
   }
 
-  return <List dense>{augs}</List>;
+  return (
+    <Paper sx={{ p: 1, maxHeight: 400, overflowY: "scroll" }}>
+      <List dense>{augs}</List>
+    </Paper>
+  );
 }
