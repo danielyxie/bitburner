@@ -119,7 +119,6 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       console.warn(`WorkerScript detected NaN for threadcount for ${workerScript.name} on ${workerScript.hostname}`);
       threads = 1;
     }
-
     workerScript.dynamicRamUsage += ramCost;
     if (workerScript.dynamicRamUsage > 1.01 * workerScript.ramUsage) {
       throw makeRuntimeRejectMsg(
@@ -521,8 +520,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     sprintf: sprintf,
     vsprintf: vsprintf,
     scan: function (_hostname: unknown = workerScript.hostname): string[] {
-      const hostname = helper.string("scan", "hostname", _hostname);
       updateDynamicRam("scan", getRamCost(Player, "scan"));
+      const hostname = helper.string("scan", "hostname", _hostname);
       const server = safeGetServer(hostname, "scan");
       const out = [];
       for (let i = 0; i < server.serversOnNetwork.length; i++) {
