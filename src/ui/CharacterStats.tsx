@@ -1,8 +1,5 @@
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { Paper, Table, TableBody } from "@mui/material";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+import { Paper, Table, TableBody, Box, IconButton, Typography, Container, Tooltip } from "@mui/material";
+import { MoreHoriz, Info } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { BitNodes } from "../BitNode/BitNode";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -29,7 +26,7 @@ const EmployersModal = ({ open, onClose }: EmployersModalProps): React.ReactElem
   return (
     <Modal open={open} onClose={onClose}>
       <>
-        <Typography variant="h6">All Employers</Typography>
+        <Typography variant="h5">All Employers</Typography>
         <ul>
           {Object.keys(player.jobs).map((j) => (
             <Typography key={j}>* {j}</Typography>
@@ -103,9 +100,9 @@ function CurrentBitNode(): React.ReactElement {
     const currentSourceFile = player.sourceFiles.find((sourceFile) => sourceFile.n == player.bitNodeN);
     const lvl = currentSourceFile ? currentSourceFile.lvl : 0;
     return (
-      <Box sx={{ width: "75%" }}>
+      <Box>
         <Paper sx={{ p: 1 }}>
-          <Typography variant="h6">
+          <Typography variant="h5">
             BitNode {player.bitNodeN}: {BitNodes[index].name} (Level {lvl})
           </Typography>
           <Typography sx={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>{BitNodes[index].info}</Typography>
@@ -238,12 +235,11 @@ export function CharacterStats(): React.ReactElement {
   timeRows.push(["Total", convertTimeMsToTimeElapsedString(player.totalPlaytime)]);
 
   return (
-    <>
-      <Box
-        sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", width: "75%", minWidth: "fit-content", mb: 1, gap: 1 }}
-      >
+    <Container maxWidth="lg" disableGutters sx={{ mx: 0 }}>
+      <Typography variant="h4">Stats</Typography>
+      <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", minWidth: "fit-content", mb: 1, gap: 1 }}>
         <Paper sx={{ p: 1 }}>
-          <Typography variant="h6">General</Typography>
+          <Typography variant="h5">General</Typography>
           <Table>
             <TableBody>
               <StatsRow name="Current City" color={Settings.theme.primary} data={{ content: player.city }} />
@@ -251,7 +247,7 @@ export function CharacterStats(): React.ReactElement {
                 <>
                   <Money money={player.money} />
                   <IconButton onClick={() => setMoneyOpen(true)} sx={{ p: 0 }}>
-                    <MoreHorizIcon color="info" />
+                    <MoreHoriz color="info" />
                   </IconButton>
                 </>
               </StatsRow>
@@ -274,7 +270,7 @@ export function CharacterStats(): React.ReactElement {
                   <>
                     <span style={{ color: Settings.theme.primary }}>{Object.keys(player.jobs).length} total</span>
                     <IconButton onClick={() => setEmployersOpen(true)} sx={{ p: 0 }}>
-                      <MoreHorizIcon color="info" />
+                      <MoreHoriz color="info" />
                     </IconButton>
                   </>
                 </StatsRow>
@@ -302,7 +298,7 @@ export function CharacterStats(): React.ReactElement {
           </Table>
         </Paper>
         <Paper sx={{ p: 1 }}>
-          <Typography variant="h6">Skills</Typography>
+          <Typography variant="h5">Skills</Typography>
           <Table>
             <TableBody>
               <StatsRow
@@ -346,9 +342,24 @@ export function CharacterStats(): React.ReactElement {
           </Table>
         </Paper>
       </Box>
-      <Box sx={{ width: "75%", minWidth: "fit-content", mb: 1 }}>
+      <Box sx={{ mb: 1 }}>
         <Paper sx={{ p: 1 }}>
-          <Typography variant="h6">Multipliers</Typography>
+          <Typography variant="h5" color="primary" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
+            Multipliers
+            <Tooltip
+              title={
+                <Typography>
+                  Displays your current multipliers.
+                  <br />
+                  <br />
+                  When there is a dim number next to a multiplier, that means that the multiplier in question is being
+                  affected by BitNode multipliers.
+                </Typography>
+              }
+            >
+              <Info sx={{ ml: 1, mb: 1 }} color="info" />
+            </Tooltip>
+          </Typography>
           <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1 }}>
             <Box>
               <MultiplierTable
@@ -497,9 +508,9 @@ export function CharacterStats(): React.ReactElement {
         </Paper>
       </Box>
 
-      <Box sx={{ width: "75%", minWidth: "fit-content", mb: 1 }}>
+      <Box sx={{ mb: 1 }}>
         <Paper sx={{ p: 1 }}>
-          <Typography variant="h6">Time Played</Typography>
+          <Typography variant="h5">Time Played</Typography>
           <Table>
             <TableBody>
               {timeRows.map(([name, content]) => (
@@ -512,6 +523,6 @@ export function CharacterStats(): React.ReactElement {
       <CurrentBitNode />
       <MoneyModal open={moneyOpen} onClose={() => setMoneyOpen(false)} />
       <EmployersModal open={employersOpen} onClose={() => setEmployersOpen(false)} />
-    </>
+    </Container>
   );
 }
