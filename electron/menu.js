@@ -8,7 +8,7 @@ const storage = require("./storage");
 const config = new Config();
 
 function getMenu(window) {
-  const canZoomIn = utils.getZoomFactor() <= 2
+  const canZoomIn = utils.getZoomFactor() <= 2;
   const zoomIn = () => {
     const currentZoom = utils.getZoomFactor();
     const newZoom = currentZoom + 0.1;
@@ -16,12 +16,12 @@ function getMenu(window) {
       utils.setZoomFactor(window, newZoom);
       refreshMenu(window);
     } else {
-      log.log('Max zoom out')
+      log.log("Max zoom out");
       utils.writeToast(window, "Cannot zoom in anymore", "warning");
     }
-  }
+  };
 
-  const canZoomOut = utils.getZoomFactor() >= 0.5
+  const canZoomOut = utils.getZoomFactor() >= 0.5;
   const zoomOut = () => {
     const currentZoom = utils.getZoomFactor();
     const newZoom = currentZoom - 0.1;
@@ -29,18 +29,17 @@ function getMenu(window) {
       utils.setZoomFactor(window, newZoom);
       refreshMenu(window);
     } else {
-      log.log('Max zoom in')
+      log.log("Max zoom in");
       utils.writeToast(window, "Cannot zoom out anymore", "warning");
     }
-  }
+  };
 
-  const canResetZoom = utils.getZoomFactor() !== 1
+  const canResetZoom = utils.getZoomFactor() !== 1;
   const resetZoom = () => {
     utils.setZoomFactor(window, 1);
     refreshMenu(window);
     log.log("Reset zoom");
-  }
-
+  };
 
   return Menu.buildFromTemplate([
     {
