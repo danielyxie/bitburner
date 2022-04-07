@@ -255,7 +255,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
     toBitVerse: (flume: boolean, quick: boolean, nextBitVerse?: number) => {
       setFlume(flume);
       setQuick(quick);
-      nextBitVerse = (nextBitVerse && nextBitVerse > 0 && nextBitVerse <= highestBitNode) ? nextBitVerse : 0
+      nextBitVerse = nextBitVerse && nextBitVerse > 0 && nextBitVerse <= highestBitNode ? nextBitVerse : 0;
       setNextBitVerse(nextBitVerse);
       calculateAchievements();
       setPage(Page.BitVerse);

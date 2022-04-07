@@ -347,8 +347,8 @@ export function SidebarRoot(props: IProps): React.ReactElement {
   function CurrentBitNode(): React.ReactElement {
     if (player.sourceFiles.length > 0) {
       const index = "BitNode" + player.bitNodeN;
-      const currentSourceFile = player.sourceFiles.find(sourceFile => sourceFile.n == player.bitNodeN)
-      const lvl = currentSourceFile ? currentSourceFile.lvl : 0
+      const currentSourceFile = player.sourceFiles.find((sourceFile) => sourceFile.n == player.bitNodeN);
+      const lvl = currentSourceFile ? currentSourceFile.lvl : 0;
       return (
         <Tooltip title={BitNodes[index].info}>
           <Typography>
@@ -373,11 +373,8 @@ export function SidebarRoot(props: IProps): React.ReactElement {
               <Typography>Bitburner v{CONSTANTS.VersionString}</Typography>
             </Tooltip>
           }
-          secondary={
-            CurrentBitNode()
-          }
+          secondary={CurrentBitNode()}
         />
-
       </ListItem>
       <Divider />
       <List>

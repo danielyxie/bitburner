@@ -56,11 +56,11 @@ export function General(props: IProps): React.ReactElement {
   }, [error]);
 
   function handleSetNextBitVerse(e: React.ChangeEvent<HTMLInputElement>): void {
-    let tempNextBitVerse = parseInt(e.target.value)
+    let tempNextBitVerse = parseInt(e.target.value);
     if (isNaN(tempNextBitVerse)) {
-      tempNextBitVerse = 0
+      tempNextBitVerse = 0;
     }
-    setNextBitVerse(tempNextBitVerse)
+    setNextBitVerse(tempNextBitVerse);
   }
 
   return (

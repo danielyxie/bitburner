@@ -138,7 +138,7 @@ export function BitverseRoot(props: IProps): React.ReactElement {
   }
 
   if (props.nextBitVerse > 0) {
-    enter(router, props.flume, destroyed, props.nextBitVerse)
+    enter(router, props.flume, destroyed, props.nextBitVerse);
   }
 
   if (destroySequence) {
