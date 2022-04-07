@@ -1106,6 +1106,7 @@ export function NetscriptSingularity(
           return true;
         default:
           workerScript.log("workForFaction", () => `Invalid work type: '${type}`);
+          return false;
       }
       return true;
     },

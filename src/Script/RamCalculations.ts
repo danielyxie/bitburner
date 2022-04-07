@@ -17,7 +17,7 @@ import { areImportsEquals } from "../Terminal/DirectoryHelpers";
 import { IPlayer } from "../PersonObjects/IPlayer";
 
 export interface RamUsageEntry {
-  type: 'ns' | 'dom' | 'fn' | 'misc';
+  type: "ns" | "dom" | "fn" | "misc";
   name: string;
   cost: number;
 }
@@ -139,7 +139,9 @@ async function parseOnlyRamCalculate(
     // Finally, walk the reference map and generate a ram cost. The initial set of keys to scan
     // are those that start with __SPECIAL_INITIAL_MODULE__.
     let ram = RamCostConstants.ScriptBaseRamCost;
-    const detailedCosts: RamUsageEntry[] = [{ type: 'misc', name: 'baseCost', cost: RamCostConstants.ScriptBaseRamCost}];
+    const detailedCosts: RamUsageEntry[] = [
+      { type: "misc", name: "baseCost", cost: RamCostConstants.ScriptBaseRamCost },
+    ];
     const unresolvedRefs = Object.keys(dependencyMap).filter((s) => s.startsWith(initialModule));
     const resolvedRefs = new Set();
     while (unresolvedRefs.length > 0) {
@@ -149,19 +151,19 @@ async function parseOnlyRamCalculate(
       // Check if this is one of the special keys, and add the appropriate ram cost if so.
       if (ref === "hacknet" && !resolvedRefs.has("hacknet")) {
         ram += RamCostConstants.ScriptHacknetNodesRamCost;
-        detailedCosts.push({ type: 'ns', name: 'hacknet', cost: RamCostConstants.ScriptHacknetNodesRamCost});
+        detailedCosts.push({ type: "ns", name: "hacknet", cost: RamCostConstants.ScriptHacknetNodesRamCost });
       }
       if (ref === "document" && !resolvedRefs.has("document")) {
         ram += RamCostConstants.ScriptDomRamCost;
-        detailedCosts.push({ type: 'dom', name: 'document', cost: RamCostConstants.ScriptDomRamCost});
+        detailedCosts.push({ type: "dom", name: "document", cost: RamCostConstants.ScriptDomRamCost });
       }
       if (ref === "window" && !resolvedRefs.has("window")) {
         ram += RamCostConstants.ScriptDomRamCost;
-        detailedCosts.push({ type: 'dom', name: 'window', cost: RamCostConstants.ScriptDomRamCost});
+        detailedCosts.push({ type: "dom", name: "window", cost: RamCostConstants.ScriptDomRamCost });
       }
       if (ref === "corporation" && !resolvedRefs.has("corporation")) {
         ram += RamCostConstants.ScriptCorporationRamCost;
-        detailedCosts.push({ type: 'ns', name: 'corporation', cost: RamCostConstants.ScriptCorporationRamCost});
+        detailedCosts.push({ type: "ns", name: "corporation", cost: RamCostConstants.ScriptCorporationRamCost });
       }
 
       resolvedRefs.add(ref);
@@ -203,7 +205,7 @@ async function parseOnlyRamCalculate(
 
         // This accounts for namespaces (Bladeburner, CodingCpntract, etc.)
         let func;
-        let refDetail = 'n/a';
+        let refDetail = "n/a";
         if (ref in workerScript.env.vars.bladeburner) {
           func = workerScript.env.vars.bladeburner[ref];
           refDetail = `bladeburner.${ref}`;
@@ -234,12 +236,12 @@ async function parseOnlyRamCalculate(
         }
         const fnRam = applyFuncRam(func);
         ram += fnRam;
-        detailedCosts.push({ type: 'fn', name: refDetail, cost: fnRam});
+        detailedCosts.push({ type: "fn", name: refDetail, cost: fnRam });
       } catch (error) {
         continue;
       }
     }
-    return { cost: ram, entries: detailedCosts.filter(e => e.cost > 0) };
+    return { cost: ram, entries: detailedCosts.filter((e) => e.cost > 0) };
   } catch (error) {
     // console.info("parse or eval error: ", error);
     // This is not unexpected. The user may be editing a script, and it may be in

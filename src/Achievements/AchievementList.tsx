@@ -3,8 +3,8 @@ import React from "react";
 import { Accordion, AccordionSummary, AccordionDetails, Box, Typography } from "@mui/material";
 
 import { AchievementEntry } from "./AchievementEntry";
-import { Achievement,  PlayerAchievement} from "./Achievements";
-import { Settings } from "../Settings/Settings"
+import { Achievement, PlayerAchievement } from "./Achievements";
+import { Settings } from "../Settings/Settings";
 import { getFiltersFromHex } from "../ThirdParty/colorUtils";
 import { CorruptableText } from "../ui/React/CorruptableText";
 
@@ -18,32 +18,39 @@ export function AchievementList({ achievements, playerAchievements }: IProps): J
   const cssPrimary = getFiltersFromHex(Settings.theme.primary);
   const cssSecondary = getFiltersFromHex(Settings.theme.secondary);
 
-  const data = achievements.map(achievement => ({
-    achievement,
-    unlockedOn: playerAchievements.find(playerAchievement => playerAchievement.ID === achievement.ID)?.unlockedOn,
-  })).sort((a, b) => (b.unlockedOn ?? 0) - (a.unlockedOn ?? 0));
+  const data = achievements
+    .map((achievement) => ({
+      achievement,
+      unlockedOn: playerAchievements.find((playerAchievement) => playerAchievement.ID === achievement.ID)?.unlockedOn,
+    }))
+    .sort((a, b) => (b.unlockedOn ?? 0) - (a.unlockedOn ?? 0));
 
-  const unlocked = data.filter(entry => entry.unlockedOn);
+  const unlocked = data.filter((entry) => entry.unlockedOn);
 
   // Hidden achievements
-  const secret = data.filter(entry => !entry.unlockedOn && entry.achievement.Secret)
+  const secret = data.filter((entry) => !entry.unlockedOn && entry.achievement.Secret);
 
   // Locked behind locked content (bitnode x)
-  const unavailable = data.filter(entry => !entry.unlockedOn && !entry.achievement.Secret && entry.achievement.Visible && !entry.achievement.Visible());
+  const unavailable = data.filter(
+    (entry) =>
+      !entry.unlockedOn && !entry.achievement.Secret && entry.achievement.Visible && !entry.achievement.Visible(),
+  );
 
   // Remaining achievements
   const locked = data
-    .filter(entry => !unlocked.map(u => u.achievement.ID).includes(entry.achievement.ID))
-    .filter(entry => !secret.map(u => u.achievement.ID).includes(entry.achievement.ID))
-    .filter(entry => !unavailable.map(u => u.achievement.ID).includes(entry.achievement.ID));
+    .filter((entry) => !unlocked.map((u) => u.achievement.ID).includes(entry.achievement.ID))
+    .filter((entry) => !secret.map((u) => u.achievement.ID).includes(entry.achievement.ID))
+    .filter((entry) => !unavailable.map((u) => u.achievement.ID).includes(entry.achievement.ID));
 
   return (
     <Box sx={{ pr: 18, my: 2 }}>
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        flexWrap: 'wrap',
-      }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "wrap",
+        }}
+      >
         {unlocked.length > 0 && (
           <Accordion defaultExpanded disableGutters square>
             <AccordionSummary>
@@ -52,12 +59,14 @@ export function AchievementList({ achievements, playerAchievements }: IProps): J
               </Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ pt: 2 }}>
-              {unlocked.map(item => (
-                <AchievementEntry key={`unlocked_${item.achievement.ID}`}
+              {unlocked.map((item) => (
+                <AchievementEntry
+                  key={`unlocked_${item.achievement.ID}`}
                   achievement={item.achievement}
                   unlockedOn={item.unlockedOn}
                   cssFiltersUnlocked={cssPrimary}
-                  cssFiltersLocked={cssSecondary} />
+                  cssFiltersLocked={cssSecondary}
+                />
               ))}
             </AccordionDetails>
           </Accordion>
@@ -71,11 +80,13 @@ export function AchievementList({ achievements, playerAchievements }: IProps): J
               </Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ pt: 2 }}>
-              {locked.map(item => (
-                <AchievementEntry key={`locked_${item.achievement.ID}`}
+              {locked.map((item) => (
+                <AchievementEntry
+                  key={`locked_${item.achievement.ID}`}
                   achievement={item.achievement}
                   cssFiltersUnlocked={cssPrimary}
-                  cssFiltersLocked={cssSecondary} />
+                  cssFiltersLocked={cssSecondary}
+                />
               ))}
             </AccordionDetails>
           </Accordion>
@@ -89,7 +100,7 @@ export function AchievementList({ achievements, playerAchievements }: IProps): J
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-            <Typography sx={{ mt: 1 }}>
+              <Typography sx={{ mt: 1 }}>
                 {unavailable.length} additional achievements hidden behind content you don't have access to.
               </Typography>
             </AccordionDetails>
@@ -105,7 +116,7 @@ export function AchievementList({ achievements, playerAchievements }: IProps): J
             </AccordionSummary>
             <AccordionDetails>
               <Typography color="secondary" sx={{ mt: 1 }}>
-                {secret.map(item => (
+                {secret.map((item) => (
                   <span key={`secret_${item.achievement.ID}`}>
                     <CorruptableText content={item.achievement.ID}></CorruptableText>
                     <br />

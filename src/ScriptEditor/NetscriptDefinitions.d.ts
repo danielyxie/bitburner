@@ -3637,9 +3637,9 @@ export interface Sleeve {
    * @param sleeveNumber - Index of the sleeve to work for the faction.
    * @param factionName - Name of the faction to work for.
    * @param factionWorkType - Name of the action to perform for this faction.
-   * @returns True if the sleeve started working on this faction, false otherwise.
+   * @returns True if the sleeve started working on this faction, false otherwise, can also throw on errors
    */
-  setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean;
+  setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean | undefined;
 
   /**
    * Set a sleeve to work for a company.
@@ -3795,6 +3795,26 @@ interface SkillsFormulas {
    * @returns The calculated exp required.
    */
   calculateExp(skill: number, skillMult?: number): number;
+}
+
+/**
+ * Reputation formulas
+ * @public
+ */
+interface ReputationFormulas {
+  /**
+   * Calculate the total required amount of faction reputation to reach a target favor.
+   * @param favor - target faction favor.
+   * @returns The calculated faction reputation required.
+   */
+  calculateFavorToRep(favor: number): number;
+  /**
+   * Calculate the resulting faction favor of a total amount of reputation.
+   * (Faction favor is gained whenever you install an Augmentation.)
+   * @param rep - amount of reputation.
+   * @returns The calculated faction favor.
+   */
+  calculateRepToFavor(rep: number): number;
 }
 
 /**
@@ -4039,6 +4059,8 @@ interface GangFormulas {
  * @public
  */
 export interface Formulas {
+  /** Reputation formulas */
+  reputation: ReputationFormulas;
   /** Skills formulas */
   skills: SkillsFormulas;
   /** Hacking formulas */
@@ -4067,7 +4089,7 @@ export interface Fragment {
  */
 export interface ActiveFragment {
   id: number;
-  avgCharge: number;
+  highestCharge: number;
   numCharge: number;
   rotation: number;
   x: number;
@@ -4620,7 +4642,7 @@ export interface NS extends Singularity {
    * ```
    * @returns
    */
-  sleep(millis: number): Promise<void>;
+  sleep(millis: number): Promise<true>;
 
   /**
    * Suspends the script for n milliseconds. Doesn't block with concurrent calls.
@@ -4630,7 +4652,7 @@ export interface NS extends Singularity {
    * @param millis - Number of milliseconds to sleep.
    * @returns
    */
-  asleep(millis: number): Promise<void>;
+  asleep(millis: number): Promise<true>;
 
   /**
    * Prints one or move values or variables to the script’s logs.

@@ -1,4 +1,4 @@
-import { FactionNames } from '../../Faction/data/FactionNames';
+import { FactionNames } from "../../Faction/data/FactionNames";
 import { Sleeve } from "./Sleeve";
 
 import { IPlayer } from "../IPlayer";
