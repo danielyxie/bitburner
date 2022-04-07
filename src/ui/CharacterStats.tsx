@@ -19,7 +19,6 @@ import { Money } from "./React/Money";
 import { StatsRow } from "./React/StatsRow";
 import { StatsTable } from "./React/StatsTable";
 
-
 interface EmployersModalProps {
   open: boolean;
   onClose: () => void;
@@ -101,12 +100,13 @@ function CurrentBitNode(): React.ReactElement {
   const player = use.Player();
   if (player.sourceFiles.length > 0) {
     const index = "BitNode" + player.bitNodeN;
+    const currentSourceFile = player.sourceFiles.find((sourceFile) => sourceFile.n == player.bitNodeN);
+    const lvl = currentSourceFile ? currentSourceFile.lvl : 0;
     return (
       <Box sx={{ width: "75%" }}>
         <Paper sx={{ p: 1 }}>
           <Typography variant="h6">
-            BitNode {player.bitNodeN}: {BitNodes[index].name} (Level {Math.min(SourceFileFlags[player.bitNodeN] + 1, 3)}
-            )
+            BitNode {player.bitNodeN}: {BitNodes[index].name} (Level {lvl})
           </Typography>
           <Typography sx={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}>{BitNodes[index].info}</Typography>
         </Paper>
@@ -239,7 +239,9 @@ export function CharacterStats(): React.ReactElement {
 
   return (
     <>
-      <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", width: "75%", minWidth: "fit-content" }}>
+      <Box
+        sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", width: "75%", minWidth: "fit-content", mb: 1, gap: 1 }}
+      >
         <Paper sx={{ p: 1 }}>
           <Typography variant="h6">General</Typography>
           <Table>
@@ -344,7 +346,7 @@ export function CharacterStats(): React.ReactElement {
           </Table>
         </Paper>
       </Box>
-      <Box sx={{ width: "75%", minWidth: "fit-content" }}>
+      <Box sx={{ width: "75%", minWidth: "fit-content", mb: 1 }}>
         <Paper sx={{ p: 1 }}>
           <Typography variant="h6">Multipliers</Typography>
           <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1 }}>
@@ -495,15 +497,13 @@ export function CharacterStats(): React.ReactElement {
         </Paper>
       </Box>
 
-      <Box sx={{ width: "75%", minWidth: "fit-content" }}>
+      <Box sx={{ width: "75%", minWidth: "fit-content", mb: 1 }}>
         <Paper sx={{ p: 1 }}>
           <Typography variant="h6">Time Played</Typography>
           <Table>
             <TableBody>
               {timeRows.map(([name, content]) => (
-                <React.Fragment key={name}>
-                  <StatsRow name={name} color={Settings.theme.primary} data={{ content: content }} />
-                </React.Fragment>
+                <StatsRow key={name} name={name} color={Settings.theme.primary} data={{ content: content }} />
               ))}
             </TableBody>
           </Table>
