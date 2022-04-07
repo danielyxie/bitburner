@@ -62,7 +62,6 @@ export interface IMinMaxRange {
   min: number;
 }
 
-
 export interface IApplyForJob {
   /**
    *  Boolean representing if application was successful

@@ -1,4 +1,4 @@
-import { IApplyForJob } from './../../types';
+import { IApplyForJob } from "./../../types";
 import * as augmentationMethods from "./PlayerObjectAugmentationMethods";
 import * as bladeburnerMethods from "./PlayerObjectBladeburnerMethods";
 import * as corporationMethods from "./PlayerObjectCorporationMethods";
@@ -494,11 +494,11 @@ export class PlayerObject implements IPlayer {
     // Let's get a hash of some semi-random stuff so we have something unique.
     this.identifier = cyrb53(
       "I-" +
-      new Date().getTime() +
-      navigator.userAgent +
-      window.innerWidth +
-      window.innerHeight +
-      getRandomInt(100, 999),
+        new Date().getTime() +
+        navigator.userAgent +
+        window.innerWidth +
+        window.innerHeight +
+        getRandomInt(100, 999),
     );
 
     this.init = generalMethods.init;

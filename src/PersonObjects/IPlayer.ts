@@ -5,7 +5,7 @@
  */
 import { Sleeve } from "./Sleeve/Sleeve";
 
-import { IMap, IApplyForJob } from '../types';
+import { IMap, IApplyForJob } from "../types";
 
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { Augmentation } from "../Augmentation/Augmentation";

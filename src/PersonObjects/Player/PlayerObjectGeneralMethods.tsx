@@ -1566,20 +1566,20 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
             "SUCCESS: Crime successful! Gained " +
-            numeralWrapper.formatMoney(this.workMoneyGained) +
-            ", " +
-            numeralWrapper.formatExp(this.workHackExpGained) +
-            " hack exp, " +
-            numeralWrapper.formatExp(this.workStrExpGained) +
-            " str exp, " +
-            numeralWrapper.formatExp(this.workDefExpGained) +
-            " def exp, " +
-            numeralWrapper.formatExp(this.workDexExpGained) +
-            " dex exp, " +
-            numeralWrapper.formatExp(this.workAgiExpGained) +
-            " agi exp, " +
-            numeralWrapper.formatExp(this.workChaExpGained) +
-            " cha exp.",
+              numeralWrapper.formatMoney(this.workMoneyGained) +
+              ", " +
+              numeralWrapper.formatExp(this.workHackExpGained) +
+              " hack exp, " +
+              numeralWrapper.formatExp(this.workStrExpGained) +
+              " str exp, " +
+              numeralWrapper.formatExp(this.workDefExpGained) +
+              " def exp, " +
+              numeralWrapper.formatExp(this.workDexExpGained) +
+              " dex exp, " +
+              numeralWrapper.formatExp(this.workAgiExpGained) +
+              " agi exp, " +
+              numeralWrapper.formatExp(this.workChaExpGained) +
+              " cha exp.",
           );
         }
       } else {
@@ -1618,18 +1618,18 @@ export function finishCrime(this: IPlayer, cancelled: boolean): string {
         if (ws.disableLogs.ALL == null && ws.disableLogs.commitCrime == null) {
           ws.scriptRef.log(
             "FAIL: Crime failed! Gained " +
-            numeralWrapper.formatExp(this.workHackExpGained) +
-            " hack exp, " +
-            numeralWrapper.formatExp(this.workStrExpGained) +
-            " str exp, " +
-            numeralWrapper.formatExp(this.workDefExpGained) +
-            " def exp, " +
-            numeralWrapper.formatExp(this.workDexExpGained) +
-            " dex exp, " +
-            numeralWrapper.formatExp(this.workAgiExpGained) +
-            " agi exp, " +
-            numeralWrapper.formatExp(this.workChaExpGained) +
-            " cha exp.",
+              numeralWrapper.formatExp(this.workHackExpGained) +
+              " hack exp, " +
+              numeralWrapper.formatExp(this.workStrExpGained) +
+              " str exp, " +
+              numeralWrapper.formatExp(this.workDefExpGained) +
+              " def exp, " +
+              numeralWrapper.formatExp(this.workDexExpGained) +
+              " dex exp, " +
+              numeralWrapper.formatExp(this.workAgiExpGained) +
+              " agi exp, " +
+              numeralWrapper.formatExp(this.workChaExpGained) +
+              " cha exp.",
           );
         }
       } else {
@@ -1754,7 +1754,7 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   // Get company that's being applied to
   const company = Companies[this.location]; //Company being applied to
   if (!(company instanceof Company)) {
-    const reason = `Could not find company that matches the location: ${this.location}. Player.applyToCompany() failed`
+    const reason = `Could not find company that matches the location: ${this.location}. Player.applyToCompany() failed`;
     console.error(reason);
     return { gotJob: false, reason };
   }
@@ -1763,7 +1763,7 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
 
   if (!this.isQualified(company, pos)) {
     const reqText = getJobRequirementText(company, pos);
-    const reason = `Unfortunately, you do not qualify for this position<br> ${reqText}`
+    const reason = `Unfortunately, you do not qualify for this position<br> ${reqText}`;
 
     if (!sing) {
       dialogBoxCreate(reason);
@@ -1800,7 +1800,7 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
     if (currCompany.name == company.name && pos.name == currPositionName) {
       const nextPos = getNextCompanyPositionHelper(pos);
       if (nextPos == null) {
-        const reason = "You are already at the highest position for your field! No promotion available"
+        const reason = "You are already at the highest position for your field! No promotion available";
 
         if (!sing) {
           dialogBoxCreate(reason);
@@ -1808,14 +1808,14 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
         return { gotJob: false, reason };
       } else if (company.hasPosition(nextPos)) {
         const reqText = getJobRequirementText(company, nextPos);
-        const reason = `Unfortunately, you do not qualify for a promotion<br>${reqText}`
+        const reason = `Unfortunately, you do not qualify for a promotion<br>${reqText}`;
 
         if (!sing) {
           dialogBoxCreate(reason);
         }
         return { gotJob: false, reason };
       } else {
-        const reason = "You are already at the highest position for your field! No promotion available"
+        const reason = "You are already at the highest position for your field! No promotion available";
 
         if (!sing) {
           dialogBoxCreate(reason);
@@ -1828,7 +1828,7 @@ export function applyForJob(this: IPlayer, entryPosType: CompanyPosition, sing =
   this.jobs[company.name] = pos.name;
   if (!this.focus && this.isWorking && this.companyName !== this.location) this.resetWorkStatus();
   this.companyName = this.location;
-  const reason = `Congratulations! You were offered a new job at ${this.companyName} as a ${pos.name}!`
+  const reason = `Congratulations! You were offered a new job at ${this.companyName} as a ${pos.name}!`;
   if (!sing) {
     dialogBoxCreate(reason);
   }
@@ -1896,7 +1896,7 @@ export function hasJob(this: IPlayer): boolean {
 }
 
 function didNotQualifyForJob(sing = false): IApplyForJob {
-  const reason = "Unfortunately, you do not qualify for this position"
+  const reason = "Unfortunately, you do not qualify for this position";
   if (!sing) {
     dialogBoxCreate(reason);
   }
@@ -1907,7 +1907,7 @@ function didQualifyForJob(player: IPlayer, position: string, company: Company, s
   player.jobs[company.name] = position;
   if (!player.focus && player.isWorking && player.companyName !== company.name) player.resetWorkStatus();
   player.companyName = company.name;
-  const reason = `Congratulations, you are now employed at ${player.location}`
+  const reason = `Congratulations, you are now employed at ${player.location}`;
 
   if (!sing) {
     dialogBoxCreate(reason);
@@ -1978,7 +1978,7 @@ export function applyForEmployeeJob(this: IPlayer, sing = false): IApplyForJob {
     return { gotJob: false };
   }
   if (this.isQualified(company, CompanyPositions[position])) {
-    return didQualifyForJob(this, position, company, sing)
+    return didQualifyForJob(this, position, company, sing);
   } else {
     return didNotQualifyForJob(sing);
   }
@@ -1992,7 +1992,7 @@ export function applyForPartTimeEmployeeJob(this: IPlayer, sing = false): IApply
     return { gotJob: false };
   }
   if (this.isQualified(company, CompanyPositions[position])) {
-    return didQualifyForJob(this, position, company, sing)
+    return didQualifyForJob(this, position, company, sing);
   } else {
     return didNotQualifyForJob(sing);
   }
@@ -2006,7 +2006,7 @@ export function applyForWaiterJob(this: IPlayer, sing = false): IApplyForJob {
     return { gotJob: false };
   }
   if (this.isQualified(company, CompanyPositions[position])) {
-    return didQualifyForJob(this, position, company, sing)
+    return didQualifyForJob(this, position, company, sing);
   } else {
     return didNotQualifyForJob(sing);
   }
@@ -2020,7 +2020,7 @@ export function applyForPartTimeWaiterJob(this: IPlayer, sing = false): IApplyFo
     return { gotJob: false };
   }
   if (this.isQualified(company, CompanyPositions[position])) {
-    return didQualifyForJob(this, position, company, sing)
+    return didQualifyForJob(this, position, company, sing);
   } else {
     return didNotQualifyForJob(sing);
   }

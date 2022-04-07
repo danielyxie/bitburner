@@ -1,4 +1,4 @@
-import { IApplyForJob } from './../types';
+import { IApplyForJob } from "./../types";
 import { INetscriptHelper } from "./INetscriptHelper";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
@@ -952,7 +952,7 @@ export function NetscriptSingularity(
           res = player.applyForPartTimeWaiterJob(true);
           break;
         default:
-          res = { gotJob: false, reason: `Invalid job: '${field}'.` }
+          res = { gotJob: false, reason: `Invalid job: '${field}'.` };
           workerScript.log("applyToCompany", () => `Invalid job: '${field}'.`);
           return res.gotJob;
       }
