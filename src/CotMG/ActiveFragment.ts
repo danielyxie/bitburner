@@ -10,7 +10,7 @@ export interface IActiveFragmentParams {
 
 export class ActiveFragment {
   id: number;
-  avgCharge: number;
+  highestCharge: number;
   numCharge: number;
   rotation: number;
   x: number;
@@ -21,16 +21,16 @@ export class ActiveFragment {
       this.id = params.fragment.id;
       this.x = params.x;
       this.y = params.y;
-      this.avgCharge = 0;
+      this.highestCharge = 0;
       this.numCharge = 0;
       this.rotation = params.rotation;
     } else {
       this.id = -1;
       this.x = -1;
       this.y = -1;
-      this.avgCharge = -1;
-      this.numCharge = -1;
-      this.rotation = -1;
+      this.highestCharge = 0;
+      this.numCharge = 0;
+      this.rotation = 0;
     }
   }
 
@@ -71,7 +71,7 @@ export class ActiveFragment {
     const fragment = FragmentById(this.id);
     if (fragment === null) throw new Error("ActiveFragment id refers to unknown Fragment.");
     const c = new ActiveFragment({ x: this.x, y: this.y, rotation: this.rotation, fragment: fragment });
-    c.avgCharge = this.avgCharge;
+    c.highestCharge = this.highestCharge;
     c.numCharge = this.numCharge;
     return c;
   }

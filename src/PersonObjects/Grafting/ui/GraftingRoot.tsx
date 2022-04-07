@@ -1,22 +1,20 @@
+import { Construction, CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
+import { Box, Button, Container, List, ListItemButton, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-
-import { Typography, Container, Box, Paper, List, ListItemButton, Button } from "@mui/material";
-import { Construction } from "@mui/icons-material";
-
-import { use } from "../../../ui/Context";
-import { Money } from "../../../ui/React/Money";
-import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
+import { Augmentation } from "../../../Augmentation/Augmentation";
 import { Augmentations } from "../../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames";
-import { Settings } from "../../../Settings/Settings";
-import { IMap } from "../../../types";
-import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
+import { CONSTANTS } from "../../../Constants";
+import { hasAugmentationPrereqs } from "../../../Faction/FactionHelpers";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { Locations } from "../../../Locations/Locations";
-import { CONSTANTS } from "../../../Constants";
-
+import { Settings } from "../../../Settings/Settings";
+import { IMap } from "../../../types";
+import { use } from "../../../ui/Context";
+import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
+import { Money } from "../../../ui/React/Money";
+import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
 import { IPlayer } from "../../IPlayer";
-
 import { GraftableAugmentation } from "../GraftableAugmentation";
 
 const GraftableAugmentations: IMap<GraftableAugmentation> = {};
@@ -31,6 +29,36 @@ export const getAvailableAugs = (player: IPlayer): string[] => {
   }
 
   return augs.filter((augmentation: string) => !player.hasAugmentation(augmentation));
+};
+
+const canGraft = (player: IPlayer, aug: GraftableAugmentation): boolean => {
+  if (player.money < aug.cost) {
+    return false;
+  }
+  return hasAugmentationPrereqs(aug.augmentation);
+};
+
+interface IProps {
+  player: IPlayer;
+  aug: Augmentation;
+}
+
+const AugPreReqsChecklist = (props: IProps): React.ReactElement => {
+  const aug = props.aug,
+    player = props.player;
+
+  return (
+    <Typography color={Settings.theme.money}>
+      <b>Pre-Requisites:</b>
+      <br />
+      {aug.prereqs.map((preAug) => (
+        <span style={{ display: "flex", alignItems: "center" }}>
+          {player.hasAugmentation(preAug) ? <CheckBox sx={{ mr: 1 }} /> : <CheckBoxOutlineBlank sx={{ mr: 1 }} />}
+          {preAug}
+        </span>
+      ))}
+    </Typography>
+  );
 };
 
 export const GraftingRoot = (): React.ReactElement => {
@@ -64,74 +92,83 @@ export const GraftingRoot = (): React.ReactElement => {
 
       <Box sx={{ my: 3 }}>
         <Typography variant="h5">Graft Augmentations</Typography>
-        <Paper sx={{ my: 1, width: "fit-content", display: "grid", gridTemplateColumns: "1fr 3fr" }}>
-          <List sx={{ maxHeight: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
-            {getAvailableAugs(player).map((k, i) => (
-              <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
-                <Typography>{k}</Typography>
-              </ListItemButton>
-            ))}
-          </List>
-          <Box sx={{ m: 1 }}>
-            <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-              <Construction sx={{ mr: 1 }} /> {selectedAug}
-            </Typography>
-            <Button
-              onClick={() => setGraftOpen(true)}
-              sx={{ width: "100%" }}
-              disabled={player.money < GraftableAugmentations[selectedAug].cost}
-            >
-              Graft Augmentation (
-              <Typography>
-                <Money money={GraftableAugmentations[selectedAug].cost} player={player} />
+        {getAvailableAugs(player).length > 0 ? (
+          <Paper sx={{ my: 1, width: "fit-content", display: "grid", gridTemplateColumns: "1fr 3fr" }}>
+            <List sx={{ maxHeight: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
+              {getAvailableAugs(player).map((k, i) => (
+                <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
+                  <Typography>{k}</Typography>
+                </ListItemButton>
+              ))}
+            </List>
+            <Box sx={{ m: 1 }}>
+              <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
+                <Construction sx={{ mr: 1 }} /> {selectedAug}
               </Typography>
-              )
-            </Button>
-            <ConfirmationModal
-              open={graftOpen}
-              onClose={() => setGraftOpen(false)}
-              onConfirm={() => {
-                const graftableAug = GraftableAugmentations[selectedAug];
-                player.loseMoney(graftableAug.cost, "augmentations");
-                player.startGraftAugmentationWork(selectedAug, graftableAug.time);
-                player.startFocusing();
-                router.toWork();
-              }}
-              confirmationText={
-                <>
-                  Cancelling grafting will <b>not</b> save grafting progress, and the money you spend will <b>not</b> be
-                  returned.
-                  <br />
-                  <br />
-                  Additionally, grafting an Augmentation will increase the potency of the Entropy virus.
-                </>
-              }
-            />
-            <Typography color={Settings.theme.info}>
-              <b>Time to Graft:</b>{" "}
-              {convertTimeMsToTimeElapsedString(
-                GraftableAugmentations[selectedAug].time / (1 + (player.getIntelligenceBonus(3) - 1) / 3),
-              )}
-              {/* Use formula so the displayed creation time is accurate to player bonus */}
-            </Typography>
-            <Typography sx={{ maxHeight: 305, overflowY: "scroll" }}>
-              {(() => {
-                const aug = Augmentations[selectedAug];
-
-                const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
-                const tooltip = (
+              <Button
+                onClick={() => setGraftOpen(true)}
+                sx={{ width: "100%" }}
+                disabled={!canGraft(player, GraftableAugmentations[selectedAug])}
+              >
+                Graft Augmentation (
+                <Typography>
+                  <Money money={GraftableAugmentations[selectedAug].cost} player={player} />
+                </Typography>
+                )
+              </Button>
+              <ConfirmationModal
+                open={graftOpen}
+                onClose={() => setGraftOpen(false)}
+                onConfirm={() => {
+                  const graftableAug = GraftableAugmentations[selectedAug];
+                  player.loseMoney(graftableAug.cost, "augmentations");
+                  player.startGraftAugmentationWork(selectedAug, graftableAug.time);
+                  player.startFocusing();
+                  router.toWork();
+                }}
+                confirmationText={
                   <>
-                    {info}
+                    Cancelling grafting will <b>not</b> save grafting progress, and the money you spend will <b>not</b>{" "}
+                    be returned.
                     <br />
                     <br />
-                    {aug.stats}
+                    Additionally, grafting an Augmentation will increase the potency of the Entropy virus.
                   </>
-                );
-                return tooltip;
-              })()}
-            </Typography>
-          </Box>
-        </Paper>
+                }
+              />
+              <Typography color={Settings.theme.info}>
+                <b>Time to Graft:</b>{" "}
+                {convertTimeMsToTimeElapsedString(
+                  GraftableAugmentations[selectedAug].time / (1 + (player.getIntelligenceBonus(3) - 1) / 3),
+                )}
+                {/* Use formula so the displayed creation time is accurate to player bonus */}
+              </Typography>
+              {Augmentations[selectedAug].prereqs.length > 0 && (
+                <AugPreReqsChecklist player={player} aug={Augmentations[selectedAug]} />
+              )}
+
+              <br />
+              <Typography sx={{ maxHeight: 305, overflowY: "scroll" }}>
+                {(() => {
+                  const aug = Augmentations[selectedAug];
+
+                  const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
+                  const tooltip = (
+                    <>
+                      {info}
+                      <br />
+                      <br />
+                      {aug.stats}
+                    </>
+                  );
+                  return tooltip;
+                })()}
+              </Typography>
+            </Box>
+          </Paper>
+        ) : (
+          <Typography>All Augmentations owned</Typography>
+        )}
       </Box>
 
       <Box sx={{ my: 3 }}>

@@ -5,6 +5,8 @@ import { KeyHandler } from "./KeyHandler";
 import { GameTimer } from "./GameTimer";
 import { interpolate } from "./Difficulty";
 import Typography from "@mui/material/Typography";
+import { KEY } from "../../utils/helpers/keyCodes";
+import { downArrowSymbol, upArrowSymbol } from "../utils";
 
 interface Difficulty {
   [key: string]: number;
@@ -34,15 +36,15 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
   function press(this: Document, event: KeyboardEvent): void {
     event.preventDefault();
     const k = event.key;
-    if (k === " ") {
+    if (k === KEY.SPACE) {
       if (positive.includes(choices[index])) props.onSuccess();
       else props.onFailure();
       return;
     }
 
     let newIndex = index;
-    if (["ArrowUp", "w", "ArrowRight", "d"].includes(k)) newIndex++;
-    if (["ArrowDown", "s", "ArrowLeft", "a"].includes(k)) newIndex--;
+    if ([KEY.UP_ARROW, KEY.W, KEY.RIGHT_ARROW, KEY.D].map((key) => key as string).includes(k)) newIndex++;
+    if ([KEY.DOWN_ARROW, KEY.S, KEY.LEFT_ARROW, KEY.A].map((key) => key as string).includes(k)) newIndex--;
     while (newIndex < 0) newIndex += choices.length;
     while (newIndex > choices.length - 1) newIndex -= choices.length;
     setIndex(newIndex);
@@ -57,13 +59,13 @@ export function BribeGame(props: IMinigameProps): React.ReactElement {
       </Grid>
       <Grid item xs={6}>
         <Typography variant="h5" color="primary">
-          ↑
+          {upArrowSymbol}
         </Typography>
         <Typography variant="h5" color="primary">
           {choices[index]}
         </Typography>
         <Typography variant="h5" color="primary">
-          ↓
+          {downArrowSymbol}
         </Typography>
       </Grid>
     </Grid>

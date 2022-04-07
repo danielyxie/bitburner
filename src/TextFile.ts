@@ -1,7 +1,7 @@
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { BaseServer } from "./Server/BaseServer";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
-import { removeLeadingSlash, isInRootDirectory } from "./Terminal/DirectoryHelpers"
+import { removeLeadingSlash, isInRootDirectory } from "./Terminal/DirectoryHelpers";
 
 /**
  * Represents a plain text file that is typically stored on a server.
@@ -20,14 +20,14 @@ export class TextFile {
   /**
    * The full file name.
    */
-   get filename(): string {
+  get filename(): string {
     return this.fn;
   }
 
   /**
    * The full file name.
    */
-   set filename(value: string) {
+  set filename(value: string) {
     this.fn = value;
   }
 

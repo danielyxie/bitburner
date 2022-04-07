@@ -50,30 +50,33 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     };
   };
 
+  const updateRam = (funcName: string): void =>
+    helper.updateDynamicRam(funcName, getRamCost(player, "sleeve", funcName));
+
   return {
     getNumSleeves: function (): number {
-      helper.updateDynamicRam("getNumSleeves", getRamCost(player, "sleeve", "getNumSleeves"));
+      updateRam("getNumSleeves");
       checkSleeveAPIAccess("getNumSleeves");
       return player.sleeves.length;
     },
     setToShockRecovery: function (_sleeveNumber: unknown): boolean {
+      updateRam("setToShockRecovery");
       const sleeveNumber = helper.number("setToShockRecovery", "sleeveNumber", _sleeveNumber);
-      helper.updateDynamicRam("setToShockRecovery", getRamCost(player, "sleeve", "setToShockRecovery"));
       checkSleeveAPIAccess("setToShockRecovery");
       checkSleeveNumber("setToShockRecovery", sleeveNumber);
       return player.sleeves[sleeveNumber].shockRecovery(player);
     },
     setToSynchronize: function (_sleeveNumber: unknown): boolean {
+      updateRam("setToSynchronize");
       const sleeveNumber = helper.number("setToSynchronize", "sleeveNumber", _sleeveNumber);
-      helper.updateDynamicRam("setToSynchronize", getRamCost(player, "sleeve", "setToSynchronize"));
       checkSleeveAPIAccess("setToSynchronize");
       checkSleeveNumber("setToSynchronize", sleeveNumber);
       return player.sleeves[sleeveNumber].synchronize(player);
     },
     setToCommitCrime: function (_sleeveNumber: unknown, _crimeRoughName: unknown): boolean {
+      updateRam("setToCommitCrime");
       const sleeveNumber = helper.number("setToCommitCrime", "sleeveNumber", _sleeveNumber);
       const crimeRoughName = helper.string("setToCommitCrime", "crimeName", _crimeRoughName);
-      helper.updateDynamicRam("setToCommitCrime", getRamCost(player, "sleeve", "setToCommitCrime"));
       checkSleeveAPIAccess("setToCommitCrime");
       checkSleeveNumber("setToCommitCrime", sleeveNumber);
       const crime = findCrime(crimeRoughName);
@@ -83,31 +86,28 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       return player.sleeves[sleeveNumber].commitCrime(player, crime.name);
     },
     setToUniversityCourse: function (_sleeveNumber: unknown, _universityName: unknown, _className: unknown): boolean {
+      updateRam("setToUniversityCourse");
       const sleeveNumber = helper.number("setToUniversityCourse", "sleeveNumber", _sleeveNumber);
       const universityName = helper.string("setToUniversityCourse", "universityName", _universityName);
       const className = helper.string("setToUniversityCourse", "className", _className);
-      helper.updateDynamicRam("setToUniversityCourse", getRamCost(player, "sleeve", "setToUniversityCourse"));
       checkSleeveAPIAccess("setToUniversityCourse");
       checkSleeveNumber("setToUniversityCourse", sleeveNumber);
       if (player.money <= 0)
-        throw helper.makeRuntimeErrorMsg(
-          "sleeve.setToUniversityCourse",
-          `You do not have any cash left!`,
-        );
+        throw helper.makeRuntimeErrorMsg("sleeve.setToUniversityCourse", `You do not have any cash left!`);
       return player.sleeves[sleeveNumber].takeUniversityCourse(player, universityName, className);
     },
     travel: function (_sleeveNumber: unknown, _cityName: unknown): boolean {
+      updateRam("travel");
       const sleeveNumber = helper.number("travel", "sleeveNumber", _sleeveNumber);
       const cityName = helper.string("travel", "cityName", _cityName);
-      helper.updateDynamicRam("travel", getRamCost(player, "sleeve", "travel"));
       checkSleeveAPIAccess("travel");
       checkSleeveNumber("travel", sleeveNumber);
       return player.sleeves[sleeveNumber].travel(player, cityName as CityName);
     },
     setToCompanyWork: function (_sleeveNumber: unknown, acompanyName: unknown): boolean {
+      updateRam("setToCompanyWork");
       const sleeveNumber = helper.number("setToCompanyWork", "sleeveNumber", _sleeveNumber);
       const companyName = helper.string("setToCompanyWork", "companyName", acompanyName);
-      helper.updateDynamicRam("setToCompanyWork", getRamCost(player, "sleeve", "setToCompanyWork"));
       checkSleeveAPIAccess("setToCompanyWork");
       checkSleeveNumber("setToCompanyWork", sleeveNumber);
 
@@ -127,11 +127,15 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
 
       return player.sleeves[sleeveNumber].workForCompany(player, companyName);
     },
-    setToFactionWork: function (_sleeveNumber: unknown, _factionName: unknown, _workType: unknown): boolean {
+    setToFactionWork: function (
+      _sleeveNumber: unknown,
+      _factionName: unknown,
+      _workType: unknown,
+    ): boolean | undefined {
+      updateRam("setToFactionWork");
       const sleeveNumber = helper.number("setToFactionWork", "sleeveNumber", _sleeveNumber);
       const factionName = helper.string("setToFactionWork", "factionName", _factionName);
       const workType = helper.string("setToFactionWork", "workType", _workType);
-      helper.updateDynamicRam("setToFactionWork", getRamCost(player, "sleeve", "setToFactionWork"));
       checkSleeveAPIAccess("setToFactionWork");
       checkSleeveNumber("setToFactionWork", sleeveNumber);
 
@@ -149,32 +153,36 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
         }
       }
 
+      if (player.gang && player.gang.facName == factionName) {
+        throw helper.makeRuntimeErrorMsg(
+          "sleeve.setToFactionWork",
+          `Sleeve ${sleeveNumber} cannot work for faction ${factionName} because you have started a gang with them.`,
+        );
+      }
+
       return player.sleeves[sleeveNumber].workForFaction(player, factionName, workType);
     },
     setToGymWorkout: function (_sleeveNumber: unknown, _gymName: unknown, _stat: unknown): boolean {
+      updateRam("setToGymWorkout");
       const sleeveNumber = helper.number("setToGymWorkout", "sleeveNumber", _sleeveNumber);
       const gymName = helper.string("setToGymWorkout", "gymName", _gymName);
       const stat = helper.string("setToGymWorkout", "stat", _stat);
-      helper.updateDynamicRam("setToGymWorkout", getRamCost(player, "sleeve", "setToGymWorkout"));
       checkSleeveAPIAccess("setToGymWorkout");
       checkSleeveNumber("setToGymWorkout", sleeveNumber);
       if (player.money <= 0)
-        throw helper.makeRuntimeErrorMsg(
-          "sleeve.setToGymWorkout",
-          `You do not have any cash left!`,
-        );
+        throw helper.makeRuntimeErrorMsg("sleeve.setToGymWorkout", `You do not have any cash left!`);
       return player.sleeves[sleeveNumber].workoutAtGym(player, gymName, stat);
     },
     getSleeveStats: function (_sleeveNumber: unknown): SleeveSkills {
+      updateRam("getSleeveStats");
       const sleeveNumber = helper.number("getSleeveStats", "sleeveNumber", _sleeveNumber);
-      helper.updateDynamicRam("getSleeveStats", getRamCost(player, "sleeve", "getSleeveStats"));
       checkSleeveAPIAccess("getSleeveStats");
       checkSleeveNumber("getSleeveStats", sleeveNumber);
       return getSleeveStats(sleeveNumber);
     },
     getTask: function (_sleeveNumber: unknown): SleeveTask {
+      updateRam("getTask");
       const sleeveNumber = helper.number("getTask", "sleeveNumber", _sleeveNumber);
-      helper.updateDynamicRam("getTask", getRamCost(player, "sleeve", "getTask"));
       checkSleeveAPIAccess("getTask");
       checkSleeveNumber("getTask", sleeveNumber);
 
@@ -188,8 +196,8 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       };
     },
     getInformation: function (_sleeveNumber: unknown): SleeveInformation {
+      updateRam("getInformation");
       const sleeveNumber = helper.number("getInformation", "sleeveNumber", _sleeveNumber);
-      helper.updateDynamicRam("getInformation", getRamCost(player, "sleeve", "getInformation"));
       checkSleeveAPIAccess("getInformation");
       checkSleeveNumber("getInformation", sleeveNumber);
 
@@ -254,8 +262,8 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       };
     },
     getSleeveAugmentations: function (_sleeveNumber: unknown): string[] {
+      updateRam("getSleeveAugmentations");
       const sleeveNumber = helper.number("getSleeveAugmentations", "sleeveNumber", _sleeveNumber);
-      helper.updateDynamicRam("getSleeveAugmentations", getRamCost(player, "sleeve", "getSleeveAugmentations"));
       checkSleeveAPIAccess("getSleeveAugmentations");
       checkSleeveNumber("getSleeveAugmentations", sleeveNumber);
 
@@ -266,8 +274,8 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       return augs;
     },
     getSleevePurchasableAugs: function (_sleeveNumber: unknown): AugmentPair[] {
+      updateRam("getSleevePurchasableAugs");
       const sleeveNumber = helper.number("getSleevePurchasableAugs", "sleeveNumber", _sleeveNumber);
-      helper.updateDynamicRam("getSleevePurchasableAugs", getRamCost(player, "sleeve", "getSleevePurchasableAugs"));
       checkSleeveAPIAccess("getSleevePurchasableAugs");
       checkSleeveNumber("getSleevePurchasableAugs", sleeveNumber);
 
@@ -284,9 +292,9 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       return augs;
     },
     purchaseSleeveAug: function (_sleeveNumber: unknown, _augName: unknown): boolean {
+      updateRam("purchaseSleeveAug");
       const sleeveNumber = helper.number("purchaseSleeveAug", "sleeveNumber", _sleeveNumber);
       const augName = helper.string("purchaseSleeveAug", "augName", _augName);
-      helper.updateDynamicRam("purchaseSleeveAug", getRamCost(player, "sleeve", "purchaseSleeveAug"));
       checkSleeveAPIAccess("purchaseSleeveAug");
       checkSleeveNumber("purchaseSleeveAug", sleeveNumber);
 

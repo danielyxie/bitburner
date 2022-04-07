@@ -56,7 +56,7 @@ export function General(props: IProps): React.ReactElement {
   }
 
   useEffect(() => {
-    if (error) throw new ReferenceError('Manually thrown error');
+    if (error) throw new ReferenceError("Manually thrown error");
   }, [error]);
 
   return (

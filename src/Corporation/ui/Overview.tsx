@@ -89,7 +89,7 @@ export function Overview({ rerender }: IProps): React.ReactElement {
       <StatsTable rows={multRows} />
       <br />
       <BonusTime />
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', width: 'fit-content' }}>
+      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", width: "fit-content" }}>
         <Tooltip
           title={
             <Typography>
@@ -200,8 +200,8 @@ function PublicButtons({ rerender }: IPublicButtonsProps): React.ReactElement {
   const sellSharesTooltip = sellSharesOnCd
     ? "Cannot sell shares for " + corp.convertCooldownToString(corp.shareSaleCooldown)
     : "Sell your shares in the company. The money earned from selling your " +
-    "shares goes into your personal account, not the Corporation's. " +
-    "This is one of the only ways to profit from your business venture.";
+      "shares goes into your personal account, not the Corporation's. " +
+      "This is one of the only ways to profit from your business venture.";
 
   const issueNewSharesOnCd = corp.issueNewSharesCooldown > 0;
   const issueNewSharesTooltip = issueNewSharesOnCd

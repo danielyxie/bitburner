@@ -35,17 +35,17 @@ export function ThrowPartyModal(props: IProps): React.ReactElement {
     if (cost === null || isNaN(cost) || cost < 0) {
       dialogBoxCreate("Invalid value entered");
     } else if (!canParty) {
-        dialogBoxCreate("You don't have enough company funds to throw a party!");
-      } else {
-        const mult = ThrowParty(corp, props.office, cost);
-        dialogBoxCreate(
-          "You threw a party for the office! The morale and happiness " +
-            "of each employee increased by " +
-            numeralWrapper.formatPercentage(mult - 1),
-        );
-        props.rerender();
-        props.onClose();
-      }
+      dialogBoxCreate("You don't have enough company funds to throw a party!");
+    } else {
+      const mult = ThrowParty(corp, props.office, cost);
+      dialogBoxCreate(
+        "You threw a party for the office! The morale and happiness " +
+          "of each employee increased by " +
+          numeralWrapper.formatPercentage(mult - 1),
+      );
+      props.rerender();
+      props.onClose();
+    }
   }
 
   function EffectText(): React.ReactElement {

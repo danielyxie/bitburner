@@ -15,8 +15,8 @@ export function unalias(
     terminal.error("Incorrect usage of unalias name. Usage: unalias [alias]");
     return;
   } else if (removeAlias(args[0] + "")) {
-      terminal.print(`Removed alias ${args[0]}`);
-    } else {
-      terminal.error(`No such alias exists: ${args[0]}`);
-    }
+    terminal.print(`Removed alias ${args[0]}`);
+  } else {
+    terminal.error(`No such alias exists: ${args[0]}`);
+  }
 }

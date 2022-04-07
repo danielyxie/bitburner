@@ -220,11 +220,19 @@ export function WorkInProgressRoot(): React.ReactElement {
 
   if (player.workType == CONSTANTS.WorkTypeCompany) {
     const comp = Companies[player.companyName];
-    let companyRep = 0;
     if (comp == null || !(comp instanceof Company)) {
-      throw new Error(`Could not find Company: ${player.companyName}`);
+      return (
+        <>
+          <Typography variant="h4" color="primary">
+            You cannot work for {player.companyName || "(Company not found)"} at this time, please try again if you
+            think this should have worked
+          </Typography>
+          <Button onClick={() => router.toTerminal()}>Back to Terminal</Button>
+        </>
+      );
     }
-    companyRep = comp.playerReputation;
+
+    const companyRep = comp.playerReputation;
 
     function cancel(): void {
       player.finishWork(true);

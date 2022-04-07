@@ -13,9 +13,7 @@ export const TerritoryInfoModal = ({ open, onClose }: IProps): React.ReactElemen
   return (
     <Modal open={open} onClose={onClose}>
       <>
-        <Typography variant='h4'>
-          Clashing
-        </Typography>
+        <Typography variant="h4">Clashing</Typography>
         <Typography>
           Every ~20 seconds, your gang has a chance to 'clash' with other gangs. Your chance to win a clash depends on
           your gang's power, which is listed in the display below. Your gang's power slowly accumulates over time. The
@@ -29,26 +27,22 @@ export const TerritoryInfoModal = ({ open, onClose }: IProps): React.ReactElemen
           gang.
         </Typography>
         <br />
-        <Typography variant='h4'>
-          Territory
-        </Typography>
+        <Typography variant="h4">Territory</Typography>
         <Typography>
-          The amount of territory you have affects all aspects of your Gang members' production, including money, respect,
-          and wanted level. It is very beneficial to have high territory control.
+          The amount of territory you have affects all aspects of your Gang members' production, including money,
+          respect, and wanted level. It is very beneficial to have high territory control.
           <br />
           <br />
-          To increase your chances of winning territory, assign gang members to "Territory Warfare". This will build your
-          gang power. Then, enable "Engage in Territory Warfare" to start fighting over territory.
+          To increase your chances of winning territory, assign gang members to "Territory Warfare". This will build
+          your gang power. Then, enable "Engage in Territory Warfare" to start fighting over territory.
         </Typography>
         <br />
-        <Typography variant='h4'>
-          Territory Clash Chance
-        </Typography>
+        <Typography variant="h4">Territory Clash Chance</Typography>
         <Typography>
           This percentage represents the chance you have of 'clashing' with another gang. If you do not wish to
           gain/lose territory, then keep this percentage at 0% by not engaging in territory warfare.
         </Typography>
       </>
-    </Modal >
+    </Modal>
   );
-}
+};

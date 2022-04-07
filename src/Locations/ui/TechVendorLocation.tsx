@@ -70,9 +70,7 @@ export function TechVendorLocation(props: IProps): React.ReactElement {
   return (
     <>
       <br />
-      <Box sx={{ display: 'grid', width: 'fit-content' }}>
-        {purchaseServerButtons}
-      </Box>
+      <Box sx={{ display: "grid", width: "fit-content" }}>{purchaseServerButtons}</Box>
       <br />
       <Typography>
         <i>"You can order bigger servers via scripts. We don't take custom orders in person."</i>

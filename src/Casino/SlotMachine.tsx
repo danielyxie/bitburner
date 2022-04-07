@@ -159,7 +159,7 @@ export function SlotMachine(props: IProps): React.ReactElement {
     const copy = index.slice();
     for (let i = 0; i < copy.length; i++) {
       if (copy[i] === locks[i] && !stoppedOne) continue;
-      copy[i] = (copy[i] - 1 >= 0) ? copy[i] - 1 : symbols.length - 1;
+      copy[i] = copy[i] - 1 >= 0 ? copy[i] - 1 : symbols.length - 1;
       stoppedOne = true;
     }
 
@@ -170,7 +170,7 @@ export function SlotMachine(props: IProps): React.ReactElement {
     }
   }
 
-  function getTable(index:number[], symbols:string[]): string[][] {
+  function getTable(index: number[], symbols: string[]): string[][] {
     return [
       [
         symbols[(index[0] + symbols.length - 1) % symbols.length],
@@ -209,7 +209,7 @@ export function SlotMachine(props: IProps): React.ReactElement {
     ]);
   }
 
-  function checkWinnings(t:string[][]): void {
+  function checkWinnings(t: string[][]): void {
     const getPaylineData = function (payline: number[][]): string[] {
       const data = [];
       for (const point of payline) {

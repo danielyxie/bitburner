@@ -1,5 +1,6 @@
-import { CityName } from "../Locations/data/CityNames";
 import { Augmentations } from "../Augmentation/Augmentations";
+import { hasAugmentationPrereqs } from "../Faction/FactionHelpers";
+import { CityName } from "../Locations/data/CityNames";
 import { getRamCost } from "../Netscript/RamCostGenerator";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { GraftableAugmentation } from "../PersonObjects/Grafting/GraftableAugmentation";
@@ -19,10 +20,13 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
     }
   };
 
+  const updateRam = (funcName: string): void =>
+    helper.updateDynamicRam(funcName, getRamCost(player, "grafting", funcName));
+
   return {
     getAugmentationGraftPrice: (_augName: unknown): number => {
+      updateRam("getAugmentationGraftPrice");
       const augName = helper.string("getAugmentationGraftPrice", "augName", _augName);
-      helper.updateDynamicRam("getAugmentationGraftPrice", getRamCost(player, "grafting", "getAugmentationGraftPrice"));
       checkGraftingAPIAccess("getAugmentationGraftPrice");
       if (!Augmentations.hasOwnProperty(augName)) {
         throw helper.makeRuntimeErrorMsg("grafting.getAugmentationGraftPrice", `Invalid aug: ${augName}`);
@@ -32,8 +36,8 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
     },
 
     getAugmentationGraftTime: (_augName: string): number => {
+      updateRam("getAugmentationGraftTime");
       const augName = helper.string("getAugmentationGraftTime", "augName", _augName);
-      helper.updateDynamicRam("getAugmentationGraftTime", getRamCost(player, "grafting", "getAugmentationGraftTime"));
       checkGraftingAPIAccess("getAugmentationGraftTime");
       if (!Augmentations.hasOwnProperty(augName)) {
         throw helper.makeRuntimeErrorMsg("grafting.getAugmentationGraftTime", `Invalid aug: ${augName}`);
@@ -43,9 +47,9 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
     },
 
     graftAugmentation: (_augName: string, _focus: unknown = true): boolean => {
+      updateRam("graftAugmentation");
       const augName = helper.string("graftAugmentation", "augName", _augName);
       const focus = helper.boolean(_focus);
-      helper.updateDynamicRam("graftAugmentation", getRamCost(player, "grafting", "graftAugmentation"));
       checkGraftingAPIAccess("graftAugmentation");
       if (player.city !== CityName.NewTokyo) {
         throw helper.makeRuntimeErrorMsg(
@@ -67,6 +71,11 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
       const craftableAug = new GraftableAugmentation(Augmentations[augName]);
       if (player.money < craftableAug.cost) {
         workerScript.log("grafting.graftAugmentation", () => `You don't have enough money to craft ${augName}`);
+        return false;
+      }
+
+      if (!hasAugmentationPrereqs(craftableAug.augmentation)) {
+        workerScript.log("grafting.graftAugmentation", () => `You don't have the pre-requisites for ${augName}`);
         return false;
       }
 

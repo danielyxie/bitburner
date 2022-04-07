@@ -43,7 +43,7 @@ export function HacknetUpgradeElem(props: IProps): React.ReactElement {
       if (!res) {
         dialogBoxCreate(
           "Failed to purchase upgrade. This may be because you do not have enough hashes, " +
-          "or because you do not have access to the feature upgrade affects.",
+            "or because you do not have access to the feature upgrade affects.",
         );
       }
       props.rerender();
