@@ -468,7 +468,7 @@ export function CharacterStats(): React.ReactElement {
                   ],
                   ["Salary", player.work_money_mult, player.work_money_mult * BitNodeMultipliers.CompanyWorkMoney],
                 ]}
-                color={Settings.theme.primary}
+                color={Settings.theme.money}
               />
               <MultiplierTable
                 rows={[
