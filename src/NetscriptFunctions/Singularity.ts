@@ -6,7 +6,6 @@ import { startWorkerScript } from "../NetscriptWorker";
 import { Augmentation } from "../Augmentation/Augmentation";
 import { Augmentations } from "../Augmentation/Augmentations";
 import { augmentationExists, installAugmentations } from "../Augmentation/AugmentationHelpers";
-import { prestigeAugmentation } from "../Prestige";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { killWorkerScript } from "../Netscript/killWorkerScript";
 import { CONSTANTS } from "../Constants";
@@ -212,7 +211,7 @@ export function NetscriptSingularity(
 
       workerScript.log("softReset", () => "Soft resetting. This will cause this script to be killed");
       setTimeout(() => {
-        prestigeAugmentation();
+        installAugmentations(true);
         runAfterReset(cbScript);
       }, 0);
 

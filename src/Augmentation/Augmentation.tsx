@@ -2,7 +2,6 @@
 import * as React from "react";
 import { IMap } from "../types";
 
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
 import { numeralWrapper } from "../ui/numeralFormat";

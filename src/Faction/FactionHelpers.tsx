@@ -203,7 +203,7 @@ export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Factio
     // Remove special augs
     augs = augs.filter((a) => !a.isSpecial);
 
-    const blacklist: string[] = [AugmentationNames.NeuroFluxGovernor];
+    const blacklist: string[] = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.CongruityImplant];
 
     if (player.bitNodeN !== 2) {
       // TRP is not available outside of BN2 for Gangs
