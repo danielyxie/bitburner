@@ -65,99 +65,94 @@ export function SourceFilesElement(): React.ReactElement {
 
   const [selectedSf, setSelectedSf] = useState<any>(sourceSfs[0]);
 
+  if (sourceSfs.length === 0) {
+    return <></>;
+  }
+
   return (
     <Box sx={{ width: "100%", mt: 1 }}>
       <Paper sx={{ p: 1 }}>
         <Typography variant="h5">Source Files</Typography>
       </Paper>
-      {sourceSfs.length > 0 ? (
-        <Paper sx={{ display: "grid", gridTemplateColumns: "1fr 3fr" }}>
-          <Box>
-            <List
-              sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}
-              disablePadding
-            >
-              {exploits.length > 0 && (
-                <ListItemButton
-                  key={-1}
-                  onClick={() => setSelectedSf({ n: -1, lvl: exploits.length })}
-                  selected={selectedSf.n === -1}
-                  sx={{ py: 0 }}
-                >
+      <Paper sx={{ display: "grid", gridTemplateColumns: "1fr 3fr" }}>
+        <Box>
+          <List
+            sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}
+            disablePadding
+          >
+            {exploits.length > 0 && (
+              <ListItemButton
+                key={-1}
+                onClick={() => setSelectedSf({ n: -1, lvl: exploits.length })}
+                selected={selectedSf.n === -1}
+                sx={{ py: 0 }}
+              >
+                <ListItemText
+                  disableTypography
+                  primary={<Typography>Source-File -1: Exploits in the BitNodes</Typography>}
+                  secondary={
+                    <Typography>
+                      Level {exploits.length} / {Object.keys(Exploit).length}
+                    </Typography>
+                  }
+                />
+              </ListItemButton>
+            )}
+
+            {sourceSfs.map((e, i) => {
+              const sfObj = safeGetSf(e.n);
+              if (!sfObj) return;
+              const maxLevel = sfObj?.n === 12 ? "∞" : "3";
+
+              return (
+                <ListItemButton key={i + 1} onClick={() => setSelectedSf(e)} selected={selectedSf === e} sx={{ py: 0 }}>
                   <ListItemText
                     disableTypography
-                    primary={<Typography>Source-File -1: Exploits in the BitNodes</Typography>}
+                    primary={<Typography>{sfObj.name}</Typography>}
                     secondary={
                       <Typography>
-                        Level {exploits.length} / {Object.keys(Exploit).length}
+                        Level {e.lvl} / {maxLevel}
                       </Typography>
                     }
                   />
                 </ListItemButton>
-              )}
+              );
+            })}
+          </List>
+        </Box>
+        <Box sx={{ m: 1 }}>
+          <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
+            {safeGetSf(selectedSf.n)?.name}
+          </Typography>
+          <Typography sx={{ maxHeight: 350, overflowY: "scroll" }}>
+            {(() => {
+              const sfObj = safeGetSf(selectedSf.n);
+              if (!sfObj) return;
 
-              {sourceSfs.map((e, i) => {
-                const sfObj = safeGetSf(e.n);
-                if (!sfObj) return;
-                const maxLevel = sfObj?.n === 12 ? "∞" : "3";
+              let maxLevel;
+              switch (sfObj?.n) {
+                case 12:
+                  maxLevel = "∞";
+                  break;
+                case -1:
+                  maxLevel = Object.keys(Exploit).length;
+                  break;
+                default:
+                  maxLevel = "3";
+              }
 
-                return (
-                  <ListItemButton
-                    key={i + 1}
-                    onClick={() => setSelectedSf(e)}
-                    selected={selectedSf === e}
-                    sx={{ py: 0 }}
-                  >
-                    <ListItemText
-                      disableTypography
-                      primary={<Typography>{sfObj.name}</Typography>}
-                      secondary={
-                        <Typography>
-                          Level {e.lvl} / {maxLevel}
-                        </Typography>
-                      }
-                    />
-                  </ListItemButton>
-                );
-              })}
-            </List>
-          </Box>
-          <Box sx={{ m: 1 }}>
-            <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-              {safeGetSf(selectedSf.n)?.name}
-            </Typography>
-            <Typography sx={{ maxHeight: 350, overflowY: "scroll" }}>
-              {(() => {
-                const sfObj = safeGetSf(selectedSf.n);
-                if (!sfObj) return;
-
-                let maxLevel;
-                switch (sfObj?.n) {
-                  case 12:
-                    maxLevel = "∞";
-                    break;
-                  case -1:
-                    maxLevel = Object.keys(Exploit).length;
-                    break;
-                  default:
-                    maxLevel = "3";
-                }
-
-                return (
-                  <>
-                    Level {selectedSf.lvl} / {maxLevel}
-                    <br />
-                    <br />
-                    {sfObj?.info}
-                  </>
-                );
-              })()}
-            </Typography>
-          </Box>
-        </Paper>
-      ) : (
-        <></>
-      )}
+              return (
+                <>
+                  Level {selectedSf.lvl} / {maxLevel}
+                  <br />
+                  <br />
+                  {sfObj?.info}
+                </>
+              );
+            })()}
+          </Typography>
+        </Box>
+      </Paper>
     </Box>
   );
 }
