@@ -78,23 +78,6 @@ function MultiplierTable(props: MultTableProps): React.ReactElement {
   );
 }
 
-function BladeburnerMults(): React.ReactElement {
-  const player = use.Player();
-  if (!player.canAccessBladeburner()) return <></>;
-  return (
-    <MultiplierTable
-      rows={[
-        ["Bladeburner Success Chance", player.bladeburner_success_chance_mult],
-        ["Bladeburner Max Stamina", player.bladeburner_max_stamina_mult],
-        ["Bladeburner Stamina Gain", player.bladeburner_stamina_gain_mult],
-        ["Bladeburner Field Analysis", player.bladeburner_analysis_mult],
-      ]}
-      color={Settings.theme.primary}
-      noMargin
-    />
-  );
-}
-
 function CurrentBitNode(): React.ReactElement {
   const player = use.Player();
   if (player.sourceFiles.length > 0) {
@@ -494,7 +477,18 @@ export function CharacterStats(): React.ReactElement {
                 ]}
                 color={Settings.theme.combat}
               />
-              <BladeburnerMults />
+              {player.canAccessBladeburner() && (
+                <MultiplierTable
+                  rows={[
+                    ["Bladeburner Success Chance", player.bladeburner_success_chance_mult],
+                    ["Bladeburner Max Stamina", player.bladeburner_max_stamina_mult],
+                    ["Bladeburner Stamina Gain", player.bladeburner_stamina_gain_mult],
+                    ["Bladeburner Field Analysis", player.bladeburner_analysis_mult],
+                  ]}
+                  color={Settings.theme.primary}
+                  noMargin
+                />
+              )}
             </Box>
           </Box>
         </Paper>
