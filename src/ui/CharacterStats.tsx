@@ -363,7 +363,7 @@ export function CharacterStats(): React.ReactElement {
                 </Typography>
               }
             >
-              <Info sx={{ ml: 1, mb: 1 }} color="info" />
+              <Info sx={{ ml: 1, mb: 0.5 }} color="info" />
             </Tooltip>
           </Typography>
           <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1 }}>

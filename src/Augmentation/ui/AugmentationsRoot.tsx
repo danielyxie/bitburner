@@ -133,7 +133,7 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
                 </>
               }
             >
-              <Info sx={{ ml: 1, mb: 1 }} color="info" />
+              <Info sx={{ ml: 1, mb: 0.5 }} color="info" />
             </Tooltip>
           </Typography>
           <ConfirmationModal

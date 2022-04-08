@@ -67,7 +67,7 @@ function MultiplierList({ rows, color, noMargin = false }: MultListProps): React
               secondary={
                 <span style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
                   <BitNodeModifiedStats base={value} mult={bnMult} color={color} />
-                  <DoubleArrow fontSize="small" color="success" sx={{ mb: 1, mx: 1 }} />
+                  <DoubleArrow fontSize="small" color="success" sx={{ mb: 0.5, mx: 1 }} />
                   <BitNodeModifiedStats base={improved} mult={bnMult} color={Settings.theme.success} />
                 </span>
               }

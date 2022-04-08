@@ -98,6 +98,7 @@ export function SourceFilesElement(): React.ReactElement {
 
               {sourceSfs.map((e, i) => {
                 const sfObj = safeGetSf(e.n);
+                if (!sfObj) return;
                 const maxLevel = sfObj?.n === 12 ? "∞" : "3";
 
                 return (
@@ -109,10 +110,10 @@ export function SourceFilesElement(): React.ReactElement {
                   >
                     <ListItemText
                       disableTypography
-                      primary={<Typography>{sfObj?.name}</Typography>}
+                      primary={<Typography>{sfObj.name}</Typography>}
                       secondary={
                         <Typography>
-                          Level {selectedSf.lvl} / {maxLevel}
+                          Level {e.lvl} / {maxLevel}
                         </Typography>
                       }
                     />
@@ -128,6 +129,7 @@ export function SourceFilesElement(): React.ReactElement {
             <Typography sx={{ maxHeight: 305, overflowY: "scroll" }}>
               {(() => {
                 const sfObj = safeGetSf(selectedSf.n);
+                if (!sfObj) return;
 
                 let maxLevel;
                 switch (sfObj?.n) {
