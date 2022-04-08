@@ -36,8 +36,10 @@ const NeuroFluxDisplay = ({ player }: NFGDisplayProps): React.ReactElement => {
 
   return level > 0 ? (
     <Paper sx={{ p: 1 }}>
-      <Typography variant="h5">NeuroFlux Governor - Level {level}</Typography>
-      <Typography>{Augmentations[AugmentationNames.NeuroFluxGovernor].stats}</Typography>
+      <Typography variant="h5" color={Settings.theme.info}>
+        NeuroFlux Governor - Level {level}
+      </Typography>
+      <Typography color={Settings.theme.info}>{Augmentations[AugmentationNames.NeuroFluxGovernor].stats}</Typography>
     </Paper>
   ) : (
     <></>
@@ -196,6 +198,7 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
             +!!((player.augmentations.find((e) => e.name === AugmentationNames.NeuroFluxGovernor)?.level ?? 0) > 0) +
             +!!(player.entropy > 0)
           }, 1fr)`,
+          gap: 1,
         }}
       >
         <NeuroFluxDisplay player={player} />
