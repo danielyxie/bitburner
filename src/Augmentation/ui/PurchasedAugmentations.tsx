@@ -51,7 +51,7 @@ export function PurchasedAugmentations(): React.ReactElement {
             })()}
           </Typography>
         }
-        enterNextDelay={1000}
+        enterNextDelay={500}
         key={displayName}
       >
         <ListItem sx={{ py: 0 }}>
