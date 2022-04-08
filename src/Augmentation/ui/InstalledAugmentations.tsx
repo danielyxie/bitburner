@@ -19,7 +19,7 @@ import { AugmentationNames } from "../data/AugmentationNames";
 export function InstalledAugmentations(): React.ReactElement {
   const setRerender = useState(true)[1];
   const player = use.Player();
-  const sourceAugs = player.augmentations.slice();
+  const sourceAugs = player.augmentations.slice().filter((aug) => aug.name !== AugmentationNames.NeuroFluxGovernor);
 
   const [selectedAug, setSelectedAug] = useState(sourceAugs[0]);
 
@@ -64,13 +64,11 @@ export function InstalledAugmentations(): React.ReactElement {
         <Paper sx={{ display: "grid", gridTemplateColumns: "1fr 3fr" }}>
           <Box>
             <List sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
-              {sourceAugs
-                .filter((aug) => aug.name !== AugmentationNames.NeuroFluxGovernor)
-                .map((k, i) => (
-                  <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
-                    <Typography>{k.name}</Typography>
-                  </ListItemButton>
-                ))}
+              {sourceAugs.map((k, i) => (
+                <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
+                  <Typography>{k.name}</Typography>
+                </ListItemButton>
+              ))}
             </List>
           </Box>
           <Box sx={{ m: 1 }}>
