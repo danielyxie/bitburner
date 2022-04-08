@@ -1484,6 +1484,19 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     ),
     factions: [FactionNames.TianDiHui],
   }),
+
+  // Grafting-exclusive Augmentation
+  new Augmentation({
+    name: AugmentationNames.CongruityImplant,
+    repCost: 0,
+    moneyCost: 50e12,
+    info:
+      "Developed by a pioneer in Grafting research, this implant " +
+      "generates pulses of stability which seem to have a nullifying " +
+      "effect versus the Entropy virus.",
+    stats: <>This Augmentation removes the Entropy virus, and prevents it from affecting you again.</>,
+    factions: [],
+  }),
 ];
 
 export const initBladeburnerAugmentations = (): Augmentation[] => [

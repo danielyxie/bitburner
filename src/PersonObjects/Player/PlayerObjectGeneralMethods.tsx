@@ -1371,8 +1371,11 @@ export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean): 
     );
 
     applyAugmentation(Augmentations[augName]);
-    this.entropy += 1;
-    this.applyEntropy(this.entropy);
+
+    if (!this.hasAugmentation(AugmentationNames.CongruityImplant)) {
+      this.entropy += 1;
+      this.applyEntropy(this.entropy);
+    }
   } else {
     dialogBoxCreate(`You cancelled the crafting of ${augName}.<br>Your money was not returned to you.`);
   }
