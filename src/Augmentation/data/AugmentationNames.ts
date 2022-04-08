@@ -91,6 +91,7 @@ export enum AugmentationNames {
   BionicArms = "Bionic Arms",
   SNA = "Social Negotiation Assistant (S.N.A)",
   HydroflameLeftArm = "Hydroflame Left Arm",
+  CongruityImplant = "nickofolas Congruity Implant",
   EsperEyewear = "EsperTech Bladeburner Eyewear",
   EMS4Recombination = "EMS-4 Recombination",
   OrionShoulder = "ORION-MKIV Shoulder",
