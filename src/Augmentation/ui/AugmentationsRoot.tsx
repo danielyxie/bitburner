@@ -53,10 +53,10 @@ interface EntropyDisplayProps {
 const EntropyDisplay = ({ player }: EntropyDisplayProps): React.ReactElement => {
   return player.entropy > 0 ? (
     <Paper sx={{ p: 1 }}>
-      <Typography variant="h5" color={Settings.theme.hp}>
+      <Typography variant="h5" color={Settings.theme.error}>
         Entropy Virus - Level {player.entropy}
       </Typography>
-      <Typography color={Settings.theme.hp}>
+      <Typography color={Settings.theme.error}>
         <b>All multipliers decreased by:</b> {formatNumber((1 - CONSTANTS.EntropyEffect ** player.entropy) * 100, 3)}%
         (multiplicative)
       </Typography>
