@@ -801,7 +801,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     desc: (data: number[][]): string => {
       return [
         "You are located in the top-left corner of the following grid:\n\n",
-        `&nbsp;&nbsp;[${data.map(line => "[" + line + "]").join(",\n&nbsp;&nbsp;&nbsp;")}]\n\n`,
+        `&nbsp;&nbsp;[${data.map((line) => "[" + line + "]").join(",\n&nbsp;&nbsp;&nbsp;")}]\n\n`,
         "You are trying to find the shortest path to the bottom-right corner of the grid,",
         "but there are obstacles on the grid that you cannot move onto.",
         "These obstacles are denoted by '1', while empty spaces are denoted by 0.\n\n",
@@ -831,20 +831,18 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       const minPathLength = dstY + dstX; // Math.abs(dstY - srcY) + Math.abs(dstX - srcX)
 
       const grid: number[][] = new Array(height);
-      for(let y = 0; y < height; y++)
-        grid[y] = new Array(width).fill(0);
+      for (let y = 0; y < height; y++) grid[y] = new Array(width).fill(0);
 
-      for(let y = 0; y < height; y++) {
-        for(let x = 0; x < width; x++) {
-          if(y == 0 && x == 0) continue; // Don't block start
-          if(y == dstY && x == dstX) continue; // Don't block destination
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          if (y == 0 && x == 0) continue; // Don't block start
+          if (y == dstY && x == dstX) continue; // Don't block destination
 
           // Generate more obstacles the farther a position is from start and destination.
           // Raw distance factor peaks at 50% at half-way mark. Rescale to 40% max.
           // Obstacle chance range of [15%, 40%] produces ~78% solvable puzzles
-          const distanceFactor = Math.min(y + x, dstY - y + dstX - x) / minPathLength * 0.8;
-          if (Math.random() < Math.max(0.15, distanceFactor))
-            grid[y][x] = 1;
+          const distanceFactor = (Math.min(y + x, dstY - y + dstX - x) / minPathLength) * 0.8;
+          if (Math.random() < Math.max(0.15, distanceFactor)) grid[y][x] = 1;
         }
       }
 
@@ -860,7 +858,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       //const prev: [[number, number] | undefined][] = new Array(height);
       const queue = new MinHeap<[number, number]>();
 
-      for(let y = 0; y < height; y++) {
+      for (let y = 0; y < height; y++) {
         distance[y] = new Array(width).fill(Infinity) as [number];
         //prev[y] = new Array(width).fill(undefined) as [undefined];
       }
@@ -871,10 +869,10 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
 
       // List in-bounds and passable neighbors
       function* neighbors(y: number, x: number): Generator<[number, number]> {
-        if(validPosition(y - 1, x)) yield [y - 1, x]; // Up
-        if(validPosition(y + 1, x)) yield [y + 1, x]; // Down
-        if(validPosition(y, x - 1)) yield [y, x - 1]; // Left
-        if(validPosition(y, x + 1)) yield [y, x + 1]; // Right
+        if (validPosition(y - 1, x)) yield [y - 1, x]; // Up
+        if (validPosition(y + 1, x)) yield [y + 1, x]; // Down
+        if (validPosition(y, x - 1)) yield [y, x - 1]; // Left
+        if (validPosition(y, x + 1)) yield [y, x + 1]; // Right
       }
 
       // Prepare starting point
@@ -882,15 +880,16 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       queue.push([0, 0], 0);
 
       // Take next-nearest position and expand potential paths from there
-      while(queue.size > 0) {
+      while (queue.size > 0) {
         const [y, x] = queue.pop() as [number, number];
-        for(const [yN, xN] of neighbors(y, x)) {
+        for (const [yN, xN] of neighbors(y, x)) {
           const d = distance[y][x] + 1;
-          if(d < distance[yN][xN]) {
-            if(distance[yN][xN] == Infinity) // Not reached previously
+          if (d < distance[yN][xN]) {
+            if (distance[yN][xN] == Infinity)
+              // Not reached previously
               queue.push([yN, xN], d);
-            else // Found a shorter path
-              queue.changeWeight(([yQ, xQ]) => yQ == yN && xQ == xN, d);
+            // Found a shorter path
+            else queue.changeWeight(([yQ, xQ]) => yQ == yN && xQ == xN, d);
             //prev[yN][xN] = [y, x];
             distance[yN][xN] = d;
           }
@@ -898,27 +897,33 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       }
 
       // No path at all?
-      if(distance[dstY][dstX] == Infinity)
-        return ans == "";
+      if (distance[dstY][dstX] == Infinity) return ans == "";
 
       // There is a solution, require that the answer path is as short as the shortest
       // path we found
-      if(ans.length > distance[dstY][dstX])
-        return false;
+      if (ans.length > distance[dstY][dstX]) return false;
 
       // Further verify that the answer path is a valid path
       let ansX = 0;
       let ansY = 0;
-      for(const direction of ans) {
-        switch(direction) {
-          case "U": ansY -= 1; break;
-          case "D": ansY += 1; break;
-          case "L": ansX -= 1; break;
-          case "R": ansX += 1; break;
-          default: return false; // Invalid character
+      for (const direction of ans) {
+        switch (direction) {
+          case "U":
+            ansY -= 1;
+            break;
+          case "D":
+            ansY += 1;
+            break;
+          case "L":
+            ansX -= 1;
+            break;
+          case "R":
+            ansX += 1;
+            break;
+          default:
+            return false; // Invalid character
         }
-        if(!validPosition(ansY, ansX))
-          return false;
+        if (!validPosition(ansY, ansX)) return false;
       }
 
       // Path was valid, finally verify that the answer path brought us to the end coordinates

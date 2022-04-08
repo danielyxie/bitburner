@@ -6,7 +6,6 @@ import { startWorkerScript } from "../NetscriptWorker";
 import { Augmentation } from "../Augmentation/Augmentation";
 import { Augmentations } from "../Augmentation/Augmentations";
 import { augmentationExists, installAugmentations } from "../Augmentation/AugmentationHelpers";
-import { prestigeAugmentation } from "../Prestige";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { killWorkerScript } from "../Netscript/killWorkerScript";
 import { CONSTANTS } from "../Constants";
