@@ -11,7 +11,7 @@ type ExternalAPI = {
 };
 
 type InternalFunction<F extends (...args: unknown[]) => unknown> = (
-  ctx: NetscriptContext
+  ctx: NetscriptContext,
 ) => (...args: unknown[]) => ReturnType<F>;
 export type InternalAPI<API> = {
   [Property in keyof API]: API[Property] extends ExternalFunction
@@ -65,7 +65,7 @@ function wrapFunction(
   func: (_ctx: NetscriptContext) => (...args: unknown[]) => unknown,
   ...tree: string[]
 ): void {
-  const functionPath = tree.join('.');
+  const functionPath = tree.join(".");
   const functionName = tree.pop();
   if (typeof functionName !== "string") {
     throw makeRuntimeRejectMsg(workerScript, "Failure occured while wrapping netscript api");
@@ -99,7 +99,7 @@ function wrapFunction(
   Object.defineProperty(parent, functionName, {
     value: wrappedFunction,
     writable: true,
-    enumerable: true
+    enumerable: true,
   });
 }
 
