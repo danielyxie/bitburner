@@ -8,6 +8,7 @@ import { Player } from "../../Player";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Augmentations } from "../Augmentations";
 import { DoubleArrow } from "@mui/icons-material";
+import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { Settings } from "../../Settings/Settings";
 
 function calculateAugmentedStats(): any {
@@ -29,7 +30,7 @@ interface BitNodeModifiedStatsProps {
 }
 
 function BitNodeModifiedStats(props: BitNodeModifiedStatsProps): React.ReactElement {
-  if (props.mult === 1)
+  if (props.mult === 1 || SourceFileFlags[5] === 0)
     return <Typography color={props.color}>{numeralWrapper.formatPercentage(props.base)}</Typography>;
 
   return (

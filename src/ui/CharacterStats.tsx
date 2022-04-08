@@ -348,23 +348,25 @@ export function CharacterStats(): React.ReactElement {
         <Paper sx={{ p: 1 }}>
           <Typography variant="h5" color="primary" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
             Multipliers
-            <Tooltip
-              title={
-                <Typography>
-                  Displays your current multipliers.
-                  <br />
-                  <br />
-                  When there is a dim number next to a multiplier, that means that the multiplier in question is being
-                  affected by BitNode multipliers.
-                  <br />
-                  <br />
-                  The dim number is the raw multiplier, and the undimmed number is the effective multiplier, as dictated
-                  by the BitNode.
-                </Typography>
-              }
-            >
-              <Info sx={{ ml: 1, mb: 0.5 }} color="info" />
-            </Tooltip>
+            {SourceFileFlags[5] > 0 && (
+              <Tooltip
+                title={
+                  <Typography>
+                    Displays your current multipliers.
+                    <br />
+                    <br />
+                    When there is a dim number next to a multiplier, that means that the multiplier in question is being
+                    affected by BitNode multipliers.
+                    <br />
+                    <br />
+                    The dim number is the raw multiplier, and the undimmed number is the effective multiplier, as
+                    dictated by the BitNode.
+                  </Typography>
+                }
+              >
+                <Info sx={{ ml: 1, mb: 0.5 }} color="info" />
+              </Tooltip>
+            )}
           </Typography>
           <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1 }}>
             <Box>
