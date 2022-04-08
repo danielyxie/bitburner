@@ -43,43 +43,51 @@ function BitNodeModifiedStats(props: BitNodeModifiedStatsProps): React.ReactElem
 interface MultListProps {
   rows: (string | number)[][];
   color: string;
+  noMargin?: boolean;
 }
 
-function MultiplierList(props: MultListProps): React.ReactElement {
-  return (
-    <List disablePadding>
-      {props.rows.map((data) => {
-        const mult = data[0] as string,
-          value = data[1] as number,
-          improved = data[2] as number | null,
-          bnMult = data[3] as number;
+function MultiplierList({ rows, color, noMargin = false }: MultListProps): React.ReactElement {
+  const listItems = rows
+    .map((data) => {
+      const mult = data[0] as string,
+        value = data[1] as number,
+        improved = data[2] as number | null,
+        bnMult = data[3] as number;
 
-        if (improved) {
-          return (
-            <ListItem key={mult} disableGutters sx={{ py: 0 }}>
-              <ListItemText
-                sx={{ my: 0.1 }}
-                primary={
-                  <Typography color={props.color}>
-                    <b>{mult}</b>
-                  </Typography>
-                }
-                secondary={
-                  <span style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-                    <BitNodeModifiedStats base={value} mult={bnMult} color={props.color} />
-                    <DoubleArrow fontSize="small" color="success" sx={{ mb: 1, mx: 1 }} />
-                    <BitNodeModifiedStats base={improved} mult={bnMult} color={Settings.theme.success} />
-                  </span>
-                }
-                disableTypography
-              />
-            </ListItem>
-          );
-        }
-        return <></>;
-      })}
-    </List>
-  );
+      if (improved) {
+        return (
+          <ListItem key={mult} disableGutters sx={{ py: 0 }}>
+            <ListItemText
+              sx={{ my: 0.1 }}
+              primary={
+                <Typography color={color}>
+                  <b>{mult}</b>
+                </Typography>
+              }
+              secondary={
+                <span style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
+                  <BitNodeModifiedStats base={value} mult={bnMult} color={color} />
+                  <DoubleArrow fontSize="small" color="success" sx={{ mb: 1, mx: 1 }} />
+                  <BitNodeModifiedStats base={improved} mult={bnMult} color={Settings.theme.success} />
+                </span>
+              }
+              disableTypography
+            />
+          </ListItem>
+        );
+      }
+      return;
+    })
+    .filter((i) => i !== undefined);
+
+  if (listItems.length > 0) {
+    return (
+      <List disablePadding sx={{ mb: noMargin ? 0 : 2 }}>
+        {listItems}
+      </List>
+    );
+  }
+  return <></>;
 }
 
 export function PlayerMultipliers(): React.ReactElement {
@@ -125,7 +133,6 @@ export function PlayerMultipliers(): React.ReactElement {
 
   return (
     <Paper sx={{ p: 1, maxHeight: 400, overflowY: "scroll" }}>
-      <Typography variant="h6">Multipliers</Typography>
       <Box>
         <MultiplierList
           rows={[
@@ -136,7 +143,6 @@ export function PlayerMultipliers(): React.ReactElement {
           ]}
           color={Settings.theme.hack}
         />
-        <br />
 
         <MultiplierList
           rows={[
@@ -155,7 +161,6 @@ export function PlayerMultipliers(): React.ReactElement {
           ]}
           color={Settings.theme.hack}
         />
-        <br />
 
         <MultiplierList
           rows={[
@@ -169,7 +174,6 @@ export function PlayerMultipliers(): React.ReactElement {
           ]}
           color={Settings.theme.combat}
         />
-        <br />
 
         <MultiplierList
           rows={[
@@ -183,7 +187,6 @@ export function PlayerMultipliers(): React.ReactElement {
           ]}
           color={Settings.theme.combat}
         />
-        <br />
 
         <MultiplierList
           rows={[
@@ -202,7 +205,6 @@ export function PlayerMultipliers(): React.ReactElement {
           ]}
           color={Settings.theme.combat}
         />
-        <br />
 
         <MultiplierList
           rows={[
@@ -216,7 +218,6 @@ export function PlayerMultipliers(): React.ReactElement {
           ]}
           color={Settings.theme.combat}
         />
-        <br />
 
         <MultiplierList
           rows={[
@@ -230,7 +231,6 @@ export function PlayerMultipliers(): React.ReactElement {
           ]}
           color={Settings.theme.cha}
         />
-        <br />
 
         <MultiplierList
           rows={[
@@ -267,7 +267,6 @@ export function PlayerMultipliers(): React.ReactElement {
           ]}
           color={Settings.theme.primary}
         />
-        <br />
 
         <MultiplierList
           rows={[
@@ -287,7 +286,6 @@ export function PlayerMultipliers(): React.ReactElement {
           ]}
           color={Settings.theme.primary}
         />
-        <br />
 
         <MultiplierList
           rows={[
@@ -301,7 +299,6 @@ export function PlayerMultipliers(): React.ReactElement {
           ]}
           color={Settings.theme.combat}
         />
-        <br />
 
         <BladeburnerMults />
       </Box>

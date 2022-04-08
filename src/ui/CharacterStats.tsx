@@ -40,11 +40,12 @@ const EmployersModal = ({ open, onClose }: EmployersModalProps): React.ReactElem
 interface MultTableProps {
   rows: (string | number)[][];
   color: string;
+  noMargin?: boolean;
 }
 
 function MultiplierTable(props: MultTableProps): React.ReactElement {
   return (
-    <Table sx={{ display: "table", width: "100%" }}>
+    <Table sx={{ display: "table", width: "100%", mb: (props.noMargin ?? false) === true ? 0 : 2 }}>
       <TableBody>
         {props.rows.map((data) => {
           const mult = data[0] as string,
@@ -89,6 +90,7 @@ function BladeburnerMults(): React.ReactElement {
         ["Bladeburner Field Analysis", player.bladeburner_analysis_mult],
       ]}
       color={Settings.theme.primary}
+      noMargin
     />
   );
 }
@@ -354,6 +356,10 @@ export function CharacterStats(): React.ReactElement {
                   <br />
                   When there is a dim number next to a multiplier, that means that the multiplier in question is being
                   affected by BitNode multipliers.
+                  <br />
+                  <br />
+                  The dim number is the raw multiplier, and the undimmed number is the effective multiplier, as dictated
+                  by the BitNode.
                 </Typography>
               }
             >
@@ -379,7 +385,6 @@ export function CharacterStats(): React.ReactElement {
                 ]}
                 color={Settings.theme.hack}
               />
-              <br />
               <MultiplierTable
                 rows={[
                   [
@@ -395,8 +400,6 @@ export function CharacterStats(): React.ReactElement {
                 ]}
                 color={Settings.theme.hack}
               />
-              <br />
-
               <MultiplierTable
                 rows={[
                   [
@@ -408,8 +411,6 @@ export function CharacterStats(): React.ReactElement {
                 ]}
                 color={Settings.theme.combat}
               />
-              <br />
-
               <MultiplierTable
                 rows={[
                   [
@@ -421,8 +422,6 @@ export function CharacterStats(): React.ReactElement {
                 ]}
                 color={Settings.theme.combat}
               />
-              <br />
-
               <MultiplierTable
                 rows={[
                   [
@@ -434,8 +433,6 @@ export function CharacterStats(): React.ReactElement {
                 ]}
                 color={Settings.theme.combat}
               />
-              <br />
-
               <MultiplierTable
                 rows={[
                   [
@@ -447,8 +444,6 @@ export function CharacterStats(): React.ReactElement {
                 ]}
                 color={Settings.theme.combat}
               />
-              <br />
-
               <MultiplierTable
                 rows={[
                   [
@@ -459,6 +454,7 @@ export function CharacterStats(): React.ReactElement {
                   ["Charisma Experience", player.charisma_exp_mult],
                 ]}
                 color={Settings.theme.cha}
+                noMargin
               />
             </Box>
 
@@ -477,8 +473,6 @@ export function CharacterStats(): React.ReactElement {
                 ]}
                 color={Settings.theme.primary}
               />
-              <br />
-
               <MultiplierTable
                 rows={[
                   ["Company reputation gain", player.company_rep_mult],
@@ -491,8 +485,6 @@ export function CharacterStats(): React.ReactElement {
                 ]}
                 color={Settings.theme.primary}
               />
-              <br />
-
               <MultiplierTable
                 rows={[
                   ["Crime success", player.crime_success_mult],
@@ -500,9 +492,7 @@ export function CharacterStats(): React.ReactElement {
                 ]}
                 color={Settings.theme.combat}
               />
-              <br />
               <BladeburnerMults />
-              <br />
             </Box>
           </Box>
         </Paper>
