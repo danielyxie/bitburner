@@ -9,7 +9,7 @@ import { AugmentationNames } from "../data/AugmentationNames";
 import { Player } from "../../Player";
 
 import { AugmentationAccordion } from "../../ui/React/AugmentationAccordion";
-import { List, Paper } from "@mui/material";
+import { List, Paper, ListItemText, ListItem, Tooltip, Typography } from "@mui/material";
 
 export function PurchasedAugmentations(): React.ReactElement {
   const augs: React.ReactElement[] = [];
@@ -23,18 +23,49 @@ export function PurchasedAugmentations(): React.ReactElement {
   }
   for (let i = 0; i < Player.queuedAugmentations.length; i++) {
     const ownedAug = Player.queuedAugmentations[i];
+    let displayName = ownedAug.name;
+
     if (ownedAug.name === AugmentationNames.NeuroFluxGovernor && i !== nfgIndex) continue;
     const aug = Augmentations[ownedAug.name];
+
     let level = null;
     if (ownedAug.name === AugmentationNames.NeuroFluxGovernor) {
       level = ownedAug.level;
+      displayName += ` - Level ${level}`;
     }
-    augs.push(<AugmentationAccordion key={aug.name} aug={aug} level={level} />);
+
+    augs.push(
+      <Tooltip
+        title={
+          <Typography>
+            {(() => {
+              const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
+              const tooltip = (
+                <>
+                  {info}
+                  <br />
+                  <br />
+                  {aug.stats}
+                </>
+              );
+              return tooltip;
+            })()}
+          </Typography>
+        }
+        enterDelay={500}
+      >
+        <ListItem key={displayName} sx={{ py: 0 }}>
+          <ListItemText primary={displayName} />
+        </ListItem>
+      </Tooltip>,
+    );
   }
 
   return (
     <Paper sx={{ p: 1, maxHeight: 400, overflowY: "scroll" }}>
-      <List dense>{augs}</List>
+      <List sx={{ height: 400, overflowY: "scroll" }} disablePadding>
+        {augs}
+      </List>
     </Paper>
   );
 }

@@ -133,7 +133,7 @@ export function PlayerMultipliers(): React.ReactElement {
   }
 
   return (
-    <Paper sx={{ p: 1, maxHeight: 400, overflowY: "scroll" }}>
+    <Paper sx={{ p: 1, maxHeight: 400, overflowY: "scroll", display: "grid", gridTemplateColumns: "repeat(2, 1fr)" }}>
       <Box>
         <MultiplierList
           rows={[
@@ -232,7 +232,9 @@ export function PlayerMultipliers(): React.ReactElement {
           ]}
           color={Settings.theme.cha}
         />
+      </Box>
 
+      <Box>
         <MultiplierList
           rows={[
             [

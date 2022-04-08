@@ -179,7 +179,7 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
           </Box>
         </Paper>
         {player.queuedAugmentations.length > 0 ? (
-          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 3fr" }}>
             <PurchasedAugmentations />
             <PlayerMultipliers />
           </Box>
