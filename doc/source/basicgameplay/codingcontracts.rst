@@ -196,6 +196,23 @@ The list contains the name of (i.e. the value returned by
 |                                    | |                                                                                        |
 |                                    | | Determine how many unique paths there are from start to finish.                        |
 +------------------------------------+------------------------------------------------------------------------------------------+
+| Shortest Path in a Grid            | | You are given a 2D array of numbers (array of array of numbers) representing           |
+|                                    | | a grid. The 2D array contains 1's and 0's, where 1 represents an obstacle and          |
+|                                    | | 0 represents a free space.                                                             |
+|                                    | |                                                                                        |
+|                                    | | Assume you are initially positioned in top-left corner of that grid and that you       |
+|                                    | | are trying to reach the bottom-right corner. In each step, you may move to the up,     |
+|                                    | | down, left or right. Furthermore, you cannot move onto spaces which have obstacles.    |
+|                                    | |                                                                                        |
+|                                    | | Determine if paths exist from start to destination, and find the shortest one.         |
+|                                    | |                                                                                        |
+|                                    | | Examples:                                                                              |
+|                                    | |  [[0,1,0,0,0],                                                                         |
+|                                    | |   [0,0,0,1,0]] -> "DRRURRD"                                                            |
+|                                    | |  [[0,1],                                                                               |
+|                                    | |   [1,0]]       -> ""                                                                   |
+|                                    | |                                                                                        |
++------------------------------------+------------------------------------------------------------------------------------------+
 | Sanitize Parentheses in Expression | | Given a string with parentheses and letters, remove the minimum number of invalid      |
 |                                    | | parentheses in order to validate the string. If there are multiple minimal ways        |
 |                                    | | to validate the string, provide all of the possible results.                           |
