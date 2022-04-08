@@ -14,11 +14,12 @@ interface SfMinus1 {
   info: React.ReactElement;
   n: number;
   name: string;
+  lvl: number;
 }
 
 const safeGetSf = (sfNum: number): SourceFile | SfMinus1 | null => {
   if (sfNum === -1) {
-    return {
+    const sfMinus1: SfMinus1 = {
       info: (
         <>
           This Source-File can only be acquired with obscure knowledge of the game, javascript, and the web ecosystem.
@@ -42,6 +43,7 @@ const safeGetSf = (sfNum: number): SourceFile | SfMinus1 | null => {
       n: -1,
       name: "Source-File -1: Exploits in the BitNodes",
     };
+    return sfMinus1;
   }
 
   const srcFileKey = "SourceFile" + sfNum;
@@ -53,9 +55,31 @@ const safeGetSf = (sfNum: number): SourceFile | SfMinus1 | null => {
   return sfObj;
 };
 
+const getMaxLevel = (sfObj: SourceFile | SfMinus1): string | number => {
+  let maxLevel;
+  switch (sfObj.n) {
+    case 12:
+      maxLevel = "∞";
+      break;
+    case -1:
+      maxLevel = Object.keys(Exploit).length;
+      break;
+    default:
+      maxLevel = "3";
+  }
+  return maxLevel;
+};
+
 export function SourceFilesElement(): React.ReactElement {
   const sourceSfs = Player.sourceFiles.slice();
   const exploits = Player.exploits;
+  // Create a fake SF for -1, if "owned"
+  if (exploits.length > 0) {
+    sourceSfs.unshift({
+      n: -1,
+      lvl: exploits.length,
+    });
+  }
 
   if (Settings.OwnedAugmentationsOrder === OwnedAugmentationsOrderSetting.Alphabetically) {
     sourceSfs.sort((sf1, sf2) => {
@@ -63,11 +87,11 @@ export function SourceFilesElement(): React.ReactElement {
     });
   }
 
-  const [selectedSf, setSelectedSf] = useState<any>(sourceSfs[0]);
-
   if (sourceSfs.length === 0) {
     return <></>;
   }
+
+  const [selectedSf, setSelectedSf] = useState(sourceSfs[0]);
 
   return (
     <Box sx={{ width: "100%", mt: 1 }}>
@@ -80,29 +104,11 @@ export function SourceFilesElement(): React.ReactElement {
             sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}
             disablePadding
           >
-            {exploits.length > 0 && (
-              <ListItemButton
-                key={-1}
-                onClick={() => setSelectedSf({ n: -1, lvl: exploits.length })}
-                selected={selectedSf.n === -1}
-                sx={{ py: 0 }}
-              >
-                <ListItemText
-                  disableTypography
-                  primary={<Typography>Source-File -1: Exploits in the BitNodes</Typography>}
-                  secondary={
-                    <Typography>
-                      Level {exploits.length} / {Object.keys(Exploit).length}
-                    </Typography>
-                  }
-                />
-              </ListItemButton>
-            )}
-
             {sourceSfs.map((e, i) => {
               const sfObj = safeGetSf(e.n);
               if (!sfObj) return;
-              const maxLevel = sfObj?.n === 12 ? "∞" : "3";
+
+              const maxLevel = getMaxLevel(sfObj);
 
               return (
                 <ListItemButton key={i + 1} onClick={() => setSelectedSf(e)} selected={selectedSf === e} sx={{ py: 0 }}>
@@ -129,24 +135,14 @@ export function SourceFilesElement(): React.ReactElement {
               const sfObj = safeGetSf(selectedSf.n);
               if (!sfObj) return;
 
-              let maxLevel;
-              switch (sfObj?.n) {
-                case 12:
-                  maxLevel = "∞";
-                  break;
-                case -1:
-                  maxLevel = Object.keys(Exploit).length;
-                  break;
-                default:
-                  maxLevel = "3";
-              }
+              const maxLevel = getMaxLevel(sfObj);
 
               return (
                 <>
                   Level {selectedSf.lvl} / {maxLevel}
                   <br />
                   <br />
-                  {sfObj?.info}
+                  {sfObj.info}
                 </>
               );
             })()}
