@@ -74,7 +74,7 @@ export function SourceFilesElement(): React.ReactElement {
         <Paper sx={{ display: "grid", gridTemplateColumns: "1fr 3fr" }}>
           <Box>
             <List
-              sx={{ maxHeight: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}
+              sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}
               disablePadding
             >
               {exploits.length > 0 && (
@@ -126,7 +126,7 @@ export function SourceFilesElement(): React.ReactElement {
             <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
               {safeGetSf(selectedSf.n)?.name}
             </Typography>
-            <Typography sx={{ maxHeight: 305, overflowY: "scroll" }}>
+            <Typography sx={{ maxHeight: 350, overflowY: "scroll" }}>
               {(() => {
                 const sfObj = safeGetSf(selectedSf.n);
                 if (!sfObj) return;

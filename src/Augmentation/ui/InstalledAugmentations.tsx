@@ -63,7 +63,7 @@ export function InstalledAugmentations(): React.ReactElement {
       {sourceAugs.length > 0 ? (
         <Paper sx={{ display: "grid", gridTemplateColumns: "1fr 3fr" }}>
           <Box>
-            <List sx={{ maxHeight: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
+            <List sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
               {sourceAugs
                 .filter((aug) => aug.name !== AugmentationNames.NeuroFluxGovernor)
                 .map((k, i) => (
@@ -77,7 +77,7 @@ export function InstalledAugmentations(): React.ReactElement {
             <Typography variant="h6" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
               {selectedAug.name}
             </Typography>
-            <Typography sx={{ maxHeight: 305, overflowY: "scroll" }}>
+            <Typography sx={{ maxHeight: 350, overflowY: "scroll" }}>
               {(() => {
                 const aug = Augmentations[selectedAug.name];
 
