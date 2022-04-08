@@ -2,13 +2,11 @@
  * React component for displaying all of the player's purchased (but not installed)
  * Augmentations on the Augmentations UI.
  */
+import { List, ListItemText, Paper, Tooltip, Typography } from "@mui/material";
 import * as React from "react";
-
+import { Player } from "../../Player";
 import { Augmentations } from "../Augmentations";
 import { AugmentationNames } from "../data/AugmentationNames";
-import { Player } from "../../Player";
-
-import { List, Paper, ListItemText, ListItem, Tooltip, Typography } from "@mui/material";
 
 export function PurchasedAugmentations(): React.ReactElement {
   const augs: React.ReactElement[] = [];
@@ -54,15 +52,13 @@ export function PurchasedAugmentations(): React.ReactElement {
         enterNextDelay={500}
         key={displayName}
       >
-        <ListItem sx={{ py: 0 }}>
-          <ListItemText primary={displayName} />
-        </ListItem>
+        <ListItemText sx={{ px: 2, py: 1 }} primary={displayName} />
       </Tooltip>,
     );
   }
 
   return (
-    <Paper sx={{ p: 1, maxHeight: 400, overflowY: "scroll" }}>
+    <Paper sx={{ py: 1, maxHeight: 400, overflowY: "scroll" }}>
       <List sx={{ height: 400, overflowY: "scroll" }} disablePadding>
         {augs}
       </List>
