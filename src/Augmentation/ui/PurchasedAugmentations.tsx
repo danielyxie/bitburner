@@ -8,7 +8,6 @@ import { Augmentations } from "../Augmentations";
 import { AugmentationNames } from "../data/AugmentationNames";
 import { Player } from "../../Player";
 
-import { AugmentationAccordion } from "../../ui/React/AugmentationAccordion";
 import { List, Paper, ListItemText, ListItem, Tooltip, Typography } from "@mui/material";
 
 export function PurchasedAugmentations(): React.ReactElement {
@@ -53,8 +52,9 @@ export function PurchasedAugmentations(): React.ReactElement {
           </Typography>
         }
         enterDelay={500}
+        key={displayName}
       >
-        <ListItem key={displayName} sx={{ py: 0 }}>
+        <ListItem sx={{ py: 0 }}>
           <ListItemText primary={displayName} />
         </ListItem>
       </Tooltip>,
