@@ -212,7 +212,7 @@ export function NetscriptSingularity(
 
       workerScript.log("softReset", () => "Soft resetting. This will cause this script to be killed");
       setTimeout(() => {
-        prestigeAugmentation();
+        installAugmentations(true);
         runAfterReset(cbScript);
       }, 0);
 
