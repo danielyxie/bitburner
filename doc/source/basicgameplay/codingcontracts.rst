@@ -96,6 +96,12 @@ The list contains the name of (i.e. the value returned by
 | Total Ways to Sum                  | | Given a number, how many different ways can that number be written as                  |
 |                                    | | a sum of at least two positive integers?                                               |
 +------------------------------------+------------------------------------------------------------------------------------------+
+| Total Ways to Sum II               | | You are given an array with two elements. The first element is an integer n.           |
+|                                    | | The second element is an array of numbers representing set of available integers.      |
+|                                    | | How many different ways can that number n be written as                                |
+|                                    | | a sum of integers containing in a given set?                                           |
+|                                    | | You can use same integer from a set infinitely many times.                             |
++------------------------------------+------------------------------------------------------------------------------------------+
 | Spiralize Matrix                   | | Given an array of array of numbers representing a 2D matrix, return the                |
 |                                    | | elements of that matrix in clockwise spiral order.                                     |
 |                                    | |                                                                                        |

@@ -148,6 +148,51 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
   },
   {
+    desc: (data: any[]): string => {
+      const n: number = data[0];
+      const s: number[] = data[1];
+      return [
+        `How many different ways can the number ${n} be written`,
+        "as a sum of integers containing in set\n\n",
+        `[${s}]?\n\n`,
+        "You can use same integer from a set infinitely many times.",
+      ].join(" ");
+    },
+    difficulty: 2,
+    gen: (): any[] => {
+      const n: number = getRandomInt(8, 200);
+      const maxLen: number = getRandomInt(8, 12);
+      let s: number[] = [];
+      while (s.length < 4) {
+        s = [];
+        for (let i = 1; i <= n; i++) {
+          if (s.length == maxLen) {
+            break;
+          }
+          if (Math.random() < 0.6) {
+            s.push(i);
+          }
+        }
+      }
+      return [n, s];
+    },
+    name: "Total Ways to Sum II",
+    numTries: 10,
+    solver: (data: any[], ans: string): boolean => {
+      const n: number = data[0];
+      const s: number[] = data[1];
+      const ways: number[] = [1];
+      ways.length = n + 1;
+      ways.fill(0, 1);
+      for (let i = 0; i < s.length; i++) {
+        for (let j = s[i]; j <= n; j++) {
+          ways[j] += ways[j - s[i]];
+        }
+      }
+      return ways[n] === parseInt(ans, 10);
+    },
+  },
+  {
     desc: (n: number[][]): string => {
       let d: string = [
         "Given the following array of arrays of numbers representing a 2D matrix,",
