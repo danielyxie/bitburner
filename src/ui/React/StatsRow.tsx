@@ -37,7 +37,7 @@ export const StatsRow = ({ name, color, classes = useStyles(), children, data }:
         <Typography style={{ color: color }}>{name}</Typography>
       </TableCell>
       <TableCell align="right" classes={{ root: classes.cellNone }}>
-        <Typography style={{ color: color }}>{content}</Typography>
+        {content ? <Typography style={{ color: color }}>{content}</Typography> : <></>}
         {children}
       </TableCell>
     </TableRow>

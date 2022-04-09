@@ -236,7 +236,7 @@ export function CharacterStats(): React.ReactElement {
                   </IconButton>
                 </>
               </StatsRow>
-              {player.companyName && (
+              {player.companyName ? (
                 <>
                   <StatsRow
                     name="Last Employer"
@@ -249,8 +249,10 @@ export function CharacterStats(): React.ReactElement {
                     data={{ content: player.jobs[player.companyName] }}
                   />
                 </>
+              ) : (
+                <></>
               )}
-              {player.jobs && Object.keys(player.jobs).length !== 0 && (
+              {player.jobs && Object.keys(player.jobs).length !== 0 ? (
                 <StatsRow name="All Employers" color={Settings.theme.primary} data={{}}>
                   <>
                     <span style={{ color: Settings.theme.primary }}>{Object.keys(player.jobs).length} total</span>
@@ -259,6 +261,8 @@ export function CharacterStats(): React.ReactElement {
                     </IconButton>
                   </>
                 </StatsRow>
+              ) : (
+                <></>
               )}
               <StatsRow
                 name="Servers Owned"
