@@ -34,6 +34,7 @@ interface IBitNodeModifiedStatsProps {
 }
 
 function BitNodeModifiedStats(props: IBitNodeModifiedStatsProps): React.ReactElement {
+  // If player doesn't have SF5 or if the property isn't affected by BitNode mults
   if (props.mult === 1 || SourceFileFlags[5] === 0)
     return <Typography color={props.color}>{numeralWrapper.formatPercentage(props.base)}</Typography>;
 
@@ -55,33 +56,28 @@ type MultiplierListItemData = [
 
 interface IMultiplierListProps {
   rows: MultiplierListItemData[];
-  noMargin?: boolean;
 }
 
-function MultiplierList({ rows, noMargin = false }: IMultiplierListProps): React.ReactElement {
-  const listItems = rows
+function MultiplierList(props: IMultiplierListProps): React.ReactElement {
+  const listItems = props.rows
     .map((data) => {
-      const mult = data[0],
-        value = data[1],
-        improved = data[2],
-        bnMult = data[3],
-        color = data[4];
+      const [multiplier, currentValue, augmentedValue, bitNodeMultiplier, color] = data;
 
-      if (improved) {
+      if (!isNaN(augmentedValue)) {
         return (
-          <ListItem key={mult} disableGutters sx={{ py: 0 }}>
+          <ListItem key={multiplier} disableGutters sx={{ py: 0 }}>
             <ListItemText
               sx={{ my: 0.1 }}
               primary={
                 <Typography color={color}>
-                  <b>{mult}</b>
+                  <b>{multiplier}</b>
                 </Typography>
               }
               secondary={
                 <span style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-                  <BitNodeModifiedStats base={value} mult={bnMult} color={color} />
+                  <BitNodeModifiedStats base={currentValue} mult={bitNodeMultiplier} color={color} />
                   <DoubleArrow fontSize="small" color="success" sx={{ mb: 0.5, mx: 1 }} />
-                  <BitNodeModifiedStats base={improved} mult={bnMult} color={Settings.theme.success} />
+                  <BitNodeModifiedStats base={augmentedValue} mult={bitNodeMultiplier} color={Settings.theme.success} />
                 </span>
               }
               disableTypography
@@ -93,19 +89,14 @@ function MultiplierList({ rows, noMargin = false }: IMultiplierListProps): React
     })
     .filter((i) => i !== undefined);
 
-  if (listItems.length > 0) {
-    return (
-      <List disablePadding sx={{ mb: noMargin ? 0 : 2 }}>
-        {listItems}
-      </List>
-    );
-  }
-  return <></>;
+  return listItems.length > 0 ? <List disablePadding>{listItems}</List> : <></>;
 }
 
 export function PlayerMultipliers(): React.ReactElement {
   const mults = calculateAugmentedStats();
 
+  // Column data is a bit janky, so it's set up here to allow for
+  // easier logic in setting up the layout
   const leftColData: MultiplierListItemData[] = [
     ...[
       ["Hacking Chance ", Player.hacking_chance_mult, Player.hacking_chance_mult * mults.hacking_chance_mult, 1],
