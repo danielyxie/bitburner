@@ -111,7 +111,12 @@ export function SourceFilesElement(): React.ReactElement {
               const maxLevel = getMaxLevel(sfObj);
 
               return (
-                <ListItemButton key={i + 1} onClick={() => setSelectedSf(e)} selected={selectedSf === e} sx={{ py: 0 }}>
+                <ListItemButton
+                  key={i + 1}
+                  onClick={() => setSelectedSf(e)}
+                  selected={selectedSf.n === e.n}
+                  sx={{ py: 0 }}
+                >
                   <ListItemText
                     disableTypography
                     primary={<Typography>{sfObj.name}</Typography>}
