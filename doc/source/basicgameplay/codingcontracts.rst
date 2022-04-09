@@ -115,6 +115,16 @@ The list contains the name of (i.e. the value returned by
 |                                    | | Assuming you are initially positioned at the start of the array, determine             |
 |                                    | | whether you are able to reach the last index of the array.                             |
 +------------------------------------+------------------------------------------------------------------------------------------+
+| Array Jumping Game II              | | You are given an array of integers where each element represents the                   |
+|                                    | | maximum possible jump distance from that position. For example, if you                 |
+|                                    | | are at position i and your maximum jump length is n, then you can jump                 |
+|                                    | | to any position from i to i+n.                                                         |
+|                                    | |                                                                                        |
+|                                    | | Assuming you are initially positioned at the start of the array, determine             |
+|                                    | | the minimum number of jumps to reach the end of the array.                             |
+|                                    | |                                                                                        |
+|                                    | | If it's impossible to reach the end, then the answer should be 0.                      |
++------------------------------------+------------------------------------------------------------------------------------------+
 | Merge Overlapping Intervals        | | Given an array of intervals, merge all overlapping intervals. An interval              |
 |                                    | | is an array with two numbers, where the first number is always less than               |
 |                                    | | the second (e.g. [1, 5]).                                                              |

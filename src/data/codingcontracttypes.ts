@@ -313,6 +313,62 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
   },
   {
+    desc: (arr: number[]): string => {
+      return [
+        "You are given the following array of integers:\n\n",
+        `${arr}\n\n`,
+        "Each element in the array represents your MAXIMUM jump length",
+        "at that position. This means that if you are at position i and your",
+        "maximum jump length is n, you can jump to any position from",
+        "i to i+n.",
+        "\n\nAssuming you are initially positioned",
+        "at the start of the array, determine the minimum number of",
+        "jumps to reach the end of the array.\n\n",
+        "If it's impossible to reach the end, then the answer should be 0.",
+      ].join(" ");
+    },
+    difficulty: 3,
+    gen: (): number[] => {
+      const len: number = getRandomInt(3, 25);
+      const arr: number[] = [];
+      arr.length = len;
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < 10; j++) {
+          if (Math.random() <= j / 10 + 0.1) {
+            arr[i] = j;
+            break;
+          }
+        }
+      }
+
+      return arr;
+    },
+    name: "Array Jumping Game II",
+    numTries: 3,
+    solver: (data: number[], ans: string): boolean => {
+      const n: number = data.length;
+      let reach = 0;
+      let jumps = 0;
+      let lastJump = -1;
+      while (reach < n - 1) {
+        let jumpedFrom = -1;
+        for (let i = reach; i > lastJump; i--) {
+          if (i + data[i] > reach) {
+            reach = i + data[i];
+            jumpedFrom = i;
+          }
+        }
+        if (jumpedFrom === -1) {
+          jumps = 0;
+          break;
+        }
+        lastJump = jumpedFrom;
+        jumps++;
+      }
+      return jumps === parseInt(ans, 10);
+    },
+  },
+  {
     desc: (arr: number[][]): string => {
       return [
         "Given the following array of array of numbers representing a list of",
