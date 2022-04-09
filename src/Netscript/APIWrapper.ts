@@ -10,9 +10,7 @@ type ExternalAPI = {
   [string: string]: ExternalAPI | ExternalFunction;
 };
 
-type InternalFunction<F extends (...args: unknown[]) => unknown> = (
-  ctx: NetscriptContext,
-) => (...args: unknown[]) => ReturnType<F>;
+type InternalFunction<F extends (...args: unknown[]) => unknown> = (ctx: NetscriptContext) => F;
 export type InternalAPI<API> = {
   [Property in keyof API]: API[Property] extends ExternalFunction
     ? InternalFunction<API[Property]>
@@ -23,7 +21,7 @@ export type InternalAPI<API> = {
 
 type WrappedNetscriptFunction = (...args: unknown[]) => unknown;
 type WrappedNetscriptAPI = {
-  [string: string]: WrappedNetscriptAPI | WrappedNetscriptFunction;
+  readonly [string: string]: WrappedNetscriptAPI | WrappedNetscriptFunction;
 };
 
 export type NetscriptContext = {
@@ -47,7 +45,6 @@ type NetscriptHelpers = {
 };
 
 type WrappedNetscriptHelpers = {
-  updateDynamicRam: (ramCost: number) => void;
   makeRuntimeErrorMsg: (msg: string) => string;
   string: (argName: string, v: unknown) => string;
   number: (argName: string, v: unknown) => number;
@@ -80,7 +77,6 @@ function wrapFunction(
     workerScript,
     function: functionName,
     helper: {
-      updateDynamicRam: (ramCost: number) => helpers.updateDynamicRam(functionName, ramCost),
       makeRuntimeErrorMsg: (msg: string) => helpers.makeRuntimeErrorMsg(functionPath, msg),
       string: (argName: string, v: unknown) => helpers.string(functionPath, argName, v),
       number: (argName: string, v: unknown) => helpers.number(functionPath, argName, v),
