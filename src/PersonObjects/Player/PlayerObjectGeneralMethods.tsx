@@ -62,7 +62,7 @@ import { Money } from "../../ui/React/Money";
 
 import React from "react";
 import { serverMetadata } from "../../Server/data/servers";
-import { SnackbarEvents } from "../../ui/React/Snackbar";
+import { SnackbarEvents, SnackbarVariant } from "../../ui/React/Snackbar";
 import { calculateClassEarnings } from "../formulas/work";
 import { achievements } from "../../Achievements/Achievements";
 import { FactionNames } from "../../Faction/data/FactionNames";
@@ -1734,7 +1734,11 @@ export function regenerateHp(this: IPlayer, amt: number): void {
 
 export function hospitalize(this: IPlayer): number {
   const cost = getHospitalizationCost(this);
-  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, "warning", 2000);
+  SnackbarEvents.emit(
+    `You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`,
+    SnackbarVariant.WARNING,
+    2000,
+  );
 
   this.loseMoney(cost, "hospitalization");
   this.hp = this.max_hp;
@@ -2709,7 +2713,7 @@ export function canAccessGrafting(this: IPlayer): boolean {
 export function giveExploit(this: IPlayer, exploit: Exploit): void {
   if (!this.exploits.includes(exploit)) {
     this.exploits.push(exploit);
-    SnackbarEvents.emit("SF -1 acquired!", "success", 2000);
+    SnackbarEvents.emit("SF -1 acquired!", SnackbarVariant.SUCCESS, 2000);
   }
 }
 
@@ -2718,7 +2722,7 @@ export function giveAchievement(this: IPlayer, achievementId: string): void {
   if (!achievement) return;
   if (!this.achievements.map((a) => a.ID).includes(achievementId)) {
     this.achievements.push({ ID: achievementId, unlockedOn: new Date().getTime() });
-    SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, "success", 2000);
+    SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, SnackbarVariant.SUCCESS, 2000);
   }
 }
 
