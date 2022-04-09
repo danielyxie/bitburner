@@ -1488,7 +1488,7 @@ export const initGeneralAugmentations = (): Augmentation[] => [
   // Grafting-exclusive Augmentation
   new Augmentation({
     name: AugmentationNames.CongruityImplant,
-    repCost: 0,
+    repCost: Infinity,
     moneyCost: 50e12,
     info:
       "Developed by a pioneer in Grafting research, this implant " +
