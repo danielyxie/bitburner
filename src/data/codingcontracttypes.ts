@@ -153,7 +153,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       const s: number[] = data[1];
       return [
         `How many different distinct ways can the number ${n} be written`,
-        "as a sum of integers containing in the set\n\n",
+        "as a sum of integers contained in the set:\n\n",
         `[${s}]?\n\n`,
         "You may use each integer in the set zero or more times.",
       ].join(" ");

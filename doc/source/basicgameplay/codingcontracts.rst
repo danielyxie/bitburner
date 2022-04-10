@@ -99,7 +99,7 @@ The list contains the name of (i.e. the value returned by
 | Total Ways to Sum II               | | You are given an array with two elements. The first element is an integer n.           |
 |                                    | | The second element is an array of numbers representing the set of available integers.  |
 |                                    | | How many different distinct ways can that number n be written as                       |
-|                                    | | a sum of integers containing in the given set?                                         |
+|                                    | | a sum of integers contained in the given set?                                          |
 |                                    | | You may use each integer in the set zero or more times.                                |
 +------------------------------------+------------------------------------------------------------------------------------------+
 | Spiralize Matrix                   | | Given an array of array of numbers representing a 2D matrix, return the                |
