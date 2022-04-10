@@ -8,7 +8,7 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  Typography
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
