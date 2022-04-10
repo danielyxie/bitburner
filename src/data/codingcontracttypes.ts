@@ -124,7 +124,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "&nbsp;&nbsp;&nbsp;&nbsp;2 + 2\n",
         "&nbsp;&nbsp;&nbsp;&nbsp;2 + 1 + 1\n",
         "&nbsp;&nbsp;&nbsp;&nbsp;1 + 1 + 1 + 1\n\n",
-        `How many different ways can the number ${n} be written as a sum of at least`,
+        `How many different distinct ways can the number ${n} be written as a sum of at least`,
         "two positive integers?",
       ].join(" ");
     },
@@ -148,39 +148,39 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     },
   },
   {
-    desc: (data: any[]): string => {
+    desc: (data: [number, number[]]): string => {
       const n: number = data[0];
       const s: number[] = data[1];
       return [
-        `How many different ways can the number ${n} be written`,
-        "as a sum of integers containing in set\n\n",
+        `How many different distinct ways can the number ${n} be written`,
+        "as a sum of integers containing in the set\n\n",
         `[${s}]?\n\n`,
-        "You can use same integer from a set infinitely many times.",
+        "You may use each integer in the set zero or more times.",
       ].join(" ");
     },
     difficulty: 2,
-    gen: (): any[] => {
-      const n: number = getRandomInt(8, 200);
+    gen: (): [number, number[]] => {
+      const n: number = getRandomInt(12, 200);
       const maxLen: number = getRandomInt(8, 12);
-      let s: number[] = [];
-      while (s.length < 4) {
-        s = [];
-        for (let i = 1; i <= n; i++) {
-          if (s.length == maxLen) {
-            break;
-          }
-          if (Math.random() < 0.6) {
-            s.push(i);
-          }
+      const s: number[] = [];
+      // Bias towards small numbers is intentional to have much bigger answers in general
+      // to force people better optimize their solutions
+      for (let i = 1; i <= n; i++) {
+        if (s.length == maxLen) {
+          break;
+        }
+        if (Math.random() < 0.6 || n - i < maxLen - s.length) {
+          s.push(i);
         }
       }
       return [n, s];
     },
     name: "Total Ways to Sum II",
     numTries: 10,
-    solver: (data: any[], ans: string): boolean => {
-      const n: number = data[0];
-      const s: number[] = data[1];
+    solver: (data: [number, number[]], ans: string): boolean => {
+      // https://www.geeksforgeeks.org/coin-change-dp-7/?ref=lbp
+      const n = data[0];
+      const s = data[1];
       const ways: number[] = [1];
       ways.length = n + 1;
       ways.fill(0, 1);

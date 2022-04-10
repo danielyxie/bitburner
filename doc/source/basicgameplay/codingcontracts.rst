@@ -93,14 +93,14 @@ The list contains the name of (i.e. the value returned by
 | Subarray with Maximum Sum          | | Given an array of integers, find the contiguous subarray (containing                   |
 |                                    | | at least one number) which has the largest sum and return that sum.                    |
 +------------------------------------+------------------------------------------------------------------------------------------+
-| Total Ways to Sum                  | | Given a number, how many different ways can that number be written as                  |
+| Total Ways to Sum                  | | Given a number, how many different distinct ways can that number be written as         |
 |                                    | | a sum of at least two positive integers?                                               |
 +------------------------------------+------------------------------------------------------------------------------------------+
 | Total Ways to Sum II               | | You are given an array with two elements. The first element is an integer n.           |
-|                                    | | The second element is an array of numbers representing set of available integers.      |
-|                                    | | How many different ways can that number n be written as                                |
-|                                    | | a sum of integers containing in a given set?                                           |
-|                                    | | You can use same integer from a set infinitely many times.                             |
+|                                    | | The second element is an array of numbers representing the set of available integers.  |
+|                                    | | How many different distinct ways can that number n be written as                       |
+|                                    | | a sum of integers containing in the given set?                                         |
+|                                    | | You may use each integer in the set zero or more times.                                |
 +------------------------------------+------------------------------------------------------------------------------------------+
 | Spiralize Matrix                   | | Given an array of array of numbers representing a 2D matrix, return the                |
 |                                    | | elements of that matrix in clockwise spiral order.                                     |
