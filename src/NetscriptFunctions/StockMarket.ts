@@ -3,7 +3,7 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { getRamCost } from "../Netscript/RamCostGenerator";
 import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";
-import { StockMarket, SymbolToStockMap, placeOrder, cancelOrder } from "../StockMarket/StockMarket";
+import { StockMarket, SymbolToStockMap, placeOrder, cancelOrder, initStockMarketFn } from "../StockMarket/StockMarket";
 import { getBuyTransactionCost, getSellTransactionGain } from "../StockMarket/StockMarketHelpers";
 import { OrderTypes } from "../StockMarket/data/OrderTypes";
 import { PositionTypes } from "../StockMarket/data/PositionTypes";
@@ -411,6 +411,7 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
       }
 
       player.hasWseAccount = true;
+      initStockMarketFn();
       player.loseMoney(getStockMarketWseCost(), "stock");
       workerScript.log("stock.purchaseWseAccount", () => "Purchased WSE Account Access");
       return true;
