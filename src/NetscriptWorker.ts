@@ -119,13 +119,13 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
   function wrapObject(vars: any, ...tree: string[]): void {
     for (const prop of Object.keys(vars)) {
       switch (typeof vars[prop]) {
-        case 'function': {
-          vars[prop] = wrap([...tree, prop].join('.'), vars[prop]);
+        case "function": {
+          vars[prop] = wrap([...tree, prop].join("."), vars[prop]);
           break;
         }
-        case 'object': {
+        case "object": {
           if (Array.isArray(vars[prop])) continue;
-          wrapObject(vars[prop], ...tree, prop)
+          wrapObject(vars[prop], ...tree, prop);
           break;
         }
       }
