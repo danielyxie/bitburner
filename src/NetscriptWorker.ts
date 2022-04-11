@@ -116,11 +116,22 @@ function startNetscript2Script(player: IPlayer, workerScript: WorkerScript): Pro
     };
   }
 
-  for (const prop of Object.keys(workerScript.env.vars)) {
-    if (typeof workerScript.env.vars[prop] !== "function") continue;
-    workerScript.env.vars[prop] = wrap(prop, workerScript.env.vars[prop]);
+  function wrapObject(vars: any, ...tree: string[]): void {
+    for (const prop of Object.keys(vars)) {
+      switch (typeof vars[prop]) {
+        case 'function': {
+          vars[prop] = wrap([...tree, prop].join('.'), vars[prop]);
+          break;
+        }
+        case 'object': {
+          if (Array.isArray(vars[prop])) continue;
+          wrapObject(vars[prop], ...tree, prop)
+          break;
+        }
+      }
+    }
   }
-  workerScript.env.vars.stanek.charge = wrap("stanek.charge", workerScript.env.vars.stanek.charge);
+  wrapObject(workerScript.env.vars);
 
   // Note: the environment that we pass to the JS script only needs to contain the functions visible
   // to that script, which env.vars does at this point.
