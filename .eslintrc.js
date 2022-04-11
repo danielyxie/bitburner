@@ -353,6 +353,7 @@ module.exports = {
         "no-useless-constructor": [
           "off", // Valid for typescript due to property ctor shorthand
         ],
+        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/ban-ts-ignore": "off",
         "@typescript-eslint/camelcase": "off",
