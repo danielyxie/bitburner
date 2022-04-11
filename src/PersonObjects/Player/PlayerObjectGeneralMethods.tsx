@@ -1366,15 +1366,19 @@ export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean
 export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean): string {
   const augName = this.graftAugmentationName;
   if (cancelled === false) {
-    dialogBoxCreate(
-      `You've finished crafting ${augName}.<br>The augmentation has been grafted to your body, but you feel a bit off.`,
-    );
-
     applyAugmentation(Augmentations[augName]);
-    this.entropy += 1;
-    this.applyEntropy(this.entropy);
+
+    if (!this.hasAugmentation(AugmentationNames.CongruityImplant)) {
+      this.entropy += 1;
+      this.applyEntropy(this.entropy);
+    }
+
+    dialogBoxCreate(
+      `You've finished grafting ${augName}.<br>The augmentation has been applied to your body` +
+        (this.hasAugmentation(AugmentationNames.CongruityImplant) ? "." : ", but you feel a bit off."),
+    );
   } else {
-    dialogBoxCreate(`You cancelled the crafting of ${augName}.<br>Your money was not returned to you.`);
+    dialogBoxCreate(`You cancelled the grafting of ${augName}.<br>Your money was not returned to you.`);
   }
 
   // Intelligence gain

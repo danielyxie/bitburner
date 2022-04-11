@@ -2,7 +2,6 @@
 import * as React from "react";
 import { IMap } from "../types";
 
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
 import { numeralWrapper } from "../ui/numeralFormat";
@@ -134,7 +133,7 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
       desc = (
         <>
           {desc}
-          <br />+{f(mults.charisma_mult - 1)} Charisma skill
+          <br />+{f(mults.charisma_mult - 1)} charisma skill
         </>
       );
   }

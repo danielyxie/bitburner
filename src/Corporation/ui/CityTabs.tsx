@@ -30,7 +30,7 @@ export function CityTabs(props: IProps): React.ReactElement {
   }
   return (
     <>
-      <Tabs variant="fullWidth" value={city} onChange={handleChange} sx={{ maxWidth: "65%" }}>
+      <Tabs variant="fullWidth" value={city} onChange={handleChange} sx={{ maxWidth: "65vw" }}>
         {Object.values(division.offices).map(
           (office: OfficeSpace | 0) => office !== 0 && <Tab key={office.loc} label={office.loc} value={office.loc} />,
         )}
