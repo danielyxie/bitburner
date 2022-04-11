@@ -79,7 +79,7 @@ export function NetscriptCorporation(
     if (!corporationName) return false;
     if (player.bitNodeN !== 3 && !selfFund) throw new Error("cannot use seed funds outside of BitNode 3");
     if (BitNodeMultipliers.CorporationSoftCap < 0.15)
-      throw new Error(`You cannot create a corporation for Bitnode ${player.bitNodeN}`);
+      throw new Error(`You cannot create a corporation in Bitnode ${player.bitNodeN}`);
 
     if (selfFund) {
       if (!player.canAfford(150e9)) return false;
@@ -322,6 +322,9 @@ export function NetscriptCorporation(
       const divisionName = helper.string("getUpgradeWarehouseCost", "divisionName", _divisionName);
       const cityName = helper.city("getUpgradeWarehouseCost", "cityName", _cityName);
       const amt = helper.number("getUpgradeWarehouseCost", "amount", _amt);
+      if (amt < 1) {
+        throw helper.makeRuntimeErrorMsg(`corporation.getUpgradeWarehouseCost`, "You must provide a positive number");
+      }
       const warehouse = getWarehouse(divisionName, cityName);
       return UpgradeWarehouseCost(warehouse, amt);
     },
@@ -384,12 +387,15 @@ export function NetscriptCorporation(
       const corporation = getCorporation();
       PurchaseWarehouse(corporation, getDivision(divisionName), cityName);
     },
-    upgradeWarehouse: function (_divisionName: unknown, _cityName: unknown, _amt: unknown): void {
+    upgradeWarehouse: function (_divisionName: unknown, _cityName: unknown, _amt: unknown = 1): void {
       checkAccess("upgradeWarehouse", 7);
       const divisionName = helper.string("upgradeWarehouse", "divisionName", _divisionName);
       const cityName = helper.city("upgradeWarehouse", "cityName", _cityName);
       const amt = helper.number("upgradeWarehouse", "amount", _amt);
       const corporation = getCorporation();
+      if (amt < 1) {
+        throw helper.makeRuntimeErrorMsg(`corporation.upgradeWarehouse`, "You must provide a positive number");
+      }
       UpgradeWarehouse(corporation, getDivision(divisionName), getWarehouse(divisionName, cityName), amt);
     },
     sellMaterial: function (

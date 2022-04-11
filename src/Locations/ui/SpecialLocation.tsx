@@ -307,7 +307,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       return renderGrafting();
     }
     case LocationName.Sector12CityHall: {
-      return (BitNodeMultipliers.CorporationSoftCap >= 0.15 && <></>) || <CreateCorporation />;
+      return (BitNodeMultipliers.CorporationSoftCap < 0.15 && <></>) || <CreateCorporation />;
     }
     case LocationName.Sector12NSA: {
       return renderBladeburner();
