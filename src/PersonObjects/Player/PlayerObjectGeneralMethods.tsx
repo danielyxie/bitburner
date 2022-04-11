@@ -1374,11 +1374,11 @@ export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean): 
     }
 
     dialogBoxCreate(
-      `You've finished crafting ${augName}.<br>The augmentation has been grafted to your body` +
+      `You've finished grafting ${augName}.<br>The augmentation has been applied to your body` +
         (this.hasAugmentation(AugmentationNames.CongruityImplant) ? "." : ", but you feel a bit off."),
     );
   } else {
-    dialogBoxCreate(`You cancelled the crafting of ${augName}.<br>Your money was not returned to you.`);
+    dialogBoxCreate(`You cancelled the grafting of ${augName}.<br>Your money was not returned to you.`);
   }
 
   // Intelligence gain
