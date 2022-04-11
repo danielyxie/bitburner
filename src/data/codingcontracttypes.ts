@@ -124,7 +124,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "&nbsp;&nbsp;&nbsp;&nbsp;2 + 2\n",
         "&nbsp;&nbsp;&nbsp;&nbsp;2 + 1 + 1\n",
         "&nbsp;&nbsp;&nbsp;&nbsp;1 + 1 + 1 + 1\n\n",
-        `How many different ways can the number ${n} be written as a sum of at least`,
+        `How many different distinct ways can the number ${n} be written as a sum of at least`,
         "two positive integers?",
       ].join(" ");
     },
@@ -145,6 +145,51 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       }
 
       return ways[data] === parseInt(ans, 10);
+    },
+  },
+  {
+    desc: (data: [number, number[]]): string => {
+      const n: number = data[0];
+      const s: number[] = data[1];
+      return [
+        `How many different distinct ways can the number ${n} be written`,
+        "as a sum of integers contained in the set:\n\n",
+        `[${s}]?\n\n`,
+        "You may use each integer in the set zero or more times.",
+      ].join(" ");
+    },
+    difficulty: 2,
+    gen: (): [number, number[]] => {
+      const n: number = getRandomInt(12, 200);
+      const maxLen: number = getRandomInt(8, 12);
+      const s: number[] = [];
+      // Bias towards small numbers is intentional to have much bigger answers in general
+      // to force people better optimize their solutions
+      for (let i = 1; i <= n; i++) {
+        if (s.length == maxLen) {
+          break;
+        }
+        if (Math.random() < 0.6 || n - i < maxLen - s.length) {
+          s.push(i);
+        }
+      }
+      return [n, s];
+    },
+    name: "Total Ways to Sum II",
+    numTries: 10,
+    solver: (data: [number, number[]], ans: string): boolean => {
+      // https://www.geeksforgeeks.org/coin-change-dp-7/?ref=lbp
+      const n = data[0];
+      const s = data[1];
+      const ways: number[] = [1];
+      ways.length = n + 1;
+      ways.fill(0, 1);
+      for (let i = 0; i < s.length; i++) {
+        for (let j = s[i]; j <= n; j++) {
+          ways[j] += ways[j - s[i]];
+        }
+      }
+      return ways[n] === parseInt(ans, 10);
     },
   },
   {
