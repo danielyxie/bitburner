@@ -1490,10 +1490,16 @@ export const initGeneralAugmentations = (): Augmentation[] => [
     name: AugmentationNames.CongruityImplant,
     repCost: 0,
     moneyCost: 50e12,
-    info:
-      "Developed by a pioneer in Grafting research, this implant " +
-      "generates pulses of stability which seem to have a nullifying " +
-      "effect versus the Entropy virus.",
+    info: (
+      <>
+        Developed by a pioneer in Grafting research, this implant generates pulses of stability which seem to have a
+        nullifying effect versus the Entropy virus.
+        <br />
+        <br />
+        <b>Note:</b> For unknown reasons, the lowercase <code>n</code> appears to be an integral component to its
+        functionality.
+      </>
+    ),
     stats: <>This Augmentation removes the Entropy virus, and prevents it from affecting you again.</>,
     factions: [],
   }),
