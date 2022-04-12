@@ -6938,10 +6938,14 @@ interface Employee {
 interface Product {
   /** Name of the product */
   name: string;
-  /** Demand for the product */
-  dmd: number;
-  /** Competition for the product */
-  cmp: number;
+  /** Demand for the product, only present if "Market Research - Demand" unlocked */
+  dmd: number | undefined;
+  /** Competition for the product, only present if "Market Research - Competition" unlocked */
+  cmp: number | undefined;
+  /** Product Rating */
+  rat: number;
+  /** Product Properties. The data is {qlt, per, dur, rel, aes, fea} */
+  properties: { [key: string]: number };
   /** Production cost */
   pCost: number;
   /** Sell cost, can be "MP+5" */
@@ -6965,6 +6969,10 @@ interface Material {
   qty: number;
   /** Quality of the material */
   qlt: number;
+  /** Demand for the material, only present if "Market Research - Demand" unlocked */
+  dmd: number | undefined;
+  /** Competition for the material, only present if "Market Research - Competition" unlocked */
+  cmp: number | undefined;
   /** Amount of material produced  */
   prod: number;
   /** Amount of material sold  */
