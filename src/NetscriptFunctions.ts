@@ -585,9 +585,24 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculatePercentMoneyHacked(server, Player);
     },
-    hackAnalyzeSecurity: function (_threads: unknown): number {
+    hackAnalyzeSecurity: function (_threads: unknown, hostname?: string): number {
       updateDynamicRam("hackAnalyzeSecurity", getRamCost(Player, "hackAnalyzeSecurity"));
-      const threads = helper.number("hackAnalyzeSecurity", "threads", _threads);
+      let threads = helper.number("hackAnalyzeSecurity", "threads", _threads);
+      if (hostname) {
+        const server = safeGetServer(hostname, "hackAnalyze");
+        if (!(server instanceof Server)) {
+          workerScript.log("hackAnalyzeSecurity", () => "Cannot be executed on this server.");
+          return 0;
+        }
+
+        const percentHacked = calculatePercentMoneyHacked(server, Player);
+
+        if (percentHacked > 0) {
+          // thread count is limited to the maximum number of threads needed
+          threads = Math.ceil(1 / percentHacked);
+        }
+      }
+
       return CONSTANTS.ServerFortifyAmount * threads;
     },
     hackAnalyzeChance: function (_hostname: unknown): number {
