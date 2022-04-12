@@ -242,8 +242,11 @@ export async function determineAllPossibilitiesForTabCompletion(
     // All directly connected and backdoored servers are reachable
 
     return GetAllServers()
-      .filter(server => currServ.serversOnNetwork.includes(server.hostname) || (server instanceof Server && server.backdoorInstalled))
-      .map(server => server.hostname);
+      .filter(
+        (server) =>
+          currServ.serversOnNetwork.includes(server.hostname) || (server instanceof Server && server.backdoorInstalled),
+      )
+      .map((server) => server.hostname);
   }
 
   if (isCommand("nano") || isCommand("vim")) {
