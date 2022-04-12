@@ -75,6 +75,7 @@ import { IPort } from "./NetscriptPort";
 
 import {
   NS as INS,
+  Singularity as ISingularity,
   Player as INetscriptPlayer,
   Gang as IGang,
   Bladeburner as IBladeburner,
@@ -498,7 +499,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const codingcontract = NetscriptCodingContract(Player, workerScript, helper);
   const corporation = NetscriptCorporation(Player, workerScript, helper);
   const formulas = NetscriptFormulas(Player, workerScript, helper);
-  const singularity = NetscriptSingularity(Player, workerScript, helper);
+  const singularity = wrapAPI(helper, {}, workerScript, NetscriptSingularity(Player, workerScript), "singularity")
+    .singularity as unknown as ISingularity;
   const stockmarket = NetscriptStockMarket(Player, workerScript, helper);
   const ui = NetscriptUserInterface(Player, workerScript, helper);
   const grafting = NetscriptGrafting(Player, workerScript, helper);

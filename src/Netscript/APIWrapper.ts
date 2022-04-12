@@ -4,6 +4,7 @@ import type { BaseServer } from "../Server/BaseServer";
 import type { WorkerScript } from "./WorkerScript";
 import { makeRuntimeRejectMsg } from "../NetscriptEvaluator";
 import { Player } from "../Player";
+import { CityName } from "src/Locations/data/CityNames";
 
 type ExternalFunction = (...args: any[]) => any;
 type ExternalAPI = {
@@ -37,6 +38,7 @@ type NetscriptHelpers = {
   makeRuntimeErrorMsg: (caller: string, msg: string) => string;
   string: (funcName: string, argName: string, v: unknown) => string;
   number: (funcName: string, argName: string, v: unknown) => number;
+  city: (funcName: string, argName: string, v: unknown) => CityName;
   boolean: (v: unknown) => boolean;
   getServer: (hostname: string, callingFnName: string) => BaseServer;
   checkSingularityAccess: (func: string) => void;
@@ -48,6 +50,7 @@ type WrappedNetscriptHelpers = {
   makeRuntimeErrorMsg: (msg: string) => string;
   string: (argName: string, v: unknown) => string;
   number: (argName: string, v: unknown) => number;
+  city: (argName: string, v: unknown) => CityName;
   boolean: (v: unknown) => boolean;
   getServer: (hostname: string) => BaseServer;
   checkSingularityAccess: () => void;
@@ -80,6 +83,7 @@ function wrapFunction(
       makeRuntimeErrorMsg: (msg: string) => helpers.makeRuntimeErrorMsg(functionPath, msg),
       string: (argName: string, v: unknown) => helpers.string(functionPath, argName, v),
       number: (argName: string, v: unknown) => helpers.number(functionPath, argName, v),
+      city: (argName: string, v: unknown) => helpers.city(functionPath, argName, v),
       boolean: helpers.boolean,
       getServer: (hostname: string) => helpers.getServer(hostname, functionPath),
       checkSingularityAccess: () => helpers.checkSingularityAccess(functionName),
