@@ -1462,7 +1462,10 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     getRecentScripts: function (): IRecentScript[] {
       updateDynamicRam("getRecentScripts", getRamCost(Player, "getRecentScripts"));
-      return recentScripts.map((rs) => ({ ...rs, runningScript: createPublicRunningScript(rs.runningScript) }));
+      return recentScripts.map((rs) => ({
+        timeOfDeath: rs.timeOfDeath,
+        ...createPublicRunningScript(rs.runningScript),
+      }));
     },
     ps: function (_hostname: unknown = workerScript.hostname): ProcessInfo[] {
       updateDynamicRam("ps", getRamCost(Player, "ps"));

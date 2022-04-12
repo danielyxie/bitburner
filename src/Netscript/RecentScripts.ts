@@ -5,15 +5,11 @@ import { WorkerScript } from "./WorkerScript";
 export const recentScripts: RecentScript[] = [];
 
 export function AddRecentScript(workerScript: WorkerScript): void {
-  if (recentScripts.find((r) => r.pid === workerScript.pid)) return;
+  if (recentScripts.find((r) => r.runningScript.pid === workerScript.pid)) return;
 
   const killedTime = new Date();
   recentScripts.unshift({
-    filename: workerScript.name,
-    args: workerScript.args,
-    pid: workerScript.pid,
-    timestamp: killedTime,
-    timestampEpoch: killedTime.getTime(),
+    timeOfDeath: killedTime,
     runningScript: workerScript.scriptRef,
   });
 
@@ -23,10 +19,6 @@ export function AddRecentScript(workerScript: WorkerScript): void {
 }
 
 export interface RecentScript {
-  filename: string;
-  args: string[];
-  pid: number;
-  timestamp: Date;
-  timestampEpoch: number;
+  timeOfDeath: Date;
   runningScript: RunningScript;
 }

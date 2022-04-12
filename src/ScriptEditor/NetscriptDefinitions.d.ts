@@ -136,19 +136,9 @@ export interface RunningScript {
 /**
  * @public
  */
-interface RecentScript {
-  /** Arguments the script was called with */
-  args: string[];
-  /** Filename of the script */
-  filename: string;
-  /** Process ID. Must be an integer */
-  pid: number;
+export interface RecentScript extends RunningScript {
   /** Timestamp of when the script was killed */
-  timestamp: Date;
-  /** Numeric epoch of timestamp */
-  timestampEpoch: number;
-  /** An inactive copy of the last `RunningScript` associated to the script */
-  runningScript: RunningScript;
+  timeOfDeath: Date;
 }
 
 /**

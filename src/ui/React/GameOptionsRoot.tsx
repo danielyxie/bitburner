@@ -196,7 +196,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                   value={recentScriptsSize}
                   onChange={handleRecentScriptsSizeChange}
                   step={25}
-                  min={25}
+                  min={0}
                   max={500}
                   valueLabelDisplay="auto"
                 />
