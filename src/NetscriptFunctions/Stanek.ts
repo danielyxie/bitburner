@@ -12,7 +12,7 @@ import {
   Stanek as IStanek,
 } from "../ScriptEditor/NetscriptDefinitions";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
-import { NetscriptContext, InternalAPI } from "src/Netscript/APIWrapper";
+import { NetscriptContext, InternalAPI } from "../Netscript/APIWrapper";
 
 export function NetscriptStanek(
   player: IPlayer,
@@ -26,12 +26,12 @@ export function NetscriptStanek(
   }
 
   return {
-    giftWidth: (_ctx: NetscriptContext) =>
+    giftWidth: () =>
       function (): number {
         checkStanekAPIAccess("giftWidth");
         return staneksGift.width();
       },
-    giftHeight: (_ctx: NetscriptContext) =>
+    giftHeight: () =>
       function (): number {
         checkStanekAPIAccess("giftHeight");
         return staneksGift.height();

@@ -60,7 +60,7 @@ export class WorkerScript {
   env: Environment;
 
   /**
-   * Status message in case of script error. Currently unused I think
+   * Status message in case of script error.
    */
   errorMessage = "";
 

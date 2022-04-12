@@ -101,22 +101,44 @@ interface Player {
 /**
  * @public
  */
-interface RunningScript {
+export interface RunningScript {
+  /** Arguments the script was called with */
   args: string[];
+  /** Filename of the script */
   filename: string;
+  /**
+   * Script logs as an array. The newest log entries are at the bottom.
+   * Timestamps, if enabled, are placed inside `[brackets]` at the start of each line.
+   **/
   logs: string[];
+  /** Total amount of hacking experience earned from this script when offline */
   offlineExpGained: number;
+  /** Total amount of money made by this script when offline */
   offlineMoneyMade: number;
-  /** Offline running time of the script, in seconds **/
+  /** Number of seconds that the script has been running offline */
   offlineRunningTime: number;
+  /** Total amount of hacking experience earned from this script when online */
   onlineExpGained: number;
+  /** Total amount of money made by this script when online */
   onlineMoneyMade: number;
-  /** Online running time of the script, in seconds **/
+  /** Number of seconds that this script has been running online */
   onlineRunningTime: number;
+  /** Process ID. Must be an integer */
   pid: number;
+  /** How much RAM this script uses for ONE thread */
   ramUsage: number;
+  /** Hostname of the server on which this script runs */
   server: string;
+  /** Number of threads that this script runs with */
   threads: number;
+}
+
+/**
+ * @public
+ */
+export interface RecentScript extends RunningScript {
+  /** Timestamp of when the script was killed */
+  timeOfDeath: Date;
 }
 
 /**
@@ -2618,7 +2640,7 @@ export interface Hacknet {
    * // NS1:
    * var upgradeName = "Sell for Corporation Funds";
    * if (hacknet.numHashes() > hacknet.hashCost(upgradeName)) {
-   *    hacknet.spendHashes(upgName);
+   *    hacknet.spendHashes(upgradeName);
    * }
    * ```
    * @example
@@ -2626,7 +2648,7 @@ export interface Hacknet {
    * // NS2:
    * const upgradeName = "Sell for Corporation Funds";
    * if (ns.hacknet.numHashes() > ns.hacknet.hashCost(upgradeName)) {
-   *    ns.hacknet.spendHashes(upgName);
+   *    ns.hacknet.spendHashes(upgradeName);
    * }
    * ```
    * @param upgName - Name of the upgrade of Hacknet Node.
@@ -4555,9 +4577,10 @@ export interface NS extends Singularity {
    * Returns the security increase that would occur if a hack with this many threads happened.
    *
    * @param threads - Amount of threads that will be used.
+   * @param hostname - Hostname of the target server. The number of threads is limited to the number needed to hack the servers maximum amount of money.
    * @returns The security increase.
    */
-  hackAnalyzeSecurity(threads: number): number;
+  hackAnalyzeSecurity(threads: number, hostname?: string): number;
 
   /**
    * Get the chance of successfully hacking a server.
@@ -4780,6 +4803,27 @@ export interface NS extends Singularity {
    * @returns Returns an string array, where each line is an element in the array. The most recently logged line is at the end of the array.
    */
   getScriptLogs(fn?: string, host?: string, ...args: any[]): string[];
+
+  /**
+   * Get an array of recently killed scripts across all servers.
+   * @remarks
+   * RAM cost: 0.2 GB
+   *
+   * The most recently killed script is the first element in the array.
+   * Note that there is a maximum number of recently killed scripts which are tracked.
+   * This is configurable in the game's options as `Recently killed scripts size`.
+   *
+   * @usage below:
+   * ```ts
+   * let recentScripts = ns.getRecentScripts();
+   * let mostRecent = recentScripts.shift()
+   * if (mostRecent)
+   *   ns.tprint(mostRecent.logs.join('\n'))
+   * ```
+   *
+   * @returns Array with information about previously killed scripts.
+   */
+  getRecentScripts(): RecentScript[];
 
   /**
    * Open the tail window of a script.
@@ -6965,8 +7009,10 @@ interface Office {
   maxMor: number;
   /** Name of all the employees */
   employees: string[];
-  /** Positions of the employees */
+  /** Production of the employees */
   employeeProd: EmployeeJobs;
+  /** Positions of the employees */
+  employeeJobs: EmployeeJobs;
 }
 
 /**

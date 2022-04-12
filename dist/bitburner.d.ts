@@ -2101,7 +2101,7 @@ export declare interface Hacknet {
      * // NS1:
      * var upgradeName = "Sell for Corporation Funds";
      * if (hacknet.numHashes() > hacknet.hashCost(upgradeName)) {
-     *    hacknet.spendHashes(upgName);
+     *    hacknet.spendHashes(upgradeName);
      * }
      * ```
      * @example
@@ -2109,7 +2109,7 @@ export declare interface Hacknet {
      * // NS2:
      * const upgradeName = "Sell for Corporation Funds";
      * if (ns.hacknet.numHashes() > ns.hacknet.hashCost(upgradeName)) {
-     *    ns.hacknet.spendHashes(upgName);
+     *    ns.hacknet.spendHashes(upgradeName);
      * }
      * ```
      * @param upgName - Name of the upgrade of Hacknet Node.
@@ -2825,9 +2825,10 @@ export declare interface NS extends Singularity {
      * Returns the security increase that would occur if a hack with this many threads happened.
      *
      * @param threads - Amount of threads that will be used.
+     * @param hostname - Hostname of the target server. The number of threads is limited to the number needed to hack the servers maximum amount of money.
      * @returns The security increase.
      */
-    hackAnalyzeSecurity(threads: number): number;
+    hackAnalyzeSecurity(threads: number, hostname?: string): number;
 
     /**
      * Get the chance of successfully hacking a server.
@@ -4671,8 +4672,10 @@ export declare interface Office {
     maxMor: number;
     /** Name of all the employees */
     employees: string[];
-    /** Positions of the employees */
+    /** Production of the employees */
     employeeProd: EmployeeJobs;
+    /** Positions of the employees */
+    employeeJobs: EmployeeJobs;
 }
 
 /**

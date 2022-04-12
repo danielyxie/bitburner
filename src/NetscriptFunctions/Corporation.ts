@@ -637,9 +637,6 @@ export function NetscriptCorporation(
       const office = getOffice(divisionName, cityName);
       if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
       return netscriptDelay(1000, workerScript).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         return Promise.resolve(office.setEmployeeToJob(job, amount));
       });
     },
@@ -752,6 +749,15 @@ export function NetscriptCorporation(
           Management: office.employeeProd[EmployeePositions.Management],
           "Research & Development": office.employeeProd[EmployeePositions.RandD],
           Training: office.employeeProd[EmployeePositions.Training],
+        },
+        employeeJobs: {
+          Operations: office.employeeJobs[EmployeePositions.Operations],
+          Engineer: office.employeeJobs[EmployeePositions.Engineer],
+          Business: office.employeeJobs[EmployeePositions.Business],
+          Management: office.employeeJobs[EmployeePositions.Management],
+          "Research & Development": office.employeeJobs[EmployeePositions.RandD],
+          Training: office.employeeJobs[EmployeePositions.Training],
+          Unassigned: office.employeeJobs[EmployeePositions.Unassigned],
         },
       };
     },

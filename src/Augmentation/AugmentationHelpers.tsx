@@ -21,6 +21,7 @@ import {
   initNeuroFluxGovernor,
   initUnstableCircadianModulator,
 } from "./AugmentationCreator";
+import { Router } from "../ui/GameRoot";
 
 export function AddToAugmentations(aug: Augmentation): void {
   const name = aug.name;
@@ -194,6 +195,7 @@ function installAugmentations(force?: boolean): boolean {
     );
   }
   prestigeAugmentation();
+  Router.toTerminal();
   return true;
 }
 
