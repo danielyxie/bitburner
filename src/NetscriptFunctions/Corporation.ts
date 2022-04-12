@@ -753,6 +753,15 @@ export function NetscriptCorporation(
           "Research & Development": office.employeeProd[EmployeePositions.RandD],
           Training: office.employeeProd[EmployeePositions.Training],
         },
+        employeeJobs: {
+          Operations: office.employeeJobs[EmployeePositions.Operations],
+          Engineer: office.employeeJobs[EmployeePositions.Engineer],
+          Business: office.employeeJobs[EmployeePositions.Business],
+          Management: office.employeeJobs[EmployeePositions.Management],
+          "Research & Development": office.employeeJobs[EmployeePositions.RandD],
+          Training: office.employeeJobs[EmployeePositions.Training],
+          Unassigned: office.employeeJobs[EmployeePositions.Unassigned],
+        },
       };
     },
     getEmployee: function (_divisionName: unknown, _cityName: unknown, _employeeName: unknown): NSEmployee {

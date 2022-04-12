@@ -4671,8 +4671,10 @@ export declare interface Office {
     maxMor: number;
     /** Name of all the employees */
     employees: string[];
-    /** Positions of the employees */
+    /** Production of the employees */
     employeeProd: EmployeeJobs;
+    /** Positions of the employees */
+    employeeJobs: EmployeeJobs;
 }
 
 /**
