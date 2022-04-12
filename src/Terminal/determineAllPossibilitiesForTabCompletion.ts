@@ -240,7 +240,7 @@ export async function determineAllPossibilitiesForTabCompletion(
 
   if (isCommand("connect")) {
     // All directly connected and backdoored servers are reachable
-
+    console.log(GetAllServers());
     return GetAllServers()
       .filter(
         (server) =>
