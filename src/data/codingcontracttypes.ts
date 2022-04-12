@@ -1256,7 +1256,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "Convert it into a binary string and encode it as a 'Hamming-Code'. eg:\n ",
         "Value 8 will result into binary '1000', which will be encoded",
         "with the pattern 'pppdpddd', where p is a paritybit and d a databit,\n",
-        "or '10101' (Value 21) will result into (pppdpdddpd) '1111101011'.\n\n",
+        "or '10101' (Value 21) will result into (pppdpdddpd) '1001101011'.\n\n",
         "NOTE: You need an parity Bit on Index 0 as an 'overall'-paritybit. \n",
         "NOTE 2: You should watch the HammingCode-video from 3Blue1Brown, which explains the 'rule' of encoding,",
         "including the first Index parity-bit mentioned on the first note.\n\n",
