@@ -41,6 +41,7 @@ export const CONSTANTS: {
   IntelligenceInfiltrationWeight: number;
   IntelligenceCrimeBaseExpGain: number;
   IntelligenceProgramBaseExpGain: number;
+  IntelligenceGraftBaseExpGain: number;
   IntelligenceTerminalHackBaseExpGain: number;
   IntelligenceSingFnBaseExpGain: number;
   IntelligenceClassBaseExpGain: number;
@@ -71,6 +72,7 @@ export const CONSTANTS: {
   WorkTypeCreateProgram: string;
   WorkTypeStudyClass: string;
   WorkTypeCrime: string;
+  WorkTypeGraftAugmentation: string;
   ClassStudyComputerScience: string;
   ClassDataStructures: string;
   ClassNetworks: string;
@@ -108,11 +110,14 @@ export const CONSTANTS: {
   CodingContractBaseFactionRepGain: number;
   CodingContractBaseCompanyRepGain: number;
   CodingContractBaseMoneyGain: number;
+  AugmentationGraftingCostMult: number;
+  AugmentationGraftingTimeBase: number;
+  EntropyEffect: number;
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  VersionString: "1.4.0",
-  VersionNumber: 10,
+  VersionString: "1.6.3",
+  VersionNumber: 13,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -180,6 +185,7 @@ export const CONSTANTS: {
   IntelligenceInfiltrationWeight: 0.1, // Weight for how much int affects infiltration success rates
   IntelligenceCrimeBaseExpGain: 0.05,
   IntelligenceProgramBaseExpGain: 0.1, // Program required hack level divided by this to determine int exp gain
+  IntelligenceGraftBaseExpGain: 0.05,
   IntelligenceTerminalHackBaseExpGain: 200, // Hacking exp divided by this to determine int exp gain
   IntelligenceSingFnBaseExpGain: 1.5,
   IntelligenceClassBaseExpGain: 0.01,
@@ -224,6 +230,7 @@ export const CONSTANTS: {
   WorkTypeCreateProgram: "Working on Create a Program",
   WorkTypeStudyClass: "Studying or Taking a class at university",
   WorkTypeCrime: "Committing a crime",
+  WorkTypeGraftAugmentation: "Grafting an Augmentation",
 
   ClassStudyComputerScience: "studying Computer Science",
   ClassDataStructures: "taking a Data Structures course",
@@ -269,26 +276,30 @@ export const CONSTANTS: {
   CodingContractBaseCompanyRepGain: 4000,
   CodingContractBaseMoneyGain: 75e6,
 
+  // Augmentation grafting multipliers
+  AugmentationGraftingCostMult: 3,
+  AugmentationGraftingTimeBase: 3600000,
+
+  // Value raised to the number of entropy stacks, then multiplied to player multipliers
+  EntropyEffect: 0.98,
+
   // BitNode/Source-File related stuff
   TotalNumBitNodes: 24,
 
   LatestUpdate: `
-    v1.4.0 - 2022-01-18 Sharing is caring
-    -------------------------------------
+  v1.6.3 - 2022-04-01 Few stanek fixes
+  ----------------------------
 
-    ** Computer sharing **
+   Stanek Gift 
 
-    * A new mechanic has been added, it's is invoked by calling the new function 'share'.
-      This mechanic helps you farm reputation faster.
+  * Has a minimum size of 2x3
+  * Active Fragment property 'avgCharge' renamed to 'highestCharge'
+  * Formula for fragment effect updated to make 561% more sense. 
+    Now you can charge to your heart content.
+  * Logs for the 'chargeFragment' function updated.
 
-    ** gang **
+   Misc. 
 
-    * Installing augs means losing a little bit of ascension multipliers.
-
-    ** There's more but I'm going to write it later. **
-
-    ** Misc. **
-
-    * Nerf noodle bar.
+  * Nerf noodle bar.
 `,
 };

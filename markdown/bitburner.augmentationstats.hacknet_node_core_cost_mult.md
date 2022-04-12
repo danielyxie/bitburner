@@ -4,7 +4,7 @@
 
 ## AugmentationStats.hacknet\_node\_core\_cost\_mult property
 
-Multipler to cost of core for a Hacknet Node
+Multiplier to cost of core for a Hacknet Node
 
 <b>Signature:</b>
 

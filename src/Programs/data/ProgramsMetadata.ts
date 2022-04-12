@@ -11,6 +11,7 @@ import { numeralWrapper } from "../../ui/numeralFormat";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { BitFlumeEvent } from "../../BitNode/ui/BitFlumeModal";
 import { calculateHackingTime, calculateGrowTime, calculateWeakenTime } from "../../Hacking";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 function requireHackingLevel(lvl: number) {
   return function (p: IPlayer) {
@@ -316,7 +317,7 @@ export const programsMetadata: IProgramCreationParams[] = [
       }
 
       terminal.print("We will contact you.");
-      terminal.print("-- Daedalus --");
+      terminal.print(`-- ${FactionNames.Daedalus} --`);
     },
   },
 ];

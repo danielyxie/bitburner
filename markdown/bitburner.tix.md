@@ -32,6 +32,8 @@ export interface TIX
 |  [placeOrder(sym, shares, price, type, pos)](./bitburner.tix.placeorder.md) | Place order for stocks. |
 |  [purchase4SMarketData()](./bitburner.tix.purchase4smarketdata.md) | Purchase 4S Market Data Access. |
 |  [purchase4SMarketDataTixApi()](./bitburner.tix.purchase4smarketdatatixapi.md) | Purchase 4S Market Data TIX API Access. |
+|  [purchaseTixApi()](./bitburner.tix.purchasetixapi.md) | Purchase TIX API Access |
+|  [purchaseWseAccount()](./bitburner.tix.purchasewseaccount.md) | Purchase WSE Account. |
 |  [sell(sym, shares)](./bitburner.tix.sell.md) | Sell stocks. |
 |  [sellShort(sym, shares)](./bitburner.tix.sellshort.md) | Sell short stock. |
 |  [short(sym, shares)](./bitburner.tix.short.md) | Short stocks. |

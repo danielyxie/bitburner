@@ -29,6 +29,16 @@ export class OfficeSpace {
     [EmployeePositions.RandD]: 0,
     total: 0,
   };
+  employeeJobs: { [key: string]: number } = {
+    [EmployeePositions.Operations]: 0,
+    [EmployeePositions.Engineer]: 0,
+    [EmployeePositions.Business]: 0,
+    [EmployeePositions.Management]: 0,
+    [EmployeePositions.RandD]: 0,
+    [EmployeePositions.Training]: 0,
+    [EmployeePositions.Unassigned]: 0,
+    total: 0,
+  };
 
   constructor(params: IParams = {}) {
     this.loc = params.loc ? params.loc : "";
@@ -47,6 +57,8 @@ export class OfficeSpace {
         emp.pos = EmployeePositions.Training;
       }
     }
+
+    this.calculateTotalEmployees();
 
     // Process Office properties
     this.maxEne = 100;
@@ -99,6 +111,19 @@ export class OfficeSpace {
 
     this.calculateEmployeeProductivity(corporation, industry);
     return salaryPaid;
+  }
+
+  calculateTotalEmployees(): void {
+    //Reset
+    for (const name of Object.keys(this.employeeJobs)) {
+      this.employeeJobs[name] = 0;
+    }
+
+    for (let i = 0; i < this.employees.length; ++i) {
+      const employee = this.employees[i];
+      this.employeeJobs[employee.pos]++;
+    }
+    this.employeeJobs.total = this.employees.length;
   }
 
   calculateEmployeeProductivity(corporation: ICorporation, industry: IIndustry): void {
@@ -174,37 +199,19 @@ export class OfficeSpace {
   }
 
   setEmployeeToJob(job: string, amount: number): boolean {
-    let unassignedCount = 0;
-    let jobCount = 0;
-    for (let i = 0; i < this.employees.length; ++i) {
-      if (this.employees[i].pos === EmployeePositions.Unassigned) {
-        unassignedCount++;
-      } else if (this.employees[i].pos === job) {
+    let jobCount = this.employees.reduce((acc, employee) => (employee.pos === job ? acc + 1 : acc), 0);
+
+    for (const employee of this.employees) {
+      if (jobCount == amount) return true;
+      if (employee.pos === EmployeePositions.Unassigned && jobCount <= amount) {
+        employee.pos = job;
         jobCount++;
+      } else if (employee.pos === job && jobCount >= amount) {
+        employee.pos = EmployeePositions.Unassigned;
+        jobCount--;
       }
     }
-
-    if ((jobCount + unassignedCount) < amount) return false;
-
-    for (let i = 0; i < this.employees.length; ++i) {
-      if (this.employees[i].pos === EmployeePositions.Unassigned) {
-        if (jobCount <= amount) {
-          this.employees[i].pos = job;
-          jobCount++;
-          unassignedCount--;
-        }
-        if (jobCount === amount) break;
-      } else if (this.employees[i].pos === job) {
-        if (jobCount >= amount) {
-          this.employees[i].pos = EmployeePositions.Unassigned;
-          jobCount--;
-          unassignedCount++;
-        }
-        if (jobCount === amount) break;
-      }
-    }
-    if (jobCount !== amount) return false;
-    return true;
+    return jobCount === amount;
   }
 
   toJSON(): any {

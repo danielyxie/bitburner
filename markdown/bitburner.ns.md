@@ -31,7 +31,7 @@ export async function main(ns) {
  ns.getHostname();
  // Some related functions are gathered under a sub-property of the ns object
  ns.stock.getPrice();
- // Some functions need to be await ed
+ // Some functions need to be awaited
  await ns.hack('n00dles');
 }
 ```
@@ -47,6 +47,7 @@ export async function main(ns) {
 |  [corporation](./bitburner.ns.corporation.md) | [Corporation](./bitburner.corporation.md) | Namespace for corporation functions. RAM cost: 0 GB |
 |  [formulas](./bitburner.ns.formulas.md) | [Formulas](./bitburner.formulas.md) | Namespace for formulas functions. |
 |  [gang](./bitburner.ns.gang.md) | [Gang](./bitburner.gang.md) | Namespace for gang functions. |
+|  [grafting](./bitburner.ns.grafting.md) | [Grafting](./bitburner.grafting.md) | Namespace for grafting functions. |
 |  [hacknet](./bitburner.ns.hacknet.md) | [Hacknet](./bitburner.hacknet.md) | Namespace for hacknet functions. |
 |  [sleeve](./bitburner.ns.sleeve.md) | [Sleeve](./bitburner.sleeve.md) | Namespace for sleeve functions. |
 |  [stanek](./bitburner.ns.stanek.md) | [Stanek](./bitburner.stanek.md) | Namespace for stanek functions. RAM cost: 0 GB |
@@ -89,9 +90,9 @@ export async function main(ns) {
 |  [getPurchasedServers()](./bitburner.ns.getpurchasedservers.md) | Returns an array with the hostnames of all of the servers you have purchased. |
 |  [getRunningScript(filename, hostname, args)](./bitburner.ns.getrunningscript.md) | Get general info about a running script. |
 |  [getScriptExpGain()](./bitburner.ns.getscriptexpgain.md) | Get the exp gain of a script. |
-|  [getScriptExpGain(script, host, args)](./bitburner.ns.getscriptexpgain_1.md) |  |
+|  [getScriptExpGain(script, host, args)](./bitburner.ns.getscriptexpgain_1.md) | Get the exp gain of a script. |
 |  [getScriptIncome()](./bitburner.ns.getscriptincome.md) | Get the income of a script. |
-|  [getScriptIncome(script, host, args)](./bitburner.ns.getscriptincome_1.md) |  |
+|  [getScriptIncome(script, host, args)](./bitburner.ns.getscriptincome_1.md) | Get the income of a script. |
 |  [getScriptLogs(fn, host, args)](./bitburner.ns.getscriptlogs.md) | Get all the logs of a script. |
 |  [getScriptName()](./bitburner.ns.getscriptname.md) | Returns the current script name. |
 |  [getScriptRam(script, host)](./bitburner.ns.getscriptram.md) | Get the ram cost of a script. |
@@ -123,7 +124,7 @@ export async function main(ns) {
 |  [isLogEnabled(fn)](./bitburner.ns.islogenabled.md) | Checks the status of the logging for the given function. |
 |  [isRunning(script, host, args)](./bitburner.ns.isrunning.md) | Check if a script is running. |
 |  [kill(script)](./bitburner.ns.kill.md) | Terminate another script. |
-|  [kill(script, host, args)](./bitburner.ns.kill_1.md) |  |
+|  [kill(script, host, args)](./bitburner.ns.kill_1.md) | Terminate another script. |
 |  [killall(host)](./bitburner.ns.killall.md) | Terminate all scripts on a server. |
 |  [ls(host, grep)](./bitburner.ns.ls.md) | List files on a server. |
 |  [mv(host, source, destination)](./bitburner.ns.mv.md) | Move a file on the target server. |
@@ -131,7 +132,8 @@ export async function main(ns) {
 |  [nuke(host)](./bitburner.ns.nuke.md) | Runs NUKE.exe on a server. |
 |  [peek(port)](./bitburner.ns.peek.md) | Get a copy of the data from a port without popping it. |
 |  [print(args)](./bitburner.ns.print.md) | Prints one or move values or variables to the script’s logs. |
-|  [prompt(txt)](./bitburner.ns.prompt.md) | Prompt the player with a Yes/No modal. |
+|  [printf(format, args)](./bitburner.ns.printf.md) | Prints a formatted string to the script’s logs. |
+|  [prompt(txt, options)](./bitburner.ns.prompt.md) | Prompt the player with an input modal. |
 |  [ps(host)](./bitburner.ns.ps.md) | List running scripts on a server. |
 |  [purchaseServer(hostname, ram)](./bitburner.ns.purchaseserver.md) | Purchase a server. |
 |  [read(handle)](./bitburner.ns.read.md) | Read content of a file. |
@@ -141,7 +143,7 @@ export async function main(ns) {
 |  [run(script, numThreads, args)](./bitburner.ns.run.md) | Start another script on the current server. |
 |  [scan(host)](./bitburner.ns.scan.md) | Get the list of servers connected to a server. |
 |  [scp(files, destination)](./bitburner.ns.scp.md) | Copy file between servers. |
-|  [scp(files, source, destination)](./bitburner.ns.scp_1.md) |  |
+|  [scp(files, source, destination)](./bitburner.ns.scp_1.md) | Copy file between servers. |
 |  [scriptKill(script, host)](./bitburner.ns.scriptkill.md) | Kill all scripts with a filename. |
 |  [scriptRunning(script, host)](./bitburner.ns.scriptrunning.md) | Check if any script with a filename is running. |
 |  [serverExists(host)](./bitburner.ns.serverexists.md) | Returns a boolean denoting whether or not the specified server exists. |

@@ -4,7 +4,6 @@ import { BladeburnerConstants } from "../data/Constants";
 import { formatNumber } from "../../utils/StringHelperFunctions";
 import { IBladeburner } from "../IBladeburner";
 import Typography from "@mui/material/Typography";
-import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 interface IProps {
   bladeburner: IBladeburner;
 }
@@ -23,8 +22,7 @@ export function SkillPage(props: IProps): React.ReactElement {
         <strong>Skill Points: {formatNumber(props.bladeburner.skillPoints, 0)}</strong>
       </Typography>
       <Typography>
-        You will gain one skill point every{" "}
-        {BladeburnerConstants.RanksPerSkillPoint * BitNodeMultipliers.BladeburnerSkillCost} ranks.
+        You will gain one skill point every {BladeburnerConstants.RanksPerSkillPoint} ranks.
         <br />
         Note that when upgrading a skill, the benefit for that skill is additive. However, the effects of different
         skills with each other is multiplicative.
@@ -74,7 +72,7 @@ for (var i = 0; i < multKeys.length; ++i) {
     if (mult && mult !== 1) {
         mult = formatNumber(mult, 3);
         switch(multKeys[i]) {
-            
+
         }
     }
 }

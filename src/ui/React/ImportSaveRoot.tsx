@@ -121,7 +121,7 @@ export function ImportSaveRoot(props: IProps): JSX.Element {
     Settings.AutosaveInterval = initialAutosave;
     pushImportResult(false);
     props.router.allowRouting(true);
-    setHeadback(true)
+    setHeadback(true);
   }
 
   async function handleImport(): Promise<void> {
@@ -211,12 +211,14 @@ export function ImportSaveRoot(props: IProps): JSX.Element {
             <TableRow>
               <TableCell>Saved On</TableCell>
               <TableCell>
-                {(currentData.playerData?.lastSave ?? 0) > 0 ?
-                    new Date(currentData.playerData?.lastSave ?? 0).toLocaleString() : 'n/a'}
+                {(currentData.playerData?.lastSave ?? 0) > 0
+                  ? new Date(currentData.playerData?.lastSave ?? 0).toLocaleString()
+                  : "n/a"}
               </TableCell>
               <TableCell>
-                {(importData.playerData?.lastSave ?? 0) > 0 ?
-                    new Date(importData.playerData?.lastSave ?? 0).toLocaleString() : 'n/a'}
+                {(importData.playerData?.lastSave ?? 0) > 0
+                  ? new Date(importData.playerData?.lastSave ?? 0).toLocaleString()
+                  : "n/a"}
               </TableCell>
               <TableCell>
                 {importData.playerData?.lastSave !== currentData.playerData?.lastSave && (

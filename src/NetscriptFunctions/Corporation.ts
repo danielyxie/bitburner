@@ -21,7 +21,7 @@ import {
   Division as NSDivision,
   WarehouseAPI,
   OfficeAPI,
-  InvestmentOffer
+  InvestmentOffer,
 } from "../ScriptEditor/NetscriptDefinitions";
 
 import {
@@ -49,6 +49,9 @@ import {
   SetMaterialMarketTA2,
   SetProductMarketTA1,
   SetProductMarketTA2,
+  BulkPurchase,
+  SellShares,
+  BuyBackShares,
   SetSmartSupplyUseLeftovers,
 } from "../Corporation/Actions";
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
@@ -97,8 +100,8 @@ export function NetscriptCorporation(
     return upgrade[1];
   }
 
-  function getUpgradeLevel(aupgradeName: string): number {
-    const upgradeName = helper.string("levelUpgrade", "upgradeName", aupgradeName);
+  function getUpgradeLevel(_upgradeName: string): number {
+    const upgradeName = helper.string("levelUpgrade", "upgradeName", _upgradeName);
     const corporation = getCorporation();
     const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
     if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
@@ -106,8 +109,8 @@ export function NetscriptCorporation(
     return corporation.upgrades[upgN];
   }
 
-  function getUpgradeLevelCost(aupgradeName: string): number {
-    const upgradeName = helper.string("levelUpgrade", "upgradeName", aupgradeName);
+  function getUpgradeLevelCost(_upgradeName: string): number {
+    const upgradeName = helper.string("levelUpgrade", "upgradeName", _upgradeName);
     const corporation = getCorporation();
     const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
     if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
@@ -132,11 +135,15 @@ export function NetscriptCorporation(
 
   function getInvestmentOffer(): InvestmentOffer {
     const corporation = getCorporation();
-    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length || corporation.public) 
+    if (
+      corporation.fundingRound >= CorporationConstants.FundingRoundShares.length ||
+      corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length ||
+      corporation.public
+    )
       return {
         funds: 0,
         shares: 0,
-        round: corporation.fundingRound + 1 // Make more readable 
+        round: corporation.fundingRound + 1, // Make more readable
       }; // Don't throw an error here, no reason to have a second function to check if you can get investment.
     const val = corporation.determineValuation();
     const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
@@ -146,13 +153,18 @@ export function NetscriptCorporation(
     return {
       funds: funding,
       shares: investShares,
-      round: corporation.fundingRound + 1 // Make more readable 
+      round: corporation.fundingRound + 1, // Make more readable
     };
   }
 
   function acceptInvestmentOffer(): boolean {
     const corporation = getCorporation();
-    if (corporation.fundingRound >= CorporationConstants.FundingRoundShares.length || corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length || corporation.public) return false;
+    if (
+      corporation.fundingRound >= CorporationConstants.FundingRoundShares.length ||
+      corporation.fundingRound >= CorporationConstants.FundingRoundMultiplier.length ||
+      corporation.public
+    )
+      return false;
     const val = corporation.determineValuation();
     const percShares = CorporationConstants.FundingRoundShares[corporation.fundingRound];
     const roundMultiplier = CorporationConstants.FundingRoundMultiplier[corporation.fundingRound];
@@ -188,16 +200,18 @@ export function NetscriptCorporation(
   }
 
   function hasResearched(division: IIndustry, researchName: string): boolean {
-    return division.researched[researchName] === undefined ? false : division.researched[researchName] as boolean;
+    return division.researched[researchName] === undefined ? false : (division.researched[researchName] as boolean);
   }
 
   function bribe(factionName: string, amountCash: number, amountShares: number): boolean {
     if (!player.factions.includes(factionName)) throw new Error("Invalid faction name");
-    if (isNaN(amountCash) || amountCash < 0 || isNaN(amountShares) || amountShares < 0)  throw new Error("Invalid value for amount field! Must be numeric, grater than 0.");
+    if (isNaN(amountCash) || amountCash < 0 || isNaN(amountShares) || amountShares < 0)
+      throw new Error("Invalid value for amount field! Must be numeric, grater than 0.");
+
     const corporation = getCorporation();
     if (corporation.funds < amountCash) return false;
     if (corporation.numShares < amountShares) return false;
-    const faction = Factions[factionName]
+    const faction = Factions[factionName];
     const info = faction.getInfo();
     if (!info.offersWork()) return false;
     if (player.hasGangWith(factionName)) return false;
@@ -216,14 +230,14 @@ export function NetscriptCorporation(
     return corporation;
   }
 
-  function getDivision(divisionName: any): IIndustry {
+  function getDivision(divisionName: string): IIndustry {
     const corporation = getCorporation();
     const division = corporation.divisions.find((div) => div.name === divisionName);
     if (division === undefined) throw new Error(`No division named '${divisionName}'`);
     return division;
   }
 
-  function getOffice(divisionName: any, cityName: any): OfficeSpace {
+  function getOffice(divisionName: string, cityName: string): OfficeSpace {
     const division = getDivision(divisionName);
     if (!(cityName in division.offices)) throw new Error(`Invalid city name '${cityName}'`);
     const office = division.offices[cityName];
@@ -231,7 +245,7 @@ export function NetscriptCorporation(
     return office;
   }
 
-  function getWarehouse(divisionName: any, cityName: any): Warehouse {
+  function getWarehouse(divisionName: string, cityName: string): Warehouse {
     const division = getDivision(divisionName);
     if (!(cityName in division.warehouses)) throw new Error(`Invalid city name '${cityName}'`);
     const warehouse = division.warehouses[cityName];
@@ -239,7 +253,7 @@ export function NetscriptCorporation(
     return warehouse;
   }
 
-  function getMaterial(divisionName: any, cityName: any, materialName: any): Material {
+  function getMaterial(divisionName: string, cityName: string, materialName: string): Material {
     const warehouse = getWarehouse(divisionName, cityName);
     const matName = (materialName as string).replace(/ /g, "");
     const material = warehouse.materials[matName];
@@ -247,14 +261,14 @@ export function NetscriptCorporation(
     return material;
   }
 
-  function getProduct(divisionName: any, productName: any): Product {
+  function getProduct(divisionName: string, productName: string): Product {
     const division = getDivision(divisionName);
     const product = division.products[productName];
     if (product === undefined) throw new Error(`Invalid product name: '${productName}'`);
     return product;
   }
 
-  function getEmployee(divisionName: any, cityName: any, employeeName: any): Employee {
+  function getEmployee(divisionName: string, cityName: string, employeeName: string): Employee {
     const office = getOffice(divisionName, cityName);
     const employee = office.employees.find((e) => e.name === employeeName);
     if (employee === undefined) throw new Error(`Invalid employee name: '${employeeName}'`);
@@ -271,25 +285,25 @@ export function NetscriptCorporation(
 
   function getSafeDivision(division: Industry): NSDivision {
     const cities: string[] = [];
-      for (const office of Object.values(division.offices)) {
-        if (office === 0) continue;
-        cities.push(office.loc);
-      }
-      return {
-        name: division.name,
-        type: division.type,
-        awareness: division.awareness,
-        popularity: division.popularity,
-        prodMult: division.prodMult,
-        research: division.sciResearch.qty,
-        lastCycleRevenue: division.lastCycleRevenue,
-        lastCycleExpenses: division.lastCycleExpenses,
-        thisCycleRevenue: division.thisCycleRevenue,
-        thisCycleExpenses: division.thisCycleExpenses,
-        upgrades: division.upgrades,
-        cities: cities,
-        products: division.products === undefined ? [] : Object.keys(division.products),
-      };
+    for (const office of Object.values(division.offices)) {
+      if (office === 0) continue;
+      cities.push(office.loc);
+    }
+    return {
+      name: division.name,
+      type: division.type,
+      awareness: division.awareness,
+      popularity: division.popularity,
+      prodMult: division.prodMult,
+      research: division.sciResearch.qty,
+      lastCycleRevenue: division.lastCycleRevenue,
+      lastCycleExpenses: division.lastCycleExpenses,
+      thisCycleRevenue: division.thisCycleRevenue,
+      thisCycleExpenses: division.thisCycleExpenses,
+      upgrades: division.upgrades.slice(),
+      cities: cities,
+      products: division.products === undefined ? [] : Object.keys(division.products),
+    };
   }
 
   const warehouseAPI: WarehouseAPI = {
@@ -297,40 +311,40 @@ export function NetscriptCorporation(
       checkAccess("getPurchaseWarehouseCost", 7);
       return CorporationConstants.WarehouseInitialCost;
     },
-    getUpgradeWarehouseCost: function (adivisionName: any, acityName: any): number {
+    getUpgradeWarehouseCost: function (_divisionName: unknown, _cityName: unknown): number {
       checkAccess("upgradeWarehouse", 7);
-      const divisionName = helper.string("getUpgradeWarehouseCost", "divisionName", adivisionName);
-      const cityName = helper.string("getUpgradeWarehouseCost", "cityName", acityName);
+      const divisionName = helper.string("getUpgradeWarehouseCost", "divisionName", _divisionName);
+      const cityName = helper.city("getUpgradeWarehouseCost", "cityName", _cityName);
       const warehouse = getWarehouse(divisionName, cityName);
       return CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
     },
-    hasWarehouse: function (adivisionName: any, acityName: any): boolean {
+    hasWarehouse: function (_divisionName: unknown, _cityName: unknown): boolean {
       checkAccess("hasWarehouse", 7);
-      const divisionName = helper.string("getWarehouse", "divisionName", adivisionName);
-      const cityName = helper.string("getWarehouse", "cityName", acityName);
+      const divisionName = helper.string("getWarehouse", "divisionName", _divisionName);
+      const cityName = helper.city("getWarehouse", "cityName", _cityName);
       const division = getDivision(divisionName);
       if (!(cityName in division.warehouses)) throw new Error(`Invalid city name '${cityName}'`);
       const warehouse = division.warehouses[cityName];
       return warehouse !== 0;
     },
-    getWarehouse: function (adivisionName: any, acityName: any): NSWarehouse {
+    getWarehouse: function (_divisionName: unknown, _cityName: unknown): NSWarehouse {
       checkAccess("getWarehouse", 7);
-      const divisionName = helper.string("getWarehouse", "divisionName", adivisionName);
-      const cityName = helper.string("getWarehouse", "cityName", acityName);
+      const divisionName = helper.string("getWarehouse", "divisionName", _divisionName);
+      const cityName = helper.city("getWarehouse", "cityName", _cityName);
       const warehouse = getWarehouse(divisionName, cityName);
       return {
         level: warehouse.level,
         loc: warehouse.loc,
         size: warehouse.size,
         sizeUsed: warehouse.sizeUsed,
-        smartSupplyEnabled: warehouse.smartSupplyEnabled
+        smartSupplyEnabled: warehouse.smartSupplyEnabled,
       };
     },
-    getMaterial: function (adivisionName: any, acityName: any, amaterialName: any): NSMaterial {
+    getMaterial: function (_divisionName: unknown, _cityName: unknown, _materialName: unknown): NSMaterial {
       checkAccess("getMaterial", 7);
-      const divisionName = helper.string("getMaterial", "divisionName", adivisionName);
-      const cityName = helper.string("getMaterial", "cityName", acityName);
-      const materialName = helper.string("getMaterial", "materialName", amaterialName);
+      const divisionName = helper.string("getMaterial", "divisionName", _divisionName);
+      const cityName = helper.city("getMaterial", "cityName", _cityName);
+      const materialName = helper.string("getMaterial", "materialName", _materialName);
       const material = getMaterial(divisionName, cityName, materialName);
       return {
         name: material.name,
@@ -340,10 +354,10 @@ export function NetscriptCorporation(
         sell: material.sll,
       };
     },
-    getProduct: function (adivisionName: any, aproductName: any): NSProduct {
+    getProduct: function (_divisionName: unknown, _productName: unknown): NSProduct {
       checkAccess("getProduct", 7);
-      const divisionName = helper.string("getProduct", "divisionName", adivisionName);
-      const productName = helper.string("getProduct", "productName", aproductName);
+      const divisionName = helper.string("getProduct", "divisionName", _divisionName);
+      const productName = helper.string("getProduct", "productName", _productName);
       const product = getProduct(divisionName, productName);
       return {
         name: product.name,
@@ -355,211 +369,283 @@ export function NetscriptCorporation(
         developmentProgress: product.prog,
       };
     },
-    purchaseWarehouse: function (adivisionName: any, acityName: any): void {
+    purchaseWarehouse: function (_divisionName: unknown, _cityName: unknown): void {
       checkAccess("purchaseWarehouse", 7);
-      const divisionName = helper.string("purchaseWarehouse", "divisionName", adivisionName);
-      const cityName = helper.string("purchaseWarehouse", "cityName", acityName);
+      const divisionName = helper.string("purchaseWarehouse", "divisionName", _divisionName);
+      const cityName = helper.city("purchaseWarehouse", "cityName", _cityName);
       const corporation = getCorporation();
       PurchaseWarehouse(corporation, getDivision(divisionName), cityName);
     },
-    upgradeWarehouse: function (adivisionName: any, acityName: any): void {
+    upgradeWarehouse: function (_divisionName: unknown, _cityName: unknown): void {
       checkAccess("upgradeWarehouse", 7);
-      const divisionName = helper.string("upgradeWarehouse", "divisionName", adivisionName);
-      const cityName = helper.string("upgradeWarehouse", "cityName", acityName);
+      const divisionName = helper.string("upgradeWarehouse", "divisionName", _divisionName);
+      const cityName = helper.city("upgradeWarehouse", "cityName", _cityName);
       const corporation = getCorporation();
       UpgradeWarehouse(corporation, getDivision(divisionName), getWarehouse(divisionName, cityName));
     },
-    sellMaterial: function (adivisionName: any, acityName: any, amaterialName: any, aamt: any, aprice: any): void {
+    sellMaterial: function (
+      _divisionName: unknown,
+      _cityName: unknown,
+      _materialName: unknown,
+      _amt: unknown,
+      _price: unknown,
+    ): void {
       checkAccess("sellMaterial", 7);
-      const divisionName = helper.string("sellMaterial", "divisionName", adivisionName);
-      const cityName = helper.string("sellMaterial", "cityName", acityName);
-      const materialName = helper.string("sellMaterial", "materialName", amaterialName);
-      const amt = helper.string("sellMaterial", "amt", aamt);
-      const price = helper.string("sellMaterial", "price", aprice);
+      const divisionName = helper.string("sellMaterial", "divisionName", _divisionName);
+      const cityName = helper.city("sellMaterial", "cityName", _cityName);
+      const materialName = helper.string("sellMaterial", "materialName", _materialName);
+      const amt = helper.string("sellMaterial", "amt", _amt);
+      const price = helper.string("sellMaterial", "price", _price);
       const material = getMaterial(divisionName, cityName, materialName);
       SellMaterial(material, amt, price);
     },
     sellProduct: function (
-      adivisionName: any,
-      acityName: any,
-      aproductName: any,
-      aamt: any,
-      aprice: any,
-      aall: any,
+      _divisionName: unknown,
+      _cityName: unknown,
+      _productName: unknown,
+      _amt: unknown,
+      _price: unknown,
+      _all: unknown,
     ): void {
       checkAccess("sellProduct", 7);
-      const divisionName = helper.string("sellProduct", "divisionName", adivisionName);
-      const cityName = helper.string("sellProduct", "cityName", acityName);
-      const productName = helper.string("sellProduct", "productName", aproductName);
-      const amt = helper.string("sellProduct", "amt", aamt);
-      const price = helper.string("sellProduct", "price", aprice);
-      const all = helper.boolean(aall);
+      const divisionName = helper.string("sellProduct", "divisionName", _divisionName);
+      const cityName = helper.city("sellProduct", "cityName", _cityName);
+      const productName = helper.string("sellProduct", "productName", _productName);
+      const amt = helper.string("sellProduct", "amt", _amt);
+      const price = helper.string("sellProduct", "price", _price);
+      const all = helper.boolean(_all);
       const product = getProduct(divisionName, productName);
       SellProduct(product, cityName, amt, price, all);
     },
-    discontinueProduct: function (adivisionName: any, aproductName: any): void {
+    discontinueProduct: function (_divisionName: unknown, _productName: unknown): void {
       checkAccess("discontinueProduct", 7);
-      const divisionName = helper.string("discontinueProduct", "divisionName", adivisionName);
-      const productName = helper.string("discontinueProduct", "productName", aproductName);
+      const divisionName = helper.string("discontinueProduct", "divisionName", _divisionName);
+      const productName = helper.string("discontinueProduct", "productName", _productName);
       getDivision(divisionName).discontinueProduct(getProduct(divisionName, productName));
     },
-    setSmartSupply: function (adivisionName: any, acityName: any, aenabled: any): void {
+    setSmartSupply: function (_divisionName: unknown, _cityName: unknown, _enabled: unknown): void {
       checkAccess("setSmartSupply", 7);
-      const divisionName = helper.string("setSmartSupply", "divisionName", adivisionName);
-      const cityName = helper.string("sellProduct", "cityName", acityName);
-      const enabled = helper.boolean(aenabled);
+      const divisionName = helper.string("setSmartSupply", "divisionName", _divisionName);
+      const cityName = helper.city("sellProduct", "cityName", _cityName);
+      const enabled = helper.boolean(_enabled);
       const warehouse = getWarehouse(divisionName, cityName);
+      if (!hasUnlockUpgrade("Smart Supply"))
+        throw helper.makeRuntimeErrorMsg(
+          `corporation.setSmartSupply`,
+          `You have not purchased the Smart Supply upgrade!`,
+        );
       SetSmartSupply(warehouse, enabled);
     },
-    setSmartSupplyUseLeftovers: function (adivisionName: any, acityName: any, amaterialName: any, aenabled: any): void {
+    setSmartSupplyUseLeftovers: function (
+      _divisionName: unknown,
+      _cityName: unknown,
+      _materialName: unknown,
+      _enabled: unknown,
+    ): void {
       checkAccess("setSmartSupplyUseLeftovers", 7);
-      const divisionName = helper.string("setSmartSupply", "divisionName", adivisionName);
-      const cityName = helper.string("sellProduct", "cityName", acityName);
-      const materialName = helper.string("sellProduct", "materialName", amaterialName);
-      const enabled = helper.boolean(aenabled);
+      const divisionName = helper.string("setSmartSupply", "divisionName", _divisionName);
+      const cityName = helper.city("sellProduct", "cityName", _cityName);
+      const materialName = helper.string("sellProduct", "materialName", _materialName);
+      const enabled = helper.boolean(_enabled);
       const warehouse = getWarehouse(divisionName, cityName);
       const material = getMaterial(divisionName, cityName, materialName);
+      if (!hasUnlockUpgrade("Smart Supply"))
+        throw helper.makeRuntimeErrorMsg(
+          `corporation.setSmartSupply`,
+          `You have not purchased the Smart Supply upgrade!`,
+        );
       SetSmartSupplyUseLeftovers(warehouse, material, enabled);
     },
-    buyMaterial: function (adivisionName: any, acityName: any, amaterialName: any, aamt: any): void {
+    buyMaterial: function (_divisionName: unknown, _cityName: unknown, _materialName: unknown, _amt: unknown): void {
       checkAccess("buyMaterial", 7);
-      const divisionName = helper.string("buyMaterial", "divisionName", adivisionName);
-      const cityName = helper.string("buyMaterial", "cityName", acityName);
-      const materialName = helper.string("buyMaterial", "materialName", amaterialName);
-      const amt = helper.number("buyMaterial", "amt", aamt);
-      if (amt < 0) throw new Error("Invalid value for amount field! Must be numeric and grater than 0");
+      const divisionName = helper.string("buyMaterial", "divisionName", _divisionName);
+      const cityName = helper.city("buyMaterial", "cityName", _cityName);
+      const materialName = helper.string("buyMaterial", "materialName", _materialName);
+      const amt = helper.number("buyMaterial", "amt", _amt);
+      if (amt < 0) throw new Error("Invalid value for amount field! Must be numeric and greater than 0");
       const material = getMaterial(divisionName, cityName, materialName);
       BuyMaterial(material, amt);
     },
+    bulkPurchase: function (_divisionName: unknown, _cityName: unknown, _materialName: unknown, _amt: unknown): void {
+      checkAccess("bulkPurchase", 7);
+      const divisionName = helper.string("bulkPurchase", "divisionName", _divisionName);
+      if (!hasResearched(getDivision(divisionName), "Bulk Purchasing"))
+        throw new Error(`You have not researched Bulk Purchasing in ${divisionName}`);
+      const corporation = getCorporation();
+      const cityName = helper.city("bulkPurchase", "cityName", _cityName);
+      const materialName = helper.string("bulkPurchase", "materialName", _materialName);
+      const amt = helper.number("bulkPurchase", "amt", _amt);
+      const warehouse = getWarehouse(divisionName, cityName);
+      const material = getMaterial(divisionName, cityName, materialName);
+      BulkPurchase(corporation, warehouse, material, amt);
+    },
     makeProduct: function (
-      adivisionName: any,
-      acityName: any,
-      aproductName: any,
-      adesignInvest: any,
-      amarketingInvest: any,
+      _divisionName: unknown,
+      _cityName: unknown,
+      _productName: unknown,
+      _designInvest: unknown,
+      _marketingInvest: unknown,
     ): void {
       checkAccess("makeProduct", 7);
-      const divisionName = helper.string("makeProduct", "divisionName", adivisionName);
-      const cityName = helper.string("makeProduct", "cityName", acityName);
-      const productName = helper.string("makeProduct", "productName", aproductName);
-      const designInvest = helper.number("makeProduct", "designInvest", adesignInvest);
-      const marketingInvest = helper.number("makeProduct", "marketingInvest", amarketingInvest);
+      const divisionName = helper.string("makeProduct", "divisionName", _divisionName);
+      const cityName = helper.city("makeProduct", "cityName", _cityName);
+      const productName = helper.string("makeProduct", "productName", _productName);
+      const designInvest = helper.number("makeProduct", "designInvest", _designInvest);
+      const marketingInvest = helper.number("makeProduct", "marketingInvest", _marketingInvest);
       const corporation = getCorporation();
       MakeProduct(corporation, getDivision(divisionName), cityName, productName, designInvest, marketingInvest);
     },
     exportMaterial: function (
-      asourceDivision: any,
-      asourceCity: any,
-      atargetDivision: any,
-      atargetCity: any,
-      amaterialName: any,
-      aamt: any,
+      _sourceDivision: unknown,
+      _sourceCity: unknown,
+      _targetDivision: unknown,
+      _targetCity: unknown,
+      _materialName: unknown,
+      _amt: unknown,
     ): void {
       checkAccess("exportMaterial", 7);
-      const sourceDivision = helper.string("exportMaterial", "sourceDivision", asourceDivision);
-      const sourceCity = helper.string("exportMaterial", "sourceCity", asourceCity);
-      const targetDivision = helper.string("exportMaterial", "targetDivision", atargetDivision);
-      const targetCity = helper.string("exportMaterial", "targetCity", atargetCity);
-      const materialName = helper.string("exportMaterial", "materialName", amaterialName);
-      const amt = helper.string("exportMaterial", "amt", aamt);
-      ExportMaterial(targetDivision, targetCity, getMaterial(sourceDivision, sourceCity, materialName), amt + "");
+      const sourceDivision = helper.string("exportMaterial", "sourceDivision", _sourceDivision);
+      const sourceCity = helper.string("exportMaterial", "sourceCity", _sourceCity);
+      const targetDivision = helper.string("exportMaterial", "targetDivision", _targetDivision);
+      const targetCity = helper.string("exportMaterial", "targetCity", _targetCity);
+      const materialName = helper.string("exportMaterial", "materialName", _materialName);
+      const amt = helper.string("exportMaterial", "amt", _amt);
+      ExportMaterial(
+        targetDivision,
+        targetCity,
+        getMaterial(sourceDivision, sourceCity, materialName),
+        amt + "",
+        getDivision(targetDivision),
+      );
     },
     cancelExportMaterial: function (
-      asourceDivision: any,
-      asourceCity: any,
-      atargetDivision: any,
-      atargetCity: any,
-      amaterialName: any,
-      aamt: any,
+      _sourceDivision: unknown,
+      _sourceCity: unknown,
+      _targetDivision: unknown,
+      _targetCity: unknown,
+      _materialName: unknown,
+      _amt: unknown,
     ): void {
       checkAccess("cancelExportMaterial", 7);
-      const sourceDivision = helper.string("cancelExportMaterial", "sourceDivision", asourceDivision);
-      const sourceCity = helper.string("cancelExportMaterial", "sourceCity", asourceCity);
-      const targetDivision = helper.string("cancelExportMaterial", "targetDivision", atargetDivision);
-      const targetCity = helper.string("cancelExportMaterial", "targetCity", atargetCity);
-      const materialName = helper.string("cancelExportMaterial", "materialName", amaterialName);
-      const amt = helper.string("cancelExportMaterial", "amt", aamt);
+      const sourceDivision = helper.string("cancelExportMaterial", "sourceDivision", _sourceDivision);
+      const sourceCity = helper.string("cancelExportMaterial", "sourceCity", _sourceCity);
+      const targetDivision = helper.string("cancelExportMaterial", "targetDivision", _targetDivision);
+      const targetCity = helper.string("cancelExportMaterial", "targetCity", _targetCity);
+      const materialName = helper.string("cancelExportMaterial", "materialName", _materialName);
+      const amt = helper.string("cancelExportMaterial", "amt", _amt);
       CancelExportMaterial(targetDivision, targetCity, getMaterial(sourceDivision, sourceCity, materialName), amt + "");
     },
-    setMaterialMarketTA1: function (adivisionName: any, acityName: any, amaterialName: any, aon: any): void {
+    setMaterialMarketTA1: function (
+      _divisionName: unknown,
+      _cityName: unknown,
+      _materialName: unknown,
+      _on: unknown,
+    ): void {
       checkAccess("setMaterialMarketTA1", 7);
-      const divisionName = helper.string("setMaterialMarketTA1", "divisionName", adivisionName);
-      const cityName = helper.string("setMaterialMarketTA1", "cityName", acityName);
-      const materialName = helper.string("setMaterialMarketTA1", "materialName", amaterialName);
-      const on = helper.boolean(aon);
+      const divisionName = helper.string("setMaterialMarketTA1", "divisionName", _divisionName);
+      const cityName = helper.city("setMaterialMarketTA1", "cityName", _cityName);
+      const materialName = helper.string("setMaterialMarketTA1", "materialName", _materialName);
+      const on = helper.boolean(_on);
+      if (!getDivision(divisionName).hasResearch("Market-TA.I"))
+        throw helper.makeRuntimeErrorMsg(
+          `corporation.setMaterialMarketTA1`,
+          `You have not researched MarketTA.I for division: ${divisionName}`,
+        );
       SetMaterialMarketTA1(getMaterial(divisionName, cityName, materialName), on);
     },
-    setMaterialMarketTA2: function (adivisionName: any, acityName: any, amaterialName: any, aon: any): void {
+    setMaterialMarketTA2: function (
+      _divisionName: unknown,
+      _cityName: unknown,
+      _materialName: unknown,
+      _on: unknown,
+    ): void {
       checkAccess("setMaterialMarketTA2", 7);
-      const divisionName = helper.string("setMaterialMarketTA2", "divisionName", adivisionName);
-      const cityName = helper.string("setMaterialMarketTA2", "cityName", acityName);
-      const materialName = helper.string("setMaterialMarketTA2", "materialName", amaterialName);
-      const on = helper.boolean(aon);
+      const divisionName = helper.string("setMaterialMarketTA2", "divisionName", _divisionName);
+      const cityName = helper.city("setMaterialMarketTA2", "cityName", _cityName);
+      const materialName = helper.string("setMaterialMarketTA2", "materialName", _materialName);
+      const on = helper.boolean(_on);
+      if (!getDivision(divisionName).hasResearch("Market-TA.II"))
+        throw helper.makeRuntimeErrorMsg(
+          `corporation.setMaterialMarketTA2`,
+          `You have not researched MarketTA.II for division: ${divisionName}`,
+        );
       SetMaterialMarketTA2(getMaterial(divisionName, cityName, materialName), on);
     },
-    setProductMarketTA1: function (adivisionName: any, aproductName: any, aon: any): void {
+    setProductMarketTA1: function (_divisionName: unknown, _productName: unknown, _on: unknown): void {
       checkAccess("setProductMarketTA1", 7);
-      const divisionName = helper.string("setProductMarketTA1", "divisionName", adivisionName);
-      const productName = helper.string("setProductMarketTA1", "productName", aproductName);
-      const on = helper.boolean(aon);
+      const divisionName = helper.string("setProductMarketTA1", "divisionName", _divisionName);
+      const productName = helper.string("setProductMarketTA1", "productName", _productName);
+      const on = helper.boolean(_on);
+      if (!getDivision(divisionName).hasResearch("Market-TA.I"))
+        throw helper.makeRuntimeErrorMsg(
+          `corporation.setProductMarketTA1`,
+          `You have not researched MarketTA.I for division: ${divisionName}`,
+        );
       SetProductMarketTA1(getProduct(divisionName, productName), on);
     },
-    setProductMarketTA2: function (adivisionName: any, aproductName: any, aon: any): void {
+    setProductMarketTA2: function (_divisionName: unknown, _productName: unknown, _on: unknown): void {
       checkAccess("setProductMarketTA2", 7);
-      const divisionName = helper.string("setProductMarketTA2", "divisionName", adivisionName);
-      const productName = helper.string("setProductMarketTA2", "productName", aproductName);
-      const on = helper.boolean(aon);
+      const divisionName = helper.string("setProductMarketTA2", "divisionName", _divisionName);
+      const productName = helper.string("setProductMarketTA2", "productName", _productName);
+      const on = helper.boolean(_on);
+      if (!getDivision(divisionName).hasResearch("Market-TA.II"))
+        throw helper.makeRuntimeErrorMsg(
+          `corporation.setProductMarketTA2`,
+          `You have not researched MarketTA.II for division: ${divisionName}`,
+        );
       SetProductMarketTA2(getProduct(divisionName, productName), on);
     },
   };
 
   const officeAPI: OfficeAPI = {
-    getHireAdVertCost: function (adivisionName: any): number {
+    getHireAdVertCost: function (_divisionName: unknown): number {
       checkAccess("getHireAdVertCost", 8);
-      const divisionName = helper.string("getHireAdVertCost", "divisionName", adivisionName);
+      const divisionName = helper.string("getHireAdVertCost", "divisionName", _divisionName);
       const division = getDivision(divisionName);
       const upgrade = IndustryUpgrades[1];
       return upgrade[1] * Math.pow(upgrade[2], division.upgrades[1]);
     },
-    getHireAdVertCount: function (adivisionName: any): number {
+    getHireAdVertCount: function (_divisionName: unknown): number {
       checkAccess("getHireAdVertCount", 8);
-      const divisionName = helper.string("getHireAdVertCount", "divisionName", adivisionName);
+      const divisionName = helper.string("getHireAdVertCount", "divisionName", _divisionName);
       const division = getDivision(divisionName);
-      return division.upgrades[1]
+      return division.upgrades[1];
     },
-    getResearchCost: function (adivisionName: any, aresearchName: any): number {
+    getResearchCost: function (_divisionName: unknown, _researchName: unknown): number {
       checkAccess("getResearchCost", 8);
-      const divisionName = helper.string("getResearchCost", "divisionName", adivisionName);
-      const researchName = helper.string("getResearchCost", "researchName", aresearchName);
+      const divisionName = helper.string("getResearchCost", "divisionName", _divisionName);
+      const researchName = helper.string("getResearchCost", "researchName", _researchName);
       return getResearchCost(getDivision(divisionName), researchName);
     },
-    hasResearched: function (adivisionName: any, aresearchName: any): boolean {
+    hasResearched: function (_divisionName: unknown, _researchName: unknown): boolean {
       checkAccess("hasResearched", 8);
-      const divisionName = helper.string("hasResearched", "divisionName", adivisionName);
-      const researchName = helper.string("hasResearched", "researchName", aresearchName);
+      const divisionName = helper.string("hasResearched", "divisionName", _divisionName);
+      const researchName = helper.string("hasResearched", "researchName", _researchName);
       return hasResearched(getDivision(divisionName), researchName);
     },
-    setAutoJobAssignment: function (adivisionName: any, acityName: any, ajob: any, aamount: any): Promise<boolean> {
+    setAutoJobAssignment: function (
+      _divisionName: unknown,
+      _cityName: unknown,
+      _job: unknown,
+      _amount: unknown,
+    ): Promise<boolean> {
       checkAccess("setAutoJobAssignment", 8);
-      const divisionName = helper.string("setAutoJobAssignment", "divisionName", adivisionName);
-      const cityName = helper.string("setAutoJobAssignment", "cityName", acityName);
-      const amount = helper.number("setAutoJobAssignment", "amount", aamount);
-      const job = helper.string("setAutoJobAssignment", "job", ajob);
+      const divisionName = helper.string("setAutoJobAssignment", "divisionName", _divisionName);
+      const cityName = helper.city("setAutoJobAssignment", "cityName", _cityName);
+      const amount = helper.number("setAutoJobAssignment", "amount", _amount);
+      const job = helper.string("setAutoJobAssignment", "job", _job);
       const office = getOffice(divisionName, cityName);
       if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
       return netscriptDelay(1000, workerScript).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         return Promise.resolve(office.setEmployeeToJob(job, amount));
       });
     },
-    getOfficeSizeUpgradeCost: function (adivisionName: any, acityName: any, asize: any): number {
+    getOfficeSizeUpgradeCost: function (_divisionName: unknown, _cityName: unknown, _size: unknown): number {
       checkAccess("getOfficeSizeUpgradeCost", 8);
-      const divisionName = helper.string("getOfficeSizeUpgradeCost", "divisionName", adivisionName);
-      const cityName = helper.string("getOfficeSizeUpgradeCost", "cityName", acityName);
-      const size = helper.number("getOfficeSizeUpgradeCost", "size", asize);
-      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and grater than 0");
+      const divisionName = helper.string("getOfficeSizeUpgradeCost", "divisionName", _divisionName);
+      const cityName = helper.city("getOfficeSizeUpgradeCost", "cityName", _cityName);
+      const size = helper.number("getOfficeSizeUpgradeCost", "size", _size);
+      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
       const initialPriceMult = Math.round(office.size / CorporationConstants.OfficeInitialSize);
       const costMultiplier = 1.09;
@@ -569,40 +655,46 @@ export function NetscriptCorporation(
       }
       return CorporationConstants.OfficeInitialCost * mult;
     },
-    assignJob: function (adivisionName: any, acityName: any, aemployeeName: any, ajob: any): Promise<void> {
+    assignJob: function (
+      _divisionName: unknown,
+      _cityName: unknown,
+      _employeeName: unknown,
+      _job: unknown,
+    ): Promise<void> {
       checkAccess("assignJob", 8);
-      const divisionName = helper.string("assignJob", "divisionName", adivisionName);
-      const cityName = helper.string("assignJob", "cityName", acityName);
-      const employeeName = helper.string("assignJob", "employeeName", aemployeeName);
-      const job = helper.string("assignJob", "job", ajob);
+      const divisionName = helper.string("assignJob", "divisionName", _divisionName);
+      const cityName = helper.city("assignJob", "cityName", _cityName);
+      const employeeName = helper.string("assignJob", "employeeName", _employeeName);
+      const job = helper.string("assignJob", "job", _job);
       const employee = getEmployee(divisionName, cityName, employeeName);
       return netscriptDelay(1000, workerScript).then(function () {
         return Promise.resolve(AssignJob(employee, job));
       });
     },
-    hireEmployee: function (adivisionName: any, acityName: any): any {
+    hireEmployee: function (_divisionName: unknown, _cityName: unknown): any {
       checkAccess("hireEmployee", 8);
-      const divisionName = helper.string("hireEmployee", "divisionName", adivisionName);
-      const cityName = helper.string("hireEmployee", "cityName", acityName);
+      const divisionName = helper.string("hireEmployee", "divisionName", _divisionName);
+      const cityName = helper.city("hireEmployee", "cityName", _cityName);
       const office = getOffice(divisionName, cityName);
       return office.hireRandomEmployee();
     },
-    upgradeOfficeSize: function (adivisionName: any, acityName: any, asize: any): void {
+    upgradeOfficeSize: function (_divisionName: unknown, _cityName: unknown, _size: unknown): void {
       checkAccess("upgradeOfficeSize", 8);
-      const divisionName = helper.string("upgradeOfficeSize", "divisionName", adivisionName);
-      const cityName = helper.string("upgradeOfficeSize", "cityName", acityName);
-      const size = helper.number("upgradeOfficeSize", "size", asize);
-      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and grater than 0");
+      const divisionName = helper.string("upgradeOfficeSize", "divisionName", _divisionName);
+      const cityName = helper.city("upgradeOfficeSize", "cityName", _cityName);
+      const size = helper.number("upgradeOfficeSize", "size", _size);
+      if (size < 0) throw new Error("Invalid value for size field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
       const corporation = getCorporation();
       UpgradeOfficeSize(corporation, office, size);
     },
-    throwParty: function (adivisionName: any, acityName: any, acostPerEmployee: any): Promise<number> {
+    throwParty: function (_divisionName: unknown, _cityName: unknown, _costPerEmployee: unknown): Promise<number> {
       checkAccess("throwParty", 8);
-      const divisionName = helper.string("throwParty", "divisionName", adivisionName);
-      const cityName = helper.string("throwParty", "cityName", acityName);
-      const costPerEmployee = helper.number("throwParty", "costPerEmployee", acostPerEmployee);
-      if (costPerEmployee < 0) throw new Error("Invalid value for Cost Per Employee field! Must be numeric and grater than 0");
+      const divisionName = helper.string("throwParty", "divisionName", _divisionName);
+      const cityName = helper.city("throwParty", "cityName", _cityName);
+      const costPerEmployee = helper.number("throwParty", "costPerEmployee", _costPerEmployee);
+      if (costPerEmployee < 0)
+        throw new Error("Invalid value for Cost Per Employee field! Must be numeric and greater than 0");
       const office = getOffice(divisionName, cityName);
       const corporation = getCorporation();
       return netscriptDelay(
@@ -612,10 +704,10 @@ export function NetscriptCorporation(
         return Promise.resolve(ThrowParty(corporation, office, costPerEmployee));
       });
     },
-    buyCoffee: function (adivisionName: any, acityName: any): Promise<void> {
+    buyCoffee: function (_divisionName: unknown, _cityName: unknown): Promise<void> {
       checkAccess("buyCoffee", 8);
-      const divisionName = helper.string("buyCoffee", "divisionName", adivisionName);
-      const cityName = helper.string("buyCoffee", "cityName", acityName);
+      const divisionName = helper.string("buyCoffee", "divisionName", _divisionName);
+      const cityName = helper.city("buyCoffee", "cityName", _cityName);
       const corporation = getCorporation();
       return netscriptDelay(
         (60 * 1000) / (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1)),
@@ -624,22 +716,22 @@ export function NetscriptCorporation(
         return Promise.resolve(BuyCoffee(corporation, getDivision(divisionName), getOffice(divisionName, cityName)));
       });
     },
-    hireAdVert: function (adivisionName: any): void {
+    hireAdVert: function (_divisionName: unknown): void {
       checkAccess("hireAdVert", 8);
-      const divisionName = helper.string("hireAdVert", "divisionName", adivisionName);
+      const divisionName = helper.string("hireAdVert", "divisionName", _divisionName);
       const corporation = getCorporation();
       HireAdVert(corporation, getDivision(divisionName), getOffice(divisionName, "Sector-12"));
     },
-    research: function (adivisionName: any, aresearchName: any): void {
+    research: function (_divisionName: unknown, _researchName: unknown): void {
       checkAccess("research", 8);
-      const divisionName = helper.string("research", "divisionName", adivisionName);
-      const researchName = helper.string("research", "researchName", aresearchName);
+      const divisionName = helper.string("research", "divisionName", _divisionName);
+      const researchName = helper.string("research", "researchName", _researchName);
       Research(getDivision(divisionName), researchName);
     },
-    getOffice: function (adivisionName: any, acityName: any): any {
+    getOffice: function (_divisionName: unknown, _cityName: unknown): any {
       checkAccess("getOffice", 8);
-      const divisionName = helper.string("getOffice", "divisionName", adivisionName);
-      const cityName = helper.string("getOffice", "cityName", acityName);
+      const divisionName = helper.string("getOffice", "divisionName", _divisionName);
+      const cityName = helper.city("getOffice", "cityName", _cityName);
       const office = getOffice(divisionName, cityName);
       return {
         loc: office.loc,
@@ -658,13 +750,22 @@ export function NetscriptCorporation(
           "Research & Development": office.employeeProd[EmployeePositions.RandD],
           Training: office.employeeProd[EmployeePositions.Training],
         },
+        employeeJobs: {
+          Operations: office.employeeJobs[EmployeePositions.Operations],
+          Engineer: office.employeeJobs[EmployeePositions.Engineer],
+          Business: office.employeeJobs[EmployeePositions.Business],
+          Management: office.employeeJobs[EmployeePositions.Management],
+          "Research & Development": office.employeeJobs[EmployeePositions.RandD],
+          Training: office.employeeJobs[EmployeePositions.Training],
+          Unassigned: office.employeeJobs[EmployeePositions.Unassigned],
+        },
       };
     },
-    getEmployee: function (adivisionName: any, acityName: any, aemployeeName: any): NSEmployee {
+    getEmployee: function (_divisionName: unknown, _cityName: unknown, _employeeName: unknown): NSEmployee {
       checkAccess("getEmployee", 8);
-      const divisionName = helper.string("getEmployee", "divisionName", adivisionName);
-      const cityName = helper.string("getEmployee", "cityName", acityName);
-      const employeeName = helper.string("getEmployee", "employeeName", aemployeeName);
+      const divisionName = helper.string("getEmployee", "divisionName", _divisionName);
+      const cityName = helper.city("getEmployee", "cityName", _cityName);
+      const employeeName = helper.string("getEmployee", "employeeName", _employeeName);
       const employee = getEmployee(divisionName, cityName, employeeName);
       return {
         name: employee.name,
@@ -686,51 +787,54 @@ export function NetscriptCorporation(
   return {
     ...warehouseAPI,
     ...officeAPI,
-    expandIndustry: function (aindustryName: any, adivisionName: any): void {
+    expandIndustry: function (_industryName: unknown, _divisionName: unknown): void {
       checkAccess("expandIndustry");
-      const industryName = helper.string("expandIndustry", "industryName", aindustryName);
-      const divisionName = helper.string("expandIndustry", "divisionName", adivisionName);
+      const industryName = helper.string("expandIndustry", "industryName", _industryName);
+      const divisionName = helper.string("expandIndustry", "divisionName", _divisionName);
       const corporation = getCorporation();
       NewIndustry(corporation, industryName, divisionName);
     },
-    expandCity: function (adivisionName: any, acityName: any): void {
+    expandCity: function (_divisionName: unknown, _cityName: unknown): void {
       checkAccess("expandCity");
-      const divisionName = helper.string("expandCity", "divisionName", adivisionName);
-      const cityName = helper.string("expandCity", "cityName", acityName);
+      const divisionName = helper.string("expandCity", "divisionName", _divisionName);
+      const cityName = helper.city("expandCity", "cityName", _cityName);
       if (!CorporationConstants.Cities.includes(cityName)) throw new Error("Invalid city name");
       const corporation = getCorporation();
       const division = getDivision(divisionName);
       NewCity(corporation, division, cityName);
     },
-    unlockUpgrade: function (aupgradeName: any): void {
+    unlockUpgrade: function (_upgradeName: unknown): void {
       checkAccess("unlockUpgrade");
-      const upgradeName = helper.string("unlockUpgrade", "upgradeName", aupgradeName);
+      const upgradeName = helper.string("unlockUpgrade", "upgradeName", _upgradeName);
       const corporation = getCorporation();
       const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade[2] === upgradeName);
       if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
       UnlockUpgrade(corporation, upgrade);
     },
-    levelUpgrade: function (aupgradeName: any): void {
+    levelUpgrade: function (_upgradeName: unknown): void {
       checkAccess("levelUpgrade");
-      const upgradeName = helper.string("levelUpgrade", "upgradeName", aupgradeName);
+      const upgradeName = helper.string("levelUpgrade", "upgradeName", _upgradeName);
       const corporation = getCorporation();
       const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
       if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
       LevelUpgrade(corporation, upgrade);
     },
-    issueDividends: function (apercent: any): void {
+    issueDividends: function (_percent: unknown): void {
       checkAccess("issueDividends");
-      const percent = helper.number("issueDividends", "percent", apercent);
-      if (percent < 0 || percent > 100) throw new Error("Invalid value for percent field! Must be numeric, grater than 0, and less than 100");
+      const percent = helper.number("issueDividends", "percent", _percent);
+      if (percent < 0 || percent > 100)
+        throw new Error("Invalid value for percent field! Must be numeric, greater than 0, and less than 100");
       const corporation = getCorporation();
+      if (!corporation.public)
+        throw helper.makeRuntimeErrorMsg(`corporation.issueDividends`, `Your company has not gone public!`);
       IssueDividends(corporation, percent);
     },
 
     // If you modify these objects you will affect them for real, it's not
     // copies.
-    getDivision: function (adivisionName: any): NSDivision {
+    getDivision: function (_divisionName: unknown): NSDivision {
       checkAccess("getDivision");
-      const divisionName = helper.string("getDivision", "divisionName", adivisionName);
+      const divisionName = helper.string("getDivision", "divisionName", _divisionName);
       const division = getDivision(divisionName);
       return getSafeDivision(division);
     },
@@ -752,58 +856,73 @@ export function NetscriptCorporation(
         divisions: corporation.divisions.map((division): NSDivision => getSafeDivision(division)),
       };
     },
-    createCorporation: function (acorporationName: string, selfFund = true): boolean {
-      const corporationName = helper.string("createCorporation", "corporationName", acorporationName);
+    createCorporation: function (_corporationName: unknown, _selfFund: unknown = true): boolean {
+      const corporationName = helper.string("createCorporation", "corporationName", _corporationName);
+      const selfFund = helper.boolean(_selfFund);
       return createCorporation(corporationName, selfFund);
     },
-    hasUnlockUpgrade: function (aupgradeName: any): boolean {
+    hasUnlockUpgrade: function (_upgradeName: unknown): boolean {
       checkAccess("hasUnlockUpgrade");
-      const upgradeName = helper.string("hasUnlockUpgrade", "upgradeName", aupgradeName);
+      const upgradeName = helper.string("hasUnlockUpgrade", "upgradeName", _upgradeName);
       return hasUnlockUpgrade(upgradeName);
     },
-    getUnlockUpgradeCost: function (aupgradeName: any): number {
+    getUnlockUpgradeCost: function (_upgradeName: unknown): number {
       checkAccess("getUnlockUpgradeCost");
-      const upgradeName = helper.string("getUnlockUpgradeCost", "upgradeName", aupgradeName);
+      const upgradeName = helper.string("getUnlockUpgradeCost", "upgradeName", _upgradeName);
       return getUnlockUpgradeCost(upgradeName);
     },
-    getUpgradeLevel: function (aupgradeName: any): number {
+    getUpgradeLevel: function (_upgradeName: unknown): number {
       checkAccess("hasUnlockUpgrade");
-      const upgradeName = helper.string("getUpgradeLevel", "upgradeName", aupgradeName);
+      const upgradeName = helper.string("getUpgradeLevel", "upgradeName", _upgradeName);
       return getUpgradeLevel(upgradeName);
     },
-    getUpgradeLevelCost: function (aupgradeName: any): number {
+    getUpgradeLevelCost: function (_upgradeName: unknown): number {
       checkAccess("getUpgradeLevelCost");
-      const upgradeName = helper.string("getUpgradeLevelCost", "upgradeName", aupgradeName);
+      const upgradeName = helper.string("getUpgradeLevelCost", "upgradeName", _upgradeName);
       return getUpgradeLevelCost(upgradeName);
     },
-    getExpandIndustryCost: function (aindustryName: any): number {
+    getExpandIndustryCost: function (_industryName: unknown): number {
       checkAccess("getExpandIndustryCost");
-      const industryName = helper.string("getExpandIndustryCost", "industryName", aindustryName);
+      const industryName = helper.string("getExpandIndustryCost", "industryName", _industryName);
       return getExpandIndustryCost(industryName);
     },
-    getExpandCityCost: function(): number {
+    getExpandCityCost: function (): number {
       checkAccess("getExpandCityCost");
       return getExpandCityCost();
     },
-    getInvestmentOffer: function(): InvestmentOffer {
+    getInvestmentOffer: function (): InvestmentOffer {
       checkAccess("getInvestmentOffer");
       return getInvestmentOffer();
     },
-    acceptInvestmentOffer: function(): boolean {
+    acceptInvestmentOffer: function (): boolean {
       checkAccess("acceptInvestmentOffer");
       return acceptInvestmentOffer();
     },
-    goPublic: function(anumShares: any): boolean {
+    goPublic: function (_numShares: unknown): boolean {
       checkAccess("acceptInvestmentOffer");
-      const numShares = helper.number("goPublic", "numShares", anumShares);
+      const numShares = helper.number("goPublic", "numShares", _numShares);
       return goPublic(numShares);
     },
-    bribe: function(afactionName: string, aamountCash: any, aamountShares: any): boolean {
+    sellShares: function (_numShares: unknown): number {
+      checkAccess("acceptInvestmentOffer");
+      const numShares = helper.number("sellStock", "numShares", _numShares);
+      return SellShares(getCorporation(), player, numShares);
+    },
+    buyBackShares: function (_numShares: unknown): boolean {
+      checkAccess("acceptInvestmentOffer");
+      const numShares = helper.number("buyStock", "numShares", _numShares);
+      return BuyBackShares(getCorporation(), player, numShares);
+    },
+    bribe: function (_factionName: unknown, _amountCash: unknown, _amountShares: unknown): boolean {
       checkAccess("bribe");
-      const factionName = helper.string("bribe", "factionName", afactionName);
-      const amountCash = helper.number("bribe", "amountCash", aamountCash);
-      const amountShares = helper.number("bribe", "amountShares", aamountShares);
+      const factionName = helper.string("bribe", "factionName", _factionName);
+      const amountCash = helper.number("bribe", "amountCash", _amountCash);
+      const amountShares = helper.number("bribe", "amountShares", _amountShares);
       return bribe(factionName, amountCash, amountShares);
+    },
+    getBonusTime: function (): number {
+      checkAccess("getBonusTime");
+      return Math.round(getCorporation().storedCycles / 5) * 1000;
     },
   };
 }

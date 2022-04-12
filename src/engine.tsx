@@ -15,6 +15,7 @@ import { Factions, initFactions } from "./Faction/Factions";
 import { staneksGift } from "./CotMG/Helper";
 import { processPassiveFactionRepGain, inviteToFaction } from "./Faction/FactionHelpers";
 import { Router } from "./ui/GameRoot";
+import { Page } from "./ui/Router";
 import { SetupTextEditor } from "./ScriptEditor/ui/ScriptEditorRoot";
 
 import {
@@ -48,6 +49,8 @@ import { calculateAchievements } from "./Achievements/Achievements";
 
 import React from "react";
 import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
+import { Button, Typography } from "@mui/material";
+import { SnackbarEvents } from "./ui/React/Snackbar";
 
 const Engine: {
   _lastUpdate: number;
@@ -186,7 +189,8 @@ const Engine: {
         Settings.AutosaveInterval = 60;
       }
       if (Settings.AutosaveInterval === 0) {
-        Engine.Counters.autoSaveCounter = Infinity;
+        warnAutosaveDisabled();
+        Engine.Counters.autoSaveCounter = 60 * 5; // Let's check back in a bit
       } else {
         Engine.Counters.autoSaveCounter = Settings.AutosaveInterval * 5;
         saveObject.saveGame(!Settings.SuppressSavedGameToast);
@@ -259,6 +263,9 @@ const Engine: {
         initSymbolToStockMap();
       }
 
+      // Apply penalty for entropy accumulation
+      Player.applyEntropy(Player.entropy);
+
       // Calculate the number of cycles have elapsed while offline
       Engine._lastUpdate = new Date().getTime();
       const lastUpdate = Player.lastUpdate;
@@ -298,6 +305,8 @@ const Engine: {
           Player.commitCrime(numCyclesOffline);
         } else if (Player.workType == CONSTANTS.WorkTypeCompanyPartTime) {
           Player.workPartTime(numCyclesOffline);
+        } else if (Player.workType === CONSTANTS.WorkTypeGraftAugmentation) {
+          Player.graftAugmentationWork(numCyclesOffline);
         } else {
           Player.work(numCyclesOffline);
         }
@@ -401,9 +410,22 @@ const Engine: {
         () =>
           AlertEvents.emit(
             <>
-              Offline for {timeOfflineString}. While you were offline, your scripts generated{" "}
-              <Money money={offlineHackingIncome} />, your Hacknet Nodes generated {hacknetProdInfo} and you gained{" "}
-              <Reputation reputation={offlineReputation} /> reputation divided amongst your factions.
+              <Typography>Offline for {timeOfflineString}. While you were offline:</Typography>
+              <ul>
+                <li>
+                  <Typography>
+                    Your scripts generated <Money money={offlineHackingIncome} />
+                  </Typography>
+                </li>
+                <li>
+                  <Typography>Your Hacknet Nodes generated {hacknetProdInfo}</Typography>
+                </li>
+                <li>
+                  <Typography>
+                    You gained <Reputation reputation={offlineReputation} /> reputation divided amongst your factions
+                  </Typography>
+                </li>
+              </ul>
             </>,
           ),
         250,
@@ -444,5 +466,36 @@ const Engine: {
     window.requestAnimationFrame(Engine.start);
   },
 };
+
+/**
+ * Shows a toast warning that lets the player know that auto-saves are disabled, with an button to re-enable them.
+ */
+function warnAutosaveDisabled(): void {
+  // If the player has suppressed those warnings let's just exit right away.
+  if (Settings.SuppressAutosaveDisabledWarnings) return;
+
+  // We don't want this warning to show up on certain pages.
+  // When in recovery or importing we want to keep autosave disabled.
+  const ignoredPages = [Page.Recovery, Page.ImportSave];
+  if (ignoredPages.includes(Router.page())) return;
+
+  const warningToast = (
+    <>
+      Auto-saves are <strong>disabled</strong>!
+      <Button
+        sx={{ ml: 1 }}
+        color="warning"
+        size="small"
+        onClick={() => {
+          // We reset the value to a default
+          Settings.AutosaveInterval = 60;
+        }}
+      >
+        Enable
+      </Button>
+    </>
+  );
+  SnackbarEvents.emit(warningToast, "warning", 5000);
+}
 
 export { Engine };

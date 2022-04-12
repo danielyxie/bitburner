@@ -123,6 +123,11 @@ interface IDefaultSettings {
    */
   SuppressSavedGameToast: boolean;
 
+  /**
+   * Whether the user should be displayed a toast warning when the autosave is disabled.
+   */
+  SuppressAutosaveDisabledWarnings: boolean;
+
   /*
    * Whether the game should skip saving the running scripts for late game
    */
@@ -203,6 +208,7 @@ export const defaultSettings: IDefaultSettings = {
   SuppressBladeburnerPopup: false,
   SuppressTIXPopup: false,
   SuppressSavedGameToast: false,
+  SuppressAutosaveDisabledWarnings: false,
   UseIEC60027_2: false,
   ExcludeRunningScriptsFromSave: false,
   IsSidebarOpened: true,
@@ -242,6 +248,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   SuppressBladeburnerPopup: defaultSettings.SuppressBladeburnerPopup,
   SuppressTIXPopup: defaultSettings.SuppressTIXPopup,
   SuppressSavedGameToast: defaultSettings.SuppressSavedGameToast,
+  SuppressAutosaveDisabledWarnings: defaultSettings.SuppressAutosaveDisabledWarnings,
   UseIEC60027_2: defaultSettings.UseIEC60027_2,
   ExcludeRunningScriptsFromSave: defaultSettings.ExcludeRunningScriptsFromSave,
   IsSidebarOpened: defaultSettings.IsSidebarOpened,

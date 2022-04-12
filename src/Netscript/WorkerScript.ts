@@ -60,7 +60,7 @@ export class WorkerScript {
   env: Environment;
 
   /**
-   * Status message in case of script error. Currently unused I think
+   * Status message in case of script error.
    */
   errorMessage = "";
 
@@ -102,7 +102,7 @@ export class WorkerScript {
   scriptRef: RunningScript;
 
   /**
-   * IP Address on which this script is running
+   * hostname on which this script is running
    */
   hostname: string;
 

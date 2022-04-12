@@ -165,14 +165,12 @@ function executeOrder(order: Order, refs: IProcessOrderRefs): void {
 
     console.error("Could not find the following Order in Order Book: ");
     console.error(order);
-  } else {
-    if (isBuy) {
-      dialogBoxCreate(
-        <>
-          Failed to execute {order.type} for {stock.symbol} @ <Money money={order.price} /> ({pos}). This is most likely
-          because you do not have enough money or the order would exceed the stock's maximum number of shares
-        </>,
-      );
-    }
+  } else if (isBuy) {
+    dialogBoxCreate(
+      <>
+        Failed to execute {order.type} for {stock.symbol} @ <Money money={order.price} /> ({pos}). This is most likely
+        because you do not have enough money or the order would exceed the stock's maximum number of shares
+      </>,
+    );
   }
 }

@@ -3,7 +3,7 @@ import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
 
-import {commonEditor} from './common/editor';
+import { commonEditor } from "./common/editor";
 
 export function nano(
   terminal: ITerminal,
@@ -12,5 +12,5 @@ export function nano(
   server: BaseServer,
   args: (string | number | boolean)[],
 ): void {
-  return commonEditor('nano', {terminal, router, player, server, args});
+  return commonEditor("nano", { terminal, router, player, server, args });
 }

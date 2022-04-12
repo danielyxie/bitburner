@@ -22,6 +22,8 @@ import { Router } from "../ui/GameRoot";
 import { Page } from "../ui/Router";
 import { IMap } from "../types";
 import * as data from "./AchievementData.json";
+import { FactionNames } from "../Faction/data/FactionNames";
+import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 
 // Unable to correctly cast the JSON data into AchievementDataJson type otherwise...
 const achievementData = (<AchievementDataJson>(<unknown>data)).achievements;
@@ -56,7 +58,9 @@ function bitNodeFinishedState(): boolean {
   const wd = GetServer(SpecialServers.WorldDaemon);
   if (!(wd instanceof Server)) return false;
   if (wd.backdoorInstalled) return true;
-  return Player.bladeburner !== null && Player.bladeburner.blackops.hasOwnProperty("Operation Daedalus");
+  return (
+    Player.bladeburner !== null && Player.bladeburner.blackops.hasOwnProperty(BlackOperationNames.OperationDaedalus)
+  );
 }
 
 function hasAccessToSF(player: PlayerObject, bn: number): boolean {
@@ -82,40 +86,40 @@ function sfAchievement(): Achievement[] {
 }
 
 export const achievements: IMap<Achievement> = {
-  CYBERSEC: {
-    ...achievementData["CYBERSEC"],
+  [FactionNames.CyberSec.toUpperCase()]: {
+    ...achievementData[FactionNames.CyberSec.toUpperCase()],
     Icon: "CSEC",
-    Condition: () => Player.factions.includes("CyberSec"),
+    Condition: () => Player.factions.includes(FactionNames.CyberSec),
   },
-  NITESEC: {
-    ...achievementData["NITESEC"],
-    Icon: "NiteSec",
-    Condition: () => Player.factions.includes("NiteSec"),
+  [FactionNames.NiteSec.toUpperCase()]: {
+    ...achievementData[FactionNames.NiteSec.toUpperCase()],
+    Icon: FactionNames.NiteSec,
+    Condition: () => Player.factions.includes(FactionNames.NiteSec),
   },
   THE_BLACK_HAND: {
     ...achievementData["THE_BLACK_HAND"],
     Icon: "TBH",
-    Condition: () => Player.factions.includes("The Black Hand"),
+    Condition: () => Player.factions.includes(FactionNames.TheBlackHand),
   },
-  BITRUNNERS: {
-    ...achievementData["BITRUNNERS"],
-    Icon: "bitrunners",
-    Condition: () => Player.factions.includes("BitRunners"),
+  [FactionNames.BitRunners.toUpperCase()]: {
+    ...achievementData[FactionNames.BitRunners.toUpperCase()],
+    Icon: FactionNames.BitRunners.toLowerCase(),
+    Condition: () => Player.factions.includes(FactionNames.BitRunners),
   },
-  DAEDALUS: {
-    ...achievementData["DAEDALUS"],
-    Icon: "daedalus",
-    Condition: () => Player.factions.includes("Daedalus"),
+  [FactionNames.Daedalus.toUpperCase()]: {
+    ...achievementData[FactionNames.Daedalus.toUpperCase()],
+    Icon: FactionNames.Daedalus.toLowerCase(),
+    Condition: () => Player.factions.includes(FactionNames.Daedalus),
   },
   THE_COVENANT: {
     ...achievementData["THE_COVENANT"],
-    Icon: "thecovenant",
-    Condition: () => Player.factions.includes("The Covenant"),
+    Icon: FactionNames.TheCovenant.toLowerCase(),
+    Condition: () => Player.factions.includes(FactionNames.TheCovenant),
   },
-  ILLUMINATI: {
-    ...achievementData["ILLUMINATI"],
-    Icon: "illuminati",
-    Condition: () => Player.factions.includes("Illuminati"),
+  [FactionNames.Illuminati.toUpperCase()]: {
+    ...achievementData[FactionNames.Illuminati.toUpperCase()],
+    Icon: FactionNames.Illuminati.toLowerCase(),
+    Condition: () => Player.factions.includes(FactionNames.Illuminati),
   },
   "BRUTESSH.EXE": {
     ...achievementData["BRUTESSH.EXE"],
@@ -553,7 +557,8 @@ export const achievements: IMap<Achievement> = {
     ...achievementData["MAX_CACHE"],
     Icon: "HASHNETCAP",
     Visible: () => hasAccessToSF(Player, 9),
-    Condition: () => hasHacknetServers(Player) &&
+    Condition: () =>
+      hasHacknetServers(Player) &&
       Player.hashManager.hashes === Player.hashManager.capacity &&
       Player.hashManager.capacity > 0,
   },
@@ -561,7 +566,7 @@ export const achievements: IMap<Achievement> = {
     ...achievementData["SLEEVE_8"],
     Icon: "SLEEVE8",
     Visible: () => hasAccessToSF(Player, 10),
-    Condition: () => Player.sleeves.length === 8,
+    Condition: () => Player.sleeves.length === 8 && Player.sourceFileLvl(10) === 3,
   },
   INDECISIVE: {
     ...achievementData["INDECISIVE"],
@@ -729,34 +734,46 @@ export const achievements: IMap<Achievement> = {
     Secret: true,
     Condition: () => Player.exploits.includes(Exploit.YoureNotMeantToAccessThis),
   },
+  RAINBOW: {
+    ...achievementData["RAINBOW"],
+    Icon: "SF-1",
+    Secret: true,
+    Condition: () => Player.exploits.includes(Exploit.INeedARainbow),
+  },
+  TRUE_RECURSION: {
+    ...achievementData["TRUE_RECURSION"],
+    Icon: "SF-1",
+    Secret: true,
+    Condition: () => Player.exploits.includes(Exploit.TrueRecursion),
+  },
 };
 
 // Steam has a limit of 100 achievement. So these were planned but commented for now.
-// { ID: "ECORP", Condition: () => Player.factions.includes("ECorp") },
-// { ID: "MEGACORP", Condition: () => Player.factions.includes("MegaCorp") },
-// { ID: "BACHMAN_&_ASSOCIATES", Condition: () => Player.factions.includes("Bachman & Associates") },
-// { ID: "BLADE_INDUSTRIES", Condition: () => Player.factions.includes("Blade Industries") },
-// { ID: "NWO", Condition: () => Player.factions.includes("NWO") },
-// { ID: "CLARKE_INCORPORATED", Condition: () => Player.factions.includes("Clarke Incorporated") },
-// { ID: "OMNITEK_INCORPORATED", Condition: () => Player.factions.includes("OmniTek Incorporated") },
-// { ID: "FOUR_SIGMA", Condition: () => Player.factions.includes("Four Sigma") },
-// { ID: "KUAIGONG_INTERNATIONAL", Condition: () => Player.factions.includes("KuaiGong International") },
-// { ID: "FULCRUM_SECRET_TECHNOLOGIES", Condition: () => Player.factions.includes("Fulcrum Secret Technologies") },
-// { ID: "AEVUM", Condition: () => Player.factions.includes("Aevum") },
-// { ID: "CHONGQING", Condition: () => Player.factions.includes("Chongqing") },
-// { ID: "ISHIMA", Condition: () => Player.factions.includes("Ishima") },
-// { ID: "NEW_TOKYO", Condition: () => Player.factions.includes("New Tokyo") },
-// { ID: "SECTOR-12", Condition: () => Player.factions.includes("Sector-12") },
-// { ID: "VOLHAVEN", Condition: () => Player.factions.includes("Volhaven") },
-// { ID: "SPEAKERS_FOR_THE_DEAD", Condition: () => Player.factions.includes("Speakers for the Dead") },
-// { ID: "THE_DARK_ARMY", Condition: () => Player.factions.includes("The Dark Army") },
-// { ID: "THE_SYNDICATE", Condition: () => Player.factions.includes("The Syndicate") },
-// { ID: "SILHOUETTE", Condition: () => Player.factions.includes("Silhouette") },
-// { ID: "TETRADS", Condition: () => Player.factions.includes("Tetrads") },
-// { ID: "SLUM_SNAKES", Condition: () => Player.factions.includes("Slum Snakes") },
-// { ID: "NETBURNERS", Condition: () => Player.factions.includes("Netburners") },
-// { ID: "TIAN_DI_HUI", Condition: () => Player.factions.includes("Tian Di Hui") },
-// { ID: "BLADEBURNERS", Condition: () => Player.factions.includes("Bladeburners") },
+// { ID: FactionNames.ECorp.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.ECorp) },
+// { ID: FactionNames.MegaCorp.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.MegaCorp) },
+// { ID: "BACHMAN_&_ASSOCIATES", Condition: () => Player.factions.includes(FactionNames.BachmanAssociates) },
+// { ID: "BLADE_INDUSTRIES", Condition: () => Player.factions.includes(FactionNames.BladeIndustries) },
+// { ID: FactionNames.NWO.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.NWO) },
+// { ID: "CLARKE_INCORPORATED", Condition: () => Player.factions.includes(FactionNames.ClarkeIncorporated) },
+// { ID: "OMNITEK_INCORPORATED", Condition: () => Player.factions.includes(FactionNames.OmniTekIncorporated) },
+// { ID: "FOUR_SIGMA", Condition: () => Player.factions.includes(FactionNames.FourSigma) },
+// { ID: "KUAIGONG_INTERNATIONAL", Condition: () => Player.factions.includes(FactionNames.KuaiGongInternational) },
+// { ID: "FULCRUM_SECRET_TECHNOLOGIES", Condition: () => Player.factions.includes(FactionNames.FulcrumSecretTechnologies) },
+// { ID: FactionNames.Aevum.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.Aevum) },
+// { ID: FactionNames.Chongqing.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.Chongqing) },
+// { ID: FactionNames.Ishima.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.Ishima) },
+// { ID: "NEW_TOKYO", Condition: () => Player.factions.includes(FactionNames.NewTokyo) },
+// { ID: "SECTOR-12", Condition: () => Player.factions.includes(FactionNames.Sector12) },
+// { ID: FactionNames.Volhaven.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.Volhaven) },
+// { ID: "SPEAKERS_FOR_THE_DEAD", Condition: () => Player.factions.includes(FactionNames.SpeakersForTheDead) },
+// { ID: "THE_DARK_ARMY", Condition: () => Player.factions.includes(FactionNames.TheDarkArmy) },
+// { ID: "THE_SYNDICATE", Condition: () => Player.factions.includes(FactionNames.TheSyndicate) },
+// { ID: FactionNames.Silhouette.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.Silhouette) },
+// { ID: FactionNames.Tetrads.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.Tetrads) },
+// { ID: "SLUM_SNAKES", Condition: () => Player.factions.includes(FactionNames.SlumSnakes) },
+// { ID: FactionNames.Netburners.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.Netburners) },
+// { ID: "TIAN_DI_HUI", Condition: () => Player.factions.includes(FactionNames.TianDiHui) },
+// { ID: FactionNames.Bladeburners.toUpperCase(), Condition: () => Player.factions.includes(FactionNames.Bladeburners) },
 // { ID: "DEEPSCANV1.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.DeepscanV1.name) },
 // { ID: "DEEPSCANV2.EXE", Condition: () => Player.getHomeComputer().programs.includes(Programs.DeepscanV2.name) },
 // {

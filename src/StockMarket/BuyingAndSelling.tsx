@@ -114,10 +114,11 @@ export function buyStock(
   }
 
   if (workerScript) {
-    const resultTxt =
-      `Bought ${numeralWrapper.formatShares(shares)} shares of ${stock.symbol} for ${numeralWrapper.formatMoney(
-        totalPrice,
-      )}. ` + `Paid ${numeralWrapper.formatMoney(CONSTANTS.StockMarketCommission)} in commission fees.`;
+    const resultTxt = `Bought ${numeralWrapper.formatShares(shares)} shares of ${
+      stock.symbol
+    } for ${numeralWrapper.formatMoney(totalPrice)}. Paid ${numeralWrapper.formatMoney(
+      CONSTANTS.StockMarketCommission,
+    )} in commission fees.`;
     workerScript.log("stock.buy", () => resultTxt);
   } else if (opts.suppressDialog !== true) {
     dialogBoxCreate(

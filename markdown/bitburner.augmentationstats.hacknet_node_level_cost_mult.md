@@ -4,7 +4,7 @@
 
 ## AugmentationStats.hacknet\_node\_level\_cost\_mult property
 
-Multipler to cost of leveling up a Hacknet Node
+Multiplier to cost of leveling up a Hacknet Node
 
 <b>Signature:</b>
 

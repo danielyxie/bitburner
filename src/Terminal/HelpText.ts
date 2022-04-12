@@ -26,7 +26,7 @@ export const TerminalHelpText: string[] = [
   "    hostname                             Displays the hostname of the machine",
   "    kill [script/pid] [args...]          Stops the specified script on the current server ",
   "    killall                              Stops all running scripts on the current machine",
-  "    ls [dir] [| grep pattern]            Displays all files on the machine",
+  "    ls [dir] [--grep pattern]            Displays all files on the machine",
   "    lscpu                                Displays the number of CPU cores on the machine",
   "    mem [script] [-t n]                  Displays the amount of RAM required to run the script",
   "    mv [src] [dest]                      Move/rename a text or script file",
@@ -65,10 +65,10 @@ const TemplatedHelpTexts: IMap<(command: string) => string[]> = {
       ` `,
       `    ${command} test.*`,
       `    ${command} /my-dir/*.js`,
-      ` `
-    ]
-  }
-}
+      ` `,
+    ];
+  },
+};
 
 export const HelpTexts: IMap<string[]> = {
   alias: [
@@ -190,9 +190,9 @@ export const HelpTexts: IMap<string[]> = {
   connect: [
     "Usage: connect [hostname]",
     " ",
-    "Connect to a remote server. The hostname or IP address of the remote server must be given as the argument ",
-    "to this command. Note that only servers that are immediately adjacent to the current server in the network can be connected to. To ",
-    "see which servers can be connected to, use the 'scan' command.",
+    "Connect to a remote server. The hostname of the remote server must be given as the argument ",
+    "to this command. Note that only servers that are immediately adjacent to the current server in the network and the ones that have",
+    "a backdoor installed can be connected to. To see which servers can be connected to, use the 'scan' command.",
     " ",
   ],
   cp: ["Usage: cp [src] [dst]", " ", "Copy a file on this server. To copy a file to another server use scp.", " "],
@@ -263,7 +263,10 @@ export const HelpTexts: IMap<string[]> = {
     " ",
   ],
   home: [
-    "Usage: home", " ", "Connect to your home computer. This will work no matter what server you are currently connected to.", " ",
+    "Usage: home",
+    " ",
+    "Connect to your home computer. This will work no matter what server you are currently connected to.",
+    " ",
   ],
   hostname: ["Usage: hostname", " ", "Prints the hostname of the current server", " "],
   kill: [
@@ -295,28 +298,30 @@ export const HelpTexts: IMap<string[]> = {
     " ",
   ],
   ls: [
-    "Usage: ls [dir] [| grep pattern]",
+    "Usage: ls [dir] [-l] [--grep pattern]",
     " ",
     "The ls command, with no arguments, prints all files and directories on the current server's directory to the Terminal screen. ",
     "The files will be displayed in alphabetical order. ",
     " ",
     "The 'dir' optional parameter can be used to display files/directories in another directory.",
     " ",
-    "The '| grep pattern' optional parameter can be used to only display files whose filenames match the specified pattern.",
+    "The '-l' optional parameter allows you to force each item onto a single line.",
+    " ",
+    "The '--grep pattern' optional parameter can be used to only display files whose filenames match the specified pattern.",
     " ",
     "Examples:",
     " ",
     "List all files with the '.script' extension in the current directory:",
     " ",
-    "    ls | grep .script",
+    "    ls -l --grep .script",
     " ",
     "List all files with the '.js' extension in the root directory:",
     " ",
-    "    ls / | grep .js",
+    "    ls / -l --grep .js",
     " ",
     "List all files with the word 'purchase' in the filename, in the 'scripts' directory:",
     " ",
-    "    ls scripts | grep purchase",
+    "    ls scripts -l --grep purchase",
     " ",
   ],
   lscpu: ["Usage: lscpu", " ", "Prints the number of CPU Cores the current server has", " "],
@@ -352,7 +357,7 @@ export const HelpTexts: IMap<string[]> = {
     "    mv myScript.js myOldScript.js",
     " ",
   ],
-  nano: TemplatedHelpTexts.scriptEditor('nano'),
+  nano: TemplatedHelpTexts.scriptEditor("nano"),
   ps: ["Usage: ps", " ", "Prints all scripts that are running on the current server", " "],
   rm: [
     "Usage: rm [file]",
@@ -455,7 +460,7 @@ export const HelpTexts: IMap<string[]> = {
     "It is not necessary to differentiate between global and non-global aliases when using 'unalias'",
     " ",
   ],
-  vim: TemplatedHelpTexts.scriptEditor('vim'),
+  vim: TemplatedHelpTexts.scriptEditor("vim"),
   weaken: [
     "Usage: weaken",
     " ",

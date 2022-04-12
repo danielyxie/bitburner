@@ -4,12 +4,14 @@ import { getSubdirectories } from "./DirectoryServerHelpers";
 import { Aliases, GlobalAliases, substituteAliases } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { GetServer, GetAllServers } from "../Server/AllServers";
+import { GetAllServers } from "../Server/AllServers";
+import { Server } from "../Server/Server";
 import { ParseCommand, ParseCommands } from "./Parser";
 import { HelpTexts } from "./HelpText";
 import { isScriptFilename } from "../Script/isScriptFilename";
 import { compile } from "../NetscriptJSEvaluator";
 import { Flags } from "../NetscriptFunctions/Flags";
+import { AutocompleteData } from "../ScriptEditor/NetscriptDefinitions";
 import * as libarg from "arg";
 
 // An array of all Terminal commands
@@ -180,7 +182,7 @@ export async function determineAllPossibilitiesForTabCompletion(
   }
 
   // Autocomplete the command
-  if (index === -1 && !input.startsWith('./')) {
+  if (index === -1 && !input.startsWith("./")) {
     return commands.concat(Object.keys(Aliases)).concat(Object.keys(GlobalAliases));
   }
 
@@ -237,16 +239,14 @@ export async function determineAllPossibilitiesForTabCompletion(
   }
 
   if (isCommand("connect")) {
-    // All network connections
-    for (let i = 0; i < currServ.serversOnNetwork.length; ++i) {
-      const serv = GetServer(currServ.serversOnNetwork[i]);
-      if (serv == null) {
-        continue;
-      }
-      allPos.push(serv.hostname);
-    }
-
-    return allPos;
+    // All directly connected and backdoored servers are reachable
+    console.log(GetAllServers());
+    return GetAllServers()
+      .filter(
+        (server) =>
+          currServ.serversOnNetwork.includes(server.hostname) || (server instanceof Server && server.backdoorInstalled),
+      )
+      .map((server) => server.hostname);
   }
 
   if (isCommand("nano") || isCommand("vim")) {
@@ -282,9 +282,9 @@ export async function determineAllPossibilitiesForTabCompletion(
     // the output of processFilepath or if it matches with a '/' prepended,
     // this way autocomplete works inside of directories
     const script = currServ.scripts.find((script) => {
-      const fn = filename.replace(/^\.\//g, '');
-      return (processFilepath(script.filename) === fn || script.filename === '/' + fn);
-    })
+      const fn = filename.replace(/^\.\//g, "");
+      return processFilepath(script.filename) === fn || script.filename === "/" + fn;
+    });
     if (!script) return; // Doesn't exist.
     if (!script.module) {
       await compile(p, script, currServ.scripts);
@@ -298,29 +298,25 @@ export async function determineAllPossibilitiesForTabCompletion(
       argv: command.slice(2),
     });
     const flagFunc = Flags(flags._);
+    const autocompleteData: AutocompleteData = {
+      servers: GetAllServers().map((server) => server.hostname),
+      scripts: currServ.scripts.map((script) => script.filename),
+      txts: currServ.textFiles.map((txt) => txt.fn),
+      flags: (schema: any) => {
+        pos2 = schema.map((f: any) => {
+          if (f[0].length === 1) return "-" + f[0];
+          return "--" + f[0];
+        });
+        try {
+          return flagFunc(schema);
+        } catch (err) {
+          return undefined;
+        }
+      },
+    };
     let pos: string[] = [];
     let pos2: string[] = [];
-    pos = pos.concat(
-      loadedModule.autocomplete(
-        {
-          servers: GetAllServers().map((server) => server.hostname),
-          scripts: currServ.scripts.map((script) => script.filename),
-          txts: currServ.textFiles.map((txt) => txt.fn),
-          flags: (schema: any) => {
-            pos2 = schema.map((f: any) => {
-              if (f[0].length === 1) return "-" + f[0];
-              return "--" + f[0];
-            });
-            try {
-              return flagFunc(schema);
-            } catch (err) {
-              return undefined;
-            }
-          },
-        },
-        flags._,
-      ),
-    );
+    pos = pos.concat(loadedModule.autocomplete(autocompleteData, flags._));
     return pos.concat(pos2);
   }
   const pos = await scriptAutocomplete();

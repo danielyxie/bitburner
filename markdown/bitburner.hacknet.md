@@ -28,8 +28,8 @@ Not all these functions are immediately available.
 |  [getNodeStats(index)](./bitburner.hacknet.getnodestats.md) | Get the stats of a hacknet node. |
 |  [getPurchaseNodeCost()](./bitburner.hacknet.getpurchasenodecost.md) | Get the price of the next hacknet node. |
 |  [getRamUpgradeCost(index, n)](./bitburner.hacknet.getramupgradecost.md) | Calculate the cost of upgrading hacknet node RAM. |
-|  [getStudyMult()](./bitburner.hacknet.getstudymult.md) | Get the multipler to study. |
-|  [getTrainingMult()](./bitburner.hacknet.gettrainingmult.md) | Get the multipler to training. |
+|  [getStudyMult()](./bitburner.hacknet.getstudymult.md) | Get the multiplier to study. |
+|  [getTrainingMult()](./bitburner.hacknet.gettrainingmult.md) | Get the multiplier to training. |
 |  [hashCapacity()](./bitburner.hacknet.hashcapacity.md) | Get the maximum number of hashes you can store. |
 |  [hashCost(upgName)](./bitburner.hacknet.hashcost.md) | Get the cost of a hash upgrade. |
 |  [maxNumNodes()](./bitburner.hacknet.maxnumnodes.md) | Get the maximum number of hacknet nodes. |

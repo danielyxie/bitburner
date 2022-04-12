@@ -1,3 +1,4 @@
+import { FactionNames } from "../../Faction/data/FactionNames";
 // tslint:disable:max-file-line-count
 
 // This could actually be a JSON file as it should be constant metadata to be imported...
@@ -78,7 +79,7 @@ interface IServerMetadata {
 export const serverMetadata: IServerMetadata[] = [
   {
     hackDifficulty: 99,
-    hostname: "ecorp",
+    hostname: LocationName.AevumECorp.toLowerCase(),
     moneyAvailable: {
       max: 70e9,
       min: 30e9,
@@ -95,7 +96,7 @@ export const serverMetadata: IServerMetadata[] = [
   },
   {
     hackDifficulty: 99,
-    hostname: "megacorp",
+    hostname: LocationName.Sector12MegaCorp.toLowerCase(),
     moneyAvailable: {
       max: 60e9,
       min: 40e9,
@@ -163,7 +164,7 @@ export const serverMetadata: IServerMetadata[] = [
   },
   {
     hackDifficulty: 99,
-    hostname: "nwo",
+    hostname: LocationName.VolhavenNWO.toLowerCase(),
     literature: [LiteratureNames.TheHiddenWorld],
     moneyAvailable: {
       max: 40e9,
@@ -423,7 +424,7 @@ export const serverMetadata: IServerMetadata[] = [
       max: 90,
       min: 80,
     },
-    hostname: "vitalife",
+    hostname: LocationName.NewTokyoVitaLife.toLowerCase(),
     literature: [LiteratureNames.AGreenTomorrow],
     maxRamExponent: {
       max: 7,
@@ -601,7 +602,7 @@ export const serverMetadata: IServerMetadata[] = [
       max: 90,
       min: 80,
     },
-    hostname: "aerocorp",
+    hostname: LocationName.AevumAeroCorp.toLowerCase(),
     literature: [LiteratureNames.ManAndMachine],
     moneyAvailable: {
       max: 1200000000,
@@ -726,7 +727,7 @@ export const serverMetadata: IServerMetadata[] = [
       max: 85,
       min: 75,
     },
-    hostname: "deltaone",
+    hostname: LocationName.Sector12DeltaOne.toLowerCase(),
     moneyAvailable: {
       max: 1700000000,
       min: 1300000000,
@@ -1120,7 +1121,7 @@ export const serverMetadata: IServerMetadata[] = [
       max: 65,
       min: 55,
     },
-    hostname: "comptek",
+    hostname: LocationName.VolhavenCompuTek.toLowerCase(),
     literature: [LiteratureNames.ManAndMachine],
     moneyAvailable: {
       max: 250000000,
@@ -1201,7 +1202,7 @@ export const serverMetadata: IServerMetadata[] = [
   },
   {
     hackDifficulty: 10,
-    hostname: "foodnstuff",
+    hostname: LocationName.Sector12FoodNStuff.toLowerCase(),
     literature: [LiteratureNames.Sector12Crime],
     maxRamExponent: 4,
     moneyAvailable: 2000000,
@@ -1381,7 +1382,7 @@ export const serverMetadata: IServerMetadata[] = [
     moneyAvailable: 20000000,
     networkLayer: 1,
     numOpenPortsRequired: 1,
-    organizationName: "Iron Gym Network",
+    organizationName: `${LocationName.Sector12IronGym} Network`,
     requiredHackingSkill: 100,
     serverGrowth: 20,
     specialName: LocationName.Sector12IronGym,
@@ -1503,7 +1504,7 @@ export const serverMetadata: IServerMetadata[] = [
     moneyAvailable: 0,
     networkLayer: 4,
     numOpenPortsRequired: 2,
-    organizationName: "NiteSec",
+    organizationName: FactionNames.NiteSec,
     requiredHackingSkill: {
       max: 220,
       min: 202,
@@ -1534,7 +1535,7 @@ export const serverMetadata: IServerMetadata[] = [
     moneyAvailable: 0,
     networkLayer: 2,
     numOpenPortsRequired: 1,
-    organizationName: "CyberSec",
+    organizationName: FactionNames.CyberSec,
     requiredHackingSkill: {
       max: 60,
       min: 51,

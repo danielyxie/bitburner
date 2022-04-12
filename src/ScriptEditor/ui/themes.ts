@@ -260,7 +260,6 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         token: "ns",
         foreground: "FFB86C",
         fontStyle: "italic",
-        
       },
       {
         token: "netscriptfunction",
@@ -273,7 +272,7 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
       {
         token: "type.identifier.js",
         foreground: "7EE9FD",
-        fontStyle: "italic"
+        fontStyle: "italic",
       },
       {
         token: "delimiter.square.js",
@@ -281,7 +280,7 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
       },
       {
         token: "delimiter.parenthesis.js",
-        foreground: "FFD709"
+        foreground: "FFD709",
       },
       {
         token: "delimiter.bracket.js",
@@ -293,7 +292,7 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
         fontStyle: "italic",
       },
     ],
-    "colors": {
+    colors: {
       "editor.foreground": "#F8F8F2",
       "editor.background": "#282A36",
       "editorLineNumber.foreground": "#6272A4",
@@ -402,6 +401,6 @@ export async function loadThemes(monaco: { editor: any }): Promise<void> {
       "scrollbarSlider.background": "#4E566680",
       "scrollbarSlider.activeBackground": "#747D9180",
       "scrollbarSlider.hoverBackground": "#5A637580",
-    }
+    },
   });
 }

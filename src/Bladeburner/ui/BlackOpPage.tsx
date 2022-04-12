@@ -3,6 +3,7 @@ import { BlackOpList } from "./BlackOpList";
 import { IBladeburner } from "../IBladeburner";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import Typography from "@mui/material/Typography";
+import { FactionNames } from "../../Faction/data/FactionNames";
 
 interface IProps {
   bladeburner: IBladeburner;
@@ -17,7 +18,10 @@ export function BlackOpPage(props: IProps): React.ReactElement {
         successively by completing the one before it.
         <br />
         <br />
-        <b>Your ultimate goal to climb through the ranks of Bladeburners is to complete all of the Black Ops.</b>
+        <b>
+          Your ultimate goal to climb through the ranks of {FactionNames.Bladeburners} is to complete all of the Black
+          Ops.
+        </b>
         <br />
         <br />
         Like normal operations, you may use a team for Black Ops. Failing a black op will incur heavy HP and rank

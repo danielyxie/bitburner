@@ -27,6 +27,8 @@ import Tooltip from "@mui/material/Tooltip";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 
 interface IProps {
   corp: ICorporation;
@@ -36,6 +38,14 @@ interface IProps {
   player: IPlayer;
   rerender: () => void;
 }
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    retainHeight: {
+      minHeight: "3em",
+    },
+  }),
+);
 
 function WarehouseRoot(props: IProps): React.ReactElement {
   const corp = useCorporation();
@@ -55,6 +65,8 @@ function WarehouseRoot(props: IProps): React.ReactElement {
     corp.funds = corp.funds - sizeUpgradeCost;
     props.rerender();
   }
+
+  const classes = useStyles();
 
   // Current State:
   let stateText;
@@ -83,8 +95,10 @@ function WarehouseRoot(props: IProps): React.ReactElement {
   const mats = [];
   for (const matName of Object.keys(props.warehouse.materials)) {
     if (!(props.warehouse.materials[matName] instanceof Material)) continue;
-    // Only create UI for materials that are relevant for the industry
-    if (!isRelevantMaterial(matName, division)) continue;
+    // Only create UI for materials that are relevant for the industry or in stock
+    const isInStock = props.warehouse.materials[matName].qty > 0;
+    const isRelevant = isRelevantMaterial(matName, division);
+    if (!isInStock && !isRelevant) continue;
     mats.push(
       <MaterialElem
         rerender={props.rerender}
@@ -113,27 +127,53 @@ function WarehouseRoot(props: IProps): React.ReactElement {
     const mat = props.warehouse.materials[matName];
     if (!MaterialSizes.hasOwnProperty(matName)) continue;
     if (mat.qty === 0) continue;
-    breakdownItems.push(<>{matName}: {numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0")}</>);
+    breakdownItems.push(
+      <>
+        {matName}: {numeralWrapper.format(mat.qty * MaterialSizes[matName], "0,0.0")}
+      </>,
+    );
   }
 
   for (const prodName of Object.keys(division.products)) {
     const prod = division.products[prodName];
     if (prod === undefined) continue;
-    breakdownItems.push(<>{prodName}: {numeralWrapper.format(prod.data[props.warehouse.loc][0] * prod.siz, "0,0.0")}</>);
+    breakdownItems.push(
+      <>
+        {prodName}: {numeralWrapper.format(prod.data[props.warehouse.loc][0] * prod.siz, "0,0.0")}
+      </>,
+    );
   }
 
   let breakdown;
   if (breakdownItems && breakdownItems.length > 0) {
     breakdown = breakdownItems.reduce(
-      (previous: JSX.Element, current: JSX.Element): JSX.Element => previous && <>{previous}<br />{current}</> || <>{current}</>);
+      (previous: JSX.Element, current: JSX.Element): JSX.Element =>
+        (previous && (
+          <>
+            {previous}
+            <br />
+            {current}
+          </>
+        )) || <>{current}</>,
+    );
   } else {
-    breakdown = <>No items in storage.</>
+    breakdown = <>No items in storage.</>;
   }
 
   return (
     <Paper>
       <Box display="flex" alignItems="center">
-        <Tooltip title={props.warehouse.sizeUsed !== 0 ? <Typography><>{breakdown}</></Typography> : ""}>
+        <Tooltip
+          title={
+            props.warehouse.sizeUsed !== 0 ? (
+              <Typography>
+                <>{breakdown}</>
+              </Typography>
+            ) : (
+              ""
+            )
+          }
+        >
           <Typography color={props.warehouse.sizeUsed >= props.warehouse.size ? "error" : "primary"}>
             Storage: {numeralWrapper.formatBigNumber(props.warehouse.sizeUsed)} /{" "}
             {numeralWrapper.formatBigNumber(props.warehouse.size)}
@@ -158,7 +198,7 @@ function WarehouseRoot(props: IProps): React.ReactElement {
       </Typography>
       <br />
 
-      <Typography>{stateText}</Typography>
+      <Typography className={classes.retainHeight}>{stateText}</Typography>
 
       {corp.unlockUpgrades[1] && (
         <>

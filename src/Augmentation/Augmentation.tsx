@@ -2,7 +2,6 @@
 import * as React from "react";
 import { IMap } from "../types";
 
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
 import { numeralWrapper } from "../ui/numeralFormat";
@@ -18,6 +17,7 @@ export interface IConstructorParams {
   name: string;
   prereqs?: string[];
   repCost: number;
+  factions: string[];
 
   hacking_mult?: number;
   strength_mult?: number;
@@ -133,7 +133,7 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
       desc = (
         <>
           {desc}
-          <br />+{f(mults.charisma_mult - 1)} Charisma skill
+          <br />+{f(mults.charisma_mult - 1)} charisma skill
         </>
       );
   }
@@ -393,21 +393,26 @@ export class Augmentation {
   // Initial cost. Doesn't change when you purchase multiple Augmentation
   startingCost = 0;
 
+  // Factions that offer this aug.
+  factions: string[] = [];
+
   constructor(
     params: IConstructorParams = {
       info: "",
       moneyCost: 0,
       name: "",
       repCost: 0,
+      factions: [],
     },
   ) {
     this.name = params.name;
     this.info = params.info;
     this.prereqs = params.prereqs ? params.prereqs : [];
 
-    this.baseRepRequirement = params.repCost * BitNodeMultipliers.AugmentationRepCost;
-    this.baseCost = params.moneyCost * BitNodeMultipliers.AugmentationMoneyCost;
+    this.baseRepRequirement = params.repCost;
+    this.baseCost = params.moneyCost;
     this.startingCost = this.baseCost;
+    this.factions = params.factions;
 
     if (params.isSpecial) {
       this.isSpecial = true;

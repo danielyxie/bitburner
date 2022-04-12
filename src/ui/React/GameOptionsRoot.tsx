@@ -354,6 +354,14 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
             </ListItem>
             <ListItem>
               <OptionSwitch
+                checked={Settings.SuppressAutosaveDisabledWarnings}
+                onChange={(newValue) => (Settings.SuppressAutosaveDisabledWarnings = newValue)}
+                text="Suppress Auto-Save Disabled Warning"
+                tooltip={<>If this is set, there will be no warning triggered when auto-save is disabled (at 0).</>}
+              />
+            </ListItem>
+            <ListItem>
+              <OptionSwitch
                 checked={Settings.DisableHotkeys}
                 onChange={(newValue) => (Settings.DisableHotkeys = newValue)}
                 text="Disable hotkeys"

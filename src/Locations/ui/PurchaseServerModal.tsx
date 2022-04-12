@@ -10,6 +10,7 @@ import { use } from "../../ui/Context";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 interface IProps {
   open: boolean;
@@ -29,7 +30,7 @@ export function PurchaseServerModal(props: IProps): React.ReactElement {
   }
 
   function onKeyUp(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.keyCode === 13) tryToPurchaseServer();
+    if (event.key === KEY.ENTER) tryToPurchaseServer();
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
