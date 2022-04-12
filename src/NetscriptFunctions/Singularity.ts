@@ -219,7 +219,7 @@ export function NetscriptSingularity(
       workerScript.running = false;
       killWorkerScript(workerScript);
     },
-    installAugmentations: function (_cbScript: unknown): boolean {
+    installAugmentations: function (_cbScript: unknown = ""): boolean {
       updateRam("installAugmentations");
       const cbScript = helper.string("installAugmentations", "cbScript", _cbScript);
       helper.checkSingularityAccess("installAugmentations");

@@ -491,7 +491,6 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
           }}
           installAugmentationsFn={() => {
             installAugmentations();
-            Router.toTerminal();
           }}
         />
       );
