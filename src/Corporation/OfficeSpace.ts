@@ -58,7 +58,7 @@ export class OfficeSpace {
       }
     }
 
-    this.calculateTotalEmployees(corporation, industry);
+    this.calculateTotalEmployees();
 
     // Process Office properties
     this.maxEne = 100;
@@ -113,7 +113,7 @@ export class OfficeSpace {
     return salaryPaid;
   }
 
-  calculateTotalEmployees(corporation: ICorporation, industry: IIndustry): void {
+  calculateTotalEmployees(): void {
     //Reset
     for (const name of Object.keys(this.employeeJobs)) {
       this.employeeJobs[name] = 0;
