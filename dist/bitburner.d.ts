@@ -2101,7 +2101,7 @@ export declare interface Hacknet {
      * // NS1:
      * var upgradeName = "Sell for Corporation Funds";
      * if (hacknet.numHashes() > hacknet.hashCost(upgradeName)) {
-     *    hacknet.spendHashes(upgName);
+     *    hacknet.spendHashes(upgradeName);
      * }
      * ```
      * @example
@@ -2109,7 +2109,7 @@ export declare interface Hacknet {
      * // NS2:
      * const upgradeName = "Sell for Corporation Funds";
      * if (ns.hacknet.numHashes() > ns.hacknet.hashCost(upgradeName)) {
-     *    ns.hacknet.spendHashes(upgName);
+     *    ns.hacknet.spendHashes(upgradeName);
      * }
      * ```
      * @param upgName - Name of the upgrade of Hacknet Node.
