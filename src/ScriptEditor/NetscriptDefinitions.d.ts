@@ -101,22 +101,54 @@ interface Player {
 /**
  * @public
  */
-interface RunningScript {
+export interface RunningScript {
+  /** Arguments the script was called with */
   args: string[];
+  /** Filename of the script */
   filename: string;
+  /**
+   * Script logs as an array. The newest log entries are at the bottom.
+   * Timestamps, if enabled, are placed inside `[brackets]` at the start of each line.
+   **/
   logs: string[];
+  /** Total amount of hacking experience earned from this script when offline */
   offlineExpGained: number;
+  /** Total amount of money made by this script when offline */
   offlineMoneyMade: number;
-  /** Offline running time of the script, in seconds **/
+  /** Number of seconds that the script has been running offline */
   offlineRunningTime: number;
+  /** Total amount of hacking experience earned from this script when online */
   onlineExpGained: number;
+  /** Total amount of money made by this script when online */
   onlineMoneyMade: number;
-  /** Online running time of the script, in seconds **/
+  /** Number of seconds that this script has been running online */
   onlineRunningTime: number;
+  /** Process ID. Must be an integer */
   pid: number;
+  /** How much RAM this script uses for ONE thread */
   ramUsage: number;
+  /** Hostname of the server on which this script runs */
   server: string;
+  /** Number of threads that this script runs with */
   threads: number;
+}
+
+/**
+ * @public
+ */
+interface RecentScript {
+  /** Arguments the script was called with */
+  args: string[];
+  /** Filename of the script */
+  filename: string;
+  /** Process ID. Must be an integer */
+  pid: number;
+  /** Timestamp of when the script was killed */
+  timestamp: Date;
+  /** Numeric epoch of timestamp */
+  timestampEpoch: number;
+  /** An inactive copy of the last `RunningScript` associated to the script */
+  runningScript: RunningScript;
 }
 
 /**
@@ -4781,6 +4813,27 @@ export interface NS extends Singularity {
    * @returns Returns an string array, where each line is an element in the array. The most recently logged line is at the end of the array.
    */
   getScriptLogs(fn?: string, host?: string, ...args: any[]): string[];
+
+  /**
+   * Get an array of recently killed scripts across all servers.
+   * @remarks
+   * RAM cost: 0.2 GB
+   *
+   * The most recently killed script is the first element in the array.
+   * Note that there is a maximum number of recently killed scripts which are tracked.
+   * This is configurable in the game's options as `Recently killed scripts size`.
+   *
+   * @usage below:
+   * ```ts
+   * let recentScripts = ns.getRecentScripts();
+   * let mostRecent = recentScripts.shift()
+   * if (mostRecent)
+   *   ns.tprint(mostRecent.logs.join('\n'))
+   * ```
+   *
+   * @returns Array with information about previously killed scripts.
+   */
+  getRecentScripts(): RecentScript[];
 
   /**
    * Open the tail window of a script.

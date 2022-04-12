@@ -140,6 +140,7 @@ export const RamCosts: IMap<any> = {
   scp: RamCostConstants.ScriptScpRamCost,
   ls: RamCostConstants.ScriptScanRamCost,
   ps: RamCostConstants.ScriptScanRamCost,
+  getRecentScripts: RamCostConstants.ScriptScanRamCost,
   hasRootAccess: RamCostConstants.ScriptHasRootAccessRamCost,
   getIp: RamCostConstants.ScriptGetHostnameRamCost,
   getHostname: RamCostConstants.ScriptGetHostnameRamCost,
