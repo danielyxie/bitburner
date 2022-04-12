@@ -575,63 +575,65 @@ function createAndAddWorkerScript(
 
   // Once the code finishes (either resolved or rejected, doesnt matter), set its
   // running status to false
-  scriptExecution.then(function () {
-    workerScript.running = false;
-    workerScript.env.stopFlag = true;
-    // On natural death, the earnings are transfered to the parent if it still exists.
-    if (parent !== undefined) {
-      if (parent.running) {
-        parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
-        parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
+  scriptExecution
+    .then(function () {
+      workerScript.running = false;
+      workerScript.env.stopFlag = true;
+      // On natural death, the earnings are transfered to the parent if it still exists.
+      if (parent !== undefined) {
+        if (parent.running) {
+          parent.scriptRef.onlineExpGained += runningScriptObj.onlineExpGained;
+          parent.scriptRef.onlineMoneyMade += runningScriptObj.onlineMoneyMade;
+        }
       }
-    }
 
-    killWorkerScript(workerScript);
-    workerScript.log("", () => "Script finished running");
-  }).catch(function (e) {
-    if (e instanceof Error) {
-      dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-      console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + e.toString());
-      return;
-    } else if (e instanceof ScriptDeath) {
-      if (isScriptErrorMessage(workerScript.errorMessage)) {
-        const errorTextArray = workerScript.errorMessage.split("|DELIMITER|");
-        if (errorTextArray.length != 4) {
-          console.error("ERROR: Something wrong with Error text in evaluator...");
-          console.error("Error text: " + workerScript.errorMessage);
-          return;
+      killWorkerScript(workerScript);
+      workerScript.log("", () => "Script finished running");
+    })
+    .catch(function (e) {
+      if (e instanceof Error) {
+        dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
+        console.error("Evaluating workerscript returns an Error. THIS SHOULDN'T HAPPEN: " + e.toString());
+        return;
+      } else if (e instanceof ScriptDeath) {
+        if (isScriptErrorMessage(workerScript.errorMessage)) {
+          const errorTextArray = workerScript.errorMessage.split("|DELIMITER|");
+          if (errorTextArray.length != 4) {
+            console.error("ERROR: Something wrong with Error text in evaluator...");
+            console.error("Error text: " + workerScript.errorMessage);
+            return;
+          }
+          const hostname = errorTextArray[1];
+          const scriptName = errorTextArray[2];
+          const errorMsg = errorTextArray[3];
+
+          let msg = `RUNTIME ERROR<br>${scriptName}@${hostname} (PID - ${workerScript.pid})<br>`;
+          if (workerScript.args.length > 0) {
+            msg += `Args: ${arrayToString(workerScript.args)}<br>`;
+          }
+          msg += "<br>";
+          msg += errorMsg;
+
+          dialogBoxCreate(msg);
+          workerScript.log("", () => "Script crashed with runtime error");
+        } else {
+          workerScript.log("", () => "Script killed");
+          return; // Already killed, so stop here
         }
-        const hostname = errorTextArray[1];
-        const scriptName = errorTextArray[2];
-        const errorMsg = errorTextArray[3];
-
-        let msg = `RUNTIME ERROR<br>${scriptName}@${hostname} (PID - ${workerScript.pid})<br>`;
-        if (workerScript.args.length > 0) {
-          msg += `Args: ${arrayToString(workerScript.args)}<br>`;
-        }
-        msg += "<br>";
-        msg += errorMsg;
-
-        dialogBoxCreate(msg);
-        workerScript.log("", () => "Script crashed with runtime error");
+      } else if (isScriptErrorMessage(e)) {
+        dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
+        console.error(
+          "ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " +
+            e.toString(),
+        );
+        return;
       } else {
-        workerScript.log("", () => "Script killed");
-        return; // Already killed, so stop here
+        dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
+        console.error(e);
       }
-    } else if (isScriptErrorMessage(e)) {
-      dialogBoxCreate("Script runtime unknown error. This is a bug please contact game developer");
-      console.error(
-        "ERROR: Evaluating workerscript returns only error message rather than WorkerScript object. THIS SHOULDN'T HAPPEN: " +
-          e.toString(),
-      );
-      return;
-    } else {
-      dialogBoxCreate("An unknown script died for an unknown reason. This is a bug please contact game dev");
-      console.error(e);
-    }
 
-    killWorkerScript(workerScript);
-  });
+      killWorkerScript(workerScript);
+    });
 
   return true;
 }
