@@ -2825,9 +2825,10 @@ export declare interface NS extends Singularity {
      * Returns the security increase that would occur if a hack with this many threads happened.
      *
      * @param threads - Amount of threads that will be used.
+     * @param hostname - Hostname of the target server. The number of threads is limited to the number needed to hack the servers maximum amount of money.
      * @returns The security increase.
      */
-    hackAnalyzeSecurity(threads: number): number;
+    hackAnalyzeSecurity(threads: number, hostname?: string): number;
 
     /**
      * Get the chance of successfully hacking a server.
