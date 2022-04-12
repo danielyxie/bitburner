@@ -637,9 +637,6 @@ export function NetscriptCorporation(
       const office = getOffice(divisionName, cityName);
       if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
       return netscriptDelay(1000, workerScript).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         return Promise.resolve(office.setEmployeeToJob(job, amount));
       });
     },
