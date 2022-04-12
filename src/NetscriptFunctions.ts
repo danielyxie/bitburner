@@ -585,10 +585,11 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculatePercentMoneyHacked(server, Player);
     },
-    hackAnalyzeSecurity: function (_threads: unknown, hostname?: string): number {
+    hackAnalyzeSecurity: function (_threads: unknown, _hostname?: unknown): number {
       updateDynamicRam("hackAnalyzeSecurity", getRamCost(Player, "hackAnalyzeSecurity"));
       let threads = helper.number("hackAnalyzeSecurity", "threads", _threads);
-      if (hostname) {
+      if (_hostname) {
+        const hostname = helper.string("hackAnalyzeSecurity", "hostname", _hostname);
         const server = safeGetServer(hostname, "hackAnalyze");
         if (!(server instanceof Server)) {
           workerScript.log("hackAnalyzeSecurity", () => "Cannot be executed on this server.");
