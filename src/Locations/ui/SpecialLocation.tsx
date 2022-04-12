@@ -174,10 +174,11 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       applyAugmentation({ name: AugmentationNames.StaneksGift1, level: 1 });
     }
 
-    router.toFaction(faction);
+    router.toStaneksGift();
   }
 
   function renderCotMG(): React.ReactElement {
+    const toStanek = <Button onClick={() => router.toStaneksGift()}>Open Stanek's Gift</Button>;
     // prettier-ignore
     const symbol = <Typography sx={{ lineHeight: '1em', whiteSpace: 'pre' }}>
       {"                 ``          "}<br />
@@ -218,6 +219,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
               seems. Curious, Just how much of a machine's soul do you house in that body?
             </i>
           </Typography>
+          <br />
+          {toStanek}
+          <br />
           {symbol}
         </>
       );
@@ -232,6 +236,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
               mastery of the gift clearly demonstrates that. My hopes are climbing by the day for you.
             </i>
           </Typography>
+          <br />
+          {toStanek}
+          <br />
           {symbol}
         </>
       );
@@ -242,6 +249,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
           <Typography>
             <i>Allison "Mother" Stanek: Welcome back my child!</i>
           </Typography>
+          <br />
+          {toStanek}
+          <br />
           {symbol}
         </>
       );
