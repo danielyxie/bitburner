@@ -11,7 +11,7 @@ module.exports = (env, argv) => {
   const runInContainer = (env || {}).runInContainer === true;
   const isDevelopment = argv.mode === "development";
   const isFastRefresh = argv.fast === "true";
-  const outputDirectory = isDevServer ? "dist-dev" : "dist";
+  const outputDirectory = "dist";
   const entry = "./src/index.tsx";
 
   const statsConfig = {
