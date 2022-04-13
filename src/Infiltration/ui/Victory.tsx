@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
-import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { use } from "../../ui/Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
