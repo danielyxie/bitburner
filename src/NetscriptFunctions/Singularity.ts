@@ -1342,6 +1342,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       (_nextBN: unknown, _callbackScript: unknown = ""): void => {
         const nextBN = _ctx.helper.number("nextBN", _nextBN);
         const callbackScript = _ctx.helper.string("callbackScript", _callbackScript);
+        _ctx.helper.checkSingularityAccess();
         enterBitNode(Router, true, player.bitNodeN, nextBN);
         if (callbackScript)
           setTimeout(() => {
@@ -1353,6 +1354,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       (_nextBN: unknown, _callbackScript: unknown = ""): void => {
         const nextBN = _ctx.helper.number("nextBN", _nextBN);
         const callbackScript = _ctx.helper.string("callbackScript", _callbackScript);
+        _ctx.helper.checkSingularityAccess();
 
         const hackingRequirements = (): boolean => {
           const wd = GetServer(SpecialServers.WorldDaemon);

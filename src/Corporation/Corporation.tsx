@@ -45,6 +45,8 @@ export class Corporation {
   upgrades: number[];
   upgradeMultipliers: number[];
 
+  avgProfit = 0;
+
   state = new CorporationState();
 
   constructor(params: IParams = {}) {
@@ -106,6 +108,8 @@ export class Corporation {
           this.expenses = this.expenses + ind.lastCycleExpenses;
         });
         const profit = this.revenue - this.expenses;
+        this.avgProfit =
+          (this.avgProfit * (CorporationConstants.AvgProfitLength - 1) + profit) / CorporationConstants.AvgProfitLength;
         const cycleProfit = profit * (marketCycles * CorporationConstants.SecsPerMarketCycle);
         if (isNaN(this.funds) || this.funds === Infinity || this.funds === -Infinity) {
           dialogBoxCreate(
@@ -160,7 +164,7 @@ export class Corporation {
 
   determineValuation(): number {
     let val,
-      profit = this.revenue - this.expenses;
+      profit = this.avgProfit;
     if (this.public) {
       // Account for dividends
       if (this.dividendPercentage > 0) {
