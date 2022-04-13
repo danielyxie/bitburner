@@ -4639,7 +4639,7 @@ export interface NS {
    * @param cores - Optional. The number of cores of the server that would run grow.
    * @returns The security increase.
    */
-  growthAnalyzeSecurity(threads: number, hostname: string, cores?: number): number;
+  growthAnalyzeSecurity(threads: number, hostname?: string, cores?: number): number;
 
   /**
    * Suspends the script for n milliseconds.
