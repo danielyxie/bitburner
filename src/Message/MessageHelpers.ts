@@ -19,7 +19,7 @@ function sendMessage(msg: Message, forced = false): void {
   addMessageToServer(msg);
 }
 
-function showMessage(name: string): void {
+function showMessage(name: MessageFilenames): void {
   const msg = Messages[name];
   if (!(msg instanceof Message)) throw new Error("trying to display unexistent message");
   const txt =
@@ -107,7 +107,7 @@ function checkForMessagesToSend(): void {
   }
 }
 
-enum MessageFilenames {
+export enum MessageFilenames {
   Jumper0 = "j0.msg",
   Jumper1 = "j1.msg",
   Jumper2 = "j2.msg",
@@ -121,7 +121,7 @@ enum MessageFilenames {
 }
 
 //Reset
-const Messages: Record<string, Message> = {
+const Messages: Record<MessageFilenames, Message> = {
   //jump3R Messages
   [MessageFilenames.Jumper0]: new Message(
     MessageFilenames.Jumper0,
