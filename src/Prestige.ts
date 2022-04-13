@@ -12,7 +12,6 @@ import { Faction } from "./Faction/Faction";
 import { Factions, initFactions } from "./Faction/Factions";
 import { joinFaction } from "./Faction/FactionHelpers";
 import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
-import { initMessages } from "./Message/MessageHelpers";
 import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { Router } from "./ui/GameRoot";
@@ -104,9 +103,6 @@ export function prestigeAugmentation(): void {
   initAugmentations(); // Calls reapplyAllAugmentations() and resets Player multipliers
   Player.reapplyAllSourceFiles();
   initCompanies();
-
-  // Messages
-  initMessages();
 
   // Apply entropy from grafting
   Player.applyEntropy(Player.entropy);
@@ -250,9 +246,6 @@ export function prestigeSourceFile(flume: boolean): void {
   initAugmentations(); // Calls reapplyAllAugmentations() and resets Player multipliers
   Player.reapplyAllSourceFiles();
   initCompanies();
-
-  // Messages
-  initMessages();
 
   if (Player.sourceFileLvl(5) > 0 || Player.bitNodeN === 5) {
     homeComp.programs.push(Programs.Formulas.name);
