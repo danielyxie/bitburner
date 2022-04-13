@@ -5,7 +5,6 @@ import { defaultStyles } from "../Themes/Styles";
 import { WordWrapOptions } from "../ScriptEditor/ui/Options";
 import { OverviewSettings } from "../ui/React/Overview";
 import { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
-import { defaultMonacoTheme, IScriptEditorTheme } from "../ScriptEditor/ui/themes";
 
 /**
  * Represents the default settings the player could customize.
@@ -158,11 +157,6 @@ interface IDefaultSettings {
    *  If the game's sidebar is opened
    */
   IsSidebarOpened: boolean;
-
-  /**
-   *  Script editor theme data
-   */
-  EditorTheme: IScriptEditorTheme;
 }
 
 /**
@@ -222,8 +216,6 @@ export const defaultSettings: IDefaultSettings = {
   theme: defaultTheme,
   styles: defaultStyles,
   overview: { x: 0, y: 0, opened: true },
-
-  EditorTheme: defaultMonacoTheme,
 };
 
 /**
@@ -270,7 +262,6 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   theme: { ...defaultTheme },
   styles: { ...defaultStyles },
   overview: defaultSettings.overview,
-  EditorTheme: { ...defaultMonacoTheme },
   init() {
     Object.assign(Settings, defaultSettings);
   },
@@ -282,8 +273,6 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     delete save.styles;
     Object.assign(Settings.overview, save.overview);
     delete save.overview;
-    Object.assign(Settings.EditorTheme, save.EditorTheme);
-    delete save.EditorTheme;
     Object.assign(Settings, save);
   },
 };

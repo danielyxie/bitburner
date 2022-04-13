@@ -366,9 +366,9 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           sx={{ mb: 1 }}
           multiline
           fullWidth
-          maxRows={10}
+          maxRows={3}
           label={"import / export theme"}
-          value={JSON.stringify(customTheme, undefined, 2)}
+          value={JSON.stringify(customTheme)}
           onChange={onThemeChange}
         />
         <>
