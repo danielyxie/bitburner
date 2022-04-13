@@ -1,52 +1,21 @@
 import React, { useState } from "react";
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { MaterialSizes } from "../MaterialSizes";
-import { Warehouse } from "../Warehouse";
-import { Material } from "../Material";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { BulkPurchase, BuyMaterial } from "../Actions";
-import { Modal } from "../../ui/React/Modal";
-import { useCorporation, useDivision } from "./Context";
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
+import { MaterialSizes } from "../../MaterialSizes";
+import { Warehouse } from "../../Warehouse";
+import { Material } from "../../Material";
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { BulkPurchase, BuyMaterial } from "../../Actions";
+import { Modal } from "../../../ui/React/Modal";
+import { useCorporation, useDivision } from "../Context";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { KEY } from "../../utils/helpers/keyCodes";
+import { KEY } from "../../../utils/helpers/keyCodes";
 
 interface IBulkPurchaseTextProps {
   warehouse: Warehouse;
   mat: Material;
   amount: string;
-}
-
-function BulkPurchaseText(props: IBulkPurchaseTextProps): React.ReactElement {
-  const parsedAmt = parseFloat(props.amount);
-  const cost = parsedAmt * props.mat.bCost;
-
-  const matSize = MaterialSizes[props.mat.name];
-  const maxAmount = (props.warehouse.size - props.warehouse.sizeUsed) / matSize;
-
-  if (parsedAmt * matSize > maxAmount) {
-    return (
-      <>
-        <Typography color={"error"}>Not enough warehouse space to purchase this amount</Typography>
-      </>
-    );
-  } else if (isNaN(cost) || parsedAmt < 0) {
-    return (
-      <>
-        <Typography color={"error"}>Invalid put for Bulk Purchase amount</Typography>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Typography>
-          Purchasing {numeralWrapper.format(parsedAmt, "0,0.00")} of {props.mat.name} will cost{" "}
-          {numeralWrapper.formatMoney(cost)}
-        </Typography>
-      </>
-    );
-  }
 }
 
 interface IBPProps {
@@ -58,6 +27,41 @@ interface IBPProps {
 function BulkPurchaseSection(props: IBPProps): React.ReactElement {
   const corp = useCorporation();
   const [buyAmt, setBuyAmt] = useState("");
+  const [disabled, setDisabled] = useState(false);
+
+  function BulkPurchaseText(props: IBulkPurchaseTextProps): React.ReactElement {
+    const parsedAmt = parseFloat(props.amount);
+    const cost = parsedAmt * props.mat.bCost;
+
+    const matSize = MaterialSizes[props.mat.name];
+    const maxAmount = (props.warehouse.size - props.warehouse.sizeUsed) / matSize;
+
+    if (parsedAmt > maxAmount) {
+      setDisabled(true);
+      return (
+        <>
+          <Typography color={"error"}>Not enough warehouse space to purchase this amount</Typography>
+        </>
+      );
+    } else if (isNaN(cost) || parsedAmt < 0) {
+      setDisabled(true);
+      return (
+        <>
+          <Typography color={"error"}>Invalid input for Bulk Purchase amount</Typography>
+        </>
+      );
+    } else {
+      setDisabled(false);
+      return (
+        <>
+          <Typography>
+            Purchasing {numeralWrapper.format(parsedAmt, "0,0.00")} of {props.mat.name} will cost{" "}
+            {numeralWrapper.formatMoney(cost)}
+          </Typography>
+        </>
+      );
+    }
+  }
 
   function bulkPurchase(): void {
     try {
@@ -90,7 +94,9 @@ function BulkPurchaseSection(props: IBPProps): React.ReactElement {
         placeholder="Bulk Purchase amount"
         onKeyDown={onKeyDown}
       />
-      <Button onClick={bulkPurchase}>Confirm Bulk Purchase</Button>
+      <Button disabled={disabled} onClick={bulkPurchase}>
+        Confirm Bulk Purchase
+      </Button>
     </>
   );
 }

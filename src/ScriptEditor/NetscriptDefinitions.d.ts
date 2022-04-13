@@ -6737,8 +6737,9 @@ export interface WarehouseAPI {
    * Upgrade warehouse
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
+   * @param amt - amount of upgrades defaults to 1
    */
-  upgradeWarehouse(divisionName: string, cityName: string): void;
+  upgradeWarehouse(divisionName: string, cityName: string, amt?: number): void;
   /**
    * Create a new product
    * @param divisionName - Name of the division
@@ -6755,15 +6756,34 @@ export interface WarehouseAPI {
     marketingInvest: number,
   ): void;
   /**
+   * Limit Material Production.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param qty - Amount to limit to
+   */
+  limitMaterialProduction(divisionName: string, cityName: string, materialName: string, qty: number): void;
+  /**
+   * Limit Product Production.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param productName - Name of the product
+   * @param qty - Amount to limit to
+   */
+  limitProductProduction(divisionName: string, cityName: string, productName: string, qty: number): void;
+  /**
    * Gets the cost to purchase a warehouse
    * @returns cost
    */
   getPurchaseWarehouseCost(): number;
   /**
    * Gets the cost to upgrade a warehouse to the next level
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param amt - amount of upgrades defaults to 1
    * @returns cost to upgrade
    */
-  getUpgradeWarehouseCost(adivisionName: any, acityName: any): number;
+  getUpgradeWarehouseCost(adivisionName: any, acityName: any, amt?: number): number;
   /**
    * Check if you have a warehouse in city
    * @returns true if warehouse is present, false if not
@@ -7007,8 +7027,10 @@ interface Material {
   cmp: number | undefined;
   /** Amount of material produced  */
   prod: number;
-  /** Amount of material sold  */
+  /** Amount of material sold */
   sell: number;
+  /** cost to buy material */
+  cost: number;
 }
 
 /**

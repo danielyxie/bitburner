@@ -1,11 +1,11 @@
 import React from "react";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { CorporationConstants } from "../data/Constants";
-import { OfficeSpace } from "../OfficeSpace";
-import { ICorporation } from "../ICorporation";
-import { UpgradeOfficeSize } from "../Actions";
-import { Modal } from "../../ui/React/Modal";
-import { useCorporation } from "./Context";
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { CorporationConstants } from "../../data/Constants";
+import { OfficeSpace } from "../../OfficeSpace";
+import { ICorporation } from "../../ICorporation";
+import { UpgradeOfficeSize } from "../../Actions";
+import { Modal } from "../../../ui/React/Modal";
+import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";

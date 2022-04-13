@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Factions } from "../../Faction/Factions";
-import { CorporationConstants } from "../data/Constants";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { Modal } from "../../ui/React/Modal";
-import { use } from "../../ui/Context";
-import { useCorporation } from "./Context";
+import { Factions } from "../../../Faction/Factions";
+import { CorporationConstants } from "../../data/Constants";
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
+import { Modal } from "../../../ui/React/Modal";
+import { use } from "../../../ui/Context";
+import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";

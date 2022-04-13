@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import { LevelableUpgrade } from "./LevelableUpgrade";
 import { UnlockUpgrade } from "./UnlockUpgrade";
-import { BribeFactionModal } from "./BribeFactionModal";
-import { SellSharesModal } from "./SellSharesModal";
-import { BuybackSharesModal } from "./BuybackSharesModal";
-import { IssueDividendsModal } from "./IssueDividendsModal";
-import { IssueNewSharesModal } from "./IssueNewSharesModal";
-import { FindInvestorsModal } from "./FindInvestorsModal";
-import { GoPublicModal } from "./GoPublicModal";
+import { BribeFactionModal } from "./modals/BribeFactionModal";
+import { SellSharesModal } from "./modals/SellSharesModal";
+import { BuybackSharesModal } from "./modals/BuybackSharesModal";
+import { IssueDividendsModal } from "./modals/IssueDividendsModal";
+import { IssueNewSharesModal } from "./modals/IssueNewSharesModal";
+import { FindInvestorsModal } from "./modals/FindInvestorsModal";
+import { GoPublicModal } from "./modals/GoPublicModal";
 import { Factions } from "../../Faction/Factions";
 
 import { CorporationConstants } from "../data/Constants";

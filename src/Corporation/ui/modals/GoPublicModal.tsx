@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { Modal } from "../../ui/React/Modal";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { useCorporation } from "./Context";
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
+import { Modal } from "../../../ui/React/Modal";
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { useCorporation } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { KEY } from "../../utils/helpers/keyCodes";
+import { KEY } from "../../../utils/helpers/keyCodes";
 
 interface IProps {
   open: boolean;
