@@ -16,7 +16,8 @@ interface Office
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [employeeProd](./bitburner.office.employeeprod.md) | [EmployeeJobs](./bitburner.employeejobs.md) | Positions of the employees |
+|  [employeeJobs](./bitburner.office.employeejobs.md) | [EmployeeJobs](./bitburner.employeejobs.md) | Positions of the employees |
+|  [employeeProd](./bitburner.office.employeeprod.md) | [EmployeeJobs](./bitburner.employeejobs.md) | Production of the employees |
 |  [employees](./bitburner.office.employees.md) | string\[\] | Name of all the employees |
 |  [loc](./bitburner.office.loc.md) | string | City of the office |
 |  [maxEne](./bitburner.office.maxene.md) | number | Maximum amount of energy of the employees |

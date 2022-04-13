@@ -4,6 +4,8 @@
 
 ## RunningScript.filename property
 
+Filename of the script
+
 <b>Signature:</b>
 
 ```typescript

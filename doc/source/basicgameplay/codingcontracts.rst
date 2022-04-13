@@ -93,8 +93,14 @@ The list contains the name of (i.e. the value returned by
 | Subarray with Maximum Sum          | | Given an array of integers, find the contiguous subarray (containing                   |
 |                                    | | at least one number) which has the largest sum and return that sum.                    |
 +------------------------------------+------------------------------------------------------------------------------------------+
-| Total Ways to Sum                  | | Given a number, how many different ways can that number be written as                  |
+| Total Ways to Sum                  | | Given a number, how many different distinct ways can that number be written as         |
 |                                    | | a sum of at least two positive integers?                                               |
++------------------------------------+------------------------------------------------------------------------------------------+
+| Total Ways to Sum II               | | You are given an array with two elements. The first element is an integer n.           |
+|                                    | | The second element is an array of numbers representing the set of available integers.  |
+|                                    | | How many different distinct ways can that number n be written as                       |
+|                                    | | a sum of integers contained in the given set?                                          |
+|                                    | | You may use each integer in the set zero or more times.                                |
 +------------------------------------+------------------------------------------------------------------------------------------+
 | Spiralize Matrix                   | | Given an array of array of numbers representing a 2D matrix, return the                |
 |                                    | | elements of that matrix in clockwise spiral order.                                     |
@@ -114,6 +120,16 @@ The list contains the name of (i.e. the value returned by
 |                                    | |                                                                                        |
 |                                    | | Assuming you are initially positioned at the start of the array, determine             |
 |                                    | | whether you are able to reach the last index of the array.                             |
++------------------------------------+------------------------------------------------------------------------------------------+
+| Array Jumping Game II              | | You are given an array of integers where each element represents the                   |
+|                                    | | maximum possible jump distance from that position. For example, if you                 |
+|                                    | | are at position i and your maximum jump length is n, then you can jump                 |
+|                                    | | to any position from i to i+n.                                                         |
+|                                    | |                                                                                        |
+|                                    | | Assuming you are initially positioned at the start of the array, determine             |
+|                                    | | the minimum number of jumps to reach the end of the array.                             |
+|                                    | |                                                                                        |
+|                                    | | If it's impossible to reach the end, then the answer should be 0.                      |
 +------------------------------------+------------------------------------------------------------------------------------------+
 | Merge Overlapping Intervals        | | Given an array of intervals, merge all overlapping intervals. An interval              |
 |                                    | | is an array with two numbers, where the first number is always less than               |
@@ -195,6 +211,23 @@ The list contains the name of (i.e. the value returned by
 |                                    | | or to the right. Furthermore, you cannot move onto spaces which have obstacles.        |
 |                                    | |                                                                                        |
 |                                    | | Determine how many unique paths there are from start to finish.                        |
++------------------------------------+------------------------------------------------------------------------------------------+
+| Shortest Path in a Grid            | | You are given a 2D array of numbers (array of array of numbers) representing           |
+|                                    | | a grid. The 2D array contains 1's and 0's, where 1 represents an obstacle and          |
+|                                    | | 0 represents a free space.                                                             |
+|                                    | |                                                                                        |
+|                                    | | Assume you are initially positioned in top-left corner of that grid and that you       |
+|                                    | | are trying to reach the bottom-right corner. In each step, you may move to the up,     |
+|                                    | | down, left or right. Furthermore, you cannot move onto spaces which have obstacles.    |
+|                                    | |                                                                                        |
+|                                    | | Determine if paths exist from start to destination, and find the shortest one.         |
+|                                    | |                                                                                        |
+|                                    | | Examples:                                                                              |
+|                                    | |  [[0,1,0,0,0],                                                                         |
+|                                    | |   [0,0,0,1,0]] -> "DRRURRD"                                                            |
+|                                    | |  [[0,1],                                                                               |
+|                                    | |   [1,0]]       -> ""                                                                   |
+|                                    | |                                                                                        |
 +------------------------------------+------------------------------------------------------------------------------------------+
 | Sanitize Parentheses in Expression | | Given a string with parentheses and letters, remove the minimum number of invalid      |
 |                                    | | parentheses in order to validate the string. If there are multiple minimal ways        |

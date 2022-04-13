@@ -2,7 +2,7 @@ import { Player } from "./Player";
 import { Router } from "./ui/GameRoot";
 import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { Terminal } from "./Terminal";
-import { SnackbarEvents } from "./ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 import { IMap, IReturnStatus } from "./types";
 import { GetServer } from "./Server/AllServers";
 import { ImportPlayerData, SaveData, saveObject } from "./SaveObject";
@@ -111,8 +111,7 @@ function initAppNotifier(): void {
       if (!fn) fn = Terminal.print;
       fn.bind(Terminal)(message);
     },
-    toast: (message: string, type: "info" | "success" | "warning" | "error", duration = 2000) =>
-      SnackbarEvents.emit(message, type, duration),
+    toast: (message: string, type: ToastVariant, duration = 2000) => SnackbarEvents.emit(message, type, duration),
   };
 
   // Will be consumud by the electron wrapper.
@@ -127,7 +126,7 @@ function initSaveFunctions(): void {
         saveObject.exportGame();
       } catch (error) {
         console.log(error);
-        SnackbarEvents.emit("Could not export game.", "error", 2000);
+        SnackbarEvents.emit("Could not export game.", ToastVariant.ERROR, 2000);
       }
     },
     triggerScriptsExport: (): void => exportScripts("*", Player.getHomeComputer()),
@@ -176,7 +175,7 @@ function initElectronBridge(): void {
       })
       .catch((error: any) => {
         console.log(error);
-        SnackbarEvents.emit("Could not save game.", "error", 2000);
+        SnackbarEvents.emit("Could not save game.", ToastVariant.ERROR, 2000);
       });
   });
   bridge.receive("trigger-game-export", () => {
@@ -184,7 +183,7 @@ function initElectronBridge(): void {
       (window as any).appSaveFns.triggerGameExport();
     } catch (error) {
       console.log(error);
-      SnackbarEvents.emit("Could not export game.", "error", 2000);
+      SnackbarEvents.emit("Could not export game.", ToastVariant.ERROR, 2000);
     }
   });
   bridge.receive("trigger-scripts-export", () => {
@@ -192,7 +191,7 @@ function initElectronBridge(): void {
       (window as any).appSaveFns.triggerScriptsExport();
     } catch (error) {
       console.log(error);
-      SnackbarEvents.emit("Could not export scripts.", "error", 2000);
+      SnackbarEvents.emit("Could not export scripts.", ToastVariant.ERROR, 2000);
     }
   });
 }
