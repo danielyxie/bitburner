@@ -6227,7 +6227,7 @@ export interface NS {
    * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.
    * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000
    */
-  toast(msg: any, variant?: "success" | "info" | "warning" | "error", duration?: number | null): void;
+  toast(msg: any, variant?: ToastVariantValues, duration?: number | null): void;
 
   /**
    * Download a file from the internet.
@@ -6423,7 +6423,7 @@ export interface NS {
    */
   getSharePower(): number;
 
-  // enum: NSEnums;
+  enum: NSEnums;
 }
 
 export enum ToastVariant {
@@ -6433,8 +6433,11 @@ export enum ToastVariant {
   INFO = "info",
 }
 
+export type ToastVariantValues = `${ToastVariant}`;
+
+/** @public */
 export interface NSEnums {
-  toast: ToastVariant;
+  toast: typeof ToastVariant;
 }
 
 /**

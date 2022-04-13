@@ -10,7 +10,7 @@ interface IProps {
   children: React.ReactNode | React.ReactNode[];
 }
 
-export enum SnackbarVariant {
+export enum ToastVariant {
   SUCCESS = "success",
   WARNING = "warning",
   ERROR = "error",
@@ -43,7 +43,7 @@ export function SnackbarProvider(props: IProps): React.ReactElement {
   );
 }
 
-export const SnackbarEvents = new EventEmitter<[string | React.ReactNode, SnackbarVariant, number]>();
+export const SnackbarEvents = new EventEmitter<[string | React.ReactNode, ToastVariant, number]>();
 
 export function Snackbar(): React.ReactElement {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
