@@ -47,6 +47,8 @@ import { Server } from "../Server/Server";
 import { netscriptCanHack } from "../Hacking/netscriptCanHack";
 import { FactionInfos } from "../Faction/FactionInfo";
 import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
+import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
+import { enterBitNode } from "../RedPill";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -1334,6 +1336,48 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           return 0;
         }
         return item.price;
+      },
+    b1tflum3:
+      (_ctx: NetscriptContext) =>
+      (_nextBN: unknown, _callbackScript: unknown = ""): void => {
+        const nextBN = _ctx.helper.number("nextBN", _nextBN);
+        const callbackScript = _ctx.helper.string("callbackScript", _callbackScript);
+        enterBitNode(Router, true, player.bitNodeN, nextBN);
+        if (callbackScript)
+          setTimeout(() => {
+            runAfterReset(callbackScript);
+          }, 0);
+      },
+    destroyW0r1dD43m0n:
+      (_ctx: NetscriptContext) =>
+      (_nextBN: unknown, _callbackScript: unknown = ""): void => {
+        const nextBN = _ctx.helper.number("nextBN", _nextBN);
+        const callbackScript = _ctx.helper.string("callbackScript", _callbackScript);
+
+        const hackingRequirements = (): boolean => {
+          const wd = GetServer(SpecialServers.WorldDaemon);
+          if (!(wd instanceof Server))
+            throw new Error("WorldDaemon was not a normal server. This is a bug contact dev.");
+          if (player.hacking < wd.requiredHackingSkill) return false;
+          if (!wd.hasAdminRights) return false;
+          return true;
+        };
+        const bladeburnerRequirements = (): boolean => {
+          if (!player.inBladeburner()) return false;
+          if (!player.bladeburner) return false;
+          return player.bladeburner.blackops[BlackOperationNames.OperationDaedalus];
+        };
+
+        if (!hackingRequirements() && !bladeburnerRequirements()) {
+          _ctx.log(() => "Requirements not met to destroy the world daemon");
+          return;
+        }
+
+        enterBitNode(Router, false, player.bitNodeN, nextBN);
+        if (callbackScript)
+          setTimeout(() => {
+            runAfterReset(callbackScript);
+          }, 0);
       },
   };
 }

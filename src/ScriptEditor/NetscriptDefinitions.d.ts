@@ -2386,6 +2386,30 @@ export interface Singularity {
    * purchased. Throws an error if the specified program/exploit does not exist
    */
   getDarkwebProgramCost(programName: string): number;
+
+  /**
+   * b1t_flum3 into a different BN.
+   * @remarks
+   * RAM cost: 16 GB * 16/4/1
+   *
+   * @param nextBN - BN number to jump to
+   * @param callbackScript - Name of the script to launch in the next BN.
+   */
+  b1tflum3(nextBN: number, callbackScript?: string): void;
+
+  /**
+   * Destroy the w0r1d_d43m0n and move on to the next BN.
+   * @remarks
+   * RAM cost: 32 GB * 16/4/1
+   *
+   * You must have the special augment installed and the required hacking level
+   *   OR
+   * Completed the final black op.
+   *
+   * @param nextBN - BN number to jump to
+   * @param callbackScript - Name of the script to launch in the next BN.
+   */
+  destroyW0r1dD43m0n(nextBN: number, callbackScript?: string): void;
 }
 
 /**
