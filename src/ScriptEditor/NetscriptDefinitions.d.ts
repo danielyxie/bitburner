@@ -3785,6 +3785,18 @@ export interface Grafting {
   getAugmentationGraftTime(augName: string): number;
 
   /**
+   * Retrieves a list of Augmentations that can be grafted.
+   * @remarks
+   * RAM cost: 5 GB
+   * 
+   * Note that this function returns a list of currently graftable Augmentations,
+   * based off of the Augmentations that you already own.
+   * 
+   * @returns An array of graftable Augmentations.
+   */
+  getGraftableAugmentations(): string[];
+
+  /**
    * Begins grafting the named aug. You must be in New Tokyo to use this.
    * @remarks
    * RAM cost: 7.5 GB
