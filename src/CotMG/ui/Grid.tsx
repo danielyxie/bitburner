@@ -1,4 +1,4 @@
-import { Table, TableBody, TableRow } from "@mui/material";
+import { TableBody, TableRow } from "@mui/material";
 import * as React from "react";
 import { ActiveFragment } from "../ActiveFragment";
 import { IStaneksGift } from "../IStaneksGift";
