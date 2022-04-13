@@ -108,7 +108,7 @@
     "cy:run": "cypress run",
     "doc": "npx api-extractor run && npx api-documenter markdown && rm input/bitburner.api.json && rm -r input",
     "format": "prettier --write .",
-    "format:report": "prettier -c",
+    "format:report": "prettier -c .",
     "format:report-diff": "bash -c 'if [[ $(git diff --name-only --diff-filter=ACMRTUXB origin/dev | grep -E \"(.js$|.jsx$|.ts$|.tsx$)\" | wc -c) -ne 0 ]]; then prettier -c $(git diff --name-only --diff-filter=ACMRTUXB origin/dev | grep -E \"(.js$|.jsx$|.ts$|.tsx$)\" | xargs); fi'",
     "start": "http-server -p 8000",
     "start:dev": "webpack-dev-server --progress --env.devServer --mode development",

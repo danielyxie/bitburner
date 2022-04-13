@@ -25,10 +25,7 @@ interface ICodingContractTypeMetadata {
 
 /* Helper functions for Coding Contract implementations */
 function removeBracketsFromArrayString(str: string): string {
-  var strCpy: string = str ;
-
-
-  
+  let strCpy: string = str;
   if (strCpy.startsWith("[")) {
     strCpy = strCpy.slice(1);
   }
