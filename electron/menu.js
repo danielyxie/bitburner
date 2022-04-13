@@ -8,6 +8,39 @@ const storage = require("./storage");
 const config = new Config();
 
 function getMenu(window) {
+  const canZoomIn = utils.getZoomFactor() <= 2;
+  const zoomIn = () => {
+    const currentZoom = utils.getZoomFactor();
+    const newZoom = currentZoom + 0.1;
+    if (newZoom <= 2.0) {
+      utils.setZoomFactor(window, newZoom);
+      refreshMenu(window);
+    } else {
+      log.log("Max zoom out");
+      utils.writeToast(window, "Cannot zoom in anymore", "warning");
+    }
+  };
+
+  const canZoomOut = utils.getZoomFactor() >= 0.5;
+  const zoomOut = () => {
+    const currentZoom = utils.getZoomFactor();
+    const newZoom = currentZoom - 0.1;
+    if (newZoom >= 0.5) {
+      utils.setZoomFactor(window, newZoom);
+      refreshMenu(window);
+    } else {
+      log.log("Max zoom in");
+      utils.writeToast(window, "Cannot zoom out anymore", "warning");
+    }
+  };
+
+  const canResetZoom = utils.getZoomFactor() !== 1;
+  const resetZoom = () => {
+    utils.setZoomFactor(window, 1);
+    refreshMenu(window);
+    log.log("Reset zoom");
+  };
+
   return Menu.buildFromTemplate([
     {
       label: "File",
@@ -289,45 +322,45 @@ function getMenu(window) {
       submenu: [
         {
           label: "Zoom In",
-          enabled: utils.getZoomFactor() <= 2,
+          enabled: canZoomIn,
           accelerator: "CommandOrControl+numadd",
-          click: () => {
-            const currentZoom = utils.getZoomFactor();
-            const newZoom = currentZoom + 0.1;
-            if (newZoom <= 2.0) {
-              utils.setZoomFactor(window, newZoom);
-              refreshMenu(window);
-            } else {
-              log.log("Max zoom out");
-              utils.writeToast(window, "Cannot zoom in anymore", "warning");
-            }
-          },
+          click: zoomIn,
+        },
+        {
+          label: "Zoom In (non numpad)",
+          enabled: canZoomIn,
+          visible: false,
+          accelerator: "CommandOrControl+Plus",
+          acceleratorWorksWhenHidden: true,
+          click: zoomIn,
         },
         {
           label: "Zoom Out",
-          enabled: utils.getZoomFactor() >= 0.5,
+          enabled: canZoomOut,
           accelerator: "CommandOrControl+numsub",
-          click: () => {
-            const currentZoom = utils.getZoomFactor();
-            const newZoom = currentZoom - 0.1;
-            if (newZoom >= 0.5) {
-              utils.setZoomFactor(window, newZoom);
-              refreshMenu(window);
-            } else {
-              log.log("Max zoom in");
-              utils.writeToast(window, "Cannot zoom out anymore", "warning");
-            }
-          },
+          click: zoomOut,
+        },
+        {
+          label: "Zoom Out (non numpad)",
+          enabled: canZoomOut,
+          accelerator: "CommandOrControl+-",
+          visible: false,
+          acceleratorWorksWhenHidden: true,
+          click: zoomOut,
         },
         {
           label: "Reset Zoom",
-          enabled: utils.getZoomFactor() !== 1,
+          enabled: canResetZoom,
           accelerator: "CommandOrControl+num0",
-          click: () => {
-            utils.setZoomFactor(window, 1);
-            refreshMenu(window);
-            log.log("Reset zoom");
-          },
+          click: resetZoom,
+        },
+        {
+          label: "Reset Zoom (non numpad)",
+          enabled: canResetZoom,
+          accelerator: "CommandOrControl+0",
+          visible: false,
+          acceleratorWorksWhenHidden: true,
+          click: resetZoom,
         },
       ],
     },
