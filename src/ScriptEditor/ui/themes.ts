@@ -89,9 +89,7 @@ export const sanitizeTheme = (theme: IScriptEditorTheme): void => {
       for (const [k, v] of Object.entries(block)) {
         if (typeof v === "object") {
           repairBlock(v as { [key: string]: string });
-        } else {
-          if (!v.match(colorRegExp)) block[k] = "FF0000";
-        }
+        } else if (!v.match(colorRegExp)) block[k] = "FF0000";
       }
     };
     repairBlock(v);
