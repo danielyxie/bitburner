@@ -34,6 +34,7 @@ import { RunningScript } from "./Script/RunningScript";
 import {
   getServerOnNetwork,
   numCycleForGrowth,
+  numCycleForGrowthCorrected,
   processSingleServerGrowth,
   safetlyCreateUniqueServer,
 } from "./Server/ServerHelpers";
@@ -765,7 +766,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           return 0;
         }
 
-        const maxThreadsNeeded = Math.ceil(numCycleForGrowthCorrected(server, server.moneyMax, server.moneyAvailable, Player, cores));
+        const maxThreadsNeeded = Math.ceil(
+          numCycleForGrowthCorrected(server, server.moneyMax, server.moneyAvailable, Player, cores),
+        );
 
         threads = Math.min(threads, maxThreadsNeeded);
       }
