@@ -17,7 +17,8 @@ export type DescriptionFunc = (data: any) => string;
 interface ICodingContractTypeMetadata {
   desc: DescriptionFunc;
   difficulty: number;
-  gen: GeneratorFunc;
+
+    gen: GeneratorFunc ;
   name: string;
   numTries: number;
   solver: SolverFunc;
@@ -25,7 +26,7 @@ interface ICodingContractTypeMetadata {
 
 /* Helper functions for Coding Contract implementations */
 function removeBracketsFromArrayString(str: string): string {
-  let strCpy: string = str;
+  var strCpy: string = str;
   if (strCpy.startsWith("[")) {
     strCpy = strCpy.slice(1);
   }
