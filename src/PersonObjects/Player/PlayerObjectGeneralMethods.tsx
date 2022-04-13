@@ -1315,18 +1315,19 @@ export function createProgramWork(this: IPlayer, numCycles: number): boolean {
 
 export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): string {
   const programName = this.createProgramName;
-  if (cancelled === false) {
+  if (!cancelled) {
+    //Complete case
+    this.gainIntelligenceExp((CONSTANTS.IntelligenceProgramBaseExpGain * this.timeWorked) / 1000);
     dialogBoxCreate(`You've finished creating ${programName}!<br>The new program can be found on your home computer.`);
 
-    this.getHomeComputer().programs.push(programName);
-  } else {
+    if (!this.getHomeComputer().programs.includes(programName)) {
+      this.getHomeComputer().programs.push(programName);
+    }
+  } else if (!this.getHomeComputer().programs.includes(programName)) {
+    //Incomplete case
     const perc = (Math.floor((this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) * 10000) / 100).toString();
     const incompleteName = programName + "-" + perc + "%-INC";
     this.getHomeComputer().programs.push(incompleteName);
-  }
-
-  if (!cancelled) {
-    this.gainIntelligenceExp((CONSTANTS.IntelligenceProgramBaseExpGain * this.timeWorked) / 1000);
   }
 
   this.isWorking = false;
