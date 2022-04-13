@@ -12,7 +12,6 @@ import { Faction } from "./Faction/Faction";
 import { Factions, initFactions } from "./Faction/Factions";
 import { joinFaction } from "./Faction/FactionHelpers";
 import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
-import { initMessages } from "./Message/MessageHelpers";
 import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { Router } from "./ui/GameRoot";
@@ -56,15 +55,15 @@ export function prestigeAugmentation(): void {
   AddToAllServers(homeComp);
   prestigeHomeComputer(Player, homeComp);
 
-  if (augmentationExists(AugmentationNames.Neurolink) && Augmentations[AugmentationNames.Neurolink].owned) {
+  if (augmentationExists(AugmentationNames.Neurolink) && Player.hasAugmentation(AugmentationNames.Neurolink)) {
     homeComp.programs.push(Programs.FTPCrackProgram.name);
     homeComp.programs.push(Programs.RelaySMTPProgram.name);
   }
-  if (augmentationExists(AugmentationNames.CashRoot) && Augmentations[AugmentationNames.CashRoot].owned) {
+  if (augmentationExists(AugmentationNames.CashRoot) && Player.hasAugmentation(AugmentationNames.CashRoot)) {
     Player.setMoney(1e6);
     homeComp.programs.push(Programs.BruteSSHProgram.name);
   }
-  if (augmentationExists(AugmentationNames.PCMatrix) && Augmentations[AugmentationNames.PCMatrix].owned) {
+  if (augmentationExists(AugmentationNames.PCMatrix) && Player.hasAugmentation(AugmentationNames.PCMatrix)) {
     homeComp.programs.push(Programs.DeepscanV1.name);
     homeComp.programs.push(Programs.AutoLink.name);
   }
@@ -104,9 +103,6 @@ export function prestigeAugmentation(): void {
   initAugmentations(); // Calls reapplyAllAugmentations() and resets Player multipliers
   Player.reapplyAllSourceFiles();
   initCompanies();
-
-  // Messages
-  initMessages();
 
   // Apply entropy from grafting
   Player.applyEntropy(Player.entropy);
@@ -155,7 +151,7 @@ export function prestigeAugmentation(): void {
   }
 
   // Red Pill
-  if (augmentationExists(AugmentationNames.TheRedPill) && Augmentations[AugmentationNames.TheRedPill].owned) {
+  if (augmentationExists(AugmentationNames.TheRedPill) && Player.hasAugmentation(AugmentationNames.TheRedPill)) {
     const WorldDaemon = GetServer(SpecialServers.WorldDaemon);
     const DaedalusServer = GetServer(SpecialServers.DaedalusServer);
     if (WorldDaemon && DaedalusServer) {
@@ -164,7 +160,7 @@ export function prestigeAugmentation(): void {
     }
   }
 
-  if (augmentationExists(AugmentationNames.StaneksGift1) && Augmentations[AugmentationNames.StaneksGift1].owned) {
+  if (augmentationExists(AugmentationNames.StaneksGift1) && Player.hasAugmentation(AugmentationNames.StaneksGift1)) {
     joinFaction(Factions[FactionNames.ChurchOfTheMachineGod]);
   }
 
@@ -250,9 +246,6 @@ export function prestigeSourceFile(flume: boolean): void {
   initAugmentations(); // Calls reapplyAllAugmentations() and resets Player multipliers
   Player.reapplyAllSourceFiles();
   initCompanies();
-
-  // Messages
-  initMessages();
 
   if (Player.sourceFileLvl(5) > 0 || Player.bitNodeN === 5) {
     homeComp.programs.push(Programs.Formulas.name);

@@ -34,6 +34,7 @@ import { RunningScript } from "./Script/RunningScript";
 import {
   getServerOnNetwork,
   numCycleForGrowth,
+  numCycleForGrowthCorrected,
   processSingleServerGrowth,
   safetlyCreateUniqueServer,
 } from "./Server/ServerHelpers";
@@ -75,6 +76,7 @@ import { IPort } from "./NetscriptPort";
 
 import {
   NS as INS,
+  Singularity as ISingularity,
   Player as INetscriptPlayer,
   Gang as IGang,
   Bladeburner as IBladeburner,
@@ -89,13 +91,15 @@ import {
   BitNodeMultipliers as IBNMults,
   Server as IServerDef,
   RunningScript as IRunningScriptDef,
+  // ToastVariant,
 } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 
 import { toNative } from "./NetscriptFunctions/toNative";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
-import { SnackbarEvents } from "./ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
+import { checkEnum } from "./utils/helpers/checkEnum";
 
 import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
@@ -527,7 +531,8 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const codingcontract = NetscriptCodingContract(Player, workerScript, helper);
   const corporation = NetscriptCorporation(Player, workerScript, helper);
   const formulas = NetscriptFormulas(Player, workerScript, helper);
-  const singularity = NetscriptSingularity(Player, workerScript, helper);
+  const singularity = wrapAPI(helper, {}, workerScript, NetscriptSingularity(Player, workerScript), "singularity")
+    .singularity as unknown as ISingularity;
   const stockmarket = NetscriptStockMarket(Player, workerScript, helper);
   const ui = NetscriptUserInterface(Player, workerScript, helper);
   const grafting = NetscriptGrafting(Player, workerScript, helper);
@@ -629,7 +634,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
         if (percentHacked > 0) {
           // thread count is limited to the maximum number of threads needed
-          threads = Math.ceil(1 / percentHacked);
+          threads = Math.min(threads, Math.ceil(1 / percentHacked));
         }
       }
 
@@ -748,9 +753,26 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return numCycleForGrowth(server, Number(growth), Player, cores);
     },
-    growthAnalyzeSecurity: function (_threads: unknown): number {
+    growthAnalyzeSecurity: function (_threads: unknown, _hostname?: unknown, _cores?: unknown): number {
       updateDynamicRam("growthAnalyzeSecurity", getRamCost(Player, "growthAnalyzeSecurity"));
-      const threads = helper.number("growthAnalyzeSecurity", "threads", _threads);
+      let threads = helper.number("growthAnalyzeSecurity", "threads", _threads);
+      if (_hostname) {
+        const cores = helper.number("growthAnalyzeSecurity", "cores", _cores) || 1;
+        const hostname = helper.string("growthAnalyzeSecurity", "hostname", _hostname);
+        const server = safeGetServer(hostname, "growthAnalyzeSecurity");
+
+        if (!(server instanceof Server)) {
+          workerScript.log("growthAnalyzeSecurity", () => "Cannot be executed on this server.");
+          return 0;
+        }
+
+        const maxThreadsNeeded = Math.ceil(
+          numCycleForGrowthCorrected(server, server.moneyMax, server.moneyAvailable, Player, cores),
+        );
+
+        threads = Math.min(threads, maxThreadsNeeded);
+      }
+
       return 2 * CONSTANTS.ServerFortifyAmount * threads;
     },
     weaken: async function (_hostname: unknown, { threads: requestedThreads }: BasicHGWOptions = {}): Promise<number> {
@@ -2302,13 +2324,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const message = helper.string("alert", "message", _message);
       dialogBoxCreate(message);
     },
-    toast: function (_message: unknown, _variant: unknown = "success", duration: any = 2000): void {
+    toast: function (_message: unknown, _variant: unknown = ToastVariant.SUCCESS, duration: any = 2000): void {
       updateDynamicRam("toast", getRamCost(Player, "toast"));
       const message = helper.string("toast", "message", _message);
       const variant = helper.string("toast", "variant", _variant);
-      if (!["success", "info", "warning", "error"].includes(variant))
-        throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
-      SnackbarEvents.emit(message, variant as any, duration);
+      if (!checkEnum(ToastVariant, variant))
+        throw new Error(`variant must be one of ${Object.values(ToastVariant).join(", ")}`);
+      SnackbarEvents.emit(message, variant, duration);
     },
     prompt: function (_txt: unknown, options?: { type?: string; options?: string[] }): Promise<boolean | string> {
       updateDynamicRam("prompt", getRamCost(Player, "prompt"));
@@ -2551,6 +2573,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
     },
     flags: Flags(workerScript.args),
+    enums: {
+      toast: ToastVariant,
+    },
   };
 
   // add undocumented functions

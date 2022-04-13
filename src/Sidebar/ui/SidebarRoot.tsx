@@ -51,7 +51,6 @@ import { CONSTANTS } from "../../Constants";
 import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../../InteractiveTutorial";
 import { getAvailableCreatePrograms } from "../../Programs/ProgramHelpers";
 import { Settings } from "../../Settings/Settings";
-import { redPillFlag } from "../../RedPill";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
@@ -275,7 +274,7 @@ export function SidebarRoot(props: IProps): React.ReactElement {
     //  Alt-o - Options
     function handleShortcuts(this: Document, event: KeyboardEvent): any {
       if (Settings.DisableHotkeys) return;
-      if ((props.player.isWorking && props.player.focus) || redPillFlag) return;
+      if ((props.player.isWorking && props.player.focus) || props.router.page() === Page.BitVerse) return;
       if (event.key === KEY.T && event.altKey) {
         event.preventDefault();
         clickTerminal();

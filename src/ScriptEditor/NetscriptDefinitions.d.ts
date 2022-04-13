@@ -3785,6 +3785,18 @@ export interface Grafting {
   getAugmentationGraftTime(augName: string): number;
 
   /**
+   * Retrieves a list of Augmentations that can be grafted.
+   * @remarks
+   * RAM cost: 5 GB
+   *
+   * Note that this function returns a list of currently graftable Augmentations,
+   * based off of the Augmentations that you already own.
+   *
+   * @returns An array of graftable Augmentations.
+   */
+  getGraftableAugmentations(): string[];
+
+  /**
    * Begins grafting the named aug. You must be in New Tokyo to use this.
    * @remarks
    * RAM cost: 7.5 GB
@@ -4320,7 +4332,7 @@ interface UserInterface {
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html| ns2 in-game docs}
  * <hr>
  */
-export interface NS extends Singularity {
+export interface NS {
   /**
    * Namespace for hacknet functions.
    * @remarks RAM cost: 4 GB
@@ -4635,9 +4647,11 @@ export interface NS extends Singularity {
    * Returns the security increase that would occur if a grow with this many threads happened.
    *
    * @param threads - Amount of threads that will be used.
+   * @param hostname - Optional. Hostname of the target server. The number of threads is limited to the number needed to hack the servers maximum amount of money.
+   * @param cores - Optional. The number of cores of the server that would run grow.
    * @returns The security increase.
    */
-  growthAnalyzeSecurity(threads: number): number;
+  growthAnalyzeSecurity(threads: number, hostname?: string, cores?: number): number;
 
   /**
    * Suspends the script for n milliseconds.
@@ -4813,7 +4827,7 @@ export interface NS extends Singularity {
    * Note that there is a maximum number of recently killed scripts which are tracked.
    * This is configurable in the game's options as `Recently killed scripts size`.
    *
-   * @usage below:
+   * @example
    * ```ts
    * let recentScripts = ns.getRecentScripts();
    * let mostRecent = recentScripts.shift()
@@ -6227,7 +6241,7 @@ export interface NS extends Singularity {
    * @param variant - Type of toast, must be one of success, info, warning, error. Defaults to success.
    * @param duration - Duration of toast in ms. Can also be `null` to create a persistent toast. Defaults to 2000
    */
-  toast(msg: any, variant?: string, duration?: number | null): void;
+  toast(msg: any, variant?: ToastVariantValues, duration?: number | null): void;
 
   /**
    * Download a file from the internet.
@@ -6422,6 +6436,24 @@ export interface NS extends Singularity {
    * RAM cost: 0.2 GB
    */
   getSharePower(): number;
+
+  enums: NSEnums;
+}
+
+/** @public */
+export enum ToastVariant {
+  SUCCESS = "success",
+  WARNING = "warning",
+  ERROR = "error",
+  INFO = "info",
+}
+
+/** @public */
+export type ToastVariantValues = `${ToastVariant}`;
+
+/** @public */
+export interface NSEnums {
+  toast: typeof ToastVariant;
 }
 
 /**
@@ -6938,10 +6970,14 @@ interface Employee {
 interface Product {
   /** Name of the product */
   name: string;
-  /** Demand for the product */
-  dmd: number;
-  /** Competition for the product */
-  cmp: number;
+  /** Demand for the product, only present if "Market Research - Demand" unlocked */
+  dmd: number | undefined;
+  /** Competition for the product, only present if "Market Research - Competition" unlocked */
+  cmp: number | undefined;
+  /** Product Rating */
+  rat: number;
+  /** Product Properties. The data is \{qlt, per, dur, rel, aes, fea\} */
+  properties: { [key: string]: number };
   /** Production cost */
   pCost: number;
   /** Sell cost, can be "MP+5" */
@@ -6965,6 +7001,10 @@ interface Material {
   qty: number;
   /** Quality of the material */
   qlt: number;
+  /** Demand for the material, only present if "Market Research - Demand" unlocked */
+  dmd: number | undefined;
+  /** Competition for the material, only present if "Market Research - Competition" unlocked */
+  cmp: number | undefined;
   /** Amount of material produced  */
   prod: number;
   /** Amount of material sold  */

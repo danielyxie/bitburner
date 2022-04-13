@@ -25,7 +25,7 @@ import {
 } from "./PersonObjects/formulas/reputation";
 import { hasHacknetServers, processHacknetEarnings } from "./Hacknet/HacknetHelpers";
 import { iTutorialStart } from "./InteractiveTutorial";
-import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
+import { checkForMessagesToSend } from "./Message/MessageHelpers";
 import { loadAllRunningScripts, updateOnlineScriptTimes } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { saveObject, loadGame } from "./SaveObject";
@@ -50,7 +50,7 @@ import { calculateAchievements } from "./Achievements/Achievements";
 import React from "react";
 import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
 import { Button, Typography } from "@mui/material";
-import { SnackbarEvents } from "./ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 
 const Engine: {
   _lastUpdate: number;
@@ -214,7 +214,7 @@ const Engine: {
 
     if (Engine.Counters.messages <= 0) {
       checkForMessagesToSend();
-      if (Augmentations[AugmentationNames.TheRedPill].owned) {
+      if (Player.hasAugmentation(AugmentationNames.TheRedPill)) {
         Engine.Counters.messages = 4500; // 15 minutes for Red pill message
       } else {
         Engine.Counters.messages = 150;
@@ -439,7 +439,6 @@ const Engine: {
       initCompanies();
       initFactions();
       initAugmentations();
-      initMessages();
       updateSourceFileFlags(Player);
 
       // Start interactive tutorial
@@ -495,7 +494,7 @@ function warnAutosaveDisabled(): void {
       </Button>
     </>
   );
-  SnackbarEvents.emit(warningToast, "warning", 5000);
+  SnackbarEvents.emit(warningToast, ToastVariant.WARNING, 5000);
 }
 
 export { Engine };

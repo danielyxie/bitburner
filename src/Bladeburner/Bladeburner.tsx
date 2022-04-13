@@ -1920,7 +1920,7 @@ export class Bladeburner implements IBladeburner {
     }
 
     // If the Player starts doing some other actions, set action to idle and alert
-    if (Augmentations[AugmentationNames.BladesSimulacrum].owned === false && player.isWorking) {
+    if (player.hasAugmentation(AugmentationNames.BladesSimulacrum) === false && player.isWorking) {
       if (this.action.type !== ActionTypes["Idle"]) {
         let msg = "Your Bladeburner action was cancelled because you started doing something else.";
         if (this.automateEnabled) {

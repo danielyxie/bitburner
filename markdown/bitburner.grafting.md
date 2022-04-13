@@ -22,5 +22,6 @@ This API requires Source-File 10 to use.
 |  --- | --- |
 |  [getAugmentationGraftPrice(augName)](./bitburner.grafting.getaugmentationgraftprice.md) | Retrieve the grafting cost of an aug. |
 |  [getAugmentationGraftTime(augName)](./bitburner.grafting.getaugmentationgrafttime.md) | Retrieves the time required to graft an aug. |
+|  [getGraftableAugmentations()](./bitburner.grafting.getgraftableaugmentations.md) | Retrieves a list of Augmentations that can be grafted. |
 |  [graftAugmentation(augName, focus)](./bitburner.grafting.graftaugmentation.md) | Begins grafting the named aug. You must be in New Tokyo to use this. |
 

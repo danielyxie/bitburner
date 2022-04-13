@@ -346,10 +346,13 @@ export function NetscriptCorporation(
       const cityName = helper.city("getMaterial", "cityName", _cityName);
       const materialName = helper.string("getMaterial", "materialName", _materialName);
       const material = getMaterial(divisionName, cityName, materialName);
+      const corporation = getCorporation();
       return {
         name: material.name,
         qty: material.qty,
         qlt: material.qlt,
+        dmd: corporation.unlockUpgrades[2] ? material.dmd : undefined,
+        cmp: corporation.unlockUpgrades[3] ? material.cmp : undefined,
         prod: material.prd,
         sell: material.sll,
       };
@@ -359,10 +362,20 @@ export function NetscriptCorporation(
       const divisionName = helper.string("getProduct", "divisionName", _divisionName);
       const productName = helper.string("getProduct", "productName", _productName);
       const product = getProduct(divisionName, productName);
+      const corporation = getCorporation();
       return {
         name: product.name,
-        dmd: product.dmd,
-        cmp: product.cmp,
+        dmd: corporation.unlockUpgrades[2] ? product.dmd : undefined,
+        cmp: corporation.unlockUpgrades[3] ? product.cmp : undefined,
+        rat: product.rat,
+        properties: {
+          qlt: product.qlt,
+          per: product.per,
+          dur: product.dur,
+          rel: product.rel,
+          aes: product.aes,
+          fea: product.fea,
+        },
         pCost: product.pCost,
         sCost: product.sCost,
         cityData: product.data,

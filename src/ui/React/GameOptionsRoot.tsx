@@ -27,7 +27,7 @@ import PaletteIcon from "@mui/icons-material/Palette";
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { ConfirmationModal } from "./ConfirmationModal";
 
-import { SnackbarEvents } from "./Snackbar";
+import { SnackbarEvents, ToastVariant } from "./Snackbar";
 
 import { Settings } from "../../Settings/Settings";
 import { DeleteGameButton } from "./DeleteGameButton";
@@ -129,7 +129,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
       setImportData(data);
       setImportSaveOpen(true);
     } catch (ex: any) {
-      SnackbarEvents.emit(ex.toString(), "error", 5000);
+      SnackbarEvents.emit(ex.toString(), ToastVariant.ERROR, 5000);
     }
   }
 
@@ -139,7 +139,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
     try {
       await saveObject.importGame(importData.base64);
     } catch (ex: any) {
-      SnackbarEvents.emit(ex.toString(), "error", 5000);
+      SnackbarEvents.emit(ex.toString(), ToastVariant.ERROR, 5000);
     }
 
     setImportSaveOpen(false);
