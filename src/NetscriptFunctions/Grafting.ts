@@ -54,7 +54,7 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
       if (player.city !== CityName.NewTokyo) {
         throw helper.makeRuntimeErrorMsg(
           "grafting.graftAugmentation",
-          "You must be in New Tokyo to begin crafting an Augmentation.",
+          "You must be in New Tokyo to begin grafting an Augmentation.",
         );
       }
       if (!getAvailableAugs(player).includes(augName)) {
@@ -90,7 +90,7 @@ export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, h
         Router.toTerminal();
       }
 
-      workerScript.log("grafting.graftAugmentation", () => `Began crafting Augmentation ${augName}.`);
+      workerScript.log("grafting.graftAugmentation", () => `Began grafting Augmentation ${augName}.`);
       return true;
     },
   };

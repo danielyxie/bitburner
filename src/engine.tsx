@@ -50,7 +50,7 @@ import { calculateAchievements } from "./Achievements/Achievements";
 import React from "react";
 import { setupUncaughtPromiseHandler } from "./UncaughtPromiseHandler";
 import { Button, Typography } from "@mui/material";
-import { SnackbarEvents } from "./ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 
 const Engine: {
   _lastUpdate: number;
@@ -495,7 +495,7 @@ function warnAutosaveDisabled(): void {
       </Button>
     </>
   );
-  SnackbarEvents.emit(warningToast, "warning", 5000);
+  SnackbarEvents.emit(warningToast, ToastVariant.WARNING, 5000);
 }
 
 export { Engine };

@@ -64,6 +64,11 @@ interface IDefaultSettings {
   Locale: string;
 
   /**
+   * Limit the number of recently killed script entries being tracked.
+   */
+  MaxRecentScriptsCapacity: number;
+
+  /**
    * Limit the number of log entries for each script being executed on each server.
    */
   MaxLogCapacity: number;
@@ -191,6 +196,7 @@ export const defaultSettings: IDefaultSettings = {
   EnableBashHotkeys: false,
   TimestampsFormat: "",
   Locale: "en",
+  MaxRecentScriptsCapacity: 50,
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
   MaxTerminalCapacity: 500,
@@ -228,6 +234,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   EnableBashHotkeys: defaultSettings.EnableBashHotkeys,
   TimestampsFormat: defaultSettings.TimestampsFormat,
   Locale: "en",
+  MaxRecentScriptsCapacity: defaultSettings.MaxRecentScriptsCapacity,
   MaxLogCapacity: defaultSettings.MaxLogCapacity,
   MaxPortCapacity: defaultSettings.MaxPortCapacity,
   MaxTerminalCapacity: defaultSettings.MaxTerminalCapacity,

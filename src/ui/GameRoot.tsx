@@ -22,7 +22,7 @@ import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/Buyin
 import {
   cancelOrder,
   eventEmitterForUiReset,
-  initStockMarketFnForReact,
+  initStockMarketFn,
   placeOrder,
   StockMarket,
 } from "../StockMarket/StockMarket";
@@ -310,7 +310,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
 
   function softReset(): void {
     dialogBoxCreate("Soft Reset!");
-    prestigeAugmentation();
+    installAugmentations(true);
     resetErrorBoundary();
     Router.toTerminal();
   }
@@ -445,7 +445,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
           buyStockShort={shortStock}
           cancelOrder={cancelOrder}
           eventEmitterForReset={eventEmitterForUiReset}
-          initStockMarket={initStockMarketFnForReact}
+          initStockMarket={initStockMarketFn}
           p={player}
           placeOrder={placeOrder}
           sellStockLong={sellStock}
@@ -491,7 +491,6 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
           }}
           installAugmentationsFn={() => {
             installAugmentations();
-            Router.toTerminal();
           }}
         />
       );

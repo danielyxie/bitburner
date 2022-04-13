@@ -306,7 +306,7 @@ export function processStockPrices(numCycles = 1): void {
   }
 }
 
-export function initStockMarketFnForReact(): void {
+export function initStockMarketFn(): void {
   initStockMarket();
   initSymbolToStockMap();
 }

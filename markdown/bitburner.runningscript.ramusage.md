@@ -4,6 +4,8 @@
 
 ## RunningScript.ramUsage property
 
+How much RAM this script uses for ONE thread
+
 <b>Signature:</b>
 
 ```typescript
