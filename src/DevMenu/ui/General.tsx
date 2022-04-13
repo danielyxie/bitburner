@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import { Money } from "../../ui/React/Money";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
-import { checkForMessagesToSend } from "../../Message/MessageHelpers"
+import { checkForMessagesToSend } from "../../Message/MessageHelpers";
 
 interface IProps {
   player: IPlayer;

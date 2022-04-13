@@ -3,7 +3,6 @@ import { Companies, loadCompanies } from "./Company/Companies";
 import { CONSTANTS } from "./Constants";
 import { Factions, loadFactions } from "./Faction/Factions";
 import { loadAllGangs, AllGangs } from "./Gang/AllGangs";
-import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import { Player, loadPlayer } from "./Player";
 import { saveAllServers, loadAllServers, GetAllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
@@ -67,7 +66,6 @@ class BitburnerSaveObject {
   FactionsSave = "";
   AliasesSave = "";
   GlobalAliasesSave = "";
-  MessagesSave = "";
   StockMarketSave = "";
   SettingsSave = "";
   VersionSave = "";
@@ -83,7 +81,6 @@ class BitburnerSaveObject {
     this.FactionsSave = JSON.stringify(Factions);
     this.AliasesSave = JSON.stringify(Aliases);
     this.GlobalAliasesSave = JSON.stringify(GlobalAliases);
-    this.MessagesSave = JSON.stringify(Messages);
     this.StockMarketSave = JSON.stringify(StockMarket);
     this.SettingsSave = JSON.stringify(Settings);
     this.VersionSave = JSON.stringify(CONSTANTS.VersionNumber);
@@ -440,17 +437,6 @@ function loadGame(saveString: string): boolean {
   } else {
     console.warn(`Save file did not contain a GlobalAliases property`);
     loadGlobalAliases("");
-  }
-  if (saveObj.hasOwnProperty("MessagesSave")) {
-    try {
-      loadMessages(saveObj.MessagesSave);
-    } catch (e) {
-      console.warn(`Could not load Messages from save`);
-      initMessages();
-    }
-  } else {
-    console.warn(`Save file did not contain a Messages property`);
-    initMessages();
   }
   if (saveObj.hasOwnProperty("StockMarketSave")) {
     try {

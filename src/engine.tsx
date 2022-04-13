@@ -25,7 +25,7 @@ import {
 } from "./PersonObjects/formulas/reputation";
 import { hasHacknetServers, processHacknetEarnings } from "./Hacknet/HacknetHelpers";
 import { iTutorialStart } from "./InteractiveTutorial";
-import { checkForMessagesToSend, initMessages } from "./Message/MessageHelpers";
+import { checkForMessagesToSend } from "./Message/MessageHelpers";
 import { loadAllRunningScripts, updateOnlineScriptTimes } from "./NetscriptWorker";
 import { Player } from "./Player";
 import { saveObject, loadGame } from "./SaveObject";
@@ -439,7 +439,6 @@ const Engine: {
       initCompanies();
       initFactions();
       initAugmentations();
-      initMessages();
       updateSourceFileFlags(Player);
 
       // Start interactive tutorial
