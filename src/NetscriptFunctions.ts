@@ -753,7 +753,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return numCycleForGrowth(server, Number(growth), Player, cores);
     },
-    growthAnalyzeSecurity: function (_threads: unknown, _hostname: unknown, _cores?: unknown): number {
+    growthAnalyzeSecurity: function (_threads: unknown, _hostname?: unknown, _cores?: unknown): number {
       updateDynamicRam("growthAnalyzeSecurity", getRamCost(Player, "growthAnalyzeSecurity"));
       let threads = helper.number("growthAnalyzeSecurity", "threads", _threads);
       if (_hostname) {
