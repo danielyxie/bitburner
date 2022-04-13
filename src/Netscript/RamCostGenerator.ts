@@ -299,6 +299,7 @@ const ui: IMap<any> = {
 const grafting: IMap<any> = {
   getAugmentationGraftPrice: 3.75,
   getAugmentationGraftTime: 3.75,
+  getGraftableAugmentations: 5,
   graftAugmentation: 7.5,
 };
 

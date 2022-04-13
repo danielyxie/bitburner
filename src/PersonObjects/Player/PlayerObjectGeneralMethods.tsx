@@ -1315,18 +1315,19 @@ export function createProgramWork(this: IPlayer, numCycles: number): boolean {
 
 export function finishCreateProgramWork(this: IPlayer, cancelled: boolean): string {
   const programName = this.createProgramName;
-  if (cancelled === false) {
+  if (!cancelled) {
+    //Complete case
+    this.gainIntelligenceExp((CONSTANTS.IntelligenceProgramBaseExpGain * this.timeWorked) / 1000);
     dialogBoxCreate(`You've finished creating ${programName}!<br>The new program can be found on your home computer.`);
 
-    this.getHomeComputer().programs.push(programName);
-  } else {
+    if (!this.getHomeComputer().programs.includes(programName)) {
+      this.getHomeComputer().programs.push(programName);
+    }
+  } else if (!this.getHomeComputer().programs.includes(programName)) {
+    //Incomplete case
     const perc = (Math.floor((this.timeWorkedCreateProgram / this.timeNeededToCompleteWork) * 10000) / 100).toString();
     const incompleteName = programName + "-" + perc + "%-INC";
     this.getHomeComputer().programs.push(incompleteName);
-  }
-
-  if (!cancelled) {
-    this.gainIntelligenceExp((CONSTANTS.IntelligenceProgramBaseExpGain * this.timeWorked) / 1000);
   }
 
   this.isWorking = false;
@@ -1735,11 +1736,7 @@ export function regenerateHp(this: IPlayer, amt: number): void {
 
 export function hospitalize(this: IPlayer): number {
   const cost = getHospitalizationCost(this);
-  SnackbarEvents.emit(
-    `You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`,
-    ToastVariant.WARNING,
-    2000,
-  );
+  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, ToastVariant.WARNING, 2000);
 
   this.loseMoney(cost, "hospitalization");
   this.hp = this.max_hp;
@@ -2088,12 +2085,7 @@ export function reapplyAllAugmentations(this: IPlayer, resetMultipliers = true):
 
     const playerAug = this.augmentations[i];
     const augName = playerAug.name;
-    const aug = Augmentations[augName];
-    if (aug == null) {
-      console.warn(`Invalid augmentation name in Player.reapplyAllAugmentations(). Aug ${augName} will be skipped`);
-      continue;
-    }
-    aug.owned = true;
+
     if (augName == AugmentationNames.NeuroFluxGovernor) {
       for (let j = 0; j < playerAug.level; ++j) {
         applyAugmentation(this.augmentations[i], true);

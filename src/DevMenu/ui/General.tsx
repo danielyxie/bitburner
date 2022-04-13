@@ -14,6 +14,7 @@ import { MenuItem, SelectChangeEvent, TextField, Select } from "@mui/material";
 import { Bladeburner } from "../../Bladeburner/Bladeburner";
 import { GangConstants } from "../../Gang/data/Constants";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { checkForMessagesToSend } from "../../Message/MessageHelpers";
 
 interface IProps {
   player: IPlayer;
@@ -66,6 +67,10 @@ export function General(props: IProps): React.ReactElement {
 
   function setGangFactionDropdown(event: SelectChangeEvent<string>): void {
     setGangFaction(event.target.value);
+  }
+    
+  function checkMessages(): void {
+    checkForMessagesToSend();
   }
 
   useEffect(() => {
@@ -127,6 +132,7 @@ export function General(props: IProps): React.ReactElement {
         <Button onClick={quickHackW0r1dD43m0n}>Quick w0rld_d34m0n</Button>
         <Button onClick={hackW0r1dD43m0n}>Hack w0rld_d34m0n</Button>
         <Button onClick={() => setError(true)}>Throw Error</Button>
+        <Button onClick={checkMessages}>Check Messages</Button>
       </AccordionDetails>
     </Accordion>
   );
