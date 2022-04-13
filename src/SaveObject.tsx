@@ -395,6 +395,9 @@ function evaluateVersionCompatibility(ver: string | number): void {
         delete anyPlayer.resleeves;
       }
     }
+    if (ver < 14) {
+      delete (Settings as any).EditorTheme;
+    }
   }
 }
 
