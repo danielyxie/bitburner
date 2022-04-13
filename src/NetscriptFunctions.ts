@@ -90,13 +90,14 @@ import {
   BitNodeMultipliers as IBNMults,
   Server as IServerDef,
   RunningScript as IRunningScriptDef,
+  // ToastVariant,
 } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 
 import { toNative } from "./NetscriptFunctions/toNative";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
-import { SnackbarEvents, SnackbarVariant } from "./ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 import { checkEnum } from "./utils/helpers/checkEnum";
 
 import { Flags } from "./NetscriptFunctions/Flags";
@@ -2305,12 +2306,12 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const message = helper.string("alert", "message", _message);
       dialogBoxCreate(message);
     },
-    toast: function (_message: unknown, _variant: unknown = SnackbarVariant.SUCCESS, duration: any = 2000): void {
+    toast: function (_message: unknown, _variant: unknown = ToastVariant.SUCCESS, duration: any = 2000): void {
       updateDynamicRam("toast", getRamCost(Player, "toast"));
       const message = helper.string("toast", "message", _message);
       const variant = helper.string("toast", "variant", _variant);
-      if (!checkEnum(SnackbarVariant, variant))
-        throw new Error(`variant must be one of ${Object.values(SnackbarVariant).join(", ")}`);
+      if (!checkEnum(ToastVariant, variant))
+        throw new Error(`variant must be one of ${Object.values(ToastVariant).join(", ")}`);
       SnackbarEvents.emit(message, variant, duration);
     },
     prompt: function (_txt: unknown, options?: { type?: string; options?: string[] }): Promise<boolean | string> {
@@ -2554,6 +2555,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
     },
     flags: Flags(workerScript.args),
+    enum: {
+      toast: ToastVariant,
+    },
   };
 
   // add undocumented functions
