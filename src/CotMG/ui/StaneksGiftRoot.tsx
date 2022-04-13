@@ -90,7 +90,7 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
                 </Typography>
 
                 <DummyGrid
-                  width={4}
+                  width={3}
                   height={4}
                   fragments={[
                     new ActiveFragment({
@@ -112,8 +112,8 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
                 </Typography>
 
                 <DummyGrid
-                  width={4}
-                  height={4}
+                  width={5}
+                  height={3}
                   fragments={[
                     new ActiveFragment({
                       x: 0,
@@ -129,9 +129,7 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
                     }),
                   ]}
                 />
-                <Typography sx={{ fontStyle: "italic" }}>
-                  Even though the booster touches many tiles, the bonus is only applied once.
-                </Typography>
+                <Typography sx={{ fontStyle: "italic" }}>No bonus is applied diagonally.</Typography>
 
                 <DummyGrid
                   width={4}
