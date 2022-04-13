@@ -66,6 +66,7 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
                   user, Stat Fragments increase the efficacy of adjacent Stat Fragments by 10%, and do not need to be
                   charged.
                 </Typography>
+                <br />
 
                 <DummyGrid
                   width={4}
@@ -86,8 +87,9 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
                   ]}
                 />
                 <Typography sx={{ fontStyle: "italic" }}>
-                  This boost provides a bonus to the touching fragment
+                  This Booster Fragment provides a bonus to the adjacent Stat Fragment.
                 </Typography>
+                <br />
 
                 <DummyGrid
                   width={3}
@@ -108,8 +110,10 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
                   ]}
                 />
                 <Typography sx={{ fontStyle: "italic" }}>
-                  Even though the booster touches many tiles, the bonus is only applied once.
+                  Even though the Booster Fragment touches the Stat Fragment in multiple places, the bonus is only
+                  applied once.
                 </Typography>
+                <br />
 
                 <DummyGrid
                   width={5}
@@ -122,14 +126,17 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
                       fragment: Fragments.find((f) => f.id === 5) ?? Fragments[0],
                     }),
                     new ActiveFragment({
-                      x: 2,
-                      y: 0,
+                      x: 1,
+                      y: 1,
                       rotation: 0,
                       fragment: Fragments.find((f) => f.id === 105) ?? Fragments[0],
                     }),
                   ]}
                 />
-                <Typography sx={{ fontStyle: "italic" }}>No bonus is applied diagonally.</Typography>
+                <Typography sx={{ fontStyle: "italic" }}>
+                  This Booster Fragment does nothing, as it is not touching a Stat Fragment.
+                </Typography>
+                <br />
 
                 <DummyGrid
                   width={4}
@@ -156,10 +163,10 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
                   ]}
                 />
                 <Typography sx={{ fontStyle: "italic" }}>
-                  This booster provides bonus to all fragment it touches.
+                  This Booster Fragment provides a bonus to both Stat Fragments it's touching.
                 </Typography>
-
                 <br />
+
                 <Typography>
                   Stat Fragments are charged using the stanek.chargeFragment(rootX, rootY) NetScript API function. The
                   charging process ordinarily takes 1000ms to complete, but only takes 200ms during bonus time. When the
