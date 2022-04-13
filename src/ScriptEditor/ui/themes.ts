@@ -53,20 +53,20 @@ export const defaultMonacoTheme: IScriptEditorTheme = {
     keyword: "569CD6",
     comment: "6A9955",
     constant: "569CD6",
-    error: "F44747"
+    error: "F44747",
   },
   ui: {
     line: "1E1E1E",
     panel: {
       bg: "252526",
       selected: "252526",
-      border: "1E1E1E"
+      border: "1E1E1E",
     },
     selection: {
-      bg: "ADD6FF26"
-    }
-  }
-}
+      bg: "ADD6FF26",
+    },
+  },
+};
 
 // Regex used for token color validation
 // https://github.com/microsoft/vscode/blob/973684056e67153952f495fce93bf50d0ec0b892/src/vs/editor/common/languages/supports/tokenization.ts#L153
@@ -93,122 +93,124 @@ export const sanitizeTheme = (theme: IScriptEditorTheme): void => {
           if (!v.match(colorRegExp)) block[k] = "FF0000";
         }
       }
-    }
+    };
     repairBlock(v);
   }
-}
+};
 
 export function makeTheme(theme: IScriptEditorTheme): any {
   const themeRules = [
     {
       token: "",
       background: theme.ui.line,
-      foreground: theme.common.fg
+      foreground: theme.common.fg,
     },
     {
       token: "identifier",
-      foreground: theme.common.accent
+      foreground: theme.common.accent,
     },
     {
       token: "keyword",
-      foreground: theme.syntax.keyword
+      foreground: theme.syntax.keyword,
     },
     {
       token: "string",
-      foreground: theme.syntax.string
+      foreground: theme.syntax.string,
     },
     {
       token: "string.escape",
-      foreground: theme.syntax.regexp
+      foreground: theme.syntax.regexp,
     },
     {
       token: "comment",
-      foreground: theme.syntax.comment
+      foreground: theme.syntax.comment,
     },
     {
       token: "constant",
-      foreground: theme.syntax.constant
+      foreground: theme.syntax.constant,
     },
     {
       token: "entity",
-      foreground: theme.syntax.entity
+      foreground: theme.syntax.entity,
     },
     {
       token: "type",
-      foreground: theme.syntax.tag
+      foreground: theme.syntax.tag,
     },
     {
       token: "tag",
-      foreground: theme.syntax.tag
+      foreground: theme.syntax.tag,
     },
     {
       token: "regexp",
-      foreground: theme.syntax.regexp
+      foreground: theme.syntax.regexp,
     },
     {
       token: "attribute",
-      foreground: theme.syntax.tag
+      foreground: theme.syntax.tag,
     },
     {
       token: "constructor",
-      foreground: theme.syntax.markup
+      foreground: theme.syntax.markup,
     },
     {
       token: "invalid",
-      foreground: theme.syntax.error
+      foreground: theme.syntax.error,
     },
     {
       token: "number",
-      foreground: theme.common.accent
+      foreground: theme.common.accent,
     },
     {
       token: "delimiter",
-      foreground: theme.common.fg
+      foreground: theme.common.fg,
     },
     // Custom tokens
     {
       token: "ns",
-      foreground: theme.syntax.tag
+      foreground: theme.syntax.tag,
     },
     {
       token: "netscriptfunction",
-      foreground: theme.syntax.markup
+      foreground: theme.syntax.markup,
     },
     {
       token: "otherkeywords",
-      foreground: theme.syntax.keyword
+      foreground: theme.syntax.keyword,
     },
     {
       token: "otherkeyvars",
-      foreground: theme.common.accent
+      foreground: theme.common.accent,
     },
     {
       token: "this",
-      foreground: theme.syntax.tag
-    }
+      foreground: theme.syntax.tag,
+    },
   ];
 
-  const themeColors = Object.fromEntries([
-    ["editor.background", theme.common.bg],
-    ["editor.foreground", theme.common.fg],
-    ["editor.lineHighlightBackground", theme.ui.line],
-    ["editor.selectionBackground", theme.ui.selection.bg],
+  const themeColors = Object.fromEntries(
+    [
+      ["editor.background", theme.common.bg],
+      ["editor.foreground", theme.common.fg],
+      ["editor.lineHighlightBackground", theme.ui.line],
+      ["editor.selectionBackground", theme.ui.selection.bg],
 
-    ["editorSuggestWidget.background", theme.ui.panel.bg],
-    ["editorSuggestWidget.border", theme.ui.panel.border],
-    ["editorSuggestWidget.selectedBackground", theme.ui.panel.selected],
+      ["editorSuggestWidget.background", theme.ui.panel.bg],
+      ["editorSuggestWidget.border", theme.ui.panel.border],
+      ["editorSuggestWidget.selectedBackground", theme.ui.panel.selected],
 
-    ["editorHoverWidget.background", theme.ui.panel.bg],
-    ["editorHoverWidget.border", theme.ui.panel.border],
+      ["editorHoverWidget.background", theme.ui.panel.bg],
+      ["editorHoverWidget.border", theme.ui.panel.border],
 
-    ["editorWidget.background", theme.ui.panel.bg],
-    ["editorWidget.border", theme.ui.panel.border],
+      ["editorWidget.background", theme.ui.panel.bg],
+      ["editorWidget.border", theme.ui.panel.border],
 
-    ["input.background", theme.ui.panel.bg],
-    ["input.border", theme.ui.panel.border]
-  ].map(([k, v]) => [k, "#" + v]));
+      ["input.background", theme.ui.panel.bg],
+      ["input.border", theme.ui.panel.border],
+    ].map(([k, v]) => [k, "#" + v]),
+  );
 
-  return { base: theme.base, inherit: theme.inherit, rules: themeRules, colors: themeColors }
+  return { base: theme.base, inherit: theme.inherit, rules: themeRules, colors: themeColors };
 }
 
 export async function loadThemes(monaco: { editor: any }): Promise<void> {

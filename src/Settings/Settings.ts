@@ -266,7 +266,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   MonacoFontSize: 20,
   MonacoVim: false,
   MonacoWordWrap: "off",
-  
+
   theme: { ...defaultTheme },
   styles: { ...defaultStyles },
   overview: defaultSettings.overview,

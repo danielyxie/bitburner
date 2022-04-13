@@ -10,8 +10,8 @@ import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import ReplyIcon from "@mui/icons-material/Reply";
-import HistoryIcon from '@mui/icons-material/History';
-import SaveIcon from '@mui/icons-material/Save';
+import HistoryIcon from "@mui/icons-material/History";
+import SaveIcon from "@mui/icons-material/Save";
 
 import { Settings } from "../../Settings/Settings";
 import { OptionSwitch } from "../../ui/React/OptionSwitch";
@@ -99,10 +99,13 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
   }
 
   return (
-    <Modal open={props.open} onClose={() => {
-      setThemeCopy(Settings.EditorTheme);
-      props.onClose();
-    }}>
+    <Modal
+      open={props.open}
+      onClose={() => {
+        setThemeCopy(Settings.EditorTheme);
+        props.onClose();
+      }}
+    >
       <Typography variant="h4">Customize Editor theme</Typography>
       <Typography>Hover over input boxes for more information</Typography>
       <Paper sx={{ p: 1, my: 1 }}>
@@ -115,8 +118,8 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           text="Use light theme as base"
           tooltip={
             <>
-              If enabled, the <code>vs</code> light theme will be used as the
-              theme base, otherwise, <code>vs-dark</code> will be used.
+              If enabled, the <code>vs</code> light theme will be used as the theme base, otherwise,{" "}
+              <code>vs-dark</code> will be used.
             </>
           }
         />
@@ -258,19 +261,26 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
           onChange={onThemeChange}
         />
         <Box sx={{ mt: 1 }}>
-          <Button onClick={() => {
-            Settings.EditorTheme = { ...themeCopy };
-            props.onClose()
-          }} startIcon={<SaveIcon />}>Save</Button>
+          <Button
+            onClick={() => {
+              Settings.EditorTheme = { ...themeCopy };
+              props.onClose();
+            }}
+            startIcon={<SaveIcon />}
+          >
+            Save
+          </Button>
           <Button
             onClick={() => {
               setThemeCopy(defaultMonacoTheme);
               rerender();
             }}
             startIcon={<HistoryIcon />}
-          >Reset to default</Button>
+          >
+            Reset to default
+          </Button>
         </Box>
       </Paper>
     </Modal>
-  )
+  );
 }
