@@ -1,23 +1,13 @@
-import React, { useState } from "react";
-import { Modal } from "../../ui/React/Modal";
-import { defaultMonacoTheme, IScriptEditorTheme } from "./themes";
-
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Tooltip from "@mui/material/Tooltip";
-import TextField from "@mui/material/TextField";
-import Paper from "@mui/material/Paper";
+import { History, Reply, Save } from "@mui/icons-material";
+import { Box, Button, Paper, TextField, Tooltip, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import ReplyIcon from "@mui/icons-material/Reply";
-import HistoryIcon from "@mui/icons-material/History";
-import SaveIcon from "@mui/icons-material/Save";
-
-import { Settings } from "../../Settings/Settings";
-import { OptionSwitch } from "../../ui/React/OptionSwitch";
 import _ from "lodash";
-
 import { Color, ColorPicker } from "material-ui-color";
+import React, { useState } from "react";
+import { Settings } from "../../Settings/Settings";
+import { Modal } from "../../ui/React/Modal";
+import { OptionSwitch } from "../../ui/React/OptionSwitch";
+import { defaultMonacoTheme, IScriptEditorTheme } from "./themes";
 
 interface IProps {
   onClose: () => void;
@@ -62,7 +52,7 @@ function ColorEditor({ label, themePath, onColorChange, color, defaultColor }: I
               endAdornment: (
                 <>
                   <IconButton onClick={() => onColorChange(themePath, defaultColor)}>
-                    <ReplyIcon color="primary" />
+                    <Reply color="primary" />
                   </IconButton>
                 </>
               ),
@@ -266,7 +256,7 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
               Settings.EditorTheme = { ...themeCopy };
               props.onClose();
             }}
-            startIcon={<SaveIcon />}
+            startIcon={<Save />}
           >
             Save
           </Button>
@@ -275,7 +265,7 @@ export function ThemeEditorModal(props: IProps): React.ReactElement {
               setThemeCopy(defaultMonacoTheme);
               rerender();
             }}
-            startIcon={<HistoryIcon />}
+            startIcon={<History />}
           >
             Reset to default
           </Button>
