@@ -189,7 +189,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeRejectMsg(
         workerScript,
         `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-        `This is probably a bug. Please report to game developer`,
+          `This is probably a bug. Please report to game developer`,
       );
     }
 
