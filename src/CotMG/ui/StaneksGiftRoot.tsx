@@ -7,6 +7,13 @@ import { IStaneksGift } from "../IStaneksGift";
 import { Info } from "@mui/icons-material";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import { Table } from "@mui/material";
+import { Grid } from "./Grid";
+import { DummyGift } from "../DummyGift";
+import { ActiveFragment } from "../ActiveFragment";
+import { Fragments } from "../Fragment";
+import { DummyGrid } from "./DummyGrid";
 
 type IProps = {
   staneksGift: IStaneksGift;
@@ -64,13 +71,99 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
                   charged.
                 </Typography>
 
-                {/*
-                TODO:
-                Board showing a booster fragment touching a single stat fragment on one edge, labeled as providing a 10% bonus to the stat fragment.
-                Board showing a booster fragment touching a single stat fragment on many edges, labeled as providing a 10% bonus to the stat fragment.
-                Board showing a booster fragment diagonal from a single stat fragment along multiple corners, labeled as providing no bonus to the stat fragment.
-                Board showing a booster fragment touching multiple stat fragments, labeled as providing a 10% bonus to each stat fragment.
-              */}
+                <DummyGrid
+                  width={4}
+                  height={4}
+                  fragments={[
+                    new ActiveFragment({
+                      x: 0,
+                      y: 0,
+                      rotation: 0,
+                      fragment: Fragments.find((f) => f.id === 5) ?? Fragments[0],
+                    }),
+                    new ActiveFragment({
+                      x: 0,
+                      y: 2,
+                      rotation: 0,
+                      fragment: Fragments.find((f) => f.id === 101) ?? Fragments[0],
+                    }),
+                  ]}
+                />
+                <Typography sx={{ fontStyle: "italic" }}>
+                  This boost provides a bonus to the touching fragment
+                </Typography>
+
+                <DummyGrid
+                  width={4}
+                  height={4}
+                  fragments={[
+                    new ActiveFragment({
+                      x: 0,
+                      y: 1,
+                      rotation: 3,
+                      fragment: Fragments.find((f) => f.id === 100) ?? Fragments[0],
+                    }),
+                    new ActiveFragment({
+                      x: 0,
+                      y: 0,
+                      rotation: 2,
+                      fragment: Fragments.find((f) => f.id === 1) ?? Fragments[0],
+                    }),
+                  ]}
+                />
+                <Typography sx={{ fontStyle: "italic" }}>
+                  Even though the booster touches many tiles, the bonus is only applied once.
+                </Typography>
+
+                <DummyGrid
+                  width={4}
+                  height={4}
+                  fragments={[
+                    new ActiveFragment({
+                      x: 0,
+                      y: 0,
+                      rotation: 0,
+                      fragment: Fragments.find((f) => f.id === 5) ?? Fragments[0],
+                    }),
+                    new ActiveFragment({
+                      x: 2,
+                      y: 0,
+                      rotation: 0,
+                      fragment: Fragments.find((f) => f.id === 105) ?? Fragments[0],
+                    }),
+                  ]}
+                />
+                <Typography sx={{ fontStyle: "italic" }}>
+                  Even though the booster touches many tiles, the bonus is only applied once.
+                </Typography>
+
+                <DummyGrid
+                  width={4}
+                  height={4}
+                  fragments={[
+                    new ActiveFragment({
+                      x: 0,
+                      y: 0,
+                      rotation: 1,
+                      fragment: Fragments.find((f) => f.id === 27) ?? Fragments[0],
+                    }),
+                    new ActiveFragment({
+                      x: 0,
+                      y: 1,
+                      rotation: 2,
+                      fragment: Fragments.find((f) => f.id === 100) ?? Fragments[0],
+                    }),
+                    new ActiveFragment({
+                      x: 2,
+                      y: 0,
+                      rotation: 1,
+                      fragment: Fragments.find((f) => f.id === 30) ?? Fragments[0],
+                    }),
+                  ]}
+                />
+                <Typography sx={{ fontStyle: "italic" }}>
+                  This booster provides bonus to all fragment it touches.
+                </Typography>
 
                 <br />
                 <Typography>
