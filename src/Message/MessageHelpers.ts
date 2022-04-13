@@ -121,7 +121,7 @@ enum MessageFilenames {
 }
 
 //Reset
-const Messages = {
+const Messages: Record<string, Message> = {
   //jump3R Messages
   [MessageFilenames.Jumper0]: new Message(
     MessageFilenames.Jumper0,
