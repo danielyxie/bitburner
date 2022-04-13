@@ -39,7 +39,7 @@ Returns the number of hashes required for the specified upgrade. The name of the
 // NS1:
 var upgradeName = "Sell for Corporation Funds";
 if (hacknet.numHashes() > hacknet.hashCost(upgradeName)) {
-   hacknet.spendHashes(upgName);
+   hacknet.spendHashes(upgradeName);
 }
 ```
 
@@ -50,7 +50,7 @@ if (hacknet.numHashes() > hacknet.hashCost(upgradeName)) {
 // NS2:
 const upgradeName = "Sell for Corporation Funds";
 if (ns.hacknet.numHashes() > ns.hacknet.hashCost(upgradeName)) {
-   ns.hacknet.spendHashes(upgName);
+   ns.hacknet.spendHashes(upgradeName);
 }
 ```
 

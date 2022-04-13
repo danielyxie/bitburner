@@ -24,5 +24,6 @@ You need Formulas.exe on your home computer to use this API.
 |  [hacking](./bitburner.formulas.hacking.md) | [HackingFormulas](./bitburner.hackingformulas.md) | Hacking formulas |
 |  [hacknetNodes](./bitburner.formulas.hacknetnodes.md) | [HacknetNodesFormulas](./bitburner.hacknetnodesformulas.md) | Hacknet Nodes formulas |
 |  [hacknetServers](./bitburner.formulas.hacknetservers.md) | [HacknetServersFormulas](./bitburner.hacknetserversformulas.md) | Hacknet Servers formulas |
+|  [reputation](./bitburner.formulas.reputation.md) | [ReputationFormulas](./bitburner.reputationformulas.md) | Reputation formulas |
 |  [skills](./bitburner.formulas.skills.md) | [SkillsFormulas](./bitburner.skillsformulas.md) | Skills formulas |
 
