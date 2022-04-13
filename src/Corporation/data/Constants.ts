@@ -85,5 +85,5 @@ export const CorporationConstants: {
   FundingRoundShares: [0.1, 0.35, 0.25, 0.2],
   FundingRoundMultiplier: [4, 3, 3, 2.5],
 
-  AvgProfitLength: 50,
+  AvgProfitLength: 1,
 };
