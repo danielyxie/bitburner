@@ -11,7 +11,7 @@ import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 import { staneksGift, loadStaneksGift } from "./CotMG/Helper";
 
-import { SnackbarEvents } from "./ui/React/Snackbar";
+import { SnackbarEvents, SnackbarVariant } from "./ui/React/Snackbar";
 
 import * as ExportBonus from "./ExportBonus";
 
@@ -114,7 +114,7 @@ class BitburnerSaveObject {
           pushGameSaved(saveData);
 
           if (emitToastEvent) {
-            SnackbarEvents.emit("Game Saved!", "info", 2000);
+            SnackbarEvents.emit("Game Saved!", SnackbarVariant.INFO, 2000);
           }
           return resolve();
         })

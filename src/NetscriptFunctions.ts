@@ -96,7 +96,8 @@ import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 import { toNative } from "./NetscriptFunctions/toNative";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
-import { SnackbarEvents } from "./ui/React/Snackbar";
+import { SnackbarEvents, SnackbarVariant } from "./ui/React/Snackbar";
+import { checkEnum } from "./utils/helpers/checkEnum";
 
 import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
@@ -2304,13 +2305,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const message = helper.string("alert", "message", _message);
       dialogBoxCreate(message);
     },
-    toast: function (_message: unknown, _variant: unknown = "success", duration: any = 2000): void {
+    toast: function (_message: unknown, _variant: unknown = SnackbarVariant.SUCCESS, duration: any = 2000): void {
       updateDynamicRam("toast", getRamCost(Player, "toast"));
       const message = helper.string("toast", "message", _message);
       const variant = helper.string("toast", "variant", _variant);
-      if (!["success", "info", "warning", "error"].includes(variant))
-        throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
-      SnackbarEvents.emit(message, variant as any, duration);
+      if (!checkEnum(SnackbarVariant, variant))
+        throw new Error(`variant must be one of ${Object.values(SnackbarVariant).join(", ")}`);
+      SnackbarEvents.emit(message, variant, duration);
     },
     prompt: function (_txt: unknown, options?: { type?: string; options?: string[] }): Promise<boolean | string> {
       updateDynamicRam("prompt", getRamCost(Player, "prompt"));
