@@ -504,7 +504,7 @@ export function WorkInProgressRoot(): React.ReactElement {
       <Grid container direction="column" justifyContent="center" alignItems="center" style={{ minHeight: "100vh" }}>
         <Grid item>
           <Typography>
-            You are currently working on crafting {player.graftAugmentationName}.
+            You are currently working on grafting {player.graftAugmentationName}.
             <br />
             <br />
             You have been working for {convertTimeMsToTimeElapsedString(player.timeWorked)}
@@ -519,7 +519,7 @@ export function WorkInProgressRoot(): React.ReactElement {
         </Grid>
         <Grid item>
           <Button sx={{ mx: 2 }} onClick={cancel}>
-            Cancel work on crafting Augmentation
+            Cancel work on grafting Augmentation
           </Button>
           <Button onClick={unfocus}>Do something else simultaneously</Button>
         </Grid>

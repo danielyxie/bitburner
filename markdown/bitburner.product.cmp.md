@@ -4,10 +4,10 @@
 
 ## Product.cmp property
 
-Competition for the product
+Competition for the product, only present if "Market Research - Competition" unlocked
 
 <b>Signature:</b>
 
 ```typescript
-cmp: number;
+cmp: number | undefined;
 ```

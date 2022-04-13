@@ -9,7 +9,7 @@ Set a sleeve to work for a faction.
 <b>Signature:</b>
 
 ```typescript
-setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean;
+setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: string): boolean | undefined;
 ```
 
 ## Parameters
@@ -22,9 +22,9 @@ setToFactionWork(sleeveNumber: number, factionName: string, factionWorkType: str
 
 <b>Returns:</b>
 
-boolean
+boolean \| undefined
 
-True if the sleeve started working on this faction, false otherwise.
+True if the sleeve started working on this faction, false otherwise, can also throw on errors
 
 ## Remarks
 

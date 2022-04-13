@@ -4,7 +4,7 @@
 
 ## RunningScript.onlineRunningTime property
 
-Online running time of the script, in seconds \*
+Number of seconds that this script has been running online
 
 <b>Signature:</b>
 
