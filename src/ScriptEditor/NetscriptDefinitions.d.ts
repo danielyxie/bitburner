@@ -4320,7 +4320,7 @@ interface UserInterface {
  * {@link https://bitburner.readthedocs.io/en/latest/netscript/netscriptjs.html| ns2 in-game docs}
  * <hr>
  */
-export interface NS extends Singularity {
+export interface NS {
   /**
    * Namespace for hacknet functions.
    * @remarks RAM cost: 4 GB
