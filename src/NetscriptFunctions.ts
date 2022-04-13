@@ -633,7 +633,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
         if (percentHacked > 0) {
           // thread count is limited to the maximum number of threads needed
-          threads = Math.ceil(1 / percentHacked);
+          threads = Math.min(threads, Math.ceil(1 / percentHacked));
         }
       }
 
