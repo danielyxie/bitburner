@@ -1,4 +1,4 @@
-name: CI
+name: CI Pull Request
 
 on:
   # Triggers the workflow on pull request events but only for the dev branch, checking only diffs
