@@ -1,8 +1,8 @@
 name: CI
 
 on:
-  # Triggers the workflow on push events but only for the dev branch
-  push:
+  # Triggers the workflow on pull request events but only for the dev branch, checking only diffs
+  pull_request:
     branches: [dev]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -36,7 +36,7 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
       - name: Run linter
-        run: npm run lint:report
+        run: npm run lint:report-diff
   prettier:
     name: Prettier
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
       - name: Run prettier check
-        run: npm run format:report
+        run: npm run format:report-diff
   test:
     name: Test
     runs-on: ubuntu-latest
