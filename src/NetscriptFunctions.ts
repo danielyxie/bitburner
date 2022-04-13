@@ -189,7 +189,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       throw makeRuntimeRejectMsg(
         workerScript,
         `Invalid scriptArgs argument passed into getRunningScript() from ${callingFnName}(). ` +
-          `This is probably a bug. Please report to game developer`,
+        `This is probably a bug. Please report to game developer`,
       );
     }
 
@@ -752,9 +752,25 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return numCycleForGrowth(server, Number(growth), Player, cores);
     },
-    growthAnalyzeSecurity: function (_threads: unknown): number {
+    growthAnalyzeSecurity: function (_threads: unknown, _hostname: unknown, _cores?: unknown): number {
       updateDynamicRam("growthAnalyzeSecurity", getRamCost(Player, "growthAnalyzeSecurity"));
-      const threads = helper.number("growthAnalyzeSecurity", "threads", _threads);
+      let threads = helper.number("growthAnalyzeSecurity", "threads", _threads);
+      if (_hostname) {
+        const cores = helper.number("growthAnalyzeSecurity", "cores", _cores) || 1;
+        const hostname = helper.string("growthAnalyzeSecurity", "hostname", _hostname);
+        const server = safeGetServer(hostname, "growthAnalyzeSecurity");
+
+        if (!(server instanceof Server)) {
+          workerScript.log("growthAnalyzeSecurity", () => "Cannot be executed on this server.");
+          return 0;
+        }
+
+        const growthFactor = server.moneyMax / server.moneyAvailable;
+        const maxThreadsNeeded = Math.ceil(numCycleForGrowth(server, growthFactor, Player, cores));
+
+        threads = Math.min(threads, maxThreadsNeeded);
+      }
+
       return 2 * CONSTANTS.ServerFortifyAmount * threads;
     },
     weaken: async function (_hostname: unknown, { threads: requestedThreads }: BasicHGWOptions = {}): Promise<number> {
