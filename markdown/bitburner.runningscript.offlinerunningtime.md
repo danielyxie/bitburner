@@ -4,7 +4,7 @@
 
 ## RunningScript.offlineRunningTime property
 
-Offline running time of the script, in seconds \*
+Number of seconds that the script has been running offline
 
 <b>Signature:</b>
 

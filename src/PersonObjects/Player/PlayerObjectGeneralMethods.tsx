@@ -62,7 +62,7 @@ import { Money } from "../../ui/React/Money";
 
 import React from "react";
 import { serverMetadata } from "../../Server/data/servers";
-import { SnackbarEvents } from "../../ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { calculateClassEarnings } from "../formulas/work";
 import { achievements } from "../../Achievements/Achievements";
 import { IApplyForJob } from "../../types";
@@ -1367,15 +1367,19 @@ export function craftAugmentationWork(this: IPlayer, numCycles: number): boolean
 export function finishGraftAugmentationWork(this: IPlayer, cancelled: boolean): string {
   const augName = this.graftAugmentationName;
   if (cancelled === false) {
-    dialogBoxCreate(
-      `You've finished crafting ${augName}.<br>The augmentation has been grafted to your body, but you feel a bit off.`,
-    );
-
     applyAugmentation(Augmentations[augName]);
-    this.entropy += 1;
-    this.applyEntropy(this.entropy);
+
+    if (!this.hasAugmentation(AugmentationNames.CongruityImplant)) {
+      this.entropy += 1;
+      this.applyEntropy(this.entropy);
+    }
+
+    dialogBoxCreate(
+      `You've finished grafting ${augName}.<br>The augmentation has been applied to your body` +
+        (this.hasAugmentation(AugmentationNames.CongruityImplant) ? "." : ", but you feel a bit off."),
+    );
   } else {
-    dialogBoxCreate(`You cancelled the crafting of ${augName}.<br>Your money was not returned to you.`);
+    dialogBoxCreate(`You cancelled the grafting of ${augName}.<br>Your money was not returned to you.`);
   }
 
   // Intelligence gain
@@ -1732,7 +1736,7 @@ export function regenerateHp(this: IPlayer, amt: number): void {
 
 export function hospitalize(this: IPlayer): number {
   const cost = getHospitalizationCost(this);
-  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, "warning", 2000);
+  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, ToastVariant.WARNING, 2000);
 
   this.loseMoney(cost, "hospitalization");
   this.hp = this.max_hp;
@@ -2687,7 +2691,7 @@ export function canAccessGrafting(this: IPlayer): boolean {
 export function giveExploit(this: IPlayer, exploit: Exploit): void {
   if (!this.exploits.includes(exploit)) {
     this.exploits.push(exploit);
-    SnackbarEvents.emit("SF -1 acquired!", "success", 2000);
+    SnackbarEvents.emit("SF -1 acquired!", ToastVariant.SUCCESS, 2000);
   }
 }
 
@@ -2696,7 +2700,7 @@ export function giveAchievement(this: IPlayer, achievementId: string): void {
   if (!achievement) return;
   if (!this.achievements.map((a) => a.ID).includes(achievementId)) {
     this.achievements.push({ ID: achievementId, unlockedOn: new Date().getTime() });
-    SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, "success", 2000);
+    SnackbarEvents.emit(`Unlocked Achievement: "${achievement.Name}"`, ToastVariant.SUCCESS, 2000);
   }
 }
 

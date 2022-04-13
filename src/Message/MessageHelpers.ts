@@ -1,9 +1,9 @@
 import { Message } from "./Message";
-import { Augmentations } from "../Augmentation/Augmentations";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
+import { Router } from "../ui/GameRoot";
 import { Programs } from "../Programs/Programs";
 import { Player } from "../Player";
-import { redPillFlag } from "../RedPill";
+import { Page } from "../ui/Router";
 import { GetServer } from "../Server/AllServers";
 import { Settings } from "../Settings/Settings";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
@@ -51,7 +51,7 @@ function addMessageToServer(msg: Message, serverHostname: string): void {
 
 //Checks if any of the 'timed' messages should be sent
 function checkForMessagesToSend(): void {
-  if (redPillFlag) return;
+  if (Router.page() === Page.BitVerse) return;
   const jumper0 = Messages[MessageFilenames.Jumper0];
   const jumper1 = Messages[MessageFilenames.Jumper1];
   const jumper2 = Messages[MessageFilenames.Jumper2];
@@ -62,38 +62,29 @@ function checkForMessagesToSend(): void {
   const bitrunnersTest = Messages[MessageFilenames.BitRunnersTest];
   const redpill = Messages[MessageFilenames.RedPill];
 
-  let redpillOwned = false;
-  if (Augmentations[AugmentationNames.TheRedPill].owned) {
-    redpillOwned = true;
-  }
-
-  if (redpill && redpillOwned && Player.sourceFiles.length === 0 && !redPillFlag) {
-    sendMessage(redpill, true);
-  } else if (redpill && redpillOwned) {
-    //If player has already destroyed a BitNode, message is not forced
-    if (!redPillFlag) {
-      sendMessage(redpill);
-    }
-  } else if (jumper0 && !jumper0.recvd && Player.hacking >= 25) {
+  if (Player.hasAugmentation(AugmentationNames.TheRedPill)) {
+    //Force the message if the player has never destroyed a BitNode
+    sendMessage(redpill, Player.sourceFiles.length === 0);
+  } else if (!jumper0.recvd && Player.hacking >= 25) {
     sendMessage(jumper0);
     const flightName = Programs.Flight.name;
     const homeComp = Player.getHomeComputer();
     if (!homeComp.programs.includes(flightName)) {
       homeComp.programs.push(flightName);
     }
-  } else if (jumper1 && !jumper1.recvd && Player.hacking >= 40) {
+  } else if (!jumper1.recvd && Player.hacking >= 40) {
     sendMessage(jumper1);
-  } else if (cybersecTest && !cybersecTest.recvd && Player.hacking >= 50) {
+  } else if (!cybersecTest.recvd && Player.hacking >= 50) {
     sendMessage(cybersecTest);
-  } else if (jumper2 && !jumper2.recvd && Player.hacking >= 175) {
+  } else if (!jumper2.recvd && Player.hacking >= 175) {
     sendMessage(jumper2);
-  } else if (nitesecTest && !nitesecTest.recvd && Player.hacking >= 200) {
+  } else if (!nitesecTest.recvd && Player.hacking >= 200) {
     sendMessage(nitesecTest);
-  } else if (jumper3 && !jumper3.recvd && Player.hacking >= 350) {
+  } else if (!jumper3.recvd && Player.hacking >= 350) {
     sendMessage(jumper3);
-  } else if (jumper4 && !jumper4.recvd && Player.hacking >= 490) {
+  } else if (!jumper4.recvd && Player.hacking >= 490) {
     sendMessage(jumper4);
-  } else if (bitrunnersTest && !bitrunnersTest.recvd && Player.hacking >= 500) {
+  } else if (!bitrunnersTest.recvd && Player.hacking >= 500) {
     sendMessage(bitrunnersTest);
   }
 }
@@ -102,23 +93,23 @@ function AddToAllMessages(msg: Message): void {
   Messages[msg.filename] = msg;
 }
 
-let Messages: { [key: string]: Message | undefined } = {};
+let Messages: { [key: string]: Message } = {};
 
 function loadMessages(saveString: string): void {
   Messages = JSON.parse(saveString, Reviver);
 }
 
-const MessageFilenames = {
-  Jumper0: "j0.msg",
-  Jumper1: "j1.msg",
-  Jumper2: "j2.msg",
-  Jumper3: "j3.msg",
-  Jumper4: "j4.msg",
-  CyberSecTest: "csec-test.msg",
-  NiteSecTest: "nitesec-test.msg",
-  BitRunnersTest: "19dfj3l1nd.msg",
-  RedPill: "icarus.msg",
-};
+enum MessageFilenames {
+  Jumper0 = "j0.msg",
+  Jumper1 = "j1.msg",
+  Jumper2 = "j2.msg",
+  Jumper3 = "j3.msg",
+  Jumper4 = "j4.msg",
+  CyberSecTest = "csec-test.msg",
+  NiteSecTest = "nitesec-test.msg",
+  BitRunnersTest = "19dfj3l1nd.msg",
+  RedPill = "icarus.msg",
+}
 
 function initMessages(): void {
   //Reset

@@ -97,7 +97,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     travel: function (_sleeveNumber: unknown, _cityName: unknown): boolean {
       updateRam("travel");
       const sleeveNumber = helper.number("travel", "sleeveNumber", _sleeveNumber);
-      const cityName = helper.string("setToUniversityCourse", "cityName", _cityName);
+      const cityName = helper.string("travel", "cityName", _cityName);
       checkSleeveAPIAccess("travel");
       checkSleeveNumber("travel", sleeveNumber);
       return player.sleeves[sleeveNumber].travel(player, cityName as CityName);
@@ -105,7 +105,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     setToCompanyWork: function (_sleeveNumber: unknown, acompanyName: unknown): boolean {
       updateRam("setToCompanyWork");
       const sleeveNumber = helper.number("setToCompanyWork", "sleeveNumber", _sleeveNumber);
-      const companyName = helper.string("setToUniversityCourse", "companyName", acompanyName);
+      const companyName = helper.string("setToCompanyWork", "companyName", acompanyName);
       checkSleeveAPIAccess("setToCompanyWork");
       checkSleeveNumber("setToCompanyWork", sleeveNumber);
 
@@ -117,7 +117,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
         const other = player.sleeves[i];
         if (other.currentTask === SleeveTaskType.Company && other.currentTaskLocation === companyName) {
           throw helper.makeRuntimeErrorMsg(
-            "sleeve.setToFactionWork",
+            "sleeve.setToCompanyWork",
             `Sleeve ${sleeveNumber} cannot work for company ${companyName} because Sleeve ${i} is already working for them.`,
           );
         }
@@ -132,8 +132,8 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     ): boolean | undefined {
       updateRam("setToFactionWork");
       const sleeveNumber = helper.number("setToFactionWork", "sleeveNumber", _sleeveNumber);
-      const factionName = helper.string("setToUniversityCourse", "factionName", _factionName);
-      const workType = helper.string("setToUniversityCourse", "workType", _workType);
+      const factionName = helper.string("setToFactionWork", "factionName", _factionName);
+      const workType = helper.string("setToFactionWork", "workType", _workType);
       checkSleeveAPIAccess("setToFactionWork");
       checkSleeveNumber("setToFactionWork", sleeveNumber);
 
@@ -163,8 +163,8 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
     setToGymWorkout: function (_sleeveNumber: unknown, _gymName: unknown, _stat: unknown): boolean {
       updateRam("setToGymWorkout");
       const sleeveNumber = helper.number("setToGymWorkout", "sleeveNumber", _sleeveNumber);
-      const gymName = helper.string("setToUniversityCourse", "gymName", _gymName);
-      const stat = helper.string("setToUniversityCourse", "stat", _stat);
+      const gymName = helper.string("setToGymWorkout", "gymName", _gymName);
+      const stat = helper.string("setToGymWorkout", "stat", _stat);
       checkSleeveAPIAccess("setToGymWorkout");
       checkSleeveNumber("setToGymWorkout", sleeveNumber);
 

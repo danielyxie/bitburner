@@ -11,12 +11,6 @@ import { SourceFiles } from "./SourceFile/SourceFiles";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { IRouter } from "./ui/Router";
 
-export let redPillFlag = false;
-
-export function setRedPillFlag(b: boolean): void {
-  redPillFlag = b;
-}
-
 function giveSourceFile(bitNodeNumber: number): void {
   const sourceFileKey = "SourceFile" + bitNodeNumber.toString();
   const sourceFile = SourceFiles[sourceFileKey];
@@ -82,7 +76,6 @@ export function enterBitNode(router: IRouter, flume: boolean, destroyedBitNode: 
   if (newBitNode === 5 && Player.intelligence === 0) {
     Player.intelligence = 1;
   }
-  redPillFlag = false;
   // Set new Bit Node
   Player.bitNodeN = newBitNode;
 

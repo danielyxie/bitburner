@@ -49,7 +49,7 @@ export interface BitNodeMultipliers
 |  [PurchasedServerCost](./bitburner.bitnodemultipliers.purchasedservercost.md) | number | Influence how much it costs to purchase a server |
 |  [PurchasedServerLimit](./bitburner.bitnodemultipliers.purchasedserverlimit.md) | number | Influences the maximum number of purchased servers you can have |
 |  [PurchasedServerMaxRam](./bitburner.bitnodemultipliers.purchasedservermaxram.md) | number | Influences the maximum allowed RAM for a purchased server |
-|  [PurchasedServerSoftCap](./bitburner.bitnodemultipliers.purchasedserversoftcap.md) | number | Influences cost of any purchased server at or above 128GB |
+|  [PurchasedServerSoftcap](./bitburner.bitnodemultipliers.purchasedserversoftcap.md) | number | Influences cost of any purchased server at or above 128GB |
 |  [RepToDonateToFaction](./bitburner.bitnodemultipliers.reptodonatetofaction.md) | number | Influences the minimum favor the player must have with a faction before they can donate to gain rep. |
 |  [ScriptHackMoney](./bitburner.bitnodemultipliers.scripthackmoney.md) | number | Influences how much the money on a server can be reduced when a script performs a hack against it. |
 |  [ScriptHackMoneyGain](./bitburner.bitnodemultipliers.scripthackmoneygain.md) | number | Influences how much of the money stolen by a scripted hack will be added to the player's money. |
