@@ -765,8 +765,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
           return 0;
         }
 
-        const growthFactor = server.moneyMax / server.moneyAvailable;
-        const maxThreadsNeeded = Math.ceil(numCycleForGrowth(server, growthFactor, Player, cores));
+        const maxThreadsNeeded = Math.ceil(numCycleForGrowthCorrected(server, server.moneyMax, server.moneyAvailable, Player, cores));
 
         threads = Math.min(threads, maxThreadsNeeded);
       }
