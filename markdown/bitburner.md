@@ -10,6 +10,7 @@
 |  --- | --- |
 |  [OrderTypes](./bitburner.ordertypes.md) |  |
 |  [PositionTypes](./bitburner.positiontypes.md) |  |
+|  [ToastVariant](./bitburner.toastvariant.md) |  |
 
 ## Interfaces
 
@@ -59,12 +60,15 @@
 |  [NetscriptPort](./bitburner.netscriptport.md) | Object representing a port. A port is a serialized queue. |
 |  [NodeStats](./bitburner.nodestats.md) | Object representing all the values related to a hacknet node. |
 |  [NS](./bitburner.ns.md) | Collection of all functions passed to scripts |
+|  [NSEnums](./bitburner.nsenums.md) |  |
 |  [Office](./bitburner.office.md) | Office for a division in a city. |
 |  [OfficeAPI](./bitburner.officeapi.md) | Corporation Office API |
 |  [Player](./bitburner.player.md) |  |
 |  [PlayerSkills](./bitburner.playerskills.md) | Short summary of the players skills. |
 |  [ProcessInfo](./bitburner.processinfo.md) | A single process on a server. |
 |  [Product](./bitburner.product.md) | Product in a warehouse |
+|  [RecentScript](./bitburner.recentscript.md) |  |
+|  [ReputationFormulas](./bitburner.reputationformulas.md) | Reputation formulas |
 |  [RunningScript](./bitburner.runningscript.md) |  |
 |  [Server](./bitburner.server.md) | A single server. |
 |  [Singularity](./bitburner.singularity.md) | Singularity API |

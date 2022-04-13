@@ -4813,7 +4813,7 @@ export interface NS {
    * Note that there is a maximum number of recently killed scripts which are tracked.
    * This is configurable in the game's options as `Recently killed scripts size`.
    *
-   * @usage below:
+   * @example
    * ```ts
    * let recentScripts = ns.getRecentScripts();
    * let mostRecent = recentScripts.shift()
@@ -6426,6 +6426,7 @@ export interface NS {
   enum: NSEnums;
 }
 
+/** @public */
 export enum ToastVariant {
   SUCCESS = "success",
   WARNING = "warning",
@@ -6960,7 +6961,7 @@ interface Product {
   cmp: number | undefined;
   /** Product Rating */
   rat: number;
-  /** Product Properties. The data is {qlt, per, dur, rel, aes, fea} */
+  /** Product Properties. The data is \{qlt, per, dur, rel, aes, fea\} */
   properties: { [key: string]: number };
   /** Production cost */
   pCost: number;

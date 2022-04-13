@@ -4,7 +4,7 @@
 
 ## Office.employeeProd property
 
-Positions of the employees
+Production of the employees
 
 <b>Signature:</b>
 
