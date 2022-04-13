@@ -1743,11 +1743,7 @@ export function regenerateHp(this: IPlayer, amt: number): void {
 
 export function hospitalize(this: IPlayer): number {
   const cost = getHospitalizationCost(this);
-  SnackbarEvents.emit(
-    `You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`,
-    ToastVariant.WARNING,
-    2000,
-  );
+  SnackbarEvents.emit(`You've been Hospitalized for ${numeralWrapper.formatMoney(cost)}`, ToastVariant.WARNING, 2000);
 
   this.loseMoney(cost, "hospitalization");
   this.hp = this.max_hp;
