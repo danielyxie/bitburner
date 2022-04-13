@@ -27,7 +27,7 @@ import PaletteIcon from "@mui/icons-material/Palette";
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
 import { ConfirmationModal } from "./ConfirmationModal";
 
-import { SnackbarEvents } from "./Snackbar";
+import { SnackbarEvents, ToastVariant } from "./Snackbar";
 
 import { Settings } from "../../Settings/Settings";
 import { DeleteGameButton } from "./DeleteGameButton";
@@ -64,6 +64,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   const importInput = useRef<HTMLInputElement>(null);
 
   const [execTime, setExecTime] = useState(Settings.CodeInstructionRunTime);
+  const [recentScriptsSize, setRecentScriptsSize] = useState(Settings.MaxRecentScriptsCapacity);
   const [logSize, setLogSize] = useState(Settings.MaxLogCapacity);
   const [portSize, setPortSize] = useState(Settings.MaxPortCapacity);
   const [terminalSize, setTerminalSize] = useState(Settings.MaxTerminalCapacity);
@@ -77,6 +78,11 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
   function handleExecTimeChange(event: any, newValue: number | number[]): void {
     setExecTime(newValue as number);
     Settings.CodeInstructionRunTime = newValue as number;
+  }
+
+  function handleRecentScriptsSizeChange(event: any, newValue: number | number[]): void {
+    setRecentScriptsSize(newValue as number);
+    Settings.MaxRecentScriptsCapacity = newValue as number;
   }
 
   function handleLogSizeChange(event: any, newValue: number | number[]): void {
@@ -123,7 +129,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
       setImportData(data);
       setImportSaveOpen(true);
     } catch (ex: any) {
-      SnackbarEvents.emit(ex.toString(), "error", 5000);
+      SnackbarEvents.emit(ex.toString(), ToastVariant.ERROR, 5000);
     }
   }
 
@@ -133,7 +139,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
     try {
       await saveObject.importGame(importData.base64);
     } catch (ex: any) {
-      SnackbarEvents.emit(ex.toString(), "error", 5000);
+      SnackbarEvents.emit(ex.toString(), ToastVariant.ERROR, 5000);
     }
 
     setImportSaveOpen(false);
@@ -174,6 +180,24 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
                   step={1}
                   min={5}
                   max={100}
+                  valueLabelDisplay="auto"
+                />
+                <Tooltip
+                  title={
+                    <Typography>
+                      The maximum number of recently killed script entries being tracked. Setting this too high can
+                      cause the game to use a lot of memory.
+                    </Typography>
+                  }
+                >
+                  <Typography>Recently killed scripts size</Typography>
+                </Tooltip>
+                <Slider
+                  value={recentScriptsSize}
+                  onChange={handleRecentScriptsSizeChange}
+                  step={25}
+                  min={0}
+                  max={500}
                   valueLabelDisplay="auto"
                 />
                 <Tooltip

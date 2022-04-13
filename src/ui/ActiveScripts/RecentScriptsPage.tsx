@@ -13,7 +13,7 @@ export function RecentScriptsPage(): React.ReactElement {
     <>
       <Typography>List of all recently killed scripts.</Typography>
       {recentScripts.map((r) => (
-        <RecentScriptAccordion key={r.pid} recentScript={r} />
+        <RecentScriptAccordion key={r.runningScript.pid} recentScript={r} />
       ))}
     </>
   );

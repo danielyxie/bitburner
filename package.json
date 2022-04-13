@@ -1,7 +1,7 @@
 {
   "name": "bitburner",
   "license": "SEE LICENSE IN license.txt",
-  "version": "1.6.0",
+  "version": "1.6.3",
   "main": "electron-main.js",
   "author": {
     "name": "Daniel Xie & Olivier Gagnon"
@@ -70,7 +70,7 @@
     "babel-jest": "^27.0.6",
     "babel-loader": "^8.0.5",
     "cypress": "^8.3.1",
-    "electron": "^14.0.2",
+    "electron": "^14.2.4",
     "electron-packager": "^15.4.0",
     "eslint": "^7.24.0",
     "file-loader": "^6.2.0",
@@ -109,26 +109,31 @@
     "doc": "npx api-extractor run && npx api-documenter markdown && rm input/bitburner.api.json && rm -r input",
     "format": "prettier --write .",
     "format:report": "prettier -c .",
+    "format:report-diff": "bash -c 'if [[ $(git diff --name-only --diff-filter=ACMRTUXB origin/dev | grep -E \"(.js$|.jsx$|.ts$|.tsx$)\" | wc -c) -ne 0 ]]; then prettier -c $(git diff --name-only --diff-filter=ACMRTUXB origin/dev | grep -E \"(.js$|.jsx$|.ts$|.tsx$)\" | xargs); fi'",
     "start": "http-server -p 8000",
     "start:dev": "webpack-dev-server --progress --env.devServer --mode development",
     "start:dev-fast": "webpack-dev-server --progress --env.devServer --mode development --fast true",
     "start:container": "webpack-dev-server --progress --env.devServer --mode development --env.runInContainer",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
-    "lint": "eslint --fix . --ext js,jsx,ts,tsx",
-    "lint:report": "eslint --ext js,jsx,ts,tsx .",
+    "lint": "eslint --fix --ext js,jsx,ts,tsx --max-warnings 0 .",
+    "lint:report": "eslint --ext js,jsx,ts,tsx --max-warnings 0 .",
+    "lint:report-diff": "eslint --max-warnings 0 $(git diff --name-only --diff-filter=ACMRTUXB origin/dev | grep -E \"(.js$|.jsx$|.ts$|.tsx$)\" | xargs)",
     "preinstall": "node ./tools/engines-check/engines-check.js",
     "postinstall": "cd electron && npm install",
     "test": "jest",
     "test:watch": "jest --watch",
     "watch": "webpack --watch --mode production",
     "watch:dev": "webpack --watch --mode development",
-    "electron": "sh ./package.sh",
+    "electron": "sh ./tools/package-electron.sh",
     "electron:packager": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png --no-prune",
     "electron:packager-all": "electron-packager .package bitburner --all --out .build --overwrite --icon .package/icon.png",
     "electron:packager-win": "electron-packager .package bitburner --platform win32 --arch x64 --out .build --overwrite --icon .package/icon.png",
     "electron:packager-mac": "electron-packager .package bitburner --platform darwin --arch x64 --out .build --overwrite --icon .package/icon.png",
     "electron:packager-linux": "electron-packager .package bitburner --platform linux --arch x64 --out .build --overwrite --icon .package/icon.png",
-    "allbuild": "npm run build && npm run electron && git add --all && git commit -m \"allbuild commit $(git rev-parse --short HEAD)\" && git push -f -u origin dev"
+    "allbuild": "npm run build && npm run electron && git add --all && git commit -m \"allbuild commit $(git rev-parse --short HEAD)\" && git push -f -u origin dev",
+    "preversion": "npm install && npm run test",
+    "version": "sh ./tools/build-release.sh && git add --all",
+    "postversion": "git push -u origin dev && git push --tags"
   }
 }

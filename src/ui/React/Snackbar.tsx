@@ -10,6 +10,13 @@ interface IProps {
   children: React.ReactNode | React.ReactNode[];
 }
 
+export enum ToastVariant {
+  SUCCESS = "success",
+  WARNING = "warning",
+  ERROR = "error",
+  INFO = "info",
+}
+
 const useStyles = makeStyles(() => ({
   snackbar: {
     // Log popup z-index increments, so let's add a padding to be well above them.
@@ -36,9 +43,7 @@ export function SnackbarProvider(props: IProps): React.ReactElement {
   );
 }
 
-export const SnackbarEvents = new EventEmitter<
-  [string | React.ReactNode, "success" | "warning" | "error" | "info", number]
->();
+export const SnackbarEvents = new EventEmitter<[string | React.ReactNode, ToastVariant, number]>();
 
 export function Snackbar(): React.ReactElement {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();

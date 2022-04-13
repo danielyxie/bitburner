@@ -981,11 +981,11 @@ export function Root(props: IProps): React.ReactElement {
           </Button>
           <Typography>
             {" "}
-            Documentation:{" "}
+            <strong>Documentation:</strong>{" "}
             <Link target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
               Basic
-            </Link>{" "}
-            |
+            </Link>
+            {" | "}
             <Link target="_blank" href="https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md">
               Full
             </Link>

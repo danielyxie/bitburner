@@ -17,9 +17,10 @@ interface IProps {
   color: string;
   classes?: any;
   data: ITableRowData;
+  children?: React.ReactElement;
 }
 
-export const StatsRow = ({ name, color, classes = useStyles(), data }: IProps): React.ReactElement => {
+export const StatsRow = ({ name, color, classes = useStyles(), children, data }: IProps): React.ReactElement => {
   let content;
 
   if (data.content !== undefined) {
@@ -36,7 +37,8 @@ export const StatsRow = ({ name, color, classes = useStyles(), data }: IProps): 
         <Typography style={{ color: color }}>{name}</Typography>
       </TableCell>
       <TableCell align="right" classes={{ root: classes.cellNone }}>
-        <Typography style={{ color: color }}>{content}</Typography>
+        {content ? <Typography style={{ color: color }}>{content}</Typography> : <></>}
+        {children}
       </TableCell>
     </TableRow>
   );

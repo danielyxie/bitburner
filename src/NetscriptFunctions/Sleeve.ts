@@ -119,7 +119,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
         const other = player.sleeves[i];
         if (other.currentTask === SleeveTaskType.Company && other.currentTaskLocation === companyName) {
           throw helper.makeRuntimeErrorMsg(
-            "sleeve.setToFactionWork",
+            "sleeve.setToCompanyWork",
             `Sleeve ${sleeveNumber} cannot work for company ${companyName} because Sleeve ${i} is already working for them.`,
           );
         }
