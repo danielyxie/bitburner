@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import { Money } from "../../ui/React/Money";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
+import { checkForMessagesToSend } from "../../Message/MessageHelpers"
 
 interface IProps {
   player: IPlayer;
@@ -43,6 +44,10 @@ export function General(props: IProps): React.ReactElement {
 
   function hackW0r1dD43m0n(): void {
     props.router.toBitVerse(false, false);
+  }
+
+  function checkMessages(): void {
+    checkForMessagesToSend();
   }
 
   useEffect(() => {
@@ -88,6 +93,7 @@ export function General(props: IProps): React.ReactElement {
         <Button onClick={quickHackW0r1dD43m0n}>Quick w0rld_d34m0n</Button>
         <Button onClick={hackW0r1dD43m0n}>Hack w0rld_d34m0n</Button>
         <Button onClick={() => setError(true)}>Throw Error</Button>
+        <Button onClick={checkMessages}>Check Messages</Button>
       </AccordionDetails>
     </Accordion>
   );
