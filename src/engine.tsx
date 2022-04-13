@@ -2,7 +2,6 @@
  * Game engine. Handles the main game loop.
  */
 import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
-import { Augmentations } from "./Augmentation/Augmentations";
 import { initAugmentations } from "./Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
