@@ -1,13 +1,15 @@
+import { Exploit } from "../Exploits/Exploit";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
-import { Exploit } from "../Exploits/Exploit";
-import * as bcrypt from "bcryptjs";
+import { Apr1Events as devMenu } from "../ui/Apr1";
 import { INetscriptHelper } from "./INetscriptHelper";
+import * as bcrypt from "bcryptjs";
 
 export interface INetscriptExtra {
   heart: {
     break(): number;
   };
+  openDevMenu(): void;
   exploit(): void;
   bypass(doc: Document): void;
   alterReality(): void;
@@ -21,6 +23,9 @@ export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript, help
       break: function (): number {
         return player.karma;
       },
+    },
+    openDevMenu: function (): void {
+      devMenu.emit();
     },
     exploit: function (): void {
       player.giveExploit(Exploit.UndocumentedFunctionCall);
