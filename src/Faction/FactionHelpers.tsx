@@ -80,7 +80,6 @@ export function hasAugmentationPrereqs(aug: Augmentation): boolean {
 }
 
 export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = false): string {
-  const factionInfo = fac.getInfo();
   const hasPrereqs = hasAugmentationPrereqs(aug);
   if (!hasPrereqs) {
     const txt = `You must first purchase or install ${aug.prereqs.join(",")} before you can purchase this one.`;
@@ -89,7 +88,7 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
     } else {
       dialogBoxCreate(txt);
     }
-  } else if (aug.baseCost !== 0 && Player.money < aug.baseCost * factionInfo.augmentationPriceMult) {
+  } else if (aug.baseCost !== 0 && Player.money < aug.baseCost) {
     const txt = "You don't have enough money to purchase " + aug.name;
     if (sing) {
       return txt;
@@ -101,14 +100,14 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
       return txt;
     }
     dialogBoxCreate(txt);
-  } else if (aug.baseCost === 0 || Player.money >= aug.baseCost * factionInfo.augmentationPriceMult) {
+  } else if (aug.baseCost === 0 || Player.money >= aug.baseCost) {
     const queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {
       queuedAugmentation.level = getNextNeuroFluxLevel();
     }
     Player.queuedAugmentations.push(queuedAugmentation);
 
-    Player.loseMoney(aug.baseCost * factionInfo.augmentationPriceMult, "augmentations");
+    Player.loseMoney(aug.baseCost, "augmentations");
 
     updateAugmentationCosts();
 
@@ -167,7 +166,7 @@ export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Factio
     // Remove special augs
     augs = augs.filter((a) => !a.isSpecial);
 
-    const blacklist: string[] = [AugmentationNames.NeuroFluxGovernor];
+    const blacklist: string[] = [AugmentationNames.NeuroFluxGovernor, AugmentationNames.CongruityImplant];
 
     if (player.bitNodeN !== 2) {
       // TRP is not available outside of BN2 for Gangs

@@ -2,6 +2,7 @@
  * Stops an actively-running script (represented by a WorkerScript object)
  * and removes it from the global pool of active scripts.
  */
+import { ScriptDeath } from "./ScriptDeath";
 import { WorkerScript } from "./WorkerScript";
 import { workerScripts } from "./WorkerScripts";
 import { WorkerScriptStartStopEventEmitter } from "./WorkerScriptStartStopEventEmitter";
@@ -139,7 +140,7 @@ function killNetscriptDelay(workerScript: WorkerScript): void {
     if (workerScript.delay) {
       clearTimeout(workerScript.delay);
       if (workerScript.delayReject) {
-        workerScript.delayReject(workerScript);
+        workerScript.delayReject(new ScriptDeath(workerScript));
       }
     }
   }

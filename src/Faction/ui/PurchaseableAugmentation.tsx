@@ -85,11 +85,11 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
     return <></>;
   }
 
-  const moneyCost = aug.baseCost * props.faction.getInfo().augmentationPriceMult;
-  const repCost = aug.baseRepRequirement * props.faction.getInfo().augmentationRepRequirementMult;
+  const moneyCost = aug.baseCost;
+  const repCost = aug.baseRepRequirement;
   const hasReq = hasAugmentationPrereqs(aug);
   const hasRep = props.faction.playerReputation >= repCost;
-  const hasCost = aug.baseCost === 0 || props.p.money > aug.baseCost * props.faction.getInfo().augmentationPriceMult;
+  const hasCost = aug.baseCost === 0 || props.p.money > aug.baseCost;
 
   // Determine UI properties
   const color: "error" | "primary" = !hasReq || !hasRep || !hasCost ? "error" : "primary";

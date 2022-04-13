@@ -22,6 +22,7 @@ import {
   initUnstableCircadianModulator,
 } from "./data/AugmentationCreator";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { Router } from "../ui/GameRoot";
 
 export function AddToAugmentations(aug: Augmentation): void {
   const name = aug.name;
@@ -157,6 +158,12 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
     }
   }
 
+  // Special logic for Congruity Implant
+  if (aug.name === AugmentationNames.CongruityImplant && !reapply) {
+    Player.entropy = 0;
+    Player.applyEntropy(Player.entropy);
+  }
+
   // Push onto Player's Augmentation list
   if (!reapply) {
     const ownedAug = new PlayerOwnedAugmentation(aug.name);
@@ -164,8 +171,8 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
   }
 }
 
-function installAugmentations(): boolean {
-  if (Player.queuedAugmentations.length == 0) {
+function installAugmentations(force?: boolean): boolean {
+  if (Player.queuedAugmentations.length == 0 && !force) {
     dialogBoxCreate("You have not purchased any Augmentations to install!");
     return false;
   }
@@ -195,13 +202,16 @@ function installAugmentations(): boolean {
     augmentationList += aug.name + level + "<br>";
   }
   Player.queuedAugmentations = [];
-  dialogBoxCreate(
-    "You slowly drift to sleep as scientists put you under in order " +
-      "to install the following Augmentations:<br>" +
-      augmentationList +
-      "<br>You wake up in your home...you feel different...",
-  );
+  if (!force) {
+    dialogBoxCreate(
+      "You slowly drift to sleep as scientists put you under in order " +
+        "to install the following Augmentations:<br>" +
+        augmentationList +
+        "<br>You wake up in your home...you feel different...",
+    );
+  }
   prestigeAugmentation();
+  Router.toTerminal();
   return true;
 }
 

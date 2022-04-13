@@ -1,15 +1,20 @@
 import { isString } from "./utils/helpers/isString";
 import { GetServer } from "./Server/AllServers";
+import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { WorkerScript } from "./Netscript/WorkerScript";
 
 export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
+  // Cancel any pre-existing netscriptDelay'ed function call
+  // TODO: the rejection almost certainly ends up in the uncaught rejection handler.
+  //       Maybe reject with a stack-trace'd error message?
   if (workerScript.delayReject) workerScript.delayReject();
+
   return new Promise(function (resolve, reject) {
     workerScript.delay = window.setTimeout(() => {
       workerScript.delay = null;
       workerScript.delayReject = undefined;
 
-      if (workerScript.env.stopFlag) reject(workerScript);
+      if (workerScript.env.stopFlag) reject(new ScriptDeath(workerScript));
       else resolve();
     }, time);
     workerScript.delayReject = reject;

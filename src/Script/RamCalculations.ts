@@ -233,6 +233,9 @@ async function parseOnlyRamCalculate(
         } else if (ref in workerScript.env.vars.grafting) {
           func = workerScript.env.vars.grafting[ref];
           refDetail = `grafting.${ref}`;
+        } else if (ref in workerScript.env.vars.singularity) {
+          func = workerScript.env.vars.singularity[ref];
+          refDetail = `singularity.${ref}`;
         } else {
           func = workerScript.env.vars[ref];
           refDetail = `${ref}`;

@@ -17,6 +17,8 @@ export interface CharacterMult
 |  --- | --- | --- |
 |  [agility](./bitburner.charactermult.agility.md) | number | Agility stat |
 |  [agilityExp](./bitburner.charactermult.agilityexp.md) | number | Agility exp |
+|  [charisma](./bitburner.charactermult.charisma.md) | number | Charisma stat |
+|  [charismaExp](./bitburner.charactermult.charismaexp.md) | number | Charisma exp |
 |  [companyRep](./bitburner.charactermult.companyrep.md) | number | Company reputation |
 |  [crimeMoney](./bitburner.charactermult.crimemoney.md) | number | Money earned from crimes |
 |  [crimeSuccess](./bitburner.charactermult.crimesuccess.md) | number | Crime success chance |

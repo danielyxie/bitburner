@@ -2,7 +2,6 @@
 import * as React from "react";
 import { IMap } from "../types";
 
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
 import { numeralWrapper } from "../ui/numeralFormat";
@@ -141,7 +140,7 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
       desc = (
         <>
           {desc}
-          <br />+{f(mults.charisma_mult - 1)} Charisma skill
+          <br />+{f(mults.charisma_mult - 1)} charisma skill
         </>
       );
   }
@@ -464,8 +463,8 @@ export class Augmentation {
     this.info = params.info;
     this.prereqs = params.prereqs ? params.prereqs : [];
 
-    this.baseRepRequirement = params.repCost * BitNodeMultipliers.AugmentationRepCost;
-    this.baseCost = params.moneyCost * BitNodeMultipliers.AugmentationMoneyCost;
+    this.baseRepRequirement = params.repCost;
+    this.baseCost = params.moneyCost;
     this.startingCost = this.baseCost;
     this.startingRepRequirement = this.baseRepRequirement;
     this.factions = params.factions;

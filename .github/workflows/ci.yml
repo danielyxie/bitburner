@@ -1,10 +1,8 @@
 name: CI
 
 on:
-  # Triggers the workflow on push or pull request events but only for the dev branch
+  # Triggers the workflow on push events but only for the dev branch
   push:
-    branches: [dev]
-  pull_request:
     branches: [dev]
 
   # Allows you to run this workflow manually from the Actions tab

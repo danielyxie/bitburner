@@ -76,11 +76,14 @@ import { IPort } from "./NetscriptPort";
 
 import {
   NS as INS,
+  Singularity as ISingularity,
   Player as INetscriptPlayer,
   Gang as IGang,
   Bladeburner as IBladeburner,
   Stanek as IStanek,
   Infiltration as IInfiltration,
+  RunningScript as IRunningScript,
+  RecentScript as IRecentScript,
   SourceFileLvl,
   BasicHGWOptions,
   ProcessInfo,
@@ -89,18 +92,22 @@ import {
   BitNodeMultipliers as IBNMults,
   Server as IServerDef,
   RunningScript as IRunningScriptDef,
+  // ToastVariant,
 } from "./ScriptEditor/NetscriptDefinitions";
 import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
 
 import { toNative } from "./NetscriptFunctions/toNative";
 
 import { dialogBoxCreate } from "./ui/React/DialogBox";
-import { SnackbarEvents } from "./ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
+import { checkEnum } from "./utils/helpers/checkEnum";
 
 import { Flags } from "./NetscriptFunctions/Flags";
 import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
+import { recentScripts } from "./Netscript/RecentScripts";
 import { CityName } from "./Locations/data/CityNames";
+import { wrapAPI } from "./Netscript/APIWrapper";
 
 interface NS extends INS {
   [key: string]: any;
@@ -213,6 +220,32 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       if (runningScript) return runningScript;
     }
     return null;
+  };
+
+  /**
+   * Sanitizes a `RunningScript` to remove sensitive information, making it suitable for
+   * return through an NS function.
+   * @see NS.getRecentScripts
+   * @see NS.getRunningScript
+   * @param runningScript Existing, internal RunningScript
+   * @returns A sanitized, NS-facing copy of the RunningScript
+   */
+  const createPublicRunningScript = function (runningScript: RunningScript): IRunningScript {
+    return {
+      args: runningScript.args.slice(),
+      filename: runningScript.filename,
+      logs: runningScript.logs.slice(),
+      offlineExpGained: runningScript.offlineExpGained,
+      offlineMoneyMade: runningScript.offlineMoneyMade,
+      offlineRunningTime: runningScript.offlineRunningTime,
+      onlineExpGained: runningScript.onlineExpGained,
+      onlineMoneyMade: runningScript.onlineMoneyMade,
+      onlineRunningTime: runningScript.onlineRunningTime,
+      pid: runningScript.pid,
+      ramUsage: runningScript.ramUsage,
+      server: runningScript.server,
+      threads: runningScript.threads,
+    };
   };
 
   /**
@@ -494,13 +527,15 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
   const sleeve = NetscriptSleeve(Player, workerScript, helper);
   const extra = NetscriptExtra(Player, workerScript, helper);
   const hacknet = NetscriptHacknet(Player, workerScript, helper);
-  const stanek = NetscriptStanek(Player, workerScript, helper);
   const infiltration = NetscriptInfiltration(Player, workerScript, helper);
+  const stanek = wrapAPI(helper, {}, workerScript, NetscriptStanek(Player, workerScript, helper), "stanek")
+    .stanek as unknown as IStanek;
   const bladeburner = NetscriptBladeburner(Player, workerScript, helper);
   const codingcontract = NetscriptCodingContract(Player, workerScript, helper);
   const corporation = NetscriptCorporation(Player, workerScript, helper);
   const formulas = NetscriptFormulas(Player, workerScript, helper);
-  const singularity = NetscriptSingularity(Player, workerScript, helper);
+  const singularity = wrapAPI(helper, {}, workerScript, NetscriptSingularity(Player, workerScript), "singularity")
+    .singularity as unknown as ISingularity;
   const stockmarket = NetscriptStockMarket(Player, workerScript, helper);
   const ui = NetscriptUserInterface(Player, workerScript, helper);
   const grafting = NetscriptGrafting(Player, workerScript, helper);
@@ -588,9 +623,25 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return calculatePercentMoneyHacked(server, Player);
     },
-    hackAnalyzeSecurity: function (_threads: unknown): number {
+    hackAnalyzeSecurity: function (_threads: unknown, _hostname?: unknown): number {
       updateDynamicRam("hackAnalyzeSecurity", getRamCost(Player, "hackAnalyzeSecurity"));
-      const threads = helper.number("hackAnalyzeSecurity", "threads", _threads);
+      let threads = helper.number("hackAnalyzeSecurity", "threads", _threads);
+      if (_hostname) {
+        const hostname = helper.string("hackAnalyzeSecurity", "hostname", _hostname);
+        const server = safeGetServer(hostname, "hackAnalyze");
+        if (!(server instanceof Server)) {
+          workerScript.log("hackAnalyzeSecurity", () => "Cannot be executed on this server.");
+          return 0;
+        }
+
+        const percentHacked = calculatePercentMoneyHacked(server, Player);
+
+        if (percentHacked > 0) {
+          // thread count is limited to the maximum number of threads needed
+          threads = Math.ceil(1 / percentHacked);
+        }
+      }
+
       return CONSTANTS.ServerFortifyAmount * threads;
     },
     hackAnalyzeChance: function (_hostname: unknown): number {
@@ -1418,6 +1469,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       allFiles.sort();
       return allFiles;
     },
+    getRecentScripts: function (): IRecentScript[] {
+      updateDynamicRam("getRecentScripts", getRamCost(Player, "getRecentScripts"));
+      return recentScripts.map((rs) => ({
+        timeOfDeath: rs.timeOfDeath,
+        ...createPublicRunningScript(rs.runningScript),
+      }));
+    },
     ps: function (_hostname: unknown = workerScript.hostname): ProcessInfo[] {
       updateDynamicRam("ps", getRamCost(Player, "ps"));
       const hostname = helper.string("ps", "hostname", _hostname);
@@ -2133,21 +2191,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         runningScript = getRunningScript(fn, hostname, "getRunningScript", args);
       }
       if (runningScript === null) return null;
-      return {
-        args: runningScript.args.slice(),
-        filename: runningScript.filename,
-        logs: runningScript.logs.slice(),
-        offlineExpGained: runningScript.offlineExpGained,
-        offlineMoneyMade: runningScript.offlineMoneyMade,
-        offlineRunningTime: runningScript.offlineRunningTime,
-        onlineExpGained: runningScript.onlineExpGained,
-        onlineMoneyMade: runningScript.onlineMoneyMade,
-        onlineRunningTime: runningScript.onlineRunningTime,
-        pid: runningScript.pid,
-        ramUsage: runningScript.ramUsage,
-        server: runningScript.server,
-        threads: runningScript.threads,
-      };
+      return createPublicRunningScript(runningScript);
     },
     getHackTime: function (_hostname: unknown = workerScript.hostname): number {
       updateDynamicRam("getHackTime", getRamCost(Player, "getHackTime"));
@@ -2267,13 +2311,13 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       const message = helper.string("alert", "message", _message);
       dialogBoxCreate(message);
     },
-    toast: function (_message: unknown, _variant: unknown = "success", duration: any = 2000): void {
+    toast: function (_message: unknown, _variant: unknown = ToastVariant.SUCCESS, duration: any = 2000): void {
       updateDynamicRam("toast", getRamCost(Player, "toast"));
       const message = helper.string("toast", "message", _message);
       const variant = helper.string("toast", "variant", _variant);
-      if (!["success", "info", "warning", "error"].includes(variant))
-        throw new Error(`variant must be one of "success", "info", "warning", or "error"`);
-      SnackbarEvents.emit(message, variant as any, duration);
+      if (!checkEnum(ToastVariant, variant))
+        throw new Error(`variant must be one of ${Object.values(ToastVariant).join(", ")}`);
+      SnackbarEvents.emit(message, variant, duration);
     },
     prompt: function (_txt: unknown, options?: { type?: string; options?: string[] }): Promise<boolean | string> {
       updateDynamicRam("prompt", getRamCost(Player, "prompt"));
@@ -2522,6 +2566,9 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
     },
     flags: Flags(workerScript.args),
+    enums: {
+      toast: ToastVariant,
+    },
   };
 
   // add undocumented functions

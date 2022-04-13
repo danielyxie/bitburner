@@ -94,7 +94,7 @@ export const GraftingRoot = (): React.ReactElement => {
         <Typography variant="h5">Graft Augmentations</Typography>
         {getAvailableAugs(player).length > 0 ? (
           <Paper sx={{ my: 1, width: "fit-content", display: "grid", gridTemplateColumns: "1fr 3fr" }}>
-            <List sx={{ maxHeight: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
+            <List sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
               {getAvailableAugs(player).map((k, i) => (
                 <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
                   <Typography>{k}</Typography>
@@ -130,9 +130,13 @@ export const GraftingRoot = (): React.ReactElement => {
                   <>
                     Cancelling grafting will <b>not</b> save grafting progress, and the money you spend will <b>not</b>{" "}
                     be returned.
-                    <br />
-                    <br />
-                    Additionally, grafting an Augmentation will increase the potency of the Entropy virus.
+                    {!player.hasAugmentation(AugmentationNames.CongruityImplant) && (
+                      <>
+                        <br />
+                        <br />
+                        Additionally, grafting an Augmentation will increase the potency of the Entropy virus.
+                      </>
+                    )}
                   </>
                 }
               />

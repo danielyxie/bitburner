@@ -346,10 +346,13 @@ export function NetscriptCorporation(
       const cityName = helper.city("getMaterial", "cityName", _cityName);
       const materialName = helper.string("getMaterial", "materialName", _materialName);
       const material = getMaterial(divisionName, cityName, materialName);
+      const corporation = getCorporation();
       return {
         name: material.name,
         qty: material.qty,
         qlt: material.qlt,
+        dmd: corporation.unlockUpgrades[2] ? material.dmd : undefined,
+        cmp: corporation.unlockUpgrades[3] ? material.cmp : undefined,
         prod: material.prd,
         sell: material.sll,
       };
@@ -359,10 +362,20 @@ export function NetscriptCorporation(
       const divisionName = helper.string("getProduct", "divisionName", _divisionName);
       const productName = helper.string("getProduct", "productName", _productName);
       const product = getProduct(divisionName, productName);
+      const corporation = getCorporation();
       return {
         name: product.name,
-        dmd: product.dmd,
-        cmp: product.cmp,
+        dmd: corporation.unlockUpgrades[2] ? product.dmd : undefined,
+        cmp: corporation.unlockUpgrades[3] ? product.cmp : undefined,
+        rat: product.rat,
+        properties: {
+          qlt: product.qlt,
+          per: product.per,
+          dur: product.dur,
+          rel: product.rel,
+          aes: product.aes,
+          fea: product.fea,
+        },
         pCost: product.pCost,
         sCost: product.sCost,
         cityData: product.data,
@@ -637,9 +650,6 @@ export function NetscriptCorporation(
       const office = getOffice(divisionName, cityName);
       if (!Object.values(EmployeePositions).includes(job)) throw new Error(`'${job}' is not a valid job.`);
       return netscriptDelay(1000, workerScript).then(function () {
-        if (workerScript.env.stopFlag) {
-          return Promise.reject(workerScript);
-        }
         return Promise.resolve(office.setEmployeeToJob(job, amount));
       });
     },
@@ -752,6 +762,15 @@ export function NetscriptCorporation(
           Management: office.employeeProd[EmployeePositions.Management],
           "Research & Development": office.employeeProd[EmployeePositions.RandD],
           Training: office.employeeProd[EmployeePositions.Training],
+        },
+        employeeJobs: {
+          Operations: office.employeeJobs[EmployeePositions.Operations],
+          Engineer: office.employeeJobs[EmployeePositions.Engineer],
+          Business: office.employeeJobs[EmployeePositions.Business],
+          Management: office.employeeJobs[EmployeePositions.Management],
+          "Research & Development": office.employeeJobs[EmployeePositions.RandD],
+          Training: office.employeeJobs[EmployeePositions.Training],
+          Unassigned: office.employeeJobs[EmployeePositions.Unassigned],
         },
       };
     },
