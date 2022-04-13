@@ -3788,10 +3788,10 @@ export interface Grafting {
    * Retrieves a list of Augmentations that can be grafted.
    * @remarks
    * RAM cost: 5 GB
-   * 
+   *
    * Note that this function returns a list of currently graftable Augmentations,
    * based off of the Augmentations that you already own.
-   * 
+   *
    * @returns An array of graftable Augmentations.
    */
   getGraftableAugmentations(): string[];
