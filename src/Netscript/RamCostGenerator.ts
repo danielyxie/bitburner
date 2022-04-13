@@ -177,6 +177,8 @@ const singularity: IMap<any> = {
   installAugmentations: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   isFocused: SF4Cost(0.1),
   setFocus: SF4Cost(0.1),
+  b1tflum3: SF4Cost(16),
+  destroyW0r1dD43m0n: SF4Cost(32),
 };
 
 // Gang API

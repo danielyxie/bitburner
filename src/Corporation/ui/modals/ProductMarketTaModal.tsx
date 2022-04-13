@@ -1,52 +1,43 @@
 import React, { useState } from "react";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { Material } from "../Material";
-import { Modal } from "../../ui/React/Modal";
-import { useDivision } from "./Context";
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { Product } from "../../Product";
+import { Modal } from "../../../ui/React/Modal";
+import { useDivision } from "../Context";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Tooltip from "@mui/material/Tooltip";
 
-interface IMarketTA2Props {
-  mat: Material;
+interface ITa2Props {
+  product: Product;
 }
 
-function MarketTA2(props: IMarketTA2Props): React.ReactElement {
+function MarketTA2(props: ITa2Props): React.ReactElement {
   const division = useDivision();
   if (!division.hasResearch("Market-TA.II")) return <></>;
-  const [newCost, setNewCost] = useState<number>(props.mat.bCost);
+  const markupLimit = props.product.rat / props.product.mku;
+  const [value, setValue] = useState(props.product.pCost);
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
   }
-  const markupLimit = props.mat.getMarkupLimit();
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    if (event.target.value === "") setNewCost(0);
-    else setNewCost(parseFloat(event.target.value));
+    setValue(parseFloat(event.target.value));
   }
 
-  const sCost = newCost;
-  let markup = 1;
-  if (sCost > props.mat.bCost) {
-    //Penalty if difference between sCost and bCost is greater than markup limit
-    if (sCost - props.mat.bCost > markupLimit) {
-      markup = Math.pow(markupLimit / (sCost - props.mat.bCost), 2);
-    }
-  } else if (sCost < props.mat.bCost) {
-    if (sCost <= 0) {
-      markup = 1e12; //Sell everything, essentially discard
-    } else {
-      //Lower prices than market increases sales
-      markup = props.mat.bCost / sCost;
-    }
-  }
-
-  function onMarketTA2(event: React.ChangeEvent<HTMLInputElement>): void {
-    props.mat.marketTa2 = event.target.checked;
+  function onCheckedChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    props.product.marketTa2 = event.target.checked;
     rerender();
+  }
+
+  const sCost = value;
+  let markup = 1;
+  if (sCost > props.product.pCost) {
+    if (sCost - props.product.pCost > markupLimit) {
+      markup = markupLimit / (sCost - props.product.pCost);
+    }
   }
 
   return (
@@ -57,10 +48,10 @@ function MarketTA2(props: IMarketTA2Props): React.ReactElement {
         If you sell at {numeralWrapper.formatMoney(sCost)}, then you will sell{" "}
         {numeralWrapper.format(markup, "0.00000")}x as much compared to if you sold at market price.
       </Typography>
-      <TextField type="number" onChange={onChange} value={newCost} />
+      <TextField type="number" onChange={onChange} value={value} />
       <br />
       <FormControlLabel
-        control={<Switch checked={props.mat.marketTa2} onChange={onMarketTA2} />}
+        control={<Switch checked={props.product.marketTa2} onChange={onCheckedChange} />}
         label={
           <Tooltip
             title={
@@ -82,19 +73,19 @@ function MarketTA2(props: IMarketTA2Props): React.ReactElement {
 interface IProps {
   open: boolean;
   onClose: () => void;
-  mat: Material;
+  product: Product;
 }
 
-// Create a popup that lets the player use the Market TA research for Materials
-export function MaterialMarketTaModal(props: IProps): React.ReactElement {
+// Create a popup that lets the player use the Market TA research for Products
+export function ProductMarketTaModal(props: IProps): React.ReactElement {
+  const markupLimit = props.product.rat / props.product.mku;
   const setRerender = useState(false)[1];
   function rerender(): void {
     setRerender((old) => !old);
   }
-  const markupLimit = props.mat.getMarkupLimit();
 
-  function onMarketTA1(event: React.ChangeEvent<HTMLInputElement>): void {
-    props.mat.marketTa1 = event.target.checked;
+  function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    props.product.marketTa1 = event.target.checked;
     rerender();
   }
 
@@ -103,13 +94,13 @@ export function MaterialMarketTaModal(props: IProps): React.ReactElement {
       <>
         <Typography variant="h4">Market-TA.I</Typography>
         <Typography>
-          The maximum sale price you can mark this up to is {numeralWrapper.formatMoney(props.mat.bCost + markupLimit)}.
-          This means that if you set the sale price higher than this, you will begin to experience a loss in number of
-          sales
+          The maximum sale price you can mark this up to is{" "}
+          {numeralWrapper.formatMoney(props.product.pCost + markupLimit)}. This means that if you set the sale price
+          higher than this, you will begin to experience a loss in number of sales
         </Typography>
 
         <FormControlLabel
-          control={<Switch checked={props.mat.marketTa1} onChange={onMarketTA1} />}
+          control={<Switch checked={props.product.marketTa1} onChange={onChange} />}
           label={
             <Tooltip
               title={
@@ -125,7 +116,7 @@ export function MaterialMarketTaModal(props: IProps): React.ReactElement {
         />
       </>
 
-      <MarketTA2 mat={props.mat} />
+      <MarketTA2 product={props.product} />
     </Modal>
   );
 }

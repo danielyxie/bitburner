@@ -53,6 +53,9 @@ import {
   SellShares,
   BuyBackShares,
   SetSmartSupplyUseLeftovers,
+  LimitMaterialProduction,
+  LimitProductProduction,
+  UpgradeWarehouseCost,
 } from "../Corporation/Actions";
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
@@ -64,6 +67,7 @@ import { CorporationConstants } from "../Corporation/data/Constants";
 import { IndustryUpgrades } from "../Corporation/IndustryUpgrades";
 import { ResearchMap } from "../Corporation/ResearchMap";
 import { Factions } from "../Faction/Factions";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 
 export function NetscriptCorporation(
   player: IPlayer,
@@ -74,6 +78,8 @@ export function NetscriptCorporation(
     if (!player.canAccessCorporation() || player.hasCorporation()) return false;
     if (!corporationName) return false;
     if (player.bitNodeN !== 3 && !selfFund) throw new Error("cannot use seed funds outside of BitNode 3");
+    if (BitNodeMultipliers.CorporationSoftCap < 0.15)
+      throw new Error(`You cannot create a corporation in Bitnode ${player.bitNodeN}`);
 
     if (selfFund) {
       if (!player.canAfford(150e9)) return false;
@@ -311,12 +317,16 @@ export function NetscriptCorporation(
       checkAccess("getPurchaseWarehouseCost", 7);
       return CorporationConstants.WarehouseInitialCost;
     },
-    getUpgradeWarehouseCost: function (_divisionName: unknown, _cityName: unknown): number {
+    getUpgradeWarehouseCost: function (_divisionName: unknown, _cityName: unknown, _amt: unknown = 1): number {
       checkAccess("upgradeWarehouse", 7);
       const divisionName = helper.string("getUpgradeWarehouseCost", "divisionName", _divisionName);
       const cityName = helper.city("getUpgradeWarehouseCost", "cityName", _cityName);
+      const amt = helper.number("getUpgradeWarehouseCost", "amount", _amt);
+      if (amt < 1) {
+        throw helper.makeRuntimeErrorMsg(`corporation.getUpgradeWarehouseCost`, "You must provide a positive number");
+      }
       const warehouse = getWarehouse(divisionName, cityName);
-      return CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
+      return UpgradeWarehouseCost(warehouse, amt);
     },
     hasWarehouse: function (_divisionName: unknown, _cityName: unknown): boolean {
       checkAccess("hasWarehouse", 7);
@@ -348,6 +358,7 @@ export function NetscriptCorporation(
       const material = getMaterial(divisionName, cityName, materialName);
       const corporation = getCorporation();
       return {
+        cost: material.bCost,
         name: material.name,
         qty: material.qty,
         qlt: material.qlt,
@@ -389,12 +400,16 @@ export function NetscriptCorporation(
       const corporation = getCorporation();
       PurchaseWarehouse(corporation, getDivision(divisionName), cityName);
     },
-    upgradeWarehouse: function (_divisionName: unknown, _cityName: unknown): void {
+    upgradeWarehouse: function (_divisionName: unknown, _cityName: unknown, _amt: unknown = 1): void {
       checkAccess("upgradeWarehouse", 7);
       const divisionName = helper.string("upgradeWarehouse", "divisionName", _divisionName);
       const cityName = helper.city("upgradeWarehouse", "cityName", _cityName);
+      const amt = helper.number("upgradeWarehouse", "amount", _amt);
       const corporation = getCorporation();
-      UpgradeWarehouse(corporation, getDivision(divisionName), getWarehouse(divisionName, cityName));
+      if (amt < 1) {
+        throw helper.makeRuntimeErrorMsg(`corporation.upgradeWarehouse`, "You must provide a positive number");
+      }
+      UpgradeWarehouse(corporation, getDivision(divisionName), getWarehouse(divisionName, cityName), amt);
     },
     sellMaterial: function (
       _divisionName: unknown,
@@ -508,6 +523,19 @@ export function NetscriptCorporation(
       const corporation = getCorporation();
       MakeProduct(corporation, getDivision(divisionName), cityName, productName, designInvest, marketingInvest);
     },
+    limitProductProduction: function (
+      _divisionName: unknown,
+      _productName: unknown,
+      _cityName: unknown,
+      _qty: unknown,
+    ) {
+      checkAccess("limitProductProduction", 7);
+      const divisionName = helper.string("limitProductProduction", "divisionName", _divisionName);
+      const cityName = helper.city("limitMaterialProduction", "cityName", _cityName);
+      const productName = helper.string("limitProductProduction", "productName", _productName);
+      const qty = helper.number("limitMaterialProduction", "qty", _qty);
+      LimitProductProduction(getProduct(divisionName, productName), cityName, qty);
+    },
     exportMaterial: function (
       _sourceDivision: unknown,
       _sourceCity: unknown,
@@ -547,6 +575,19 @@ export function NetscriptCorporation(
       const materialName = helper.string("cancelExportMaterial", "materialName", _materialName);
       const amt = helper.string("cancelExportMaterial", "amt", _amt);
       CancelExportMaterial(targetDivision, targetCity, getMaterial(sourceDivision, sourceCity, materialName), amt + "");
+    },
+    limitMaterialProduction: function (
+      _divisionName: unknown,
+      _cityName: unknown,
+      _materialName: unknown,
+      _qty: unknown,
+    ) {
+      checkAccess("limitMaterialProduction", 7);
+      const divisionName = helper.string("limitMaterialProduction", "divisionName", _divisionName);
+      const cityName = helper.city("limitMaterialProduction", "cityName", _cityName);
+      const materialName = helper.string("limitMaterialProduction", "materialName", _materialName);
+      const qty = helper.number("limitMaterialProduction", "qty", _qty);
+      LimitMaterialProduction(getMaterial(divisionName, cityName, materialName), qty);
     },
     setMaterialMarketTA1: function (
       _divisionName: unknown,

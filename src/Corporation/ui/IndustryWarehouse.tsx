@@ -6,7 +6,7 @@ import { CorporationConstants } from "../data/Constants";
 import { Material } from "../Material";
 import { Product } from "../Product";
 import { Warehouse } from "../Warehouse";
-import { SmartSupplyModal } from "./SmartSupplyModal";
+import { SmartSupplyModal } from "./modals/SmartSupplyModal";
 import { ProductElem } from "./ProductElem";
 import { MaterialElem } from "./MaterialElem";
 import { MaterialSizes } from "../MaterialSizes";
