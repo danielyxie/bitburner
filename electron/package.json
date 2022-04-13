@@ -1,6 +1,6 @@
 {
   "name": "bitburner",
-  "version": "1.6.1",
+  "version": "1.6.3",
   "description": "A cyberpunk-themed programming incremental game",
   "main": "main.js",
   "author": "Daniel Xie & Olivier Gagnon",
