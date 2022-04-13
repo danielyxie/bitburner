@@ -116,8 +116,8 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
                 <br />
 
                 <DummyGrid
-                  width={5}
-                  height={3}
+                  width={4}
+                  height={4}
                   fragments={[
                     new ActiveFragment({
                       x: 0,
