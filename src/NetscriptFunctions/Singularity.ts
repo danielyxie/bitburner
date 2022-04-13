@@ -580,6 +580,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           throw _ctx.helper.makeRuntimeErrorMsg(`Invalid hostname: '${hostname}'`);
         }
 
+        //Home case
         if (hostname === "home") {
           player.getCurrentServer().isConnectedTo = false;
           player.currentServer = player.getHomeComputer().hostname;
@@ -588,6 +589,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           return true;
         }
 
+        //Adjacent server case
         const server = player.getCurrentServer();
         for (let i = 0; i < server.serversOnNetwork.length; i++) {
           const other = getServerOnNetwork(server, i);
@@ -601,6 +603,17 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           }
         }
 
+        //Backdoor case
+        const other = GetServer(hostname);
+        if (other !== null && other instanceof Server && other.backdoorInstalled) {
+          player.getCurrentServer().isConnectedTo = false;
+          player.currentServer = target.hostname;
+          player.getCurrentServer().isConnectedTo = true;
+          Terminal.setcwd("/");
+          return true;
+        }
+
+        //Failure case
         return false;
       },
     manualHack: (_ctx: NetscriptContext) =>
