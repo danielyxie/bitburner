@@ -547,8 +547,14 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           return true;
         }
 
+        player.getHomeComputer().pushProgram(item.program);
+        // Cancel if the program is in progress of writing
+        if (player.createProgramName === item.program) {
+          player.isWorking = false;
+          player.resetWorkStatus();
+        }
+
         player.loseMoney(item.price, "other");
-        player.getHomeComputer().programs.push(item.program);
         workerScript.log(
           "purchaseProgram",
           () => `You have purchased the '${item.program}' program. The new program can be found on your home computer.`,
