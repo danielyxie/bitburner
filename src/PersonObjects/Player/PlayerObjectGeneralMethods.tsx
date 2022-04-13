@@ -2084,12 +2084,7 @@ export function reapplyAllAugmentations(this: IPlayer, resetMultipliers = true):
 
     const playerAug = this.augmentations[i];
     const augName = playerAug.name;
-    const aug = Augmentations[augName];
-    if (aug == null) {
-      console.warn(`Invalid augmentation name in Player.reapplyAllAugmentations(). Aug ${augName} will be skipped`);
-      continue;
-    }
-    aug.owned = true;
+
     if (augName == AugmentationNames.NeuroFluxGovernor) {
       for (let j = 0; j < playerAug.level; ++j) {
         applyAugmentation(this.augmentations[i], true);

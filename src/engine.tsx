@@ -214,7 +214,7 @@ const Engine: {
 
     if (Engine.Counters.messages <= 0) {
       checkForMessagesToSend();
-      if (Augmentations[AugmentationNames.TheRedPill].owned) {
+      if (Player.hasAugmentation(AugmentationNames.TheRedPill)) {
         Engine.Counters.messages = 4500; // 15 minutes for Red pill message
       } else {
         Engine.Counters.messages = 150;

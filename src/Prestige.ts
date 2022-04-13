@@ -55,15 +55,15 @@ export function prestigeAugmentation(): void {
   AddToAllServers(homeComp);
   prestigeHomeComputer(Player, homeComp);
 
-  if (augmentationExists(AugmentationNames.Neurolink) && Augmentations[AugmentationNames.Neurolink].owned) {
+  if (augmentationExists(AugmentationNames.Neurolink) && Player.hasAugmentation(AugmentationNames.Neurolink)) {
     homeComp.programs.push(Programs.FTPCrackProgram.name);
     homeComp.programs.push(Programs.RelaySMTPProgram.name);
   }
-  if (augmentationExists(AugmentationNames.CashRoot) && Augmentations[AugmentationNames.CashRoot].owned) {
+  if (augmentationExists(AugmentationNames.CashRoot) && Player.hasAugmentation(AugmentationNames.CashRoot)) {
     Player.setMoney(1e6);
     homeComp.programs.push(Programs.BruteSSHProgram.name);
   }
-  if (augmentationExists(AugmentationNames.PCMatrix) && Augmentations[AugmentationNames.PCMatrix].owned) {
+  if (augmentationExists(AugmentationNames.PCMatrix) && Player.hasAugmentation(AugmentationNames.PCMatrix)) {
     homeComp.programs.push(Programs.DeepscanV1.name);
     homeComp.programs.push(Programs.AutoLink.name);
   }
@@ -151,7 +151,7 @@ export function prestigeAugmentation(): void {
   }
 
   // Red Pill
-  if (augmentationExists(AugmentationNames.TheRedPill) && Augmentations[AugmentationNames.TheRedPill].owned) {
+  if (augmentationExists(AugmentationNames.TheRedPill) && Player.hasAugmentation(AugmentationNames.TheRedPill)) {
     const WorldDaemon = GetServer(SpecialServers.WorldDaemon);
     const DaedalusServer = GetServer(SpecialServers.DaedalusServer);
     if (WorldDaemon && DaedalusServer) {
@@ -160,7 +160,7 @@ export function prestigeAugmentation(): void {
     }
   }
 
-  if (augmentationExists(AugmentationNames.StaneksGift1) && Augmentations[AugmentationNames.StaneksGift1].owned) {
+  if (augmentationExists(AugmentationNames.StaneksGift1) && Player.hasAugmentation(AugmentationNames.StaneksGift1)) {
     joinFaction(Factions[FactionNames.ChurchOfTheMachineGod]);
   }
 

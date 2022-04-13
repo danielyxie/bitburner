@@ -118,8 +118,6 @@ function resetAugmentation(aug: Augmentation): void {
 }
 
 function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void {
-  Augmentations[aug.name].owned = true;
-
   const augObj = Augmentations[aug.name];
 
   // Apply multipliers
