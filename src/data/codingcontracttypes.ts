@@ -124,7 +124,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "&nbsp;&nbsp;&nbsp;&nbsp;2 + 2\n",
         "&nbsp;&nbsp;&nbsp;&nbsp;2 + 1 + 1\n",
         "&nbsp;&nbsp;&nbsp;&nbsp;1 + 1 + 1 + 1\n\n",
-        `How many different ways can the number ${n} be written as a sum of at least`,
+        `How many different distinct ways can the number ${n} be written as a sum of at least`,
         "two positive integers?",
       ].join(" ");
     },
@@ -145,6 +145,51 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       }
 
       return ways[data] === parseInt(ans, 10);
+    },
+  },
+  {
+    desc: (data: [number, number[]]): string => {
+      const n: number = data[0];
+      const s: number[] = data[1];
+      return [
+        `How many different distinct ways can the number ${n} be written`,
+        "as a sum of integers contained in the set:\n\n",
+        `[${s}]?\n\n`,
+        "You may use each integer in the set zero or more times.",
+      ].join(" ");
+    },
+    difficulty: 2,
+    gen: (): [number, number[]] => {
+      const n: number = getRandomInt(12, 200);
+      const maxLen: number = getRandomInt(8, 12);
+      const s: number[] = [];
+      // Bias towards small numbers is intentional to have much bigger answers in general
+      // to force people better optimize their solutions
+      for (let i = 1; i <= n; i++) {
+        if (s.length == maxLen) {
+          break;
+        }
+        if (Math.random() < 0.6 || n - i < maxLen - s.length) {
+          s.push(i);
+        }
+      }
+      return [n, s];
+    },
+    name: "Total Ways to Sum II",
+    numTries: 10,
+    solver: (data: [number, number[]], ans: string): boolean => {
+      // https://www.geeksforgeeks.org/coin-change-dp-7/?ref=lbp
+      const n = data[0];
+      const s = data[1];
+      const ways: number[] = [1];
+      ways.length = n + 1;
+      ways.fill(0, 1);
+      for (let i = 0; i < s.length; i++) {
+        for (let j = s[i]; j <= n; j++) {
+          ways[j] += ways[j - s[i]];
+        }
+      }
+      return ways[n] === parseInt(ans, 10);
     },
   },
   {
@@ -310,6 +355,62 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       }
       const solution: boolean = i === n;
       return (ans === "1" && solution) || (ans === "0" && !solution);
+    },
+  },
+  {
+    desc: (arr: number[]): string => {
+      return [
+        "You are given the following array of integers:\n\n",
+        `${arr}\n\n`,
+        "Each element in the array represents your MAXIMUM jump length",
+        "at that position. This means that if you are at position i and your",
+        "maximum jump length is n, you can jump to any position from",
+        "i to i+n.",
+        "\n\nAssuming you are initially positioned",
+        "at the start of the array, determine the minimum number of",
+        "jumps to reach the end of the array.\n\n",
+        "If it's impossible to reach the end, then the answer should be 0.",
+      ].join(" ");
+    },
+    difficulty: 3,
+    gen: (): number[] => {
+      const len: number = getRandomInt(3, 25);
+      const arr: number[] = [];
+      arr.length = len;
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < 10; j++) {
+          if (Math.random() <= j / 10 + 0.1) {
+            arr[i] = j;
+            break;
+          }
+        }
+      }
+
+      return arr;
+    },
+    name: "Array Jumping Game II",
+    numTries: 3,
+    solver: (data: number[], ans: string): boolean => {
+      const n: number = data.length;
+      let reach = 0;
+      let jumps = 0;
+      let lastJump = -1;
+      while (reach < n - 1) {
+        let jumpedFrom = -1;
+        for (let i = reach; i > lastJump; i--) {
+          if (i + data[i] > reach) {
+            reach = i + data[i];
+            jumpedFrom = i;
+          }
+        }
+        if (jumpedFrom === -1) {
+          jumps = 0;
+          break;
+        }
+        lastJump = jumpedFrom;
+        jumps++;
+      }
+      return jumps === parseInt(ans, 10);
     },
   },
   {
@@ -1155,7 +1256,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
         "Convert it into a binary string and encode it as a 'Hamming-Code'. eg:\n ",
         "Value 8 will result into binary '1000', which will be encoded",
         "with the pattern 'pppdpddd', where p is a paritybit and d a databit,\n",
-        "or '10101' (Value 21) will result into (pppdpdddpd) '1111101011'.\n\n",
+        "or '10101' (Value 21) will result into (pppdpdddpd) '1001101011'.\n\n",
         "NOTE: You need an parity Bit on Index 0 as an 'overall'-paritybit. \n",
         "NOTE 2: You should watch the HammingCode-video from 3Blue1Brown, which explains the 'rule' of encoding,",
         "including the first Index parity-bit mentioned on the first note.\n\n",

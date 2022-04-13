@@ -276,7 +276,7 @@ export const CONSTANTS: {
   CodingContractBaseCompanyRepGain: 4000,
   CodingContractBaseMoneyGain: 75e6,
 
-  // Augmentation crafting multipliers
+  // Augmentation grafting multipliers
   AugmentationGraftingCostMult: 3,
   AugmentationGraftingTimeBase: 3600000,
 
