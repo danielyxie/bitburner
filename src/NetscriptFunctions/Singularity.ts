@@ -96,8 +96,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
   return {
     getOwnedAugmentations: (_ctx: NetscriptContext) =>
       function (_purchased: unknown = false): string[] {
-        const purchased = _ctx.helper.boolean(_purchased);
         _ctx.helper.checkSingularityAccess();
+        const purchased = _ctx.helper.boolean(_purchased);
         const res = [];
         for (let i = 0; i < player.augmentations.length; ++i) {
           res.push(player.augmentations[i].name);
@@ -111,52 +111,52 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     getAugmentationsFromFaction: (_ctx: NetscriptContext) =>
       function (_facName: unknown): string[] {
-        const facName = _ctx.helper.string("facName", _facName);
         _ctx.helper.checkSingularityAccess();
+        const facName = _ctx.helper.string("facName", _facName);
         const faction = getFaction(_ctx, facName);
 
         return getFactionAugmentationsFiltered(player, faction);
       },
     getAugmentationCost: (_ctx: NetscriptContext) =>
       function (_augName: unknown): [number, number] {
-        const augName = _ctx.helper.string("augName", _augName);
         _ctx.helper.checkSingularityAccess();
+        const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
         return [aug.baseRepRequirement, aug.baseCost];
       },
     getAugmentationPrereq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): string[] {
-        const augName = _ctx.helper.string("augName", _augName);
         _ctx.helper.checkSingularityAccess();
+        const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
         return aug.prereqs.slice();
       },
     getAugmentationPrice: (_ctx: NetscriptContext) =>
       function (_augName: unknown): number {
-        const augName = _ctx.helper.string("augName", _augName);
         _ctx.helper.checkSingularityAccess();
+        const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
         return aug.baseCost;
       },
     getAugmentationRepReq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): number {
-        const augName = _ctx.helper.string("augName", _augName);
         _ctx.helper.checkSingularityAccess();
+        const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
         return aug.baseRepRequirement;
       },
     getAugmentationStats: (_ctx: NetscriptContext) =>
       function (_augName: unknown): AugmentationStats {
-        const augName = _ctx.helper.string("augName", _augName);
         _ctx.helper.checkSingularityAccess();
+        const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
         return Object.assign({}, aug.mults);
       },
     purchaseAugmentation: (_ctx: NetscriptContext) =>
       function (_facName: unknown, _augName: unknown): boolean {
+        _ctx.helper.checkSingularityAccess();
         const facName = _ctx.helper.string("facName", _facName);
         const augName = _ctx.helper.string("augName", _augName);
-        _ctx.helper.checkSingularityAccess();
         const fac = getFaction(_ctx, facName);
         const aug = getAugmentation(_ctx, augName);
 
@@ -202,8 +202,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     softReset: (_ctx: NetscriptContext) =>
       function (_cbScript: unknown = ""): void {
-        const cbScript = _ctx.helper.string("cbScript", _cbScript);
         _ctx.helper.checkSingularityAccess();
+        const cbScript = _ctx.helper.string("cbScript", _cbScript);
 
         workerScript.log("softReset", () => "Soft resetting. This will cause this script to be killed");
         setTimeout(() => {
@@ -217,8 +217,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     installAugmentations: (_ctx: NetscriptContext) =>
       function (_cbScript: unknown = ""): boolean {
-        const cbScript = _ctx.helper.string("cbScript", _cbScript);
         _ctx.helper.checkSingularityAccess();
+        const cbScript = _ctx.helper.string("cbScript", _cbScript);
 
         if (player.queuedAugmentations.length === 0) {
           workerScript.log("installAugmentations", () => "You do not have any Augmentations to be installed.");
@@ -241,8 +241,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
     goToLocation: (_ctx: NetscriptContext) =>
       function (_locationName: unknown): boolean {
-        const locationName = _ctx.helper.string("locationName", _locationName);
         _ctx.helper.checkSingularityAccess();
+        const locationName = _ctx.helper.string("locationName", _locationName);
         const location = Object.values(Locations).find((l) => l.name === locationName);
         if (!location) {
           workerScript.log("goToLocation", () => `No location named ${locationName}`);
@@ -258,10 +258,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     universityCourse: (_ctx: NetscriptContext) =>
       function (_universityName: unknown, _className: unknown, _focus: unknown = true): boolean {
+        _ctx.helper.checkSingularityAccess();
         const universityName = _ctx.helper.string("universityName", _universityName);
         const className = _ctx.helper.string("className", _className);
         const focus = _ctx.helper.boolean(_focus);
-        _ctx.helper.checkSingularityAccess();
         const wasFocusing = player.focus;
         if (player.isWorking) {
           const txt = player.singularityStopWork();
@@ -349,10 +349,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
     gymWorkout: (_ctx: NetscriptContext) =>
       function (_gymName: unknown, _stat: unknown, _focus: unknown = true): boolean {
+        _ctx.helper.checkSingularityAccess();
         const gymName = _ctx.helper.string("gymName", _gymName);
         const stat = _ctx.helper.string("stat", _stat);
         const focus = _ctx.helper.boolean(_focus);
-        _ctx.helper.checkSingularityAccess();
         const wasFocusing = player.focus;
         if (player.isWorking) {
           const txt = player.singularityStopWork();
@@ -464,8 +464,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
 
     travelToCity: (_ctx: NetscriptContext) =>
       function (_cityName: unknown): boolean {
-        const cityName = _ctx.helper.city("cityName", _cityName);
         _ctx.helper.checkSingularityAccess();
+        const cityName = _ctx.helper.city("cityName", _cityName);
 
         switch (cityName) {
           case CityName.Aevum:
@@ -522,8 +522,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     purchaseProgram: (_ctx: NetscriptContext) =>
       function (_programName: unknown): boolean {
-        const programName = _ctx.helper.string("programName", _programName).toLowerCase();
         _ctx.helper.checkSingularityAccess();
+        const programName = _ctx.helper.string("programName", _programName).toLowerCase();
 
         if (!player.hasTorRouter()) {
           workerScript.log("purchaseProgram", () => "You do not have the TOR router.");
@@ -571,8 +571,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     connect: (_ctx: NetscriptContext) =>
       function (_hostname: unknown): boolean {
-        const hostname = _ctx.helper.string("hostname", _hostname);
         _ctx.helper.checkSingularityAccess();
+        const hostname = _ctx.helper.string("hostname", _hostname);
         if (!hostname) {
           throw _ctx.helper.makeRuntimeErrorMsg(`Invalid hostname: '${hostname}'`);
         }
@@ -664,8 +664,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     setFocus: (_ctx: NetscriptContext) =>
       function (_focus: unknown): boolean {
-        const focus = _ctx.helper.boolean(_focus);
         _ctx.helper.checkSingularityAccess();
+        const focus = _ctx.helper.boolean(_focus);
         if (!player.isWorking) {
           throw _ctx.helper.makeRuntimeErrorMsg("Not currently working");
         }
@@ -864,9 +864,9 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     workForCompany: (_ctx: NetscriptContext) =>
       function (_companyName: unknown, _focus: unknown = true): boolean {
+        _ctx.helper.checkSingularityAccess();
         let companyName = _ctx.helper.string("companyName", _companyName);
         const focus = _ctx.helper.boolean(_focus);
-        _ctx.helper.checkSingularityAccess();
 
         // Sanitize input
         if (companyName == null) {
@@ -920,9 +920,9 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     applyToCompany: (_ctx: NetscriptContext) =>
       function (_companyName: unknown, _field: unknown): boolean {
+        _ctx.helper.checkSingularityAccess();
         const companyName = _ctx.helper.string("companyName", _companyName);
         const field = _ctx.helper.string("field", _field);
-        _ctx.helper.checkSingularityAccess();
         getCompany(_ctx, companyName);
 
         player.location = companyName as LocationName;
@@ -992,22 +992,22 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     getCompanyRep: (_ctx: NetscriptContext) =>
       function (_companyName: unknown): number {
-        const companyName = _ctx.helper.string("companyName", _companyName);
         _ctx.helper.checkSingularityAccess();
+        const companyName = _ctx.helper.string("companyName", _companyName);
         const company = getCompany(_ctx, companyName);
         return company.playerReputation;
       },
     getCompanyFavor: (_ctx: NetscriptContext) =>
       function (_companyName: unknown): number {
-        const companyName = _ctx.helper.string("companyName", _companyName);
         _ctx.helper.checkSingularityAccess();
+        const companyName = _ctx.helper.string("companyName", _companyName);
         const company = getCompany(_ctx, companyName);
         return company.favor;
       },
     getCompanyFavorGain: (_ctx: NetscriptContext) =>
       function (_companyName: unknown): number {
-        const companyName = _ctx.helper.string("companyName", _companyName);
         _ctx.helper.checkSingularityAccess();
+        const companyName = _ctx.helper.string("companyName", _companyName);
         const company = getCompany(_ctx, companyName);
         return company.getFavorGain();
       },
@@ -1019,8 +1019,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     joinFaction: (_ctx: NetscriptContext) =>
       function (_facName: unknown): boolean {
-        const facName = _ctx.helper.string("facName", _facName);
         _ctx.helper.checkSingularityAccess();
+        const facName = _ctx.helper.string("facName", _facName);
         getFaction(_ctx, facName);
 
         if (!player.factionInvitations.includes(facName)) {
@@ -1043,10 +1043,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     workForFaction: (_ctx: NetscriptContext) =>
       function (_facName: unknown, _type: unknown, _focus: unknown = true): boolean {
+        _ctx.helper.checkSingularityAccess();
         const facName = _ctx.helper.string("facName", _facName);
         const type = _ctx.helper.string("type", _type);
         const focus = _ctx.helper.boolean(_focus);
-        _ctx.helper.checkSingularityAccess();
         getFaction(_ctx, facName);
 
         // if the player is in a gang and the target faction is any of the gang faction, fail
@@ -1132,30 +1132,30 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     getFactionRep: (_ctx: NetscriptContext) =>
       function (_facName: unknown): number {
-        const facName = _ctx.helper.string("facName", _facName);
         _ctx.helper.checkSingularityAccess();
+        const facName = _ctx.helper.string("facName", _facName);
         const faction = getFaction(_ctx, facName);
         return faction.playerReputation;
       },
     getFactionFavor: (_ctx: NetscriptContext) =>
       function (_facName: unknown): number {
-        const facName = _ctx.helper.string("facName", _facName);
         _ctx.helper.checkSingularityAccess();
+        const facName = _ctx.helper.string("facName", _facName);
         const faction = getFaction(_ctx, facName);
         return faction.favor;
       },
     getFactionFavorGain: (_ctx: NetscriptContext) =>
       function (_facName: unknown): number {
-        const facName = _ctx.helper.string("facName", _facName);
         _ctx.helper.checkSingularityAccess();
+        const facName = _ctx.helper.string("facName", _facName);
         const faction = getFaction(_ctx, facName);
         return faction.getFavorGain();
       },
     donateToFaction: (_ctx: NetscriptContext) =>
       function (_facName: unknown, _amt: unknown): boolean {
+        _ctx.helper.checkSingularityAccess();
         const facName = _ctx.helper.string("facName", _facName);
         const amt = _ctx.helper.number("amt", _amt);
-        _ctx.helper.checkSingularityAccess();
         const faction = getFaction(_ctx, facName);
         if (!player.factions.includes(faction.name)) {
           workerScript.log("donateToFaction", () => `You can't donate to '${facName}' because you aren't a member`);
@@ -1202,9 +1202,9 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     createProgram: (_ctx: NetscriptContext) =>
       function (_programName: unknown, _focus: unknown = true): boolean {
+        _ctx.helper.checkSingularityAccess();
         const programName = _ctx.helper.string("programName", _programName).toLowerCase();
         const focus = _ctx.helper.boolean(_focus);
-        _ctx.helper.checkSingularityAccess();
 
         const wasFocusing = player.focus;
         if (player.isWorking) {
@@ -1251,8 +1251,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     commitCrime: (_ctx: NetscriptContext) =>
       function (_crimeRoughName: unknown): number {
-        const crimeRoughName = _ctx.helper.string("crimeRoughName", _crimeRoughName);
         _ctx.helper.checkSingularityAccess();
+        const crimeRoughName = _ctx.helper.string("crimeRoughName", _crimeRoughName);
 
         if (player.isWorking) {
           const txt = player.singularityStopWork();
@@ -1272,8 +1272,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     getCrimeChance: (_ctx: NetscriptContext) =>
       function (_crimeRoughName: unknown): number {
-        const crimeRoughName = _ctx.helper.string("crimeRoughName", _crimeRoughName);
         _ctx.helper.checkSingularityAccess();
+        const crimeRoughName = _ctx.helper.string("crimeRoughName", _crimeRoughName);
 
         const crime = findCrime(crimeRoughName.toLowerCase());
         if (crime == null) {
@@ -1284,8 +1284,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     getCrimeStats: (_ctx: NetscriptContext) =>
       function (_crimeRoughName: unknown): CrimeStats {
-        const crimeRoughName = _ctx.helper.string("crimeRoughName", _crimeRoughName);
         _ctx.helper.checkSingularityAccess();
+        const crimeRoughName = _ctx.helper.string("crimeRoughName", _crimeRoughName);
 
         const crime = findCrime(crimeRoughName.toLowerCase());
         if (crime == null) {
@@ -1307,8 +1307,8 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       },
     getDarkwebProgramCost: (_ctx: NetscriptContext) =>
       function (_programName: unknown): number {
-        const programName = _ctx.helper.string("programName", _programName).toLowerCase();
         _ctx.helper.checkSingularityAccess();
+        const programName = _ctx.helper.string("programName", _programName).toLowerCase();
 
         // If we don't have Tor, log it and return -1
         if (!player.hasTorRouter()) {
@@ -1340,6 +1340,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
     b1tflum3:
       (_ctx: NetscriptContext) =>
       (_nextBN: unknown, _callbackScript: unknown = ""): void => {
+        _ctx.helper.checkSingularityAccess();
         const nextBN = _ctx.helper.number("nextBN", _nextBN);
         const callbackScript = _ctx.helper.string("callbackScript", _callbackScript);
         enterBitNode(Router, true, player.bitNodeN, nextBN);
@@ -1351,6 +1352,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
     destroyW0r1dD43m0n:
       (_ctx: NetscriptContext) =>
       (_nextBN: unknown, _callbackScript: unknown = ""): void => {
+        _ctx.helper.checkSingularityAccess();
         const nextBN = _ctx.helper.number("nextBN", _nextBN);
         const callbackScript = _ctx.helper.string("callbackScript", _callbackScript);
 
