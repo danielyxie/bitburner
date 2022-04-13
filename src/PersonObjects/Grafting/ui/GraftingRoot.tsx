@@ -15,21 +15,10 @@ import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
 import { Money } from "../../../ui/React/Money";
 import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
 import { IPlayer } from "../../IPlayer";
+import { getGraftingAvailableAugs } from "../GraftingHelpers";
 import { GraftableAugmentation } from "../GraftableAugmentation";
 
 const GraftableAugmentations: IMap<GraftableAugmentation> = {};
-
-export const getAvailableAugs = (player: IPlayer): string[] => {
-  const augs: string[] = [];
-
-  for (const [augName, aug] of Object.entries(Augmentations)) {
-    if (augName === AugmentationNames.NeuroFluxGovernor || augName === AugmentationNames.TheRedPill || aug.isSpecial)
-      continue;
-    augs.push(augName);
-  }
-
-  return augs.filter((augmentation: string) => !player.hasAugmentation(augmentation));
-};
 
 const canGraft = (player: IPlayer, aug: GraftableAugmentation): boolean => {
   if (player.money < aug.cost) {
@@ -71,7 +60,7 @@ export const GraftingRoot = (): React.ReactElement => {
     GraftableAugmentations[name] = graftableAug;
   }
 
-  const [selectedAug, setSelectedAug] = useState(getAvailableAugs(player)[0]);
+  const [selectedAug, setSelectedAug] = useState(getGraftingAvailableAugs(player)[0]);
   const [graftOpen, setGraftOpen] = useState(false);
 
   return (
@@ -92,10 +81,10 @@ export const GraftingRoot = (): React.ReactElement => {
 
       <Box sx={{ my: 3 }}>
         <Typography variant="h5">Graft Augmentations</Typography>
-        {getAvailableAugs(player).length > 0 ? (
+        {getGraftingAvailableAugs(player).length > 0 ? (
           <Paper sx={{ my: 1, width: "fit-content", display: "grid", gridTemplateColumns: "1fr 3fr" }}>
             <List sx={{ height: 400, overflowY: "scroll", borderRight: `1px solid ${Settings.theme.welllight}` }}>
-              {getAvailableAugs(player).map((k, i) => (
+              {getGraftingAvailableAugs(player).map((k, i) => (
                 <ListItemButton key={i + 1} onClick={() => setSelectedAug(k)} selected={selectedAug === k}>
                   <Typography>{k}</Typography>
                 </ListItemButton>
