@@ -7,9 +7,9 @@ import { IStaneksGift } from "../IStaneksGift";
 import { Info } from "@mui/icons-material";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import Typography from "@mui/material/Typography";
-import { ActiveFragment } from "../ActiveFragment";
-import { Fragments } from "../Fragment";
-import { DummyGrid } from "./DummyGrid";
+// import { ActiveFragment } from "../ActiveFragment";
+// import { Fragments } from "../Fragment";
+// import { DummyGrid } from "./DummyGrid";
 
 type IProps = {
   staneksGift: IStaneksGift;
@@ -67,6 +67,7 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
                   charged.
                 </Typography>
 
+                {/*
                 <DummyGrid
                   width={4}
                   height={4}
@@ -160,6 +161,7 @@ export function StaneksGiftRoot({ staneksGift }: IProps): React.ReactElement {
                 <Typography sx={{ fontStyle: "italic" }}>
                   This booster provides bonus to all fragment it touches.
                 </Typography>
+                */}
 
                 <br />
                 <Typography>
