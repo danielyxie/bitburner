@@ -2479,7 +2479,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         infiltration_trade_mult: Player.infiltration_trade_mult,
         infiltration_sell_mult: Player.infiltration_sell_mult,
         infiltration_timer_mult: Player.infiltration_timer_mult,
-        infiltration_health_reduction_mult: Player.infiltration_health_reduction_mult,
+        infiltration_damage_reduction_mult: Player.infiltration_damage_reduction_mult,
         bitNodeN: Player.bitNodeN,
         totalPlaytime: Player.totalPlaytime,
         playtimeSinceLastAug: Player.playtimeSinceLastAug,

@@ -282,9 +282,9 @@ export function PlayerMultipliers(): React.ReactElement {
         1,
       ],
       [
-        "Infiltration minigame health reduction",
-        Player.infiltration_health_reduction_mult,
-        -1 * (1 - Player.infiltration_health_reduction_mult * mults.infiltration_health_reduction_mult),
+        "Infiltration minigame damage reduction",
+        Player.infiltration_damage_reduction_mult,
+        -1 * (1 - Player.infiltration_damage_reduction_mult * mults.infiltration_damage_reduction_mult),
         1,
       ],
     ].map((data): MultiplierListItemData => (data as any).concat([Settings.theme.primary])),

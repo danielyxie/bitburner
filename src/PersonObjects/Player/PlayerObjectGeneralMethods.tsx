@@ -320,7 +320,7 @@ export function resetMultipliers(this: IPlayer): void {
   this.infiltration_trade_mult = 1;
   this.infiltration_sell_mult = 1;
   this.infiltration_timer_mult = 1;
-  this.infiltration_health_reduction_mult = 1;
+  this.infiltration_damage_reduction_mult = 1;
 }
 
 export function hasProgram(this: IPlayer, programName: string): boolean {

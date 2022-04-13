@@ -55,7 +55,7 @@ export interface IConstructorParams {
   infiltration_trade_mult?: number;
   infiltration_sell_mult?: number;
   infiltration_timer_mult?: number;
-  infiltration_health_reduction_mult?: number;
+  infiltration_damage_reduction_mult?: number;
 
   startingMoney?: number;
   programs?: string[];
@@ -380,12 +380,12 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
         <br />+{f(mults.infiltration_timer_mult - 1)} Infiltration time per minigame
       </>
     );
-  if (mults.infiltration_health_reduction_mult)
+  if (mults.infiltration_damage_reduction_mult)
     desc = (
       <>
         {desc}
         <br />
-        {f(mults.infiltration_health_reduction_mult - 1)} Infiltration health lost per failed minigame
+        {f(mults.infiltration_damage_reduction_mult - 1)} Infiltration health lost per failed minigame
       </>
     );
 
@@ -582,8 +582,8 @@ export class Augmentation {
     if (params.infiltration_timer_mult) {
       this.mults.infiltration_timer_mult = params.infiltration_timer_mult;
     }
-    if (params.infiltration_health_reduction_mult) {
-      this.mults.infiltration_health_reduction_mult = params.infiltration_health_reduction_mult;
+    if (params.infiltration_damage_reduction_mult) {
+      this.mults.infiltration_damage_reduction_mult = params.infiltration_damage_reduction_mult;
     }
 
     if (params.stats === undefined)

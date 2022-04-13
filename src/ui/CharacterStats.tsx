@@ -502,7 +502,7 @@ export function CharacterStats(): React.ReactElement {
                     ["Infiltration sell", player.infiltration_sell_mult],
                     ["Infiltration trade", player.infiltration_trade_mult],
                     ["Infiltration minigame timer", player.infiltration_timer_mult],
-                    ["Infiltration minigame health reduction", -1 * (1 - player.infiltration_health_reduction_mult)],
+                    ["Infiltration minigame damage reduction", -1 * (1 - player.infiltration_damage_reduction_mult)],
                   ]}
                 />
               )}

@@ -102,7 +102,7 @@ export abstract class Person {
   infiltration_trade_mult = 1;
   infiltration_sell_mult = 1;
   infiltration_timer_mult = 1;
-  infiltration_health_reduction_mult = 1;
+  infiltration_damage_reduction_mult = 1;
 
   /**
    * Augmentations
@@ -219,7 +219,7 @@ export abstract class Person {
     this.infiltration_trade_mult = 1;
     this.infiltration_sell_mult = 1;
     this.infiltration_timer_mult = 1;
-    this.infiltration_health_reduction_mult = 1;
+    this.infiltration_damage_reduction_mult = 1;
   }
 
   /**

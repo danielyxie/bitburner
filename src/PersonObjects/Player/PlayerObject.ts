@@ -138,7 +138,7 @@ export class PlayerObject implements IPlayer {
   infiltration_trade_mult: number;
   infiltration_sell_mult: number;
   infiltration_timer_mult: number;
-  infiltration_health_reduction_mult: number;
+  infiltration_damage_reduction_mult: number;
 
   createProgramReqLvl: number;
   factionWorkType: string;
@@ -476,7 +476,7 @@ export class PlayerObject implements IPlayer {
     this.infiltration_trade_mult = 1;
     this.infiltration_sell_mult = 1;
     this.infiltration_timer_mult = 1;
-    this.infiltration_health_reduction_mult = 1;
+    this.infiltration_damage_reduction_mult = 1;
 
     // Sleeves & Re-sleeving
     this.sleeves = [];

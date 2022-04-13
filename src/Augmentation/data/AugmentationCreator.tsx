@@ -152,7 +152,7 @@ export const initInfiltratorsAugmentations = (): Augmentation[] => [
     name: AugmentationNames.BitaniumArmorAlloy,
     repCost: 5e2,
     moneyCost: 1e6,
-    infiltration_health_reduction_mult: 0.7,
+    infiltration_damage_reduction_mult: 0.7,
     info:
       `Deep in the mines of ${CityName.Ishima} miners found a strange new material, now known as bitanium after ` +
       "many iterations of experimenting it was found to be exceptional at increasing ones amour at absorbing " +

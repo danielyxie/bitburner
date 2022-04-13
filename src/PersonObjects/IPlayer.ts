@@ -129,7 +129,7 @@ export interface IPlayer {
   infiltration_trade_mult: number;
   infiltration_sell_mult: number;
   infiltration_timer_mult: number;
-  infiltration_health_reduction_mult: number;
+  infiltration_damage_reduction_mult: number;
 
   createProgramReqLvl: number;
   factionWorkType: string;
