@@ -4647,9 +4647,11 @@ export interface NS {
    * Returns the security increase that would occur if a grow with this many threads happened.
    *
    * @param threads - Amount of threads that will be used.
+   * @param hostname - Optional. Hostname of the target server. The number of threads is limited to the number needed to hack the servers maximum amount of money.
+   * @param cores - Optional. The number of cores of the server that would run grow.
    * @returns The security increase.
    */
-  growthAnalyzeSecurity(threads: number): number;
+  growthAnalyzeSecurity(threads: number, hostname?: string, cores?: number): number;
 
   /**
    * Suspends the script for n milliseconds.
