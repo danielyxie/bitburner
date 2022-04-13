@@ -46,10 +46,7 @@ export function Info(props: IProps): React.ReactElement {
 
   const favorGain = props.faction.getFavorGain();
   const offersWork =
-    props.factionInfo.offerHackingMission ||
-    props.factionInfo.offerFieldWork ||
-    props.factionInfo.offerSecurityWork ||
-    props.factionInfo.offerHackingWork;
+    props.factionInfo.offerFieldWork || props.factionInfo.offerSecurityWork || props.factionInfo.offerHackingWork;
 
   return (
     <>
