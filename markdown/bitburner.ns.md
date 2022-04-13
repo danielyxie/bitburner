@@ -44,6 +44,7 @@ export async function main(ns) {
 |  [bladeburner](./bitburner.ns.bladeburner.md) | [Bladeburner](./bitburner.bladeburner.md) | Namespace for bladeburner functions. |
 |  [codingcontract](./bitburner.ns.codingcontract.md) | [CodingContract](./bitburner.codingcontract.md) | Namespace for codingcontract functions. |
 |  [corporation](./bitburner.ns.corporation.md) | [Corporation](./bitburner.corporation.md) | Namespace for corporation functions. RAM cost: 0 GB |
+|  [enums](./bitburner.ns.enums.md) | [NSEnums](./bitburner.nsenums.md) |  |
 |  [formulas](./bitburner.ns.formulas.md) | [Formulas](./bitburner.formulas.md) | Namespace for formulas functions. |
 |  [gang](./bitburner.ns.gang.md) | [Gang](./bitburner.gang.md) | Namespace for gang functions. |
 |  [grafting](./bitburner.ns.grafting.md) | [Grafting](./bitburner.grafting.md) | Namespace for grafting functions. |

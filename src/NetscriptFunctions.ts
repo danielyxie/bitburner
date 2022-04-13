@@ -2555,7 +2555,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       }
     },
     flags: Flags(workerScript.args),
-    enum: {
+    enums: {
       toast: ToastVariant,
     },
   };

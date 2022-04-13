@@ -6423,7 +6423,7 @@ export interface NS {
    */
   getSharePower(): number;
 
-  enum: NSEnums;
+  enums: NSEnums;
 }
 
 /** @public */
@@ -6434,6 +6434,7 @@ export enum ToastVariant {
   INFO = "info",
 }
 
+/** @public */
 export type ToastVariantValues = `${ToastVariant}`;
 
 /** @public */

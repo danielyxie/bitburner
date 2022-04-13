@@ -92,4 +92,5 @@
 |  Type Alias | Description |
 |  --- | --- |
 |  [FilenameOrPID](./bitburner.filenameorpid.md) |  |
+|  [ToastVariantValues](./bitburner.toastvariantvalues.md) |  |
 

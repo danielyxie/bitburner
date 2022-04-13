@@ -15,5 +15,5 @@ export interface NSEnums
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [toast](./bitburner.nsenums.toast.md) | [ToastVariant](./bitburner.toastvariant.md) |  |
+|  [toast](./bitburner.nsenums.toast.md) | typeof [ToastVariant](./bitburner.toastvariant.md) |  |
 

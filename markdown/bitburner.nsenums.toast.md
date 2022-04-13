@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-toast: ToastVariant;
+toast: typeof ToastVariant;
 ```
