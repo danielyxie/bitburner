@@ -23,7 +23,6 @@ import { findCrime } from "../Crime/CrimeHelpers";
 import { CompanyPosition } from "../Company/CompanyPosition";
 import { CompanyPositions } from "../Company/CompanyPositions";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
-import { AllGangs } from "../Gang/AllGangs";
 import { CityName } from "../Locations/data/CityNames";
 import { LocationName } from "../Locations/data/LocationNames";
 import { Router } from "../ui/GameRoot";
@@ -1047,11 +1046,14 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const facName = _ctx.helper.string("facName", _facName);
         const type = _ctx.helper.string("type", _type);
         const focus = _ctx.helper.boolean(_focus);
-        getFaction(_ctx, facName);
+        const faction = getFaction(_ctx, facName);
 
         // if the player is in a gang and the target faction is any of the gang faction, fail
-        if (player.inGang() && AllGangs[facName] !== undefined) {
-          workerScript.log("workForFaction", () => `Faction '${facName}' does not offer work at the moment.`);
+        if (player.inGang() && faction.name === player.getGangFaction().name) {
+          workerScript.log(
+            "workForFaction",
+            () => `You can't work for '${facName}' because youre managing a gang for it`,
+          );
           return false;
         }
 
@@ -1066,21 +1068,18 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           workerScript.log("workForFaction", () => txt);
         }
 
-        const fac = Factions[facName];
-        // Arrays listing factions that allow each time of work
-
         switch (type.toLowerCase()) {
           case "hacking":
           case "hacking contracts":
           case "hackingcontracts":
-            if (!FactionInfos[fac.name].offerHackingWork) {
+            if (!FactionInfos[faction.name].offerHackingWork) {
               workerScript.log(
                 "workForFaction",
-                () => `Faction '${fac.name}' do not need help with hacking contracts.`,
+                () => `Faction '${faction.name}' do not need help with hacking contracts.`,
               );
               return false;
             }
-            player.startFactionHackWork(fac);
+            player.startFactionHackWork(faction);
             if (focus) {
               player.startFocusing();
               Router.toWork();
@@ -1088,16 +1087,19 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               player.stopFocusing();
               Router.toTerminal();
             }
-            workerScript.log("workForFaction", () => `Started carrying out hacking contracts for '${fac.name}'`);
+            workerScript.log("workForFaction", () => `Started carrying out hacking contracts for '${faction.name}'`);
             return true;
           case "field":
           case "fieldwork":
           case "field work":
-            if (!FactionInfos[fac.name].offerFieldWork) {
-              workerScript.log("workForFaction", () => `Faction '${fac.name}' do not need help with field missions.`);
+            if (!FactionInfos[faction.name].offerFieldWork) {
+              workerScript.log(
+                "workForFaction",
+                () => `Faction '${faction.name}' do not need help with field missions.`,
+              );
               return false;
             }
-            player.startFactionFieldWork(fac);
+            player.startFactionFieldWork(faction);
             if (focus) {
               player.startFocusing();
               Router.toWork();
@@ -1105,16 +1107,19 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               player.stopFocusing();
               Router.toTerminal();
             }
-            workerScript.log("workForFaction", () => `Started carrying out field missions for '${fac.name}'`);
+            workerScript.log("workForFaction", () => `Started carrying out field missions for '${faction.name}'`);
             return true;
           case "security":
           case "securitywork":
           case "security work":
-            if (!FactionInfos[fac.name].offerSecurityWork) {
-              workerScript.log("workForFaction", () => `Faction '${fac.name}' do not need help with security work.`);
+            if (!FactionInfos[faction.name].offerSecurityWork) {
+              workerScript.log(
+                "workForFaction",
+                () => `Faction '${faction.name}' do not need help with security work.`,
+              );
               return false;
             }
-            player.startFactionSecurityWork(fac);
+            player.startFactionSecurityWork(faction);
             if (focus) {
               player.startFocusing();
               Router.toWork();
@@ -1122,7 +1127,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
               player.stopFocusing();
               Router.toTerminal();
             }
-            workerScript.log("workForFaction", () => `Started carrying out security work for '${fac.name}'`);
+            workerScript.log("workForFaction", () => `Started carrying out security work for '${faction.name}'`);
             return true;
           default:
             workerScript.log("workForFaction", () => `Invalid work type: '${type}`);
