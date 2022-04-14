@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { Modal } from "../../ui/React/Modal";
-import { use } from "../../ui/Context";
-import { useCorporation } from "./Context";
-import { ICorporation } from "../ICorporation";
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
+import { Modal } from "../../../ui/React/Modal";
+import { use } from "../../../ui/Context";
+import { useCorporation } from "../Context";
+import { ICorporation } from "../../ICorporation";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Money } from "../../ui/React/Money";
-import { SellShares } from "../Actions";
-import { KEY } from "../../utils/helpers/keyCodes";
+import { Money } from "../../../ui/React/Money";
+import { SellShares } from "../../Actions";
+import { KEY } from "../../../utils/helpers/keyCodes";
 interface IProps {
   open: boolean;
   onClose: () => void;
@@ -33,19 +33,22 @@ export function SellSharesModal(props: IProps): React.ReactElement {
 
   function ProfitIndicator(props: { shares: number | null; corp: ICorporation }): React.ReactElement {
     if (props.shares === null) return <></>;
+    let text = "";
     if (isNaN(props.shares) || props.shares <= 0) {
-      return <>ERROR: Invalid value entered for number of shares to sell</>;
+      text = `ERROR: Invalid value entered for number of shares to sell`;
     } else if (props.shares > corp.numShares) {
-      return <>You don't have this many shares to sell!</>;
+      text = `You don't have this many shares to sell!`;
     } else {
       const stockSaleResults = corp.calculateShareSale(props.shares);
       const profit = stockSaleResults[0];
-      return (
-        <>
-          Sell {props.shares} shares for a total of {numeralWrapper.formatMoney(profit)}
-        </>
-      );
+      text = `Sell ${props.shares} shares for a total of ${numeralWrapper.formatMoney(profit)}`;
     }
+
+    return (
+      <Typography>
+        <small>{text}</small>
+      </Typography>
+    );
   }
 
   function sell(): void {
@@ -84,7 +87,6 @@ export function SellSharesModal(props: IProps): React.ReactElement {
         <br />
         The current price of your company's stock is {numeralWrapper.formatMoney(corp.sharePrice)}
       </Typography>
-      <ProfitIndicator shares={shares} corp={corp} />
       <br />
       <TextField
         variant="standard"
@@ -97,6 +99,7 @@ export function SellSharesModal(props: IProps): React.ReactElement {
       <Button disabled={disabled} onClick={sell} sx={{ mx: 1 }}>
         Sell shares
       </Button>
+      <ProfitIndicator shares={shares} corp={corp} />
     </Modal>
   );
 }

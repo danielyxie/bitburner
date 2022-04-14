@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
-import { CreateCorporationModal } from "../../Corporation/ui/CreateCorporationModal";
+import { CreateCorporationModal } from "../../Corporation/ui/modals/CreateCorporationModal";
 import { LocationName } from "../data/LocationNames";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Factions } from "../../Faction/Factions";
@@ -34,6 +34,7 @@ import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer } from "../../Server/AllServers";
 import { ArcadeRoot } from "../../Arcade/ui/ArcadeRoot";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 type IProps = {
   loc: Location;
@@ -316,7 +317,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       return renderGrafting();
     }
     case LocationName.Sector12CityHall: {
-      return <CreateCorporation />;
+      return (BitNodeMultipliers.CorporationSoftCap < 0.15 && <></>) || <CreateCorporation />;
     }
     case LocationName.Sector12NSA: {
       return renderBladeburner();

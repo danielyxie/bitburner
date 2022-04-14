@@ -20,7 +20,6 @@ import { LiteratureNames } from "./Literature/data/LiteratureNames";
 
 import { GetServer, AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
 import { prestigeHomeComputer } from "./Server/ServerHelpers";
-import { SourceFileFlags, updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
@@ -139,7 +138,7 @@ export function prestigeAugmentation(): void {
   if (Player.bitNodeN === 8) {
     Player.money = BitNode8StartingMoney;
   }
-  if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {
+  if (Player.bitNodeN === 8 || Player.sourceFileLvl(8) > 0) {
     Player.hasWseAccount = true;
     Player.hasTixApiAccess = true;
   }
@@ -174,7 +173,6 @@ export function prestigeAugmentation(): void {
 // Prestige by destroying Bit Node and gaining a Source File
 export function prestigeSourceFile(flume: boolean): void {
   initBitNodeMultipliers(Player);
-  updateSourceFileFlags(Player);
 
   Player.prestigeSourceFile();
   prestigeWorkerScripts(); // Delete all Worker Scripts objects
@@ -198,9 +196,9 @@ export function prestigeSourceFile(flume: boolean): void {
   // Re-create foreign servers
   initForeignServers(Player.getHomeComputer());
 
-  if (SourceFileFlags[9] >= 2) {
+  if (Player.sourceFileLvl(9) >= 2) {
     homeComp.setMaxRam(128);
-  } else if (SourceFileFlags[1] > 0) {
+  } else if (Player.sourceFileLvl(1) > 0) {
     homeComp.setMaxRam(32);
   } else {
     homeComp.setMaxRam(8);
@@ -234,10 +232,10 @@ export function prestigeSourceFile(flume: boolean): void {
   }
 
   // Give levels of NeuroFluxGoverner for Source-File 12. Must be done here before Augmentations are recalculated
-  if (SourceFileFlags[12] > 0) {
+  if (Player.sourceFileLvl(12) > 0) {
     Player.augmentations.push({
       name: AugmentationNames.NeuroFluxGovernor,
-      level: SourceFileFlags[12],
+      level: Player.sourceFileLvl(12),
     });
   }
 
@@ -264,7 +262,7 @@ export function prestigeSourceFile(flume: boolean): void {
   if (Player.bitNodeN === 8) {
     Player.money = BitNode8StartingMoney;
   }
-  if (Player.bitNodeN === 8 || SourceFileFlags[8] > 0) {
+  if (Player.bitNodeN === 8 || Player.sourceFileLvl(8) > 0) {
     Player.hasWseAccount = true;
     Player.hasTixApiAccess = true;
   }
@@ -292,7 +290,7 @@ export function prestigeSourceFile(flume: boolean): void {
   Player.bladeburner = null;
 
   // Source-File 9 (level 3) effect
-  if (SourceFileFlags[9] >= 3) {
+  if (Player.sourceFileLvl(9) >= 3) {
     const hserver = Player.createHacknetServer();
 
     hserver.level = 100;
@@ -309,7 +307,7 @@ export function prestigeSourceFile(flume: boolean): void {
   staneksGift.prestigeSourceFile();
 
   // Gain int exp
-  if (SourceFileFlags[5] !== 0 && !flume) Player.gainIntelligenceExp(300);
+  if (Player.sourceFileLvl(5) !== 0 && !flume) Player.gainIntelligenceExp(300);
 
   resetPidCounter();
 }

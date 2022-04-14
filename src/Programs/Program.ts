@@ -24,9 +24,4 @@ export class Program {
     this.create = create;
     this.run = run;
   }
-
-  htmlID(): string {
-    const name = this.name.endsWith(".exe") ? this.name.slice(0, -".exe".length) : this.name;
-    return "create-program-" + name;
-  }
 }

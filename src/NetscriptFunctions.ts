@@ -40,7 +40,6 @@ import {
 } from "./Server/ServerHelpers";
 import { getPurchaseServerCost, getPurchaseServerLimit, getPurchaseServerMaxRam } from "./Server/ServerPurchases";
 import { Server } from "./Server/Server";
-import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { influenceStockThroughServerHack, influenceStockThroughServerGrow } from "./StockMarket/PlayerInfluencing";
 
 import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
@@ -1548,7 +1547,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     getBitNodeMultipliers: function (): IBNMults {
       updateDynamicRam("getBitNodeMultipliers", getRamCost(Player, "getBitNodeMultipliers"));
-      if (SourceFileFlags[5] <= 0 && Player.bitNodeN !== 5) {
+      if (Player.sourceFileLvl(5) <= 0 && Player.bitNodeN !== 5) {
         throw makeRuntimeErrorMsg("getBitNodeMultipliers", "Requires Source-File 5 to run.");
       }
       const copy = Object.assign({}, BitNodeMultipliers);
