@@ -636,8 +636,7 @@ export class PlayerObject implements IPlayer {
     return "Player";
   }
 
-
-    /**
+  /**
    * Serialize the current object to a JSON save state.
    */
   toJSON(): any {
