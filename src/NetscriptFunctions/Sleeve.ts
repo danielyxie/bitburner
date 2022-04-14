@@ -101,7 +101,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       checkSleeveAPIAccess("travel");
       checkSleeveNumber("travel", sleeveNumber);
       if (checkEnum(CityName, cityName)) {
-        return player.sleeves[sleeveNumber].travel(player, cityName as CityName);
+        return player.sleeves[sleeveNumber].travel(player, cityName);
       } else {
         throw helper.makeRuntimeErrorMsg("sleeve.setToCompanyWork", `Invalid city name: '${cityName}'.`);
       }
