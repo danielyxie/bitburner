@@ -4,6 +4,8 @@
 
 ## RunningScript.server property
 
+Hostname of the server on which this script runs
+
 <b>Signature:</b>
 
 ```typescript

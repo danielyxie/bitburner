@@ -11,7 +11,7 @@ import { StyleEditorButton } from "./StyleEditorButton";
 import { ThemeEntry } from "./ThemeEntry";
 import { ThemeCollaborate } from "./ThemeCollaborate";
 import { Modal } from "../../ui/React/Modal";
-import { SnackbarEvents } from "../../ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 
 interface IProps {
   router: IRouter;
@@ -54,7 +54,7 @@ export function ThemeBrowser({ router }: IProps): React.ReactElement {
           UNDO
         </Button>
       </>,
-      "info",
+      ToastVariant.INFO,
       30000,
     );
   }

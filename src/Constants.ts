@@ -116,8 +116,8 @@ export const CONSTANTS: {
   TotalNumBitNodes: number;
   LatestUpdate: string;
 } = {
-  VersionString: "1.6.3",
-  VersionNumber: 13,
+  VersionString: "1.6.4",
+  VersionNumber: 14,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -276,7 +276,7 @@ export const CONSTANTS: {
   CodingContractBaseCompanyRepGain: 4000,
   CodingContractBaseMoneyGain: 75e6,
 
-  // Augmentation crafting multipliers
+  // Augmentation grafting multipliers
   AugmentationGraftingCostMult: 3,
   AugmentationGraftingTimeBase: 3600000,
 

@@ -51,29 +51,31 @@ export function NewIndustry(corporation: ICorporation, industry: string, name: s
 export function NewCity(corporation: ICorporation, division: IIndustry, city: string): void {
   if (corporation.funds < CorporationConstants.OfficeInitialCost) {
     throw new Error("You don't have enough company funds to open a new office!");
-  } else {
-    corporation.funds = corporation.funds - CorporationConstants.OfficeInitialCost;
-    division.offices[city] = new OfficeSpace({
-      loc: city,
-      size: CorporationConstants.OfficeInitialSize,
-    });
   }
+  if (division.offices[city]) {
+    throw new Error(`You have already expanded into ${city} for ${division.name}`);
+  }
+  corporation.funds = corporation.funds - CorporationConstants.OfficeInitialCost;
+  division.offices[city] = new OfficeSpace({
+    loc: city,
+    size: CorporationConstants.OfficeInitialSize,
+  });
 }
 
 export function UnlockUpgrade(corporation: ICorporation, upgrade: CorporationUnlockUpgrade): void {
-  if (corporation.funds < upgrade[1]) {
+  if (corporation.funds < upgrade.price) {
     throw new Error("Insufficient funds");
   }
-  if (corporation.unlockUpgrades[upgrade[0]] === 1) {
-    throw new Error(`You have already unlocked the ${upgrade[2]} upgrade!`);
+  if (corporation.unlockUpgrades[upgrade.index] === 1) {
+    throw new Error(`You have already unlocked the ${upgrade.name} upgrade!`);
   }
   corporation.unlock(upgrade);
 }
 
 export function LevelUpgrade(corporation: ICorporation, upgrade: CorporationUpgrade): void {
-  const baseCost = upgrade[1];
-  const priceMult = upgrade[2];
-  const level = corporation.upgrades[upgrade[0]];
+  const baseCost = upgrade.basePrice;
+  const priceMult = upgrade.priceMult;
+  const level = corporation.upgrades[upgrade.index];
   const cost = baseCost * Math.pow(priceMult, level);
   if (corporation.funds < cost) {
     throw new Error("Insufficient funds");
@@ -257,7 +259,7 @@ export function BulkPurchase(corp: ICorporation, warehouse: Warehouse, material:
   if (isNaN(amt) || amt < 0) {
     throw new Error(`Invalid input amount`);
   }
-  if (amt * matSize <= maxAmount) {
+  if (amt > maxAmount) {
     throw new Error(`You do not have enough warehouse size to fit this purchase`);
   }
   const cost = amt * material.bCost;
@@ -345,10 +347,17 @@ export function PurchaseWarehouse(corp: ICorporation, division: IIndustry, city:
   corp.funds = corp.funds - CorporationConstants.WarehouseInitialCost;
 }
 
-export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, warehouse: Warehouse): void {
-  const sizeUpgradeCost = CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1);
+export function UpgradeWarehouseCost(warehouse: Warehouse, amt: number): number {
+  return Array.from(Array(amt).keys()).reduce(
+    (acc, index) => acc + CorporationConstants.WarehouseUpgradeBaseCost * Math.pow(1.07, warehouse.level + 1 + index),
+    0,
+  );
+}
+
+export function UpgradeWarehouse(corp: ICorporation, division: IIndustry, warehouse: Warehouse, amt = 1): void {
+  const sizeUpgradeCost = UpgradeWarehouseCost(warehouse, amt);
   if (corp.funds < sizeUpgradeCost) return;
-  ++warehouse.level;
+  warehouse.level += amt;
   warehouse.updateSize(corp, division);
   corp.funds = corp.funds - sizeUpgradeCost;
 }
@@ -416,7 +425,7 @@ export function MakeProduct(
   }
 
   const product = new Product({
-    name: productName.replace(/[<>]/g, ""), //Sanitize for HTMl elements
+    name: productName.replace(/[<>]/g, "").trim(), //Sanitize for HTMl elements
     createCity: city,
     designCost: designInvest,
     advCost: marketingInvest,
@@ -488,9 +497,20 @@ export function CancelExportMaterial(divisionName: string, cityName: string, mat
 export function LimitProductProduction(product: Product, cityName: string, qty: number): void {
   if (qty < 0 || isNaN(qty)) {
     product.prdman[cityName][0] = false;
+    product.prdman[cityName][1] = 0;
   } else {
     product.prdman[cityName][0] = true;
     product.prdman[cityName][1] = qty;
+  }
+}
+
+export function LimitMaterialProduction(material: Material, qty: number): void {
+  if (qty < 0 || isNaN(qty)) {
+    material.prdman[0] = false;
+    material.prdman[1] = 0;
+  } else {
+    material.prdman[0] = true;
+    material.prdman[1] = qty;
   }
 }
 

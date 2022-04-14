@@ -25,7 +25,7 @@ import { Settings } from "../../Settings/Settings";
 import { iTutorialNextStep, ITutorial, iTutorialSteps } from "../../InteractiveTutorial";
 import { debounce } from "lodash";
 import { saveObject } from "../../SaveObject";
-import { loadThemes } from "./themes";
+import { loadThemes, makeTheme, sanitizeTheme } from "./themes";
 import { GetServer } from "../../Server/AllServers";
 
 import Button from "@mui/material/Button";
@@ -362,6 +362,8 @@ export function Root(props: IProps): React.ReactElement {
     monaco.languages.typescript.javascriptDefaults.addExtraLib(source, "netscript.d.ts");
     monaco.languages.typescript.typescriptDefaults.addExtraLib(source, "netscript.d.ts");
     loadThemes(monaco);
+    sanitizeTheme(Settings.EditorTheme);
+    monaco.editor.defineTheme("customTheme", makeTheme(Settings.EditorTheme));
   }
 
   // When the editor is mounted
@@ -981,11 +983,11 @@ export function Root(props: IProps): React.ReactElement {
           </Button>
           <Typography>
             {" "}
-            Documentation:{" "}
+            <strong>Documentation:</strong>{" "}
             <Link target="_blank" href="https://bitburner.readthedocs.io/en/latest/index.html">
               Basic
-            </Link>{" "}
-            |
+            </Link>
+            {" | "}
             <Link target="_blank" href="https://github.com/danielyxie/bitburner/blob/dev/markdown/bitburner.ns.md">
               Full
             </Link>
@@ -993,7 +995,11 @@ export function Root(props: IProps): React.ReactElement {
         </Box>
         <OptionsModal
           open={optionsOpen}
-          onClose={() => setOptionsOpen(false)}
+          onClose={() => {
+            sanitizeTheme(Settings.EditorTheme);
+            monacoRef.current?.editor.defineTheme("customTheme", makeTheme(Settings.EditorTheme));
+            setOptionsOpen(false);
+          }}
           options={{
             theme: Settings.MonacoTheme,
             insertSpaces: Settings.MonacoInsertSpaces,
@@ -1002,6 +1008,8 @@ export function Root(props: IProps): React.ReactElement {
             vim: Settings.MonacoVim,
           }}
           save={(options: Options) => {
+            sanitizeTheme(Settings.EditorTheme);
+            monacoRef.current?.editor.defineTheme("customTheme", makeTheme(Settings.EditorTheme));
             setOptions(options);
             Settings.MonacoTheme = options.theme;
             Settings.MonacoInsertSpaces = options.insertSpaces;

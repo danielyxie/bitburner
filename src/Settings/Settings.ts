@@ -5,6 +5,7 @@ import { defaultStyles } from "../Themes/Styles";
 import { WordWrapOptions } from "../ScriptEditor/ui/Options";
 import { OverviewSettings } from "../ui/React/Overview";
 import { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
+import { defaultMonacoTheme, IScriptEditorTheme } from "../ScriptEditor/ui/themes";
 
 /**
  * Represents the default settings the player could customize.
@@ -62,6 +63,11 @@ interface IDefaultSettings {
    * Locale used for display numbers
    */
   Locale: string;
+
+  /**
+   * Limit the number of recently killed script entries being tracked.
+   */
+  MaxRecentScriptsCapacity: number;
 
   /**
    * Limit the number of log entries for each script being executed on each server.
@@ -152,6 +158,11 @@ interface IDefaultSettings {
    *  If the game's sidebar is opened
    */
   IsSidebarOpened: boolean;
+
+  /**
+   *  Script editor theme data
+   */
+  EditorTheme: IScriptEditorTheme;
 }
 
 /**
@@ -191,6 +202,7 @@ export const defaultSettings: IDefaultSettings = {
   EnableBashHotkeys: false,
   TimestampsFormat: "",
   Locale: "en",
+  MaxRecentScriptsCapacity: 50,
   MaxLogCapacity: 50,
   MaxPortCapacity: 50,
   MaxTerminalCapacity: 500,
@@ -210,6 +222,8 @@ export const defaultSettings: IDefaultSettings = {
   theme: defaultTheme,
   styles: defaultStyles,
   overview: { x: 0, y: 0, opened: true },
+
+  EditorTheme: defaultMonacoTheme,
 };
 
 /**
@@ -228,6 +242,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   EnableBashHotkeys: defaultSettings.EnableBashHotkeys,
   TimestampsFormat: defaultSettings.TimestampsFormat,
   Locale: "en",
+  MaxRecentScriptsCapacity: defaultSettings.MaxRecentScriptsCapacity,
   MaxLogCapacity: defaultSettings.MaxLogCapacity,
   MaxPortCapacity: defaultSettings.MaxPortCapacity,
   MaxTerminalCapacity: defaultSettings.MaxTerminalCapacity,
@@ -255,6 +270,7 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
   theme: { ...defaultTheme },
   styles: { ...defaultStyles },
   overview: defaultSettings.overview,
+  EditorTheme: { ...defaultMonacoTheme },
   init() {
     Object.assign(Settings, defaultSettings);
   },
@@ -266,6 +282,8 @@ export const Settings: ISettings & ISelfInitializer & ISelfLoading = {
     delete save.styles;
     Object.assign(Settings.overview, save.overview);
     delete save.overview;
+    Object.assign(Settings.EditorTheme, save.EditorTheme);
+    delete save.EditorTheme;
     Object.assign(Settings, save);
   },
 };

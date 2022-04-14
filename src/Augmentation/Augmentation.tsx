@@ -133,7 +133,7 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
       desc = (
         <>
           {desc}
-          <br />+{f(mults.charisma_mult - 1)} Charisma skill
+          <br />+{f(mults.charisma_mult - 1)} charisma skill
         </>
       );
   }
@@ -379,9 +379,6 @@ export class Augmentation {
 
   // Name of Augmentation
   name = "";
-
-  // Whether the player owns this Augmentation
-  owned = false;
 
   // Array of names of all prerequisites
   prereqs: string[] = [];
