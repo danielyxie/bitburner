@@ -1124,7 +1124,7 @@ export interface NetscriptPort {
    *
    * @returns The data popped off the queue if it was full.
    */
-  write(value: string | number): null | string | number;
+  write(value: unknown): null | unknown;
 
   /**
    * Attempt to write data to the port.
@@ -1133,7 +1133,7 @@ export interface NetscriptPort {
    *
    * @returns True if the data was added to the port, false if the port was full
    */
-  tryWrite(value: string | number): boolean;
+  tryWrite(value: unknown): boolean;
 
   /**
    * Shift an element out of the port.
@@ -1144,7 +1144,7 @@ export interface NetscriptPort {
    * If the port is empty, then the string “NULL PORT DATA” will be returned.
    * @returns the data read.
    */
-  read(): string | number;
+  read(): unknown;
 
   /**
    * Retrieve the first element from the port without removing it.
@@ -1156,7 +1156,7 @@ export interface NetscriptPort {
    * the port is empty, the string “NULL PORT DATA” will be returned.
    * @returns the data read
    */
-  peek(): string | number;
+  peek(): unknown;
 
   /**
    * Check if the port is full.
@@ -3258,12 +3258,12 @@ export interface CodingContract {
    * Attempts to solve the Coding Contract with the provided solution.
    *
    * @param answer - Solution for the contract.
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @param opts - Optional parameters for configuring function behavior.
    * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
    */
-  attempt(answer: string[] | number, filename: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
+  attempt(answer: string[] | number | string, filename: string, host?: string, opts?: CodingAttemptOptions): boolean | string;
 
   /**
    * Get the type of a coding contract.
@@ -3273,7 +3273,7 @@ export interface CodingContract {
    * Returns a name describing the type of problem posed by the Coding Contract.
    * (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Name describing the type of problem posed by the Coding Contract.
    */
@@ -3286,7 +3286,7 @@ export interface CodingContract {
    *
    * Get the full text description for the problem posed by the Coding Contract.
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Contract’s text description.
    */
@@ -3314,7 +3314,7 @@ export interface CodingContract {
    *
    * Get the number of tries remaining on the contract before it self-destructs.
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns How many attempts are remaining for the contract;
    */
@@ -5109,8 +5109,7 @@ export interface NS {
    * PID stands for Process ID. The PID is a unique identifier for each script.
    * The PID will always be a positive integer.
    *
-   * Running this function with a numThreads argument of 0 will return 0 without running the script.
-   * However, running this function with a negative numThreads argument will cause a runtime error.
+   * Running this function with 0 or a negative numThreads argument will cause a runtime error.
    *
    * @example
    * ```ts
@@ -5902,7 +5901,7 @@ export interface NS {
    * @param data - Data to write.
    * @returns True if the data is successfully written to the port, and false otherwise.
    */
-  tryWritePort(port: number, data: string | number): Promise<boolean>;
+  tryWritePort(port: number, data: unknown): Promise<boolean>;
 
   /**
    * Read content of a file.
@@ -5917,7 +5916,7 @@ export interface NS {
    * @param handle - Filename to read from.
    * @returns Data in the specified text file.
    */
-  read(handle: string): any;
+  read(handle: string): unknown;
 
   /**
    * Get a copy of the data from a port without popping it.
@@ -5931,7 +5930,7 @@ export interface NS {
    * @param port - Port to peek. Must be an integer between 1 and 20.
    * @returns Data in the specified port.
    */
-  peek(port: number): any;
+  peek(port: number): unknown;
 
   /**
    * Clear data from a file.
@@ -5963,7 +5962,7 @@ export interface NS {
    * Write data to that netscript port.
    * @returns The data popped off the queue if it was full.
    */
-  writePort(port: number, data: string | number): Promise<any>;
+  writePort(port: number, data: unknown): Promise<unknown>;
   /**
    * Read data from a port.
    * @remarks
@@ -5974,7 +5973,7 @@ export interface NS {
    * If the queue is empty, then the string “NULL PORT DATA” will be returned.
    * @returns the data read.
    */
-  readPort(port: number): any;
+  readPort(port: number): unknown;
 
   /**
    * Get all data on a port.
