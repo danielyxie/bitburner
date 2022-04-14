@@ -40,7 +40,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
   const [abc, setABC] = useState(["------", "------", "------"]);
 
   function setTask(): void {
-    props.sleeve.resetTaskStatus(); // sets to idle
+    props.sleeve.resetTaskStatus(player); // sets to idle
     switch (abc[0]) {
       case "------":
         break;
@@ -58,6 +58,9 @@ export function SleeveElem(props: IProps): React.ReactElement {
         break;
       case "Workout at Gym":
         props.sleeve.workoutAtGym(player, abc[2], abc[1]);
+        break;
+      case "Perform Bladeburner Actions":
+        props.sleeve.bladeburner(player, abc[1], abc[2]);
         break;
       case "Shock Recovery":
         props.sleeve.shockRecovery(player);
@@ -115,6 +118,13 @@ export function SleeveElem(props: IProps): React.ReactElement {
       break;
     case SleeveTaskType.Gym:
       desc = <>This sleeve is currently working out at {props.sleeve.currentTaskLocation}.</>;
+      break;
+    case SleeveTaskType.Bladeburner:
+      let contract = '';
+      if (props.sleeve.bbContract !== '------') {
+        contract = ` - ${props.sleeve.bbContract} (Success Rate: ${props.sleeve.currentTaskLocation})`;
+      }
+      desc = <>This sleeve is currently attempting to {props.sleeve.bbAction}{contract}</>
       break;
     case SleeveTaskType.Recovery:
       desc = (
@@ -178,8 +188,10 @@ export function SleeveElem(props: IProps): React.ReactElement {
               <Button onClick={setTask} sx={{ width: '100%' }}>Set Task</Button>
               <Typography>{desc}</Typography>
               <Typography>
-                {props.sleeve.currentTask === SleeveTaskType.Crime &&
-                  createProgressBarText({
+                {(props.sleeve.currentTask === SleeveTaskType.Crime 
+                || props.sleeve.currentTask === SleeveTaskType.Bladeburner) 
+                && props.sleeve.currentTaskMaxTime > 0
+                && createProgressBarText({
                     progress: props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime,
                     totalTicks: 25,
                   })}

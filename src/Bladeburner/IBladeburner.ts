@@ -3,6 +3,8 @@ import { City } from "./City";
 import { Skill } from "./Skill";
 import { IAction } from "./IAction";
 import { IPlayer } from "../PersonObjects/IPlayer";
+import { IPerson } from "../PersonObjects/IPerson";
+import { ITaskTracker } from "../PersonObjects/ITaskTracker";
 import { IRouter } from "../ui/Router";
 import { WorkerScript } from "../Netscript/WorkerScript";
 
@@ -70,13 +72,12 @@ export interface IBladeburner {
   getGeneralActionNamesNetscriptFn(): string[];
   getSkillNamesNetscriptFn(): string[];
   startActionNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): boolean;
-  getActionTimeNetscriptFn(player: IPlayer, type: string, name: string, workerScript: WorkerScript): number;
+  getActionTimeNetscriptFn(person: IPerson, type: string, name: string): number|string;
   getActionEstimatedSuccessChanceNetscriptFn(
-    player: IPlayer,
+    person: IPerson,
     type: string,
     name: string,
-    workerScript: WorkerScript,
-  ): [number, number];
+  ): [number, number]|string;
   getActionCountRemainingNetscriptFn(type: string, name: string, workerScript: WorkerScript): number;
   getSkillLevelNetscriptFn(skillName: string, workerScript: WorkerScript): number;
   getSkillUpgradeCostNetscriptFn(skillName: string, workerScript: WorkerScript): number;
@@ -95,20 +96,22 @@ export interface IBladeburner {
   triggerMigration(sourceCityName: string): void;
   triggerPotentialMigration(sourceCityName: string, chance: number): void;
   randomEvent(): void;
-  gainActionStats(player: IPlayer, action: IAction, success: boolean): void;
   getDiplomacyEffectiveness(player: IPlayer): number;
-  getRecruitmentSuccessChance(player: IPlayer): number;
-  getRecruitmentTime(player: IPlayer): number;
+  getRecruitmentSuccessChance(player: IPerson): number;
+  getRecruitmentTime(player: IPerson): number;
   resetSkillMultipliers(): void;
   updateSkillMultipliers(): void;
-  completeOperation(success: boolean): void;
+  completeOperation(success: boolean, player: IPlayer): void;
   getActionObject(actionId: IActionIdentifier): IAction | null;
-  completeContract(success: boolean): void;
-  completeAction(router: IRouter, player: IPlayer): void;
+  completeContract(success: boolean, actionIdent: IActionIdentifier): void;
+  completeAction(player: IPlayer, person: IPerson, actionIdent: IActionIdentifier): ITaskTracker;
+  infiltrateSynthoidCommunities(): void;
   changeRank(player: IPlayer, change: number): void;
   processAction(router: IRouter, player: IPlayer, seconds: number): void;
   calculateStaminaGainPerSecond(player: IPlayer): number;
   calculateMaxStamina(player: IPlayer): void;
   create(): void;
   process(router: IRouter, player: IPlayer): void;
+  getActionStats(action: IAction, success: boolean): ITaskTracker;
+  sleeveSupport(joining: boolean): void;
 }

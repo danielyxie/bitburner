@@ -30,8 +30,9 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServer } from "../Hacknet/HacknetServer";
 import { ISkillProgress } from "./formulas/skill";
 import { PlayerAchievement } from "../Achievements/Achievements";
+import { IPerson } from "./IPerson";
 
-export interface IPlayer {
+export interface IPlayer extends IPerson {
   // Class members
   augmentations: IPlayerOwnedAugmentation[];
   bitNodeN: number;
@@ -185,13 +186,6 @@ export interface IPlayer {
   canAccessGang(): boolean;
   canAccessGrafting(): boolean;
   canAfford(cost: number): boolean;
-  gainHackingExp(exp: number): void;
-  gainStrengthExp(exp: number): void;
-  gainDefenseExp(exp: number): void;
-  gainDexterityExp(exp: number): void;
-  gainAgilityExp(exp: number): void;
-  gainCharismaExp(exp: number): void;
-  gainIntelligenceExp(exp: number): void;
   gainMoney(money: number, source: string): void;
   getCurrentServer(): BaseServer;
   getGangFaction(): Faction;
@@ -213,7 +207,6 @@ export interface IPlayer {
   process(router: IRouter, numCycles?: number): void;
   reapplyAllAugmentations(resetMultipliers?: boolean): void;
   reapplyAllSourceFiles(): void;
-  regenerateHp(amt: number): void;
   setMoney(amt: number): void;
   singularityStopWork(): string;
   startBladeburner(p: any): void;
@@ -240,12 +233,9 @@ export interface IPlayer {
   startGang(facName: string, isHacking: boolean): void;
   startWork(companyName: string): void;
   startWorkPartTime(companyName: string): void;
-  takeDamage(amt: number): boolean;
   travel(to: CityName): boolean;
   giveExploit(exploit: Exploit): void;
   giveAchievement(achievementId: string): void;
-  queryStatFromString(str: string): number;
-  getIntelligenceBonus(weight: number): number;
   getCasinoWinnings(): number;
   quitJob(company: string): void;
   hasJob(): boolean;
@@ -266,7 +256,6 @@ export interface IPlayer {
   resetMultipliers(): void;
   prestigeAugmentation(): void;
   prestigeSourceFile(): void;
-  calculateSkill(exp: number, mult?: number): number;
   calculateSkillProgress(exp: number, mult?: number): ISkillProgress;
   resetWorkStatus(generalType?: string, group?: string, workType?: string): void;
   getWorkHackExpGain(): number;

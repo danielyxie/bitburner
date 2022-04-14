@@ -1,4 +1,4 @@
-// Base class representing a person-like object
+import * as generalMethods from "./Player/PlayerObjectGeneralMethods";
 import { Augmentation } from "../Augmentation/Augmentation";
 import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
@@ -6,32 +6,12 @@ import { CityName } from "../Locations/data/CityNames";
 import { CONSTANTS } from "../Constants";
 import { calculateSkill } from "./formulas/skill";
 import { calculateIntelligenceBonus } from "./formulas/intelligence";
+import { IPerson } from "./IPerson";
+import { Reviver } from "../utils/JSONReviver";
+import { ITaskTracker } from "./ITaskTracker";
 
-// Interface that defines a generic object used to track experience/money
-// earnings for tasks
-export interface ITaskTracker {
-  hack: number;
-  str: number;
-  def: number;
-  dex: number;
-  agi: number;
-  cha: number;
-  money: number;
-}
-
-export function createTaskTracker(): ITaskTracker {
-  return {
-    hack: 0,
-    str: 0,
-    def: 0,
-    dex: 0,
-    agi: 0,
-    cha: 0,
-    money: 0,
-  };
-}
-
-export abstract class Person {
+// Base class representing a person-like object
+export abstract class Person implements IPerson {
   /**
    * Stats
    */
@@ -44,6 +24,7 @@ export abstract class Person {
   intelligence = 1;
   hp = 10;
   max_hp = 10;
+  money = 0;
 
   /**
    * Experience
@@ -240,4 +221,35 @@ export abstract class Person {
   getIntelligenceBonus(weight: number): number {
     return calculateIntelligenceBonus(this.intelligence, weight);
   }
+
+  abstract takeDamage(amt: number): boolean;
+
+  abstract whoAmI(): string;
+
+  gainHackingExp: (exp: number) => void;
+  gainStrengthExp: (exp: number) => void;
+  gainDefenseExp: (exp: number) => void;
+  gainDexterityExp: (exp: number) => void;
+  gainAgilityExp: (exp: number) => void;
+  gainCharismaExp: (exp: number) => void;
+  gainIntelligenceExp: (exp: number) => void;
+  gainStats: (retValue: ITaskTracker) => void;
+  calculateSkill: (exp: number, mult: number) => number;
+  regenerateHp: (amt: number) => void;
+  queryStatFromString: (str: string) => number;
+  constructor() {
+    this.gainHackingExp = generalMethods.gainHackingExp;
+    this.gainStrengthExp = generalMethods.gainStrengthExp;
+    this.gainDefenseExp = generalMethods.gainDefenseExp;
+    this.gainDexterityExp = generalMethods.gainDexterityExp;
+    this.gainAgilityExp = generalMethods.gainAgilityExp;
+    this.gainCharismaExp = generalMethods.gainCharismaExp;
+    this.gainIntelligenceExp = generalMethods.gainIntelligenceExp;
+    this.gainStats = generalMethods.gainStats;
+    this.calculateSkill = generalMethods.calculateSkill;
+    this.regenerateHp = generalMethods.regenerateHp;
+    this.queryStatFromString = generalMethods.queryStatFromString;
+  }
 }
+
+Reviver.constructors.Person = Person;
