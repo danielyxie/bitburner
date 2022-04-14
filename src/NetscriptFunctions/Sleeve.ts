@@ -99,7 +99,17 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       const cityName = helper.string("travel", "cityName", _cityName);
       checkSleeveAPIAccess("travel");
       checkSleeveNumber("travel", sleeveNumber);
-      return player.sleeves[sleeveNumber].travel(player, cityName as CityName);
+      switch (cityName) {
+        case CityName.Aevum:
+        case CityName.Chongqing:
+        case CityName.Sector12:
+        case CityName.NewTokyo:
+        case CityName.Ishima:
+        case CityName.Volhaven:
+          return player.sleeves[sleeveNumber].travel(player, cityName as CityName);
+        default:
+          throw helper.makeRuntimeErrorMsg("sleeve.setToCompanyWork", `Invalid city name: '${cityName}'.`);
+      }
     },
     setToCompanyWork: function (_sleeveNumber: unknown, acompanyName: unknown): boolean {
       updateRam("setToCompanyWork");
