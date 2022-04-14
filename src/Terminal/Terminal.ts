@@ -68,7 +68,7 @@ import { sudov } from "./commands/sudov";
 import { tail } from "./commands/tail";
 import { top } from "./commands/top";
 import { unalias } from "./commands/unalias";
-import { vim } from "./commands/vim";
+import { nvim, vi, vim } from "./commands/vim";
 import { weaken } from "./commands/weaken";
 import { wget } from "./commands/wget";
 import { hash } from "../hash/hash";
@@ -799,6 +799,7 @@ export class Terminal implements ITerminal {
       mem: mem,
       mv: mv,
       nano: nano,
+      nvim: nvim,
       ps: ps,
       rm: rm,
       run: run,
@@ -809,6 +810,7 @@ export class Terminal implements ITerminal {
       apr1: apr1,
       top: top,
       unalias: unalias,
+      vi: vi,
       vim: vim,
       weaken: weaken,
       wget: wget,
