@@ -31,6 +31,17 @@ const useStyles = makeStyles(() =>
   }),
 );
 
+function DefaultAssignment(): React.ReactElement {
+  return (
+    <Typography>
+      Perform work/carry out assignments for your faction to help further its cause! By doing so you will earn
+      reputation for your faction. You will also gain reputation passively over time, although at a very slow rate.
+      Earning reputation will allow you to purchase Augmentations through this faction, which are powerful upgrades that
+      enhance your abilities.
+    </Typography>
+  );
+}
+
 export function Info(props: IProps): React.ReactElement {
   const setRerender = useState(false)[1];
   function rerender(): void {
@@ -43,6 +54,8 @@ export function Info(props: IProps): React.ReactElement {
   }, []);
 
   const classes = useStyles();
+
+  const Assignment = props.factionInfo.assignment ?? DefaultAssignment;
 
   const favorGain = props.faction.getFavorGain();
   const offersWork =
@@ -97,18 +110,7 @@ export function Info(props: IProps): React.ReactElement {
       </Box>
 
       <Typography>-------------------------</Typography>
-      <Typography>
-        {offersWork ? (
-          <>
-            Perform work/carry out assignments for your faction to help further its cause! By doing so you will earn
-            reputation for your faction.{" "}
-          </>
-        ) : (
-          <></>
-        )}
-        You will also gain reputation passively over time, although at a very slow rate. Earning reputation will allow
-        you to purchase Augmentations through this faction, which are powerful upgrades that enhance your abilities.
-      </Typography>
+      <Assignment />
     </>
   );
 }

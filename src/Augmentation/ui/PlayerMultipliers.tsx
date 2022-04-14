@@ -7,7 +7,6 @@ import * as React from "react";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Player } from "../../Player";
 import { Settings } from "../../Settings/Settings";
-import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Augmentations } from "../Augmentations";
 
@@ -35,7 +34,7 @@ interface IBitNodeModifiedStatsProps {
 
 function BitNodeModifiedStats(props: IBitNodeModifiedStatsProps): React.ReactElement {
   // If player doesn't have SF5 or if the property isn't affected by BitNode mults
-  if (props.mult === 1 || SourceFileFlags[5] === 0)
+  if (props.mult === 1 || Player.sourceFileLvl(5) === 0)
     return <Typography color={props.color}>{numeralWrapper.formatPercentage(props.base)}</Typography>;
 
   return (

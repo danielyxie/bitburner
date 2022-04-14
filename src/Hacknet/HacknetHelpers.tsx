@@ -21,12 +21,11 @@ import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../InteractiveTuto
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { GetServer } from "../Server/AllServers";
 import { Server } from "../Server/Server";
-import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 // Returns a boolean indicating whether the player has Hacknet Servers
 // (the upgraded form of Hacknet Nodes)
 export function hasHacknetServers(player: IPlayer): boolean {
-  return player.bitNodeN === 9 || SourceFileFlags[9] > 0;
+  return player.bitNodeN === 9 || player.sourceFileLvl(9) > 0;
 }
 
 export function purchaseHacknet(player: IPlayer): number {

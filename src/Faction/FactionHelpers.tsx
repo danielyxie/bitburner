@@ -62,7 +62,8 @@ export function hasAugmentationPrereqs(aug: Augmentation): boolean {
         console.error(`Invalid prereq Augmentation ${aug.prereqs[i]}`);
         continue;
       }
-      if (prereqAug.owned === false) {
+
+      if (Player.hasAugmentation(prereqAug, true) === false) {
         hasPrereqs = false;
 
         // Check if the aug is purchased
