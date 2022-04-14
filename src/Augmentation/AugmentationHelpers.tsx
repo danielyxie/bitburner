@@ -1,5 +1,5 @@
 import { Augmentation } from "./Augmentation";
-import { Augmentations } from "./Augmentations";
+import { StaticAugmentations } from "./StaticAugmentations";
 import { PlayerOwnedAugmentation, IPlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
 import { AugmentationNames } from "./data/AugmentationNames";
 
@@ -23,7 +23,7 @@ import {
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Router } from "../ui/GameRoot";
 
-export function AddToAugmentations(aug: Augmentation): void {
+export function AddToStaticAugmentations(aug: Augmentation): void {
   const name = aug.name;
   Augmentations[name] = aug;
 }
@@ -44,6 +44,7 @@ export function getNextNeuroFluxLevel(): number {
     }
   }
   return currLevel + 1;
+  StaticAugmentations[name] = aug;
 }
 
 function createAugmentations(): void {
@@ -67,7 +68,7 @@ function resetFactionAugmentations(): void {
 
 function initAugmentations(): void {
   resetFactionAugmentations();
-  clearObject(Augmentations);
+  clearObject(StaticAugmentations);
   createAugmentations();
   updateAugmentationCosts();
   Player.reapplyAllAugmentations();
@@ -127,17 +128,17 @@ function resetAugmentation(aug: Augmentation): void {
   aug.addToFactions(aug.factions);
   const name = aug.name;
   if (augmentationExists(name)) {
-    delete Augmentations[name];
+    delete StaticAugmentations[name];
   }
-  AddToAugmentations(aug);
+  AddToStaticAugmentations(aug);
 }
 
 function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void {
-  const augObj = Augmentations[aug.name];
+  const staticAugmentation = StaticAugmentations[aug.name];
 
   // Apply multipliers
-  for (const mult of Object.keys(augObj.mults)) {
-    const v = Player.getMult(mult) * augObj.mults[mult];
+  for (const mult of Object.keys(staticAugmentation.mults)) {
+    const v = Player.getMult(mult) * staticAugmentation.mults[mult];
     Player.setMult(mult, v);
   }
 
@@ -183,7 +184,7 @@ function installAugmentations(force?: boolean): boolean {
   }
   for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
     const ownedAug = Player.queuedAugmentations[i];
-    const aug = Augmentations[ownedAug.name];
+    const aug = StaticAugmentations[ownedAug.name];
     if (aug == null) {
       console.error(`Invalid augmentation: ${ownedAug.name}`);
       continue;
@@ -213,7 +214,7 @@ function installAugmentations(force?: boolean): boolean {
 }
 
 function augmentationExists(name: string): boolean {
-  return Augmentations.hasOwnProperty(name);
+  return StaticAugmentations.hasOwnProperty(name);
 }
 
 export function isRepeatableAug(aug: Augmentation): boolean {

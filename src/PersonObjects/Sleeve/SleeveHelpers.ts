@@ -4,7 +4,7 @@ import { Sleeve } from "./Sleeve";
 import { IPlayer } from "../IPlayer";
 
 import { Augmentation } from "../../Augmentation/Augmentation";
-import { Augmentations } from "../../Augmentation/Augmentations";
+import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
@@ -68,8 +68,8 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
   if (p.inGang()) {
     const fac = p.getGangFaction();
 
-    for (const augName of Object.keys(Augmentations)) {
-      const aug = Augmentations[augName];
+    for (const augName of Object.keys(StaticAugmentations)) {
+      const aug = StaticAugmentations[augName];
       if (!isAvailableForSleeve(aug)) {
         continue;
       }
@@ -93,7 +93,7 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
     }
 
     for (const augName of fac.augmentations) {
-      const aug: Augmentation = Augmentations[augName];
+      const aug: Augmentation = StaticAugmentations[augName];
       if (!isAvailableForSleeve(aug)) {
         continue;
       }

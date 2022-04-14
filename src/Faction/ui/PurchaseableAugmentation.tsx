@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
 import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
-import { Augmentations } from "../../Augmentation/Augmentations";
+import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Faction } from "../Faction";
 import { IPlayer } from "../../PersonObjects/IPlayer";
@@ -35,7 +35,7 @@ interface IReqProps {
 }
 
 function Requirements(props: IReqProps): React.ReactElement {
-  const aug = Augmentations[props.augName];
+  const aug = StaticAugmentations[props.augName];
   if (!props.hasReq) {
     return (
       <TableCell key={1} colSpan={2}>
@@ -75,7 +75,7 @@ interface IProps {
 
 export function PurchaseableAugmentation(props: IProps): React.ReactElement {
   const [open, setOpen] = useState(false);
-  const aug = Augmentations[props.augName];
+  const aug = StaticAugmentations[props.augName];
   if (aug == null) throw new Error(`aug ${props.augName} does not exists`);
 
   if (aug == null) {

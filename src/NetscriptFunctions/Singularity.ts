@@ -3,7 +3,7 @@ import { IPlayer } from "../PersonObjects/IPlayer";
 import { purchaseAugmentation, joinFaction, getFactionAugmentationsFiltered } from "../Faction/FactionHelpers";
 import { startWorkerScript } from "../NetscriptWorker";
 import { Augmentation } from "../Augmentation/Augmentation";
-import { Augmentations } from "../Augmentation/Augmentations";
+import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { augmentationExists, installAugmentations } from "../Augmentation/AugmentationHelpers";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
 import { killWorkerScript } from "../Netscript/killWorkerScript";
@@ -56,7 +56,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
       throw _ctx.helper.makeRuntimeErrorMsg(`Invalid augmentation: '${name}'`);
     }
 
-    return Augmentations[name];
+    return StaticAugmentations[name];
   };
 
   const getFaction = function (_ctx: NetscriptContext, name: string): Faction {

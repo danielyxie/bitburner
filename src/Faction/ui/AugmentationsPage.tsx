@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 import { PurchaseableAugmentation } from "./PurchaseableAugmentation";
 
-import { Augmentations } from "../../Augmentation/Augmentations";
+import { StaticAugmentations } from "../../Augmentation/StaticAugmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Faction } from "../Faction";
 import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
@@ -63,8 +63,8 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   function getAugsSortedByCost(): string[] {
     const augs = getAugs();
     augs.sort((augName1, augName2) => {
-      const aug1 = Augmentations[augName1],
-        aug2 = Augmentations[augName2];
+      const aug1 = StaticAugmentations[augName1],
+        aug2 = StaticAugmentations[augName2];
       if (aug1 == null || aug2 == null) {
         throw new Error("Invalid Augmentation Names");
       }
@@ -78,16 +78,16 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   function getAugsSortedByPurchasable(): string[] {
     const augs = getAugs();
     function canBuy(augName: string): boolean {
-      const aug = Augmentations[augName];
       const repCost = aug.baseRepRequirement;
+      const aug = StaticAugmentations[augName];
       const hasReq = props.faction.playerReputation >= repCost;
       const hasRep = hasAugmentationPrereqs(aug);
       const hasCost = aug.baseCost !== 0 && player.money > aug.baseCost;
       return hasCost && hasReq && hasRep;
     }
     const buy = augs.filter(canBuy).sort((augName1, augName2) => {
-      const aug1 = Augmentations[augName1],
-        aug2 = Augmentations[augName2];
+      const aug1 = StaticAugmentations[augName1],
+        aug2 = StaticAugmentations[augName2];
       if (aug1 == null || aug2 == null) {
         throw new Error("Invalid Augmentation Names");
       }
@@ -97,8 +97,8 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
     const cantBuy = augs
       .filter((aug) => !canBuy(aug))
       .sort((augName1, augName2) => {
-        const aug1 = Augmentations[augName1],
-          aug2 = Augmentations[augName2];
+        const aug1 = StaticAugmentations[augName1],
+          aug2 = StaticAugmentations[augName2];
         if (aug1 == null || aug2 == null) {
           throw new Error("Invalid Augmentation Names");
         }
@@ -111,8 +111,8 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   function getAugsSortedByReputation(): string[] {
     const augs = getAugs();
     augs.sort((augName1, augName2) => {
-      const aug1 = Augmentations[augName1],
-        aug2 = Augmentations[augName2];
+      const aug1 = StaticAugmentations[augName1],
+        aug2 = StaticAugmentations[augName2];
       if (aug1 == null || aug2 == null) {
         throw new Error("Invalid Augmentation Names");
       }

@@ -5,7 +5,7 @@
 import { List, ListItemText, Paper, Tooltip, Typography } from "@mui/material";
 import * as React from "react";
 import { Player } from "../../Player";
-import { Augmentations } from "../Augmentations";
+import { StaticAugmentations } from "../StaticAugmentations";
 import { AugmentationNames } from "../data/AugmentationNames";
 
 export function PurchasedAugmentations(): React.ReactElement {
@@ -23,7 +23,7 @@ export function PurchasedAugmentations(): React.ReactElement {
     let displayName = ownedAug.name;
 
     if (ownedAug.name === AugmentationNames.NeuroFluxGovernor && i !== nfgIndex) continue;
-    const aug = Augmentations[ownedAug.name];
+    const aug = StaticAugmentations[ownedAug.name];
 
     let level = null;
     if (ownedAug.name === AugmentationNames.NeuroFluxGovernor) {

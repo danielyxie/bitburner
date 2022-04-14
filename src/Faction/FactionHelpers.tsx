@@ -1,4 +1,4 @@
-import { Augmentations } from "../Augmentation/Augmentations";
+import { StaticAugmentations } from "../Augmentation/StaticAugmentations";
 import { Augmentation } from "../Augmentation/Augmentation";
 import { PlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
@@ -57,7 +57,7 @@ export function hasAugmentationPrereqs(aug: Augmentation): boolean {
   let hasPrereqs = true;
   if (aug.prereqs && aug.prereqs.length > 0) {
     for (let i = 0; i < aug.prereqs.length; ++i) {
-      const prereqAug = Augmentations[aug.prereqs[i]];
+      const prereqAug = StaticAugmentations[aug.prereqs[i]];
       if (prereqAug == null) {
         console.error(`Invalid prereq Augmentation ${aug.prereqs[i]}`);
         continue;
@@ -162,7 +162,7 @@ export function processPassiveFactionRepGain(numCycles: number): void {
 export const getFactionAugmentationsFiltered = (player: IPlayer, faction: Faction): string[] => {
   // If player has a gang with this faction, return (almost) all augmentations
   if (player.hasGangWith(faction.name)) {
-    let augs = Object.values(Augmentations);
+    let augs = Object.values(StaticAugmentations);
 
     // Remove special augs
     augs = augs.filter((a) => !a.isSpecial);

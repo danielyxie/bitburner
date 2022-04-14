@@ -8,7 +8,7 @@ import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Player } from "../../Player";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { Augmentations } from "../Augmentations";
+import { StaticAugmentations } from "../StaticAugmentations";
 
 interface IAugmentedStats {
   [index: string]: number;
@@ -17,7 +17,7 @@ interface IAugmentedStats {
 function calculateAugmentedStats(): IAugmentedStats {
   const augP: IAugmentedStats = {};
   for (const aug of Player.queuedAugmentations) {
-    const augObj = Augmentations[aug.name];
+    const augObj = StaticAugmentations[aug.name];
     for (const mult of Object.keys(augObj.mults)) {
       const v = augP[mult] ? augP[mult] : 1;
       augP[mult] = v * augObj.mults[mult];

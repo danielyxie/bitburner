@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Sleeve } from "../Sleeve";
 import { findSleevePurchasableAugs } from "../SleeveHelpers";
-import { Augmentations } from "../../../Augmentation/Augmentations";
+import { StaticAugmentations } from "../../../Augmentation/StaticAugmentations";
 import { Augmentation } from "../../../Augmentation/Augmentation";
 import { Money } from "../../../ui/React/Money";
 import { Modal } from "../../../ui/React/Modal";
@@ -93,7 +93,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
             <Typography sx={{ mx: 1 }}>Owned Augmentations:</Typography>
             <Box display="grid" sx={{ gridTemplateColumns: "repeat(5, 1fr)", m: 1 }}>
               {ownedAugNames.map((augName) => {
-                const aug = Augmentations[augName];
+                const aug = StaticAugmentations[augName];
                 const info = typeof aug.info === "string" ? <span>{aug.info}</span> : aug.info;
                 const tooltip = (
                   <>
