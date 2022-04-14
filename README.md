@@ -1,5 +1,6 @@
 # Bitburner
 
+<iframe src="https://discord.com/widget?id=415207508303544321&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
 [![Build Status](https://github.com/danielyxie/bitburner/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/danielyxie/bitburner/actions/workflows/ci.yml)
 
 Bitburner is a programming-based [incremental game](https://en.wikipedia.org/wiki/Incremental_game)
