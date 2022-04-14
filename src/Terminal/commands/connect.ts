@@ -36,7 +36,9 @@ export function connect(
       terminal.connectToServer(player, hostname);
       return;
     }
-    terminal.error(`Cannot directly connect to ${hostname}. Make sure the server is backdoored or adjacent to your current Server`);
+    terminal.error(
+      `Cannot directly connect to ${hostname}. Make sure the server is backdoored or adjacent to your current Server`,
+    );
   } else {
     terminal.error("Host not found");
   }

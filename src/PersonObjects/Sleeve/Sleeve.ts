@@ -936,7 +936,7 @@ export class Sleeve extends Person {
    * Returns boolean indicating success
    */
   workForFaction(p: IPlayer, factionName: string, workType: string): boolean {
-    const faction = Factions[factionName]
+    const faction = Factions[factionName];
     if (factionName === "" || !faction || !(faction instanceof Faction) || !p.factions.includes(factionName)) {
       return false;
     }

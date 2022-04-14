@@ -2,7 +2,6 @@
 import * as React from "react";
 import { IMap } from "../types";
 
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
 import { numeralWrapper } from "../ui/numeralFormat";
@@ -410,8 +409,8 @@ export class Augmentation {
     this.info = params.info;
     this.prereqs = params.prereqs ? params.prereqs : [];
 
-    this.baseRepRequirement = params.repCost * BitNodeMultipliers.AugmentationRepCost;
-    this.baseCost = params.moneyCost * BitNodeMultipliers.AugmentationMoneyCost;
+    this.baseRepRequirement = params.repCost;
+    this.baseCost = params.moneyCost;
     this.startingCost = this.baseCost;
     this.factions = params.factions;
 

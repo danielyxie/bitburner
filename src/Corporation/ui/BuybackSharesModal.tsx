@@ -6,8 +6,8 @@ import { useCorporation } from "./Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { BuyBackShares } from '../Actions';
-import { dialogBoxCreate } from '../../ui/React/DialogBox';
+import { BuyBackShares } from "../Actions";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { KEY } from "../../utils/helpers/keyCodes";
 
 interface IProps {
@@ -40,9 +40,8 @@ export function BuybackSharesModal(props: IProps): React.ReactElement {
   function buy(): void {
     if (disabled) return;
     try {
-      BuyBackShares(corp, player, shares)
-    }
-    catch (err) {
+      BuyBackShares(corp, player, shares);
+    } catch (err) {
       dialogBoxCreate(err + "");
     }
     props.onClose();

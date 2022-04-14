@@ -8,7 +8,7 @@ import { BaseServer } from "../../Server/BaseServer";
 import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../DirectoryHelpers";
 import { IRouter } from "../../ui/Router";
 import { ITerminal } from "../ITerminal";
-import * as libarg from "arg"
+import * as libarg from "arg";
 
 export function ls(
   terminal: ITerminal,
@@ -19,19 +19,20 @@ export function ls(
 ): void {
   let flags;
   try {
-    flags = libarg({
-      '-l': Boolean,
-      '--grep': String,
-      '-g': '--grep',
-    },
-      { argv: args }
-    )
+    flags = libarg(
+      {
+        "-l": Boolean,
+        "--grep": String,
+        "-g": "--grep",
+      },
+      { argv: args },
+    );
   } catch (e) {
     // catch passing only -g / --grep with no string to use as the search
-    incorrectUsage()
+    incorrectUsage();
     return;
   }
-  const filter = flags['--grep']
+  const filter = flags["--grep"];
 
   const numArgs = args.length;
   function incorrectUsage(): void {
@@ -49,7 +50,7 @@ export function ls(
   }
 
   // If first arg doesn't contain a - it must be the file/folder
-  const dir = (args[0] && typeof args[0] == "string" && !args[0].startsWith("-")) ? args[0] : ""
+  const dir = args[0] && typeof args[0] == "string" && !args[0].startsWith("-") ? args[0] : "";
   const newPath = evaluateDirectoryPath(dir + "", terminal.cwd());
   prefix = newPath || "";
   if (!prefix.endsWith("/")) {
@@ -163,9 +164,7 @@ export function ls(
             <span key={rowItem[0]} className={classes.scriptLink} onClick={() => onScriptLinkClick(rowItem[0])}>
               {rowItem[0]}
             </span>
-            <span key={'s'+rowItem[0]}>
-              {rowItem[1]}
-            </span>
+            <span key={"s" + rowItem[0]}>{rowItem[1]}</span>
           </span>
         ))}
       </span>
@@ -181,7 +180,7 @@ export function ls(
         if (!(i < segments.length)) break;
         row += segments[i];
         row += " ".repeat(maxLength * (col + 1) - row.length);
-        if(linked) {
+        if (linked) {
           row += "~";
         }
         i++;

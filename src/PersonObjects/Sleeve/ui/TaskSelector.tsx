@@ -79,9 +79,9 @@ function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
     }
   }
 
-  return factions.filter(faction => {
+  return factions.filter((faction) => {
     const facInfo = Factions[faction].getInfo();
-    return facInfo.offerHackingWork || facInfo.offerFieldWork || facInfo.offerSecurityWork
+    return facInfo.offerHackingWork || facInfo.offerFieldWork || facInfo.offerSecurityWork;
   });
 }
 
@@ -319,7 +319,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
 
   return (
     <>
-      <Select onChange={onS0Change} value={s0} sx={{ width: '100%' }}>
+      <Select onChange={onS0Change} value={s0} sx={{ width: "100%" }}>
         {validActions.map((task) => (
           <MenuItem key={task} value={task}>
             {task}
@@ -328,7 +328,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
       </Select>
       {!(details.first.length === 1 && details.first[0] === "------") && (
         <>
-          <Select onChange={onS1Change} value={s1} sx={{ width: '100%' }}>
+          <Select onChange={onS1Change} value={s1} sx={{ width: "100%" }}>
             {details.first.map((detail) => (
               <MenuItem key={detail} value={detail}>
                 {detail}
@@ -339,7 +339,7 @@ export function TaskSelector(props: IProps): React.ReactElement {
       )}
       {!(details2.length === 1 && details2[0] === "------") && (
         <>
-          <Select onChange={onS2Change} value={s2} sx={{ width: '100%' }}>
+          <Select onChange={onS2Change} value={s2} sx={{ width: "100%" }}>
             {details2.map((detail) => (
               <MenuItem key={detail} value={detail}>
                 {detail}

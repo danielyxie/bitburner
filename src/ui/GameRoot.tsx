@@ -310,7 +310,7 @@ export function GameRoot({ player, engine, terminal }: IProps): React.ReactEleme
 
   function softReset(): void {
     dialogBoxCreate("Soft Reset!");
-    prestigeAugmentation();
+    installAugmentations(true);
     resetErrorBoundary();
     Router.toTerminal();
   }

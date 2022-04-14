@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 
-import {
-  Box,
-  Paper,
-  Typography,
-  Button,
-  Tooltip
-} from "@mui/material";
+import { Box, Paper, Typography, Button, Tooltip } from "@mui/material";
 
 import { CONSTANTS } from "../../../Constants";
 import { Crimes } from "../../../Crime/Crimes";
@@ -147,12 +141,12 @@ export function SleeveElem(props: IProps): React.ReactElement {
   }
 
   return (
-    <Box component={Paper} sx={{ width: 'auto' }}>
+    <Box component={Paper} sx={{ width: "auto" }}>
       <Box sx={{ m: 1 }}>
-        <Box display="grid" sx={{ gridTemplateColumns: '1fr 1fr', width: '100%', gap: 1 }}>
+        <Box display="grid" sx={{ gridTemplateColumns: "1fr 1fr", width: "100%", gap: 1 }}>
           <Box>
             <StatsElement sleeve={props.sleeve} />
-            <Box display="grid" sx={{ gridTemplateColumns: '1fr 1fr', width: '100%' }}>
+            <Box display="grid" sx={{ gridTemplateColumns: "1fr 1fr", width: "100%" }}>
               <Button onClick={() => setStatsOpen(true)}>More Stats</Button>
               <Button onClick={() => setEarningsOpen(true)}>More Earnings Info</Button>
               <Tooltip title={player.money < CONSTANTS.TravelCost ? <Typography>Insufficient funds</Typography> : ""}>
@@ -160,20 +154,22 @@ export function SleeveElem(props: IProps): React.ReactElement {
                   <Button
                     onClick={() => setTravelOpen(true)}
                     disabled={player.money < CONSTANTS.TravelCost}
-                    sx={{ width: '100%', height: '100%' }}
+                    sx={{ width: "100%", height: "100%" }}
                   >
                     Travel
                   </Button>
                 </span>
               </Tooltip>
               <Tooltip
-                title={props.sleeve.shock < 100 ? <Typography>Unlocked when sleeve has fully recovered</Typography> : ""}
+                title={
+                  props.sleeve.shock < 100 ? <Typography>Unlocked when sleeve has fully recovered</Typography> : ""
+                }
               >
                 <span>
                   <Button
                     onClick={() => setAugmentationsOpen(true)}
                     disabled={props.sleeve.shock < 100}
-                    sx={{ width: '100%', height: '100%' }}
+                    sx={{ width: "100%", height: "100%" }}
                   >
                     Manage Augmentations
                   </Button>
@@ -185,7 +181,9 @@ export function SleeveElem(props: IProps): React.ReactElement {
             <EarningsElement sleeve={props.sleeve} />
             <Box>
               <TaskSelector player={player} sleeve={props.sleeve} setABC={setABC} />
-              <Button onClick={setTask} sx={{ width: '100%' }}>Set Task</Button>
+              <Button onClick={setTask} sx={{ width: "100%" }}>
+                Set Task
+              </Button>
               <Typography>{desc}</Typography>
               <Typography>
                 {(props.sleeve.currentTask === SleeveTaskType.Crime 
@@ -213,6 +211,6 @@ export function SleeveElem(props: IProps): React.ReactElement {
           />
         </Box>
       </Box>
-    </Box >
+    </Box>
   );
 }

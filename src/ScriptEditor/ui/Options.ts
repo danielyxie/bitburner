@@ -1,4 +1,4 @@
-export type WordWrapOptions = 'on' | 'off' | 'bounded' | 'wordWrapColumn';
+export type WordWrapOptions = "on" | "off" | "bounded" | "wordWrapColumn";
 export interface Options {
   theme: string;
   insertSpaces: boolean;

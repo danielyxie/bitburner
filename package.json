@@ -70,7 +70,7 @@
     "babel-jest": "^27.0.6",
     "babel-loader": "^8.0.5",
     "cypress": "^8.3.1",
-    "electron": "^14.0.2",
+    "electron": "^14.2.4",
     "electron-packager": "^15.4.0",
     "eslint": "^7.24.0",
     "file-loader": "^6.2.0",

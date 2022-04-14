@@ -135,9 +135,7 @@ export class Action implements IAction {
     for (const decay of Object.keys(this.decays)) {
       if (this.decays.hasOwnProperty(decay)) {
         if (this.decays[decay] > 1) {
-          throw new Error(
-            `Invalid decays when constructing Action ${this.name}. Decay value cannot be greater than 1`,
-          );
+          throw new Error(`Invalid decays when constructing Action ${this.name}. Decay value cannot be greater than 1`);
         }
       }
     }
