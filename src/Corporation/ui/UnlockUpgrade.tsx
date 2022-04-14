@@ -20,9 +20,9 @@ interface IProps {
 export function UnlockUpgrade(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const data = props.upgradeData;
-  const tooltip = data[3];
+  const tooltip = data.desc;
   function onClick(): void {
-    if (corp.funds < data[1]) return;
+    if (corp.funds < data.price) return;
     try {
       UU(corp, props.upgradeData);
     } catch (err) {
@@ -34,11 +34,11 @@ export function UnlockUpgrade(props: IProps): React.ReactElement {
   return (
     <Grid item xs={4}>
       <Box display="flex" alignItems="center" flexDirection="row-reverse">
-        <Button disabled={corp.funds < data[1]} sx={{ mx: 1 }} onClick={onClick}>
-          <MoneyCost money={data[1]} corp={corp} />
+        <Button disabled={corp.funds < data.price} sx={{ mx: 1 }} onClick={onClick}>
+          <MoneyCost money={data.price} corp={corp} />
         </Button>
         <Tooltip title={tooltip}>
-          <Typography>{data[2]}</Typography>
+          <Typography>{data.name}</Typography>
         </Tooltip>
       </Box>
     </Grid>

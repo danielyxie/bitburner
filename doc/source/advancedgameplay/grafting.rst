@@ -5,10 +5,10 @@ Grafting
 Grafting is an experimental process through which you can obtain the benefits of
 Augmentations, without needing to reboot your body.
 
-In order to graft, you must first purchase a blueprint for and craft the Augmentation.
-This can be done at VitaLife in New Tokyo, where you'll find a shady researcher with
-questionable connections. Once you purchase a blueprint, you will start crafting the
-Augmentation, and it will be grafted to your body once complete.
+Grafting can be done at VitaLife in New Tokyo, where you'll find a shady researcher with
+questionable connections. From there, you can spend a sum of money to begin grafting
+Augmentations. This will take some time. When done, the Augmentation will be applied to
+your character without needing to install.
 
 Be warned, some who have tested grafting have reported an unidentified malware. Dubbed
 "Entropy", this virus seems to grow in potency as more Augmentations are grafted,

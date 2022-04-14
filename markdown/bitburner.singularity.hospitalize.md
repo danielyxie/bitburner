@@ -9,13 +9,11 @@ Hospitalize the player.
 <b>Signature:</b>
 
 ```typescript
-hospitalize(): number;
+hospitalize(): void;
 ```
 <b>Returns:</b>
 
-number
-
-The cost of the hospitalization.
+void
 
 ## Remarks
 

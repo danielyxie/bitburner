@@ -4,10 +4,10 @@
 
 ## Product.dmd property
 
-Demand for the product
+Demand for the product, only present if "Market Research - Demand" unlocked
 
 <b>Signature:</b>
 
 ```typescript
-dmd: number;
+dmd: number | undefined;
 ```

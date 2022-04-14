@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 import { Location } from "../Location";
-import { CreateCorporationModal } from "../../Corporation/ui/CreateCorporationModal";
+import { CreateCorporationModal } from "../../Corporation/ui/modals/CreateCorporationModal";
 import { LocationName } from "../data/LocationNames";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 import { Factions } from "../../Faction/Factions";
@@ -24,7 +24,7 @@ import { joinFaction } from "../../Faction/FactionHelpers";
 import { use } from "../../ui/Context";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { SnackbarEvents } from "../../ui/React/Snackbar";
+import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { N00dles } from "../../utils/helpers/N00dles";
 import { Exploit } from "../../Exploits/Exploit";
 import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
@@ -34,6 +34,7 @@ import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer } from "../../Server/AllServers";
 import { ArcadeRoot } from "../../Arcade/ui/ArcadeRoot";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 
 type IProps = {
   loc: Location;
@@ -91,7 +92,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
 
   function renderNoodleBar(): React.ReactElement {
     function EatNoodles(): void {
-      SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", "success", 2000);
+      SnackbarEvents.emit("You ate some delicious noodles and feel refreshed", ToastVariant.SUCCESS, 2000);
       N00dles(); // This is the true power of the noodles.
       if (player.sourceFiles.length > 0) player.giveExploit(Exploit.N00dles);
       if (player.sourceFileLvl(5) > 0 || player.bitNodeN === 5) {
@@ -174,10 +175,11 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       applyAugmentation({ name: AugmentationNames.StaneksGift1, level: 1 });
     }
 
-    router.toFaction(faction);
+    router.toStaneksGift();
   }
 
   function renderCotMG(): React.ReactElement {
+    const toStanek = <Button onClick={() => router.toStaneksGift()}>Open Stanek's Gift</Button>;
     // prettier-ignore
     const symbol = <Typography sx={{ lineHeight: '1em', whiteSpace: 'pre' }}>
       {"                 ``          "}<br />
@@ -218,6 +220,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
               seems. Curious, Just how much of a machine's soul do you house in that body?
             </i>
           </Typography>
+          <br />
+          {toStanek}
+          <br />
           {symbol}
         </>
       );
@@ -232,6 +237,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
               mastery of the gift clearly demonstrates that. My hopes are climbing by the day for you.
             </i>
           </Typography>
+          <br />
+          {toStanek}
+          <br />
           {symbol}
         </>
       );
@@ -242,6 +250,9 @@ export function SpecialLocation(props: IProps): React.ReactElement {
           <Typography>
             <i>Allison "Mother" Stanek: Welcome back my child!</i>
           </Typography>
+          <br />
+          {toStanek}
+          <br />
           {symbol}
         </>
       );
@@ -306,7 +317,7 @@ export function SpecialLocation(props: IProps): React.ReactElement {
       return renderGrafting();
     }
     case LocationName.Sector12CityHall: {
-      return <CreateCorporation />;
+      return (BitNodeMultipliers.CorporationSoftCap < 0.15 && <></>) || <CreateCorporation />;
     }
     case LocationName.Sector12NSA: {
       return renderBladeburner();

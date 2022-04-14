@@ -20,7 +20,6 @@ interface IProps {
 
 export function PurchaseAugmentationModal(props: IProps): React.ReactElement {
   const player = use.Player();
-  const factionInfo = props.faction.getInfo();
 
   function buy(): void {
     if (!isRepeatableAug(props.aug) && player.hasAugmentation(props.aug)) {
@@ -43,7 +42,7 @@ export function PurchaseAugmentationModal(props: IProps): React.ReactElement {
         <br />
         <br />
         Would you like to purchase the {props.aug.name} Augmentation for&nbsp;
-        <Money money={props.aug.baseCost * factionInfo.augmentationPriceMult} />?
+        <Money money={props.aug.baseCost} />?
         <br />
         <br />
       </Typography>

@@ -2,10 +2,11 @@ import React, { useState } from "react";
 
 import { CorporationConstants } from "../data/Constants";
 import { Product } from "../Product";
-import { DiscontinueProductModal } from "./DiscontinueProductModal";
-import { LimitProductProductionModal } from "./LimitProductProductionModal";
-import { SellProductModal } from "./SellProductModal";
-import { ProductMarketTaModal } from "./ProductMarketTaModal";
+import { DiscontinueProductModal } from "./modals/DiscontinueProductModal";
+import { LimitProductProductionModal } from "./modals/LimitProductProductionModal";
+import { SellProductModal } from "./modals/SellProductModal";
+import { ProductMarketTaModal } from "./modals/ProductMarketTaModal";
+import { CancelProductModal } from "./modals/CancelProductModal";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
@@ -32,6 +33,7 @@ export function ProductElem(props: IProductProps): React.ReactElement {
   const [sellOpen, setSellOpen] = useState(false);
   const [limitOpen, setLimitOpen] = useState(false);
   const [discontinueOpen, setDiscontinueOpen] = useState(false);
+  const [cancelOpen, setCancelOpen] = useState(false);
   const [marketTaOpen, setMarketTaOpen] = useState(false);
   const city = props.city;
   const product = props.product;
@@ -111,6 +113,13 @@ export function ProductElem(props: IProductProps): React.ReactElement {
           </Typography>
           <br />
           <Typography>{numeralWrapper.format(product.prog, "0.00")}% complete</Typography>
+          <Button onClick={() => setCancelOpen(true)}>Cancel</Button>
+          <CancelProductModal
+            product={product}
+            rerender={props.rerender}
+            open={cancelOpen}
+            onClose={() => setCancelOpen(false)}
+          />
         </>
       ) : (
         <>
@@ -171,6 +180,13 @@ export function ProductElem(props: IProductProps): React.ReactElement {
               <Typography>Est. Market Price: {numeralWrapper.formatMoney(product.pCost)}</Typography>
             </Tooltip>
           </Box>
+          <Button onClick={() => setDiscontinueOpen(true)}>Discontinue</Button>
+          <DiscontinueProductModal
+            product={product}
+            rerender={props.rerender}
+            open={discontinueOpen}
+            onClose={() => setDiscontinueOpen(false)}
+          />
         </>
       )}
 
@@ -185,14 +201,6 @@ export function ProductElem(props: IProductProps): React.ReactElement {
             city={city}
             open={limitOpen}
             onClose={() => setLimitOpen(false)}
-          />
-          <Button onClick={() => setDiscontinueOpen(true)}>Discontinue</Button>
-
-          <DiscontinueProductModal
-            product={product}
-            rerender={props.rerender}
-            open={discontinueOpen}
-            onClose={() => setDiscontinueOpen(false)}
           />
           {division.hasResearch("Market-TA.I") && (
             <>

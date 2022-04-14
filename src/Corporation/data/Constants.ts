@@ -28,6 +28,7 @@ export const CorporationConstants: {
   AllMaterials: string[];
   FundingRoundShares: number[];
   FundingRoundMultiplier: number[];
+  AvgProfitLength: number;
 } = {
   INITIALSHARES: 1e9, //Total number of shares you have at your company
   SHARESPERPRICEUPDATE: 1e6, //When selling large number of shares, price is dynamically updated for every batch of this amount
@@ -83,4 +84,6 @@ export const CorporationConstants: {
   ],
   FundingRoundShares: [0.1, 0.35, 0.25, 0.2],
   FundingRoundMultiplier: [4, 3, 3, 2.5],
+
+  AvgProfitLength: 1,
 };

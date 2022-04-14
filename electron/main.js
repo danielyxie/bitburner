@@ -25,7 +25,7 @@ process.on("uncaughtException", function () {
 
 // We want to fail gracefully if we cannot connect to Steam
 try {
-  if (greenworks.init()) {
+  if (greenworks && greenworks.init()) {
     log.info("Steam API has been initialized.");
   } else {
     const error = "Steam API has failed to initialize.";
