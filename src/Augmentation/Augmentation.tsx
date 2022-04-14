@@ -9,6 +9,18 @@ import { Money } from "../ui/React/Money";
 
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 import { FactionNames } from "../Faction/data/FactionNames";
+import { IPlayer } from "../PersonObjects/IPlayer";
+import { AugmentationNames } from "./data/AugmentationNames";
+import { CONSTANTS } from "../Constants";
+import { StaticAugmentations } from "./StaticAugmentations";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { getBaseAugmentationPriceMultiplier, getGenericAugmentationPriceMultiplier } from "./AugmentationHelpers";
+import { initInfiltratorsAugmentations } from "./data/AugmentationCreator";
+
+export interface AugmentationCosts {
+  moneyCost: number;
+  repCost: number;
+}
 
 export interface IConstructorParams {
   info: string | JSX.Element;
@@ -410,10 +422,10 @@ function generateStatsDescription(mults: IMap<number>, programs?: string[], star
 }
 
 export class Augmentation {
-  // How much money this costs to buy
+  // How much money this costs to buy before multipliers
   baseCost = 0;
 
-  // How much faction reputation is required to unlock this
+  // How much faction reputation is required to unlock this  before multipliers
   baseRepRequirement = 0;
 
   // Description of what this Aug is and what it does
@@ -425,9 +437,6 @@ export class Augmentation {
   // Any Augmentation not immediately available in BitNode-1 is special (e.g. Bladeburner augs)
   isSpecial = false;
 
-  // Augmentation level - for repeatable Augs like NeuroFlux Governor
-  level = 0;
-
   // Name of Augmentation
   name = "";
 
@@ -437,12 +446,6 @@ export class Augmentation {
   // Multipliers given by this Augmentation.  Must match the property name in
   // The Player/Person classes
   mults: IMap<number> = {};
-
-  // Initial cost. Doesn't change when you purchase multiple Augmentation
-  startingCost = 0;
-
-  // Initial rep requirement. Doesn't change when you purchase multiple Augmentation
-  startingRepRequirement = 0;
 
   // Factions that offer this aug.
   factions: string[] = [];
@@ -462,15 +465,11 @@ export class Augmentation {
 
     this.baseRepRequirement = params.repCost;
     this.baseCost = params.moneyCost;
-    this.startingCost = this.baseCost;
-    this.startingRepRequirement = this.baseRepRequirement;
     this.factions = params.factions;
 
     if (params.isSpecial) {
       this.isSpecial = true;
     }
-
-    this.level = 0;
 
     // Set multipliers
     if (params.hacking_mult) {
@@ -598,6 +597,59 @@ export class Augmentation {
       }
       faction.augmentations.push(this.name);
     }
+  }
+
+  getCost(player: IPlayer): AugmentationCosts {
+    const augmentationReference = StaticAugmentations[this.name];
+    let moneyCost = augmentationReference.baseCost;
+    let repCost = augmentationReference.baseRepRequirement;
+
+    if (augmentationReference.name === AugmentationNames.NeuroFluxGovernor) {
+      let nextLevel = this.getLevel(player);
+      --nextLevel;
+      const multiplier = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
+      repCost = augmentationReference.baseRepRequirement * multiplier * BitNodeMultipliers.AugmentationRepCost;
+      moneyCost = augmentationReference.baseCost * multiplier * BitNodeMultipliers.AugmentationMoneyCost;
+
+      for (let i = 0; i < player.queuedAugmentations.length; ++i) {
+        augmentationReference.baseCost *= getBaseAugmentationPriceMultiplier();
+      }
+    } else if (augmentationReference.factions.includes(FactionNames.Infiltrators)) {
+      const infiltratorAugmentationNames = initInfiltratorsAugmentations().map((augmentation) => augmentation.name);
+      const infiltratorMultiplier =
+        infiltratorAugmentationNames.filter((augmentationName) => player.hasAugmentation(augmentationName)).length + 1;
+      moneyCost = Math.pow(augmentationReference.baseCost * 1000, infiltratorMultiplier);
+      if (infiltratorAugmentationNames.find((augmentationName) => augmentationName === augmentationReference.name)) {
+        repCost = augmentationReference.baseRepRequirement * infiltratorMultiplier;
+      }
+    } else {
+      moneyCost =
+        augmentationReference.baseCost *
+        getGenericAugmentationPriceMultiplier() *
+        BitNodeMultipliers.AugmentationMoneyCost;
+    }
+    return { moneyCost, repCost };
+  }
+
+  getLevel(player: IPlayer): number {
+    // Get current Neuroflux level based on Player's augmentations
+    if (this.name === AugmentationNames.NeuroFluxGovernor) {
+      let currLevel = 0;
+      for (let i = 0; i < player.augmentations.length; ++i) {
+        if (player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
+          currLevel = player.augmentations[i].level;
+        }
+      }
+
+      // Account for purchased but uninstalled Augmentations
+      for (let i = 0; i < player.queuedAugmentations.length; ++i) {
+        if (player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
+          ++currLevel;
+        }
+      }
+      return currLevel + 1;
+    }
+    return 0;
   }
 
   // Adds this Augmentation to all Factions

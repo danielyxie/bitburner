@@ -20,30 +20,10 @@ import {
   initNeuroFluxGovernor,
   initUnstableCircadianModulator,
 } from "./data/AugmentationCreator";
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Router } from "../ui/GameRoot";
 
 export function AddToStaticAugmentations(aug: Augmentation): void {
   const name = aug.name;
-  Augmentations[name] = aug;
-}
-
-export function getNextNeuroFluxLevel(): number {
-  // Get current Neuroflux level based on Player's augmentations
-  let currLevel = 0;
-  for (let i = 0; i < Player.augmentations.length; ++i) {
-    if (Player.augmentations[i].name === AugmentationNames.NeuroFluxGovernor) {
-      currLevel = Player.augmentations[i].level;
-    }
-  }
-
-  // Account for purchased but uninstalled Augmentations
-  for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
-    if (Player.queuedAugmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
-      ++currLevel;
-    }
-  }
-  return currLevel + 1;
   StaticAugmentations[name] = aug;
 }
 
@@ -70,57 +50,14 @@ function initAugmentations(): void {
   resetFactionAugmentations();
   clearObject(StaticAugmentations);
   createAugmentations();
-  updateAugmentationCosts();
   Player.reapplyAllAugmentations();
 }
 
-function getBaseAugmentationPriceMultiplier(): number {
+export function getBaseAugmentationPriceMultiplier(): number {
   return CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][Player.sourceFileLvl(11)];
 }
 export function getGenericAugmentationPriceMultiplier(): number {
   return Math.pow(getBaseAugmentationPriceMultiplier(), Player.queuedAugmentations.length);
-}
-
-function updateNeuroFluxGovernorCosts(neuroFluxGovernorAugmentation: Augmentation): void {
-  let nextLevel = getNextNeuroFluxLevel();
-  --nextLevel;
-  const multiplier = Math.pow(CONSTANTS.NeuroFluxGovernorLevelMult, nextLevel);
-  neuroFluxGovernorAugmentation.baseRepRequirement =
-    neuroFluxGovernorAugmentation.startingRepRequirement * multiplier * BitNodeMultipliers.AugmentationRepCost;
-  neuroFluxGovernorAugmentation.baseCost =
-    neuroFluxGovernorAugmentation.startingCost * multiplier * BitNodeMultipliers.AugmentationMoneyCost;
-
-  for (let i = 0; i < Player.queuedAugmentations.length; ++i) {
-    neuroFluxGovernorAugmentation.baseCost *= getBaseAugmentationPriceMultiplier();
-  }
-}
-
-function updateInfiltratorCosts(infiltratorAugmentation: Augmentation): void {
-  const infiltratorAugmentationNames = initInfiltratorsAugmentations().map((augmentation) => augmentation.name);
-  const infiltratorMultiplier =
-    infiltratorAugmentationNames.filter((augmentationName) => Player.hasAugmentation(augmentationName)).length + 1;
-  infiltratorAugmentation.baseCost = Math.pow(infiltratorAugmentation.startingCost * 1000, infiltratorMultiplier);
-  if (infiltratorAugmentationNames.find((augmentationName) => augmentationName === infiltratorAugmentation.name)) {
-    infiltratorAugmentation.baseRepRequirement = infiltratorAugmentation.startingRepRequirement * infiltratorMultiplier;
-  }
-}
-
-export function updateAugmentationCosts(): void {
-  for (const name of Object.keys(Augmentations)) {
-    if (Augmentations.hasOwnProperty(name)) {
-      const augmentationToUpdate = Augmentations[name];
-      if (augmentationToUpdate.name === AugmentationNames.NeuroFluxGovernor) {
-        updateNeuroFluxGovernorCosts(augmentationToUpdate);
-      } else if (augmentationToUpdate.factions.includes(FactionNames.Infiltrators)) {
-        updateInfiltratorCosts(augmentationToUpdate);
-      } else {
-        augmentationToUpdate.baseCost =
-          augmentationToUpdate.startingCost *
-          getGenericAugmentationPriceMultiplier() *
-          BitNodeMultipliers.AugmentationMoneyCost;
-      }
-    }
-  }
 }
 
 //Resets an Augmentation during (re-initizliation)
@@ -140,20 +77,6 @@ function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void
   for (const mult of Object.keys(staticAugmentation.mults)) {
     const v = Player.getMult(mult) * staticAugmentation.mults[mult];
     Player.setMult(mult, v);
-  }
-
-  // Special logic for NeuroFlux Governor
-  if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-    if (!reapply) {
-      Augmentations[aug.name].level = aug.level;
-      for (let i = 0; i < Player.augmentations.length; ++i) {
-        if (Player.augmentations[i].name == AugmentationNames.NeuroFluxGovernor) {
-          Player.augmentations[i].level = aug.level;
-          return;
-          // break;
-        }
-      }
-    }
   }
 
   // Special logic for Congruity Implant

@@ -1,3 +1,4 @@
+import { AugmentationCosts } from "./../Augmentation/Augmentation";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { purchaseAugmentation, joinFaction, getFactionAugmentationsFiltered } from "../Faction/FactionHelpers";
@@ -122,7 +123,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return [aug.baseRepRequirement, aug.baseCost];
+        return [aug.getCost(player).moneyCost, aug.getCost(player).repCost];
       },
     getAugmentationPrereq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): string[] {
@@ -136,14 +137,14 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return aug.baseCost;
+        return aug.getCost(player).moneyCost;
       },
     getAugmentationRepReq: (_ctx: NetscriptContext) =>
       function (_augName: unknown): number {
         _ctx.helper.checkSingularityAccess();
         const augName = _ctx.helper.string("augName", _augName);
         const aug = getAugmentation(_ctx, augName);
-        return aug.baseRepRequirement;
+        return aug.getCost(player).repCost;
       },
     getAugmentationStats: (_ctx: NetscriptContext) =>
       function (_augName: unknown): AugmentationStats {
@@ -186,7 +187,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           }
         }
 
-        if (fac.playerReputation < aug.baseRepRequirement) {
+        if (fac.playerReputation < aug.getCost(player).repCost) {
           workerScript.log("purchaseAugmentation", () => `You do not have enough reputation with '${fac.name}'.`);
           return false;
         }
@@ -1128,7 +1129,6 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             workerScript.log("workForFaction", () => `Invalid work type: '${type}`);
             return false;
         }
-        return true;
       },
     getFactionRep: (_ctx: NetscriptContext) =>
       function (_facName: unknown): number {

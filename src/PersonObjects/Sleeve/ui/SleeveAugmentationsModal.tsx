@@ -66,7 +66,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
                   return (
                     <TableRow key={aug.name}>
                       <TableCell>
-                        <Button onClick={() => purchaseAugmentation(aug)} disabled={player.money < aug.startingCost}>
+                        <Button onClick={() => purchaseAugmentation(aug)} disabled={player.money < aug.baseCost}>
                           Buy
                         </Button>
                       </TableCell>
@@ -78,7 +78,7 @@ export function SleeveAugmentationsModal(props: IProps): React.ReactElement {
                         </Box>
                       </TableCell>
                       <TableCell>
-                        <Money money={aug.startingCost} player={player} />
+                        <Money money={aug.baseCost} player={player} />
                       </TableCell>
                     </TableRow>
                   );

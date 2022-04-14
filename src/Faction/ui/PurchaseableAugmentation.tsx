@@ -22,7 +22,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 import { TableCell } from "../../ui/React/Table";
 import TableRow from "@mui/material/TableRow";
-import { getNextNeuroFluxLevel } from "../../Augmentation/AugmentationHelpers";
+import { use } from "../../ui/Context";
 
 interface IReqProps {
   augName: string;
@@ -74,6 +74,7 @@ interface IProps {
 }
 
 export function PurchaseableAugmentation(props: IProps): React.ReactElement {
+  const player = use.Player();
   const [open, setOpen] = useState(false);
   const aug = StaticAugmentations[props.augName];
   if (aug == null) throw new Error(`aug ${props.augName} does not exists`);
@@ -85,11 +86,12 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
     return <></>;
   }
 
-  const moneyCost = aug.baseCost;
-  const repCost = aug.baseRepRequirement;
+  const repCosts = aug.getCost(player);
+  const moneyCost = repCosts.moneyCost;
+  const repCost = repCosts.repCost;
   const hasReq = hasAugmentationPrereqs(aug);
   const hasRep = props.faction.playerReputation >= repCost;
-  const hasCost = aug.baseCost === 0 || props.p.money > aug.baseCost;
+  const hasCost = moneyCost === 0 || props.p.money > moneyCost;
 
   // Determine UI properties
   const color: "error" | "primary" = !hasReq || !hasRep || !hasCost ? "error" : "primary";
@@ -97,7 +99,7 @@ export function PurchaseableAugmentation(props: IProps): React.ReactElement {
   // Determine button txt
   let btnTxt = aug.name;
   if (aug.name === AugmentationNames.NeuroFluxGovernor) {
-    btnTxt += ` - Level ${getNextNeuroFluxLevel()}`;
+    btnTxt += ` - Level ${aug.getLevel(player)}`;
   }
 
   let tooltip = <></>;

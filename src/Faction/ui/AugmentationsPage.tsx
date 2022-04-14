@@ -69,7 +69,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         throw new Error("Invalid Augmentation Names");
       }
 
-      return aug1.baseCost - aug2.baseCost;
+      return aug1.getCost(player).moneyCost - aug2.getCost(player).moneyCost;
     });
 
     return augs;
@@ -78,11 +78,12 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
   function getAugsSortedByPurchasable(): string[] {
     const augs = getAugs();
     function canBuy(augName: string): boolean {
-      const repCost = aug.baseRepRequirement;
       const aug = StaticAugmentations[augName];
+      const augCosts = aug.getCost(player)
+      const repCost = augCosts.repCost;
       const hasReq = props.faction.playerReputation >= repCost;
       const hasRep = hasAugmentationPrereqs(aug);
-      const hasCost = aug.baseCost !== 0 && player.money > aug.baseCost;
+      const hasCost = augCosts.moneyCost !== 0 && player.money > augCosts.moneyCost;
       return hasCost && hasReq && hasRep;
     }
     const buy = augs.filter(canBuy).sort((augName1, augName2) => {
@@ -92,7 +93,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         throw new Error("Invalid Augmentation Names");
       }
 
-      return aug1.baseCost - aug2.baseCost;
+      return aug1.getCost(player).moneyCost - aug2.getCost(player).moneyCost;
     });
     const cantBuy = augs
       .filter((aug) => !canBuy(aug))
@@ -102,7 +103,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
         if (aug1 == null || aug2 == null) {
           throw new Error("Invalid Augmentation Names");
         }
-        return aug1.baseRepRequirement - aug2.baseRepRequirement;
+        return aug1.getCost(player).repCost - aug2.getCost(player).repCost;
       });
 
     return buy.concat(cantBuy);
@@ -116,7 +117,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
       if (aug1 == null || aug2 == null) {
         throw new Error("Invalid Augmentation Names");
       }
-      return aug1.baseRepRequirement - aug2.baseRepRequirement;
+      return aug1.getCost(player).repCost - aug2.getCost(player).repCost;
     });
 
     return augs;

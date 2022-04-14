@@ -281,7 +281,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
         const aug = purchasableAugs[i];
         augs.push({
           name: aug.name,
-          cost: aug.startingCost,
+          cost: aug.baseCost,
         });
       }
 

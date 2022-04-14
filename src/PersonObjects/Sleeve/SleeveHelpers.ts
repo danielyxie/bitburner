@@ -74,7 +74,7 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
         continue;
       }
 
-      if (fac.playerReputation > aug.baseRepRequirement) {
+      if (fac.playerReputation > aug.getCost(p).repCost) {
         availableAugs.push(aug);
       }
     }
@@ -98,7 +98,7 @@ export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentat
         continue;
       }
 
-      if (fac.playerReputation > aug.baseRepRequirement) {
+      if (fac.playerReputation > aug.getCost(p).repCost) {
         availableAugs.push(aug);
       }
     }

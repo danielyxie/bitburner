@@ -18,7 +18,6 @@ import {
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";
 import { FactionNames } from "./data/FactionNames";
-import { updateAugmentationCosts, getNextNeuroFluxLevel } from "../Augmentation/AugmentationHelpers";
 import { SFC32RNG } from "../Casino/RNG";
 
 export function inviteToFaction(faction: Faction): void {
@@ -82,6 +81,7 @@ export function hasAugmentationPrereqs(aug: Augmentation): boolean {
 
 export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = false): string {
   const hasPrereqs = hasAugmentationPrereqs(aug);
+  const augCosts = aug.getCost(Player);
   if (!hasPrereqs) {
     const txt = `You must first purchase or install ${aug.prereqs.join(",")} before you can purchase this one.`;
     if (sing) {
@@ -89,28 +89,26 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
     } else {
       dialogBoxCreate(txt);
     }
-  } else if (aug.baseCost !== 0 && Player.money < aug.baseCost) {
+  } else if (augCosts.moneyCost !== 0 && Player.money < augCosts.moneyCost) {
     const txt = "You don't have enough money to purchase " + aug.name;
     if (sing) {
       return txt;
     }
     dialogBoxCreate(txt);
-  } else if (fac.playerReputation < aug.baseRepRequirement) {
+  } else if (fac.playerReputation < augCosts.repCost) {
     const txt = "You don't have enough faction reputation to purchase " + aug.name;
     if (sing) {
       return txt;
     }
     dialogBoxCreate(txt);
-  } else if (aug.baseCost === 0 || Player.money >= aug.baseCost) {
+  } else if (augCosts.moneyCost === 0 || Player.money >= augCosts.moneyCost) {
     const queuedAugmentation = new PlayerOwnedAugmentation(aug.name);
     if (aug.name == AugmentationNames.NeuroFluxGovernor) {
-      queuedAugmentation.level = getNextNeuroFluxLevel();
+      queuedAugmentation.level = aug.getLevel(Player);
     }
     Player.queuedAugmentations.push(queuedAugmentation);
 
-    Player.loseMoney(aug.baseCost, "augmentations");
-
-    updateAugmentationCosts();
+    Player.loseMoney(augCosts.moneyCost, "augmentations");
 
     if (sing) {
       return "You purchased " + aug.name;
