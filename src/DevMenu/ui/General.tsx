@@ -68,7 +68,7 @@ export function General(props: IProps): React.ReactElement {
   function setGangFactionDropdown(event: SelectChangeEvent<string>): void {
     setGangFaction(event.target.value);
   }
-    
+
   function checkMessages(): void {
     checkForMessagesToSend();
   }

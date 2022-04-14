@@ -1126,7 +1126,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       for (let i = 0; i < sanitizedPlayerAnsArr.length; ++i) {
         sanitizedPlayerAnsArr[i] = removeQuotesFromString(sanitizedPlayerAnsArr[i]).replace(/\s/g, "");
       }
-      
+
       if (sanitizedPlayerAnsArr.length !== res.length) {
         return false;
       }
