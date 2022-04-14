@@ -1,6 +1,8 @@
 import React from "react";
 import { IMap } from "../types";
 import { FactionNames } from "./data/FactionNames";
+import { use } from "../ui/Context";
+import { Option } from "./ui/Option";
 
 interface FactionInfoParams {
   infoText?: JSX.Element;
@@ -10,6 +12,7 @@ interface FactionInfoParams {
   offerSecurityWork?: boolean;
   special?: boolean;
   keepOnInstall?: boolean;
+  assignment?: () => React.ReactElement;
 }
 
 /**
@@ -51,6 +54,11 @@ export class FactionInfo {
    */
   special: boolean;
 
+  /**
+   * The data to display on the faction screen.
+   */
+  assignment?: () => React.ReactElement;
+
   constructor(params: FactionInfoParams) {
     this.infoText = params.infoText ?? <></>;
     this.enemies = params.enemies ?? [];
@@ -60,6 +68,7 @@ export class FactionInfo {
 
     this.keep = params.keepOnInstall ?? false;
     this.special = params.special ?? false;
+    this.assignment = params.assignment;
   }
 
   offersWork(): boolean {
@@ -438,11 +447,21 @@ export const FactionInfos: IMap<FactionInfo> = {
     ),
 
     special: true,
+    assignment: (): React.ReactElement => {
+      const router = use.Router();
+      return (
+        <Option
+          buttonText={"Open Bladeburner headquarters"}
+          infoText={"You can gain reputation with bladeburner by completing contracts and operations."}
+          onClick={() => router.toBladeburner()}
+        />
+      );
+    },
   }),
 
-  // prettier-ignore
   [FactionNames.ChurchOfTheMachineGod]: new FactionInfo({
-  infoText:(<>
+    // prettier-ignore
+    infoText:(<>
     {"                 ``          "}<br />
     {"             -odmmNmds:      "}<br />
     {"           `hNmo:..-omNh.    "}<br />
@@ -472,13 +491,24 @@ export const FactionInfos: IMap<FactionInfo> = {
     {"     -smNNNNmdo-             "}<br />
     {"        `..`                 "}<br /><br />
     Many cultures predict an end to humanity in the near future, a final
-    Armageddon that will end the world; but we disagree.
-    <br /><br />Note that for this faction, reputation can
-    only be gained by charging Stanek's gift.</>),
-  offerHackingWork:  false,
-  offerFieldWork:  false,
-  offerSecurityWork:  false,
-  special:  true,
-  keepOnInstall:  true,
+    Armageddon that will end the world; but we disagree.</>),
+    offerHackingWork: false,
+    offerFieldWork: false,
+    offerSecurityWork: false,
+    special: true,
+    keepOnInstall: true,
+    assignment: (): React.ReactElement => {
+      const router = use.Router();
+      return (
+        <Option
+          buttonText={"Open Staneks Gift"}
+          infoText={
+            "Stanek's Gift is a powerful augmentation that powers up the stat you chose to boost." +
+            "Gaining reputation with the Church of the Machine God can only be done by charging the gift."
+          }
+          onClick={() => router.toStaneksGift()}
+        />
+      );
+    },
   }),
 };
