@@ -48,6 +48,7 @@ import { FactionInfos } from "../Faction/FactionInfo";
 import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { enterBitNode } from "../RedPill";
+import { FactionNames } from "../Faction/data/FactionNames";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {
@@ -1170,6 +1171,13 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           workerScript.log(
             "donateToFaction",
             () => `You can't donate to '${facName}' because youre managing a gang for it`,
+          );
+          return false;
+        }
+        if (faction.name === FactionNames.ChurchOfTheMachineGod || faction.name === FactionNames.Bladeburners) {
+          workerScript.log(
+            "donateToFaction",
+            () => `You can't donate to '${facName}' because they do not accept donations`,
           );
           return false;
         }

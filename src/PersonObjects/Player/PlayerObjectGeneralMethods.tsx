@@ -108,7 +108,7 @@ export function prestigeAugmentation(this: PlayerObject): void {
   this.agility_exp = 0;
   this.charisma_exp = 0;
 
-  this.money = 1000;
+  this.money = 1000 + CONSTANTS.Donations;
 
   this.city = CityName.Sector12;
   this.location = LocationName.TravelAgency;

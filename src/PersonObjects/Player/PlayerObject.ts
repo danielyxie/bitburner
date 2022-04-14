@@ -38,6 +38,7 @@ import { PlayerAchievement } from "../../Achievements/Achievements";
 import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
 import { ITaskTracker } from "../ITaskTracker";
+import { CONSTANTS } from "../../Constants";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -356,7 +357,7 @@ export class PlayerObject implements IPlayer {
     this.faction_rep_mult = 1;
 
     //Money
-    this.money = 1000;
+    this.money = 1000 + CONSTANTS.Donations;
 
     //Location information
     this.city = CityName.Sector12;
@@ -635,7 +636,8 @@ export class PlayerObject implements IPlayer {
     return "Player";
   }
 
-  /**
+
+    /**
    * Serialize the current object to a JSON save state.
    */
   toJSON(): any {
