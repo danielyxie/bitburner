@@ -1,17 +1,17 @@
-import { IProgramCreate } from "../Program";
-import { CONSTANTS } from "../../Constants";
-import { BaseServer } from "../../Server/BaseServer";
-import { Server } from "../../Server/Server";
-import { ITerminal } from "../../Terminal/ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { GetServer } from "../../Server/AllServers";
-import { numeralWrapper } from "../../ui/numeralFormat";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { BitFlumeEvent } from "../../BitNode/ui/BitFlumeModal";
-import { calculateHackingTime, calculateGrowTime, calculateWeakenTime } from "../../Hacking";
+import { CONSTANTS } from "../../Constants";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { calculateGrowTime, calculateHackingTime, calculateWeakenTime } from "../../Hacking";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { GetServer } from "../../Server/AllServers";
+import type { BaseServer } from "../../Server/BaseServer";
+import { Server } from "../../Server/Server";
+import type { ITerminal } from "../../Terminal/ITerminal";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import type { IRouter } from "../../ui/Router";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import type { IProgramCreate } from "../Program";
 
 function requireHackingLevel(lvl: number) {
   return function (p: IPlayer) {

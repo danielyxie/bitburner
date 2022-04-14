@@ -4,12 +4,13 @@
  * This does NOT represent a script that is actively running and
  * being evaluated. See RunningScript for that
  */
-import { calculateRamUsage, RamUsageEntry } from "./RamCalculations";
-import { ScriptUrl } from "./ScriptUrl";
-
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import type { IPlayer } from "../PersonObjects/IPlayer";
 import { roundToTwo } from "../utils/helpers/roundToTwo";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
+import { calculateRamUsage } from "./RamCalculations";
+import type { RamUsageEntry } from "./RamCalculations";
+import type { ScriptUrl } from "./ScriptUrl";
 
 let globalModuleSequenceNumber = 0;
 

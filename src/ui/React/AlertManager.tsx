@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { EventEmitter } from "../../utils/EventEmitter";
-import { Modal } from "./Modal";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import { sha256 } from "js-sha256";
+import React, { useEffect, useState } from "react";
+
+import { EventEmitter } from "../../utils/EventEmitter";
+
+import { Modal } from "./Modal";
 
 export const AlertEvents = new EventEmitter<[string | JSX.Element]>();
 

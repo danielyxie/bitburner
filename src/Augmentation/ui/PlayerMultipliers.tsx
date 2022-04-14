@@ -4,6 +4,7 @@
 import { DoubleArrow } from "@mui/icons-material";
 import { List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
 import * as React from "react";
+
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
 import { Player } from "../../Player";
 import { Settings } from "../../Settings/Settings";

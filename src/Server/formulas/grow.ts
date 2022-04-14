@@ -1,7 +1,7 @@
-import { CONSTANTS } from "../../Constants";
-import { Server } from "../Server";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import { CONSTANTS } from "../../Constants";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { Server } from "../Server";
 
 export function calculateServerGrowth(server: Server, threads: number, p: IPlayer, cores = 1): number {
   const numServerGrowthCycles = Math.max(Math.floor(threads), 0);

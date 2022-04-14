@@ -1,4 +1,4 @@
-import { ITaskParams } from "../ITaskParams";
+import type { ITaskParams } from "../ITaskParams";
 /* tslint:disable:max-line-length */
 
 /**

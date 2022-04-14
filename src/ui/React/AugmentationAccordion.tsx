@@ -4,18 +4,18 @@
  * The header of the accordion contains the Augmentation's name (and level, if
  * applicable), and the accordion's panel contains the Augmentation's description.
  */
-import React, { useState } from "react";
-
-import { Augmentation } from "../../Augmentation/Augmentation";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Collapse from "@mui/material/Collapse";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import ExpandLess from "@mui/icons-material/ExpandLess";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import type { Augmentation } from "../../Augmentation/Augmentation";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
 
 type IProps = {
   aug: Augmentation;

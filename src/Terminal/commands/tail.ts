@@ -1,11 +1,11 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
-import { findRunningScriptByPid } from "../../Script/ScriptHelpers";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { isScriptFilename, validScriptExtensions } from "../../Script/isScriptFilename";
-import { compareArrays } from "../../utils/helpers/compareArrays";
+import { findRunningScriptByPid } from "../../Script/ScriptHelpers";
+import type { BaseServer } from "../../Server/BaseServer";
 import { LogBoxEvents } from "../../ui/React/LogBoxManager";
+import type { IRouter } from "../../ui/Router";
+import { compareArrays } from "../../utils/helpers/compareArrays";
+import type { ITerminal } from "../ITerminal";
 
 export function tail(
   terminal: ITerminal,

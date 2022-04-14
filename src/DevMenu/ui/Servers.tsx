@@ -1,16 +1,16 @@
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { GetServer, GetAllServers } from "../../Server/AllServers";
+import { GetAllServers, GetServer } from "../../Server/AllServers";
 import { Server } from "../../Server/Server";
-import MenuItem from "@mui/material/MenuItem";
 
 export function Servers(): React.ReactElement {
   const [server, setServer] = useState("home");

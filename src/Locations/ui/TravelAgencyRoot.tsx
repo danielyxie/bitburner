@@ -3,24 +3,22 @@
  *
  * TThis subcomponent renders all of the buttons for traveling to different cities
  */
-import React, { useState, useEffect } from "react";
-
-import { CityName } from "../data/CityNames";
-import { TravelConfirmationModal } from "./TravelConfirmationModal";
-
-import { CONSTANTS } from "../../Constants";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { IRouter } from "../../ui/Router";
-import { Settings } from "../../Settings/Settings";
-
-import { use } from "../../ui/Context";
-import { Money } from "../../ui/React/Money";
-import { WorldMap } from "../../ui/React/WorldMap";
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
+import { CONSTANTS } from "../../Constants";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { Settings } from "../../Settings/Settings";
+import { use } from "../../ui/Context";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { Money } from "../../ui/React/Money";
+import { WorldMap } from "../../ui/React/WorldMap";
+import type { IRouter } from "../../ui/Router";
+import { CityName } from "../data/CityNames";
+
+import { TravelConfirmationModal } from "./TravelConfirmationModal";
 
 type IProps = {
   p: IPlayer;

@@ -1,5 +1,5 @@
-import { Faction } from "../Faction/Faction";
-import { Location } from "../Locations/Location";
+import type { Faction } from "../Faction/Faction";
+import type { Location } from "../Locations/Location";
 
 /**
  * The full-screen page the player is currently be on.

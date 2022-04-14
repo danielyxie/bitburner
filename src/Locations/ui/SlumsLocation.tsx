@@ -3,15 +3,14 @@
  *
  * This subcomponent renders all of the buttons for committing crimes
  */
-import * as React from "react";
+import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
+import * as React from "react";
 
 import { Crimes } from "../../Crime/Crimes";
-
-import { numeralWrapper } from "../../ui/numeralFormat";
 import { use } from "../../ui/Context";
-import { Box } from "@mui/material";
+import { numeralWrapper } from "../../ui/numeralFormat";
 
 export function SlumsLocation(): React.ReactElement {
   const player = use.Player();

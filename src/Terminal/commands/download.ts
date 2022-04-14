@@ -1,10 +1,11 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
-import { isScriptFilename } from "../../Script/isScriptFilename";
 import FileSaver from "file-saver";
 import JSZip from "jszip";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { isScriptFilename } from "../../Script/isScriptFilename";
+import type { BaseServer } from "../../Server/BaseServer";
+import type { IRouter } from "../../ui/Router";
+import type { ITerminal } from "../ITerminal";
 
 export function exportScripts(pattern: string, server: BaseServer): void {
   const matchEnding = pattern.length == 1 || pattern === "*.*" ? null : pattern.slice(1); // Treat *.* the same as *

@@ -1,16 +1,18 @@
-import { Theme } from "@mui/material/styles";
+import type { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
+import * as libarg from "arg";
 import { toString } from "lodash";
 import React from "react";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
-import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../DirectoryHelpers";
-import { IRouter } from "../../ui/Router";
-import { ITerminal } from "../ITerminal";
-import * as libarg from "arg";
+
 import { showLiterature } from "../../Literature/LiteratureHelpers";
-import { MessageFilenames, showMessage } from "../../Message/MessageHelpers";
+import type { MessageFilenames } from "../../Message/MessageHelpers";
+import { showMessage } from "../../Message/MessageHelpers";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { BaseServer } from "../../Server/BaseServer";
+import type { IRouter } from "../../ui/Router";
+import { evaluateDirectoryPath, getFirstParentDirectory, isValidDirectoryPath } from "../DirectoryHelpers";
+import type { ITerminal } from "../ITerminal";
 
 export function ls(
   terminal: ITerminal,

@@ -1,13 +1,13 @@
-import { EmployeePositions } from "./EmployeePositions";
-import { MaterialSizes } from "./MaterialSizes";
-import { IIndustry } from "./IIndustry";
-import { ProductRatingWeights, IProductRatingWeight } from "./ProductRatingWeights";
-
 import { createCityMap } from "../Locations/createCityMap";
-import { IMap } from "../types";
-
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import type { IMap } from "../types";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
+import { EmployeePositions } from "./EmployeePositions";
+import type { IIndustry } from "./IIndustry";
+import { MaterialSizes } from "./MaterialSizes";
+import { ProductRatingWeights } from "./ProductRatingWeights";
+import type { IProductRatingWeight } from "./ProductRatingWeights";
 
 interface IConstructorParams {
   name?: string;

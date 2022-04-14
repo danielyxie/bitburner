@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { jest, describe, expect, test } from "@jest/globals";
+import { describe, expect, jest, test } from "@jest/globals";
+
 import * as dirHelpers from "../../../src/Terminal/DirectoryHelpers";
 
 describe("Terminal Directory Tests", function () {

@@ -5,10 +5,9 @@
 import * as React from "react";
 
 import { Player } from "../../Player";
-import { Settings } from "../../Settings/Settings";
 import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
+import { Settings } from "../../Settings/Settings";
 import { SourceFiles } from "../../SourceFile/SourceFiles";
-
 import { SourceFileAccordion } from "../../ui/React/SourceFileAccordion";
 
 export function OwnedSourceFiles(): React.ReactElement {

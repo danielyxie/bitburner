@@ -1,6 +1,7 @@
 import React from "react";
-import { IIndustry } from "../IIndustry";
+
 import { MathJaxWrapper } from "../../MathJaxWrapper";
+import type { IIndustry } from "../IIndustry";
 
 interface IProps {
   division: IIndustry;

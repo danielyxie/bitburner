@@ -1,10 +1,10 @@
-import React from "react";
-import { Theme } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
-import M from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
+import type { Theme } from "@mui/material";
 import Box from "@mui/material/Box";
+import Fade from "@mui/material/Fade";
+import M from "@mui/material/Modal";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import React from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

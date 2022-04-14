@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-
-import { Money } from "../../../ui/React/Money";
-import { Modal } from "../../../ui/React/Modal";
-import { use } from "../../../ui/Context";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { use } from "../../../ui/Context";
+import { Modal } from "../../../ui/React/Modal";
+import { Money } from "../../../ui/React/Money";
 
 interface IProps {
   open: boolean;

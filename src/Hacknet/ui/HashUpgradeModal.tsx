@@ -1,16 +1,16 @@
 /**
  * Create the pop-up for purchasing upgrades with hashes
  */
-import React, { useState, useEffect } from "react";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
 
+import { use } from "../../ui/Context";
+import { Hashes } from "../../ui/React/Hashes";
+import { Modal } from "../../ui/React/Modal";
 import { HashManager } from "../HashManager";
 import { HashUpgrades } from "../HashUpgrades";
 
-import { Hashes } from "../../ui/React/Hashes";
 import { HacknetUpgradeElem } from "./HacknetUpgradeElem";
-import { Modal } from "../../ui/React/Modal";
-import { use } from "../../ui/Context";
-import Typography from "@mui/material/Typography";
 
 interface IProps {
   open: boolean;

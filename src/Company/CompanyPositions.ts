@@ -1,7 +1,9 @@
 // Constructs all CompanyPosition objects using the metadata in data/companypositions.ts
+import type { IMap } from "../types";
+
+import { CompanyPosition } from "./CompanyPosition";
+import type { IConstructorParams } from "./CompanyPosition";
 import { companyPositionMetadata } from "./data/CompanyPositionsMetadata";
-import { CompanyPosition, IConstructorParams } from "./CompanyPosition";
-import { IMap } from "../types";
 
 export const CompanyPositions: IMap<CompanyPosition> = {};
 

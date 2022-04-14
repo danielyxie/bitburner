@@ -1,17 +1,15 @@
+import { Table, TableBody, TableCell, TableRow, Typography } from "@mui/material";
 import React from "react";
 
-import { Typography, Table, TableBody, TableCell, TableRow } from "@mui/material";
-
-import { numeralWrapper } from "../../../ui/numeralFormat";
 import { Settings } from "../../../Settings/Settings";
-import { StatsRow } from "../../../ui/React/StatsRow";
+import { use } from "../../../ui/Context";
+import { numeralWrapper } from "../../../ui/numeralFormat";
 import { characterOverviewStyles as useStyles } from "../../../ui/React/CharacterOverview";
 import { Money } from "../../../ui/React/Money";
 import { MoneyRate } from "../../../ui/React/MoneyRate";
 import { ReputationRate } from "../../../ui/React/ReputationRate";
-import { use } from "../../../ui/Context";
-
-import { Sleeve } from "../Sleeve";
+import { StatsRow } from "../../../ui/React/StatsRow";
+import type { Sleeve } from "../Sleeve";
 import { SleeveTaskType } from "../SleeveTaskTypesEnum";
 
 interface IProps {

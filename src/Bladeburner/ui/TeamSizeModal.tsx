@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { Modal } from "../../ui/React/Modal";
-import { Action } from "../Action";
-import { IBladeburner } from "../IBladeburner";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { Modal } from "../../ui/React/Modal";
+import type { Action } from "../Action";
+import type { IBladeburner } from "../IBladeburner";
 
 interface IProps {
   bladeburner: IBladeburner;

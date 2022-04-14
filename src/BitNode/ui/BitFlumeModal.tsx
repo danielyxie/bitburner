@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Modal } from "../../ui/React/Modal";
-import { use } from "../../ui/Context";
-import { EventEmitter } from "../../utils/EventEmitter";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
+import { use } from "../../ui/Context";
+import { Modal } from "../../ui/React/Modal";
+import { EventEmitter } from "../../utils/EventEmitter";
 
 export const BitFlumeEvent = new EventEmitter<[]>();
 

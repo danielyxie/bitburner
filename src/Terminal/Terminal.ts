@@ -1,40 +1,36 @@
-import { ITerminal, Output, Link, RawOutput, TTimer } from "./ITerminal";
-import { IRouter } from "../ui/Router";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { HacknetServer } from "../Hacknet/HacknetServer";
-import { BaseServer } from "../Server/BaseServer";
-import { Server } from "../Server/Server";
-import { Programs } from "../Programs/Programs";
 import { CodingContractResult } from "../CodingContracts";
-import { TerminalEvents, TerminalClearEvents } from "./TerminalEvents";
-
-import { TextFile } from "../TextFile";
-import { Script } from "../Script/Script";
-import { isScriptFilename } from "../Script/isScriptFilename";
 import { CONSTANTS } from "../Constants";
-import { GetServer, GetAllServers } from "../Server/AllServers";
-
-import { removeLeadingSlash, isInRootDirectory, evaluateFilePath } from "./DirectoryHelpers";
 import { checkIfConnectedToDarkweb } from "../DarkWeb/DarkWeb";
-import { iTutorialNextStep, iTutorialSteps, ITutorial } from "../InteractiveTutorial";
-import { getServerOnNetwork, processSingleServerGrowth } from "../Server/ServerHelpers";
-import { ParseCommand, ParseCommands } from "./Parser";
-import { SpecialServers } from "../Server/data/SpecialServers";
-import { Settings } from "../Settings/Settings";
-import { createProgressBarText } from "../utils/helpers/createProgressBarText";
 import {
+  calculateGrowTime,
   calculateHackingChance,
   calculateHackingExpGain,
-  calculatePercentMoneyHacked,
   calculateHackingTime,
-  calculateGrowTime,
+  calculatePercentMoneyHacked,
   calculateWeakenTime,
 } from "../Hacking";
+import { HacknetServer } from "../Hacknet/HacknetServer";
+import { hash } from "../hash/hash";
+import { ITutorial, iTutorialNextStep, iTutorialSteps } from "../InteractiveTutorial";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { Programs } from "../Programs/Programs";
+import { isScriptFilename } from "../Script/isScriptFilename";
+import type { Script } from "../Script/Script";
+import { GetAllServers, GetServer } from "../Server/AllServers";
+import type { BaseServer } from "../Server/BaseServer";
+import { SpecialServers } from "../Server/data/SpecialServers";
+import { Server } from "../Server/Server";
+import { getServerOnNetwork, processSingleServerGrowth } from "../Server/ServerHelpers";
+import { Settings } from "../Settings/Settings";
+import type { TextFile } from "../TextFile";
 import { numeralWrapper } from "../ui/numeralFormat";
+import type { IRouter } from "../ui/Router";
+import { createProgressBarText } from "../utils/helpers/createProgressBarText";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
 import { alias } from "./commands/alias";
 import { analyze } from "./commands/analyze";
+import { apr1 } from "./commands/apr1";
 import { backdoor } from "./commands/backdoor";
 import { buy } from "./commands/buy";
 import { cat } from "./commands/cat";
@@ -71,8 +67,11 @@ import { unalias } from "./commands/unalias";
 import { vim } from "./commands/vim";
 import { weaken } from "./commands/weaken";
 import { wget } from "./commands/wget";
-import { hash } from "../hash/hash";
-import { apr1 } from "./commands/apr1";
+import { evaluateFilePath, isInRootDirectory, removeLeadingSlash } from "./DirectoryHelpers";
+import { Link, Output, RawOutput, TTimer } from "./ITerminal";
+import type { ITerminal } from "./ITerminal";
+import { ParseCommand, ParseCommands } from "./Parser";
+import { TerminalClearEvents, TerminalEvents } from "./TerminalEvents";
 
 export class Terminal implements ITerminal {
   // Flags to determine whether the player is currently running a hack or an analyze

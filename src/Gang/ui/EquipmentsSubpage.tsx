@@ -1,27 +1,28 @@
 /**
  * React Component for the popup that manages gang members upgrades
  */
-import React, { useState } from "react";
-import { useGang } from "./Context";
-
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { MenuItem, Table, TableBody, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { MenuItem, Table, TableBody, TextField } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
 
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { GangMemberUpgrades } from "../GangMemberUpgrades";
-import { GangMemberUpgrade } from "../GangMemberUpgrade";
-import { Money } from "../../ui/React/Money";
-import { GangMember } from "../GangMember";
-import { UpgradeType } from "../data/upgrades";
-import { use } from "../../ui/Context";
 import { Settings } from "../../Settings/Settings";
+import { use } from "../../ui/Context";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
 import { StatsRow } from "../../ui/React/StatsRow";
+import { UpgradeType } from "../data/upgrades";
+import type { GangMember } from "../GangMember";
+import type { GangMemberUpgrade } from "../GangMemberUpgrade";
+import { GangMemberUpgrades } from "../GangMemberUpgrades";
+
+import { useGang } from "./Context";
 
 interface INextRevealProps {
   upgrades: string[];

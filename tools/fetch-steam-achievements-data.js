@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const https = require("https");
 const fs = require("fs").promises;
+const https = require("https");
 const path = require("path");
 
 const key = process.argv[2];

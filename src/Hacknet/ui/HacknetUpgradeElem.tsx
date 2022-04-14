@@ -1,22 +1,18 @@
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
-import { purchaseHashUpgrade } from "../HacknetHelpers";
-import { HashManager } from "../HashManager";
-import { HashUpgrade } from "../HashUpgrade";
-
-import { IPlayer } from "../../PersonObjects/IPlayer";
-
-import { ServerDropdown, ServerType } from "../../ui/React/ServerDropdown";
-
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { CopyableText } from "../../ui/React/CopyableText";
-import { Hashes } from "../../ui/React/Hashes";
-
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import { SelectChangeEvent } from "@mui/material/Select";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { CopyableText } from "../../ui/React/CopyableText";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { Hashes } from "../../ui/React/Hashes";
+import { ServerDropdown, ServerType } from "../../ui/React/ServerDropdown";
+import { purchaseHashUpgrade } from "../HacknetHelpers";
+import type { HashManager } from "../HashManager";
+import type { HashUpgrade } from "../HashUpgrade";
 
 interface IProps {
   player: IPlayer;

@@ -1,13 +1,13 @@
+import { Typography } from "@mui/material";
+import type { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import React from "react";
 
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
-import { Theme } from "@mui/material/styles";
+import { Player } from "../Player";
 
 import { AchievementList } from "./AchievementList";
 import { achievements } from "./Achievements";
-import { Typography } from "@mui/material";
-import { Player } from "../Player";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

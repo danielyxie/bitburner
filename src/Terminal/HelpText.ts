@@ -1,5 +1,5 @@
 /* tslint:disable:max-line-length completed-docs variable-name*/
-import { IMap } from "../types";
+import type { IMap } from "../types";
 
 export const TerminalHelpText: string[] = [
   "Type 'help name' to learn more about the command ",

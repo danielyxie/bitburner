@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
 
 type IProps = {
   value: string;

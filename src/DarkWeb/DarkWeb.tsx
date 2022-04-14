@@ -1,12 +1,13 @@
 import React from "react";
-import { DarkWebItems } from "./DarkWebItems";
 
 import { Player } from "../Player";
-import { Terminal } from "../Terminal";
 import { SpecialServers } from "../Server/data/SpecialServers";
+import { Terminal } from "../Terminal";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
-import { DarkWebItem } from "./DarkWebItem";
+
+import type { DarkWebItem } from "./DarkWebItem";
+import { DarkWebItems } from "./DarkWebItems";
 
 //Posts a "help" message if connected to DarkWeb
 export function checkIfConnectedToDarkweb(): void {

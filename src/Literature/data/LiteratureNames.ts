@@ -1,4 +1,4 @@
-import { IMap } from "../../types";
+import type { IMap } from "../../types";
 
 export const LiteratureNames: IMap<string> = {
   HackersStartingHandbook: "hackers-starting-handbook.lit",

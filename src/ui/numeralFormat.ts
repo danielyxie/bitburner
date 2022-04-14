@@ -1,4 +1,3 @@
-import numeral from "numeral";
 import "numeral/locales/bg";
 import "numeral/locales/cs";
 import "numeral/locales/da-dk";
@@ -13,6 +12,7 @@ import "numeral/locales/lv";
 import "numeral/locales/no";
 import "numeral/locales/pl";
 import "numeral/locales/ru";
+import numeral from "numeral";
 
 import { Settings } from "../Settings/Settings";
 

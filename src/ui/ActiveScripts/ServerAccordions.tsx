@@ -2,20 +2,20 @@
  * React Component for rendering the Accordion elements for all servers
  * on which scripts are running
  */
-import React, { useState, useEffect } from "react";
-
-import { ServerAccordion } from "./ServerAccordion";
-
-import TextField from "@mui/material/TextField";
+import SearchIcon from "@mui/icons-material/Search";
 import List from "@mui/material/List";
 import TablePagination from "@mui/material/TablePagination";
-import { WorkerScript } from "../../Netscript/WorkerScript";
+import TextField from "@mui/material/TextField";
+import React, { useEffect, useState } from "react";
+
+import type { WorkerScript } from "../../Netscript/WorkerScript";
 import { WorkerScriptStartStopEventEmitter } from "../../Netscript/WorkerScriptStartStopEventEmitter";
 import { GetServer } from "../../Server/AllServers";
-import { BaseServer } from "../../Server/BaseServer";
+import type { BaseServer } from "../../Server/BaseServer";
 import { Settings } from "../../Settings/Settings";
 import { TablePaginationActionsAll } from "../React/TablePaginationActionsAll";
-import SearchIcon from "@mui/icons-material/Search";
+
+import { ServerAccordion } from "./ServerAccordion";
 
 // Map of server hostname -> all workerscripts on that server for all active scripts
 interface IServerData {

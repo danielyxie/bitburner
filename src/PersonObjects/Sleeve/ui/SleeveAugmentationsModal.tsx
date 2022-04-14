@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Sleeve } from "../Sleeve";
-import { findSleevePurchasableAugs } from "../SleeveHelpers";
-import { Augmentations } from "../../../Augmentation/Augmentations";
-import { Augmentation } from "../../../Augmentation/Augmentation";
-import { Money } from "../../../ui/React/Money";
-import { Modal } from "../../../ui/React/Modal";
-import { use } from "../../../ui/Context";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import TableBody from "@mui/material/TableBody";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
-import { TableCell } from "../../../ui/React/Table";
+import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
+import type { Augmentation } from "../../../Augmentation/Augmentation";
+import { Augmentations } from "../../../Augmentation/Augmentations";
+import { use } from "../../../ui/Context";
+import { Modal } from "../../../ui/React/Modal";
+import { Money } from "../../../ui/React/Money";
+import { TableCell } from "../../../ui/React/Table";
+import type { Sleeve } from "../Sleeve";
+import { findSleevePurchasableAugs } from "../SleeveHelpers";
 
 interface IProps {
   open: boolean;

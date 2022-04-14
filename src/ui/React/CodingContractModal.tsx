@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
+import { CodingContractTypes } from "../../CodingContracts";
+import type { CodingContract } from "../../CodingContracts";
+import { EventEmitter } from "../../utils/EventEmitter";
 import { KEY } from "../../utils/helpers/keyCodes";
 
-import { CodingContract, CodingContractTypes } from "../../CodingContracts";
 import { CopyableText } from "./CopyableText";
 import { Modal } from "./Modal";
-import { EventEmitter } from "../../utils/EventEmitter";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 
 interface IProps {
   c: CodingContract;

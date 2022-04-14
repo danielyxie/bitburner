@@ -1,5 +1,5 @@
-import { KEY } from "../utils/helpers/keyCodes";
 import { substituteAliases } from "../Alias";
+import { KEY } from "../utils/helpers/keyCodes";
 // Helper function that checks if an argument (which is a string) is a valid number
 function isNumber(str: string): boolean {
   if (typeof str != "string") {

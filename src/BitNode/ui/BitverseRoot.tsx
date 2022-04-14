@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-import { IRouter } from "../../ui/Router";
-import { BitNodes } from "../BitNode";
-import { enterBitNode } from "../../RedPill";
-import { PortalModal } from "./PortalModal";
-import { CinematicText } from "../../ui/React/CinematicText";
-import { use } from "../../ui/Context";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import { Settings } from "../../Settings/Settings";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import React, { useState } from "react";
+
+import { enterBitNode } from "../../RedPill";
+import { Settings } from "../../Settings/Settings";
+import { use } from "../../ui/Context";
+import { CinematicText } from "../../ui/React/CinematicText";
+import type { IRouter } from "../../ui/Router";
+import { BitNodes } from "../BitNode";
+
+import { PortalModal } from "./PortalModal";
 
 const useStyles = makeStyles(() =>
   createStyles({

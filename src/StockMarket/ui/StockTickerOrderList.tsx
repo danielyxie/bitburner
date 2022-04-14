@@ -4,12 +4,11 @@
  */
 import * as React from "react";
 
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { Order } from "../Order";
+import type { Stock } from "../Stock";
+
 import { StockTickerOrder } from "./StockTickerOrder";
-
-import { Order } from "../Order";
-import { Stock } from "../Stock";
-
-import { IPlayer } from "../../PersonObjects/IPlayer";
 
 type IProps = {
   cancelOrder: (params: any) => void;

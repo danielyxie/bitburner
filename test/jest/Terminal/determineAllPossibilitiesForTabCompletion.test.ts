@@ -1,14 +1,15 @@
-import { CityName } from "./../../../src/Locations/data/CityNames";
 /* eslint-disable no-await-in-loop */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { jest, describe, expect, test } from "@jest/globals";
+import { describe, expect, jest, test } from "@jest/globals";
 
-import { Player } from "../../../src/Player";
-import { determineAllPossibilitiesForTabCompletion } from "../../../src/Terminal/determineAllPossibilitiesForTabCompletion";
-import { Server } from "../../../src/Server/Server";
-import { AddToAllServers, prestigeAllServers } from "../../../src/Server/AllServers";
-import { LocationName } from "../../../src/Locations/data/LocationNames";
 import { CodingContract } from "../../../src/CodingContracts";
+import { LocationName } from "../../../src/Locations/data/LocationNames";
+import { Player } from "../../../src/Player";
+import { AddToAllServers, prestigeAllServers } from "../../../src/Server/AllServers";
+import { Server } from "../../../src/Server/Server";
+import { determineAllPossibilitiesForTabCompletion } from "../../../src/Terminal/determineAllPossibilitiesForTabCompletion";
+
+import { CityName } from "./../../../src/Locations/data/CityNames";
 
 jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
   virtual: true,

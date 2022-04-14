@@ -6,14 +6,14 @@
  * Instead, whenever the game is opened, WorkerScripts are re-created from
  * RunningScript objects
  */
+import type { RunningScript } from "../Script/RunningScript";
+import type { Script } from "../Script/Script";
+import { GetServer } from "../Server/AllServers";
+import type { BaseServer } from "../Server/BaseServer";
+import type { IMap } from "../types";
+
 import { Environment } from "./Environment";
 import { RamCostConstants } from "./RamCostGenerator";
-
-import { RunningScript } from "../Script/RunningScript";
-import { Script } from "../Script/Script";
-import { GetServer } from "../Server/AllServers";
-import { BaseServer } from "../Server/BaseServer";
-import { IMap } from "../types";
 
 export class WorkerScript {
   /**

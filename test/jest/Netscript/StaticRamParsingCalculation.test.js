@@ -1,10 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { describe, expect, jest } from "@jest/globals";
 
+import { RamCostConstants } from "../../../src/Netscript/RamCostGenerator";
 // Player is needed for calculating costs like Singularity functions, that depend on acquired source files
 import { Player } from "../../../src/Player";
-
-import { RamCostConstants } from "../../../src/Netscript/RamCostGenerator";
 import { calculateRamUsage } from "../../../src/Script/RamCalculations";
 import { Script } from "../../../src/Script/Script";
 

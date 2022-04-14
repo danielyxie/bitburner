@@ -1,7 +1,7 @@
+import type { BaseServer } from "./Server/BaseServer";
+import { isInRootDirectory, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
-import { BaseServer } from "./Server/BaseServer";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
-import { removeLeadingSlash, isInRootDirectory } from "./Terminal/DirectoryHelpers";
 
 /**
  * Represents a plain text file that is typically stored on a server.

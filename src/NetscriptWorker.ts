@@ -2,41 +2,39 @@
  * Functions for handling WorkerScripts, which are the underlying mechanism
  * that allows for scripts to run
  */
+import { parse } from "acorn";
+import { simple as walksimple } from "acorn-walk";
+import { generate } from "escodegen";
+import { sprintf } from "sprintf-js";
+
+import { CONSTANTS } from "./Constants";
 import { killWorkerScript } from "./Netscript/killWorkerScript";
+import { generateNextPid } from "./Netscript/Pid";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
 import { WorkerScript } from "./Netscript/WorkerScript";
 import { workerScripts } from "./Netscript/WorkerScripts";
 import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
-import { generateNextPid } from "./Netscript/Pid";
-
-import { CONSTANTS } from "./Constants";
-import { Interpreter } from "./ThirdParty/JSInterpreter";
 import { isScriptErrorMessage, makeRuntimeRejectMsg } from "./NetscriptEvaluator";
 import { NetscriptFunctions } from "./NetscriptFunctions";
 import { executeJSScript } from "./NetscriptJSEvaluator";
-import { NetscriptPort, IPort } from "./NetscriptPort";
+import { NetscriptPort } from "./NetscriptPort";
+import type { IPort } from "./NetscriptPort";
+import type { IPlayer } from "./PersonObjects/IPlayer";
+import { Player } from "./Player";
 import { RunningScript } from "./Script/RunningScript";
 import { getRamUsageFromRunningScript } from "./Script/RunningScriptHelpers";
+import type { Script } from "./Script/Script";
 import { scriptCalculateOfflineProduction } from "./Script/ScriptHelpers";
-import { Script } from "./Script/Script";
 import { GetAllServers } from "./Server/AllServers";
-import { BaseServer } from "./Server/BaseServer";
+import type { BaseServer } from "./Server/BaseServer";
 import { Settings } from "./Settings/Settings";
-
-import { generate } from "escodegen";
-
+import { Terminal } from "./Terminal";
+import { areFilesEqual } from "./Terminal/DirectoryHelpers";
+import { Interpreter } from "./ThirdParty/JSInterpreter";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
 import { arrayToString } from "./utils/helpers/arrayToString";
-import { roundToTwo } from "./utils/helpers/roundToTwo";
 import { isString } from "./utils/helpers/isString";
-import { sprintf } from "sprintf-js";
-
-import { parse } from "acorn";
-import { simple as walksimple } from "acorn-walk";
-import { areFilesEqual } from "./Terminal/DirectoryHelpers";
-import { Player } from "./Player";
-import { Terminal } from "./Terminal";
-import { IPlayer } from "./PersonObjects/IPlayer";
+import { roundToTwo } from "./utils/helpers/roundToTwo";
 
 // Netscript Ports are instantiated here
 export const NetscriptPorts: IPort[] = [];

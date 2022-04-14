@@ -7,12 +7,13 @@ import {
   IconButton,
   MenuItem,
   Select,
-  SelectChangeEvent,
   Typography,
 } from "@mui/material";
+import type { SelectChangeEvent } from "@mui/material";
 import React, { useState } from "react";
+
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
   player: IPlayer;

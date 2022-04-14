@@ -1,5 +1,5 @@
-import { FragmentType } from "./FragmentType";
 import { Shapes } from "./data/Shapes";
+import { FragmentType } from "./FragmentType";
 
 export const Fragments: Fragment[] = [];
 

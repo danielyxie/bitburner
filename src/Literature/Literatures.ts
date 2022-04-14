@@ -1,8 +1,9 @@
-import { CityName } from "./../Locations/data/CityNames";
-import { Literature } from "./Literature";
-import { LiteratureNames } from "./data/LiteratureNames";
-import { IMap } from "../types";
 import { FactionNames } from "../Faction/data/FactionNames";
+import type { IMap } from "../types";
+
+import { CityName } from "./../Locations/data/CityNames";
+import { LiteratureNames } from "./data/LiteratureNames";
+import { Literature } from "./Literature";
 
 export const Literatures: IMap<Literature> = {};
 

@@ -1,9 +1,10 @@
-import * as React from "react";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { ICorporation } from "../ICorporation";
-import { Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
+import type { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import * as React from "react";
+
+import { numeralWrapper } from "../../ui/numeralFormat";
+import type { ICorporation } from "../ICorporation";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

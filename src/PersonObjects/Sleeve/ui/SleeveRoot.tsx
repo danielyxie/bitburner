@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
-
-import { Box, Typography, Button, Container } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 
 import { use } from "../../../ui/Context";
 
-import { SleeveElem } from "./SleeveElem";
 import { FAQModal } from "./FAQModal";
+import { SleeveElem } from "./SleeveElem";
 
 export function SleeveRoot(): React.ReactElement {
   const player = use.Player();

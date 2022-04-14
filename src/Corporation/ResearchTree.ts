@@ -3,12 +3,11 @@
 // Each Node in the Research Trees only holds the name(s) of Research,
 // not an actual Research object. The name can be used to obtain a reference
 // to the corresponding Research object using the ResearchMap
-import { Research } from "./Research";
-import { ResearchMap } from "./ResearchMap";
-
-import { IMap } from "../types";
-
+import type { IMap } from "../types";
 import { numeralWrapper } from "../ui/numeralFormat";
+
+import type { Research } from "./Research";
+import { ResearchMap } from "./ResearchMap";
 
 interface IConstructorParams {
   children?: Node[];

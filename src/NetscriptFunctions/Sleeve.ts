@@ -1,15 +1,13 @@
-import { INetscriptHelper } from "./INetscriptHelper";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { getRamCost } from "../Netscript/RamCostGenerator";
-import { FactionWorkType } from "../Faction/FactionWorkTypeEnum";
-import { SleeveTaskType } from "../PersonObjects/Sleeve/SleeveTaskTypesEnum";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
 import { Augmentations } from "../Augmentation/Augmentations";
-import { CityName } from "../Locations/data/CityNames";
 import { findCrime } from "../Crime/CrimeHelpers";
-
-import {
+import { FactionWorkType } from "../Faction/FactionWorkTypeEnum";
+import { CityName } from "../Locations/data/CityNames";
+import { getRamCost } from "../Netscript/RamCostGenerator";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
+import { SleeveTaskType } from "../PersonObjects/Sleeve/SleeveTaskTypesEnum";
+import type {
   AugmentPair,
   Sleeve as ISleeve,
   SleeveInformation,
@@ -17,6 +15,8 @@ import {
   SleeveTask,
 } from "../ScriptEditor/NetscriptDefinitions";
 import { checkEnum } from "../utils/helpers/checkEnum";
+
+import type { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): ISleeve {
   const checkSleeveAPIAccess = function (func: string): void {

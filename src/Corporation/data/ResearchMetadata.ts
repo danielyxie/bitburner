@@ -1,4 +1,4 @@
-import { IConstructorParams } from "../Research";
+import type { IConstructorParams } from "../Research";
 
 export const researchMetadata: IConstructorParams[] = [
   {

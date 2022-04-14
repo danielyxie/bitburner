@@ -2,10 +2,10 @@
  * Represents a Limit or Buy Order on the stock market. Does not represent
  * a Market Order since those are just executed immediately
  */
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
 import { OrderTypes } from "./data/OrderTypes";
 import { PositionTypes } from "./data/PositionTypes";
-
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
 export class Order {
   readonly pos: PositionTypes;

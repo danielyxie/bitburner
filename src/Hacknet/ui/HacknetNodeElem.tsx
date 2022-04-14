@@ -2,35 +2,32 @@
  * React Component for the Hacknet Node UI.
  * This Component displays the panel for a single Hacknet Node
  */
-import React from "react";
-
-import { HacknetNodeConstants } from "../data/Constants";
-import {
-  getMaxNumberLevelUpgrades,
-  getMaxNumberRamUpgrades,
-  getMaxNumberCoreUpgrades,
-  purchaseLevelUpgrade,
-  purchaseRamUpgrade,
-  purchaseCoreUpgrade,
-} from "../HacknetHelpers";
-
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { HacknetNode } from "../HacknetNode";
-
-import { Money } from "../../ui/React/Money";
-import { MoneyRate } from "../../ui/React/MoneyRate";
-
-import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import { TableCell } from "../../ui/React/Table";
-import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React from "react";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
+import { MoneyRate } from "../../ui/React/MoneyRate";
+import { TableCell } from "../../ui/React/Table";
+import { HacknetNodeConstants } from "../data/Constants";
 import { calculateMoneyGainRate } from "../formulas/HacknetNodes";
+import {
+  getMaxNumberCoreUpgrades,
+  getMaxNumberLevelUpgrades,
+  getMaxNumberRamUpgrades,
+  purchaseCoreUpgrade,
+  purchaseLevelUpgrade,
+  purchaseRamUpgrade,
+} from "../HacknetHelpers";
+import type { HacknetNode } from "../HacknetNode";
 
 interface IProps {
   node: HacknetNode;

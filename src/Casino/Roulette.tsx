@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
-
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { Money } from "../ui/React/Money";
-import { win, reachedLimit } from "./Game";
-import { WHRNG } from "./RNG";
-import { trusted } from "./utils";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { Money } from "../ui/React/Money";
+
+import { reachedLimit, win } from "./Game";
+import { WHRNG } from "./RNG";
+import { trusted } from "./utils";
 
 type IProps = {
   p: IPlayer;

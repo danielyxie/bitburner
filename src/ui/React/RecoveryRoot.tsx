@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
-
-import { Typography, Link, Button, ButtonGroup, Tooltip, Box, Paper, TextField } from "@mui/material";
-import { Settings } from "../../Settings/Settings";
-import { load } from "../../db";
-import { IRouter } from "../Router";
-import { download } from "../../SaveObject";
-import { IErrorData, newIssueUrl } from "../../utils/ErrorHelper";
-import { DeleteGameButton } from "./DeleteGameButton";
-import { SoftResetButton } from "./SoftResetButton";
-
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { Box, Button, ButtonGroup, Link, Paper, TextField, Tooltip, Typography } from "@mui/material";
+import React, { useEffect } from "react";
+
+import { load } from "../../db";
+import { download } from "../../SaveObject";
+import { Settings } from "../../Settings/Settings";
+import { newIssueUrl } from "../../utils/ErrorHelper";
+import type { IErrorData } from "../../utils/ErrorHelper";
+import type { IRouter } from "../Router";
+
+import { DeleteGameButton } from "./DeleteGameButton";
+import { SoftResetButton } from "./SoftResetButton";
 
 export let RecoveryMode = false;
 

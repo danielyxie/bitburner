@@ -1,11 +1,12 @@
 /**
  * React Component for the subpage that manages gang members, the main page.
  */
-import React from "react";
-import { GangStats } from "./GangStats";
-import { GangMemberList } from "./GangMemberList";
-import { useGang } from "./Context";
 import Typography from "@mui/material/Typography";
+import React from "react";
+
+import { useGang } from "./Context";
+import { GangMemberList } from "./GangMemberList";
+import { GangStats } from "./GangStats";
 
 export function ManagementSubpage(): React.ReactElement {
   const gang = useGang();

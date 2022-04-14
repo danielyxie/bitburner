@@ -1,5 +1,4 @@
 /* Generic Reviver, toJSON, and fromJSON functions used for saving and loading objects */
-
 import { validateObject } from "./Validator";
 
 interface IReviverValue {

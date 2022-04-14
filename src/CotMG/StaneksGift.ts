@@ -1,18 +1,19 @@
-import { FactionNames } from "../Faction/data/FactionNames";
-import { Fragment } from "./Fragment";
-import { ActiveFragment } from "./ActiveFragment";
-import { FragmentType } from "./FragmentType";
-import { IStaneksGift } from "./IStaneksGift";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { Factions } from "../Faction/Factions";
-import { CalculateEffect } from "./formulas/effect";
-import { StaneksGiftEvents } from "./StaneksGiftEvents";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
-import { CONSTANTS } from "../Constants";
-import { StanekConstants } from "./data/Constants";
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { Player } from "../Player";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { CONSTANTS } from "../Constants";
+import { FactionNames } from "../Faction/data/FactionNames";
+import { Factions } from "../Faction/Factions";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { Player } from "../Player";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
+import { ActiveFragment } from "./ActiveFragment";
+import { StanekConstants } from "./data/Constants";
+import { CalculateEffect } from "./formulas/effect";
+import type { Fragment } from "./Fragment";
+import { FragmentType } from "./FragmentType";
+import type { IStaneksGift } from "./IStaneksGift";
+import { StaneksGiftEvents } from "./StaneksGiftEvents";
 
 export class StaneksGift implements IStaneksGift {
   storedCycles = 0;

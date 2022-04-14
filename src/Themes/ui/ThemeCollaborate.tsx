@@ -1,6 +1,6 @@
-import React from "react";
-import Typography from "@mui/material/Typography";
 import { Link } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import React from "react";
 
 export function ThemeCollaborate(): React.ReactElement {
   return (

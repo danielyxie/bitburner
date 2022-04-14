@@ -1,7 +1,9 @@
-import { IBladeburner } from "./IBladeburner";
-import { BladeburnerConstants } from "./data/Constants";
-import { Action, IActionParams } from "./Action";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
+import { Action } from "./Action";
+import type { IActionParams } from "./Action";
+import { BladeburnerConstants } from "./data/Constants";
+import type { IBladeburner } from "./IBladeburner";
 
 export interface IOperationParams extends IActionParams {
   reqdRank?: number;

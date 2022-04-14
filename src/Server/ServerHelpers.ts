@@ -1,15 +1,15 @@
-import { GetServer, createUniqueRandomIp, ipExists } from "./AllServers";
-import { Server, IConstructorParams } from "./Server";
-import { BaseServer } from "./BaseServer";
-import { calculateServerGrowth } from "./formulas/grow";
-
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { Programs } from "../Programs/Programs";
 import { LiteratureNames } from "../Literature/data/LiteratureNames";
-
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { Programs } from "../Programs/Programs";
 import { isValidNumber } from "../utils/helpers/isValidNumber";
+
+import { GetServer, createUniqueRandomIp, ipExists } from "./AllServers";
+import type { BaseServer } from "./BaseServer";
+import { calculateServerGrowth } from "./formulas/grow";
+import { Server } from "./Server";
+import type { IConstructorParams } from "./Server";
 
 /**
  * Constructs a new server, while also ensuring that the new server

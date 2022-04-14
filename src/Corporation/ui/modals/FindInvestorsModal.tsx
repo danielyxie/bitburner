@@ -1,11 +1,11 @@
-import React from "react";
-import { numeralWrapper } from "../../../ui/numeralFormat";
-import { CorporationConstants } from "../../data/Constants";
-import { Modal } from "../../../ui/React/Modal";
-import { useCorporation } from "../Context";
-
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import React from "react";
+
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { Modal } from "../../../ui/React/Modal";
+import { CorporationConstants } from "../../data/Constants";
+import { useCorporation } from "../Context";
 
 interface IProps {
   open: boolean;

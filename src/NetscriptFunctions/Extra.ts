@@ -1,9 +1,11 @@
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { Exploit } from "../Exploits/Exploit";
 import * as bcrypt from "bcryptjs";
-import { INetscriptHelper } from "./INetscriptHelper";
+
+import { Exploit } from "../Exploits/Exploit";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
 import { Apr1Events as devMenu } from "../ui/Apr1";
+
+import type { INetscriptHelper } from "./INetscriptHelper";
 
 export interface INetscriptExtra {
   heart: {

@@ -2,17 +2,15 @@
  * Abstract Base Class for any Server object
  */
 import { CodingContract } from "../CodingContracts";
-import { RunningScript } from "../Script/RunningScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { isScriptFilename } from "../Script/isScriptFilename";
+import type { RunningScript } from "../Script/RunningScript";
 import { Script } from "../Script/Script";
 import { isValidFilePath } from "../Terminal/DirectoryHelpers";
 import { TextFile } from "../TextFile";
-import { IReturnStatus } from "../types";
-
-import { isScriptFilename } from "../Script/isScriptFilename";
-
-import { createRandomIp } from "../utils/IPAddress";
+import type { IReturnStatus } from "../types";
 import { compareArrays } from "../utils/helpers/compareArrays";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { createRandomIp } from "../utils/IPAddress";
 
 interface IConstructorParams {
   adminRights?: boolean;

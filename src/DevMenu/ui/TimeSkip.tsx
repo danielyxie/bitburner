@@ -1,15 +1,14 @@
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import React from "react";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IEngine } from "../../IEngine";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { saveObject } from "../../SaveObject";
-import { IEngine } from "../../IEngine";
 
 // Update as additional BitNodes get implemented
 

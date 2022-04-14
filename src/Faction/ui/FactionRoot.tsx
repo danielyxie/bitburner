@@ -3,26 +3,23 @@
  * This is the component for displaying a single faction's UI, not the list of all
  * accessible factions
  */
-import React, { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { CONSTANTS } from "../../Constants";
+import { GangConstants } from "../../Gang/data/Constants";
+import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPurchasesRoot";
+import { use } from "../../ui/Context";
+import { FactionNames } from "../data/FactionNames";
+import type { Faction } from "../Faction";
 
 import { AugmentationsPage } from "./AugmentationsPage";
+import { CreateGangModal } from "./CreateGangModal";
 import { DonateOption } from "./DonateOption";
 import { Info } from "./Info";
 import { Option } from "./Option";
-
-import { CONSTANTS } from "../../Constants";
-
-import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { Faction } from "../Faction";
-
-import { use } from "../../ui/Context";
-import { CreateGangModal } from "./CreateGangModal";
-
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { CovenantPurchasesRoot } from "../../PersonObjects/Sleeve/ui/CovenantPurchasesRoot";
-import { FactionNames } from "../data/FactionNames";
-import { GangConstants } from "../../Gang/data/Constants";
 
 type IProps = {
   faction: Faction;

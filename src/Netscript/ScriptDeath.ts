@@ -1,4 +1,4 @@
-import { WorkerScript } from "./WorkerScript";
+import type { WorkerScript } from "./WorkerScript";
 
 /**
  * Script death marker.

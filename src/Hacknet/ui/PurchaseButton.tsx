@@ -1,13 +1,12 @@
 /**
  * React Component for the button that is used to purchase new Hacknet Nodes
  */
+import Button from "@mui/material/Button";
 import React from "react";
 
-import { hasHacknetServers, hasMaxNumberHacknetServers } from "../HacknetHelpers";
 import { Player } from "../../Player";
 import { Money } from "../../ui/React/Money";
-
-import Button from "@mui/material/Button";
+import { hasHacknetServers, hasMaxNumberHacknetServers } from "../HacknetHelpers";
 
 interface IProps {
   multiplier: number | string;

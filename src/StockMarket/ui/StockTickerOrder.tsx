@@ -1,16 +1,15 @@
 /**
  * React component for displaying a single order in a stock's order book
  */
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import * as React from "react";
-
-import { Order } from "../Order";
-import { PositionTypes } from "../data/PositionTypes";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import { PositionTypes } from "../data/PositionTypes";
+import type { Order } from "../Order";
 
 type IProps = {
   cancelOrder: (params: any) => void;

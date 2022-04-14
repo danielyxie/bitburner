@@ -1,4 +1,4 @@
-import { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
+import type { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
 
 export const defaultStyles: IStyleSettings = {
   lineHeight: 1.5,

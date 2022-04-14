@@ -1,31 +1,30 @@
-import { IPlayer } from "./PersonObjects/IPlayer";
-import { Bladeburner } from "./Bladeburner/Bladeburner";
-import { IEngine } from "./IEngine";
-import { IRouter } from "./ui/Router";
-import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
-
+import Typography from "@mui/material/Typography";
 import React, { useEffect } from "react";
 
-import { General } from "./DevMenu/ui/General";
-import { Stats } from "./DevMenu/ui/Stats";
-import { Factions } from "./DevMenu/ui/Factions";
+import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
+import { Bladeburner } from "./Bladeburner/Bladeburner";
+import { Achievements } from "./DevMenu/ui/Achievements";
 import { Augmentations } from "./DevMenu/ui/Augmentations";
-import { SourceFiles } from "./DevMenu/ui/SourceFiles";
+import { Bladeburner as BladeburnerElem } from "./DevMenu/ui/Bladeburner";
+import { CodingContracts } from "./DevMenu/ui/CodingContracts";
+import { Companies } from "./DevMenu/ui/Companies";
+import { Corporation } from "./DevMenu/ui/Corporation";
+import { Entropy } from "./DevMenu/ui/Entropy";
+import { Factions } from "./DevMenu/ui/Factions";
+import { Gang } from "./DevMenu/ui/Gang";
+import { General } from "./DevMenu/ui/General";
 import { Programs } from "./DevMenu/ui/Programs";
 import { Servers } from "./DevMenu/ui/Servers";
-import { Companies } from "./DevMenu/ui/Companies";
-import { Bladeburner as BladeburnerElem } from "./DevMenu/ui/Bladeburner";
-import { Gang } from "./DevMenu/ui/Gang";
-import { Corporation } from "./DevMenu/ui/Corporation";
-import { CodingContracts } from "./DevMenu/ui/CodingContracts";
-import { StockMarket } from "./DevMenu/ui/StockMarket";
 import { Sleeves } from "./DevMenu/ui/Sleeves";
+import { SourceFiles } from "./DevMenu/ui/SourceFiles";
 import { Stanek } from "./DevMenu/ui/Stanek";
+import { Stats } from "./DevMenu/ui/Stats";
+import { StockMarket } from "./DevMenu/ui/StockMarket";
 import { TimeSkip } from "./DevMenu/ui/TimeSkip";
-import { Achievements } from "./DevMenu/ui/Achievements";
-import { Entropy } from "./DevMenu/ui/Entropy";
-import Typography from "@mui/material/Typography";
 import { Exploit } from "./Exploits/Exploit";
+import type { IEngine } from "./IEngine";
+import type { IPlayer } from "./PersonObjects/IPlayer";
+import type { IRouter } from "./ui/Router";
 
 interface IProps {
   player: IPlayer;

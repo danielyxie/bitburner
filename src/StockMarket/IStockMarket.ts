@@ -1,5 +1,5 @@
-import { IOrderBook } from "./IOrderBook";
-import { Stock } from "./Stock";
+import type { IOrderBook } from "./IOrderBook";
+import type { Stock } from "./Stock";
 
 export type IStockMarket = {
   [key: string]: Stock;

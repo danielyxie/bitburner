@@ -1,8 +1,8 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { BaseServer } from "../../Server/BaseServer";
 import { getServerOnNetwork } from "../../Server/ServerHelpers";
+import type { IRouter } from "../../ui/Router";
+import type { ITerminal } from "../ITerminal";
 
 export function scan(
   terminal: ITerminal,

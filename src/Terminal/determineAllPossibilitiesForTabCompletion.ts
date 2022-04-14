@@ -1,18 +1,19 @@
-import { evaluateDirectoryPath, getAllParentDirectories } from "./DirectoryHelpers";
-import { getSubdirectories } from "./DirectoryServerHelpers";
+import * as libarg from "arg";
 
 import { Aliases, GlobalAliases, substituteAliases } from "../Alias";
 import { DarkWebItems } from "../DarkWeb/DarkWebItems";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { Flags } from "../NetscriptFunctions/Flags";
+import { compile } from "../NetscriptJSEvaluator";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { isScriptFilename } from "../Script/isScriptFilename";
+import type { AutocompleteData } from "../ScriptEditor/NetscriptDefinitions";
 import { GetAllServers } from "../Server/AllServers";
 import { Server } from "../Server/Server";
-import { ParseCommand, ParseCommands } from "./Parser";
+
+import { evaluateDirectoryPath, getAllParentDirectories } from "./DirectoryHelpers";
+import { getSubdirectories } from "./DirectoryServerHelpers";
 import { HelpTexts } from "./HelpText";
-import { isScriptFilename } from "../Script/isScriptFilename";
-import { compile } from "../NetscriptJSEvaluator";
-import { Flags } from "../NetscriptFunctions/Flags";
-import { AutocompleteData } from "../ScriptEditor/NetscriptDefinitions";
-import * as libarg from "arg";
+import { ParseCommand, ParseCommands } from "./Parser";
 
 // An array of all Terminal commands
 const commands = [

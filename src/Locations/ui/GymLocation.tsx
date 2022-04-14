@@ -3,20 +3,18 @@
  *
  * This subcomponent renders all of the buttons for training at the gym
  */
-import * as React from "react";
+import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
-
-import { Location } from "../Location";
+import * as React from "react";
 
 import { CONSTANTS } from "../../Constants";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { GetServer } from "../../Server/AllServers";
-import { Server } from "../../Server/Server";
-
-import { Money } from "../../ui/React/Money";
-import { IRouter } from "../../ui/Router";
 import { serverMetadata } from "../../Server/data/servers";
-import { Box } from "@mui/material";
+import type { Server } from "../../Server/Server";
+import { Money } from "../../ui/React/Money";
+import type { IRouter } from "../../ui/Router";
+import type { Location } from "../Location";
 
 type IProps = {
   loc: Location;

@@ -1,6 +1,5 @@
-import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { sanitizeExploits } from "./Exploits/Exploit";
-
+import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { Reviver } from "./utils/JSONReviver";
 
 export let Player = new PlayerObject();

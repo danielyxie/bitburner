@@ -1,11 +1,12 @@
 import React from "react";
-import { TextFile } from "../TextFile";
-import { Script } from "../Script/Script";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IRouter } from "../ui/Router";
+
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type { Script } from "../Script/Script";
+import type { BaseServer } from "../Server/BaseServer";
 import { Settings } from "../Settings/Settings";
+import type { TextFile } from "../TextFile";
+import type { IRouter } from "../ui/Router";
 import { formatTime } from "../utils/helpers/formatTime";
-import { BaseServer } from "../Server/BaseServer";
 
 export class Output {
   text: string;

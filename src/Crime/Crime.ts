@@ -1,8 +1,8 @@
 import { CONSTANTS } from "../Constants";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IPlayerOrSleeve } from "../PersonObjects/IPlayerOrSleeve";
-import { IRouter } from "../ui/Router";
-import { WorkerScript } from "../Netscript/WorkerScript";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type { IPlayerOrSleeve } from "../PersonObjects/IPlayerOrSleeve";
+import type { IRouter } from "../ui/Router";
 
 interface IConstructorParams {
   hacking_success_weight?: number;

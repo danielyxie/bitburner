@@ -1,5 +1,5 @@
-import React from "react";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
+import React from "react";
 
 interface IProps {
   children: React.ReactNode;

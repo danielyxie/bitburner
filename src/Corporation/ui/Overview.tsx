@@ -1,34 +1,36 @@
 // React Component for displaying Corporation Overview info
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
-import { LevelableUpgrade } from "./LevelableUpgrade";
-import { UnlockUpgrade } from "./UnlockUpgrade";
-import { BribeFactionModal } from "./modals/BribeFactionModal";
-import { SellSharesModal } from "./modals/SellSharesModal";
-import { BuybackSharesModal } from "./modals/BuybackSharesModal";
-import { IssueDividendsModal } from "./modals/IssueDividendsModal";
-import { IssueNewSharesModal } from "./modals/IssueNewSharesModal";
-import { FindInvestorsModal } from "./modals/FindInvestorsModal";
-import { GoPublicModal } from "./modals/GoPublicModal";
-import { Factions } from "../../Faction/Factions";
-
-import { CorporationConstants } from "../data/Constants";
-import { CorporationUnlockUpgrade, CorporationUnlockUpgrades } from "../data/CorporationUnlockUpgrades";
-import { CorporationUpgrade, CorporationUpgradeIndex, CorporationUpgrades } from "../data/CorporationUpgrades";
 
 import { CONSTANTS } from "../../Constants";
+import { Factions } from "../../Faction/Factions";
+import { use } from "../../ui/Context";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { StatsTable } from "../../ui/React/StatsTable";
-import { use } from "../../ui/Context";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import { CorporationConstants } from "../data/Constants";
+import { CorporationUnlockUpgrades } from "../data/CorporationUnlockUpgrades";
+import type { CorporationUnlockUpgrade } from "../data/CorporationUnlockUpgrades";
+import { CorporationUpgrades } from "../data/CorporationUpgrades";
+import type { CorporationUpgrade, CorporationUpgradeIndex } from "../data/CorporationUpgrades";
+
 import { useCorporation } from "./Context";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
+import { LevelableUpgrade } from "./LevelableUpgrade";
+import { BribeFactionModal } from "./modals/BribeFactionModal";
+import { BuybackSharesModal } from "./modals/BuybackSharesModal";
+import { FindInvestorsModal } from "./modals/FindInvestorsModal";
+import { GoPublicModal } from "./modals/GoPublicModal";
+import { IssueDividendsModal } from "./modals/IssueDividendsModal";
+import { IssueNewSharesModal } from "./modals/IssueNewSharesModal";
+import { SellSharesModal } from "./modals/SellSharesModal";
+import { UnlockUpgrade } from "./UnlockUpgrade";
 
 interface IProps {
   rerender: () => void;

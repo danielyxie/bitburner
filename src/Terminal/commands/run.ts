@@ -1,10 +1,11 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
-import { runScript } from "./runScript";
+import type { BaseServer } from "../../Server/BaseServer";
+import type { IRouter } from "../../ui/Router";
+import type { ITerminal } from "../ITerminal";
+
 import { runProgram } from "./runProgram";
+import { runScript } from "./runScript";
 
 export function run(
   terminal: ITerminal,

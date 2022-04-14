@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
-import CircularProgress from "@mui/material/CircularProgress";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
+import CircularProgress from "@mui/material/CircularProgress";
+import Grid from "@mui/material/Grid";
+import type { Theme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import createStyles from "@mui/styles/createStyles";
-
-import { Terminal } from "../Terminal";
-import { load } from "../db";
-import { Player } from "../Player";
-import { Engine } from "../engine";
-import { GameRoot } from "./GameRoot";
+import makeStyles from "@mui/styles/makeStyles";
+import React, { useEffect, useState } from "react";
 
 import { CONSTANTS } from "../Constants";
-import { ActivateRecoveryMode } from "./React/RecoveryRoot";
-import { hash } from "../hash/hash";
+import { load } from "../db";
 import { pushGameReady } from "../Electron";
+import { Engine } from "../engine";
+import { hash } from "../hash/hash";
+import { Player } from "../Player";
+import { Terminal } from "../Terminal";
+
+import { GameRoot } from "./GameRoot";
+import { ActivateRecoveryMode } from "./React/RecoveryRoot";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -1,13 +1,12 @@
-import { FactionNames } from "../../Faction/data/FactionNames";
-import { Sleeve } from "./Sleeve";
-
-import { IPlayer } from "../IPlayer";
-
-import { Augmentation } from "../../Augmentation/Augmentation";
+import type { Augmentation } from "../../Augmentation/Augmentation";
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Faction } from "../../Faction/Faction";
+import { FactionNames } from "../../Faction/data/FactionNames";
+import type { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
+import type { IPlayer } from "../IPlayer";
+
+import type { Sleeve } from "./Sleeve";
 
 export function findSleevePurchasableAugs(sleeve: Sleeve, p: IPlayer): Augmentation[] {
   // You can only purchase Augmentations that are actually available from

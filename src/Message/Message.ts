@@ -1,4 +1,4 @@
-import { MessageFilenames } from "./MessageHelpers";
+import type { MessageFilenames } from "./MessageHelpers";
 
 export class Message {
   // Name of Message file

@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
-import { useSnackbar, SnackbarProvider as SB } from "notistack";
-import makeStyles from "@mui/styles/makeStyles";
-import { EventEmitter } from "../../utils/EventEmitter";
 import Alert from "@mui/material/Alert";
 import Paper from "@mui/material/Paper";
+import makeStyles from "@mui/styles/makeStyles";
+import { SnackbarProvider as SB, useSnackbar } from "notistack";
+import React, { useEffect } from "react";
+
+import { EventEmitter } from "../../utils/EventEmitter";
+
 import { logBoxBaseZIndex } from "./LogBoxManager";
 
 interface IProps {

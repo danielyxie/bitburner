@@ -2,14 +2,16 @@
  * React Component for the content of the popup before the player confirms the
  * ascension of a gang member.
  */
-import React, { useState, useEffect } from "react";
-import { GangMember } from "../GangMember";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { Modal } from "../../ui/React/Modal";
+import type { GangMember } from "../GangMember";
+
 import { useGang } from "./Context";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 
 interface IProps {
   open: boolean;

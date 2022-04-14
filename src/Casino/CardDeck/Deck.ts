@@ -1,5 +1,6 @@
-import { Card, Suit } from "./Card";
 import { shuffle } from "lodash";
+
+import { Card, Suit } from "./Card";
 
 export class Deck {
   private cards: Card[] = [];

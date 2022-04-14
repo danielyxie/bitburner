@@ -1,6 +1,8 @@
 import React from "react";
+
+import type { IMap } from "../types";
+
 import { SourceFile } from "./SourceFile";
-import { IMap } from "../types";
 
 export const SourceFiles: IMap<SourceFile> = {};
 

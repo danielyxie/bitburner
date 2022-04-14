@@ -1,7 +1,7 @@
-import { Crime } from "./Crime";
-
 import { CONSTANTS } from "../Constants";
-import { IMap } from "../types";
+import type { IMap } from "../types";
+
+import { Crime } from "./Crime";
 
 export const Crimes: IMap<Crime> = {
   Shoplift: new Crime("Shoplift", CONSTANTS.CrimeShoplift, 2e3, 15e3, 1 / 20, 0.1, {

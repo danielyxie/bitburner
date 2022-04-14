@@ -1,15 +1,16 @@
 // React Component for managing the Corporation's Industry UI
 // This Industry component does NOT include the city tabs at the top
+import Box from "@mui/material/Box";
 import React from "react";
 
+import { use } from "../../ui/Context";
+import type { OfficeSpace } from "../OfficeSpace";
+import type { Warehouse } from "../Warehouse";
+
+import { useCorporation, useDivision } from "./Context";
 import { IndustryOffice } from "./IndustryOffice";
 import { IndustryOverview } from "./IndustryOverview";
 import { IndustryWarehouse } from "./IndustryWarehouse";
-import { Warehouse } from "../Warehouse";
-import { OfficeSpace } from "../OfficeSpace";
-import { use } from "../../ui/Context";
-import { useCorporation, useDivision } from "./Context";
-import Box from "@mui/material/Box";
 
 interface IProps {
   city: string;

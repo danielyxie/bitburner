@@ -1,14 +1,16 @@
 /**
  * React Component for the recruitment button and text on the gang main page.
  */
-import React, { useState } from "react";
-import { RecruitModal } from "./RecruitModal";
-import { GangConstants } from "../data/Constants";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { useGang } from "./Context";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { GangConstants } from "../data/Constants";
+
+import { useGang } from "./Context";
+import { RecruitModal } from "./RecruitModal";
 
 interface IProps {
   onRecruit: () => void;

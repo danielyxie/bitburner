@@ -1,10 +1,11 @@
-import { INetscriptHelper } from "./INetscriptHelper";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import type { CodingContract } from "../CodingContracts";
 import { getRamCost } from "../Netscript/RamCostGenerator";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type { CodingAttemptOptions, CodingContract as ICodingContract } from "../ScriptEditor/NetscriptDefinitions";
 import { is2DArray } from "../utils/helpers/is2DArray";
-import { CodingContract } from "../CodingContracts";
-import { CodingAttemptOptions, CodingContract as ICodingContract } from "../ScriptEditor/NetscriptDefinitions";
+
+import type { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptCodingContract(
   player: IPlayer,

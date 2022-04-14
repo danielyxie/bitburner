@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import { initElectron } from "./Electron";
 import { TTheme as Theme, ThemeEvents, refreshTheme } from "./Themes/ui/Theme";
 import { LoadingScreen } from "./ui/LoadingScreen";
-import { initElectron } from "./Electron";
 initElectron();
 globalThis["React"] = React;
 globalThis["ReactDOM"] = ReactDOM;

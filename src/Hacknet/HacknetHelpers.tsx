@@ -8,19 +8,19 @@
  *
  * TODO Should probably split the different types of functions into their own modules
  */
-import { HacknetNode } from "./HacknetNode";
+import { generateRandomContract } from "../CodingContractGenerator";
+import { ITutorial, iTutorialNextStep, iTutorialSteps } from "../InteractiveTutorial";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { GetServer } from "../Server/AllServers";
+import { Server } from "../Server/Server";
+
+import { HacknetNodeConstants, HacknetServerConstants } from "./data/Constants";
 import { calculateNodeCost } from "./formulas/HacknetNodes";
 import { calculateServerCost } from "./formulas/HacknetServers";
-import { HacknetNodeConstants, HacknetServerConstants } from "./data/Constants";
+import { HacknetNode } from "./HacknetNode";
 import { HacknetServer } from "./HacknetServer";
 import { HashManager } from "./HashManager";
 import { HashUpgrades } from "./HashUpgrades";
-
-import { generateRandomContract } from "../CodingContractGenerator";
-import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../InteractiveTutorial";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { GetServer } from "../Server/AllServers";
-import { Server } from "../Server/Server";
 
 // Returns a boolean indicating whether the player has Hacknet Servers
 // (the upgraded form of Hacknet Nodes)

@@ -2,15 +2,14 @@
  * Implements functions for purchasing servers or purchasing more RAM for
  * the home computer
  */
-import { AddToAllServers, createUniqueRandomIp } from "./AllServers";
-import { safetlyCreateUniqueServer } from "./ServerHelpers";
-
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
-import { IPlayer } from "../PersonObjects/IPlayer";
-
+import type { IPlayer } from "../PersonObjects/IPlayer";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { isPowerOfTwo } from "../utils/helpers/isPowerOfTwo";
+
+import { AddToAllServers, createUniqueRandomIp } from "./AllServers";
+import { safetlyCreateUniqueServer } from "./ServerHelpers";
 
 // Returns the cost of purchasing a server with the given RAM
 // Returns Infinity for invalid 'ram' arguments

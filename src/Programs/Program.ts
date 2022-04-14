@@ -1,7 +1,7 @@
-import { BaseServer } from "../Server/BaseServer";
-import { ITerminal } from "../Terminal/ITerminal";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IRouter } from "../ui/Router";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type { BaseServer } from "../Server/BaseServer";
+import type { ITerminal } from "../Terminal/ITerminal";
+import type { IRouter } from "../ui/Router";
 
 export interface IProgramCreate {
   level: number;

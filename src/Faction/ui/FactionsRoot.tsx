@@ -1,15 +1,13 @@
+import { Box, Button, Container, Paper, TableBody, TableRow, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-import { Box, Button, Container, Paper, TableBody, TableRow, Typography } from "@mui/material";
-
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { Table, TableCell } from "../../ui/React/Table";
-import { IRouter } from "../../ui/Router";
-
-import { Faction } from "../Faction";
-import { joinFaction, getFactionAugmentationsFiltered } from "../FactionHelpers";
-import { Factions } from "../Factions";
+import type { IRouter } from "../../ui/Router";
 import { FactionNames } from "../data/FactionNames";
+import type { Faction } from "../Faction";
+import { getFactionAugmentationsFiltered, joinFaction } from "../FactionHelpers";
+import { Factions } from "../Factions";
 
 export const InvitationsSeen: string[] = [];
 

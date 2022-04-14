@@ -2,21 +2,19 @@
  * React Component for displaying the total production and production rate
  * of scripts on the 'Active Scripts' UI page
  */
-import * as React from "react";
-
-import { Money } from "../React/Money";
-import { MoneyRate } from "../React/MoneyRate";
-import { use } from "../Context";
-
-import Typography from "@mui/material/Typography";
-
-import { Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
+import type { Theme } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import * as React from "react";
+
+import { use } from "../Context";
+import { Money } from "../React/Money";
+import { MoneyRate } from "../React/MoneyRate";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

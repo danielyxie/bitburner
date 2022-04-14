@@ -1,14 +1,16 @@
-import { Factions } from "../../Faction/Factions";
-import React, { useState } from "react";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { Factions } from "../../Faction/Factions";
+import { use } from "../../ui/Context";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
-import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { use } from "../../ui/Context";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 interface IProps {
   StartingDifficulty: number;

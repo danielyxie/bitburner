@@ -1,9 +1,10 @@
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import React from "react";
-import { Company } from "../Company";
+
 import { use } from "../../ui/Context";
 import { Modal } from "../../ui/React/Modal";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import type { Company } from "../Company";
 
 interface IProps {
   open: boolean;

@@ -1,25 +1,25 @@
 import { FactionNames } from "../Faction/data/FactionNames";
-import { GangConstants } from "../Gang/data/Constants";
-import { INetscriptHelper } from "./INetscriptHelper";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { getRamCost } from "../Netscript/RamCostGenerator";
-import { Gang } from "../Gang/Gang";
 import { AllGangs } from "../Gang/AllGangs";
+import { GangConstants } from "../Gang/data/Constants";
+import { Gang } from "../Gang/Gang";
+import type { GangMember } from "../Gang/GangMember";
+import type { GangMemberTask } from "../Gang/GangMemberTask";
 import { GangMemberTasks } from "../Gang/GangMemberTasks";
 import { GangMemberUpgrades } from "../Gang/GangMemberUpgrades";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { GangMember } from "../Gang/GangMember";
-import { GangMemberTask } from "../Gang/GangMemberTask";
-
-import {
-  Gang as IGang,
-  GangGenInfo,
-  GangOtherInfo,
-  GangMemberInfo,
-  GangMemberAscension,
+import { getRamCost } from "../Netscript/RamCostGenerator";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type {
   EquipmentStats,
+  GangGenInfo,
+  GangMemberAscension,
+  GangMemberInfo,
+  GangOtherInfo,
   GangTaskStats,
+  Gang as IGang,
 } from "../ScriptEditor/NetscriptDefinitions";
+
+import type { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptGang(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IGang {
   const checkGangApiAccess = function (func: string): void {

@@ -1,15 +1,16 @@
-import { Player } from "./Player";
-import { Router } from "./ui/GameRoot";
-import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
-import { Terminal } from "./Terminal";
-import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
-import { IMap, IReturnStatus } from "./types";
-import { GetServer } from "./Server/AllServers";
-import { ImportPlayerData, SaveData, saveObject } from "./SaveObject";
-import { Settings } from "./Settings/Settings";
-import { exportScripts } from "./Terminal/commands/download";
 import { CONSTANTS } from "./Constants";
 import { hash } from "./hash/hash";
+import { Player } from "./Player";
+import { saveObject } from "./SaveObject";
+import type { ImportPlayerData, SaveData } from "./SaveObject";
+import { GetServer } from "./Server/AllServers";
+import { Settings } from "./Settings/Settings";
+import { Terminal } from "./Terminal";
+import { exportScripts } from "./Terminal/commands/download";
+import { removeLeadingSlash } from "./Terminal/DirectoryHelpers";
+import type { IMap, IReturnStatus } from "./types";
+import { Router } from "./ui/GameRoot";
+import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
 
 export function initElectron(): void {
   const userAgent = navigator.userAgent.toLowerCase();

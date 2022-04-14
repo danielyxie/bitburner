@@ -2,24 +2,21 @@
  * React Component for rendering the Accordion element for a single
  * server in the 'Active Scripts' UI page
  */
-import * as React from "react";
-
-import Typography from "@mui/material/Typography";
-
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-
-import Paper from "@mui/material/Paper";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import { ServerAccordionContent } from "./ServerAccordionContent";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
 
-import { BaseServer } from "../../Server/BaseServer";
-import { WorkerScript } from "../../Netscript/WorkerScript";
-
+import type { WorkerScript } from "../../Netscript/WorkerScript";
+import type { BaseServer } from "../../Server/BaseServer";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
+
+import { ServerAccordionContent } from "./ServerAccordionContent";
 
 type IProps = {
   server: BaseServer;

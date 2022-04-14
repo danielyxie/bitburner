@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { Options, WordWrapOptions } from "./Options";
-import { Modal } from "../../ui/React/Modal";
-
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Select from "@mui/material/Select";
-import Switch from "@mui/material/Switch";
-import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
 
+import { Modal } from "../../ui/React/Modal";
+
+import type { Options, WordWrapOptions } from "./Options";
 import { ThemeEditorModal } from "./ThemeEditorModal";
 
 interface IProps {

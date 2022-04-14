@@ -1,5 +1,5 @@
-import { ActiveFragment } from "./ActiveFragment";
-import { IStaneksGift } from "./IStaneksGift";
+import type { ActiveFragment } from "./ActiveFragment";
+import type { IStaneksGift } from "./IStaneksGift";
 
 export class DummyGift implements IStaneksGift {
   storedCycles = 0;

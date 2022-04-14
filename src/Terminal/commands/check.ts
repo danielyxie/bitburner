@@ -1,9 +1,9 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
-import { findRunningScript } from "../../Script/ScriptHelpers";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { isScriptFilename, validScriptExtensions } from "../../Script/isScriptFilename";
+import { findRunningScript } from "../../Script/ScriptHelpers";
+import type { BaseServer } from "../../Server/BaseServer";
+import type { IRouter } from "../../ui/Router";
+import type { ITerminal } from "../ITerminal";
 
 export function check(
   terminal: ITerminal,

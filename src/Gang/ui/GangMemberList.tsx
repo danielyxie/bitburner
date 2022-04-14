@@ -1,16 +1,16 @@
 /**
  * React Component for the list of gang members on the management subpage.
  */
+import SearchIcon from "@mui/icons-material/Search";
+import { Box, TextField } from "@mui/material";
 import React, { useState } from "react";
+
+import { OptionSwitch } from "../../ui/React/OptionSwitch";
+import type { GangMember } from "../GangMember";
+
+import { useGang } from "./Context";
 import { GangMemberCard } from "./GangMemberCard";
 import { RecruitButton } from "./RecruitButton";
-import { useGang } from "./Context";
-
-import { Box, TextField } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-
-import { GangMember } from "../GangMember";
-import { OptionSwitch } from "../../ui/React/OptionSwitch";
 
 export function GangMemberList(): React.ReactElement {
   const gang = useGang();

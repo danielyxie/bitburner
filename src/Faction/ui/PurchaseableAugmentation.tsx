@@ -2,26 +2,25 @@
  * React component for displaying a single augmentation for purchase through
  * the faction UI
  */
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TableRow from "@mui/material/TableRow";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
-
-import { getNextNeurofluxLevel, hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
-import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Faction } from "../Faction";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
+import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
-
-import { Augmentation as AugFormat } from "../../ui/React/Augmentation";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Box from "@mui/material/Box";
 import { TableCell } from "../../ui/React/Table";
-import TableRow from "@mui/material/TableRow";
+import type { Faction } from "../Faction";
+import { getNextNeurofluxLevel, hasAugmentationPrereqs, purchaseAugmentation } from "../FactionHelpers";
+
+import { PurchaseAugmentationModal } from "./PurchaseAugmentationModal";
 
 interface IReqProps {
   augName: string;

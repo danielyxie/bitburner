@@ -1,9 +1,8 @@
-import { codingContractTypesMetadata, DescriptionFunc, GeneratorFunc, SolverFunc } from "./data/codingcontracttypes";
-
-import { IMap } from "./types";
-
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
+import { codingContractTypesMetadata } from "./data/codingcontracttypes";
+import type { DescriptionFunc, GeneratorFunc, SolverFunc } from "./data/codingcontracttypes";
+import type { IMap } from "./types";
 import { CodingContractEvent } from "./ui/React/CodingContractModal";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "./utils/JSONReviver";
 
 /* tslint:disable:no-magic-numbers completed-docs max-classes-per-file no-console */
 

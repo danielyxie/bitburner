@@ -1,14 +1,14 @@
 /**
  * React Component for a gang member on the management subpage.
  */
-import React from "react";
-import { GangMember } from "../GangMember";
-import { GangMemberCardContent } from "./GangMemberCardContent";
-
 import Box from "@mui/material/Box";
-
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
+import React from "react";
+
+import type { GangMember } from "../GangMember";
+
+import { GangMemberCardContent } from "./GangMemberCardContent";
 
 interface IProps {
   member: GangMember;

@@ -1,26 +1,26 @@
-import { INetscriptHelper } from "./INetscriptHelper";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { WorkerScript } from "../Netscript/WorkerScript";
 import { HacknetServerConstants } from "../Hacknet/data/Constants";
 import {
   getCostOfNextHacknetNode,
   getCostOfNextHacknetServer,
   hasHacknetServers,
+  purchaseCacheUpgrade,
+  purchaseCoreUpgrade,
   purchaseHacknet,
+  purchaseHashUpgrade,
   purchaseLevelUpgrade,
   purchaseRamUpgrade,
-  purchaseCoreUpgrade,
-  purchaseCacheUpgrade,
-  purchaseHashUpgrade,
   updateHashManagerCapacity,
 } from "../Hacknet/HacknetHelpers";
-import { HacknetServer } from "../Hacknet/HacknetServer";
 import { HacknetNode } from "../Hacknet/HacknetNode";
+import { HacknetServer } from "../Hacknet/HacknetServer";
+import type { HashUpgrade } from "../Hacknet/HashUpgrade";
 import { HashUpgrades } from "../Hacknet/HashUpgrades";
-import { HashUpgrade } from "../Hacknet/HashUpgrade";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type { Hacknet as IHacknet, NodeStats } from "../ScriptEditor/NetscriptDefinitions";
 import { GetServer } from "../Server/AllServers";
 
-import { Hacknet as IHacknet, NodeStats } from "../ScriptEditor/NetscriptDefinitions";
+import type { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IHacknet {
   // Utility function to get Hacknet Node object

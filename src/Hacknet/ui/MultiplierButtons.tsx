@@ -3,10 +3,10 @@
  * These buttons let the player control how many Nodes/Upgrades they're
  * purchasing when using the UI (x1, x5, x10, MAX)
  */
+import Button from "@mui/material/Button";
 import React from "react";
 
 import { PurchaseMultipliers } from "../data/Constants";
-import Button from "@mui/material/Button";
 
 interface IMultiplierProps {
   disabled: boolean;

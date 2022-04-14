@@ -1,32 +1,31 @@
 // React Component for displaying an Industry's OfficeSpace information
 // (bottom-left panel in the Industry UI)
-import React, { useState } from "react";
-
-import { OfficeSpace } from "../OfficeSpace";
-import { Employee } from "../Employee";
-import { EmployeePositions } from "../EmployeePositions";
-
-import { numeralWrapper } from "../../ui/numeralFormat";
-
-import { UpgradeOfficeSizeModal } from "./modals/UpgradeOfficeSizeModal";
-import { ThrowPartyModal } from "./modals/ThrowPartyModal";
-import { Money } from "../../ui/React/Money";
-import { useCorporation, useDivision } from "./Context";
-
-import Typography from "@mui/material/Typography";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import Paper from "@mui/material/Paper";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Paper from "@mui/material/Paper";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
 import { TableCell } from "../../ui/React/Table";
-import { Box } from "@mui/material";
+import type { Employee } from "../Employee";
+import { EmployeePositions } from "../EmployeePositions";
+import type { OfficeSpace } from "../OfficeSpace";
+
+import { useCorporation, useDivision } from "./Context";
+import { ThrowPartyModal } from "./modals/ThrowPartyModal";
+import { UpgradeOfficeSizeModal } from "./modals/UpgradeOfficeSizeModal";
 
 interface IProps {
   office: OfficeSpace;

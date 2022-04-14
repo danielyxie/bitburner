@@ -1,6 +1,6 @@
 import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { IPlayer } from "../IPlayer";
+import type { IPlayer } from "../IPlayer";
 
 export const getGraftingAvailableAugs = (player: IPlayer): string[] => {
   const augs: string[] = [];

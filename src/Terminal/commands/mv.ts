@@ -1,11 +1,11 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
+import type { Script } from "../../Script/Script";
+import type { BaseServer } from "../../Server/BaseServer";
 import { TextFile } from "../../TextFile";
-import { Script } from "../../Script/Script";
-import { getDestinationFilepath, areFilesEqual } from "../DirectoryHelpers";
+import type { IRouter } from "../../ui/Router";
+import { areFilesEqual, getDestinationFilepath } from "../DirectoryHelpers";
+import type { ITerminal } from "../ITerminal";
 
 export function mv(
   terminal: ITerminal,

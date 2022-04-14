@@ -1,7 +1,8 @@
-import { BladeburnerConstants } from "./data/Constants";
+import { addOffset } from "../utils/helpers/addOffset";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
-import { addOffset } from "../utils/helpers/addOffset";
+
+import { BladeburnerConstants } from "./data/Constants";
 
 interface IChangePopulationByCountParams {
   estChange: number;

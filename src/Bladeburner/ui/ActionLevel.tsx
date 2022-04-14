@@ -1,15 +1,15 @@
-import React from "react";
-import { IAction } from "../IAction";
-import { IBladeburner } from "../IBladeburner";
-import { BladeburnerConstants } from "../data/Constants";
-import { use } from "../../ui/Context";
-
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React from "react";
+
+import { use } from "../../ui/Context";
+import { BladeburnerConstants } from "../data/Constants";
+import type { IAction } from "../IAction";
+import type { IBladeburner } from "../IBladeburner";
 
 interface IProps {
   action: IAction;

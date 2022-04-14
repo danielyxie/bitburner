@@ -1,11 +1,9 @@
 /**
  * Augmentation-related methods for the Player class (PlayerObject)
  */
-import { IPlayer } from "../IPlayer";
-
 import { Augmentation } from "../../Augmentation/Augmentation";
-
 import { calculateEntropy } from "../Grafting/EntropyAccumulation";
+import type { IPlayer } from "../IPlayer";
 
 export function hasAugmentation(this: IPlayer, aug: string | Augmentation, includeQueued = false): boolean {
   const augName: string = aug instanceof Augmentation ? aug.name : aug;

@@ -1,18 +1,20 @@
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
+
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
-import { Material } from "../../Material";
-import { Export } from "../../Export";
-import { IIndustry } from "../../IIndustry";
-import { ExportMaterial } from "../../Actions";
 import { Modal } from "../../../ui/React/Modal";
+import { ExportMaterial } from "../../Actions";
+import type { Export } from "../../Export";
+import type { IIndustry } from "../../IIndustry";
+import type { Material } from "../../Material";
 import { useCorporation } from "../Context";
 import { isRelevantMaterial } from "../Helpers";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 interface IProps {
   open: boolean;

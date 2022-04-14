@@ -1,13 +1,15 @@
-import { Paper, Table, TableBody, Box, IconButton, Typography, Container, Tooltip } from "@mui/material";
-import { MoreHoriz, Info } from "@mui/icons-material";
+import { Info, MoreHoriz } from "@mui/icons-material";
+import { Box, Container, IconButton, Paper, Table, TableBody, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+
 import { BitNodes } from "../BitNode/BitNode";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { HacknetServerConstants } from "../Hacknet/data/Constants";
 import { getPurchaseServerLimit } from "../Server/ServerPurchases";
 import { Settings } from "../Settings/Settings";
-import { MoneySourceTracker } from "../utils/MoneySourceTracker";
+import type { MoneySourceTracker } from "../utils/MoneySourceTracker";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+
 import { use } from "./Context";
 import { numeralWrapper } from "./numeralFormat";
 import { Modal } from "./React/Modal";

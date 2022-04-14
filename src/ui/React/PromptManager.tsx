@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { EventEmitter } from "../../utils/EventEmitter";
-import { Modal } from "./Modal";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
+import { EventEmitter } from "../../utils/EventEmitter";
 import { KEY } from "../../utils/helpers/keyCodes";
+
+import { Modal } from "./Modal";
 
 export const PromptEvent = new EventEmitter<[Prompt]>();
 

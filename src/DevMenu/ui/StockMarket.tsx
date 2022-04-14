@@ -1,17 +1,16 @@
-import React, { useState } from "react";
-
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import Typography from "@mui/material/Typography";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { Money } from "../../ui/React/Money";
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { StockMarket as SM } from "../../StockMarket/StockMarket";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
 import { Stock } from "../../StockMarket/Stock";
+import { StockMarket as SM } from "../../StockMarket/StockMarket";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { Money } from "../../ui/React/Money";
 
 export function StockMarket(): React.ReactElement {
   const [stockPrice, setStockPrice] = useState(0);

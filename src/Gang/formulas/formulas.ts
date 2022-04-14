@@ -1,6 +1,6 @@
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { GangMember } from "../GangMember";
-import { GangMemberTask } from "../GangMemberTask";
+import type { GangMember } from "../GangMember";
+import type { GangMemberTask } from "../GangMemberTask";
 
 interface Gang {
   respect: number;

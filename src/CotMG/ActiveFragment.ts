@@ -1,5 +1,7 @@
-import { Fragment, FragmentById } from "./Fragment";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
+import { FragmentById } from "./Fragment";
+import type { Fragment } from "./Fragment";
 
 export interface IActiveFragmentParams {
   x: number;

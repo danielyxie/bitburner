@@ -1,16 +1,17 @@
 // React components for the levelable upgrade buttons on the overview panel
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import React from "react";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { CorporationUpgrade } from "../data/CorporationUpgrades";
 import { LevelUpgrade } from "../Actions";
-import { MoneyCost } from "./MoneyCost";
+import type { CorporationUpgrade } from "../data/CorporationUpgrades";
+
 import { useCorporation } from "./Context";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import { MoneyCost } from "./MoneyCost";
 
 interface IProps {
   upgrade: CorporationUpgrade;

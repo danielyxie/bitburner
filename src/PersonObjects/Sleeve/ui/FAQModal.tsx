@@ -1,8 +1,8 @@
+import Typography from "@mui/material/Typography";
 import React from "react";
 
-import { Modal } from "../../../ui/React/Modal";
-import Typography from "@mui/material/Typography";
 import { FactionNames } from "../../../Faction/data/FactionNames";
+import { Modal } from "../../../ui/React/Modal";
 
 interface IProps {
   open: boolean;

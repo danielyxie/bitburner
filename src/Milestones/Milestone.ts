@@ -1,4 +1,4 @@
-import { IPlayer } from "../PersonObjects/IPlayer";
+import type { IPlayer } from "../PersonObjects/IPlayer";
 
 export type Milestone = {
   title: string;

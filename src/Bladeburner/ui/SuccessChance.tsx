@@ -1,9 +1,11 @@
 import React from "react";
+
 import { formatNumber } from "../../utils/StringHelperFunctions";
-import { StealthIcon } from "./StealthIcon";
+import type { IAction } from "../IAction";
+import type { IBladeburner } from "../IBladeburner";
+
 import { KillIcon } from "./KillIcon";
-import { IAction } from "../IAction";
-import { IBladeburner } from "../IBladeburner";
+import { StealthIcon } from "./StealthIcon";
 
 interface IProps {
   bladeburner: IBladeburner;

@@ -3,17 +3,17 @@
  *
  * This subcomponent renders all of the buttons for training at the gym
  */
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { BadRNG } from "./RNG";
-import { win, reachedLimit } from "./Game";
-import { trusted } from "./utils";
+import type { IPlayer } from "../PersonObjects/IPlayer";
 
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import { reachedLimit, win } from "./Game";
+import { BadRNG } from "./RNG";
+import { trusted } from "./utils";
 
 type IProps = {
   p: IPlayer;

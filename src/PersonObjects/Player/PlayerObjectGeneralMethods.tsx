@@ -1,70 +1,69 @@
-import { IPlayer } from "../IPlayer";
-import { PlayerObject } from "./PlayerObject";
-import { Augmentations } from "../../Augmentation/Augmentations";
+import React from "react";
+
+import { achievements } from "../../Achievements/Achievements";
 import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
-import { PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
+import { Augmentations } from "../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { PlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { CodingContractRewardType, ICodingContractReward } from "../../CodingContracts";
-import { Company } from "../../Company/Company";
+import { CodingContractRewardType } from "../../CodingContracts";
+import type { ICodingContractReward } from "../../CodingContracts";
 import { Companies } from "../../Company/Companies";
-import { getNextCompanyPositionHelper } from "../../Company/GetNextCompanyPosition";
-import { getJobRequirementText } from "../../Company/GetJobRequirementText";
+import { Company } from "../../Company/Company";
+import type { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
-import { CompanyPosition } from "../../Company/CompanyPosition";
 import * as posNames from "../../Company/data/companypositionnames";
+import { getJobRequirementText } from "../../Company/GetJobRequirementText";
+import { getNextCompanyPositionHelper } from "../../Company/GetNextCompanyPosition";
 import { CONSTANTS } from "../../Constants";
-import { Programs } from "../../Programs/Programs";
 import { determineCrimeSuccess } from "../../Crime/CrimeHelpers";
 import { Crimes } from "../../Crime/Crimes";
-import { Exploit } from "../../Exploits/Exploit";
+import { applyExploit } from "../../Exploits/applyExploits";
+import type { Exploit } from "../../Exploits/Exploit";
+import { FactionNames } from "../../Faction/data/FactionNames";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 import { resetGangs } from "../../Gang/AllGangs";
+import { HacknetServer } from "../../Hacknet/HacknetServer";
+import { getHospitalizationCost } from "../../Hospital/Hospital";
 import { Cities } from "../../Locations/Cities";
-import { Locations } from "../../Locations/Locations";
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
-import { Sleeve } from "../Sleeve/Sleeve";
-import {
-  calculateSkill as calculateSkillF,
-  calculateSkillProgress as calculateSkillProgressF,
-  ISkillProgress,
-} from "../formulas/skill";
+import { Locations } from "../../Locations/Locations";
+import type { WorkerScript } from "../../Netscript/WorkerScript";
+import { Programs } from "../../Programs/Programs";
+import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
+import { serverMetadata } from "../../Server/data/servers";
+import { SpecialServers } from "../../Server/data/SpecialServers";
+import { Server } from "../../Server/Server";
+import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
+import { applySourceFile } from "../../SourceFile/applySourceFile";
+import { SourceFiles } from "../../SourceFile/SourceFiles";
+import { influenceStockThroughCompanyWork } from "../../StockMarket/PlayerInfluencing";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { Money } from "../../ui/React/Money";
+import { Reputation } from "../../ui/React/Reputation";
+import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
+import type { IRouter } from "../../ui/Router";
+import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
 import { calculateIntelligenceBonus } from "../formulas/intelligence";
 import {
   getHackingWorkRepGain,
   getFactionSecurityWorkRepGain,
   getFactionFieldWorkRepGain,
 } from "../formulas/reputation";
-import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
-import { Server } from "../../Server/Server";
-import { safetlyCreateUniqueServer } from "../../Server/ServerHelpers";
-
-import { SpecialServers } from "../../Server/data/SpecialServers";
-import { applySourceFile } from "../../SourceFile/applySourceFile";
-import { applyExploit } from "../../Exploits/applyExploits";
-import { SourceFiles } from "../../SourceFile/SourceFiles";
-import { influenceStockThroughCompanyWork } from "../../StockMarket/PlayerInfluencing";
-import { getHospitalizationCost } from "../../Hospital/Hospital";
-import { WorkerScript } from "../../Netscript/WorkerScript";
-import { HacknetServer } from "../../Hacknet/HacknetServer";
-
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { IRouter } from "../../ui/Router";
-import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-
-import { Reputation } from "../../ui/React/Reputation";
-import { Money } from "../../ui/React/Money";
-
-import React from "react";
-import { serverMetadata } from "../../Server/data/servers";
-import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
+import {
+  calculateSkill as calculateSkillF,
+  calculateSkillProgress as calculateSkillProgressF,
+} from "../formulas/skill";
+import type { ISkillProgress } from "../formulas/skill";
 import { calculateClassEarnings } from "../formulas/work";
-import { achievements } from "../../Achievements/Achievements";
-import { FactionNames } from "../../Faction/data/FactionNames";
+import type { IPlayer } from "../IPlayer";
+import { Sleeve } from "../Sleeve/Sleeve";
+
+import type { PlayerObject } from "./PlayerObject";
 
 export function init(this: IPlayer): void {
   /* Initialize Player's home computer */

@@ -1,5 +1,6 @@
-import { CityName } from "src/Locations/data/CityNames";
-import { BaseServer } from "../Server/BaseServer";
+import type { CityName } from "src/Locations/data/CityNames";
+
+import type { BaseServer } from "../Server/BaseServer";
 
 export interface INetscriptHelper {
   updateDynamicRam(functionName: string, ram: number): void;

@@ -6,11 +6,11 @@
  * his hashes, and contains method for grabbing the data/multipliers from
  * those upgrades
  */
-import { HashUpgrades } from "./HashUpgrades";
-import { HashUpgrade } from "./HashUpgrade";
-
-import { IMap } from "../types";
+import type { IMap } from "../types";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
+import type { HashUpgrade } from "./HashUpgrade";
+import { HashUpgrades } from "./HashUpgrades";
 
 export class HashManager {
   // Max number of hashes this can hold. Equal to the sum of capacities of

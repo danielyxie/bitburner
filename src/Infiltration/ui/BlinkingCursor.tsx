@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export function BlinkingCursor(): React.ReactElement {
   const [on, setOn] = useState(true);

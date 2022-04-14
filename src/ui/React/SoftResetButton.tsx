@@ -1,9 +1,9 @@
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { Tooltip } from "@mui/material";
+import Button from "@mui/material/Button";
 import React, { useState } from "react";
 
 import { ConfirmationModal } from "./ConfirmationModal";
-import Button from "@mui/material/Button";
-import { Tooltip } from "@mui/material";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 interface IProps {
   color?: "primary" | "warning" | "error";

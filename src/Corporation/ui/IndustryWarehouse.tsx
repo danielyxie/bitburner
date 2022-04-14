@@ -1,34 +1,32 @@
 // React Component for displaying an Industry's warehouse information
 // (right-side panel in the Industry UI)
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import React, { useState } from "react";
 
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { PurchaseWarehouse } from "../Actions";
 import { CorporationConstants } from "../data/Constants";
+import type { ICorporation } from "../ICorporation";
+import type { IIndustry } from "../IIndustry";
 import { Material } from "../Material";
+import { MaterialSizes } from "../MaterialSizes";
 import { Product } from "../Product";
 import { Warehouse } from "../Warehouse";
-import { SmartSupplyModal } from "./modals/SmartSupplyModal";
-import { ProductElem } from "./ProductElem";
-import { MaterialElem } from "./MaterialElem";
-import { MaterialSizes } from "../MaterialSizes";
 
-import { numeralWrapper } from "../../ui/numeralFormat";
-
-import { ICorporation } from "../ICorporation";
-import { IIndustry } from "../IIndustry";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { MoneyCost } from "./MoneyCost";
+import { useCorporation, useDivision } from "./Context";
 import { isRelevantMaterial } from "./Helpers";
 import { IndustryProductEquation } from "./IndustryProductEquation";
-import { PurchaseWarehouse } from "../Actions";
-import { useCorporation, useDivision } from "./Context";
-
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
+import { MaterialElem } from "./MaterialElem";
+import { SmartSupplyModal } from "./modals/SmartSupplyModal";
+import { MoneyCost } from "./MoneyCost";
+import { ProductElem } from "./ProductElem";
 
 interface IProps {
   corp: ICorporation;

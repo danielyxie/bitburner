@@ -3,23 +3,22 @@
  * This UI shows all of the available locations in the city, and lets the player
  * visit those locations
  */
+import Button from "@mui/material/Button";
+import type { Theme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import * as React from "react";
 
-import { City } from "../City";
-import { Cities } from "../Cities";
-import { LocationName } from "../data/LocationNames";
-import { Locations } from "../Locations";
-import { Location } from "../Location";
 import { Settings } from "../../Settings/Settings";
-
 import { use } from "../../ui/Context";
-import { IRouter } from "../../ui/Router";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import type { IRouter } from "../../ui/Router";
+import { Cities } from "../Cities";
+import type { City } from "../City";
+import { LocationName } from "../data/LocationNames";
+import type { Location } from "../Location";
+import { Locations } from "../Locations";
 import { LocationType } from "../LocationTypeEnum";
-import { Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
 
 type IProps = {
   city: City;

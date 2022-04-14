@@ -1,6 +1,7 @@
-import { ActiveFragment } from "./ActiveFragment";
-import { Fragment } from "./Fragment";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+
+import type { ActiveFragment } from "./ActiveFragment";
+import type { Fragment } from "./Fragment";
 
 export interface IStaneksGift {
   storedCycles: number;

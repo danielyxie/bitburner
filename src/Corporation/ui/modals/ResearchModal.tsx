@@ -1,22 +1,22 @@
+import CheckIcon from "@mui/icons-material/Check";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Collapse from "@mui/material/Collapse";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
-import { Modal } from "../../../ui/React/Modal";
-import { IndustryResearchTrees } from "../../IndustryData";
-import { CorporationConstants } from "../../data/Constants";
-import { IIndustry } from "../../IIndustry";
-import { Research } from "../../Actions";
-import { Node } from "../../ResearchTree";
-import { ResearchMap } from "../../ResearchMap";
+
 import { Settings } from "../../../Settings/Settings";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-
-import Collapse from "@mui/material/Collapse";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import CheckIcon from "@mui/icons-material/Check";
+import { Modal } from "../../../ui/React/Modal";
+import { Research } from "../../Actions";
+import { CorporationConstants } from "../../data/Constants";
+import type { IIndustry } from "../../IIndustry";
+import { IndustryResearchTrees } from "../../IndustryData";
+import { ResearchMap } from "../../ResearchMap";
+import type { Node } from "../../ResearchTree";
 
 interface INodeProps {
   n: Node | null;

@@ -1,16 +1,11 @@
-import {
-  CodingContract,
-  CodingContractRewardType,
-  CodingContractTypes,
-  ICodingContractReward,
-} from "./CodingContracts";
+import { CodingContract, CodingContractRewardType, CodingContractTypes } from "./CodingContracts";
+import type { ICodingContractReward } from "./CodingContracts";
 import { Factions } from "./Faction/Factions";
 import { Player } from "./Player";
-import { GetServer, GetAllServers } from "./Server/AllServers";
+import { GetAllServers, GetServer } from "./Server/AllServers";
+import type { BaseServer } from "./Server/BaseServer";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { Server } from "./Server/Server";
-import { BaseServer } from "./Server/BaseServer";
-
 import { getRandomInt } from "./utils/helpers/getRandomInt";
 
 export function generateRandomContract(): void {

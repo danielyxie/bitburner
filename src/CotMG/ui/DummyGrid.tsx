@@ -1,9 +1,11 @@
 import { Box, Table } from "@mui/material";
 import * as React from "react";
-import { ActiveFragment } from "../ActiveFragment";
+
+import type { ActiveFragment } from "../ActiveFragment";
 import { DummyGift } from "../DummyGift";
-import { Grid } from "./Grid";
 import { calculateGrid, zeros } from "../Helper";
+
+import { Grid } from "./Grid";
 
 interface IProps {
   width: number;

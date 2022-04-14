@@ -3,7 +3,7 @@ import {
   CorporationUnlockUpgradeIndex,
   CorporationUnlockUpgrades,
 } from "../../Corporation/data/CorporationUnlockUpgrades";
-import { IPlayer } from "../IPlayer";
+import type { IPlayer } from "../IPlayer";
 
 export function canAccessCorporation(this: IPlayer): boolean {
   return this.bitNodeN === 3 || this.sourceFileLvl(3) > 0;

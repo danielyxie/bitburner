@@ -1,4 +1,5 @@
-import { EqualityFunc } from "../types";
+import type { EqualityFunc } from "../types";
+
 import { isString } from "./helpers/isString";
 
 /*

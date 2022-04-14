@@ -1,9 +1,10 @@
-import { Sleeve } from "../Sleeve";
-import { numeralWrapper } from "../../../ui/numeralFormat";
-import { Money } from "../../../ui/React/Money";
 import * as React from "react";
-import { StatsTable } from "../../../ui/React/StatsTable";
+
+import { numeralWrapper } from "../../../ui/numeralFormat";
 import { Modal } from "../../../ui/React/Modal";
+import { Money } from "../../../ui/React/Money";
+import { StatsTable } from "../../../ui/React/StatsTable";
+import type { Sleeve } from "../Sleeve";
 
 interface IProps {
   open: boolean;

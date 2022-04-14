@@ -1,18 +1,20 @@
-import { use } from "../../ui/Context";
-import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import { Countdown } from "./Countdown";
-import { BracketGame } from "./BracketGame";
-import { SlashGame } from "./SlashGame";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { use } from "../../ui/Context";
+
 import { BackwardGame } from "./BackwardGame";
+import { BracketGame } from "./BracketGame";
 import { BribeGame } from "./BribeGame";
 import { CheatCodeGame } from "./CheatCodeGame";
+import { Countdown } from "./Countdown";
 import { Cyberpunk2077Game } from "./Cyberpunk2077Game";
 import { MinesweeperGame } from "./MinesweeperGame";
-import { WireCuttingGame } from "./WireCuttingGame";
+import { SlashGame } from "./SlashGame";
 import { Victory } from "./Victory";
-import Typography from "@mui/material/Typography";
+import { WireCuttingGame } from "./WireCuttingGame";
 
 interface IProps {
   StartingDifficulty: number;

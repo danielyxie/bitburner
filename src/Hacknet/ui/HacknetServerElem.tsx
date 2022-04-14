@@ -2,38 +2,36 @@
  * React Component for the Hacknet Node UI.
  * This Component displays the panel for a single Hacknet Node
  */
-import React from "react";
-
-import { HacknetServerConstants } from "../data/Constants";
-import {
-  getMaxNumberLevelUpgrades,
-  getMaxNumberRamUpgrades,
-  getMaxNumberCoreUpgrades,
-  getMaxNumberCacheUpgrades,
-  purchaseLevelUpgrade,
-  purchaseRamUpgrade,
-  purchaseCoreUpgrade,
-  purchaseCacheUpgrade,
-  updateHashManagerCapacity,
-} from "../HacknetHelpers";
-
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { HacknetServer } from "../HacknetServer";
-
-import { Money } from "../../ui/React/Money";
-import { Hashes } from "../../ui/React/Hashes";
-import { HashRate } from "../../ui/React/HashRate";
-import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import { TableCell } from "../../ui/React/Table";
-import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { calculateHashGainRate } from "../formulas/HacknetServers";
 import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React from "react";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { Hashes } from "../../ui/React/Hashes";
+import { HashRate } from "../../ui/React/HashRate";
+import { Money } from "../../ui/React/Money";
+import { TableCell } from "../../ui/React/Table";
+import { HacknetServerConstants } from "../data/Constants";
+import { calculateHashGainRate } from "../formulas/HacknetServers";
+import {
+  getMaxNumberCacheUpgrades,
+  getMaxNumberCoreUpgrades,
+  getMaxNumberLevelUpgrades,
+  getMaxNumberRamUpgrades,
+  purchaseCacheUpgrade,
+  purchaseCoreUpgrade,
+  purchaseLevelUpgrade,
+  purchaseRamUpgrade,
+  updateHashManagerCapacity,
+} from "../HacknetHelpers";
+import type { HacknetServer } from "../HacknetServer";
 
 interface IProps {
   node: HacknetServer;

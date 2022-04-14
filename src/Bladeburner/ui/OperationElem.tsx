@@ -1,20 +1,21 @@
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
-import { ActionTypes } from "../data/ActionTypes";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { CopyableText } from "../../ui/React/CopyableText";
 import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
-import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { SuccessChance } from "./SuccessChance";
+import { convertTimeMsToTimeElapsedString, formatNumber } from "../../utils/StringHelperFunctions";
+import { ActionTypes } from "../data/ActionTypes";
+import { Operations } from "../data/Operations";
+import type { IBladeburner } from "../IBladeburner";
+import type { Operation } from "../Operation";
+
 import { ActionLevel } from "./ActionLevel";
 import { Autolevel } from "./Autolevel";
 import { StartButton } from "./StartButton";
+import { SuccessChance } from "./SuccessChance";
 import { TeamSizeButton } from "./TeamSizeButton";
-import { IBladeburner } from "../IBladeburner";
-import { Operation } from "../Operation";
-import { Operations } from "../data/Operations";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { CopyableText } from "../../ui/React/CopyableText";
-
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
 
 interface IProps {
   bladeburner: IBladeburner;

@@ -1,11 +1,12 @@
 /**
  * React Component for the popup used to create a new gang.
  */
-import React from "react";
-import { Modal } from "../../ui/React/Modal";
-import { use } from "../../ui/Context";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import React from "react";
+
+import { use } from "../../ui/Context";
+import { Modal } from "../../ui/React/Modal";
 import { KEY } from "../../utils/helpers/keyCodes";
 import { FactionNames } from "../data/FactionNames";
 

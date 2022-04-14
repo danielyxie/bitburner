@@ -1,9 +1,11 @@
 import React from "react";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { BlackOperation } from "../BlackOperation";
 import { BlackOperations } from "../BlackOperations";
-import { BlackOperation } from "../BlackOperation";
+import type { IBladeburner } from "../IBladeburner";
+
 import { BlackOpElem } from "./BlackOpElem";
-import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
   bladeburner: IBladeburner;

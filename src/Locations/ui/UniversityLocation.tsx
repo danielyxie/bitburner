@@ -3,19 +3,17 @@
  *
  * This subcomponent renders all of the buttons for studying/taking courses
  */
-import * as React from "react";
-import Tooltip from "@mui/material/Tooltip";
+import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
-
-import { Location } from "../Location";
+import Tooltip from "@mui/material/Tooltip";
+import * as React from "react";
 
 import { CONSTANTS } from "../../Constants";
 import { GetServer } from "../../Server/AllServers";
-import { Server } from "../../Server/Server";
-
-import { Money } from "../../ui/React/Money";
+import type { Server } from "../../Server/Server";
 import { use } from "../../ui/Context";
-import { Box } from "@mui/material";
+import { Money } from "../../ui/React/Money";
+import type { Location } from "../Location";
 
 type IProps = {
   loc: Location;

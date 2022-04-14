@@ -1,14 +1,13 @@
 import { CONSTANTS } from "../Constants";
 import { Player } from "../Player";
-import { BaseServer } from "../Server/BaseServer";
-import { Server } from "../Server/Server";
-import { RunningScript } from "./RunningScript";
-import { processSingleServerGrowth } from "../Server/ServerHelpers";
 import { GetServer } from "../Server/AllServers";
-
+import type { BaseServer } from "../Server/BaseServer";
+import { Server } from "../Server/Server";
+import { processSingleServerGrowth } from "../Server/ServerHelpers";
 import { numeralWrapper } from "../ui/numeralFormat";
-
 import { compareArrays } from "../utils/helpers/compareArrays";
+
+import type { RunningScript } from "./RunningScript";
 
 export function scriptCalculateOfflineProduction(runningScript: RunningScript): void {
   //The Player object stores the last update time from when we were online

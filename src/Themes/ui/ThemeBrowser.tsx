@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
-import Typography from "@mui/material/Typography";
+import { Box, Button, ButtonGroup } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { ThemeEvents } from "./Theme";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
 import { Settings } from "../../Settings/Settings";
-import { getPredefinedThemes, IPredefinedTheme } from "../Themes";
-import { Box, ButtonGroup, Button } from "@mui/material";
-import { IRouter } from "../../ui/Router";
-import { ThemeEditorButton } from "./ThemeEditorButton";
-import { StyleEditorButton } from "./StyleEditorButton";
-import { ThemeEntry } from "./ThemeEntry";
-import { ThemeCollaborate } from "./ThemeCollaborate";
 import { Modal } from "../../ui/React/Modal";
 import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
+import type { IRouter } from "../../ui/Router";
+import { getPredefinedThemes } from "../Themes";
+import type { IPredefinedTheme } from "../Themes";
+
+import { StyleEditorButton } from "./StyleEditorButton";
+import { ThemeEvents } from "./Theme";
+import { ThemeCollaborate } from "./ThemeCollaborate";
+import { ThemeEditorButton } from "./ThemeEditorButton";
+import { ThemeEntry } from "./ThemeEntry";
 
 interface IProps {
   router: IRouter;

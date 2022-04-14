@@ -1,9 +1,9 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { isScriptFilename } from "../../Script/isScriptFilename";
-import { getDestinationFilepath, areFilesEqual } from "../DirectoryHelpers";
+import type { BaseServer } from "../../Server/BaseServer";
+import type { IRouter } from "../../ui/Router";
+import { areFilesEqual, getDestinationFilepath } from "../DirectoryHelpers";
+import type { ITerminal } from "../ITerminal";
 
 export function cp(
   terminal: ITerminal,

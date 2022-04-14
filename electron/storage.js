@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { app, ipcMain } = require("electron");
-const zlib = require("zlib");
-const path = require("path");
 const fs = require("fs/promises");
+const path = require("path");
 const { promisify } = require("util");
+const zlib = require("zlib");
+
+const { app, ipcMain } = require("electron");
+const Config = require("electron-config");
+const log = require("electron-log");
+const flatten = require("lodash/flatten");
+
+const greenworks = require("./greenworks");
 const gzip = promisify(zlib.gzip);
 const gunzip = promisify(zlib.gunzip);
 
-const greenworks = require("./greenworks");
-const log = require("electron-log");
-const flatten = require("lodash/flatten");
-const Config = require("electron-config");
 const config = new Config();
 
 // https://stackoverflow.com/a/69418940

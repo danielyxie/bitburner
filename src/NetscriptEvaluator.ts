@@ -1,7 +1,7 @@
-import { isString } from "./utils/helpers/isString";
-import { GetServer } from "./Server/AllServers";
 import { ScriptDeath } from "./Netscript/ScriptDeath";
-import { WorkerScript } from "./Netscript/WorkerScript";
+import type { WorkerScript } from "./Netscript/WorkerScript";
+import { GetServer } from "./Server/AllServers";
+import { isString } from "./utils/helpers/isString";
 
 export function netscriptDelay(time: number, workerScript: WorkerScript): Promise<void> {
   // Cancel any pre-existing netscriptDelay'ed function call

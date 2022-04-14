@@ -1,8 +1,8 @@
-import React from "react";
+import type React from "react";
 
-import { Page } from "../ui/Router";
-import { hash } from "../hash/hash";
 import { CONSTANTS } from "../Constants";
+import { hash } from "../hash/hash";
+import { Page } from "../ui/Router";
 
 enum GameEnv {
   Production,

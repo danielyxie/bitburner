@@ -1,7 +1,8 @@
 import React from "react";
-import { ResearchTree } from "./ResearchTree";
-import { ICorporation } from "./ICorporation";
+
 import { getBaseResearchTreeCopy, getProductIndustryResearchTreeCopy } from "./data/BaseResearchTree";
+import type { ICorporation } from "./ICorporation";
+import type { ResearchTree } from "./ResearchTree";
 import { MoneyCost } from "./ui/MoneyCost";
 
 interface IIndustryMap<T> {

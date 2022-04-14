@@ -1,73 +1,71 @@
-import { INetscriptHelper } from "./INetscriptHelper";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { netscriptDelay } from "../NetscriptEvaluator";
-
-import { OfficeSpace } from "../Corporation/OfficeSpace";
-import { Employee } from "../Corporation/Employee";
-import { Product } from "../Corporation/Product";
-import { Material } from "../Corporation/Material";
-import { Warehouse } from "../Corporation/Warehouse";
-import { IIndustry } from "../Corporation/IIndustry";
-import { ICorporation } from "../Corporation/ICorporation";
-
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import {
-  Corporation as NSCorporation,
-  CorporationInfo,
-  Employee as NSEmployee,
-  Product as NSProduct,
-  Material as NSMaterial,
-  Warehouse as NSWarehouse,
-  Division as NSDivision,
-  WarehouseAPI,
-  OfficeAPI,
-  InvestmentOffer,
-} from "../ScriptEditor/NetscriptDefinitions";
-
-import {
-  NewIndustry,
-  NewCity,
-  UnlockUpgrade,
-  LevelUpgrade,
+  AssignJob,
+  BulkPurchase,
+  BuyBackShares,
+  BuyCoffee,
+  BuyMaterial,
+  CancelExportMaterial,
+  ExportMaterial,
+  HireAdVert,
   IssueDividends,
+  LevelUpgrade,
+  LimitMaterialProduction,
+  LimitProductProduction,
+  MakeProduct,
+  NewCity,
+  NewIndustry,
+  PurchaseWarehouse,
+  Research,
   SellMaterial,
   SellProduct,
-  SetSmartSupply,
-  BuyMaterial,
-  AssignJob,
-  UpgradeOfficeSize,
-  ThrowParty,
-  PurchaseWarehouse,
-  UpgradeWarehouse,
-  BuyCoffee,
-  HireAdVert,
-  MakeProduct,
-  Research,
-  ExportMaterial,
-  CancelExportMaterial,
+  SellShares,
   SetMaterialMarketTA1,
   SetMaterialMarketTA2,
   SetProductMarketTA1,
   SetProductMarketTA2,
-  BulkPurchase,
-  SellShares,
-  BuyBackShares,
+  SetSmartSupply,
   SetSmartSupplyUseLeftovers,
-  LimitMaterialProduction,
-  LimitProductProduction,
+  ThrowParty,
+  UnlockUpgrade,
+  UpgradeOfficeSize,
+  UpgradeWarehouse,
   UpgradeWarehouseCost,
 } from "../Corporation/Actions";
+import { CorporationConstants } from "../Corporation/data/Constants";
 import { CorporationUnlockUpgrades } from "../Corporation/data/CorporationUnlockUpgrades";
 import { CorporationUpgrades } from "../Corporation/data/CorporationUpgrades";
+import type { Employee } from "../Corporation/Employee";
 import { EmployeePositions } from "../Corporation/EmployeePositions";
-import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
-import { Industry } from "../Corporation/Industry";
+import type { ICorporation } from "../Corporation/ICorporation";
+import type { IIndustry } from "../Corporation/IIndustry";
+import type { Industry } from "../Corporation/Industry";
 import { IndustryResearchTrees, IndustryStartingCosts } from "../Corporation/IndustryData";
-import { CorporationConstants } from "../Corporation/data/Constants";
 import { IndustryUpgrades } from "../Corporation/IndustryUpgrades";
+import type { Material } from "../Corporation/Material";
+import type { OfficeSpace } from "../Corporation/OfficeSpace";
+import type { Product } from "../Corporation/Product";
 import { ResearchMap } from "../Corporation/ResearchMap";
+import type { Warehouse } from "../Corporation/Warehouse";
 import { Factions } from "../Faction/Factions";
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import { netscriptDelay } from "../NetscriptEvaluator";
+import { calculateIntelligenceBonus } from "../PersonObjects/formulas/intelligence";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type {
+  CorporationInfo,
+  InvestmentOffer,
+  Corporation as NSCorporation,
+  Division as NSDivision,
+  Employee as NSEmployee,
+  Material as NSMaterial,
+  Product as NSProduct,
+  Warehouse as NSWarehouse,
+  OfficeAPI,
+  WarehouseAPI,
+} from "../ScriptEditor/NetscriptDefinitions";
+
+import type { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptCorporation(
   player: IPlayer,

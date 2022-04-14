@@ -2,14 +2,14 @@
  * Class representing a Script instance that is actively running.
  * A Script can have multiple active instances
  */
-import { Script } from "./Script";
-import { ScriptUrl } from "./ScriptUrl";
 import { Settings } from "../Settings/Settings";
-import { IMap } from "../types";
 import { Terminal } from "../Terminal";
-
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import type { IMap } from "../types";
 import { formatTime } from "../utils/helpers/formatTime";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
+import type { Script } from "./Script";
+import type { ScriptUrl } from "./ScriptUrl";
 
 export class RunningScript {
   // Script arguments

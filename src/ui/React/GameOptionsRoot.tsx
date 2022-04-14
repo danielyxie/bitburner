@@ -1,44 +1,41 @@
-import React, { useState, useRef } from "react";
-
-import { IPlayer } from "../../PersonObjects/IPlayer";
-
-import { Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
-import Typography from "@mui/material/Typography";
-import Slider from "@mui/material/Slider";
-import Grid from "@mui/material/Grid";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
-
+import DownloadIcon from "@mui/icons-material/Download";
+import PaletteIcon from "@mui/icons-material/Palette";
+import SaveIcon from "@mui/icons-material/Save";
+import UploadIcon from "@mui/icons-material/Upload";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Link from "@mui/material/Link";
-import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import Slider from "@mui/material/Slider";
+import type { Theme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-
-import DownloadIcon from "@mui/icons-material/Download";
-import UploadIcon from "@mui/icons-material/Upload";
-import SaveIcon from "@mui/icons-material/Save";
-import PaletteIcon from "@mui/icons-material/Palette";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import React, { useRef, useState } from "react";
 
 import { FileDiagnosticModal } from "../../Diagnostic/FileDiagnosticModal";
-import { ConfirmationModal } from "./ConfirmationModal";
-
-import { SnackbarEvents, ToastVariant } from "./Snackbar";
-
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { saveObject } from "../../SaveObject";
+import type { ImportData } from "../../SaveObject";
 import { Settings } from "../../Settings/Settings";
-import { DeleteGameButton } from "./DeleteGameButton";
-import { SoftResetButton } from "./SoftResetButton";
-import { IRouter } from "../Router";
-import { ThemeEditorButton } from "../../Themes/ui/ThemeEditorButton";
 import { StyleEditorButton } from "../../Themes/ui/StyleEditorButton";
+import { ThemeEditorButton } from "../../Themes/ui/ThemeEditorButton";
 import { formatTime } from "../../utils/helpers/formatTime";
-import { OptionSwitch } from "./OptionSwitch";
-import { ImportData, saveObject } from "../../SaveObject";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import type { IRouter } from "../Router";
+
+import { ConfirmationModal } from "./ConfirmationModal";
+import { DeleteGameButton } from "./DeleteGameButton";
+import { OptionSwitch } from "./OptionSwitch";
+import { SnackbarEvents, ToastVariant } from "./Snackbar";
+import { SoftResetButton } from "./SoftResetButton";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

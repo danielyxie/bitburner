@@ -1,21 +1,22 @@
-import { INetscriptHelper } from "./INetscriptHelper";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
 import { getRamCost } from "../Netscript/RamCostGenerator";
-import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";
-import { StockMarket, SymbolToStockMap, placeOrder, cancelOrder, initStockMarketFn } from "../StockMarket/StockMarket";
-import { getBuyTransactionCost, getSellTransactionGain } from "../StockMarket/StockMarketHelpers";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type { TIX } from "../ScriptEditor/NetscriptDefinitions";
+import { buyStock, sellShort, sellStock, shortStock } from "../StockMarket/BuyingAndSelling";
 import { OrderTypes } from "../StockMarket/data/OrderTypes";
 import { PositionTypes } from "../StockMarket/data/PositionTypes";
 import { StockSymbols } from "../StockMarket/data/StockSymbols";
+import type { Stock } from "../StockMarket/Stock";
+import { StockMarket, SymbolToStockMap, cancelOrder, initStockMarketFn, placeOrder } from "../StockMarket/StockMarket";
 import {
   getStockMarket4SDataCost,
   getStockMarket4STixApiCost,
-  getStockMarketWseCost,
   getStockMarketTixApiCost,
+  getStockMarketWseCost,
 } from "../StockMarket/StockMarketCosts";
-import { Stock } from "../StockMarket/Stock";
-import { TIX } from "../ScriptEditor/NetscriptDefinitions";
+import { getBuyTransactionCost, getSellTransactionGain } from "../StockMarket/StockMarketHelpers";
+
+import type { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): TIX {
   /**

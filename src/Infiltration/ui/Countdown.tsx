@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
-
 import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
 interface IProps {
   onFinish: () => void;
 }

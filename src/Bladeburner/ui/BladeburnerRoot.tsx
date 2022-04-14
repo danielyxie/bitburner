@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Stats } from "./Stats";
-import { Console } from "./Console";
-import { AllPages } from "./AllPages";
+import Box from "@mui/material/Box";
+import React, { useEffect, useState } from "react";
 
 import { use } from "../../ui/Context";
-import Box from "@mui/material/Box";
+
+import { AllPages } from "./AllPages";
+import { Console } from "./Console";
+import { Stats } from "./Stats";
 
 export function BladeburnerRoot(): React.ReactElement {
   const player = use.Player();

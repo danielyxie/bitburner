@@ -1,16 +1,15 @@
-import { Server } from "./Server";
-import { BaseServer } from "./BaseServer";
-import { serverMetadata } from "./data/servers";
-
-import { HacknetServer } from "../Hacknet/HacknetServer";
-
-import { IMap } from "../types";
-import { createRandomIp } from "../utils/IPAddress";
-import { getRandomInt } from "../utils/helpers/getRandomInt";
-import { Reviver } from "../utils/JSONReviver";
-import { isValidIPAddress } from "../utils/helpers/isValidIPAddress";
-import { SpecialServers } from "./data/SpecialServers";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import type { HacknetServer } from "../Hacknet/HacknetServer";
+import type { IMap } from "../types";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { isValidIPAddress } from "../utils/helpers/isValidIPAddress";
+import { createRandomIp } from "../utils/IPAddress";
+import { Reviver } from "../utils/JSONReviver";
+
+import type { BaseServer } from "./BaseServer";
+import { serverMetadata } from "./data/servers";
+import { SpecialServers } from "./data/SpecialServers";
+import { Server } from "./Server";
 
 /**
  * Map of all Servers that exist in the game

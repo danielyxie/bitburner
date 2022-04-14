@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import ColorizeIcon from "@mui/icons-material/Colorize";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
+import React, { useState } from "react";
+
+import type { IRouter } from "../../ui/Router";
+
 import { ThemeEditorModal } from "./ThemeEditorModal";
-import { IRouter } from "../../ui/Router";
-import ColorizeIcon from "@mui/icons-material/Colorize";
 
 interface IProps {
   router: IRouter;

@@ -1,9 +1,10 @@
 /**
  * Stock Market Helper Functions
  */
-import { Stock } from "./Stock";
-import { PositionTypes } from "./data/PositionTypes";
 import { CONSTANTS } from "../Constants";
+
+import { PositionTypes } from "./data/PositionTypes";
+import { Stock } from "./Stock";
 
 // Amount by which a stock's forecast changes during each price movement
 export const forecastChangePerPriceMovement = 0.006;

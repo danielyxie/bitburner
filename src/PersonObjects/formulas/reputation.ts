@@ -1,8 +1,8 @@
-import { IPlayer } from "../IPlayer";
-import { Faction } from "../../Faction/Faction";
-import { CONSTANTS } from "../../Constants";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { CONSTANTS } from "../../Constants";
+import type { Faction } from "../../Faction/Faction";
 import { CalculateShareMult } from "../../NetworkShare/Share";
+import type { IPlayer } from "../IPlayer";
 
 function mult(f: Faction): number {
   let favorMult = 1 + f.favor / 100;

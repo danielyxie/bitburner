@@ -3,26 +3,24 @@
  *
  * This subcomponent renders all of the buttons for applying to jobs at a company
  */
-import React, { useState, useEffect } from "react";
-import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import Box from "@mui/material/Box";
-
-import { ApplyToJobButton } from "./ApplyToJobButton";
-
-import { Locations } from "../Locations";
-import { LocationName } from "../data/LocationNames";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
 
 import { Companies } from "../../Company/Companies";
 import { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
 import * as posNames from "../../Company/data/companypositionnames";
-
-import { Reputation } from "../../ui/React/Reputation";
-import { Favor } from "../../ui/React/Favor";
-import { use } from "../../ui/Context";
 import { QuitJobModal } from "../../Company/ui/QuitJobModal";
+import { use } from "../../ui/Context";
+import { Favor } from "../../ui/React/Favor";
+import { Reputation } from "../../ui/React/Reputation";
+import type { LocationName } from "../data/LocationNames";
+import { Locations } from "../Locations";
+
+import { ApplyToJobButton } from "./ApplyToJobButton";
 
 type IProps = {
   locName: LocationName;

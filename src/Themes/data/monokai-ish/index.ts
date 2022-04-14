@@ -1,4 +1,5 @@
-import { IPredefinedTheme } from "../../Themes";
+import type { IPredefinedTheme } from "../../Themes";
+
 import img1 from "./screenshot.png";
 
 export const Theme: IPredefinedTheme = {

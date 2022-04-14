@@ -1,9 +1,11 @@
-import * as React from "react";
-import LinearProgress from "@mui/material/LinearProgress";
 import { TableCell, Tooltip, Typography } from "@mui/material";
-import { characterOverviewStyles } from "./CharacterOverview";
-import { ISkillProgress } from "src/PersonObjects/formulas/skill";
+import LinearProgress from "@mui/material/LinearProgress";
+import * as React from "react";
+import type { ISkillProgress } from "src/PersonObjects/formulas/skill";
+
 import { numeralWrapper } from "../numeralFormat";
+
+import { characterOverviewStyles } from "./CharacterOverview";
 
 interface IProgressProps {
   min: number;

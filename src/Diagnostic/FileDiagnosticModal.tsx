@@ -1,8 +1,8 @@
-import React from "react";
-import { GetServer, GetAllServers } from "../Server/AllServers";
-import { Modal } from "../ui/React/Modal";
-import { numeralWrapper } from "../ui/numeralFormat";
-
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,11 +10,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import React from "react";
+
+import { GetAllServers, GetServer } from "../Server/AllServers";
+import { numeralWrapper } from "../ui/numeralFormat";
+import { Modal } from "../ui/React/Modal";
 
 interface IServerProps {
   hostname: string;

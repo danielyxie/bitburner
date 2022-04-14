@@ -3,15 +3,13 @@
  *
  * This subcomponent renders all of the buttons for hospital options
  */
-import * as React from "react";
 import Button from "@mui/material/Button";
+import * as React from "react";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { getHospitalizationCost } from "../../Hospital/Hospital";
-
-import { Money } from "../../ui/React/Money";
-
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { Money } from "../../ui/React/Money";
 
 type IProps = {
   p: IPlayer;

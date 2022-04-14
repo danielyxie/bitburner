@@ -1,15 +1,16 @@
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import React from "react";
-import { Sleeve } from "../Sleeve";
+
 import { CONSTANTS } from "../../../Constants";
-import { Money } from "../../../ui/React/Money";
-import { WorldMap } from "../../../ui/React/WorldMap";
 import { CityName } from "../../../Locations/data/CityNames";
 import { Settings } from "../../../Settings/Settings";
-import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { use } from "../../../ui/Context";
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { Money } from "../../../ui/React/Money";
+import { WorldMap } from "../../../ui/React/WorldMap";
+import type { Sleeve } from "../Sleeve";
 
 interface IProps {
   open: boolean;

@@ -1,10 +1,12 @@
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import React, { useState } from "react";
-import { Intro } from "./Intro";
-import { Game } from "./Game";
-import { Location } from "../../Locations/Location";
-import { use } from "../../ui/Context";
+
+import type { Location } from "../../Locations/Location";
 import { calculateSkill } from "../../PersonObjects/formulas/skill";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { use } from "../../ui/Context";
+
+import { Game } from "./Game";
+import { Intro } from "./Intro";
 
 interface IProps {
   location: Location;

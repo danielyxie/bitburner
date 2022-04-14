@@ -1,9 +1,9 @@
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
 import { Modal } from "../../ui/React/Modal";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 
 interface IProps {
   open: boolean;

@@ -1,8 +1,8 @@
-import commandLineArgs from "command-line-args";
-
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
+
+import commandLineArgs from "command-line-args";
 
 // https://github.com/75lb/command-line-args
 const optionDefinitions = [

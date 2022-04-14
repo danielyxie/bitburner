@@ -1,10 +1,10 @@
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { Milestones } from "../Milestones";
-import { Milestone } from "../Milestone";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import * as React from "react";
 
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { Milestone } from "../Milestone";
+import { Milestones } from "../Milestones";
 
 interface IProps {
   player: IPlayer;

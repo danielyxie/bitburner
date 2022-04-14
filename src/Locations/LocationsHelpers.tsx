@@ -3,11 +3,9 @@
  * Mostly used for UI
  */
 import { CONSTANTS } from "../Constants";
-
-import { IPlayer } from "../PersonObjects/IPlayer";
+import type { IPlayer } from "../PersonObjects/IPlayer";
 import { AddToAllServers, createUniqueRandomIp } from "../Server/AllServers";
 import { safetlyCreateUniqueServer } from "../Server/ServerHelpers";
-
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 
 /**

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { LimitMaterialProduction } from "../../Actions";
-import { Modal } from "../../../ui/React/Modal";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
+import { Modal } from "../../../ui/React/Modal";
 import { KEY } from "../../../utils/helpers/keyCodes";
-import { Material } from "../../Material";
+import { LimitMaterialProduction } from "../../Actions";
+import type { Material } from "../../Material";
 
 interface IProps {
   open: boolean;

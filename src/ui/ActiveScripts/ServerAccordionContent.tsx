@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { WorkerScript } from "../../Netscript/WorkerScript";
-import { WorkerScriptAccordion } from "./WorkerScriptAccordion";
 import List from "@mui/material/List";
 import TablePagination from "@mui/material/TablePagination";
-import { TablePaginationActionsAll } from "../React/TablePaginationActionsAll";
+import React, { useState } from "react";
+
+import type { WorkerScript } from "../../Netscript/WorkerScript";
 import { Settings } from "../../Settings/Settings";
+import { TablePaginationActionsAll } from "../React/TablePaginationActionsAll";
+
+import { WorkerScriptAccordion } from "./WorkerScriptAccordion";
 
 interface IProps {
   workerScripts: WorkerScript[];

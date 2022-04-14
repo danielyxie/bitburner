@@ -2,19 +2,17 @@
  * React component for a panel that lets you purchase upgrades for a Duplicate
  * Sleeve's Memory (through The Covenant)
  */
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
-
-import { Sleeve } from "../Sleeve";
-import { IPlayer } from "../../IPlayer";
 
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { Money } from "../../../ui/React/Money";
-
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
+import type { IPlayer } from "../../IPlayer";
+import type { Sleeve } from "../Sleeve";
 
 interface IProps {
   index: number;

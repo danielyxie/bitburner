@@ -1,23 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
-import { EventEmitter } from "../../utils/EventEmitter";
-import { RunningScript } from "../../Script/RunningScript";
-import { killWorkerScript } from "../../Netscript/killWorkerScript";
-import Typography from "@mui/material/Typography";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import type { Theme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import { debounce } from "lodash";
+import React, { useEffect, useRef, useState } from "react";
 import Draggable from "react-draggable";
 import { ResizableBox } from "react-resizable";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
+import { killWorkerScript } from "../../Netscript/killWorkerScript";
 import { workerScripts } from "../../Netscript/WorkerScripts";
 import { startWorkerScript } from "../../NetscriptWorker";
-import { GetServer } from "../../Server/AllServers";
-import { Theme } from "@mui/material";
-import { findRunningScript } from "../../Script/ScriptHelpers";
 import { Player } from "../../Player";
-import { debounce } from "lodash";
+import type { RunningScript } from "../../Script/RunningScript";
+import { findRunningScript } from "../../Script/ScriptHelpers";
+import { GetServer } from "../../Server/AllServers";
+import { EventEmitter } from "../../utils/EventEmitter";
 
 let layerCounter = 0;
 

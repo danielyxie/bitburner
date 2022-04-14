@@ -2,17 +2,17 @@
  * React Component for the content of the accordion of gang members on the
  * management subpage.
  */
+import HelpIcon from "@mui/icons-material/Help";
+import { Button, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import React, { useState } from "react";
+
+import { StaticModal } from "../../ui/React/StaticModal";
+import type { GangMember } from "../GangMember";
+
+import { AscensionModal } from "./AscensionModal";
 import { GangMemberStats } from "./GangMemberStats";
 import { TaskSelector } from "./TaskSelector";
-import { AscensionModal } from "./AscensionModal";
-
-import { Box } from "@mui/system";
-import { Button, Typography } from "@mui/material";
-import HelpIcon from "@mui/icons-material/Help";
-
-import { GangMember } from "../GangMember";
-import { StaticModal } from "../../ui/React/StaticModal";
 
 interface IProps {
   member: GangMember;

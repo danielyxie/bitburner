@@ -1,10 +1,11 @@
-import React from "react";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
 import PaletteSharpIcon from "@mui/icons-material/PaletteSharp";
+import { Button, Card, CardContent, CardHeader, CardMedia, Link } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React from "react";
+
 import { Settings } from "../../Settings/Settings";
-import { IPredefinedTheme } from "../Themes";
-import { Link, Card, CardHeader, CardContent, CardMedia, Button } from "@mui/material";
+import type { IPredefinedTheme } from "../Themes";
 
 interface IProps {
   theme: IPredefinedTheme;

@@ -1,11 +1,12 @@
-import { EmployeePositions } from "./EmployeePositions";
-import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
-import { generateRandomString } from "../utils/StringHelperFunctions";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import { generateRandomString } from "../utils/StringHelperFunctions";
+
+import { CorporationConstants } from "./data/Constants";
 import { Employee } from "./Employee";
-import { IIndustry } from "./IIndustry";
-import { ICorporation } from "./ICorporation";
+import { EmployeePositions } from "./EmployeePositions";
+import type { ICorporation } from "./ICorporation";
+import type { IIndustry } from "./IIndustry";
 
 interface IParams {
   loc?: string;

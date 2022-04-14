@@ -1,44 +1,45 @@
-import { INetscriptHelper } from "./INetscriptHelper";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { calculateServerGrowth } from "../Server/formulas/grow";
+import { repFromDonation } from "../Faction/formulas/donation";
+import { favorToRep as calculateFavorToRep, repToFavor as calculateRepToFavor } from "../Faction/formulas/favor";
 import {
-  calculateMoneyGainRate,
-  calculateLevelUpgradeCost,
-  calculateRamUpgradeCost,
+  calculateAscensionMult,
+  calculateAscensionPointsGain,
+  calculateMoneyGain,
+  calculateRespectGain,
+  calculateWantedLevelGain,
+  calculateWantedPenalty,
+} from "../Gang/formulas/formulas";
+import {
+  calculateGrowTime,
+  calculateHackingChance,
+  calculateHackingExpGain,
+  calculateHackingTime,
+  calculatePercentMoneyHacked,
+  calculateWeakenTime,
+} from "../Hacking";
+import { HacknetNodeConstants, HacknetServerConstants } from "../Hacknet/data/Constants";
+import {
   calculateCoreUpgradeCost,
+  calculateLevelUpgradeCost,
+  calculateMoneyGainRate,
   calculateNodeCost,
+  calculateRamUpgradeCost,
 } from "../Hacknet/formulas/HacknetNodes";
 import {
+  calculateCacheUpgradeCost as HScalculateCacheUpgradeCost,
+  calculateCoreUpgradeCost as HScalculateCoreUpgradeCost,
   calculateHashGainRate as HScalculateHashGainRate,
   calculateLevelUpgradeCost as HScalculateLevelUpgradeCost,
   calculateRamUpgradeCost as HScalculateRamUpgradeCost,
-  calculateCoreUpgradeCost as HScalculateCoreUpgradeCost,
-  calculateCacheUpgradeCost as HScalculateCacheUpgradeCost,
   calculateServerCost as HScalculateServerCost,
 } from "../Hacknet/formulas/HacknetServers";
-import { HacknetNodeConstants, HacknetServerConstants } from "../Hacknet/data/Constants";
-import { calculateSkill, calculateExp } from "../PersonObjects/formulas/skill";
-import {
-  calculateHackingChance,
-  calculateHackingExpGain,
-  calculatePercentMoneyHacked,
-  calculateHackingTime,
-  calculateGrowTime,
-  calculateWeakenTime,
-} from "../Hacking";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import { calculateExp, calculateSkill } from "../PersonObjects/formulas/skill";
+import type { IPlayer } from "../PersonObjects/IPlayer";
 import { Programs } from "../Programs/Programs";
-import { Formulas as IFormulas } from "../ScriptEditor/NetscriptDefinitions";
-import {
-  calculateRespectGain,
-  calculateWantedLevelGain,
-  calculateMoneyGain,
-  calculateWantedPenalty,
-  calculateAscensionMult,
-  calculateAscensionPointsGain,
-} from "../Gang/formulas/formulas";
-import { favorToRep as calculateFavorToRep, repToFavor as calculateRepToFavor } from "../Faction/formulas/favor";
-import { repFromDonation } from "../Faction/formulas/donation";
+import type { Formulas as IFormulas } from "../ScriptEditor/NetscriptDefinitions";
+import { calculateServerGrowth } from "../Server/formulas/grow";
+
+import type { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptFormulas(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IFormulas {
   const checkFormulasAccess = function (func: string): void {

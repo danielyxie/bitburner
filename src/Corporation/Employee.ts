@@ -1,10 +1,11 @@
-import { CorporationConstants } from "./data/Constants";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
+import { CorporationConstants } from "./data/Constants";
 import { EmployeePositions } from "./EmployeePositions";
-import { ICorporation } from "./ICorporation";
-import { OfficeSpace } from "./OfficeSpace";
-import { IIndustry } from "./IIndustry";
+import type { ICorporation } from "./ICorporation";
+import type { IIndustry } from "./IIndustry";
+import type { OfficeSpace } from "./OfficeSpace";
 
 interface IParams {
   name?: string;

@@ -1,10 +1,12 @@
-import { getRamCost } from "./RamCostGenerator";
-import type { IPort } from "../NetscriptPort";
-import type { BaseServer } from "../Server/BaseServer";
-import type { WorkerScript } from "./WorkerScript";
+import type { CityName } from "src/Locations/data/CityNames";
+
 import { makeRuntimeRejectMsg } from "../NetscriptEvaluator";
+import type { IPort } from "../NetscriptPort";
 import { Player } from "../Player";
-import { CityName } from "src/Locations/data/CityNames";
+import type { BaseServer } from "../Server/BaseServer";
+
+import { getRamCost } from "./RamCostGenerator";
+import type { WorkerScript } from "./WorkerScript";
 
 type ExternalFunction = (...args: any[]) => any;
 type ExternalAPI = {

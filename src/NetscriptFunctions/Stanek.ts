@@ -1,18 +1,17 @@
-import { INetscriptHelper } from "./INetscriptHelper";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { netscriptDelay } from "../NetscriptEvaluator";
-
+import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
+import { FragmentById, Fragments } from "../CotMG/Fragment";
 import { staneksGift } from "../CotMG/Helper";
-import { Fragments, FragmentById } from "../CotMG/Fragment";
-
-import {
-  Fragment as IFragment,
+import type { InternalAPI, NetscriptContext } from "../Netscript/APIWrapper";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import { netscriptDelay } from "../NetscriptEvaluator";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type {
   ActiveFragment as IActiveFragment,
+  Fragment as IFragment,
   Stanek as IStanek,
 } from "../ScriptEditor/NetscriptDefinitions";
-import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
-import { NetscriptContext, InternalAPI } from "../Netscript/APIWrapper";
+
+import type { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptStanek(
   player: IPlayer,

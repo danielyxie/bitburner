@@ -2,13 +2,14 @@
  * Root React Component for the "Active Scripts" UI page. This page displays
  * and provides information about all of the player's scripts that are currently running
  */
-import React, { useState, useEffect } from "react";
-import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import React, { useEffect, useState } from "react";
+
+import type { WorkerScript } from "../../Netscript/WorkerScript";
 
 import { ActiveScriptsPage } from "./ActiveScriptsPage";
 import { RecentScriptsPage } from "./RecentScriptsPage";
-import { WorkerScript } from "../../Netscript/WorkerScript";
 
 interface IProps {
   workerScripts: Map<number, WorkerScript>;

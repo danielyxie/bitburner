@@ -1,6 +1,6 @@
-import { CONSTANTS } from "../../Constants";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { IPlayer } from "../IPlayer";
+import { CONSTANTS } from "../../Constants";
+import type { IPlayer } from "../IPlayer";
 
 export interface WorkEarnings {
   workMoneyLossRate: number;

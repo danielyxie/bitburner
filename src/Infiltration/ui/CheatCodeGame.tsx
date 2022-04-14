@@ -1,11 +1,13 @@
-import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
-import { IMinigameProps } from "./IMinigameProps";
-import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
-import { random, getArrow, rightArrowSymbol, leftArrowSymbol, upArrowSymbol, downArrowSymbol } from "../utils";
-import { interpolate } from "./Difficulty";
 import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { downArrowSymbol, getArrow, leftArrowSymbol, random, rightArrowSymbol, upArrowSymbol } from "../utils";
+
+import { interpolate } from "./Difficulty";
+import { GameTimer } from "./GameTimer";
+import type { IMinigameProps } from "./IMinigameProps";
+import { KeyHandler } from "./KeyHandler";
 
 interface Difficulty {
   [key: string]: number;

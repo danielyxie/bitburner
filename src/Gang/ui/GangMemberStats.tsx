@@ -2,19 +2,19 @@
  * React Component for the first part of a gang member details.
  * Contains skills and exp.
  */
-import React from "react";
-import { useGang } from "./Context";
-
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
 import { Table, TableBody, TableCell, TableRow } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React from "react";
 
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { GangMember } from "../GangMember";
 import { Settings } from "../../Settings/Settings";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { characterOverviewStyles as useStyles } from "../../ui/React/CharacterOverview";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { StatsRow } from "../../ui/React/StatsRow";
-import { characterOverviewStyles as useStyles } from "../../ui/React/CharacterOverview";
+import type { GangMember } from "../GangMember";
+
+import { useGang } from "./Context";
 
 interface IProps {
   member: GangMember;

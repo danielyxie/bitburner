@@ -1,23 +1,24 @@
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ReplyIcon from "@mui/icons-material/Reply";
+import ReplyAllIcon from "@mui/icons-material/ReplyAll";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import IconButton from "@mui/material/IconButton";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { Adjuster } from "./Adjuster";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { Factions as AllFaction } from "../../Faction/Factions";
-import FormControl from "@mui/material/FormControl";
-import MenuItem from "@mui/material/MenuItem";
-import IconButton from "@mui/material/IconButton";
-import ReplyAllIcon from "@mui/icons-material/ReplyAll";
-import ReplyIcon from "@mui/icons-material/Reply";
-import InputLabel from "@mui/material/InputLabel";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { Factions as AllFaction } from "../../Faction/Factions";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+
+import { Adjuster } from "./Adjuster";
 
 const bigNumber = 1e12;
 

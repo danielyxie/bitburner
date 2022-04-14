@@ -1,5 +1,5 @@
-import { Company } from "./Company";
-import { CompanyPosition } from "./CompanyPosition";
+import type { Company } from "./Company";
+import type { CompanyPosition } from "./CompanyPosition";
 
 /**
  * Returns a string with the given CompanyPosition's stat requirements

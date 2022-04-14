@@ -2,11 +2,11 @@
  * Implementation of the mechanisms that allow the player to affect the
  * Stock Market
  */
+import type { Company } from "../Company/Company";
+import type { Server } from "../Server/Server";
+
 import { Stock } from "./Stock";
 import { StockMarket } from "./StockMarket";
-
-import { Company } from "../Company/Company";
-import { Server } from "../Server/Server";
 
 // Change in second-order forecast due to hacks/grows
 export const forecastForecastChangeFromHack = 0.1;

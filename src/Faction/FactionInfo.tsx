@@ -1,7 +1,9 @@
 import React from "react";
-import { IMap } from "../types";
-import { FactionNames } from "./data/FactionNames";
+
+import type { IMap } from "../types";
 import { use } from "../ui/Context";
+
+import { FactionNames } from "./data/FactionNames";
 import { Option } from "./ui/Option";
 
 interface FactionInfoParams {

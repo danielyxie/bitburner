@@ -2,24 +2,21 @@
  * Hacknet Servers - Reworked Hacknet Node mechanic for BitNode-9
  */
 import { CONSTANTS } from "../Constants";
-
-import { IHacknetNode } from "./IHacknetNode";
-
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type { RunningScript } from "../Script/RunningScript";
 import { BaseServer } from "../Server/BaseServer";
-import { RunningScript } from "../Script/RunningScript";
+import { createRandomIp } from "../utils/IPAddress";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
 import { HacknetServerConstants } from "./data/Constants";
 import {
+  calculateCacheUpgradeCost,
+  calculateCoreUpgradeCost,
   calculateHashGainRate,
   calculateLevelUpgradeCost,
   calculateRamUpgradeCost,
-  calculateCoreUpgradeCost,
-  calculateCacheUpgradeCost,
 } from "./formulas/HacknetServers";
-
-import { createRandomIp } from "../utils/IPAddress";
-
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import type { IHacknetNode } from "./IHacknetNode";
 
 interface IConstructorParams {
   adminRights?: boolean;

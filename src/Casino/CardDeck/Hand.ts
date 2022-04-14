@@ -3,8 +3,7 @@
  *
  * This class is IMMUTABLE
  */
-
-import { Card } from "./Card";
+import type { Card } from "./Card";
 
 export class Hand {
   constructor(readonly cards: readonly Card[]) {}

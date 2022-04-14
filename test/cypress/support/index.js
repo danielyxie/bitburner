@@ -14,8 +14,8 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import "./globalHooks";
 import "./commands";
+import "./globalHooks";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

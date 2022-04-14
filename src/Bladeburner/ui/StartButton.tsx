@@ -1,10 +1,10 @@
+import Button from "@mui/material/Button";
 import React from "react";
 
-import { IBladeburner } from "../IBladeburner";
-import { BlackOperation } from "../BlackOperation";
-import { use } from "../../ui/Context";
-import Button from "@mui/material/Button";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { use } from "../../ui/Context";
+import { BlackOperation } from "../BlackOperation";
+import type { IBladeburner } from "../IBladeburner";
 
 interface IProps {
   bladeburner: IBladeburner;

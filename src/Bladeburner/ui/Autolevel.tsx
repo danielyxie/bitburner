@@ -1,9 +1,10 @@
-import React from "react";
-import { IAction } from "../IAction";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React from "react";
+
+import type { IAction } from "../IAction";
 
 interface IProps {
   action: IAction;

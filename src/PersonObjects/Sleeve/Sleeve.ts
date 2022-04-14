@@ -6,33 +6,26 @@
  *
  * Sleeves are unlocked in BitNode-10.
  */
-import { SleeveTaskType } from "./SleeveTaskTypesEnum";
-
-import { IPlayer } from "../IPlayer";
-import { Person, ITaskTracker, createTaskTracker } from "../Person";
-
-import { Augmentation } from "../../Augmentation/Augmentation";
-
+import type { Augmentation } from "../../Augmentation/Augmentation";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-
-import { Crime } from "../../Crime/Crime";
-import { Crimes } from "../../Crime/Crimes";
-
 import { Companies } from "../../Company/Companies";
 import { Company } from "../../Company/Company";
-import { CompanyPosition } from "../../Company/CompanyPosition";
+import type { CompanyPosition } from "../../Company/CompanyPosition";
 import { CompanyPositions } from "../../Company/CompanyPositions";
-
 import { CONSTANTS } from "../../Constants";
-
+import type { Crime } from "../../Crime/Crime";
+import { Crimes } from "../../Crime/Crimes";
 import { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
 import { FactionWorkType } from "../../Faction/FactionWorkTypeEnum";
-
 import { CityName } from "../../Locations/data/CityNames";
 import { LocationName } from "../../Locations/data/LocationNames";
-
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
+import type { IPlayer } from "../IPlayer";
+import type { ITaskTracker } from "../Person";
+import { Person, createTaskTracker } from "../Person";
+
+import { SleeveTaskType } from "./SleeveTaskTypesEnum";
 
 export class Sleeve extends Person {
   /**

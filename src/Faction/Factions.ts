@@ -2,12 +2,11 @@
  * Initialization and manipulation of the Factions object, which stores data
  * about all Factions in the game
  */
+import type { IMap } from "../types";
+import { Reviver } from "../utils/JSONReviver";
+
 import { Faction } from "./Faction";
 import { FactionInfos } from "./FactionInfo";
-
-import { IMap } from "../types";
-
-import { Reviver } from "../utils/JSONReviver";
 
 export let Factions: IMap<Faction> = {};
 

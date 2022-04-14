@@ -1,35 +1,32 @@
-import { FactionNames } from "./Faction/data/FactionNames";
-import { CityName } from "./Locations/data/CityNames";
-import { Augmentations } from "./Augmentation/Augmentations";
 import { augmentationExists, initAugmentations } from "./Augmentation/AugmentationHelpers";
+import { Augmentations } from "./Augmentation/Augmentations";
 import { AugmentationNames } from "./Augmentation/data/AugmentationNames";
 import { initBitNodeMultipliers } from "./BitNode/BitNode";
 import { Bladeburner } from "./Bladeburner/Bladeburner";
 import { Companies, initCompanies } from "./Company/Companies";
+import { CONSTANTS } from "./Constants";
 import { resetIndustryResearchTrees } from "./Corporation/IndustryData";
-import { Programs } from "./Programs/Programs";
+import { staneksGift } from "./CotMG/Helper";
+import { FactionNames } from "./Faction/data/FactionNames";
 import { Faction } from "./Faction/Faction";
-import { Factions, initFactions } from "./Faction/Factions";
 import { joinFaction } from "./Faction/FactionHelpers";
+import { Factions, initFactions } from "./Faction/Factions";
+import { InvitationsSeen } from "./Faction/ui/FactionsRoot";
 import { updateHashManagerCapacity } from "./Hacknet/HacknetHelpers";
+import { LiteratureNames } from "./Literature/data/LiteratureNames";
+import { CityName } from "./Locations/data/CityNames";
+import { resetPidCounter } from "./Netscript/Pid";
 import { prestigeWorkerScripts } from "./NetscriptWorker";
 import { Player } from "./Player";
-import { Router } from "./ui/GameRoot";
-import { resetPidCounter } from "./Netscript/Pid";
-import { LiteratureNames } from "./Literature/data/LiteratureNames";
-
-import { GetServer, AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
-import { prestigeHomeComputer } from "./Server/ServerHelpers";
+import { Programs } from "./Programs/Programs";
+import { ProgramsSeen } from "./Programs/ui/ProgramsRoot";
+import { AddToAllServers, GetServer, initForeignServers, prestigeAllServers } from "./Server/AllServers";
 import { SpecialServers } from "./Server/data/SpecialServers";
+import { prestigeHomeComputer } from "./Server/ServerHelpers";
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
-
+import { Router } from "./ui/GameRoot";
 import { dialogBoxCreate } from "./ui/React/DialogBox";
-
-import { staneksGift } from "./CotMG/Helper";
-import { ProgramsSeen } from "./Programs/ui/ProgramsRoot";
-import { InvitationsSeen } from "./Faction/ui/FactionsRoot";
-import { CONSTANTS } from "./Constants";
 import { LogBoxClearEvents } from "./ui/React/LogBoxManager";
 
 const BitNode8StartingMoney = 250e6;

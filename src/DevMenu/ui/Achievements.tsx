@@ -1,19 +1,18 @@
-import React, { useState } from "react";
-
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import { Tooltip } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
+import { Tooltip } from "@mui/material";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import { achievements } from "../../Achievements/Achievements";
-import { IEngine } from "../../IEngine";
+import type { IEngine } from "../../IEngine";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
   player: IPlayer;

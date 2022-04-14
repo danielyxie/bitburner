@@ -1,8 +1,11 @@
-import React, { ErrorInfo } from "react";
+import React from "react";
+import type { ErrorInfo } from "react";
 
-import { IErrorData, getErrorForDisplay } from "../utils/ErrorHelper";
+import { getErrorForDisplay } from "../utils/ErrorHelper";
+import type { IErrorData } from "../utils/ErrorHelper";
+
 import { RecoveryRoot } from "./React/RecoveryRoot";
-import { IRouter, Page } from "./Router";
+import type { IRouter, Page } from "./Router";
 
 interface IProps {
   router: IRouter;

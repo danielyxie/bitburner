@@ -2,7 +2,7 @@
  * The environment in which a script runs. The environment holds
  * Netscript functions and arguments for that script.
  */
-import { IMap } from "../types";
+import type { IMap } from "../types";
 
 export class Environment {
   /**

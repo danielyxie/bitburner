@@ -1,13 +1,14 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
-import { LogBoxEvents } from "../../ui/React/LogBoxManager";
+import * as libarg from "arg";
+
 import { startWorkerScript } from "../../NetscriptWorker";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { RunningScript } from "../../Script/RunningScript";
 import { findRunningScript } from "../../Script/ScriptHelpers";
-import * as libarg from "arg";
+import type { BaseServer } from "../../Server/BaseServer";
 import { numeralWrapper } from "../../ui/numeralFormat";
+import { LogBoxEvents } from "../../ui/React/LogBoxManager";
+import type { IRouter } from "../../ui/Router";
+import type { ITerminal } from "../ITerminal";
 
 export function runScript(
   terminal: ITerminal,

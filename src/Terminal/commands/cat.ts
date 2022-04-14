@@ -1,11 +1,11 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
-import { MessageFilenames, showMessage } from "../../Message/MessageHelpers";
 import { showLiterature } from "../../Literature/LiteratureHelpers";
+import { MessageFilenames, showMessage } from "../../Message/MessageHelpers";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { BaseServer } from "../../Server/BaseServer";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import type { IRouter } from "../../ui/Router";
 import { checkEnum } from "../../utils/helpers/checkEnum";
+import type { ITerminal } from "../ITerminal";
 
 export function cat(
   terminal: ITerminal,

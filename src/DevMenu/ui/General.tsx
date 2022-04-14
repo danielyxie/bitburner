@@ -1,20 +1,20 @@
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { MenuItem, Select, TextField } from "@mui/material";
+import type { SelectChangeEvent } from "@mui/material";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import React, { useEffect, useState } from "react";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { Money } from "../../ui/React/Money";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { IRouter } from "../../ui/Router";
-import { MenuItem, SelectChangeEvent, TextField, Select } from "@mui/material";
 import { Bladeburner } from "../../Bladeburner/Bladeburner";
-import { GangConstants } from "../../Gang/data/Constants";
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { GangConstants } from "../../Gang/data/Constants";
 import { checkForMessagesToSend } from "../../Message/MessageHelpers";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { Money } from "../../ui/React/Money";
+import type { IRouter } from "../../ui/Router";
 
 interface IProps {
   player: IPlayer;

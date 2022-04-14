@@ -1,7 +1,7 @@
-import { jest, describe, expect } from "@jest/globals";
+import { describe, expect, jest } from "@jest/globals";
 
+import { RamCostConstants, getRamCost } from "../../../src/Netscript/RamCostGenerator";
 import { Player } from "../../../src/Player";
-import { getRamCost, RamCostConstants } from "../../../src/Netscript/RamCostGenerator";
 import { calculateRamUsage } from "../../../src/Script/RamCalculations";
 
 jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {

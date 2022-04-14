@@ -1,16 +1,14 @@
 /**
  * Server and HacknetServer-related methods for the Player class (PlayerObject)
  */
-import { IPlayer } from "../IPlayer";
-
-import { CONSTANTS } from "../../Constants";
-
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
-import { Server } from "../../Server/Server";
-import { BaseServer } from "../../Server/BaseServer";
+import { CONSTANTS } from "../../Constants";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
-import { GetServer, AddToAllServers, createUniqueRandomIp } from "../../Server/AllServers";
+import { AddToAllServers, GetServer, createUniqueRandomIp } from "../../Server/AllServers";
+import type { BaseServer } from "../../Server/BaseServer";
 import { SpecialServers } from "../../Server/data/SpecialServers";
+import { Server } from "../../Server/Server";
+import type { IPlayer } from "../IPlayer";
 
 export function hasTorRouter(this: IPlayer): boolean {
   return !!GetServer(SpecialServers.DarkWeb);

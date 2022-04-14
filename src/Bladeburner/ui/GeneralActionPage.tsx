@@ -1,8 +1,10 @@
-import * as React from "react";
-import { GeneralActionList } from "./GeneralActionList";
-import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import Typography from "@mui/material/Typography";
+import * as React from "react";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IBladeburner } from "../IBladeburner";
+
+import { GeneralActionList } from "./GeneralActionList";
 
 interface IProps {
   bladeburner: IBladeburner;

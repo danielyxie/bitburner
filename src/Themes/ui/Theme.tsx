@@ -1,7 +1,9 @@
+import { StyledEngineProvider, ThemeProvider, createTheme } from "@mui/material/styles";
+import type { Theme } from "@mui/material/styles";
 import React from "react";
-import { createTheme, ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
-import { EventEmitter } from "../../utils/EventEmitter";
+
 import { Settings } from "../../Settings/Settings";
+import { EventEmitter } from "../../utils/EventEmitter";
 
 export const ThemeEvents = new EventEmitter<[]>();
 

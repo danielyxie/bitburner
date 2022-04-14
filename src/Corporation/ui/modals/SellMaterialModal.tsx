@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import { dialogBoxCreate } from "../../../ui/React/DialogBox";
-import { Material } from "../../Material";
-import { SellMaterial } from "../../Actions";
-import { Modal } from "../../../ui/React/Modal";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
+import { Modal } from "../../../ui/React/Modal";
 import { KEY } from "../../../utils/helpers/keyCodes";
+import { SellMaterial } from "../../Actions";
+import type { Material } from "../../Material";
 
 function initialPrice(mat: Material): string {
   let val = mat.sCost ? mat.sCost + "" : "";

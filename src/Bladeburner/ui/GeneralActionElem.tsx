@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { ActionTypes } from "../data/ActionTypes";
-import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
-import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { IBladeburner } from "../IBladeburner";
-import { IAction } from "../IAction";
-import { GeneralActions } from "../data/GeneralActions";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { CopyableText } from "../../ui/React/CopyableText";
-
-import { StartButton } from "./StartButton";
-
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { CopyableText } from "../../ui/React/CopyableText";
+import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
+import { convertTimeMsToTimeElapsedString, formatNumber } from "../../utils/StringHelperFunctions";
+import { ActionTypes } from "../data/ActionTypes";
+import { GeneralActions } from "../data/GeneralActions";
+import type { IAction } from "../IAction";
+import type { IBladeburner } from "../IBladeburner";
+
+import { StartButton } from "./StartButton";
 
 interface IProps {
   bladeburner: IBladeburner;

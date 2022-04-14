@@ -1,7 +1,9 @@
 import React from "react";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IBladeburner } from "../IBladeburner";
+
 import { OperationElem } from "./OperationElem";
-import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 
 interface IProps {
   bladeburner: IBladeburner;

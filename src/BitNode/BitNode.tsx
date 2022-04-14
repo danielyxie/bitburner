@@ -1,9 +1,11 @@
 import React from "react";
-import { BitNodeMultipliers } from "./BitNodeMultipliers";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IMap } from "../types";
+
 import { FactionNames } from "../Faction/data/FactionNames";
 import { CityName } from "../Locations/data/CityNames";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type { IMap } from "../types";
+
+import { BitNodeMultipliers } from "./BitNodeMultipliers";
 
 class BitNode {
   // A short description, or tagline, about the BitNode

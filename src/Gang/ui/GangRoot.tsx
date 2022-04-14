@@ -1,15 +1,16 @@
 /**
  * React Component for all the gang stuff.
  */
-import React, { useState, useEffect } from "react";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import React, { useEffect, useState } from "react";
+
+import { use } from "../../ui/Context";
+
+import { Context } from "./Context";
+import { EquipmentsSubpage } from "./EquipmentsSubpage";
 import { ManagementSubpage } from "./ManagementSubpage";
 import { TerritorySubpage } from "./TerritorySubpage";
-import { EquipmentsSubpage } from "./EquipmentsSubpage";
-import { use } from "../../ui/Context";
-import { Context } from "./Context";
-
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 
 export function GangRoot(): React.ReactElement {
   const player = use.Player();

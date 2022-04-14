@@ -1,9 +1,10 @@
-import { Milestone } from "./Milestone";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { Factions } from "../Faction/Factions";
-import { Faction } from "../Faction/Faction";
-import { GetServer } from "../Server/AllServers";
 import { FactionNames } from "../Faction/data/FactionNames";
+import type { Faction } from "../Faction/Faction";
+import { Factions } from "../Faction/Factions";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { GetServer } from "../Server/AllServers";
+
+import type { Milestone } from "./Milestone";
 
 function allFactionAugs(p: IPlayer, f: Faction): boolean {
   const factionAugs = f.augmentations.slice().filter((aug) => aug !== "NeuroFlux Governor");

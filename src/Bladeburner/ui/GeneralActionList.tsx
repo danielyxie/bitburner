@@ -1,9 +1,11 @@
 import React from "react";
-import { GeneralActionElem } from "./GeneralActionElem";
-import { Action } from "../Action";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { Action } from "../Action";
 import { GeneralActions } from "../GeneralActions";
-import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IBladeburner } from "../IBladeburner";
+
+import { GeneralActionElem } from "./GeneralActionElem";
 
 interface IProps {
   bladeburner: IBladeburner;

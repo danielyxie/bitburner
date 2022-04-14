@@ -1,5 +1,5 @@
-import { IMap } from "./types";
 import { Terminal } from "./Terminal";
+import type { IMap } from "./types";
 
 export let Aliases: IMap<string> = {};
 export let GlobalAliases: IMap<string> = {};

@@ -2,21 +2,19 @@
  * Root React component for the popup that lets player purchase Duplicate
  * Sleeves and Sleeve-related upgrades from The Covenant
  */
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
-import { CovenantSleeveMemoryUpgrade } from "./CovenantSleeveMemoryUpgrade";
-
+import { FactionNames } from "../../../Faction/data/FactionNames";
+import { use } from "../../../ui/Context";
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
+import { Modal } from "../../../ui/React/Modal";
+import { Money } from "../../../ui/React/Money";
 import { Sleeve } from "../Sleeve";
 import { BaseCostPerSleeve, MaxSleevesFromCovenant } from "../SleeveCovenantPurchases";
 
-import { Money } from "../../../ui/React/Money";
-import { Modal } from "../../../ui/React/Modal";
-import { use } from "../../../ui/Context";
-
-import { dialogBoxCreate } from "../../../ui/React/DialogBox";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { FactionNames } from "../../../Faction/data/FactionNames";
+import { CovenantSleeveMemoryUpgrade } from "./CovenantSleeveMemoryUpgrade";
 
 interface IProps {
   open: boolean;

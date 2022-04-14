@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { dialogBoxCreate } from "../../../ui/React/DialogBox";
-import { Modal } from "../../../ui/React/Modal";
-import { Industries } from "../../IndustryData";
-import { MakeProduct } from "../../Actions";
-import { useCorporation, useDivision } from "../Context";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
+import { Modal } from "../../../ui/React/Modal";
 import { KEY } from "../../../utils/helpers/keyCodes";
+import { MakeProduct } from "../../Actions";
+import { Industries } from "../../IndustryData";
+import { useCorporation, useDivision } from "../Context";
 
 interface IProps {
   open: boolean;

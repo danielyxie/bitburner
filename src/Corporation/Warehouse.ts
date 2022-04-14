@@ -1,10 +1,11 @@
-import { Material } from "./Material";
-import { ICorporation } from "./ICorporation";
-import { IIndustry } from "./IIndustry";
-import { MaterialSizes } from "./MaterialSizes";
-import { IMap } from "../types";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import type { IMap } from "../types";
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
+import type { ICorporation } from "./ICorporation";
+import type { IIndustry } from "./IIndustry";
+import { Material } from "./Material";
+import { MaterialSizes } from "./MaterialSizes";
 
 interface IConstructorParams {
   corp?: ICorporation;

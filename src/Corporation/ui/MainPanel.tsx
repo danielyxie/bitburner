@@ -3,11 +3,11 @@
 // be filled with whatever is needed based on the routing/navigation
 import React from "react";
 
-import { CityTabs } from "./CityTabs";
-import { IIndustry } from "../IIndustry";
-import { Context, useCorporation } from "./Context";
-
 import { CityName } from "../../Locations/data/CityNames";
+import type { IIndustry } from "../IIndustry";
+
+import { CityTabs } from "./CityTabs";
+import { Context, useCorporation } from "./Context";
 
 interface IProps {
   divisionName: string;

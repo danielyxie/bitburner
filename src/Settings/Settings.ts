@@ -1,11 +1,14 @@
-import { ISelfInitializer, ISelfLoading } from "../types";
-import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
-import { defaultTheme, ITheme } from "../Themes/Themes";
+import type { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
+import type { WordWrapOptions } from "../ScriptEditor/ui/Options";
+import { defaultMonacoTheme } from "../ScriptEditor/ui/themes";
+import type { IScriptEditorTheme } from "../ScriptEditor/ui/themes";
 import { defaultStyles } from "../Themes/Styles";
-import { WordWrapOptions } from "../ScriptEditor/ui/Options";
-import { OverviewSettings } from "../ui/React/Overview";
-import { IStyleSettings } from "../ScriptEditor/NetscriptDefinitions";
-import { defaultMonacoTheme, IScriptEditorTheme } from "../ScriptEditor/ui/themes";
+import { defaultTheme } from "../Themes/Themes";
+import type { ITheme } from "../Themes/Themes";
+import type { ISelfInitializer, ISelfLoading } from "../types";
+import type { OverviewSettings } from "../ui/React/Overview";
+
+import { OwnedAugmentationsOrderSetting, PurchaseAugmentationsOrderSetting } from "./SettingEnums";
 
 /**
  * Represents the default settings the player could customize.

@@ -1,9 +1,9 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
-import { numeralWrapper } from "../../ui/numeralFormat";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { BaseServer } from "../../Server/BaseServer";
 import { Settings } from "../../Settings/Settings";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import type { IRouter } from "../../ui/Router";
+import type { ITerminal } from "../ITerminal";
 
 export function mem(
   terminal: ITerminal,

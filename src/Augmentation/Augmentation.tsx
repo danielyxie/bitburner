@@ -1,12 +1,11 @@
 // Class definition for a single Augmentation object
 import * as React from "react";
-import { IMap } from "../types";
 
-import { Faction } from "../Faction/Faction";
+import type { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
+import type { IMap } from "../types";
 import { numeralWrapper } from "../ui/numeralFormat";
 import { Money } from "../ui/React/Money";
-
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
 export interface IConstructorParams {

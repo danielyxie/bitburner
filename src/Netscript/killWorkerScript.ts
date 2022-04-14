@@ -2,18 +2,17 @@
  * Stops an actively-running script (represented by a WorkerScript object)
  * and removes it from the global pool of active scripts.
  */
+import { Player } from "../Player";
+import { RunningScript } from "../Script/RunningScript";
+import { GetServer } from "../Server/AllServers";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { compareArrays } from "../utils/helpers/compareArrays";
+
+import { AddRecentScript } from "./RecentScripts";
 import { ScriptDeath } from "./ScriptDeath";
 import { WorkerScript } from "./WorkerScript";
 import { workerScripts } from "./WorkerScripts";
 import { WorkerScriptStartStopEventEmitter } from "./WorkerScriptStartStopEventEmitter";
-
-import { RunningScript } from "../Script/RunningScript";
-import { GetServer } from "../Server/AllServers";
-
-import { compareArrays } from "../utils/helpers/compareArrays";
-import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { AddRecentScript } from "./RecentScripts";
-import { Player } from "../Player";
 
 export function killWorkerScript(runningScriptObj: RunningScript, hostname: string, rerenderUi?: boolean): boolean;
 export function killWorkerScript(workerScript: WorkerScript): boolean;

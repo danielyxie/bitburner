@@ -1,11 +1,10 @@
 // Class representing a single hackable Server
-import { BaseServer } from "./BaseServer";
-
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-
 import { createRandomString } from "../utils/helpers/createRandomString";
 import { createRandomIp } from "../utils/IPAddress";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
+import { BaseServer } from "./BaseServer";
 
 export interface IConstructorParams {
   adminRights?: boolean;

@@ -1,7 +1,5 @@
-import { Player } from "./Player";
-
 import { LiteratureNames } from "./Literature/data/LiteratureNames";
-
+import { Player } from "./Player";
 import { ITutorialEvents } from "./ui/InteractiveTutorial/ITutorialEvents";
 
 // Ordered array of keys to Interactive Tutorial Steps

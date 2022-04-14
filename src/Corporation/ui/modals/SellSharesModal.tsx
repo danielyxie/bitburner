@@ -1,16 +1,17 @@
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
+
+import { use } from "../../../ui/Context";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { dialogBoxCreate } from "../../../ui/React/DialogBox";
 import { Modal } from "../../../ui/React/Modal";
-import { use } from "../../../ui/Context";
-import { useCorporation } from "../Context";
-import { ICorporation } from "../../ICorporation";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import { Money } from "../../../ui/React/Money";
-import { SellShares } from "../../Actions";
 import { KEY } from "../../../utils/helpers/keyCodes";
+import { SellShares } from "../../Actions";
+import type { ICorporation } from "../../ICorporation";
+import { useCorporation } from "../Context";
 interface IProps {
   open: boolean;
   onClose: () => void;

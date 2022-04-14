@@ -1,10 +1,11 @@
 // import { Octokit } from "@octokit/rest";
-import commandLineArgs from "command-line-args";
 
-import fs from "fs/promises";
 import { readFileSync } from "fs";
+import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
+
+import commandLineArgs from "command-line-args";
 import pandoc from "node-pandoc";
 
 // https://github.com/75lb/command-line-args

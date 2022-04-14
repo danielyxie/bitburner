@@ -1,11 +1,13 @@
-import { INetscriptHelper } from "./INetscriptHelper";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import type { IAction } from "src/Bladeburner/IAction";
+
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { Bladeburner } from "../Bladeburner/Bladeburner";
 import { getRamCost } from "../Netscript/RamCostGenerator";
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { Bladeburner as INetscriptBladeburner, BladeburnerCurAction } from "../ScriptEditor/NetscriptDefinitions";
-import { IAction } from "src/Bladeburner/IAction";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type { BladeburnerCurAction, Bladeburner as INetscriptBladeburner } from "../ScriptEditor/NetscriptDefinitions";
+
+import type { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptBladeburner(
   player: IPlayer,

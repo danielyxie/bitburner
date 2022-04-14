@@ -1,8 +1,9 @@
-import React from "react";
-import { Location } from "../../Locations/Location";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import React from "react";
+
+import type { Location } from "../../Locations/Location";
 import { numeralWrapper } from "../../ui/numeralFormat";
 
 interface IProps {

@@ -1,8 +1,8 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
-import { TerminalHelpText, HelpTexts } from "../HelpText";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { BaseServer } from "../../Server/BaseServer";
+import type { IRouter } from "../../ui/Router";
+import { HelpTexts, TerminalHelpText } from "../HelpText";
+import type { ITerminal } from "../ITerminal";
 
 export function help(
   terminal: ITerminal,

@@ -1,54 +1,53 @@
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { purchaseAugmentation, joinFaction, getFactionAugmentationsFiltered } from "../Faction/FactionHelpers";
-import { startWorkerScript } from "../NetscriptWorker";
-import { Augmentation } from "../Augmentation/Augmentation";
-import { Augmentations } from "../Augmentation/Augmentations";
-import { augmentationExists, installAugmentations } from "../Augmentation/AugmentationHelpers";
-import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
-import { killWorkerScript } from "../Netscript/killWorkerScript";
-import { CONSTANTS } from "../Constants";
-import { isString } from "../utils/helpers/isString";
-import { RunningScript } from "../Script/RunningScript";
+import type { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
 
-import {
+import type { Augmentation } from "../Augmentation/Augmentation";
+import { augmentationExists, installAugmentations } from "../Augmentation/AugmentationHelpers";
+import { Augmentations } from "../Augmentation/Augmentations";
+import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
+import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
+import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
+import { Companies } from "../Company/Companies";
+import { Company } from "../Company/Company";
+import { CompanyPosition } from "../Company/CompanyPosition";
+import { CompanyPositions } from "../Company/CompanyPositions";
+import { CONSTANTS } from "../Constants";
+import { findCrime } from "../Crime/CrimeHelpers";
+import { DarkWebItems } from "../DarkWeb/DarkWebItems";
+import { FactionNames } from "../Faction/data/FactionNames";
+import type { Faction } from "../Faction/Faction";
+import { getFactionAugmentationsFiltered, joinFaction, purchaseAugmentation } from "../Faction/FactionHelpers";
+import { FactionInfos } from "../Faction/FactionInfo";
+import { Factions, factionExists } from "../Faction/Factions";
+import { calculateHackingTime } from "../Hacking";
+import { netscriptCanHack } from "../Hacking/netscriptCanHack";
+import { CityName } from "../Locations/data/CityNames";
+import { LocationName } from "../Locations/data/LocationNames";
+import { Locations } from "../Locations/Locations";
+import { killWorkerScript } from "../Netscript/killWorkerScript";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import { netscriptDelay } from "../NetscriptEvaluator";
+import { startWorkerScript } from "../NetscriptWorker";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { Programs } from "../Programs/Programs";
+import { enterBitNode } from "../RedPill";
+import { RunningScript } from "../Script/RunningScript";
+import type {
   AugmentationStats,
   CharacterInfo,
   CrimeStats,
-  PlayerSkills,
   Singularity as ISingularity,
+  PlayerSkills,
 } from "../ScriptEditor/NetscriptDefinitions";
-
-import { findCrime } from "../Crime/CrimeHelpers";
-import { CompanyPosition } from "../Company/CompanyPosition";
-import { CompanyPositions } from "../Company/CompanyPositions";
-import { DarkWebItems } from "../DarkWeb/DarkWebItems";
-import { CityName } from "../Locations/data/CityNames";
-import { LocationName } from "../Locations/data/LocationNames";
-import { Router } from "../ui/GameRoot";
+import { AddToAllServers, GetServer, createUniqueRandomIp } from "../Server/AllServers";
 import { SpecialServers } from "../Server/data/SpecialServers";
-import { Page } from "../ui/Router";
-import { Locations } from "../Locations/Locations";
-import { GetServer, AddToAllServers, createUniqueRandomIp } from "../Server/AllServers";
-import { Programs } from "../Programs/Programs";
-import { numeralWrapper } from "../ui/numeralFormat";
-import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { Company } from "../Company/Company";
-import { Companies } from "../Company/Companies";
-import { Factions, factionExists } from "../Faction/Factions";
-import { Faction } from "../Faction/Faction";
-import { netscriptDelay } from "../NetscriptEvaluator";
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+import { Server } from "../Server/Server";
 import { getServerOnNetwork, safetlyCreateUniqueServer } from "../Server/ServerHelpers";
 import { Terminal } from "../Terminal";
-import { calculateHackingTime } from "../Hacking";
-import { Server } from "../Server/Server";
-import { netscriptCanHack } from "../Hacking/netscriptCanHack";
-import { FactionInfos } from "../Faction/FactionInfo";
-import { InternalAPI, NetscriptContext } from "src/Netscript/APIWrapper";
-import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
-import { enterBitNode } from "../RedPill";
-import { FactionNames } from "../Faction/data/FactionNames";
+import { Router } from "../ui/GameRoot";
+import { numeralWrapper } from "../ui/numeralFormat";
+import { Page } from "../ui/Router";
+import { isString } from "../utils/helpers/isString";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 
 export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript): InternalAPI<ISingularity> {
   const getAugmentation = function (_ctx: NetscriptContext, name: string): Augmentation {

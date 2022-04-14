@@ -1,6 +1,7 @@
-import { Program } from "./Program";
+import type { IMap } from "../types";
+
 import { programsMetadata } from "./data/ProgramsMetadata";
-import { IMap } from "../types";
+import { Program } from "./Program";
 
 export const Programs: IMap<Program> = {};
 

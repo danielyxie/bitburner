@@ -1,27 +1,25 @@
 // React Component for displaying an Industry's warehouse information
 // (right-side panel in the Industry UI)
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
-import { OfficeSpace } from "../OfficeSpace";
-import { Material } from "../Material";
-import { Warehouse } from "../Warehouse";
-import { ExportModal } from "./modals/ExportModal";
-import { MaterialMarketTaModal } from "./modals/MaterialMarketTaModal";
-import { SellMaterialModal } from "./modals/SellMaterialModal";
-import { PurchaseMaterialModal } from "./modals/PurchaseMaterialModal";
-
 import { numeralWrapper } from "../../ui/numeralFormat";
-
-import { isString } from "../../utils/helpers/isString";
 import { Money } from "../../ui/React/Money";
-import { useCorporation, useDivision } from "./Context";
+import { isString } from "../../utils/helpers/isString";
+import type { Material } from "../Material";
+import { OfficeSpace } from "../OfficeSpace";
+import type { Warehouse } from "../Warehouse";
 
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import { useCorporation, useDivision } from "./Context";
+import { ExportModal } from "./modals/ExportModal";
 import { LimitMaterialProductionModal } from "./modals/LimitMaterialProductionModal";
+import { MaterialMarketTaModal } from "./modals/MaterialMarketTaModal";
+import { PurchaseMaterialModal } from "./modals/PurchaseMaterialModal";
+import { SellMaterialModal } from "./modals/SellMaterialModal";
 
 interface IMaterialProps {
   warehouse: Warehouse;

@@ -1,10 +1,11 @@
 import { Player } from "../Player";
-import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { addOffset } from "../utils/helpers/addOffset";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
 import { BladeburnerConstants } from "./data/Constants";
-import { IBladeburner } from "./IBladeburner";
-import { IAction, ISuccessChanceParams } from "./IAction";
+import type { IAction, ISuccessChanceParams } from "./IAction";
+import type { IBladeburner } from "./IBladeburner";
 
 class StatsMultiplier {
   [key: string]: number;

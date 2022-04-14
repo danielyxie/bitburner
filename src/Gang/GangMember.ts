@@ -1,18 +1,19 @@
-import { GangMemberTask } from "./GangMemberTask";
-import { GangMemberTasks } from "./GangMemberTasks";
-import { GangMemberUpgrade } from "./GangMemberUpgrade";
-import { GangMemberUpgrades } from "./GangMemberUpgrades";
-import { IAscensionResult } from "./IAscensionResult";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IGang } from "./IGang";
+import type { IPlayer } from "../PersonObjects/IPlayer";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
 import {
-  calculateRespectGain,
-  calculateMoneyGain,
-  calculateWantedLevelGain,
   calculateAscensionMult,
   calculateAscensionPointsGain,
+  calculateMoneyGain,
+  calculateRespectGain,
+  calculateWantedLevelGain,
 } from "./formulas/formulas";
+import { GangMemberTask } from "./GangMemberTask";
+import { GangMemberTasks } from "./GangMemberTasks";
+import type { GangMemberUpgrade } from "./GangMemberUpgrade";
+import { GangMemberUpgrades } from "./GangMemberUpgrades";
+import type { IAscensionResult } from "./IAscensionResult";
+import type { IGang } from "./IGang";
 
 interface IMults {
   hack: number;

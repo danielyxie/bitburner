@@ -1,5 +1,5 @@
 import { Bladeburner } from "../../Bladeburner/Bladeburner";
-import { IPlayer } from "../IPlayer";
+import type { IPlayer } from "../IPlayer";
 
 export function canAccessBladeburner(this: IPlayer): boolean {
   if (this.bitNodeN === 8) {

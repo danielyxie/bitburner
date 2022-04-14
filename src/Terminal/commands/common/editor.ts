@@ -1,12 +1,13 @@
-import { ITerminal } from "../../ITerminal";
-import { removeLeadingSlash, removeTrailingSlash } from "../../DirectoryHelpers";
-import { IRouter, ScriptEditorRouteOptions } from "../../../ui/Router";
-import { IPlayer } from "../../../PersonObjects/IPlayer";
-import { BaseServer } from "../../../Server/BaseServer";
-import { isScriptFilename } from "../../../Script/isScriptFilename";
-import { CursorPositions } from "../../../ScriptEditor/CursorPositions";
-import { Script } from "../../../Script/Script";
 import { isEmpty } from "lodash";
+
+import type { IPlayer } from "../../../PersonObjects/IPlayer";
+import { isScriptFilename } from "../../../Script/isScriptFilename";
+import type { Script } from "../../../Script/Script";
+import { CursorPositions } from "../../../ScriptEditor/CursorPositions";
+import type { BaseServer } from "../../../Server/BaseServer";
+import type { IRouter, ScriptEditorRouteOptions } from "../../../ui/Router";
+import { removeLeadingSlash, removeTrailingSlash } from "../../DirectoryHelpers";
+import type { ITerminal } from "../../ITerminal";
 
 interface EditorParameters {
   terminal: ITerminal;

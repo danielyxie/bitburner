@@ -1,6 +1,6 @@
 import { sum } from "lodash";
 
-import { Augmentation } from "../../Augmentation/Augmentation";
+import type { Augmentation } from "../../Augmentation/Augmentation";
 import { CONSTANTS } from "../../Constants";
 
 export interface IConstructorParams {

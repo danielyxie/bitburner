@@ -1,10 +1,11 @@
-import React from "react";
-import { CityName } from "../../Locations/data/CityNames";
-import Typography from "@mui/material/Typography";
+import type { Theme } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
-import { Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
+import Typography from "@mui/material/Typography";
 import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import React from "react";
+
+import { CityName } from "../../Locations/data/CityNames";
 
 interface ICityProps {
   currentCity: CityName;

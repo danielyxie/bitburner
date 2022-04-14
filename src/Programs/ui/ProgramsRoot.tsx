@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { Check, Create, Lock } from "@mui/icons-material";
+import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import { find } from "lodash";
+import React, { useEffect, useState } from "react";
 
-import { Box, Typography, Button, Container, Paper } from "@mui/material";
-import { Check, Lock, Create } from "@mui/icons-material";
-
-import { use } from "../../ui/Context";
 import { Settings } from "../../Settings/Settings";
-
+import { use } from "../../ui/Context";
 import { Programs } from "../Programs";
 
 export const ProgramsSeen: string[] = [];

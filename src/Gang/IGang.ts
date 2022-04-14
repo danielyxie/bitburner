@@ -1,8 +1,9 @@
-import { GangMemberUpgrade } from "./GangMemberUpgrade";
-import { GangMember } from "./GangMember";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IAscensionResult } from "./IAscensionResult";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+
+import type { GangMember } from "./GangMember";
+import type { GangMemberUpgrade } from "./GangMemberUpgrade";
+import type { IAscensionResult } from "./IAscensionResult";
 
 export interface IGang {
   facName: string;

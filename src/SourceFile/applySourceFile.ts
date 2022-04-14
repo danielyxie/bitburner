@@ -1,7 +1,7 @@
-import { PlayerOwnedSourceFile } from "./PlayerOwnedSourceFile";
-import { SourceFiles } from "./SourceFiles";
-
 import { Player } from "../Player";
+
+import type { PlayerOwnedSourceFile } from "./PlayerOwnedSourceFile";
+import { SourceFiles } from "./SourceFiles";
 
 export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
   const srcFileKey = "SourceFile" + srcFile.n;

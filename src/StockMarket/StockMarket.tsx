@@ -1,23 +1,21 @@
-import { IOrderBook } from "./IOrderBook";
-import { IStockMarket } from "./IStockMarket";
-import { Order } from "./Order";
-import { processOrders } from "./OrderProcessing";
-import { Stock } from "./Stock";
-import { TicksPerCycle } from "./StockMarketConstants";
+import { CONSTANTS } from "../Constants";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IMap } from "../types";
+import { numeralWrapper } from "../ui/numeralFormat";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { EventEmitter } from "../utils/EventEmitter";
+import { Reviver } from "../utils/JSONReviver";
+
 import { InitStockMetadata } from "./data/InitStockMetadata";
 import { OrderTypes } from "./data/OrderTypes";
 import { PositionTypes } from "./data/PositionTypes";
 import { StockSymbols } from "./data/StockSymbols";
-
-import { CONSTANTS } from "../Constants";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IMap } from "../types";
-import { EventEmitter } from "../utils/EventEmitter";
-
-import { numeralWrapper } from "../ui/numeralFormat";
-
-import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { Reviver } from "../utils/JSONReviver";
+import type { IOrderBook } from "./IOrderBook";
+import type { IStockMarket } from "./IStockMarket";
+import { Order } from "./Order";
+import { processOrders } from "./OrderProcessing";
+import { Stock } from "./Stock";
+import { TicksPerCycle } from "./StockMarketConstants";
 
 export let StockMarket: IStockMarket = {
   lastUpdate: 0,

@@ -10,31 +10,29 @@
  * This subcomponent creates all of the buttons for interacting with those special
  * properties
  */
-import React, { useState } from "react";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
 
-import { Location } from "../Location";
-import { CreateCorporationModal } from "../../Corporation/ui/modals/CreateCorporationModal";
-import { LocationName } from "../data/LocationNames";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Factions } from "../../Faction/Factions";
-import { joinFaction } from "../../Faction/FactionHelpers";
-
-import { use } from "../../ui/Context";
-
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
-import { N00dles } from "../../utils/helpers/N00dles";
-import { Exploit } from "../../Exploits/Exploit";
+import { ArcadeRoot } from "../../Arcade/ui/ArcadeRoot";
 import { applyAugmentation } from "../../Augmentation/AugmentationHelpers";
-import { CorruptableText } from "../../ui/React/CorruptableText";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { CreateCorporationModal } from "../../Corporation/ui/modals/CreateCorporationModal";
+import { Exploit } from "../../Exploits/Exploit";
+import { FactionNames } from "../../Faction/data/FactionNames";
+import { joinFaction } from "../../Faction/FactionHelpers";
+import { Factions } from "../../Faction/Factions";
 import { HacknetNode } from "../../Hacknet/HacknetNode";
 import { HacknetServer } from "../../Hacknet/HacknetServer";
 import { GetServer } from "../../Server/AllServers";
-import { ArcadeRoot } from "../../Arcade/ui/ArcadeRoot";
-import { FactionNames } from "../../Faction/data/FactionNames";
-import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { use } from "../../ui/Context";
+import { CorruptableText } from "../../ui/React/CorruptableText";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
+import { N00dles } from "../../utils/helpers/N00dles";
+import { LocationName } from "../data/LocationNames";
+import type { Location } from "../Location";
 
 type IProps = {
   loc: Location;

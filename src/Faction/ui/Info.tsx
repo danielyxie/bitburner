@@ -2,20 +2,18 @@
  * React component for general information about the faction. This includes the
  * factions "motto", reputation, favor, and gameplay instructions
  */
-import React, { useState, useEffect } from "react";
-
-import { Faction } from "../Faction";
-import { FactionInfo } from "../FactionInfo";
-
-import { Reputation } from "../../ui/React/Reputation";
-import { Favor } from "../../ui/React/Favor";
-import { MathJaxWrapper } from "../../MathJaxWrapper";
-
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import React, { useEffect, useState } from "react";
+
+import { MathJaxWrapper } from "../../MathJaxWrapper";
+import { Favor } from "../../ui/React/Favor";
+import { Reputation } from "../../ui/React/Reputation";
+import type { Faction } from "../Faction";
+import type { FactionInfo } from "../FactionInfo";
 
 type IProps = {
   faction: Faction;

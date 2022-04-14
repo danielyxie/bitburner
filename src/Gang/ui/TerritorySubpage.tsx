@@ -1,14 +1,12 @@
 /**
  * React Component for the territory subpage.
  */
-import React, { useState } from "react";
-
-import { Container, Button, Paper, Box, Tooltip, Switch, FormControlLabel, Typography } from "@mui/material";
 import { Help } from "@mui/icons-material";
+import { Box, Button, Container, FormControlLabel, Paper, Switch, Tooltip, Typography } from "@mui/material";
+import React, { useState } from "react";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { formatNumber } from "../../utils/StringHelperFunctions";
-
 import { AllGangs } from "../AllGangs";
 
 import { useGang } from "./Context";

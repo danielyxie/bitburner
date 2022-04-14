@@ -1,17 +1,15 @@
-import React from "react";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import React from "react";
 
-import { CONSTANTS } from "../../Constants";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { purchaseRamForHomeComputer } from "../../Server/ServerPurchases";
-
-import { Money } from "../../ui/React/Money";
-import { numeralWrapper } from "../../ui/numeralFormat";
-
-import { MathJaxWrapper } from "../../MathJaxWrapper";
 import { BitNodeMultipliers } from "../../BitNode/BitNodeMultipliers";
+import { CONSTANTS } from "../../Constants";
+import { MathJaxWrapper } from "../../MathJaxWrapper";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { purchaseRamForHomeComputer } from "../../Server/ServerPurchases";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
 
 type IProps = {
   p: IPlayer;

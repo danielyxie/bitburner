@@ -1,11 +1,11 @@
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import React from "react";
 
-import { BitNodes } from "../BitNode";
-import { IRouter } from "../../ui/Router";
 import { use } from "../../ui/Context";
 import { Modal } from "../../ui/React/Modal";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import type { IRouter } from "../../ui/Router";
+import { BitNodes } from "../BitNode";
 
 interface IProps {
   open: boolean;

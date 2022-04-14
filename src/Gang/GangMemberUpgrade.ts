@@ -1,5 +1,7 @@
-import { IMults, UpgradeType } from "./data/upgrades";
 import { numeralWrapper } from "../ui/numeralFormat";
+
+import { UpgradeType } from "./data/upgrades";
+import type { IMults } from "./data/upgrades";
 
 export class GangMemberUpgrade {
   name: string;

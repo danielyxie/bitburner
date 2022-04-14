@@ -2,19 +2,20 @@
  * React Component for the stats related to the gang, like total respect and
  * money per second.
  */
+import Box from "@mui/material/Box";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import React from "react";
-import { Factions } from "../../Faction/Factions";
 
-import { formatNumber } from "../../utils/StringHelperFunctions";
+import { Factions } from "../../Faction/Factions";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { MoneyRate } from "../../ui/React/MoneyRate";
 import { Reputation } from "../../ui/React/Reputation";
+import { formatNumber } from "../../utils/StringHelperFunctions";
 import { AllGangs } from "../AllGangs";
+
 import { BonusTime } from "./BonusTime";
 import { useGang } from "./Context";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Box from "@mui/material/Box";
 
 export function GangStats(): React.ReactElement {
   const gang = useGang();

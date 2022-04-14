@@ -1,6 +1,6 @@
 import { Reviver } from "../utils/JSONReviver";
 
-import { IStaneksGift } from "./IStaneksGift";
+import type { IStaneksGift } from "./IStaneksGift";
 import { StaneksGift } from "./StaneksGift";
 
 export let staneksGift: IStaneksGift = new StaneksGift();

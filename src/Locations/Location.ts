@@ -1,9 +1,9 @@
 /**
  * Class representing a visitable location in the world
  */
-import { CityName } from "./data/CityNames";
+import type { CityName } from "./data/CityNames";
 import { LocationName } from "./data/LocationNames";
-import { LocationType } from "./LocationTypeEnum";
+import type { LocationType } from "./LocationTypeEnum";
 
 interface IInfiltrationMetadata {
   maxClearanceLevel: number;

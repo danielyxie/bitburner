@@ -1,10 +1,11 @@
-import { IActionIdentifier } from "./IActionIdentifier";
-import { City } from "./City";
-import { Skill } from "./Skill";
-import { IAction } from "./IAction";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IRouter } from "../ui/Router";
-import { WorkerScript } from "../Netscript/WorkerScript";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type { IRouter } from "../ui/Router";
+
+import type { City } from "./City";
+import type { IAction } from "./IAction";
+import type { IActionIdentifier } from "./IActionIdentifier";
+import type { Skill } from "./Skill";
 
 export interface IBladeburner {
   numHosp: number;

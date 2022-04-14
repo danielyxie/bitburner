@@ -1,12 +1,14 @@
-import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { IMinigameProps } from "./IMinigameProps";
-import { KeyHandler } from "./KeyHandler";
-import { GameTimer } from "./GameTimer";
-import { random } from "../utils";
-import { interpolate } from "./Difficulty";
+import React, { useState } from "react";
+
 import { KEY } from "../../utils/helpers/keyCodes";
+import { random } from "../utils";
+
+import { interpolate } from "./Difficulty";
+import { GameTimer } from "./GameTimer";
+import type { IMinigameProps } from "./IMinigameProps";
+import { KeyHandler } from "./KeyHandler";
 
 interface Difficulty {
   [key: string]: number;

@@ -2,19 +2,18 @@
  * React Component for displaying a list of the player's Source-Files
  * on the Augmentations UI
  */
-import React, { useState } from "react";
-
-import { Player } from "../../Player";
-import { Exploit, ExploitName } from "../../Exploits/Exploit";
-
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Collapse from "@mui/material/Collapse";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import ExpandLess from "@mui/icons-material/ExpandLess";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { Exploit, ExploitName } from "../../Exploits/Exploit";
+import { Player } from "../../Player";
 
 export function SourceFileMinus1(): React.ReactElement {
   const [open, setOpen] = useState(false);

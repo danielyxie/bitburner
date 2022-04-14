@@ -2,15 +2,15 @@
  * Uses the acorn.js library to parse a script's code into an AST and
  * recursively walk through that AST to replace import urls with blobs
  */
-import * as walk from "acorn-walk";
 import { parse } from "acorn";
+import * as walk from "acorn-walk";
 
+import type { WorkerScript } from "./Netscript/WorkerScript";
 import { makeRuntimeRejectMsg } from "./NetscriptEvaluator";
+import type { IPlayer } from "./PersonObjects/IPlayer";
+import type { Script } from "./Script/Script";
 import { ScriptUrl } from "./Script/ScriptUrl";
-import { WorkerScript } from "./Netscript/WorkerScript";
-import { Script } from "./Script/Script";
 import { areImportsEquals } from "./Terminal/DirectoryHelpers";
-import { IPlayer } from "./PersonObjects/IPlayer";
 
 // Makes a blob that contains the code of a given script.
 function makeScriptBlob(code: string): Blob {

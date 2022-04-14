@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Modal } from "../../ui/React/Modal";
-
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
 import ReplyIcon from "@mui/icons-material/Reply";
 import SaveIcon from "@mui/icons-material/Save";
+import { Tooltip } from "@mui/material";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
+import type { IStyleSettings } from "../../ScriptEditor/NetscriptDefinitions";
+import { Settings } from "../../Settings/Settings";
+import { Modal } from "../../ui/React/Modal";
+import { defaultStyles } from "../Styles";
 
 import { ThemeEvents } from "./Theme";
-import { Settings } from "../../Settings/Settings";
-import { defaultStyles } from "../Styles";
-import { Tooltip } from "@mui/material";
-import { IStyleSettings } from "../../ScriptEditor/NetscriptDefinitions";
 
 interface IProps {
   open: boolean;

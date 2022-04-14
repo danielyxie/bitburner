@@ -1,23 +1,21 @@
+import { Box, Button, Paper, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
-
-import { Box, Paper, Typography, Button, Tooltip } from "@mui/material";
 
 import { CONSTANTS } from "../../../Constants";
 import { Crimes } from "../../../Crime/Crimes";
+import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
+import { use } from "../../../ui/Context";
 import { numeralWrapper } from "../../../ui/numeralFormat";
 import { createProgressBarText } from "../../../utils/helpers/createProgressBarText";
-import { use } from "../../../ui/Context";
-import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
-
-import { Sleeve } from "../Sleeve";
+import type { Sleeve } from "../Sleeve";
 import { SleeveTaskType } from "../SleeveTaskTypesEnum";
 
-import { SleeveAugmentationsModal } from "./SleeveAugmentationsModal";
-import { TravelModal } from "./TravelModal";
-import { StatsElement, EarningsElement } from "./StatsElement";
-import { MoreStatsModal } from "./MoreStatsModal";
 import { MoreEarningsModal } from "./MoreEarningsModal";
+import { MoreStatsModal } from "./MoreStatsModal";
+import { SleeveAugmentationsModal } from "./SleeveAugmentationsModal";
+import { EarningsElement, StatsElement } from "./StatsElement";
 import { TaskSelector } from "./TaskSelector";
+import { TravelModal } from "./TravelModal";
 
 interface IProps {
   sleeve: Sleeve;

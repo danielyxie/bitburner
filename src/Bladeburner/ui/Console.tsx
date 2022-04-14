@@ -1,17 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
-import { IBladeburner } from "../IBladeburner";
-import { KEY } from "../../utils/helpers/keyCodes";
-
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import type { Theme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import { Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
+import Typography from "@mui/material/Typography";
 import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import React, { useEffect, useRef, useState } from "react";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { KEY } from "../../utils/helpers/keyCodes";
+import type { IBladeburner } from "../IBladeburner";
 
 interface ILineProps {
   content: any;

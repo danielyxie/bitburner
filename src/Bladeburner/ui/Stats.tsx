@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { BladeburnerConstants } from "../data/Constants";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { Money } from "../../ui/React/Money";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { Factions } from "../../Faction/Factions";
-import { IRouter } from "../../ui/Router";
-import { joinFaction } from "../../Faction/FactionHelpers";
-import { IBladeburner } from "../IBladeburner";
-
-import { TravelModal } from "./TravelModal";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
 import { FactionNames } from "../../Faction/data/FactionNames";
+import { joinFaction } from "../../Faction/FactionHelpers";
+import { Factions } from "../../Faction/Factions";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
+import type { IRouter } from "../../ui/Router";
+import { convertTimeMsToTimeElapsedString, formatNumber } from "../../utils/StringHelperFunctions";
+import { BladeburnerConstants } from "../data/Constants";
+import type { IBladeburner } from "../IBladeburner";
+
+import { TravelModal } from "./TravelModal";
 
 interface IProps {
   bladeburner: IBladeburner;

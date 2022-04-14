@@ -1,92 +1,89 @@
-import React, { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import type { Theme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import _functions from "lodash/functions";
+import _wrap from "lodash/wrap";
+import React, { useEffect, useState } from "react";
 
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IEngine } from "../IEngine";
-import { ITerminal } from "../Terminal/ITerminal";
+import { calculateAchievements } from "../Achievements/Achievements";
+import { AchievementsRoot } from "../Achievements/AchievementsRoot";
 import { installAugmentations } from "../Augmentation/AugmentationHelpers";
-import { saveObject } from "../SaveObject";
+import { AugmentationsRoot } from "../Augmentation/ui/AugmentationsRoot";
+import { BitverseRoot } from "../BitNode/ui/BitverseRoot";
+import { BladeburnerCinematic } from "../Bladeburner/ui/BladeburnerCinematic";
+import { BladeburnerRoot } from "../Bladeburner/ui/BladeburnerRoot";
+import { CorporationRoot } from "../Corporation/ui/CorporationRoot";
+import { staneksGift } from "../CotMG/Helper";
+import { StaneksGiftRoot } from "../CotMG/ui/StaneksGiftRoot";
+import { DevMenuRoot } from "../DevMenu";
+import { Unclickable } from "../Exploits/Unclickable";
 import { onExport } from "../ExportBonus";
-import { LocationName } from "../Locations/data/LocationNames";
-import { Location } from "../Locations/Location";
-import { Locations } from "../Locations/Locations";
-import { ITutorial, iTutorialStart } from "../InteractiveTutorial";
-import { InteractiveTutorialRoot } from "./InteractiveTutorial/InteractiveTutorialRoot";
-import { ITutorialEvents } from "./InteractiveTutorial/ITutorialEvents";
-
-import { Faction } from "../Faction/Faction";
-import { prestigeAugmentation } from "../Prestige";
-import { dialogBoxCreate } from "./React/DialogBox";
-import { GetAllServers } from "../Server/AllServers";
+import type { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
-import { buyStock, sellStock, shortStock, sellShort } from "../StockMarket/BuyingAndSelling";
+import { FactionRoot } from "../Faction/ui/FactionRoot";
+import { FactionsRoot } from "../Faction/ui/FactionsRoot";
+import { InvitationModal } from "../Faction/ui/InvitationModal";
+import { GangRoot } from "../Gang/ui/GangRoot";
+import { HacknetRoot } from "../Hacknet/ui/HacknetRoot";
+import type { IEngine } from "../IEngine";
+import { InfiltrationRoot } from "../Infiltration/ui/InfiltrationRoot";
+import { ITutorial, iTutorialStart } from "../InteractiveTutorial";
+import { LocationName } from "../Locations/data/LocationNames";
+import type { Location } from "../Locations/Location";
+import { Locations } from "../Locations/Locations";
+import { LocationCity } from "../Locations/ui/City";
+import { GenericLocation } from "../Locations/ui/GenericLocation";
+import { TravelAgencyRoot } from "../Locations/ui/TravelAgencyRoot";
+import { MilestonesRoot } from "../Milestones/ui/MilestonesRoot";
+import { workerScripts } from "../Netscript/WorkerScripts";
+import { GraftingRoot } from "../PersonObjects/Grafting/ui/GraftingRoot";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { SleeveRoot } from "../PersonObjects/Sleeve/ui/SleeveRoot";
+import { prestigeAugmentation } from "../Prestige";
+import { ProgramsRoot } from "../Programs/ui/ProgramsRoot";
+import { enterBitNode } from "../RedPill";
+import { saveObject } from "../SaveObject";
+import { Root as ScriptEditorRoot } from "../ScriptEditor/ui/ScriptEditorRoot";
+import { GetAllServers } from "../Server/AllServers";
+import { Settings } from "../Settings/Settings";
+import { SidebarRoot } from "../Sidebar/ui/SidebarRoot";
+import { buyStock, sellShort, sellStock, shortStock } from "../StockMarket/BuyingAndSelling";
 import {
+  StockMarket,
   cancelOrder,
   eventEmitterForUiReset,
   initStockMarketFn,
   placeOrder,
-  StockMarket,
 } from "../StockMarket/StockMarket";
-
-import { Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-
-import { Page, IRouter, ScriptEditorRouteOptions } from "./Router";
-import { Overview } from "./React/Overview";
-import { SidebarRoot } from "../Sidebar/ui/SidebarRoot";
-import { AugmentationsRoot } from "../Augmentation/ui/AugmentationsRoot";
-import { DevMenuRoot } from "../DevMenu";
-import { BladeburnerRoot } from "../Bladeburner/ui/BladeburnerRoot";
-import { GangRoot } from "../Gang/ui/GangRoot";
-import { CorporationRoot } from "../Corporation/ui/CorporationRoot";
-import { InfiltrationRoot } from "../Infiltration/ui/InfiltrationRoot";
-import { GraftingRoot } from "../PersonObjects/Grafting/ui/GraftingRoot";
-import { WorkInProgressRoot } from "./WorkInProgressRoot";
-import { GameOptionsRoot } from "./React/GameOptionsRoot";
-import { SleeveRoot } from "../PersonObjects/Sleeve/ui/SleeveRoot";
-import { HacknetRoot } from "../Hacknet/ui/HacknetRoot";
-import { GenericLocation } from "../Locations/ui/GenericLocation";
-import { LocationCity } from "../Locations/ui/City";
-import { ProgramsRoot } from "../Programs/ui/ProgramsRoot";
-import { Root as ScriptEditorRoot } from "../ScriptEditor/ui/ScriptEditorRoot";
-import { MilestonesRoot } from "../Milestones/ui/MilestonesRoot";
-import { TerminalRoot } from "../Terminal/ui/TerminalRoot";
-import { TutorialRoot } from "../Tutorial/ui/TutorialRoot";
-import { ActiveScriptsRoot } from "./ActiveScripts/ActiveScriptsRoot";
-import { FactionsRoot } from "../Faction/ui/FactionsRoot";
-import { FactionRoot } from "../Faction/ui/FactionRoot";
-import { CharacterStats } from "./CharacterStats";
-import { TravelAgencyRoot } from "../Locations/ui/TravelAgencyRoot";
 import { StockMarketRoot } from "../StockMarket/ui/StockMarketRoot";
-import { BitverseRoot } from "../BitNode/ui/BitverseRoot";
-import { StaneksGiftRoot } from "../CotMG/ui/StaneksGiftRoot";
-import { staneksGift } from "../CotMG/Helper";
-import { CharacterOverview } from "./React/CharacterOverview";
-import { BladeburnerCinematic } from "../Bladeburner/ui/BladeburnerCinematic";
-import { workerScripts } from "../Netscript/WorkerScripts";
-import { Unclickable } from "../Exploits/Unclickable";
-import { Snackbar, SnackbarProvider } from "./React/Snackbar";
-import { LogBoxManager } from "./React/LogBoxManager";
-import { AlertManager } from "./React/AlertManager";
-import { PromptManager } from "./React/PromptManager";
-import { InvitationModal } from "../Faction/ui/InvitationModal";
-import { calculateAchievements } from "../Achievements/Achievements";
-
-import { enterBitNode } from "../RedPill";
-import { Context } from "./Context";
-import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
-import { AchievementsRoot } from "../Achievements/AchievementsRoot";
-import { ErrorBoundary } from "./ErrorBoundary";
-import { Settings } from "../Settings/Settings";
+import type { ITerminal } from "../Terminal/ITerminal";
+import { TerminalRoot } from "../Terminal/ui/TerminalRoot";
 import { ThemeBrowser } from "../Themes/ui/ThemeBrowser";
-import { ImportSaveRoot } from "./React/ImportSaveRoot";
-import { BypassWrapper } from "./React/BypassWrapper";
+import { TutorialRoot } from "../Tutorial/ui/TutorialRoot";
 
-import _wrap from "lodash/wrap";
-import _functions from "lodash/functions";
+import { ActiveScriptsRoot } from "./ActiveScripts/ActiveScriptsRoot";
 import { Apr1 } from "./Apr1";
+import { CharacterStats } from "./CharacterStats";
+import { Context } from "./Context";
+import { ErrorBoundary } from "./ErrorBoundary";
+import { InteractiveTutorialRoot } from "./InteractiveTutorial/InteractiveTutorialRoot";
+import { ITutorialEvents } from "./InteractiveTutorial/ITutorialEvents";
+import { AlertManager } from "./React/AlertManager";
+import { BypassWrapper } from "./React/BypassWrapper";
+import { CharacterOverview } from "./React/CharacterOverview";
+import { dialogBoxCreate } from "./React/DialogBox";
+import { GameOptionsRoot } from "./React/GameOptionsRoot";
+import { ImportSaveRoot } from "./React/ImportSaveRoot";
+import { LogBoxManager } from "./React/LogBoxManager";
+import { Overview } from "./React/Overview";
+import { PromptManager } from "./React/PromptManager";
+import { RecoveryMode, RecoveryRoot } from "./React/RecoveryRoot";
+import { Snackbar, SnackbarProvider } from "./React/Snackbar";
+import { Page } from "./Router";
+import type { IRouter, ScriptEditorRouteOptions } from "./Router";
+import { WorkInProgressRoot } from "./WorkInProgressRoot";
 
 const htmlLocation = location;
 

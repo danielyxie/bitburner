@@ -2,30 +2,29 @@
  * Root React component for the Augmentations UI page that display all of your
  * owned and purchased Augmentations and Source-Files.
  */
-import React, { useState, useEffect } from "react";
+import { Info } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
+import { CONSTANTS } from "../../Constants";
+import { canGetBonus } from "../../ExportBonus";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { Settings } from "../../Settings/Settings";
+import { use } from "../../ui/Context";
+import { ConfirmationModal } from "../../ui/React/ConfirmationModal";
+import { formatNumber } from "../../utils/StringHelperFunctions";
+import { Augmentations } from "../Augmentations";
+import { AugmentationNames } from "../data/AugmentationNames";
 
 import { InstalledAugmentations } from "./InstalledAugmentations";
 import { PlayerMultipliers } from "./PlayerMultipliers";
 import { PurchasedAugmentations } from "./PurchasedAugmentations";
 import { SourceFilesElement } from "./SourceFiles";
-
-import { canGetBonus } from "../../ExportBonus";
-import { use } from "../../ui/Context";
-
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Container from "@mui/material/Container";
-import { Settings } from "../../Settings/Settings";
-import { ConfirmationModal } from "../../ui/React/ConfirmationModal";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { AugmentationNames } from "../data/AugmentationNames";
-import { Augmentations } from "../Augmentations";
-import { CONSTANTS } from "../../Constants";
-import { formatNumber } from "../../utils/StringHelperFunctions";
-import { Info } from "@mui/icons-material";
 
 interface NFGDisplayProps {
   player: IPlayer;

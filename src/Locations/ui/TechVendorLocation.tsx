@@ -3,22 +3,21 @@
  *
  * This subcomponent renders all of the buttons for purchasing things from tech vendors
  */
-import React, { useState, useEffect } from "react";
-import Typography from "@mui/material/Typography";
+import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
-
-import { Location } from "../Location";
-import { RamButton } from "./RamButton";
-import { TorButton } from "./TorButton";
-import { CoresButton } from "./CoresButton";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
 
 import { getPurchaseServerCost } from "../../Server/ServerPurchases";
-
-import { Money } from "../../ui/React/Money";
 import { use } from "../../ui/Context";
-import { PurchaseServerModal } from "./PurchaseServerModal";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import { Box } from "@mui/material";
+import { Money } from "../../ui/React/Money";
+import type { Location } from "../Location";
+
+import { CoresButton } from "./CoresButton";
+import { PurchaseServerModal } from "./PurchaseServerModal";
+import { RamButton } from "./RamButton";
+import { TorButton } from "./TorButton";
 
 interface IServerProps {
   ram: number;

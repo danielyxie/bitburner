@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { ActiveFragment } from "../ActiveFragment";
-import { IStaneksGift } from "../IStaneksGift";
-import { FragmentType, Effect } from "../FragmentType";
-import { numeralWrapper } from "../../ui/numeralFormat";
-
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
+import { numeralWrapper } from "../../ui/numeralFormat";
+import type { ActiveFragment } from "../ActiveFragment";
+import { Effect, FragmentType } from "../FragmentType";
+import type { IStaneksGift } from "../IStaneksGift";
 
 type IProps = {
   gift: IStaneksGift;

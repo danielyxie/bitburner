@@ -1,8 +1,10 @@
 // The Research Map is an object that holds all Corporation Research objects
 // as values. They are identified by their names
-import { Research, IConstructorParams } from "./Research";
+import type { IMap } from "../types";
+
 import { researchMetadata } from "./data/ResearchMetadata";
-import { IMap } from "../types";
+import { Research } from "./Research";
+import type { IConstructorParams } from "./Research";
 
 export const ResearchMap: IMap<Research> = {};
 

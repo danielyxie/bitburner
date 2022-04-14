@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { IGang } from "../IGang";
+
+import type { IGang } from "../IGang";
 
 export const Context: {
   Gang: React.Context<IGang>;

@@ -1,18 +1,19 @@
-import { CorporationState } from "./CorporationState";
-import { CorporationUnlockUpgrade, CorporationUnlockUpgrades } from "./data/CorporationUnlockUpgrades";
-import { CorporationUpgrade, CorporationUpgrades } from "./data/CorporationUpgrades";
-import { Warehouse } from "./Warehouse";
-import { CorporationConstants } from "./data/Constants";
-import { Industry } from "./Industry";
-
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { showLiterature } from "../Literature/LiteratureHelpers";
 import { LiteratureNames } from "../Literature/data/LiteratureNames";
-import { IPlayer } from "../PersonObjects/IPlayer";
-
+import { showLiterature } from "../Literature/LiteratureHelpers";
+import type { IPlayer } from "../PersonObjects/IPlayer";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
 import { isString } from "../utils/helpers/isString";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
+import { CorporationState } from "./CorporationState";
+import { CorporationConstants } from "./data/Constants";
+import { CorporationUnlockUpgrades } from "./data/CorporationUnlockUpgrades";
+import type { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
+import { CorporationUpgrades } from "./data/CorporationUpgrades";
+import type { CorporationUpgrade } from "./data/CorporationUpgrades";
+import type { Industry } from "./Industry";
+import { Warehouse } from "./Warehouse";
 
 interface IParams {
   name?: string;

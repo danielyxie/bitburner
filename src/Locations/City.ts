@@ -1,8 +1,8 @@
 /**
  * Class representing a City in the game
  */
-import { CityName } from "./data/CityNames";
-import { LocationName } from "./data/LocationNames";
+import type { CityName } from "./data/CityNames";
+import type { LocationName } from "./data/LocationNames";
 
 export class City {
   /**

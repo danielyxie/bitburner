@@ -1,8 +1,9 @@
-import { Industry } from "./Industry";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
-import { CorporationUpgrade } from "./data/CorporationUpgrades";
-import { CorporationState } from "./CorporationState";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+
+import type { CorporationState } from "./CorporationState";
+import type { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
+import type { CorporationUpgrade } from "./data/CorporationUpgrades";
+import type { Industry } from "./Industry";
 
 export interface ICorporation {
   name: string;

@@ -3,12 +3,11 @@
  * options including working for the faction, hacking missions, purchasing
  * augmentations, etc.
  */
-import * as React from "react";
-
-import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
 
 type IProps = {
   buttonText: string;

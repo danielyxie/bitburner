@@ -1,7 +1,7 @@
-import { Programs } from "./Programs";
-import { Program } from "./Program";
+import type { IPlayer } from "../PersonObjects/IPlayer";
 
-import { IPlayer } from "../PersonObjects/IPlayer";
+import type { Program } from "./Program";
+import { Programs } from "./Programs";
 
 //Returns the programs this player can create.
 export function getAvailableCreatePrograms(player: IPlayer): Program[] {

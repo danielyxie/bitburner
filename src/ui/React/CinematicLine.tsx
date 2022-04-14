@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
 
 interface IProps {
   text: string;

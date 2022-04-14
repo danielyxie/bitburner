@@ -1,15 +1,16 @@
 /**
  * React Component for the popup used to purchase a new server.
  */
-import React, { useState } from "react";
-import { purchaseServer } from "../../Server/ServerPurchases";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { Money } from "../../ui/React/Money";
-import { Modal } from "../../ui/React/Modal";
-import { use } from "../../ui/Context";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { purchaseServer } from "../../Server/ServerPurchases";
+import { use } from "../../ui/Context";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { Modal } from "../../ui/React/Modal";
+import { Money } from "../../ui/React/Money";
 import { KEY } from "../../utils/helpers/keyCodes";
 
 interface IProps {

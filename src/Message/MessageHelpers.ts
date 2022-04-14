@@ -1,15 +1,16 @@
-import { Message } from "./Message";
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
-import { Router } from "../ui/GameRoot";
-import { Programs } from "../Programs/Programs";
+import { FactionNames } from "../Faction/data/FactionNames";
 import { Player } from "../Player";
-import { Page } from "../ui/Router";
+import { Programs } from "../Programs/Programs";
 import { GetServer } from "../Server/AllServers";
 import { SpecialServers } from "../Server/data/SpecialServers";
-import { Settings } from "../Settings/Settings";
-import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { FactionNames } from "../Faction/data/FactionNames";
 import { Server } from "../Server/Server";
+import { Settings } from "../Settings/Settings";
+import { Router } from "../ui/GameRoot";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { Page } from "../ui/Router";
+
+import { Message } from "./Message";
 
 //Sends message to player, including a pop up
 function sendMessage(msg: Message, forced = false): void {

@@ -1,5 +1,6 @@
+import type { IMap } from "../types";
+
 import { Action } from "./Action";
-import { IMap } from "../types";
 
 export const GeneralActions: IMap<Action> = {};
 

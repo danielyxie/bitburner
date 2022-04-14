@@ -1,6 +1,7 @@
-import { Skill } from "./Skill";
+import type { IMap } from "../types";
+
 import { SkillNames } from "./data/SkillNames";
-import { IMap } from "../types";
+import { Skill } from "./Skill";
 
 export const Skills: IMap<Skill> = {};
 

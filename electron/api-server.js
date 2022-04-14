@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const http = require("http");
 const crypto = require("crypto");
-const log = require("electron-log");
+const http = require("http");
+
 const Config = require("electron-config");
+const log = require("electron-log");
 const config = new Config();
 
 let server;

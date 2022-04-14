@@ -2,14 +2,13 @@
  * Root React Component for the "Active Scripts" UI page. This page displays
  * and provides information about all of the player's scripts that are currently running
  */
+import Typography from "@mui/material/Typography";
 import React from "react";
+
+import type { WorkerScript } from "../../Netscript/WorkerScript";
 
 import { ScriptProduction } from "./ScriptProduction";
 import { ServerAccordions } from "./ServerAccordions";
-
-import { WorkerScript } from "../../Netscript/WorkerScript";
-
-import Typography from "@mui/material/Typography";
 
 interface IProps {
   workerScripts: Map<number, WorkerScript>;

@@ -1,17 +1,18 @@
-import * as React from "react";
-
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { Money } from "../ui/React/Money";
-import { Game, reachedLimit } from "./Game";
-import { Deck } from "./CardDeck/Deck";
-import { Hand } from "./CardDeck/Hand";
 import { InputAdornment } from "@mui/material";
-import { ReactCard } from "./CardDeck/ReactCard";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
+
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { Money } from "../ui/React/Money";
+
+import { Deck } from "./CardDeck/Deck";
+import { Hand } from "./CardDeck/Hand";
+import { ReactCard } from "./CardDeck/ReactCard";
+import { Game, reachedLimit } from "./Game";
 
 const MAX_BET = 100e6;
 export const DECK_COUNT = 5; // 5-deck multideck

@@ -1,4 +1,4 @@
-import { ITaskParams, ITerritory } from "./ITaskParams";
+import type { ITaskParams, ITerritory } from "./ITaskParams";
 
 export class GangMemberTask {
   name: string;

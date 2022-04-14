@@ -1,61 +1,61 @@
-import React, { useState, useEffect } from "react";
-import { KEY } from "../../utils/helpers/keyCodes";
-import clsx from "clsx";
-import { styled, Theme, CSSObject } from "@mui/material/styles";
-import createStyles from "@mui/styles/createStyles";
-import makeStyles from "@mui/styles/makeStyles";
-import MuiDrawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import Tooltip from "@mui/material/Tooltip";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import AccountTreeIcon from "@mui/icons-material/AccountTree"; // Terminal
+import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive"; // Create Script
+import BugReportIcon from "@mui/icons-material/BugReport"; // Active Scripts
+import BusinessIcon from "@mui/icons-material/Business"; // Create Program
+import CheckIcon from "@mui/icons-material/Check"; // Stats
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ComputerIcon from "@mui/icons-material/Computer"; // Factions
+import ContactsIcon from "@mui/icons-material/Contacts"; // Augmentations
+import CreateIcon from "@mui/icons-material/Create"; // Hacknet
+import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard"; // Sleeves
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow"; // City
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents"; // Travel
+import EqualizerIcon from "@mui/icons-material/Equalizer"; // Job
+import ExpandLessIcon from "@mui/icons-material/ExpandLess"; // Stock Market
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"; // Bladeburner
+import FormatBoldIcon from "@mui/icons-material/FormatBold"; // Corp
+import HelpIcon from "@mui/icons-material/Help"; // Gang
+import LastPageIcon from "@mui/icons-material/LastPage"; // Milestones
+import LiveHelpIcon from "@mui/icons-material/LiveHelp"; // Tutorial
+import LocationCityIcon from "@mui/icons-material/LocationCity"; // options
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt"; // Dev
+import PublicIcon from "@mui/icons-material/Public"; // Achievements
+import SettingsIcon from "@mui/icons-material/Settings";
+import SportsMmaIcon from "@mui/icons-material/SportsMma";
+import StorageIcon from "@mui/icons-material/Storage";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import WorkIcon from "@mui/icons-material/Work";
+import Badge from "@mui/material/Badge";
+import Collapse from "@mui/material/Collapse";
+import Divider from "@mui/material/Divider";
+import MuiDrawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { styled } from "@mui/material/styles";
+import type { CSSObject, Theme } from "@mui/material/styles";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import Collapse from "@mui/material/Collapse";
-import Badge from "@mui/material/Badge";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import clsx from "clsx";
+import React, { useEffect, useState } from "react";
 
-import ComputerIcon from "@mui/icons-material/Computer";
-import LastPageIcon from "@mui/icons-material/LastPage"; // Terminal
-import CreateIcon from "@mui/icons-material/Create"; // Create Script
-import StorageIcon from "@mui/icons-material/Storage"; // Active Scripts
-import BugReportIcon from "@mui/icons-material/BugReport"; // Create Program
-import EqualizerIcon from "@mui/icons-material/Equalizer"; // Stats
-import ContactsIcon from "@mui/icons-material/Contacts"; // Factions
-import DoubleArrowIcon from "@mui/icons-material/DoubleArrow"; // Augmentations
-import AccountTreeIcon from "@mui/icons-material/AccountTree"; // Hacknet
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt"; // Sleeves
-import LocationCityIcon from "@mui/icons-material/LocationCity"; // City
-import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive"; // Travel
-import WorkIcon from "@mui/icons-material/Work"; // Job
-import TrendingUpIcon from "@mui/icons-material/TrendingUp"; // Stock Market
-import FormatBoldIcon from "@mui/icons-material/FormatBold"; // Bladeburner
-import BusinessIcon from "@mui/icons-material/Business"; // Corp
-import SportsMmaIcon from "@mui/icons-material/SportsMma"; // Gang
-import CheckIcon from "@mui/icons-material/Check"; // Milestones
-import HelpIcon from "@mui/icons-material/Help"; // Tutorial
-import SettingsIcon from "@mui/icons-material/Settings"; // options
-import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard"; // Dev
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents"; // Achievements
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import PublicIcon from "@mui/icons-material/Public";
-import LiveHelpIcon from "@mui/icons-material/LiveHelp";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import { IRouter, Page } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { CONSTANTS } from "../../Constants";
-import { iTutorialSteps, iTutorialNextStep, ITutorial } from "../../InteractiveTutorial";
-import { getAvailableCreatePrograms } from "../../Programs/ProgramHelpers";
-import { Settings } from "../../Settings/Settings";
 import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-
-import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
+import { CONSTANTS } from "../../Constants";
 import { InvitationsSeen } from "../../Faction/ui/FactionsRoot";
 import { hash } from "../../hash/hash";
+import { ITutorial, iTutorialNextStep, iTutorialSteps } from "../../InteractiveTutorial";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { getAvailableCreatePrograms } from "../../Programs/ProgramHelpers";
+import { ProgramsSeen } from "../../Programs/ui/ProgramsRoot";
+import { Settings } from "../../Settings/Settings";
+import { Page } from "../../ui/Router";
+import type { IRouter } from "../../ui/Router";
+import { KEY } from "../../utils/helpers/keyCodes";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: theme.spacing(31),

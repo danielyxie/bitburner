@@ -1,36 +1,72 @@
-import { vsprintf, sprintf } from "sprintf-js";
-
-import { getRamCost } from "./Netscript/RamCostGenerator";
-import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
+import { sprintf, vsprintf } from "sprintf-js";
 
 import { BitNodeMultipliers } from "./BitNode/BitNodeMultipliers";
-
 import { CONSTANTS } from "./Constants";
-
 import {
+  calculateGrowTime,
   calculateHackingChance,
   calculateHackingExpGain,
-  calculatePercentMoneyHacked,
   calculateHackingTime,
-  calculateGrowTime,
+  calculatePercentMoneyHacked,
   calculateWeakenTime,
 } from "./Hacking";
-
 import { netscriptCanGrow, netscriptCanHack, netscriptCanWeaken } from "./Hacking/netscriptCanHack";
-
 import { HacknetServer } from "./Hacknet/HacknetServer";
-
-import { Terminal } from "./Terminal";
-
+import { CityName } from "./Locations/data/CityNames";
+import { wrapAPI } from "./Netscript/APIWrapper";
+import { killWorkerScript } from "./Netscript/killWorkerScript";
+import { getRamCost } from "./Netscript/RamCostGenerator";
+import { recentScripts } from "./Netscript/RecentScripts";
+import type { WorkerScript } from "./Netscript/WorkerScript";
+import { workerScripts } from "./Netscript/WorkerScripts";
+import { WorkerScriptStartStopEventEmitter } from "./Netscript/WorkerScriptStartStopEventEmitter";
+import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads } from "./NetscriptEvaluator";
+import { NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
+import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
+import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
+import { NetscriptExtra } from "./NetscriptFunctions/Extra";
+import { Flags } from "./NetscriptFunctions/Flags";
+import { NetscriptFormulas } from "./NetscriptFunctions/Formulas";
+import { NetscriptGang } from "./NetscriptFunctions/Gang";
+import { NetscriptGrafting } from "./NetscriptFunctions/Grafting";
+import { NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
+import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
+import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
+import { NetscriptStanek } from "./NetscriptFunctions/Stanek";
+import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
+import { toNative } from "./NetscriptFunctions/toNative";
+import { NetscriptUserInterface } from "./NetscriptFunctions/UserInterface";
+import type { IPort } from "./NetscriptPort";
+import { NetscriptPorts, runScriptFromScript } from "./NetscriptWorker";
+import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
+import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
 import { Player } from "./Player";
 import { Programs } from "./Programs/Programs";
+import { isScriptFilename } from "./Script/isScriptFilename";
+import type { RunningScript } from "./Script/RunningScript";
 import { Script } from "./Script/Script";
 import { findRunningScript, findRunningScriptByPid } from "./Script/ScriptHelpers";
-import { isScriptFilename } from "./Script/isScriptFilename";
-import { PromptEvent } from "./ui/React/PromptManager";
-
-import { GetServer, GetAllServers, DeleteServer, AddToAllServers, createUniqueRandomIp } from "./Server/AllServers";
-import { RunningScript } from "./Script/RunningScript";
+import type {
+  BasicHGWOptions,
+  HackingMultipliers,
+  HacknetMultipliers,
+  BitNodeMultipliers as IBNMults,
+  Bladeburner as IBladeburner,
+  Gang as IGang,
+  NS as INS,
+  Player as INetscriptPlayer,
+  RecentScript as IRecentScript,
+  RunningScript as IRunningScript,
+  RunningScript as IRunningScriptDef,
+  Server as IServerDef,
+  Singularity as ISingularity,
+  Stanek as IStanek,
+  ProcessInfo,
+  SourceFileLvl,
+} from "./ScriptEditor/NetscriptDefinitions";
+import { AddToAllServers, DeleteServer, GetAllServers, GetServer, createUniqueRandomIp } from "./Server/AllServers";
+import type { BaseServer } from "./Server/BaseServer";
+import { Server } from "./Server/Server";
 import {
   getServerOnNetwork,
   numCycleForGrowth,
@@ -39,73 +75,19 @@ import {
   safetlyCreateUniqueServer,
 } from "./Server/ServerHelpers";
 import { getPurchaseServerCost, getPurchaseServerLimit, getPurchaseServerMaxRam } from "./Server/ServerPurchases";
-import { Server } from "./Server/Server";
-import { influenceStockThroughServerHack, influenceStockThroughServerGrow } from "./StockMarket/PlayerInfluencing";
-
+import { influenceStockThroughServerGrow, influenceStockThroughServerHack } from "./StockMarket/PlayerInfluencing";
+import { Terminal } from "./Terminal";
 import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
-import { TextFile, getTextFile, createTextFile } from "./TextFile";
-
-import { NetscriptPorts, runScriptFromScript } from "./NetscriptWorker";
-import { killWorkerScript } from "./Netscript/killWorkerScript";
-import { workerScripts } from "./Netscript/WorkerScripts";
-import { WorkerScript } from "./Netscript/WorkerScript";
-import { makeRuntimeRejectMsg, netscriptDelay, resolveNetscriptRequestedThreads } from "./NetscriptEvaluator";
-
+import { TextFile, createTextFile, getTextFile } from "./TextFile";
 import { numeralWrapper } from "./ui/numeralFormat";
-import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
-
-import { LogBoxEvents } from "./ui/React/LogBoxManager";
-import { arrayToString } from "./utils/helpers/arrayToString";
-import { isString } from "./utils/helpers/isString";
-
-import { BaseServer } from "./Server/BaseServer";
-import { NetscriptGang } from "./NetscriptFunctions/Gang";
-import { NetscriptSleeve } from "./NetscriptFunctions/Sleeve";
-import { NetscriptExtra } from "./NetscriptFunctions/Extra";
-import { NetscriptHacknet } from "./NetscriptFunctions/Hacknet";
-import { NetscriptStanek } from "./NetscriptFunctions/Stanek";
-import { NetscriptUserInterface } from "./NetscriptFunctions/UserInterface";
-import { NetscriptBladeburner } from "./NetscriptFunctions/Bladeburner";
-import { NetscriptCodingContract } from "./NetscriptFunctions/CodingContract";
-import { NetscriptCorporation } from "./NetscriptFunctions/Corporation";
-import { NetscriptFormulas } from "./NetscriptFunctions/Formulas";
-import { NetscriptStockMarket } from "./NetscriptFunctions/StockMarket";
-import { NetscriptGrafting } from "./NetscriptFunctions/Grafting";
-import { IPort } from "./NetscriptPort";
-
-import {
-  NS as INS,
-  Singularity as ISingularity,
-  Player as INetscriptPlayer,
-  Gang as IGang,
-  Bladeburner as IBladeburner,
-  Stanek as IStanek,
-  RunningScript as IRunningScript,
-  RecentScript as IRecentScript,
-  SourceFileLvl,
-  BasicHGWOptions,
-  ProcessInfo,
-  HackingMultipliers,
-  HacknetMultipliers,
-  BitNodeMultipliers as IBNMults,
-  Server as IServerDef,
-  RunningScript as IRunningScriptDef,
-  // ToastVariant,
-} from "./ScriptEditor/NetscriptDefinitions";
-import { NetscriptSingularity } from "./NetscriptFunctions/Singularity";
-
-import { toNative } from "./NetscriptFunctions/toNative";
-
 import { dialogBoxCreate } from "./ui/React/DialogBox";
+import { LogBoxEvents } from "./ui/React/LogBoxManager";
+import { PromptEvent } from "./ui/React/PromptManager";
 import { SnackbarEvents, ToastVariant } from "./ui/React/Snackbar";
+import { arrayToString } from "./utils/helpers/arrayToString";
 import { checkEnum } from "./utils/helpers/checkEnum";
-
-import { Flags } from "./NetscriptFunctions/Flags";
-import { calculateIntelligenceBonus } from "./PersonObjects/formulas/intelligence";
-import { CalculateShareMult, StartSharing } from "./NetworkShare/Share";
-import { recentScripts } from "./Netscript/RecentScripts";
-import { CityName } from "./Locations/data/CityNames";
-import { wrapAPI } from "./Netscript/APIWrapper";
+import { isString } from "./utils/helpers/isString";
+import { convertTimeMsToTimeElapsedString } from "./utils/StringHelperFunctions";
 
 interface NS extends INS {
   [key: string]: any;

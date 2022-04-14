@@ -2,9 +2,11 @@
  * Map of all Hash Upgrades
  * Key = Hash name, Value = HashUpgrade object
  */
-import { HashUpgrade, IConstructorParams } from "./HashUpgrade";
+import type { IMap } from "../types";
+
 import { HashUpgradesMetadata } from "./data/HashUpgradesMetadata";
-import { IMap } from "../types";
+import { HashUpgrade } from "./HashUpgrade";
+import type { IConstructorParams } from "./HashUpgrade";
 
 export const HashUpgrades: IMap<HashUpgrade> = {};
 

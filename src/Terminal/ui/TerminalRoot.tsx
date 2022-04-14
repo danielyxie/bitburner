@@ -1,21 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
-import Typography from "@mui/material/Typography";
+import { Link as MuiLink } from "@mui/material";
+import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { Link as MuiLink } from "@mui/material";
-import { Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
+import type { Theme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import createStyles from "@mui/styles/createStyles";
-import Box from "@mui/material/Box";
-import { ITerminal, Output, Link, RawOutput } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { TerminalInput } from "./TerminalInput";
-import { TerminalEvents, TerminalClearEvents } from "../TerminalEvents";
-import { BitFlumeModal } from "../../BitNode/ui/BitFlumeModal";
-import { CodingContractModal } from "../../ui/React/CodingContractModal";
-
+import makeStyles from "@mui/styles/makeStyles";
 import _ from "lodash";
+import React, { useEffect, useRef, useState } from "react";
+
+import { BitFlumeModal } from "../../BitNode/ui/BitFlumeModal";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { CodingContractModal } from "../../ui/React/CodingContractModal";
+import type { IRouter } from "../../ui/Router";
+import type { ITerminal } from "../ITerminal";
+import { Link, Output, RawOutput } from "../ITerminal";
+import { TerminalClearEvents, TerminalEvents } from "../TerminalEvents";
+
+import { TerminalInput } from "./TerminalInput";
 
 interface IActionTimerProps {
   terminal: ITerminal;

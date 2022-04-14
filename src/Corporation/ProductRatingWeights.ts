@@ -1,5 +1,6 @@
+import type { IMap } from "../types";
+
 import { Industries } from "./IndustryData";
-import { IMap } from "../types";
 
 export interface IProductRatingWeight {
   Aesthetics?: number;

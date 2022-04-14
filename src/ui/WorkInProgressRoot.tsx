@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { use } from "./Context";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+
+import { Companies } from "../Company/Companies";
+import { Company } from "../Company/Company";
 import { CONSTANTS } from "../Constants";
+import { Factions } from "../Faction/Factions";
+import { LocationName } from "../Locations/data/LocationNames";
+import { Locations } from "../Locations/Locations";
+import { createProgressBarText } from "../utils/helpers/createProgressBarText";
+import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
+
+import { use } from "./Context";
 import { numeralWrapper } from "./numeralFormat";
+import { Money } from "./React/Money";
+import { MoneyRate } from "./React/MoneyRate";
 import { Reputation } from "./React/Reputation";
 import { ReputationRate } from "./React/ReputationRate";
-import { MoneyRate } from "./React/MoneyRate";
-import { Money } from "./React/Money";
-import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
-import { Factions } from "../Faction/Factions";
-import { Company } from "../Company/Company";
-import { Companies } from "../Company/Companies";
-import { Locations } from "../Locations/Locations";
-import { LocationName } from "../Locations/data/LocationNames";
-
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-
-import { createProgressBarText } from "../utils/helpers/createProgressBarText";
 
 const CYCLES_PER_SEC = 1000 / CONSTANTS.MilliPerCycle;
 

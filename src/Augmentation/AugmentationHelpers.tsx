@@ -1,18 +1,14 @@
-import { Augmentation } from "./Augmentation";
-import { Augmentations } from "./Augmentations";
-import { PlayerOwnedAugmentation, IPlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
-import { AugmentationNames } from "./data/AugmentationNames";
-
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { CONSTANTS } from "../Constants";
+import { FactionNames } from "../Faction/data/FactionNames";
 import { Factions, factionExists } from "../Faction/Factions";
 import { Player } from "../Player";
 import { prestigeAugmentation } from "../Prestige";
-
+import { Router } from "../ui/GameRoot";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { clearObject } from "../utils/helpers/clearObject";
 
-import { FactionNames } from "../Faction/data/FactionNames";
+import { Augmentation } from "./Augmentation";
 import {
   initBladeburnerAugmentations,
   initChurchOfTheMachineGodAugmentations,
@@ -20,7 +16,10 @@ import {
   initNeuroFluxGovernor,
   initUnstableCircadianModulator,
 } from "./AugmentationCreator";
-import { Router } from "../ui/GameRoot";
+import { Augmentations } from "./Augmentations";
+import { AugmentationNames } from "./data/AugmentationNames";
+import { PlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
+import type { IPlayerOwnedAugmentation } from "./PlayerOwnedAugmentation";
 
 export function AddToAugmentations(aug: Augmentation): void {
   const name = aug.name;

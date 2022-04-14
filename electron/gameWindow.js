@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const cp = require("child_process");
+const fs = require("fs");
+const path = require("path");
+const { fileURLToPath } = require("url");
+
 const { app, BrowserWindow } = require("electron");
 const log = require("electron-log");
-const utils = require("./utils");
+
 const achievements = require("./achievements");
-const menu = require("./menu");
 const api = require("./api-server");
-const cp = require("child_process");
-const path = require("path");
-const fs = require("fs");
+const menu = require("./menu");
+const utils = require("./utils");
 const { windowTracker } = require("./windowTracker");
-const { fileURLToPath } = require("url");
 
 const debug = process.argv.includes("--debug");
 

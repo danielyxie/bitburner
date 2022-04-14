@@ -1,12 +1,12 @@
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from "@mui/material";
 import React from "react";
 
-import { Accordion, AccordionSummary, AccordionDetails, Box, Typography } from "@mui/material";
-
-import { AchievementEntry } from "./AchievementEntry";
-import { Achievement, PlayerAchievement } from "./Achievements";
 import { Settings } from "../Settings/Settings";
 import { getFiltersFromHex } from "../ThirdParty/colorUtils";
 import { CorruptableText } from "../ui/React/CorruptableText";
+
+import { AchievementEntry } from "./AchievementEntry";
+import type { Achievement, PlayerAchievement } from "./Achievements";
 
 interface IProps {
   achievements: Achievement[];

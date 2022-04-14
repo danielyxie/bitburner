@@ -1,15 +1,16 @@
-import React from "react";
-import { GeneralActionPage } from "./GeneralActionPage";
-import { ContractPage } from "./ContractPage";
-import { OperationPage } from "./OperationPage";
-import { BlackOpPage } from "./BlackOpPage";
-import { SkillPage } from "./SkillPage";
-import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import React from "react";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IBladeburner } from "../IBladeburner";
+
+import { BlackOpPage } from "./BlackOpPage";
+import { ContractPage } from "./ContractPage";
+import { GeneralActionPage } from "./GeneralActionPage";
+import { OperationPage } from "./OperationPage";
+import { SkillPage } from "./SkillPage";
 
 interface IProps {
   bladeburner: IBladeburner;

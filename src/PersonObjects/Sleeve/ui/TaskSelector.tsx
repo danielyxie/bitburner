@@ -1,15 +1,17 @@
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
 import React, { useState } from "react";
-import { Sleeve } from "../Sleeve";
-import { IPlayer } from "../../IPlayer";
-import { SleeveTaskType } from "../SleeveTaskTypesEnum";
+
 import { Crimes } from "../../../Crime/Crimes";
-import { LocationName } from "../../../Locations/data/LocationNames";
-import { CityName } from "../../../Locations/data/CityNames";
+import { FactionNames } from "../../../Faction/data/FactionNames";
 import { Factions } from "../../../Faction/Factions";
 import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import { FactionNames } from "../../../Faction/data/FactionNames";
+import { CityName } from "../../../Locations/data/CityNames";
+import { LocationName } from "../../../Locations/data/LocationNames";
+import type { IPlayer } from "../../IPlayer";
+import type { Sleeve } from "../Sleeve";
+import { SleeveTaskType } from "../SleeveTaskTypesEnum";
 
 const universitySelectorOptions: string[] = [
   "Study Computer Science",

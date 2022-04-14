@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { Operation } from "../Operation";
-import { IBladeburner } from "../IBladeburner";
-import { TeamSizeModal } from "./TeamSizeModal";
-import { formatNumber } from "../../utils/StringHelperFunctions";
 import Button from "@mui/material/Button";
+import React, { useState } from "react";
+
+import { formatNumber } from "../../utils/StringHelperFunctions";
+import type { IBladeburner } from "../IBladeburner";
+import type { Operation } from "../Operation";
+
+import { TeamSizeModal } from "./TeamSizeModal";
 interface IProps {
   action: Operation;
   bladeburner: IBladeburner;

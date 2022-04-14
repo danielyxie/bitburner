@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const greenworks = require("./greenworks");
 const log = require("electron-log");
+
+const greenworks = require("./greenworks");
 
 async function enableAchievementsInterval(window) {
   // If the Steam API could not be initialized on game start, we'll abort this.

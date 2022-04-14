@@ -2,24 +2,21 @@
  * Helper functions for determine whether Limit and Stop orders should
  * be executed (and executing them)
  */
-import { buyStock, sellStock, shortStock, sellShort } from "./BuyingAndSelling";
-import { IOrderBook } from "./IOrderBook";
-import { IStockMarket } from "./IStockMarket";
-import { Order } from "./Order";
-import { Stock } from "./Stock";
+import * as React from "react";
 
-import { OrderTypes } from "./data/OrderTypes";
-import { PositionTypes } from "./data/PositionTypes";
-
-import { IMap } from "../types";
-
+import { Settings } from "../Settings/Settings";
+import type { IMap } from "../types";
 import { numeralWrapper } from "../ui/numeralFormat";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { Money } from "../ui/React/Money";
 
-import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { Settings } from "../Settings/Settings";
-
-import * as React from "react";
+import { buyStock, sellShort, sellStock, shortStock } from "./BuyingAndSelling";
+import { OrderTypes } from "./data/OrderTypes";
+import { PositionTypes } from "./data/PositionTypes";
+import type { IOrderBook } from "./IOrderBook";
+import type { IStockMarket } from "./IStockMarket";
+import type { Order } from "./Order";
+import { Stock } from "./Stock";
 
 export interface IProcessOrderRefs {
   stockMarket: IStockMarket;

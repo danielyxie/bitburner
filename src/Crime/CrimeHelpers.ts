@@ -1,8 +1,8 @@
-import { Crimes } from "./Crimes";
-import { Crime } from "./Crime";
-import { IPlayer } from "../PersonObjects/IPlayer";
-
+import type { IPlayer } from "../PersonObjects/IPlayer";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
+
+import type { Crime } from "./Crime";
+import { Crimes } from "./Crimes";
 
 export function determineCrimeSuccess(p: IPlayer, type: string): boolean {
   let chance = 0;

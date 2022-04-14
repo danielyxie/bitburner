@@ -1,33 +1,31 @@
 /**
  * Root React Component for the Hacknet Node UI
  */
-import React, { useState, useEffect } from "react";
+import { Box } from "@mui/material";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
 
-import { GeneralInfo } from "./GeneralInfo";
-import { HacknetNodeElem } from "./HacknetNodeElem";
-import { HacknetServerElem } from "./HacknetServerElem";
-import { HacknetNode } from "../HacknetNode";
-import { HacknetServer } from "../HacknetServer";
-import { HashUpgradeModal } from "./HashUpgradeModal";
-import { MultiplierButtons } from "./MultiplierButtons";
-import { PlayerInfo } from "./PlayerInfo";
-import { PurchaseButton } from "./PurchaseButton";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { GetServer } from "../../Server/AllServers";
 import { PurchaseMultipliers } from "../data/Constants";
-
 import {
   getCostOfNextHacknetNode,
   getCostOfNextHacknetServer,
   hasHacknetServers,
   purchaseHacknet,
 } from "../HacknetHelpers";
+import { HacknetNode } from "../HacknetNode";
+import { HacknetServer } from "../HacknetServer";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { GetServer } from "../../Server/AllServers";
-
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import { Box } from "@mui/material";
+import { GeneralInfo } from "./GeneralInfo";
+import { HacknetNodeElem } from "./HacknetNodeElem";
+import { HacknetServerElem } from "./HacknetServerElem";
+import { HashUpgradeModal } from "./HashUpgradeModal";
+import { MultiplierButtons } from "./MultiplierButtons";
+import { PlayerInfo } from "./PlayerInfo";
+import { PurchaseButton } from "./PurchaseButton";
 
 interface IProps {
   player: IPlayer;

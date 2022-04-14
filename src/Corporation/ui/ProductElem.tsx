@@ -1,24 +1,22 @@
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { Money } from "../../ui/React/Money";
+import { isString } from "../../utils/helpers/isString";
 import { CorporationConstants } from "../data/Constants";
-import { Product } from "../Product";
+import type { Product } from "../Product";
+
+import { useCorporation, useDivision } from "./Context";
+import { CancelProductModal } from "./modals/CancelProductModal";
 import { DiscontinueProductModal } from "./modals/DiscontinueProductModal";
 import { LimitProductProductionModal } from "./modals/LimitProductProductionModal";
-import { SellProductModal } from "./modals/SellProductModal";
 import { ProductMarketTaModal } from "./modals/ProductMarketTaModal";
-import { CancelProductModal } from "./modals/CancelProductModal";
-
-import { numeralWrapper } from "../../ui/numeralFormat";
-
-import { isString } from "../../utils/helpers/isString";
-import { Money } from "../../ui/React/Money";
-import { useCorporation, useDivision } from "./Context";
-
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import { SellProductModal } from "./modals/SellProductModal";
 
 interface IProductProps {
   city: string;

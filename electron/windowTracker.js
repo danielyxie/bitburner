@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { screen } = require("electron");
+const Config = require("electron-config");
 const log = require("electron-log");
 const debounce = require("lodash/debounce");
-const Config = require("electron-config");
 const config = new Config();
 
 // https://stackoverflow.com/a/68627253

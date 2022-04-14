@@ -1,9 +1,9 @@
-import { Material } from "./Material";
-import { Warehouse } from "./Warehouse";
-import { ICorporation } from "./ICorporation";
-import { OfficeSpace } from "./OfficeSpace";
-import { Product } from "./Product";
-import { IndustryUpgrade } from "./IndustryUpgrades";
+import type { ICorporation } from "./ICorporation";
+import type { IndustryUpgrade } from "./IndustryUpgrades";
+import type { Material } from "./Material";
+import type { OfficeSpace } from "./OfficeSpace";
+import type { Product } from "./Product";
+import type { Warehouse } from "./Warehouse";
 
 export interface IIndustry {
   name: string;

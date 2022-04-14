@@ -1,15 +1,14 @@
 /**
  * React Component for a button that's used to apply for a job
  */
-import * as React from "react";
-
-import { Company } from "../../Company/Company";
-import { CompanyPosition } from "../../Company/CompanyPosition";
-import { getJobRequirementText } from "../../Company/GetJobRequirementText";
-
-import { use } from "../../ui/Context";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
+import * as React from "react";
+
+import type { Company } from "../../Company/Company";
+import type { CompanyPosition } from "../../Company/CompanyPosition";
+import { getJobRequirementText } from "../../Company/GetJobRequirementText";
+import { use } from "../../ui/Context";
 
 type IProps = {
   company: Company;

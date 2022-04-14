@@ -2,16 +2,15 @@
  * React Component for the text on a stock ticker that display's information
  * about the player's position in that stock
  */
+import Box from "@mui/material/Box";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import * as React from "react";
 
-import { Stock } from "../Stock";
-
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { numeralWrapper } from "../../ui/numeralFormat";
 import { Money } from "../../ui/React/Money";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Box from "@mui/material/Box";
+import type { Stock } from "../Stock";
 
 type IProps = {
   p: IPlayer;

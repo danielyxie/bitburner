@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { IRouter } from "./Router";
+
+import type { IPlayer } from "../PersonObjects/IPlayer";
+
+import type { IRouter } from "./Router";
 
 export const Context: {
   Player: React.Context<IPlayer>;

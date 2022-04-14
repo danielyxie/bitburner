@@ -5,16 +5,17 @@
  * recursively walk through that AST, calculating RAM usage along
  * the way
  */
+import { parse } from "acorn";
+import type acorn from "acorn";
 import * as walk from "acorn-walk";
-import acorn, { parse } from "acorn";
+
+import { RamCostConstants, RamCosts } from "../Netscript/RamCostGenerator";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import { areImportsEquals } from "../Terminal/DirectoryHelpers";
 
 import { RamCalculationErrorCode } from "./RamCalculationErrorCodes";
-
-import { RamCosts, RamCostConstants } from "../Netscript/RamCostGenerator";
-import { Script } from "./Script";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { areImportsEquals } from "../Terminal/DirectoryHelpers";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import type { Script } from "./Script";
 
 export interface RamUsageEntry {
   type: "ns" | "dom" | "fn" | "misc";

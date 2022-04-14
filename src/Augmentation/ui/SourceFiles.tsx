@@ -3,11 +3,12 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
+
 import { Exploit, ExploitName } from "../../Exploits/Exploit";
 import { Player } from "../../Player";
 import { OwnedAugmentationsOrderSetting } from "../../Settings/SettingEnums";
 import { Settings } from "../../Settings/Settings";
-import { SourceFile } from "../../SourceFile/SourceFile";
+import type { SourceFile } from "../../SourceFile/SourceFile";
 import { SourceFiles } from "../../SourceFile/SourceFiles";
 
 interface SfMinus1 {

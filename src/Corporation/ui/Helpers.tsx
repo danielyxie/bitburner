@@ -1,4 +1,4 @@
-import { IIndustry } from "../IIndustry";
+import type { IIndustry } from "../IIndustry";
 
 // Returns a boolean indicating whether the given material is relevant for the
 // current industry.

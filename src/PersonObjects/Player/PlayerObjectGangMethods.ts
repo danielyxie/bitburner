@@ -1,7 +1,7 @@
+import type { Faction } from "../../Faction/Faction";
 import { Factions } from "../../Faction/Factions";
-import { Faction } from "../../Faction/Faction";
 import { Gang } from "../../Gang/Gang";
-import { IPlayer } from "../IPlayer";
+import type { IPlayer } from "../IPlayer";
 
 // Amount of negative karma needed to manage a gang in BitNodes other than 2
 const GangKarmaRequirement = -54000;

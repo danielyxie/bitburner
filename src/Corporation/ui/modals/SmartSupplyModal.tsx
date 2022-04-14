@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-
-import { Warehouse } from "../../Warehouse";
-import { SetSmartSupply, SetSmartSupplyUseLeftovers } from "../../Actions";
-import { Material } from "../../Material";
-import { dialogBoxCreate } from "../../../ui/React/DialogBox";
-import { Modal } from "../../../ui/React/Modal";
-import { useDivision } from "../Context";
-import Typography from "@mui/material/Typography";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { dialogBoxCreate } from "../../../ui/React/DialogBox";
+import { Modal } from "../../../ui/React/Modal";
+import { SetSmartSupply, SetSmartSupplyUseLeftovers } from "../../Actions";
+import { Material } from "../../Material";
+import type { Warehouse } from "../../Warehouse";
+import { useDivision } from "../Context";
 
 interface ILeftoverProps {
   matName: string;

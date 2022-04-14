@@ -1,7 +1,8 @@
-import { Construction, CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
+import { CheckBox, CheckBoxOutlineBlank, Construction } from "@mui/icons-material";
 import { Box, Button, Container, List, ListItemButton, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { Augmentation } from "../../../Augmentation/Augmentation";
+
+import type { Augmentation } from "../../../Augmentation/Augmentation";
 import { Augmentations } from "../../../Augmentation/Augmentations";
 import { AugmentationNames } from "../../../Augmentation/data/AugmentationNames";
 import { CONSTANTS } from "../../../Constants";
@@ -9,14 +10,14 @@ import { hasAugmentationPrereqs } from "../../../Faction/FactionHelpers";
 import { LocationName } from "../../../Locations/data/LocationNames";
 import { Locations } from "../../../Locations/Locations";
 import { Settings } from "../../../Settings/Settings";
-import { IMap } from "../../../types";
+import type { IMap } from "../../../types";
 import { use } from "../../../ui/Context";
 import { ConfirmationModal } from "../../../ui/React/ConfirmationModal";
 import { Money } from "../../../ui/React/Money";
 import { convertTimeMsToTimeElapsedString, formatNumber } from "../../../utils/StringHelperFunctions";
-import { IPlayer } from "../../IPlayer";
-import { getGraftingAvailableAugs } from "../GraftingHelpers";
+import type { IPlayer } from "../../IPlayer";
 import { GraftableAugmentation } from "../GraftableAugmentation";
+import { getGraftingAvailableAugs } from "../GraftingHelpers";
 
 const GraftableAugmentations: IMap<GraftableAugmentation> = {};
 

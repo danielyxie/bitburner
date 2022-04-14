@@ -2,32 +2,29 @@
  * React Component for displaying a single WorkerScript's info as an
  * Accordion element
  */
-import * as React from "react";
-
-import { numeralWrapper } from "../numeralFormat";
-
-import Table from "@mui/material/Table";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import TableBody from "@mui/material/TableBody";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import makeStyles from "@mui/styles/makeStyles";
-
-import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Collapse from "@mui/material/Collapse";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import makeStyles from "@mui/styles/makeStyles";
+import * as React from "react";
 
-import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import type { RecentScript } from "../../Netscript/RecentScripts";
 import { arrayToString } from "../../utils/helpers/arrayToString";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import { numeralWrapper } from "../numeralFormat";
+import { LogBoxEvents } from "../React/LogBoxManager";
 import { Money } from "../React/Money";
 import { MoneyRate } from "../React/MoneyRate";
-import { RecentScript } from "../../Netscript/RecentScripts";
-import { LogBoxEvents } from "../React/LogBoxManager";
 
 const useStyles = makeStyles({
   noborder: {

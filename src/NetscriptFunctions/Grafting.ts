@@ -2,13 +2,14 @@ import { Augmentations } from "../Augmentation/Augmentations";
 import { hasAugmentationPrereqs } from "../Faction/FactionHelpers";
 import { CityName } from "../Locations/data/CityNames";
 import { getRamCost } from "../Netscript/RamCostGenerator";
-import { WorkerScript } from "../Netscript/WorkerScript";
+import type { WorkerScript } from "../Netscript/WorkerScript";
 import { GraftableAugmentation } from "../PersonObjects/Grafting/GraftableAugmentation";
 import { getGraftingAvailableAugs } from "../PersonObjects/Grafting/GraftingHelpers";
-import { IPlayer } from "../PersonObjects/IPlayer";
-import { Grafting as IGrafting } from "../ScriptEditor/NetscriptDefinitions";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type { Grafting as IGrafting } from "../ScriptEditor/NetscriptDefinitions";
 import { Router } from "../ui/GameRoot";
-import { INetscriptHelper } from "./INetscriptHelper";
+
+import type { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptGrafting(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): IGrafting {
   const checkGraftingAPIAccess = (func: string): void => {

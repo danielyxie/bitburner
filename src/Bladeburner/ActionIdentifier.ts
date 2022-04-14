@@ -1,5 +1,6 @@
-import { IActionIdentifier } from "./IActionIdentifier";
 import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
+import type { IActionIdentifier } from "./IActionIdentifier";
 
 interface IParams {
   name?: string;

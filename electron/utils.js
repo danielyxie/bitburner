@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { app, dialog, shell } = require("electron");
+const Config = require("electron-config");
 const log = require("electron-log");
 
 const achievements = require("./achievements");
 const api = require("./api-server");
-
-const Config = require("electron-config");
 const config = new Config();
 
 function reloadAndKill(window, killScripts) {

@@ -1,10 +1,13 @@
-import { PlayerObject } from "src/PersonObjects/Player/PlayerObject";
+import type { PlayerObject } from "src/PersonObjects/Player/PlayerObject";
+
 import { AugmentationNames } from "../Augmentation/data/AugmentationNames";
+import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 import { SkillNames } from "../Bladeburner/data/SkillNames";
 import { Skills } from "../Bladeburner/Skills";
 import { CONSTANTS } from "../Constants";
 import { Industries } from "../Corporation/IndustryData";
 import { Exploit } from "../Exploits/Exploit";
+import { FactionNames } from "../Faction/data/FactionNames";
 import { Factions } from "../Faction/Factions";
 import { AllGangs } from "../Gang/AllGangs";
 import { GangConstants } from "../Gang/data/Constants";
@@ -18,12 +21,11 @@ import { Programs } from "../Programs/Programs";
 import { GetAllServers, GetServer } from "../Server/AllServers";
 import { SpecialServers } from "../Server/data/SpecialServers";
 import { Server } from "../Server/Server";
+import type { IMap } from "../types";
 import { Router } from "../ui/GameRoot";
 import { Page } from "../ui/Router";
-import { IMap } from "../types";
+
 import * as data from "./AchievementData.json";
-import { FactionNames } from "../Faction/data/FactionNames";
-import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 
 // Unable to correctly cast the JSON data into AchievementDataJson type otherwise...
 const achievementData = (<AchievementDataJson>(<unknown>data)).achievements;

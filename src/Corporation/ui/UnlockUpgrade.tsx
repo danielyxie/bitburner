@@ -1,16 +1,17 @@
 // React Components for the Unlock upgrade buttons on the overview page
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import React from "react";
 
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { CorporationUnlockUpgrade } from "../data/CorporationUnlockUpgrades";
-import { useCorporation } from "./Context";
 import { UnlockUpgrade as UU } from "../Actions";
+import type { CorporationUnlockUpgrade } from "../data/CorporationUnlockUpgrades";
+
+import { useCorporation } from "./Context";
 import { MoneyCost } from "./MoneyCost";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 
 interface IProps {
   upgradeData: CorporationUnlockUpgrade;

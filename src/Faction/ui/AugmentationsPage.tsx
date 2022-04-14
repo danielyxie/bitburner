@@ -1,29 +1,27 @@
 /**
  * Root React Component for displaying a faction's "Purchase Augmentations" page
  */
-import React, { useState } from "react";
-
-import { PurchaseableAugmentation } from "./PurchaseableAugmentation";
-
-import { Augmentations } from "../../Augmentation/Augmentations";
-import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
-import { Faction } from "../Faction";
-import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
-import { Settings } from "../../Settings/Settings";
-import { hasAugmentationPrereqs, getFactionAugmentationsFiltered } from "../FactionHelpers";
-
-import { use } from "../../ui/Context";
-import { Reputation } from "../../ui/React/Reputation";
-import { Favor } from "../../ui/React/Favor";
-import { numeralWrapper } from "../../ui/numeralFormat";
-
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import TableBody from "@mui/material/TableBody";
 import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
 import { getGenericAugmentationPriceMultiplier } from "../../Augmentation/AugmentationHelpers";
+import { Augmentations } from "../../Augmentation/Augmentations";
+import { AugmentationNames } from "../../Augmentation/data/AugmentationNames";
+import { PurchaseAugmentationsOrderSetting } from "../../Settings/SettingEnums";
+import { Settings } from "../../Settings/Settings";
+import { use } from "../../ui/Context";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { Favor } from "../../ui/React/Favor";
+import { Reputation } from "../../ui/React/Reputation";
+import type { Faction } from "../Faction";
+import { getFactionAugmentationsFiltered, hasAugmentationPrereqs } from "../FactionHelpers";
+
+import { PurchaseableAugmentation } from "./PurchaseableAugmentation";
 
 type IProps = {
   faction: Faction;

@@ -1,10 +1,10 @@
+import { Box, Typography } from "@mui/material";
 import React from "react";
 
-import { Box, Typography } from "@mui/material";
-
-import { Achievement } from "./Achievements";
 import { Settings } from "../Settings/Settings";
+
 import { AchievementIcon } from "./AchievementIcon";
+import type { Achievement } from "./Achievements";
 
 interface IProps {
   achievement: Achievement;

@@ -1,4 +1,4 @@
-import { IMap } from "../types";
+import type { IMap } from "../types";
 
 export type IndustryUpgrade = [number, number, number, number, string, string];
 

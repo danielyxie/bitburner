@@ -1,6 +1,8 @@
-import { RunningScript } from "src/Script/RunningScript";
+import type { RunningScript } from "src/Script/RunningScript";
+
 import { Settings } from "../Settings/Settings";
-import { WorkerScript } from "./WorkerScript";
+
+import type { WorkerScript } from "./WorkerScript";
 
 export const recentScripts: RecentScript[] = [];
 

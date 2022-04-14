@@ -1,5 +1,5 @@
-import { calculateIntelligenceBonus } from "../../PersonObjects/formulas/intelligence";
 import { CONSTANTS } from "../../Constants";
+import { calculateIntelligenceBonus } from "../../PersonObjects/formulas/intelligence";
 
 export interface ICrime {
   hacking_success_weight: number;

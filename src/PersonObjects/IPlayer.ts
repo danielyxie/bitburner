@@ -3,33 +3,32 @@
  * Used because at the time of implementation, the PlayerObject
  * cant be converted to TypeScript.
  */
-import { Sleeve } from "./Sleeve/Sleeve";
+import type { PlayerAchievement } from "../Achievements/Achievements";
+import type { Augmentation } from "../Augmentation/Augmentation";
+import type { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
+import type { IBladeburner } from "../Bladeburner/IBladeburner";
+import type { ICodingContractReward } from "../CodingContracts";
+import type { Company } from "../Company/Company";
+import type { CompanyPosition } from "../Company/CompanyPosition";
+import type { ICorporation } from "../Corporation/ICorporation";
+import type { Exploit } from "../Exploits/Exploit";
+import type { Faction } from "../Faction/Faction";
+import type { IGang } from "../Gang/IGang";
+import type { HacknetNode } from "../Hacknet/HacknetNode";
+import type { HacknetServer } from "../Hacknet/HacknetServer";
+import type { HashManager } from "../Hacknet/HashManager";
+import type { CityName } from "../Locations/data/CityNames";
+import type { LocationName } from "../Locations/data/LocationNames";
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { BaseServer } from "../Server/BaseServer";
+import type { Server } from "../Server/Server";
+import type { IPlayerOwnedSourceFile } from "../SourceFile/PlayerOwnedSourceFile";
+import type { IMap } from "../types";
+import type { IRouter } from "../ui/Router";
+import type { MoneySourceTracker } from "../utils/MoneySourceTracker";
 
-import { IMap } from "../types";
-
-import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
-import { Augmentation } from "../Augmentation/Augmentation";
-import { Company } from "../Company/Company";
-import { CompanyPosition } from "../Company/CompanyPosition";
-import { CityName } from "../Locations/data/CityNames";
-import { Faction } from "../Faction/Faction";
-import { HashManager } from "../Hacknet/HashManager";
-import { HacknetNode } from "../Hacknet/HacknetNode";
-import { LocationName } from "../Locations/data/LocationNames";
-import { Server } from "../Server/Server";
-import { BaseServer } from "../Server/BaseServer";
-import { IPlayerOwnedSourceFile } from "../SourceFile/PlayerOwnedSourceFile";
-import { MoneySourceTracker } from "../utils/MoneySourceTracker";
-import { Exploit } from "../Exploits/Exploit";
-import { ICorporation } from "../Corporation/ICorporation";
-import { IGang } from "../Gang/IGang";
-import { IBladeburner } from "../Bladeburner/IBladeburner";
-import { ICodingContractReward } from "../CodingContracts";
-import { IRouter } from "../ui/Router";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { HacknetServer } from "../Hacknet/HacknetServer";
-import { ISkillProgress } from "./formulas/skill";
-import { PlayerAchievement } from "../Achievements/Achievements";
+import type { ISkillProgress } from "./formulas/skill";
+import type { Sleeve } from "./Sleeve/Sleeve";
 
 export interface IPlayer {
   // Class members

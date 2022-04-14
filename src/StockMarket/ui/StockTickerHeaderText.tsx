@@ -3,15 +3,14 @@
  * general information on the stock such as the name, symbol, price, and
  * 4S Market Data
  */
+import Typography from "@mui/material/Typography";
 import * as React from "react";
 
-import { Stock } from "../Stock";
-import { TickerHeaderFormatData } from "../data/TickerHeaderFormatData";
-
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 import { numeralWrapper } from "../../ui/numeralFormat";
-import Typography from "@mui/material/Typography";
+import { TickerHeaderFormatData } from "../data/TickerHeaderFormatData";
+import type { Stock } from "../Stock";
 
 type IProps = {
   p: IPlayer;

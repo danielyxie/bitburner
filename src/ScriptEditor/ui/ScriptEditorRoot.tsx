@@ -1,50 +1,50 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import Editor, { Monaco } from "@monaco-editor/react";
-import * as monaco from "monaco-editor";
+import Editor from "@monaco-editor/react";
+import type { Monaco } from "@monaco-editor/react";
+import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
+import SettingsIcon from "@mui/icons-material/Settings";
+import SyncIcon from "@mui/icons-material/Sync";
+import { TextField, Tooltip } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import { debounce } from "lodash";
+import type * as monaco from "monaco-editor";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+
+import { ITutorial, iTutorialNextStep, iTutorialSteps } from "../../InteractiveTutorial";
+import type { WorkerScript } from "../../Netscript/WorkerScript";
+import { NetscriptFunctions } from "../../NetscriptFunctions";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { saveObject } from "../../SaveObject";
+import { isScriptFilename } from "../../Script/isScriptFilename";
+import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
+import { calculateRamUsage, checkInfiniteLoop } from "../../Script/RamCalculations";
+import { Script } from "../../Script/Script";
+import { GetServer } from "../../Server/AllServers";
+import { Settings } from "../../Settings/Settings"; // Red flag!
+import { isValidFilePath } from "../../Terminal/DirectoryHelpers";
+import { TextFile } from "../../TextFile";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { Modal } from "../../ui/React/Modal";
+import { PromptEvent } from "../../ui/React/PromptManager";
+import type { IRouter } from "../../ui/Router";
+
+import type { Options } from "./Options";
+import { OptionsModal } from "./OptionsModal";
+import { loadThemes, makeTheme, sanitizeTheme } from "./themes";
+
+import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
 
 type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 type ITextModel = monaco.editor.ITextModel;
-import { OptionsModal } from "./OptionsModal";
-import { Options } from "./Options";
-import { isValidFilePath } from "../../Terminal/DirectoryHelpers";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { IRouter } from "../../ui/Router";
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { isScriptFilename } from "../../Script/isScriptFilename";
-import { Script } from "../../Script/Script";
-import { TextFile } from "../../TextFile";
-import { calculateRamUsage, checkInfiniteLoop } from "../../Script/RamCalculations";
-import { RamCalculationErrorCode } from "../../Script/RamCalculationErrorCodes";
-import { numeralWrapper } from "../../ui/numeralFormat";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import SearchIcon from "@mui/icons-material/Search";
-
-import { NetscriptFunctions } from "../../NetscriptFunctions";
-import { WorkerScript } from "../../Netscript/WorkerScript";
-import { Settings } from "../../Settings/Settings";
-import { iTutorialNextStep, ITutorial, iTutorialSteps } from "../../InteractiveTutorial";
-import { debounce } from "lodash";
-import { saveObject } from "../../SaveObject";
-import { loadThemes, makeTheme, sanitizeTheme } from "./themes";
-import { GetServer } from "../../Server/AllServers";
-
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
-import Box from "@mui/material/Box";
-import SettingsIcon from "@mui/icons-material/Settings";
-import SyncIcon from "@mui/icons-material/Sync";
-import CloseIcon from "@mui/icons-material/Close";
-import Table from "@mui/material/Table";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import TableBody from "@mui/material/TableBody";
-import { PromptEvent } from "../../ui/React/PromptManager";
-import { Modal } from "../../ui/React/Modal";
-
-import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
-import { TextField, Tooltip } from "@mui/material";
-
 interface IProps {
   // Map of filename -> code
   files: Record<string, string>;

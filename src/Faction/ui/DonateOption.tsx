@@ -1,26 +1,22 @@
 /**
  * React component for a donate option on the Faction UI
  */
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
 import { CONSTANTS } from "../../Constants";
-import { Faction } from "../Faction";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { repFromDonation } from "../formulas/donation";
+import { MathJaxWrapper } from "../../MathJaxWrapper";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { numeralWrapper } from "../../ui/numeralFormat";
+import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { Favor } from "../../ui/React/Favor";
-
 import { Money } from "../../ui/React/Money";
 import { Reputation } from "../../ui/React/Reputation";
-
-import { numeralWrapper } from "../../ui/numeralFormat";
-
-import { dialogBoxCreate } from "../../ui/React/DialogBox";
-import { MathJaxWrapper } from "../../MathJaxWrapper";
-
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import type { Faction } from "../Faction";
+import { repFromDonation } from "../formulas/donation";
 
 type IProps = {
   faction: Faction;

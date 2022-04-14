@@ -1,9 +1,9 @@
+import { TableCell, TableRow, Typography } from "@mui/material";
 import React from "react";
 
-import { Typography, TableCell, TableRow } from "@mui/material";
-
-import { numeralWrapper } from "../numeralFormat";
 import { formatNumber } from "../../utils/StringHelperFunctions";
+import { numeralWrapper } from "../numeralFormat";
+
 import { characterOverviewStyles as useStyles } from "./CharacterOverview";
 
 interface ITableRowData {

@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
-import Draggable, { DraggableEventHandler } from "react-draggable";
-import makeStyles from "@mui/styles/makeStyles";
-import Collapse from "@mui/material/Collapse";
-import Paper from "@mui/material/Paper";
+import EqualizerIcon from "@mui/icons-material/Equalizer";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import EqualizerIcon from "@mui/icons-material/Equalizer";
 import SchoolIcon from "@mui/icons-material/School";
+import { Box, Button, Typography } from "@mui/material";
+import Collapse from "@mui/material/Collapse";
+import Paper from "@mui/material/Paper";
+import makeStyles from "@mui/styles/makeStyles";
+import { debounce } from "lodash";
+import React, { useEffect, useRef, useState } from "react";
+import Draggable from "react-draggable";
+import type { DraggableEventHandler } from "react-draggable";
+
+import { Settings } from "../../Settings/Settings";
 import { use } from "../Context";
 import { Page } from "../Router";
-import { Settings } from "../../Settings/Settings";
-import { Box, Button, Typography } from "@mui/material";
-import { debounce } from "lodash";
 
 const useStyles = makeStyles({
   overviewContainer: {

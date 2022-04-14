@@ -1,4 +1,5 @@
-import { IMap } from "../types";
+import type { IMap } from "../types";
+
 import * as predefined from "./data";
 
 export interface ITheme {

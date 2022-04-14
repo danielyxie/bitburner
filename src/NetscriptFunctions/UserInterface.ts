@@ -1,19 +1,20 @@
-import { INetscriptHelper } from "./INetscriptHelper";
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { CONSTANTS } from "../Constants";
+import { hash } from "../hash/hash";
 import { getRamCost } from "../Netscript/RamCostGenerator";
-import {
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
+import type {
   GameInfo,
   IStyleSettings,
   UserInterface as IUserInterface,
   UserInterfaceTheme,
 } from "../ScriptEditor/NetscriptDefinitions";
 import { Settings } from "../Settings/Settings";
-import { ThemeEvents } from "../Themes/ui/Theme";
-import { defaultTheme } from "../Themes/Themes";
 import { defaultStyles } from "../Themes/Styles";
-import { CONSTANTS } from "../Constants";
-import { hash } from "../hash/hash";
+import { defaultTheme } from "../Themes/Themes";
+import { ThemeEvents } from "../Themes/ui/Theme";
+
+import type { INetscriptHelper } from "./INetscriptHelper";
 
 export function NetscriptUserInterface(
   player: IPlayer,

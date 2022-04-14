@@ -1,22 +1,24 @@
-import { IPlayer } from "src/PersonObjects/IPlayer";
-import { MaterialSizes } from "./MaterialSizes";
-import { ICorporation } from "./ICorporation";
-import { IIndustry } from "./IIndustry";
-import { IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
-import { Industry } from "./Industry";
-import { CorporationConstants } from "./data/Constants";
-import { OfficeSpace } from "./OfficeSpace";
-import { Material } from "./Material";
-import { Product } from "./Product";
-import { Warehouse } from "./Warehouse";
-import { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
-import { CorporationUpgrade } from "./data/CorporationUpgrades";
+import type { IPlayer } from "src/PersonObjects/IPlayer";
+
 import { Cities } from "../Locations/Cities";
+
+import { CorporationConstants } from "./data/Constants";
+import type { CorporationUnlockUpgrade } from "./data/CorporationUnlockUpgrades";
+import type { CorporationUpgrade } from "./data/CorporationUpgrades";
+import type { Employee } from "./Employee";
 import { EmployeePositions } from "./EmployeePositions";
-import { Employee } from "./Employee";
+import type { ICorporation } from "./ICorporation";
+import type { IIndustry } from "./IIndustry";
+import { Industry } from "./Industry";
+import { IndustryResearchTrees, IndustryStartingCosts } from "./IndustryData";
 import { IndustryUpgrades } from "./IndustryUpgrades";
+import type { Material } from "./Material";
+import { MaterialSizes } from "./MaterialSizes";
+import { OfficeSpace } from "./OfficeSpace";
+import { Product } from "./Product";
 import { ResearchMap } from "./ResearchMap";
 import { isRelevantMaterial } from "./ui/Helpers";
+import { Warehouse } from "./Warehouse";
 
 export function NewIndustry(corporation: ICorporation, industry: string, name: string): void {
   if (corporation.divisions.find(({ type }) => industry == type))

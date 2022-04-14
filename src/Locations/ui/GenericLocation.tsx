@@ -4,10 +4,21 @@
  * This is a "router" component of sorts, meaning it deduces the type of
  * location that is being rendered and then creates the proper component(s) for that.
  */
-import * as React from "react";
-import Typography from "@mui/material/Typography";
+import { Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
 
+import { GetServer } from "../../Server/AllServers";
+import { serverMetadata } from "../../Server/data/servers";
+import { isBackdoorInstalled } from "../../Server/ServerHelpers";
+import { Settings } from "../../Settings/Settings";
+import { use } from "../../ui/Context";
+import { CorruptableText } from "../../ui/React/CorruptableText";
+import type { Location } from "../Location";
+import { LocationType } from "../LocationTypeEnum";
+
+import { CasinoLocation } from "./CasinoLocation";
 import { CompanyLocation } from "./CompanyLocation";
 import { GymLocation } from "./GymLocation";
 import { HospitalLocation } from "./HospitalLocation";
@@ -16,20 +27,6 @@ import { SpecialLocation } from "./SpecialLocation";
 import { TechVendorLocation } from "./TechVendorLocation";
 import { TravelAgencyRoot } from "./TravelAgencyRoot";
 import { UniversityLocation } from "./UniversityLocation";
-import { CasinoLocation } from "./CasinoLocation";
-
-import { Location } from "../Location";
-import { LocationType } from "../LocationTypeEnum";
-
-import { Settings } from "../../Settings/Settings";
-
-import { isBackdoorInstalled } from "../../Server/ServerHelpers";
-import { GetServer } from "../../Server/AllServers";
-
-import { CorruptableText } from "../../ui/React/CorruptableText";
-import { use } from "../../ui/Context";
-import { serverMetadata } from "../../Server/data/servers";
-import { Tooltip } from "@mui/material";
 
 type IProps = {
   loc: Location;

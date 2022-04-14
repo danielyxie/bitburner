@@ -2,13 +2,14 @@
  * Map of all Locations in the game
  * Key = Location name, value = Location object
  */
-import { City } from "./City";
+import type { IMap } from "../types";
+
 import { Cities } from "./Cities";
-import { Location, IConstructorParams } from "./Location";
+import { City } from "./City";
 import { CityName } from "./data/CityNames";
 import { LocationsMetadata } from "./data/LocationsMetadata";
-
-import { IMap } from "../types";
+import type { IConstructorParams } from "./Location";
+import { Location } from "./Location";
 
 export const Locations: IMap<Location> = {};
 

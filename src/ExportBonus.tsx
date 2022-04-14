@@ -1,5 +1,5 @@
 import { Factions } from "./Faction/Factions";
-import { IPlayer } from "./PersonObjects/IPlayer";
+import type { IPlayer } from "./PersonObjects/IPlayer";
 
 export let LastExportBonus = 0;
 

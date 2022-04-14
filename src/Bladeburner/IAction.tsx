@@ -1,4 +1,4 @@
-import { IBladeburner } from "./IBladeburner";
+import type { IBladeburner } from "./IBladeburner";
 
 interface IStatsMultiplier {
   [key: string]: number;

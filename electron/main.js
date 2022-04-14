@@ -1,15 +1,16 @@
 /* eslint-disable no-process-exit */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { app, dialog, BrowserWindow, ipcMain } = require("electron");
+const Config = require("electron-config");
 const log = require("electron-log");
-const greenworks = require("./greenworks");
+const debounce = require("lodash/debounce");
+
+const achievements = require("./achievements");
 const api = require("./api-server");
 const gameWindow = require("./gameWindow");
-const achievements = require("./achievements");
-const utils = require("./utils");
+const greenworks = require("./greenworks");
 const storage = require("./storage");
-const debounce = require("lodash/debounce");
-const Config = require("electron-config");
+const utils = require("./utils");
 const config = new Config();
 
 log.transports.file.level = config.get("file-log-level", "info");

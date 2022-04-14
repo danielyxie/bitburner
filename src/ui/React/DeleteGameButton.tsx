@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { deleteGame } from "../../db";
-import { ConfirmationModal } from "./ConfirmationModal";
-import Button from "@mui/material/Button";
-import { Tooltip } from "@mui/material";
-
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Tooltip } from "@mui/material";
+import Button from "@mui/material/Button";
+import React, { useState } from "react";
+
+import { deleteGame } from "../../db";
 import { pushDisableRestore } from "../../Electron";
+
+import { ConfirmationModal } from "./ConfirmationModal";
 
 interface IProps {
   color?: "primary" | "warning" | "error";

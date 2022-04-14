@@ -1,7 +1,9 @@
 import { TableBody, TableRow } from "@mui/material";
 import * as React from "react";
-import { ActiveFragment } from "../ActiveFragment";
-import { IStaneksGift } from "../IStaneksGift";
+
+import type { ActiveFragment } from "../ActiveFragment";
+import type { IStaneksGift } from "../IStaneksGift";
+
 import { Cell } from "./Cell";
 
 interface IProps {

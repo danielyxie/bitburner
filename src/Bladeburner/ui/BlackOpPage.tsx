@@ -1,9 +1,11 @@
-import * as React from "react";
-import { BlackOpList } from "./BlackOpList";
-import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import Typography from "@mui/material/Typography";
+import * as React from "react";
+
 import { FactionNames } from "../../Faction/data/FactionNames";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IBladeburner } from "../IBladeburner";
+
+import { BlackOpList } from "./BlackOpList";
 
 interface IProps {
   bladeburner: IBladeburner;

@@ -1,13 +1,16 @@
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
-import { CorporationConstants } from "../data/Constants";
+
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
 import { NewCity } from "../Actions";
-import { MoneyCost } from "./MoneyCost";
+import { CorporationConstants } from "../data/Constants";
+
 import { useCorporation, useDivision } from "./Context";
-import Typography from "@mui/material/Typography";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Button from "@mui/material/Button";
+import { MoneyCost } from "./MoneyCost";
 
 interface IProps {
   cityStateSetter: (city: string) => void;

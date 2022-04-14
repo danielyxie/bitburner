@@ -1,11 +1,12 @@
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import React from "react";
-import { IBladeburner } from "../IBladeburner";
-import { WorldMap } from "../../ui/React/WorldMap";
-import { Modal } from "../../ui/React/Modal";
+
 import { CityName } from "../../Locations/data/CityNames";
 import { Settings } from "../../Settings/Settings";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { Modal } from "../../ui/React/Modal";
+import { WorldMap } from "../../ui/React/WorldMap";
+import type { IBladeburner } from "../IBladeburner";
 
 interface IProps {
   bladeburner: IBladeburner;

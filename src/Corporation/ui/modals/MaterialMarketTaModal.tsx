@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { numeralWrapper } from "../../../ui/numeralFormat";
-import { Material } from "../../Material";
-import { Modal } from "../../../ui/React/Modal";
-import { useDivision } from "../Context";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { Modal } from "../../../ui/React/Modal";
+import type { Material } from "../../Material";
+import { useDivision } from "../Context";
 
 interface IMarketTA2Props {
   mat: Material;

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+
 import { ConfirmationModal } from "../../ui/React/ConfirmationModal";
 
 interface IProps {

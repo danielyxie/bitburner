@@ -2,35 +2,31 @@
  * React Component for displaying a single WorkerScript's info as an
  * Accordion element
  */
-import * as React from "react";
-
-import { numeralWrapper } from "../numeralFormat";
-
-import Table from "@mui/material/Table";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import TableBody from "@mui/material/TableBody";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import makeStyles from "@mui/styles/makeStyles";
-
-import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import makeStyles from "@mui/styles/makeStyles";
+import * as React from "react";
 
 import { killWorkerScript } from "../../Netscript/killWorkerScript";
-import { WorkerScript } from "../../Netscript/WorkerScript";
-
+import type { WorkerScript } from "../../Netscript/WorkerScript";
+import { arrayToString } from "../../utils/helpers/arrayToString";
+import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
+import { numeralWrapper } from "../numeralFormat";
 import { dialogBoxCreate } from "../React/DialogBox";
 import { LogBoxEvents } from "../React/LogBoxManager";
-import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { arrayToString } from "../../utils/helpers/arrayToString";
 import { Money } from "../React/Money";
 import { MoneyRate } from "../React/MoneyRate";
 

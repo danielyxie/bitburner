@@ -1,7 +1,6 @@
-import { IMap } from "../../types";
 import { CONSTANTS } from "../../Constants";
-
-import { IPlayer } from "../IPlayer";
+import type { IMap } from "../../types";
+import type { IPlayer } from "../IPlayer";
 
 export const calculateEntropy = (player: IPlayer, stacks = 1): IMap<number> => {
   const multipliers: IMap<number> = {

@@ -1,9 +1,9 @@
+import { Box } from "@mui/material";
 import React, { useState } from "react";
 
-import { Box } from "@mui/material";
-
-import { Achievement } from "./Achievements";
 import { Settings } from "../Settings/Settings";
+
+import type { Achievement } from "./Achievements";
 
 interface IProps {
   achievement: Achievement;

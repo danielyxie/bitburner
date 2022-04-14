@@ -3,29 +3,24 @@
  * Add police clashes
  * balance point to keep them from running out of control
  */
-
+import { CONSTANTS } from "../Constants";
 import { Faction } from "../Faction/Faction";
 import { Factions } from "../Faction/Factions";
-
+import type { WorkerScript } from "../Netscript/WorkerScript";
+import type { IPlayer } from "../PersonObjects/IPlayer";
 import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
-
 import { exceptionAlert } from "../utils/helpers/exceptionAlert";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
-
-import { GangMemberUpgrade } from "./GangMemberUpgrade";
-import { GangConstants } from "./data/Constants";
-import { CONSTANTS } from "../Constants";
-import { GangMemberTasks } from "./GangMemberTasks";
-import { IAscensionResult } from "./IAscensionResult";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
 import { AllGangs } from "./AllGangs";
-import { GangMember } from "./GangMember";
-
-import { WorkerScript } from "../Netscript/WorkerScript";
-import { IPlayer } from "../PersonObjects/IPlayer";
+import { GangConstants } from "./data/Constants";
 import { PowerMultiplier } from "./data/power";
-import { IGang } from "./IGang";
+import { GangMember } from "./GangMember";
+import { GangMemberTasks } from "./GangMemberTasks";
+import type { GangMemberUpgrade } from "./GangMemberUpgrade";
+import type { IAscensionResult } from "./IAscensionResult";
+import type { IGang } from "./IGang";
 
 export class Gang implements IGang {
   facName: string;

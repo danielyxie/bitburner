@@ -1,12 +1,10 @@
-import React from "react";
 import Button from "@mui/material/Button";
-
-import { purchaseTorRouter } from "../LocationsHelpers";
+import React from "react";
 
 import { CONSTANTS } from "../../Constants";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { Money } from "../../ui/React/Money";
+import { purchaseTorRouter } from "../LocationsHelpers";
 
 type IProps = {
   p: IPlayer;

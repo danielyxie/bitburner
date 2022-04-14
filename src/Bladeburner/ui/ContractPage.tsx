@@ -1,8 +1,10 @@
-import * as React from "react";
-import { ContractList } from "./ContractList";
-import { IBladeburner } from "../IBladeburner";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 import Typography from "@mui/material/Typography";
+import * as React from "react";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IBladeburner } from "../IBladeburner";
+
+import { ContractList } from "./ContractList";
 
 interface IProps {
   bladeburner: IBladeburner;

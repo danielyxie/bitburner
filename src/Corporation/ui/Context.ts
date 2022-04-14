@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { ICorporation } from "../ICorporation";
-import { IIndustry } from "../IIndustry";
+
+import type { ICorporation } from "../ICorporation";
+import type { IIndustry } from "../IIndustry";
 
 export const Context: {
   Corporation: React.Context<ICorporation>;

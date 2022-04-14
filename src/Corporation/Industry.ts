@@ -1,20 +1,22 @@
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../utils/JSONReviver";
 import { CityName } from "../Locations/data/CityNames";
-import { Industries, IndustryStartingCosts, IndustryResearchTrees } from "./IndustryData";
+import { dialogBoxCreate } from "../ui/React/DialogBox";
+import { calculateEffectWithFactors } from "../utils/calculateEffectWithFactors";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { isString } from "../utils/helpers/isString";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+
 import { CorporationConstants } from "./data/Constants";
 import { EmployeePositions } from "./EmployeePositions";
+import type { ICorporation } from "./ICorporation";
+import type { IIndustry } from "./IIndustry";
+import { Industries, IndustryResearchTrees, IndustryStartingCosts } from "./IndustryData";
+import { IndustryUpgrades } from "./IndustryUpgrades";
+import type { IndustryUpgrade } from "./IndustryUpgrades";
 import { Material } from "./Material";
-import { getRandomInt } from "../utils/helpers/getRandomInt";
-import { calculateEffectWithFactors } from "../utils/calculateEffectWithFactors";
+import { MaterialSizes } from "./MaterialSizes";
 import { OfficeSpace } from "./OfficeSpace";
 import { Product } from "./Product";
-import { dialogBoxCreate } from "../ui/React/DialogBox";
-import { isString } from "../utils/helpers/isString";
-import { MaterialSizes } from "./MaterialSizes";
 import { Warehouse } from "./Warehouse";
-import { ICorporation } from "./ICorporation";
-import { IIndustry } from "./IIndustry";
-import { IndustryUpgrade, IndustryUpgrades } from "./IndustryUpgrades";
 
 interface IParams {
   name?: string;

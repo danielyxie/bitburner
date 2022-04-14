@@ -1,6 +1,6 @@
-import { IMinMaxRange } from "../types";
-import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
+import type { IMinMaxRange } from "../types";
 import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../utils/JSONReviver";
 
 export const StockForecastInfluenceLimit = 5;
 

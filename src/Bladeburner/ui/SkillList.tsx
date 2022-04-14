@@ -1,7 +1,9 @@
 import * as React from "react";
-import { SkillElem } from "./SkillElem";
+
+import type { IBladeburner } from "../IBladeburner";
 import { Skills } from "../Skills";
-import { IBladeburner } from "../IBladeburner";
+
+import { SkillElem } from "./SkillElem";
 
 interface IProps {
   bladeburner: IBladeburner;

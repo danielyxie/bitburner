@@ -1,7 +1,6 @@
-import { getRandomInt } from "../utils/helpers/getRandomInt";
+import { HammingDecode, HammingEncode } from "../utils/HammingCodeTools";
 import { MinHeap } from "../utils/Heap";
-
-import { HammingEncode, HammingDecode } from "../utils/HammingCodeTools";
+import { getRandomInt } from "../utils/helpers/getRandomInt";
 /* tslint:disable:completed-docs no-magic-numbers arrow-return-shorthand */
 
 /* Function that generates a valid 'data' for a contract type */

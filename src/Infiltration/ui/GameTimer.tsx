@@ -1,8 +1,8 @@
-import LinearProgress from "@mui/material/LinearProgress";
-import React, { useState, useEffect } from "react";
-import withStyles from "@mui/styles/withStyles";
-import { Theme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
+import LinearProgress from "@mui/material/LinearProgress";
+import type { Theme } from "@mui/material/styles";
+import withStyles from "@mui/styles/withStyles";
+import React, { useEffect, useState } from "react";
 
 const TimerProgress = withStyles((theme: Theme) => ({
   root: {

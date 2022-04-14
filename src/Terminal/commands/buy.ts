@@ -1,10 +1,10 @@
-import { ITerminal } from "../ITerminal";
-import { IRouter } from "../../ui/Router";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { BaseServer } from "../../Server/BaseServer";
-import { listAllDarkwebItems, buyAllDarkwebItems, buyDarkwebItem } from "../../DarkWeb/DarkWeb";
-import { SpecialServers } from "../../Server/data/SpecialServers";
+import { buyAllDarkwebItems, buyDarkwebItem, listAllDarkwebItems } from "../../DarkWeb/DarkWeb";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { GetServer } from "../../Server/AllServers";
+import type { BaseServer } from "../../Server/BaseServer";
+import { SpecialServers } from "../../Server/data/SpecialServers";
+import type { IRouter } from "../../ui/Router";
+import type { ITerminal } from "../ITerminal";
 
 export function buy(
   terminal: ITerminal,

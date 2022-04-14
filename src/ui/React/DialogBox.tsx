@@ -1,8 +1,8 @@
-import { AlertEvents } from "./AlertManager";
-
-import React from "react";
-import { SxProps } from "@mui/system";
 import { Typography } from "@mui/material";
+import type { SxProps } from "@mui/system";
+import React from "react";
+
+import { AlertEvents } from "./AlertManager";
 
 export function dialogBoxCreate(txt: string | JSX.Element, styles?: SxProps): void {
   if (typeof txt !== "string") {

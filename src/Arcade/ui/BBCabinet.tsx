@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
-import { use } from "../../ui/Context";
+import React, { useEffect } from "react";
+
 import { Exploit } from "../../Exploits/Exploit";
+import { use } from "../../ui/Context";
 
 const metaBB = "https://bitburner-official.github.io/bitburner-legacy/";
 

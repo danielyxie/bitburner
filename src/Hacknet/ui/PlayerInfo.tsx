@@ -4,15 +4,15 @@
  * - Player's money
  * - Player's production from Hacknet Nodes
  */
+import Typography from "@mui/material/Typography";
 import React from "react";
 
-import { hasHacknetServers } from "../HacknetHelpers";
-import { IPlayer } from "../../PersonObjects/IPlayer";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { Hashes } from "../../ui/React/Hashes";
+import { HashRate } from "../../ui/React/HashRate";
 import { Money } from "../../ui/React/Money";
 import { MoneyRate } from "../../ui/React/MoneyRate";
-import { HashRate } from "../../ui/React/HashRate";
-import { Hashes } from "../../ui/React/Hashes";
-import Typography from "@mui/material/Typography";
+import { hasHacknetServers } from "../HacknetHelpers";
 
 interface IProps {
   totalProduction: number;

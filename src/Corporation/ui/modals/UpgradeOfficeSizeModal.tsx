@@ -1,15 +1,16 @@
-import React from "react";
-import { numeralWrapper } from "../../../ui/numeralFormat";
-import { CorporationConstants } from "../../data/Constants";
-import { OfficeSpace } from "../../OfficeSpace";
-import { ICorporation } from "../../ICorporation";
-import { UpgradeOfficeSize } from "../../Actions";
-import { Modal } from "../../../ui/React/Modal";
-import { useCorporation } from "../Context";
-import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import React from "react";
+
+import { numeralWrapper } from "../../../ui/numeralFormat";
+import { Modal } from "../../../ui/React/Modal";
+import { UpgradeOfficeSize } from "../../Actions";
+import { CorporationConstants } from "../../data/Constants";
+import type { ICorporation } from "../../ICorporation";
+import type { OfficeSpace } from "../../OfficeSpace";
+import { useCorporation } from "../Context";
 
 interface IUpgradeButton {
   cost: number;

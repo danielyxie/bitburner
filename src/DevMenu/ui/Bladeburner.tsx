@@ -1,13 +1,13 @@
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Typography from "@mui/material/Typography";
 import React from "react";
 
-import Typography from "@mui/material/Typography";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 
 import { Adjuster } from "./Adjuster";
-import { IPlayer } from "../../PersonObjects/IPlayer";
 
 const bigNumber = 1e27;
 

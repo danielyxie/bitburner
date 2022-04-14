@@ -1,19 +1,20 @@
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
-import { ActionTypes } from "../data/ActionTypes";
-import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
-import { formatNumber, convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { Contracts } from "../data/Contracts";
-import { IBladeburner } from "../IBladeburner";
-import { IAction } from "../IAction";
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { SuccessChance } from "./SuccessChance";
+
+import type { IPlayer } from "../../PersonObjects/IPlayer";
 import { CopyableText } from "../../ui/React/CopyableText";
+import { createProgressBarText } from "../../utils/helpers/createProgressBarText";
+import { convertTimeMsToTimeElapsedString, formatNumber } from "../../utils/StringHelperFunctions";
+import { ActionTypes } from "../data/ActionTypes";
+import { Contracts } from "../data/Contracts";
+import type { IAction } from "../IAction";
+import type { IBladeburner } from "../IBladeburner";
+
 import { ActionLevel } from "./ActionLevel";
 import { Autolevel } from "./Autolevel";
 import { StartButton } from "./StartButton";
-
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
+import { SuccessChance } from "./SuccessChance";
 
 interface IProps {
   bladeburner: IBladeburner;

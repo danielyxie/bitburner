@@ -1,11 +1,12 @@
 // Base class representing a person-like object
-import { Augmentation } from "../Augmentation/Augmentation";
-import { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
+import type { Augmentation } from "../Augmentation/Augmentation";
+import type { IPlayerOwnedAugmentation } from "../Augmentation/PlayerOwnedAugmentation";
 import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
-import { CityName } from "../Locations/data/CityNames";
 import { CONSTANTS } from "../Constants";
-import { calculateSkill } from "./formulas/skill";
+import { CityName } from "../Locations/data/CityNames";
+
 import { calculateIntelligenceBonus } from "./formulas/intelligence";
+import { calculateSkill } from "./formulas/skill";
 
 // Interface that defines a generic object used to track experience/money
 // earnings for tasks

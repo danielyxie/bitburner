@@ -1,43 +1,40 @@
+import type { PlayerAchievement } from "../../Achievements/Achievements";
+import type { Augmentation } from "../../Augmentation/Augmentation";
+import type { IPlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
+import type { IBladeburner } from "../../Bladeburner/IBladeburner";
+import type { ICodingContractReward } from "../../CodingContracts";
+import type { Company } from "../../Company/Company";
+import type { CompanyPosition } from "../../Company/CompanyPosition";
+import { CONSTANTS } from "../../Constants";
+import type { ICorporation } from "../../Corporation/ICorporation";
+import type { Exploit } from "../../Exploits/Exploit";
+import type { Faction } from "../../Faction/Faction";
+import type { IGang } from "../../Gang/IGang";
+import type { HacknetNode } from "../../Hacknet/HacknetNode";
+import type { HacknetServer } from "../../Hacknet/HacknetServer";
+import { HashManager } from "../../Hacknet/HashManager";
+import { CityName } from "../../Locations/data/CityNames";
+import { LocationName } from "../../Locations/data/LocationNames";
+import type { WorkerScript } from "../../Netscript/WorkerScript";
+import type { BaseServer } from "../../Server/BaseServer";
+import type { Server } from "../../Server/Server";
+import type { IPlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
+import type { IMap } from "../../types";
+import type { IRouter } from "../../ui/Router";
+import { getRandomInt } from "../../utils/helpers/getRandomInt";
+import { Generic_fromJSON, Generic_toJSON, Reviver } from "../../utils/JSONReviver";
+import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
+import { cyrb53 } from "../../utils/StringHelperFunctions";
+import type { ISkillProgress } from "../formulas/skill";
+import type { IPlayer } from "../IPlayer";
+import type { Sleeve } from "../Sleeve/Sleeve";
+
 import * as augmentationMethods from "./PlayerObjectAugmentationMethods";
 import * as bladeburnerMethods from "./PlayerObjectBladeburnerMethods";
 import * as corporationMethods from "./PlayerObjectCorporationMethods";
 import * as gangMethods from "./PlayerObjectGangMethods";
 import * as generalMethods from "./PlayerObjectGeneralMethods";
 import * as serverMethods from "./PlayerObjectServerMethods";
-
-import { IMap } from "../../types";
-import { Sleeve } from "../Sleeve/Sleeve";
-import { IPlayerOwnedSourceFile } from "../../SourceFile/PlayerOwnedSourceFile";
-import { Exploit } from "../../Exploits/Exploit";
-import { WorkerScript } from "../../Netscript/WorkerScript";
-import { CompanyPosition } from "../../Company/CompanyPosition";
-import { Server } from "../../Server/Server";
-import { BaseServer } from "../../Server/BaseServer";
-import { HacknetServer } from "../../Hacknet/HacknetServer";
-import { Faction } from "../../Faction/Faction";
-import { Company } from "../../Company/Company";
-import { Augmentation } from "../../Augmentation/Augmentation";
-import { IRouter } from "../../ui/Router";
-import { ICodingContractReward } from "../../CodingContracts";
-
-import { IPlayer } from "../IPlayer";
-import { LocationName } from "../../Locations/data/LocationNames";
-import { IPlayerOwnedAugmentation } from "../../Augmentation/PlayerOwnedAugmentation";
-import { ICorporation } from "../../Corporation/ICorporation";
-import { IGang } from "../../Gang/IGang";
-import { IBladeburner } from "../../Bladeburner/IBladeburner";
-import { HacknetNode } from "../../Hacknet/HacknetNode";
-
-import { HashManager } from "../../Hacknet/HashManager";
-import { CityName } from "../../Locations/data/CityNames";
-
-import { MoneySourceTracker } from "../../utils/MoneySourceTracker";
-import { Reviver, Generic_toJSON, Generic_fromJSON } from "../../utils/JSONReviver";
-import { ISkillProgress } from "../formulas/skill";
-import { PlayerAchievement } from "../../Achievements/Achievements";
-import { cyrb53 } from "../../utils/StringHelperFunctions";
-import { getRandomInt } from "../../utils/helpers/getRandomInt";
-import { CONSTANTS } from "../../Constants";
 
 export class PlayerObject implements IPlayer {
   // Class members

@@ -1,12 +1,11 @@
-import React from "react";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import React from "react";
 
-import { IPlayer } from "../../PersonObjects/IPlayer";
-
-import { Money } from "../../ui/React/Money";
 import { MathJaxWrapper } from "../../MathJaxWrapper";
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import { Money } from "../../ui/React/Money";
 
 type IProps = {
   p: IPlayer;

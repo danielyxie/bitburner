@@ -5,16 +5,15 @@
  */
 import React, { useState } from "react";
 
+import type { IPlayer } from "../../PersonObjects/IPlayer";
+import type { EventEmitter } from "../../utils/EventEmitter";
+import type { OrderTypes } from "../data/OrderTypes";
+import type { PositionTypes } from "../data/PositionTypes";
+import type { IStockMarket } from "../IStockMarket";
+import { Stock } from "../Stock";
+
 import { StockTicker } from "./StockTicker";
 import { StockTickersConfig, TickerDisplayMode } from "./StockTickersConfig";
-
-import { IStockMarket } from "../IStockMarket";
-import { Stock } from "../Stock";
-import { OrderTypes } from "../data/OrderTypes";
-import { PositionTypes } from "../data/PositionTypes";
-
-import { IPlayer } from "../../PersonObjects/IPlayer";
-import { EventEmitter } from "../../utils/EventEmitter";
 
 type txFn = (stock: Stock, shares: number) => boolean;
 type placeOrderFn = (

@@ -1,4 +1,4 @@
-import { IMap } from "../types";
+import type { IMap } from "../types";
 
 // Map of material (by name) to their sizes (how much space it takes in warehouse)
 export const MaterialSizes: IMap<number> = {

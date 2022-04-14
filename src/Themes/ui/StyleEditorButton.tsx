@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import TextFormatIcon from "@mui/icons-material/TextFormat";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import TextFormatIcon from "@mui/icons-material/TextFormat";
+import React, { useState } from "react";
+
 import { StyleEditorModal } from "./StyleEditorModal";
 
 export function StyleEditorButton(): React.ReactElement {
