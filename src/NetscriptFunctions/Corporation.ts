@@ -94,35 +94,35 @@ export function NetscriptCorporation(
 
   function hasUnlockUpgrade(upgradeName: string): boolean {
     const corporation = getCorporation();
-    const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade[2] === upgradeName);
+    const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade.name === upgradeName);
     if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
-    const upgN = upgrade[0];
+    const upgN = upgrade.index;
     return corporation.unlockUpgrades[upgN] === 1;
   }
 
   function getUnlockUpgradeCost(upgradeName: string): number {
-    const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade[2] === upgradeName);
+    const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade.name === upgradeName);
     if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
-    return upgrade[1];
+    return upgrade.price;
   }
 
   function getUpgradeLevel(_upgradeName: string): number {
     const upgradeName = helper.string("levelUpgrade", "upgradeName", _upgradeName);
     const corporation = getCorporation();
-    const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
+    const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade.name === upgradeName);
     if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
-    const upgN = upgrade[0];
+    const upgN = upgrade.index;
     return corporation.upgrades[upgN];
   }
 
   function getUpgradeLevelCost(_upgradeName: string): number {
     const upgradeName = helper.string("levelUpgrade", "upgradeName", _upgradeName);
     const corporation = getCorporation();
-    const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
+    const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade.name === upgradeName);
     if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
-    const upgN = upgrade[0];
-    const baseCost = upgrade[1];
-    const priceMult = upgrade[2];
+    const upgN = upgrade.index;
+    const baseCost = upgrade.basePrice;
+    const priceMult = upgrade.priceMult;
     const level = corporation.upgrades[upgN];
     return baseCost * Math.pow(priceMult, level);
   }
@@ -861,7 +861,7 @@ export function NetscriptCorporation(
       checkAccess("unlockUpgrade");
       const upgradeName = helper.string("unlockUpgrade", "upgradeName", _upgradeName);
       const corporation = getCorporation();
-      const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade[2] === upgradeName);
+      const upgrade = Object.values(CorporationUnlockUpgrades).find((upgrade) => upgrade.name === upgradeName);
       if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
       UnlockUpgrade(corporation, upgrade);
     },
@@ -869,7 +869,7 @@ export function NetscriptCorporation(
       checkAccess("levelUpgrade");
       const upgradeName = helper.string("levelUpgrade", "upgradeName", _upgradeName);
       const corporation = getCorporation();
-      const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade[4] === upgradeName);
+      const upgrade = Object.values(CorporationUpgrades).find((upgrade) => upgrade.name === upgradeName);
       if (upgrade === undefined) throw new Error(`No upgrade named '${upgradeName}'`);
       LevelUpgrade(corporation, upgrade);
     },

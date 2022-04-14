@@ -13,7 +13,7 @@ import { Factions } from "../../Faction/Factions";
 
 import { CorporationConstants } from "../data/Constants";
 import { CorporationUnlockUpgrade, CorporationUnlockUpgrades } from "../data/CorporationUnlockUpgrades";
-import { CorporationUpgrade, CorporationUpgrades } from "../data/CorporationUpgrades";
+import { CorporationUpgrade, CorporationUpgradeIndex, CorporationUpgrades } from "../data/CorporationUpgrades";
 
 import { CONSTANTS } from "../../Constants";
 import { numeralWrapper } from "../../ui/numeralFormat";
@@ -164,9 +164,9 @@ function Upgrades({ rerender }: IUpgradeProps): React.ReactElement {
         <Typography variant="h4">Unlocks</Typography>
         <Grid container>
           {Object.values(CorporationUnlockUpgrades)
-            .filter((upgrade: CorporationUnlockUpgrade) => !corp.unlockUpgrades[upgrade[0]])
+            .filter((upgrade: CorporationUnlockUpgrade) => !corp.unlockUpgrades[upgrade.index])
             .map((upgrade: CorporationUnlockUpgrade) => (
-              <UnlockUpgrade rerender={rerender} upgradeData={upgrade} key={upgrade[0]} />
+              <UnlockUpgrade rerender={rerender} upgradeData={upgrade} key={upgrade.index} />
             ))}
         </Grid>
       </Paper>
@@ -174,9 +174,9 @@ function Upgrades({ rerender }: IUpgradeProps): React.ReactElement {
         <Typography variant="h4">Upgrades</Typography>
         <Grid container>
           {corp.upgrades
-            .map((level: number, i: number) => CorporationUpgrades[i])
+            .map((level: number, i: number) => CorporationUpgrades[i as CorporationUpgradeIndex])
             .map((upgrade: CorporationUpgrade) => (
-              <LevelableUpgrade rerender={rerender} upgrade={upgrade} key={upgrade[0]} />
+              <LevelableUpgrade rerender={rerender} upgrade={upgrade} key={upgrade.index} />
             ))}
         </Grid>
       </Paper>

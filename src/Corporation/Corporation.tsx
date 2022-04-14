@@ -264,8 +264,8 @@ export class Corporation {
 
   //One time upgrades that unlock new features
   unlock(upgrade: CorporationUnlockUpgrade): void {
-    const upgN = upgrade[0],
-      price = upgrade[1];
+    const upgN = upgrade.index,
+      price = upgrade.price;
     while (this.unlockUpgrades.length <= upgN) {
       this.unlockUpgrades.push(0);
     }
@@ -286,10 +286,10 @@ export class Corporation {
 
   //Levelable upgrades
   upgrade(upgrade: CorporationUpgrade): void {
-    const upgN = upgrade[0],
-      basePrice = upgrade[1],
-      priceMult = upgrade[2],
-      upgradeAmt = upgrade[3]; //Amount by which the upgrade multiplier gets increased (additive)
+    const upgN = upgrade.index,
+      basePrice = upgrade.basePrice,
+      priceMult = upgrade.priceMult,
+      upgradeAmt = upgrade.benefit; //Amount by which the upgrade multiplier gets increased (additive)
     while (this.upgrades.length <= upgN) {
       this.upgrades.push(0);
     }

@@ -63,19 +63,19 @@ export function NewCity(corporation: ICorporation, division: IIndustry, city: st
 }
 
 export function UnlockUpgrade(corporation: ICorporation, upgrade: CorporationUnlockUpgrade): void {
-  if (corporation.funds < upgrade[1]) {
+  if (corporation.funds < upgrade.price) {
     throw new Error("Insufficient funds");
   }
-  if (corporation.unlockUpgrades[upgrade[0]] === 1) {
-    throw new Error(`You have already unlocked the ${upgrade[2]} upgrade!`);
+  if (corporation.unlockUpgrades[upgrade.index] === 1) {
+    throw new Error(`You have already unlocked the ${upgrade.name} upgrade!`);
   }
   corporation.unlock(upgrade);
 }
 
 export function LevelUpgrade(corporation: ICorporation, upgrade: CorporationUpgrade): void {
-  const baseCost = upgrade[1];
-  const priceMult = upgrade[2];
-  const level = corporation.upgrades[upgrade[0]];
+  const baseCost = upgrade.basePrice;
+  const priceMult = upgrade.priceMult;
+  const level = corporation.upgrades[upgrade.index];
   const cost = baseCost * Math.pow(priceMult, level);
   if (corporation.funds < cost) {
     throw new Error("Insufficient funds");
