@@ -167,6 +167,7 @@ module.exports = (env, argv) => {
           options: {
             name: "[contenthash].[ext]",
             outputPath: "images",
+            publicPath: `${outputDirectory}/images`,
           },
         },
       ],
