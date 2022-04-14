@@ -58,8 +58,6 @@ export function Info(props: IProps): React.ReactElement {
   const Assignment = props.factionInfo.assignment ?? DefaultAssignment;
 
   const favorGain = props.faction.getFavorGain();
-  const offersWork =
-    props.factionInfo.offerFieldWork || props.factionInfo.offerSecurityWork || props.factionInfo.offerHackingWork;
 
   return (
     <>
