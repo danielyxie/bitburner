@@ -22,8 +22,6 @@ export enum CorporationUpgradeIndex {
 
 // Corporation Upgrades
 // Upgrades for entire corporation, levelable upgrades
-// The data structure is an array with the following format
-//  [index in Corporation upgrades array, base price, price mult, benefit mult (additive), name, desc]
 export const CorporationUpgrades: Record<CorporationUpgradeIndex, CorporationUpgrade> = {
   //Smart factories, increases production
   [CorporationUpgradeIndex.SmartFactories]: {
