@@ -37,7 +37,7 @@ import { ISkillProgress } from "../formulas/skill";
 import { PlayerAchievement } from "../../Achievements/Achievements";
 import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
-import { CONSTANTS } from "src/Constants";
+import { CONSTANTS } from "../../Constants";
 
 export class PlayerObject implements IPlayer {
   // Class members

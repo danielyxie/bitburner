@@ -59,17 +59,20 @@ export function NetscriptExtra(player: IPlayer, workerScript: WorkerScript, help
         player.giveExploit(Exploit.RealityAlteration);
       }
     },
-    rainbow: function (guess: unknown): void {
-      async function tryGuess(): Promise<void> {
-        const verified = await bcrypt.compare(
+    rainbow: function (guess: unknown): boolean {
+      function tryGuess(): boolean {
+        // eslint-disable-next-line no-sync
+        const verified = bcrypt.compareSync(
           helper.string("rainbow", "guess", guess),
           "$2a$10$aertxDEkgor8baVtQDZsLuMwwGYmkRM/ohcA6FjmmzIHQeTCsrCcO",
         );
         if (verified) {
           player.giveExploit(Exploit.INeedARainbow);
+          return true;
         }
+        return false;
       }
-      tryGuess();
+      return tryGuess();
     },
   };
 }
