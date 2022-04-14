@@ -3,11 +3,10 @@ import {
   CorporationUnlockUpgradeIndex,
   CorporationUnlockUpgrades,
 } from "../../Corporation/data/CorporationUnlockUpgrades";
-import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { IPlayer } from "../IPlayer";
 
 export function canAccessCorporation(this: IPlayer): boolean {
-  return this.bitNodeN === 3 || SourceFileFlags[3] > 0;
+  return this.bitNodeN === 3 || this.sourceFileLvl(3) > 0;
 }
 
 export function hasCorporation(this: IPlayer): boolean {
@@ -22,7 +21,7 @@ export function startCorporation(this: IPlayer, corpName: string, additionalShar
     name: corpName,
   });
 
-  if (SourceFileFlags[3] === 3) {
+  if (this.sourceFileLvl(3) === 3) {
     const warehouseApi = CorporationUnlockUpgrades[CorporationUnlockUpgradeIndex.WarehouseAPI].index;
     const OfficeApi = CorporationUnlockUpgrades[CorporationUnlockUpgradeIndex.OfficeAPI].index;
 

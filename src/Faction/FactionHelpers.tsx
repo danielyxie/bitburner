@@ -15,7 +15,6 @@ import {
   getFactionSecurityWorkRepGain,
   getFactionFieldWorkRepGain,
 } from "../PersonObjects/formulas/reputation";
-import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { InvitationEvent } from "./ui/InvitationModal";
@@ -120,13 +119,14 @@ export function purchaseAugmentation(aug: Augmentation, fac: Faction, sing = fal
       aug.baseCost = 750e3 * mult * BitNodeMultipliers.AugmentationMoneyCost;
 
       for (let i = 0; i < Player.queuedAugmentations.length - 1; ++i) {
-        aug.baseCost *= CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
+        aug.baseCost *= CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][Player.sourceFileLvl(11)];
       }
     }
 
     for (const name of Object.keys(Augmentations)) {
       if (Augmentations.hasOwnProperty(name)) {
-        Augmentations[name].baseCost *= CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
+        Augmentations[name].baseCost *=
+          CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][Player.sourceFileLvl(11)];
       }
     }
 

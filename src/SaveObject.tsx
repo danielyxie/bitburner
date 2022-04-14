@@ -6,7 +6,6 @@ import { loadAllGangs, AllGangs } from "./Gang/AllGangs";
 import { Player, loadPlayer } from "./Player";
 import { saveAllServers, loadAllServers, GetAllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
-import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 import { staneksGift, loadStaneksGift } from "./CotMG/Helper";
 
@@ -126,7 +125,7 @@ class BitburnerSaveObject {
     // Save file name is based on current timestamp and BitNode
     const epochTime = Math.round(Date.now() / 1000);
     const bn = Player.bitNodeN;
-    let filename = `bitburnerSave_${epochTime}_BN${bn}x${SourceFileFlags[bn]}.json`;
+    let filename = `bitburnerSave_${epochTime}_BN${bn}x${Player.sourceFileLvl(bn) + 1}.json`;
     if (isRecovery) filename = "RECOVERY" + filename;
     return filename;
   }
