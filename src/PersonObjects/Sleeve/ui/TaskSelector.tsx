@@ -236,7 +236,7 @@ const canDo: {
     [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
   "Workout at Gym": (player: IPlayer, sleeve: Sleeve) =>
     [CityName.Aevum, CityName.Sector12, CityName.Volhaven].includes(sleeve.city),
-  "Perform Bladeburner Actions": (player: IPlayer, sleeve: Sleeve) => player.inBladeburner(),
+  "Perform Bladeburner Actions": (player: IPlayer, _: Sleeve) => player.inBladeburner(),
   "Shock Recovery": (player: IPlayer, sleeve: Sleeve) => sleeve.shock < 100,
   Synchronize: (player: IPlayer, sleeve: Sleeve) => sleeve.sync < 100,
 };

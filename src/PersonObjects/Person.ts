@@ -15,74 +15,74 @@ export abstract class Person implements IPerson {
   /**
    * Stats
    */
-  hacking = 1;
-  strength = 1;
-  defense = 1;
-  dexterity = 1;
-  agility = 1;
-  charisma = 1;
-  intelligence = 1;
-  hp = 10;
-  max_hp = 10;
-  money = 0;
+  hacking;
+  strength;
+  defense;
+  dexterity;
+  agility;
+  charisma;
+  intelligence;
+  hp;
+  max_hp;
+  money;
 
   /**
    * Experience
    */
-  hacking_exp = 0;
-  strength_exp = 0;
-  defense_exp = 0;
-  dexterity_exp = 0;
-  agility_exp = 0;
-  charisma_exp = 0;
-  intelligence_exp = 0;
+  hacking_exp;
+  strength_exp;
+  defense_exp;
+  dexterity_exp;
+  agility_exp;
+  charisma_exp;
+  intelligence_exp;
 
   /**
    * Multipliers
    */
-  hacking_mult = 1;
-  strength_mult = 1;
-  defense_mult = 1;
-  dexterity_mult = 1;
-  agility_mult = 1;
-  charisma_mult = 1;
+  hacking_mult;
+  strength_mult;
+  defense_mult;
+  dexterity_mult;
+  agility_mult;
+  charisma_mult;
 
-  hacking_exp_mult = 1;
-  strength_exp_mult = 1;
-  defense_exp_mult = 1;
-  dexterity_exp_mult = 1;
-  agility_exp_mult = 1;
-  charisma_exp_mult = 1;
+  hacking_exp_mult;
+  strength_exp_mult;
+  defense_exp_mult;
+  dexterity_exp_mult;
+  agility_exp_mult;
+  charisma_exp_mult;
 
-  hacking_chance_mult = 1;
-  hacking_speed_mult = 1;
-  hacking_money_mult = 1;
-  hacking_grow_mult = 1;
+  hacking_chance_mult;
+  hacking_speed_mult;
+  hacking_money_mult;
+  hacking_grow_mult;
 
-  company_rep_mult = 1;
-  faction_rep_mult = 1;
+  company_rep_mult;
+  faction_rep_mult;
 
-  crime_money_mult = 1;
-  crime_success_mult = 1;
+  crime_money_mult;
+  crime_success_mult;
 
-  work_money_mult = 1;
+  work_money_mult;
 
-  hacknet_node_money_mult = 1;
-  hacknet_node_purchase_cost_mult = 1;
-  hacknet_node_ram_cost_mult = 1;
-  hacknet_node_core_cost_mult = 1;
-  hacknet_node_level_cost_mult = 1;
+  hacknet_node_money_mult;
+  hacknet_node_purchase_cost_mult;
+  hacknet_node_ram_cost_mult;
+  hacknet_node_core_cost_mult;
+  hacknet_node_level_cost_mult;
 
-  bladeburner_max_stamina_mult = 1;
-  bladeburner_stamina_gain_mult = 1;
-  bladeburner_analysis_mult = 1;
-  bladeburner_success_chance_mult = 1;
+  bladeburner_max_stamina_mult;
+  bladeburner_stamina_gain_mult;
+  bladeburner_analysis_mult;
+  bladeburner_success_chance_mult;
 
   /**
    * Augmentations
    */
-  augmentations: IPlayerOwnedAugmentation[] = [];
-  queuedAugmentations: IPlayerOwnedAugmentation[] = [];
+  augmentations: IPlayerOwnedAugmentation[];
+  queuedAugmentations: IPlayerOwnedAugmentation[];
 
   /**
    * City that the person is in
@@ -100,6 +100,97 @@ export abstract class Person implements IPerson {
   calculateSkill: (exp: number, mult: number) => number;
   regenerateHp: (amt: number) => void;
   queryStatFromString: (str: string) => number;
+
+  constructor() {
+    /**
+     * Stats
+     */
+    this.hacking = 1;
+    this.strength = 1;
+    this.defense = 1;
+    this.dexterity = 1;
+    this.agility = 1;
+    this.charisma = 1;
+    this.intelligence = 1;
+    this.hp = 10;
+    this.max_hp = 10;
+    this.money = 0;
+
+    /**
+     * Experience
+     */
+    this.hacking_exp = 0;
+    this.strength_exp = 0;
+    this.defense_exp = 0;
+    this.dexterity_exp = 0;
+    this.agility_exp = 0;
+    this.charisma_exp = 0;
+    this.intelligence_exp = 0;
+
+    /**
+     * Multipliers
+     */
+    this.hacking_mult = 1;
+    this.strength_mult = 1;
+    this.defense_mult = 1;
+    this.dexterity_mult = 1;
+    this.agility_mult = 1;
+    this.charisma_mult = 1;
+
+    this.hacking_exp_mult = 1;
+    this.strength_exp_mult = 1;
+    this.defense_exp_mult = 1;
+    this.dexterity_exp_mult = 1;
+    this.agility_exp_mult = 1;
+    this.charisma_exp_mult = 1;
+
+    this.hacking_chance_mult = 1;
+    this.hacking_speed_mult = 1;
+    this.hacking_money_mult = 1;
+    this.hacking_grow_mult = 1;
+
+    this.company_rep_mult = 1;
+    this.faction_rep_mult = 1;
+
+    this.crime_money_mult = 1;
+    this.crime_success_mult = 1;
+
+    this.work_money_mult = 1;
+
+    this.hacknet_node_money_mult = 1;
+    this.hacknet_node_purchase_cost_mult = 1;
+    this.hacknet_node_ram_cost_mult = 1;
+    this.hacknet_node_core_cost_mult = 1;
+    this.hacknet_node_level_cost_mult = 1;
+
+    this.bladeburner_max_stamina_mult = 1;
+    this.bladeburner_stamina_gain_mult = 1;
+    this.bladeburner_analysis_mult = 1;
+    this.bladeburner_success_chance_mult = 1;
+
+    /**
+     * Augmentations
+     */
+    this.augmentations = [];
+    this.queuedAugmentations = [];
+
+    /**
+     * City that the person is in
+     */
+    this.city = CityName.Sector12;
+
+    this.gainHackingExp = generalMethods.gainHackingExp;
+    this.gainStrengthExp = generalMethods.gainStrengthExp;
+    this.gainDefenseExp = generalMethods.gainDefenseExp;
+    this.gainDexterityExp = generalMethods.gainDexterityExp;
+    this.gainAgilityExp = generalMethods.gainAgilityExp;
+    this.gainCharismaExp = generalMethods.gainCharismaExp;
+    this.gainIntelligenceExp = generalMethods.gainIntelligenceExp;
+    this.gainStats = generalMethods.gainStats;
+    this.calculateSkill = generalMethods.calculateSkill;
+    this.regenerateHp = generalMethods.regenerateHp;
+    this.queryStatFromString = generalMethods.queryStatFromString;
+  }
 
   /**
    * Updates this object's multipliers for the given augmentation
@@ -237,20 +328,6 @@ export abstract class Person implements IPerson {
   abstract takeDamage(amt: number): boolean;
 
   abstract whoAmI(): string;
-
-  constructor() {
-    this.gainHackingExp = generalMethods.gainHackingExp;
-    this.gainStrengthExp = generalMethods.gainStrengthExp;
-    this.gainDefenseExp = generalMethods.gainDefenseExp;
-    this.gainDexterityExp = generalMethods.gainDexterityExp;
-    this.gainAgilityExp = generalMethods.gainAgilityExp;
-    this.gainCharismaExp = generalMethods.gainCharismaExp;
-    this.gainIntelligenceExp = generalMethods.gainIntelligenceExp;
-    this.gainStats = generalMethods.gainStats;
-    this.calculateSkill = generalMethods.calculateSkill;
-    this.regenerateHp = generalMethods.regenerateHp;
-    this.queryStatFromString = generalMethods.queryStatFromString;
-  }
 }
 
 Reviver.constructors.Person = Person;

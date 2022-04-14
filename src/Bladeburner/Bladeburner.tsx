@@ -1456,9 +1456,7 @@ export class Bladeburner implements IBladeburner {
             }
             this.teamLost += losses;
             if (this.logging.blackops) {
-              this.log(
-                `${person.whoAmI()}: ` + "You lost " + formatNumber(losses, 0) + " team members during " + action.name,
-              );
+              this.log(`${person.whoAmI()}:  You lost ${formatNumber(losses, 0)} team members during ${action.name}`);
             }
           }
         } catch (e: any) {
@@ -1595,7 +1593,7 @@ export class Bladeburner implements IBladeburner {
           this.operations[operation].count += (60 * 3 * growthF()) / BladeburnerConstants.ActionCountGrowthPeriod;
         }
         if (this.logging.general) {
-          this.log(`${person.whoAmI()}: ` + `Incited violence in the synthoid communities.`);
+          this.log(`${person.whoAmI()}: Incited violence in the synthoid communities.`);
         }
         for (const cityName of Object.keys(this.cities)) {
           const city = this.cities[cityName];

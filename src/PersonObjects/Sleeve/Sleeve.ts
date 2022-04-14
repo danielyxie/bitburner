@@ -1091,8 +1091,8 @@ export class Sleeve extends Person {
         break;
       case "Recruitment":
         time = this.getBladeburnerActionTime(p, "General", action);
-        const recruitTime = (p.bladeburner?.getRecruitmentTime(this) ?? 0) * 1000;
-        this.gainRatesForTask.cha = 2 * BladeburnerConstants.BaseStatGain * recruitTime;
+        this.gainRatesForTask.cha =
+          2 * BladeburnerConstants.BaseStatGain * (p.bladeburner?.getRecruitmentTime(this) ?? 0) * 1000;
         this.currentTaskLocation = (p.bladeburner?.getRecruitmentSuccessChance(this) ?? 0).toString() + "%";
         break;
       case "Diplomacy":

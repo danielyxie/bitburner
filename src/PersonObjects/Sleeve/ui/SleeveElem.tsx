@@ -113,7 +113,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
     case SleeveTaskType.Gym:
       desc = <>This sleeve is currently working out at {props.sleeve.currentTaskLocation}.</>;
       break;
-    case SleeveTaskType.Bladeburner:
+    case SleeveTaskType.Bladeburner: {
       let contract = "";
       if (props.sleeve.bbContract !== "------") {
         contract = ` - ${props.sleeve.bbContract} (Success Rate: ${props.sleeve.currentTaskLocation})`;
@@ -125,6 +125,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
         </>
       );
       break;
+    }
     case SleeveTaskType.Recovery:
       desc = (
         <>
