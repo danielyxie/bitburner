@@ -31,7 +31,6 @@ import { saveObject, loadGame } from "./SaveObject";
 import { initForeignServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
 import { ThemeEvents } from "./Themes/ui/Theme";
-import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { initSymbolToStockMap, processStockPrices } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
 import { Sleeve } from "./PersonObjects/Sleeve/Sleeve";
@@ -255,7 +254,6 @@ const Engine: {
       ThemeEvents.emit();
 
       initBitNodeMultipliers(Player);
-      updateSourceFileFlags(Player);
       initAugmentations(); // Also calls Player.reapplyAllAugmentations()
       Player.reapplyAllSourceFiles();
       if (Player.hasWseAccount) {
@@ -438,7 +436,6 @@ const Engine: {
       initCompanies();
       initFactions();
       initAugmentations();
-      updateSourceFileFlags(Player);
 
       // Start interactive tutorial
       iTutorialStart();

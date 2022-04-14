@@ -20,7 +20,6 @@ import { LiteratureNames } from "./Literature/data/LiteratureNames";
 
 import { GetServer, AddToAllServers, initForeignServers, prestigeAllServers } from "./Server/AllServers";
 import { prestigeHomeComputer } from "./Server/ServerHelpers";
-import { updateSourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { SpecialServers } from "./Server/data/SpecialServers";
 import { deleteStockMarket, initStockMarket, initSymbolToStockMap } from "./StockMarket/StockMarket";
 import { Terminal } from "./Terminal";
@@ -174,7 +173,6 @@ export function prestigeAugmentation(): void {
 // Prestige by destroying Bit Node and gaining a Source File
 export function prestigeSourceFile(flume: boolean): void {
   initBitNodeMultipliers(Player);
-  updateSourceFileFlags(Player);
 
   Player.prestigeSourceFile();
   prestigeWorkerScripts(); // Delete all Worker Scripts objects
