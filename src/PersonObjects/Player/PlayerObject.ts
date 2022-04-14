@@ -304,8 +304,8 @@ export class PlayerObject implements IPlayer {
   graftAugmentationWork: (numCycles: number) => boolean;
   finishGraftAugmentationWork: (cancelled: boolean) => string;
   applyEntropy: (stacks?: number) => void;
-  whoAmI(): string{
-    return 'Player';
+  whoAmI(): string {
+    return "Player";
   }
 
   constructor() {

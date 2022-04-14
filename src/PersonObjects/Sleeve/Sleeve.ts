@@ -225,7 +225,7 @@ export class Sleeve extends Person {
       const bb = p.bladeburner;
       if (bb === null) {
         const errorLogText = `bladeburner is null`;
-        console.error(`Function: sleeves.finishTask; Message: '${errorLogText}'`)
+        console.error(`Function: sleeves.finishTask; Message: '${errorLogText}'`);
         this.resetTaskStatus(p);
         return retValue;
       }
@@ -240,25 +240,25 @@ export class Sleeve extends Person {
         let type: string;
         let name: string;
         if (this.bbAction === "Take on Contracts") {
-          type = 'Contracts';
+          type = "Contracts";
           name = this.bbContract;
         } else {
-          type = 'General';
+          type = "General";
           name = this.bbAction;
         }
 
         const actionIdent = bb.getActionIdFromTypeAndName(type, name);
-        if(actionIdent === null) {
+        if (actionIdent === null) {
           const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-          console.error(`Function: sleeves.finishTask; Message: '${errorLogText}'`)
+          console.error(`Function: sleeves.finishTask; Message: '${errorLogText}'`);
           this.resetTaskStatus(p);
           return retValue;
         }
 
         const action = bb.getActionObject(actionIdent);
-        if((action?.count ?? 0) > 0) {
+        if ((action?.count ?? 0) > 0) {
           const bbRetValue = bb.completeAction(p, this, actionIdent);
-          if(bbRetValue) {
+          if (bbRetValue) {
             retValue = this.gainExperience(p, bbRetValue);
             this.gainMoney(p, bbRetValue);
 
@@ -633,13 +633,13 @@ export class Sleeve extends Person {
    * Resets all parameters used to keep information about the current task
    */
   resetTaskStatus(p: IPlayer): void {
-    if (this.bbAction == 'Support main sleeve') {
+    if (this.bbAction == "Support main sleeve") {
       p.bladeburner?.sleeveSupport(false);
     }
     if (this.currentTask == SleeveTaskType.Class) {
       const retVal = createTaskTracker();
       retVal.int = CONSTANTS.IntelligenceClassBaseExpGain * Math.round(this.currentTaskTime / 1000);
-      this.gainExperience(p, retVal);//Wont be shared with other sleeves
+      this.gainExperience(p, retVal); //Wont be shared with other sleeves
     }
     this.earningsForTask = createTaskTracker();
     this.gainRatesForTask = createTaskTracker();
@@ -1080,23 +1080,23 @@ export class Sleeve extends Person {
     this.gainRatesForTask.agi = 0;
     this.gainRatesForTask.cha = 0;
     this.gainRatesForTask.money = 0;
-    this.currentTaskLocation = '';
+    this.currentTaskLocation = "";
 
     let time = 0;
     switch (action) {
       case "Field Analysis":
-        time = this.getBladeburnerActionTime(p, 'General', action);
+        time = this.getBladeburnerActionTime(p, "General", action);
         this.gainRatesForTask.hack = 20 * this.hacking_exp_mult;
         this.gainRatesForTask.cha = 20 * this.charisma_exp_mult;
         break;
       case "Recruitment":
-        time = this.getBladeburnerActionTime(p, 'General', action);
+        time = this.getBladeburnerActionTime(p, "General", action);
         const recruitTime = (p.bladeburner?.getRecruitmentTime(this) ?? 0) * 1000;
         this.gainRatesForTask.cha = 2 * BladeburnerConstants.BaseStatGain * recruitTime;
-        this.currentTaskLocation = (p.bladeburner?.getRecruitmentSuccessChance(this) ?? 0).toString() + '%';
+        this.currentTaskLocation = (p.bladeburner?.getRecruitmentSuccessChance(this) ?? 0).toString() + "%";
         break;
       case "Diplomacy":
-        time = this.getBladeburnerActionTime(p, 'General', action);
+        time = this.getBladeburnerActionTime(p, "General", action);
         break;
       case "Infiltrate synthoids":
         time = 60000;
@@ -1106,9 +1106,9 @@ export class Sleeve extends Person {
         time = 0;
         break;
       case "Take on Contracts":
-        time = this.getBladeburnerActionTime(p, 'Contracts', contract);
-        this.contractGainRates(p, 'Contracts', contract);
-        this.currentTaskLocation = this.contractSuccessChance(p, 'Contracts', contract);
+        time = this.getBladeburnerActionTime(p, "Contracts", contract);
+        this.contractGainRates(p, "Contracts", contract);
+        this.currentTaskLocation = this.contractSuccessChance(p, "Contracts", contract);
         break;
     }
 
@@ -1121,41 +1121,41 @@ export class Sleeve extends Person {
 
   contractSuccessChance(p: IPlayer, type: string, name: string): string {
     const bb = p.bladeburner;
-    if(bb === null){
+    if (bb === null) {
       const errorLogText = `bladeburner is null`;
-      console.error(`Function: sleeves.contractSuccessChance; Message: '${errorLogText}'`)
-      return '0%';
+      console.error(`Function: sleeves.contractSuccessChance; Message: '${errorLogText}'`);
+      return "0%";
     }
     const chances = bb.getActionEstimatedSuccessChanceNetscriptFn(this, type, name);
-    if(typeof chances === 'string'){
-      console.error(`Function: sleeves.contractSuccessChance; Message: '${chances}'`)
-      return '0%';
+    if (typeof chances === "string") {
+      console.error(`Function: sleeves.contractSuccessChance; Message: '${chances}'`);
+      return "0%";
     }
-    if(chances[0] >= 1) {
-      return '100%';
+    if (chances[0] >= 1) {
+      return "100%";
     } else {
-      return `${chances[0]*100}% - ${chances[1]*100}%`;
+      return `${chances[0] * 100}% - ${chances[1] * 100}%`;
     }
   }
 
   contractGainRates(p: IPlayer, type: string, name: string): void {
     const bb = p.bladeburner;
-    if(bb === null){
+    if (bb === null) {
       const errorLogText = `bladeburner is null`;
-      console.error(`Function: sleeves.contractGainRates; Message: '${errorLogText}'`)
+      console.error(`Function: sleeves.contractGainRates; Message: '${errorLogText}'`);
       return;
     }
     const actionIdent = bb.getActionIdFromTypeAndName(type, name);
-    if(actionIdent === null) {
+    if (actionIdent === null) {
       const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-      console.error(`Function: sleeves.contractGainRates; Message: '${errorLogText}'`)
+      console.error(`Function: sleeves.contractGainRates; Message: '${errorLogText}'`);
       this.resetTaskStatus(p);
       return;
     }
     const action = bb.getActionObject(actionIdent);
-    if(action === null) {
+    if (action === null) {
       const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-      console.error(`Function: sleeves.contractGainRates; Message: '${errorLogText}'`)
+      console.error(`Function: sleeves.contractGainRates; Message: '${errorLogText}'`);
       this.resetTaskStatus(p);
       return;
     }
@@ -1167,28 +1167,30 @@ export class Sleeve extends Person {
     this.gainRatesForTask.agi = retValue.agi;
     this.gainRatesForTask.cha = retValue.cha;
     const rewardMultiplier = Math.pow(action.rewardFac, action.level - 1);
-    this.gainRatesForTask.money = BladeburnerConstants.ContractBaseMoneyGain * rewardMultiplier * bb.skillMultipliers.money;
+    this.gainRatesForTask.money =
+      BladeburnerConstants.ContractBaseMoneyGain * rewardMultiplier * bb.skillMultipliers.money;
   }
 
-  getBladeburnerActionTime(p: IPlayer, type: string, name: string): number{//Maybe find workerscript and use original
+  getBladeburnerActionTime(p: IPlayer, type: string, name: string): number {
+    //Maybe find workerscript and use original
     const bb = p.bladeburner;
-    if(bb === null){
+    if (bb === null) {
       const errorLogText = `bladeburner is null`;
-      console.error(`Function: sleeves.getBladeburnerActionTime; Message: '${errorLogText}'`)
+      console.error(`Function: sleeves.getBladeburnerActionTime; Message: '${errorLogText}'`);
       return -1;
     }
 
     const time = bb.getActionTimeNetscriptFn(this, type, name);
-    if(typeof time === 'string'){
+    if (typeof time === "string") {
       const errorLogText = `Invalid action: type='${type}' name='${name}'`;
-      console.error(`Function: sleeves.getBladeburnerActionTime; Message: '${errorLogText}'`)
+      console.error(`Function: sleeves.getBladeburnerActionTime; Message: '${errorLogText}'`);
       return -1;
     } else {
       return time;
     }
   }
 
-  takeDamage(amt: number):boolean {
+  takeDamage(amt: number): boolean {
     if (typeof amt !== "number") {
       console.warn(`Player.takeDamage() called without a numeric argument: ${amt}`);
       return false;
@@ -1205,7 +1207,7 @@ export class Sleeve extends Person {
   }
 
   whoAmI(): string {
-    return 'Sleeve';
+    return "Sleeve";
   }
 
   /**

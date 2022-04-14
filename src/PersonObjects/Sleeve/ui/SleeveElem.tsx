@@ -114,11 +114,16 @@ export function SleeveElem(props: IProps): React.ReactElement {
       desc = <>This sleeve is currently working out at {props.sleeve.currentTaskLocation}.</>;
       break;
     case SleeveTaskType.Bladeburner:
-      let contract = '';
-      if (props.sleeve.bbContract !== '------') {
+      let contract = "";
+      if (props.sleeve.bbContract !== "------") {
         contract = ` - ${props.sleeve.bbContract} (Success Rate: ${props.sleeve.currentTaskLocation})`;
       }
-      desc = <>This sleeve is currently attempting to {props.sleeve.bbAction}{contract}</>
+      desc = (
+        <>
+          This sleeve is currently attempting to {props.sleeve.bbAction}
+          {contract}
+        </>
+      );
       break;
     case SleeveTaskType.Recovery:
       desc = (
@@ -186,10 +191,10 @@ export function SleeveElem(props: IProps): React.ReactElement {
               </Button>
               <Typography>{desc}</Typography>
               <Typography>
-                {(props.sleeve.currentTask === SleeveTaskType.Crime
-                || props.sleeve.currentTask === SleeveTaskType.Bladeburner)
-                && props.sleeve.currentTaskMaxTime > 0
-                && createProgressBarText({
+                {(props.sleeve.currentTask === SleeveTaskType.Crime ||
+                  props.sleeve.currentTask === SleeveTaskType.Bladeburner) &&
+                  props.sleeve.currentTaskMaxTime > 0 &&
+                  createProgressBarText({
                     progress: props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime,
                     totalTicks: 25,
                   })}

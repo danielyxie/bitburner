@@ -22,7 +22,14 @@ const universitySelectorOptions: string[] = [
 
 const gymSelectorOptions: string[] = ["Train Strength", "Train Defense", "Train Dexterity", "Train Agility"];
 
-const bladeburnerSelectorOptions: string[] = ["Field Analysis", "Recruitment", "Diplomacy", "Infiltrate synthoids", "Support main sleeve", "Take on Contracts"];
+const bladeburnerSelectorOptions: string[] = [
+  "Field Analysis",
+  "Recruitment",
+  "Diplomacy",
+  "Infiltrate synthoids",
+  "Support main sleeve",
+  "Take on Contracts",
+];
 
 interface IProps {
   sleeve: Sleeve;
@@ -86,7 +93,7 @@ function possibleFactions(player: IPlayer, sleeve: Sleeve): string[] {
 
 function possibleContracts(player: IPlayer, sleeve: Sleeve): string[] {
   const bb = player.bladeburner;
-  if(bb === null){
+  if (bb === null) {
     return ["------"];
   }
   let contracts = bb.getContractNamesNetscriptFn();
@@ -94,12 +101,11 @@ function possibleContracts(player: IPlayer, sleeve: Sleeve): string[] {
     if (sleeve === otherSleeve) {
       continue;
     }
-    if (otherSleeve.currentTask === SleeveTaskType.Bladeburner
-      && otherSleeve.bbAction == 'Take on Contracts') {
-        contracts = contracts.filter(x => x != otherSleeve.bbContract);
+    if (otherSleeve.currentTask === SleeveTaskType.Bladeburner && otherSleeve.bbAction == "Take on Contracts") {
+      contracts = contracts.filter((x) => x != otherSleeve.bbContract);
     }
   }
-  if(contracts.length === 0){
+  if (contracts.length === 0) {
     return ["------"];
   }
   return contracts;
@@ -194,12 +200,13 @@ const tasks: {
     return {
       first: bladeburnerSelectorOptions,
       second: (s1: string) => {
-        if(s1 === "Take on Contracts"){
+        if (s1 === "Take on Contracts") {
           return possibleContracts(player, sleeve);
         } else {
           return ["------"];
         }
-    } };
+      },
+    };
   },
   "Shock Recovery": (): ITaskDetails => {
     return { first: ["------"], second: () => ["------"] };
