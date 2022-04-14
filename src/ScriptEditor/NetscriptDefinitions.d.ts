@@ -3258,7 +3258,7 @@ export interface CodingContract {
    * Attempts to solve the Coding Contract with the provided solution.
    *
    * @param answer - Solution for the contract.
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @param opts - Optional parameters for configuring function behavior.
    * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
@@ -3273,7 +3273,7 @@ export interface CodingContract {
    * Returns a name describing the type of problem posed by the Coding Contract.
    * (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Name describing the type of problem posed by the Coding Contract.
    */
@@ -3286,7 +3286,7 @@ export interface CodingContract {
    *
    * Get the full text description for the problem posed by the Coding Contract.
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Contract’s text description.
    */
@@ -3314,7 +3314,7 @@ export interface CodingContract {
    *
    * Get the number of tries remaining on the contract before it self-destructs.
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns How many attempts are remaining for the contract;
    */
@@ -5109,8 +5109,7 @@ export interface NS {
    * PID stands for Process ID. The PID is a unique identifier for each script.
    * The PID will always be a positive integer.
    *
-   * Running this function with a numThreads argument of 0 will return 0 without running the script.
-   * However, running this function with a negative numThreads argument will cause a runtime error.
+   * Running this function with 0 or a negative numThreads argument will cause a runtime error.
    *
    * @example
    * ```ts
