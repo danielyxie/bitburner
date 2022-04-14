@@ -89,6 +89,18 @@ export abstract class Person implements IPerson {
    */
   city: CityName = CityName.Sector12;
 
+  gainHackingExp: (exp: number) => void;
+  gainStrengthExp: (exp: number) => void;
+  gainDefenseExp: (exp: number) => void;
+  gainDexterityExp: (exp: number) => void;
+  gainAgilityExp: (exp: number) => void;
+  gainCharismaExp: (exp: number) => void;
+  gainIntelligenceExp: (exp: number) => void;
+  gainStats: (retValue: ITaskTracker) => void;
+  calculateSkill: (exp: number, mult: number) => number;
+  regenerateHp: (amt: number) => void;
+  queryStatFromString: (str: string) => number;
+
   /**
    * Updates this object's multipliers for the given augmentation
    */
@@ -226,17 +238,6 @@ export abstract class Person implements IPerson {
 
   abstract whoAmI(): string;
 
-  gainHackingExp: (exp: number) => void;
-  gainStrengthExp: (exp: number) => void;
-  gainDefenseExp: (exp: number) => void;
-  gainDexterityExp: (exp: number) => void;
-  gainAgilityExp: (exp: number) => void;
-  gainCharismaExp: (exp: number) => void;
-  gainIntelligenceExp: (exp: number) => void;
-  gainStats: (retValue: ITaskTracker) => void;
-  calculateSkill: (exp: number, mult: number) => number;
-  regenerateHp: (amt: number) => void;
-  queryStatFromString: (str: string) => number;
   constructor() {
     this.gainHackingExp = generalMethods.gainHackingExp;
     this.gainStrengthExp = generalMethods.gainStrengthExp;

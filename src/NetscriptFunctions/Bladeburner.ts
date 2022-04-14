@@ -137,7 +137,7 @@ export function NetscriptBladeburner(
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       try {
-        let time = bladeburner.getActionTimeNetscriptFn(player, type, name);
+        const time = bladeburner.getActionTimeNetscriptFn(player, type, name);
         if(typeof time === 'string'){
           const errorLogText = `Invalid action: type='${type}' name='${name}'`;
           workerScript.log("bladeburner.getActionTime", () => errorLogText);
@@ -157,7 +157,7 @@ export function NetscriptBladeburner(
       const bladeburner = player.bladeburner;
       if (bladeburner === null) throw new Error("Should not be called without Bladeburner");
       try {
-        let chance = bladeburner.getActionEstimatedSuccessChanceNetscriptFn(player, type, name);
+        const chance = bladeburner.getActionEstimatedSuccessChanceNetscriptFn(player, type, name);
         if(typeof chance === 'string'){
           const errorLogText = `Invalid action: type='${type}' name='${name}'`;
           workerScript.log("bladeburner.getActionTime", () => errorLogText);

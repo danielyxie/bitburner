@@ -10,7 +10,6 @@ import { FactionWorkType } from "../../../Faction/FactionWorkTypeEnum";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FactionNames } from "../../../Faction/data/FactionNames";
-import { Contract } from "../../../Bladeburner/Contract";
 
 const universitySelectorOptions: string[] = [
   "Study Computer Science",
@@ -95,7 +94,7 @@ function possibleContracts(player: IPlayer, sleeve: Sleeve): string[] {
     if (sleeve === otherSleeve) {
       continue;
     }
-    if (otherSleeve.currentTask === SleeveTaskType.Bladeburner 
+    if (otherSleeve.currentTask === SleeveTaskType.Bladeburner
       && otherSleeve.bbAction == 'Take on Contracts') {
         contracts = contracts.filter(x => x != otherSleeve.bbContract);
     }
@@ -192,8 +191,8 @@ const tasks: {
     return { first: gymSelectorOptions, second: () => gyms };
   },
   "Perform Bladeburner Actions": (player: IPlayer, sleeve: Sleeve): ITaskDetails => {
-    return { 
-      first: bladeburnerSelectorOptions, 
+    return {
+      first: bladeburnerSelectorOptions,
       second: (s1: string) => {
         if(s1 === "Take on Contracts"){
           return possibleContracts(player, sleeve);

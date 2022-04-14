@@ -38,7 +38,6 @@ import { WorkerScript } from "../Netscript/WorkerScript";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { BlackOperationNames } from "./data/BlackOperationNames";
 import { KEY } from "../utils/helpers/keyCodes";
-import { Player } from "src/Player";
 
 interface BlackOpsAttempt {
   error?: string;
@@ -1022,7 +1021,7 @@ export class Bladeburner implements IBladeburner {
     const unweightedGain = time * BladeburnerConstants.BaseStatGain * successMult * difficultyMult;
     const unweightedIntGain = time * BladeburnerConstants.BaseIntGain * successMult * difficultyMult;
     const skillMult = this.skillMultipliers.expGain;
-    
+
     return {
       hack: unweightedGain * action.weights.hack * skillMult,
       str: unweightedGain * action.weights.str * skillMult,
@@ -1136,7 +1135,7 @@ export class Bladeburner implements IBladeburner {
       const losses = getRandomInt(0, max);
       this.teamSize -= losses;
       if(this.teamSize < this.sleeveSize) {
-        let sup = player.sleeves.filter(x => x.bbAction == 'Support main sleeve');
+        const sup = player.sleeves.filter(x => x.bbAction == 'Support main sleeve');
         for(let i = 0; i > (this.teamSize-this.sleeveSize); i--){
           const r = Math.floor(Math.random() * sup.length);
           sup[r].takeDamage(sup[r].max_hp);
@@ -1314,7 +1313,7 @@ export class Bladeburner implements IBladeburner {
                 this.log(`${person.whoAmI()}: ` + action.name + " successfully completed! Gained " + formatNumber(gain, 3) + " rank");
               } else if (!isOperation && this.logging.contracts) {
                 this.log(
-                  `${person.whoAmI()}: ` + 
+                  `${person.whoAmI()}: ` +
                   action.name +
                     " contract successfully completed! Gained " +
                     formatNumber(gain, 3) +
@@ -1422,7 +1421,7 @@ export class Bladeburner implements IBladeburner {
 
             if (this.logging.blackops) {
               this.log(
-                `${person.whoAmI()}: ` + 
+                `${person.whoAmI()}: ` +
                 action.name +
                   " failed! Lost " +
                   formatNumber(rankLoss, 1) +
@@ -1440,7 +1439,7 @@ export class Bladeburner implements IBladeburner {
             const losses = getRandomInt(1, teamLossMax);
             this.teamSize -= losses;
             if(this.teamSize < this.sleeveSize) {
-              let sup = player.sleeves.filter(x => x.bbAction == 'Support main sleeve');
+              const sup = player.sleeves.filter(x => x.bbAction == 'Support main sleeve');
               for(let i = 0; i > (this.teamSize-this.sleeveSize); i--){
                 const r = Math.floor(Math.random() * sup.length);
                 sup[r].takeDamage(sup[r].max_hp);
@@ -1472,7 +1471,7 @@ export class Bladeburner implements IBladeburner {
         this.staminaBonus += staminaGain;
         if (this.logging.general) {
           this.log(
-            `${person.whoAmI()}: ` + 
+            `${person.whoAmI()}: ` +
             "Training completed. Gained: " +
               formatNumber(strExpGain, 1) +
               " str exp, " +
@@ -1509,7 +1508,7 @@ export class Bladeburner implements IBladeburner {
         this.getCurrentCity().improvePopulationEstimateByPercentage(eff * this.skillMultipliers.successChanceEstimate);
         if (this.logging.general) {
           this.log(
-            `${person.whoAmI()}: ` + 
+            `${person.whoAmI()}: ` +
             `Field analysis completed. Gained ${formatNumber(rankGain, 2)} rank, ` +
               `${formatNumber(hackingExpGain, 1)} hacking exp, and ` +
               `${formatNumber(charismaExpGain, 1)} charisma exp`,
@@ -1655,7 +1654,7 @@ export class Bladeburner implements IBladeburner {
     this.actionTimeOverflow = 0;
     if (this.actionTimeCurrent >= this.actionTimeToComplete) {
       this.actionTimeOverflow = this.actionTimeCurrent - this.actionTimeToComplete;
-      let retValue = this.completeAction(player, player, this.action);
+      const retValue = this.completeAction(player, player, this.action);
       player.gainMoney(retValue.money, "bladeburner");
       player.gainStats(retValue);
       // Operation Daedalus

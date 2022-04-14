@@ -10,7 +10,7 @@ export interface ITaskTracker {
     int: number;
     money: number;
   }
-  
+
   export function createTaskTracker(): ITaskTracker {
     return {
       hack: 0,

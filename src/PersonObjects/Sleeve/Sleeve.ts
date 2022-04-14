@@ -189,7 +189,7 @@ export class Sleeve extends Person {
    */
   finishTask(p: IPlayer): ITaskTracker {
     let retValue: ITaskTracker = createTaskTracker(); // Amount of exp to be gained by other sleeves
-    
+
     if (this.currentTask === SleeveTaskType.Crime) {
       // For crimes, all experience and money is gained at the end
       if (this.currentTaskTime >= this.currentTaskMaxTime) {
@@ -229,7 +229,7 @@ export class Sleeve extends Person {
         this.resetTaskStatus(p);
         return retValue;
       }
-      
+
       if (this.currentTaskTime >= this.currentTaskMaxTime) {
         if (this.bbAction === "Infiltrate synthoids") {
           bb.infiltrateSynthoidCommunities();
@@ -637,7 +637,7 @@ export class Sleeve extends Person {
       p.bladeburner?.sleeveSupport(false);
     }
     if (this.currentTask == SleeveTaskType.Class) {
-      let retVal = createTaskTracker();
+      const retVal = createTaskTracker();
       retVal.int = CONSTANTS.IntelligenceClassBaseExpGain * Math.round(this.currentTaskTime / 1000);
       this.gainExperience(p, retVal);//Wont be shared with other sleeves
     }
@@ -1091,7 +1091,7 @@ export class Sleeve extends Person {
         break;
       case "Recruitment":
         time = this.getBladeburnerActionTime(p, 'General', action);
-        const recruitTime = p.bladeburner?.getRecruitmentTime(this) ?? 0 * 1000;
+        const recruitTime = (p.bladeburner?.getRecruitmentTime(this) ?? 0) * 1000;
         this.gainRatesForTask.cha = 2 * BladeburnerConstants.BaseStatGain * recruitTime;
         this.currentTaskLocation = (p.bladeburner?.getRecruitmentSuccessChance(this) ?? 0).toString() + '%';
         break;
@@ -1167,7 +1167,7 @@ export class Sleeve extends Person {
     this.gainRatesForTask.agi = retValue.agi;
     this.gainRatesForTask.cha = retValue.cha;
     const rewardMultiplier = Math.pow(action.rewardFac, action.level - 1);
-    this.gainRatesForTask.money = BladeburnerConstants.ContractBaseMoneyGain * rewardMultiplier * bb.skillMultipliers.money;;
+    this.gainRatesForTask.money = BladeburnerConstants.ContractBaseMoneyGain * rewardMultiplier * bb.skillMultipliers.money;
   }
 
   getBladeburnerActionTime(p: IPlayer, type: string, name: string): number{//Maybe find workerscript and use original
@@ -1177,7 +1177,7 @@ export class Sleeve extends Person {
       console.error(`Function: sleeves.getBladeburnerActionTime; Message: '${errorLogText}'`)
       return -1;
     }
-    
+
     const time = bb.getActionTimeNetscriptFn(this, type, name);
     if(typeof time === 'string'){
       const errorLogText = `Invalid action: type='${type}' name='${name}'`;

@@ -186,8 +186,8 @@ export function SleeveElem(props: IProps): React.ReactElement {
               </Button>
               <Typography>{desc}</Typography>
               <Typography>
-                {(props.sleeve.currentTask === SleeveTaskType.Crime 
-                || props.sleeve.currentTask === SleeveTaskType.Bladeburner) 
+                {(props.sleeve.currentTask === SleeveTaskType.Crime
+                || props.sleeve.currentTask === SleeveTaskType.Bladeburner)
                 && props.sleeve.currentTaskMaxTime > 0
                 && createProgressBarText({
                     progress: props.sleeve.currentTaskTime / props.sleeve.currentTaskMaxTime,

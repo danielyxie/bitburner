@@ -15,7 +15,7 @@ export interface IPerson {
     hp: number;
     max_hp: number;
     money: number;
-  
+
     // Experience
     hacking_exp: number;
     strength_exp: number;
@@ -24,7 +24,7 @@ export interface IPerson {
     agility_exp: number;
     charisma_exp: number;
     intelligence_exp: number;
-  
+
     // Multipliers
     hacking_exp_mult: number;
     strength_exp_mult: number;
@@ -46,7 +46,7 @@ export interface IPerson {
     crime_success_mult: number;
 
     bladeburner_analysis_mult: number;
-  
+
     getIntelligenceBonus(weight: number): number;
     gainHackingExp(exp: number): void;
     gainStrengthExp(exp: number): void;
