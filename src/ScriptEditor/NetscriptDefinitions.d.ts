@@ -3837,6 +3837,13 @@ interface ReputationFormulas {
    * @returns The calculated faction favor.
    */
   calculateRepToFavor(rep: number): number;
+
+  /**
+   * Calculate how much rep would be gained.
+   * @param amount - Amount of money donated
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   */
+  repFromDonation(amount: number, player: Player): number;
 }
 
 /**
