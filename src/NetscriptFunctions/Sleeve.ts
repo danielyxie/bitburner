@@ -16,6 +16,7 @@ import {
   SleeveSkills,
   SleeveTask,
 } from "../ScriptEditor/NetscriptDefinitions";
+import { checkEnum } from "../utils/helpers/checkEnum";
 
 export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): ISleeve {
   const checkSleeveAPIAccess = function (func: string): void {
@@ -99,7 +100,11 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       const cityName = helper.string("travel", "cityName", _cityName);
       checkSleeveAPIAccess("travel");
       checkSleeveNumber("travel", sleeveNumber);
-      return player.sleeves[sleeveNumber].travel(player, cityName as CityName);
+      if (checkEnum(CityName, cityName)) {
+        return player.sleeves[sleeveNumber].travel(player, cityName as CityName);
+      } else {
+        throw helper.makeRuntimeErrorMsg("sleeve.setToCompanyWork", `Invalid city name: '${cityName}'.`);
+      }
     },
     setToCompanyWork: function (_sleeveNumber: unknown, acompanyName: unknown): boolean {
       updateRam("setToCompanyWork");
