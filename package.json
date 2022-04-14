@@ -73,6 +73,7 @@
     "electron": "^14.2.4",
     "electron-packager": "^15.4.0",
     "eslint": "^7.24.0",
+    "eslint-plugin-import": "^2.26.0",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^6.3.3",
     "html-webpack-plugin": "^3.2.0",

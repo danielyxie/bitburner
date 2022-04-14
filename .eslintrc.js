@@ -4,7 +4,12 @@ module.exports = {
     commonjs: true,
     es6: false,
   },
-  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+  ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 8,
@@ -13,7 +18,7 @@ module.exports = {
       experimentalObjectRestSpread: true,
     },
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "import"],
   rules: {
     "accessor-pairs": [
       "error",
@@ -63,6 +68,16 @@ module.exports = {
     "id-blacklist": ["error"],
     "id-length": ["off"],
     "id-match": ["error"],
+    "import/no-unresolved": "off",
+    "import/namespace": "off",
+    "import/order": [
+      "error",
+      {
+        groups: ["builtin", "external", "parent", "sibling", "index"],
+        "newlines-between": "always",
+        alphabetize: { order: "asc", caseInsensitive: true },
+      },
+    ],
     indent: ["off"],
     "indent-legacy": ["off"],
     "init-declarations": ["off"],
@@ -117,12 +132,7 @@ module.exports = {
     "no-dupe-class-members": ["error"],
     "no-dupe-keys": ["error"],
     "no-duplicate-case": ["error"],
-    "no-duplicate-imports": [
-      "error",
-      {
-        includeExports: true,
-      },
-    ],
+    "no-duplicate-imports": "off",
     "no-else-return": ["off"],
     "no-empty": [
       "off",
@@ -300,7 +310,6 @@ module.exports = {
     semi: ["off"],
     "semi-spacing": ["off"],
     "semi-style": ["error", "last"],
-    "sort-imports": ["off"],
     "sort-keys": ["off"],
     "sort-vars": ["off"],
     "space-before-blocks": ["off"],
@@ -331,6 +340,18 @@ module.exports = {
     yoda: ["error", "never"],
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      {
+        prefer: "type-imports",
+      },
+    ],
+    "@typescript-eslint/no-duplicate-imports": [
+      "error",
+      {
+        includeExports: true,
+      },
+    ],
   },
   overrides: [
     {
@@ -345,9 +366,11 @@ module.exports = {
       // TypeScript configuration
       files: ["**/*.ts", "**/*.tsx"],
       parser: "@typescript-eslint/parser",
-      plugins: ["@typescript-eslint"],
-      extends: ["plugin:@typescript-eslint/recommended"],
+      plugins: ["@typescript-eslint", "import"],
+      extends: ["plugin:@typescript-eslint/recommended", "plugin:import/recommended", "plugin:import/typescript"],
       rules: {
+        "import/no-unresolved": "off",
+        "import/namespace": "off",
         "lines-between-class-members": "off",
         "no-empty-pattern": "off",
         "no-useless-constructor": [
