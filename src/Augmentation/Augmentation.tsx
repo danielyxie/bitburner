@@ -464,7 +464,9 @@ export class Augmentation {
     this.prereqs = params.prereqs ? params.prereqs : [];
 
     this.baseRepRequirement = params.repCost;
+    Object.freeze(this.baseRepRequirement);
     this.baseCost = params.moneyCost;
+    Object.freeze(this.baseCost);
     this.factions = params.factions;
 
     if (params.isSpecial) {
