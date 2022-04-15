@@ -79,7 +79,7 @@ export function AugmentationsPage(props: IProps): React.ReactElement {
     const augs = getAugs();
     function canBuy(augName: string): boolean {
       const aug = StaticAugmentations[augName];
-      const augCosts = aug.getCost(player)
+      const augCosts = aug.getCost(player);
       const repCost = augCosts.repCost;
       const hasReq = props.faction.playerReputation >= repCost;
       const hasRep = hasAugmentationPrereqs(aug);
