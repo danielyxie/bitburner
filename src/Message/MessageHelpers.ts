@@ -183,7 +183,7 @@ const Messages: Record<MessageFilenames, Message> = {
       "like us. Because they can't hide from us. Because they can't fight shadows " +
       "and ideas with bullets. <br><br>" +
       "Join us, and people will fear you, too. <br><br>" +
-      "Find and install the backdoor on our server. Then, we will contact you again." +
+      "Find and install the backdoor on our server, avmnite-02h. Then, we will contact you again." +
       `<br><br>-${FactionNames.NiteSec}`,
   ),
 
