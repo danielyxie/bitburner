@@ -40,8 +40,9 @@ export class ActiveFragment {
     // These 2 variables converts 'this' local coordinates to world to other local.
     const dx: number = other.x - this.x;
     const dy: number = other.y - this.y;
-    for (let j = 0; j < thisFragment.shape.length; j++) {
-      for (let i = 0; i < thisFragment.shape[j].length; i++) {
+    const fragSize = Math.max(thisFragment.shape.length, thisFragment.shape[0].length);
+    for (let j = 0; j < fragSize; j++) {
+      for (let i = 0; i < fragSize; i++) {
         if (thisFragment.fullAt(i, j, this.rotation) && otherFragment.fullAt(i - dx, j - dy, other.rotation))
           return true;
       }

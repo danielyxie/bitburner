@@ -6,7 +6,6 @@ import { getRamCost, RamCostConstants } from "../../../src/Netscript/RamCostGene
 import { Environment } from "../../../src/Netscript/Environment";
 import { RunningScript } from "../../../src/Script/RunningScript";
 import { Script } from "../../../src/Script/Script";
-import { SourceFileFlags } from "../../../src/SourceFile/SourceFileFlags";
 
 jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
   virtual: true,
@@ -168,12 +167,6 @@ describe("Netscript Dynamic RAM Calculation/Generation Tests", function () {
     testEquality(workerScript.dynamicRamUsage, ScriptBaseCost);
     testEquality(workerScript.dynamicRamUsage, runningScript.ramUsage);
   }
-
-  beforeEach(function () {
-    for (let i = 0; i < SourceFileFlags.length; ++i) {
-      SourceFileFlags[i] = 3;
-    }
-  });
 
   describe("Basic Functions", function () {
     it("hack()", async function () {

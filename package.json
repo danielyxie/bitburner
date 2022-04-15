@@ -134,6 +134,7 @@
     "allbuild": "npm run build && npm run electron && git add --all && git commit -m \"allbuild commit $(git rev-parse --short HEAD)\" && git push -f -u origin dev",
     "preversion": "npm install && npm run test",
     "version": "sh ./tools/build-release.sh && git add --all",
-    "postversion": "git push -u origin dev && git push --tags"
+    "postversion": "git push -u origin dev && git push --tags",
+    "changelog": "node tools/fetch-changelog/index.js --from=$(cat last_changelog_hash) > changelog.md"
   }
 }
