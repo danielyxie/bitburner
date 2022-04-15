@@ -612,7 +612,7 @@ export class Augmentation {
       moneyCost = augmentationReference.baseCost * multiplier * BitNodeMultipliers.AugmentationMoneyCost;
 
       for (let i = 0; i < player.queuedAugmentations.length; ++i) {
-        augmentationReference.baseCost *= getBaseAugmentationPriceMultiplier();
+        moneyCost *= getBaseAugmentationPriceMultiplier();
       }
     } else if (augmentationReference.factions.includes(FactionNames.Infiltrators)) {
       const infiltratorAugmentationNames = initInfiltratorsAugmentations().map((augmentation) => augmentation.name);
