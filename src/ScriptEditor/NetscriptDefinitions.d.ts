@@ -2387,6 +2387,30 @@ export interface Singularity {
    * purchased. Throws an error if the specified program/exploit does not exist
    */
   getDarkwebProgramCost(programName: string): number;
+
+  /**
+   * b1t_flum3 into a different BN.
+   * @remarks
+   * RAM cost: 16 GB * 16/4/1
+   *
+   * @param nextBN - BN number to jump to
+   * @param callbackScript - Name of the script to launch in the next BN.
+   */
+  b1tflum3(nextBN: number, callbackScript?: string): void;
+
+  /**
+   * Destroy the w0r1d_d43m0n and move on to the next BN.
+   * @remarks
+   * RAM cost: 32 GB * 16/4/1
+   *
+   * You must have the special augment installed and the required hacking level
+   *   OR
+   * Completed the final black op.
+   *
+   * @param nextBN - BN number to jump to
+   * @param callbackScript - Name of the script to launch in the next BN.
+   */
+  destroyW0r1dD43m0n(nextBN: number, callbackScript?: string): void;
 }
 
 /**
@@ -3235,7 +3259,7 @@ export interface CodingContract {
    * Attempts to solve the Coding Contract with the provided solution.
    *
    * @param answer - Solution for the contract.
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @param opts - Optional parameters for configuring function behavior.
    * @returns True if the solution was correct, false otherwise. If the returnReward option is configured, then the function will instead return a string. If the contract is successfully solved, the string will contain a description of the contract’s reward. Otherwise, it will be an empty string.
@@ -3250,7 +3274,7 @@ export interface CodingContract {
    * Returns a name describing the type of problem posed by the Coding Contract.
    * (e.g. Find Largest Prime Factor, Total Ways to Sum, etc.)
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Name describing the type of problem posed by the Coding Contract.
    */
@@ -3263,7 +3287,7 @@ export interface CodingContract {
    *
    * Get the full text description for the problem posed by the Coding Contract.
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns Contract’s text description.
    */
@@ -3291,7 +3315,7 @@ export interface CodingContract {
    *
    * Get the number of tries remaining on the contract before it self-destructs.
    *
-   * @param fn - Filename of the contract.
+   * @param filename - Filename of the contract.
    * @param host - Host of the server containing the contract. Optional. Defaults to current server if not provided.
    * @returns How many attempts are remaining for the contract;
    */
@@ -3786,6 +3810,18 @@ export interface Grafting {
   getAugmentationGraftTime(augName: string): number;
 
   /**
+   * Retrieves a list of Augmentations that can be grafted.
+   * @remarks
+   * RAM cost: 5 GB
+   *
+   * Note that this function returns a list of currently graftable Augmentations,
+   * based off of the Augmentations that you already own.
+   *
+   * @returns An array of graftable Augmentations.
+   */
+  getGraftableAugmentations(): string[];
+
+  /**
    * Begins grafting the named aug. You must be in New Tokyo to use this.
    * @remarks
    * RAM cost: 7.5 GB
@@ -3838,6 +3874,13 @@ interface ReputationFormulas {
    * @returns The calculated faction favor.
    */
   calculateRepToFavor(rep: number): number;
+
+  /**
+   * Calculate how much rep would be gained.
+   * @param amount - Amount of money donated
+   * @param player - Player info from {@link NS.getPlayer | getPlayer}
+   */
+  repFromDonation(amount: number, player: Player): number;
 }
 
 /**
@@ -4636,9 +4679,11 @@ export interface NS {
    * Returns the security increase that would occur if a grow with this many threads happened.
    *
    * @param threads - Amount of threads that will be used.
+   * @param hostname - Optional. Hostname of the target server. The number of threads is limited to the number needed to hack the servers maximum amount of money.
+   * @param cores - Optional. The number of cores of the server that would run grow.
    * @returns The security increase.
    */
-  growthAnalyzeSecurity(threads: number): number;
+  growthAnalyzeSecurity(threads: number, hostname?: string, cores?: number): number;
 
   /**
    * Suspends the script for n milliseconds.
@@ -5072,8 +5117,7 @@ export interface NS {
    * PID stands for Process ID. The PID is a unique identifier for each script.
    * The PID will always be a positive integer.
    *
-   * Running this function with a numThreads argument of 0 will return 0 without running the script.
-   * However, running this function with a negative numThreads argument will cause a runtime error.
+   * Running this function with 0 or a negative numThreads argument will cause a runtime error.
    *
    * @example
    * ```ts
@@ -6724,8 +6768,9 @@ export interface WarehouseAPI {
    * Upgrade warehouse
    * @param divisionName - Name of the division
    * @param cityName - Name of the city
+   * @param amt - amount of upgrades defaults to 1
    */
-  upgradeWarehouse(divisionName: string, cityName: string): void;
+  upgradeWarehouse(divisionName: string, cityName: string, amt?: number): void;
   /**
    * Create a new product
    * @param divisionName - Name of the division
@@ -6742,15 +6787,34 @@ export interface WarehouseAPI {
     marketingInvest: number,
   ): void;
   /**
+   * Limit Material Production.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param materialName - Name of the material
+   * @param qty - Amount to limit to
+   */
+  limitMaterialProduction(divisionName: string, cityName: string, materialName: string, qty: number): void;
+  /**
+   * Limit Product Production.
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param productName - Name of the product
+   * @param qty - Amount to limit to
+   */
+  limitProductProduction(divisionName: string, cityName: string, productName: string, qty: number): void;
+  /**
    * Gets the cost to purchase a warehouse
    * @returns cost
    */
   getPurchaseWarehouseCost(): number;
   /**
    * Gets the cost to upgrade a warehouse to the next level
+   * @param divisionName - Name of the division
+   * @param cityName - Name of the city
+   * @param amt - amount of upgrades defaults to 1
    * @returns cost to upgrade
    */
-  getUpgradeWarehouseCost(adivisionName: any, acityName: any): number;
+  getUpgradeWarehouseCost(adivisionName: any, acityName: any, amt?: number): number;
   /**
    * Check if you have a warehouse in city
    * @returns true if warehouse is present, false if not
@@ -6994,8 +7058,10 @@ interface Material {
   cmp: number | undefined;
   /** Amount of material produced  */
   prod: number;
-  /** Amount of material sold  */
+  /** Amount of material sold */
   sell: number;
+  /** cost to buy material */
+  cost: number;
 }
 
 /**

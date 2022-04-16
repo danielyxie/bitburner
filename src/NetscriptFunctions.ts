@@ -34,12 +34,12 @@ import { RunningScript } from "./Script/RunningScript";
 import {
   getServerOnNetwork,
   numCycleForGrowth,
+  numCycleForGrowthCorrected,
   processSingleServerGrowth,
   safetlyCreateUniqueServer,
 } from "./Server/ServerHelpers";
 import { getPurchaseServerCost, getPurchaseServerLimit, getPurchaseServerMaxRam } from "./Server/ServerPurchases";
 import { Server } from "./Server/Server";
-import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { influenceStockThroughServerHack, influenceStockThroughServerGrow } from "./StockMarket/PlayerInfluencing";
 
 import { isValidFilePath, removeLeadingSlash } from "./Terminal/DirectoryHelpers";
@@ -633,7 +633,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
         if (percentHacked > 0) {
           // thread count is limited to the maximum number of threads needed
-          threads = Math.ceil(1 / percentHacked);
+          threads = Math.min(threads, Math.ceil(1 / percentHacked));
         }
       }
 
@@ -752,9 +752,26 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
 
       return numCycleForGrowth(server, Number(growth), Player, cores);
     },
-    growthAnalyzeSecurity: function (_threads: unknown): number {
+    growthAnalyzeSecurity: function (_threads: unknown, _hostname?: unknown, _cores?: unknown): number {
       updateDynamicRam("growthAnalyzeSecurity", getRamCost(Player, "growthAnalyzeSecurity"));
-      const threads = helper.number("growthAnalyzeSecurity", "threads", _threads);
+      let threads = helper.number("growthAnalyzeSecurity", "threads", _threads);
+      if (_hostname) {
+        const cores = helper.number("growthAnalyzeSecurity", "cores", _cores) || 1;
+        const hostname = helper.string("growthAnalyzeSecurity", "hostname", _hostname);
+        const server = safeGetServer(hostname, "growthAnalyzeSecurity");
+
+        if (!(server instanceof Server)) {
+          workerScript.log("growthAnalyzeSecurity", () => "Cannot be executed on this server.");
+          return 0;
+        }
+
+        const maxThreadsNeeded = Math.ceil(
+          numCycleForGrowthCorrected(server, server.moneyMax, server.moneyAvailable, Player, cores),
+        );
+
+        threads = Math.min(threads, maxThreadsNeeded);
+      }
+
       return 2 * CONSTANTS.ServerFortifyAmount * threads;
     },
     weaken: async function (_hostname: unknown, { threads: requestedThreads }: BasicHGWOptions = {}): Promise<number> {
@@ -1530,7 +1547,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     },
     getBitNodeMultipliers: function (): IBNMults {
       updateDynamicRam("getBitNodeMultipliers", getRamCost(Player, "getBitNodeMultipliers"));
-      if (SourceFileFlags[5] <= 0 && Player.bitNodeN !== 5) {
+      if (Player.sourceFileLvl(5) <= 0 && Player.bitNodeN !== 5) {
         throw makeRuntimeErrorMsg("getBitNodeMultipliers", "Requires Source-File 5 to run.");
       }
       const copy = Object.assign({}, BitNodeMultipliers);

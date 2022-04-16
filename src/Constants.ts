@@ -114,10 +114,11 @@ export const CONSTANTS: {
   AugmentationGraftingTimeBase: number;
   EntropyEffect: number;
   TotalNumBitNodes: number;
+  Donations: number; // number of blood/plasma/palette donation the dev have verified., boosts NFG
   LatestUpdate: string;
 } = {
-  VersionString: "1.6.3",
-  VersionNumber: 13,
+  VersionString: "1.6.4",
+  VersionNumber: 14,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -285,6 +286,8 @@ export const CONSTANTS: {
 
   // BitNode/Source-File related stuff
   TotalNumBitNodes: 24,
+
+  Donations: 2,
 
   LatestUpdate: `
   v1.6.3 - 2022-04-01 Few stanek fixes

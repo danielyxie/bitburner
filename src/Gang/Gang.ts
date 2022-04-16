@@ -252,6 +252,7 @@ export class Gang implements IGang {
         const total = Object.values(AllGangs)
           .map((g) => g.territory)
           .reduce((p, c) => p + c, 0);
+        console.log(total);
         Object.values(AllGangs).forEach((g) => (g.territory /= total));
       }
     }

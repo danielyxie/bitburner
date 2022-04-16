@@ -1,5 +1,7 @@
 # Bitburner
 
+[![Join Discord](https://img.shields.io/discord/415207508303544321)](https://discord.gg/TFc3hKD)
+
 [![Build Status](https://github.com/danielyxie/bitburner/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/danielyxie/bitburner/actions/workflows/ci.yml)
 
 Bitburner is a programming-based [incremental game](https://en.wikipedia.org/wiki/Incremental_game)

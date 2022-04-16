@@ -1,7 +1,6 @@
 import { Factions } from "../../Faction/Factions";
 import { Faction } from "../../Faction/Faction";
 import { Gang } from "../../Gang/Gang";
-import { SourceFileFlags } from "../../SourceFile/SourceFileFlags";
 import { IPlayer } from "../IPlayer";
 
 // Amount of negative karma needed to manage a gang in BitNodes other than 2
@@ -11,7 +10,7 @@ export function canAccessGang(this: IPlayer): boolean {
   if (this.bitNodeN === 2) {
     return true;
   }
-  if (SourceFileFlags[2] <= 0) {
+  if (this.sourceFileLvl(2) <= 0) {
     return false;
   }
 

@@ -20,13 +20,13 @@ interface IProps {
 export function LevelableUpgrade(props: IProps): React.ReactElement {
   const corp = useCorporation();
   const data = props.upgrade;
-  const level = corp.upgrades[data[0]];
+  const level = corp.upgrades[data.index];
 
-  const baseCost = data[1];
-  const priceMult = data[2];
+  const baseCost = data.basePrice;
+  const priceMult = data.priceMult;
   const cost = baseCost * Math.pow(priceMult, level);
 
-  const tooltip = data[5];
+  const tooltip = data.desc;
   function onClick(): void {
     if (corp.funds < cost) return;
     try {
@@ -45,7 +45,7 @@ export function LevelableUpgrade(props: IProps): React.ReactElement {
         </Button>
         <Tooltip title={tooltip}>
           <Typography>
-            {data[4]} - lvl {level}
+            {data.name} - lvl {level}
           </Typography>
         </Tooltip>
       </Box>
