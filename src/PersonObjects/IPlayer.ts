@@ -231,6 +231,7 @@ export interface IPlayer {
     chaExp: number,
     money: number,
     time: number,
+    focus: boolean,
     singParams: any,
   ): void;
   startFactionFieldWork(faction: Faction): void;

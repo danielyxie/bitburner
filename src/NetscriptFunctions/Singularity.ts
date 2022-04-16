@@ -1262,10 +1262,10 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         return true;
       },
     commitCrime: (_ctx: NetscriptContext) =>
-      function (_crimeRoughName: unknown, focus: unknown = true): number {
+      function (_crimeRoughName: unknown, _focus: unknown = true): number {
         _ctx.helper.checkSingularityAccess();
         const crimeRoughName = _ctx.helper.string("crimeRoughName", _crimeRoughName);
-        const wasFocusing = player.focus;
+        const focus = _ctx.helper.boolean(_focus);
         if (player.isWorking) {
           const txt = player.singularityStopWork();
           workerScript.log("commitCrime", () => txt);
@@ -1280,27 +1280,20 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           throw _ctx.helper.makeRuntimeErrorMsg(`Invalid crime: '${crimeRoughName}'`);
         }
         workerScript.log("commitCrime", () => `Attempting to commit ${crime.name}...`);
-        const crimeRes = crime.commit(Router, player, 1, workerScript);
-        if (focus) {
-          player.startFocusing();
-          Router.toWork();
-        } else if (wasFocusing) {
-          player.stopFocusing();
-          Router.toTerminal();
-        }
-        return crimeRes;
+        return crime.commit(Router, player, 1, focus, workerScript);
       },
     getCrimeChance: (_ctx: NetscriptContext) =>
-      function (_crimeRoughName: unknown): number {
+      function (_crimeRoughName: unknown, _focused: unknown = true): number {
         _ctx.helper.checkSingularityAccess();
         const crimeRoughName = _ctx.helper.string("crimeRoughName", _crimeRoughName);
+        const focused = _ctx.helper.boolean(_focused);
 
         const crime = findCrime(crimeRoughName.toLowerCase());
         if (crime == null) {
           throw _ctx.helper.makeRuntimeErrorMsg(`Invalid crime: ${crimeRoughName}`);
         }
 
-        return crime.successRate(player);
+        return crime.successRate(player, focused) * 100;
       },
     getCrimeStats: (_ctx: NetscriptContext) =>
       function (_crimeRoughName: unknown): CrimeStats {

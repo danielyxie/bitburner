@@ -100,18 +100,18 @@ export function SlumsLocation(): React.ReactElement {
     Crimes.Heist.commit(router, player);
   }
 
-  const shopliftChance = Crimes.Shoplift.successRate(player);
-  const robStoreChance = Crimes.RobStore.successRate(player);
-  const mugChance = Crimes.Mug.successRate(player);
-  const larcenyChance = Crimes.Larceny.successRate(player);
-  const drugsChance = Crimes.DealDrugs.successRate(player);
-  const bondChance = Crimes.BondForgery.successRate(player);
-  const armsChance = Crimes.TraffickArms.successRate(player);
-  const homicideChance = Crimes.Homicide.successRate(player);
-  const gtaChance = Crimes.GrandTheftAuto.successRate(player);
-  const kidnapChance = Crimes.Kidnap.successRate(player);
-  const assassinateChance = Crimes.Assassination.successRate(player);
-  const heistChance = Crimes.Heist.successRate(player);
+  const shopliftChance = Crimes.Shoplift.successRate(player, true);
+  const robStoreChance = Crimes.RobStore.successRate(player, true);
+  const mugChance = Crimes.Mug.successRate(player, true);
+  const larcenyChance = Crimes.Larceny.successRate(player, true);
+  const drugsChance = Crimes.DealDrugs.successRate(player, true);
+  const bondChance = Crimes.BondForgery.successRate(player, true);
+  const armsChance = Crimes.TraffickArms.successRate(player, true);
+  const homicideChance = Crimes.Homicide.successRate(player, true);
+  const gtaChance = Crimes.GrandTheftAuto.successRate(player, true);
+  const kidnapChance = Crimes.Kidnap.successRate(player, true);
+  const assassinateChance = Crimes.Assassination.successRate(player, true);
+  const heistChance = Crimes.Heist.successRate(player, true);
 
   return (
     <Box sx={{ display: "grid", width: "fit-content" }}>

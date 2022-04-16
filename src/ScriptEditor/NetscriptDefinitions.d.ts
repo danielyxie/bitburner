@@ -2061,12 +2061,13 @@ export interface Singularity {
    * RAM cost: 5 GB * 16/4/1
    *
    *
-   * This function returns your chance of success at commiting the specified crime.
+   * This function returns your chance of success at committing the specified crime.
    *
    * @param crime - Name of crime.
-   * @returns Chance of success at commiting the specified crime.
+   * @param focus - Whether or not to start the crime focused, defaults to true
+   * @returns Chance of success at committing the specified crime.
    */
-  getCrimeChance(crime: string): number;
+  getCrimeChance(crime: string, focus?: boolean): number;
 
   /**
    * Get stats related to a crime.

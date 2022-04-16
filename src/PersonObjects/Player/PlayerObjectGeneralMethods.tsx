@@ -1496,13 +1496,14 @@ export function startCrime(
   chaExp: number,
   money: number,
   time: number,
+  focus: true,
   workerscript: WorkerScript | null = null,
 ): void {
   this.crimeType = crimeType;
 
   this.resetWorkStatus();
   this.isWorking = true;
-  this.focus = true;
+  this.focus = focus;
   this.workType = CONSTANTS.WorkTypeCrime;
 
   if (workerscript !== null) {
@@ -1519,7 +1520,9 @@ export function startCrime(
   this.workMoneyGained = money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
 
   this.timeNeededToCompleteWork = time;
-  router.toWork();
+  if (this.focus) {
+    router.toWork();
+  }
 }
 
 export function commitCrime(this: IPlayer, numCycles: number): boolean {

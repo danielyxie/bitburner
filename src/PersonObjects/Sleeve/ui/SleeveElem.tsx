@@ -99,7 +99,7 @@ export function SleeveElem(props: IProps): React.ReactElement {
       desc = (
         <>
           This sleeve is currently attempting to {crime.type} (Success Rate:{" "}
-          {numeralWrapper.formatPercentage(crime.successRate(props.sleeve))}).
+          {numeralWrapper.formatPercentage(crime.successRate(props.sleeve, true))}).
         </>
       );
       break;

@@ -87,7 +87,7 @@ export class Crime {
     this.kills = params.kills ? params.kills : 0;
   }
 
-  commit(router: IRouter, p: IPlayer, div = 1, workerScript: WorkerScript | null = null): number {
+  commit(router: IRouter, p: IPlayer, div = 1, focus = true, workerScript: WorkerScript | null = null): number {
     if (div <= 0) {
       div = 1;
     }
@@ -102,13 +102,14 @@ export class Crime {
       this.charisma_exp / div,
       this.money / div,
       this.time,
+      focus,
       workerScript,
     );
 
     return this.time;
   }
 
-  successRate(p: IPlayerOrSleeve): number {
+  successRate(p: IPlayerOrSleeve, focus: boolean): number {
     let chance: number =
       this.hacking_success_weight * p.hacking +
       this.strength_success_weight * p.strength +
@@ -122,6 +123,8 @@ export class Crime {
     chance *= p.crime_success_mult;
     chance *= p.getIntelligenceBonus(1);
 
+    if (!focus) chance -= 0.25;
+    if (chance < 0) chance = 0;
     return Math.min(chance, 1);
   }
 }
