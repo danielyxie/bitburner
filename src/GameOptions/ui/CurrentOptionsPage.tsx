@@ -66,6 +66,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
   const pages = {
     [GameOptionsTab.SYSTEM]: (
       <GameOptionsPage title="System">
+        {/* Wrap in a React fragment to prevent the sliders from breaking as list items */}
         <>
           <OptionsSlider
             label=".script exec time (ms)"
