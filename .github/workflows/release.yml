@@ -28,6 +28,7 @@ jobs:
       - name: Build Wrb App
         run: npm run build
       - name: Deploy web app
+        if: contains(github.ref, 'tags') ## only deploy web app for tags
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages # The branch the action should deploy to.
@@ -50,7 +51,7 @@ jobs:
       #     ssfnFileName: ${{ secrets.STEAM_SSFN_FILE_NAME }}
       #     ssfnFileContents: ${{ secrets.STEAM_SSFN_FILE_CONTENTS }}
       #     appId: 1234560
-      #     buildDescription: v1.2.3
+      #     buildDescription: ${{ steps.version.outputs.VERSION }}
       #     rootPath: build
       #     depot1Path: StandaloneWindows64
       #     depot2Path: StandaloneLinux64
