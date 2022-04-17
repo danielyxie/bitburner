@@ -150,6 +150,35 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
             marks
           />
         </>
+        <OptionSwitch
+          checked={Settings.SuppressSavedGameToast}
+          onChange={(newValue) => (Settings.SuppressSavedGameToast = newValue)}
+          text="Suppress Auto-Save Game Toast"
+          tooltip={<>If this is set, there will be no "Game Saved!" toast appearing after an auto-save.</>}
+        />
+        <OptionSwitch
+          checked={Settings.SuppressAutosaveDisabledWarnings}
+          onChange={(newValue) => (Settings.SuppressAutosaveDisabledWarnings = newValue)}
+          text="Suppress Auto-Save Disabled Warning"
+          tooltip={<>If this is set, there will be no warning triggered when auto-save is disabled (at 0).</>}
+        />
+        <OptionSwitch
+          checked={Settings.SaveGameOnFileSave}
+          onChange={(newValue) => (Settings.SaveGameOnFileSave = newValue)}
+          text="Save game on file save"
+          tooltip={<>Save your game any time a file is saved in the script editor.</>}
+        />
+        <OptionSwitch
+          checked={Settings.ExcludeRunningScriptsFromSave}
+          onChange={(newValue) => (Settings.ExcludeRunningScriptsFromSave = newValue)}
+          text="Exclude Running Scripts from Save"
+          tooltip={
+            <>
+              If this is set, the save file will exclude all running scripts. This is only useful if your save is
+              lagging a lot. You'll have to restart your script every time you launch the game.
+            </>
+          }
+        />
       </GameOptionsPage>
     ),
     [GameOptionsTab.INTERFACE]: (
@@ -192,28 +221,24 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
             </Typography>
           }
         >
-          <span>
-            <TextField
-              InputProps={{
-                startAdornment: (
-                  <Typography
-                    color={
-                      formatTime(timestampFormat) === "format error" && timestampFormat !== "" ? "error" : "success"
-                    }
-                  >
-                    Timestamp&nbsp;format:&nbsp;
-                  </Typography>
-                ),
-              }}
-              value={timestampFormat}
-              onChange={handleTimestampFormatChange}
-              placeholder="yyyy-MM-dd hh:mm:ss"
-            />
-          </span>
+          <TextField
+            InputProps={{
+              startAdornment: (
+                <Typography
+                  color={formatTime(timestampFormat) === "format error" && timestampFormat !== "" ? "error" : "success"}
+                >
+                  Timestamp format:
+                </Typography>
+              ),
+            }}
+            value={timestampFormat}
+            onChange={handleTimestampFormatChange}
+            placeholder="yyyy-MM-dd hh:mm:ss"
+          />
         </Tooltip>
         <>
           <Tooltip title={<Typography>Sets the locale for displaying numbers.</Typography>}>
-            <Typography>Locale&nbsp;</Typography>
+            <Typography>Locale</Typography>
           </Tooltip>
           <Select value={locale} onChange={handleLocaleChange}>
             <MenuItem value="en">en</MenuItem>
@@ -282,24 +307,6 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
           text="Suppress TIX messages"
           tooltip={<>If this is set, the stock market will never create any popup.</>}
         />
-        <OptionSwitch
-          checked={Settings.SuppressSavedGameToast}
-          onChange={(newValue) => (Settings.SuppressSavedGameToast = newValue)}
-          text="Suppress Auto-Save Game Toast"
-          tooltip={<>If this is set, there will be no "Game Saved!" toast appearing after an auto-save.</>}
-        />
-        <OptionSwitch
-          checked={Settings.SuppressAutosaveDisabledWarnings}
-          onChange={(newValue) => (Settings.SuppressAutosaveDisabledWarnings = newValue)}
-          text="Suppress Auto-Save Disabled Warning"
-          tooltip={<>If this is set, there will be no warning triggered when auto-save is disabled (at 0).</>}
-        />
-        <OptionSwitch
-          checked={Settings.SaveGameOnFileSave}
-          onChange={(newValue) => (Settings.SaveGameOnFileSave = newValue)}
-          text="Save game on file save"
-          tooltip={<>Save your game any time a file is saved in the script editor.</>}
-        />
         {props.player.bladeburner && (
           <OptionSwitch
             checked={Settings.SuppressBladeburnerPopup}
@@ -338,17 +345,6 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
               Improved Bash emulation mode. Setting this to 1 enables several new Terminal shortcuts and features that
               more closely resemble a real Bash-style shell. Note that when this mode is enabled, the default browser
               shortcuts are overriden by the new Bash shortcuts.
-            </>
-          }
-        />
-        <OptionSwitch
-          checked={Settings.ExcludeRunningScriptsFromSave}
-          onChange={(newValue) => (Settings.ExcludeRunningScriptsFromSave = newValue)}
-          text="Exclude Running Scripts from Save"
-          tooltip={
-            <>
-              If this is set, the save file will exclude all running scripts. This is only useful if your save is
-              lagging a lot. You'll have to restart your script every time you launch the game.
             </>
           }
         />

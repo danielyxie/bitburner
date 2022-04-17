@@ -192,7 +192,7 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
               After using this, save the game and then reload the page. This is different then normal kill in that
               normal kill will tell the script to shut down while force kill just removes the references to it (and it
               should crash on it's own). This will not remove the files on your computer. Just forcefully kill all
-              running instance of all scripts.
+              running instances of all scripts.
             </Typography>
           }
         >
