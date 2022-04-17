@@ -12,20 +12,21 @@ on:
       changelog:
         description: "Changelog (url that points to RAW markdown)"
         default: ""
+        required: false
       buildApp:
         description: "Include Application Build"
         type: boolean
-        default: "true"
+        default: true
         required: true
       buildDoc:
         description: "Include Documentation Build"
         type: boolean
-        default: "true"
+        default: true
         required: true
       prepareRelease:
         description: "Prepare Draft Release"
         type: boolean
-        default: "true"
+        default: true
         required: true
 
 jobs:
