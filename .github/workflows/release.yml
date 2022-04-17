@@ -1,0 +1,57 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+    branches: [dev]
+jobs:
+  release:
+    name: Bump Version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Version name
+        id: version
+        run: |
+          echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
+      - name: Use Node.js 16.13.1
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.1
+          cache: "npm"
+      - name: Install NPM dependencies for version updater
+        run: npm install
+      - name: Build Wrb App
+        run: npm run build
+      - name: Deploy web app
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: dist # The folder the action should deploy.
+      - name: Build Electron App
+        run: npm run electron
+      - name: Upload builds
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.version.outputs.VERSION }}
+          path: |
+            dist/
+            builds/
+      ## for when we have perms to add permissions to handle steam deploy also
+      # - uses: game-ci/steam-deploy@v1
+      #   with:
+      #     username: ${{ secrets.STEAM_USERNAME }}
+      #     password: ${{ secrets.STEAM_PASSWORD }}
+      #     configVdf: ${{ secrets.STEAM_CONFIG_VDF}}
+      #     ssfnFileName: ${{ secrets.STEAM_SSFN_FILE_NAME }}
+      #     ssfnFileContents: ${{ secrets.STEAM_SSFN_FILE_CONTENTS }}
+      #     appId: 1234560
+      #     buildDescription: v1.2.3
+      #     rootPath: build
+      #     depot1Path: StandaloneWindows64
+      #     depot2Path: StandaloneLinux64
+      #     releaseBranch: prerelease
