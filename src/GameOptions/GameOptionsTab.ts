@@ -1,4 +1,4 @@
-export enum GameOptionsTabs {
+export enum GameOptionsTab {
   SYSTEM,
   INTERFACE,
   GAMEPLAY,

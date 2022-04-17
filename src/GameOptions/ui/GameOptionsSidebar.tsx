@@ -25,11 +25,11 @@ import { SnackbarEvents, ToastVariant } from "../../ui/React/Snackbar";
 import { SoftResetButton } from "../../ui/React/SoftResetButton";
 import { IRouter } from "../../ui/Router";
 import { convertTimeMsToTimeElapsedString } from "../../utils/StringHelperFunctions";
-import { GameOptionsTabs } from "../GameOptionsTabs";
+import { GameOptionsTab } from "../GameOptionsTab";
 
 interface IProps {
-  tab: GameOptionsTabs;
-  setTab: (tab: GameOptionsTabs) => void;
+  tab: GameOptionsTab;
+  setTab: (tab: GameOptionsTab) => void;
   player: IPlayer;
   router: IRouter;
   save: () => void;
@@ -40,7 +40,7 @@ interface IProps {
 
 interface ITabProps {
   sideBarProps: IProps;
-  tab: GameOptionsTabs;
+  tab: GameOptionsTab;
   tabName: string;
 }
 
@@ -104,10 +104,10 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
     <Box>
       <Paper sx={{ height: "fit-content", mb: 1 }}>
         <List>
-          <SideBarTab sideBarProps={props} tab={GameOptionsTabs.SYSTEM} tabName="System" />
-          <SideBarTab sideBarProps={props} tab={GameOptionsTabs.GAMEPLAY} tabName="Gameplay" />
-          <SideBarTab sideBarProps={props} tab={GameOptionsTabs.INTERFACE} tabName="Interface" />
-          <SideBarTab sideBarProps={props} tab={GameOptionsTabs.MISC} tabName="Misc" />
+          <SideBarTab sideBarProps={props} tab={GameOptionsTab.SYSTEM} tabName="System" />
+          <SideBarTab sideBarProps={props} tab={GameOptionsTab.GAMEPLAY} tabName="Gameplay" />
+          <SideBarTab sideBarProps={props} tab={GameOptionsTab.INTERFACE} tabName="Interface" />
+          <SideBarTab sideBarProps={props} tab={GameOptionsTab.MISC} tabName="Misc" />
         </List>
       </Paper>
       <Box

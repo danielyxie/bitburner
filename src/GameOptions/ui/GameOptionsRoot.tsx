@@ -2,7 +2,7 @@ import { Box, Container, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { IRouter } from "../../ui/Router";
-import { GameOptionsTabs } from "../GameOptionsTabs";
+import { GameOptionsTab } from "../GameOptionsTab";
 import { CurrentOptionsPage } from "./CurrentOptionsPage";
 import { GameOptionsSidebar } from "./GameOptionsSidebar";
 
@@ -16,7 +16,7 @@ interface IProps {
 }
 
 export function GameOptionsRoot(props: IProps): React.ReactElement {
-  const [currentTab, setCurrentTab] = useState(GameOptionsTabs.SYSTEM);
+  const [currentTab, setCurrentTab] = useState(GameOptionsTab.SYSTEM);
 
   return (
     <Container disableGutters maxWidth="lg" sx={{ mx: 0 }}>
@@ -24,7 +24,7 @@ export function GameOptionsRoot(props: IProps): React.ReactElement {
       <Box sx={{ display: "grid", gridTemplateColumns: "1fr 3fr", gap: 1 }}>
         <GameOptionsSidebar
           tab={currentTab}
-          setTab={(tab: GameOptionsTabs) => setCurrentTab(tab)}
+          setTab={(tab: GameOptionsTab) => setCurrentTab(tab)}
           player={props.player}
           router={props.router}
           save={props.save}

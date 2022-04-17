@@ -4,12 +4,12 @@ import { IPlayer } from "../../PersonObjects/IPlayer";
 import { Settings } from "../../Settings/Settings";
 import { OptionSwitch } from "../../ui/React/OptionSwitch";
 import { formatTime } from "../../utils/helpers/formatTime";
-import { GameOptionsTabs } from "../GameOptionsTabs";
+import { GameOptionsTab } from "../GameOptionsTab";
 import { GameOptionsPage } from "./GameOptionsPage";
 import { OptionsSlider } from "./OptionsSlider";
 
 interface IProps {
-  currentTab: GameOptionsTabs;
+  currentTab: GameOptionsTab;
   player: IPlayer;
 }
 
@@ -64,7 +64,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
   }
 
   const pages = {
-    [GameOptionsTabs.SYSTEM]: (
+    [GameOptionsTab.SYSTEM]: (
       <GameOptionsPage title="System" noList>
         <OptionsSlider
           label=".script exec time (ms)"
@@ -149,7 +149,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
         />
       </GameOptionsPage>
     ),
-    [GameOptionsTabs.INTERFACE]: (
+    [GameOptionsTab.INTERFACE]: (
       <GameOptionsPage title="Interface">
         <OptionSwitch
           checked={Settings.DisableASCIIArt}
@@ -232,7 +232,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
         </>
       </GameOptionsPage>
     ),
-    [GameOptionsTabs.GAMEPLAY]: (
+    [GameOptionsTab.GAMEPLAY]: (
       <GameOptionsPage title="Gameplay">
         <OptionSwitch
           checked={Settings.SuppressMessages}
@@ -312,7 +312,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
         )}
       </GameOptionsPage>
     ),
-    [GameOptionsTabs.MISC]: (
+    [GameOptionsTab.MISC]: (
       <GameOptionsPage title="Misc">
         <OptionSwitch
           checked={Settings.DisableHotkeys}
