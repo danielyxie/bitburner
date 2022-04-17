@@ -65,7 +65,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
 
   const pages = {
     [GameOptionsTabs.SYSTEM]: (
-      <GameOptionsPage title="System">
+      <GameOptionsPage title="System" noList>
         <OptionsSlider
           label=".script exec time (ms)"
           value={execTime}
@@ -135,6 +135,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
               game to use a lot of memory.
             </>
           }
+          marks
         />
         <OptionsSlider
           label="Autosave interval (s)"
@@ -144,6 +145,7 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
           min={0}
           max={600}
           tooltip={<>The time (in seconds) between each autosave. Set to 0 to disable autosave.</>}
+          marks
         />
       </GameOptionsPage>
     ),

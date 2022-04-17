@@ -9,6 +9,7 @@ interface IProps {
   max: number;
   tooltip: React.ReactElement;
   label: string;
+  marks?: boolean;
 }
 
 export const OptionsSlider = (props: IProps): React.ReactElement => {
@@ -30,6 +31,7 @@ export const OptionsSlider = (props: IProps): React.ReactElement => {
             width: "12px",
           },
         }}
+        marks={props.marks}
       />
     </Box>
   );
