@@ -1,3 +1,4 @@
+import $ from "jquery";
 import { vsprintf, sprintf } from "sprintf-js";
 
 import { getRamCost } from "./Netscript/RamCostGenerator";
