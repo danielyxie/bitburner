@@ -289,14 +289,14 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
 
         {!location.href.startsWith("file://") && (
           <Box sx={{ gridArea: "devs" }}>
-            <Button sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
-              danielyxie / BigD (Original Dev)
-              <form
-                action="https://www.paypal.com/cgi-bin/webscr"
-                method="post"
-                target="_blank"
-                style={{ display: "block" }}
-              >
+            <form
+              action="https://www.paypal.com/cgi-bin/webscr"
+              method="post"
+              target="_blank"
+              style={{ display: "block" }}
+            >
+              <Button sx={{ width: "100%", display: "flex", flexDirection: "column" }} type="submit">
+                danielyxie / BigD (Original Dev)
                 <input type="hidden" name="cmd" value="_s-xclick" />
                 <input
                   type="hidden"
@@ -310,8 +310,8 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
                   name="submit"
                   alt="PayPal - The safer, easier way to pay online!"
                 />
-              </form>
-            </Button>
+              </Button>
+            </form>
             <Button
               href="https://www.google.com/search?q=Where+to+donate+blood+near+me%3F"
               target="_blank"
@@ -323,7 +323,7 @@ export const GameOptionsSidebar = (props: IProps): React.ReactElement => {
             >
               hydroflame (Current Maintainer)
               <span style={{ display: "flex", alignItems: "center" }}>
-                <Bloodtype sx={{ mb: 0.5 }} />
+                <Bloodtype sx={{ mb: 0.5, mr: 1 }} />
                 Donate blood!
               </span>
             </Button>
