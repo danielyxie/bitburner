@@ -265,10 +265,10 @@ function LogWindow(props: IProps): React.ReactElement {
               </Typography>
 
               <Box position="absolute" right={0}>
-                {!workerScripts.has(script.pid) && <Button onClick={run}>Run</Button>}
-                {workerScripts.has(script.pid) && <Button onClick={kill}>Kill</Button>}
-                <Button onClick={minimize}>{minimized ? "\u{1F5D6}" : "\u{1F5D5}"}</Button>
-                <Button onClick={props.onClose}>Close</Button>
+                {!workerScripts.has(script.pid) && <Button onClick={run} onTouchEnd={run}>Run</Button>}
+                {workerScripts.has(script.pid) && <Button onClick={kill} onTouchEnd={kill}>Kill</Button>}
+                <Button onClick={minimize} onTouchEnd={minimize}>{minimized ? "\u{1F5D6}" : "\u{1F5D5}"}</Button>
+                <Button onClick={props.onClose} onTouchEnd={props.onClose}>Close</Button>
               </Box>
             </Box>
           </Paper>

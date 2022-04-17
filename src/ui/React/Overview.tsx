@@ -130,7 +130,7 @@ export function Overview({ children, mode }: IProps): React.ReactElement {
               size="small"
               className={classes.visibilityToggle}
             >
-              {<CurrentIcon className={classes.icon} color="secondary" onClick={() => setOpen((old) => !old)} />}
+              {<CurrentIcon className={classes.icon} color="secondary" onClick={() => setOpen((old) => !old)} onTouchEnd={() => setOpen((old) => !old)} />}
             </Button>
           </Box>
         </Box>
