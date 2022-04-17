@@ -21,7 +21,7 @@ import { Server } from "../Server/Server";
 import { Router } from "../ui/GameRoot";
 import { Page } from "../ui/Router";
 import { IMap } from "../types";
-import * as data from "./AchievementData.json";
+import data from "./AchievementData.json";
 import { FactionNames } from "../Faction/data/FactionNames";
 import { BlackOperationNames } from "../Bladeburner/data/BlackOperationNames";
 
