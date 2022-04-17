@@ -65,88 +65,90 @@ export const CurrentOptionsPage = (props: IProps): React.ReactElement => {
 
   const pages = {
     [GameOptionsTab.SYSTEM]: (
-      <GameOptionsPage title="System" noList>
-        <OptionsSlider
-          label=".script exec time (ms)"
-          value={execTime}
-          callback={handleExecTimeChange}
-          step={1}
-          min={5}
-          max={100}
-          tooltip={
-            <>
-              The minimum number of milliseconds it takes to execute an operation in Netscript. Setting this too low can
-              result in poor performance if you have many scripts running.
-            </>
-          }
-        />
-        <OptionsSlider
-          label="Recently killed scripts size"
-          value={recentScriptsSize}
-          callback={handleRecentScriptsSizeChange}
-          step={25}
-          min={0}
-          max={500}
-          tooltip={
-            <>
-              The maximum number of lines a script's logs can hold. Setting this too high can cause the game to use a
-              lot of memory if you have many scripts running.
-            </>
-          }
-        />
-        <OptionsSlider
-          label="Netscript log size"
-          value={logSize}
-          callback={handleLogSizeChange}
-          step={20}
-          min={20}
-          max={500}
-          tooltip={
-            <>
-              The maximum number of lines a script's logs can hold. Setting this too high can cause the game to use a
-              lot of memory if you have many scripts running.
-            </>
-          }
-        />
-        <OptionsSlider
-          label="Netscript port size"
-          value={portSize}
-          callback={handlePortSizeChange}
-          step={1}
-          min={20}
-          max={100}
-          tooltip={
-            <>
-              The maximum number of entries that can be written to a port using Netscript's write() function. Setting
-              this too high can cause the game to use a lot of memory.
-            </>
-          }
-        />
-        <OptionsSlider
-          label="Terminal capacity"
-          value={terminalSize}
-          callback={handleTerminalSizeChange}
-          step={50}
-          min={50}
-          max={500}
-          tooltip={
-            <>
-              The maximum number of entries that can be written to the terminal. Setting this too high can cause the
-              game to use a lot of memory.
-            </>
-          }
-          marks
-        />
-        <OptionsSlider
-          label="Autosave interval (s)"
-          value={autosaveInterval}
-          callback={handleAutosaveIntervalChange}
-          step={30}
-          min={0}
-          max={600}
-          tooltip={<>The time (in seconds) between each autosave. Set to 0 to disable autosave.</>}
-          marks
-        />
+      <GameOptionsPage title="System">
+        <>
+          <OptionsSlider
+            label=".script exec time (ms)"
+            value={execTime}
+            callback={handleExecTimeChange}
+            step={1}
+            min={5}
+            max={100}
+            tooltip={
+              <>
+                The minimum number of milliseconds it takes to execute an operation in Netscript. Setting this too low
+                can result in poor performance if you have many scripts running.
+              </>
+            }
+          />
+          <OptionsSlider
+            label="Recently killed scripts size"
+            value={recentScriptsSize}
+            callback={handleRecentScriptsSizeChange}
+            step={25}
+            min={0}
+            max={500}
+            tooltip={
+              <>
+                The maximum number of lines a script's logs can hold. Setting this too high can cause the game to use a
+                lot of memory if you have many scripts running.
+              </>
+            }
+          />
+          <OptionsSlider
+            label="Netscript log size"
+            value={logSize}
+            callback={handleLogSizeChange}
+            step={20}
+            min={20}
+            max={500}
+            tooltip={
+              <>
+                The maximum number of lines a script's logs can hold. Setting this too high can cause the game to use a
+                lot of memory if you have many scripts running.
+              </>
+            }
+          />
+          <OptionsSlider
+            label="Netscript port size"
+            value={portSize}
+            callback={handlePortSizeChange}
+            step={1}
+            min={20}
+            max={100}
+            tooltip={
+              <>
+                The maximum number of entries that can be written to a port using Netscript's write() function. Setting
+                this too high can cause the game to use a lot of memory.
+              </>
+            }
+          />
+          <OptionsSlider
+            label="Terminal capacity"
+            value={terminalSize}
+            callback={handleTerminalSizeChange}
+            step={50}
+            min={50}
+            max={500}
+            tooltip={
+              <>
+                The maximum number of entries that can be written to the terminal. Setting this too high can cause the
+                game to use a lot of memory.
+              </>
+            }
+            marks
+          />
+          <OptionsSlider
+            label="Autosave interval (s)"
+            value={autosaveInterval}
+            callback={handleAutosaveIntervalChange}
+            step={30}
+            min={0}
+            max={600}
+            tooltip={<>The time (in seconds) between each autosave. Set to 0 to disable autosave.</>}
+            marks
+          />
+        </>
       </GameOptionsPage>
     ),
     [GameOptionsTab.INTERFACE]: (
