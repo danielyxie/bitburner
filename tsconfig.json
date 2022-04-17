@@ -4,13 +4,15 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "jsx": "react",
-    "lib": ["es2016", "dom", "es2017.object", "es2019"],
     "module": "commonjs",
-    "target": "es6",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "resolveJsonModule": true,
-    "types": ["cypress", "@testing-library/cypress", "node"]
+    "target": "es2019",
+    "types": ["jest", "node"]
   },
-  "exclude": ["node_modules"]
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["test/cypress/**/*"]
 }
