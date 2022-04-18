@@ -1,7 +1,7 @@
 import { getRandomInt } from "../utils/helpers/getRandomInt";
 import { MinHeap } from "../utils/Heap";
 
-import { HammingEncode, HammingDecode } from "../utils/HammingCodeTools";
+// import { HammingEncode, HammingDecode } from "../utils/HammingCodeTools";
 /* tslint:disable:completed-docs no-magic-numbers arrow-return-shorthand */
 
 /* Function that generates a valid 'data' for a contract type */
@@ -1126,7 +1126,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       for (let i = 0; i < sanitizedPlayerAnsArr.length; ++i) {
         sanitizedPlayerAnsArr[i] = removeQuotesFromString(sanitizedPlayerAnsArr[i]).replace(/\s/g, "");
       }
-      
+
       if (sanitizedPlayerAnsArr.length !== res.length) {
         return false;
       }
@@ -1247,7 +1247,7 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
 
       return true;
     },
-  },
+  } /*
   {
     name: "HammingCodes: Integer to encoded Binary",
     numTries: 10,
@@ -1306,5 +1306,5 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
     solver: (data: string, ans: string): boolean => {
       return parseInt(ans, 10) === HammingDecode(data);
     },
-  },
+  },*/,
 ];

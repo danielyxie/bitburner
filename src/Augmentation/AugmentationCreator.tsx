@@ -5,6 +5,7 @@ import { Programs } from "../Programs/Programs";
 import { WHRNG } from "../Casino/RNG";
 import React from "react";
 import { FactionNames } from "../Faction/data/FactionNames";
+import { CONSTANTS } from "../Constants";
 
 function getRandomBonus(): any {
   const bonuses = [
@@ -1892,6 +1893,8 @@ export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
 ];
 
 export function initNeuroFluxGovernor(): Augmentation {
+  const donationBonus = CONSTANTS.Donations / 1e6 / 100; // 1 millionth of a percent per donation
+  console.log(donationBonus * 100);
   return new Augmentation({
     name: AugmentationNames.NeuroFluxGovernor,
     repCost: 500,
@@ -1904,35 +1907,36 @@ export function initNeuroFluxGovernor(): Augmentation {
     stats: (
       <>
         This special augmentation can be leveled up infinitely. Each level of this augmentation increases MOST
-        multipliers by 1%, stacking multiplicatively.
+        multipliers by 1% (+{(donationBonus * 100).toFixed(6)}% boosted by real life blood donations), stacking
+        multiplicatively.
       </>
     ),
-    hacking_chance_mult: 1.01,
-    hacking_speed_mult: 1.01,
-    hacking_money_mult: 1.01,
-    hacking_grow_mult: 1.01,
-    hacking_mult: 1.01,
-    strength_mult: 1.01,
-    defense_mult: 1.01,
-    dexterity_mult: 1.01,
-    agility_mult: 1.01,
-    charisma_mult: 1.01,
-    hacking_exp_mult: 1.01,
-    strength_exp_mult: 1.01,
-    defense_exp_mult: 1.01,
-    dexterity_exp_mult: 1.01,
-    agility_exp_mult: 1.01,
-    charisma_exp_mult: 1.01,
-    company_rep_mult: 1.01,
-    faction_rep_mult: 1.01,
-    crime_money_mult: 1.01,
-    crime_success_mult: 1.01,
-    hacknet_node_money_mult: 1.01,
-    hacknet_node_purchase_cost_mult: 0.99,
-    hacknet_node_ram_cost_mult: 0.99,
-    hacknet_node_core_cost_mult: 0.99,
-    hacknet_node_level_cost_mult: 0.99,
-    work_money_mult: 1.01,
+    hacking_chance_mult: 1.01 + donationBonus,
+    hacking_speed_mult: 1.01 + donationBonus,
+    hacking_money_mult: 1.01 + donationBonus,
+    hacking_grow_mult: 1.01 + donationBonus,
+    hacking_mult: 1.01 + donationBonus,
+    strength_mult: 1.01 + donationBonus,
+    defense_mult: 1.01 + donationBonus,
+    dexterity_mult: 1.01 + donationBonus,
+    agility_mult: 1.01 + donationBonus,
+    charisma_mult: 1.01 + donationBonus,
+    hacking_exp_mult: 1.01 + donationBonus,
+    strength_exp_mult: 1.01 + donationBonus,
+    defense_exp_mult: 1.01 + donationBonus,
+    dexterity_exp_mult: 1.01 + donationBonus,
+    agility_exp_mult: 1.01 + donationBonus,
+    charisma_exp_mult: 1.01 + donationBonus,
+    company_rep_mult: 1.01 + donationBonus,
+    faction_rep_mult: 1.01 + donationBonus,
+    crime_money_mult: 1.01 + donationBonus,
+    crime_success_mult: 1.01 + donationBonus,
+    hacknet_node_money_mult: 1.01 + donationBonus,
+    hacknet_node_purchase_cost_mult: 1 / (1.01 + donationBonus),
+    hacknet_node_ram_cost_mult: 1 / (1.01 + donationBonus),
+    hacknet_node_core_cost_mult: 1 / (1.01 + donationBonus),
+    hacknet_node_level_cost_mult: 1 / (1.01 + donationBonus),
+    work_money_mult: 1.01 + donationBonus,
     factions: Object.values(FactionNames),
   });
 }
