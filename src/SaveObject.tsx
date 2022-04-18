@@ -23,6 +23,7 @@ import { LocationName } from "./Locations/data/LocationNames";
 import { SxProps } from "@mui/system";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { pushGameSaved } from "./Electron";
+import { defaultMonacoTheme } from "./ScriptEditor/ui/themes";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -394,8 +395,8 @@ function evaluateVersionCompatibility(ver: string | number): void {
         delete anyPlayer.resleeves;
       }
     }
-    if (ver < 14) {
-      delete (Settings as any).EditorTheme;
+    if (ver < 15) {
+      (Settings as any).EditorTheme = { ...defaultMonacoTheme };
     }
   }
 }
