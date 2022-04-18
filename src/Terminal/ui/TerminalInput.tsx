@@ -3,8 +3,9 @@ import Typography from "@mui/material/Typography";
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
-import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
+import TextField from "@mui/material/TextField";
 
 import { KEY } from "../../utils/helpers/keyCodes";
 import { ITerminal } from "../ITerminal";
@@ -396,17 +397,19 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
             </Typography>
           ),
           spellCheck: false,
-          onBlur: ()=>setPossibilities([]),
+          onBlur: () => setPossibilities([]),
           onKeyDown: onKeyDown,
         }}
       ></TextField>
       <Popper open={possibilities.length > 0} anchorEl={terminalInput.current} placement={"top-end"}>
-        <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
-          Possible autocomplete candidate:
-        </Typography>
-        <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
-          {possibilities.join(" ")}
-        </Typography>
+        <Paper sx={{ m: 1, p: 2 }}>
+          <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
+            Possible autocomplete candidates:
+          </Typography>
+          <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
+            {possibilities.join(" ")}
+          </Typography>
+        </Paper>
       </Popper>
     </>
   );
