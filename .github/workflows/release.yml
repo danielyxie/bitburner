@@ -1,13 +1,18 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - "*"
-    branches: [dev phyzical/*]
+  release:
+    types:
+      - published
+  workflow_run:
+    workflows: ["CI"]
+    branches: [dev]
+    types:
+      - completed
 jobs:
   release:
-    name: Bump Version
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} || ${{ github.event.workflow_run.conclusion == false }}
+    name: Build, release and push artifacts
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -18,6 +23,7 @@ jobs:
         id: version
         run: |
           echo ::set-output name=VERSION::${GITHUB_REF#refs/*/}
+          echo "::set-output name=SHA_SHORT::$(git rev-parse --short HEAD)"
       - name: Use Node.js 16.13.1
         uses: actions/setup-node@v2
         with:
@@ -25,24 +31,107 @@ jobs:
           cache: "npm"
       - name: Install NPM dependencies for version updater
         run: npm install
-      - name: Build Wrb App
+      - name: Build Web App
         run: npm run build
+      - name: install wine
+        run: . tools/install-wine.sh
+      - name: Build Win Electron App
+        run: . tools/package-electron.sh win
+      - name: Build Mac Electron App
+        run: . tools/package-electron.sh mac
+      - name: Build Linux Electron App
+        run: . tools/package-electron.sh linux
+      - name: Zip up files
+        run: |
+          zip -r dist dist
+          cd .build
+          zip -r win bitburner-win32-x64/*
+          zip -r linux bitburner-linux-x64/*
+          zip -r mac bitburner-darwin-x64/*
+          cd ..
+      - name: Upload Web build artifact
+        if: contains(github.ref, 'dev')
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-${{ steps.version.outputs.VERSION }}.${{ steps.version.outputs.SHA_SHORT }}
+          path: dist.zip
+          retention-days: 10
+      - name: Upload Win build artifact
+        if: contains(github.ref, 'dev')
+        uses: actions/upload-artifact@v3
+        with:
+          name: win-${{ steps.version.outputs.VERSION }}.${{ steps.version.outputs.SHA_SHORT }}
+          path: .build/win.zip
+          retention-days: 10
+      - name: Upload Mac build artifact
+        if: contains(github.ref, 'dev')
+        uses: actions/upload-artifact@v3
+        with:
+          name: mac-${{ steps.version.outputs.VERSION }}.${{ steps.version.outputs.SHA_SHORT }}
+          path: .build/mac.zip
+          retention-days: 10
+      - name: Upload Linux build artifact
+        if: contains(github.ref, 'dev')
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-${{ steps.version.outputs.VERSION }}.${{ steps.version.outputs.SHA_SHORT }}
+          path: .build/linux.zip
+          retention-days: 10
+      # - name: Deploy docs
+      ## TODO
       - name: Deploy web app
-        if: contains(github.ref, 'tags') ## only deploy web app for tags
+        if: ${{ !contains(github.ref, 'dev') }}
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: dist # The folder the action should deploy.
-      - name: Build Electron App
-        run: npm run electron
-      - name: Upload builds
-        uses: actions/upload-artifact@v3
+      - name: Get release
+        if: ${{ !contains(github.ref, 'dev') }}
+        id: get_release
+        uses: bruceadams/get-release@v1.2.3
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Upload Web Release Asset
+        uses: actions/upload-release-asset@v1
+        if: ${{ !contains(github.ref, 'dev') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ steps.version.outputs.VERSION }}
-          path: |
-            dist/
-            builds/
-      ## for when we have perms to add permissions to handle steam deploy also
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: dist.zip
+          asset_name: web-${{ steps.version.outputs.VERSION }}.${{ steps.version.outputs.SHA_SHORT }}.zip
+          asset_content_type: application/zip
+      - name: Upload Win Release Asset
+        uses: actions/upload-release-asset@v1
+        if: ${{ !contains(github.ref, 'dev') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: .build/win.zip
+          asset_name: win-${{ steps.version.outputs.VERSION }}.${{ steps.version.outputs.SHA_SHORT }}.zip
+          asset_content_type: application/zip
+      - name: Upload Mac Release Asset
+        uses: actions/upload-release-asset@v1
+        if: ${{ !contains(github.ref, 'dev') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: .build/mac.zip
+          asset_name: mac-${{ steps.version.outputs.VERSION }}.${{ steps.version.outputs.SHA_SHORT }}.zip
+          asset_content_type: application/zip
+      - name: Upload linux Release Asset
+        uses: actions/upload-release-asset@v1
+        if: ${{ !contains(github.ref, 'dev') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: .build/linux.zip
+          asset_name: linux-${{ steps.version.outputs.VERSION }}.${{ steps.version.outputs.SHA_SHORT }}.zip
+          asset_content_type: application/zip
+      ## for when we have perms to add secrets to handle steam deploy also
       # - uses: game-ci/steam-deploy@v1
       #   with:
       #     username: ${{ secrets.STEAM_USERNAME }}
