@@ -36,7 +36,7 @@ import {
 import { OrderTypes } from "../../src/StockMarket/data/OrderTypes";
 import { PositionTypes } from "../../src/StockMarket/data/PositionTypes";
 
-jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
+jest.mock("../../src/ScriptEditor/NetscriptDefinitions.d.ts?raw", () => "", {
   virtual: true,
 });
 

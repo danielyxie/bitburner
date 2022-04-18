@@ -5,7 +5,7 @@ import { Environment } from "../../../src/Netscript/Environment";
 import { RunningScript } from "../../../src/Script/RunningScript";
 import { Script } from "../../../src/Script/Script";
 
-jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
+jest.mock("../../../src/ScriptEditor/NetscriptDefinitions.d.ts?raw", () => "", {
   virtual: true,
 });
 

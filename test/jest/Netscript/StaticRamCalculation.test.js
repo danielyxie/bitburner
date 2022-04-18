@@ -2,7 +2,7 @@ import { Player } from "../../../src/Player";
 import { getRamCost, RamCostConstants } from "../../../src/Netscript/RamCostGenerator";
 import { calculateRamUsage } from "../../../src/Script/RamCalculations";
 
-jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
+jest.mock("../../../src/ScriptEditor/NetscriptDefinitions.d.ts?raw", () => "", {
   virtual: true,
 });
 

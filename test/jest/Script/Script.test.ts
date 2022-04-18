@@ -1,7 +1,7 @@
 import { Script } from "../../../src/Script/Script";
 import { Player } from "../../../src/Player";
 
-jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
+jest.mock("../../../src/ScriptEditor/NetscriptDefinitions.d.ts?raw", () => "", {
   virtual: true,
 });
 

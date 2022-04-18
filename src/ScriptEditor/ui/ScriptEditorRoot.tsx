@@ -42,7 +42,7 @@ import TableBody from "@mui/material/TableBody";
 import { PromptEvent } from "../../ui/React/PromptManager";
 import { Modal } from "../../ui/React/Modal";
 
-import libSource from "!!raw-loader!../NetscriptDefinitions.d.ts";
+import libSource from "../NetscriptDefinitions.d.ts?raw";
 import { TextField, Tooltip } from "@mui/material";
 
 interface IProps {

@@ -5,7 +5,7 @@ import { RamCostConstants } from "../../../src/Netscript/RamCostGenerator";
 import { calculateRamUsage } from "../../../src/Script/RamCalculations";
 import { Script } from "../../../src/Script/Script";
 
-jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
+jest.mock("../../../src/ScriptEditor/NetscriptDefinitions.d.ts?raw", () => "", {
   virtual: true,
 });
 

@@ -8,7 +8,7 @@ import { AddToAllServers, prestigeAllServers } from "../../../src/Server/AllServ
 import { LocationName } from "../../../src/Locations/data/LocationNames";
 import { CodingContract } from "../../../src/CodingContracts";
 
-jest.mock(`!!raw-loader!../NetscriptDefinitions.d.ts`, () => "", {
+jest.mock("../../../src/ScriptEditor/NetscriptDefinitions.d.ts?raw", () => "", {
   virtual: true,
 });
 
