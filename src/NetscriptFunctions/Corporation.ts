@@ -730,7 +730,22 @@ export function NetscriptCorporation(
       const divisionName = helper.string("hireEmployee", "divisionName", _divisionName);
       const cityName = helper.city("hireEmployee", "cityName", _cityName);
       const office = getOffice(divisionName, cityName);
-      return office.hireRandomEmployee();
+      const employee = office.hireRandomEmployee();
+      if (employee === undefined) return undefined;
+      return {
+        name: employee.name,
+        mor: employee.mor,
+        hap: employee.hap,
+        ene: employee.ene,
+        int: employee.int,
+        cha: employee.cha,
+        exp: employee.exp,
+        cre: employee.cre,
+        eff: employee.eff,
+        sal: employee.sal,
+        loc: employee.loc,
+        pos: employee.pos,
+      };
     },
     upgradeOfficeSize: function (_divisionName: unknown, _cityName: unknown, _size: unknown): void {
       checkAccess("upgradeOfficeSize", 8);
