@@ -358,7 +358,6 @@ export function NetscriptStockMarket(player: IPlayer, workerScript: WorkerScript
     },
     purchase4SMarketData: function (): boolean {
       updateRam("purchase4SMarketData");
-      checkTixApiAccess("purchase4SMarketData");
 
       if (player.has4SData) {
         workerScript.log("stock.purchase4SMarketData", () => "Already purchased 4S Market Data.");
