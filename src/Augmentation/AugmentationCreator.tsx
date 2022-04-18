@@ -1907,7 +1907,8 @@ export function initNeuroFluxGovernor(): Augmentation {
     stats: (
       <>
         This special augmentation can be leveled up infinitely. Each level of this augmentation increases MOST
-        multipliers by 1% (+{donationBonus * 100}% boosted by real life blood donations), stacking multiplicatively.
+        multipliers by 1% (+{(donationBonus * 100).toFixed(6)}% boosted by real life blood donations), stacking
+        multiplicatively.
       </>
     ),
     hacking_chance_mult: 1.01 + donationBonus,
