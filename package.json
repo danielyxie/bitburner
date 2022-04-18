@@ -65,14 +65,14 @@
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^17.0.15",
     "@types/react-resizable": "^1.7.4",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.4",
     "cypress": "^8.7.0",
     "electron": "^14.2.9",
     "electron-packager": "^15.4.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.13.0",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^6.5.1",
     "html-webpack-plugin": "^3.2.0",
@@ -92,7 +92,7 @@
     "webpack-dev-server": "^3.11.3"
   },
   "engines": {
-    "node": ">=8 || <=9"
+    "node": ">=14"
   },
   "homepage": "https://github.com/danielyxie/bitburner",
   "repository": {
