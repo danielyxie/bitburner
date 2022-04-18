@@ -30,17 +30,17 @@ describe("Numeral formatting for positive numbers", () => {
     expect(numeralWrapper.formatReallyBigNumber(987654321)).toEqual("987.654m");
     expect(numeralWrapper.formatReallyBigNumber(987654321987)).toEqual("987.654b");
     expect(numeralWrapper.formatReallyBigNumber(987654321987654)).toEqual("987.654t");
-    expect(numeralWrapper.formatReallyBigNumber(987654321987654321)).toEqual("987.654q");
-    expect(numeralWrapper.formatReallyBigNumber(987654321987654321987)).toEqual("987.654Q");
-    expect(numeralWrapper.formatReallyBigNumber(987654321987654321987654)).toEqual("987.654s");
-    expect(numeralWrapper.formatReallyBigNumber(987654321987654321987654321)).toEqual("987.654S");
-    expect(numeralWrapper.formatReallyBigNumber(987654321987654321987654321987)).toEqual("987.654o");
-    expect(numeralWrapper.formatReallyBigNumber(987654321987654321987654321987654)).toEqual("987.654n");
+    expect(numeralWrapper.formatReallyBigNumber(987654321987654e3)).toEqual("987.654q");
+    expect(numeralWrapper.formatReallyBigNumber(987654321987654e6)).toEqual("987.654Q");
+    expect(numeralWrapper.formatReallyBigNumber(987654321987654e9)).toEqual("987.654s");
+    expect(numeralWrapper.formatReallyBigNumber(987654321987654e12)).toEqual("987.654S");
+    expect(numeralWrapper.formatReallyBigNumber(987654321987654e15)).toEqual("987.654o");
+    expect(numeralWrapper.formatReallyBigNumber(987654321987654e18)).toEqual("987.654n");
   });
   test("should format even bigger really big numbers in scientific format", () => {
-    expect(numeralWrapper.formatReallyBigNumber(987654321987654321987654321987654321)).toEqual("9.877e+35");
-    expect(numeralWrapper.formatReallyBigNumber(9876543219876543219876543219876543219)).toEqual("9.877e+36");
-    expect(numeralWrapper.formatReallyBigNumber(98765432198765432198765432198765432198)).toEqual("9.877e+37");
+    expect(numeralWrapper.formatReallyBigNumber(987654321987654e21)).toEqual("9.877e+35");
+    expect(numeralWrapper.formatReallyBigNumber(987654321987654e22)).toEqual("9.877e+36");
+    expect(numeralWrapper.formatReallyBigNumber(987654321987654e23)).toEqual("9.877e+37");
   });
   test("should format percentage", () => {
     expect(numeralWrapper.formatPercentage(1234.56789)).toEqual("123456.79%");
@@ -74,17 +74,17 @@ describe("Numeral formatting for negative numbers", () => {
     expect(numeralWrapper.formatReallyBigNumber(-987654321)).toEqual("-987.654m");
     expect(numeralWrapper.formatReallyBigNumber(-987654321987)).toEqual("-987.654b");
     expect(numeralWrapper.formatReallyBigNumber(-987654321987654)).toEqual("-987.654t");
-    expect(numeralWrapper.formatReallyBigNumber(-987654321987654321)).toEqual("-987.654q");
-    expect(numeralWrapper.formatReallyBigNumber(-987654321987654321987)).toEqual("-987.654Q");
-    expect(numeralWrapper.formatReallyBigNumber(-987654321987654321987654)).toEqual("-987.654s");
-    expect(numeralWrapper.formatReallyBigNumber(-987654321987654321987654321)).toEqual("-987.654S");
-    expect(numeralWrapper.formatReallyBigNumber(-987654321987654321987654321987)).toEqual("-987.654o");
-    expect(numeralWrapper.formatReallyBigNumber(-987654321987654321987654321987654)).toEqual("-987.654n");
+    expect(numeralWrapper.formatReallyBigNumber(-987654321987654e3)).toEqual("-987.654q");
+    expect(numeralWrapper.formatReallyBigNumber(-987654321987654e6)).toEqual("-987.654Q");
+    expect(numeralWrapper.formatReallyBigNumber(-987654321987654e9)).toEqual("-987.654s");
+    expect(numeralWrapper.formatReallyBigNumber(-987654321987654e12)).toEqual("-987.654S");
+    expect(numeralWrapper.formatReallyBigNumber(-987654321987654e15)).toEqual("-987.654o");
+    expect(numeralWrapper.formatReallyBigNumber(-987654321987654e18)).toEqual("-987.654n");
   });
   test("should format even bigger really big numbers in scientific format", () => {
-    expect(numeralWrapper.formatReallyBigNumber(-987654321987654321987654321987654321)).toEqual("-9.877e+35");
-    expect(numeralWrapper.formatReallyBigNumber(-9876543219876543219876543219876543219)).toEqual("-9.877e+36");
-    expect(numeralWrapper.formatReallyBigNumber(-98765432198765432198765432198765432198)).toEqual("-9.877e+37");
+    expect(numeralWrapper.formatReallyBigNumber(-987654321987654e21)).toEqual("-9.877e+35");
+    expect(numeralWrapper.formatReallyBigNumber(-987654321987654e22)).toEqual("-9.877e+36");
+    expect(numeralWrapper.formatReallyBigNumber(-987654321987654e23)).toEqual("-9.877e+37");
   });
   test("should format percentage", () => {
     expect(numeralWrapper.formatPercentage(-1234.56789)).toEqual("-123456.79%");
