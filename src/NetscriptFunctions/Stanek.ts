@@ -122,10 +122,7 @@ export function NetscriptStanek(
           player.queuedAugmentations.filter((a) => a.name !== AugmentationNames.NeuroFluxGovernor).length == 0
         ) {
           //Attempt to join CotMG
-          const faction = Factions[FactionNames.ChurchOfTheMachineGod];
-          if (!faction.isMember) {
-            joinFaction(faction);
-          }
+          joinFaction(Factions[FactionNames.ChurchOfTheMachineGod]);
           //Attempt to install the first Stanek aug
           if (
             !player.hasAugmentation(AugmentationNames.StaneksGift1) &&
