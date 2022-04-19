@@ -172,7 +172,7 @@ export function AugmentationsRoot(props: IProps): React.ReactElement {
               </span>
             </Tooltip>
             <Tooltip title={<Typography>It's always a good idea to backup/export your save!</Typography>}>
-              <Button sx={{ width: "100%" }} onClick={doExport} color="error">
+              <Button sx={{ width: "100%", color: Settings.theme.successlight }} onClick={doExport}>
                 Backup Save {exportBonusStr()}
               </Button>
             </Tooltip>
