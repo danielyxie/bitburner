@@ -1870,13 +1870,12 @@ export function getNextCompanyPosition(
 
 export function quitJob(this: IPlayer, company: string): void {
   if (this.isWorking == true && this.workType.includes("Working for Company") && this.companyName == company) {
-    this.isWorking = false;
-    this.companyName = "";
-  }
-  if (this.companyName === company) {
-    this.companyName = "";
+    this.finishWork(true);
   }
   delete this.jobs[company];
+  if (this.companyName === company) {
+    this.companyName = this.hasJob() ? Object.keys(this.jobs)[0] : "";
+  }
 }
 
 /**
