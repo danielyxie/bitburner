@@ -2166,7 +2166,7 @@ export function checkForFactionInvitations(this: IPlayer): Faction[] {
     !daedalusFac.isBanned &&
     !daedalusFac.isMember &&
     !daedalusFac.alreadyInvited &&
-    numAugmentations >= Math.round(30 * BitNodeMultipliers.DaedalusAugsRequirement) &&
+    numAugmentations >= BitNodeMultipliers.DaedalusAugsRequirement &&
     this.money >= 100000000000 &&
     (this.hacking >= 2500 ||
       (this.strength >= 1500 && this.defense >= 1500 && this.dexterity >= 1500 && this.agility >= 1500))

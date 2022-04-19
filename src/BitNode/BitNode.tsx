@@ -1,5 +1,5 @@
 import React from "react";
-import { BitNodeMultipliers } from "./BitNodeMultipliers";
+import { BitNodeMultipliers, IBitNodeMultipliers } from "./BitNodeMultipliers";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { IMap } from "../types";
 import { FactionNames } from "../Faction/data/FactionNames";
@@ -567,372 +567,435 @@ BitNodes["BitNode13"] = new BitNode(
     </>
   ),
 );
-// Books: Frontera, Shiner
-BitNodes["BitNode14"] = new BitNode(14, 2, "", "COMING SOON");
-BitNodes["BitNode15"] = new BitNode(15, 2, "", "COMING SOON");
-BitNodes["BitNode16"] = new BitNode(16, 2, "", "COMING SOON");
-BitNodes["BitNode17"] = new BitNode(17, 2, "", "COMING SOON");
-BitNodes["BitNode18"] = new BitNode(18, 2, "", "COMING SOON");
-BitNodes["BitNode19"] = new BitNode(19, 2, "", "COMING SOON");
-BitNodes["BitNode20"] = new BitNode(20, 2, "", "COMING SOON");
-BitNodes["BitNode21"] = new BitNode(21, 2, "", "COMING SOON");
-BitNodes["BitNode22"] = new BitNode(22, 2, "", "COMING SOON");
-BitNodes["BitNode23"] = new BitNode(23, 2, "", "COMING SOON");
-BitNodes["BitNode24"] = new BitNode(24, 2, "", "COMING SOON");
 
-export function initBitNodeMultipliers(p: IPlayer): void {
-  if (p.bitNodeN == null) {
-    p.bitNodeN = 1;
-  }
-  for (const mult of Object.keys(BitNodeMultipliers)) {
-    if (BitNodeMultipliers.hasOwnProperty(mult)) {
-      BitNodeMultipliers[mult] = 1;
+export const defaultMultipliers: IBitNodeMultipliers = {
+  HackingLevelMultiplier: 1,
+  StrengthLevelMultiplier: 1,
+  DefenseLevelMultiplier: 1,
+  DexterityLevelMultiplier: 1,
+  AgilityLevelMultiplier: 1,
+  CharismaLevelMultiplier: 1,
+
+  ServerGrowthRate: 1,
+  ServerMaxMoney: 1,
+  ServerStartingMoney: 1,
+  ServerStartingSecurity: 1,
+  ServerWeakenRate: 1,
+
+  HomeComputerRamCost: 1,
+
+  PurchasedServerCost: 1,
+  PurchasedServerSoftcap: 1,
+  PurchasedServerLimit: 1,
+  PurchasedServerMaxRam: 1,
+
+  CompanyWorkMoney: 1,
+  CrimeMoney: 1,
+  HacknetNodeMoney: 1,
+  ManualHackMoney: 1,
+  ScriptHackMoney: 1,
+  ScriptHackMoneyGain: 1,
+  CodingContractMoney: 1,
+
+  ClassGymExpGain: 1,
+  CompanyWorkExpGain: 1,
+  CrimeExpGain: 1,
+  FactionWorkExpGain: 1,
+  HackExpGain: 1,
+
+  FactionPassiveRepGain: 1,
+  FactionWorkRepGain: 1,
+  RepToDonateToFaction: 1,
+
+  AugmentationMoneyCost: 1,
+  AugmentationRepCost: 1,
+
+  InfiltrationMoney: 1,
+  InfiltrationRep: 1,
+
+  FourSigmaMarketDataCost: 1,
+  FourSigmaMarketDataApiCost: 1,
+
+  CorporationValuation: 1,
+  CorporationSoftCap: 1,
+
+  BladeburnerRank: 1,
+  BladeburnerSkillCost: 1,
+
+  GangSoftcap: 1,
+  GangUniqueAugs: 1,
+
+  DaedalusAugsRequirement: 30,
+
+  StaneksGiftPowerMultiplier: 1,
+  StaneksGiftExtraSize: 0,
+
+  WorldDaemonDifficulty: 1,
+};
+
+export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultipliers {
+  const mults = Object.assign({}, defaultMultipliers);
+  switch (n) {
+    case 1: {
+      return mults;
     }
-  }
-  // Special case.
-  BitNodeMultipliers.StaneksGiftExtraSize = 0;
-
-  switch (p.bitNodeN) {
-    case 1: // Source Genesis (every multiplier is 1)
-      break;
-    case 2: // Rise of the Underworld
-      BitNodeMultipliers.HackingLevelMultiplier = 0.8;
-      BitNodeMultipliers.ServerGrowthRate = 0.8;
-      BitNodeMultipliers.ServerMaxMoney = 0.2;
-      BitNodeMultipliers.ServerStartingMoney = 0.4;
-      BitNodeMultipliers.CrimeMoney = 3;
-      BitNodeMultipliers.InfiltrationMoney = 3;
-      BitNodeMultipliers.FactionWorkRepGain = 0.5;
-      BitNodeMultipliers.FactionPassiveRepGain = 0;
-      BitNodeMultipliers.StaneksGiftPowerMultiplier = 2;
-      BitNodeMultipliers.StaneksGiftExtraSize = -6;
-      BitNodeMultipliers.PurchasedServerSoftcap = 1.3;
-      BitNodeMultipliers.CorporationSoftCap = 0.9;
-      BitNodeMultipliers.WorldDaemonDifficulty = 5;
-      break;
-    case 3: // Corporatocracy
-      BitNodeMultipliers.HackingLevelMultiplier = 0.8;
-      BitNodeMultipliers.RepToDonateToFaction = 0.5;
-      BitNodeMultipliers.AugmentationRepCost = 3;
-      BitNodeMultipliers.AugmentationMoneyCost = 3;
-      BitNodeMultipliers.ServerMaxMoney = 0.2;
-      BitNodeMultipliers.ServerStartingMoney = 0.2;
-      BitNodeMultipliers.ServerGrowthRate = 0.2;
-      BitNodeMultipliers.ScriptHackMoney = 0.2;
-      BitNodeMultipliers.CompanyWorkMoney = 0.25;
-      BitNodeMultipliers.CrimeMoney = 0.25;
-      BitNodeMultipliers.HacknetNodeMoney = 0.25;
-      BitNodeMultipliers.HomeComputerRamCost = 1.5;
-      BitNodeMultipliers.PurchasedServerCost = 2;
-      BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.75;
-      BitNodeMultipliers.StaneksGiftExtraSize = -2;
-      BitNodeMultipliers.PurchasedServerSoftcap = 1.3;
-      BitNodeMultipliers.GangSoftcap = 0.9;
-      BitNodeMultipliers.WorldDaemonDifficulty = 2;
-      BitNodeMultipliers.GangUniqueAugs = 0.5;
-      break;
-    case 4: // The Singularity
-      BitNodeMultipliers.ServerMaxMoney = 0.15;
-      BitNodeMultipliers.ServerStartingMoney = 0.75;
-      BitNodeMultipliers.ScriptHackMoney = 0.2;
-      BitNodeMultipliers.CompanyWorkMoney = 0.1;
-      BitNodeMultipliers.CrimeMoney = 0.2;
-      BitNodeMultipliers.HacknetNodeMoney = 0.05;
-      BitNodeMultipliers.CompanyWorkExpGain = 0.5;
-      BitNodeMultipliers.ClassGymExpGain = 0.5;
-      BitNodeMultipliers.FactionWorkExpGain = 0.5;
-      BitNodeMultipliers.HackExpGain = 0.4;
-      BitNodeMultipliers.CrimeExpGain = 0.5;
-      BitNodeMultipliers.FactionWorkRepGain = 0.75;
-      BitNodeMultipliers.StaneksGiftPowerMultiplier = 1.5;
-      BitNodeMultipliers.StaneksGiftExtraSize = 0;
-      BitNodeMultipliers.PurchasedServerSoftcap = 1.2;
-      BitNodeMultipliers.WorldDaemonDifficulty = 3;
-      BitNodeMultipliers.GangUniqueAugs = 0.5;
-      break;
-    case 5: // Artificial intelligence
-      BitNodeMultipliers.ServerMaxMoney = 2;
-      BitNodeMultipliers.ServerStartingSecurity = 2;
-      BitNodeMultipliers.ServerStartingMoney = 0.5;
-      BitNodeMultipliers.ScriptHackMoney = 0.15;
-      BitNodeMultipliers.HacknetNodeMoney = 0.2;
-      BitNodeMultipliers.CrimeMoney = 0.5;
-      BitNodeMultipliers.InfiltrationRep = 1.5;
-      BitNodeMultipliers.InfiltrationMoney = 1.5;
-      BitNodeMultipliers.AugmentationMoneyCost = 2;
-      BitNodeMultipliers.HackExpGain = 0.5;
-      BitNodeMultipliers.CorporationValuation = 0.5;
-      BitNodeMultipliers.StaneksGiftPowerMultiplier = 1.3;
-      BitNodeMultipliers.StaneksGiftExtraSize = 0;
-      BitNodeMultipliers.PurchasedServerSoftcap = 1.2;
-      BitNodeMultipliers.WorldDaemonDifficulty = 1.5;
-      BitNodeMultipliers.GangUniqueAugs = 0.5;
-      break;
-    case 6: // Bladeburner
-      BitNodeMultipliers.HackingLevelMultiplier = 0.35;
-      BitNodeMultipliers.ServerMaxMoney = 0.4;
-      BitNodeMultipliers.ServerStartingMoney = 0.5;
-      BitNodeMultipliers.ServerStartingSecurity = 1.5;
-      BitNodeMultipliers.ScriptHackMoney = 0.75;
-      BitNodeMultipliers.CompanyWorkMoney = 0.5;
-      BitNodeMultipliers.CrimeMoney = 0.75;
-      BitNodeMultipliers.InfiltrationMoney = 0.75;
-      BitNodeMultipliers.CorporationValuation = 0.2;
-      BitNodeMultipliers.HacknetNodeMoney = 0.2;
-      BitNodeMultipliers.HackExpGain = 0.25;
-      BitNodeMultipliers.DaedalusAugsRequirement = 1.166; // Results in 35 Augs needed
-      BitNodeMultipliers.PurchasedServerSoftcap = 2;
-      BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.5;
-      BitNodeMultipliers.StaneksGiftExtraSize = 2;
-      BitNodeMultipliers.GangSoftcap = 0.7;
-      BitNodeMultipliers.CorporationSoftCap = 0.9;
-      BitNodeMultipliers.WorldDaemonDifficulty = 2;
-      BitNodeMultipliers.GangUniqueAugs = 0.2;
-      break;
-    case 7: // Bladeburner 2079
-      BitNodeMultipliers.BladeburnerRank = 0.6;
-      BitNodeMultipliers.BladeburnerSkillCost = 2;
-      BitNodeMultipliers.AugmentationMoneyCost = 3;
-      BitNodeMultipliers.HackingLevelMultiplier = 0.35;
-      BitNodeMultipliers.ServerMaxMoney = 0.4;
-      BitNodeMultipliers.ServerStartingMoney = 0.5;
-      BitNodeMultipliers.ServerStartingSecurity = 1.5;
-      BitNodeMultipliers.ScriptHackMoney = 0.5;
-      BitNodeMultipliers.CompanyWorkMoney = 0.5;
-      BitNodeMultipliers.CrimeMoney = 0.75;
-      BitNodeMultipliers.InfiltrationMoney = 0.75;
-      BitNodeMultipliers.CorporationValuation = 0.2;
-      BitNodeMultipliers.HacknetNodeMoney = 0.2;
-      BitNodeMultipliers.HackExpGain = 0.25;
-      BitNodeMultipliers.FourSigmaMarketDataCost = 2;
-      BitNodeMultipliers.FourSigmaMarketDataApiCost = 2;
-      BitNodeMultipliers.DaedalusAugsRequirement = 1.166; // Results in 35 Augs needed
-      BitNodeMultipliers.PurchasedServerSoftcap = 2;
-      BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.9;
-      BitNodeMultipliers.StaneksGiftExtraSize = -1;
-      BitNodeMultipliers.GangSoftcap = 0.7;
-      BitNodeMultipliers.CorporationSoftCap = 0.9;
-      BitNodeMultipliers.WorldDaemonDifficulty = 2;
-      BitNodeMultipliers.GangUniqueAugs = 0.2;
-      break;
-    case 8: // Ghost of Wall Street
-      BitNodeMultipliers.ScriptHackMoney = 0.3;
-      BitNodeMultipliers.ScriptHackMoneyGain = 0;
-      BitNodeMultipliers.ManualHackMoney = 0;
-      BitNodeMultipliers.CompanyWorkMoney = 0;
-      BitNodeMultipliers.CrimeMoney = 0;
-      BitNodeMultipliers.HacknetNodeMoney = 0;
-      BitNodeMultipliers.InfiltrationMoney = 0;
-      BitNodeMultipliers.RepToDonateToFaction = 0;
-      BitNodeMultipliers.CorporationValuation = 0;
-      BitNodeMultipliers.CodingContractMoney = 0;
-      BitNodeMultipliers.StaneksGiftExtraSize = -7;
-      BitNodeMultipliers.PurchasedServerSoftcap = 4;
-      BitNodeMultipliers.GangSoftcap = 0;
-      BitNodeMultipliers.CorporationSoftCap = 0;
-      BitNodeMultipliers.GangUniqueAugs = 0;
-      break;
-    case 9: // Hacktocracy
-      BitNodeMultipliers.HackingLevelMultiplier = 0.5;
-      BitNodeMultipliers.StrengthLevelMultiplier = 0.45;
-      BitNodeMultipliers.DefenseLevelMultiplier = 0.45;
-      BitNodeMultipliers.DexterityLevelMultiplier = 0.45;
-      BitNodeMultipliers.AgilityLevelMultiplier = 0.45;
-      BitNodeMultipliers.CharismaLevelMultiplier = 0.45;
-      BitNodeMultipliers.PurchasedServerLimit = 0;
-      BitNodeMultipliers.HomeComputerRamCost = 5;
-      BitNodeMultipliers.CrimeMoney = 0.5;
-      BitNodeMultipliers.ScriptHackMoney = 0.1;
-      BitNodeMultipliers.HackExpGain = 0.05;
-      BitNodeMultipliers.ServerStartingMoney = 0.1;
-      BitNodeMultipliers.ServerMaxMoney = 0.1;
-      BitNodeMultipliers.ServerStartingSecurity = 2.5;
-      BitNodeMultipliers.CorporationValuation = 0.5;
-      BitNodeMultipliers.FourSigmaMarketDataCost = 5;
-      BitNodeMultipliers.FourSigmaMarketDataApiCost = 4;
-      BitNodeMultipliers.BladeburnerRank = 0.9;
-      BitNodeMultipliers.BladeburnerSkillCost = 1.2;
-      BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.5;
-      BitNodeMultipliers.StaneksGiftExtraSize = 2;
-      BitNodeMultipliers.GangSoftcap = 0.8;
-      BitNodeMultipliers.CorporationSoftCap = 0.7;
-      BitNodeMultipliers.WorldDaemonDifficulty = 2;
-      BitNodeMultipliers.GangUniqueAugs = 0.25;
-      break;
-    case 10: // Digital Carbon
-      BitNodeMultipliers.HackingLevelMultiplier = 0.35;
-      BitNodeMultipliers.StrengthLevelMultiplier = 0.4;
-      BitNodeMultipliers.DefenseLevelMultiplier = 0.4;
-      BitNodeMultipliers.DexterityLevelMultiplier = 0.4;
-      BitNodeMultipliers.AgilityLevelMultiplier = 0.4;
-      BitNodeMultipliers.CharismaLevelMultiplier = 0.4;
-      BitNodeMultipliers.CompanyWorkMoney = 0.5;
-      BitNodeMultipliers.CrimeMoney = 0.5;
-      BitNodeMultipliers.HacknetNodeMoney = 0.5;
-      BitNodeMultipliers.ManualHackMoney = 0.5;
-      BitNodeMultipliers.ScriptHackMoney = 0.5;
-      BitNodeMultipliers.CodingContractMoney = 0.5;
-      BitNodeMultipliers.InfiltrationMoney = 0.5;
-      BitNodeMultipliers.CorporationValuation = 0.5;
-      BitNodeMultipliers.AugmentationMoneyCost = 5;
-      BitNodeMultipliers.AugmentationRepCost = 2;
-      BitNodeMultipliers.HomeComputerRamCost = 1.5;
-      BitNodeMultipliers.PurchasedServerCost = 5;
-      BitNodeMultipliers.PurchasedServerLimit = 0.6;
-      BitNodeMultipliers.PurchasedServerMaxRam = 0.5;
-      BitNodeMultipliers.BladeburnerRank = 0.8;
-      BitNodeMultipliers.StaneksGiftPowerMultiplier = 0.75;
-      BitNodeMultipliers.StaneksGiftExtraSize = -3;
-      BitNodeMultipliers.PurchasedServerSoftcap = 1.1;
-      BitNodeMultipliers.GangSoftcap = 0.9;
-      BitNodeMultipliers.CorporationSoftCap = 0.9;
-      BitNodeMultipliers.WorldDaemonDifficulty = 2;
-      BitNodeMultipliers.GangUniqueAugs = 0.25;
-      break;
-    case 11: //The Big Crash
-      BitNodeMultipliers.HackingLevelMultiplier = 0.6;
-      BitNodeMultipliers.HackExpGain = 0.5;
-      BitNodeMultipliers.ServerMaxMoney = 0.1;
-      BitNodeMultipliers.ServerStartingMoney = 0.1;
-      BitNodeMultipliers.ServerGrowthRate = 0.2;
-      BitNodeMultipliers.ServerWeakenRate = 2;
-      BitNodeMultipliers.CrimeMoney = 3;
-      BitNodeMultipliers.CompanyWorkMoney = 0.5;
-      BitNodeMultipliers.HacknetNodeMoney = 0.1;
-      BitNodeMultipliers.AugmentationMoneyCost = 2;
-      BitNodeMultipliers.InfiltrationMoney = 2.5;
-      BitNodeMultipliers.InfiltrationRep = 2.5;
-      BitNodeMultipliers.CorporationValuation = 0.1;
-      BitNodeMultipliers.CodingContractMoney = 0.25;
-      BitNodeMultipliers.FourSigmaMarketDataCost = 4;
-      BitNodeMultipliers.FourSigmaMarketDataApiCost = 4;
-      BitNodeMultipliers.PurchasedServerSoftcap = 2;
-      BitNodeMultipliers.CorporationSoftCap = 0.9;
-      BitNodeMultipliers.WorldDaemonDifficulty = 1.5;
-      BitNodeMultipliers.GangUniqueAugs = 0.75;
-      break;
+    case 2: {
+      return Object.assign(mults, {
+        HackingLevelMultiplier: 0.8,
+        ServerGrowthRate: 0.8,
+        ServerMaxMoney: 0.2,
+        ServerStartingMoney: 0.4,
+        CrimeMoney: 3,
+        InfiltrationMoney: 3,
+        FactionWorkRepGain: 0.5,
+        FactionPassiveRepGain: 0,
+        StaneksGiftPowerMultiplier: 2,
+        StaneksGiftExtraSize: -6,
+        PurchasedServerSoftcap: 1.3,
+        CorporationSoftCap: 0.9,
+        WorldDaemonDifficulty: 5,
+      });
+    }
+    case 3: {
+      return Object.assign(mults, {
+        HackingLevelMultiplier: 0.8,
+        RepToDonateToFaction: 0.5,
+        AugmentationRepCost: 3,
+        AugmentationMoneyCost: 3,
+        ServerMaxMoney: 0.2,
+        ServerStartingMoney: 0.2,
+        ServerGrowthRate: 0.2,
+        ScriptHackMoney: 0.2,
+        CompanyWorkMoney: 0.25,
+        CrimeMoney: 0.25,
+        HacknetNodeMoney: 0.25,
+        HomeComputerRamCost: 1.5,
+        PurchasedServerCost: 2,
+        StaneksGiftPowerMultiplier: 0.75,
+        StaneksGiftExtraSize: -2,
+        PurchasedServerSoftcap: 1.3,
+        GangSoftcap: 0.9,
+        WorldDaemonDifficulty: 2,
+        GangUniqueAugs: 0.5,
+      });
+    }
+    case 4: {
+      return Object.assign(mults, {
+        ServerMaxMoney: 0.15,
+        ServerStartingMoney: 0.75,
+        ScriptHackMoney: 0.2,
+        CompanyWorkMoney: 0.1,
+        CrimeMoney: 0.2,
+        HacknetNodeMoney: 0.05,
+        CompanyWorkExpGain: 0.5,
+        ClassGymExpGain: 0.5,
+        FactionWorkExpGain: 0.5,
+        HackExpGain: 0.4,
+        CrimeExpGain: 0.5,
+        FactionWorkRepGain: 0.75,
+        StaneksGiftPowerMultiplier: 1.5,
+        StaneksGiftExtraSize: 0,
+        PurchasedServerSoftcap: 1.2,
+        WorldDaemonDifficulty: 3,
+        GangUniqueAugs: 0.5,
+      });
+    }
+    case 5: {
+      return Object.assign(mults, {
+        ServerMaxMoney: 2,
+        ServerStartingSecurity: 2,
+        ServerStartingMoney: 0.5,
+        ScriptHackMoney: 0.15,
+        HacknetNodeMoney: 0.2,
+        CrimeMoney: 0.5,
+        InfiltrationRep: 1.5,
+        InfiltrationMoney: 1.5,
+        AugmentationMoneyCost: 2,
+        HackExpGain: 0.5,
+        CorporationValuation: 0.5,
+        StaneksGiftPowerMultiplier: 1.3,
+        StaneksGiftExtraSize: 0,
+        PurchasedServerSoftcap: 1.2,
+        WorldDaemonDifficulty: 1.5,
+        GangUniqueAugs: 0.5,
+      });
+    }
+    case 6: {
+      return Object.assign(mults, {
+        HackingLevelMultiplier: 0.35,
+        ServerMaxMoney: 0.4,
+        ServerStartingMoney: 0.5,
+        ServerStartingSecurity: 1.5,
+        ScriptHackMoney: 0.75,
+        CompanyWorkMoney: 0.5,
+        CrimeMoney: 0.75,
+        InfiltrationMoney: 0.75,
+        CorporationValuation: 0.2,
+        HacknetNodeMoney: 0.2,
+        HackExpGain: 0.25,
+        DaedalusAugsRequirement: 1.166, // Results in 35 Augs neede,
+        PurchasedServerSoftcap: 2,
+        StaneksGiftPowerMultiplier: 0.5,
+        StaneksGiftExtraSize: 2,
+        GangSoftcap: 0.7,
+        CorporationSoftCap: 0.9,
+        WorldDaemonDifficulty: 2,
+        GangUniqueAugs: 0.2,
+      });
+    }
+    case 7: {
+      return Object.assign(mults, {
+        BladeburnerRank: 0.6,
+        BladeburnerSkillCost: 2,
+        AugmentationMoneyCost: 3,
+        HackingLevelMultiplier: 0.35,
+        ServerMaxMoney: 0.4,
+        ServerStartingMoney: 0.5,
+        ServerStartingSecurity: 1.5,
+        ScriptHackMoney: 0.5,
+        CompanyWorkMoney: 0.5,
+        CrimeMoney: 0.75,
+        InfiltrationMoney: 0.75,
+        CorporationValuation: 0.2,
+        HacknetNodeMoney: 0.2,
+        HackExpGain: 0.25,
+        FourSigmaMarketDataCost: 2,
+        FourSigmaMarketDataApiCost: 2,
+        DaedalusAugsRequirement: 1.166, // Results in 35 Augs neede,
+        PurchasedServerSoftcap: 2,
+        StaneksGiftPowerMultiplier: 0.9,
+        StaneksGiftExtraSize: -1,
+        GangSoftcap: 0.7,
+        CorporationSoftCap: 0.9,
+        WorldDaemonDifficulty: 2,
+        GangUniqueAugs: 0.2,
+      });
+    }
+    case 8: {
+      return Object.assign(mults, {
+        ScriptHackMoney: 0.3,
+        ScriptHackMoneyGain: 0,
+        ManualHackMoney: 0,
+        CompanyWorkMoney: 0,
+        CrimeMoney: 0,
+        HacknetNodeMoney: 0,
+        InfiltrationMoney: 0,
+        RepToDonateToFaction: 0,
+        CorporationValuation: 0,
+        CodingContractMoney: 0,
+        StaneksGiftExtraSize: -99,
+        PurchasedServerSoftcap: 4,
+        GangSoftcap: 0,
+        CorporationSoftCap: 0,
+        GangUniqueAugs: 0,
+      });
+    }
+    case 9: {
+      return Object.assign(mults, {
+        HackingLevelMultiplier: 0.5,
+        StrengthLevelMultiplier: 0.45,
+        DefenseLevelMultiplier: 0.45,
+        DexterityLevelMultiplier: 0.45,
+        AgilityLevelMultiplier: 0.45,
+        CharismaLevelMultiplier: 0.45,
+        PurchasedServerLimit: 0,
+        HomeComputerRamCost: 5,
+        CrimeMoney: 0.5,
+        ScriptHackMoney: 0.1,
+        HackExpGain: 0.05,
+        ServerStartingMoney: 0.1,
+        ServerMaxMoney: 0.1,
+        ServerStartingSecurity: 2.5,
+        CorporationValuation: 0.5,
+        FourSigmaMarketDataCost: 5,
+        FourSigmaMarketDataApiCost: 4,
+        BladeburnerRank: 0.9,
+        BladeburnerSkillCost: 1.2,
+        StaneksGiftPowerMultiplier: 0.5,
+        StaneksGiftExtraSize: 2,
+        GangSoftcap: 0.8,
+        CorporationSoftCap: 0.7,
+        WorldDaemonDifficulty: 2,
+        GangUniqueAugs: 0.25,
+      });
+    }
+    case 10: {
+      return Object.assign(mults, {
+        HackingLevelMultiplier: 0.35,
+        StrengthLevelMultiplier: 0.4,
+        DefenseLevelMultiplier: 0.4,
+        DexterityLevelMultiplier: 0.4,
+        AgilityLevelMultiplier: 0.4,
+        CharismaLevelMultiplier: 0.4,
+        CompanyWorkMoney: 0.5,
+        CrimeMoney: 0.5,
+        HacknetNodeMoney: 0.5,
+        ManualHackMoney: 0.5,
+        ScriptHackMoney: 0.5,
+        CodingContractMoney: 0.5,
+        InfiltrationMoney: 0.5,
+        CorporationValuation: 0.5,
+        AugmentationMoneyCost: 5,
+        AugmentationRepCost: 2,
+        HomeComputerRamCost: 1.5,
+        PurchasedServerCost: 5,
+        PurchasedServerLimit: 0.6,
+        PurchasedServerMaxRam: 0.5,
+        BladeburnerRank: 0.8,
+        StaneksGiftPowerMultiplier: 0.75,
+        StaneksGiftExtraSize: -3,
+        PurchasedServerSoftcap: 1.1,
+        GangSoftcap: 0.9,
+        CorporationSoftCap: 0.9,
+        WorldDaemonDifficulty: 2,
+        GangUniqueAugs: 0.25,
+      });
+    }
+    case 11: {
+      return Object.assign(mults, {
+        HackingLevelMultiplier: 0.6,
+        HackExpGain: 0.5,
+        ServerMaxMoney: 0.1,
+        ServerStartingMoney: 0.1,
+        ServerGrowthRate: 0.2,
+        ServerWeakenRate: 2,
+        CrimeMoney: 3,
+        CompanyWorkMoney: 0.5,
+        HacknetNodeMoney: 0.1,
+        AugmentationMoneyCost: 2,
+        InfiltrationMoney: 2.5,
+        InfiltrationRep: 2.5,
+        CorporationValuation: 0.1,
+        CodingContractMoney: 0.25,
+        FourSigmaMarketDataCost: 4,
+        FourSigmaMarketDataApiCost: 4,
+        PurchasedServerSoftcap: 2,
+        CorporationSoftCap: 0.9,
+        WorldDaemonDifficulty: 1.5,
+        GangUniqueAugs: 0.75,
+      });
+    }
     case 12: {
-      //The Recursion
-      let sf12Lvl = 0;
-      for (let i = 0; i < p.sourceFiles.length; i++) {
-        if (p.sourceFiles[i].n === 12) {
-          sf12Lvl = p.sourceFiles[i].lvl;
-        }
-      }
-      const inc = Math.pow(1.02, sf12Lvl);
+      const inc = Math.pow(1.02, lvl);
       const dec = 1 / inc;
 
-      // Multiplier for number of augs needed for Daedalus increases
-      // up to a maximum of 1.34, which results in 40 Augs required
-      BitNodeMultipliers.DaedalusAugsRequirement = Math.min(inc, 1.34);
+      return Object.assign(mults, {
+        // Multiplier for number of augs needed for Daedalus increases
+        // up to a maximum of 1.34, which results in 40 Augs required
+        DaedalusAugsRequirement: Math.min(inc, 1.34),
 
-      BitNodeMultipliers.HackingLevelMultiplier = dec;
-      BitNodeMultipliers.StrengthLevelMultiplier = dec;
-      BitNodeMultipliers.DefenseLevelMultiplier = dec;
-      BitNodeMultipliers.DexterityLevelMultiplier = dec;
-      BitNodeMultipliers.AgilityLevelMultiplier = dec;
-      BitNodeMultipliers.CharismaLevelMultiplier = dec;
+        HackingLevelMultiplier: dec,
+        StrengthLevelMultiplier: dec,
+        DefenseLevelMultiplier: dec,
+        DexterityLevelMultiplier: dec,
+        AgilityLevelMultiplier: dec,
+        CharismaLevelMultiplier: dec,
 
-      BitNodeMultipliers.ServerMaxMoney = dec;
-      BitNodeMultipliers.ServerStartingMoney = dec;
-      BitNodeMultipliers.ServerGrowthRate = dec;
-      BitNodeMultipliers.ServerWeakenRate = dec;
+        ServerMaxMoney: dec,
+        ServerStartingMoney: dec,
+        ServerGrowthRate: dec,
+        ServerWeakenRate: dec,
 
-      //Does not scale, otherwise security might start at 300+
-      BitNodeMultipliers.ServerStartingSecurity = 1.5;
+        //Does not scale, otherwise security might start at 300+
+        ServerStartingSecurity: 1.5,
 
-      BitNodeMultipliers.HomeComputerRamCost = inc;
+        HomeComputerRamCost: inc,
 
-      BitNodeMultipliers.PurchasedServerCost = inc;
-      BitNodeMultipliers.PurchasedServerLimit = dec;
-      BitNodeMultipliers.PurchasedServerMaxRam = dec;
-      BitNodeMultipliers.PurchasedServerSoftcap = inc;
+        PurchasedServerCost: inc,
+        PurchasedServerLimit: dec,
+        PurchasedServerMaxRam: dec,
+        PurchasedServerSoftcap: inc,
 
-      BitNodeMultipliers.ManualHackMoney = dec;
-      BitNodeMultipliers.ScriptHackMoney = dec;
-      BitNodeMultipliers.CompanyWorkMoney = dec;
-      BitNodeMultipliers.CrimeMoney = dec;
-      BitNodeMultipliers.HacknetNodeMoney = dec;
-      BitNodeMultipliers.CodingContractMoney = dec;
+        ManualHackMoney: dec,
+        ScriptHackMoney: dec,
+        CompanyWorkMoney: dec,
+        CrimeMoney: dec,
+        HacknetNodeMoney: dec,
+        CodingContractMoney: dec,
 
-      BitNodeMultipliers.CompanyWorkExpGain = dec;
-      BitNodeMultipliers.ClassGymExpGain = dec;
-      BitNodeMultipliers.FactionWorkExpGain = dec;
-      BitNodeMultipliers.HackExpGain = dec;
-      BitNodeMultipliers.CrimeExpGain = dec;
+        CompanyWorkExpGain: dec,
+        ClassGymExpGain: dec,
+        FactionWorkExpGain: dec,
+        HackExpGain: dec,
+        CrimeExpGain: dec,
 
-      BitNodeMultipliers.FactionWorkRepGain = dec;
-      BitNodeMultipliers.FactionPassiveRepGain = dec;
-      BitNodeMultipliers.RepToDonateToFaction = inc;
+        FactionWorkRepGain: dec,
+        FactionPassiveRepGain: dec,
+        RepToDonateToFaction: inc,
 
-      BitNodeMultipliers.AugmentationRepCost = inc;
-      BitNodeMultipliers.AugmentationMoneyCost = inc;
+        AugmentationRepCost: inc,
+        AugmentationMoneyCost: inc,
 
-      BitNodeMultipliers.InfiltrationMoney = dec;
-      BitNodeMultipliers.InfiltrationRep = dec;
+        InfiltrationMoney: dec,
+        InfiltrationRep: dec,
 
-      BitNodeMultipliers.FourSigmaMarketDataCost = inc;
-      BitNodeMultipliers.FourSigmaMarketDataApiCost = inc;
+        FourSigmaMarketDataCost: inc,
+        FourSigmaMarketDataApiCost: inc,
 
-      BitNodeMultipliers.CorporationValuation = dec;
+        CorporationValuation: dec,
 
-      BitNodeMultipliers.BladeburnerRank = dec;
-      BitNodeMultipliers.BladeburnerSkillCost = inc;
+        BladeburnerRank: dec,
+        BladeburnerSkillCost: inc,
 
-      BitNodeMultipliers.StaneksGiftPowerMultiplier = inc;
-      BitNodeMultipliers.StaneksGiftExtraSize = inc;
-      BitNodeMultipliers.GangSoftcap = 0.8;
-      BitNodeMultipliers.CorporationSoftCap = 0.8;
-      BitNodeMultipliers.WorldDaemonDifficulty = inc;
+        StaneksGiftPowerMultiplier: inc,
+        StaneksGiftExtraSize: inc,
+        GangSoftcap: 0.8,
+        CorporationSoftCap: 0.8,
+        WorldDaemonDifficulty: inc,
 
-      BitNodeMultipliers.GangUniqueAugs = dec;
-      break;
+        GangUniqueAugs: dec,
+      });
     }
     case 13: {
-      BitNodeMultipliers.PurchasedServerSoftcap = 1.6;
+      return Object.assign(mults, {
+        PurchasedServerSoftcap: 1.6,
 
-      BitNodeMultipliers.HackingLevelMultiplier = 0.25;
-      BitNodeMultipliers.StrengthLevelMultiplier = 0.7;
-      BitNodeMultipliers.DefenseLevelMultiplier = 0.7;
-      BitNodeMultipliers.DexterityLevelMultiplier = 0.7;
-      BitNodeMultipliers.AgilityLevelMultiplier = 0.7;
+        HackingLevelMultiplier: 0.25,
+        StrengthLevelMultiplier: 0.7,
+        DefenseLevelMultiplier: 0.7,
+        DexterityLevelMultiplier: 0.7,
+        AgilityLevelMultiplier: 0.7,
 
-      BitNodeMultipliers.ServerMaxMoney = 0.45;
-      BitNodeMultipliers.ServerStartingMoney = 0.75;
+        ServerMaxMoney: 0.45,
+        ServerStartingMoney: 0.75,
 
-      BitNodeMultipliers.ServerStartingSecurity = 3;
+        ServerStartingSecurity: 3,
 
-      BitNodeMultipliers.ScriptHackMoney = 0.2;
-      BitNodeMultipliers.CompanyWorkMoney = 0.4;
-      BitNodeMultipliers.CrimeMoney = 0.4;
-      BitNodeMultipliers.HacknetNodeMoney = 0.4;
-      BitNodeMultipliers.CodingContractMoney = 0.4;
+        ScriptHackMoney: 0.2,
+        CompanyWorkMoney: 0.4,
+        CrimeMoney: 0.4,
+        HacknetNodeMoney: 0.4,
+        CodingContractMoney: 0.4,
 
-      BitNodeMultipliers.CompanyWorkExpGain = 0.5;
-      BitNodeMultipliers.ClassGymExpGain = 0.5;
-      BitNodeMultipliers.FactionWorkExpGain = 0.5;
-      BitNodeMultipliers.HackExpGain = 0.1;
-      BitNodeMultipliers.CrimeExpGain = 0.5;
+        CompanyWorkExpGain: 0.5,
+        ClassGymExpGain: 0.5,
+        FactionWorkExpGain: 0.5,
+        HackExpGain: 0.1,
+        CrimeExpGain: 0.5,
 
-      BitNodeMultipliers.FactionWorkRepGain = 0.6;
+        FactionWorkRepGain: 0.6,
 
-      BitNodeMultipliers.FourSigmaMarketDataCost = 10;
-      BitNodeMultipliers.FourSigmaMarketDataApiCost = 10;
+        FourSigmaMarketDataCost: 10,
+        FourSigmaMarketDataApiCost: 10,
 
-      BitNodeMultipliers.CorporationValuation = 0.001;
+        CorporationValuation: 0.001,
 
-      BitNodeMultipliers.BladeburnerRank = 0.45;
-      BitNodeMultipliers.BladeburnerSkillCost = 2;
-      BitNodeMultipliers.StaneksGiftPowerMultiplier = 2;
-      BitNodeMultipliers.StaneksGiftExtraSize = 1;
-      BitNodeMultipliers.GangSoftcap = 0.3;
-      BitNodeMultipliers.CorporationSoftCap = 0.3;
-      BitNodeMultipliers.WorldDaemonDifficulty = 3;
-      BitNodeMultipliers.GangUniqueAugs = 0.1;
-      break;
+        BladeburnerRank: 0.45,
+        BladeburnerSkillCost: 2,
+        StaneksGiftPowerMultiplier: 2,
+        StaneksGiftExtraSize: 1,
+        GangSoftcap: 0.3,
+        CorporationSoftCap: 0.3,
+        WorldDaemonDifficulty: 3,
+        GangUniqueAugs: 0.1,
+      });
     }
-    default:
-      console.warn("Player.bitNodeN invalid");
-      break;
+    default: {
+      throw new Error("Invalid BitNodeN");
+    }
   }
+}
+
+export function initBitNodeMultipliers(p: IPlayer): void {
+  Object.assign(BitNodeMultipliers, getBitNodeMultipliers(p.bitNodeN, p.sourceFileLvl(p.bitNodeN)));
 }
