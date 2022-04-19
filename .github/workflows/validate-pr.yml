@@ -1,0 +1,64 @@
+name: Validate PR
+
+on:
+  pull_request:
+    branches: [dev]
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  checkTitle:
+    name: Check Title
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Validate Title
+        id: validate-pr-title
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Creating label (if it does not exist)"
+          LABEL="validation: invalid title"
+          gh --repo "${{ github.repository }}" \
+            label create "$LABEL" --description "Modifications to this pull request are requested" --color D93F0B || true
+
+          PR_TITLE=$(\
+            gh --repo "${{ github.repository }}" \
+              pr view "${{ github.event.number }}" --json title --jq .title)
+          echo "::set-output name=title::$PR_TITLE"
+          echo "PR Title: $PR_TITLE"
+
+          TITLE_REGEX="^[0-9A-Z\-]*: .*$"
+          PR_TITLE_VALID=$(echo "$PR_TITLE" | grep -Eq "$TITLE_REGEX" && echo "true" || echo "false")
+
+          if [ "$PR_TITLE_VALID" == "true" ]; then
+            echo "Title is valid, removing label"
+            gh --repo "${{ github.repository }}" \
+              pr edit "${{ github.event.number }}" --remove-label "$LABEL" || true
+          else
+            echo "Invalid Title"
+            ERROR_MSG="$PR_TITLE -> should match -> $TITLE_REGEX"
+            echo "$ERROR_MSG"
+            echo "::set-output name=invalid::true"
+            echo "::set-output name=errorMessage::$ERROR_MSG"
+
+            touch comment.txt
+            echo "## The title \`$PR_TITLE\` should match \`$TITLE_REGEX\`" >> comment.txt
+            echo "" >> comment.txt
+            echo "SECTION: FIX #xzyw PLAYER DESCRIPTION" >> comment.txt
+            echo "" >> comment.txt
+            echo 'SECTION is something like "API", "UI", "MISC", "STANEK", "CORPORATION"' >> comment.txt
+            echo 'FIX #xyzw is the issue number, if any' >> comment.txt
+            echo "PLAYER DESCRIPTION is what you'd tell a non-contributor to convey what is changed." >> comment.txt
+
+            echo "Add pr label"
+            gh --repo "${{ github.repository }}" \
+              pr edit "${{ github.event.number }}" --add-label "$LABEL"
+            echo "And comment on the pr"
+            gh --repo "${{ github.repository }}" \
+              pr comment "${{ github.event.number }}" --body-file comment.txt
+          fi
+      - name: Flag workflow error
+        if: steps.validate-pr-title.outputs.invalid == 'true'
+        run: |
+          echo "${{ steps.validate-pr-title.outputs.errorMessage }}"
+          exit 1
