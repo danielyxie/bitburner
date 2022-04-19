@@ -115,11 +115,15 @@ export function NetscriptStanek(
       },
     acceptGift: (_ctx: NetscriptContext) =>
       function (): boolean {
-        //Check if the player has access to the church
-        if (player.canAccessCotMG()) {
+        //Check if the player is eligible to join the church
+        if (
+          player.canAccessCotMG() &&
+          player.augmentations.filter((a) => a.name !== AugmentationNames.NeuroFluxGovernor).length == 0 &&
+          player.queuedAugmentations.filter((a) => a.name !== AugmentationNames.NeuroFluxGovernor).length == 0
+        ) {
           //Attempt to join CotMG
           const faction = Factions[FactionNames.ChurchOfTheMachineGod];
-          if (!player.factions.includes(FactionNames.ChurchOfTheMachineGod)) {
+          if (!faction.isMember) {
             joinFaction(faction);
           }
           //Attempt to install the first Stanek aug
@@ -132,7 +136,7 @@ export function NetscriptStanek(
         }
         //Return true iff the player is in CotMG and has the first Stanek aug installed
         return (
-          player.factions.includes(FactionNames.ChurchOfTheMachineGod) &&
+          Factions[FactionNames.ChurchOfTheMachineGod].isMember &&
           player.hasAugmentation(AugmentationNames.StaneksGift1)
         );
       },
