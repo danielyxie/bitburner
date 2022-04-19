@@ -798,5 +798,5 @@ export function calculateAchievements(): void {
   // Write all player's achievements to document for Steam/Electron
   // This could be replaced by "availableAchievements"
   // if we don't want to grant the save game achievements to steam but only currently available
-  (document as any).achievements = [...Player.achievements.map((a) => a.ID)];
+  document.achievements = [...Player.achievements.map((a) => a.ID)];
 }
