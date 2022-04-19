@@ -1894,7 +1894,6 @@ export const initChurchOfTheMachineGodAugmentations = (): Augmentation[] => [
 
 export function initNeuroFluxGovernor(): Augmentation {
   const donationBonus = CONSTANTS.Donations / 1e6 / 100; // 1 millionth of a percent per donation
-  console.log(donationBonus * 100);
   return new Augmentation({
     name: AugmentationNames.NeuroFluxGovernor,
     repCost: 500,
