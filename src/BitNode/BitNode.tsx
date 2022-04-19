@@ -73,25 +73,12 @@ BitNodes["BitNode2"] = new BitNode(
       savagery. The organized crime factions quickly rose to the top of the modern world.
       <br />
       <br />
-      In this BitNode:
-      <br />
-      <br />
-      Your hacking level is reduced by 20%
-      <br />
-      The growth rate and maximum amount of money available on servers are significantly decreased
-      <br />
-      The amount of money gained from crimes and Infiltration is tripled
-      <br />
       Certain Factions ({FactionNames.SlumSnakes}, {FactionNames.Tetrads}, {FactionNames.TheSyndicate},{" "}
       {FactionNames.TheDarkArmy}, {FactionNames.SpeakersForTheDead}, {FactionNames.NiteSec}, {FactionNames.TheBlackHand}
       ) give the player the ability to form and manage their own gangs. These gangs will earn the player money and
       reputation with the corresponding Faction
       <br />
       Every Augmentation in the game will be available through the Factions listed above
-      <br />
-      For every Faction NOT listed above, reputation gains are halved
-      <br />
-      You will no longer gain passive reputation with Factions
       <br />
       <br />
       Destroying this BitNode will give you Source-File 2, or if you already have this Source-File it will upgrade its
@@ -123,15 +110,7 @@ BitNodes["BitNode3"] = new BitNode(
       <br />
       <br />
       In this BitNode you can create and manage your own corporation. Running a successful corporation has the potential
-      of generating massive profits. All other forms of income are reduced by 75%. Furthermore: <br />
-      <br />
-      The price and reputation cost of all Augmentations is tripled
-      <br />
-      The starting and maximum amount of money on servers is reduced by 75%
-      <br />
-      Server growth rate is reduced by 80%
-      <br />
-      You now only need 75 favour with a faction in order to donate to it, rather than 150
+      of generating massive profits.
       <br />
       <br />
       Destroying this BitNode will give you Source-File 3, or if you already have this Source-File it will upgrade its
@@ -157,9 +136,6 @@ BitNodes["BitNode4"] = new BitNode(
       The Singularity has arrived. The human race is gone, replaced by artificially superintelligent beings that are
       more machine than man. <br />
       <br />
-      In this BitNode, progressing is significantly harder. Experience gain rates for all stats are reduced. Most
-      methods of earning money will now give significantly less.
-      <br />
       <br />
       In this BitNode you will gain access to a new set of Netscript Functions known as Singularity Functions. These
       functions allow you to control most aspects of the game through scripts, including working for factions/companies,
@@ -182,24 +158,6 @@ BitNodes["BitNode5"] = new BitNode(
       They said it couldn't be done. They said the human brain, along with its consciousness and intelligence, couldn't
       be replicated. They said the complexity of the brain results from unpredictable, nonlinear interactions that
       couldn't be modeled by 1's and 0's. They were wrong.
-      <br />
-      <br />
-      In this BitNode:
-      <br />
-      <br />
-      The base security level of servers is doubled
-      <br />
-      The starting money on servers is halved, but the maximum money remains the same
-      <br />
-      Most methods of earning money now give significantly less
-      <br />
-      Infiltration gives 50% more reputation and money
-      <br />
-      Corporations have 50% lower valuations and are therefore less profitable
-      <br />
-      Augmentations are more expensive
-      <br />
-      Hacking experience gain rates are reduced
       <br />
       <br />
       Destroying this BitNode will give you Source-File 5, or if you already have this Source-File it will upgrade its
@@ -235,20 +193,7 @@ BitNodes["BitNode6"] = new BitNode(
       <br />
       <br />
       In this BitNode you will be able to access the {FactionNames.Bladeburners} Division at the NSA, which provides a
-      new mechanic for progression. Furthermore:
-      <br />
-      <br />
-      Hacking and Hacknet Nodes will be less profitable
-      <br />
-      Your hacking level is reduced by 65%
-      <br />
-      Hacking experience gain from scripts is reduced by 75%
-      <br />
-      Corporations have 80% lower valuations and are therefore less profitable
-      <br />
-      Working for companies is 50% less profitable
-      <br />
-      Crimes and Infiltration are 25% less profitable
+      new mechanic for progression.
       <br />
       <br />
       Destroying this BitNode will give you Source-File 6, or if you already have this Source-File it will upgrade its
@@ -281,25 +226,7 @@ BitNodes["BitNode7"] = new BitNode(
       <br />
       In this BitNode you will be able to access the {FactionNames.Bladeburners} API, which allows you to access{" "}
       {FactionNames.Bladeburners}
-      functionality through Netscript. Furthermore: <br />
-      <br />
-      The rank you gain from {FactionNames.Bladeburners} contracts/operations is reduced by 40%
-      <br />
-      {FactionNames.Bladeburners} skills cost twice as many skill points
-      <br />
-      Augmentations are 3x more expensive
-      <br />
-      Hacking and Hacknet Nodes will be significantly less profitable
-      <br />
-      Your hacking level is reduced by 65%
-      <br />
-      Hacking experience gain from scripts is reduced by 75%
-      <br />
-      Corporations have 80% lower valuations and are therefore less profitable
-      <br />
-      Working for companies is 50% less profitable
-      <br />
-      Crimes and Infiltration are 25% less profitable
+      functionality through Netscript.
       <br />
       <br />
       Destroying this BitNode will give you Source-File 7, or if you already have this Source-File it will upgrade its
@@ -331,13 +258,9 @@ BitNodes["BitNode8"] = new BitNode(
       <br />
       You start with $250 million
       <br />
-      The only way to earn money is by trading on the stock market
-      <br />
       You start with a WSE membership and access to the TIX API
       <br />
       You are able to short stocks and place different types of orders (limit/stop)
-      <br />
-      You can immediately donate to factions to gain reputation
       <br />
       <br />
       Destroying this BitNode will give you Source-File 8, or if you already have this Source-File it will upgrade its
@@ -376,16 +299,6 @@ BitNodes["BitNode9"] = new BitNode(
       <br />
       This BitNode unlocks the Hacknet Server, an upgraded version of the Hacknet Node. Hacknet Servers generate hashes,
       which can be spent on a variety of different upgrades.
-      <br />
-      <br />
-      In this BitNode:
-      <br />
-      <br />
-      Your stats are significantly decreased
-      <br />
-      You cannnot purchase additional servers
-      <br />
-      Hacking is significantly less profitable
       <br />
       <br />
       Destroying this BitNode will give you Source-File 9, or if you already have this Source-File it will upgrade its
@@ -432,19 +345,7 @@ BitNodes["BitNode10"] = new BitNode(
       1. Grafting: Visit VitaLife in New Tokyo to be able to obtain Augmentations without needing to install
       <br />
       2. Duplicate Sleeves: Duplicate your consciousness into Synthoids, allowing you to perform different tasks
-      synchronously
-      <br />
-      <br />
-      In this BitNode:
-      <br />
-      <br />
-      Your stats are significantly decreased
-      <br />
-      All methods of gaining money are half as profitable (except Stock Market)
-      <br />
-      Purchased servers are more expensive, have less max RAM, and a lower maximum limit
-      <br />
-      Augmentations are 5x as expensive and require twice as much reputation
+      synchronously.
       <br />
       <br />
       Destroying this BitNode will give you Source-File 10, or if you already have this Source-File it will upgrade its
@@ -470,28 +371,6 @@ BitNodes["BitNode11"] = new BitNode(
       this chaos and confusion, hackers were able to steal billions of dollars from the world's largest electronic
       banks, prompting an international banking crisis as governments were unable to bail out insolvent banks. Now, the
       world is slowly crumbling in the middle of the biggest economic crisis of all time.
-      <br />
-      <br />
-      In this BitNode:
-      <br />
-      <br />
-      Your hacking stat and experience gain are halved
-      <br />
-      The starting and maximum amount of money available on servers is significantly decreased
-      <br />
-      The growth rate of servers is significantly reduced
-      <br />
-      Weakening a server is twice as effective
-      <br />
-      Company wages are decreased by 50%
-      <br />
-      Corporation valuations are 90% lower and are therefore significantly less profitable
-      <br />
-      Hacknet Node production is significantly decreased
-      <br />
-      Crime and Infiltration are more lucrative
-      <br />
-      Augmentations are twice as expensive
       <br />
       <br />
       Destroying this BitNode will give you Source-File 11, or if you already have this Source-File it will upgrade its
@@ -548,14 +427,6 @@ BitNodes["BitNode13"] = new BitNode(
       <br />
       Their leader, Allison "Mother" Stanek is said to have created her own Augmentation whose power goes beyond any
       other. Find her in {CityName.Chongqing} and gain her trust.
-      <br />
-      <br />
-      In this BitNode:
-      <br />
-      <br />
-      Every stat is significantly reduced
-      <br />
-      Stanek's Gift power is significantly increased.
       <br />
       <br />
       Destroying this BitNode will give you Source-File 13, or if you already have this Source-File it will upgrade its
@@ -733,7 +604,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
         CorporationValuation: 0.2,
         HacknetNodeMoney: 0.2,
         HackExpGain: 0.25,
-        DaedalusAugsRequirement: 1.166, // Results in 35 Augs neede,
+        DaedalusAugsRequirement: 35,
         PurchasedServerSoftcap: 2,
         StaneksGiftPowerMultiplier: 0.5,
         StaneksGiftExtraSize: 2,
@@ -761,7 +632,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
         HackExpGain: 0.25,
         FourSigmaMarketDataCost: 2,
         FourSigmaMarketDataApiCost: 2,
-        DaedalusAugsRequirement: 1.166, // Results in 35 Augs neede,
+        DaedalusAugsRequirement: 35,
         PurchasedServerSoftcap: 2,
         StaneksGiftPowerMultiplier: 0.9,
         StaneksGiftExtraSize: -1,
@@ -880,9 +751,7 @@ export function getBitNodeMultipliers(n: number, lvl: number): IBitNodeMultiplie
       const dec = 1 / inc;
 
       return Object.assign(mults, {
-        // Multiplier for number of augs needed for Daedalus increases
-        // up to a maximum of 1.34, which results in 40 Augs required
-        DaedalusAugsRequirement: Math.min(inc, 1.34),
+        DaedalusAugsRequirement: Math.floor(Math.min(mults.DaedalusAugsRequirement + inc, 40)),
 
         HackingLevelMultiplier: dec,
         StrengthLevelMultiplier: dec,
