@@ -430,7 +430,7 @@ export function CharacterStats(): React.ReactElement {
                     player.mults.agility,
                     player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
                   ],
-                  ["Agility Experience", player.agility_exp_mult],
+                  ["Agility Experience", player.mults.agility_exp],
                 ]}
                 color={Settings.theme.combat}
               />

@@ -102,7 +102,6 @@ export class PlayerObject implements IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  agility_exp_mult: number;
   charisma_mult: number;
   charisma_exp_mult: number;
   hacknet_node_money_mult: number;
@@ -362,7 +361,6 @@ export class PlayerObject implements IPlayer {
 
     this.charisma_mult = 1;
 
-    this.agility_exp_mult = 1;
     this.charisma_exp_mult = 1;
 
     this.company_rep_mult = 1;

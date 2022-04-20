@@ -74,7 +74,7 @@ export function calculateClassEarnings(player: IPlayer): WorkEarnings {
     workStrExpGainRate: strExp * player.mults.strength_exp * BitNodeMultipliers.ClassGymExpGain,
     workDefExpGainRate: defExp * player.mults.defense_exp * BitNodeMultipliers.ClassGymExpGain,
     workDexExpGainRate: dexExp * player.mults.dexterity_exp * BitNodeMultipliers.ClassGymExpGain,
-    workAgiExpGainRate: agiExp * player.agility_exp_mult * BitNodeMultipliers.ClassGymExpGain,
+    workAgiExpGainRate: agiExp * player.mults.agility_exp * BitNodeMultipliers.ClassGymExpGain,
     workChaExpGainRate: chaExp * player.charisma_exp_mult * BitNodeMultipliers.ClassGymExpGain,
   };
 }

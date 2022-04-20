@@ -2437,7 +2437,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         strength_exp_mult: Player.mults.strength_exp,
         defense_exp_mult: Player.mults.defense_exp,
         dexterity_exp_mult: Player.mults.dexterity_exp,
-        agility_exp_mult: Player.agility_exp_mult,
+        agility_exp_mult: Player.mults.agility_exp,
         charisma_exp_mult: Player.charisma_exp_mult,
         company_rep_mult: Player.company_rep_mult,
         faction_rep_mult: Player.faction_rep_mult,
