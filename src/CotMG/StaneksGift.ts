@@ -151,7 +151,7 @@ export class StaneksGift implements IStaneksGift {
           p.mults.hacking_speed *= power;
           break;
         case FragmentType.HackingMoney:
-          p.hacking_money_mult *= power;
+          p.mults.hacking_money *= power;
           break;
         case FragmentType.HackingGrow:
           p.hacking_grow_mult *= power;

@@ -364,8 +364,8 @@ export function CharacterStats(): React.ReactElement {
                   ["Hacking Speed", player.mults.hacking_speed],
                   [
                     "Hacking Money",
-                    player.hacking_money_mult,
-                    player.hacking_money_mult * BitNodeMultipliers.ScriptHackMoney,
+                    player.mults.hacking_money,
+                    player.mults.hacking_money * BitNodeMultipliers.ScriptHackMoney,
                   ],
                   [
                     "Hacking Growth",
