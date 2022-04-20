@@ -17,6 +17,13 @@ export function canAccessGang(this: IPlayer): boolean {
   return this.karma <= GangKarmaRequirement;
 }
 
+export function isAwareOfGang(this: IPlayer): boolean {
+  if (this.bitNodeN === 2 || this.sourceFileLvl(2) >= 1) {
+    return true;
+  }
+  return false;
+}
+
 export function getGangFaction(this: IPlayer): Faction {
   const gang = this.gang;
   if (gang === null) {

@@ -208,6 +208,7 @@ export interface IPlayer {
   hasProgram(program: string): boolean;
   inBladeburner(): boolean;
   inGang(): boolean;
+  isAwareOfGang(): boolean;
   isQualified(company: Company, position: CompanyPosition): boolean;
   loseMoney(money: number, source: string): void;
   process(router: IRouter, numCycles?: number): void;
