@@ -29,7 +29,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.mults.defense *= incMult;
       Player.mults.dexterity *= incMult;
       Player.mults.agility *= incMult;
-      Player.charisma_mult *= incMult;
+      Player.mults.charisma *= incMult;
       Player.mults.hacking_exp *= incMult;
       Player.mults.strength_exp *= incMult;
       Player.mults.defense_exp *= incMult;
@@ -57,7 +57,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       const incMult = 1 + mult / 100;
       Player.crime_money_mult *= incMult;
       Player.crime_success_mult *= incMult;
-      Player.charisma_mult *= incMult;
+      Player.mults.charisma *= incMult;
       break;
     }
     case 3: {
@@ -67,7 +67,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
         mult += 8 / Math.pow(2, i);
       }
       const incMult = 1 + mult / 100;
-      Player.charisma_mult *= incMult;
+      Player.mults.charisma *= incMult;
       Player.work_money_mult *= incMult;
       break;
     }

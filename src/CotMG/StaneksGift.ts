@@ -177,7 +177,7 @@ export class StaneksGift implements IStaneksGift {
           p.mults.agility_exp *= power;
           break;
         case FragmentType.Charisma:
-          p.charisma_mult *= power;
+          p.mults.charisma *= power;
           p.charisma_exp_mult *= power;
           break;
         case FragmentType.HacknetMoney:

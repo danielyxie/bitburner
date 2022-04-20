@@ -298,7 +298,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
   );
   const charismaProgress = player.calculateSkillProgress(
     player.charisma_exp,
-    player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
+    player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
   );
 
   return (

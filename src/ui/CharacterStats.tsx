@@ -438,8 +438,8 @@ export function CharacterStats(): React.ReactElement {
                 rows={[
                   [
                     "Charisma Level",
-                    player.charisma_mult,
-                    player.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier,
+                    player.mults.charisma,
+                    player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
                   ],
                   ["Charisma Experience", player.charisma_exp_mult],
                 ]}
