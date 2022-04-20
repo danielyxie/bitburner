@@ -27,7 +27,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.mults.hacking *= incMult;
       Player.mults.strength *= incMult;
       Player.mults.defense *= incMult;
-      Player.dexterity_mult *= incMult;
+      Player.mults.dexterity *= incMult;
       Player.agility_mult *= incMult;
       Player.charisma_mult *= incMult;
       Player.mults.hacking_exp *= incMult;
@@ -104,7 +104,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.agility_exp_mult *= incMult;
       Player.mults.strength *= incMult;
       Player.mults.defense *= incMult;
-      Player.dexterity_mult *= incMult;
+      Player.mults.dexterity *= incMult;
       Player.agility_mult *= incMult;
       break;
     }

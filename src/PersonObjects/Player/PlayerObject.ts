@@ -102,8 +102,6 @@ export class PlayerObject implements IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  // Multipliers
-  dexterity_mult: number;
   dexterity_exp_mult: number;
   agility_mult: number;
   agility_exp_mult: number;
@@ -364,7 +362,6 @@ export class PlayerObject implements IPlayer {
     this.charisma_exp = 0;
     this.intelligence_exp = 0;
 
-    this.dexterity_mult = 1;
     this.agility_mult = 1;
     this.charisma_mult = 1;
 

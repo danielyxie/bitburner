@@ -416,8 +416,8 @@ export function CharacterStats(): React.ReactElement {
                 rows={[
                   [
                     "Dexterity Level",
-                    player.dexterity_mult,
-                    player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+                    player.mults.dexterity,
+                    player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
                   ],
                   ["Dexterity Experience", player.dexterity_exp_mult],
                 ]}

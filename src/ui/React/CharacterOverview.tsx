@@ -290,7 +290,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
   );
   const dexterityProgress = player.calculateSkillProgress(
     player.dexterity_exp,
-    player.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+    player.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
   );
   const agilityProgress = player.calculateSkillProgress(
     player.agility_exp,

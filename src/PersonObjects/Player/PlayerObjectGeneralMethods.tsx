@@ -251,7 +251,7 @@ export function updateSkillLevels(this: IPlayer): void {
   this.dexterity = Math.max(
     1,
     Math.floor(
-      this.calculateSkill(this.dexterity_exp, this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier),
+      this.calculateSkill(this.dexterity_exp, this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier),
     ),
   );
   this.agility = Math.max(
@@ -283,7 +283,7 @@ export function resetMultipliers(this: IPlayer): void {
   this.mults.hacking = 1;
   this.mults.strength = 1;
   this.mults.defense = 1;
-  this.dexterity_mult = 1;
+  this.mults.dexterity = 1;
   this.agility_mult = 1;
   this.charisma_mult = 1;
 
@@ -431,7 +431,7 @@ export function gainDexterityExp(this: IPlayer, exp: number): void {
 
   this.dexterity = calculateSkillF(
     this.dexterity_exp,
-    this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier,
+    this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier,
   );
 }
 
