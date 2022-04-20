@@ -130,7 +130,7 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript, he
       const i = helper.number("getLevelUpgradeCost", "i", _i);
       const n = helper.number("getLevelUpgradeCost", "n", _n);
       const node = getHacknetNode(i, "upgradeLevel");
-      return node.calculateLevelUpgradeCost(n, player.hacknet_node_level_cost_mult);
+      return node.calculateLevelUpgradeCost(n, player.mults.hacknet_node_level_cost);
     },
     getRamUpgradeCost: function (_i: unknown, _n: unknown = 1): number {
       const i = helper.number("getRamUpgradeCost", "i", _i);

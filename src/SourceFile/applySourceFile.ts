@@ -44,7 +44,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.mults.hacknet_node_purchase_cost *= decMult;
       Player.mults.hacknet_node_ram_cost *= decMult;
       Player.mults.hacknet_node_core_cost *= decMult;
-      Player.hacknet_node_level_cost_mult *= decMult;
+      Player.mults.hacknet_node_level_cost *= decMult;
       Player.work_money_mult *= incMult;
       break;
     }
@@ -140,7 +140,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       const incMult = 1 + mult / 100;
       const decMult = 1 - mult / 100;
       Player.mults.hacknet_node_core_cost *= decMult;
-      Player.hacknet_node_level_cost_mult *= decMult;
+      Player.mults.hacknet_node_level_cost *= decMult;
       Player.mults.hacknet_node_money *= incMult;
       Player.mults.hacknet_node_purchase_cost *= decMult;
       Player.mults.hacknet_node_ram_cost *= decMult;

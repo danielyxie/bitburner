@@ -1543,7 +1543,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         purchaseCost: Player.mults.hacknet_node_purchase_cost,
         ramCost: Player.mults.hacknet_node_ram_cost,
         coreCost: Player.mults.hacknet_node_core_cost,
-        levelCost: Player.hacknet_node_level_cost_mult,
+        levelCost: Player.mults.hacknet_node_level_cost,
       };
     },
     getBitNodeMultipliers: function (): IBNMults {
@@ -2478,7 +2478,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         hacknet_node_purchase_cost_mult: Player.mults.hacknet_node_purchase_cost,
         hacknet_node_ram_cost_mult: Player.mults.hacknet_node_ram_cost,
         hacknet_node_core_cost_mult: Player.mults.hacknet_node_core_cost,
-        hacknet_node_level_cost_mult: Player.hacknet_node_level_cost_mult,
+        hacknet_node_level_cost_mult: Player.mults.hacknet_node_level_cost,
         hasWseAccount: Player.hasWseAccount,
         hasTixApiAccess: Player.hasTixApiAccess,
         has4SData: Player.has4SData,

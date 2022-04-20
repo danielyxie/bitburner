@@ -187,7 +187,7 @@ export class StaneksGift implements IStaneksGift {
           p.mults.hacknet_node_purchase_cost /= power;
           p.mults.hacknet_node_ram_cost /= power;
           p.mults.hacknet_node_core_cost /= power;
-          p.hacknet_node_level_cost_mult /= power;
+          p.mults.hacknet_node_level_cost /= power;
           break;
         case FragmentType.Rep:
           p.company_rep_mult *= power;

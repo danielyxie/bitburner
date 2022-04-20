@@ -60,7 +60,7 @@ export function HacknetNodeElem(props: IProps): React.ReactElement {
     const increase =
       calculateMoneyGainRate(node.level + multiplier, node.ram, node.cores, props.player.mults.hacknet_node_money) -
       node.moneyGainRatePerSecond;
-    const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, props.player.hacknet_node_level_cost_mult);
+    const upgradeLevelCost = node.calculateLevelUpgradeCost(multiplier, props.player.mults.hacknet_node_level_cost);
     upgradeLevelButton = (
       <Tooltip
         title={
