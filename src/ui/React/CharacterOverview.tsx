@@ -278,7 +278,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
 
   const hackingProgress = player.calculateSkillProgress(
     player.hacking_exp,
-    player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
+    player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
   );
   const strengthProgress = player.calculateSkillProgress(
     player.strength_exp,

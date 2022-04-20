@@ -379,8 +379,8 @@ export function CharacterStats(): React.ReactElement {
                 rows={[
                   [
                     "Hacking Level",
-                    player.hacking_mult,
-                    player.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier,
+                    player.mults.hacking,
+                    player.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier,
                   ],
                   [
                     "Hacking Experience",

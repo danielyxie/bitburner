@@ -238,7 +238,7 @@ export function calculateSkillProgress(this: IPlayer, exp: number, mult = 1): IS
 export function updateSkillLevels(this: IPlayer): void {
   this.hacking = Math.max(
     1,
-    Math.floor(this.calculateSkill(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier)),
+    Math.floor(this.calculateSkill(this.hacking_exp, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier)),
   );
   this.strength = Math.max(
     1,
@@ -280,7 +280,7 @@ export function resetMultipliers(this: IPlayer): void {
   this.mults.hacking_money = 1;
   this.mults.hacking_grow = 1;
 
-  this.hacking_mult = 1;
+  this.mults.hacking = 1;
   this.strength_mult = 1;
   this.defense_mult = 1;
   this.dexterity_mult = 1;
@@ -387,7 +387,7 @@ export function gainHackingExp(this: IPlayer, exp: number): void {
     this.hacking_exp = 0;
   }
 
-  this.hacking = calculateSkillF(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier);
+  this.hacking = calculateSkillF(this.hacking_exp, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier);
 }
 
 export function gainStrengthExp(this: IPlayer, exp: number): void {
