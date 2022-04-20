@@ -257,7 +257,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const className = _ctx.helper.string("className", _className);
         const focus = _ctx.helper.boolean(_focus);
         if (player.money <= 0) {
-          workerScript.log("universityCourse", () => `You do not have enough money!`);
+          _ctx.log(() => `You do not have enough money!`);
           return false;
         }
         const wasFocusing = player.focus;
@@ -345,7 +345,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
         const stat = _ctx.helper.string("stat", _stat);
         const focus = _ctx.helper.boolean(_focus);
         if (player.money <= 0) {
-          workerScript.log("gymWorkout", () => `You do not have enough money!`);
+          _ctx.log(() => `You do not have enough money!`);
           return false;
         }
         const wasFocusing = player.focus;
