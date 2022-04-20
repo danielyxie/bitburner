@@ -100,7 +100,7 @@ export function PlayerMultipliers(): React.ReactElement {
     ...[
       ["Hacking Chance ", Player.mults.hacking_chance, Player.mults.hacking_chance * mults.hacking_chance, 1],
       ["Hacking Speed ", Player.mults.hacking_speed, Player.mults.hacking_speed * mults.hacking_speed, 1],
-      ["Hacking Money ", Player.mults.hacking_money, Player.mults.hacking_money * mults.hacking_money, 1],
+      ["Hacking Money ", Player.mults.hacking_money, Player.mults.hacking_money * mults.hacking_money, BitNodeMultipliers.ScriptHackMoney],
       ["Hacking Growth ", Player.mults.hacking_money, Player.mults.hacking_money * mults.hacking_grow, 1],
       [
         "Hacking Level ",
