@@ -292,7 +292,7 @@ export function resetMultipliers(this: IPlayer): void {
   this.mults.defense_exp = 1;
   this.mults.dexterity_exp = 1;
   this.mults.agility_exp = 1;
-  this.charisma_exp_mult = 1;
+  this.mults.charisma_exp = 1;
 
   this.company_rep_mult = 1;
   this.faction_rep_mult = 1;
@@ -907,7 +907,7 @@ export function startFactionFieldWork(this: IPlayer, faction: Faction): void {
   this.workDefExpGainRate = 0.1 * this.mults.defense_exp * BitNodeMultipliers.FactionWorkExpGain;
   this.workDexExpGainRate = 0.1 * this.mults.dexterity_exp * BitNodeMultipliers.FactionWorkExpGain;
   this.workAgiExpGainRate = 0.1 * this.mults.agility_exp * BitNodeMultipliers.FactionWorkExpGain;
-  this.workChaExpGainRate = 0.1 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workChaExpGainRate = 0.1 * this.mults.charisma_exp * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionFieldWorkRepGain(this, faction);
 
   this.factionWorkType = CONSTANTS.FactionWorkField;
@@ -924,7 +924,7 @@ export function startFactionSecurityWork(this: IPlayer, faction: Faction): void 
   this.workDefExpGainRate = 0.15 * this.mults.defense_exp * BitNodeMultipliers.FactionWorkExpGain;
   this.workDexExpGainRate = 0.15 * this.mults.dexterity_exp * BitNodeMultipliers.FactionWorkExpGain;
   this.workAgiExpGainRate = 0.15 * this.mults.agility_exp * BitNodeMultipliers.FactionWorkExpGain;
-  this.workChaExpGainRate = 0.0 * this.charisma_exp_mult * BitNodeMultipliers.FactionWorkExpGain;
+  this.workChaExpGainRate = 0.0 * this.mults.charisma_exp * BitNodeMultipliers.FactionWorkExpGain;
   this.workRepGainRate = getFactionSecurityWorkRepGain(this, faction);
 
   this.factionWorkType = CONSTANTS.FactionWorkSecurity;
@@ -1196,7 +1196,7 @@ export function getWorkChaExpGain(this: IPlayer): number {
   return (
     companyPosition.charismaExpGain *
     company.expMultiplier *
-    this.charisma_exp_mult *
+    this.mults.charisma_exp *
     BitNodeMultipliers.CompanyWorkExpGain
   );
 }
@@ -1515,7 +1515,7 @@ export function startCrime(
   this.workDefExpGained = defExp * this.mults.defense_exp * BitNodeMultipliers.CrimeExpGain;
   this.workDexExpGained = dexExp * this.mults.dexterity_exp * BitNodeMultipliers.CrimeExpGain;
   this.workAgiExpGained = agiExp * this.mults.agility_exp * BitNodeMultipliers.CrimeExpGain;
-  this.workChaExpGained = chaExp * this.charisma_exp_mult * BitNodeMultipliers.CrimeExpGain;
+  this.workChaExpGained = chaExp * this.mults.charisma_exp * BitNodeMultipliers.CrimeExpGain;
   this.workMoneyGained = money * this.crime_money_mult * BitNodeMultipliers.CrimeMoney;
 
   this.timeNeededToCompleteWork = time;

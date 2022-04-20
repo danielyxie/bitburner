@@ -35,7 +35,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.mults.defense_exp *= incMult;
       Player.mults.dexterity_exp *= incMult;
       Player.mults.agility_exp *= incMult;
-      Player.charisma_exp_mult *= incMult;
+      Player.mults.charisma_exp *= incMult;
       Player.company_rep_mult *= incMult;
       Player.faction_rep_mult *= incMult;
       Player.crime_money_mult *= incMult;

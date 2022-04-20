@@ -441,7 +441,7 @@ export function CharacterStats(): React.ReactElement {
                     player.mults.charisma,
                     player.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier,
                   ],
-                  ["Charisma Experience", player.charisma_exp_mult],
+                  ["Charisma Experience", player.mults.charisma_exp],
                 ]}
                 color={Settings.theme.cha}
                 noMargin

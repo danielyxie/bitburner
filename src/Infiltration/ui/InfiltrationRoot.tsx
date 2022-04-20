@@ -29,7 +29,7 @@ function calcReward(player: IPlayer, startingDifficulty: number): number {
     calculateSkill(player.mults.defense_exp * xpMult, player.mults.defense) +
     calculateSkill(player.mults.agility_exp * xpMult, player.mults.agility) +
     calculateSkill(player.mults.dexterity_exp * xpMult, player.mults.dexterity) +
-    calculateSkill(player.charisma_exp_mult * xpMult, player.mults.charisma);
+    calculateSkill(player.mults.charisma_exp * xpMult, player.mults.charisma);
   return calcRawDiff(player, total, startingDifficulty);
 }
 
