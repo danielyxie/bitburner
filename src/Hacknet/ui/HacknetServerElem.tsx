@@ -117,7 +117,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
         node.cores,
         props.player.mults.hacknet_node_money,
       ) - node.hashRate;
-    const upgradeRamCost = node.calculateRamUpgradeCost(multiplier, props.player.hacknet_node_ram_cost_mult);
+    const upgradeRamCost = node.calculateRamUpgradeCost(multiplier, props.player.mults.hacknet_node_ram_cost);
     upgradeRamButton = (
       <Tooltip
         title={

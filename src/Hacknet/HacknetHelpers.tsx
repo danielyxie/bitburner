@@ -137,7 +137,7 @@ export function getMaxNumberRamUpgrades(
     throw new Error(`getMaxNumberRamUpgrades() called without maxLevel arg`);
   }
 
-  if (player.money < nodeObj.calculateRamUpgradeCost(1, player.hacknet_node_ram_cost_mult)) {
+  if (player.money < nodeObj.calculateRamUpgradeCost(1, player.mults.hacknet_node_ram_cost)) {
     return 0;
   }
 
@@ -147,13 +147,13 @@ export function getMaxNumberRamUpgrades(
   } else {
     levelsToMax = Math.round(Math.log2(maxLevel / nodeObj.ram));
   }
-  if (player.money > nodeObj.calculateRamUpgradeCost(levelsToMax, player.hacknet_node_ram_cost_mult)) {
+  if (player.money > nodeObj.calculateRamUpgradeCost(levelsToMax, player.mults.hacknet_node_ram_cost)) {
     return levelsToMax;
   }
 
   //We'll just loop until we find the max
   for (let i = levelsToMax - 1; i >= 0; --i) {
-    if (player.money > nodeObj.calculateRamUpgradeCost(i, player.hacknet_node_ram_cost_mult)) {
+    if (player.money > nodeObj.calculateRamUpgradeCost(i, player.mults.hacknet_node_ram_cost)) {
       return i;
     }
   }
@@ -273,7 +273,7 @@ export function purchaseLevelUpgrade(player: IPlayer, node: HacknetNode | Hackne
 
 export function purchaseRamUpgrade(player: IPlayer, node: HacknetNode | HacknetServer, levels = 1): boolean {
   const sanitizedLevels = Math.round(levels);
-  const cost = node.calculateRamUpgradeCost(sanitizedLevels, player.hacknet_node_ram_cost_mult);
+  const cost = node.calculateRamUpgradeCost(sanitizedLevels, player.mults.hacknet_node_ram_cost);
   if (isNaN(cost) || cost <= 0 || sanitizedLevels < 0) {
     return false;
   }

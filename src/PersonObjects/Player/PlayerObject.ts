@@ -102,7 +102,6 @@ export class PlayerObject implements IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  hacknet_node_ram_cost_mult: number;
   hacknet_node_core_cost_mult: number;
   hacknet_node_level_cost_mult: number;
   company_rep_mult: number;
@@ -497,7 +496,6 @@ export class PlayerObject implements IPlayer {
 
     this.work_money_mult = 1;
 
-    this.hacknet_node_ram_cost_mult = 1;
     this.hacknet_node_core_cost_mult = 1;
     this.hacknet_node_level_cost_mult = 1;
 

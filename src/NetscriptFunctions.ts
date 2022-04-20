@@ -1541,7 +1541,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
       return {
         production: Player.mults.hacknet_node_money,
         purchaseCost: Player.mults.hacknet_node_purchase_cost,
-        ramCost: Player.hacknet_node_ram_cost_mult,
+        ramCost: Player.mults.hacknet_node_ram_cost,
         coreCost: Player.hacknet_node_core_cost_mult,
         levelCost: Player.hacknet_node_level_cost_mult,
       };
@@ -2476,7 +2476,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         work_money_mult: Player.work_money_mult,
         hacknet_node_money_mult: Player.mults.hacknet_node_money,
         hacknet_node_purchase_cost_mult: Player.mults.hacknet_node_purchase_cost,
-        hacknet_node_ram_cost_mult: Player.hacknet_node_ram_cost_mult,
+        hacknet_node_ram_cost_mult: Player.mults.hacknet_node_ram_cost,
         hacknet_node_core_cost_mult: Player.hacknet_node_core_cost_mult,
         hacknet_node_level_cost_mult: Player.hacknet_node_level_cost_mult,
         hasWseAccount: Player.hasWseAccount,
