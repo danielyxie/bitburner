@@ -2730,13 +2730,13 @@ export function getCasinoWinnings(this: IPlayer): number {
 }
 
 export function getMult(this: IPlayer, name: string): number {
-  if (!this.hasOwnProperty(name)) return 1;
-  return (this as any)[name];
+  if (!this.mults.hasOwnProperty(name)) return 1;
+  return this.mults[name];
 }
 
 export function setMult(this: IPlayer, name: string, mult: number): void {
-  if (!this.hasOwnProperty(name)) return;
-  (this as any)[name] = mult;
+  if (!this.mults.hasOwnProperty(name)) return;
+  this.mults[name] = mult;
 }
 
 export function canAccessCotMG(this: IPlayer): boolean {

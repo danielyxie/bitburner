@@ -21,6 +21,7 @@ export interface IPlayerOrSleeve {
 
   // Multipliers
   mults: {
+    [mult: string]: number;
     crime_success: number;
   };
 
