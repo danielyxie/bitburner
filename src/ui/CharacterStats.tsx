@@ -360,7 +360,7 @@ export function CharacterStats(): React.ReactElement {
             <Box>
               <MultiplierTable
                 rows={[
-                  ["Hacking Chance", player.hacking_chance_mult],
+                  ["Hacking Chance", player.mults.hacking_chance],
                   ["Hacking Speed", player.hacking_speed_mult],
                   [
                     "Hacking Money",

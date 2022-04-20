@@ -12,7 +12,7 @@ export function calculateHackingChance(server: Server, player: IPlayer): number 
   const skillMult = hackFactor * player.hacking;
   const skillChance = (skillMult - server.requiredHackingSkill) / skillMult;
   const chance =
-    skillChance * difficultyMult * player.hacking_chance_mult * calculateIntelligenceBonus(player.intelligence, 1);
+    skillChance * difficultyMult * player.mults.hacking_chance * calculateIntelligenceBonus(player.intelligence, 1);
   if (chance > 1) {
     return 1;
   }

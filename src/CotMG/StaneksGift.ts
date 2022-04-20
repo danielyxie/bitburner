@@ -145,7 +145,7 @@ export class StaneksGift implements IStaneksGift {
       const power = this.effect(aFrag);
       switch (fragment.type) {
         case FragmentType.HackingChance:
-          p.hacking_chance_mult *= power;
+          p.mults.hacking_chance *= power;
           break;
         case FragmentType.HackingSpeed:
           p.hacking_speed_mult *= power;

@@ -93,7 +93,6 @@ export interface IPlayer {
   intelligence_exp: number;
 
   // Multipliers
-  hacking_chance_mult: number;
   hacking_speed_mult: number;
   hacking_money_mult: number;
   hacking_grow_mult: number;

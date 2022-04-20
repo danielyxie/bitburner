@@ -1530,7 +1530,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getHackingMultipliers: function (): HackingMultipliers {
       updateDynamicRam("getHackingMultipliers", getRamCost(Player, "getHackingMultipliers"));
       return {
-        chance: Player.hacking_chance_mult,
+        chance: Player.mults.hacking_chance,
         speed: Player.hacking_speed_mult,
         money: Player.hacking_money_mult,
         growth: Player.hacking_grow_mult,
@@ -2417,7 +2417,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         agility: Player.agility,
         charisma: Player.charisma,
         intelligence: Player.intelligence,
-        hacking_chance_mult: Player.hacking_chance_mult,
+        hacking_chance_mult: Player.mults.hacking_chance,
         hacking_speed_mult: Player.hacking_speed_mult,
         hacking_money_mult: Player.hacking_money_mult,
         hacking_grow_mult: Player.hacking_grow_mult,
