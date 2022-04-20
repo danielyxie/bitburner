@@ -158,7 +158,7 @@ export function HacknetServerElem(props: IProps): React.ReactElement {
     const increase =
       calculateHashGainRate(node.level, 0, node.maxRam, node.cores + multiplier, props.player.mults.hacknet_node_money) -
       node.hashRate;
-    const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, props.player.hacknet_node_core_cost_mult);
+    const upgradeCoreCost = node.calculateCoreUpgradeCost(multiplier, props.player.mults.hacknet_node_core_cost);
     upgradeCoresButton = (
       <Tooltip
         title={

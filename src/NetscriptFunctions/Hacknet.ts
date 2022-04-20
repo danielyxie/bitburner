@@ -142,7 +142,7 @@ export function NetscriptHacknet(player: IPlayer, workerScript: WorkerScript, he
       const i = helper.number("getCoreUpgradeCost", "i", _i);
       const n = helper.number("getCoreUpgradeCost", "n", _n);
       const node = getHacknetNode(i, "upgradeCore");
-      return node.calculateCoreUpgradeCost(n, player.hacknet_node_core_cost_mult);
+      return node.calculateCoreUpgradeCost(n, player.mults.hacknet_node_core_cost);
     },
     getCacheUpgradeCost: function (_i: unknown, _n: unknown = 1): number {
       const i = helper.number("getCacheUpgradeCost", "i", _i);

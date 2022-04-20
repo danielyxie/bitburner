@@ -170,14 +170,14 @@ export function getMaxNumberCoreUpgrades(
     throw new Error(`getMaxNumberCoreUpgrades() called without maxLevel arg`);
   }
 
-  if (player.money < nodeObj.calculateCoreUpgradeCost(1, player.hacknet_node_core_cost_mult)) {
+  if (player.money < nodeObj.calculateCoreUpgradeCost(1, player.mults.hacknet_node_core_cost)) {
     return 0;
   }
 
   let min = 1;
   let max = maxLevel - 1;
   const levelsToMax = maxLevel - nodeObj.cores;
-  if (player.money > nodeObj.calculateCoreUpgradeCost(levelsToMax, player.hacknet_node_core_cost_mult)) {
+  if (player.money > nodeObj.calculateCoreUpgradeCost(levelsToMax, player.mults.hacknet_node_core_cost)) {
     return levelsToMax;
   }
 
@@ -186,13 +186,13 @@ export function getMaxNumberCoreUpgrades(
     const curr = ((min + max) / 2) | 0;
     if (
       curr != maxLevel &&
-      player.money > nodeObj.calculateCoreUpgradeCost(curr, player.hacknet_node_core_cost_mult) &&
-      player.money < nodeObj.calculateCoreUpgradeCost(curr + 1, player.hacknet_node_core_cost_mult)
+      player.money > nodeObj.calculateCoreUpgradeCost(curr, player.mults.hacknet_node_core_cost) &&
+      player.money < nodeObj.calculateCoreUpgradeCost(curr + 1, player.mults.hacknet_node_core_cost)
     ) {
       return Math.min(levelsToMax, curr);
-    } else if (player.money < nodeObj.calculateCoreUpgradeCost(curr, player.hacknet_node_core_cost_mult)) {
+    } else if (player.money < nodeObj.calculateCoreUpgradeCost(curr, player.mults.hacknet_node_core_cost)) {
       max = curr - 1;
-    } else if (player.money > nodeObj.calculateCoreUpgradeCost(curr, player.hacknet_node_core_cost_mult)) {
+    } else if (player.money > nodeObj.calculateCoreUpgradeCost(curr, player.mults.hacknet_node_core_cost)) {
       min = curr + 1;
     } else {
       return Math.min(levelsToMax, curr);
@@ -312,7 +312,7 @@ export function purchaseRamUpgrade(player: IPlayer, node: HacknetNode | HacknetS
 
 export function purchaseCoreUpgrade(player: IPlayer, node: HacknetNode | HacknetServer, levels = 1): boolean {
   const sanitizedLevels = Math.round(levels);
-  const cost = node.calculateCoreUpgradeCost(sanitizedLevels, player.hacknet_node_core_cost_mult);
+  const cost = node.calculateCoreUpgradeCost(sanitizedLevels, player.mults.hacknet_node_core_cost);
   if (isNaN(cost) || cost <= 0 || sanitizedLevels < 0) {
     return false;
   }
