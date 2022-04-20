@@ -124,6 +124,49 @@ export interface IPlayer {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
+  mults: {
+    hacking_chance: number;
+    hacking_speed: number;
+    hacking_money: number;
+    hacking_grow: number;
+
+    hacking: number;
+    hacking_exp: number;
+
+    strength: number;
+    strength_exp: number;
+
+    defense: number;
+    defense_exp: number;
+
+    dexterity: number;
+    dexterity_exp: number;
+
+    agility: number;
+    agility_exp: number;
+
+    charisma: number;
+    charisma_exp: number;
+
+    hacknet_node_money: number;
+    hacknet_node_purchase_cost: number;
+    hacknet_node_ram_cost: number;
+    hacknet_node_core_cost: number;
+    hacknet_node_level_cost: number;
+
+    company_rep: number;
+    faction_rep: number;
+    work_money: number;
+
+    crime_success: number;
+    crime_money: number;
+
+    bladeburner_max_stamina: number;
+    bladeburner_stamina_gain: number;
+    bladeburner_analysis: number;
+    bladeburner_success_chance: number;
+  };
+
   createProgramReqLvl: number;
   factionWorkType: string;
   createProgramName: string;

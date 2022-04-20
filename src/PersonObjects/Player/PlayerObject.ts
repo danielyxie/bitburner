@@ -134,6 +134,49 @@ export class PlayerObject implements IPlayer {
   bladeburner_analysis_mult: number;
   bladeburner_success_chance_mult: number;
 
+  mults: {
+    hacking_chance: number;
+    hacking_speed: number;
+    hacking_money: number;
+    hacking_grow: number;
+
+    hacking: number;
+    hacking_exp: number;
+
+    strength: number;
+    strength_exp: number;
+
+    defense: number;
+    defense_exp: number;
+
+    dexterity: number;
+    dexterity_exp: number;
+
+    agility: number;
+    agility_exp: number;
+
+    charisma: number;
+    charisma_exp: number;
+
+    hacknet_node_money: number;
+    hacknet_node_purchase_cost: number;
+    hacknet_node_ram_cost: number;
+    hacknet_node_core_cost: number;
+    hacknet_node_level_cost: number;
+
+    company_rep: number;
+    faction_rep: number;
+    work_money: number;
+
+    crime_success: number;
+    crime_money: number;
+
+    bladeburner_max_stamina: number;
+    bladeburner_stamina_gain: number;
+    bladeburner_analysis: number;
+    bladeburner_success_chance: number;
+  };
+
   createProgramReqLvl: number;
   factionWorkType: string;
   createProgramName: string;
@@ -353,6 +396,60 @@ export class PlayerObject implements IPlayer {
 
     this.company_rep_mult = 1;
     this.faction_rep_mult = 1;
+
+    this.mults = {
+      // Hacking multipliers
+      hacking_chance: 1,
+      hacking_speed: 1,
+      hacking_money: 1,
+      hacking_grow: 1,
+
+      // Hacking skill and exp multipliers
+      hacking: 1,
+      hacking_exp: 1,
+  
+      // Strength skill and exp multipliers
+      strength: 1,
+      strength_exp: 1,
+  
+      // Defense skill and exp multipliers
+      defense: 1,
+      defense_exp: 1,
+  
+      // Dexterity skill and exp multipliers
+      dexterity: 1,
+      dexterity_exp: 1,
+  
+      // Agility skill and exp multipliers
+      agility: 1,
+      agility_exp: 1,
+  
+      // Charisma skill and exp multipliers
+      charisma: 1,
+      charisma_exp: 1,
+  
+      // Hacknet multipliers
+      hacknet_node_money: 1,
+      hacknet_node_purchase_cost: 1,
+      hacknet_node_ram_cost: 1,
+      hacknet_node_core_cost: 1,
+      hacknet_node_level_cost: 1,
+  
+      // Company/Faction rep and work money multipliers
+      company_rep: 1,
+      faction_rep: 1,
+      work_money: 1,
+  
+      // Crime multipliers
+      crime_success: 1,
+      crime_money: 1,
+  
+      // Bladeburner multipliers
+      bladeburner_max_stamina: 1,
+      bladeburner_stamina_gain: 1,
+      bladeburner_analysis: 1,
+      bladeburner_success_chance: 1,
+    };
 
     //Money
     this.money = 1000 + CONSTANTS.Donations;
