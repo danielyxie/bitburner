@@ -59,7 +59,6 @@ export abstract class Person {
   /**
    * Multipliers
    */
-  hacking_mult = 1;
   strength_mult = 1;
   defense_mult = 1;
   dexterity_mult = 1;
@@ -96,6 +95,60 @@ export abstract class Person {
   bladeburner_stamina_gain_mult = 1;
   bladeburner_analysis_mult = 1;
   bladeburner_success_chance_mult = 1;
+
+  mults = {
+    // Hacking multipliers
+    hacking_chance: 1,
+    hacking_speed: 1,
+    hacking_money: 1,
+    hacking_grow: 1,
+
+    // Hacking skill and exp multipliers
+    hacking: 1,
+    hacking_exp: 1,
+
+    // Strength skill and exp multipliers
+    strength: 1,
+    strength_exp: 1,
+
+    // Defense skill and exp multipliers
+    defense: 1,
+    defense_exp: 1,
+
+    // Dexterity skill and exp multipliers
+    dexterity: 1,
+    dexterity_exp: 1,
+
+    // Agility skill and exp multipliers
+    agility: 1,
+    agility_exp: 1,
+
+    // Charisma skill and exp multipliers
+    charisma: 1,
+    charisma_exp: 1,
+
+    // Hacknet multipliers
+    hacknet_node_money: 1,
+    hacknet_node_purchase_cost: 1,
+    hacknet_node_ram_cost: 1,
+    hacknet_node_core_cost: 1,
+    hacknet_node_level_cost: 1,
+
+    // Company/Faction rep and work money multipliers
+    company_rep: 1,
+    faction_rep: 1,
+    work_money: 1,
+
+    // Crime multipliers
+    crime_success: 1,
+    crime_money: 1,
+
+    // Bladeburner multipliers
+    bladeburner_max_stamina: 1,
+    bladeburner_stamina_gain: 1,
+    bladeburner_analysis: 1,
+    bladeburner_success_chance: 1,
+  };
 
   /**
    * Augmentations
@@ -174,27 +227,40 @@ export abstract class Person {
    * Reset all multipliers to 1
    */
   resetMultipliers(): void {
-    this.hacking_mult = 1;
-    this.strength_mult = 1;
-    this.defense_mult = 1;
-    this.dexterity_mult = 1;
-    this.agility_mult = 1;
-    this.charisma_mult = 1;
+    Object.assign(this.mults, {
+      // Hacking skill and exp multipliers
+      hacking: 1,
+      hacking_exp: 1,
 
-    this.hacking_exp_mult = 1;
-    this.strength_exp_mult = 1;
-    this.defense_exp_mult = 1;
-    this.dexterity_exp_mult = 1;
-    this.agility_exp_mult = 1;
-    this.charisma_exp_mult = 1;
+      // Strength skill and exp multipliers
+      strength: 1,
+      strength_exp: 1,
 
-    this.company_rep_mult = 1;
-    this.faction_rep_mult = 1;
+      // Defense skill and exp multipliers
+      defense: 1,
+      defense_exp: 1,
 
-    this.crime_money_mult = 1;
-    this.crime_success_mult = 1;
+      // Dexterity skill and exp multipliers
+      dexterity: 1,
+      dexterity_exp: 1,
 
-    this.work_money_mult = 1;
+      // Agility skill and exp multipliers
+      agility: 1,
+      agility_exp: 1,
+
+      // Charisma skill and exp multipliers
+      charisma: 1,
+      charisma_exp: 1,
+      
+      // Company/Faction rep and work money multipliers
+      company_rep: 1,
+      faction_rep: 1,
+      work_money: 1,
+
+      // Crime multipliers
+      crime_success: 1,
+      crime_money: 1,
+    });
   }
 
   /**
@@ -203,7 +269,7 @@ export abstract class Person {
   updateStatLevels(): void {
     this.hacking = Math.max(
       1,
-      Math.floor(this.calculateStat(this.hacking_exp, this.hacking_mult * BitNodeMultipliers.HackingLevelMultiplier)),
+      Math.floor(this.calculateStat(this.hacking_exp, this.mults.hacking * BitNodeMultipliers.HackingLevelMultiplier)),
     );
     this.strength = Math.max(
       1,

@@ -54,7 +54,7 @@ export function MoreStatsModal(props: IProps): React.ReactElement {
       <br />
       <StatsTable
         rows={[
-          [<>Hacking Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.hacking_mult)],
+          [<>Hacking Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.mults.hacking)],
           [<>Hacking Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.hacking_exp_mult)],
           [<>Strength Level multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.strength_mult)],
           [<>Strength Experience multiplier:&nbsp;</>, numeralWrapper.formatPercentage(props.sleeve.strength_exp_mult)],

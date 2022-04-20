@@ -224,7 +224,7 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
           dexterity: sl.dexterity_mult,
           dexterityExp: sl.dexterity_exp_mult,
           factionRep: sl.faction_rep_mult,
-          hacking: sl.hacking_mult,
+          hacking: sl.mults.hacking,
           hackingExp: sl.hacking_exp_mult,
           strength: sl.strength_mult,
           strengthExp: sl.strength_exp_mult,
