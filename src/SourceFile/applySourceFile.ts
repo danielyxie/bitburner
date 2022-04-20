@@ -23,7 +23,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.mults.hacking_chance *= incMult;
       Player.mults.hacking_speed *= incMult;
       Player.mults.hacking_money *= incMult;
-      Player.hacking_grow_mult *= incMult;
+      Player.mults.hacking_grow *= incMult;
       Player.hacking_mult *= incMult;
       Player.strength_mult *= incMult;
       Player.defense_mult *= incMult;
@@ -86,7 +86,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.mults.hacking_chance *= incMult;
       Player.mults.hacking_speed *= incMult;
       Player.mults.hacking_money *= incMult;
-      Player.hacking_grow_mult *= incMult;
+      Player.mults.hacking_grow *= incMult;
       Player.hacking_mult *= incMult;
       Player.hacking_exp_mult *= incMult;
       break;
@@ -128,7 +128,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
         mult += 12 / Math.pow(2, i);
       }
       const incMult = 1 + mult / 100;
-      Player.hacking_grow_mult *= incMult;
+      Player.mults.hacking_grow *= incMult;
       break;
     }
     case 9: {

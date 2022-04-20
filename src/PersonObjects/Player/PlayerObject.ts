@@ -103,7 +103,6 @@ export class PlayerObject implements IPlayer {
   intelligence_exp: number;
 
   // Multipliers
-  hacking_grow_mult: number;
   hacking_mult: number;
   hacking_exp_mult: number;
   strength_mult: number;
@@ -361,9 +360,6 @@ export class PlayerObject implements IPlayer {
 
     //Special stats
     this.intelligence = 0;
-
-    //Hacking multipliers
-    this.hacking_grow_mult = 1;
 
     //Experience and multipliers
     this.hacking_exp = 0;

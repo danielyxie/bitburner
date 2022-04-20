@@ -369,8 +369,8 @@ export function CharacterStats(): React.ReactElement {
                   ],
                   [
                     "Hacking Growth",
-                    player.hacking_grow_mult,
-                    player.hacking_grow_mult * BitNodeMultipliers.ServerGrowthRate,
+                    player.mults.hacking_grow,
+                    player.mults.hacking_grow * BitNodeMultipliers.ServerGrowthRate,
                   ],
                 ]}
                 color={Settings.theme.hack}

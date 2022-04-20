@@ -1533,7 +1533,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         chance: Player.mults.hacking_chance,
         speed: Player.mults.hacking_speed,
         money: Player.mults.hacking_money,
-        growth: Player.hacking_grow_mult,
+        growth: Player.mults.hacking_grow,
       };
     },
     getHacknetMultipliers: function (): HacknetMultipliers {
@@ -2420,7 +2420,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         hacking_chance_mult: Player.mults.hacking_chance,
         hacking_speed_mult: Player.mults.hacking_speed,
         hacking_money_mult: Player.mults.hacking_money,
-        hacking_grow_mult: Player.hacking_grow_mult,
+        hacking_grow_mult: Player.mults.hacking_grow,
         hacking_exp: Player.hacking_exp,
         strength_exp: Player.strength_exp,
         defense_exp: Player.defense_exp,
