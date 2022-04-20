@@ -294,7 +294,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
   );
   const agilityProgress = player.calculateSkillProgress(
     player.agility_exp,
-    player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
+    player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
   );
   const charismaProgress = player.calculateSkillProgress(
     player.charisma_exp,

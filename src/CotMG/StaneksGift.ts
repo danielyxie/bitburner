@@ -173,7 +173,7 @@ export class StaneksGift implements IStaneksGift {
           p.mults.dexterity_exp *= power;
           break;
         case FragmentType.Agility:
-          p.agility_mult *= power;
+          p.mults.agility *= power;
           p.agility_exp_mult *= power;
           break;
         case FragmentType.Charisma:

@@ -427,8 +427,8 @@ export function CharacterStats(): React.ReactElement {
                 rows={[
                   [
                     "Agility Level",
-                    player.agility_mult,
-                    player.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier,
+                    player.mults.agility,
+                    player.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier,
                   ],
                   ["Agility Experience", player.agility_exp_mult],
                 ]}

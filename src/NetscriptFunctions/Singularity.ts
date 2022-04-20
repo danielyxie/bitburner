@@ -699,7 +699,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
           jobTitles: Object.values(player.jobs),
           maxHp: player.max_hp,
           mult: {
-            agility: player.agility_mult,
+            agility: player.mults.agility,
             agilityExp: player.agility_exp_mult,
             charisma: player.charisma,
             charismaExp: player.charisma_exp,

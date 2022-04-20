@@ -92,7 +92,6 @@ export interface IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  agility_mult: number;
   agility_exp_mult: number;
   charisma_mult: number;
   charisma_exp_mult: number;
