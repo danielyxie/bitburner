@@ -715,7 +715,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             hackingExp: player.mults.hacking_exp,
             strength: player.mults.strength,
             strengthExp: player.mults.strength_exp,
-            workMoney: player.work_money_mult,
+            workMoney: player.mults.work_money,
           },
           timeWorked: player.timeWorked,
           tor: player.hasTorRouter(),

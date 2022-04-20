@@ -102,7 +102,6 @@ export class PlayerObject implements IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  work_money_mult: number;
   crime_success_mult: number;
   crime_money_mult: number;
   bladeburner_max_stamina_mult: number;
@@ -486,8 +485,6 @@ export class PlayerObject implements IPlayer {
     this.timeWorked = 0; //in m;
     this.timeWorkedCreateProgram = 0;
     this.timeNeededToCompleteWork = 0;
-
-    this.work_money_mult = 1;
 
     //Stock Market
     this.hasWseAccount = false;

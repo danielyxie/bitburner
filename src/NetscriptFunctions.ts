@@ -2473,7 +2473,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         createProgramReqLvl: Player.createProgramReqLvl,
         className: Player.className,
         crimeType: Player.crimeType,
-        work_money_mult: Player.work_money_mult,
+        work_money_mult: Player.mults.work_money,
         hacknet_node_money_mult: Player.mults.hacknet_node_money,
         hacknet_node_purchase_cost_mult: Player.mults.hacknet_node_purchase_cost,
         hacknet_node_ram_cost_mult: Player.mults.hacknet_node_ram_cost,

@@ -92,7 +92,6 @@ export interface IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  work_money_mult: number;
   crime_success_mult: number;
   crime_money_mult: number;
   bladeburner_max_stamina_mult: number;

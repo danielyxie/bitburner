@@ -306,7 +306,7 @@ export function resetMultipliers(this: IPlayer): void {
   this.mults.hacknet_node_core_cost = 1;
   this.mults.hacknet_node_level_cost = 1;
 
-  this.work_money_mult = 1;
+  this.mults.work_money = 1;
 
   this.bladeburner_max_stamina_mult = 1;
   this.bladeburner_stamina_gain_mult = 1;
@@ -1051,7 +1051,7 @@ export function getWorkMoneyGain(this: IPlayer): number {
   return (
     companyPosition.baseSalary *
     company.salaryMultiplier *
-    this.work_money_mult *
+    this.mults.work_money *
     BitNodeMultipliers.CompanyWorkMoney *
     bn11Mult
   );

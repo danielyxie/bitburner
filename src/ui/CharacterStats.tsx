@@ -471,7 +471,7 @@ export function CharacterStats(): React.ReactElement {
                     player.mults.faction_rep,
                     player.mults.faction_rep * BitNodeMultipliers.FactionWorkRepGain,
                   ],
-                  ["Salary", player.work_money_mult, player.work_money_mult * BitNodeMultipliers.CompanyWorkMoney],
+                  ["Salary", player.mults.work_money, player.mults.work_money * BitNodeMultipliers.CompanyWorkMoney],
                 ]}
                 color={Settings.theme.money}
               />

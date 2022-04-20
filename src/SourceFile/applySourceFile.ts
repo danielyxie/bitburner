@@ -45,7 +45,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       Player.mults.hacknet_node_ram_cost *= decMult;
       Player.mults.hacknet_node_core_cost *= decMult;
       Player.mults.hacknet_node_level_cost *= decMult;
-      Player.work_money_mult *= incMult;
+      Player.mults.work_money *= incMult;
       break;
     }
     case 2: {
@@ -68,7 +68,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       }
       const incMult = 1 + mult / 100;
       Player.mults.charisma *= incMult;
-      Player.work_money_mult *= incMult;
+      Player.mults.work_money *= incMult;
       break;
     }
     case 4: {
@@ -158,7 +158,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
         mult += 32 / Math.pow(2, i);
       }
       const incMult = 1 + mult / 100;
-      Player.work_money_mult *= incMult;
+      Player.mults.work_money *= incMult;
       Player.mults.company_rep *= incMult;
       break;
     }
