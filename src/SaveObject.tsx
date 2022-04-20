@@ -3,11 +3,9 @@ import { Companies, loadCompanies } from "./Company/Companies";
 import { CONSTANTS } from "./Constants";
 import { Factions, loadFactions } from "./Faction/Factions";
 import { loadAllGangs, AllGangs } from "./Gang/AllGangs";
-import { loadMessages, initMessages, Messages } from "./Message/MessageHelpers";
 import { Player, loadPlayer } from "./Player";
 import { saveAllServers, loadAllServers, GetAllServers } from "./Server/AllServers";
 import { Settings } from "./Settings/Settings";
-import { SourceFileFlags } from "./SourceFile/SourceFileFlags";
 import { loadStockMarket, StockMarket } from "./StockMarket/StockMarket";
 import { staneksGift, loadStaneksGift } from "./CotMG/Helper";
 
@@ -25,6 +23,7 @@ import { LocationName } from "./Locations/data/LocationNames";
 import { SxProps } from "@mui/system";
 import { PlayerObject } from "./PersonObjects/Player/PlayerObject";
 import { pushGameSaved } from "./Electron";
+import { defaultMonacoTheme } from "./ScriptEditor/ui/themes";
 
 /* SaveObject.js
  *  Defines the object used to save/load games
@@ -67,7 +66,6 @@ class BitburnerSaveObject {
   FactionsSave = "";
   AliasesSave = "";
   GlobalAliasesSave = "";
-  MessagesSave = "";
   StockMarketSave = "";
   SettingsSave = "";
   VersionSave = "";
@@ -83,7 +81,6 @@ class BitburnerSaveObject {
     this.FactionsSave = JSON.stringify(Factions);
     this.AliasesSave = JSON.stringify(Aliases);
     this.GlobalAliasesSave = JSON.stringify(GlobalAliases);
-    this.MessagesSave = JSON.stringify(Messages);
     this.StockMarketSave = JSON.stringify(StockMarket);
     this.SettingsSave = JSON.stringify(Settings);
     this.VersionSave = JSON.stringify(CONSTANTS.VersionNumber);
@@ -129,7 +126,7 @@ class BitburnerSaveObject {
     // Save file name is based on current timestamp and BitNode
     const epochTime = Math.round(Date.now() / 1000);
     const bn = Player.bitNodeN;
-    let filename = `bitburnerSave_${epochTime}_BN${bn}x${SourceFileFlags[bn]}.json`;
+    let filename = `bitburnerSave_${epochTime}_BN${bn}x${Player.sourceFileLvl(bn) + 1}.json`;
     if (isRecovery) filename = "RECOVERY" + filename;
     return filename;
   }
@@ -398,6 +395,9 @@ function evaluateVersionCompatibility(ver: string | number): void {
         delete anyPlayer.resleeves;
       }
     }
+    if (ver < 15) {
+      (Settings as any).EditorTheme = { ...defaultMonacoTheme };
+    }
   }
 }
 
@@ -440,17 +440,6 @@ function loadGame(saveString: string): boolean {
   } else {
     console.warn(`Save file did not contain a GlobalAliases property`);
     loadGlobalAliases("");
-  }
-  if (saveObj.hasOwnProperty("MessagesSave")) {
-    try {
-      loadMessages(saveObj.MessagesSave);
-    } catch (e) {
-      console.warn(`Could not load Messages from save`);
-      initMessages();
-    }
-  } else {
-    console.warn(`Save file did not contain a Messages property`);
-    initMessages();
   }
   if (saveObj.hasOwnProperty("StockMarketSave")) {
     try {

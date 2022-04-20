@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Product } from "../Product";
-import { Modal } from "../../ui/React/Modal";
-import { useDivision } from "./Context";
+import { Product } from "../../Product";
+import { Modal } from "../../../ui/React/Modal";
+import { useDivision } from "../Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 

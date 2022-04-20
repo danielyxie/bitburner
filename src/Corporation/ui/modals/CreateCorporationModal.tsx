@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import { Money } from "../../ui/React/Money";
-import { Modal } from "../../ui/React/Modal";
-import { use } from "../../ui/Context";
+import { Money } from "../../../ui/React/Money";
+import { Modal } from "../../../ui/React/Modal";
+import { use } from "../../../ui/Context";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";

@@ -2,7 +2,6 @@ import { INetscriptHelper } from "./INetscriptHelper";
 import { IPlayer } from "../PersonObjects/IPlayer";
 import { getRamCost } from "../Netscript/RamCostGenerator";
 import { FactionWorkType } from "../Faction/FactionWorkTypeEnum";
-import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { SleeveTaskType } from "../PersonObjects/Sleeve/SleeveTaskTypesEnum";
 import { WorkerScript } from "../Netscript/WorkerScript";
 import { findSleevePurchasableAugs } from "../PersonObjects/Sleeve/SleeveHelpers";
@@ -17,10 +16,11 @@ import {
   SleeveSkills,
   SleeveTask,
 } from "../ScriptEditor/NetscriptDefinitions";
+import { checkEnum } from "../utils/helpers/checkEnum";
 
 export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, helper: INetscriptHelper): ISleeve {
   const checkSleeveAPIAccess = function (func: string): void {
-    if (player.bitNodeN !== 10 && !SourceFileFlags[10]) {
+    if (player.bitNodeN !== 10 && !player.sourceFileLvl(10)) {
       throw helper.makeRuntimeErrorMsg(
         `sleeve.${func}`,
         "You do not currently have access to the Sleeve API. This is either because you are not in BitNode-10 or because you do not have Source-File 10",
@@ -102,7 +102,11 @@ export function NetscriptSleeve(player: IPlayer, workerScript: WorkerScript, hel
       const cityName = helper.string("travel", "cityName", _cityName);
       checkSleeveAPIAccess("travel");
       checkSleeveNumber("travel", sleeveNumber);
-      return player.sleeves[sleeveNumber].travel(player, cityName as CityName);
+      if (checkEnum(CityName, cityName)) {
+        return player.sleeves[sleeveNumber].travel(player, cityName);
+      } else {
+        throw helper.makeRuntimeErrorMsg("sleeve.setToCompanyWork", `Invalid city name: '${cityName}'.`);
+      }
     },
     setToCompanyWork: function (_sleeveNumber: unknown, acompanyName: unknown): boolean {
       updateRam("setToCompanyWork");
