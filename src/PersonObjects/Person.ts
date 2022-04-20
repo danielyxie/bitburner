@@ -56,46 +56,7 @@ export abstract class Person {
   charisma_exp = 0;
   intelligence_exp = 0;
 
-  /**
-   * Multipliers
-   */
-  strength_mult = 1;
-  defense_mult = 1;
-  dexterity_mult = 1;
-  agility_mult = 1;
-  charisma_mult = 1;
-
-  hacking_exp_mult = 1;
-  strength_exp_mult = 1;
-  defense_exp_mult = 1;
-  dexterity_exp_mult = 1;
-  agility_exp_mult = 1;
-  charisma_exp_mult = 1;
-
-  hacking_chance_mult = 1;
-  hacking_speed_mult = 1;
-  hacking_money_mult = 1;
-  hacking_grow_mult = 1;
-
-  company_rep_mult = 1;
-  faction_rep_mult = 1;
-
-  crime_money_mult = 1;
-  crime_success_mult = 1;
-
-  work_money_mult = 1;
-
-  hacknet_node_money_mult = 1;
-  hacknet_node_purchase_cost_mult = 1;
-  hacknet_node_ram_cost_mult = 1;
-  hacknet_node_core_cost_mult = 1;
-  hacknet_node_level_cost_mult = 1;
-
-  bladeburner_max_stamina_mult = 1;
-  bladeburner_stamina_gain_mult = 1;
-  bladeburner_analysis_mult = 1;
-  bladeburner_success_chance_mult = 1;
-
+  // Multipliers
   mults = {
     // Hacking multipliers
     hacking_chance: 1,
@@ -196,7 +157,7 @@ export abstract class Person {
           this.agility / CONSTANTS.MaxSkillLevel +
           this.charisma / CONSTANTS.MaxSkillLevel)) /
       5.5;
-    return t * this.faction_rep_mult;
+    return t * this.mults.faction_rep;
   }
 
   /**
@@ -204,7 +165,7 @@ export abstract class Person {
    * when doing Hacking Work for a faction
    */
   getFactionHackingWorkRepGain(): number {
-    return (this.hacking / CONSTANTS.MaxSkillLevel) * this.faction_rep_mult;
+    return (this.hacking / CONSTANTS.MaxSkillLevel) * this.mults.faction_rep;
   }
 
   /**
@@ -220,7 +181,7 @@ export abstract class Person {
           this.dexterity / CONSTANTS.MaxSkillLevel +
           this.agility / CONSTANTS.MaxSkillLevel)) /
       4.5;
-    return t * this.faction_rep_mult;
+    return t * this.mults.faction_rep;
   }
 
   /**
@@ -251,7 +212,7 @@ export abstract class Person {
       // Charisma skill and exp multipliers
       charisma: 1,
       charisma_exp: 1,
-      
+
       // Company/Faction rep and work money multipliers
       company_rep: 1,
       faction_rep: 1,
@@ -274,27 +235,27 @@ export abstract class Person {
     this.strength = Math.max(
       1,
       Math.floor(
-        this.calculateStat(this.strength_exp, this.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier),
+        this.calculateStat(this.strength_exp, this.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier),
       ),
     );
     this.defense = Math.max(
       1,
-      Math.floor(this.calculateStat(this.defense_exp, this.defense_mult * BitNodeMultipliers.DefenseLevelMultiplier)),
+      Math.floor(this.calculateStat(this.defense_exp, this.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier)),
     );
     this.dexterity = Math.max(
       1,
       Math.floor(
-        this.calculateStat(this.dexterity_exp, this.dexterity_mult * BitNodeMultipliers.DexterityLevelMultiplier),
+        this.calculateStat(this.dexterity_exp, this.mults.dexterity * BitNodeMultipliers.DexterityLevelMultiplier),
       ),
     );
     this.agility = Math.max(
       1,
-      Math.floor(this.calculateStat(this.agility_exp, this.agility_mult * BitNodeMultipliers.AgilityLevelMultiplier)),
+      Math.floor(this.calculateStat(this.agility_exp, this.mults.agility * BitNodeMultipliers.AgilityLevelMultiplier)),
     );
     this.charisma = Math.max(
       1,
       Math.floor(
-        this.calculateStat(this.charisma_exp, this.charisma_mult * BitNodeMultipliers.CharismaLevelMultiplier),
+        this.calculateStat(this.charisma_exp, this.mults.charisma * BitNodeMultipliers.CharismaLevelMultiplier),
       ),
     );
 
