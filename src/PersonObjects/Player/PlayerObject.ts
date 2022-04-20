@@ -38,6 +38,7 @@ import { ISkillProgress } from "../formulas/skill";
 import { PlayerAchievement } from "../../Achievements/Achievements";
 import { cyrb53 } from "../../utils/StringHelperFunctions";
 import { getRandomInt } from "../../utils/helpers/getRandomInt";
+import { CONSTANTS } from "../../Constants";
 
 export class PlayerObject implements IPlayer {
   // Class members
@@ -355,7 +356,7 @@ export class PlayerObject implements IPlayer {
     this.faction_rep_mult = 1;
 
     //Money
-    this.money = 1000;
+    this.money = 1000 + CONSTANTS.Donations;
 
     //Location information
     this.city = CityName.Sector12;

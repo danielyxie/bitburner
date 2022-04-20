@@ -3,8 +3,9 @@ import Typography from "@mui/material/Typography";
 import { Theme } from "@mui/material/styles";
 import makeStyles from "@mui/styles/makeStyles";
 import createStyles from "@mui/styles/createStyles";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
 import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
 
 import { KEY } from "../../utils/helpers/keyCodes";
 import { ITerminal } from "../ITerminal";
@@ -376,46 +377,40 @@ export function TerminalInput({ terminal, router, player }: IProps): React.React
 
   return (
     <>
-      <Tooltip
-        title={
-          possibilities.length > 0 ? (
-            <>
-              <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
-                Possible autocomplete candidate:
-              </Typography>
-              <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
-                {possibilities.join(" ")}
-              </Typography>
-            </>
-          ) : (
-            ""
-          )
-        }
-      >
-        <TextField
-          fullWidth
-          color={terminal.action === null ? "primary" : "secondary"}
-          autoFocus
-          disabled={terminal.action !== null}
-          autoComplete="off"
-          value={value}
-          classes={{ root: classes.textfield }}
-          onChange={handleValueChange}
-          inputRef={terminalInput}
-          InputProps={{
-            // for players to hook in
-            id: "terminal-input",
-            className: classes.input,
-            startAdornment: (
-              <Typography color={terminal.action === null ? "primary" : "secondary"} flexShrink={0}>
-                [{player.getCurrentServer().hostname}&nbsp;~{terminal.cwd()}]&gt;&nbsp;
-              </Typography>
-            ),
-            spellCheck: false,
-            onKeyDown: onKeyDown,
-          }}
-        ></TextField>
-      </Tooltip>
+      <TextField
+        fullWidth
+        color={terminal.action === null ? "primary" : "secondary"}
+        autoFocus
+        disabled={terminal.action !== null}
+        autoComplete="off"
+        value={value}
+        classes={{ root: classes.textfield }}
+        onChange={handleValueChange}
+        inputRef={terminalInput}
+        InputProps={{
+          // for players to hook in
+          id: "terminal-input",
+          className: classes.input,
+          startAdornment: (
+            <Typography color={terminal.action === null ? "primary" : "secondary"} flexShrink={0}>
+              [{player.getCurrentServer().hostname}&nbsp;~{terminal.cwd()}]&gt;&nbsp;
+            </Typography>
+          ),
+          spellCheck: false,
+          onBlur: () => setPossibilities([]),
+          onKeyDown: onKeyDown,
+        }}
+      ></TextField>
+      <Popper open={possibilities.length > 0} anchorEl={terminalInput.current} placement={"top-end"}>
+        <Paper sx={{ m: 1, p: 2 }}>
+          <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
+            Possible autocomplete candidates:
+          </Typography>
+          <Typography classes={{ root: classes.preformatted }} color={"primary"} paragraph={false}>
+            {possibilities.join(" ")}
+          </Typography>
+        </Paper>
+      </Popper>
     </>
   );
 }

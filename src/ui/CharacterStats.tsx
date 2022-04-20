@@ -6,7 +6,6 @@ import { BitNodeMultipliers } from "../BitNode/BitNodeMultipliers";
 import { HacknetServerConstants } from "../Hacknet/data/Constants";
 import { getPurchaseServerLimit } from "../Server/ServerPurchases";
 import { Settings } from "../Settings/Settings";
-import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 import { MoneySourceTracker } from "../utils/MoneySourceTracker";
 import { convertTimeMsToTimeElapsedString } from "../utils/StringHelperFunctions";
 import { use } from "./Context";
@@ -44,6 +43,7 @@ interface MultTableProps {
 }
 
 function MultiplierTable(props: MultTableProps): React.ReactElement {
+  const player = use.Player();
   return (
     <Table sx={{ display: "table", width: "100%", mb: (props.noMargin ?? false) === true ? 0 : 2 }}>
       <TableBody>
@@ -52,7 +52,7 @@ function MultiplierTable(props: MultTableProps): React.ReactElement {
             value = data[1] as number,
             modded = data[2] as number | null;
 
-          if (modded && modded !== value && SourceFileFlags[5] > 0) {
+          if (modded && modded !== value && player.sourceFileLvl(5) > 0) {
             return (
               <StatsRow key={mult} name={mult} color={props.color} data={{}}>
                 <>
@@ -82,8 +82,7 @@ function CurrentBitNode(): React.ReactElement {
   const player = use.Player();
   if (player.sourceFiles.length > 0) {
     const index = "BitNode" + player.bitNodeN;
-    const currentSourceFile = player.sourceFiles.find((sourceFile) => sourceFile.n == player.bitNodeN);
-    const lvl = currentSourceFile ? currentSourceFile.lvl : 0;
+    const lvl = player.sourceFileLvl(player.bitNodeN) + 1;
     return (
       <Box>
         <Paper sx={{ p: 1 }}>
@@ -270,11 +269,13 @@ export function CharacterStats(): React.ReactElement {
                 data={{ content: `${player.purchasedServers.length} / ${getPurchaseServerLimit()}` }}
               />
               <StatsRow
-                name={`Hacknet ${player.bitNodeN === 9 || SourceFileFlags[9] > 0 ? "Servers" : "Nodes"} owned`}
+                name={`Hacknet ${player.bitNodeN === 9 || player.sourceFileLvl(9) > 0 ? "Servers" : "Nodes"} owned`}
                 color={Settings.theme.primary}
                 data={{
                   content: `${player.hacknetNodes.length}${
-                    player.bitNodeN === 9 || SourceFileFlags[9] > 0 ? ` / ${HacknetServerConstants.MaxServers}` : ""
+                    player.bitNodeN === 9 || player.sourceFileLvl(9) > 0
+                      ? ` / ${HacknetServerConstants.MaxServers}`
+                      : ""
                   }`,
                 }}
               />
@@ -320,7 +321,7 @@ export function CharacterStats(): React.ReactElement {
                 color={Settings.theme.cha}
                 data={{ level: player.charisma, exp: player.charisma_exp }}
               />
-              {player.intelligence > 0 && (player.bitNodeN === 5 || SourceFileFlags[5] > 0) && (
+              {player.intelligence > 0 && (player.bitNodeN === 5 || player.sourceFileLvl(5) > 0) && (
                 <StatsRow
                   name="Intelligence"
                   color={Settings.theme.int}
@@ -335,7 +336,7 @@ export function CharacterStats(): React.ReactElement {
         <Paper sx={{ p: 1 }}>
           <Typography variant="h5" color="primary" sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
             Multipliers
-            {SourceFileFlags[5] > 0 && (
+            {player.sourceFileLvl(5) > 0 && (
               <Tooltip
                 title={
                   <Typography>

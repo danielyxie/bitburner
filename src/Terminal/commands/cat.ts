@@ -2,9 +2,10 @@ import { ITerminal } from "../ITerminal";
 import { IRouter } from "../../ui/Router";
 import { IPlayer } from "../../PersonObjects/IPlayer";
 import { BaseServer } from "../../Server/BaseServer";
-import { showMessage } from "../../Message/MessageHelpers";
+import { MessageFilenames, showMessage } from "../../Message/MessageHelpers";
 import { showLiterature } from "../../Literature/LiteratureHelpers";
 import { dialogBoxCreate } from "../../ui/React/DialogBox";
+import { checkEnum } from "../../utils/helpers/checkEnum";
 
 export function cat(
   terminal: ITerminal,
@@ -43,6 +44,7 @@ export function cat(
       } else if (filename.endsWith(".msg")) {
         const file = server.messages[i];
         if (file !== filename) continue;
+        if (!checkEnum(MessageFilenames, file)) return;
         showMessage(file);
         return;
       }

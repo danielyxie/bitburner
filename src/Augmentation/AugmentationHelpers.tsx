@@ -8,7 +8,6 @@ import { CONSTANTS } from "../Constants";
 import { Factions, factionExists } from "../Faction/Factions";
 import { Player } from "../Player";
 import { prestigeAugmentation } from "../Prestige";
-import { SourceFileFlags } from "../SourceFile/SourceFileFlags";
 
 import { dialogBoxCreate } from "../ui/React/DialogBox";
 import { clearObject } from "../utils/helpers/clearObject";
@@ -73,7 +72,7 @@ function initAugmentations(): void {
 }
 
 function getBaseAugmentationPriceMultiplier(): number {
-  return CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][SourceFileFlags[11]];
+  return CONSTANTS.MultipleAugMultiplier * [1, 0.96, 0.94, 0.93][Player.sourceFileLvl(11)];
 }
 export function getGenericAugmentationPriceMultiplier(): number {
   return Math.pow(getBaseAugmentationPriceMultiplier(), Player.queuedAugmentations.length);
@@ -118,8 +117,6 @@ function resetAugmentation(aug: Augmentation): void {
 }
 
 function applyAugmentation(aug: IPlayerOwnedAugmentation, reapply = false): void {
-  Augmentations[aug.name].owned = true;
-
   const augObj = Augmentations[aug.name];
 
   // Apply multipliers

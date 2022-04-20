@@ -70,6 +70,7 @@ export const RamCostConstants: IMap<number> = {
   ScriptStanekPlace: 5,
   ScriptStanekFragmentAt: 2,
   ScriptStanekDeleteAt: 0.15,
+  ScriptStanekAcceptGift: 2,
 };
 
 function SF4Cost(cost: number): (player: IPlayer) => number {
@@ -177,6 +178,8 @@ const singularity: IMap<any> = {
   installAugmentations: SF4Cost(RamCostConstants.ScriptSingularityFn3RamCost),
   isFocused: SF4Cost(0.1),
   setFocus: SF4Cost(0.1),
+  b1tflum3: SF4Cost(16),
+  destroyW0r1dD43m0n: SF4Cost(32),
 };
 
 // Gang API
@@ -282,6 +285,7 @@ const stanek: IMap<any> = {
   placeFragment: RamCostConstants.ScriptStanekPlace,
   getFragment: RamCostConstants.ScriptStanekFragmentAt,
   removeFragment: RamCostConstants.ScriptStanekDeleteAt,
+  acceptGift: RamCostConstants.ScriptStanekAcceptGift,
 };
 
 // UI API
@@ -299,6 +303,7 @@ const ui: IMap<any> = {
 const grafting: IMap<any> = {
   getAugmentationGraftPrice: 3.75,
   getAugmentationGraftTime: 3.75,
+  getGraftableAugmentations: 5,
   graftAugmentation: 7.5,
 };
 

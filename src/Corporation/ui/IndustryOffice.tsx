@@ -8,8 +8,8 @@ import { EmployeePositions } from "../EmployeePositions";
 
 import { numeralWrapper } from "../../ui/numeralFormat";
 
-import { UpgradeOfficeSizeModal } from "./UpgradeOfficeSizeModal";
-import { ThrowPartyModal } from "./ThrowPartyModal";
+import { UpgradeOfficeSizeModal } from "./modals/UpgradeOfficeSizeModal";
+import { ThrowPartyModal } from "./modals/ThrowPartyModal";
 import { Money } from "../../ui/React/Money";
 import { useCorporation, useDivision } from "./Context";
 
