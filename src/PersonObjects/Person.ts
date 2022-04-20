@@ -128,7 +128,6 @@ export abstract class Person {
    */
   applyAugmentation(aug: Augmentation): void {
     for (const [mult, value] of Object.entries(aug.mults)) {
-      console.log(mult, value)
       if (this.mults?.[mult] == null) {
         console.warn(`Augmentation has unrecognized multiplier property: ${mult}`);
       } else if (typeof value === "number") {
