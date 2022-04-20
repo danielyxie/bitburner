@@ -453,8 +453,8 @@ export function CharacterStats(): React.ReactElement {
                 rows={[
                   [
                     "Hacknet Node production",
-                    player.hacknet_node_money_mult,
-                    player.hacknet_node_money_mult * BitNodeMultipliers.HacknetNodeMoney,
+                    player.mults.hacknet_node_money,
+                    player.mults.hacknet_node_money * BitNodeMultipliers.HacknetNodeMoney,
                   ],
                   ["Hacknet Node purchase cost", player.hacknet_node_purchase_cost_mult],
                   ["Hacknet Node RAM upgrade cost", player.hacknet_node_ram_cost_mult],

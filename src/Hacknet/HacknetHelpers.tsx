@@ -66,7 +66,7 @@ export function purchaseHacknet(player: IPlayer): number {
 
     // Auto generate a name for the Node
     const name = "hacknet-node-" + numOwned;
-    const node = new HacknetNode(name, player.hacknet_node_money_mult);
+    const node = new HacknetNode(name, player.mults.hacknet_node_money);
 
     player.loseMoney(cost, "hacknet_expenses");
     player.hacknetNodes.push(node);
@@ -266,7 +266,7 @@ export function purchaseLevelUpgrade(player: IPlayer, node: HacknetNode | Hackne
   }
 
   player.loseMoney(cost, "hacknet_expenses");
-  node.upgradeLevel(sanitizedLevels, player.hacknet_node_money_mult);
+  node.upgradeLevel(sanitizedLevels, player.mults.hacknet_node_money);
 
   return true;
 }
@@ -305,7 +305,7 @@ export function purchaseRamUpgrade(player: IPlayer, node: HacknetNode | HacknetS
   }
 
   player.loseMoney(cost, "hacknet_expenses");
-  node.upgradeRam(sanitizedLevels, player.hacknet_node_money_mult);
+  node.upgradeRam(sanitizedLevels, player.mults.hacknet_node_money);
 
   return true;
 }
@@ -336,7 +336,7 @@ export function purchaseCoreUpgrade(player: IPlayer, node: HacknetNode | Hacknet
   }
 
   player.loseMoney(cost, "hacknet_expenses");
-  node.upgradeCore(sanitizedLevels, player.hacknet_node_money_mult);
+  node.upgradeCore(sanitizedLevels, player.mults.hacknet_node_money);
 
   return true;
 }
@@ -415,7 +415,7 @@ function processAllHacknetServerEarnings(player: IPlayer, numCycles: number): nu
     if (ip instanceof HacknetNode) throw new Error(`player nodes should not be HacketNode`);
     const hserver = GetServer(ip);
     if (!(hserver instanceof HacknetServer)) throw new Error(`player nodes shoud not be Server`);
-    hserver.updateHashRate(player.hacknet_node_money_mult);
+    hserver.updateHashRate(player.mults.hacknet_node_money);
     const h = hserver.process(numCycles);
     hashes += h;
   }

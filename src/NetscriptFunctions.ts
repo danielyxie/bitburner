@@ -1539,7 +1539,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
     getHacknetMultipliers: function (): HacknetMultipliers {
       updateDynamicRam("getHacknetMultipliers", getRamCost(Player, "getHacknetMultipliers"));
       return {
-        production: Player.hacknet_node_money_mult,
+        production: Player.mults.hacknet_node_money,
         purchaseCost: Player.hacknet_node_purchase_cost_mult,
         ramCost: Player.hacknet_node_ram_cost_mult,
         coreCost: Player.hacknet_node_core_cost_mult,
@@ -2474,7 +2474,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         className: Player.className,
         crimeType: Player.crimeType,
         work_money_mult: Player.work_money_mult,
-        hacknet_node_money_mult: Player.hacknet_node_money_mult,
+        hacknet_node_money_mult: Player.mults.hacknet_node_money,
         hacknet_node_purchase_cost_mult: Player.hacknet_node_purchase_cost_mult,
         hacknet_node_ram_cost_mult: Player.hacknet_node_ram_cost_mult,
         hacknet_node_core_cost_mult: Player.hacknet_node_core_cost_mult,
