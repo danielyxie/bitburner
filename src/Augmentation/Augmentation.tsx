@@ -76,7 +76,7 @@ function generateStatsDescription(mults: IAugmentationMults, programs?: string[]
     if (x === 1.777 - 1) return "77.7%";
     return numeralWrapper.formatPercentage(x, decimals);
   };
-  let desc = <>Effects:</>;
+  const effectList = ["Effects:"];
 
   if (
     mults.hacking &&
@@ -86,20 +86,9 @@ function generateStatsDescription(mults: IAugmentationMults, programs?: string[]
     mults.hacking == mults.agility &&
     mults.hacking == mults.charisma
   ) {
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.hacking - 1)} all skills
-      </>
-    );
+    effectList.push(`+${f(mults.hacking - 1)} all skills`);
   } else {
-    if (mults.hacking)
-      desc = (
-        <>
-          {desc}
-          <br />+{f(mults.hacking - 1)} hacking skill
-        </>
-      );
+    if (mults.hacking) effectList.push(`+${f(mults.hacking - 1)} hacking skill`);
 
     if (
       mults.strength &&
@@ -107,49 +96,14 @@ function generateStatsDescription(mults: IAugmentationMults, programs?: string[]
       mults.strength == mults.dexterity &&
       mults.strength == mults.agility
     ) {
-      desc = (
-        <>
-          {desc}
-          <br />+{f(mults.strength - 1)} combat skills
-        </>
-      );
+      effectList.push(`+${f(mults.strength - 1)} combat skills`);
     } else {
-      if (mults.strength)
-        desc = (
-          <>
-            {desc}
-            <br />+{f(mults.strength - 1)} strength skill
-          </>
-        );
-      if (mults.defense)
-        desc = (
-          <>
-            {desc}
-            <br />+{f(mults.defense - 1)} defense skill
-          </>
-        );
-      if (mults.dexterity)
-        desc = (
-          <>
-            {desc}
-            <br />+{f(mults.dexterity - 1)} dexterity skill
-          </>
-        );
-      if (mults.agility)
-        desc = (
-          <>
-            {desc}
-            <br />+{f(mults.agility - 1)} agility skill
-          </>
-        );
+      if (mults.strength) effectList.push(`+${f(mults.strength - 1)} strength skill`);
+      if (mults.defense) effectList.push(`+${f(mults.defense - 1)} defense skill`);
+      if (mults.dexterity) effectList.push(`+${f(mults.dexterity - 1)} dexterity skill`);
+      if (mults.agility) effectList.push(`+${f(mults.agility - 1)} agility skill`);
     }
-    if (mults.charisma)
-      desc = (
-        <>
-          {desc}
-          <br />+{f(mults.charisma - 1)} charisma skill
-        </>
-      );
+    if (mults.charisma) effectList.push(`+${f(mults.charisma - 1)} charisma skill`);
   }
 
   if (
@@ -160,20 +114,9 @@ function generateStatsDescription(mults: IAugmentationMults, programs?: string[]
     mults.hacking_exp === mults.agility_exp &&
     mults.hacking_exp === mults.charisma_exp
   ) {
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.hacking_exp - 1)} exp for all skills
-      </>
-    );
+    effectList.push(`+${f(mults.hacking_exp - 1)} exp for all skills`);
   } else {
-    if (mults.hacking_exp)
-      desc = (
-        <>
-          {desc}
-          <br />+{f(mults.hacking_exp - 1)} hacking exp
-        </>
-      );
+    if (mults.hacking_exp) effectList.push(`+${f(mults.hacking_exp - 1)} hacking exp`);
 
     if (
       mults.strength_exp &&
@@ -181,176 +124,57 @@ function generateStatsDescription(mults: IAugmentationMults, programs?: string[]
       mults.strength_exp === mults.dexterity_exp &&
       mults.strength_exp === mults.agility_exp
     ) {
-      desc = (
-        <>
-          {desc}
-          <br />+{f(mults.strength_exp - 1)} combat exp
-        </>
-      );
+      effectList.push(`+${f(mults.strength_exp - 1)} combat exp`);
     } else {
-      if (mults.strength_exp)
-        desc = (
-          <>
-            {desc}
-            <br />+{f(mults.strength_exp - 1)} strength exp
-          </>
-        );
-      if (mults.defense_exp)
-        desc = (
-          <>
-            {desc}
-            <br />+{f(mults.defense_exp - 1)} defense exp
-          </>
-        );
-      if (mults.dexterity_exp)
-        desc = (
-          <>
-            {desc}
-            <br />+{f(mults.dexterity_exp - 1)} dexterity exp
-          </>
-        );
-      if (mults.agility_exp)
-        desc = (
-          <>
-            {desc}
-            <br />+{f(mults.agility_exp - 1)} agility exp
-          </>
-        );
+      if (mults.strength_exp) effectList.push(`+${f(mults.strength_exp - 1)} strength exp`);
+      if (mults.defense_exp) effectList.push(`+${f(mults.defense_exp - 1)} defense exp`);
+      if (mults.dexterity_exp) effectList.push(`+${f(mults.dexterity_exp - 1)} dexterity exp`);
+      if (mults.agility_exp) effectList.push(`+${f(mults.agility_exp - 1)} agility exp`);
     }
-    if (mults.charisma_exp)
-      desc = (
-        <>
-          {desc}
-          <br />+{f(mults.charisma_exp - 1)} charisma exp
-        </>
-      );
+    if (mults.charisma_exp) effectList.push(`+${f(mults.charisma_exp - 1)} charisma exp`);
   }
 
-  if (mults.hacking_speed)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.hacking_speed - 1)} faster hack(), grow(), and weaken()
-      </>
-    );
-  if (mults.hacking_chance)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.hacking_chance - 1)} hack() success chance
-      </>
-    );
-  if (mults.hacking_money)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.hacking_money - 1)} hack() power
-      </>
-    );
-  if (mults.hacking_grow)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.hacking_grow - 1)} grow() power
-      </>
-    );
+  if (mults.hacking_speed) effectList.push(`+${f(mults.hacking_speed - 1)} faster hack(), grow(), and weaken()`);
+  if (mults.hacking_chance) effectList.push(`+${f(mults.hacking_chance - 1)} hack() success chance`);
+  if (mults.hacking_money) effectList.push(`+${f(mults.hacking_money - 1)} hack() power`);
+  if (mults.hacking_grow) effectList.push(`+${f(mults.hacking_grow - 1)} grow() power`);
 
   if (mults.faction_rep && mults.faction_rep === mults.company_rep) {
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.faction_rep - 1)} reputation from factions and companies
-      </>
-    );
+    effectList.push(`+${f(mults.faction_rep - 1)} reputation from factions and companies`);
   } else {
-    if (mults.faction_rep)
-      desc = (
-        <>
-          {desc}
-          <br />+{f(mults.faction_rep - 1)} reputation from factions
-        </>
-      );
-    if (mults.company_rep)
-      desc = (
-        <>
-          {desc}
-          <br />+{f(mults.company_rep - 1)} reputation from companies
-        </>
-      );
+    if (mults.faction_rep) effectList.push(`+${f(mults.faction_rep - 1)} reputation from factions`);
+    if (mults.company_rep) effectList.push(`+${f(mults.company_rep - 1)} reputation from companies`);
   }
 
-  if (mults.crime_money)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.crime_money - 1)} crime money
-      </>
-    );
-  if (mults.crime_success)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.crime_success - 1)} crime success rate
-      </>
-    );
-  if (mults.work_money)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.work_money - 1)} work money
-      </>
-    );
+  if (mults.crime_money) effectList.push(`+${f(mults.crime_money - 1)} crime money`);
+  if (mults.crime_success) effectList.push(`+${f(mults.crime_success - 1)} crime success rate`);
+  if (mults.work_money) effectList.push(`+${f(mults.work_money - 1)} work money`);
 
-  if (mults.hacknet_node_money)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.hacknet_node_money - 1)} hacknet production
-      </>
-    );
+  if (mults.hacknet_node_money) effectList.push(`+${f(mults.hacknet_node_money - 1)} hacknet production`);
   if (mults.hacknet_node_purchase_cost)
-    desc = (
-      <>
-        {desc}
-        <br />-{f(-(mults.hacknet_node_purchase_cost - 1))} hacknet nodes cost
-      </>
-    );
+    effectList.push(`-${f(-(mults.hacknet_node_purchase_cost - 1))} hacknet nodes cost`);
   if (mults.hacknet_node_level_cost)
-    desc = (
-      <>
-        {desc}
-        <br />-{f(-(mults.hacknet_node_level_cost - 1))} hacknet nodes upgrade cost
-      </>
-    );
+    effectList.push(`-${f(-(mults.hacknet_node_level_cost - 1))} hacknet nodes upgrade cost`);
 
   if (mults.bladeburner_max_stamina)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.bladeburner_max_stamina - 1)} Bladeburner Max Stamina
-      </>
-    );
+    effectList.push(`+${f(mults.bladeburner_max_stamina - 1)} Bladeburner Max Stamina`);
   if (mults.bladeburner_stamina_gain)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.bladeburner_stamina_gain - 1)} Bladeburner Stamina gain
-      </>
-    );
+    effectList.push(`+${f(mults.bladeburner_stamina_gain - 1)} Bladeburner Stamina gain`);
   if (mults.bladeburner_analysis)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.bladeburner_analysis - 1)} Bladeburner Field Analysis effectiveness
-      </>
-    );
+    effectList.push(`+${f(mults.bladeburner_analysis - 1)} Bladeburner Field Analysis effectiveness`);
   if (mults.bladeburner_success_chance)
-    desc = (
-      <>
-        {desc}
-        <br />+{f(mults.bladeburner_success_chance - 1)} Bladeburner Contracts and Operations success chance
-      </>
-    );
+    effectList.push(`+${f(mults.bladeburner_success_chance - 1)} Bladeburner Contracts and Operations success chance`);
+
+  let desc = (
+    <>
+      {effectList.map((effect) => (
+        <>
+          <br />
+          {effect}
+        </>
+      ))}
+    </>
+  );
 
   if (startingMoney)
     desc = (
