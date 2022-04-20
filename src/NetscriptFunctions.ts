@@ -2447,7 +2447,7 @@ export function NetscriptFunctions(workerScript: WorkerScript): NS {
         location: Player.location,
         companyName: Player.companyName,
         crime_money_mult: Player.crime_money_mult,
-        crime_success_mult: Player.crime_success_mult,
+        crime_success_mult: Player.mults.crime_success,
         isWorking: Player.isWorking,
         workType: Player.workType,
         currentWorkFactionName: Player.currentWorkFactionName,

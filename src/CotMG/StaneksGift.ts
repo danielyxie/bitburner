@@ -197,7 +197,7 @@ export class StaneksGift implements IStaneksGift {
           p.mults.work_money *= power;
           break;
         case FragmentType.Crime:
-          p.crime_success_mult *= power;
+          p.mults.crime_success *= power;
           p.crime_money_mult *= power;
           break;
         case FragmentType.Bladeburner:

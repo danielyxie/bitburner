@@ -477,7 +477,7 @@ export function CharacterStats(): React.ReactElement {
               />
               <MultiplierTable
                 rows={[
-                  ["Crime success", player.crime_success_mult],
+                  ["Crime success", player.mults.crime_success],
                   ["Crime money", player.crime_money_mult, player.crime_money_mult * BitNodeMultipliers.CrimeMoney],
                 ]}
                 color={Settings.theme.combat}

@@ -102,7 +102,6 @@ export class PlayerObject implements IPlayer {
   charisma_exp: number;
   intelligence_exp: number;
 
-  crime_success_mult: number;
   crime_money_mult: number;
   bladeburner_max_stamina_mult: number;
   bladeburner_stamina_gain_mult: number;
@@ -441,7 +440,6 @@ export class PlayerObject implements IPlayer {
     this.karma = 0;
 
     this.crime_money_mult = 1;
-    this.crime_success_mult = 1;
 
     //Flags/variables for working (Company, Faction, Creating Program, Taking Class)
     this.isWorking = false;

@@ -20,7 +20,9 @@ export interface IPlayerOrSleeve {
   charisma_exp: number;
 
   // Multipliers
-  crime_success_mult: number;
+  mults: {
+    crime_success: number;
+  };
 
   getIntelligenceBonus(weight: number): number;
 }
