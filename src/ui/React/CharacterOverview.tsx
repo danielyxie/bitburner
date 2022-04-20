@@ -282,7 +282,7 @@ export function CharacterOverview({ save, killScripts }: IProps): React.ReactEle
   );
   const strengthProgress = player.calculateSkillProgress(
     player.strength_exp,
-    player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
+    player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
   );
   const defenseProgress = player.calculateSkillProgress(
     player.defense_exp,

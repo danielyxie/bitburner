@@ -394,8 +394,8 @@ export function CharacterStats(): React.ReactElement {
                 rows={[
                   [
                     "Strength Level",
-                    player.strength_mult,
-                    player.strength_mult * BitNodeMultipliers.StrengthLevelMultiplier,
+                    player.mults.strength,
+                    player.mults.strength * BitNodeMultipliers.StrengthLevelMultiplier,
                   ],
                   ["Strength Experience", player.strength_exp_mult],
                 ]}
