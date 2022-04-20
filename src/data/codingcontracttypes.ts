@@ -1306,4 +1306,55 @@ export const codingContractTypesMetadata: ICodingContractTypeMetadata[] = [
       return parseInt(ans, 10) === HammingDecode(data);
     },
   },
+  {
+    name: "Proper 2-Coloring of a Graph",
+    difficulty: 6,
+    numTries: 5,
+    desc: (data: [number, number][]): string => {
+      return `test description, submit "${JSON.stringify(data)}"`;
+    },
+    gen: (): [number, number][] => {
+      //Generate two partite sets
+      const n = Math.floor(Math.random() * 5) + 3;
+      const m = Math.floor(Math.random() * 5) + 3;
+
+      //50% chance of spawning any given valid edge in the bipartite graph
+      const edges: [number, number][] = [];
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < m; j++) {
+          if (Math.random() > 0.5) {
+            edges.push([i, n + j]);
+          }
+        }
+      }
+
+      //Add an edge at random with no regard to partite sets
+      let a = Math.floor(Math.random() * (n + m));
+      let b = Math.floor(Math.random() * (n + m));
+      if (a > b) [a, b] = [b, a]; //Enforce a <= b
+      if (a != b && !edges.includes([a, b])) {
+        edges.push([a, b]);
+      }
+
+      //Randomize array in-place using Durstenfeld shuffle algorithm
+      const shuffler = Array.from(Array(n + m).keys());
+      for (let i = shuffler.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffler[i], shuffler[j]] = [shuffler[j], shuffler[i]];
+      }
+
+      //Replace instances of the original vertex names in-place
+      for (let i = 0; i < edges.length; i++) {
+        edges[i] = [shuffler[edges[i][0]], shuffler[edges[i][1]]];
+      }
+
+      return edges;
+    },
+    solver: (data: [number, number][], ans: string): boolean => {
+      //TODO: Return false for invalid inputs.
+      //TODO: Check the no solution case.
+      //TODO: Check if the given 2-coloring is proper.
+      return JSON.stringify(data) == ans;
+    },
+  },
 ];
