@@ -6,6 +6,7 @@ import { use } from "../../ui/Context";
 import { Modal } from "../../ui/React/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { BitnodeMultiplierDescription } from "./BitnodeMultipliersDescription";
 
 interface IProps {
   open: boolean;
@@ -40,6 +41,7 @@ export function PortalModal(props: IProps): React.ReactElement {
       <br />
       <br />
       <Typography>{bitNode.info}</Typography>
+      <BitnodeMultiplierDescription n={props.n} />
       <br />
       <br />
       <Button

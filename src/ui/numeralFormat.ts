@@ -223,19 +223,21 @@ class NumeralFormatter {
     const parsed = parseFloat(s);
     const selfParsed = this.parseCustomLargeNumber(s);
     // Check for one or more NaN values
-    if (isNaN(parsed) && numeralValue === null && isNaN(selfParsed)) {
-      // 3x NaN
-      return NaN;
-    } else if (isNaN(parsed) && isNaN(selfParsed)) {
+    if (isNaN(parsed) && isNaN(selfParsed)) {
+      if (numeralValue === null) {
+        // 3x NaN
+        return NaN;
+      }
       // 2x NaN
       return numeralValue;
     } else if (numeralValue === null && isNaN(selfParsed)) {
       // 2x NaN
       return parsed;
-    } else if (isNaN(parsed) && numeralValue === null) {
-      // 2x NaN
-      return selfParsed;
     } else if (isNaN(parsed)) {
+      if (numeralValue === null) {
+        // 2x NaN
+        return selfParsed;
+      }
       // 1x NaN
       return this.largestAbsoluteNumber(numeralValue, selfParsed);
     } else if (numeralValue === null) {

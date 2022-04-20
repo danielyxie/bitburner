@@ -118,7 +118,7 @@ export const CONSTANTS: {
   LatestUpdate: string;
 } = {
   VersionString: "1.6.4",
-  VersionNumber: 14,
+  VersionNumber: 15,
 
   // Speed (in ms) at which the main loop is updated
   _idleSpeed: 200,
@@ -287,7 +287,7 @@ export const CONSTANTS: {
   // BitNode/Source-File related stuff
   TotalNumBitNodes: 24,
 
-  Donations: 2,
+  Donations: 4,
 
   LatestUpdate: `
   v1.6.3 - 2022-04-01 Few stanek fixes

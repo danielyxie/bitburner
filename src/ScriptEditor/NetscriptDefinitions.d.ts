@@ -4261,6 +4261,16 @@ interface Stanek {
    * @returns The fragment at [rootX, rootY], if any.
    */
   removeFragment(rootX: number, rootY: number): boolean;
+
+  /**
+   * Accept Stanek's Gift by joining the Church of the Machine God
+   * @remarks
+   * RAM cost: 2 GB
+   *
+   * @returns true if the player is a member of the church and has the gift installed,
+   * false otherwise.
+   */
+  acceptGift(): boolean;
 }
 
 export interface InfiltrationReward {
