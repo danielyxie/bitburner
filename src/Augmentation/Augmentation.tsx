@@ -168,10 +168,10 @@ function generateStatsDescription(mults: IAugmentationMults, programs?: string[]
   let desc = (
     <>
       {effectList.map((effect) => (
-        <>
+        <React.Fragment key={effect}>
           <br />
           {effect}
-        </>
+        </React.Fragment>
       ))}
     </>
   );
