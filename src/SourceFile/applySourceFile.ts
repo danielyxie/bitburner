@@ -21,7 +21,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       const incMult = 1 + mult / 100;
       const decMult = 1 - mult / 100;
       Player.mults.hacking_chance *= incMult;
-      Player.hacking_speed_mult *= incMult;
+      Player.mults.hacking_speed *= incMult;
       Player.hacking_money_mult *= incMult;
       Player.hacking_grow_mult *= incMult;
       Player.hacking_mult *= incMult;
@@ -84,7 +84,7 @@ export function applySourceFile(srcFile: PlayerOwnedSourceFile): void {
       }
       const incMult = 1 + mult / 100;
       Player.mults.hacking_chance *= incMult;
-      Player.hacking_speed_mult *= incMult;
+      Player.mults.hacking_speed *= incMult;
       Player.hacking_money_mult *= incMult;
       Player.hacking_grow_mult *= incMult;
       Player.hacking_mult *= incMult;

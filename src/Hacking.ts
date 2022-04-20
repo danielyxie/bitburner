@@ -77,7 +77,7 @@ export function calculateHackingTime(server: Server, player: IPlayer): number {
   const hackTimeMultiplier = 5;
   const hackingTime =
     (hackTimeMultiplier * skillFactor) /
-    (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1));
+    (player.mults.hacking_speed * calculateIntelligenceBonus(player.intelligence, 1));
 
   return hackingTime;
 }

@@ -767,7 +767,7 @@ export function NetscriptCorporation(
       const office = getOffice(divisionName, cityName);
       const corporation = getCorporation();
       return netscriptDelay(
-        (60 * 1000) / (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1)),
+        (60 * 1000) / (player.mults.hacking_speed * calculateIntelligenceBonus(player.intelligence, 1)),
         workerScript,
       ).then(function () {
         return Promise.resolve(ThrowParty(corporation, office, costPerEmployee));
@@ -779,7 +779,7 @@ export function NetscriptCorporation(
       const cityName = helper.city("buyCoffee", "cityName", _cityName);
       const corporation = getCorporation();
       return netscriptDelay(
-        (60 * 1000) / (player.hacking_speed_mult * calculateIntelligenceBonus(player.intelligence, 1)),
+        (60 * 1000) / (player.mults.hacking_speed * calculateIntelligenceBonus(player.intelligence, 1)),
         workerScript,
       ).then(function () {
         return Promise.resolve(BuyCoffee(corporation, getDivision(divisionName), getOffice(divisionName, cityName)));

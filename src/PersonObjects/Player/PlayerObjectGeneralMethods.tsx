@@ -276,7 +276,7 @@ export function updateSkillLevels(this: IPlayer): void {
 
 export function resetMultipliers(this: IPlayer): void {
   this.mults.hacking_chance = 1;
-  this.hacking_speed_mult = 1;
+  this.mults.hacking_speed = 1;
   this.hacking_money_mult = 1;
   this.hacking_grow_mult = 1;
 
