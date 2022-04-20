@@ -114,7 +114,7 @@ export const initInfiltratorsAugmentations = (): Augmentation[] => [
     infiltration_rep_mult: 2.5,
     info:
       "As time went on corporations realized that managers were redundant if they could be replaced by AI chips " +
-      "implanted directly in the brain, and so the this implant was developed which could analyse the users brain " +
+      "implanted directly in the brain, and so this implant was developed which could analyse the users brain " +
       "to find the perfect tone and sounding voice to increase productivity of the user to maximum profits.",
     factions: [FactionNames.Infiltrators],
   }),
@@ -155,8 +155,8 @@ export const initInfiltratorsAugmentations = (): Augmentation[] => [
     moneyCost: 1e6,
     infiltration_damage_reduction_mult: 0.7,
     info:
-      `Deep in the mines of ${CityName.Ishima} miners found a strange new material, now known as bitanium after ` +
-      "many iterations of experimenting it was found to be exceptional at increasing ones amour at absorbing " +
+      `Deep in the mines of ${CityName.Ishima} miners found a strange new material, now known as bitanium. After ` +
+      "many iterations of experimenting it was found to be exceptional at increasing ones armor at absorbing " +
       "blunt damage when used as an alloy with almost any other metal you can think of.",
     factions: [FactionNames.Infiltrators],
   }),
@@ -208,7 +208,7 @@ export const initInfiltratorsAugmentations = (): Augmentation[] => [
     repCost: 1e2,
     moneyCost: 1e6,
     info:
-      "A module initially developed to reverse the disability of dyslexia, But during human trials it was found " +
+      "A module initially developed to reverse the affliction of dyslexia, But during human trials it was found " +
       "to actually cause dyslexia, despite the fact scientists decided to sell it anyway. Who would want " +
       "to install something like that... i guess it has the added benefit of qualifying for a disability card",
     stats: <>This augmentation makes the Cheat Code minigame easier by allowing the opposite character.</>,
