@@ -384,8 +384,8 @@ export function CharacterStats(): React.ReactElement {
                   ],
                   [
                     "Hacking Experience",
-                    player.hacking_exp_mult,
-                    player.hacking_exp_mult * BitNodeMultipliers.HackExpGain,
+                    player.mults.hacking_exp,
+                    player.mults.hacking_exp * BitNodeMultipliers.HackExpGain,
                   ],
                 ]}
                 color={Settings.theme.hack}

@@ -36,7 +36,7 @@ export function calculateHackingExpGain(server: Server, player: IPlayer): number
   let expGain = baseExpGain;
   expGain += server.baseDifficulty * diffFactor;
 
-  return expGain * player.hacking_exp_mult * BitNodeMultipliers.HackExpGain;
+  return expGain * player.mults.hacking_exp * BitNodeMultipliers.HackExpGain;
 }
 
 /**

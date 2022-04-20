@@ -1017,7 +1017,7 @@ export class Bladeburner implements IBladeburner {
     const unweightedGain = time * BladeburnerConstants.BaseStatGain * successMult * difficultyMult;
     const unweightedIntGain = time * BladeburnerConstants.BaseIntGain * successMult * difficultyMult;
     const skillMult = this.skillMultipliers.expGain;
-    player.gainHackingExp(unweightedGain * action.weights.hack * player.hacking_exp_mult * skillMult);
+    player.gainHackingExp(unweightedGain * action.weights.hack * player.mults.hacking_exp * skillMult);
     player.gainStrengthExp(unweightedGain * action.weights.str * player.strength_exp_mult * skillMult);
     player.gainDefenseExp(unweightedGain * action.weights.def * player.defense_exp_mult * skillMult);
     player.gainDexterityExp(unweightedGain * action.weights.dex * player.dexterity_exp_mult * skillMult);
@@ -1466,7 +1466,7 @@ export class Bladeburner implements IBladeburner {
         if (isNaN(eff) || eff < 0) {
           throw new Error("Field Analysis Effectiveness calculated to be NaN or negative");
         }
-        const hackingExpGain = 20 * player.hacking_exp_mult;
+        const hackingExpGain = 20 * player.mults.hacking_exp;
         const charismaExpGain = 20 * player.charisma_exp_mult;
         const rankGain = 0.1 * BitNodeMultipliers.BladeburnerRank;
         player.gainHackingExp(hackingExpGain);

@@ -712,7 +712,7 @@ export function NetscriptSingularity(player: IPlayer, workerScript: WorkerScript
             dexterityExp: player.dexterity_exp_mult,
             factionRep: player.faction_rep_mult,
             hacking: player.mults.hacking,
-            hackingExp: player.hacking_exp_mult,
+            hackingExp: player.mults.hacking_exp,
             strength: player.strength_mult,
             strengthExp: player.strength_exp_mult,
             workMoney: player.work_money_mult,
