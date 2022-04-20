@@ -166,7 +166,7 @@ export class StaneksGift implements IStaneksGift {
           break;
         case FragmentType.Defense:
           p.mults.defense *= power;
-          p.defense_exp_mult *= power;
+          p.mults.defense_exp *= power;
           break;
         case FragmentType.Dexterity:
           p.dexterity_mult *= power;

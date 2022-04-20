@@ -1019,7 +1019,7 @@ export class Bladeburner implements IBladeburner {
     const skillMult = this.skillMultipliers.expGain;
     player.gainHackingExp(unweightedGain * action.weights.hack * player.mults.hacking_exp * skillMult);
     player.gainStrengthExp(unweightedGain * action.weights.str * player.mults.strength_exp * skillMult);
-    player.gainDefenseExp(unweightedGain * action.weights.def * player.defense_exp_mult * skillMult);
+    player.gainDefenseExp(unweightedGain * action.weights.def * player.mults.defense_exp * skillMult);
     player.gainDexterityExp(unweightedGain * action.weights.dex * player.dexterity_exp_mult * skillMult);
     player.gainAgilityExp(unweightedGain * action.weights.agi * player.agility_exp_mult * skillMult);
     player.gainCharismaExp(unweightedGain * action.weights.cha * player.charisma_exp_mult * skillMult);
@@ -1428,7 +1428,7 @@ export class Bladeburner implements IBladeburner {
       case ActionTypes["Training"]: {
         this.stamina -= 0.5 * BladeburnerConstants.BaseStaminaLoss;
         const strExpGain = 30 * player.mults.strength_exp,
-          defExpGain = 30 * player.defense_exp_mult,
+          defExpGain = 30 * player.mults.defense_exp,
           dexExpGain = 30 * player.dexterity_exp_mult,
           agiExpGain = 30 * player.agility_exp_mult,
           staminaGain = 0.04 * this.skillMultipliers.stamina;

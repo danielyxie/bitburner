@@ -408,7 +408,7 @@ export function CharacterStats(): React.ReactElement {
                     player.mults.defense,
                     player.mults.defense * BitNodeMultipliers.DefenseLevelMultiplier,
                   ],
-                  ["Defense Experience", player.defense_exp_mult],
+                  ["Defense Experience", player.mults.defense_exp],
                 ]}
                 color={Settings.theme.combat}
               />

@@ -26,7 +26,7 @@ function calcReward(player: IPlayer, startingDifficulty: number): number {
   const xpMult = 10 * 60 * 15;
   const total =
     calculateSkill(player.mults.strength_exp * xpMult, player.mults.strength) +
-    calculateSkill(player.defense_exp_mult * xpMult, player.mults.defense) +
+    calculateSkill(player.mults.defense_exp * xpMult, player.mults.defense) +
     calculateSkill(player.agility_exp_mult * xpMult, player.agility_mult) +
     calculateSkill(player.dexterity_exp_mult * xpMult, player.dexterity_mult) +
     calculateSkill(player.charisma_exp_mult * xpMult, player.charisma_mult);
