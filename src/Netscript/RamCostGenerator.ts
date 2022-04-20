@@ -70,6 +70,7 @@ export const RamCostConstants: IMap<number> = {
   ScriptStanekPlace: 5,
   ScriptStanekFragmentAt: 2,
   ScriptStanekDeleteAt: 0.15,
+  ScriptStanekAcceptGift: 2,
 };
 
 function SF4Cost(cost: number): (player: IPlayer) => number {
@@ -284,6 +285,7 @@ const stanek: IMap<any> = {
   placeFragment: RamCostConstants.ScriptStanekPlace,
   getFragment: RamCostConstants.ScriptStanekFragmentAt,
   removeFragment: RamCostConstants.ScriptStanekDeleteAt,
+  acceptGift: RamCostConstants.ScriptStanekAcceptGift,
 };
 
 // UI API
